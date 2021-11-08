@@ -1,11 +1,12 @@
 // React
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import { format_date } from '../../utils/helper_functions';
 import { LazyImage } from '../UtilityComponents';
 
 const OrderSmallScreen = (props) => {
+	const history = useHistory();
 	return (
 		<div className="container p-15px " style={{ backgroundColor: props.determine_color(props.order) }}>
 			<div className="pb-15px mb-10px row ai-c" style={{ borderBottom: '1px solid white' }}>
@@ -31,7 +32,13 @@ const OrderSmallScreen = (props) => {
 					</div> */}
 
 					<div className="jc-fe">
-						<Link to={'/secure/account/order/' + props.order._id} className="m-auto">
+						<Link
+							to={{
+								pathname: '/secure/account/order/' + props.order._id,
+								previous_path: history.location.pathname + history.location.search
+							}}
+							className="m-auto"
+						>
 							<button className="btn icon fs-25px">
 								<i className="fas fa-info-circle" />
 							</button>

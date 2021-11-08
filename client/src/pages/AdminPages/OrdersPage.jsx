@@ -7,7 +7,7 @@ import { Helmet } from 'react-helmet';
 import { JSONToCSV, Order, OrderListItem, OrderSmallScreen, Search, Sort } from '../../components/SpecialtyComponents';
 import Pagination from 'react-js-pagination';
 import { API_Orders } from '../../utils';
-import { format_date } from '../../utils/helper_functions';
+import { format_date, getUrlParameter } from '../../utils/helper_functions';
 import { check_authentication } from '../../utils/react_helper_functions';
 // import CsvDownload from 'react-json-to-csv';
 
@@ -19,13 +19,12 @@ const OrdersPage = (props) => {
 	const [ loading_mark_as_shipped, set_loading_mark_as_shipped ] = useState(false);
 	const [ total_orders, set_total_orders ] = useState([]);
 	const [ total_expenses, set_total_expenses ] = useState([]);
+	const [ page, set_page ] = useState(1);
+	const [ limit, set_limit ] = useState(10);
 
 	const category = props.match.params.category ? props.match.params.category : '';
-	const page = props.match.params.page ? props.match.params.page : 1;
-	const limit = props.match.params.limit ? props.match.params.limit : 10;
 	const orderList = useSelector((state) => state.orderList);
 	const { loading, orders, error } = orderList;
-	// console.log({ orderList });
 
 	const orderDelete = useSelector((state) => state.orderDelete);
 	const { success: successDelete } = orderDelete;
@@ -34,22 +33,24 @@ const OrdersPage = (props) => {
 
 	const [ order_state, set_order_state ] = useState({});
 
-	useEffect(() => {
-		// if (history.action === 'PUSH') {
-		dispatch(listOrders(category, search, sortOrder, page, limit));
-		// } else if (history.action === 'POP') {
-		// if (window.performance) {
-		// 	console.log({ performance: window.performance });
-		// 	if (window.performance.navigation.type === 1) {
-		// 		dispatch(listOrders(category, search, sortOrder, page, limit));
-		// 		console.log('This page is reloaded');
-		// 	} else {
-		// 		console.log('This page is not reloaded');
-		// 		// dispatch(listOrders(category, search, sortOrder, page, limit));
-		// 	}
-		// }
-		// }
-	}, []);
+	const query = getUrlParameter(props.location);
+
+	useEffect(
+		() => {
+			if (query.page) {
+				console.log({ page: query.page });
+				set_page(query.page);
+				set_limit(query.limit);
+				dispatch(listOrders(category, search, sortOrder, query.page, query.limit));
+			}
+			return () => {};
+		},
+		[ query.page ]
+	);
+
+	// useEffect(() => {
+	// 	dispatch(listOrders(category, search, sortOrder, page, limit));
+	// }, []);
 
 	const submitHandler = (e) => {
 		e.preventDefault();
@@ -142,47 +143,6 @@ const OrdersPage = (props) => {
 		[ error ]
 	);
 
-	// useEffect(() => {
-	// 	// if (history.action !== 'POP') {
-	// 	get_total_orders();
-	// 	get_total_expenses();
-	// 	// }
-	// 	return () => {};
-	// }, []);
-
-	// const get_total_orders = async () => {
-	// 	const { data } = await API_Orders.total_orders();
-	// 	console.log({ data: data.length });
-	// 	set_total_orders(
-	// 		data.filter((order) => order.deleted === false).filter((order) => order.isPaid === true).map((order) => ({
-	// 			Date: format_date(order.createdAt),
-	// 			ID: order._id,
-	// 			Name: order.shipping.first_name + ' ' + order.shipping.last_name,
-	// 			Email: order.shipping.email,
-	// 			Subtotal: '$' + order.itemsPrice,
-	// 			Shipping: '$' + order.shippingPrice,
-	// 			Tax: '$' + order.taxPrice,
-	// 			Total: '$' + order.totalPrice
-	// 		}))
-	// 	);
-	// };
-	// const get_total_expenses = async () => {
-	// 	const { data } = await API_Orders.total_expenses();
-	// 	console.log({ data: data.length });
-	// 	set_total_expenses(
-	// 		data.filter((expense) => expense.deleted === false).map((expense) => ({
-	// 			'Date of Purchase': format_date(expense.date_of_purchase),
-	// 			ID: expense._id,
-	// 			Expense: expense.expense_name,
-	// 			Category: expense.category,
-	// 			'Place of Purchase': expense.place_of_purchase,
-	// 			Application: expense.application,
-	// 			Card: expense.card,
-	// 			Amount: '$' + expense.amount
-	// 		}))
-	// 	);
-	// };
-
 	const history = useHistory();
 
 	const update_page = (e) => {
@@ -195,30 +155,6 @@ const OrdersPage = (props) => {
 		console.log(e.target.value);
 		dispatch(listOrders(category, search, sortOrder, page));
 	};
-
-	// const [ finishStatus, setfinishStatus ] = useState(false);
-
-	// const onBackButtonEvent = (e) => {
-	// 	e.preventDefault();
-	// 	if (!finishStatus) {
-	// 		if (window.confirm('Do you want to go back ?')) {
-	// 			setfinishStatus(true);
-	// 			// your logic
-	// 			props.history.push('/');
-	// 		} else {
-	// 			window.history.pushState(null, null, window.location.pathname);
-	// 			setfinishStatus(false);
-	// 		}
-	// 	}
-	// };
-
-	// useEffect(() => {
-	// 	window.history.pushState(null, null, window.location.pathname);
-	// 	window.addEventListener('popstate', onBackButtonEvent);
-	// 	return () => {
-	// 		window.removeEventListener('popstate', onBackButtonEvent);
-	// 	};
-	// }, []);
 
 	useEffect(() => {
 		mark_as_shipped();

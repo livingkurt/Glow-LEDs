@@ -1007,7 +1007,7 @@ const MarkAsShippedEmail = (props) => {
 			})(i);
 		});
 		setTimeout(() => {
-			history.push(`/secure/glow/orders`);
+			history.push(props.location.previous_path || '/secure/glow/orders?page=1');
 		}, 2000 * orders.length - 1);
 	};
 
@@ -1025,7 +1025,7 @@ const MarkAsShippedEmail = (props) => {
 					<Link to="/secure/glow/emails">
 						<button className="btn primary">Back to Emails</button>
 					</Link>
-					<Link to="/secure/glow/orders">
+					<Link to={props.location.previous_path || '/secure/glow/orders?page=1'}>
 						<button className="btn primary">Back to Orders</button>
 					</Link>
 					{order && (

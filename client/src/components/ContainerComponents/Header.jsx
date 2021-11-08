@@ -830,7 +830,7 @@ const Header = (props) => {
 											<Link to="/secure/glow/controlpanel">
 												<button className="btn nav">Control Panel</button>
 											</Link>
-											<Link to="/secure/glow/orders">
+											<Link to="/secure/glow/orders?page=1">
 												<button className="btn nav">Orders</button>
 											</Link>
 											<Link to="/secure/glow/products">

@@ -487,7 +487,7 @@ const ProductPage = (props) => {
 			<div className="p-1rem">
 				<div className="jc-b">
 					<div className="mb-10px">
-						<Link to={props.location.previous_path || '/collections/all/products/'} className="m-auto">
+						<Link to={props.location.previous_path || '/collections/all/products'} className="m-auto">
 							<button className="btn secondary">Back to Products</button>
 						</Link>
 					</div>

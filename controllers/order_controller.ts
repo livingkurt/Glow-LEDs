@@ -43,7 +43,7 @@ export default {
 			const category = req.query.category ? { category: req.query.category } : {};
 			const page: any = req.query.page ? req.query.page : 1;
 			const limit: any = req.query.limit ? req.query.limit : 10;
-			// // console.log({ page });
+			console.log({ page: req.query.page, limit: req.query.limit });
 			// let user: any;
 			// let search: any;
 			// if (req.query.search) {

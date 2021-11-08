@@ -1026,7 +1026,7 @@ const OrderStatusEmail = (props) => {
 					<Link to="/secure/glow/emails">
 						<button className="btn primary">Back to Emails</button>
 					</Link>
-					<Link to="/secure/glow/orders">
+					<Link to={props.location.previous_path || '/secure/glow/orders?page=1'}>
 						<button className="btn primary">Back to Orders</button>
 					</Link>
 					{order && (

@@ -207,7 +207,7 @@ const EditOrderPage = (props) => {
 		);
 		e.target.reset();
 		unset_state();
-		history.push('/secure/glow/orders');
+		history.push(props.location.previous_path || '/secure/glow/orders?page=1');
 	};
 
 	const add_order_item = (e) => {

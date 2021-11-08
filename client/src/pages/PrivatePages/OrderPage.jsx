@@ -446,7 +446,7 @@ const OrderPage = (props) => {
 					<div className="mb-10px ml-20px">
 						{userInfo &&
 						userInfo.isAdmin && (
-							<Link to="/secure/glow/orders">
+							<Link to={props.location.previous_path || '/secure/glow/orders?page=1'}>
 								<button className="btn secondary">Back to Admin Orders</button>
 							</Link>
 						)}
@@ -873,7 +873,15 @@ ${order.shipping.email}`)}
 								/>
 							</div>
 							<button className="btn secondary w-100per mv-5px ">
-								<Link to={'/secure/glow/emails/invoice/' + order._id}>View Invoice</Link>
+								{/* <Link to={'/secure/glow/emails/invoice/' + order._id}>View Invoice</Link> */}
+								<Link
+									to={{
+										pathname: '/secure/glow/emails/invoice/' + order._id,
+										previous_path: props.location.previous_path
+									}}
+								>
+									View Invoice
+								</Link>
 							</button>
 							{userInfo &&
 							userInfo.isAdmin && (

@@ -1,6 +1,6 @@
 // React
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { determine_tracking_number, determnine_link, format_date } from '../../utils/helper_functions';
@@ -11,6 +11,7 @@ import { LazyImage, Loading } from '../UtilityComponents';
 import { determine_product_name } from '../../utils/react_helper_functions';
 
 const OrderListItem = (props) => {
+	const history = useHistory();
 	const dispatch = useDispatch();
 	const [ loading_label, set_loading_label ] = useState(false);
 
@@ -157,12 +158,25 @@ const OrderListItem = (props) => {
 							)}
 						</div>
 						<div className="row fs-16px jc-b ai-c">
-							<Link to={'/secure/account/order/' + props.order._id}>
+							<Link
+								to={{
+									pathname: '/secure/account/order/' + props.order._id,
+									previous_path: history.location.pathname + history.location.search
+								}}
+							>
 								<button className="btn primary">Order Details</button>
 							</Link>
 							<div>|</div>
 							<button className="btn secondary">
-								<Link to={'/secure/glow/emails/invoice/' + props.order._id}>View Invoice</Link>
+								{/* <Link to={'/secure/glow/emails/invoice/' + props.order._id}>View Invoice</Link> */}
+								<Link
+									to={{
+										pathname: '/secure/glow/emails/invoice/' + props.order._id,
+										previous_path: history.location.pathname + history.location.search
+									}}
+								>
+									View Invoice
+								</Link>
 							</button>
 						</div>
 					</div>

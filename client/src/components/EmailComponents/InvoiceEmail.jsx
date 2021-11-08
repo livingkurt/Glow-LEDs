@@ -10,6 +10,7 @@ import { listPromos } from '../../actions/promoActions';
 
 const InvoiceEmail = (props) => {
 	const history = useHistory();
+	console.log({ history });
 	const orderDetails = useSelector((state) => state.orderDetails);
 	const { order } = orderDetails;
 
@@ -744,6 +745,8 @@ const InvoiceEmail = (props) => {
 		}, 500);
 		return false;
 	};
+
+	console.log({ location: props.location.previous_path });
 	return (
 		<div>
 			<div className="jc-b mb-2rem">
@@ -753,7 +756,7 @@ const InvoiceEmail = (props) => {
 						Back to Emails
 					</button>
 				)}
-				<Link to="/secure/glow/orders">
+				<Link to={props.location.previous_path || '/secure/glow/orders?page=1'}>
 					<button className="btn primary mh-10px">Back to Orders</button>
 				</Link>
 

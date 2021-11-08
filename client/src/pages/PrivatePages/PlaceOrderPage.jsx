@@ -350,7 +350,7 @@ const PlaceOrderPage = (props) => {
 		);
 
 		set_loading_payment(false);
-		props.history.push('/secure/glow/orders');
+		props.history.push('/secure/glow/orders?page=1');
 		empty_cart();
 		// if (promo_code) {
 		// 	await API_Products.promo_code_used(promo_code);
@@ -394,7 +394,7 @@ const PlaceOrderPage = (props) => {
 			})
 		);
 
-		props.history.push('/secure/glow/orders');
+		props.history.push('/secure/glow/orders?page=1');
 		empty_cart();
 		// if (promo_code) {
 		// 	await API_Products.promo_code_used(promo_code);

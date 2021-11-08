@@ -1,6 +1,6 @@
 // React
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { format_date } from '../../utils/helper_functions';
@@ -11,6 +11,7 @@ import { LazyImage } from '../UtilityComponents';
 const Order = (props) => {
 	const dispatch = useDispatch();
 	const [ clipboard, copyToClipboard ] = useClipboard();
+	const history = useHistory();
 
 	const [ refund_state, set_refund_state ] = useState({});
 	const [ refund_amount, set_refund_amount ] = useState(0);
@@ -138,7 +139,12 @@ const Order = (props) => {
 							</div>
 						</div>
 						<div className="row fs-16px jc-b ai-c">
-							<Link to={'/secure/account/order/' + props.order._id}>
+							<Link
+								to={{
+									pathname: '/secure/account/order/' + props.order._id,
+									previous_path: history.location.pathname + history.location.search
+								}}
+							>
 								<button className="btn primary">Order Details</button>
 							</Link>
 							<div>|</div>

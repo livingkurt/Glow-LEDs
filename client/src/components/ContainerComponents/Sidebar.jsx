@@ -737,7 +737,7 @@ const Sidebar = (props) => {
 									Control Panel
 								</button>
 							</Link>
-							<Link to="/secure/glow/orders">
+							<Link to="/secure/glow/orders?page=1">
 								<button className="sidebar-btn secondary" onClick={closeMenu}>
 									Orders
 								</button>

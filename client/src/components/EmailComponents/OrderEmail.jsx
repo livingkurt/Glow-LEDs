@@ -2201,7 +2201,7 @@ const OrderEmail = (props) => {
 					<Link to="/secure/glow/emails">
 						<button className="btn primary mh-10px">Back to Emails</button>
 					</Link>
-					<Link to="/secure/glow/orders">
+					<Link to={props.location.previous_path || '/secure/glow/orders?page=1'}>
 						<button className="btn primary mh-10px">Back to Orders</button>
 					</Link>
 
