@@ -1,4 +1,4 @@
-import { User } from '../models';
+import { User, Token } from '../models';
 import { prnt } from '../util';
 require('dotenv');
 
