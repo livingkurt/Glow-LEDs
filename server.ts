@@ -109,7 +109,13 @@ app.get('/api/config/paypal', (req, res) => {
 
 app.use((req, res, next) => {
 	const host = req.get('Host');
-	if (host === 'glow-leds.com') {
+	if (host === 'http://Glow-LEDs.com') {
+		return res.redirect(301, 'https://wwww.glow-leds.com/' + req.originalUrl);
+	}
+	if (host === 'Glow-LEDs.com') {
+		return res.redirect(301, 'https://wwww.glow-leds.com/' + req.originalUrl);
+	}
+	if (host === 'http://glow-leds.com') {
 		return res.redirect(301, 'https://wwww.glow-leds.com/' + req.originalUrl);
 	}
 	return next();
