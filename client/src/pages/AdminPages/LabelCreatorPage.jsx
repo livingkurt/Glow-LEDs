@@ -403,8 +403,8 @@ const LabelCreatorPage = (props) => {
 													value={to_shipping.state}
 												>
 													{state_names.map((state, index) => (
-														<option key={index} value={state}>
-															{state}
+														<option key={index} value={state.short_name}>
+															{state.long_name}
 														</option>
 													))}
 												</select>
@@ -628,8 +628,8 @@ const LabelCreatorPage = (props) => {
 													value={from_shipping.state}
 												>
 													{state_names.map((state, index) => (
-														<option key={index} value={state}>
-															{state}
+														<option key={index} value={state.short_name}>
+															{state.long_name}
 														</option>
 													))}
 												</select>
