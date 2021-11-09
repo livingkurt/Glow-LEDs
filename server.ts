@@ -107,6 +107,14 @@ app.get('/api/config/paypal', (req, res) => {
 	res.send(config.PAYPAL_CLIENT_ID);
 });
 
+app.use((req, res, next) => {
+	const host = req.get('Host');
+	if (host === 'glow-leds.com') {
+		return res.redirect(301, 'https://wwww.glow-leds.com/' + req.originalUrl);
+	}
+	return next();
+});
+
 // app.use(function(req, res, next) {
 // 	throw new Error('Test error');
 // });
