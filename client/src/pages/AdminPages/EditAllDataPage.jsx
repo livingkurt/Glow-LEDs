@@ -3,9 +3,27 @@ import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { API_Products } from '../../utils';
-import { unformat_date } from '../../utils/helper_functions';
+import {
+	accurate_date,
+	format_date,
+	format_time,
+	unformat_date,
+	unformat_date_and_time
+} from '../../utils/helper_functions';
 
 const EditAllDataPage = (props) => {
+	const date = new Date();
+
+	function addDays(date, days) {
+		const copy = new Date(Number(date));
+		copy.setDate(date.getDate() + days);
+		return copy;
+	}
+
+	const today = accurate_date(date);
+	const end_date = accurate_date(addDays(date, 7));
+	console.log({ end_date: accurate_date(addDays(date, 7)) });
+	console.log({ today });
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
 
@@ -19,8 +37,10 @@ const EditAllDataPage = (props) => {
 	const [ request, set_request ] = useState('');
 	const [ sale_price_request, set_sale_price_request ] = useState('');
 	const [ discount_percentage, set_discount_percentage ] = useState(0);
-	const [ sale_start_date, set_sale_start_date ] = useState('');
-	const [ sale_end_date, set_sale_end_date ] = useState('');
+	const [ sale_start_date, set_sale_start_date ] = useState(format_date(today));
+	const [ sale_end_date, set_sale_end_date ] = useState(format_date(end_date));
+	const [ sale_start_time, set_sale_start_time ] = useState(format_time(today));
+	const [ sale_end_time, set_sale_end_time ] = useState('9:00 PM');
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
 
 	setTimeout(() => {
@@ -57,15 +77,19 @@ const EditAllDataPage = (props) => {
 
 	const update_sale_price = async (e) => {
 		e.preventDefault();
-		console.log({ discount_percentage: parseInt(discount_percentage / 100) });
-		console.log({ discount_percentage: parseInt(discount_percentage) / 100 });
+		console.log({
+			start_date: unformat_date_and_time(sale_start_date, sale_start_time),
+			end_date: unformat_date_and_time(sale_end_date, sale_end_time)
+		});
+		const start_date = new Date(unformat_date_and_time(sale_start_date, sale_start_time));
+		const end_date = new Date(unformat_date_and_time(sale_end_date, sale_end_time));
+		console.log({ start_date: accurate_date(start_date) });
 		const request = await API_Products.set_sale_price(
 			parseInt(discount_percentage) / 100,
-			unformat_date(sale_start_date),
-			unformat_date(sale_end_date)
+			accurate_date(start_date),
+			accurate_date(end_date)
 		);
 
-		console.log({ request });
 		set_request(request);
 	};
 	const clear_sale = async (e) => {
@@ -141,7 +165,7 @@ const EditAllDataPage = (props) => {
 							</li>
 							<li>
 								<div className="jc-b">
-									<div>
+									<div className="mr-5px">
 										<label htmlFor="sale_start_date">Start Date</label>
 										<input
 											type="text"
@@ -152,10 +176,25 @@ const EditAllDataPage = (props) => {
 											onChange={(e) => set_sale_start_date(e.target.value)}
 										/>
 									</div>
-									<div className="m-7px pt-22px">
-										<i className="fas fa-minus" />
-									</div>
 									<div>
+										<label htmlFor="sale_start_time">Start Time</label>
+										<input
+											type="text"
+											className="w-100per"
+											name="sale_start_time"
+											value={sale_start_time}
+											id="sale_start_time"
+											onChange={(e) => set_sale_start_time(e.target.value)}
+										/>
+									</div>
+								</div>
+							</li>
+							<div className="w-100per ta-c fs-20px">
+								<i class="fas fa-arrow-down" />
+							</div>
+							<li>
+								<div className="jc-b">
+									<div className="mr-5px">
 										<label htmlFor="sale_end_date">End Date</label>
 										<input
 											type="text"
@@ -164,6 +203,18 @@ const EditAllDataPage = (props) => {
 											value={sale_end_date}
 											id="sale_end_date"
 											onChange={(e) => set_sale_end_date(e.target.value)}
+										/>
+									</div>
+
+									<div>
+										<label htmlFor="sale_end_time">End Time</label>
+										<input
+											type="text"
+											className="w-100per"
+											name="sale_end_time"
+											value={sale_end_time}
+											id="sale_end_time"
+											onChange={(e) => set_sale_end_time(e.target.value)}
 										/>
 									</div>
 								</div>

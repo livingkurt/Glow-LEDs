@@ -49,6 +49,7 @@ const orderItemSchema = new mongoose.Schema(
 		color: { type: String },
 		secondary_color: { type: String },
 		color_group_name: { type: String },
+		is_manufactured: { type: Boolean },
 		secondary_color_group_name: { type: String },
 		option_group_name: { type: String },
 		secondary_group_name: { type: String },

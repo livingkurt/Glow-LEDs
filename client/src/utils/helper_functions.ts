@@ -170,14 +170,52 @@ export const format_date = (unformatted_date: string) => {
 	return formatted_date;
 };
 export const format_time = (unformatted_time: any) => {
+	console.log({ unformatted_time });
 	let hour = unformatted_time.slice(11, 13);
-	// let hour_int = parseInt(hour);
-	// hour = (hour_int + 11) % 12 + 1;
+	let formatted_hour = hour > 12 ? hour - 12 : hour;
 	const minute = unformatted_time.slice(14, 16);
 	const second = unformatted_time.slice(17, 19);
-	const formatted_time = `${hour}:${minute}:${second}`;
+	const formatted_time = `${formatted_hour}:${minute} ${hour >= 12 ? 'PM' : 'AM'}`;
 	return formatted_time;
 };
+
+export const unformat_time = (formatted_time: any) => {
+	let hour = formatted_time.slice(11, 13);
+	let formatted_hour = hour > 12 ? hour - 12 : hour;
+	const minute = formatted_time.slice(14, 16);
+	const second = formatted_time.slice(17, 19);
+	const unformatted_time = `${formatted_hour}:${minute} ${hour >= 12 ? 'PM' : 'AM'}`;
+	return formatted_time;
+};
+
+export const accurate_date = (date: any) => {
+	var tzo = -date.getTimezoneOffset(),
+		dif = tzo >= 0 ? '+' : '-',
+		pad = function(num: any) {
+			var norm = Math.floor(Math.abs(num));
+			return (norm < 10 ? '0' : '') + norm;
+		};
+
+	return (
+		date.getFullYear() +
+		'-' +
+		pad(date.getMonth() + 1) +
+		'-' +
+		pad(date.getDate()) +
+		'T' +
+		pad(date.getHours()) +
+		':' +
+		pad(date.getMinutes()) +
+		':' +
+		pad(date.getSeconds()) +
+		dif +
+		pad(tzo / 60) +
+		':' +
+		pad(tzo % 60)
+	);
+};
+
+// var dt = new Date();
 
 export const unformat_date = (formatted_date: string) => {
 	// console.log({ formatted_date });
@@ -186,6 +224,41 @@ export const unformat_date = (formatted_date: string) => {
 	const month = date[0];
 	const year = date[2];
 	const unformat_date = `${year}-${month}-${day}`;
+	return unformat_date;
+};
+export const unformat_date_and_time = (formatted_date: string, formatted_time: string) => {
+	const date = formatted_date.split('/');
+	const time = formatted_time.trim().split(':');
+	const day = date[1];
+	const month = date[0];
+	const year = date[2];
+	let hour;
+	const minute_time = time[1];
+	let minute = minute_time.slice(0, 2);
+	if (minute_time.slice(-2) === 'PM') {
+		hour = parseInt(time[0]) + 12;
+	} else if (minute_time.slice(-2) === 'AM') {
+		if (time[0].length === 1) {
+			hour = `0${time[0]}`;
+		} else if (time[0].length === 2) {
+			hour = time[0];
+		}
+	}
+	const unformat_date = `${year}-${month}-${day}T${hour}:${minute}:00`;
+	console.log({ unformat_date });
+	return unformat_date;
+};
+export const format_date_and_time = (formatted_date: string, formatted_time: string) => {
+	// console.log({ formatted_date });
+	const date = formatted_date.split('/');
+	const time = formatted_time.split(':');
+	const day = date[1];
+	const month = date[0];
+	const year = date[2];
+	const hour = time[1];
+	const second = time[0];
+	const ms = time[2];
+	const unformat_date = `${year}-${month}-${day}T${hour}.${second}.${ms}`;
 	return unformat_date;
 };
 

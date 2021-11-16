@@ -4,7 +4,16 @@ import { saveProduct, detailsProduct, listProducts } from '../../actions/product
 import { useHistory, Link } from 'react-router-dom';
 import { DropdownDisplay, ImageDisplay, Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
-import { create_color_products, format_date, snake_case, unformat_date } from '../../utils/helper_functions';
+import {
+	accurate_date,
+	create_color_products,
+	format_date,
+	format_time,
+	snake_case,
+	unformat_date,
+	unformat_date_and_time,
+	unformat_time
+} from '../../utils/helper_functions';
 import { listChips } from '../../actions/chipActions';
 import { API_Products } from '../../utils';
 import { listCategorys } from '../../actions/categoryActions';
@@ -32,6 +41,8 @@ const EditProductPage = (props) => {
 	const [ sale_price, setSalePrice ] = useState(0);
 	const [ sale_start_date, set_sale_start_date ] = useState('');
 	const [ sale_end_date, set_sale_end_date ] = useState('');
+	const [ sale_start_time, set_sale_start_time ] = useState('');
+	const [ sale_end_time, set_sale_end_time ] = useState('');
 
 	const [ package_volume, set_package_volume ] = useState(0);
 	// const [ subcategories, set_subcategories ] = useState('');
@@ -257,11 +268,15 @@ const EditProductPage = (props) => {
 		setHidden(product.hidden);
 		setSalePrice(product.sale_price);
 		set_previous_price(product.previous_price);
+		const start_date = new Date(product.sale_start_date);
+		const end_date = new Date(product.sale_end_date);
 		if (product.sale_start_date) {
-			set_sale_start_date(format_date(product.sale_start_date));
+			set_sale_start_date(format_date(accurate_date(start_date)));
+			set_sale_start_time(format_time(accurate_date(start_date)));
 		}
 		if (product.sale_end_date) {
-			set_sale_end_date(format_date(product.sale_end_date));
+			set_sale_end_date(format_date(accurate_date(end_date)));
+			set_sale_end_time(format_time(accurate_date(end_date)));
 		}
 		set_package_volume(product.package_volume);
 		set_meta_title(product.meta_title);
@@ -354,6 +369,8 @@ const EditProductPage = (props) => {
 		setSalePrice('');
 		set_sale_start_date(format_date('2021-01-01'));
 		set_sale_end_date(format_date('2021-01-01'));
+		// set_sale_start_time('12:00 PM');
+		// set_sale_end_time('12:00 PM');
 		set_package_volume(1);
 		set_meta_title('');
 		set_meta_description('');
@@ -403,6 +420,8 @@ const EditProductPage = (props) => {
 	// };
 
 	const save_product = () => {
+		const start_date = new Date(unformat_date_and_time(sale_start_date, sale_start_time));
+		const end_date = new Date(unformat_date_and_time(sale_end_date, sale_end_time));
 		dispatch(
 			saveProduct({
 				_id: props.match.params.pathname && props.match.params.template === 'false' ? id : null,
@@ -424,8 +443,8 @@ const EditProductPage = (props) => {
 				description,
 				hidden,
 				sale_price,
-				sale_start_date: unformat_date(sale_start_date),
-				sale_end_date: unformat_date(sale_end_date),
+				sale_start_date: accurate_date(start_date),
+				sale_end_date: accurate_date(end_date),
 				package_volume: package_length * package_width * package_height,
 				subcategory,
 				meta_title: `${name} | Glow LEDs`,
@@ -888,7 +907,7 @@ const EditProductPage = (props) => {
 													onChange={(e) => set_extra_cost(e.target.value)}
 												/>
 											</li>
-											<li>
+											{/* <li>
 												<div className="jc-b">
 													<div>
 														<label htmlFor="sale_start_date">Start Date</label>
@@ -913,6 +932,62 @@ const EditProductPage = (props) => {
 															value={sale_end_date}
 															id="sale_end_date"
 															onChange={(e) => set_sale_end_date(e.target.value)}
+														/>
+													</div>
+												</div>
+											</li> */}
+											<li>
+												<div className="jc-b">
+													<div className="mr-5px">
+														<label htmlFor="sale_start_date">Start Date</label>
+														<input
+															type="text"
+															className="w-100per"
+															name="sale_start_date"
+															value={sale_start_date}
+															id="sale_start_date"
+															onChange={(e) => set_sale_start_date(e.target.value)}
+														/>
+													</div>
+													<div>
+														<label htmlFor="sale_start_time">Start Time</label>
+														<input
+															type="text"
+															className="w-100per"
+															name="sale_start_time"
+															value={sale_start_time}
+															id="sale_start_time"
+															onChange={(e) => set_sale_start_time(e.target.value)}
+														/>
+													</div>
+												</div>
+											</li>
+											<div className="w-100per ta-c fs-20px">
+												<i class="fas fa-arrow-down" />
+											</div>
+											<li>
+												<div className="jc-b">
+													<div className="mr-5px">
+														<label htmlFor="sale_end_date">End Date</label>
+														<input
+															type="text"
+															className="w-100per"
+															name="sale_end_date"
+															value={sale_end_date}
+															id="sale_end_date"
+															onChange={(e) => set_sale_end_date(e.target.value)}
+														/>
+													</div>
+
+													<div>
+														<label htmlFor="sale_end_time">End Time</label>
+														<input
+															type="text"
+															className="w-100per"
+															name="sale_end_time"
+															value={sale_end_time}
+															id="sale_end_time"
+															onChange={(e) => set_sale_end_time(e.target.value)}
 														/>
 													</div>
 												</div>

@@ -15,7 +15,6 @@ router.route('/affiliates').put(isAuth, isAdmin, batch_controller.find_all_affil
 router.route('/paychecks').put(isAuth, isAdmin, batch_controller.find_all_paychecks);
 router.route('/product_sale_price').put(isAuth, isAdmin, batch_controller.update_product_sale_price);
 router.route('/clear_sale').put(isAuth, isAdmin, batch_controller.update_clear_sale);
-router.route('/clear_sale').put(isAuth, isAdmin, batch_controller.update_clear_sale);
 router.route('/update_order_items').put(batch_controller.update_order_items);
 router.route('/find_duplicate_emails').put(isAuth, isAdmin, batch_controller.find_duplicate_emails);
 router.route('/make_emails_lowercase').put(isAuth, isAdmin, batch_controller.make_emails_lowercase);
