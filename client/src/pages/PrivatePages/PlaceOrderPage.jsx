@@ -816,8 +816,8 @@ const PlaceOrderPage = (props) => {
 									name="tip"
 									id="tip"
 									placeholder="$0.00"
-									onFocus={() => this.placeholder('')}
-									onBlur={() => this.placeholder('$0.00')}
+									// onFocus={() => this.placeholder('')}
+									// onBlur={() => this.placeholder('$0.00')}
 									defaultValue={`$${tip && parseFloat(tip).toFixed(2)}`}
 									// defaultValue={tip}
 									className="w-100per"
