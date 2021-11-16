@@ -195,7 +195,7 @@ export default {
 			// const newOrderCreated = await Order.create({ ...req.body, guest: true });
 			const newOrderCreated = await Order.create({
 				orderItems: req.body.orderItems,
-				user: req.body.user ? req.body.user._id : req.user._id,
+				user: req.body.user,
 				shipping: req.body.shipping,
 				payment: req.body.payment,
 				itemsPrice: req.body.itemsPrice,

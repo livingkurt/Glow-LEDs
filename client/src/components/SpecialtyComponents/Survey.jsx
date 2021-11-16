@@ -160,9 +160,17 @@ const Survey = (props) => {
 	const submitHandler = (e) => {
 		set_loading_submit(true);
 		e.preventDefault();
+		let user = '';
+		if (user_order && user_order.user) {
+			user = user_order.user._id;
+		} else if (userInfo) {
+			user = userInfo._id;
+		} else {
+			user = null;
+		}
 		dispatch(
 			saveSurvey({
-				user: user_order ? user_order.user._id : userInfo && userInfo._id,
+				user: user,
 				question_1,
 				question_2,
 				question_3,

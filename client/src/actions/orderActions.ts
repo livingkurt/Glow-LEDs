@@ -38,7 +38,6 @@ import {
 	USER_SAVE_REQUEST,
 	USER_SAVE_SUCCESS
 } from '../constants/userConstants';
-import { prnt } from '../utils/helper_functions';
 require('dotenv').config();
 
 export const createPayOrder = (
@@ -159,7 +158,7 @@ export const createPayOrderGuest = (
 			}
 		} else {
 			const user_email_res = await axios.get('/api/users/email/' + order.shipping.email);
-			// prnt({ createPayOrderGuest_user_email_res: user_email_res });
+			// console.log({ createPayOrderGuest_user_email_res: user_email_res });
 			if (user_email_res.data && Object.keys(user_email_res.data).length > 0) {
 				dispatch({ type: ORDER_CREATE_REQUEST, payload: order });
 				const create_guest_order_res = await axios.post('/api/orders/guest', {
@@ -187,7 +186,7 @@ export const createPayOrderGuest = (
 				}
 			} else {
 				dispatch({ type: USER_SAVE_REQUEST, payload: {} });
-				// prnt('User Doesnt Exist');
+				// console.log('User Doesnt Exist');
 				const { data } = await axios.post('/api/users/', {
 					first_name: order.shipping.first_name,
 					last_name: order.shipping.last_name,
@@ -197,14 +196,14 @@ export const createPayOrderGuest = (
 					guest: true,
 					password: process.env.REACT_APP_TEMP_PASS
 				});
-				prnt({ createPayOrderGuest_user_create: data });
+				console.log({ createPayOrderGuest_user_create: data });
 				dispatch({ type: USER_SAVE_SUCCESS, payload: data });
 				dispatch({ type: ORDER_CREATE_REQUEST, payload: order });
 				const create_guest_order_res = await axios.post('/api/orders/guest', {
 					...order,
 					user: data._id
 				});
-				prnt({ create_guest_order_res });
+				console.log({ create_guest_order_res });
 				if (create_guest_order_res.data && Object.keys(create_guest_order_res.data).length > 0) {
 					dispatch({ type: ORDER_CREATE_SUCCESS, payload: create_guest_order_res.data });
 

@@ -310,6 +310,7 @@ const OrderPage = (props) => {
 	};
 
 	const create_duplicate_order = () => {
+		console.log({ order });
 		dispatch(
 			createOrder({
 				orderItems: order.orderItems,
@@ -318,7 +319,7 @@ const OrderPage = (props) => {
 				shippingPrice: 0,
 				taxPrice: 0,
 				totalPrice: 0,
-				user: order.user._id,
+				user: order.user ? order.user._id : null,
 				order_note: `Replacement Order for ${order.shipping.first_name} ${order.shipping
 					.last_name} - Original Order Number is ${order._id}`
 			})

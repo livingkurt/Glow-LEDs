@@ -1,7 +1,7 @@
 // React
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { determnine_link } from '../../utils/helper_functions';
 import { LazyImage } from '../UtilityComponents';
@@ -13,6 +13,9 @@ const CartItem = (props) => {
 		dispatch(removeFromCart(product));
 	};
 	const dispatch = useDispatch();
+
+	const userLogin = useSelector((state) => state.userLogin);
+	const { userInfo } = userLogin;
 
 	// const [ show_hidden, set_show_hidden ] = useState(false);
 
@@ -28,9 +31,12 @@ const CartItem = (props) => {
 	return (
 		<li key={props.index} className="">
 			<div className="cart-image m-auto ai-c">
-				<button className="btn primary mr-10px" onClick={() => show_hidden_products(props.item)}>
-					{props.item.is_manufactured ? <i class="fas fa-check-square" /> : <i class="far fa-square" />}
-				</button>
+				{userInfo &&
+				userInfo.isAdmin && (
+					<button className="btn primary mr-10px" onClick={() => show_hidden_products(props.item)}>
+						{props.item.is_manufactured ? <i class="fas fa-check-square" /> : <i class="far fa-square" />}
+					</button>
+				)}
 				<Link to={determnine_link(props.item)}>
 					<div className="">
 						{!props.item.secondary_image && (
