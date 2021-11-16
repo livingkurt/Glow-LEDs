@@ -19,6 +19,8 @@ const cartItemsSchema = new mongoose.Schema(
 		pathname: { type: String },
 		size: { type: Number },
 		sale_price: { type: Number },
+		sale_start_date: { type: Date },
+		sale_end_date: { type: Date },
 		package_volume: { type: Number },
 		weight_pounds: { type: Number },
 		weight_ounces: { type: Number },

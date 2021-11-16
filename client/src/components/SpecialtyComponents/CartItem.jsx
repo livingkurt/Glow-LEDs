@@ -1,14 +1,11 @@
 // React
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-import { determnine_link, format_date } from '../../utils/helper_functions';
-import useClipboard from 'react-hook-clipboard';
-import { createOrder, deleteOrder, listOrders, refundOrder } from '../../actions/orderActions';
-import { API_Orders } from '../../utils';
-import { LazyImage, Loading } from '../UtilityComponents';
-import { cart_item_name, cart_sale_price_switch } from '../../utils/react_helper_functions';
+import { determnine_link } from '../../utils/helper_functions';
+import { LazyImage } from '../UtilityComponents';
+import { cart_item_name, sale_price_switch } from '../../utils/react_helper_functions';
 import { addToCart, removeFromCart } from '../../actions/cartActions';
 
 const CartItem = (props) => {
@@ -83,7 +80,7 @@ const CartItem = (props) => {
 						<label className="paragraph_font lh-0px mv-0px fs-18px">{props.item.name}</label>
 					</Link>
 					<div className="ai-c">
-						<div className="cart-price fs-16px">{cart_sale_price_switch(props.item)}</div>
+						<div className="cart-price fs-16px">{sale_price_switch(props.item)}</div>
 						<button className="btn icon" onClick={() => removeFromCartHandler(props.item)}>
 							<i className="fas fa-trash-alt" />
 						</button>

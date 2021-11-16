@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Carousel } from '../../components/SpecialtyComponents';
 import { Helmet } from 'react-helmet';
+import { determine_total } from '../../utils/helper_functions';
 const CartPage = (props) => {
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
@@ -178,17 +179,7 @@ const CartPage = (props) => {
 					<div className="cart-action">
 						<h3 className="subtotal_h3">
 							Subtotal ( {cart.cartItems.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)} items ) : ${' '}
-							{/* {console.log(
-							cart.cartItems
-								.reduce((a, c) => (a + c.sale_price !== 0 ? c.sale_price : c.price * c.qty), 0)
-								.toFixed(2)
-						)} */}
-							{cart.cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0) === 0 ? (
-								cart.cartItems.reduce((a, c) => a + c.price * c.qty, 0).toFixed(2)
-							) : (
-								cart.cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0).toFixed(2)
-							)}
-							{/* {cart.cartItems.reduce((a, c) => a + c.price * c.qty, 0).toFixed(2)} */}
+							{determine_total(cart.cartItems)}
 						</h3>
 						<button
 							onClick={checkoutHandler}

@@ -14,10 +14,7 @@ import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { addToCart, saveCart } from '../../actions/cartActions';
 import 'react-medium-image-zoom/dist/styles.css';
-import {
-	determine_secondary_product_name,
-	sale_price_product_option_switch_product
-} from '../../utils/react_helper_functions';
+import { determine_secondary_product_name, sale_price_switch } from '../../utils/react_helper_functions';
 import useWindowDimensions from '../../components/Hooks/windowDimensions';
 import 'react-awesome-slider/dist/styles.css';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
@@ -351,6 +348,8 @@ const ProductPage = (props) => {
 			secondary_image: secondary_image ? secondary_image : '',
 			price,
 			sale_price,
+			sale_start_date: product.sale_start_date,
+			sale_end_date: product.sale_end_date,
 			countInStock: count_in_stock,
 			weight_pounds: dimensions.weight_pounds,
 			weight_ounces: dimensions.weight_ounces,
@@ -754,7 +753,7 @@ const ProductPage = (props) => {
 								</div>
 								<div className="row ai-c mv-20px">
 									<h3 className="mv-0px mr-5px">Price: </h3>
-									{sale_price_product_option_switch_product(price, sale_price, previous_price)}
+									{sale_price_switch(product)}
 								</div>
 
 								<div className="">
@@ -793,7 +792,7 @@ const ProductPage = (props) => {
 											price
 										)} */}
 
-										{sale_price_product_option_switch_product(price, sale_price, previous_price)}
+										{sale_price_switch(product)}
 									</div>
 									<li className="mt-1rem">
 										Status: {count_in_stock > 0 ? 'In Stock' : 'Out of Stock'}
@@ -1101,11 +1100,7 @@ const ProductPage = (props) => {
 										<div className="jc-b ai-c">
 											<div className="ai-c mb-1rem">
 												<h3 className="mv-0px mr-5px">Price: </h3>
-												{sale_price_product_option_switch_product(
-													price,
-													sale_price,
-													previous_price
-												)}
+												{sale_price_switch(product)}
 											</div>
 											<div className="mb-20px">
 												<a href="#reviews">

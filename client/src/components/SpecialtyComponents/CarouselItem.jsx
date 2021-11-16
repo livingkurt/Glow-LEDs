@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import Rating from './Rating';
 import { useHistory } from 'react-router';
 import { useSelector, useDispatch } from 'react-redux';
-import { sale_price_product_option_switch } from '../../utils/react_helper_functions';
+import { sale_price_switch } from '../../utils/react_helper_functions';
 import { LazyImage } from '../UtilityComponents';
 import { detailsProduct } from '../../actions/productActions';
 import { addToCart } from '../../actions/cartActions';
@@ -58,6 +58,8 @@ const CarouselItem = (props) => {
 				display_image: product.images[0],
 				price: product.price,
 				sale_price: product.sale_price,
+				sale_start_date: product.sale_start_date,
+				sale_end_date: product.sale_end_date,
 				countInStock: product.countInStock,
 				weight_pounds: product.weight_pounds,
 				weight_ounces: product.weight_ounces,
@@ -232,9 +234,7 @@ const CarouselItem = (props) => {
 										$549.99 - $<i className="fas fa-arrow-up" />
 									</label>
 								) : (
-									<label className="product-price">
-										{sale_price_product_option_switch(props.product)}
-									</label>
+									<label className="product-price">{sale_price_switch(props.product)}</label>
 								)}
 
 								{product.rating ? (

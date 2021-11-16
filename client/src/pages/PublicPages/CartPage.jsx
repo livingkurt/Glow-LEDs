@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { addToCart, removeFromCart } from '../../actions/cartActions';
+import { removeFromCart } from '../../actions/cartActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Carousel, CartItem } from '../../components/SpecialtyComponents';
 import { Helmet } from 'react-helmet';
-import { cart_item_name, cart_sale_price_switch, determine_product_name } from '../../utils/react_helper_functions';
+import { determine_total } from '../../utils/helper_functions';
 
 const CartPage = (props) => {
 	const cart = useSelector((state) => state.cart);
@@ -98,11 +98,7 @@ const CartPage = (props) => {
 					<div className="cart-action">
 						<h3 className="subtotal_h3">
 							Subtotal ( {cartItems.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)} items ) : ${' '}
-							{cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0) === 0 ? (
-								cartItems.reduce((a, c) => a + c.price * c.qty, 0).toFixed(2)
-							) : (
-								cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0).toFixed(2)
-							)}
+							{determine_total(cartItems)}
 						</h3>
 						<button onClick={decide_warning} className="btn primary w-100per bob">
 							Proceed to Checkout

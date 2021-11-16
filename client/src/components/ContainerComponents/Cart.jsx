@@ -3,14 +3,14 @@ import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../actions/userActions';
 import { HashLink } from 'react-router-hash-link';
-import { addToCart, removeFromCart } from '../../actions/cartActions';
-import { cart_sale_price_switch, determine_product_name } from '../../utils/react_helper_functions';
+import { removeFromCart } from '../../actions/cartActions';
+import { sale_price_switch, determine_product_name } from '../../utils/react_helper_functions';
 import { mobile_check } from '../../utils/react_helper_functions';
 import { API_Products } from '../../utils';
 import { MenuItemD } from '../DesktopComponents';
 import { MenuItemM } from '../MobileComponents';
 import { LazyImage, Loading } from '../UtilityComponents';
-import { humanize } from '../../utils/helper_functions';
+import { determine_total, humanize } from '../../utils/helper_functions';
 import useWindowDimensions from '../Hooks/windowDimensions';
 
 const Cart = (props) => {
@@ -229,7 +229,7 @@ const Cart = (props) => {
 
 											{/* <div className="">
 											<div className="cart_sidebar-price fs-16px">
-												{cart_sale_price_switch(item)}
+												{sale_price_switch(item)}
 											</div>
 										</div> */}
 										</li>
@@ -379,9 +379,7 @@ const Cart = (props) => {
 										</div>
 
 										<div className="">
-											<div className="cart_sidebar-price fs-16px">
-												{cart_sale_price_switch(item)}
-											</div>
+											<div className="cart_sidebar-price fs-16px">{sale_price_switch(item)}</div>
 											<div style={{ textAlign: 'right', width: '100%' }}>
 												<button
 													className="btn icon"
@@ -408,11 +406,7 @@ const Cart = (props) => {
 			>
 				<h3 className="subtotal_h3">
 					Subtotal ( {cartItems && cartItems.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)} items ) : ${' '}
-					{cartItems && cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0) === 0 ? (
-						cartItems && cartItems.reduce((a, c) => a + c.price * c.qty, 0).toFixed(2)
-					) : (
-						cartItems && cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0).toFixed(2)
-					)}
+					{determine_total(cartItems)}
 				</h3>
 				<Link to="/checkout/cart" className="w-100per">
 					<button className="btn secondary w-100per mb-2rem" onClick={closeMenu}>

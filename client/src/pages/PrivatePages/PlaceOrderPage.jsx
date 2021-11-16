@@ -13,7 +13,7 @@ import { listUsers } from '../../actions/userActions';
 import { API_External, API_Products, API_Promos, API_Shipping } from '../../utils';
 import { ShippingChoice, ShippingSpeed } from '../../components/SpecialtyComponents/ShippingComponents';
 import Autocomplete from 'react-google-autocomplete';
-import { prnt, state_names } from '../../utils/helper_functions';
+import { determine_total, prnt, state_names } from '../../utils/helper_functions';
 import { check_authentication } from '../../utils/react_helper_functions';
 
 const PlaceOrderPage = (props) => {
@@ -34,10 +34,7 @@ const PlaceOrderPage = (props) => {
 
 	const promoList = useSelector((state) => state.promoList);
 	const { promos } = promoList;
-	const items_price =
-		cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0) === 0
-			? cartItems.reduce((a, c) => a + c.price * c.qty, 0)
-			: cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0);
+	const items_price = determine_total(cartItems);
 
 	const [ shipping_rates, set_shipping_rates ] = useState({});
 	const [ current_shipping_speed, set_current_shipping_speed ] = useState('');
@@ -110,11 +107,7 @@ const PlaceOrderPage = (props) => {
 			}
 
 			dispatch(savePayment({ paymentMethod }));
-			stable_setItemsPrice(
-				cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0) === 0
-					? cartItems.reduce((a, c) => a + c.price * c.qty, 0)
-					: cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0)
-			);
+			stable_setItemsPrice(determine_total(cartItems));
 
 			return () => {};
 		},

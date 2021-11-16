@@ -4,7 +4,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import useClipboard from 'react-hook-clipboard';
 import { LazyImage, Loading } from '../UtilityComponents';
-import { sale_price_product_option_switch } from '../../utils/react_helper_functions';
+import { sale_price_switch } from '../../utils/react_helper_functions';
 import { deleteProduct, listProducts, saveProduct } from '../../actions/productActions';
 import styled from 'styled-components';
 
@@ -196,9 +196,7 @@ const ProductListItem = (props) => {
 				</button>
 				<label className="w-200px">{product.category}</label>
 				<label className="w-100px">{product.order}</label>
-				<label className="product-price w-500px">
-					{sale_price_product_option_switch(product, product.product_options)}
-				</label>
+				<label className="product-price w-500px">{sale_price_switch(product, product.product_options)}</label>
 				<Link className="w-500px" to={'/secure/glow/editproduct/' + product.pathname + '/' + true}>
 					<button className="btn primary">Use as Template</button>
 				</Link>

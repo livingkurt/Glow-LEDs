@@ -12,7 +12,7 @@ import { validate_promo_code, validate_passwords } from '../../utils/validations
 import { Carousel } from '../../components/SpecialtyComponents';
 import { API_External, API_Products, API_Promos, API_Shipping } from '../../utils';
 import { ShippingChoice } from '../../components/SpecialtyComponents/ShippingComponents';
-import { prnt, state_names } from '../../utils/helper_functions';
+import { determine_total, prnt, state_names } from '../../utils/helper_functions';
 
 const PlaceOrderPublicPage = (props) => {
 	const dispatch = useDispatch();
@@ -30,10 +30,7 @@ const PlaceOrderPublicPage = (props) => {
 	const promoList = useSelector((state) => state.promoList);
 	const { promos } = promoList;
 	// console.log({ orderPay });
-	const items_price =
-		cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0) === 0
-			? cartItems.reduce((a, c) => a + c.price * c.qty, 0)
-			: cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0);
+	const items_price = determine_total(cartItems);
 
 	const [ shipping_rates, set_shipping_rates ] = useState({});
 	const [ current_shipping_speed, set_current_shipping_speed ] = useState('');
@@ -91,11 +88,7 @@ const PlaceOrderPublicPage = (props) => {
 				dispatch(saveShipping(JSON.parse(shipping_storage)));
 			}
 			dispatch(savePayment({ paymentMethod: 'stripe' }));
-			setItemsPrice(
-				cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0) === 0
-					? cartItems.reduce((a, c) => a + c.price * c.qty, 0)
-					: cartItems.reduce((a, c) => a + c.sale_price * c.qty, 0)
-			);
+			setItemsPrice(determine_total(cartItems));
 
 			return () => {};
 		},

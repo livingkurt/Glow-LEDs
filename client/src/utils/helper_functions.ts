@@ -283,6 +283,24 @@ export const occurrence = function(array: any) {
 
 	return result;
 };
+export const determine_total = (cartItems: any) => {
+	const today = new Date();
+	let total = 0;
+	if (cartItems) {
+		cartItems.forEach((item: any) => {
+			if (
+				today >= new Date(item.sale_start_date) &&
+				today <= new Date(item.sale_end_date) &&
+				item.sale_price !== 0
+			) {
+				total += item.sale_price;
+			} else {
+				total += item.price;
+			}
+		});
+		return total;
+	}
+};
 
 const colors = [
 	{ color: 'Black', price: 11.99 },

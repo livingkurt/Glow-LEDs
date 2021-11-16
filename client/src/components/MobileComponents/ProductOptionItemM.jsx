@@ -1,7 +1,7 @@
 // React
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { determine_product_name_display, sale_price_product_option_switch } from '../../utils/react_helper_functions';
+import { determine_product_name_display, sale_price_switch } from '../../utils/react_helper_functions';
 import { Rating } from '../SpecialtyComponents';
 import { LazyImage } from '../UtilityComponents';
 
@@ -34,7 +34,7 @@ const ProductOptionItemM = (props) => {
 	// 								</div>
 	// 							) : (
 	// 								<div className="">
-	// 									{sale_price_product_option_switch(props.product, props.product.product_options)}
+	// 									{sale_price_switch(props.product, props.product.product_options)}
 	// 								</div>
 	// 							)}
 	// 						</div>

@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import Rating from './Rating';
-import { sale_price_product_option_switch } from '../../utils/react_helper_functions';
+import { sale_price_switch } from '../../utils/react_helper_functions';
 import { LazyImage } from '../UtilityComponents';
 
 const ProductThumbCarouselItem = (props) => {
@@ -57,7 +57,7 @@ const ProductThumbCarouselItem = (props) => {
 								</label>
 							) : (
 								<label className="product-price">
-									{sale_price_product_option_switch(props.product, props.product.product_options)}
+									{sale_price_switch(props.product, props.product.product_options)}
 								</label>
 							)}
 

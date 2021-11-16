@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { Search, Sort } from '../../components/SpecialtyComponents';
-import { sale_price_product_option_switch, sale_price_switch } from '../../utils/react_helper_functions';
+import { sale_price_switch } from '../../utils/react_helper_functions';
 import { facebook_catalog_upload, google_catalog_upload } from '../../utils/google_sheets_upload';
 import { mutliDragAwareReorder, multiSelectTo as multiSelect } from '../../utils/helper_functions';
 import memoizeOne from 'memoize-one';

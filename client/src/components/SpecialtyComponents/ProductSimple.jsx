@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import Rating from './Rating';
-import { determine_product_name_display, sale_price_product_option_switch } from '../../utils/react_helper_functions';
+import { determine_product_name_display, sale_price_switch } from '../../utils/react_helper_functions';
 import { LazyImage } from '../UtilityComponents';
 
 const Product = (props) => {
@@ -53,7 +53,7 @@ const Product = (props) => {
 							</label>
 						) : (
 							<label className="product-price">
-								{sale_price_product_option_switch(props.product, props.product.product_options)}
+								{sale_price_switch(props.product, props.product.product_options)}
 							</label>
 						)}
 
