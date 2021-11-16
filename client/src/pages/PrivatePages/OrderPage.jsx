@@ -319,7 +319,7 @@ const OrderPage = (props) => {
 				shippingPrice: 0,
 				taxPrice: 0,
 				totalPrice: 0,
-				user: order.user ? order.user._id : null,
+				user: order.user._id,
 				order_note: `Replacement Order for ${order.shipping.first_name} ${order.shipping
 					.last_name} - Original Order Number is ${order._id}`
 			})

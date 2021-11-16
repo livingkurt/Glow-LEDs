@@ -49,7 +49,7 @@ export const createPayOrder = (
 		shippingPrice: number;
 		taxPrice: number;
 		totalPrice: number;
-		user_data: object;
+		user: object;
 		order_note: string;
 		promo_code: string;
 	},
@@ -61,11 +61,15 @@ export const createPayOrder = (
 	try {
 		dispatch({ type: ORDER_CREATE_REQUEST, payload: order });
 		const { userLogin: { userInfo } } = getState();
-		const order_create_res = await axios.post('/api/orders/secure', order, {
-			headers: {
-				Authorization: ' Bearer ' + userInfo.access_token
+		const order_create_res = await axios.post(
+			'/api/orders/secure',
+			{ ...order, user: userInfo._id },
+			{
+				headers: {
+					Authorization: ' Bearer ' + userInfo.access_token
+				}
 			}
-		});
+		);
 		console.log({ order_create_res });
 		if (order_create_res.data) {
 			dispatch({ type: ORDER_CREATE_SUCCESS, payload: order_create_res.data });
@@ -262,7 +266,7 @@ export const createOrder = (order: {
 	shippingPrice: number;
 	taxPrice: number;
 	totalPrice: number;
-	user_data: object;
+	user: object;
 	order_note: string;
 	promo_code: string;
 }) => async (
@@ -270,6 +274,7 @@ export const createOrder = (order: {
 	getState: () => { userLogin: { userInfo: any } }
 ) => {
 	try {
+		console.log({ createOrder: order });
 		dispatch({ type: ORDER_CREATE_REQUEST, payload: order });
 		const { userLogin: { userInfo } } = getState();
 		const create_order_res = await axios.post('/api/orders/secure', order, {

@@ -244,7 +244,6 @@ const PlaceOrderPublicPage = (props) => {
 					shippingPrice,
 					taxPrice,
 					totalPrice,
-					userInfo,
 					order_note,
 					tip,
 					promo_code: show_message && promo_code,

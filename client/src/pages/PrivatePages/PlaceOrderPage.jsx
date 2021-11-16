@@ -332,7 +332,7 @@ const PlaceOrderPage = (props) => {
 				shippingPrice,
 				taxPrice,
 				totalPrice,
-				user,
+				user: user._id,
 				order_note,
 				tip,
 				promo_code,
