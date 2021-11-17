@@ -44,6 +44,7 @@ const ControlPanelPage = (props) => {
 	const [ year, set_year ] = useState(2021);
 	const [ month, set_month ] = useState();
 	const [ batteries, set_batteries ] = useState({});
+	const [ top_customers, set_top_customers ] = useState([]);
 
 	const [ year_2020, set_year_2020 ] = useState({});
 	const [ year_2021, set_year_2021 ] = useState({});
@@ -113,6 +114,7 @@ const ControlPanelPage = (props) => {
 		get_income();
 		get_occurrences();
 		get_orders();
+		get_top_customers();
 		// get_by_category();
 	}, []);
 
@@ -160,6 +162,11 @@ const ControlPanelPage = (props) => {
 		return difference_in_day;
 	};
 
+	const get_top_customers = async () => {
+		const { data } = await API_Orders.top_customers();
+		set_top_customers(data);
+		// initialize_occurrence_chart(occurrences);
+	};
 	const get_occurrences = async () => {
 		const { data: occurrences } = await API_Products.get_occurrences();
 		set_product_occurrences(occurrences);
@@ -396,7 +403,7 @@ const ControlPanelPage = (props) => {
 			)} */}
 			<Loading loading={expenses && expenses.length === 0} />
 			<Loading loading={orders && orders.length === 0} />
-			<div className="jc-b">
+			<div className="">
 				{expenses &&
 				orders &&
 				weekly_orders &&
@@ -496,6 +503,41 @@ const ControlPanelPage = (props) => {
 											(duration_of_opening() / 30)).toFixed(2)}
 									</th>
 								</tr>
+							</tbody>
+						</table>
+					</div>
+				)}
+				{top_customers && (
+					<div className="order-list responsive_table">
+						<h2 className="ta-c w-100per jc-c">Top Customers</h2>
+						<table className="styled-table">
+							<thead>
+								<tr>
+									<th>Rank</th>
+									<th>User</th>
+									<th>Orders Made</th>
+									<th>Money Spent</th>
+								</tr>
+							</thead>
+							<tbody>
+								{top_customers.map((customer, index) => (
+									<tr
+										style={{
+											backgroundColor: '#626262',
+											fontSize: '16px',
+											height: '50px'
+										}}
+									>
+										<th style={{ padding: '15px' }}>{index + 1}</th>
+										<th style={{ padding: '15px' }}>
+											<Link to={'/secure/glow/userprofile/' + customer.user._id}>
+												{customer.user.first_name} {customer.user.last_name}
+											</Link>
+										</th>
+										<th style={{ padding: '15px' }}>{customer.number_of_orders}</th>
+										<th style={{ padding: '15px' }}>${customer.amount.toFixed(2)}</th>
+									</tr>
+								))}
 							</tbody>
 						</table>
 					</div>

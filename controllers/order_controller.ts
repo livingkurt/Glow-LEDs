@@ -1,5 +1,5 @@
 export {};
-import { Order } from '../models';
+import { Order, User } from '../models';
 const scraper = require('table-scraper');
 
 const dates_in_year = [
@@ -124,6 +124,33 @@ export default {
 			const orders = await Order.find({ deleted: false, user: req.user._id }).sort({ _id: -1 });
 
 			res.send(orders);
+		} catch (error) {
+			console.log({ error });
+
+			res.status(500).send({ error, message: 'Error Getting Your Orders' });
+		}
+	},
+	top_customers: async (req: any, res: any) => {
+		try {
+			const users = await User.find({ deleted: false }).sort({ _id: -1 });
+			const orders = await Promise.all(
+				users.map(async (user: any) => {
+					const orders = await Order.find({ deleted: false, user: user._id }).sort({ _id: -1 });
+					const amount = orders.reduce(
+						(total: any, c: any) => parseFloat(total) + parseFloat(c.totalPrice),
+						0
+					);
+					return { user: user, number_of_orders: orders.length, amount: amount };
+				})
+			);
+			const sorted_orders = orders
+				.map((order: any) => {
+					return { user: order.user, number_of_orders: order.number_of_orders, amount: order.amount };
+				})
+				.sort((a: any, b: any) => (a.amount > b.amount ? -1 : 1))
+				.slice(0, 20);
+			console.log({ sorted_orders });
+			await res.send(sorted_orders);
 		} catch (error) {
 			console.log({ error });
 

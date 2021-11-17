@@ -7,6 +7,9 @@ const order_routes = {
 	total_orders: () => {
 		return axios.get('/api/orders/total_orders');
 	},
+	top_customers: () => {
+		return axios.get('/api/orders/top_customers');
+	},
 	// monthly_income: (dates: any) => {
 	// 	console.log({ dates });
 	// 	return axios.get('/api/orders/monthly_income', {dates});

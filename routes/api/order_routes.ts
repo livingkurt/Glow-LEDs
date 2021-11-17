@@ -26,6 +26,7 @@ router
 	.delete(isAuth, isAdmin, order_controller.remove);
 
 router.route('/occurrences').get(order_controller.occurrences);
+router.route('/top_customers').get(order_controller.top_customers);
 router.route('/category_occurrences').get(order_controller.category_occurrences);
 router.route('/code_usage').put(order_controller.code_usage);
 // router.route('/all_orders').get(order_controller.all_orders);
