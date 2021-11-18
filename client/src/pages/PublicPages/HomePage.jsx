@@ -662,7 +662,7 @@ const HomePage = (props) => {
 								</ReadMore>
 							</div>
 							<div className="jc-c">
-								<Link className="w-100per" to={`/collections/all/products/${card.category}`}>
+								<Link className="w-100per" to={`/collections/all/products/category/${card.category}`}>
 									<button className="btn primary w-100per">Shop {card.name}</button>
 								</Link>
 							</div>
