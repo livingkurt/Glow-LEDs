@@ -509,6 +509,9 @@ const Header = (props) => {
 														</button>
 													</Link>
 													<hr className="w-95per m-0px" />
+													<Link to="/collections/all/products/category/diffuser_caps/collection/fractal">
+														<button className="btn nav w-100per ta-l">Fractal</button>
+													</Link>
 													<Link to="/collections/all/products/category/diffuser_caps/collection/space_cadet">
 														<button className="btn nav w-100per ta-l">Space Cadet</button>
 													</Link>
