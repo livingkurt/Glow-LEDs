@@ -579,6 +579,7 @@ const ProductPage = (props) => {
 						{!secondary_image &&
 						width <= 819 && (
 							<div>
+								<h1 className="product_title_side ta-c lh-50px fs-30px mv-0px">{name}</h1>
 								<div className=" w-100per max-w-400px m-auto">
 									<ProductSlideshow
 										product={product}
