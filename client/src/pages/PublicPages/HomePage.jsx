@@ -557,59 +557,64 @@ const HomePage = (props) => {
 			<h4 className="fs-25px mv-8px ta-c jc-c title_font lh-30px">Featured Artists</h4>
 			<div className={`${width > 1019 ? 'jc-b' : 'jc-c'} wrap`}>
 				{features &&
-					features.reverse().slice(0, width > 1473 ? 3 : width > 1019 ? 2 : 1).map((feature, index) => {
-						return (
-							<div
-								className={`container ${width > 1473
-									? 'max-w-450px'
-									: width > 1019
-										? `w-49per ${index === 0 ? 'mr-1rem' : ''}`
-										: 'w-100per'} w-500px jc-b column bg-secondary `}
-							>
-								<div>
-									<h4 className="fs-20px mv-8px ta-c jc-c title_font lh-30px">
-										{feature.artist_name}
-									</h4>
-									{feature.show_image &&
-									feature.logo && (
-										<div className="m-auto jc-c max-w-300px">
-											<Link to={`/collections/all/features/category/glovers/${feature.pathname}`}>
-												<img
-													style={{ borderRadius: '20px', width: '100%' }}
-													src={feature.logo}
-													className="max-w-300px jc-c m-auto"
-													alt="Promo"
-													title="Promo Image"
-												/>
-											</Link>
-										</div>
-									)}
-
-									{feature.video && (
-										<div className="jc-c pos-rel">
-											<div className="iframe-container">
-												<iframe
-													title="Content Video"
-													width="996"
-													height="560"
-													style={{ borderRadius: '20px' }}
-													src={`https://www.youtube.com/embed/${feature.video}?mute=1&showinfo=0&rel=0&autoplay=1&loop=1`}
-													frameborder="0"
-													allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-													allowfullscreen="1"
-												/>
-											</div>
-										</div>
-									)}
-
-									<div className="jc-c">
-										<h4 className="fs-18px mb-0px ta-c title_font lh-30px">
-											{feature.product && humanize(feature.product)}
+					features
+						.filter((feature) => feature.release_date)
+						.slice(0, width > 1473 ? 3 : width > 1019 ? 2 : 1)
+						.map((feature, index) => {
+							return (
+								<div
+									className={`container ${width > 1473
+										? 'max-w-450px'
+										: width > 1019
+											? `w-49per ${index === 0 ? 'mr-1rem' : ''}`
+											: 'w-100per'} w-500px jc-b column bg-secondary `}
+								>
+									<div>
+										<h4 className="fs-20px mv-8px ta-c jc-c title_font lh-30px">
+											{feature.artist_name}
 										</h4>
-									</div>
-									<div className="jc-c w-100per m-auto">
-										<p>{feature.song_id}</p>
-										{/* <ReadMore
+										{feature.show_image &&
+										feature.logo && (
+											<div className="m-auto jc-c max-w-300px">
+												<Link
+													to={`/collections/all/features/category/glovers/${feature.pathname}`}
+												>
+													<img
+														style={{ borderRadius: '20px', width: '100%' }}
+														src={feature.logo}
+														className="max-w-300px jc-c m-auto"
+														alt="Promo"
+														title="Promo Image"
+													/>
+												</Link>
+											</div>
+										)}
+
+										{feature.video && (
+											<div className="jc-c pos-rel">
+												<div className="iframe-container">
+													<iframe
+														title="Content Video"
+														width="996"
+														height="560"
+														style={{ borderRadius: '20px' }}
+														src={`https://www.youtube.com/embed/${feature.video}?mute=1&showinfo=0&rel=0&autoplay=1&loop=1`}
+														frameborder="0"
+														allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+														allowfullscreen="1"
+													/>
+												</div>
+											</div>
+										)}
+
+										<div className="jc-c">
+											<h4 className="fs-18px mb-0px ta-c title_font lh-30px">
+												{feature.product && humanize(feature.product)}
+											</h4>
+										</div>
+										<div className="jc-c w-100per m-auto">
+											<p>{feature.song_id}</p>
+											{/* <ReadMore
 											width={5000}
 											className="p_descriptions paragraph_font"
 											length={100}
@@ -617,18 +622,18 @@ const HomePage = (props) => {
 										>
 											{feature.description}
 										</ReadMore> */}
+										</div>
+									</div>
+									<div className="jc-c">
+										<Link to={`/collections/all/features/category/glovers/${feature.pathname}`}>
+											<button className="btn primary bob">
+												Learn More About {feature.artist_name}
+											</button>
+										</Link>
 									</div>
 								</div>
-								<div className="jc-c">
-									<Link to={`/collections/all/features/category/glovers/${feature.pathname}`}>
-										<button className="btn primary bob">
-											Learn More About {feature.artist_name}
-										</button>
-									</Link>
-								</div>
-							</div>
-						);
-					})}
+							);
+						})}
 			</div>
 			<h4 className="fs-25px mv-8px ta-c jc-c title_font lh-30px">Check out Our Products in Action</h4>
 			<div className={`small_home_page_cards ${width > 1019 ? 'jc-b' : 'jc-c'} wrap`}>
