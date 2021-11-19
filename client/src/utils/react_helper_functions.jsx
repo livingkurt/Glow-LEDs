@@ -126,16 +126,20 @@ export const sale_price_switch = (product) => {
 						On Sale!
 					</label>
 				);
-			} else if (!product.countInStock) {
+			} else if (product.sale_price !== 0) {
 				return (
-					<label>
+					<label className="">
 						<del style={{ color: '#a03131' }}>
-							<label style={{ color: 'white' }} className="ml-7px">
+							<label className="" style={{ color: 'white' }}>
 								${product.price ? product.price.toFixed(2) : product.price}
 							</label>
 						</del>{' '}
-						<i className="fas fa-arrow-right" />
-						<label className="ml-7px">Sold Out</label>
+						<i className="fas fa-arrow-right" /> ${product.sale_price ? (
+							product.sale_price.toFixed(2)
+						) : (
+							product.sale_price
+						)}{' '}
+						On Sale!
 					</label>
 				);
 			} else {
