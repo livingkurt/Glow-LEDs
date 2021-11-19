@@ -397,6 +397,11 @@ const Sidebar = (props) => {
 										</button>
 									</div>
 									<ul className="sidebar_dropdown_nested_container" id="glow_casings_dropdown_5">
+										<Link to="/collections/all/products/category/diffuser_caps/collection/texture">
+											<button className="sidebar-btn nested-2" onClick={closeMenu}>
+												Texture
+											</button>
+										</Link>
 										<Link to="/collections/all/products/category/diffuser_caps/collection/fractal">
 											<button className="sidebar-btn nested-2" onClick={closeMenu}>
 												Fractal
