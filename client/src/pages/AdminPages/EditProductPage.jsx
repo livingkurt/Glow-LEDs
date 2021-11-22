@@ -1735,6 +1735,7 @@ const EditProductPage = (props) => {
 															// 	...macro_products_list,
 															// 	...option_products_list
 															// ]}
+															placement="top"
 															list_items={secondary_products}
 															set_items={set_secondary_products}
 															list_name={'Secondary Products'}

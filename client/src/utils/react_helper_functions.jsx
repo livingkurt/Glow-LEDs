@@ -427,7 +427,7 @@ export const determine_secondary_product_name = (name, category, subcategory) =>
 	// console.log({ name: name.split('-')[0], category, subcategory });
 	if (name) {
 		if (category === 'diffuser_caps') {
-			return name.slice(0, -14);
+			return name.slice(0, -17);
 		}
 		if (name.split('-')[0].trim() === 'Nanoskins') {
 			return name.split('-')[1].trim();

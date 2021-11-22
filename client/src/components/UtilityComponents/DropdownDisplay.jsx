@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const DropdownDisplay = ({ item_list, list_items, set_items, list_name }) => {
+const DropdownDisplay = ({ item_list, list_items, set_items, list_name, placement }) => {
 	const remove_list_item = (item_index, e) => {
 		e.preventDefault();
 		set_items((items) =>
@@ -16,7 +16,11 @@ const DropdownDisplay = ({ item_list, list_items, set_items, list_name }) => {
 		const item_object = JSON.parse(e.target.value);
 		if (list_items) {
 			console.log('items.length > 0');
-			set_items((items) => [ ...items, item_object ]);
+			if (placement === 'top') {
+				set_items((items) => [ item_object, ...items ]);
+			} else {
+				set_items((items) => [ ...items, item_object ]);
+			}
 		} else {
 			console.log('items.length === 0');
 			set_items([ item_object ]);
