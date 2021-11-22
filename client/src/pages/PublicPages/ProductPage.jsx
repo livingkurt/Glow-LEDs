@@ -10,7 +10,7 @@ import {
 	Carousel,
 	ProductSlideshow
 } from '../../components/SpecialtyComponents';
-import { Loading } from '../../components/UtilityComponents';
+import { LazyImage, Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { addToCart, saveCart } from '../../actions/cartActions';
 import 'react-medium-image-zoom/dist/styles.css';
@@ -1425,6 +1425,44 @@ const ProductPage = (props) => {
 								</div>
 							</div>
 						</div>
+						{/* {product.category === 'diffuser_caps' && (
+							<div>
+								<p className="w-100per ta-c fs-30px heading_font">Diffuser Caps V4</p>
+								<div className="ta-c jc-c">
+									<LazyImage
+										className="h-auto br-20px"
+										alt={product.category}
+										title="Product Image"
+										effect="blur"
+										src="https://thumbs2.imgbox.com/52/58/dl9PBtfO_t.jpeg"
+									/>
+								</div>
+								<pre className="  ">
+									🔷What is new with our Diffuser Caps V4 🔷 Diffuser Caps V4 includes a few new
+									features that we think really makes the Diffuser Cap experience even better 😱 V4
+									Features Include: 🔷Rounded Edged Design: In V3 the edge could be a little harsh on
+									sensitive finger tips, so in V4 we added a rounded edge around the design face for a
+									better grip and comfortability and to make it even easier to secure your Caps on
+									your gloves. 🙌 🔷Threading Overhaul: In V3 the threading came to a point as it
+									works with standard nuts and bolts.🔩 This design worked great but it wasn’t as
+									smooth as we prefer it to be. 🍦 We redesigned the threading in V4 to be rounded
+									instead of sharp which allows the cap to glide smoothly over the glove resulting in
+									a more secure fit 🤯 🔷Precision: One of the most important upgrades to the Diffuser
+									Caps V4 is the care we put into the creation of the caps.👨‍🍼. After much testing
+									and configuring, we slowed down our Diffuser Caps manufacturing process by 60% to
+									guarentee the precision of the cap design. Making for a more clean and consistent
+									experience 👌 We are super proud of these upgrades and we hope you will try them
+									out! 😊 We really believe in the Diffuser Caps! It’s an effect that you truly have
+									to see to believe. It does not translate as well on camera 📷 so get a pair and try
+									them out! You won’t be disappointed! 😌 Learn more about Diffuser Cap V4 here:
+									https://www.glow-leds.com/collections/all/products/category/diffuser_caps . . . . .
+									#gloving #glovingisnotacrime #supporttheflow #flowarts #lightshow #edm
+									#glovingislife #lightshows #glover #rave #flow #glovingisart #flowart #dance
+									#edmlifestyle #fingershow #art #love #diffusers #diffusercaps #dreamstate #festival
+									#ledlights #sale #edc #ledlights #ravelife #ravemob
+								</pre>
+							</div>
+						)} */}
 						<Tabs>
 							<Overflow onStateChange={(state) => setCanScroll(state.canScroll.right)}>
 								<Overflow.Content>

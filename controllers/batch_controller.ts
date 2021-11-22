@@ -395,5 +395,19 @@ export default {
 		);
 		console.log({ order });
 		res.send(order);
+	},
+	update_diffuser_caps_product_name: async (req: any, res: any) => {
+		// const orders = await Order.find({ 'orderItems.name': 'Diffuser Caps + Adapters Starter Kit' });
+		const products = await Product.find({});
+		console.log({ discount_percentage: req.body.discount_percentage });
+		const diffuser_caps = products.filter((product: any) => product.category === 'diffuser_caps');
+
+		diffuser_caps.forEach(async (product: any) => {
+			product.name = product.name + ' V4';
+			const result = await product.save();
+			console.log({ result });
+		});
+		// console.log({ products });
+		res.send(products);
 	}
 };

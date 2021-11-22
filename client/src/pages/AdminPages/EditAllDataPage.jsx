@@ -351,8 +351,10 @@ const EditAllDataPage = (props) => {
 									</li>
 									<li>
 										<label htmlFor="value">Value</label>
-										<input
+
+										<textarea
 											type="text"
+											className="w-100per"
 											name="value"
 											value={value}
 											id="value"
