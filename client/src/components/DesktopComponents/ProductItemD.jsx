@@ -119,24 +119,22 @@ const ProductItemD = (props) => {
 							</div>
 						</Link>
 
-						<label className="mt-5px title_font" style={{ fontSize: '14px' }}>
+						{/* <label className="mt-5px title_font" style={{ fontSize: '14px' }}>
 							{props.product.brand}
-						</label>
+						</label> */}
 						<Link
 							to={{
 								pathname: '/collections/all/products/' + props.product.pathname,
 								previous_path: history.location.pathname
 							}}
-							className="mv-5px"
+							className="mt-13px"
 						>
 							<label style={{ fontSize: '1.6rem' }}>
 								{determine_product_name_display(props.product, false)}
 							</label>
 						</Link>
 
-						<label className="product-price">
-							{sale_price_switch(props.product, props.product.product_options)}
-						</label>
+						<label className="product-price mv-3px">{sale_price_switch(props.product)}</label>
 
 						{props.product.rating ? (
 							<Rating rating={props.product.rating} numReviews={props.product.numReviews} />

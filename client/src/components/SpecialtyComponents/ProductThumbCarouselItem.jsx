@@ -47,10 +47,12 @@ const ProductThumbCarouselItem = (props) => {
 								src={product.images && product.images[0]} 
 							/> */}
 
-							<label className="title_font" style={{ fontSize: '1.3rem' }}>
+							{/* <label className="title_font" style={{ fontSize: '1.3rem' }}>
 								{product.brand}
+							</label> */}
+							<label style={{ fontSize: '1.6rem' }} className="mt-10px">
+								{product.name}
 							</label>
-							<label style={{ fontSize: '1.6rem' }}>{product.name}</label>
 							{product.name === 'Custom Infinity Mirror' ? (
 								<label className="product-price">
 									$549.99 - $<i className="fas fa-arrow-up" />

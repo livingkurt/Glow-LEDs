@@ -34,16 +34,16 @@ const Product = (props) => {
 							</div>
 						</Link>
 
-						<label style={{ fontSize: '1.3rem' }} className="title_font">
+						{/* <label style={{ fontSize: '1.3rem' }} className="title_font">
 							{props.product.brand}
-						</label>
+						</label> */}
 						<Link
 							to={{
 								pathname: '/collections/all/products/' + props.product.pathname,
 								previous_path: history.location.pathname
 							}}
 						>
-							<label style={{ fontSize: '1.6rem' }}>
+							<label className="mt-10px" style={{ fontSize: '1.6rem' }}>
 								{determine_product_name_display(props.product, false)}
 							</label>
 						</Link>

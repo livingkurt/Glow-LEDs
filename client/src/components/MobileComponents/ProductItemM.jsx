@@ -53,7 +53,7 @@ const ProductItemM = (props) => {
 							</div>
 						</div>
 						<div className="ph-10px">
-							<div className="product_text" style={{ fontSize: '1.6rem' }}>
+							<div className="product_text mt-10px" style={{ fontSize: '1.6rem' }}>
 								{determine_product_name_display(props.product, false)}
 							</div>
 							<div className="product_text mt-10px">
@@ -62,9 +62,7 @@ const ProductItemM = (props) => {
 										$549.99 - $<i className="fas fa-arrow-up" />
 									</div>
 								) : (
-									<div className="">
-										{sale_price_switch(props.product, props.product.product_options)}
-									</div>
+									<div className="">{sale_price_switch(props.product)}</div>
 								)}
 							</div>
 							{props.product.rating ? (

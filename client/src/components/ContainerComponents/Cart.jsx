@@ -232,12 +232,6 @@ const Cart = (props) => {
 											<div className=" ta-l w-100per">
 												<div className="mb-10px">{item.name}</div>
 											</div>
-
-											{/* <div className="">
-											<div className="cart_sidebar-price fs-16px">
-												{sale_price_switch(item)}
-											</div>
-										</div> */}
 										</li>
 									</Link>
 								);
@@ -363,7 +357,41 @@ const Cart = (props) => {
 												</div>
 											</Link>
 										</div>
-										<div className="cart_sidebar-name">
+										<div className="w-100per">
+											<div className="cart_sidebar-name jc-b ai-c">
+												<div className="mb-10px w-100per">
+													<Link
+														to={`/collections/all/products/${item.category}/${item.subcategory}/${item.pathname}`}
+													>
+														{determine_product_name(item, true)}
+													</Link>
+												</div>
+												<div className="mb-10px">
+													<button
+														className="btn icon"
+														onClick={() => removeFromCartHandler(item)}
+													>
+														<i className="fas fa-trash-alt" />
+													</button>
+												</div>
+											</div>
+
+											<div className="jc-b">
+												<div className="ai-c h-25px">
+													<label
+														aria-label="sortOrder"
+														htmlFor="sortOrder"
+														className="select-label mr-1rem "
+													>
+														Qty: {item.qty}
+													</label>
+												</div>
+												<div className="cart_sidebar-price fs-16px">
+													{sale_price_switch(item, true)}
+												</div>
+											</div>
+										</div>
+										{/* <div className="cart_sidebar-name">
 											<div className="mb-10px">
 												<Link
 													to={`/collections/all/products/${item.category}/${item.subcategory}/${item.pathname}`}
@@ -385,7 +413,9 @@ const Cart = (props) => {
 										</div>
 
 										<div className="">
-											<div className="cart_sidebar-price fs-16px">{sale_price_switch(item)}</div>
+											<div className="cart_sidebar-price fs-16px">
+												{sale_price_switch(item, true)}
+											</div>
 											<div style={{ textAlign: 'right', width: '100%' }}>
 												<button
 													className="btn icon"
@@ -394,7 +424,7 @@ const Cart = (props) => {
 													<i className="fas fa-trash-alt" />
 												</button>
 											</div>
-										</div>
+										</div> */}
 									</li>
 								))}
 							{recently_viewed_grid()}

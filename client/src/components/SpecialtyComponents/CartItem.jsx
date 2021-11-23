@@ -81,12 +81,11 @@ const CartItem = (props) => {
 				</Link>
 			</div>
 			<div className="cart-name">
-				<div className="jc-b ai-c">
+				<div className="jc-b ai-c mb-20px">
 					<Link to={'/collections/all/products/' + props.item.pathname} className="m-0px">
 						<label className="paragraph_font lh-0px mv-0px fs-18px">{props.item.name}</label>
 					</Link>
 					<div className="ai-c">
-						<div className="cart-price fs-16px">{sale_price_switch(props.item)}</div>
 						<button className="btn icon" onClick={() => removeFromCartHandler(props.item)}>
 							<i className="fas fa-trash-alt" />
 						</button>
@@ -124,6 +123,7 @@ const CartItem = (props) => {
 					) : (
 						<label>{props.item.qty}</label>
 					)}
+					<div className="cart-price fs-16px">{sale_price_switch(props.item)}</div>
 				</div>
 			</div>
 		</li>

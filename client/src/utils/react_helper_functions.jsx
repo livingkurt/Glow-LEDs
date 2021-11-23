@@ -90,61 +90,44 @@ export const browser_check = () => {
 	}
 };
 
-export const sale_price_switch = (product) => {
-	const color = { color: '#a03131' };
-	const today = new Date();
+export const sale_price_switch = (product, cartItem) => {
+	const color = cartItem ? { color: '#7e7e7e' } : { color: '#2a3156' };
 	if (product) {
 		if (product.hasOwnProperty('previous_price') && product.previous_price) {
 			return (
-				<label className="fs-16px">
-					<del style={color}>
-						<label className="" style={color}>
-							${product.previous_price ? product.previous_price.toFixed(2) : product.previous_price}
-						</label>
-					</del>{' '}
-					<i className="fas fa-arrow-right" /> ${product.price ? product.price.toFixed(2) : product.price}{' '}
-					Discounted!
+				<label className="fs-18px">
+					<label>${product.price ? product.price.toFixed(2) : product.price}</label>
+					<label> ({100 * (1 - product.price / product.previous_price).toFixed(2)}% Off) </label>
+					<label>
+						<del style={color}>
+							<label className="" style={color}>
+								${product.previous_price ? product.previous_price.toFixed(2) : product.previous_price}
+							</label>
+						</del>{' '}
+					</label>
 				</label>
 			);
 		} else {
 			if (
+				product.sale_price !== 0 &&
 				today >= new Date(product.sale_start_date) &&
-				today <= new Date(product.sale_end_date) &&
-				product.sale_price !== 0
+				today <= new Date(product.sale_end_date)
 			) {
 				return (
-					<label className="">
-						<del style={color}>
-							<label className="" style={color}>
-								${product.price ? product.price.toFixed(2) : product.price}
-							</label>
-						</del>{' '}
-						<i className="fas fa-arrow-right" /> ${product.sale_price ? (
-							product.sale_price.toFixed(2)
-						) : (
-							product.sale_price
-						)}{' '}
-						On Sale!
-					</label>
-				);
-			} else if (product.sale_price !== 0) {
-				return (
-					<label className="">
-						<del style={color}>
-							<label className="" style={color}>
-								${product.price ? product.price.toFixed(2) : product.price}
-							</label>
-						</del>{' '}
-						<i className="fas fa-arrow-right" /> ${product.sale_price ? (
-							product.sale_price.toFixed(2)
-						) : (
-							product.sale_price
-						)}{' '}
-						On Sale!
+					<label className="fs-18px">
+						<label>${product.sale_price ? product.sale_price.toFixed(2) : product.sale_price}</label>
+						<label> ({100 * (1 - product.sale_price / product.price).toFixed(2)}% Off) </label>
+						<label>
+							<del style={color}>
+								<label className="" style={color}>
+									${product.price ? product.price.toFixed(2) : product.price}
+								</label>
+							</del>{' '}
+						</label>
 					</label>
 				);
 			} else {
-				return <label>${product.price ? product.price.toFixed(2) : product.price}</label>;
+				return <label className="fs-18px">${product.price ? product.price.toFixed(2) : product.price}</label>;
 			}
 		}
 	}
@@ -181,7 +164,7 @@ export const cart_item_name = (item) => {
 	return (
 		<div className="max-w-500px">
 			{item.secondary_product && (
-				<div className="ai-c mv-20px jc-b w-100per">
+				<div className="ai-c mb-20px jc-b w-100per">
 					<label className="mv-0px mr-5px">
 						{item.secondary_group_name ? item.secondary_group_name : 'Cap Design'}: {' '}
 					</label>
@@ -190,7 +173,7 @@ export const cart_item_name = (item) => {
 			)}
 			{item.size !== '1 Sled' &&
 			item.color && (
-				<div className="ai-c mv-20px jc-b w-100per">
+				<div className="ai-c mb-20px jc-b w-100per">
 					<label className="mv-0px mr-5px">{item.color_group_name ? item.color_group_name : 'Color'}: </label>
 					<div className="ai-c">
 						<label className=" mv-0px">{item.color}</label>
@@ -205,7 +188,7 @@ export const cart_item_name = (item) => {
 			)}
 			{item.size !== '1 Skin' &&
 			item.secondary_color && (
-				<div className="ai-c mv-20px jc-b w-100per">
+				<div className="ai-c mb-20px jc-b w-100per">
 					<label className="mv-0px mr-5px">
 						{item.secondary_color_group_name ? item.secondary_color_group_name : 'Secondary Color'}:{' '}
 					</label>
@@ -221,7 +204,7 @@ export const cart_item_name = (item) => {
 				</div>
 			)}
 			{item.size && (
-				<div className="ai-c mv-20px jc-b w-100per">
+				<div className="ai-c mb-20px jc-b w-100per">
 					<label className="mv-0px mr-5px">
 						{item.option_group_name ? item.option_group_name : 'Size'}:{' '}
 					</label>
