@@ -91,13 +91,14 @@ export const browser_check = () => {
 };
 
 export const sale_price_switch = (product) => {
+	const color = { color: '#a03131' };
 	const today = new Date();
 	if (product) {
 		if (product.hasOwnProperty('previous_price') && product.previous_price) {
 			return (
-				<label className="">
-					<del style={{ color: '#a03131' }}>
-						<label className="" style={{ color: 'white' }}>
+				<label className="fs-16px">
+					<del style={color}>
+						<label className="" style={color}>
 							${product.previous_price ? product.previous_price.toFixed(2) : product.previous_price}
 						</label>
 					</del>{' '}
@@ -113,8 +114,8 @@ export const sale_price_switch = (product) => {
 			) {
 				return (
 					<label className="">
-						<del style={{ color: '#a03131' }}>
-							<label className="" style={{ color: 'white' }}>
+						<del style={color}>
+							<label className="" style={color}>
 								${product.price ? product.price.toFixed(2) : product.price}
 							</label>
 						</del>{' '}
@@ -129,8 +130,8 @@ export const sale_price_switch = (product) => {
 			} else if (product.sale_price !== 0) {
 				return (
 					<label className="">
-						<del style={{ color: '#a03131' }}>
-							<label className="" style={{ color: 'white' }}>
+						<del style={color}>
+							<label className="" style={color}>
 								${product.price ? product.price.toFixed(2) : product.price}
 							</label>
 						</del>{' '}
