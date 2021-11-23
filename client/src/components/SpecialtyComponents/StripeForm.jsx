@@ -2,6 +2,7 @@
 import React from 'react';
 import { CardElement, Elements, useStripe, useElements } from '@stripe/react-stripe-js';
 import { PromosPage } from '../../pages';
+import { decide_warning } from '../../utils/helper_functions';
 
 const StripeForm = (props) => {
 	const stripe = useStripe();
@@ -24,7 +25,7 @@ const StripeForm = (props) => {
 		// }
 		// else {
 
-			props.pay_order(paymentMethod);
+		props.pay_order(paymentMethod);
 		// }
 	};
 
@@ -51,11 +52,17 @@ const StripeForm = (props) => {
 					}
 				}}
 			/>
-			{!props.loading_payment && 
+			{new Date() > new Date(props.date_1) &&
+			new Date() < new Date(props.date_2) && (
+				<li>
+					<p style={{ color: '#ffca00' }}>Your Order will ship after 12/02/2021 🚚</p>
+				</li>
+			)}
+			{!props.loading_payment && (
 				<button type="submit" className="btn primary w-100per mb-12px bob" disabled={!stripe}>
 					Complete Order
 				</button>
-			}
+			)}
 		</form>
 	);
 };

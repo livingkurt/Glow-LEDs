@@ -135,6 +135,9 @@ const App = (props) => {
 		content: 'linear-gradient(180deg, #8a8a8a 0%, #272727 100%);',
 		container: '#272727'
 	};
+
+	const out_of_office_date_1 = '2021-11-23';
+	const out_of_office_date_2 = '2021-12-02';
 	const { height, width } = useWindowDimensions();
 
 	const [ message, set_message ] = useState('');
@@ -242,7 +245,13 @@ const App = (props) => {
 				<Particles params={particlesjs_config} className="zi-n5" style={{ zIndex: -5, position: 'fixed' }} />
 				<Header visible={visible} />
 				<Sidebar visible={visible} height={height} width={width} />
-				<Cart visible={visible} height={height} width={width} />
+				<Cart
+					visible={visible}
+					height={height}
+					width={width}
+					date_1={out_of_office_date_1}
+					date_2={out_of_office_date_2}
+				/>
 
 				<Content>
 					{process.env.NODE_ENV === 'production' && (
@@ -267,7 +276,16 @@ const App = (props) => {
 							<PrivateRoute path="/secure/account/devices" component={DevicesPage} />
 							<PrivateRoute path="/secure/account/editdevice/:id?" component={EditDevicePage} />
 							<PrivateRoute path="/secure/account/order/:id" component={OrderPage} />
-							<PrivateRoute path="/secure/checkout/placeorder" component={PlaceOrderPage} />
+							<PrivateRoute
+								path="/secure/checkout/placeorder"
+								component={(props) => (
+									<PlaceOrderPage
+										{...props}
+										date_1={out_of_office_date_1}
+										date_2={out_of_office_date_2}
+									/>
+								)}
+							/>
 							<PrivateRoute
 								path="/secure/account/affiliate_sign_up_complete"
 								component={AffiliateCreationComplete}
@@ -412,9 +430,23 @@ const App = (props) => {
 							/>
 							{/* Checkout */}
 							<Route path="/checkout/decision" component={GuestDecisionPage} />
-							<Route path="/checkout/placeorder" component={PlaceOrderPublicPage} />
+							<Route
+								path="/checkout/placeorder"
+								component={(props) => (
+									<PlaceOrderPublicPage
+										{...props}
+										date_1={out_of_office_date_1}
+										date_2={out_of_office_date_2}
+									/>
+								)}
+							/>
 							<Route path="/checkout/shipping" component={ShippingPublicPage} />
-							<Route path="/checkout/cart/:pathname?" component={CartPage} />
+							<Route
+								path="/checkout/cart/:pathname?"
+								component={(props) => (
+									<CartPage {...props} date_1={out_of_office_date_1} date_2={out_of_office_date_2} />
+								)}
+							/>
 							<Route path="/checkout/order/:id" exact={true} component={OrderPublicPage} />
 							<Route path="/checkout/order/receipt/:id/:status/:send?" component={OrderEmail} />
 

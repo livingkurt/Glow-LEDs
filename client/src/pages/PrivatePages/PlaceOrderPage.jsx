@@ -829,7 +829,12 @@ const PlaceOrderPage = (props) => {
 						!hide_pay_button &&
 						shipping &&
 						shipping.hasOwnProperty('first_name') && (
-							<Stripe pay_order={placeOrderHandler} loading_payment={loading_payment} />
+							<Stripe
+								pay_order={placeOrderHandler}
+								loading_payment={loading_payment}
+								date_1={props.date_1}
+								date_2={props.date_2}
+							/>
 						)}
 
 						{userInfo &&

@@ -9,7 +9,13 @@ const Stripe = (props) => {
 	return (
 		<div>
 			<Elements stripe={stripePromise}>
-				<StripeForm pay_order={props.pay_order}  loading_payment={props.loading_payment} guest={props.guest}/>
+				<StripeForm
+					pay_order={props.pay_order}
+					loading_payment={props.loading_payment}
+					guest={props.guest}
+					date_1={props.date_1}
+					date_2={props.date_2}
+				/>
 			</Elements>
 		</div>
 	);

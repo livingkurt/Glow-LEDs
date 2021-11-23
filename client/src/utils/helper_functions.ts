@@ -283,6 +283,23 @@ export const occurrence = function(array: any) {
 
 	return result;
 };
+
+export const decide_warning = (date_1: string, date_2: string) => {
+	if (new Date() > new Date(date_1) && new Date() < new Date(date_2)) {
+		const confirm = window.confirm(
+			`Glow LEDs will be out of office from ${format_date(date_1)} - ${format_date(
+				date_2
+			)}. \n\nYou may still place orders in this time, but orders will not be shipped until after ${format_date(
+				date_2
+			)} \n\nThank you so much for your support! 💙`
+		);
+		console.log({ confirm });
+		return confirm;
+	} else {
+		return true;
+	}
+};
+
 export const determine_total = (cartItems: any) => {
 	const today = new Date();
 	let total = 0;

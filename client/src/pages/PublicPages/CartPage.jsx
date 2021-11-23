@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Carousel, CartItem } from '../../components/SpecialtyComponents';
 import { Helmet } from 'react-helmet';
-import { determine_total } from '../../utils/helper_functions';
+import { decide_warning, determine_total } from '../../utils/helper_functions';
 
 const CartPage = (props) => {
 	const cart = useSelector((state) => state.cart);
@@ -22,29 +22,19 @@ const CartPage = (props) => {
 	};
 
 	const checkoutHandler = () => {
-		if (cartItems.length === 0) {
-			set_no_items_in_cart('Cannot proceed to checkout without any items in cart');
-		} else {
-			if (userInfo.hasOwnProperty('first_name')) {
-				props.history.push('/account/login?redirect=/secure/checkout/placeorder');
+		if (decide_warning(props.date_1, props.date_2)) {
+			if (cartItems.length === 0) {
+				set_no_items_in_cart('Cannot proceed to checkout without any items in cart');
 			} else {
-				props.history.push('/checkout/decision');
+				if (userInfo.hasOwnProperty('first_name')) {
+					props.history.push('/account/login?redirect=/secure/checkout/placeorder');
+				} else {
+					props.history.push('/checkout/decision');
+				}
 			}
 		}
 	};
 
-	const decide_warning = () => {
-		if (new Date() > new Date('2020-12-17') && new Date() < new Date('2021-01-02')) {
-			const confirm = window.confirm(
-				'Glow LEDs will be out of office from 12/18/20 - 1/2/21. Orders will not be shipped until after January 2nd 2021'
-			);
-			if (confirm) {
-				checkoutHandler();
-			}
-		} else {
-			checkoutHandler();
-		}
-	};
 	const no_adapters_warning = () => {
 		const categories = cartItems.map((cartItem) => {
 			return cartItem.category;
@@ -98,9 +88,9 @@ const CartPage = (props) => {
 					<div className="cart-action">
 						<h3 className="subtotal_h3">
 							Subtotal ( {cartItems.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)} items ) : ${' '}
-							{determine_total(cartItems)}
+							{determine_total(cartItems).toFixed(2)}
 						</h3>
-						<button onClick={decide_warning} className="btn primary w-100per bob">
+						<button onClick={() => checkoutHandler()} className="btn primary w-100per bob">
 							Proceed to Checkout
 						</button>
 					</div>

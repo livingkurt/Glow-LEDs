@@ -10,7 +10,7 @@ import { API_Products } from '../../utils';
 import { MenuItemD } from '../DesktopComponents';
 import { MenuItemM } from '../MobileComponents';
 import { LazyImage, Loading } from '../UtilityComponents';
-import { determine_total, humanize } from '../../utils/helper_functions';
+import { determine_total, format_date, humanize, decide_warning } from '../../utils/helper_functions';
 import useWindowDimensions from '../Hooks/windowDimensions';
 
 const Cart = (props) => {
@@ -63,30 +63,36 @@ const Cart = (props) => {
 	};
 
 	const checkoutHandler = () => {
-		if (cartItems.length === 0) {
-			set_no_items_in_cart('Cannot proceed to checkout without any items in cart');
-		} else {
-			if (userInfo.hasOwnProperty('first_name')) {
-				history.push('/account/login?redirect=/secure/checkout/placeorder');
+		if (decide_warning(props.date_1, props.date_2)) {
+			if (cartItems.length === 0) {
+				set_no_items_in_cart('Cannot proceed to checkout without any items in cart');
 			} else {
-				history.push('/checkout/decision');
+				if (userInfo.hasOwnProperty('first_name')) {
+					history.push('/account/login?redirect=/secure/checkout/placeorder');
+				} else {
+					history.push('/checkout/decision');
+				}
 			}
+			closeMenu();
 		}
-		closeMenu();
 	};
 
-	const decide_warning = () => {
-		if (new Date() > new Date('2020-12-17') && new Date() < new Date('2021-01-02')) {
-			const confirm = window.confirm(
-				'Glow LEDs will be out of office from 12/18/20 - 1/2/21. Orders will not be shipped until after January 2nd 2021'
-			);
-			if (confirm) {
-				checkoutHandler();
-			}
-		} else {
-			checkoutHandler();
-		}
-	};
+	// const decide_warning = () => {
+	// 	const date_1 = '2021-11-20';
+	// 	const date_2 = '2021-12-02';
+	// 	if (new Date() > new Date(date_1) && new Date() < new Date(date_2)) {
+	// 		const confirm = window.confirm(
+	// 			`Glow LEDs will be out of office from ${format_date(date_1)} - ${format_date(
+	// 				date_2
+	// 			)}. Orders will not be shipped until after ${format_date(date_2)}`
+	// 		);
+	// 		if (confirm) {
+	// 			checkoutHandler();
+	// 		}
+	// 	} else {
+	// 		checkoutHandler();
+	// 	}
+	// };
 
 	useEffect(() => {
 		// console.log({ isMobile: mobile_check() });
@@ -406,7 +412,7 @@ const Cart = (props) => {
 			>
 				<h3 className="subtotal_h3">
 					Subtotal ( {cartItems && cartItems.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)} items ) : ${' '}
-					{determine_total(cartItems)}
+					{determine_total(cartItems).toFixed(2)}
 				</h3>
 				<Link to="/checkout/cart" className="w-100per">
 					<button className="btn secondary w-100per mb-2rem" onClick={closeMenu}>
@@ -414,7 +420,7 @@ const Cart = (props) => {
 					</button>
 				</Link>
 
-				<button onClick={decide_warning} className="btn primary w-100per mb-1rem bob">
+				<button onClick={() => checkoutHandler()} className="btn primary w-100per mb-1rem bob">
 					Proceed to Checkout
 				</button>
 			</div>
