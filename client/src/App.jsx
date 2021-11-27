@@ -99,6 +99,8 @@ import {
 	EventsPage
 } from './pages/index';
 import { Header, Container, Content, Footer, Sidebar, Cart } from './components/ContainerComponents/index';
+import { useSelector } from 'react-redux';
+
 import { AdminRoute, PrivateRoute } from './components/RouteComponents';
 import { Notification, ScrollToTop } from './components/UtilityComponents';
 import DevicesPage from './pages/PrivatePages/DevicesPage';
@@ -116,17 +118,16 @@ import {
 	ReviewEmail
 } from './components/EmailComponents';
 import { Helmet } from 'react-helmet';
-import { setCurrentUser, logout, check_refresh_token } from './actions/userActions';
+
+import { setCurrentUser, logout } from './actions/userActions';
 import jwt_decode from 'jwt-decode';
 import setAuthToken from './utils/setAuthToken';
+import store from './store';
 import EditChipPage from './pages/AdminPages/EditChipPage';
 import useWindowDimensions from './components/Hooks/windowDimensions';
 // import { Particles } from './components/SpecialtyComponents';
 import Particles from 'react-particles-js';
 import particlesjs_config from './particlesjs_config.json';
-import { API_Users } from './utils';
-import { check_authentication } from './utils/react_helper_functions';
-import MarkAsShippedEmail from './components/EmailComponents/MarkAsShippedEmail';
 
 const App = (props) => {
 	const theme_colors = {
@@ -135,19 +136,35 @@ const App = (props) => {
 		content: 'linear-gradient(180deg, #8a8a8a 0%, #272727 100%);',
 		container: '#272727'
 	};
-
-	const out_of_office_date_1 = '2021-11-23';
-	const out_of_office_date_2 = '2021-12-02';
 	const { height, width } = useWindowDimensions();
 
 	const [ message, set_message ] = useState('');
 	// const userLogin = useSelector((state) => state.userLogin);
 
-	check_authentication();
+	// let { userInfo } = userLogin;
+	// let userInfo = {};
+	// console.log({ window });
+	// Check for token to keep user logged in
+	if (localStorage.jwtToken) {
+		// Set auth token header auth
+		const token = localStorage.jwtToken;
+		setAuthToken(token);
+		// Decode token and get user info and exp
+		const decoded = jwt_decode(token);
+		// console.log({ decoded });
+		// userInfo = decoded.userInfo;
+		// Set user and isAuthenticated
+		store.dispatch(setCurrentUser(decoded));
+		// Check for expired token
+		const currentTime = Date.now() / 1000; // to get in milliseconds
+		if (decoded.exp < currentTime) {
+			// Logout user
+			store.dispatch(logout());
 
-	setInterval(() => {
-		check_authentication();
-	}, 800000);
+			// Redirect to login
+			window.location.href = '/account/login?redirect=' + window.location.pathname;
+		}
+	}
 
 	// We listen to the resize event
 	window.addEventListener('resize', () => {
@@ -156,6 +173,17 @@ const App = (props) => {
 		document.documentElement.style.setProperty('--vh', `${vh}px`);
 	});
 
+	// const userUpdate = useSelector((state) => state.userUpdate);
+
+	// useEffect(
+	// 	() => {
+	// 		if (userUpdate.userInfo) {
+	// 			set_first_name(userUpdate.userInfo.first_name);
+	// 		}
+	// 		return () => {};
+	// 	},
+	// 	[ userUpdate.userInfo ]
+	// );
 	const debounce = (func, wait, immediate) => {
 		let timeout;
 		return function() {
@@ -245,13 +273,7 @@ const App = (props) => {
 				<Particles params={particlesjs_config} className="zi-n5" style={{ zIndex: -5, position: 'fixed' }} />
 				<Header visible={visible} />
 				<Sidebar visible={visible} height={height} width={width} />
-				<Cart
-					visible={visible}
-					height={height}
-					width={width}
-					date_1={out_of_office_date_1}
-					date_2={out_of_office_date_2}
-				/>
+				<Cart visible={visible} height={height} width={width} />
 
 				<Content>
 					{process.env.NODE_ENV === 'production' && (
@@ -276,16 +298,7 @@ const App = (props) => {
 							<PrivateRoute path="/secure/account/devices" component={DevicesPage} />
 							<PrivateRoute path="/secure/account/editdevice/:id?" component={EditDevicePage} />
 							<PrivateRoute path="/secure/account/order/:id" component={OrderPage} />
-							<PrivateRoute
-								path="/secure/checkout/placeorder"
-								component={(props) => (
-									<PlaceOrderPage
-										{...props}
-										date_1={out_of_office_date_1}
-										date_2={out_of_office_date_2}
-									/>
-								)}
-							/>
+							<PrivateRoute path="/secure/checkout/placeorder" component={PlaceOrderPage} />
 							<PrivateRoute
 								path="/secure/account/affiliate_sign_up_complete"
 								component={AffiliateCreationComplete}
@@ -369,11 +382,6 @@ const App = (props) => {
 								exact={true}
 								component={OrderStatusEmail}
 							/>
-							<AdminRoute
-								path="/secure/glow/mark_as_shipped/:status?/:send?/:batch?/:message_to_user?"
-								exact={true}
-								component={MarkAsShippedEmail}
-							/>
 							<AdminRoute path="/secure/glow/emails/invoice" exact={true} component={InvoiceEmail} />
 							<AdminRoute
 								path="/secure/glow/emails/reset_password"
@@ -407,13 +415,10 @@ const App = (props) => {
 							<AdminRoute path="/secure/glow/promos" component={PromosPage} />
 							<AdminRoute path="/secure/glow/affiliates" component={AffiliatesPage} />
 							<AdminRoute path="/secure/glow/teams" component={TeamsPage} />
-							<AdminRoute path="/secure/glow/teams/category/:category" component={TeamsPage} />
 							<AdminRoute path="/secure/glow/chips" component={ChipsPage} />
 							<AdminRoute path="/secure/glow/product_display" component={ProductsDisplayPage} />
 
 							{/* Public Routes */}
-							<Route path="/" exact={true} component={HomePage} />
-							{/* Account */}
 							<Route path="/account/login" component={LoginPage} />
 							<Route path="/account/verified/:id" component={VerifiedPage} />
 							<Route path="/account/checkemail" component={CheckEmailPage} />
@@ -422,41 +427,21 @@ const App = (props) => {
 							<Route path="/account/register" component={RegisterPage} />
 							<Route path="/account/passwordreset" component={PasswordResetPage} />
 							<Route path="/account/resetpassword/:id" component={ResetPasswordPage} />
-							<Route path="/account/submit_feature" component={SubmitFeaturePage} />
-							<Route path="/account/feature/receipt/:pathname/:status/:send?" component={FeatureEmail} />
-							<Route
-								path="/account/affiliate/receipt/:pathname/:status/:send?"
-								component={AffiliateEmail}
-							/>
-							{/* Checkout */}
 							<Route path="/checkout/decision" component={GuestDecisionPage} />
-							<Route
-								path="/checkout/placeorder"
-								component={(props) => (
-									<PlaceOrderPublicPage
-										{...props}
-										date_1={out_of_office_date_1}
-										date_2={out_of_office_date_2}
-									/>
-								)}
-							/>
+							<Route path="/checkout/placeorder" component={PlaceOrderPublicPage} />
 							<Route path="/checkout/shipping" component={ShippingPublicPage} />
-							<Route
-								path="/checkout/cart/:pathname?"
-								component={(props) => (
-									<CartPage {...props} date_1={out_of_office_date_1} date_2={out_of_office_date_2} />
-								)}
-							/>
-							<Route path="/checkout/order/:id" exact={true} component={OrderPublicPage} />
-							<Route path="/checkout/order/receipt/:id/:status/:send?" component={OrderEmail} />
 
-							{/* Collections */}
-							{/* Product Collections */}
+							<Route path="/checkout/cart/:pathname?" component={CartPage} />
 							<Route
 								path="/collections/all/products/code/:promo_code?"
 								exact={true}
 								component={(props) => <AllProductsPage {...props} set_message={set_message} />}
 							/>
+							{/* <Route
+								path="/collections/all/products/code/:promo_code?"
+								exact={true}
+								component={AllProductsPage} 
+							/> */}
 							<Route path="/collections/all/products" exact={true} component={AllProductsPage} />
 							<Route
 								path="/collections/all/products/collection/:collection?"
@@ -470,9 +455,19 @@ const App = (props) => {
 								path="/collections/all/products/category/:category/collection/:collection?"
 								component={AllProductsPage}
 							/>
+
 							<Route path="/collections/all/products/category/:category" component={AllProductsPage} />
+
 							<Route path="/collections/all/products/:pathname" component={ProductPage} />
-							{/* Feature Collections */}
+							<Route path="/checkout/order/receipt/:id/:status/:send?" component={OrderEmail} />
+							<Route path="/pages/contact/:reason?" exact={true} component={ContactPage} />
+							<Route path="/pages/glowcontrol" component={ContactPage} />
+							<Route path="/pages/terms" exact={true} component={TermsPage} />
+							<Route path="/pages/menu/:pathname" exact={true} component={MenuPage} />
+
+							<Route path="/pages/about" exact={true} component={AboutPage} />
+							<Route path="/pages/faq" exact={true} component={FAQPage} />
+							<Route path="/pages/sitemap" exact={true} component={SitemapPage} />
 							<Route
 								path="/collections/all/features/category/:category?"
 								exact={true}
@@ -483,7 +478,6 @@ const App = (props) => {
 								exact={true}
 								component={FeaturedPage}
 							/>
-							{/* Sponsors Collections */}
 							<Route
 								path="/collections/all/sponsors/category/:category?"
 								exact={true}
@@ -491,31 +485,29 @@ const App = (props) => {
 							/>
 							<Route path="/collections/all/sponsors" exact={true} component={AllSponsorsPage} />
 							<Route path="/collections/all/sponsors/:promo_code?" exact={true} component={SponsorPage} />
-							{/* Team Collections */}
 							<Route
 								path="/collections/all/teams/category/:category?"
 								exact={true}
 								component={AllTeamsPage}
 							/>
+							<Route path="/account/feature/receipt/:pathname/:status/:send?" component={FeatureEmail} />
+							<Route
+								path="/account/affiliate/receipt/:pathname/:status/:send?"
+								component={AffiliateEmail}
+							/>
+							<Route path="/account/submit_feature" component={SubmitFeaturePage} />
 							<Route path="/collections/all/teams" exact={true} component={AllTeamsPage} />
 							<Route path="/collections/all/teams/:pathname?" exact={true} component={TeamPage} />
-
-							{/* Pages */}
+							<Route path="/pages/music" exact={true} component={MusicPage} />
+							<Route path="/" exact={true} component={HomePage} />
+							<Route path="/pages/track_your_order" exact={true} component={TrackOrderPage} />
+							<Route path="/checkout/order/:id" exact={true} component={OrderPublicPage} />
 							<Route path="/pages/announcements" exact={true} component={AnnouncementsPage} />
 							<Route path="/pages/manual/:pathname?" exact={true} component={ManualPage} />
 							<Route path="/pages/affiliate_terms" exact={true} component={AffiliateTermsPage} />
 							<Route path="/pages/become_affiliate" exact={true} component={BecomeAffiliatePage} />
 							<Route path="/pages/color_palettes" exact={true} component={ColorPalettePage} />
 							<Route path="/pages/events" exact={true} component={EventsPage} />
-							<Route path="/pages/contact/:reason?" exact={true} component={ContactPage} />
-							<Route path="/pages/glowcontrol" component={ContactPage} />
-							<Route path="/pages/terms" exact={true} component={TermsPage} />
-							<Route path="/pages/menu/:pathname" exact={true} component={MenuPage} />
-							<Route path="/pages/about" exact={true} component={AboutPage} />
-							<Route path="/pages/faq" exact={true} component={FAQPage} />
-							<Route path="/pages/sitemap" exact={true} component={SitemapPage} />
-							<Route path="/pages/music" exact={true} component={MusicPage} />
-							<Route path="/pages/track_your_order" exact={true} component={TrackOrderPage} />
 
 							<Route component={Four04Page} />
 						</Switch>
