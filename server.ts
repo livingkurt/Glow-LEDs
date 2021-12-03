@@ -8,6 +8,8 @@ const cors = require('cors');
 require('dotenv').config();
 const passport = require('passport');
 const compression = require('compression');
+const expressAttack = require('express-attack');
+const requestIp = require('request-ip');
 
 import routes from './routes';
 
@@ -77,22 +79,22 @@ app.use(express.json());
 app.use(compression());
 app.use(sslRedirect());
 
-// // throttle request when given IP hit 50 times over 300 seconds
-// function throttleByIp(req: any) {
-// 	const clientIp = requestIp.getClientIp(req);
+// throttle request when given IP hit 50 times over 300 seconds
+function throttleByIp(req: any) {
+	const clientIp = requestIp.getClientIp(req);
 
-// 	return {
-// 		key: clientIp,
-// 		limit: 50,
-// 		period: 300
-// 	};
-// }
+	return {
+		key: clientIp,
+		limit: 200,
+		period: 60
+	};
+}
 
-// app.use(
-// 	expressAttack({
-// 		throttles: [ throttleByIp ]
-// 	})
-// );
+app.use(
+	expressAttack({
+		throttles: [ throttleByIp ]
+	})
+);
 // Passport middleware
 app.use(passport.initialize());
 

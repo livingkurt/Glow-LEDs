@@ -105,7 +105,7 @@ function ProductPage(props) {
 		{ name: 'Glow Casings', color: '#557b68' },
 		{ name: 'Glow Strings', color: '#4b7188' },
 		{ name: 'Glowskins', color: '#736084' },
-		{ name: 'Mega Diffuser Caps', color: '#4b8882' },
+		{ name: 'Decals', color: '#6f5aa3' },
 		{ name: 'Frosted Diffusers', color: '#ca9160' },
 		{ name: 'Diffuser Caps', color: '#6c7ea9' },
 		{ name: 'Accessories', color: '#925757' },
@@ -131,7 +131,7 @@ function ProductPage(props) {
 		if (product.category === 'glowskins') {
 			result = colors[3].color;
 		}
-		if (product.category === 'mega_diffuser_caps') {
+		if (product.category === 'decals') {
 			result = colors[4].color;
 		}
 		if (product.category === 'diffusers') {
@@ -483,50 +483,55 @@ function ProductPage(props) {
 			<Helmet>
 				<title>Admin Products | Glow LEDs</title>
 			</Helmet>
-			<div className="wrap jc-b">
-				{colors.map((color, index) => {
-					return (
-						<div className="jc-b p-1rem" key={index}>
-							<label style={{ marginRight: '1rem' }}>{color.name}</label>
-							<div
-								style={{
-									backgroundColor: color.color,
-									height: '20px',
-									width: '60px',
-									borderRadius: '5px'
-								}}
-							/>
-						</div>
-					);
-				})}
-				<Link to="/secure/glow/product_display">
-					<button className="btn primary">Display Products</button>
-				</Link>
-				<button className="btn primary" onClick={() => update_product_catelog()}>
-					Update Product Catalog
-				</button>
+			<div className="jc-b">
+				{/* <div className="w-20per">
+					{colors.map((color, index) => {
+						return (
+							<div className="jc-b p-1rem" key={index}>
+								<label style={{ marginRight: '1rem' }}>{color.name}</label>
+								<div
+									style={{
+										backgroundColor: color.color,
+										height: '20px',
+										width: '60px',
+										borderRadius: '5px'
+									}}
+								/>
+							</div>
+						);
+					})}
+				</div> */}
+				<div className="jc-b w-80per">
+					<Link to="/secure/glow/product_display">
+						<button className="btn primary h-35px ">Display Products</button>
+					</Link>
+					<button className="btn primary h-35px" onClick={() => update_product_catelog()}>
+						Update Product Catalog
+					</button>
 
-				<Link to="/secure/glow/editproduct">
-					<button className="btn primary">Create Product</button>
-				</Link>
-				<button className="btn primary" onClick={show_hidden_products}>
-					{!show_hidden ? 'Show' : 'Hide'} Hidden Products
-				</button>
-				<button className="btn primary" onClick={update_order}>
-					Update Order
-				</button>
-				<button className="btn primary" onClick={add_item_group_id}>
-					Add Item Group ID
-				</button>
-				{/* <button className="btn primary" onClick={generate_sitemap}>
+					<button className="btn primary h-35px" onClick={update_order}>
+						Update Order
+					</button>
+					<Link to="/secure/glow/editproduct">
+						<button className="btn primary h-35px">Create Product</button>
+					</Link>
+
+					{/* <button className="btn primary" onClick={add_item_group_id}>
+						Add Item Group ID
+					</button> */}
+					{/* <button className="btn primary" onClick={generate_sitemap}>
 					Add Item Group ID
 				</button> */}
+				</div>
 			</div>
 			<div className="jc-c">
 				<h1 style={{ textAlign: 'center' }}>Products</h1>
 			</div>
 			<Loading loading={loading_upload} error={error} />
-			<div className="search_and_sort row jc-c ai-c" style={{ overflowX: 'scroll' }}>
+			<div className="search_and_sort jc-c ai-c">
+				<button className="btn primary" style={{ whiteSpace: 'nowrap' }} onClick={show_hidden_products}>
+					{!show_hidden ? 'Show' : 'Hide'} Hidden Products
+				</button>
 				<Search search={search} set_search={set_search} submitHandler={submitHandler} category={category} />
 				<Sort sortHandler={sortHandler} sort_options={sort_options} />
 			</div>
