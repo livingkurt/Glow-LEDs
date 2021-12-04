@@ -21,7 +21,7 @@ const AboutPage = () => {
 	const dispatch = useDispatch();
 
 	const affiliateList = useSelector((state) => state.affiliateList);
-	const { affiliates, loading, error } = affiliateList;
+	const { affiliates, loading: loading_sponsors, error } = affiliateList;
 	const teamList = useSelector((state) => state.teamList);
 	const { teams, loading: loading_team, error: error_team } = teamList;
 
@@ -65,7 +65,7 @@ const AboutPage = () => {
 				<div>
 					{/* <h2
 						className="about_names"
-						style={{ fontFamily: 'heading_font', marginTop: 0, marginBottom: '25px' }}
+						style={{ marginTop: 0, marginBottom: '25px' }}
 					>
 						Who is Glow LEDs?
 					</h2> */}
@@ -87,10 +87,7 @@ const AboutPage = () => {
 							/>
 						</div>
 					</div>
-					<h2
-						className="about_names"
-						style={{ fontFamily: 'heading_font', marginTop: 0, marginBottom: '25px' }}
-					>
+					<h2 className="about_names" style={{ marginTop: 0, marginBottom: '25px' }}>
 						The Beginning
 					</h2>
 
@@ -134,10 +131,7 @@ const AboutPage = () => {
 						short amount of time. It almost seems like the new glovers are getting good faster than ever
 						within just a few months now. What a beautiful thing.
 					</ReadMore>
-					<h2
-						className="about_names"
-						style={{ fontFamily: 'heading_font', marginTop: 0, marginBottom: '25px' }}
-					>
+					<h2 className="about_names" style={{ marginTop: 0, marginBottom: '25px' }}>
 						The Problem
 					</h2>
 					<div>
@@ -176,10 +170,7 @@ const AboutPage = () => {
 							not being sold anywhere! I just couldn’t believe it.
 						</ReadMore>
 					</div>
-					<h2
-						className="about_names"
-						style={{ fontFamily: 'heading_font', marginTop: 0, marginBottom: '25px' }}
-					>
+					<h2 className="about_names" style={{ marginTop: 0, marginBottom: '25px' }}>
 						The Solution
 					</h2>
 					<div>
@@ -216,10 +207,7 @@ const AboutPage = () => {
 							everything is always available!
 						</ReadMore>
 					</div>
-					<h2
-						className="about_names"
-						style={{ fontFamily: 'heading_font', marginTop: 0, marginBottom: '25px' }}
-					>
+					<h2 className="about_names" style={{ marginTop: 0, marginBottom: '25px' }}>
 						The Vision
 					</h2>
 					<div>
@@ -240,10 +228,7 @@ const AboutPage = () => {
 							you. As long you keep glowing just as bright as you can!
 						</ReadMore>
 					</div>
-					<h2
-						className="about_names ta-c fs-30px"
-						style={{ fontFamily: 'heading_font', marginTop: 0, marginBottom: '25px' }}
-					>
+					<h2 className="about_names ta-c fs-30px" style={{ marginTop: 0, marginBottom: '25px' }}>
 						Welcome to the Glow LEDs Family! Can't to meet you all!
 					</h2>
 					<div
@@ -265,101 +250,88 @@ const AboutPage = () => {
 							src="https://thumbs2.imgbox.com/74/18/uf9lTIoK_t.jpeg"
 						/>
 					</div>
-					<h2
-						className="about_names ta-c fs-30px"
-						style={{ fontFamily: 'heading_font', marginTop: 0, marginBottom: '25px' }}
-					>
+					<h2 className="about_names ta-c fs-30px" style={{ marginTop: 0, marginBottom: '25px' }}>
 						Meet the Team
 					</h2>
 
-					<h2
-						className="about_names"
-						style={{ fontFamily: 'heading_font', marginTop: 0, marginBottom: '25px' }}
-					>
+					<h2 className="about_names" style={{ marginTop: 0, marginBottom: '25px' }}>
 						Sponsored Artists
 					</h2>
-					{affiliates && (
-						<Loading loading={loading} error={error}>
-							<div>
-								<div className="product_big_screen">
-									{affiliates && (
-										<ul className="products" style={{ marginTop: 0, textDecoration: 'none' }}>
-											{affiliates.map(
-												(affiliate, index) =>
-													!affiliate.hidden && (
-														<Sponsor
-															size="300px"
-															key={index}
-															affiliate={affiliate}
-															// category={props.match.params.category}
-														/>
-													)
-											)}
-										</ul>
-									)}
-								</div>
 
-								<div className="product_small_screen none">
-									{affiliates && (
-										<ul className="products" style={{ marginTop: 0, textDecoration: 'none' }}>
-											{affiliates.map(
-												(affiliate, index) =>
-													!affiliate.hidden && (
-														<SponsorSmallScreen
-															size="300px"
-															key={index}
-															affiliate={affiliate}
-															// category={props.match.params.category}
-														/>
-													)
-											)}
-										</ul>
-									)}
-								</div>
+					<Loading loading={loading_sponsors} error={error}>
+						<div>
+							<div className="product_big_screen">
+								{affiliates && (
+									<ul className="products" style={{ marginTop: 0, textDecoration: 'none' }}>
+										{affiliates.map(
+											(affiliate, index) =>
+												!affiliate.hidden && (
+													<Sponsor
+														size="300px"
+														key={index}
+														affiliate={affiliate}
+														// category={props.match.params.category}
+													/>
+												)
+										)}
+									</ul>
+								)}
 							</div>
-							{affiliates.length === 0 && (
-								<h2 style={{ textAlign: 'center' }}>Sorry we can't find anything with that name</h2>
-							)}
-						</Loading>
-					)}
-					<h2
-						className="about_names"
-						style={{ fontFamily: 'heading_font', marginTop: 0, marginBottom: '25px' }}
-					>
+
+							<div className="product_small_screen none">
+								{affiliates && (
+									<ul className="products" style={{ marginTop: 0, textDecoration: 'none' }}>
+										{affiliates.map(
+											(affiliate, index) =>
+												!affiliate.hidden && (
+													<SponsorSmallScreen
+														size="300px"
+														key={index}
+														affiliate={affiliate}
+														// category={props.match.params.category}
+													/>
+												)
+										)}
+									</ul>
+								)}
+							</div>
+						</div>
+						{affiliates.length === 0 && (
+							<h2 style={{ textAlign: 'center' }}>Sorry we can't find anything with that name</h2>
+						)}
+					</Loading>
+					<h2 className="about_names" style={{ marginTop: 0, marginBottom: '25px' }}>
 						Sponsored Teams
 					</h2>
-					{teams && (
-						<Loading loading={loading} error={error}>
-							<div>
-								<div className="product_big_screen">
-									{teams && (
-										<ul className="products" style={{ marginTop: 0, textDecoration: 'none' }}>
-											{teams.map(
-												(team, index) =>
-													!team.hidden && <Team size="300px" key={index} team={team} />
-											)}
-										</ul>
-									)}
-								</div>
 
-								<div className="product_small_screen none">
-									{teams && (
-										<ul className="products" style={{ marginTop: 0, textDecoration: 'none' }}>
-											{teams.map(
-												(team, index) =>
-													!team.hidden && (
-														<TeamSmallScreen size="300px" key={index} team={team} />
-													)
-											)}
-										</ul>
-									)}
-								</div>
+					<Loading loading={loading_team} error={error}>
+						<div>
+							<div className="product_big_screen">
+								{teams && (
+									<ul className="products" style={{ marginTop: 0, textDecoration: 'none' }}>
+										{teams.map(
+											(team, index) =>
+												!team.hidden && <Team size="300px" key={index} team={team} />
+										)}
+									</ul>
+								)}
 							</div>
-							{teams.length === 0 && (
-								<h2 style={{ textAlign: 'center' }}>Sorry we can't find anything with that name</h2>
-							)}
-						</Loading>
-					)}
+
+							<div className="product_small_screen none">
+								{teams && (
+									<ul className="products" style={{ marginTop: 0, textDecoration: 'none' }}>
+										{teams.map(
+											(team, index) =>
+												!team.hidden && <TeamSmallScreen size="300px" key={index} team={team} />
+										)}
+									</ul>
+								)}
+							</div>
+						</div>
+						{teams.length === 0 && (
+							<h2 style={{ textAlign: 'center' }}>Sorry we can't find anything with that name</h2>
+						)}
+					</Loading>
 				</div>
 			</div>
 		</div>

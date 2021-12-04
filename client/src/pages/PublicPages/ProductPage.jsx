@@ -604,7 +604,7 @@ const ProductPage = (props) => {
 								{(secondary_image || width > 819) && (
 									<div>
 										<label
-											className="product_title_top  fs-30px ff-h mb-2rem ta-c lh-50px"
+											className="product_title_top fs-30px ff-h mb-2rem ta-c lh-50px"
 											style={{ display: width < 819 ? 'block' : 'none' }}
 										>
 											{name}
