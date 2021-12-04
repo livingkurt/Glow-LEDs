@@ -90,6 +90,49 @@ export const browser_check = () => {
 	}
 };
 
+export const product_page_sale_price_switch = (
+	price = 0,
+	sale_price = 0,
+	previous_price = 0,
+	sale_start_date,
+	sale_end_date,
+	cartItem
+) => {
+	const color = cartItem ? { color: '#7e7e7e' } : { color: '#2a3156' };
+	if (previous_price) {
+		return (
+			<label className="fs-18px">
+				<label>${price ? price.toFixed(2) : price}</label>
+				<label> ({100 * (1 - price / previous_price).toFixed(2)}% Off) </label>
+				<label>
+					<del style={color}>
+						<label className="" style={color}>
+							${previous_price ? previous_price.toFixed(2) : previous_price}
+						</label>
+					</del>{' '}
+				</label>
+			</label>
+		);
+	} else {
+		if (sale_price !== 0 && today >= new Date(sale_start_date) && today <= new Date(sale_end_date)) {
+			return (
+				<label className="fs-18px">
+					<label>${sale_price ? sale_price.toFixed(2) : sale_price}</label>
+					<label> ({100 * (1 - sale_price / price).toFixed(2)}% Off) </label>
+					<label>
+						<del style={color}>
+							<label className="" style={color}>
+								${price ? price.toFixed(2) : price}
+							</label>
+						</del>{' '}
+					</label>
+				</label>
+			);
+		} else {
+			return <label className="fs-18px">${price ? price.toFixed(2) : price}</label>;
+		}
+	}
+};
 export const sale_price_switch = (product, cartItem) => {
 	const color = cartItem ? { color: '#7e7e7e' } : { color: '#2a3156' };
 	if (product) {
@@ -424,7 +467,7 @@ export const determine_secondary_product_name = (name, category, subcategory) =>
 		if (name.split('-')[0].trim() === 'Nanoskins') {
 			return name.split('-')[1].trim();
 		}
-		
+
 		if (subcategory === 'gloves' && name.includes('Bulk')) {
 			return name.split(' ')[1].trim();
 		}

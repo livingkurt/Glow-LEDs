@@ -17,7 +17,7 @@ import 'react-medium-image-zoom/dist/styles.css';
 import {
 	determine_option_product_name,
 	determine_secondary_product_name,
-	sale_price_switch
+	product_page_sale_price_switch
 } from '../../utils/react_helper_functions';
 import useWindowDimensions from '../../components/Hooks/windowDimensions';
 import 'react-awesome-slider/dist/styles.css';
@@ -760,7 +760,13 @@ const ProductPage = (props) => {
 								</div>
 								<div className="row ai-c mv-20px">
 									<h3 className="mv-0px mr-5px">Price: </h3>
-									{sale_price_switch(product)}
+									{product_page_sale_price_switch(
+										price,
+										sale_price,
+										previous_price,
+										product.sale_start_date,
+										product.sale_end_date
+									)}
 								</div>
 
 								<div className="">
@@ -799,7 +805,13 @@ const ProductPage = (props) => {
 											price
 										)} */}
 
-										{sale_price_switch(product)}
+										{product_page_sale_price_switch(
+											price,
+											sale_price,
+											previous_price,
+											product.sale_start_date,
+											product.sale_end_date
+										)}
 									</div>
 									<li className="mt-1rem">
 										Status: {count_in_stock > 0 ? 'In Stock' : 'Out of Stock'}
@@ -1111,7 +1123,13 @@ const ProductPage = (props) => {
 										<div className="jc-b ai-c">
 											<div className="ai-c mb-1rem">
 												<h3 className="mv-0px mr-5px">Price: </h3>
-												{sale_price_switch(product)}
+												{product_page_sale_price_switch(
+													price,
+													sale_price,
+													previous_price,
+													product.sale_start_date,
+													product.sale_end_date
+												)}
 											</div>
 											<div className="mb-20px">
 												<a href="#reviews">
