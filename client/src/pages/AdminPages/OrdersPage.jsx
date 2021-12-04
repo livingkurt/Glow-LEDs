@@ -31,7 +31,7 @@ const OrdersPage = (props) => {
 
 	const category = props.match.params.category ? props.match.params.category : '';
 	const orderList = useSelector((state) => state.orderList);
-	const { loading, orders, totalPages, error } = orderList;
+	const { loading, orders, totalPages, currentPage, error } = orderList;
 	console.log({ orderList });
 
 	const orderDelete = useSelector((state) => state.orderDelete);
@@ -54,6 +54,15 @@ const OrdersPage = (props) => {
 			return () => {};
 		},
 		[ query.page ]
+	);
+
+	useEffect(
+		() => {
+			if (currentPage) {
+				set_page(currentPage);
+			}
+		},
+		[ currentPage ]
 	);
 
 	// useEffect(() => {

@@ -24,7 +24,10 @@ import {
 	PRODUCT_REVIEW_DELETE_RESET
 } from '../constants/productConstants';
 
-export const productListReducer = (state = { products: [] }, action: { type: any; payload: any }) => {
+export const productListReducer = (
+	state = { products: [], totalPages: 0, currentPage: 1 },
+	action: { type: any; payload: any }
+) => {
 	switch (action.type) {
 		case PRODUCT_LIST_REQUEST:
 			return { loading: true, products: [] };

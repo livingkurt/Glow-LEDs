@@ -32,7 +32,7 @@ const AllProductsPage = (props) => {
 	const [ chip, set_chip ] = useState('');
 	const [ page, set_page ] = useState(1);
 	const [ limit, set_limit ] = useState(20);
-	const [ currentPage, setCurrentPage ] = useState(1);
+	// const [ currentPage, setCurrentPage ] = useState(1);
 
 	// const category = props.match.params.category ? props.match.params.category : '';
 	// const subcategory = props.match.params.subcategory ? props.match.params.subcategory : '';
@@ -50,7 +50,7 @@ const AllProductsPage = (props) => {
 	const [ filter, set_filter ] = useState('');
 
 	const productList = useSelector((state) => state.productList);
-	const { products: main_products, totalPages, loading, error } = productList;
+	const { products: main_products, totalPages, currentPage, loading, error } = productList;
 	console.log({ productList });
 
 	const chipList = useSelector((state) => state.chipList);
@@ -73,6 +73,7 @@ const AllProductsPage = (props) => {
 			if (main_products) {
 				if (category !== 'essentials' || category !== 'discounted' || category !== 'best_sellers') {
 					set_products(main_products);
+					set_page(currentPage);
 					set_loading_products(false);
 				}
 			}

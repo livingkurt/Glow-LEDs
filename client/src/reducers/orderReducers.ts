@@ -110,7 +110,9 @@ export const myOrderListReducer = (
 
 export const orderListReducer = (
 	state = {
-		orders: []
+		orders: [],
+		totalPages: 0,
+		currentPage: 1
 	},
 	action: { type: any; payload: any }
 ) => {
