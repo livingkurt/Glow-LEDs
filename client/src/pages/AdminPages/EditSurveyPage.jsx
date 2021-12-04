@@ -202,7 +202,7 @@ const EditSurveyPage = (props) => {
 														<option key={1} defaultValue="">
 															---Choose Order---
 														</option>
-														{orders.orders.map((order, index) => (
+														{orders.map((order, index) => (
 															<option key={index} value={order._id}>
 																{order.shipping.first_name} {order.shipping.last_name}
 															</option>

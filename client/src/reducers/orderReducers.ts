@@ -110,7 +110,7 @@ export const myOrderListReducer = (
 
 export const orderListReducer = (
 	state = {
-		orders: { orders: [], totalPages: 0, currentPage: 0 }
+		orders: []
 	},
 	action: { type: any; payload: any }
 ) => {
@@ -121,11 +121,9 @@ export const orderListReducer = (
 		case ORDER_LIST_SUCCESS:
 			return {
 				loading: false,
-				orders: {
-					orders: action.payload.orders,
-					totalPages: action.payload.totalPages,
-					currentPage: action.payload.currentPage
-				},
+				orders: action.payload.orders,
+				totalPages: action.payload.totalPages,
+				currentPage: action.payload.currentPage,
 				message: 'Orders Found'
 			};
 		case ORDER_LIST_FAIL:

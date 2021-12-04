@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { listProducts } from '../../actions/productActions';
-import { Filter, Search, Sort } from '../../components/SpecialtyComponents/index';
+import { Filter, Search, Sort, Pagination } from '../../components/SpecialtyComponents/index';
 import { Loading, Notification } from '../../components/UtilityComponents';
 import {
 	description_determination,
@@ -17,6 +17,7 @@ import { API_Products } from '../../utils';
 import { listChips } from '../../actions/chipActions';
 import { ProductItemM } from '../../components/MobileComponents';
 import { ProductItemD } from '../../components/DesktopComponents';
+import { userWindowDimensions } from '../../components/Hooks';
 
 const AllProductsPage = (props) => {
 	const history = useHistory();
@@ -29,6 +30,9 @@ const AllProductsPage = (props) => {
 	const [ alternative_products, set_alternative_products ] = useState([]);
 	const [ products, set_products ] = useState([]);
 	const [ chip, set_chip ] = useState('');
+	const [ page, set_page ] = useState(1);
+	const [ limit, set_limit ] = useState(20);
+	const [ currentPage, setCurrentPage ] = useState(1);
 
 	// const category = props.match.params.category ? props.match.params.category : '';
 	// const subcategory = props.match.params.subcategory ? props.match.params.subcategory : '';
@@ -46,7 +50,8 @@ const AllProductsPage = (props) => {
 	const [ filter, set_filter ] = useState('');
 
 	const productList = useSelector((state) => state.productList);
-	const { products: main_products, loading, error } = productList;
+	const { products: main_products, totalPages, loading, error } = productList;
+	console.log({ productList });
 
 	const chipList = useSelector((state) => state.chipList);
 	const { chips: chips_list } = chipList;
@@ -64,6 +69,7 @@ const AllProductsPage = (props) => {
 	);
 	useEffect(
 		() => {
+			console.log({ main_products });
 			if (main_products) {
 				if (category !== 'essentials' || category !== 'discounted' || category !== 'best_sellers') {
 					set_products(main_products);
@@ -73,6 +79,9 @@ const AllProductsPage = (props) => {
 		},
 		[ main_products ]
 	);
+
+	let PageSize = 10;
+
 	useEffect(
 		() => {
 			get_occurrences(props.match.params.category);
@@ -80,72 +89,7 @@ const AllProductsPage = (props) => {
 		[ props.match.params.category ]
 	);
 
-	// useEffect(() => {
-	// 	const query = getUrlParameter(props.location);
-	// 	console.log({ query });
-	// 	if (Object.keys(query).length > 0) {
-	// 		if (query.search) {
-	// 			set_search(query.search.split('%20').join(' '));
-	// 		}
-	// 		if (query.sort) {
-	// 			set_sort(query.sort);
-	// 		}
-	// 		if (query.filter) {
-	// 			set_filter(chips_list.filter((chip) => chip.name === query.filter.split('%20').join(' '))._id);
-	// 		}
-	// 		if (category === 'discounted') {
-	// 			get_occurrences(category);
-	// 		} else if (category === 'best_sellers') {
-	// 			get_occurrences(category);
-	// 		} else if (category === 'essentials') {
-	// 			get_occurrences(category);
-	// 		}
-	// 		if ((query.search || query.sort || query.filter) && !category && !subcategory) {
-	// 			dispatch(
-	// 				listProducts(
-	// 					category,
-	// 					subcategory,
-	// 					query.search ? query.search.split('%20').join(' ') : '',
-	// 					query.sort,
-	// 					query.filter
-	// 						? chips_list.filter((chip) => chip.name === query.filter.split('%20').join(' '))._id
-	// 						: '',
-	// 					'',
-	// 					collection
-	// 				)
-	// 			);
-	// 		}
-	// 		if (category !== 'essentials' || category !== 'discounted' || category !== 'best_sellers') {
-	// 			// console.log('All Products');
-	// 			if (!collection && category) {
-	// 				console.log('No Category or Collection');
-	// 				dispatch(
-	// 					listProducts(
-	// 						category,
-	// 						subcategory,
-	// 						query.search ? query.search.split('%20').join(' ') : '',
-	// 						query.sort,
-	// 						query.filter
-	// 							? chips_list.filter((chip) => chip.name === query.filter.split('%20').join(' '))._id
-	// 							: '',
-	// 						'',
-	// 						collection
-	// 					)
-	// 				);
-	// 			}
-	// 			// else if (collection && category) {
-	// 			// 	dispatch(listProducts(category, '', '', '', '', '', collection));
-	// 			// }
-	// 		}
-	// 	} else if (
-	// 		Object.keys(query).length === 0 &&
-	// 		(category !== 'essentials' || category !== 'discounted' || category !== 'best_sellers')
-	// 	) {
-	// 		dispatch(listProducts(category, subcategory, '', '', '', '', collection));
-	// 	}
-	// 	// dispatch(listProducts(category, subcategory, '', '', '', '', collection));
-	// 	dispatch(listChips());
-	// }, []);
+	const { width, height } = userWindowDimensions();
 
 	useEffect(() => {
 		determine_products();
@@ -159,20 +103,6 @@ const AllProductsPage = (props) => {
 		},
 		[ props.match.params.category, props.match.params.subcategory, props.location ]
 	);
-	// useEffect(
-	// 	() => {
-	// 		// determine_products();
-	// 		if (chips_list.length > 0) {
-	// 			const query = getUrlParameter(props.location);
-	// 			prnt({ chip: query.filter.split('%20').join(' ') });
-	// 			set_filter(chips_list.find((chip) => chip.name === query.filter.split('%20').join(' '))._id);
-	// 			let filter = chips_list.find((chip) => chip.name === query.filter.split('%20').join(' ')._id);
-	// 			prnt({ filter, chips_list });
-	// 		}
-	// 		return () => {};
-	// 	},
-	// 	[ chips_list ]
-	// );
 
 	const determine_products = () => {
 		dispatch(listChips(''));
@@ -183,6 +113,7 @@ const AllProductsPage = (props) => {
 		let sort = '';
 		let filter = '';
 		let show_hidden = '';
+		let page = '';
 		let collection = props.match.params.collection ? props.match.params.collection : '';
 		// prnt({ query });
 		if (category !== 'essentials' || category !== 'discounted' || category !== 'best_sellers') {
@@ -198,6 +129,13 @@ const AllProductsPage = (props) => {
 				if (query.filter) {
 					filter = waitForElement(query.filter, chips_list);
 				}
+				if (query.page) {
+					set_page(query.page);
+					page = query.page;
+				}
+				if (query.limit) {
+					set_limit(query.limit);
+				}
 			}
 			if (category) {
 				if (category === 'discounted') {
@@ -209,8 +147,7 @@ const AllProductsPage = (props) => {
 				}
 			}
 			console.log({ category, subcategory, search, sort, filter, show_hidden, collection });
-
-			dispatch(listProducts(category, subcategory, search, sort, filter, show_hidden, collection));
+			dispatch(listProducts(category, subcategory, search, sort, filter, show_hidden, collection, page));
 		}
 	};
 
@@ -270,6 +207,27 @@ const AllProductsPage = (props) => {
 		dispatch(listProducts(category, subcategory, '', sort, chip_selected._id, '', collection));
 	};
 
+	const update_page = (e, new_page) => {
+		console.log({ e, new_page });
+		e.preventDefault();
+		const page = parseInt(new_page);
+		history.push({
+			search: '?page=' + page
+		});
+
+		console.log(new_page);
+		dispatch(listProducts(category, search, sort, new_page));
+	};
+
+	// const currentTableData = useMemo(
+	// 	() => {
+	// 		const firstPageIndex = (currentPage - 1) * PageSize;
+	// 		const lastPageIndex = firstPageIndex + PageSize;
+	// 		return products.slice(firstPageIndex, lastPageIndex);
+	// 	},
+	// 	[ currentPage ]
+	// );
+
 	return (
 		<div>
 			<Helmet>
@@ -312,50 +270,71 @@ const AllProductsPage = (props) => {
 				<Filter filterHandler={filterHandler} filter_options={chips_list} />
 			</div>
 			<Loading loading={loading_products} />
-			<Loading loading={loading} error={error}>
-				{products && (
-					<div>
-						<div className="product_big_screen">
-							{products && (
-								<ul className="products" style={{ marginTop: 0 }}>
-									{products
-										.filter((product) => !product.option)
-										.map(
-											(product, index) =>
-												!product.hidden && (
-													<ProductItemD
-														size="300px"
-														key={index}
-														product={product}
-														product_occurrences={product_occurrences}
-													/>
-												)
-										)}
-								</ul>
-							)}
-						</div>
-
-						<div className="product_small_screen none">
-							{products && (
-								<ul className="products" style={{ marginTop: 0 }}>
-									{products
-										.filter((product) => !product.option)
-										.map(
-											(product, index) =>
-												!product.hidden && (
-													<ProductItemM
-														size="300px"
-														key={index}
-														product={product}
-														product_occurrences={product_occurrences}
-													/>
-												)
-										)}
-								</ul>
-							)}
-						</div>
-					</div>
+			<div className="jc-c">
+				{totalPages && (
+					<Pagination
+						className="pagination-bar"
+						currentPage={page}
+						totalCount={totalPages}
+						pageSize={limit}
+						onPageChange={(e, page) => update_page(e, page)}
+					/>
 				)}
+			</div>
+			<Loading loading={loading} error={error}>
+				<div>
+					<ul className="products" style={{ marginTop: 0 }}>
+						{products &&
+							products
+								.filter((product) => !product.option)
+								.map(
+									(product, index) =>
+										!product.hidden &&
+										(width >= 704 ? (
+											<ProductItemD
+												size="300px"
+												key={index}
+												product={product}
+												product_occurrences={product_occurrences}
+											/>
+										) : (
+											<ProductItemM
+												size="300px"
+												key={index}
+												product={product}
+												product_occurrences={product_occurrences}
+											/>
+										))
+								)}
+					</ul>
+				</div>
+
+				{/* <div className="wrap jc-c">
+					{totalPages &&
+						totalPages &&
+						[ ...Array(totalPages).keys() ].map((x, index) => (
+							<button
+								key={index}
+								value={x}
+								defaultValue={x}
+								className="btn primary w-40px mr-1rem mb-1rem"
+								onClick={(e) => update_page(e)}
+							>
+								{parseInt(x + 1)}
+							</button>
+						))}
+				</div> */}
+				<div className="jc-c">
+					{totalPages && (
+						<Pagination
+							className="pagination-bar"
+							currentPage={page}
+							totalCount={totalPages}
+							pageSize={limit}
+							onPageChange={(e, page) => update_page(e, page)}
+						/>
+					)}
+				</div>
 				{products.length === 0 &&
 				!best_sellers && <h2 style={{ textAlign: 'center' }}>Sorry we can't find anything with that name</h2>}
 			</Loading>

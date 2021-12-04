@@ -38,3 +38,4 @@ export { default as JSONToCSV } from './JSONToCSV';
 export { default as HomeSlideshow } from './HomeSlideshow';
 export { default as ProductSlideshow } from './ProductSlideshow';
 export { default as QuickButtons } from './QuickButtons';
+export { default as Pagination } from './Pagination';

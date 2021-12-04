@@ -7,6 +7,9 @@ export default {
 			const category = req.query.category ? { category: req.query.category } : {};
 			const subcategory = req.query.subcategory ? { subcategory: req.query.subcategory } : {};
 			const collection = req.query.collection ? { product_collection: req.query.collection } : {};
+			const page: any = req.query.page ? req.query.page : 1;
+			const limit: any = req.query.limit ? req.query.limit : 21;
+			console.log({ page: req.query.page, limit: req.query.limit });
 			// console.log({ chip: req.query.chip });
 			const chips = req.query.chip ? { chips: { $in: [ req.query.chip, '60203602dcf28a002a1a62ed' ] } } : {};
 
@@ -107,7 +110,8 @@ export default {
 
 			const products = await Product.find({
 				deleted: false,
-				// option: false,
+				option: false,
+				hidden: false,
 				...category,
 				...subcategory,
 				...collection,
@@ -120,12 +124,25 @@ export default {
 				.populate('secondary_products')
 				.populate('option_products')
 				.populate('categorys')
-				.populate('subcategorys');
+				.populate('subcategorys')
+				.limit(limit * 1)
+				.skip((page - 1) * limit)
+				.exec();
 			// console.log({ products });
+			const count = await Product.countDocuments({
+				deleted: false,
+				option: false,
+				hidden: false
+			});
 
 			if (chips && Object.keys(chips).length === 0 && Object.getPrototypeOf(chips) === Object.prototype) {
 				// console.log('No Chip');
-				res.send(products);
+				// res.send(products);
+				res.json({
+					products,
+					totalPages: Math.ceil(count / limit),
+					currentPage: parseInt(page)
+				});
 			} else {
 				// console.log('Yes Chip');
 				const accessories = products.filter((product: any) => product.category === 'accessories');

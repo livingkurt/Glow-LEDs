@@ -30,7 +30,8 @@ export const listProducts = (
 	sortOrder = '',
 	chip = '',
 	show_hidden = '',
-	collection = ''
+	collection = '',
+	page = ''
 ) => async (dispatch: (arg0: { type: string; payload?: any }) => void) => {
 	try {
 		dispatch({ type: PRODUCT_LIST_REQUEST });
@@ -49,7 +50,9 @@ export const listProducts = (
 				'&showHidden=' +
 				show_hidden +
 				'&collection=' +
-				collection
+				collection +
+				'&page=' +
+				page
 		);
 		dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
 	} catch (error) {

@@ -4,8 +4,15 @@ import { useSelector, useDispatch } from 'react-redux';
 import { listOrders, update_order, update_payment } from '../../actions/orderActions';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
-import { JSONToCSV, Order, OrderListItem, OrderSmallScreen, Search, Sort } from '../../components/SpecialtyComponents';
-import Pagination from 'react-js-pagination';
+import {
+	JSONToCSV,
+	Order,
+	OrderListItem,
+	OrderSmallScreen,
+	Search,
+	Sort,
+	Pagination
+} from '../../components/SpecialtyComponents';
 import { API_Orders } from '../../utils';
 import { format_date, getUrlParameter } from '../../utils/helper_functions';
 import { check_authentication } from '../../utils/react_helper_functions';
@@ -24,7 +31,8 @@ const OrdersPage = (props) => {
 
 	const category = props.match.params.category ? props.match.params.category : '';
 	const orderList = useSelector((state) => state.orderList);
-	const { loading, orders, error } = orderList;
+	const { loading, orders, totalPages, error } = orderList;
+	console.log({ orderList });
 
 	const orderDelete = useSelector((state) => state.orderDelete);
 	const { success: successDelete } = orderDelete;
@@ -145,15 +153,16 @@ const OrdersPage = (props) => {
 
 	const history = useHistory();
 
-	const update_page = (e) => {
+	const update_page = (e, new_page) => {
+		console.log({ e, new_page });
 		e.preventDefault();
-		const page = parseInt(e.target.value) + 1;
+		const page = parseInt(new_page);
 		history.push({
 			search: '?page=' + page
 		});
 
-		console.log(e.target.value);
-		dispatch(listOrders(category, search, sortOrder, page));
+		console.log(new_page);
+		dispatch(listOrders(category, search, sortOrder, new_page));
 	};
 
 	useEffect(() => {
@@ -240,10 +249,10 @@ const OrdersPage = (props) => {
 					<Search search={search} set_search={set_search} submitHandler={submitHandler} category={category} />
 					<Sort sortHandler={sortHandler} sort_options={sort_options} />
 				</div>
-				<div className="wrap jc-c">
+				{/* <div className="wrap jc-c">
 					{orders &&
-						orders.totalPages &&
-						[ ...Array(orders.totalPages).keys() ].map((x, index) => (
+						totalPages &&
+						[ ...Array(totalPages).keys() ].map((x, index) => (
 							<button
 								key={index}
 								value={x}
@@ -254,13 +263,24 @@ const OrdersPage = (props) => {
 								{parseInt(x + 1)}
 							</button>
 						))}
+				</div> */}
+				<div className="jc-c">
+					{totalPages && (
+						<Pagination
+							className="pagination-bar"
+							currentPage={page}
+							totalCount={totalPages}
+							pageSize={limit}
+							onPageChange={(e, page) => update_page(e, page)}
+						/>
+					)}
 				</div>
 				<Loading loading={loading_mark_as_shipped} />
 				<Loading loading={loading} error={error}>
 					<div className="product_big_screen">
 						{!block_list_view &&
 							orders &&
-							orders.orders.map((order, index) => (
+							orders.map((order, index) => (
 								<OrderListItem
 									key={index}
 									determine_color={determine_color}
@@ -275,7 +295,7 @@ const OrdersPage = (props) => {
 					<div className="product_big_screen">
 						{block_list_view &&
 							orders &&
-							orders.orders.map((order, index) => (
+							orders.map((order, index) => (
 								<Order
 									key={index}
 									determine_color={determine_color}
@@ -289,7 +309,7 @@ const OrdersPage = (props) => {
 					</div>
 					<div className="product_small_screen none column">
 						{orders &&
-							orders.orders.map((order, index) => (
+							orders.map((order, index) => (
 								<OrderSmallScreen
 									determine_color={determine_color}
 									key={index}
@@ -299,10 +319,21 @@ const OrdersPage = (props) => {
 							))}
 					</div>
 				</Loading>
-				<div className="wrap jc-c">
+				<div className="jc-c">
+					{totalPages && (
+						<Pagination
+							className="pagination-bar"
+							currentPage={page}
+							totalCount={totalPages}
+							pageSize={limit}
+							onPageChange={(e, page) => update_page(e, page)}
+						/>
+					)}
+				</div>
+				{/* <div className="wrap jc-c">
 					{orders &&
-						orders.totalPages &&
-						[ ...Array(orders.totalPages).keys() ].map((x, index) => (
+						totalPages &&
+						[ ...Array(totalPages).keys() ].map((x, index) => (
 							<button
 								key={index}
 								value={x}
@@ -313,7 +344,7 @@ const OrdersPage = (props) => {
 								{parseInt(x + 1)}
 							</button>
 						))}
-				</div>
+				</div> */}
 			</div>
 		</div>
 	);

@@ -29,7 +29,13 @@ export const productListReducer = (state = { products: [] }, action: { type: any
 		case PRODUCT_LIST_REQUEST:
 			return { loading: true, products: [] };
 		case PRODUCT_LIST_SUCCESS:
-			return { loading: false, products: action.payload, message: 'Products Found' };
+			return {
+				loading: false,
+				products: action.payload.products,
+				totalPages: action.payload.totalPages,
+				currentPage: action.payload.currentPage,
+				message: 'Products Found'
+			};
 		case PRODUCT_LIST_FAIL:
 			return { loading: false, error: action.payload.error, message: action.payload.message };
 		default:
