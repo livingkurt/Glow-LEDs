@@ -132,7 +132,12 @@ export default {
 			const count = await Product.countDocuments({
 				deleted: false,
 				option: false,
-				hidden: false
+				hidden: false,
+				...category,
+				...subcategory,
+				...collection,
+				...search,
+				...chips
 			});
 
 			if (chips && Object.keys(chips).length === 0 && Object.getPrototypeOf(chips) === Object.prototype) {

@@ -103,7 +103,7 @@ export default {
 				.exec();
 
 			// get total documents in the Posts collection
-			const count = await Order.countDocuments();
+			const count = await Order.countDocuments({ deleted: false, ...category, ...search, ...filter });
 
 			// return response with posts, total pages, and current page
 
