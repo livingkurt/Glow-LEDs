@@ -315,7 +315,9 @@ export default {
 		res.send(final_result);
 	},
 	category_occurrences: async (req: any, res: any) => {
+		console.log({ category_occurrences: 'Hello' });
 		const orders = await Order.find({ deleted: false }).populate('orderItems.secondary_product');
+		console.log({ orders });
 		const products: any = [];
 		const ids: any = [];
 		orders.forEach((order: any) => {

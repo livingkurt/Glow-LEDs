@@ -76,7 +76,7 @@ const product_routes = {
 		return axios.get('/api/orders/occurrences');
 	},
 	get_category_occurrences: () => {
-		// console.log({ not_paid_email: array });
+		console.log({ get_category_occurrences: 'Hello' });
 		return axios.get('/api/orders/category_occurrences');
 	},
 

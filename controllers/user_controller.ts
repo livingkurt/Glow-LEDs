@@ -119,7 +119,7 @@ export default {
 		const { body } = req;
 		//get refreshToken
 		const { refresh_token } = body;
-		console.log({ refresh_token });
+		// console.log({ refresh_token });
 		try {
 			//send error if no refresh_token is sent
 			if (!refresh_token) {
@@ -135,15 +135,15 @@ export default {
 				// await Token.findOneAndDelete({ token: refresh_token });
 				//extract payload from refresh token and generate a new access token and send it
 				const payload = jwt.verify(refresh_token, config.REFRESH_TOKEN_SECRET);
-				console.log({ payload });
+				// console.log({ payload });
 
 				const user = await user_services.refresh_login_users_s(payload.email, payload.password);
-				console.log({ user });
+				// console.log({ user });
 				const access_token = jwt.sign(user, config.ACCESS_TOKEN_SECRET, {
 					expiresIn: '15m'
 				});
 				// const user: any = await user_db.findById_users_db(params.id);
-				console.log({ update_profile_users_c: user });
+				// console.log({ update_profile_users_c: user });
 				if (user) {
 					const updatedUser = await user_db.update_users_db(user._id, body);
 					console.log({ updatedUser });
@@ -220,7 +220,7 @@ export default {
 		const { body } = req;
 		try {
 			const { user, matched } = await user_services.register_users_s(body);
-			console.log({ user, matched });
+			// console.log({ user, matched });
 			bcrypt.genSalt(10, (err: any, salt: any) => {
 				bcrypt.hash(req.body.password, salt, async (err: any, hash: any) => {
 					if (err) throw err;
@@ -251,7 +251,7 @@ export default {
 		const { body } = req;
 		try {
 			const user = await user_services.login_users_s(body.email, body.password);
-			console.log({ user });
+			// console.log({ user });
 			if (user) {
 				return jwt.sign(
 					user,
@@ -277,7 +277,7 @@ export default {
 		try {
 			//get refreshToken
 			const { refresh_token } = req.body;
-			console.log({ refresh_token });
+			// console.log({ refresh_token });
 			//send error if no refresh_token is sent
 			if (!refresh_token) {
 				return res.status(403).send({ error: 'Access denied,token missing!' });
@@ -314,7 +314,7 @@ export default {
 		try {
 			//delete the refresh token saved in database:
 			const { refresh_token } = req.body;
-			console.log({ refresh_token });
+			// console.log({ refresh_token });
 			await Token.findOneAndDelete({ token: refresh_token });
 			return res.status(200).json({ success: 'User logged out!' });
 		} catch (error) {
@@ -372,7 +372,7 @@ export default {
 	},
 	reset_password_users_c: async (req: any, res: any) => {
 		const { body } = req;
-		console.log({ body });
+		// console.log({ body });
 		try {
 			const user = await user_services.findByEmail_users_s(body);
 			console.log({ user });

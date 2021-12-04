@@ -17,7 +17,7 @@ const Cart = (props) => {
 	const history = useHistory();
 	const [ loading_products, set_loading_products ] = useState(false);
 	const [ loading_pictures, set_loading_pictures ] = useState(false);
-	const [ category_items, set_category_items ] = useState(false);
+	const [ category_items, set_category_items ] = useState([]);
 
 	function useOutsideAlerter(ref) {
 		useEffect(
@@ -94,16 +94,18 @@ const Cart = (props) => {
 	// 	}
 	// };
 
-	useEffect(() => {
-		// console.log({ isMobile: mobile_check() });
-		get_category_occurrences();
-		return () => {};
-	}, []);
+	// useEffect(() => {
+	// 	// console.log({ isMobile: mobile_check() });
+
+	// 	get_category_occurrences();
+	// 	return () => {};
+	// }, []);
 
 	const get_category_occurrences = async () => {
 		set_loading_products(true);
+		console.log('Hello');
 		const { data } = await API_Products.get_category_occurrences();
-		// console.log({ data });
+		console.log({ data });
 		set_loading_products(false);
 		const top_4_categories = data.slice(0, 5);
 		// console.log({ top_4_categories });
@@ -117,7 +119,7 @@ const Cart = (props) => {
 		// console.log({ top_4 });
 		const top_4_products = top_4.map((item) => item.data[item.data.length - 1]);
 
-		// console.log({ top_4_products });
+		console.log({ top_4_products });
 		set_category_items(top_4_products);
 	};
 	const decide_url = (item) => {
@@ -300,7 +302,7 @@ const Cart = (props) => {
 						<div className="p-1rem ta-c w-100per">
 							<div className="ta-c w-100per">Cart is Empty</div>
 							{recently_viewed_grid()}
-							{top_categories_grid()}
+							{/* {top_categories_grid()} */}
 						</div>
 					) : (
 						<div

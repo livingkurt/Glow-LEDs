@@ -5,7 +5,7 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { Link, useHistory } from 'react-router-dom';
 import { humanize, prnt } from '../../utils/helper_functions';
 
-const ProductSlideshow = ({ product, images, secondary_images, className, set_image }) => {
+const ProductSlideshow = ({ product, images, secondary_images, className, set_image, interval, transitionTime }) => {
 	return (
 		<Carousel
 			infiniteLoop={true}
@@ -15,10 +15,10 @@ const ProductSlideshow = ({ product, images, secondary_images, className, set_im
 			showIndicators={true}
 			showStatus={false}
 			showThumbs={true}
-			interval={5000}
+			interval={interval}
 			swipeable={true}
 			thumbWidth={50}
-			// transitionTime={1300}
+			transitionTime={transitionTime}
 			// selectedItem={start}
 			emulateTouch={true}
 			// animationHandler="fade"

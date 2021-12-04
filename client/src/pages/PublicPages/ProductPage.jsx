@@ -593,6 +593,8 @@ const ProductPage = (props) => {
 										secondary_images={secondary_images}
 										className=""
 										set_image={set_image}
+										interval={6000}
+										transitionTime={200}
 									/>
 								</div>
 							</div>
