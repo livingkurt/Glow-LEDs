@@ -128,6 +128,7 @@ import useWindowDimensions from './components/Hooks/windowDimensions';
 // import { Particles } from './components/SpecialtyComponents';
 import Particles from 'react-particles-js';
 import particlesjs_config from './particlesjs_config.json';
+import { check_authentication } from './utils/react_helper_functions';
 
 const App = (props) => {
 	const theme_colors = {
@@ -140,34 +141,34 @@ const App = (props) => {
 
 	const [ message, set_message ] = useState('');
 	// const userLogin = useSelector((state) => state.userLogin);
-
+	check_authentication();
 	// let { userInfo } = userLogin;
 	// let userInfo = {};
 	// console.log({ window });
 	// Check for token to keep user logged in
-	if (localStorage.jwtToken) {
-		// Set auth token header auth
-		const token = localStorage.jwtToken;
-		setAuthToken(token);
-		// Decode token and get user info and exp
-		const decoded = jwt_decode(token);
-		// console.log({ decoded });
-		// userInfo = decoded.userInfo;
-		// Set user and isAuthenticated
-		store.dispatch(setCurrentUser(decoded));
-		// Check for expired token
-		const currentTime = Date.now() / 1000; // to get in milliseconds
-		if (decoded.exp < currentTime) {
-			// Logout user
-			store.dispatch(logout());
+	// if (localStorage.jwtToken) {
+	// 	// Set auth token header auth
+	// 	const token = localStorage.jwtToken;
+	// 	setAuthToken(token);
+	// 	// Decode token and get user info and exp
+	// 	const decoded = jwt_decode(token);
+	// 	// console.log({ decoded });
+	// 	// userInfo = decoded.userInfo;
+	// 	// Set user and isAuthenticated
+	// 	store.dispatch(setCurrentUser(decoded));
+	// 	// Check for expired token
+	// 	const currentTime = Date.now() / 1000; // to get in milliseconds
+	// 	if (decoded.exp < currentTime) {
+	// 		// Logout user
+	// 		store.dispatch(logout());
 
-			// Redirect to login
-			window.location.href =
-				window.location.pathname === '/account/login'
-					? '/account/login'
-					: '/account/login?redirect=' + window.location.pathname;
-		}
-	}
+	// 		// Redirect to login
+	// 		window.location.href =
+	// 			window.location.pathname === '/account/login'
+	// 				? '/account/login'
+	// 				: '/account/login?redirect=' + window.location.pathname;
+	// 	}
+	// }
 
 	// We listen to the resize event
 	window.addEventListener('resize', () => {
