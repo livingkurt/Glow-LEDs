@@ -162,12 +162,10 @@ const HomePage = (props) => {
 									}}
 								>
 									<div className="jc-c">
-										<h1 className="welcome_text mb-1rem ta-c" style={{ fontSize: '4rem' }}>
-											Welcome to Glow-LEDs
-										</h1>
+										<h1 className="welcome_text mv-2rem ta-c fs-4rem">Welcome to Glow-LEDs</h1>
 									</div>
 									<div className="jc-c">
-										<h2 className="mb-1rem ta-c title_font" style={{ fontSize: '2rem' }}>
+										<h2 className="mb-1rem ta-c title_font fs-2rem">
 											Innovators of Gloving and Flow Art Technology
 										</h2>
 									</div>
@@ -239,12 +237,10 @@ const HomePage = (props) => {
 									}}
 								>
 									<div className="jc-c">
-										<h1 className="welcome_text mb-1rem ta-c" style={{ fontSize: '4rem' }}>
-											Welcome to Glow-LEDs
-										</h1>
+										<h1 className="welcome_text mv-2rem ta-c fs-4rem">Welcome to Glow-LEDs</h1>
 									</div>
 									<div className="jc-c">
-										<h2 className="mb-1rem ta-c title_font" style={{ fontSize: '2rem' }}>
+										<h2 className="mb-1rem ta-c title_font fs-2rem">
 											Innovators of Gloving and Flow Art Technology
 										</h2>
 									</div>
@@ -317,12 +313,10 @@ const HomePage = (props) => {
 									}}
 								>
 									<div className="jc-c">
-										<h1 className="welcome_text mb-1rem ta-c" style={{ fontSize: '4rem' }}>
-											Welcome to Glow-LEDs
-										</h1>
+										<h1 className="welcome_text mv-2rem ta-c fs-4rem">Welcome to Glow-LEDs</h1>
 									</div>
 									<div className="jc-c">
-										<h2 className="mb-1rem ta-c title_font" style={{ fontSize: '2rem' }}>
+										<h2 className="mb-1rem ta-c title_font fs-2rem">
 											Innovators of Gloving and Flow Art Technology
 										</h2>
 									</div>
@@ -458,8 +452,8 @@ const HomePage = (props) => {
 				)}
 			</div>
 
-			<div style={{ marginTop: slideshow.length === 0 ? 0 : '-25%' }}>
-				<ReadMore width={1000} className="p_descriptions paragraph_font ta-c " length={100}>
+			<div style={{ marginTop: slideshow.length === 0 ? 0 : '-25%' }} className="pv-2rem">
+				<ReadMore width={1000} className="p_descriptions paragraph_font ta-c" length={100}>
 					Here at Glow LEDs we offer a wide variety of Gloving and Flow Art accessories. Including EXO
 					Diffusers, Glow Casings and our most popular product Glowskins! We are based in Austin, TX ran by a
 					small team of people that are dedicated to creating new and innovated technology for flow artists
@@ -573,7 +567,7 @@ const HomePage = (props) => {
 											: 'w-100per'} w-500px jc-b column bg-secondary `}
 								>
 									<div>
-										<h4 className="fs-20px mv-8px ta-c jc-c title_font lh-30px">
+										<h4 className="fs-20px mt-1rem mb-2rem ta-c jc-c title_font lh-30px">
 											{feature.artist_name}
 										</h4>
 										{feature.show_image &&
@@ -611,11 +605,11 @@ const HomePage = (props) => {
 										)}
 
 										<div className="jc-c">
-											<h4 className="fs-18px mb-0px ta-c title_font lh-30px">
+											<h4 className="fs-18px mb-0px ta-c title_font lh-30px mv-1rem">
 												{feature.product && humanize(feature.product)}
 											</h4>
 										</div>
-										<div className="jc-c w-100per m-auto">
+										<div className="jc-c w-100per mv-1rem">
 											<p>{feature.song_id}</p>
 											{/* <ReadMore
 											width={5000}
@@ -629,7 +623,7 @@ const HomePage = (props) => {
 									</div>
 									<div className="jc-c">
 										<Link to={`/collections/all/features/category/glovers/${feature.pathname}`}>
-											<button className="btn primary bob">
+											<button className="btn primary bob mv-1rem">
 												Learn More About {feature.artist_name}
 											</button>
 										</Link>
@@ -651,7 +645,7 @@ const HomePage = (props) => {
 						>
 							<div className="">
 								<div className="jc-c">
-									<h2 className="ta-c">{card.name}</h2>
+									<h2 className="ta-c fs-20px mt-1rem mb-2rem">{card.name}</h2>
 								</div>
 								<div className="jc-c pos-rel mb-1rem">
 									<div className="iframe-container">

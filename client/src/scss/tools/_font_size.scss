@@ -6,6 +6,11 @@
 	}
 }
 @for $i from 0 to 10 {
+	.fs-#{$i}rem {
+		font-size: $i + rem !important;
+	}
+}
+@for $i from 0 to 10 {
 	.fs-#{$i}em {
 		font-size: $i + em !important;
 	}
@@ -67,4 +72,8 @@ h1,
 h2,
 h3 {
 	font-family: $title_font;
+}
+
+p {
+	font-size: 16px;
 }
