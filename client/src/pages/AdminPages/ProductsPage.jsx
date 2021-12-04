@@ -528,6 +528,7 @@ function ProductPage(props) {
 				<h1 style={{ textAlign: 'center' }}>Products</h1>
 			</div>
 			<Loading loading={loading_upload} error={error} />
+			<Loading loading={loading} error={error} />
 			<div className="search_and_sort jc-c ai-c">
 				<button className="btn primary" style={{ whiteSpace: 'nowrap' }} onClick={show_hidden_products}>
 					{!show_hidden ? 'Show' : 'Hide'} Hidden Products
@@ -546,7 +547,7 @@ function ProductPage(props) {
 			</div>
 			{!show_hidden && (
 				<DragDropContext onDragStart={onDragStart} onDragEnd={onDragEnd}>
-					{state.entities.columnOrder.map((columnId) => {
+					{state.entities.columnOrder.map((columnId, index) => {
 						const column = state.entities.columns[columnId];
 						console.log({ column });
 						// const products = column.product_ids.map((product_id, index) => state.entities.products[index]);
@@ -560,7 +561,7 @@ function ProductPage(props) {
 						console.log({ products_2 });
 
 						return (
-							<Droppable droppableId={'column-1'}>
+							<Droppable droppableId={'column-1'} key={index}>
 								{(provided) => (
 									<ul {...provided.droppableProps} ref={provided.innerRef}>
 										{/* {console.log({ state.entities })} */}
@@ -632,7 +633,7 @@ function ProductPage(props) {
 						console.log({ products_2 });
 
 						return (
-							<Droppable droppableId={'column-1'}>
+							<Droppable droppableId={'column-1'} index>
 								{(provided) => (
 									<ul {...provided.droppableProps} ref={provided.innerRef}>
 										{/* {console.log({ state.entities })} */}
