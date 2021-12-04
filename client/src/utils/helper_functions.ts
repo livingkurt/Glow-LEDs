@@ -131,6 +131,7 @@ export const toCapitalize = (string: string) => {
 };
 
 export const determine_promoter_code_tier = (code_usage: number) => {
+	console.log({ promter_code_usage: code_usage });
 	if (code_usage === 0 || code_usage === 1) {
 		return 20;
 	} else if (code_usage >= 2 && code_usage <= 5) {
@@ -148,6 +149,7 @@ export const determine_promoter_code_tier = (code_usage: number) => {
 	}
 };
 export const determine_sponsor_code_tier = (code_usage: number) => {
+	console.log({ sponsor_code_usage: code_usage });
 	if (code_usage === 0 || code_usage === 1) {
 		return 30;
 	} else if (code_usage >= 2 && code_usage <= 5) {

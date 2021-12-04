@@ -113,42 +113,14 @@ const AffiliatesPage = (props) => {
 		set_total_orders(data);
 	};
 
-	const save_affiliate = async (e) => {
+	const update_percentage_off = async (e) => {
 		e.preventDefault();
 		set_loading_promo_update(true);
-		// const affiliate_revenue = calculate_affiliate_usage(
-		// 	affiliates.filter((affiliate) => affiliate.sponsor).filter((affiliate) => affiliate.active),
-		// 	last_months_orders
-		// );
-		affiliates.forEach(async (affiliate) => {
-			const code_usage = last_months_orders.filter((order) => {
-				return (
-					order.promo_code &&
-					order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
-				);
-			}).length;
-			if (code_usage >= 2) {
-				if (affiliate.promoter) {
-					console.log({ promoter: code_usage });
-					const request = await API_Promos.update_promo_code(
-						affiliate.private_code._id,
-						determine_promoter_code_tier(code_usage)
-					);
-					console.log({ request });
-				} else if (affiliate.sponsor) {
-					console.log({ sponsor: code_usage });
-					const request = await API_Promos.update_promo_code(
-						affiliate.private_code._id,
-						determine_sponsor_code_tier(code_usage)
-					);
-					console.log({ request });
-				}
-			}
-
-			// if
-		});
-		set_loading_promo_update(false);
-		dispatch(listAffiliates());
+		const request = await API_Promos.update_promo_code(affiliates, last_months_orders);
+		if (request) {
+			set_loading_promo_update(false);
+			dispatch(listAffiliates());
+		}
 	};
 
 	const get_code_usage = async (affiliate) => {
@@ -195,7 +167,7 @@ const AffiliatesPage = (props) => {
 					})}
 				</div>
 				{total_orders && (
-					<button className="btn primary" onClick={(e) => save_affiliate(e)}>
+					<button className="btn primary" onClick={(e) => update_percentage_off(e)}>
 						Update Percentage Off
 					</button>
 				)}

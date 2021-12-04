@@ -1,4 +1,5 @@
 import { promo_db } from '../db';
+import { determine_promoter_code_tier, determine_sponsor_code_tier } from '../util';
 
 export default {
 	findAll_promos_s: async (query: any) => {
@@ -62,21 +63,36 @@ export default {
 		}
 	},
 	update_affiliate_codes_promos_s: async (params: any, body: any) => {
+		const { affiliates, orders } = body;
+		// console.log({ orders });
 		try {
-			const promo: any = await promo_db.findById_promos_db(body.private_code_id);
-			promo.percentage_off = body.percentage_off;
-			if (promo) {
-				try {
-					const updatedPromo = await promo_db.update_promos_db(params._id, promo);
-					if (updatedPromo) {
+			affiliates
+				.filter((affiliate: any) => affiliate.active)
+				.filter((affiliate: any) => affiliate.private_code)
+				.forEach(async (affiliate: any) => {
+					const code_usage = orders.filter(
+						(order: any) =>
+							order.promo_code &&
+							order.promo_code.toLowerCase() === affiliate.public_code.promo_code &&
+							affiliate.public_code.promo_code.toLowerCase()
+					).length;
+					if (affiliate.promoter) {
+						console.log({ promoter: code_usage });
+						const updatedPromo = await promo_db.update_promos_db(affiliate.private_code._id, {
+							...affiliate.private_code,
+							percentage_off: determine_promoter_code_tier(code_usage)
+						});
+						return updatedPromo;
+					} else if (affiliate.sponsor) {
+						console.log({ sponsor: code_usage });
+						const updatedPromo = await promo_db.update_promos_db(affiliate.private_code._id, {
+							...affiliate.private_code,
+							percentage_off: determine_sponsor_code_tier(code_usage)
+						});
 						return updatedPromo;
 					}
-				} catch (error) {
-					throw new Error(error.message);
-				}
-			} else {
-				throw new Error('No Promo Code Found');
-			}
+				});
+			return 'Success';
 		} catch (error) {
 			console.log({ update_code_used_promos_s_promos_s_error: error });
 			throw new Error(error.message);

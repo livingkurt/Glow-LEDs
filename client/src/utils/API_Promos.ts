@@ -1,9 +1,13 @@
 import axios from 'axios';
 
 const promo_routes = {
-	update_promo_code: (private_code_id: any, percentage_off: number) => {
-		return axios.put('/api/promos/update_discount', { private_code_id, percentage_off });
+	update_promo_code: (affiliates: any, orders: any) => {
+		console.log({ affiliates, orders });
+		return axios.put('/api/promos/update_discount', { affiliates, orders });
 	},
+	// update_promo_code: (private_code_id: any, percentage_off: number) => {
+	// 	return axios.put('/api/promos/update_discount', { private_code_id, percentage_off });
+	// },
 	get_promo: (promo_code: any) => {
 		console.log({ get_promo: promo_code });
 		return axios.get('/api/promos/code/' + promo_code);

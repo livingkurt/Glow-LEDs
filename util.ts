@@ -91,7 +91,7 @@ export const getRefreshToken = (user: any) => {
 
 export const isAuth = (req: any, res: any, next: () => void) => {
 	const token = req.headers.authorization;
-	console.log({ isAuth: token });
+	// console.log({ isAuth: token });
 
 	if (token) {
 		const onlyToken = token.slice(7, token.length);
@@ -110,7 +110,7 @@ export const isAuth = (req: any, res: any, next: () => void) => {
 
 export const isAdmin = (req: any, res: any, next: () => any) => {
 	// console.log(req.user);
-	console.log({ isAdmin: req.user });
+	// console.log({ isAdmin: req.user });
 	if (req.user && req.user.isAdmin) {
 		return next();
 	}
@@ -322,5 +322,38 @@ export const snake_case = (str: any) => {
 		} else {
 			return str.replace(/\W+/g, ' ').toLowerCase().split(' ').join('_');
 		}
+	}
+};
+
+export const determine_promoter_code_tier = (code_usage: number) => {
+	console.log({ promter_code_usage: code_usage });
+	if (code_usage === 0 || code_usage === 1) {
+		return 20;
+	} else if (code_usage >= 2 && code_usage <= 5) {
+		return 25;
+	} else if (code_usage >= 6 && code_usage <= 9) {
+		return 30;
+	} else if (code_usage >= 10 && code_usage <= 13) {
+		return 35;
+	} else if (code_usage >= 14 && code_usage <= 17) {
+		return 40;
+	} else if (code_usage >= 18 && code_usage <= 21) {
+		return 45;
+	} else if (code_usage >= 22) {
+		return 60;
+	}
+};
+export const determine_sponsor_code_tier = (code_usage: number) => {
+	console.log({ sponsor_code_usage: code_usage });
+	if (code_usage === 0 || code_usage === 1) {
+		return 30;
+	} else if (code_usage >= 2 && code_usage <= 5) {
+		return 35;
+	} else if (code_usage >= 6 && code_usage <= 9) {
+		return 40;
+	} else if (code_usage >= 10 && code_usage <= 14) {
+		return 50;
+	} else if (code_usage >= 15) {
+		return 75;
 	}
 };
