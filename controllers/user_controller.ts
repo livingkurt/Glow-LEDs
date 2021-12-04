@@ -98,7 +98,7 @@ export default {
 	// 				user,
 	// 				config.ACCESS_TOKEN_SECRET,
 	// 				{
-	// 					expiresIn: '10d'
+	// 					expiresIn: '15m'
 	// 				},
 	// 				(err: any, access_token: string) => {
 	// 					return res.status(200).send({
@@ -140,7 +140,7 @@ export default {
 				const user = await user_services.refresh_login_users_s(payload.email, payload.password);
 				console.log({ user });
 				const access_token = jwt.sign(user, config.ACCESS_TOKEN_SECRET, {
-					expiresIn: '10d'
+					expiresIn: '15m'
 				});
 				// const user: any = await user_db.findById_users_db(params.id);
 				console.log({ update_profile_users_c: user });
@@ -167,7 +167,7 @@ export default {
 							payload,
 							config.ACCESS_TOKEN_SECRET,
 							{
-								expiresIn: '10d'
+								expiresIn: '15m'
 							},
 							(err: any, access_token: string) => {
 								return {
@@ -257,7 +257,7 @@ export default {
 					user,
 					config.ACCESS_TOKEN_SECRET,
 					{
-						expiresIn: '10d'
+						expiresIn: '15m'
 					},
 					(err: any, access_token: string) => {
 						return res.status(200).send({
@@ -297,7 +297,7 @@ export default {
 				const user = await user_services.refresh_login_users_s(payload.email, payload.password);
 				console.log({ user });
 				const access_token = jwt.sign(user, config.ACCESS_TOKEN_SECRET, {
-					expiresIn: '10d'
+					expiresIn: '15m'
 				});
 				return res.status(200).send({
 					success: true,

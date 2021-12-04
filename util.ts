@@ -24,7 +24,7 @@ export const getAccessToken = (user: any) => {
 		},
 		config.ACCESS_TOKEN_SECRET,
 		{
-			expiresIn: '10d' // 1 year in seconds
+			expiresIn: '15m' // 1 year in seconds
 		}
 	);
 };

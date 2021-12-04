@@ -97,7 +97,7 @@ export default {
 	// 					payload,
 	// 					config.ACCESS_TOKEN_SECRET,
 	// 					{
-	// 						expiresIn: '10d'
+	// 						expiresIn: '15m'
 	// 					},
 	// 					(err: any, access_token: string) => {
 	// 						return {
