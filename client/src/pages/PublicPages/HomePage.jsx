@@ -102,6 +102,29 @@ const HomePage = (props) => {
 		set_loading(false);
 	};
 
+	const determine_welcome_font_size = (width) => {
+		if (width > 1500) {
+			return 'fs-40px';
+		} else if (width < 1500 && width > 1100) {
+			return 'fs-35px';
+		} else if (width < 528 && width > 529) {
+			return 'fs-30px';
+		} else if (width < 438 && width > 300) {
+			return 'fs-20px';
+		}
+	};
+	const determine_innovators_font_size = (width) => {
+		if (width > 1500) {
+			return 'fs-25px';
+		} else if (width < 1500 && width > 1100) {
+			return 'fs-25px';
+		} else if (width < 528 && width > 529) {
+			return 'fs-20px';
+		} else if (width < 438 && width > 300) {
+			return 'fs-16px';
+		}
+	};
+
 	return (
 		<div className="main_container">
 			<Helmet>
@@ -162,10 +185,16 @@ const HomePage = (props) => {
 									}}
 								>
 									<div className="jc-c">
-										<h1 className="welcome_text mv-2rem ta-c fs-4rem">Welcome to Glow-LEDs</h1>
+										<h1
+											className={`welcome_text mb-1rem ta-c ${determine_welcome_font_size(
+												width
+											)}`}
+										>
+											Welcome to Glow-LEDs
+										</h1>
 									</div>
 									<div className="jc-c">
-										<h2 className="mb-1rem ta-c title_font fs-2rem">
+										<h2 className={`mb-1rem ta-c lh-25px ${determine_innovators_font_size(width)}`}>
 											Innovators of Gloving and Flow Art Technology
 										</h2>
 									</div>
@@ -237,10 +266,16 @@ const HomePage = (props) => {
 									}}
 								>
 									<div className="jc-c">
-										<h1 className="welcome_text mv-2rem ta-c fs-4rem">Welcome to Glow-LEDs</h1>
+										<h1
+											className={`welcome_text mv-2rem ta-c ${determine_welcome_font_size(
+												width
+											)}`}
+										>
+											Welcome to Glow-LEDs
+										</h1>
 									</div>
 									<div className="jc-c">
-										<h2 className="mb-1rem ta-c title_font fs-2rem">
+										<h2 className={`mb-1rem ta-c lh-25px ${determine_innovators_font_size(width)}`}>
 											Innovators of Gloving and Flow Art Technology
 										</h2>
 									</div>
@@ -313,10 +348,16 @@ const HomePage = (props) => {
 									}}
 								>
 									<div className="jc-c">
-										<h1 className="welcome_text mv-2rem ta-c fs-4rem">Welcome to Glow-LEDs</h1>
+										<h1
+											className={`welcome_text mv-2rem ta-c ${determine_welcome_font_size(
+												width
+											)}`}
+										>
+											Welcome to Glow-LEDs
+										</h1>
 									</div>
 									<div className="jc-c">
-										<h2 className="mb-1rem ta-c title_font fs-2rem">
+										<h2 className={`mb-1rem ta-c lh-25px ${determine_innovators_font_size(width)}`}>
 											Innovators of Gloving and Flow Art Technology
 										</h2>
 									</div>
@@ -385,12 +426,12 @@ const HomePage = (props) => {
 								}}
 							>
 								<div className="jc-c">
-									<h1 className="welcome_text mb-1rem ta-c" style={{ fontSize: '4rem' }}>
+									<h1 className={`welcome_text mb-1rem ta-c ${determine_welcome_font_size(width)}`}>
 										Welcome to Glow-LEDs
 									</h1>
 								</div>
 								<div className="jc-c">
-									<h2 className="mb-1rem ta-c title_font" style={{ fontSize: '2rem' }}>
+									<h2 className={`mb-1rem ta-c lh-30px ${determine_innovators_font_size(width)}`}>
 										Innovators of Gloving and Flow Art Technology
 									</h2>
 								</div>
