@@ -6,7 +6,7 @@ import { logout } from '../../actions/userActions';
 import { listProducts } from '../../actions/productActions';
 import Banner from './Banner';
 import { HashLink } from 'react-router-hash-link';
-import { browser_check, check_authentication } from '../../utils/react_helper_functions';
+import { browser_check } from '../../utils/react_helper_functions';
 import useWindowDimensions from '../Hooks/windowDimensions';
 import { API_Products } from '../../utils';
 import { categories, humanize, subcategories } from '../../utils/helper_functions';

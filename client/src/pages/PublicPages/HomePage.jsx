@@ -7,8 +7,8 @@ import { ReadMore, HomeSlideshow } from '../../components/SpecialtyComponents';
 import { categories, homepage_videos, humanize, subcategories } from '../../utils/helper_functions';
 import { API_Products } from '../../utils';
 import useWindowDimensions from '../../components/Hooks/windowDimensions';
-import { LazyImage, Loading } from '../../components/UtilityComponents';
-import { hide_search_bar, show_search_bar } from '../../actions/settingActions';
+import { Loading } from '../../components/UtilityComponents';
+import { show_search_bar } from '../../actions/settingActions';
 import { listFeatures } from '../../actions/featureActions';
 
 const HomePage = (props) => {
@@ -476,6 +476,7 @@ const HomePage = (props) => {
 						.map(({ home_page }, index) => {
 							return (
 								<div
+									key={index}
 									className={`container ${width > 1473
 										? 'max-w-450px'
 										: width > 1019
@@ -505,6 +506,7 @@ const HomePage = (props) => {
 												<Link to={home_page.link} className="home_page_pictures">
 													{home_page.images.map((image, index) => (
 														<img
+															key={index}
 															src={image}
 															className={'w-100per br-20px m-auto image_' + (index + 1)}
 															alt="Promo"
@@ -563,6 +565,7 @@ const HomePage = (props) => {
 						.map((feature, index) => {
 							return (
 								<div
+									key={index}
 									className={`container ${width > 1473
 										? 'max-w-450px'
 										: width > 1019

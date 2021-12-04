@@ -13,13 +13,13 @@ const requestIp = require('request-ip');
 
 import routes from './routes';
 
-let Bugsnag = require('@bugsnag/js');
-let BugsnagPluginExpress = require('@bugsnag/plugin-express');
+// let Bugsnag = require('@bugsnag/js');
+// let BugsnagPluginExpress = require('@bugsnag/plugin-express');
 
-Bugsnag.start({
-	apiKey: process.env.BUGSNAG_KEY,
-	plugins: [ BugsnagPluginExpress ]
-});
+// Bugsnag.start({
+// 	apiKey: process.env.BUGSNAG_KEY,
+// 	plugins: [ BugsnagPluginExpress ]
+// });
 
 const allowCrossDomain = function(req: any, res: any, next: any) {
 	res.header('Access-Control-Allow-Origin', '*');
@@ -52,16 +52,16 @@ const app = express();
 // 	// app.use(express.static(path.join(application_root, "public")));
 // 	// app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 // });
-const middleware = Bugsnag.getPlugin('express');
+// const middleware = Bugsnag.getPlugin('express');
 
-// This must be the first piece of middleware in the stack.
-// It can only capture errors in downstream middleware
-app.use(middleware.requestHandler);
+// // This must be the first piece of middleware in the stack.
+// // It can only capture errors in downstream middleware
+// app.use(middleware.requestHandler);
 
-/* all other middleware and application routes go here */
+// /* all other middleware and application routes go here */
 
-// This handles any errors that Express catches
-app.use(middleware.errorHandler);
+// // This handles any errors that Express catches
+// app.use(middleware.errorHandler);
 
 app.all('*', function(req, res, next) {
 	const origin = req.get('origin');

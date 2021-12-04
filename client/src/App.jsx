@@ -162,7 +162,10 @@ const App = (props) => {
 			store.dispatch(logout());
 
 			// Redirect to login
-			window.location.href = '/account/login?redirect=' + window.location.pathname;
+			window.location.href =
+				window.location.pathname === '/account/login'
+					? '/account/login'
+					: '/account/login?redirect=' + window.location.pathname;
 		}
 	}
 

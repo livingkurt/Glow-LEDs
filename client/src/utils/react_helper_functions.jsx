@@ -307,6 +307,14 @@ export const determine_product_name = (item, show_qty, date) => {
 					</div>
 				);
 			}
+			if (item.subcategory === 'gloves') {
+				return (
+					<div>
+						{show_qty && item.qty > 1 && item.qty + 'x'} {item.color && item.color + ' '} {item.name}{' '}
+						{item.size !== '0' && ' - ' + item.size}{' '}
+					</div>
+				);
+			}
 			if (item.subcategory === 'chips') {
 				return (
 					<div>
@@ -416,6 +424,13 @@ export const determine_secondary_product_name = (name, category, subcategory) =>
 		if (name.split('-')[0].trim() === 'Nanoskins') {
 			return name.split('-')[1].trim();
 		}
+		
+		if (subcategory === 'gloves' && name.includes('Bulk')) {
+			return name.split(' ')[1].trim();
+		}
+		if (name.split('-')[0].trim() === 'Supreme Gloves') {
+			return name.split('-')[1].trim();
+		}
 		if (name.split('-')[0].trim() === 'Nano Glow Casings') {
 			return name.split('-')[1].trim();
 		}
@@ -437,6 +452,23 @@ export const determine_secondary_product_name = (name, category, subcategory) =>
 			// }
 			return name;
 		}
+	}
+};
+export const determine_option_product_name = (name, category, subcategory) => {
+	// console.log({ name: name.split('-')[0], category, subcategory });
+	try {
+		if (name) {
+			if (name.split('-')[0].trim() === 'Supreme Gloves') {
+				return name.split('-')[1].trim();
+			} else {
+				// if (category === 'accessories' && subcategory === 'clips') {
+				// 	return name.split(' ')[3] + ' ' + name.split(' ')[4];
+				// }
+				return name;
+			}
+		}
+	} catch (error) {
+		return name;
 	}
 };
 

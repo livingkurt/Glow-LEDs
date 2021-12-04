@@ -14,7 +14,11 @@ import { LazyImage, Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { addToCart, saveCart } from '../../actions/cartActions';
 import 'react-medium-image-zoom/dist/styles.css';
-import { determine_secondary_product_name, sale_price_switch } from '../../utils/react_helper_functions';
+import {
+	determine_option_product_name,
+	determine_secondary_product_name,
+	sale_price_switch
+} from '../../utils/react_helper_functions';
 import useWindowDimensions from '../../components/Hooks/windowDimensions';
 import 'react-awesome-slider/dist/styles.css';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
@@ -288,10 +292,12 @@ const ProductPage = (props) => {
 		set_secondary_product(secondary._id);
 		set_secondary_product_name(secondary.name);
 		set_secondary_product_object(secondary);
-
-		if (secondary.images.length > 0) {
-			set_images(secondary.images);
-			set_image(secondary.images && secondary.images[0]);
+		console.log({ subcategory: secondary.subcategory });
+		if (secondary.subcategory !== 'batteries') {
+			if (secondary.images.length > 0) {
+				set_images(secondary.images);
+				set_image(secondary.images && secondary.images[0]);
+			}
 		}
 	};
 	const update_url = (color = '', secondary_color = '', option = '', secondary_product = '') => {
@@ -970,7 +976,9 @@ const ProductPage = (props) => {
 																			: 'primary'}`}
 																>
 																	{/* {console.log({ option })} */}
-																	{option.size || option.name}
+																	{determine_option_product_name(
+																		option.size || option.name
+																	)}
 																</button>
 															))}
 														</div>
@@ -1008,7 +1016,9 @@ const ProductPage = (props) => {
 																			: 'primary'}`}
 																>
 																	{/* {console.log({ option })} */}
-																	{option.size || option.name}
+																	{determine_option_product_name(
+																		option.size || option.name
+																	)}
 																</button>
 															))}
 														</div>
@@ -1304,7 +1314,9 @@ const ProductPage = (props) => {
 																			? 'secondary'
 																			: 'primary'}`}
 																>
-																	{option.size || option.name}
+																	{determine_option_product_name(
+																		option.size || option.name
+																	)}
 																</button>
 															))}
 													</div>
@@ -1333,7 +1345,9 @@ const ProductPage = (props) => {
 																		? 'secondary'
 																		: 'primary'}`}
 																>
-																	{option.size || option.name}
+																	{determine_option_product_name(
+																		option.size || option.name
+																	)}
 																</button>
 															))}
 													</div>
