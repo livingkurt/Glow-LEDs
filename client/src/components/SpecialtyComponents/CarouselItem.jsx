@@ -60,7 +60,7 @@ const CarouselItem = (props) => {
 				sale_price: product.sale_price,
 				sale_start_date: product.sale_start_date,
 				sale_end_date: product.sale_end_date,
-				countInStock: product.countInStock,
+				quantity: product.quantity,
 				weight_pounds: product.weight_pounds,
 				weight_ounces: product.weight_ounces,
 				package_length: product.package_length,
@@ -105,7 +105,7 @@ const CarouselItem = (props) => {
 					<div className="tooltip">
 						<span className="tooltiptext">
 							<li>
-								{product.countInStock > 0 && props.add_to_cart ? (
+								{product.quantity > 0 && props.add_to_cart ? (
 									<div>
 										{product.subcategory !== 'batteries' ? (
 											<button onClick={handleAddToCart} className="btn primary">

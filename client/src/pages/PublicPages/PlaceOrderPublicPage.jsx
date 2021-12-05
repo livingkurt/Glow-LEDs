@@ -262,12 +262,12 @@ const PlaceOrderPublicPage = (props) => {
 			if (item.finite_stock) {
 				// const { data: product } = await API_Products.get_product(item.product);
 				// console.log({ product });
-				const new_count = item.countInStock - item.qty;
+				const new_count = item.quantity - item.qty;
 				// console.log({ new_count });
 				const { data: res } = await API_Products.update_stock(item.product, new_count);
 			}
 			//  else if (item.product_option.finite_stock) {
-			// 	const new_count = item.product_option.count_in_stock - item.qty;
+			// 	const new_count = item.product_option.quantity_state - item.qty;
 			// 	// console.log({ new_count });
 			// 	const { data: res } = await API_Products.update_product_option_stock(
 			// 		item.product,

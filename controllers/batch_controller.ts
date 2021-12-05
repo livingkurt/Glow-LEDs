@@ -409,5 +409,19 @@ export default {
 		});
 		// console.log({ products });
 		res.send(products);
+	},
+	convert_away_from_count_in_stock: async (req: any, res: any) => {
+		const products = await Product.updateMany(
+			{},
+			{
+				$rename: { countInStock: 'count_in_stock' },
+				$set: {
+					quantity: 20
+				}
+			},
+			{ multi: true }
+		);
+
+		res.send(products);
 	}
 };

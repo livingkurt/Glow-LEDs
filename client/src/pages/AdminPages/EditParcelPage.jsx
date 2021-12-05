@@ -16,7 +16,7 @@ const EditParcelPage = (props) => {
 	const [ width, set_width ] = useState();
 	const [ height, set_height ] = useState();
 	const [ volume, set_volume ] = useState();
-	const [ count_in_stock, set_count_in_stock ] = useState();
+	const [ quantity_state, set_quantity_state ] = useState();
 
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
 
@@ -32,7 +32,7 @@ const EditParcelPage = (props) => {
 		set_width(parcel.width);
 		set_height(parcel.height);
 		set_volume(parcel.volume);
-		set_count_in_stock(parcel.count_in_stock);
+		set_quantity_state(parcel.quantity_state);
 	};
 	const unset_state = () => {
 		set_id('');
@@ -41,7 +41,7 @@ const EditParcelPage = (props) => {
 		set_width();
 		set_height();
 		set_volume();
-		set_count_in_stock();
+		set_quantity_state();
 	};
 
 	const dispatch = useDispatch();
@@ -89,7 +89,7 @@ const EditParcelPage = (props) => {
 				width,
 				height,
 				volume: length * width * height,
-				count_in_stock
+				quantity_state
 			})
 		);
 		e.target.reset();
@@ -190,13 +190,13 @@ const EditParcelPage = (props) => {
 											/>
 										</li>
 										<li>
-											<label htmlFor="count_in_stock">Count In Stock</label>
+											<label htmlFor="quantity_state">Count In Stock</label>
 											<input
 												type="text"
-												name="count_in_stock"
-												defaultValue={count_in_stock}
-												id="count_in_stock"
-												onChange={(e) => set_count_in_stock(e.target.value)}
+												name="quantity_state"
+												defaultValue={quantity_state}
+												id="quantity_state"
+												onChange={(e) => set_quantity_state(e.target.value)}
 											/>
 										</li>
 									</div>

@@ -217,7 +217,7 @@ const Cart = (props) => {
 							{recently_viewed_products.map((item, index) => {
 								return (
 									<Link
-										to={`/collections/all/products/${item.category}/${item.subcategory}/${item.pathname}`}
+										to={`/collections/all/products/${item.pathname}`}
 										className="w-100per mb-1rem"
 										key={index}
 									>
@@ -362,9 +362,7 @@ const Cart = (props) => {
 										<div className="w-100per">
 											<div className="cart_sidebar-name jc-b ai-c">
 												<div className="mb-10px w-100per">
-													<Link
-														to={`/collections/all/products/${item.category}/${item.subcategory}/${item.pathname}`}
-													>
+													<Link to={`/collections/all/products/${item.pathname}`}>
 														{determine_product_name(item, true)}
 													</Link>
 												</div>
@@ -396,7 +394,7 @@ const Cart = (props) => {
 										{/* <div className="cart_sidebar-name">
 											<div className="mb-10px">
 												<Link
-													to={`/collections/all/products/${item.category}/${item.subcategory}/${item.pathname}`}
+													to={`/collections/all/products/${item.pathname}`}
 												>
 													{determine_product_name(item, true)}
 												</Link>

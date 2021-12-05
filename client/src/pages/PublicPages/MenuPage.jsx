@@ -312,7 +312,7 @@ const MenuPage = (props) => {
 		if (item) {
 			if (pathname === 'gloving' || pathname === 'decor') {
 				if (item.subcategory) {
-					return `/collections/all/products/${item.category}/${item.subcategory}/${item.pathname}`;
+					return `/collections/all/products/${item.pathname}`;
 				} else {
 					return `/collections/all/products/${item.category}`;
 				}

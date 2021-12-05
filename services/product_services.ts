@@ -488,7 +488,7 @@ export default {
 	update_stock: async (req: any, res: any) => {
 		try {
 			console.log({ product_id: req.body.product_id });
-			console.log({ count_in_stock: req.body.count_in_stock });
+			console.log({ quantity_state: req.body.quantity_state });
 			const productId = req.body.product_id;
 			console.log({ productId });
 			const product = await Product.findById(productId);
@@ -496,7 +496,7 @@ export default {
 			if (product) {
 				const updatedProduct = await Product.updateOne(
 					{ _id: productId },
-					{ ...req.body, countInStock: req.body.count_in_stock }
+					{ ...req.body, quantity: req.body.quantity_state }
 				);
 				console.log({ updatedProduct });
 				if (updatedProduct) {
@@ -566,12 +566,12 @@ export default {
 	update_product_option_stock: async (req: any, res: any) => {
 		try {
 			// console.log({ product_id: req.body.product_id });
-			// console.log({ count_in_stock: req.body.count_in_stock });
+			// console.log({ quantity_state: req.body.quantity_state });
 			// console.log({ product_option: req.body.product_option });
 			console.log('update_product_option_stock');
 			const product_id = req.body.product_id;
 			const product_option = req.body.product_option;
-			const count_in_stock = req.body.count_in_stock;
+			const quantity_state = req.body.quantity_state;
 			// console.log({ product_id });
 			const product = await Product.findById(product_id);
 			// console.log({ product });
@@ -584,7 +584,7 @@ export default {
 				const product_options = [ ...product.product_options ];
 				product_options[index] = {
 					...product_option,
-					count_in_stock: count_in_stock
+					quantity_state: quantity_state
 				};
 				console.log({ product_options });
 				const updatedProduct = await Product.updateOne({ _id: product_id }, { ...req.body, product_options });

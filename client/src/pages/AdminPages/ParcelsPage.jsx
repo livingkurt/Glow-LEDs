@@ -143,7 +143,7 @@ const ParcelsPage = (props) => {
 										<td className="p-10px">{parcel.width}</td>
 										<td className="p-10px">{parcel.height}</td>
 										<td className="p-10px">{parcel.volume}</td>
-										<td className="p-10px">{parcel.count_in_stock}</td>
+										<td className="p-10px">{parcel.quantity_state}</td>
 										<td className="p-10px">
 											<div className="jc-b">
 												<Link to={'/secure/glow/editparcel/' + parcel._id}>

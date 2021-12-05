@@ -187,7 +187,7 @@ export const email_sale_price_switch = (item, color) => {
 				{'-->'} ${item.sale_price && (item.sale_price * item.qty).toFixed(2)}
 			</label>
 		);
-	} else if (item.countInStock === 0) {
+	} else if (item.quantity === 0) {
 		return (
 			<label>
 				<del style={{ color: '#a03131' }}>

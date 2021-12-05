@@ -33,7 +33,8 @@ const EditProductPage = (props) => {
 	const [ brand, setBrand ] = useState('');
 	const [ category, setCategory ] = useState('');
 	const [ product_collection, set_product_collection ] = useState('');
-	const [ countInStock, setCountInStock ] = useState('');
+	const [ quantity, set_quantity ] = useState();
+	const [ count_in_stock, set_count_in_stock ] = useState();
 	const [ description, setDescription ] = useState('');
 	const [ facts, setFacts ] = useState('');
 	const [ included_items, setIncludedItems ] = useState();
@@ -302,7 +303,8 @@ const EditProductPage = (props) => {
 		setCategory(product.category);
 		set_product_collection(product.product_collection);
 		set_subcategory(product.subcategory);
-		setCountInStock(product.countInStock);
+		set_quantity(product.quantity);
+		set_count_in_stock(product.count_in_stock);
 		set_finite_stock(product.finite_stock);
 		if (props.match.params.pathname) {
 			if (props.match.params.template === 'false') {
@@ -361,7 +363,8 @@ const EditProductPage = (props) => {
 		// set_subcategories('');
 		set_subcategory('');
 		set_product_collection('');
-		setCountInStock(0);
+		set_quantity();
+		set_count_in_stock();
 		setHidden(false);
 		set_chips([]);
 		set_categorys([]);
@@ -437,7 +440,8 @@ const EditProductPage = (props) => {
 				brand,
 				category,
 				product_collection,
-				countInStock,
+				quantity,
+				count_in_stock,
 				facts,
 				included_items: included_items.length === 0 ? '' : included_items,
 				description,
@@ -1082,13 +1086,23 @@ const EditProductPage = (props) => {
 
 										<div className="w-228px m-10px">
 											<li>
-												<label htmlFor="countInStock">Count In Stock</label>
+												<label htmlFor="quantity">Quantity</label>
 												<input
 													type="text"
-													name="countInStock"
-													value={countInStock}
-													id="countInStock"
-													onChange={(e) => setCountInStock(e.target.value)}
+													name="quantity"
+													value={quantity}
+													id="quantity"
+													onChange={(e) => set_quantity(e.target.value)}
+												/>
+											</li>
+											<li>
+												<label htmlFor="count_in_stock">Count In Stock</label>
+												<input
+													type="text"
+													name="count_in_stock"
+													value={count_in_stock}
+													id="count_in_stock"
+													onChange={(e) => set_count_in_stock(e.target.value)}
 												/>
 											</li>
 											{loading_checkboxes ? (

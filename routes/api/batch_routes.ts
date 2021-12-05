@@ -19,6 +19,7 @@ router.route('/update_order_items').put(batch_controller.update_order_items);
 router.route('/find_duplicate_emails').put(isAuth, isAdmin, batch_controller.find_duplicate_emails);
 router.route('/make_emails_lowercase').put(isAuth, isAdmin, batch_controller.make_emails_lowercase);
 router.route('/update_diffuser_caps_product_name').put(batch_controller.update_diffuser_caps_product_name);
+router.route('/convert_away_from_count_in_stock').put(batch_controller.convert_away_from_count_in_stock);
 
 // router.route('/create_categories').post();
 

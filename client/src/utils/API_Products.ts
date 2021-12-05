@@ -43,9 +43,9 @@ const product_routes = {
 		// console.log({ update_product_order: { product, order } });
 		return axios.put('/api/products/update_product_order', { product, order });
 	},
-	update_stock: (product_id: string, count_in_stock: number) => {
-		// console.log({ update_stock: { product_id, count_in_stock } });
-		return axios.put('/api/products/update_stock', { product_id, count_in_stock });
+	update_stock: (cartItems: any) => {
+		// console.log({ update_stock: { product_id, new_count_in_stock } });
+		return axios.put('/api/products/update_stock', { cartItems });
 	},
 	create_product_option: (product: any) => {
 		// console.log({ update_stock: product });
@@ -55,9 +55,9 @@ const product_routes = {
 		// console.log({ update_pathname: { product_id, pathname } });
 		return axios.put('/api/products/update_pathname', { product_id, pathname, product });
 	},
-	update_product_option_stock: (product_id: string, product_option: any, count_in_stock: number) => {
-		// console.log({ update_product_option_stock: { product_id, product_option, count_in_stock } });
-		return axios.put('/api/products/update_product_option_stock', { product_id, product_option, count_in_stock });
+	update_product_option_stock: (product_id: string, product_option: any, quantity_state: number) => {
+		// console.log({ update_product_option_stock: { product_id, product_option, quantity_state } });
+		return axios.put('/api/products/update_product_option_stock', { product_id, product_option, quantity_state });
 	},
 	// save_secondary_product: (order: any, user_data: any, secondary_product: any) => {
 	// 	console.log({ save_secondary_product: { order, user_data, secondary_product } });

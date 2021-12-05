@@ -618,31 +618,77 @@ export default {
 		}
 	},
 	update_stock: async (req: any, res: any) => {
-		try {
-			console.log({ product_id: req.body.product_id });
-			console.log({ count_in_stock: req.body.count_in_stock });
-			const productId = req.body.product_id;
-			console.log({ productId });
-			const product = await Product.findById(productId);
-			console.log({ product });
-			if (product) {
-				const updatedProduct = await Product.updateOne(
-					{ _id: productId },
-					{ ...req.body, countInStock: req.body.count_in_stock }
-				);
-				console.log({ updatedProduct });
-				if (updatedProduct) {
-					return res.status(200).send(updatedProduct);
-				}
-			} else {
-				console.log('Error in Updating Product.');
-				return res.status(500).send({ message: ' Error in Updating Product.' });
+		const { cartItems } = req.body;
+		const save_product = async (id: string, count_in_stock: number, qty: number) => {
+			const new_count = count_in_stock - qty;
+			console.log({ id, new_count });
+			const product: any = await Product.findOne({ _id: id });
+			if (product.count_in_stock <= product.quantity) {
+				product.quantity = new_count;
 			}
+			product.count_in_stock = new_count;
+			if (product) {
+				const request = await product.save();
+				res.status(200).send(request);
+			}
+		};
+		try {
+			cartItems.forEach(async (item: any) => {
+				if (item.finite_stock) {
+					save_product(item.product, item.count_in_stock, item.qty);
+				} else if (item.option_product && item.option_product.finite_stock) {
+					save_product(item.option_product.product, item.option_product.count_in_stock, item.qty);
+				} else if (item.secondary_product && item.secondary_product.finite_stock) {
+					save_product(item.secondary_product.product, item.secondary_product.count_in_stock, item.qty);
+				} else if (item.color_product && item.color_product.finite_stock) {
+					save_product(item.color_product.product, item.color_product.count_in_stock, item.qty);
+				} else if (item.secondary_color_product && item.secondary_color_product.finite_stock) {
+					save_product(
+						item.secondary_color_product.product,
+						item.secondary_color_product.count_in_stock,
+						item.qty
+					);
+				}
+			});
 		} catch (error) {
 			console.log({ update_stock_products_error: error });
 			res.status(500).send({ error, message: 'Error Updating Product' });
 		}
 	},
+	// update_stock: async (req: any, res: any) => {
+	// 	const { cartItems } = req.body;
+	// 	let product: any = {};
+	// 	let new_count = 0;
+	// 	try {
+	// 		cartItems.forEach(async (item: any) => {
+	// 			if (item.finite_stock) {
+	// 				product = await Product.findOne({ _id: item.product });
+	// 				new_count = product.count_in_stock - item.qty;
+	// 			} else if (item.option_product && item.option_product.finite_stock) {
+	// 				product = await Product.findOne({ _id: item.option_product.product });
+	// 				new_count = product.option_product.count_in_stock - item.qty;
+	// 			} else if (item.secondary_product && item.secondary_product.finite_stock) {
+	// 				product = await Product.findOne({ _id: item.secondary_product.product });
+	// 				new_count = product.secondary_product.count_in_stock - item.qty;
+	// 			} else if (item.color_product && item.color_product.finite_stock) {
+	// 				product = await Product.findOne({ _id: item.color_product.product });
+	// 				new_count = product.color_product.count_in_stock - item.qty;
+	// 			} else if (item.secondary_color_product && item.secondary_color_product.finite_stock) {
+	// 				product = await Product.findOne({ _id: item.secondary_color_product.product });
+	// 				new_count = product.secondary_color_product.count_in_stock - item.qty;
+	// 			}
+	// 			console.log({ product });
+	// 			console.log({ new_count });
+	// 			if (product) {
+	// 				const request = await product.save();
+	// 				res.status(200).send(request);
+	// 			}
+	// 		});
+	// 	} catch (error) {
+	// 		console.log({ update_stock_products_error: error });
+	// 		res.status(500).send({ error, message: 'Error Updating Product' });
+	// 	}
+	// },
 	save_item_group_id: async (req: any, res: any) => {
 		try {
 			const option = req.body.option;
@@ -698,12 +744,12 @@ export default {
 	update_product_option_stock: async (req: any, res: any) => {
 		try {
 			// console.log({ product_id: req.body.product_id });
-			// console.log({ count_in_stock: req.body.count_in_stock });
+			// console.log({ quantity_state: req.body.quantity_state });
 			// console.log({ product_option: req.body.product_option });
 			console.log('update_product_option_stock');
 			const product_id = req.body.product_id;
 			const product_option = req.body.product_option;
-			const count_in_stock = req.body.count_in_stock;
+			const quantity_state = req.body.quantity_state;
 			// console.log({ product_id });
 			const product = await Product.findById(product_id);
 			// console.log({ product });
@@ -716,7 +762,7 @@ export default {
 				const product_options = [ ...product.product_options ];
 				product_options[index] = {
 					...product_option,
-					count_in_stock: count_in_stock
+					quantity_state: quantity_state
 				};
 				console.log({ product_options });
 				const updatedProduct = await Product.updateOne({ _id: product_id }, { ...req.body, product_options });

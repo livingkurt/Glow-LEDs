@@ -24,6 +24,7 @@ const cartItemsSchema = new mongoose.Schema(
 		package_volume: { type: Number },
 		weight_pounds: { type: Number },
 		weight_ounces: { type: Number },
+		count_in_stock: { type: Number },
 		length: { type: Number },
 		width: { type: Number },
 		height: { type: Number },

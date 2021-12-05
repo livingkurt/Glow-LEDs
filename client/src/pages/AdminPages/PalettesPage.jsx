@@ -195,7 +195,7 @@ const PalettesPage = (props) => {
 										<td className="p-10px">{palette.width}</td>
 										<td className="p-10px">{palette.height}</td>
 										<td className="p-10px">{palette.volume}</td>
-										<td className="p-10px">{palette.count_in_stock}</td>
+										<td className="p-10px">{palette.quantity_state}</td>
 										<td className="p-10px">
 											<div className="jc-b">
 												<Link to={'/secure/glow/editpalette/' + palette._id}>

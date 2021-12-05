@@ -66,7 +66,7 @@ export const addToCart = (cart_item_1: any) => async (
 			sale_price: cart_data.sale_price,
 			sale_start_date: cart_data.sale_start_date,
 			sale_end_date: cart_data.sale_end_date,
-			countInStock: cart_data.countInStock,
+			count_in_stock: cart_data.count_in_stock,
 			weight_pounds: cart_data.weight_pounds,
 			weight_ounces: cart_data.weight_ounces,
 			package_length: cart_data.package_length,

@@ -1743,17 +1743,17 @@ const EditOrderPage = (props) => {
 																	/>
 																</li>
 																<li>
-																	<label htmlFor="count_in_stock">
+																	<label htmlFor="quantity_state">
 																		Count In Stock
 																	</label>
 																	<input
 																		type="text"
-																		name="count_in_stock"
+																		name="quantity_state"
 																		defaultValue={
-																			item.product_option.count_in_stock
+																			item.product_option.quantity_state
 																		}
-																		value={item.product_option.count_in_stock}
-																		id="count_in_stock"
+																		value={item.product_option.quantity_state}
+																		id="quantity_state"
 																		onChange={(e) =>
 																			update_product_option_property(
 																				e.target.value,

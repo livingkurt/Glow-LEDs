@@ -112,7 +112,7 @@ const CartItem = (props) => {
 									);
 								}}
 							>
-								{[ ...Array(props.item.countInStock).keys() ].map((x, index) => (
+								{[ ...Array(props.item.quantity).keys() ].map((x, index) => (
 									<option key={index} defaultValue={parseInt(x + 1)}>
 										{parseInt(x + 1)}
 									</option>

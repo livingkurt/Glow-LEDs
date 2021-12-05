@@ -73,7 +73,7 @@ const facebook_catalog_upload = async () => {
 				const image_link = product.images[0];
 				const additional_image_link = product.images[1];
 				const brand = 'Glow LEDs';
-				const inventory = product.countInStock;
+				const inventory = product.quantity;
 				const fb_product_category = 'toys & games > electronic toys';
 				const google_product_category = 'Toys & Games > Toys > Visual Toys';
 				const sale_price = product.sale_price;

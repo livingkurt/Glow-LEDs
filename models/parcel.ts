@@ -8,7 +8,7 @@ const parcel_schema = new mongoose.Schema(
 		width: { type: Number },
 		height: { type: Number },
 		volume: { type: Number },
-		count_in_stock: { type: Number },
+		quantity_state: { type: Number },
 		deleted: { type: Boolean, default: false }
 	},
 	{

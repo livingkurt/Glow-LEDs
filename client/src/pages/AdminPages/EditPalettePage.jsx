@@ -29,7 +29,7 @@ const EditPalettePage = (props) => {
 	const [ chip, set_chip ] = useState({});
 	const [ colors_per_mode, set_colors_per_mode ] = useState();
 	const [ colors, set_colors ] = useState(0);
-	const [ count_in_stock, set_count_in_stock ] = useState(1);
+	const [ quantity_state, set_quantity_state ] = useState(1);
 	const [ color, set_color ] = useState('#333333');
 	const [ chips, set_chips ] = useState([]);
 	const [ preset_colors, set_preset_colors ] = useState([ 'red', 'green', 'blue' ]);
@@ -51,7 +51,7 @@ const EditPalettePage = (props) => {
 		set_name(palette.name);
 		set_chip(palette.chip);
 		set_colors(palette.colors);
-		set_count_in_stock(palette.count_in_stock);
+		set_quantity_state(palette.quantity_state);
 	};
 	const unset_state = () => {
 		set_id('');
@@ -59,7 +59,7 @@ const EditPalettePage = (props) => {
 		set_name();
 		set_chip();
 		set_colors();
-		set_count_in_stock();
+		set_quantity_state();
 	};
 
 	const dispatch = useDispatch();
@@ -121,7 +121,7 @@ const EditPalettePage = (props) => {
 				chip,
 				colors_per_mode,
 				colors: name * chip * colors_per_mode,
-				count_in_stock
+				quantity_state
 			})
 		);
 		e.target.reset();
@@ -288,13 +288,13 @@ const EditPalettePage = (props) => {
 											/>
 										</li>
 										<li>
-											<label htmlFor="count_in_stock">Count In Stock</label>
+											<label htmlFor="quantity_state">Count In Stock</label>
 											<input
 												type="text"
-												name="count_in_stock"
-												defaultValue={count_in_stock}
-												id="count_in_stock"
-												onChange={(e) => set_count_in_stock(e.target.value)}
+												name="quantity_state"
+												defaultValue={quantity_state}
+												id="quantity_state"
+												onChange={(e) => set_quantity_state(e.target.value)}
 											/>
 										</li>
 									</div>
