@@ -423,5 +423,67 @@ export default {
 		);
 
 		res.send(products);
+	},
+	remove_countInStock: async (req: any, res: any) => {
+		const products = await Product.updateMany(
+			{},
+			{
+				$unset: { countInStock: 1 }
+			},
+			{ multi: true }
+		);
+
+		res.send(products);
+	},
+	change_size_to_string: async (req: any, res: any) => {
+		const products = await Product.find({ deleted: false });
+		// console.log({ discount_percentage: req.body.discount_percentage });
+		// const diffuser_caps = products.filter((product: any) => product.category === 'diffuser_caps');
+
+		products.forEach(async (product: any) => {
+			product.sizing = product.size ? `${product.size}` : null;
+			const result = await product.save();
+			console.log({ result });
+		});
+
+		res.send(products);
+	},
+	remove_size: async (req: any, res: any) => {
+		const products = await Product.updateMany(
+			{},
+			{
+				$unset: { size: 1 }
+			},
+			{ multi: true }
+		);
+
+		res.send(products);
+	},
+	rename_sizing_to_size: async (req: any, res: any) => {
+		const products = await Product.updateMany(
+			{},
+			{
+				$rename: { sizing: 'size' }
+			},
+			{ multi: true }
+		);
+
+		res.send(products);
+	},
+	remove_product_options: async (req: any, res: any) => {
+		const products = await Product.updateMany(
+			{},
+			{
+				// $rename: { shipping_price: 'volume' }
+				// $set: {
+				// 	product_options: []
+				// }
+				$unset: { product_options: 1 }
+			},
+			{ multi: true }
+			// { upsert: true }
+		);
+
+		res.send(products);
 	}
 };

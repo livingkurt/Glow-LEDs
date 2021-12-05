@@ -20,6 +20,11 @@ router.route('/find_duplicate_emails').put(isAuth, isAdmin, batch_controller.fin
 router.route('/make_emails_lowercase').put(isAuth, isAdmin, batch_controller.make_emails_lowercase);
 router.route('/update_diffuser_caps_product_name').put(batch_controller.update_diffuser_caps_product_name);
 router.route('/convert_away_from_count_in_stock').put(batch_controller.convert_away_from_count_in_stock);
+router.route('/remove_countInStock').put(batch_controller.remove_countInStock);
+router.route('/remove_size').put(batch_controller.remove_size);
+router.route('/change_size_to_string').put(batch_controller.change_size_to_string);
+router.route('/remove_product_options').put(batch_controller.remove_product_options);
+router.route('/rename_sizing_to_size').put(batch_controller.rename_sizing_to_size);
 
 // router.route('/create_categories').post();
 

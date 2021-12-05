@@ -121,6 +121,7 @@ const productSchema = new mongoose.Schema(
 		color: { type: String },
 		color_code: { type: String },
 		size: { type: Number },
+		sizing: { type: String },
 		default_option: { type: Boolean, default: false },
 		option: { type: Boolean, default: false },
 		macro_product: { type: Boolean, default: false },
