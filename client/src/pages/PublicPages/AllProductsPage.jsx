@@ -219,7 +219,7 @@ const AllProductsPage = (props) => {
 		update_products_url(history, search, sort, filter, page);
 
 		console.log(new_page);
-		dispatch(listProducts(category, subcategory, filter, search, sort, '', new_page, limit));
+		dispatch(listProducts(category, subcategory, filter, search, sort, '', new_page, limit, false));
 	};
 
 	// const currentTableData = useMemo(

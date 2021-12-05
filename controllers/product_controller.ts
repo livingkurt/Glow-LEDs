@@ -9,10 +9,16 @@ export default {
 			const collection = req.query.collection ? { product_collection: req.query.collection } : {};
 			const page: any = req.query.page ? req.query.page : 1;
 			const limit: any = req.query.limit ? req.query.limit : 21;
-			const hidden: any = req.query.hidden ? { hidden: req.query.hidden } : { hidden: false };
-			const option: any = req.query.option ? { option: req.query.option } : { option: false };
-			// console.log({ page: req.query.page, limit: req.query.limit });
-			console.log({ query: req.query });
+			const hidden: any = req.query.hidden
+				? req.query.hidden === 'true' ? {} : { hidden: false }
+				: { hidden: false };
+			const option: any = req.query.option
+				? { option: req.query.option === 'true' ? true : false }
+				: { option: false };
+			console.log({
+				hidden,
+				option
+			});
 			const chips = req.query.chip ? { chips: { $in: [ req.query.chip, '60203602dcf28a002a1a62ed' ] } } : {};
 
 			const categories = [
@@ -112,13 +118,13 @@ export default {
 
 			const products = await Product.find({
 				deleted: false,
-				...option,
-				...hidden,
 				...category,
 				...subcategory,
 				...collection,
 				...search,
-				...chips
+				...chips,
+				...option,
+				...hidden
 			})
 				.sort(sortOrder)
 				.populate('color_products')
@@ -130,7 +136,7 @@ export default {
 				.limit(limit * 1)
 				.skip((page - 1) * limit)
 				.exec();
-			console.log({ products });
+			// console.log({ products });
 			const count = await Product.countDocuments({
 				deleted: false,
 				...option,

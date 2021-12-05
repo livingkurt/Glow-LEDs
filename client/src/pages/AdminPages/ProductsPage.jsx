@@ -78,10 +78,12 @@ function ProductPage(props) {
 		let search = '';
 		let sort = '';
 		let filter = '';
-		let hidden = '';
-		let limit = '';
-		let page = '';
 		let collection = props.match.params.collection ? props.match.params.collection : '';
+		let limit = 30;
+		let page = '';
+		let hidden = true;
+		let option = false;
+
 		// prnt({ query });
 		if (category !== 'essentials' || category !== 'discounted' || category !== 'best_sellers') {
 			if (Object.keys(query).length > 0) {
@@ -106,7 +108,7 @@ function ProductPage(props) {
 				}
 			}
 			console.log({ category, subcategory, search, sort, filter, collection });
-			dispatch(listProducts(category, subcategory, filter, search, sort, collection, page, limit, hidden));
+			dispatch(listProducts(category, subcategory, filter, search, sort, collection, page, 30, hidden, option));
 		}
 	};
 
@@ -299,7 +301,7 @@ function ProductPage(props) {
 		update_products_url(history, search, '', '', page);
 
 		console.log(new_page);
-		dispatch(listProducts(category, subcategory, '', search, '', '', new_page, limit));
+		dispatch(listProducts(category, subcategory, '', search, '', '', new_page, limit, true, false));
 	};
 
 	const onDragStart = (start) => {
