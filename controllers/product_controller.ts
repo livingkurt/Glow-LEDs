@@ -9,8 +9,10 @@ export default {
 			const collection = req.query.collection ? { product_collection: req.query.collection } : {};
 			const page: any = req.query.page ? req.query.page : 1;
 			const limit: any = req.query.limit ? req.query.limit : 21;
-			console.log({ page: req.query.page, limit: req.query.limit });
-			// console.log({ chip: req.query.chip });
+			const hidden: any = req.query.hidden ? { hidden: req.query.hidden } : { hidden: false };
+			const option: any = req.query.option ? { option: req.query.option } : { option: false };
+			// console.log({ page: req.query.page, limit: req.query.limit });
+			console.log({ query: req.query });
 			const chips = req.query.chip ? { chips: { $in: [ req.query.chip, '60203602dcf28a002a1a62ed' ] } } : {};
 
 			const categories = [
@@ -110,8 +112,8 @@ export default {
 
 			const products = await Product.find({
 				deleted: false,
-				option: false,
-				hidden: false,
+				...option,
+				...hidden,
 				...category,
 				...subcategory,
 				...collection,
@@ -128,11 +130,11 @@ export default {
 				.limit(limit * 1)
 				.skip((page - 1) * limit)
 				.exec();
-			// console.log({ products });
+			console.log({ products });
 			const count = await Product.countDocuments({
 				deleted: false,
-				option: false,
-				hidden: false,
+				...option,
+				...hidden,
 				...category,
 				...subcategory,
 				...collection,
@@ -158,16 +160,21 @@ export default {
 				const glow_strings = products.filter((product: any) => product.category === 'glow_strings');
 				const glow_casings = products.filter((product: any) => product.category === 'glow_casings');
 				const glowskins = products.filter((product: any) => product.category === 'glowskins');
-				res.send([
-					...glowskins,
-					...glow_casings,
-					...accessories,
-					...exo_diffusers,
-					...decals,
-					...glow_strings,
-					...diffuser_caps,
-					...diffusers
-				]);
+
+				res.json({
+					products: [
+						...glowskins,
+						...glow_casings,
+						...accessories,
+						...exo_diffusers,
+						...decals,
+						...glow_strings,
+						...diffuser_caps,
+						...diffusers
+					],
+					totalPages: Math.ceil(count / limit),
+					currentPage: parseInt(page)
+				});
 			}
 		} catch (error) {
 			console.log({ findAll_products_error: error });

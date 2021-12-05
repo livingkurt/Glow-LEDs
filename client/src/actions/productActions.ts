@@ -26,12 +26,14 @@ import axios from 'axios';
 export const listProducts = (
 	category = '',
 	subcategory = '',
+	chip = '',
 	search = '',
 	sortOrder = '',
-	chip = '',
-	show_hidden = '',
 	collection = '',
-	page = ''
+	page = '',
+	limit = '',
+	hidden = false,
+	option = false
 ) => async (dispatch: (arg0: { type: string; payload?: any }) => void) => {
 	try {
 		dispatch({ type: PRODUCT_LIST_REQUEST });
@@ -47,12 +49,16 @@ export const listProducts = (
 				search +
 				'&sortOrder=' +
 				sortOrder.toLowerCase() +
-				'&showHidden=' +
-				show_hidden +
 				'&collection=' +
 				collection +
 				'&page=' +
-				page
+				page +
+				'&limit=' +
+				limit +
+				'&hidden=' +
+				hidden +
+				'&option=' +
+				option
 		);
 		dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
 	} catch (error) {

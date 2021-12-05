@@ -2,22 +2,31 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { listProducts } from '../../actions/productActions';
-import { ProductListItem } from '../../components/SpecialtyComponents';
+import { Pagination, ProductListItem } from '../../components/SpecialtyComponents';
 import { API_Products } from '../../utils';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { Search, Sort } from '../../components/SpecialtyComponents';
 import { sale_price_switch } from '../../utils/react_helper_functions';
 import { facebook_catalog_upload, google_catalog_upload } from '../../utils/google_sheets_upload';
-import { mutliDragAwareReorder, multiSelectTo as multiSelect } from '../../utils/helper_functions';
+import {
+	mutliDragAwareReorder,
+	multiSelectTo as multiSelect,
+	update_products_url,
+	getUrlParameter
+} from '../../utils/helper_functions';
 import memoizeOne from 'memoize-one';
 
 function ProductPage(props) {
+	const history = useHistory();
 	const [ search, set_search ] = useState('');
 	const [ sortOrder, setSortOrder ] = useState('');
 	const [ loading_upload, set_loading_upload ] = useState(false);
 	const [ show_hidden, set_show_hidden ] = useState(false);
+	const [ page, set_page ] = useState(1);
+	const [ limit, set_limit ] = useState(20);
+
 	// const [ hide_hidden, set_hide_hidden] = useState('');
 	const category = props.match.params.category ? props.match.params.category : '';
 	const subcategory = props.match.params.subcategory ? props.match.params.subcategory : '';
@@ -31,14 +40,14 @@ function ProductPage(props) {
 	const [ products_list, updateProducts ] = useState([]);
 
 	const productList = useSelector((state) => state.productList);
-	const { loading, products: items, error } = productList;
+	const { loading, products: items, totalPages, currentPage, error } = productList;
 
-	useEffect(() => {
-		dispatch(listProducts());
-		return () => {
-			//
-		};
-	}, []);
+	// useEffect(() => {
+	// 	dispatch(listProducts());
+	// 	return () => {
+	// 		//
+	// 	};
+	// }, []);
 	// useEffect(
 	// 	() => {
 	// 		if (items) {
@@ -51,12 +60,55 @@ function ProductPage(props) {
 	// 	},
 	// 	[ items ]
 	// );
-	useEffect(
-		() => {
-			dispatch(listProducts(category.subcategory, search, sortOrder));
-		},
-		[ sortOrder ]
-	);
+	// useEffect(
+	// 	() => {
+	// 		dispatch(listProducts(category.subcategory, search, sortOrder));
+	// 	},
+	// 	[ sortOrder ]
+	// );
+	useEffect(() => {
+		determine_products();
+		return () => {};
+	}, []);
+
+	const determine_products = () => {
+		const query = getUrlParameter(props.location);
+		let category = props.match.params.category ? props.match.params.category : '';
+		let subcategory = props.match.params.subcategory ? props.match.params.subcategory : '';
+		let search = '';
+		let sort = '';
+		let filter = '';
+		let hidden = '';
+		let limit = '';
+		let page = '';
+		let collection = props.match.params.collection ? props.match.params.collection : '';
+		// prnt({ query });
+		if (category !== 'essentials' || category !== 'discounted' || category !== 'best_sellers') {
+			if (Object.keys(query).length > 0) {
+				if (query.search) {
+					set_search(query.search.split('%20').join(' '));
+					search = query.search.split('%20').join(' ');
+				}
+				// if (query.sort) {
+				// 	set_sort(query.sort);
+				// 	sort = query.sort;
+				// }
+				// if (query.filter) {
+				// 	// console.log({ filter: query.filter, chips_list });
+				// 	filter = waitForElement(query.filter, chips_list);
+				// }
+				if (query.page) {
+					set_page(query.page);
+					page = query.page;
+				}
+				if (query.limit) {
+					set_limit(query.limit);
+				}
+			}
+			console.log({ category, subcategory, search, sort, filter, collection });
+			dispatch(listProducts(category, subcategory, filter, search, sort, collection, page, limit, hidden));
+		}
+	};
 
 	const submitHandler = (e) => {
 		e.preventDefault();
@@ -109,7 +161,7 @@ function ProductPage(props) {
 		{ name: 'Frosted Diffusers', color: '#ca9160' },
 		{ name: 'Diffuser Caps', color: '#6c7ea9' },
 		{ name: 'Accessories', color: '#925757' },
-		{ name: 'Exo Diffusers', color: '#4162ad' }
+		{ name: 'EXO Diffusers', color: '#4162ad' }
 	];
 
 	const determine_color = (product, isSelected, isDragging) => {
@@ -217,6 +269,9 @@ function ProductPage(props) {
 					selectedProductIds: [],
 					draggingProductId: null
 				});
+				if (currentPage) {
+					set_page(currentPage);
+				}
 			} else {
 				setState({
 					entities: {
@@ -236,6 +291,15 @@ function ProductPage(props) {
 			}
 		}
 		updateProducts(items);
+	};
+	const update_page = (e, new_page) => {
+		console.log({ e, new_page });
+		e.preventDefault();
+		const page = parseInt(new_page);
+		update_products_url(history, search, '', '', page);
+
+		console.log(new_page);
+		dispatch(listProducts(category, subcategory, '', search, '', '', new_page, limit));
 	};
 
 	const onDragStart = (start) => {
@@ -536,6 +600,17 @@ function ProductPage(props) {
 				<Search search={search} set_search={set_search} submitHandler={submitHandler} category={category} />
 				<Sort sortHandler={sortHandler} sort_options={sort_options} />
 			</div>
+			<div className="jc-c">
+				{totalPages && (
+					<Pagination
+						className="pagination-bar"
+						currentPage={page}
+						totalCount={totalPages}
+						pageSize={limit}
+						onPageChange={(e, page) => update_page(e, page)}
+					/>
+				)}
+			</div>
 			<div className="ai-c mt-10px">
 				<div className="w-500px">Product Name</div>
 				<div className="w-100px">Hidden</div>
@@ -688,6 +763,17 @@ function ProductPage(props) {
 					})}
 				</DragDropContext>
 			)}
+			<div className="jc-c">
+				{totalPages && (
+					<Pagination
+						className="pagination-bar"
+						currentPage={page}
+						totalCount={totalPages}
+						pageSize={limit}
+						onPageChange={(e, page) => update_page(e, page)}
+					/>
+				)}
+			</div>
 		</div>
 	);
 }

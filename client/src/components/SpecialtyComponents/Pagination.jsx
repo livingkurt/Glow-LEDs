@@ -4,7 +4,7 @@ import { usePagination, DOTS } from '../Hooks/usePagination';
 const Pagination = (props) => {
 	const { onPageChange, totalCount, siblingCount = 1, currentPage, pageSize, className } = props;
 
-	console.log({ props });
+	// console.log({ props });
 
 	const paginationRange = usePagination({
 		currentPage,
@@ -12,7 +12,7 @@ const Pagination = (props) => {
 		siblingCount,
 		pageSize
 	});
-	console.log({ paginationRange });
+	// console.log({ paginationRange });
 
 	if (currentPage === 0 || paginationRange.length < 2) {
 		return null;
@@ -57,7 +57,6 @@ const Pagination = (props) => {
 						})}
 						onClick={(e) => onPageChange(e, pageNumber)}
 					>
-						{console.log({ pageNumber, currentPage })}
 						<div className={`btn ${pageNumber === parseInt(currentPage) ? 'secondary' : 'primary'} w-40px`}>
 							{pageNumber}
 						</div>

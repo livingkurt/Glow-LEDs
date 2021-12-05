@@ -55,6 +55,7 @@ const AllProductsPage = (props) => {
 
 	const chipList = useSelector((state) => state.chipList);
 	const { chips: chips_list } = chipList;
+	console.log({ chips_list });
 
 	const dispatch = useDispatch();
 
@@ -73,15 +74,15 @@ const AllProductsPage = (props) => {
 			if (main_products) {
 				if (category !== 'essentials' || category !== 'discounted' || category !== 'best_sellers') {
 					set_products(main_products);
-					set_page(currentPage);
+					if (currentPage) {
+						set_page(currentPage);
+					}
 					set_loading_products(false);
 				}
 			}
 		},
 		[ main_products ]
 	);
-
-	let PageSize = 10;
 
 	useEffect(
 		() => {
@@ -94,6 +95,7 @@ const AllProductsPage = (props) => {
 
 	useEffect(() => {
 		determine_products();
+		dispatch(listChips(''));
 		return () => {};
 	}, []);
 
@@ -113,7 +115,8 @@ const AllProductsPage = (props) => {
 		let search = '';
 		let sort = '';
 		let filter = '';
-		let show_hidden = '';
+		let hidden = '';
+		let limit = '';
 		let page = '';
 		let collection = props.match.params.collection ? props.match.params.collection : '';
 		// prnt({ query });
@@ -128,6 +131,7 @@ const AllProductsPage = (props) => {
 					sort = query.sort;
 				}
 				if (query.filter) {
+					// console.log({ filter: query.filter, chips_list });
 					filter = waitForElement(query.filter, chips_list);
 				}
 				if (query.page) {
@@ -147,12 +151,12 @@ const AllProductsPage = (props) => {
 					get_occurrences(category);
 				}
 			}
-			console.log({ category, subcategory, search, sort, filter, show_hidden, collection });
-			dispatch(listProducts(category, subcategory, search, sort, filter, show_hidden, collection, page));
+			console.log({ category, subcategory, search, sort, filter, collection });
+			dispatch(listProducts(category, subcategory, filter, search, sort, collection, page, limit, hidden));
 		}
 	};
 
-	const waitForElement = (filter, chips_list) => {
+	const waitForElement = (filter, chips_list = []) => {
 		// prnt({ filter, chips_list });
 		if (typeof chips_list && chips_list.length > 0) {
 			// prnt({ chip: filter.split('%20').join(' ') });
@@ -195,7 +199,7 @@ const AllProductsPage = (props) => {
 	const sortHandler = (e) => {
 		set_sort(e.target.value);
 		update_products_url(history, search, e.target.value, filter);
-		dispatch(listProducts(category, subcategory, search, e.target.value, '', '', collection));
+		dispatch(listProducts(category, subcategory, '', search, e.target.value, '', '', collection));
 	};
 
 	const filterHandler = (e) => {
@@ -205,19 +209,17 @@ const AllProductsPage = (props) => {
 		set_filter(chip_selected._id);
 		// console.log({ chip_selected });
 		update_products_url(history, '', sort, chip_selected.name);
-		dispatch(listProducts(category, subcategory, '', sort, chip_selected._id, '', collection));
+		dispatch(listProducts(category, subcategory, chip_selected._id, '', sort, collection));
 	};
 
 	const update_page = (e, new_page) => {
 		console.log({ e, new_page });
 		e.preventDefault();
 		const page = parseInt(new_page);
-		history.push({
-			search: '?page=' + page
-		});
+		update_products_url(history, search, sort, filter, page);
 
 		console.log(new_page);
-		dispatch(listProducts(category, search, sort, new_page));
+		dispatch(listProducts(category, subcategory, filter, search, sort, '', new_page, limit));
 	};
 
 	// const currentTableData = useMemo(
@@ -266,9 +268,9 @@ const AllProductsPage = (props) => {
 
 			<div className="jc-c ai-c wrap m-auto pb-1rem" style={{ overflowX: 'scroll' }}>
 				{/* <Search search={search} set_search={set_search} submitHandler={submitHandler} category={category} /> */}
-				<Sort sortHandler={sortHandler} sort_options={sort_options} />
+				{/* <Sort sortHandler={sortHandler} sort_options={sort_options} /> */}
 				{/* {category === 'glowskins' && <Filter filterHandler={filterHandler} filter_options={chips_list} />} */}
-				<Filter filterHandler={filterHandler} filter_options={chips_list} />
+				{/* <Filter filterHandler={filterHandler} filter_options={chips_list} /> */}
 			</div>
 			<Loading loading={loading_products} />
 			<div className="jc-c">
@@ -285,13 +287,13 @@ const AllProductsPage = (props) => {
 			<Loading loading={loading} error={error}>
 				<div>
 					<ul className="products" style={{ marginTop: 0 }}>
+						{console.log({ products })}
 						{products &&
 							products
 								.filter((product) => !product.option)
 								.map(
 									(product, index) =>
-										!product.hidden &&
-										(width >= 704 ? (
+										width >= 704 ? (
 											<ProductItemD
 												size="300px"
 												key={index}
@@ -305,26 +307,10 @@ const AllProductsPage = (props) => {
 												product={product}
 												product_occurrences={product_occurrences}
 											/>
-										))
+										)
 								)}
 					</ul>
 				</div>
-
-				{/* <div className="wrap jc-c">
-					{totalPages &&
-						totalPages &&
-						[ ...Array(totalPages).keys() ].map((x, index) => (
-							<button
-								key={index}
-								value={x}
-								defaultValue={x}
-								className="btn primary w-40px mr-1rem mb-1rem"
-								onClick={(e) => update_page(e)}
-							>
-								{parseInt(x + 1)}
-							</button>
-						))}
-				</div> */}
 				<div className="jc-c">
 					{totalPages && (
 						<Pagination
