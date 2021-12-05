@@ -271,7 +271,7 @@ const ControlPanelPage = (props) => {
 			<div className="jc-b">
 				<div>
 					<h2>Total Income</h2>
-					<div className="fs-30px">
+					<div className="fs-25px">
 						${orders && orders.length > 0 ? (
 							orders.reduce((a, order) => a + order.totalPrice - order.taxPrice, 0).toFixed(2)
 						) : (
@@ -281,7 +281,7 @@ const ControlPanelPage = (props) => {
 				</div>
 				<div>
 					<h2>Total Expenses</h2>
-					<div className="fs-30px">
+					<div className="fs-25px">
 						${expenses && expenses.length > 0 ? (
 							expenses.reduce((a, expense) => a + expense.amount, 0).toFixed(2)
 						) : (
@@ -291,7 +291,7 @@ const ControlPanelPage = (props) => {
 				</div>
 				<div>
 					<h2>Total Profit</h2>
-					<div className="fs-30px">
+					<div className="fs-25px">
 						${orders && orders.length > 0 && expenses && expenses.length > 0 ? (
 							(orders.reduce((a, order) => a + order.totalPrice - order.taxPrice, 0) +
 								expenses.reduce((a, expense) => a + expense.amount, 0)).toFixed(2)
@@ -302,7 +302,7 @@ const ControlPanelPage = (props) => {
 				</div>
 				<div>
 					<h2>Total Taxes</h2>
-					<div className="fs-30px">
+					<div className="fs-25px">
 						${orders && orders.length > 0 && expenses && expenses.length > 0 ? (
 							orders.reduce((a, order) => a + order.taxPrice, 0).toFixed(2)
 						) : (
@@ -312,7 +312,7 @@ const ControlPanelPage = (props) => {
 				</div>
 				<div>
 					<h2>Total Days Open</h2>
-					<div className="fs-30px">{duration_of_opening().toFixed(0)}</div>
+					<div className="fs-25px">{duration_of_opening().toFixed(0)}</div>
 				</div>
 			</div>
 

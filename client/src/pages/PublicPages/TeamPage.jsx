@@ -124,7 +124,7 @@ const TeamPage = (props) => {
 								<div>
 									<h3 className="">Follow {team.team_name} </h3>
 									<div className="mt-2rem wrap  ">
-										<div className="fs-30px jc-fs w-100per max-w-500px ai-c">
+										<div className="fs-25px jc-fs w-100per max-w-500px ai-c">
 											<div className="fs-40px">
 												{team.facebook_name && (
 													<a
@@ -177,7 +177,7 @@ const TeamPage = (props) => {
 													src={affiliate.picture}
 												/>
 												<h3
-													className="pos-abs fs-30px"
+													className="pos-abs fs-25px"
 													style={{
 														top: '40%',
 														left: '50%',
@@ -219,7 +219,7 @@ const TeamPage = (props) => {
 													src={affiliate.picture}
 												/>
 												<h3
-													className="pos-abs fs-30px"
+													className="pos-abs fs-25px"
 													style={{
 														top: '40%',
 														left: '50%',

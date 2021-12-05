@@ -669,7 +669,7 @@ const MonthlyExpensesPage = (props) => {
 				<div className="jc-b mb-1rem">
 					<div>
 						<h2>{year} Income</h2>
-						<div className="fs-30px">
+						<div className="fs-25px">
 							${monthly_income && monthly_income.length > 0 ? (
 								monthly_income
 									.filter((month) => month !== undefined)
@@ -682,7 +682,7 @@ const MonthlyExpensesPage = (props) => {
 					</div>
 					<div>
 						<h2>{year} Expenses</h2>
-						<div className="fs-30px">
+						<div className="fs-25px">
 							${monthly_income && monthly_income.length > 0 ? (
 								monthly_income
 									.filter((month) => month !== undefined)
@@ -695,7 +695,7 @@ const MonthlyExpensesPage = (props) => {
 					</div>
 					<div>
 						<h2>{year} Profit</h2>
-						<div className="fs-30px">
+						<div className="fs-25px">
 							${monthly_income && monthly_income.length > 0 ? (
 								monthly_income
 									.filter((month) => month !== undefined)

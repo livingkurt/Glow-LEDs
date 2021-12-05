@@ -619,39 +619,42 @@ export default {
 	},
 	update_stock: async (req: any, res: any) => {
 		const { cartItems } = req.body;
-		const save_product = async (id: string, count_in_stock: number, qty: number) => {
-			const new_count = count_in_stock - qty;
-			console.log({ id, new_count });
+		const save_product = async (id: string, qty: number) => {
 			const product: any = await Product.findOne({ _id: id });
-			if (new_count <= 0) {
-				product.quantity = 30;
-				product.count_in_stock = 0;
-			} else if (product.count_in_stock <= product.quantity) {
-				product.quantity = new_count;
-				product.count_in_stock = new_count;
-			}
+			console.log({ product });
+			const new_count = product.count_in_stock - qty;
+			console.log({ id, new_count });
+			if (product.finite_stock) {
+				console.log({ finite_stock: 'Hello' });
+				if (new_count <= 0) {
+					product.quantity = 30;
+					product.count_in_stock = 0;
+				} else if (product.count_in_stock <= product.quantity) {
+					product.quantity = new_count;
+					product.count_in_stock = new_count;
+				} else {
+					product.count_in_stock = new_count;
+				}
 
-			if (product) {
-				const request = await product.save();
-				res.status(200).send(request);
+				if (product) {
+					const request = await product.save();
+					res.status(200).send(request);
+				}
 			}
 		};
 		try {
 			cartItems.forEach(async (item: any) => {
+				console.log({ item });
 				if (item.finite_stock) {
-					save_product(item.product, item.count_in_stock, item.qty);
-				} else if (item.option_product && item.option_product.finite_stock) {
-					save_product(item.option_product.product, item.option_product.count_in_stock, item.qty);
-				} else if (item.secondary_product && item.secondary_product.finite_stock) {
-					save_product(item.secondary_product.product, item.secondary_product.count_in_stock, item.qty);
-				} else if (item.color_product && item.color_product.finite_stock) {
-					save_product(item.color_product.product, item.color_product.count_in_stock, item.qty);
-				} else if (item.secondary_color_product && item.secondary_color_product.finite_stock) {
-					save_product(
-						item.secondary_color_product.product,
-						item.secondary_color_product.count_in_stock,
-						item.qty
-					);
+					save_product(item.product, item.qty);
+				} else if (item.option_product) {
+					save_product(item.option_product, item.qty);
+				} else if (item.secondary_product) {
+					save_product(item.secondary_product, item.qty);
+				} else if (item.color_product) {
+					save_product(item.color_product, item.qty);
+				} else if (item.secondary_color_product) {
+					save_product(item.secondary_color_product, item.qty);
 				}
 			});
 		} catch (error) {

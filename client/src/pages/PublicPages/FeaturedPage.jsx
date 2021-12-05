@@ -108,7 +108,7 @@ const FeaturedPage = (props) => {
 						Check out {feature.artist_name} with the {feature.product && humanize(feature.product)}!
 					</p> */}
 					<div className="mt-2rem wrap jc-c ">
-						<div className="ml-10px fs-30px jc-b w-100per max-w-500px">
+						<div className="ml-10px fs-25px jc-b w-100per max-w-500px">
 							{feature.facebook_name && (
 								<div className="ml-10px fs-40px">
 									<a href={feature.facebook_name} target="_blank" rel="noopener noreferrer">

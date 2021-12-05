@@ -30,7 +30,7 @@ const TeamSmallScreen = (props) => {
 
 							{/* <label style={{ fontSize: '1.6rem' }}>{props.team.location}</label> */}
 							{/* <div className="mt-2rem wrap  ">
-								<div className="fs-30px jc-fs w-100per max-w-500px ai-c">
+								<div className="fs-25px jc-fs w-100per max-w-500px ai-c">
 									<div className="fs-40px">
 										<a
 											href={'https://www.facebook.com/' + props.team.facebook_name}

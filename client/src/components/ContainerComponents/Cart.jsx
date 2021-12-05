@@ -287,7 +287,9 @@ const Cart = (props) => {
 									</Link>
 									<Link to="/">
 										<div className="row">
-											<label className="ml-5px fs-30px mv-0px ff-h">Shopping Cart</label>
+											<label className="ml-5px fs-25px mv-0px ff-h title_font">
+												Shopping Cart
+											</label>
 										</div>
 									</Link>
 								</div>

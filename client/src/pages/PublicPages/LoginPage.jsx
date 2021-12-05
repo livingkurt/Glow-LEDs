@@ -106,6 +106,7 @@ const LoginPage = (props) => {
 						<label htmlFor="password">Password</label>
 						<input
 							type="password"
+							C
 							id="password"
 							name="password"
 							onChange={(e) => setPassword(e.target.value)}
@@ -121,8 +122,8 @@ const LoginPage = (props) => {
 						</button>
 					</li>
 					<li>
-						<Link to="/account/passwordreset" style={{ fontFamily: 'heading_font' }}>
-							<button className="btn secondary w-100per">Forgot Password?</button>
+						<Link to="/account/passwordreset">
+							<button className="btn secondary w-100per title_font">Forgot Password?</button>
 						</Link>
 					</li>
 					<li>New to Glow LEDs?</li>

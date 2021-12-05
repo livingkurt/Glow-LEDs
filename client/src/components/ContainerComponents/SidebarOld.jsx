@@ -119,7 +119,7 @@ const Sidebar = (props) => {
 				</Link>
 				<Link to="/">
 					<div className="row">
-						<label className="ml-5px fs-30px mv-0px ff-h">Glow LEDs</label>
+						<label className="ml-5px fs-25px mv-0px ff-h">Glow LEDs</label>
 					</div>
 				</Link>
 			</div>

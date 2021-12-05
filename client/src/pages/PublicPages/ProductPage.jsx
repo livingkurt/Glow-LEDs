@@ -42,8 +42,8 @@ const ProductPage = (props) => {
 	const [ previous_price, set_previous_price ] = useState();
 	const [ sale_price, set_sale_price ] = useState(0);
 	const [ size, set_size ] = useState();
-	const [ quantity, set_quantity ] = useState(30);
-	const [ count_in_stock, set_count_in_stock ] = useState(30);
+	const [ quantity, set_quantity ] = useState();
+	const [ count_in_stock, set_count_in_stock ] = useState();
 	const [ product_option, set_product_option ] = useState({});
 	const [ image, set_image ] = useState('');
 	const [ secondary_image, set_secondary_image ] = useState('');
@@ -242,6 +242,12 @@ const ProductPage = (props) => {
 		set_color(color.color);
 		set_color_code(color.color_code);
 		set_color_product_object(color);
+		// if (color.quantity) {
+		// 	set_quantity(color.quantity);
+		// }
+		// if (color.count_in_stock) {
+		// 	set_count_in_stock(color.count_in_stock);
+		// }
 		// update_url(color.color);
 	};
 
@@ -250,6 +256,12 @@ const ProductPage = (props) => {
 		set_secondary_color(secondary_color.color);
 		set_secondary_color_code(secondary_color.color_code);
 		set_secondary_color_product_object(secondary_color);
+		// if (secondary_color.quantity) {
+		// 	set_quantity(secondary_color.quantity);
+		// }
+		// if (secondary_color.count_in_stock) {
+		// 	set_count_in_stock(secondary_color.count_in_stock);
+		// }
 		// update_url(color, secondary_color.color);
 	};
 
@@ -269,12 +281,12 @@ const ProductPage = (props) => {
 		if (option.sale_price > 0) {
 			set_sale_price(option.sale_price);
 		}
-		if (option.quantity) {
-			set_quantity(option.quantity);
-		}
-		if (option.count_in_stock) {
-			set_count_in_stock(option.count_in_stock);
-		}
+		// if (option.quantity) {
+		// set_quantity(option.quantity);
+		// }
+		// if (option.count_in_stock) {
+		// 	set_count_in_stock(option.count_in_stock);
+		// }
 
 		set_product_option(option);
 		set_dimensions({
@@ -297,6 +309,12 @@ const ProductPage = (props) => {
 		set_secondary_product(secondary._id);
 		set_secondary_product_name(secondary.name);
 		set_secondary_product_object(secondary);
+		if (secondary.quantity) {
+			set_quantity(secondary.quantity);
+		}
+		if (secondary.count_in_stock) {
+			set_count_in_stock(secondary.count_in_stock);
+		}
 		console.log({ subcategory: secondary.subcategory });
 		if (secondary.subcategory !== 'batteries') {
 			if (secondary.images.length > 0) {
@@ -401,6 +419,12 @@ const ProductPage = (props) => {
 		}
 		set_color_product(option._id);
 		set_color_product_object(option);
+		if (option.quantity) {
+			set_quantity(option.quantity);
+		}
+		if (option.count_in_stock) {
+			set_count_in_stock(option.count_in_stock);
+		}
 		update_url(option.color, secondary_color, size || option_product_name, secondary_product_name);
 	};
 
@@ -421,6 +445,12 @@ const ProductPage = (props) => {
 		}
 		set_secondary_color_product(option._id);
 		set_secondary_color_product_object(option);
+		if (option.quantity) {
+			set_quantity(option.quantity);
+		}
+		if (option.count_in_stock) {
+			set_count_in_stock(option.count_in_stock);
+		}
 		update_url(color, option.color, size || option_product_name, secondary_product_name);
 	};
 
@@ -446,6 +476,12 @@ const ProductPage = (props) => {
 		}
 		if (option.sale_price > 0) {
 			set_sale_price(option.sale_price);
+		}
+		if (option.quantity) {
+			set_quantity(option.quantity);
+		}
+		if (option.count_in_stock) {
+			set_count_in_stock(option.count_in_stock);
 		}
 
 		if (option.subcategory !== 'gloves') {
@@ -486,7 +522,12 @@ const ProductPage = (props) => {
 			}
 			set_option_products(secondary.option_products);
 		}
-
+		if (secondary.quantity) {
+			set_quantity(secondary.quantity);
+		}
+		if (secondary.count_in_stock) {
+			set_count_in_stock(secondary.count_in_stock);
+		}
 		console.log({ secondary });
 		set_color_products(secondary.color_products);
 		set_secondary_color_products(secondary.secondary_color_products);
@@ -1425,7 +1466,7 @@ const ProductPage = (props) => {
 											<div />
 										) : (
 											<li>
-												{quantity > 0 ? (
+												{count_in_stock > 0 ? (
 													<button className="btn primary" onClick={handleAddToCart}>
 														Add to Cart
 													</button>
@@ -1466,7 +1507,7 @@ const ProductPage = (props) => {
 						</div>
 						{/* {product.category === 'diffuser_caps' && (
 							<div>
-								<p className="w-100per ta-c fs-30px heading_font">Diffuser Caps V4</p>
+								<p className="w-100per ta-c fs-25px heading_font">Diffuser Caps V4</p>
 								<div className="ta-c jc-c">
 									<LazyImage
 										className="h-auto br-20px"

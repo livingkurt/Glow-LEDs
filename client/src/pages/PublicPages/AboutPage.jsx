@@ -228,7 +228,7 @@ const AboutPage = () => {
 							you. As long you keep glowing just as bright as you can!
 						</ReadMore>
 					</div>
-					<h2 className="about_names ta-c fs-30px" style={{ marginTop: 0, marginBottom: '25px' }}>
+					<h2 className="about_names ta-c fs-25px" style={{ marginTop: 0, marginBottom: '25px' }}>
 						Welcome to the Glow LEDs Family! Can't to meet you all!
 					</h2>
 					<div
@@ -250,7 +250,7 @@ const AboutPage = () => {
 							src="https://thumbs2.imgbox.com/74/18/uf9lTIoK_t.jpeg"
 						/>
 					</div>
-					<h2 className="about_names ta-c fs-30px" style={{ marginTop: 0, marginBottom: '25px' }}>
+					<h2 className="about_names ta-c fs-25px" style={{ marginTop: 0, marginBottom: '25px' }}>
 						Meet the Team
 					</h2>
 

@@ -337,7 +337,7 @@ const MonthExpensesPage = (props) => {
 				<div className="jc-b">
 					<div>
 						<h2>{year} Income</h2>
-						<div className="fs-30px">
+						<div className="fs-25px">
 							${orders && orders.length > 0 ? (
 								orders
 									.filter((order) => order.isPaid)
@@ -353,7 +353,7 @@ const MonthExpensesPage = (props) => {
 					</div>
 					<div>
 						<h2>{year} Expenses</h2>
-						<div className="fs-30px">
+						<div className="fs-25px">
 							${expenses && expenses.length > 0 ? (
 								expenses.reduce((a, c) => parseFloat(a) + parseFloat(c.amount), 0).toFixed(2)
 							) : (
@@ -363,7 +363,7 @@ const MonthExpensesPage = (props) => {
 					</div>
 					<div>
 						<h2>{year} Profit</h2>
-						<div className="fs-30px">
+						<div className="fs-25px">
 							${monthly_income && monthly_income.length > 0 ? (
 								(orders
 									.filter((order) => order.isPaid)
@@ -387,7 +387,7 @@ const MonthExpensesPage = (props) => {
 							categories.map((category) => (
 								<div>
 									<h2>{toCapitalize(humanize(category))}</h2>
-									<div className="fs-30px">
+									<div className="fs-25px">
 										${orders
 											.map((order) => order.orderItems)
 											.filter((item) => item.category === category)

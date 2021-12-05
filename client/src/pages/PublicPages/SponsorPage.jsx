@@ -156,7 +156,7 @@ const SponsorPage = (props) => {
 												src={team.picture} 
 											/>
 											<h3
-												className="pos-abs fs-30px"
+												className="pos-abs fs-25px"
 												style={{ top: '40%', left: '50%', transform: 'translate(-50%, -50%)' }}
 											>
 												{affiliate.artist_name != 'Koztic' && affiliate.artist_name}
@@ -175,7 +175,7 @@ const SponsorPage = (props) => {
 											key={index}
 										>
 											{/* <h3
-												className="pos-abs fs-30px w-200px"
+												className="pos-abs fs-25px w-200px"
 												style={{ top: '-146px', left: '27%' }}
 											>
 												{team.team_name}
@@ -187,7 +187,7 @@ const SponsorPage = (props) => {
 												src={team.picture}
 											/>
 											<h3
-												className="pos-abs fs-30px"
+												className="pos-abs fs-25px"
 												style={{
 													top: '-119px',
 													left: '50%',
@@ -203,7 +203,7 @@ const SponsorPage = (props) => {
 							<div>
 								<h3 className="">Follow {affiliate.artist_name} </h3>
 								<div className="mt-2rem wrap  ">
-									<div className="fs-30px jc-fs w-100per max-w-500px ai-c">
+									<div className="fs-25px jc-fs w-100per max-w-500px ai-c">
 										<div className="fs-40px">
 											{affiliate.facebook_name && (
 												<a

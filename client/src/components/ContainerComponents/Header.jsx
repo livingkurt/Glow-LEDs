@@ -181,7 +181,7 @@ const Header = (props) => {
 								</Link>
 								{width < 1106 && (
 									<button
-										className="side-bar-open fs-30px h-50px w-50px p-10px"
+										className="side-bar-open fs-25px h-50px w-50px p-10px"
 										onClick={open_sidebar}
 										aria-label="sidebar"
 										style={{ fontSize: '30px !important' }}

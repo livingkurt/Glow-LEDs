@@ -108,7 +108,7 @@ const HomePage = (props) => {
 		} else if (width < 1500 && width > 1100) {
 			return 'fs-35px';
 		} else if (width < 528 && width > 529) {
-			return 'fs-30px';
+			return 'fs-25px';
 		} else if (width < 438 && width > 300) {
 			return 'fs-20px';
 		}
