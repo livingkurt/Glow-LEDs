@@ -558,8 +558,8 @@ const ProductPage = (props) => {
 			set_count_in_stock(secondary.count_in_stock);
 		}
 		console.log({ secondary });
-		set_color_products(secondary.color_products);
-		set_secondary_color_products(secondary.secondary_color_products);
+		// set_color_products(secondary.color_products);
+		// set_secondary_color_products(secondary.secondary_color_products);
 
 		// set_secondary_products(secondary.secondary_products);
 		set_secondary_product(secondary._id);
@@ -1072,21 +1072,8 @@ const ProductPage = (props) => {
 																		: option.default_option
 																			? 'secondary'
 																			: 'primary'}`}
-																	// className={`packs fs-13px flex-s-0 min-w-40px mr-1rem mb-1rem btn ${option_product_object.hasOwnProperty(
-																	// 	'name'
-																	// ) || option_product_object.hasOwnProperty('size')
-																	// 	? option_product_object.size === option.size
-																	// 		? 'secondary'
-																	// 		: 'primary'
-																	// 	: option.default_option
-																	// 		? 'secondary'
-																	// 		: 'primary'}`}
 																>
-																	{/* {console.log({ option })} */}
 																	{determine_option_product_name(option.size)}
-																	{/* {determine_option_product_name(
-																		option.size || option.name
-																	)} */}
 																</button>
 															))}
 														</div>

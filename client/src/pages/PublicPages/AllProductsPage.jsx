@@ -246,7 +246,7 @@ const AllProductsPage = (props) => {
 
 			<div className="jc-c">
 				<div className="row">
-					<h1>
+					<h1 className="fs-25px mb-5px ta-c">
 						{`${humanize(category) === 'Exo Diffusers'
 							? 'EXO Diffusers'
 							: humanize(category)} ${subcategory && humanize(subcategory)} ${collection &&
@@ -267,10 +267,9 @@ const AllProductsPage = (props) => {
 			</div>
 
 			<div className="jc-c ai-c wrap m-auto pb-1rem" style={{ overflowX: 'scroll' }}>
-				{/* <Search search={search} set_search={set_search} submitHandler={submitHandler} category={category} /> */}
-				{/* <Sort sortHandler={sortHandler} sort_options={sort_options} /> */}
+				<Sort sortHandler={sortHandler} sort_options={sort_options} />
 				{/* {category === 'glowskins' && <Filter filterHandler={filterHandler} filter_options={chips_list} />} */}
-				{/* <Filter filterHandler={filterHandler} filter_options={chips_list} /> */}
+				<Filter filterHandler={filterHandler} filter_options={chips_list} />
 			</div>
 			<Loading loading={loading_products} />
 			<div className="jc-c">
