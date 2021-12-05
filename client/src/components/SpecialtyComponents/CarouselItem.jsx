@@ -52,7 +52,8 @@ const CarouselItem = (props) => {
 				// secondary_product,
 				// secondary_product_name,
 				name: product.name,
-				size: size ? size : option ? option.size || option.name : null,
+				// size: size ? size : option ? option.size || option.name : null,
+				size: size ? size : option.size,
 				color: color && color.color,
 				secondary_color: secondary_color && secondary_color.secondary_color,
 				display_image: product.images[0],
@@ -142,14 +143,15 @@ const CarouselItem = (props) => {
 																product.option_products.map((option, index) => (
 																	<button
 																		key={index}
-																		id={option.name}
+																		id={option.size}
 																		value={JSON.stringify(option)}
 																		onClick={(e) => update_option(e)}
 																		className={`packs fs-13px flex-s-0 min-w-40px mr-2px mb-1rem btn ${option.default_option
 																			? 'secondary'
 																			: 'primary'}`}
 																	>
-																		{option.size || option.name}
+																		{/* {option.size || option.name} */}
+																		{option.size}
 																	</button>
 																))}
 														</div>

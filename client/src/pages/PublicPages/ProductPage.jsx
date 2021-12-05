@@ -222,10 +222,13 @@ const ProductPage = (props) => {
 						}
 
 						const option = product.option_products.find(
-							(option) =>
-								option.size === parseInt(query.option) ||
-								option.name === query_option.split('%20').join(' ')
+							(option) => option.size === query_option.split('%20').join(' ')
 						);
+						// const option = product.option_products.find(
+						// 	(option) =>
+						// 		option.size === parseInt(query.option) ||
+						// 		option.name === query_option.split('%20').join(' ')
+						// );
 						console.log({ option });
 						// const option =
 						// 	query.option &&
@@ -293,9 +296,10 @@ const ProductPage = (props) => {
 	const update_option_product_state = (option) => {
 		if (option.size) {
 			set_size(option.size);
-		} else {
-			set_size(option.name);
 		}
+		// else {
+		// 	set_size(option.name);
+		// }
 
 		if (option.secondary_color) {
 			set_secondary_color(option.secondary_color);
@@ -322,8 +326,6 @@ const ProductPage = (props) => {
 			package_height: option.package_height,
 			package_volume: option.package_volume
 		});
-		set_option_product(option._id);
-		set_option_product_name(option.name);
 		set_option_product(option._id);
 		set_option_product_name(option.name);
 		set_option_product_object(option);
@@ -493,9 +495,10 @@ const ProductPage = (props) => {
 
 		if (option.size) {
 			set_size(option.size);
-		} else {
-			set_size(option.name);
 		}
+		// else {
+		// 	set_size(option.name);
+		// }
 		if (option.price > 0) {
 			set_price(option.price);
 		}
@@ -535,7 +538,8 @@ const ProductPage = (props) => {
 		set_option_product_object(option);
 		set_option_product(option._id);
 		set_option_product_name(option.name);
-		update_url(color, secondary_color, option.size || option.name, secondary_product_name);
+		update_url(color, secondary_color, option.size);
+		// update_url(color, secondary_color, option.size || option.name, secondary_product_name);
 	};
 
 	const update_secondary = (e) => {
@@ -1056,23 +1060,33 @@ const ProductPage = (props) => {
 															{option_products.map((option, index) => (
 																<button
 																	key={index}
-																	id={option.name}
+																	id={option.size}
 																	value={JSON.stringify(option)}
 																	onClick={(e) => update_option(e)}
 																	className={`packs fs-13px flex-s-0 min-w-40px mr-1rem mb-1rem btn ${option_product_object.hasOwnProperty(
-																		'name'
-																	) || option_product_object.hasOwnProperty('size')
+																		'size'
+																	)
 																		? option_product_object.size === option.size
 																			? 'secondary'
 																			: 'primary'
 																		: option.default_option
 																			? 'secondary'
 																			: 'primary'}`}
+																	// className={`packs fs-13px flex-s-0 min-w-40px mr-1rem mb-1rem btn ${option_product_object.hasOwnProperty(
+																	// 	'name'
+																	// ) || option_product_object.hasOwnProperty('size')
+																	// 	? option_product_object.size === option.size
+																	// 		? 'secondary'
+																	// 		: 'primary'
+																	// 	: option.default_option
+																	// 		? 'secondary'
+																	// 		: 'primary'}`}
 																>
 																	{/* {console.log({ option })} */}
-																	{determine_option_product_name(
+																	{determine_option_product_name(option.size)}
+																	{/* {determine_option_product_name(
 																		option.size || option.name
-																	)}
+																	)} */}
 																</button>
 															))}
 														</div>
@@ -1096,13 +1110,13 @@ const ProductPage = (props) => {
 															{option_products.map((option, index) => (
 																<button
 																	key={index}
-																	id={option.name}
+																	id={option.size}
 																	value={JSON.stringify(option)}
 																	onClick={(e) => update_option(e)}
 																	className={`packs fs-13px flex-s-0 min-w-40px mr-1rem mb-1rem btn ${option_product_object.hasOwnProperty(
-																		'name'
+																		'size'
 																	)
-																		? option_product_object.name === option.name
+																		? option_product_object.size === option.size
 																			? 'secondary'
 																			: 'primary'
 																		: option.default_option
@@ -1110,9 +1124,10 @@ const ProductPage = (props) => {
 																			: 'primary'}`}
 																>
 																	{/* {console.log({ option })} */}
-																	{determine_option_product_name(
+																	{determine_option_product_name(option.size)}
+																	{/* {determine_option_product_name(
 																		option.size || option.name
-																	)}
+																	)} */}
 																</button>
 															))}
 														</div>
@@ -1394,7 +1409,7 @@ const ProductPage = (props) => {
 														{option_products.map((option, index) => (
 															<button
 																key={index}
-																id={option.name}
+																id={option.size}
 																value={JSON.stringify(option)}
 																onClick={(e) => update_option(e)}
 																className={`packs fs-13px flex-s-0 min-w-40px mr-1rem mb-1rem btn ${option_product_object.hasOwnProperty(
@@ -1405,9 +1420,10 @@ const ProductPage = (props) => {
 																		: 'primary'
 																	: option.default_option ? 'secondary' : 'primary'}`}
 															>
-																{determine_option_product_name(
+																{determine_option_product_name(option.size)}
+																{/* {determine_option_product_name(
 																	option.size || option.name
-																)}
+																)} */}
 															</button>
 														))}
 													</div>
@@ -1429,16 +1445,14 @@ const ProductPage = (props) => {
 																<button
 																	key={index}
 																	selected={option.default_option}
-																	id={option.name}
+																	id={option.size}
 																	value={JSON.stringify(option)}
 																	onClick={(e) => update_option(e)}
 																	className={`packs fs-13px flex-s-0 min-w-40px mr-1rem mb-1rem btn ${option.default_option
 																		? 'secondary'
 																		: 'primary'}`}
 																>
-																	{determine_option_product_name(
-																		option.size || option.name
-																	)}
+																	{determine_option_product_name(option.size)}
 																</button>
 															))}
 													</div>

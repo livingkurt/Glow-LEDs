@@ -441,7 +441,7 @@ export default {
 		// const diffuser_caps = products.filter((product: any) => product.category === 'diffuser_caps');
 
 		products.forEach(async (product: any) => {
-			product.sizing = product.size ? `${product.size}` : null;
+			product.sizing = product.size ? `${product.size}` : '';
 			const result = await product.save();
 			console.log({ result });
 		});

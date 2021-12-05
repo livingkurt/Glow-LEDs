@@ -120,7 +120,7 @@ const productSchema = new mongoose.Schema(
 		option_products: [ { type: mongoose.Schema.Types.ObjectId, ref: 'Product' } ],
 		color: { type: String },
 		color_code: { type: String },
-		size: { type: Number },
+		size: { type: String },
 		sizing: { type: String },
 		default_option: { type: Boolean, default: false },
 		option: { type: Boolean, default: false },
