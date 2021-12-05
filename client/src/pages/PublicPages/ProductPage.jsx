@@ -441,18 +441,21 @@ const ProductPage = (props) => {
 		if (option.sale_price > 0) {
 			set_sale_price(option.sale_price);
 		}
-		if (option.description) {
-			set_description(option.description);
-		}
-		if (option.facts) {
-			set_facts(option.facts);
-		}
-		if (option.included_items) {
-			set_included_items(option.included_items);
-		}
-		if (option.images && option.images[0]) {
-			set_images(option.images);
-			set_image(option.images[0]);
+
+		if (option.subcategory !== 'gloves') {
+			if (option.images && option.images[0]) {
+				set_images(option.images);
+				set_image(option.images[0]);
+			}
+			if (option.description) {
+				set_description(option.description);
+			}
+			if (option.facts) {
+				set_facts(option.facts);
+			}
+			if (option.included_items) {
+				set_included_items(option.included_items);
+			}
 		}
 		set_dimensions({
 			weight_pounds: option.weight_pounds,
@@ -470,14 +473,18 @@ const ProductPage = (props) => {
 
 	const update_secondary = (e) => {
 		const secondary = JSON.parse(e.target.value);
-		if (secondary.images && secondary.images[0]) {
-			set_images(secondary.images);
-			set_image(secondary.images[0]);
+		if (secondary.subcategory !== 'batteries') {
+			if (secondary.images && secondary.images[0]) {
+				set_images(secondary.images);
+				set_image(secondary.images[0]);
+			}
+			set_option_products(secondary.option_products);
 		}
+
 		console.log({ secondary });
 		set_color_products(secondary.color_products);
 		set_secondary_color_products(secondary.secondary_color_products);
-		set_option_products(secondary.option_products);
+
 		// set_secondary_products(secondary.secondary_products);
 		set_secondary_product(secondary._id);
 		set_secondary_product_name(secondary.name);
@@ -585,7 +592,7 @@ const ProductPage = (props) => {
 						{!secondary_image &&
 						width <= 819 && (
 							<div>
-								<h1 className="product_title_side ta-c lh-50px fs-30px mv-0px">{name}</h1>
+								<h1 className="product_title_side ta-c lh-50px fs-25px mv-0px">{name}</h1>
 								<div className=" w-100per max-w-400px m-auto">
 									<ProductSlideshow
 										product={product}
@@ -604,7 +611,7 @@ const ProductPage = (props) => {
 								{(secondary_image || width > 819) && (
 									<div>
 										<label
-											className="product_title_top fs-30px ff-h mb-2rem ta-c lh-50px"
+											className="product_title_top fs-25px ff-h mb-2rem ta-c lh-50px"
 											style={{ display: width < 819 ? 'block' : 'none' }}
 										>
 											{name}
@@ -674,7 +681,7 @@ const ProductPage = (props) => {
 								className="details-info desktop_product_view"
 								style={{ display: width > 819 ? 'block' : 'none' }}
 							>
-								<h1 className="product_title_side lh-50px fs-30px mv-0px">{name}</h1>
+								<h1 className="product_title_side lh-50px fs-25px mv-0px">{name}</h1>
 
 								<div className="mb-15px mt-n9px">
 									<a href="#reviews">
@@ -954,6 +961,7 @@ const ProductPage = (props) => {
 											</div>
 										</li>
 									)}
+									{console.log({ option_product_object })}
 									{product.option_product_group &&
 									option_products &&
 									option_products.length > 0 && (
@@ -981,8 +989,8 @@ const ProductPage = (props) => {
 																	onClick={(e) => update_option(e)}
 																	className={`packs fs-13px flex-s-0 min-w-40px mr-1rem mb-1rem btn ${option_product_object.hasOwnProperty(
 																		'name'
-																	) || option_product_object.hasOwnProperty('name')
-																		? option_product_object.name === option.name
+																	) || option_product_object.hasOwnProperty('size')
+																		? option_product_object.size === option.size
 																			? 'secondary'
 																			: 'primary'
 																		: option.default_option
@@ -1020,9 +1028,9 @@ const ProductPage = (props) => {
 																	value={JSON.stringify(option)}
 																	onClick={(e) => update_option(e)}
 																	className={`packs fs-13px flex-s-0 min-w-40px mr-1rem mb-1rem btn ${option_product_object.hasOwnProperty(
-																		'size'
+																		'name'
 																	)
-																		? option_product_object.size === option.size
+																		? option_product_object.name === option.name
 																			? 'secondary'
 																			: 'primary'
 																		: option.default_option
@@ -1297,7 +1305,7 @@ const ProductPage = (props) => {
 										option_products.length > 0 && (
 											<li>
 												<div className="row">
-													<label
+													<h3
 														aria-label="sortOrder"
 														htmlFor="sortOrder"
 														className="select-label mr-1rem mt-1rem"
@@ -1307,38 +1315,27 @@ const ProductPage = (props) => {
 														) : (
 															'Size'
 														)}:
-													</label>
+													</h3>
 													<div className="ai-c wrap">
-														{option_products
-															// .filter((option) => !option.dropdown)
-															// .filter((option) => option.count_in_stock)
-															.map((option, index) => (
-																<button
-																	key={index}
-																	// selected={option.default_option}
-																	id={option.name}
-																	value={JSON.stringify(option)}
-																	onClick={(e) => update_option(e)}
-																	// selected={
-																	// 	JSON.stringify(option) ===
-																	// 		JSON.stringify(option_product_object) ||
-																	// 	option.default_option
-																	// }
-																	className={`packs fs-13px flex-s-0 min-w-40px mr-1rem mb-1rem btn ${option_product_object.hasOwnProperty(
-																		'size'
-																	)
-																		? option_product_object.size === option.size
-																			? 'secondary'
-																			: 'primary'
-																		: option.default_option
-																			? 'secondary'
-																			: 'primary'}`}
-																>
-																	{determine_option_product_name(
-																		option.size || option.name
-																	)}
-																</button>
-															))}
+														{option_products.map((option, index) => (
+															<button
+																key={index}
+																id={option.name}
+																value={JSON.stringify(option)}
+																onClick={(e) => update_option(e)}
+																className={`packs fs-13px flex-s-0 min-w-40px mr-1rem mb-1rem btn ${option_product_object.hasOwnProperty(
+																	'size'
+																)
+																	? option_product_object.size === option.size
+																		? 'secondary'
+																		: 'primary'
+																	: option.default_option ? 'secondary' : 'primary'}`}
+															>
+																{determine_option_product_name(
+																	option.size || option.name
+																)}
+															</button>
+														))}
 													</div>
 												</div>
 											</li>
