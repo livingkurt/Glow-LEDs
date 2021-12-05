@@ -42,7 +42,8 @@ const ProductPage = (props) => {
 	const [ previous_price, set_previous_price ] = useState();
 	const [ sale_price, set_sale_price ] = useState(0);
 	const [ size, set_size ] = useState();
-	const [ quantity_state, set_quantity_state ] = useState(30);
+	const [ quantity, set_quantity ] = useState(30);
+	const [ count_in_stock, set_count_in_stock ] = useState(30);
 	const [ product_option, set_product_option ] = useState({});
 	const [ image, set_image ] = useState('');
 	const [ secondary_image, set_secondary_image ] = useState('');
@@ -131,7 +132,8 @@ const ProductPage = (props) => {
 			if (item.sale_price > 0) {
 				set_sale_price(item.sale_price);
 			}
-			set_quantity_state(item.quantity);
+			set_quantity(item.quantity);
+			set_count_in_stock(item.count_in_stock);
 			set_name(item.name);
 			set_description(item.description);
 			set_facts(item.facts);
@@ -268,7 +270,10 @@ const ProductPage = (props) => {
 			set_sale_price(option.sale_price);
 		}
 		if (option.quantity) {
-			set_quantity_state(option.quantity);
+			set_quantity(option.quantity);
+		}
+		if (option.count_in_stock) {
+			set_count_in_stock(option.count_in_stock);
 		}
 
 		set_product_option(option);
@@ -356,7 +361,7 @@ const ProductPage = (props) => {
 			sale_price,
 			sale_start_date: product.sale_start_date,
 			sale_end_date: product.sale_end_date,
-			quantity: quantity_state,
+			quantity,
 			weight_pounds: dimensions.weight_pounds,
 			weight_ounces: dimensions.weight_ounces,
 			package_length: dimensions.package_length,
@@ -824,7 +829,7 @@ const ProductPage = (props) => {
 										)}
 									</div>
 									<li className="mt-1rem">
-										Status: {quantity_state > 0 ? 'In Stock' : 'Out of Stock'}
+										Status: {count_in_stock > 0 ? 'In Stock' : 'Out of Stock'}
 									</li>
 									{product.secondary_product_group &&
 									product.secondary_products &&
@@ -1067,7 +1072,7 @@ const ProductPage = (props) => {
 														setQty(e.target.value);
 													}}
 												>
-													{[ ...Array(quantity_state).keys() ].map((x, index) => (
+													{[ ...Array(quantity).keys() ].map((x, index) => (
 														<option key={index} defaultValue={x + 1}>
 															{x + 1}
 														</option>
@@ -1101,12 +1106,14 @@ const ProductPage = (props) => {
 										<div />
 									) : (
 										<li>
-											{quantity_state > 0 ? (
+											{count_in_stock > 0 ? (
 												<button className="btn primary bob" onClick={handleAddToCart}>
 													Add to Cart
 												</button>
 											) : (
-												<button className="btn inactive">Out of Stock</button>
+												<button className="btn primary bob" onClick={handleAddToCart}>
+													Preorder
+												</button>
 											)}
 										</li>
 									)}
@@ -1383,7 +1390,7 @@ const ProductPage = (props) => {
 															setQty(e.target.value);
 														}}
 													>
-														{[ ...Array(quantity_state).keys() ].map((x, index) => (
+														{[ ...Array(quantity).keys() ].map((x, index) => (
 															<option key={index} defaultValue={x + 1}>
 																{x + 1}
 															</option>
@@ -1418,7 +1425,7 @@ const ProductPage = (props) => {
 											<div />
 										) : (
 											<li>
-												{quantity_state > 0 ? (
+												{quantity > 0 ? (
 													<button className="btn primary" onClick={handleAddToCart}>
 														Add to Cart
 													</button>

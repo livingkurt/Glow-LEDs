@@ -144,7 +144,11 @@ export const sale_price_switch = (product, cartItem) => {
 					<label>
 						<del style={color}>
 							<label className="" style={color}>
-								${product.previous_price ? product.previous_price.toFixed(2) : product.previous_price}
+								{product.count_in_stock === 0 ? 'Preordered' : ''} ${product.previous_price ? (
+									product.previous_price.toFixed(2)
+								) : (
+									product.previous_price
+								)}
 							</label>
 						</del>{' '}
 					</label>
@@ -163,20 +167,27 @@ export const sale_price_switch = (product, cartItem) => {
 						<label>
 							<del style={color}>
 								<label className="" style={color}>
-									${product.price ? product.price.toFixed(2) : product.price}
+									{product.count_in_stock === 0 ? 'Preordered' : ''} ${product.price ? product.price.toFixed(2) : product.price}
 								</label>
 							</del>{' '}
 						</label>
 					</label>
 				);
 			} else {
-				return <label className="fs-18px">${product.price ? product.price.toFixed(2) : product.price}</label>;
+				return (
+					<label className="fs-18px">
+						{product.count_in_stock === 0 ? 'Preordered' : ''} ${product.price ? product.price.toFixed(2) : product.price}
+					</label>
+				);
 			}
 		}
 	}
 };
 
 export const email_sale_price_switch = (item, color) => {
+	if (item.count_in_stock === 0) {
+		return <label className="fs-18px">Preorder</label>;
+	}
 	if (item.sale_price !== 0) {
 		return (
 			<label>

@@ -623,10 +623,14 @@ export default {
 			const new_count = count_in_stock - qty;
 			console.log({ id, new_count });
 			const product: any = await Product.findOne({ _id: id });
-			if (product.count_in_stock <= product.quantity) {
+			if (new_count <= 0) {
+				product.quantity = 30;
+				product.count_in_stock = 0;
+			} else if (product.count_in_stock <= product.quantity) {
 				product.quantity = new_count;
+				product.count_in_stock = new_count;
 			}
-			product.count_in_stock = new_count;
+
 			if (product) {
 				const request = await product.save();
 				res.status(200).send(request);
@@ -655,40 +659,6 @@ export default {
 			res.status(500).send({ error, message: 'Error Updating Product' });
 		}
 	},
-	// update_stock: async (req: any, res: any) => {
-	// 	const { cartItems } = req.body;
-	// 	let product: any = {};
-	// 	let new_count = 0;
-	// 	try {
-	// 		cartItems.forEach(async (item: any) => {
-	// 			if (item.finite_stock) {
-	// 				product = await Product.findOne({ _id: item.product });
-	// 				new_count = product.count_in_stock - item.qty;
-	// 			} else if (item.option_product && item.option_product.finite_stock) {
-	// 				product = await Product.findOne({ _id: item.option_product.product });
-	// 				new_count = product.option_product.count_in_stock - item.qty;
-	// 			} else if (item.secondary_product && item.secondary_product.finite_stock) {
-	// 				product = await Product.findOne({ _id: item.secondary_product.product });
-	// 				new_count = product.secondary_product.count_in_stock - item.qty;
-	// 			} else if (item.color_product && item.color_product.finite_stock) {
-	// 				product = await Product.findOne({ _id: item.color_product.product });
-	// 				new_count = product.color_product.count_in_stock - item.qty;
-	// 			} else if (item.secondary_color_product && item.secondary_color_product.finite_stock) {
-	// 				product = await Product.findOne({ _id: item.secondary_color_product.product });
-	// 				new_count = product.secondary_color_product.count_in_stock - item.qty;
-	// 			}
-	// 			console.log({ product });
-	// 			console.log({ new_count });
-	// 			if (product) {
-	// 				const request = await product.save();
-	// 				res.status(200).send(request);
-	// 			}
-	// 		});
-	// 	} catch (error) {
-	// 		console.log({ update_stock_products_error: error });
-	// 		res.status(500).send({ error, message: 'Error Updating Product' });
-	// 	}
-	// },
 	save_item_group_id: async (req: any, res: any) => {
 		try {
 			const option = req.body.option;
