@@ -229,37 +229,37 @@ const PlaceOrderPage = (props) => {
 	};
 
 	const placeOrderHandler = async (paymentMethod) => {
-		// check_authentication();
-		// dispatch(
-		// 	createPayOrder(
-		// 		{
-		// 			orderItems: cartItems,
-		// 			shipping: shipment_id
-		// 				? {
-		// 						...shipping,
-		// 						shipment_id,
-		// 						shipping_rate
-		// 					}
-		// 				: shipping,
-		// 			payment,
-		// 			itemsPrice,
-		// 			shippingPrice,
-		// 			taxPrice,
-		// 			totalPrice,
-		// 			userInfo,
-		// 			order_note,
-		// 			tip,
-		// 			promo_code: show_message && promo_code,
-		// 			parcel
-		// 		},
-		// 		paymentMethod
-		// 	)
-		// );
+		check_authentication();
+		dispatch(
+			createPayOrder(
+				{
+					orderItems: cartItems,
+					shipping: shipment_id
+						? {
+								...shipping,
+								shipment_id,
+								shipping_rate
+							}
+						: shipping,
+					payment,
+					itemsPrice,
+					shippingPrice,
+					taxPrice,
+					totalPrice,
+					userInfo,
+					order_note,
+					tip,
+					promo_code: show_message && promo_code,
+					parcel
+				},
+				paymentMethod
+			)
+		);
 
-		// set_loading_payment(true);
+		set_loading_payment(true);
 		dimminish_stock();
-		// promo_code_used();
-		// sessionStorage.removeItem('shippingAddress');
+		promo_code_used();
+		sessionStorage.removeItem('shippingAddress');
 	};
 
 	const dimminish_stock = async () => {

@@ -139,6 +139,10 @@ const ProductPage = (props) => {
 			set_facts(item.facts);
 			set_color(item.color);
 			set_secondary_color(item.secondary_color);
+			set_color_products(item.color_products);
+			set_secondary_color_products(item.secondary_color_products);
+			set_option_products(item.option_products);
+			set_secondary_products(item.secondary_products);
 			set_included_items(item.included_items);
 
 			set_dimensions({
@@ -210,21 +214,42 @@ const ProductPage = (props) => {
 						}
 					}
 					if (product.option_products) {
+						console.log({ query: query.option });
+						console.log({ option_products: product.option_products });
+						let query_option = query.option;
+						if (query.option && query.option.indexOf('%20') > -1) {
+							query_option = query.option.split('%20').join(' ');
+						}
+
 						const option = product.option_products.find(
 							(option) =>
 								option.size === parseInt(query.option) ||
-								option.name === query.option.split('%20').join(' ')
+								option.name === query_option.split('%20').join(' ')
 						);
+						console.log({ option });
+						// const option =
+						// 	query.option &&
+						// 	product.option_products.find(
+						// 		(option) =>
+						// 			option.size === parseInt(query.option) ||
+						// 			option.name === query.option.split('%20').join(' ')
+						// 	);
 						if (option) {
 							update_option_product_state(option);
 						}
 					}
 					if (product.secondary_products && product.secondary_products.length > 0) {
-						// console.log({ query_secondary: query.secondary });
+						console.log({ query_secondary: query.secondary });
 						set_secondary_products(product.secondary_products);
-						const secondary = product.secondary_products.find(
-							(secondary) => secondary.name === query.secondary.split('%20').join(' ')
-						);
+						let query_secondary = query.secondary;
+						if (query.secondary && query.secondary.indexOf('%20') > -1) {
+							query_secondary = query.secondary.split('%20').join(' ');
+						}
+						const secondary =
+							query.secondary &&
+							product.secondary_products.find(
+								(secondary) => secondary.name === query_secondary.split('%20').join(' ')
+							);
 						if (secondary) {
 							update_secondary_product_state(secondary);
 						}
