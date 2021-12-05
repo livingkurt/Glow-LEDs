@@ -134,7 +134,7 @@ const ProductItemD = (props) => {
 							</label>
 						</Link>
 
-						<label className="product-price mv-3px">{sale_price_switch(props.product)}</label>
+						<label className="product-price mv-3px">{sale_price_switch(props.product, false)}</label>
 
 						{props.product.rating ? (
 							<Rating rating={props.product.rating} numReviews={props.product.numReviews} />

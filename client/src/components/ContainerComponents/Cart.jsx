@@ -389,7 +389,7 @@ const Cart = (props) => {
 													</label>
 												</div>
 												<div className="cart_sidebar-price fs-16px">
-													{sale_price_switch(item, true)}
+													{sale_price_switch(item, true, 'light')}
 												</div>
 											</div>
 										</div>

@@ -96,9 +96,14 @@ export const product_page_sale_price_switch = (
 	previous_price = 0,
 	sale_start_date,
 	sale_end_date,
-	cartItem
+	cartItem,
+	background
 ) => {
-	const color = cartItem ? { color: '#7e7e7e' } : { color: '#2a3156' };
+	// const color = cartItem ? { color: '#7e7e7e' } : { color: '#bf4444' };
+	const color = cartItem ? { color: '#7e7e7e' } : { color: '#c5c5c5' };
+	// const color = cartItem
+	// 	? { color: '#7e7e7e' }
+	// 	: background === 'light' ? { color: '#283166' } : { color: '#757b99' };
 	if (previous_price) {
 		return (
 			<label className="fs-18px">
@@ -133,8 +138,12 @@ export const product_page_sale_price_switch = (
 		}
 	}
 };
-export const sale_price_switch = (product, cartItem) => {
-	const color = cartItem ? { color: '#7e7e7e' } : { color: '#2a3156' };
+export const sale_price_switch = (product, cartItem, background) => {
+	const color = cartItem ? { color: '#7e7e7e' } : { color: '#c5c5c5' };
+	// const color = cartItem ? { color: '#7e7e7e' } : { color: '#bf4444' };
+	// const color = cartItem
+	// 	? { color: '#7e7e7e' }
+	// 	: background === 'light' ? { color: '#283166' } : { color: '#757b99' };
 	if (product) {
 		if (product.hasOwnProperty('previous_price') && product.previous_price) {
 			return (

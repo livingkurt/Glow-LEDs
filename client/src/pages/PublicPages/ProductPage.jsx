@@ -850,7 +850,9 @@ const ProductPage = (props) => {
 										sale_price,
 										previous_price,
 										product.sale_start_date,
-										product.sale_end_date
+										product.sale_end_date,
+										false,
+										'light'
 									)}
 								</div>
 
@@ -895,7 +897,9 @@ const ProductPage = (props) => {
 											sale_price,
 											previous_price,
 											product.sale_start_date,
-											product.sale_end_date
+											product.sale_end_date,
+											false,
+											'dark'
 										)}
 									</div>
 									<li className="mt-1rem">
@@ -1214,7 +1218,9 @@ const ProductPage = (props) => {
 													sale_price,
 													previous_price,
 													product.sale_start_date,
-													product.sale_end_date
+													product.sale_end_date,
+													false,
+													'dark'
 												)}
 											</div>
 											<div className="mb-20px">
