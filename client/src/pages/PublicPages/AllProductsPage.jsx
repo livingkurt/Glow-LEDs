@@ -94,8 +94,8 @@ const AllProductsPage = (props) => {
 	const { width, height } = userWindowDimensions();
 
 	useEffect(() => {
-		determine_products();
 		dispatch(listChips(''));
+		determine_products();
 		return () => {};
 	}, []);
 
@@ -107,8 +107,7 @@ const AllProductsPage = (props) => {
 		[ props.match.params.category, props.match.params.subcategory, props.location ]
 	);
 
-	const determine_products = () => {
-		dispatch(listChips(''));
+	const determine_products = async () => {
 		const query = getUrlParameter(props.location);
 		let category = props.match.params.category ? props.match.params.category : '';
 		let subcategory = props.match.params.subcategory ? props.match.params.subcategory : '';
@@ -132,7 +131,9 @@ const AllProductsPage = (props) => {
 				}
 				if (query.filter) {
 					// console.log({ filter: query.filter, chips_list });
-					filter = waitForElement(query.filter, chips_list);
+					const { data } = await API_Products.get_chip_by_name(query.filter);
+					filter = data._id;
+					// filter = waitForElement(query.filter, chips_list);
 				}
 				if (query.page) {
 					set_page(query.page);
@@ -157,10 +158,24 @@ const AllProductsPage = (props) => {
 	};
 
 	const waitForElement = (filter, chips_list = []) => {
-		// prnt({ filter, chips_list });
+		prnt({ filter, chips_list });
+		let chip_selected;
 		if (typeof chips_list && chips_list.length > 0) {
 			// prnt({ chip: filter.split('%20').join(' ') });
-			set_filter(chips_list.find((chip) => chip.name === filter.split('%20').join(' '))._id);
+			if (filter.match(/^[0-9a-fA-F]{24}$/)) {
+				// it's an ObjectID
+				chip_selected = filter;
+			} else {
+				chip_selected = chips_list.find((chip) => chip.name === filter.split('%20').join(' '));
+			}
+
+			// set_filter(chips_list.find((chip) => chip.name === filter.split('%20').join(' '))._id);
+			set_chip(chip_selected._id);
+			set_search('');
+			set_filter(chip_selected._id);
+			// console.log({ chip_selected });
+			// update_products_url(history, '', sort, chip_selected.name);
+			// dispatch(listProducts(category, subcategory, chip_selected._id, '', sort, collection));
 			return chips_list.find((chip) => chip.name === filter.split('%20').join(' '))._id;
 		} else {
 			setTimeout(waitForElement, 250);
@@ -269,7 +284,7 @@ const AllProductsPage = (props) => {
 			<div className="jc-c ai-c wrap m-auto pb-1rem" style={{ overflowX: 'scroll' }}>
 				<Sort sortHandler={sortHandler} sort_options={sort_options} />
 				{/* {category === 'glowskins' && <Filter filterHandler={filterHandler} filter_options={chips_list} />} */}
-				{/* <Filter filterHandler={filterHandler} filter_options={chips_list} /> */}
+				<Filter filterHandler={filterHandler} filter_options={chips_list} />
 			</div>
 			<Loading loading={loading_products} />
 			<div className="jc-c">

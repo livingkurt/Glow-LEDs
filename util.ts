@@ -357,3 +357,55 @@ export const determine_sponsor_code_tier = (code_usage: number) => {
 		return 75;
 	}
 };
+
+export const categories = [
+	'accessories',
+	'casings',
+	'decals',
+	'diffuser_caps',
+	'diffusers',
+	'exo_diffusers',
+	'gift_card',
+	'glow_casings',
+	'glow_strings',
+	'glowskins',
+	'mega_diffuser_caps',
+	'options'
+];
+export const subcategories = [
+	'battery_storage',
+	'batteries',
+	'stickers',
+	'clips',
+	'casings',
+	'universal',
+	'batman',
+	'outline',
+	'patterns',
+	'abstract',
+	'shapes',
+	'diffuser_adapters',
+	'geometric',
+	'starter_kit',
+	'sacred_geometry',
+	'imperfect',
+	'domes',
+	'closed_hole',
+	'fisheye',
+	'open_hole',
+	'polygons',
+	'cylinders',
+	'polyhedrons',
+	'gift_card',
+	'nova',
+	'classics',
+	'novaskins',
+	'alt_novaskins',
+	'symbols',
+	'emoji',
+	'mega_diffuser_adapters',
+	'custom',
+	'colors',
+	'sizes',
+	'secondary_colors'
+];

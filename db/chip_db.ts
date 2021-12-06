@@ -5,7 +5,7 @@ import { make_private_code } from '../util';
 export default {
 	findAll_chips_db: async (filter: any, sortOrder: any) => {
 		try {
-			return await Chip.find(filter).sort(sortOrder).populate('user');
+			return await Chip.find(filter).sort(sortOrder);
 		} catch (error) {
 			console.log({ findAll_chips_db_error: error });
 			throw new Error(error.message);
@@ -13,7 +13,15 @@ export default {
 	},
 	findById_chips_db: async (id: string) => {
 		try {
-			return await Chip.findOne({ _id: id }).populate('user');
+			return await Chip.findOne({ _id: id });
+		} catch (error) {
+			console.log({ findById_chips_db_error: error });
+			throw new Error(error.message);
+		}
+	},
+	findByName_chips_db: async (name: string) => {
+		try {
+			return await Chip.findOne({ name: name });
 		} catch (error) {
 			console.log({ findById_chips_db_error: error });
 			throw new Error(error.message);

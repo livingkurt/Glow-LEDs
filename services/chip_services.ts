@@ -36,6 +36,14 @@ export default {
 			throw new Error(error.message);
 		}
 	},
+	findByName_chips_s: async (params: any) => {
+		try {
+			return await chip_db.findByName_chips_db(params.name);
+		} catch (error) {
+			console.log({ findById_chips_s_error: error });
+			throw new Error(error.message);
+		}
+	},
 	create_chips_s: async (body: any) => {
 		try {
 			return await chip_db.create_chips_db(body);

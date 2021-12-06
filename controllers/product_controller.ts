@@ -1,5 +1,5 @@
 import { Product } from '../models';
-import { snake_case } from '../util';
+import { categories, snake_case, subcategories } from '../util';
 
 export default {
 	findAll: async (req: any, res: any) => {
@@ -15,63 +15,8 @@ export default {
 			const option: any = req.query.option
 				? { option: req.query.option === 'true' ? true : false }
 				: { option: false };
-			console.log({
-				hidden,
-				option
-			});
-			const chips = req.query.chip ? { chips: { $in: [ req.query.chip, '60203602dcf28a002a1a62ed' ] } } : {};
-
-			const categories = [
-				'accessories',
-				'casings',
-				'decals',
-				'diffuser_caps',
-				'diffusers',
-				'exo_diffusers',
-				'gift_card',
-				'glow_casings',
-				'glow_strings',
-				'glowskins',
-				'mega_diffuser_caps',
-				'options'
-			];
-			const subcategories = [
-				'battery_storage',
-				'batteries',
-				'stickers',
-				'clips',
-				'casings',
-				'universal',
-				'batman',
-				'outline',
-				'patterns',
-				'abstract',
-				'shapes',
-				'diffuser_adapters',
-				'geometric',
-				'starter_kit',
-				'sacred_geometry',
-				'imperfect',
-				'domes',
-				'closed_hole',
-				'fisheye',
-				'open_hole',
-				'polygons',
-				'cylinders',
-				'polyhedrons',
-				'gift_card',
-				'nova',
-				'classics',
-				'novaskins',
-				'alt_novaskins',
-				'symbols',
-				'emoji',
-				'mega_diffuser_adapters',
-				'custom',
-				'colors',
-				'sizes',
-				'secondary_colors'
-			];
+			const chips = req.query.chip ? { chips: { $in: [ req.query.chip ] } } : {};
+			// const chips = req.query.chip ? { chips: { $in: [ req.query.chip, '60203602dcf28a002a1a62ed' ] } } : {};
 			let search = {};
 			if (categories.includes(snake_case(req.query.search))) {
 				search = req.query.search
@@ -101,7 +46,6 @@ export default {
 						}
 					: {};
 			}
-			console.log({ search });
 
 			let sortOrder = {};
 			if (req.query.sortOrder === 'lowest') {
@@ -147,41 +91,48 @@ export default {
 				...search,
 				...chips
 			});
+			console.log({ products, count });
 
-			if (chips && Object.keys(chips).length === 0 && Object.getPrototypeOf(chips) === Object.prototype) {
-				// console.log('No Chip');
-				// res.send(products);
-				res.json({
-					products,
-					totalPages: Math.ceil(count / limit),
-					currentPage: parseInt(page)
-				});
-			} else {
-				// console.log('Yes Chip');
-				const accessories = products.filter((product: any) => product.category === 'accessories');
-				const diffusers = products.filter((product: any) => product.category === 'diffusers');
-				const diffuser_caps = products.filter((product: any) => product.category === 'diffuser_caps');
-				const decals = products.filter((product: any) => product.category === 'decals');
-				const exo_diffusers = products.filter((product: any) => product.category === 'exo_diffusers');
-				const glow_strings = products.filter((product: any) => product.category === 'glow_strings');
-				const glow_casings = products.filter((product: any) => product.category === 'glow_casings');
-				const glowskins = products.filter((product: any) => product.category === 'glowskins');
+			res.json({
+				products,
+				totalPages: Math.ceil(count / limit),
+				currentPage: parseInt(page)
+			});
 
-				res.json({
-					products: [
-						...glowskins,
-						...glow_casings,
-						...accessories,
-						...exo_diffusers,
-						...decals,
-						...glow_strings,
-						...diffuser_caps,
-						...diffusers
-					],
-					totalPages: Math.ceil(count / limit),
-					currentPage: parseInt(page)
-				});
-			}
+			// if (chips && Object.keys(chips).length === 0 && Object.getPrototypeOf(chips) === Object.prototype) {
+			// 	// console.log('No Chip');
+			// 	// res.send(products);
+			// 	res.json({
+			// 		products,
+			// 		totalPages: Math.ceil(count / limit),
+			// 		currentPage: parseInt(page)
+			// 	});
+			// } else {
+			// 	// console.log('Yes Chip');
+			// 	const glowskins = products.filter((product: any) => product.category === 'glowskins');
+			// 	const glow_casings = products.filter((product: any) => product.category === 'glow_casings');
+			// 	const accessories = products.filter((product: any) => product.category === 'accessories');
+			// 	const diffusers = products.filter((product: any) => product.category === 'diffusers');
+			// 	const diffuser_caps = products.filter((product: any) => product.category === 'diffuser_caps');
+			// 	const decals = products.filter((product: any) => product.category === 'decals');
+			// 	const exo_diffusers = products.filter((product: any) => product.category === 'exo_diffusers');
+			// 	const glow_strings = products.filter((product: any) => product.category === 'glow_strings');
+
+			// 	res.json({
+			// 		products: [
+			// 			...glowskins,
+			// 			...glow_casings,
+			// 			...accessories,
+			// 			...exo_diffusers,
+			// 			...decals,
+			// 			...glow_strings,
+			// 			...diffuser_caps,
+			// 			...diffusers
+			// 		],
+			// 		totalPages: Math.ceil(count / limit),
+			// 		currentPage: parseInt(page)
+			// 	});
+			// }
 		} catch (error) {
 			console.log({ findAll_products_error: error });
 
