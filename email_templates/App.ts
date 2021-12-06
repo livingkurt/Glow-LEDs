@@ -97,5 +97,8 @@ export default (props: any) => {
       </td>
     </tr>
   </table>
-</body>"`;
+</body>"
+
+
+`;
 };

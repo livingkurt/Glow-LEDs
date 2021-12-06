@@ -22,8 +22,6 @@ const EditAllDataPage = (props) => {
 
 	const today = accurate_date(date);
 	const end_date = accurate_date(addDays(date, 7));
-	console.log({ end_date: accurate_date(addDays(date, 7)) });
-	console.log({ today });
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
 
@@ -77,13 +75,13 @@ const EditAllDataPage = (props) => {
 
 	const update_sale_price = async (e) => {
 		e.preventDefault();
-		console.log({
-			start_date: unformat_date_and_time(sale_start_date, sale_start_time),
-			end_date: unformat_date_and_time(sale_end_date, sale_end_time)
-		});
+		// console.log({
+		// 	start_date: unformat_date_and_time(sale_start_date, sale_start_time),
+		// 	end_date: unformat_date_and_time(sale_end_date, sale_end_time)
+		// });
 		const start_date = new Date(unformat_date_and_time(sale_start_date, sale_start_time));
 		const end_date = new Date(unformat_date_and_time(sale_end_date, sale_end_time));
-		console.log({ start_date: accurate_date(start_date) });
+		console.log({ start_date: accurate_date(start_date), end_date: accurate_date(start_date) });
 		const request = await API_Products.set_sale_price(
 			parseInt(discount_percentage) / 100,
 			accurate_date(start_date),

@@ -145,7 +145,25 @@ export const sale_price_switch = (product, cartItem, background) => {
 	// 	? { color: '#7e7e7e' }
 	// 	: background === 'light' ? { color: '#283166' } : { color: '#757b99' };
 	if (product) {
-		if (product.hasOwnProperty('previous_price') && product.previous_price) {
+		if (
+			product.sale_price !== 0 &&
+			today >= new Date(product.sale_start_date) &&
+			today <= new Date(product.sale_end_date)
+		) {
+			return (
+				<label className="fs-18px">
+					<label>${product.sale_price ? product.sale_price.toFixed(2) : product.sale_price}</label>
+					<label> ({100 * (1 - product.sale_price / product.price).toFixed(2)}% Off) </label>
+					<label>
+						<del style={color}>
+							<label className="" style={color}>
+								{product.count_in_stock === 0 ? 'Preordered' : ''} ${product.price ? product.price.toFixed(2) : product.price}
+							</label>
+						</del>{' '}
+					</label>
+				</label>
+			);
+		} else if (product.hasOwnProperty('previous_price') && product.previous_price) {
 			return (
 				<label className="fs-18px">
 					<label>${product.price ? product.price.toFixed(2) : product.price}</label>
@@ -164,31 +182,11 @@ export const sale_price_switch = (product, cartItem, background) => {
 				</label>
 			);
 		} else {
-			if (
-				product.sale_price !== 0 &&
-				today >= new Date(product.sale_start_date) &&
-				today <= new Date(product.sale_end_date)
-			) {
-				return (
-					<label className="fs-18px">
-						<label>${product.sale_price ? product.sale_price.toFixed(2) : product.sale_price}</label>
-						<label> ({100 * (1 - product.sale_price / product.price).toFixed(2)}% Off) </label>
-						<label>
-							<del style={color}>
-								<label className="" style={color}>
-									{product.count_in_stock === 0 ? 'Preordered' : ''} ${product.price ? product.price.toFixed(2) : product.price}
-								</label>
-							</del>{' '}
-						</label>
-					</label>
-				);
-			} else {
-				return (
-					<label className="fs-18px">
-						{product.count_in_stock === 0 ? 'Preordered' : ''} ${product.price ? product.price.toFixed(2) : product.price}
-					</label>
-				);
-			}
+			return (
+				<label className="fs-18px">
+					{product.count_in_stock === 0 ? 'Preordered' : ''} ${product.price ? product.price.toFixed(2) : product.price}
+				</label>
+			);
 		}
 	}
 };
