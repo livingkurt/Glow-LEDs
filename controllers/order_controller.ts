@@ -45,19 +45,28 @@ export default {
 			const limit: any = req.query.limit ? req.query.limit : 10;
 			console.log({ page: req.query.page, limit: req.query.limit });
 			let search = {};
-			const reg = {
-				$regex: req.query.search,
-				$options: 'i'
-			};
 			if (req.query.search.match(/^[0-9a-fA-F]{24}$/)) {
 				search = req.query.search ? { _id: req.query.search } : {};
 			} else {
 				search = req.query.search
 					? {
-							$or: [ { 'shipping.first_name': reg }, { 'shipping.last_name': reg } ]
+							$expr: {
+								$regexMatch: {
+									input: { $concat: [ '$shipping.first_name', ' ', '$shipping.last_name' ] },
+									regex: req.query.search, //Your text search here
+									options: 'i'
+								}
+							}
 						}
 					: {};
 			}
+			// else {
+			// 	search = req.query.search
+			// 		? {
+			// 				$or: [ { 'shipping.first_name': reg }, { 'shipping.last_name': reg } ]
+			// 			}
+			// 		: {};
+			// }
 			let sortOrder = {};
 			let filter = {};
 			if (req.query.sortOrder === 'lowest') {
