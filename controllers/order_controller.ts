@@ -44,23 +44,20 @@ export default {
 			const page: any = req.query.page ? req.query.page : 1;
 			const limit: any = req.query.limit ? req.query.limit : 10;
 			console.log({ page: req.query.page, limit: req.query.limit });
-			// let user: any;
-			// let search: any;
-			// if (req.query.search) {
-			// 	const userSearchKeyword = req.query.search
-			// 		? {
-			// 				user: {
-			// 					$regex: req.query.search,
-			// 					$options: 'i'
-			// 				}
-			// 			}
-			// 		: {};
-			// 	user = await User.findOne({ ...userSearchKeyword });
-			// 	search = { user: user._id };
-			// }
-			const search = req.query.search ? { _id: req.query.search } : {};
-			// const search = { _id: req.query.search };
-			// // console.log({ search });
+			let search = {};
+			const reg = {
+				$regex: req.query.search,
+				$options: 'i'
+			};
+			if (req.query.search.match(/^[0-9a-fA-F]{24}$/)) {
+				search = req.query.search ? { _id: req.query.search } : {};
+			} else {
+				search = req.query.search
+					? {
+							$or: [ { 'shipping.first_name': reg }, { 'shipping.last_name': reg } ]
+						}
+					: {};
+			}
 			let sortOrder = {};
 			let filter = {};
 			if (req.query.sortOrder === 'lowest') {
