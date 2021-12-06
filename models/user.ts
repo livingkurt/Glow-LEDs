@@ -57,7 +57,7 @@ const shippingSchema = {
 
 const userSchema = new mongoose.Schema(
 	{
-		first_name: { type: String, required: true },
+		first_name: { type: String },
 		last_name: { type: String },
 		email: {
 			type: String,
@@ -67,7 +67,7 @@ const userSchema = new mongoose.Schema(
 			// dropDups: true
 		},
 		shipping: shippingSchema,
-		password: { type: String, required: true },
+		password: { type: String },
 
 		isAdmin: { type: Boolean, required: true, default: false },
 		isVerified: { type: Boolean, required: true, default: false },

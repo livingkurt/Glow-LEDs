@@ -84,18 +84,21 @@ const EmailsPage = (props) => {
 				<Link to="/secure/glow/emails/announcement">
 					<button className="btn primary">Announcement</button>
 				</Link>
-				<Link to="/secure/glow/emails/review">
+				<a href="/api/templates/review" target="_blank">
 					<button className="btn primary">Review</button>
-				</Link>
-				<Link to="/secure/glow/emails/account_created">
+				</a>
+				<a href="/api/templates/account_created" target="_blank">
 					<button className="btn primary">Account Created</button>
-				</Link>
-				<Link to="/secure/glow/emails/reset_password">
+				</a>
+				<a href="/api/templates/reset_password" target="_blank">
 					<button className="btn primary">Reset Password</button>
-				</Link>
-				<Link to="/secure/glow/emails/password_changed">
+				</a>
+				<a href="/api/templates/password_changed" target="_blank">
 					<button className="btn primary">Password Changed</button>
-				</Link>
+				</a>
+				<a href="/api/templates/email_subscription" target="_blank">
+					<button className="btn primary">Email Subscription</button>
+				</a>
 				<Link to="/secure/glow/emails/order/60d4aae4726aa8002a5091a4/order/false">
 					<button className="btn primary">Order</button>
 				</Link>

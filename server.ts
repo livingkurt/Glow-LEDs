@@ -12,6 +12,7 @@ const expressAttack = require('express-attack');
 const requestIp = require('request-ip');
 
 import routes from './routes';
+import template_routes from './email_templates/template_routes';
 
 // let Bugsnag = require('@bugsnag/js');
 // let BugsnagPluginExpress = require('@bugsnag/plugin-express');
@@ -103,6 +104,7 @@ require('./passport')(passport);
 // Bugsnag.notify(new Error('Test error'));
 
 app.use(routes);
+app.use('/api/templates', template_routes);
 
 // app.use('/', htmlRoutes);
 app.get('/api/config/paypal', (req, res) => {
@@ -122,10 +124,6 @@ app.use((req, res, next) => {
 	}
 	return next();
 });
-
-// app.use(function(req, res, next) {
-// 	throw new Error('Test error');
-// });
 
 if (process.env.NODE_ENV === 'production') {
 	app.use(express.static('client/build'));

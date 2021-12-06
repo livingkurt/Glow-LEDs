@@ -128,18 +128,8 @@ controllers/*.js
 routes/api/*.js
 services/*.js
 db/*.js
-
-email_templates/pages/error.js
-email_templates/pages/account_created.js
-email_templates/pages/reset_password.js
-email_templates/pages/password_reset.js
-email_templates/pages/order.js
-email_templates/pages/contact.js
-email_templates/pages/contact_confirmation.js
-email_templates/pages/index.js
-email_templates/App.js
-
-
+email_templates/*.js
+email_templates/pages/*.js
 
 certification/glowleds-key.pem
 

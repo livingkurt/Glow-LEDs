@@ -1,16 +1,18 @@
 import React from 'react';
 import classnames from 'classnames';
 import { usePagination, DOTS } from '../Hooks/usePagination';
+import { userWindowDimensions } from '../Hooks';
 const Pagination = (props) => {
 	const { onPageChange, totalCount, siblingCount = 1, currentPage, pageSize, className } = props;
-
+	const { width, height } = userWindowDimensions();
 	// console.log({ props });
 
 	const paginationRange = usePagination({
 		currentPage: parseInt(currentPage),
 		totalCount,
 		siblingCount,
-		pageSize
+		pageSize,
+		width
 	});
 	// console.log({ paginationRange });
 
@@ -40,29 +42,34 @@ const Pagination = (props) => {
 					<i class="fas fa-arrow-left" />
 				</div>
 			</li>
-			{paginationRange.map((pageNumber) => {
-				if (pageNumber === DOTS) {
+			{width > 430 &&
+				paginationRange.map((pageNumber) => {
+					if (pageNumber === DOTS) {
+						return (
+							<li className="pagination-item dots">
+								{' '}
+								<div className="fs-35px">...</div>
+							</li>
+						);
+					}
+
 					return (
-						<li className="pagination-item dots">
-							{' '}
-							<div className="fs-35px">...</div>
+						<li
+							className={classnames('pagination-item', {
+								selected: pageNumber === currentPage
+							})}
+							onClick={(e) => onPageChange(e, pageNumber)}
+						>
+							<div
+								className={`btn ${pageNumber === parseInt(currentPage)
+									? 'secondary'
+									: 'primary'} w-40px`}
+							>
+								{pageNumber}
+							</div>
 						</li>
 					);
-				}
-
-				return (
-					<li
-						className={classnames('pagination-item', {
-							selected: pageNumber === currentPage
-						})}
-						onClick={(e) => onPageChange(e, pageNumber)}
-					>
-						<div className={`btn ${pageNumber === parseInt(currentPage) ? 'secondary' : 'primary'} w-40px`}>
-							{pageNumber}
-						</div>
-					</li>
-				);
-			})}
+				})}
 			<li
 				className={classnames('pagination-item', {
 					disabled: currentPage === lastPage

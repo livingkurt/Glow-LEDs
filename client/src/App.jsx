@@ -127,6 +127,7 @@ import particlesjs_config from './particlesjs_config.json';
 import { API_Users } from './utils';
 import { check_authentication } from './utils/react_helper_functions';
 import MarkAsShippedEmail from './components/EmailComponents/MarkAsShippedEmail';
+import { EmailModal } from './components/SpecialtyComponents';
 
 const App = (props) => {
 	const theme_colors = {
@@ -194,6 +195,26 @@ const App = (props) => {
 		[ prevScrollPos, visible, handleScroll ]
 	);
 
+	window.onclick = function(event) {
+		if (event.target === modal) {
+			modal.style.display = 'none';
+		}
+	};
+
+	var modal = document.getElementById('myModal');
+	const [ show_modal, set_show_modal ] = useState(false);
+
+	useEffect(() => {
+		const popup = sessionStorage.getItem('popup');
+		if (!popup) {
+			setTimeout(() => {
+				set_show_modal(true);
+			}, 5000);
+		}
+
+		return () => {};
+	}, []);
+
 	return (
 		<Router>
 			<Container>
@@ -242,6 +263,7 @@ const App = (props) => {
 					<meta name="twitter:creator" content="@glow_leds" />
 				</Helmet>
 				<Notification message={message} />
+				<EmailModal set_show_modal={set_show_modal} show_modal={show_modal} />
 				<Particles params={particlesjs_config} className="zi-n5" style={{ zIndex: -5, position: 'fixed' }} />
 				<Header visible={visible} />
 				<Sidebar visible={visible} height={height} width={width} />

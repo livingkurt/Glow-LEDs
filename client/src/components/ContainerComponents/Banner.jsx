@@ -48,7 +48,7 @@ const Banner = (props) => {
 						<div className="ml-10px mt-5px fs-12px">
 							<label>{content.banner.label}</label>
 						</div>
-						{width > 450 &&
+						{width > 490 &&
 						content.banner.button &&
 						content.banner.link && (
 							<Link to={content.banner.link && content.banner.link} className="ml-10px">
@@ -98,11 +98,7 @@ const Banner = (props) => {
 							</a>
 						</div>
 						<div className="mh-10px mr-10px">
-							<a
-								href="https://twitter.com/glow_leds"
-								target="_blank"
-								rel="noopener noreferrer"
-							>
+							<a href="https://twitter.com/glow_leds" target="_blank" rel="noopener noreferrer">
 								<i className="fab fa-twitter zoom" />
 							</a>
 						</div>
