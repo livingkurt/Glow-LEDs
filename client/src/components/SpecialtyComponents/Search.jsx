@@ -4,7 +4,7 @@ import React from 'react';
 const Search = (props) => {
 	return (
 		<form onSubmit={props.submitHandler} className={'jc-c w-100per ' + props.className}>
-			<div className="jc-b ai-c search_container">
+			<div className="jc-b ai-c search_container w-100per">
 				<label aria-label="search" htmlFor="search" />
 				<input
 					name="search"

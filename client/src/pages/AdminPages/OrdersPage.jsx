@@ -209,9 +209,8 @@ const OrdersPage = (props) => {
 				)}
 			</div>
 			<div className="profile-orders profile_orders_container" style={{ width: '100%' }}>
-				<h1 style={{ textAlign: 'center', width: '100%', justifyContent: 'center' }}>Orders</h1>
-				<div className="search_and_sort jc-b ai-c" style={{ overflowX: 'scroll' }}>
-					<div className="w-60rem">
+				<div className="search_and_sort jc-b ai-c mt-2rem" style={{ overflowX: 'scroll' }}>
+					<div className="w-40rem">
 						{orders &&
 							colors.map((color, index) => {
 								return (
@@ -272,6 +271,9 @@ const OrdersPage = (props) => {
 								);
 							})}
 					</div>
+				</div>
+				<h1 className="ta-c, w-100per jc-c">Orders</h1>
+				<div className="jc-b">
 					<Search
 						search={search}
 						set_search={set_search}
