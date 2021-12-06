@@ -195,16 +195,6 @@ const OrdersPage = (props) => {
 				<Link to="/secure/glow/controlpanel">
 					<button className="btn primary">Back to Control Panel</button>
 				</Link>
-				{/* <button
-					className="btn primary"
-					onClick={() => {
-						change_view();
-					}}
-					style={{ width: '160px' }}
-				>
-					{block_list_view ? 'Block' : 'List'}
-				</button> */}
-
 				<Link to="/secure/glow/create_label">
 					<button className="btn primary">Create Label</button>
 				</Link>
@@ -217,62 +207,80 @@ const OrdersPage = (props) => {
 						<button className="btn primary">Mark as Shipped</button>
 					</Link>
 				)}
-
-				{/* <Link to="/secure/glow/editorder">
-					<button className="btn primary">Create Order</button>
-				</Link> */}
-				{/* {total_orders &&
-				total_orders.length > 0 && (
-					<JSONToCSV data={total_orders} filename="orders.csv" className="btn primary">
-						Export Orders CSV
-					</JSONToCSV>
-				)}
-				{total_expenses &&
-				total_expenses.length > 0 && (
-					<JSONToCSV data={total_expenses} filename="expenses.csv" className="btn primary">
-						Export Expenses CSV
-					</JSONToCSV>
-				)} */}
-				{/* {total_expenses && total_expenses.length > 0 && <CsvDownload data={total_expenses} />} */}
-			</div>
-			<div className="wrap jc-b">
-				{colors.map((color, index) => {
-					return (
-						<div className="wrap jc-b w-16rem m-1rem" key={index}>
-							<label style={{ marginRight: '1rem' }}>{color.name}</label>
-							<div
-								style={{
-									backgroundColor: color.color,
-									height: '20px',
-									width: '60px',
-									borderRadius: '5px'
-								}}
-							/>
-						</div>
-					);
-				})}
 			</div>
 			<div className="profile-orders profile_orders_container" style={{ width: '100%' }}>
 				<h1 style={{ textAlign: 'center', width: '100%', justifyContent: 'center' }}>Orders</h1>
-				<div className="search_and_sort row jc-c ai-c" style={{ overflowX: 'scroll' }}>
-					<Search search={search} set_search={set_search} submitHandler={submitHandler} category={category} />
+				<div className="search_and_sort jc-b ai-c" style={{ overflowX: 'scroll' }}>
+					<div className="w-60rem">
+						{orders &&
+							colors.map((color, index) => {
+								return (
+									<div className="wrap jc-b m-1rem " key={index}>
+										<label className="w-10rem mr-1rem">{color.name}</label>
+
+										{color.name === 'Paid' && orders.filter((order) => !order.isPaid).length}
+										{color.name === 'Not Paid' &&
+											orders.filter(
+												(order) =>
+													order.isPaid &&
+													!order.isManufactured &&
+													!order.isPackaged &&
+													!order.isShipped
+											).length}
+										{color.name === 'Manufactured' &&
+											orders.filter(
+												(order) =>
+													order.isManufactured &&
+													!order.isPackaged &&
+													!order.isShipped &&
+													!order.isDelievered
+											).length}
+										{color.name === 'Packaged' &&
+											orders.filter(
+												(order) =>
+													order.isManufactured &&
+													order.isPackaged &&
+													!order.isShipped &&
+													!order.isDelievered
+											).length}
+										{color.name === 'Shipped' &&
+											orders.filter(
+												(order) =>
+													order.isManufactured &&
+													order.isPackaged &&
+													order.isShipped &&
+													!order.isDelievered
+											).length}
+
+										{color.name === 'Delivered' &&
+											orders.filter(
+												(order) =>
+													order.isManufactured &&
+													order.isPackaged &&
+													order.isShipped &&
+													order.isDelievered
+											).length}
+										<div
+											style={{
+												backgroundColor: color.color,
+												height: '20px',
+												width: '60px',
+												borderRadius: '5px'
+											}}
+										/>
+									</div>
+								);
+							})}
+					</div>
+					<Search
+						search={search}
+						set_search={set_search}
+						submitHandler={submitHandler}
+						category={category}
+						// className="max-w-50rem"
+					/>
 					<Sort sortHandler={sortHandler} sort_options={sort_options} />
 				</div>
-				{/* <div className="wrap jc-c">
-					{orders &&
-						totalPages &&
-						[ ...Array(totalPages).keys() ].map((x, index) => (
-							<button
-								key={index}
-								value={x}
-								defaultValue={x}
-								className="btn primary w-40px mr-1rem mb-1rem"
-								onClick={(e) => update_page(e)}
-							>
-								{parseInt(x + 1)}
-							</button>
-						))}
-				</div> */}
 				<div className="jc-c">
 					{totalPages && (
 						<Pagination
@@ -339,21 +347,6 @@ const OrdersPage = (props) => {
 						/>
 					)}
 				</div>
-				{/* <div className="wrap jc-c">
-					{orders &&
-						totalPages &&
-						[ ...Array(totalPages).keys() ].map((x, index) => (
-							<button
-								key={index}
-								value={x}
-								defaultValue={x}
-								className="btn primary w-40px mr-1rem mb-1rem"
-								onClick={(e) => update_page(e)}
-							>
-								{parseInt(x + 1)}
-							</button>
-						))}
-				</div> */}
 			</div>
 		</div>
 	);
