@@ -132,6 +132,7 @@ export default {
 				}
 				rave_mobers.push(object);
 			}
+
 			rave_mobers.forEach(async (member: any) => {
 				const affiliate: any = {};
 				const user: any = {};
