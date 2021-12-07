@@ -7,7 +7,8 @@ import { Helmet } from 'react-helmet';
 import { Search, Sort } from '../../components/SpecialtyComponents';
 import { listOrders } from '../../actions/orderActions';
 import { determine_promoter_code_tier, determine_sponsor_code_tier } from '../../utils/helper_functions';
-import { API_Orders, API_Promos, API_Revenue } from '../../utils';
+import { API_Affiliates, API_Orders, API_Promos, API_Revenue } from '../../utils';
+import CSVReader from 'react-csv-reader';
 
 const AffiliatesPage = (props) => {
 	const [ search, set_search ] = useState('');
@@ -143,13 +144,20 @@ const AffiliatesPage = (props) => {
 		dispatch(listAffiliates(''));
 	};
 
+	const upload_rave_mob_csv = async (csv) => {
+		const { data } = API_Affiliates.upload_rave_mob_csv(csv);
+		console.log({ upload_rave_mob_csv: data });
+		dispatch(listAffiliates(''));
+		dispatch(listAffiliates(''));
+	};
+
 	return (
 		<div className="main_container p-20px">
 			<Helmet>
 				<title>Admin Affiliates | Glow LEDs</title>
 			</Helmet>
 			<div className="wrap jc-b">
-				<div className="wrap jc-b">
+				<div className="">
 					{colors.map((color, index) => {
 						return (
 							<div className="wrap jc-b  m-1rem" key={index}>
@@ -167,13 +175,18 @@ const AffiliatesPage = (props) => {
 					})}
 				</div>
 				{total_orders && (
-					<button className="btn primary" onClick={(e) => update_percentage_off(e)}>
+					<button className="btn primary h-40px" onClick={(e) => update_percentage_off(e)}>
 						Update Percentage Off
 					</button>
 				)}
 				<Link to="/pages/affiliate_terms">
 					<button className="btn primary">Affiliate Terms</button>
 				</Link>
+
+				<label className="btn primary h-40px">
+					Upload CSV
+					<CSVReader onFileLoaded={(data, fileInfo) => upload_rave_mob_csv(data, fileInfo)} />
+				</label>
 				<Link to="/secure/glow/editaffiliate">
 					<button className="btn primary">Create Affiliate</button>
 				</Link>

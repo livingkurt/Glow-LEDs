@@ -8,3 +8,4 @@ export { default as API_Features } from './API_Features';
 export { default as API_Users } from './API_Users';
 export { default as API_Shipping } from './API_Shipping';
 export { default as API_Promos } from './API_Promos';
+export { default as API_Affiliates } from './API_Affiliates';

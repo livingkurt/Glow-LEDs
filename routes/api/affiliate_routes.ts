@@ -4,6 +4,7 @@ import { affiliate_controller } from '../../controllers';
 const { isAuth, isAdmin } = require('../../util');
 const router = express.Router();
 
+router.route('/upload_rave_mob_csv').put(affiliate_controller.upload_rave_mob_csv_affiliates_c);
 router.route('/').get(affiliate_controller.findAll_affiliates_c).post(isAuth, affiliate_controller.create_affiliates_c);
 
 router

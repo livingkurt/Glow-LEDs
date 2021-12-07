@@ -53,6 +53,20 @@ export default {
 			res.status(500).send({ error, message: 'Error Updating Affiliate' });
 		}
 	},
+	upload_rave_mob_csv_affiliates_c: async (req: any, res: any) => {
+		const { params, body } = req;
+		console.log({ body });
+		try {
+			const affiliate = await affiliate_services.upload_rave_mob_csv_affiliates_s(params, body);
+			if (affiliate) {
+				return res.status(200).send(affiliate);
+			}
+			return res.status(500).send({ message: 'Error Updating Affiliate' });
+		} catch (error) {
+			console.log({ update_affiliates_c_error: error });
+			res.status(500).send({ error, message: 'Error Updating Affiliate' });
+		}
+	},
 	remove_affiliates_c: async (req: any, res: any) => {
 		const { params } = req;
 		try {
