@@ -253,7 +253,11 @@ const OrderPage = (props) => {
 		const request = await API_Shipping.add_return_tracking_number(order, data.tracking_code, data);
 		console.log(request);
 		dispatch(detailsOrder(props.match.params.id));
-		history.push('/secure/glow/emails/invoice/' + order._id);
+		// history.push('/secure/glow/emails/invoice/' + order._id);
+		history.push({
+			pathname: '/secure/glow/emails/invoice/' + order._id,
+			previous_path: props.location.previous_path
+		});
 	};
 
 	const buy_label = async () => {
@@ -269,7 +273,11 @@ const OrderPage = (props) => {
 		const request = await API_Shipping.add_tracking_number(order, data.tracking_code, data);
 		console.log(request);
 		dispatch(detailsOrder(props.match.params.id));
-		history.push('/secure/glow/emails/invoice/' + order._id);
+		// history.push('/secure/glow/emails/invoice/' + order._id);
+		history.push({
+			pathname: '/secure/glow/emails/invoice/' + order._id,
+			previous_path: props.location.previous_path
+		});
 	};
 
 	const view_label = async () => {
