@@ -263,7 +263,7 @@ const App = (props) => {
 					<meta name="twitter:creator" content="@glow_leds" />
 				</Helmet>
 				<Notification message={message} />
-				<EmailModal set_show_modal={set_show_modal} show_modal={show_modal} />
+				{/* <EmailModal set_show_modal={set_show_modal} show_modal={show_modal} /> */}
 				<Particles params={particlesjs_config} className="zi-n5" style={{ zIndex: -5, position: 'fixed' }} />
 				<Header visible={visible} />
 				<Sidebar visible={visible} height={height} width={width} />
