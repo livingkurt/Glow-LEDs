@@ -1,20 +1,31 @@
 export default (props: any) => {
 	return `
- 
-  <div style="background-color:#5f5f5f;padding:20px">
-        <div style="display:flex;justify-content:center"></div>
-        <h4 style="text-align:center;font-family:helvetica;color:white;font-size:1.5em;margin-top:20px;margin-bottom:0">
-          Hi ${props.data.first_name}</h4>
+
+<table style="border-spacing:0;width:100%; padding: 20px; max-width: 600px; width: 100%; margin: auto;">
+  <tbody>
+    <tr style="font-size:16px">
+      <td>
         <p
-          style="font-size:16px;line-height:30px;max-width:800px;width:100%;text-align:center;margin:20px auto;color:white">
-          Your Password Was Successfully Changed. If you didn’t request this, please contact Glow LEDs using the link
-          below.</p>
-        <div style="display:flex;justify-content:center"><a href="https://www.glow-leds.com/pages/contact"
-            alt="discount image" style="background-color:#4c4f60;color:white;border-radius:10px;border:0;padding:15px">
-            <h4 style="font-family:helvetica;margin:0;font-size:1.2em;text-align:center">Contact</h4>
-          </a></div>
-      </div>
-      
+          style=" font-family:helvetica;overflow-x:auto;word-wrap:break-word;max-width:600px;width:100%;margin:0px auto;color:white;font-size:16px;line-height:30px; margin-bottom: 20px;">
+          Hello ${props.first_name},
+        </p>
+        <p
+          style=" font-family:helvetica;overflow-x:auto;word-wrap:break-word;max-width:600px;width:100%;margin:0px auto;color:white;font-size:16px;line-height:30px; ">
+          You have successfully changed your Epic Games account password. If you did not make this request, please reset the passwords of your email address and Glow LEDs account.
+        </p>
     
-	`;
+        <p style="
+              font-family:helvetica;overflow-x:auto;word-wrap:break-word;max-width:600px;width:100%;margin:0px
+              auto;color:white;font-size:16px;line-height:30px; margin-top:20px;">
+          Thank you,
+        </p>
+        <p style="
+              font-family:helvetica;overflow-x:auto;word-wrap:break-word;max-width:600px;width:100%;margin:0px
+              auto;color:white;font-size:16px;line-height:30px;">
+          The Glow LEDs Team
+        </p>
+      </td>
+    </tr>
+  </tbody>
+</table>`;
 };

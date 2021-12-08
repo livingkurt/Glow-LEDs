@@ -82,7 +82,7 @@ const EmailsPage = (props) => {
 		'review',
 		'account_created',
 		'reset_password',
-		'password_changed',
+		'password_reset',
 		'email_subscription',
 		'order',
 		'review',
@@ -90,8 +90,6 @@ const EmailsPage = (props) => {
 		'feature',
 		'contact',
 		'contact_confirmation',
-		'reset_password',
-		'password_reset',
 		'account_created'
 	];
 

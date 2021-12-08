@@ -74,7 +74,7 @@ router.get('/feature', async (req: { body: any }, res: { send: (arg0: string) =>
 	res.send(App({ body: feature(body), title: 'Enjoy 10% off your next purchase!' }));
 });
 router.get('/announcement', async (req: { body: any }, res: { send: (arg0: string) => void }) => {
-	const emails = await email_db.findAll_emails_db({ deleted: false }, { _id: -1 });
+	const emails = await email_db.findAll_emails_db({ deleted: false, active: true }, { _id: -1 });
 	// console.log({ emails });
 	// const body = {
 	// 	content: emails[0]
@@ -133,11 +133,13 @@ router.get(
 	}
 );
 
-router.get('/reset_password', (req: { body: any }, res: { send: (arg0: string) => void }) => {
-	res.send(App({ body: reset_password(req.body), title: 'Glow LEDs Reset Password' }));
+router.get('/reset_password', async (req: { body: any }, res: { send: (arg0: string) => void }) => {
+	const user = await user_db.findByEmail_users_db('lavacquek@icloud.com');
+	res.send(App({ body: reset_password(user), title: 'Password Reset Instructions ' }));
 });
-router.get('/password_reset', (req: { body: any }, res: { send: (arg0: string) => void }) => {
-	res.send(App({ body: password_reset(req.body), title: 'Glow LEDs Password Reset' }));
+router.get('/password_reset', async (req: { body: any }, res: { send: (arg0: string) => void }) => {
+	const user = await user_db.findById_users_db('5f2d7c0e9005a57059801ce8');
+	res.send(App({ body: password_reset(user), title: 'Password Reset Successful' }));
 });
 
 router.get('/account_created', async (req: { body: any }, res: { send: (arg0: string) => void }) => {

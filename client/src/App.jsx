@@ -298,7 +298,8 @@ const App = (props) => {
 							<PrivateRoute path="/secure/account/devices" component={DevicesPage} />
 							<PrivateRoute path="/secure/account/editdevice/:id?" component={EditDevicePage} />
 							<PrivateRoute path="/secure/account/order/:id" component={OrderPage} />
-							<PrivateRoute
+							<PrivateRoute path="/secure/checkout/placeorder" component={PlaceOrderPage} />
+							{/* <PrivateRoute
 								path="/secure/checkout/placeorder"
 								component={(props) => (
 									<PlaceOrderPage
@@ -307,7 +308,7 @@ const App = (props) => {
 										date_2={out_of_office_date_2}
 									/>
 								)}
-							/>
+							/> */}
 							<PrivateRoute
 								path="/secure/account/affiliate_sign_up_complete"
 								component={AffiliateCreationComplete}
@@ -452,7 +453,8 @@ const App = (props) => {
 							/>
 							{/* Checkout */}
 							<Route path="/checkout/decision" component={GuestDecisionPage} />
-							<Route
+							<Route path="/checkout/placeorder" component={PlaceOrderPage} />
+							{/* <Route
 								path="/checkout/placeorder"
 								component={(props) => (
 									<PlaceOrderPage
@@ -461,14 +463,15 @@ const App = (props) => {
 										date_2={out_of_office_date_2}
 									/>
 								)}
-							/>
+							/> */}
 							<Route path="/checkout/shipping" component={ShippingPage} />
-							<Route
+							<Route path="/checkout/cart/:pathname?" component={CartPage} />
+							{/* <Route
 								path="/checkout/cart/:pathname?"
 								component={(props) => (
 									<CartPage {...props} date_1={out_of_office_date_1} date_2={out_of_office_date_2} />
 								)}
-							/>
+							/> */}
 							<Route path="/checkout/order/:id" exact={true} component={OrderPublicPage} />
 							<Route path="/checkout/order/receipt/:id/:status/:send?" component={OrderEmail} />
 
