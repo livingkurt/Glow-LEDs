@@ -3,7 +3,7 @@ import Content from '../models/content';
 export default {
 	findAll_contents_db: async (filter: any, sortOrder: any) => {
 		try {
-			return await Content.find(filter).sort(sortOrder).populate('user').populate('affiliate');
+			return await Content.find(filter).sort(sortOrder);
 		} catch (error) {
 			console.log({ findAll_contents_db_error: error });
 			throw new Error(error.message);
@@ -11,7 +11,7 @@ export default {
 	},
 	findById_contents_db: async (id: string) => {
 		try {
-			return await Content.findOne({ _id: id }).populate('user').populate('affiliate');
+			return await Content.findOne({ _id: id });
 		} catch (error) {
 			console.log({ findById_contents_db_error: error });
 			throw new Error(error.message);

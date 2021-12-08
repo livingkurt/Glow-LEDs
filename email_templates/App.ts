@@ -1,6 +1,5 @@
 export default (props: any) => {
 	return `"
-
 <body style="background:unset;color:white;padding:0;margin:0;font-size:16px">
   <table style="width:100%;border-spacing:0;color:white;margin:auto;font-size:16px;background-color:#5f5f5f">
     <tr>

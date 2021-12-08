@@ -12,6 +12,9 @@ const email_routes = {
 	send_email: (template: string, subject: string, email: string) => {
 		return axios.post('/api/emails/send_email', { template, subject, email });
 	},
+	send_email_subscription: (email: string, promo_code: string) => {
+		return axios.post('/api/emails/send_email_subscription', { email, promo_code });
+	},
 	// send_admin_email: (template: string, subject: string) => {
 	// 	return axios.post('/api/emails/send_emails_c', { template, subject });
 	// },

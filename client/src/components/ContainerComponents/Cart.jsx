@@ -127,7 +127,7 @@ const Cart = (props) => {
 			if (item.subcategory) {
 				return `/collections/all/products/${item && item.category}/${item && item.subcategory}`;
 			} else {
-				return `/collections/all/products/${item.category}`;
+				return `/collections/all/products/category/${item.category}`;
 			}
 		} else if (item.category === 'featured') {
 			return `/collections/all/features/${item.category}`;
@@ -166,7 +166,10 @@ const Cart = (props) => {
 								return (
 									<div className="product m-5px jc-c" style={{ height: 'unset' }} key={index}>
 										{item.category && (
-											<Link to={`/collections/all/products/${item.category}`} onClick={closeMenu}>
+											<Link
+												to={`/collections/all/products/category/${item.category}`}
+												onClick={closeMenu}
+											>
 												<h3 className="mt-0px"> {humanize(item.category)}</h3>
 												<div
 													className={`w-${determine_picture_size()} h-${determine_picture_size()}`}

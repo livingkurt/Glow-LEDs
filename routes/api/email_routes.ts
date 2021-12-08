@@ -6,6 +6,7 @@ const router = express.Router();
 router.route('/').get(email_controller.findAll_emails_c).post(isAuth, isAdmin, email_controller.create_emails_c);
 
 router.route('/send_announcement').post(email_controller.send_all_emails_c);
+router.route('/send_email_subscription').post(email_controller.send_email_subscription_emails_c);
 
 router.route('/send_email').post(email_controller.send_emails_c);
 // router.route('/send_user_email').post(email_controller.send_user_email_emails_c);

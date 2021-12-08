@@ -36,14 +36,14 @@ const MenuItemD = ({ item, index, decide_url }) => {
 
 	return (
 		<div className="product m-1rem" style={{ height: 'unset' }} key={index}>
-			<Link to={decide_url(item)}>
-				<h2 className=""> {item.subcategory ? humanize(item.subcategory) : humanize(item.category)}</h2>
+			<Link to={item.link}>
+				<h2 className=""> {item.label}</h2>
 				<div className="w-300px h-300px mb-1rem">
 					{item &&
 					item.image && (
 						<LazyImage
 							className="w-100per h-auto br-20px"
-							alt={item.category}
+							alt={item.label}
 							title="Product Image"
 							size={{ height: '300px', width: '300px', objectFit: 'cover' }}
 							effect="blur"

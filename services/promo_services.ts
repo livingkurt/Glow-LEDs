@@ -1,5 +1,5 @@
 import { promo_db } from '../db';
-import { determine_promoter_code_tier, determine_sponsor_code_tier } from '../util';
+import { determine_promoter_code_tier, determine_sponsor_code_tier, make_private_code } from '../util';
 
 export default {
 	findAll_promos_s: async (query: any) => {
@@ -54,6 +54,30 @@ export default {
 			throw new Error(error.message);
 		}
 	},
+	create_one_time_use_code_promos_s: async (body: any) => {
+		const private_code = {
+			promo_code: make_private_code(6),
+			admin_only: false,
+			affiliate_only: true,
+			single_use: true,
+			used_once: false,
+			excluded_categories: [],
+			excluded_products: [],
+			percentage_off: 10,
+			free_shipping: false,
+			time_limit: false,
+			start_date: '2021-01-01',
+			end_date: '2021-01-01',
+			active: true
+		};
+		console.log({ private_code });
+		try {
+			return await promo_db.create_promos_db(private_code);
+		} catch (error) {
+			console.log({ create_promos_s_error: error });
+			throw new Error(error.message);
+		}
+	},
 	update_promos_s: async (params: any, body: any) => {
 		try {
 			return await promo_db.update_promos_db(params.id, body);
@@ -102,9 +126,10 @@ export default {
 		try {
 			const promo: any = await promo_db.findByCode_promos_db(params.promo_code.toLowerCase());
 			promo.used_once = true;
+			console.log({ promo });
 			if (promo) {
 				try {
-					const updatedPromo = await promo_db.update_promos_db(params._id, promo);
+					const updatedPromo = await promo_db.update_promos_db(promo._id, promo);
 					if (updatedPromo) {
 						return updatedPromo;
 					}

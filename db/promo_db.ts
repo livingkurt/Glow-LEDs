@@ -25,6 +25,7 @@ export default {
 		}
 	},
 	findByCode_promos_db: async (promo_code: string) => {
+		console.log({ promo_code });
 		try {
 			return await Promo.findOne({ promo_code: promo_code }).populate('sponsor').populate('user');
 		} catch (error) {

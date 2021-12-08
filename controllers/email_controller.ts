@@ -8,6 +8,8 @@ import {
 	contact,
 	contact_confirmation
 } from '../email_templates/pages/index';
+import email_subscription from '../email_templates/pages/email_subscription';
+import { content_db } from '../db';
 
 const transporter = nodemailer.createTransport({
 	service: 'gmail',
@@ -169,6 +171,31 @@ export default {
 				res.status(500).send({ error: err, message: 'Error Sending Email' });
 			} else {
 				console.log('Password Reset Email Sent to ' + req.body.data.first_name);
+				res.status(200).send({ message: 'Email Successfully Sent' });
+			}
+		});
+	},
+	send_email_subscription_emails_c: async (req: any, res: any) => {
+		console.log({ send_email_subscription_emails_c: req.body });
+		const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 });
+
+		const mailOptions = {
+			from: process.env.DISPLAY_EMAIL,
+			to: req.body.email,
+			subject: 'Enjoy 10% off your next purchase!',
+			html: App({
+				body: email_subscription({ ...req.body, categories: contents && contents[0].home_page.slideshow }),
+				title: 'Enjoy 10% off your next purchase!'
+			})
+			// bcc: req.body.data.email
+		};
+
+		transporter.sendMail(mailOptions, (err, data) => {
+			if (err) {
+				console.log('Error Occurs', err);
+				res.status(500).send({ error: err, message: 'Error Sending Email' });
+			} else {
+				console.log('Email Sent to ' + req.body.email);
 				res.status(200).send({ message: 'Email Successfully Sent' });
 			}
 		});

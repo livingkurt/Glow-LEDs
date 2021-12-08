@@ -321,7 +321,7 @@ const Survey = (props) => {
 							<div>
 								{/* <img src="https://thumbs2.imgbox.com/43/80/kQtikgYi_t.jpeg" alt="hearts" /> */}
 								<img
-									src="https://thumbs2.imgbox.com/43/80/kQtikgYi_t.jpeg"
+									src="https://thumbs2.imgbox.com/b1/08/2Dnle6TI_t.jpeg"
 									alt="Hearts"
 									title="Diffuser Caps Heart"
 									style={{

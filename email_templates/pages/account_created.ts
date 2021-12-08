@@ -7,7 +7,7 @@ export default (props: any) => {
 <div style="display:flex;justify-content:center">
   <table width="100%" style="max-width:900px">
     <tr>
-      <td><img src="https://images2.imgbox.com/d4/bf/rTNABwbr_o.jpg" alt="Glow LEDs"
+      <td><img src="https://thumbs2.imgbox.com/b1/08/2Dnle6TI_t.jpeg" alt="Glow LEDs"
           style="text-align:center;width:100%;border-radius:20px" /></td>
     </tr>
   </table>

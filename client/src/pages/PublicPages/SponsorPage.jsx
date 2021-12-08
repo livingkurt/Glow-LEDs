@@ -250,6 +250,7 @@ const SponsorPage = (props) => {
 								<iframe
 									width="996"
 									height="560"
+									title="sponsor"
 									style={{ borderRadius: '20px' }}
 									src={`https://www.youtube.com/embed/${affiliate.video}?mute=0&showinfo=0&rel=0&autoplay=1&loop=1`}
 									frameborder="0"

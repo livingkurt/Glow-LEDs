@@ -45,7 +45,20 @@ export default {
 		try {
 			const promo = await promo_services.create_promos_s(body);
 			if (promo) {
-				return res.status(201).send({ message: 'New Promo Created', data: promo });
+				return res.status(201).send(promo);
+			}
+			return res.status(500).send({ message: 'Error Creating Promo' });
+		} catch (error) {
+			console.log({ create_promos_c_error: error });
+			res.status(500).send({ error, message: 'Error Creating Promo' });
+		}
+	},
+	create_one_time_use_code_promos_c: async (req: any, res: any) => {
+		const { body } = req;
+		try {
+			const promo = await promo_services.create_one_time_use_code_promos_s(body);
+			if (promo) {
+				return res.status(201).send(promo);
 			}
 			return res.status(500).send({ message: 'Error Creating Promo' });
 		} catch (error) {
@@ -92,6 +105,7 @@ export default {
 			res.status(500).send({ error, message: 'Error Updating Promo' });
 		}
 	},
+
 	remove_promos_c: async (req: any, res: any) => {
 		const { params } = req;
 		try {

@@ -9,7 +9,7 @@ const MenuItemM = ({ item, index, decide_url }) => {
 	console.log({ item });
 	return (
 		<li key={index} className="w-100per">
-			<Link to={decide_url(item)}>
+			<Link to={item.link}>
 				<div className="small_screen_product row">
 					<LazyImage
 						className="product-image w-200px h-200px "
@@ -20,9 +20,7 @@ const MenuItemM = ({ item, index, decide_url }) => {
 						src={item.image}
 					/>
 					<div className="column jc-b  pl-2rem">
-						<h2 className="w-100per ">
-							{item.subcategory ? humanize(item.subcategory) : humanize(item.category)}
-						</h2>
+						<h2 className="w-100per ">{item.label}</h2>
 					</div>
 				</div>
 			</Link>

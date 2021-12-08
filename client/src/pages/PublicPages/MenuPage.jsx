@@ -1,308 +1,179 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import { humanize } from '../../utils/helper_functions';
+import { humanize, snake_case } from '../../utils/helper_functions';
 import { listFeatures } from '../../actions/featureActions';
 import { useSelector, useDispatch } from 'react-redux';
 import { API_Features, API_Products } from '../../utils';
 import { LazyImage, Loading } from '../../components/UtilityComponents';
 import { MenuItemD } from '../../components/DesktopComponents';
 import { MenuItemM } from '../../components/MobileComponents';
+import { listContents } from '../../actions/contentActions';
 
 const MenuPage = (props) => {
 	const pathname = props.match.params.pathname;
 
-	const [ glovers, set_glovers ] = useState([]);
-	const [ artists, set_artists ] = useState([]);
-	const [ producers, set_producers ] = useState([]);
-	const [ vfx, set_vfx ] = useState([]);
-
-	const [ glowskins, set_glowskins ] = useState([]);
-	const [ diffusers, set_diffusers ] = useState([]);
-	const [ diffuser_caps, set_diffuser_caps ] = useState([]);
-	const [ batteries, set_batteries ] = useState([]);
-	const [ accessories, set_accessories ] = useState([]);
-	const [ glow_strings, set_glow_strings ] = useState([]);
-	const [ glow_casings, set_glow_casings ] = useState([]);
-	const [ novaskins, set_novaskins ] = useState([]);
-	const [ alt_novaskins, set_alt_novaskins ] = useState([]);
-	const [ battery_storage, set_battery_storage ] = useState([]);
-	const [ exo_diffusers, set_exo_diffusers ] = useState([]);
-	const [ decals, set_decals ] = useState([]);
-
-	const [ geometric, set_geometric ] = useState([]);
-	const [ shapes, set_shapes ] = useState([]);
-	const [ abstract, set_abstract ] = useState([]);
-	const [ patterns, set_patterns ] = useState([]);
-	const [ emojis, set_emojis ] = useState([]);
+	const [ items, set_items ] = useState([]);
 	const [ loading_pictures, set_loading_pictures ] = useState(false);
 
 	const featureList = useSelector((state) => state.featureList);
 	const { features, loading, error } = featureList;
-	const dispatch = useDispatch();
-	useEffect(() => {
-		if (pathname === 'featured') {
-			dispatch(listFeatures());
-			get_features();
-		}
-		if (pathname === 'gloving' || pathname === 'manuals' || pathname === 'support') {
-			get_products_by_category();
-		}
-		// if (pathname === 'diffuser_caps') {
-		// 	get_caps_by_subcategory('diffuser_caps');
-		// }
-		// if (pathname === 'batteries') {
-		// 	get_caps_by_subcategory('batteries');
-		// }
 
-		return () => {};
-	}, []);
+	const contentList = useSelector((state) => state.contentList);
+	const { contents, loading: loading_contents, error: error_contents } = contentList;
+	const dispatch = useDispatch();
+
+	useEffect(
+		() => {
+			if (pathname === 'featured') {
+				get_features();
+			}
+			if (pathname === 'gloving' || pathname === 'manuals' || pathname === 'support') {
+				dispatch(listContents());
+			}
+			return () => {};
+		},
+		[ pathname ]
+	);
 
 	const get_features = async () => {
 		const { data: glovers } = await API_Features.get_features_by_category('glovers');
 		const { data: artists } = await API_Features.get_features_by_category('artists');
 		const { data: producers } = await API_Features.get_features_by_category('producers');
 		const { data: vfx } = await API_Features.get_features_by_category('vfx');
-		console.log({ glovers });
-		console.log({ artists });
-		console.log({ producers });
-		console.log({ vfx });
-		set_glovers(glovers.data);
-		set_artists(artists.data);
-		set_producers(producers.data);
-		set_vfx(vfx.data);
+		// console.log({ glovers: glovers[0] });
+		// console.log({ artists: artists[0] });
+		// console.log({ producers: producers[0] });
+		// console.log({ vfx: vfx[0] });
+		if (glovers && artists && producers && vfx) {
+			const menu_items = await featured_menu_items(glovers, artists, producers, vfx);
+			set_items(menu_items);
+		}
 	};
 
-	const get_products_by_category = async () => {
-		set_loading_pictures(true);
-		const { data: glowskins } = await API_Products.get_product_pictures('glowskins');
-		const { data: diffusers } = await API_Products.get_product_pictures('diffusers');
-		const { data: diffuser_caps } = await API_Products.get_product_pictures('diffuser_caps');
-		const { data: batteries } = await API_Products.get_product_pictures('accessories', 'batteries');
-		const { data: accessories } = await API_Products.get_product_pictures('accessories');
-		const { data: glow_strings } = await API_Products.get_product_pictures('glow_strings');
-		const { data: glow_casings } = await API_Products.get_product_pictures('glow_casings');
-		const { data: exo_diffusers } = await API_Products.get_product_pictures('exo_diffusers');
-		const { data: decals } = await API_Products.get_product_pictures('decals');
-		const { data: novaskins } = await API_Products.get_product_pictures('glowskins', 'novaskins');
-		const { data: alt_novaskins } = await API_Products.get_product_pictures('glowskins', 'alt_novaskins');
-		const { data: battery_storage } = await API_Products.get_product_pictures('accessories', 'battery_storage');
-		console.log({ glowskins });
-		console.log({ diffusers });
-		console.log({ diffuser_caps });
-		console.log({ batteries });
-		console.log({ accessories });
-		set_glowskins(glowskins);
-		set_diffusers(diffusers);
-		set_diffuser_caps(diffuser_caps);
-		set_batteries(batteries);
-		set_accessories(accessories);
-		set_glow_strings(glow_strings);
-		set_glow_casings(glow_casings);
-		set_novaskins(novaskins);
-		set_alt_novaskins(alt_novaskins);
-		set_battery_storage(battery_storage);
-		set_exo_diffusers(exo_diffusers);
-		set_decals(decals);
-		set_loading_pictures(false);
-	};
-
-	// const get_caps_by_subcategory = async (category) => {
-	// 	const { data: geometric } = await API_Products.get_product_pictures(category, 'geometric');
-	// 	const { data: shapes } = await API_Products.get_product_pictures(category, 'shapes');
-	// 	const { data: abstract } = await API_Products.get_product_pictures(category, 'abstract');
-	// 	const { data: patterns } = await API_Products.get_product_pictures(category, 'patterns');
-	// 	const { data: emojis } = await API_Products.get_product_pictures(category, 'emojis');
-	// 	console.log({ geometric });
-	// 	console.log({ shapes });
-	// 	console.log({ abstract });
-	// 	console.log({ patterns });
-	// 	console.log({ emojis });
-	// 	if (category === 'batteries') {
-	// 		set_geometric(geometric);
-	// 		set_shapes(shapes);
-	// 		set_abstract(abstract);
-	// 		set_patterns(patterns);
-	// 		set_emojis(emojis);
-	// 	}
-	// 	if (category === 'diffuser_caps') {
-	// 		set_geometric(geometric);
-	// 		set_shapes(shapes);
-	// 		set_abstract(abstract);
-	// 		set_patterns(patterns);
-	// 	}
-	// };
 	const date = new Date();
 
 	const today = date.toISOString();
 
-	const determine_menu_items = () => {
-		if (pathname === 'gloving') {
+	useEffect(
+		() => {
+			if (contents) {
+				const menu_items = determine_menu_items();
+				set_items(menu_items);
+				console.log({ determine_menu_items: menu_items });
+			}
+
+			return () => {};
+		},
+		[ contents ]
+	);
+
+	const featured_menu_items = (glovers, artists, producers, vfx) => {
+		console.log({ featured: producers });
+		if (glovers && artists && producers && vfx) {
+			console.log({ glovers, artists, producers, vfx });
 			return [
-				// {
-				// 	category: 'glow_strings',
-				// 	image: glow_strings[glow_strings.length - 1] && glow_strings[glow_strings.length - 1].images[0]
-				// },
 				{
-					category: 'glowskins',
-					image: glowskins[glowskins.length - 1] && glowskins[0].images[0]
+					label: 'Artists',
+					image: artists[0] && artists[0].logo,
+					link: '/collections/all/features/category/artists'
 				},
 				{
-					category: 'glow_casings',
-					image: glow_casings[glow_casings.length - 1] && glow_casings[glow_casings.length - 1].images[0]
-				},
-				{
-					category: 'glowskins',
-					subcategory: 'novaskins',
-					image: novaskins[novaskins.length - 1] && novaskins[0].images[0]
-				},
-				{
-					category: 'glowskins',
-					subcategory: 'alt_novaskins',
-					image: alt_novaskins[alt_novaskins.length - 1] && alt_novaskins[novaskins.length - 1].images[0]
-				},
-				{
-					category: 'diffusers',
-					image: diffusers[diffusers.length - 1] && diffusers[diffusers.length - 1].images[0]
-				},
-				{
-					category: 'diffuser_caps',
-					image: diffuser_caps[diffuser_caps.length - 1] && diffuser_caps[diffuser_caps.length - 1].images[0]
-				},
-				{
-					category: 'exo_diffusers',
-					image: exo_diffusers[exo_diffusers.length - 1] && exo_diffusers[exo_diffusers.length - 1].images[0]
-				},
-				{
-					category: 'decals',
-					image: decals[decals.length - 1] && decals[decals.length - 1].images[0]
-				},
-				{
-					category: 'accessories',
-					subcategory: 'batteries',
-					image: batteries[batteries.length - 1] && batteries[batteries.length - 1].images[0]
-				},
-				{
-					category: 'accessories',
-					subcategory: 'battery_storage',
-					image:
-						battery_storage[battery_storage.length - 1] &&
-						battery_storage[battery_storage.length - 1].images[0]
+					label: 'Glovers',
+					image: `http://img.youtube.com/vi/${glovers.filter(
+						(glover) => glover.release_date <= today && glover.category === 'glovers'
+					) &&
+						glovers.filter((glover) => glover.release_date <= today && glover.category === 'glovers')[0]
+							.video}/hqdefault.jpg`,
+					link: '/collections/all/features/category/glovers'
 				},
 
 				{
-					category: 'accessories',
-					image: accessories[accessories.length - 1] && accessories[accessories.length - 1].images[0]
+					label: 'Producers',
+					image: producers[0] && producers[0].logo,
+					link: '/collections/all/features/category/producers'
+				},
+				{
+					label: 'VFX',
+					image: (vfx[0] && vfx[0].logo) || `http://img.youtube.com/vi/${vfx && vfx.video}/hqdefault.jpg`,
+					link: '/collections/all/features/category/vfx'
 				}
 			];
-		} else if (pathname === 'batteries') {
-			return [
-				{ category: 'geometric', image: '' },
-				{ category: 'shapes', image: '' },
-				{ category: 'abstract', image: '' },
-				{ category: 'patterns', image: '' },
-				{ category: 'emojis', image: '' }
-			];
-		} else if (pathname === 'diffuser_caps') {
-			return [
-				{ category: 'geometric', image: '' },
-				{ category: 'shapes', image: '' },
-				{ category: 'abstract', image: '' },
-				{ category: 'patterns', image: '' }
-			];
+		}
+	};
+
+	const determine_menu_items = () => {
+		if (pathname === 'gloving') {
+			if (contents) {
+				return contents[0] && contents[0].home_page && contents[0].home_page.slideshow;
+			}
 		} else if (pathname === 'manuals') {
-			return [
-				{
-					category: 'glow_strings_v2',
-					image: glow_strings[glow_strings.length - 1] && glow_strings[glow_strings.length - 1].images[0]
-				},
-				{
-					category: 'diffuser_caps',
-					image: diffuser_caps[diffuser_caps.length - 1] && diffuser_caps[diffuser_caps.length - 1].images[0]
-				},
-				{
-					category: 'glowskins',
-					image: glowskins[glowskins.length - 1] && glowskins[glowskins.length - 1].images[0]
-				}
-				// { category: 'glowskins', image: glowskins[glowskins.length - 1] && glowskins[0].images[0] },
-				// {
-				// 	category: 'glow_casings',
-				// 	image: glow_casings[glow_casings.length - 1] && glow_casings[glow_casings.length - 1].images[0]
-				// },
-				// {
-				// 	category: 'diffusers',
-				// 	image: diffusers[diffusers.length - 1] && diffusers[diffusers.length - 1].images[0]
-				// },
-				// {
-				// 	category: 'exo_diffusers',
-				// 	image: exo_diffusers[exo_diffusers.length - 1] && exo_diffusers[exo_diffusers.length - 1].images[0]
-				// }
-			];
-		} else if (pathname === 'decor') {
-			return [
-				{ category: 'glow_strings', image: 'https://thumbs2.imgbox.com/68/f6/GBGPpTs0_t.jpg' }
-				// { category: 'infinity_mirrors', image: 'https://thumbs2.imgbox.com/77/94/3IXh3RtO_t.jpg' }
-			];
+			return (
+				contents[0] &&
+				contents[0].home_page &&
+				contents[0].home_page.slideshow
+					.filter(
+						(item) =>
+							item.label === 'Glow Strings V2' ||
+							item.label === 'Diffuser Caps' ||
+							item.label === 'Glowskins'
+					)
+					.map((item) => {
+						return { ...item, link: `/pages/manual/${snake_case(item.label)}` };
+					})
+			);
 		} else if (pathname === 'support') {
 			return [
-				{ category: 'track_your_order', image: 'https://images2.imgbox.com/6d/ca/gy6td2iV_o.png' },
-				{ category: 'about', image: 'https://thumbs2.imgbox.com/74/18/uf9lTIoK_t.jpeg' },
-				{ category: 'faq', image: 'https://images2.imgbox.com/a2/eb/D3aEUSW4_o.png' },
-				{ category: 'manuals', image: 'https://images2.imgbox.com/7b/3a/5XKKkHiJ_o.png' },
-				{ category: 'announcements', image: 'https://images2.imgbox.com/8b/52/SfnnCLNz_o.png' },
-				{ category: 'contact', image: 'https://images2.imgbox.com/30/76/xP16FSiH_o.png' },
-				{ category: 'terms', image: 'https://images2.imgbox.com/0b/55/LAI7uhOb_o.png' }
+				{
+					label: 'Track Your Order',
+					link: '/pages/track_your_order',
+					image: 'https://images2.imgbox.com/6d/ca/gy6td2iV_o.png'
+				},
+				{ label: 'About', link: '/pages/about', image: 'https://thumbs2.imgbox.com/74/18/uf9lTIoK_t.jpeg' },
+				{ label: 'FAQ', link: '/pages/faq', image: 'https://images2.imgbox.com/a2/eb/D3aEUSW4_o.png' },
+				{ label: 'Manuals', link: '/pages/manuals', image: 'https://images2.imgbox.com/7b/3a/5XKKkHiJ_o.png' },
+				{
+					label: 'Announcements',
+					link: '/pages/announcements',
+					image: 'https://images2.imgbox.com/8b/52/SfnnCLNz_o.png'
+				},
+				{ label: 'Contact', link: '/pages/contact', image: 'https://images2.imgbox.com/30/76/xP16FSiH_o.png' },
+				{ label: 'Terms', link: '/pages/terms', image: 'https://images2.imgbox.com/0b/55/LAI7uhOb_o.png' }
 			];
 		} else if (pathname === 'sponsored_artists') {
 			return [
-				{ category: 'sponsors', image: 'https://thumbs2.imgbox.com/f7/ca/Su3FEQr9_t.jpg' },
-				{ category: 'teams', image: 'https://thumbs2.imgbox.com/8c/7e/kjzjFzne_t.jpg' }
+				{
+					label: 'Sponsors',
+					image: 'https://thumbs2.imgbox.com/f7/ca/Su3FEQr9_t.jpg',
+					link: '/collections/all/sponsors'
+				},
+				{
+					label: 'Teams',
+					image: 'https://thumbs2.imgbox.com/8c/7e/kjzjFzne_t.jpg',
+					link: '/collections/all/teams'
+				}
 			];
 		} else if (pathname === 'collections') {
 			return [
-				{ category: 'space_cadet', image: 'https://thumbs2.imgbox.com/80/b2/fENNMhl9_t.jpeg' },
-				{ category: 'festy_besty', image: 'https://thumbs2.imgbox.com/90/25/ZwpZrRGy_t.jpeg' },
-				{ category: 'platonic_solids', image: 'https://thumbs2.imgbox.com/73/37/ie8226mS_t.jpg' }
-			];
-		} else if (pathname === 'support') {
-			return [
-				{ category: 'about', image: 'https://thumbs2.imgbox.com/74/18/uf9lTIoK_t.jpeg' },
-				{ category: 'faq', image: 'https://images2.imgbox.com/a2/eb/D3aEUSW4_o.png' },
-				{ category: 'contact', image: 'https://images2.imgbox.com/30/76/xP16FSiH_o.png' },
-				{ category: 'terms', image: 'https://images2.imgbox.com/0b/55/LAI7uhOb_o.png' }
-			];
-		} else if (pathname === 'featured') {
-			console.log({ producers });
-			return [
 				{
-					category: 'artists',
-					image: artists[0] && artists[0].logo
-					// artist_name: artists[0] && artists[0].artist_name,
-					// link: artists[0] && artists[0].link
+					label: 'Texture',
+					link: '/collections/all/products/category/diffuser_caps/collection/texture',
+					image: 'https://thumbs2.imgbox.com/bb/94/ZlPGCXf2_t.jpeg'
 				},
 				{
-					category: 'glovers',
-					image: `http://img.youtube.com/vi/${glovers.filter(
-						(glover) => glover.release_date <= today && glover.category === 'glovers'
-					)[0] &&
-						glovers.filter((glover) => glover.release_date <= today && glover.category === 'glovers')[0]
-							.video}/hqdefault.jpg`
-					// artist_name: glovers[0] && glovers[0].artist_name,
-					// product: glovers[0] && glovers[0].product
-				},
-
-				{
-					category: 'producers',
-					image: producers[0] && producers[0].logo
-					// artist_name: producers[0] && producers[0].artist_name
-					// link: producers[0] && producers[0].link
+					label: 'Space Cadet',
+					link: '/collections/all/products/category/diffuser_caps/collection/space_cadet',
+					image: 'https://thumbs2.imgbox.com/80/b2/fENNMhl9_t.jpeg'
 				},
 				{
-					category: 'vfx',
-					image:
-						(vfx[0] && vfx[0].logo) || `http://img.youtube.com/vi/${vfx[0] && vfx[0].video}/hqdefault.jpg`
-					// artist_name: vfx[0] && vfx[0].artist_name
-					// link: vfx[0] && vfx[0].link
+					label: 'Festy Besty',
+					link: '/collections/all/products/category/diffuser_caps/collection/festy_besty',
+					image: 'https://thumbs2.imgbox.com/90/25/ZwpZrRGy_t.jpeg'
+				},
+				{
+					label: 'Platonic Solids',
+					link: '/collections/all/products/category/diffuser_caps/collection/platonic_solids',
+					image: 'https://thumbs2.imgbox.com/73/37/ie8226mS_t.jpg'
 				}
 			];
 		}
@@ -314,7 +185,7 @@ const MenuPage = (props) => {
 				if (item.subcategory) {
 					return `/collections/all/products/${item.pathname}`;
 				} else {
-					return `/collections/all/products/${item.category}`;
+					return `/collections/all/products/category/${item.category}`;
 				}
 			} else if (pathname === 'featured') {
 				return `/collections/all/features/${item.category}`;
@@ -370,12 +241,8 @@ const MenuPage = (props) => {
 				<div className="jc-c">
 					<div className="jc-c wrap">
 						{!loading_pictures &&
-							features &&
-							glovers &&
-							artists &&
-							producers &&
-							vfx &&
-							determine_menu_items().map((item, index) => {
+							items &&
+							items.map((item, index) => {
 								return <MenuItemD item={item} index={index} decide_url={decide_url} />;
 							})}
 					</div>
@@ -385,12 +252,8 @@ const MenuPage = (props) => {
 				<div className="jc-c">
 					<ul className="jc-c wrap">
 						{!loading_pictures &&
-							features &&
-							glovers &&
-							artists &&
-							producers &&
-							vfx &&
-							determine_menu_items().map((item, index) => {
+							items &&
+							items.map((item, index) => {
 								return <MenuItemM item={item} index={index} decide_url={decide_url} />;
 							})}
 					</ul>

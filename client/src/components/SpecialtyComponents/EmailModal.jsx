@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { saveUser } from '../../actions/userActions';
+import { API_Emails, API_Promos } from '../../utils';
 import useWindowDimensions from '../Hooks/windowDimensions';
 
 const EmailModal = (props) => {
 	const [ email, set_email ] = useState('');
 	const dispatch = useDispatch();
 
-	const submitHandler = (e) => {
+	const submitHandler = async (e) => {
 		e.preventDefault();
 		dispatch(
 			saveUser({
@@ -24,7 +25,9 @@ const EmailModal = (props) => {
 				shipping: {}
 			})
 		);
-		e.target.reset();
+		const { data: promo } = await API_Promos.create_one_time_use_code();
+		const { data } = await API_Emails.send_email_subscription(email, promo.promo_code);
+		console.log({ data });
 		props.set_show_modal(false);
 		sessionStorage.setItem('popup', 'exited');
 	};

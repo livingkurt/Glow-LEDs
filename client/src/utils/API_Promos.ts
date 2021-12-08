@@ -12,6 +12,9 @@ const promo_routes = {
 		console.log({ get_promo: promo_code });
 		return axios.get('/api/promos/code/' + promo_code);
 	},
+	create_one_time_use_code: () => {
+		return axios.put('/api/promos/create_one_time_use_code');
+	},
 	promo_code_used: (promo_code: any) => {
 		console.log({ promo_code_used: promo_code });
 		return axios.put('/api/promos/code/' + promo_code);

@@ -268,12 +268,7 @@ const PlaceOrderPage = (props) => {
 
 	const promo_code_used = async () => {
 		if (promo_code) {
-			const data = promos.find((promo) => promo.promo_code === promo_code.toLowerCase());
-			console.log({ data });
-			console.log({ single_use: data.single_use });
-			if (data.single_use) {
-				await API_Promos.promo_code_used(promo_code.toLowerCase());
-			}
+			await API_Promos.promo_code_used(promo_code.toLowerCase());
 		}
 	};
 

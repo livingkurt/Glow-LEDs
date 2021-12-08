@@ -130,6 +130,7 @@ services/*.js
 db/*.js
 email_templates/*.js
 email_templates/pages/*.js
+email_templates/components/*.js
 
 certification/glowleds-key.pem
 
