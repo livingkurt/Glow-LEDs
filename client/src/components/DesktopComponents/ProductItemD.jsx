@@ -61,7 +61,7 @@ const ProductItemD = (props) => {
 									)}
 									{images.length > 1 && (
 										// <div className="image-btn-container">
-										<div style={{ overflowX: 'scroll' }}>
+										<div>
 											<div className="jc-b w-100per pos-rel ">
 												{images.length > 1 && (
 													<div className="ai-c pos-abs left-0px top-125px image-btn">
