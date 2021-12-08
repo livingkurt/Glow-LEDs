@@ -3,15 +3,9 @@ import { prnt } from '../util';
 require('dotenv');
 
 export default {
-	findAll_users_db: async (search: any, category: any, sortOrder: any) => {
+	findAll_users_db: async (filter: any, sortOrder: any) => {
 		try {
-			return await User.find({
-				deleted: false,
-				...search,
-				...category
-			})
-				.sort(sortOrder)
-				.populate('affiliate');
+			return await User.find(filter).sort(sortOrder).populate('affiliate');
 		} catch (error) {
 			console.log({ findAll_users_db_error: error });
 			throw new Error(error.message);

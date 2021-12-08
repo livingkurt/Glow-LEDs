@@ -28,7 +28,8 @@ export default {
 			} else if (query.sortOrder === 'newest' || query.sortOrder === '') {
 				sortOrder = { _id: -1 };
 			}
-			return await user_db.findAll_users_db(search, category, sortOrder);
+			const filter = { deleted: false, ...category, ...search };
+			return await user_db.findAll_users_db(filter, sortOrder);
 		} catch (error) {
 			console.log({ findAll_users_s_error: error });
 			throw new Error(error.message);

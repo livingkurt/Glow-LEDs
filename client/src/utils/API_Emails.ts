@@ -23,7 +23,7 @@ const email_routes = {
 		return axios.post('/api/emails/reset_password', { email, promo_code });
 	},
 	send_verified: (email: string, promo_code: string) => {
-		return axios.post('/api/emails/verified', { email, promo_code });
+		return axios.post('/api/emails/account_created', { email, promo_code });
 	},
 	send_announcement_email: (template: string, subject: string, test: boolean) => {
 		return axios.post('/api/emails/send_announcement', { template, subject, test });

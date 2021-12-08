@@ -18,7 +18,7 @@ import {
 import email_subscription from './pages/email_subscription';
 import express from 'express';
 import { Header, Footer } from './components';
-import { content_db } from '../db';
+import { content_db, user_db } from '../db';
 const router = express.Router();
 
 // App({header: Header({title: 'Glow LEDs Reset Password'}), footer: Footer()})
@@ -134,15 +134,22 @@ router.get(
 	}
 );
 
-router.get('/password_reset', (req: { body: any }, res: { send: (arg0: string) => void }) => {
+router.get('/reset_password', (req: { body: any }, res: { send: (arg0: string) => void }) => {
 	res.send(App({ body: reset_password(req.body), title: 'Glow LEDs Reset Password' }));
 });
 router.get('/password_reset', (req: { body: any }, res: { send: (arg0: string) => void }) => {
 	res.send(App({ body: password_reset(req.body), title: 'Glow LEDs Password Reset' }));
 });
 
-router.get('/account_created', (req: { body: any }, res: { send: (arg0: string) => void }) => {
-	res.send(App({ body: account_created(req.body), title: 'Glow LEDs Account Created' }));
+router.get('/account_created', async (req: { body: any }, res: { send: (arg0: string) => void }) => {
+	const user = await user_db.findById_users_db('5f2d7c0e9005a57059801ce8');
+	const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 });
+	const body = {
+		user,
+		categories: contents && contents[0].home_page.slideshow
+	};
+
+	res.send(App({ body: account_created(body), title: 'Glow LEDs Account Created' }));
 });
 
 export default router;

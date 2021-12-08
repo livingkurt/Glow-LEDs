@@ -1,6 +1,7 @@
 export default (props: any) => {
 	return `
 <table style="border-spacing:0;width:100%;">
+
   <tbody>
     <tr style="font-size:16px">
       <td>

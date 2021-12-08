@@ -17,7 +17,7 @@ router.route('/password_reset').post(email_controller.send_password_reset_emails
 router.route('/reset_password').post(email_controller.send_reset_password_emails_c);
 router.route('/account_created').post(email_controller.send_account_created_emails_c);
 
-router.route('/verified').post(email_controller.send_verified_emails_c);
+// router.route('/verified').post(email_controller.send_verified_emails_c);
 
 router.route('/send_announcement').post(email_controller.send_all_emails_c);
 

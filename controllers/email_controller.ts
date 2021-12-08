@@ -369,13 +369,17 @@ export default {
 		});
 	},
 	send_account_created_emails_c: async (req: any, res: any) => {
-		console.log({ register: req.body });
+		console.log({ send_email_subscription_emails_c: req.body });
+		const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 });
 
 		const mailOptions = {
 			from: process.env.DISPLAY_EMAIL,
 			to: req.body.email,
 			subject: 'Glow LEDs Account Created',
-			html: App({ body: account_created(req.body), title: 'Glow LEDs Account Created' })
+			html: App({
+				body: account_created({ user: req.body, categories: contents && contents[0].home_page.slideshow }),
+				title: 'Glow LEDs Account Created'
+			})
 		};
 
 		transporter.sendMail(mailOptions, (err, data) => {

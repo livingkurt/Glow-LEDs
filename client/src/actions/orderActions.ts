@@ -135,7 +135,7 @@ export const createPayOrderGuest = (
 			});
 			if (create_account_res.data) {
 				dispatch({ type: USER_REGISTER_SUCCESS, payload: create_account_res.data });
-				axios.post('/api/emails/verified', create_account_res.data);
+				axios.post('/api/emails/account_created', create_account_res.data);
 				dispatch({ type: ORDER_CREATE_REQUEST, payload: order });
 				const create_guest_order_res = await axios.post('/api/orders/guest', {
 					...order,

@@ -1,12 +1,14 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { listEmails, deleteEmail, saveEmail } from '../../actions/emailActions';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { Search, Sort } from '../../components/SpecialtyComponents';
+import { humanize } from '../../utils/helper_functions';
 
 const EmailsPage = (props) => {
+	const history = useHistory();
 	const [ search, set_search ] = useState('');
 	const [ sortOrder, setSortOrder ] = useState('');
 	const category = props.match.params.category ? props.match.params.category : '';
@@ -75,16 +77,63 @@ const EmailsPage = (props) => {
 
 	const sort_options = [ 'Email Type' ];
 
+	const templates = [
+		'announcement',
+		'review',
+		'account_created',
+		'reset_password',
+		'password_changed',
+		'email_subscription',
+		'order',
+		'review',
+		'affiliate',
+		'feature',
+		'contact',
+		'contact_confirmation',
+		'reset_password',
+		'password_reset',
+		'account_created'
+	];
+
+	const [ link, set_link ] = useState('announcement');
+
+	const go_to_template = (e) => {
+		e.preventDefault();
+		// history.push('/api/templates/' + e.target.value);
+		window.history.pushState({}, '', '/api/templates/' + e.target.value);
+		window.history.pushState(
+			{ urlPath: '/api/templates/' + e.target.value },
+			'',
+			'/api/templates/' + e.target.value
+		);
+	};
+
 	return (
 		<div className="main_container p-20px">
 			<Helmet>
 				<title>Admin Emails | Glow LEDs</title>
 			</Helmet>
 			<div className="wrap jc-b">
-				<Link to="/secure/glow/emails/announcement">
-					<button className="btn primary">Announcement</button>
-				</Link>
-				<a href="/api/templates/review" target="_blank">
+				<div className="ai-c h-25px mv-15px jc-c">
+					<div className="custom-select">
+						<select className="qty_select_dropdown" onChange={(e) => set_link(e.target.value)}>
+							<option key={1} defaultValue="">
+								---Choose Email Template---
+							</option>
+							{templates.map((item, index) => (
+								<option key={index} value={item}>
+									{humanize(item)}
+								</option>
+							))}
+						</select>
+						<span className="custom-arrow" />
+					</div>
+					<a href={'/api/templates/' + link} rel="noreferrer" target="_blank" className="ml-10px">
+						<button className="btn primary">{humanize(link)}</button>
+					</a>
+				</div>
+
+				{/* <a href="/api/templates/review" target="_blank">
 					<button className="btn primary">Review</button>
 				</a>
 				<a href="/api/templates/account_created" target="_blank">
@@ -99,7 +148,40 @@ const EmailsPage = (props) => {
 				<a href="/api/templates/email_subscription" target="_blank">
 					<button className="btn primary">Email Subscription</button>
 				</a>
-				<Link to="/secure/glow/emails/order/60d4aae4726aa8002a5091a4/order/false">
+				<a href="/api/templates/order" target="_blank">
+					<button className="btn primary">Order</button>
+				</a>
+				<a href="/api/templates/review" target="_blank">
+					<button className="btn primary">Review</button>
+				</a>
+				<a href="/api/templates/affiliate" target="_blank">
+					<button className="btn primary">Affiliate</button>
+				</a>
+				<a href="/api/templates/feature" target="_blank">
+					<button className="btn primary">Feature</button>
+				</a>
+				<a href="/api/templates/announcement" target="_blank">
+					<button className="btn primary">Announcement</button>
+				</a>
+				<a href="/api/templates/contact" target="_blank">
+					<button className="btn primary">Contact</button>
+				</a>
+				<a href="/api/templates/contact_confirmation" target="_blank">
+					<button className="btn primary">Contact Confirmation</button>
+				</a>
+				<a href="/api/templates/reset_password" target="_blank">
+					<button className="btn primary">Reset Password</button>
+				</a>
+				<a href="/api/templates/password_reset" target="_blank">
+					<button className="btn primary">Password Reset</button>
+				</a>
+				<a href="/api/templates/account_created" target="_blank">
+					<button className="btn primary">Account Created</button>
+				</a> */}
+				{/* <Link to="/secure/glow/emails/announcement">
+					<button className="btn primary">Announcement</button>
+				</Link> */}
+				{/* <Link to="/secure/glow/emails/order/60d4aae4726aa8002a5091a4/order/false">
 					<button className="btn primary">Order</button>
 				</Link>
 				<Link to="/secure/glow/emails/order_status/60d4aae4726aa8002a5091a4/reassured">
@@ -128,12 +210,6 @@ const EmailsPage = (props) => {
 				</Link>
 				<Link to="/secure/glow/emails/affiliate/po/affiliate/false">
 					<button className="btn primary">Affiliate</button>
-				</Link>
-				{/* <Link to="/secure/glow/emails/feature_created">
-					<button className="btn primary">Feature Created</button>
-				</Link>
-				<Link to="/secure/glow/emails/feature_submitted">
-					<button className="btn primary">Feature Submitted</button>
 				</Link> */}
 				<Link to="/secure/glow/editemail">
 					<button className="btn primary">Create Email</button>

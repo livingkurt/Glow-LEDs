@@ -64,7 +64,7 @@ export const register = (userData: any) => async (dispatch: (arg0: { type: strin
 	try {
 		const { data } = await axios.post('/api/users/register', userData);
 		dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
-		axios.post('/api/emails/verified', data);
+		axios.post('/api/emails/account_created', data);
 		// axios.post('/api/emails/verify', data);
 		dispatch({ type: USER_REGISTER_EMPTY, payload: {} });
 		setAuthToken(false);
@@ -328,7 +328,7 @@ export const verify = (user_id: string) => async (dispatch: (arg0: { type: strin
 		const { data } = await axios.put('/api/users/verify/' + user_id);
 		dispatch({ type: USER_VERIFY_SUCCESS, payload: data });
 		console.log({ verify: data });
-		axios.post('/api/emails/verified', data);
+		axios.post('/api/emails/account_created', data);
 	} catch (error) {
 		console.log({ error });
 		dispatch({ type: USER_VERIFY_FAIL, payload: error });
