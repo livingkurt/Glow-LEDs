@@ -145,6 +145,7 @@ const EditOrderPage = (props) => {
 				dispatch(detailsOrder(props.match.params.id));
 				dispatch(detailsOrder(props.match.params.id));
 				dispatch(listProducts(''));
+				dispatch(listProducts('', '', '', '', '', '', '', 300, true));
 				dispatch(listUsers(''));
 			} else {
 				dispatch(detailsOrder(''));

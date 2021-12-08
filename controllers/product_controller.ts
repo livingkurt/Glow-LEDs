@@ -9,6 +9,7 @@ export default {
 			const collection = req.query.collection ? { product_collection: req.query.collection } : {};
 			const page: any = req.query.page ? req.query.page : 1;
 			const limit: any = req.query.limit ? req.query.limit : 21;
+			console.log({ limit });
 			const hidden: any = req.query.hidden
 				? req.query.hidden === 'true' ? {} : { hidden: false }
 				: { hidden: false };
@@ -91,7 +92,7 @@ export default {
 				...search,
 				...chips
 			});
-			console.log({ products, count });
+			// console.log({ products, count });
 
 			res.json({
 				products,
