@@ -197,9 +197,13 @@ const PlaceOrderPublicPage = (props) => {
 
 	const get_promo_code = () => {
 		const promo_code_storage = sessionStorage.getItem('promo_code');
+		console.log({ promo_code_storage });
 		if (promo_code_storage && promo_code_storage.length > 0) {
-			// console.log({ promo_code_storage });
+			console.log({ promo_code_storage });
 			set_promo_code(promo_code_storage.toLowerCase());
+			set_show_promo_code(true);
+			set_show_message(promo_code_storage);
+			set_show_promo_code_input_box(false);
 			activate_promo_code(promo_code_storage);
 		}
 	};
