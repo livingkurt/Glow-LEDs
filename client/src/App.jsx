@@ -455,14 +455,14 @@ const App = (props) => {
 							<Route
 								path="/checkout/placeorder"
 								component={(props) => (
-									<PlaceOrderPublicPage
+									<PlaceOrderPage
 										{...props}
 										date_1={out_of_office_date_1}
 										date_2={out_of_office_date_2}
 									/>
 								)}
 							/>
-							<Route path="/checkout/shipping" component={ShippingPublicPage} />
+							<Route path="/checkout/shipping" component={ShippingPage} />
 							<Route
 								path="/checkout/cart/:pathname?"
 								component={(props) => (

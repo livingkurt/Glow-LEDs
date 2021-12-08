@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { createPayOrder, createOrder, createOrderGuest } from '../../actions/orderActions';
+import { createPayOrder, createOrder, createOrderGuest, createPayOrderGuest } from '../../actions/orderActions';
 import { CartItem, CheckoutSteps, Stripe } from '../../components/SpecialtyComponents';
 import { Helmet } from 'react-helmet';
 import { removeFromCart, saveShipping, savePayment } from '../../actions/cartActions';
 import { listPromos } from '../../actions/promoActions';
 import { Loading, LoadingPayments } from '../../components/UtilityComponents';
-import { validate_promo_code } from '../../utils/validations';
+import { validate_passwords, validate_promo_code } from '../../utils/validations';
 import { Carousel } from '../../components/SpecialtyComponents';
 import { listUsers } from '../../actions/userActions';
 import { API_External, API_Products, API_Promos, API_Shipping } from '../../utils';
@@ -45,6 +45,14 @@ const PlaceOrderPage = (props) => {
 	const [ hide_pay_button, set_hide_pay_button ] = useState(true);
 	const [ parcel, set_parcel ] = useState('');
 	const [ paymentMethod, set_paymentMethod ] = useState('stripe');
+	const [ create_account, set_create_account ] = useState(false);
+	const [ password, setPassword ] = useState('');
+	const [ rePassword, setRePassword ] = useState('');
+
+	const [ password_validations, setPasswordValidations ] = useState('');
+	const [ re_password_validations, setRePasswordValidations ] = useState('');
+	const [ passwords_complete, set_passwords_complete ] = useState('');
+	const [ passwords_check, set_passwords_check ] = useState(false);
 
 	const [ shippingPrice, setShippingPrice ] = useState(0);
 	const [ previousShippingPrice, setPreviousShippingPrice ] = useState(0);
@@ -234,31 +242,60 @@ const PlaceOrderPage = (props) => {
 
 	const placeOrderHandler = async (paymentMethod) => {
 		check_authentication();
-		dispatch(
-			createPayOrder(
-				{
-					orderItems: cartItems,
-					shipping: shipment_id
-						? {
-								...shipping,
-								shipment_id,
-								shipping_rate
-							}
-						: shipping,
-					payment,
-					itemsPrice,
-					shippingPrice,
-					taxPrice,
-					totalPrice,
-					userInfo,
-					order_note,
-					tip,
-					promo_code: show_message && promo_code,
-					parcel
-				},
-				paymentMethod
-			)
-		);
+		if (userInfo && userInfo.first_name) {
+			dispatch(
+				createPayOrder(
+					{
+						orderItems: cartItems,
+						shipping: shipment_id
+							? {
+									...shipping,
+									shipment_id,
+									shipping_rate
+								}
+							: shipping,
+						payment,
+						itemsPrice,
+						shippingPrice,
+						taxPrice,
+						totalPrice,
+						userInfo,
+						order_note,
+						tip,
+						promo_code: show_message && promo_code,
+						parcel
+					},
+					paymentMethod
+				)
+			);
+		} else {
+			dispatch(
+				createPayOrderGuest(
+					{
+						orderItems: cartItems,
+						shipping: shipment_id
+							? {
+									...shipping,
+									shipment_id,
+									shipping_rate
+								}
+							: shipping,
+						payment,
+						itemsPrice,
+						shippingPrice,
+						taxPrice,
+						totalPrice,
+						order_note,
+						tip,
+						promo_code: show_message && promo_code,
+						parcel
+					},
+					create_account,
+					password,
+					paymentMethod
+				)
+			);
+		}
 
 		set_loading_payment(true);
 		dimminish_stock();
@@ -380,7 +417,11 @@ const PlaceOrderPage = (props) => {
 		() => {
 			if (successPay && order) {
 				// props.history.push('/secure/checkout/paymentcomplete/' + order._id);
-				props.history.push('/secure/checkout/order/receipt/' + order._id + '/order/true');
+				if (userInfo && userInfo.first_name) {
+					props.history.push('/secure/checkout/order/receipt/' + order._id + '/order/true');
+				} else {
+					props.history.push('/checkout/order/receipt/' + order._id + '/order/true');
+				}
 				set_loading_payment(false);
 				empty_cart();
 			} else if (error_pay) {
@@ -538,6 +579,22 @@ const PlaceOrderPage = (props) => {
 		console.log({ error });
 	};
 
+	const check_password = async (e) => {
+		e.preventDefault();
+		const validation_data = { password, rePassword };
+		// console.log({ data });
+		const request = await validate_passwords(validation_data);
+		console.log({ request });
+		setPasswordValidations(request.errors.password);
+		setRePasswordValidations(request.errors.rePassword);
+		set_passwords_complete('');
+		set_passwords_check(false);
+		if (request.isValid) {
+			set_passwords_complete('Passwords Verified');
+			set_passwords_check(true);
+		}
+	};
+
 	return (
 		<div>
 			<Helmet>
@@ -578,7 +635,15 @@ const PlaceOrderPage = (props) => {
 								</div>
 							)}
 							<div style={{ marginTop: '5px' }}>
-								<Link to="/secure/checkout/shipping">
+								<Link
+									to={
+										userInfo.hasOwnProperty('first_name') ? (
+											'/secure/checkout/shipping'
+										) : (
+											'/checkout/shipping'
+										)
+									}
+								>
 									<button
 										className={`btn primary ${shipping && !shipping.hasOwnProperty('first_name')
 											? 'bob'
@@ -716,7 +781,6 @@ const PlaceOrderPage = (props) => {
 							current_shipping_speed={current_shipping_speed}
 							re_choose_shipping_rate={re_choose_shipping_rate}
 						/>
-
 						{show_promo_code && (
 							<div>
 								{show_promo_code_input_box && (
@@ -754,6 +818,70 @@ const PlaceOrderPage = (props) => {
 								)}
 							</div>
 						)}
+						{userInfo &&
+						!userInfo.first_name && (
+							<li>
+								{loading_checkboxes ? (
+									<div>Loading...</div>
+								) : (
+									<div>
+										<label htmlFor="create_account mb-20px">Create Account</label>
+										<input
+											type="checkbox"
+											name="create_account"
+											defaultChecked={create_account}
+											id="create_account"
+											onChange={(e) => {
+												set_create_account(e.target.checked);
+											}}
+										/>
+									</div>
+								)}
+							</li>
+						)}
+						{userInfo &&
+						!userInfo.first_name &&
+						create_account && (
+							<li className="column">
+								<label htmlFor="password">Password</label>
+								<input
+									// className="form_input"
+									type="password"
+									id="password"
+									name="password"
+									onChange={(e) => setPassword(e.target.value)}
+								/>
+								<label className="validation_text fs-16px jc-c ">{password_validations}</label>
+							</li>
+						)}
+						{userInfo &&
+						!userInfo.first_name &&
+						create_account && (
+							<li className="column">
+								<label htmlFor="rePassword">Re-Enter Password</label>
+								<input
+									// className="form_input"
+									type="password"
+									id="rePassword"
+									name="rePassword"
+									onChange={(e) => setRePassword(e.target.value)}
+								/>
+								<label className="validation_text fs-16px jc-c ">{re_password_validations}</label>
+							</li>
+						)}
+						{userInfo &&
+						!userInfo.first_name &&
+						create_account && (
+							<li className="">
+								<label className="fs-16px jc-c ta-c mb-12px" style={{ color: '#3dff3d' }}>
+									{passwords_complete}
+								</label>
+								<button className="btn primary" onClick={(e) => check_password(e)}>
+									Check Password
+								</button>
+							</li>
+						)}
+
 						<li>
 							<div className="w-100per ">
 								<div htmlFor="order_note">Add a note</div>
@@ -771,7 +899,9 @@ const PlaceOrderPage = (props) => {
 						</li>
 						<li>
 							<div className="w-100per ">
-								<div htmlFor="tip">Leave a Tip 💙</div>
+								<div htmlFor="tip" className="fs-16px">
+									Leave a Tip 💙
+								</div>
 								<input
 									type="number"
 									min="0.01"
@@ -788,7 +918,7 @@ const PlaceOrderPage = (props) => {
 								/>
 							</div>
 						</li>
-						{!loading &&
+						{/* {!loading &&
 						!hide_pay_button &&
 						shipping &&
 						shipping.hasOwnProperty('first_name') && (
@@ -798,7 +928,18 @@ const PlaceOrderPage = (props) => {
 								date_1={props.date_1}
 								date_2={props.date_2}
 							/>
-						)}
+						)} */}
+						{!loading &&
+						!hide_pay_button &&
+						shipping &&
+						shipping.hasOwnProperty('first_name') &&
+						!create_account && <Stripe pay_order={placeOrderHandler} loading_payment={loading_payment} />}
+
+						{!hide_pay_button &&
+						shipping &&
+						shipping.hasOwnProperty('first_name') &&
+						create_account &&
+						passwords_check && <Stripe pay_order={placeOrderHandler} loading_payment={loading_payment} />}
 
 						{userInfo &&
 						userInfo.isAdmin && (
@@ -823,19 +964,6 @@ const PlaceOrderPage = (props) => {
 												/>
 											</li>
 										)}
-										{/* {paid && (
-											<div className="w-100per mb-1rem">
-												<div htmlFor="paymentMethod">Payment Method</div>
-												<input
-													type="text"
-													name="paymentMethod"
-													value={paymentMethod}
-													id="paymentMethod"
-													className="w-100per"
-													onChange={(e) => set_paymentMethod(e.target.value)}
-												/>
-											</div>
-										)} */}
 										{paid && (
 											<div className="ai-c h-25px mv-10px mt-2rem mb-30px jc-c">
 												<div className="custom-select w-100per">
@@ -865,22 +993,6 @@ const PlaceOrderPage = (props) => {
 												</div>
 											</div>
 										)}
-										{/* {loading_checkboxes ? (
-											<div>Loading...</div>
-										) : (
-											<li>
-												<label htmlFor="no_user mb-20px ">No User</label>
-												<input
-													type="checkbox"
-													name="no_user"
-													defaultChecked={no_user}
-													id="no_user"
-													onChange={(e) => {
-														set_no_user(e.target.checked);
-													}}
-												/>
-											</li>
-										)} */}
 										<div className="ai-c h-25px mv-10px mt-2rem mb-30px jc-c">
 											<div className="custom-select w-100per">
 												<select

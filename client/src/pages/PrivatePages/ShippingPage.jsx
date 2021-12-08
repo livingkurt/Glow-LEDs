@@ -37,7 +37,7 @@ const ShippingPage = (props) => {
 
 	useEffect(
 		() => {
-			if (shipping) {
+			if (shipping && shipping.first_name && shipping.first_name.length > 1) {
 				console.log({ ShippingPage: shipping });
 				set_email(shipping.email);
 				set_first_name(shipping.first_name);
@@ -84,7 +84,7 @@ const ShippingPage = (props) => {
 	const submitHandler = (e) => {
 		e.preventDefault();
 		const data = {
-			email: userInfo.email,
+			email: email ? email : userInfo.email,
 			first_name,
 			last_name,
 			address_1,
@@ -97,7 +97,7 @@ const ShippingPage = (props) => {
 		};
 		console.log({ data });
 		const request = validate_shipping(data);
-		// set_email_validations(request.errors.email);
+		set_email_validations(request.errors.email);
 		set_first_name_validations(request.errors.first_name);
 		set_last_name_validations(request.errors.last_name);
 		set_address_validations(request.errors.address_1);
@@ -114,7 +114,7 @@ const ShippingPage = (props) => {
 				saveShipping({
 					first_name,
 					last_name,
-					email: userInfo.email,
+					email: email ? email : userInfo.email,
 					address_1,
 					address_2,
 					city,
@@ -257,7 +257,9 @@ const ShippingPage = (props) => {
 						<li>
 							<h1 style={{ textAlign: 'center', width: '100%' }}>Shipping</h1>
 						</li>
-						{userInfo.shipping.hasOwnProperty('first_name') && (
+						{userInfo &&
+						userInfo.shipping &&
+						userInfo.shipping.hasOwnProperty('first_name') && (
 							<li>
 								<button
 									onClick={(e) => use_saved_shipping(e, userInfo.shipping, userInfo)}
@@ -292,16 +294,19 @@ const ShippingPage = (props) => {
 								</div>
 							</li>
 						)}
-						{/* <li>
-							<label htmlFor="email">Email</label>
-							<input
-								type="text"
-								value={email}
-								name="email"
-								id="email"
-								onChange={(e) => set_email(e.target.value)}
-							/>
-						</li> */}
+						{userInfo &&
+						!userInfo.first_name && (
+							<li>
+								<label htmlFor="email">Email</label>
+								<input
+									type="text"
+									value={email}
+									name="email"
+									id="email"
+									onChange={(e) => set_email(e.target.value)}
+								/>
+							</li>
+						)}
 						<label className="validation_text" style={{ justifyContent: 'center' }}>
 							{email_validations}
 						</label>
@@ -475,25 +480,31 @@ const ShippingPage = (props) => {
 								Continue
 							</button>
 						</li>
-						{userInfo && loading ? (
-							<div>Loading...</div>
-						) : (
+
+						{userInfo &&
+						userInfo.first_name && (
 							<div>
-								<li>
-									<label htmlFor="save_shipping">Save Shipping</label>
-									<input
-										type="checkbox"
-										name="save_shipping"
-										// defaultChecked={save_shipping ? 'checked' : 'unchecked'}
-										defaultValue={save_shipping}
-										defaultChecked={save_shipping}
-										// value={save_shipping}
-										id="save_shipping"
-										onChange={(e) => {
-											set_save_shipping(e.target.checked);
-										}}
-									/>
-								</li>
+								{loading ? (
+									<div>Loading...</div>
+								) : (
+									<div>
+										<li>
+											<label htmlFor="save_shipping">Save Shipping</label>
+											<input
+												type="checkbox"
+												name="save_shipping"
+												// defaultChecked={save_shipping ? 'checked' : 'unchecked'}
+												defaultValue={save_shipping}
+												defaultChecked={save_shipping}
+												// value={save_shipping}
+												id="save_shipping"
+												onChange={(e) => {
+													set_save_shipping(e.target.checked);
+												}}
+											/>
+										</li>
+									</div>
+								)}
 							</div>
 						)}
 					</ul>
