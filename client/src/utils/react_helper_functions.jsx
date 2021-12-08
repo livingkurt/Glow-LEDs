@@ -108,7 +108,7 @@ export const product_page_sale_price_switch = (
 		return (
 			<label className="fs-18px">
 				<label>${price ? price.toFixed(2) : price}</label>
-				<label> ({`${100 * (1 - price / previous_price).toFixed(2)}`.substring(0, 2)}% Off) </label>
+				<label> ({100 * (1 - sale_price / price).toFixed(2)}% Off) </label>
 				<label>
 					<del style={color}>
 						<label className="" style={color}>
@@ -123,7 +123,7 @@ export const product_page_sale_price_switch = (
 			return (
 				<label className="fs-18px">
 					<label>${sale_price ? sale_price.toFixed(2) : sale_price}</label>
-					<label> ({`${100 * (1 - price / previous_price).toFixed(2)}`.substring(0, 2)}% Off) </label>
+					<label> ({100 * (1 - sale_price / price).toFixed(2)}% Off) </label>
 					<label>
 						<del style={color}>
 							<label className="" style={color}>
