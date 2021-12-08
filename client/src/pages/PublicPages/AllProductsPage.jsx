@@ -32,6 +32,7 @@ const AllProductsPage = (props) => {
 	const [ chip, set_chip ] = useState('');
 	const [ page, set_page ] = useState(1);
 	const [ limit, set_limit ] = useState(20);
+	const [ message, set_message ] = useState('');
 	// const [ currentPage, setCurrentPage ] = useState(1);
 
 	// const category = props.match.params.category ? props.match.params.category : '';
@@ -51,11 +52,9 @@ const AllProductsPage = (props) => {
 
 	const productList = useSelector((state) => state.productList);
 	const { products: main_products, totalPages, currentPage, loading, error } = productList;
-	console.log({ productList });
 
 	const chipList = useSelector((state) => state.chipList);
 	const { chips: chips_list } = chipList;
-	console.log({ chips_list });
 
 	const dispatch = useDispatch();
 
@@ -63,11 +62,12 @@ const AllProductsPage = (props) => {
 		() => {
 			if (promo_code) {
 				sessionStorage.setItem('promo_code', promo_code);
-				props.set_message(`${promo_code} Added to Checkout`);
+				set_message(`${promo_code} Added to Checkout`);
 			}
 		},
 		[ promo_code ]
 	);
+
 	useEffect(
 		() => {
 			console.log({ main_products });
@@ -108,6 +108,7 @@ const AllProductsPage = (props) => {
 	);
 
 	const determine_products = async () => {
+		console.log({});
 		const query = getUrlParameter(props.location);
 		let category = props.match.params.category ? props.match.params.category : '';
 		let subcategory = props.match.params.subcategory ? props.match.params.subcategory : '';
@@ -152,63 +153,32 @@ const AllProductsPage = (props) => {
 					get_occurrences(category);
 				}
 			}
-			console.log({ category, subcategory, search, sort, filter, collection });
+			// console.log({ category, subcategory, search, sort, filter, collection });
 			dispatch(listProducts(category, subcategory, filter, search, sort, collection, page, limit, hidden));
-		}
-	};
-
-	const waitForElement = (filter, chips_list = []) => {
-		prnt({ filter, chips_list });
-		let chip_selected;
-		if (typeof chips_list && chips_list.length > 0) {
-			// prnt({ chip: filter.split('%20').join(' ') });
-			if (filter.match(/^[0-9a-fA-F]{24}$/)) {
-				// it's an ObjectID
-				chip_selected = filter;
-			} else {
-				chip_selected = chips_list.find((chip) => chip.name === filter.split('%20').join(' '));
-			}
-
-			// set_filter(chips_list.find((chip) => chip.name === filter.split('%20').join(' '))._id);
-			set_chip(chip_selected._id);
-			set_search('');
-			set_filter(chip_selected._id);
-			// console.log({ chip_selected });
-			// update_products_url(history, '', sort, chip_selected.name);
-			// dispatch(listProducts(category, subcategory, chip_selected._id, '', sort, collection));
-			return chips_list.find((chip) => chip.name === filter.split('%20').join(' '))._id;
-		} else {
-			setTimeout(waitForElement, 250);
 		}
 	};
 
 	const get_occurrences = async (category) => {
 		set_loading_products(true);
 		const { data: occurrences } = await API_Products.get_occurrences();
-		console.log({ occurrences });
+		// console.log({ occurrences });
 		set_product_occurrences(occurrences);
 		if (occurrences && category === 'best_sellers') {
 			const { data } = await API_Products.get_best_sellers(occurrences);
-			console.log({ data });
+			// console.log({ data });
 			set_products(data);
 		} else if (occurrences && category === 'essentials') {
 			const { data } = await API_Products.get_essentials();
-			console.log({ data });
+			// console.log({ data });
 			set_products(data);
 		} else if (category === 'discounted') {
 			const { data } = await API_Products.get_imperfect();
-			console.log({ data });
+			// console.log({ data });
 			set_products(data);
 		} else {
 			set_best_sellers(false);
 		}
 		set_loading_products(false);
-	};
-
-	const submitHandler = (e) => {
-		e.preventDefault();
-		update_products_url(history, search, sort, filter);
-		dispatch(listProducts('', '', search, '', '', ''));
 	};
 
 	const sortHandler = (e) => {
@@ -228,23 +198,14 @@ const AllProductsPage = (props) => {
 	};
 
 	const update_page = (e, new_page) => {
-		console.log({ e, new_page });
+		// console.log({ e, new_page });
 		e.preventDefault();
 		const page = parseInt(new_page);
 		update_products_url(history, search, sort, filter, page);
 
-		console.log(new_page);
+		// console.log(new_page);
 		dispatch(listProducts(category, subcategory, filter, search, sort, '', new_page, limit, false));
 	};
-
-	// const currentTableData = useMemo(
-	// 	() => {
-	// 		const firstPageIndex = (currentPage - 1) * PageSize;
-	// 		const lastPageIndex = firstPageIndex + PageSize;
-	// 		return products.slice(firstPageIndex, lastPageIndex);
-	// 	},
-	// 	[ currentPage ]
-	// );
 
 	return (
 		<div>
@@ -258,7 +219,7 @@ const AllProductsPage = (props) => {
 				<meta property="og:description" content={description_determination(category)} />
 				<meta name="twitter:description" content={description_determination(category)} />
 			</Helmet>
-
+			<Notification message={message} />
 			<div className="jc-c">
 				<div className="row">
 					<h1 className="fs-25px mb-5px ta-c">

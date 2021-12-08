@@ -474,10 +474,15 @@ const App = (props) => {
 
 							{/* Collections */}
 							{/* Product Collections */}
-							<Route
-								path="/collections/all/products/code/:promo_code?"
+							{/* <Route
+								path="/collections/all/products/code/:promo_code"
 								exact={true}
 								component={(props) => <AllProductsPage {...props} set_message={set_message} />}
+							/> */}
+							<Route
+								path="/collections/all/products/code/:promo_code"
+								exact={true}
+								component={AllProductsPage}
 							/>
 							<Route path="/collections/all/products" exact={true} component={AllProductsPage} />
 							<Route

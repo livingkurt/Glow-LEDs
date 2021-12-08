@@ -1,7 +1,6 @@
 // React
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { listProducts } from '../../actions/productActions';
 import ProductThumbCarouselItem from './CarouselItem';
 import { Loading } from '../UtilityComponents';
 import useWindowDimensions from '../Hooks/windowDimensions';
@@ -12,12 +11,6 @@ const ProductThumbCarousel = (props) => {
 	const productList = useSelector((state) => state.productList);
 	const { products, loading, error } = productList;
 	const { height, width } = useWindowDimensions();
-
-	// useEffect(() => {
-	// 	dispatch(listProducts(''));
-
-	// 	// }
-	// }, []);
 
 	const [ product_number, set_product_number ] = useState(0);
 	const [ number_of_items, set_number_of_items ] = useState(5);

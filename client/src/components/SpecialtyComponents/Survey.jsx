@@ -3,12 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { saveSurvey, detailsSurvey, listSurveys } from '../../actions/surveyActions';
 import { useHistory } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
-import { format_date, unformat_date } from '../../utils/helper_functions';
-import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import { listProducts } from '../../actions/productActions';
 import { listUsers } from '../../actions/userActions';
-import Zoom from 'react-medium-image-zoom';
 import 'react-medium-image-zoom/dist/styles.css';
 import { StarRating } from '../../components/SpecialtyComponents';
 import { detailsOrderPublic } from '../../actions/orderActions';
@@ -43,10 +39,6 @@ const Survey = (props) => {
 
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
-	// console.log(users);
-	// setTimeout(() => {
-	// 	set_loading_checkboxes(false);
-	// }, 500);
 
 	const history = useHistory();
 
@@ -58,9 +50,6 @@ const Survey = (props) => {
 
 	const surveySave = useSelector((state) => state.surveySave);
 	const { survey: survey_saved, loading: loading_saved, success } = surveySave;
-
-	const productList = useSelector((state) => state.productList);
-	const { products } = productList;
 
 	const surveyList = useSelector((state) => state.surveyList);
 	const { surveys } = surveyList;
@@ -99,7 +88,6 @@ const Survey = (props) => {
 		// } else {
 		// 	dispatch(detailsSurvey(''));
 		// }
-		dispatch(listProducts(''));
 		dispatch(listSurveys(''));
 		dispatch(listUsers(''));
 
@@ -392,50 +380,9 @@ const Survey = (props) => {
 										</div>
 									)}
 								</div>
-								{/* {userInfo ? (
-									<div className="jc-c m-auto wrap">
-										{props.order_id && (
-											<Link to={'/checkout/order/' + props.order_id}>
-												<button className="btn primary mh-10px">View Order</button>
-											</Link>
-										)}
-
-										<Link to="/secure/account/orders">
-											<button className="btn primary mh-10px">Your Orders</button>
-										</Link>
-										<Link to="/collections/all/products">
-											<button className="btn primary mh-10px">Products</button>
-										</Link>
-										<Link to="/pages/featured">
-											<button className="btn primary mh-10px">Featured Videos</button>
-										</Link>
-										<Link to="/pages/music">
-											<button className="btn primary mh-10px">NTRE Music</button>
-										</Link>
-									</div>
-								) : (
-									<div className="w-1000px jc-c m-auto">
-										{props.order_id && (
-											<Link to={'/checkout/order/' + props.order_id}>
-												<button className="btn primary mh-10px">View Order</button>
-											</Link>
-										)}
-										<Link to="/collections/all/products">
-											<button className="btn primary mh-10px">Products</button>
-										</Link>
-										<Link to="/pages/featured">
-											<button className="btn primary mh-10px">Featured Videos</button>
-										</Link>
-										<Link to="/pages/music">
-											<button className="btn primary mh-10px">NTRE Music</button>
-										</Link>
-								
-									</div>
-								)} */}
 							</div>
 						)}
 					</Loading>
-					{/* )} */}
 				</form>
 			</div>
 		</div>

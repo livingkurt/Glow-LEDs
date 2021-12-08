@@ -221,9 +221,13 @@ const PlaceOrderPage = (props) => {
 
 	const get_promo_code = () => {
 		const promo_code_storage = sessionStorage.getItem('promo_code');
+		console.log({ promo_code_storage });
 		if (promo_code_storage && promo_code_storage.length > 0) {
 			console.log({ promo_code_storage });
 			set_promo_code(promo_code_storage.toLowerCase());
+			set_show_promo_code(true);
+			set_show_message(promo_code_storage);
+			set_show_promo_code_input_box(false);
 			activate_promo_code(promo_code_storage);
 		}
 	};
@@ -441,6 +445,8 @@ const PlaceOrderPage = (props) => {
 	};
 
 	const activate_promo_code = (code) => {
+		console.log({ code });
+		console.log({ promos });
 		const promo = promos.find((promo) => promo.promo_code === code.toLowerCase());
 		console.log({ isValid: promo, promo_code: code.toLowerCase() });
 		let promo_excluded = 0;

@@ -16,47 +16,13 @@ export default (props: any) => {
     <tr style="font-size:16px">
       <td>
         <p
-          style="font-family:helvetica; font-weight: 800;  text-align: center;overflow-x:auto;white-space:-o-pre-wrap;word-wrap:break-word;max-width:800px;width:100%;margin: auto; color:white;font-size:16px;line-height:50px">
+          style="font-family:helvetica; font-weight: 800;  text-align: center;overflow-x:auto;white-space:-o-pre-wrap;word-wrap:break-word;max-width:800px;width:100%;margin: auto; color:white;font-size:30px;line-height:50px">
           ⬇️ Scroll Down for Promo Code ⬇️</p>
       </td>
     </tr>
   </tbody>
 </table>
-<table style="width:100%;border-spacing:0">
-  <tbody>
-    <tr>
-      <td style="font-family:helvetica">
-        <center>
-          <table style="max-width:800px;padding:20px;width:100%;text-align:left;border-spacing:0;margin:0 auto">
-            <tbody>
-              <tr>
-                <td style="font-family:helvetica">
-                  <table style="width:100%;border-spacing:0">
-                    <tbody>
-                      <tr>
-                        <td style="font-family:helvetica;width:50%">
-                          <table width="100%" style="max-width:800px">
-                            <tr>
-                              <td><img src="https://thumbs2.imgbox.com/b1/08/2Dnle6TI_t.jpeg" alt="Glow LEDs"
-                                  title="Email Image" style="text-align:center;width:100%;border-radius:20px" />
-                              </td>
-                            </tr>
-                          </table>
-                        </td>
 
-                      </tr>
-                    </tbody>
-                  </table>
-
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </center>
-      </td>
-    </tr>
-  </tbody>
-</table>
 
 <table style="border-spacing:0;width:100%;">
   <tbody>
@@ -375,7 +341,7 @@ export default (props: any) => {
       <tbody>
         <tr style="font-family:helvetica;border-radius:4px">
           <td>
-            <h2 style="text-align:center;font-family:helvetica;color:white;font-size:16px;margin-bottom:10px">
+            <h2 style="text-align:center;font-family:helvetica;color:white;font-size:20px;margin-bottom:10px">
               Enter this Code at Checkout</h2>
           </td>
         </tr>
@@ -383,8 +349,8 @@ export default (props: any) => {
     </table>
   
     <div style="display:flex;justify-content:center;margin:10px 0"><a
-        href="http://localhost:3000/collections/all/products/category/glow_strings"
-        style="background-color:#4c4f60;color:white;border-radius:10px;border:0;padding:15px;text-decoration:none">
+        href="/collections/all/products/code/${props.promo_code.toUpperCase()}"
+        style="background-color:#4c4f60;color:white;border-radius:10px;border:0;padding:15px;text-decoration:none" target="_blank">
         <h4 style="font-family:helvetica;margin:0;font-size:20px;text-align:center">Make it Glow with Glow LEDs</h4>
       </a></div>
   </tr>
