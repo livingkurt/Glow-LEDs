@@ -1,20 +1,37 @@
 import axios from 'axios';
 
 const email_routes = {
-	// not_paid_email: (order: any, user_data: any) => {
-	// 	console.log({ not_paid_email: order });
-	// 	console.log({ not_paid_email: user_data });
-	// 	return axios.post('/api/emails/notpaid', order, user_data);
-	// },
+	send_email_subscription: (email: string, promo_code: string) => {
+		return axios.post('/api/emails/email_subscription', { email, promo_code });
+	},
+	send_order: (order: string, promo_code: string) => {
+		return axios.post('/api/emails/order_subscription', { order });
+	},
+	send_order_status: (order: string, promo_code: string) => {
+		return axios.post('/api/emails/order_status', { order, promo_code });
+	},
+	send_contact: (email: string, promo_code: string) => {
+		return axios.post('/api/emails/contact', { email, promo_code });
+	},
+	send_contact_confirmation: (email: string, promo_code: string) => {
+		return axios.post('/api/emails/contact_confirmation', { email, promo_code });
+	},
+	send_password_reset: (email: string, promo_code: string) => {
+		return axios.post('/api/emails/password_reset', { email, promo_code });
+	},
+	send_reset_password: (email: string, promo_code: string) => {
+		return axios.post('/api/emails/reset_password', { email, promo_code });
+	},
+	send_verified: (email: string, promo_code: string) => {
+		return axios.post('/api/emails/verified', { email, promo_code });
+	},
 	send_announcement_email: (template: string, subject: string, test: boolean) => {
 		return axios.post('/api/emails/send_announcement', { template, subject, test });
 	},
 	send_email: (template: string, subject: string, email: string) => {
 		return axios.post('/api/emails/send_email', { template, subject, email });
 	},
-	send_email_subscription: (email: string, promo_code: string) => {
-		return axios.post('/api/emails/send_email_subscription', { email, promo_code });
-	},
+
 	// send_admin_email: (template: string, subject: string) => {
 	// 	return axios.post('/api/emails/send_emails_c', { template, subject });
 	// },

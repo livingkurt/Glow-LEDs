@@ -369,7 +369,7 @@ export const contact = (
 			song_id,
 			quote
 		});
-		axios.post('/api/emails/contactconfirmation', {
+		axios.post('/api/emails/contact_confirmation', {
 			first_name,
 			last_name,
 			email,

@@ -1,19 +1,27 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const CheckoutSteps = (props) => {
+	const userLogin = useSelector((state) => state.userLogin);
+	const { userInfo } = userLogin;
 	return (
 		<div className="checkout-steps">
-			<div className={props.step1 ? 'active' : ''}>Login</div>
+			<div className={props.step1 ? 'active' : ''}>{userInfo && userInfo.first_name ? 'Login' : 'Guest'}</div>
 			<div className={props.step2 ? 'active' : ''}>
-				<Link to="/secure/checkout/shipping">Shipping</Link>
+				<Link to={userInfo && userInfo.first_name ? '/secure/checkout/shipping' : '/checkout/shipping'}>
+					Shipping
+				</Link>
 			</div>
-
 			<div className={props.step3 ? 'active' : ''}>
-				<Link to="/secure/checkout/placeorder">Payment</Link>
+				<Link to={userInfo && userInfo.first_name ? '/secure/checkout/placeorder' : '/checkout/placeorder'}>
+					Payment
+				</Link>
 			</div>
 			<div className={props.step4 ? 'active' : ''}>
-				<Link to="/secure/checkout/payment">Complete</Link>
+				{/* <Link to={userInfo && userInfo.first_name ? '/secure/account/orders' : '/account/orders'}> */}
+				Complete
+				{/* </Link> */}
 			</div>
 		</div>
 	);

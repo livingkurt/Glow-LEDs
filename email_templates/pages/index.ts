@@ -5,3 +5,8 @@ export { default as error } from './error';
 export { default as order } from './order';
 export { default as contact } from './contact';
 export { default as contact_confirmation } from './contact_confirmation';
+export { default as order_status } from './order_status';
+export { default as review } from './review';
+export { default as affiliate } from './affiliate';
+export { default as feature } from './feature';
+export { default as announcement } from './announcement';

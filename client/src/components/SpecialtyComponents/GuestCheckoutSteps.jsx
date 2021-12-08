@@ -13,7 +13,7 @@ const CheckoutSteps = (props) => {
 				<Link to="/secure/checkout/placeorder">Payment</Link>
 			</div>
 			<div className={props.step4 ? 'active' : ''}>
-				<Link to="/secure/checkout/payment">Complete</Link>
+				<Link to="/secure/account/orders">Complete</Link>
 			</div>
 		</div>
 	);
