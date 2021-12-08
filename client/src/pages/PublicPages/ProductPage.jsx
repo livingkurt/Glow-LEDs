@@ -25,6 +25,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import { getUrlParameter, humanize, manuals, toCapitalize } from '../../utils/helper_functions';
 import Overflow from 'react-overflow-indicator';
+import RelatedProductsSlideshow from '../../components/SpecialtyComponents/RelatedProductsSlideshow';
 
 const ProductPage = (props) => {
 	const userLogin = useSelector((state) => state.userLogin);
@@ -1919,6 +1920,23 @@ const ProductPage = (props) => {
 				/>
 			)}
 			<Carousel product_pathname={props.match.params.pathname} random={true} title="Suggested Products" />
+			{/* {product && (
+				<div>
+					<div className=" w-100per m-auto">
+						<RelatedProductsSlideshow
+							product={product}
+							images={images}
+							secondary_images={secondary_images}
+							random={true}
+							className=""
+							product_pathname={props.match.params.pathname}
+							set_image={set_image}
+							interval={6000}
+							transitionTime={200}
+						/>
+					</div>
+				</div>
+			)} */}
 		</div>
 	);
 };

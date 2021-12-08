@@ -487,7 +487,12 @@ export const refundOrder = (
 	}
 };
 
-export const update_order = (order: { _id: string }, result: boolean, is_action: string, action_at: string) => async (
+export const update_order = (
+	order: { _id: string; isManufactured: boolean },
+	result: boolean,
+	is_action: string,
+	action_at: string
+) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }
 ) => {
@@ -495,17 +500,26 @@ export const update_order = (order: { _id: string }, result: boolean, is_action:
 	try {
 		dispatch({ type: ORDER_UPDATE_REQUEST, payload: result });
 		const { userLogin: { userInfo } } = getState();
-		const { data } = await axios.put(
-			'/api/orders/glow/' + order._id,
-			{
+		let d = {};
+		if (!order.isManufactured && is_action === 'isPackaged') {
+			d = {
+				...order,
+				[is_action]: result,
+				[action_at]: result ? Date.now() : '',
+				isManufactured: true,
+				manufacturedAt: result ? Date.now() : ''
+			};
+		} else {
+			d = {
 				...order,
 				[is_action]: result,
 				[action_at]: result ? Date.now() : ''
-			},
-			{
-				headers: { Authorization: 'Bearer ' + userInfo.access_token }
-			}
-		);
+			};
+		}
+
+		const { data } = await axios.put('/api/orders/glow/' + order._id, d, {
+			headers: { Authorization: 'Bearer ' + userInfo.access_token }
+		});
 		console.log({ data });
 		dispatch({ type: ORDER_UPDATE_SUCCESS, payload: data });
 	} catch (error) {
