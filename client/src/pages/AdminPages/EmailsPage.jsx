@@ -113,6 +113,37 @@ const EmailsPage = (props) => {
 			<Helmet>
 				<title>Admin Emails | Glow LEDs</title>
 			</Helmet>
+			<Link to="/secure/glow/emails/announcement">
+				<button className="btn primary">Announcement</button>
+			</Link>
+			<Link to="/secure/glow/emails/order/60d4aae4726aa8002a5091a4/order/false">
+				<button className="btn primary">Order</button>
+			</Link>
+			<Link to="/secure/glow/emails/order_status/60d4aae4726aa8002a5091a4/reassured">
+				<button className="btn primary">Reassurance</button>
+			</Link>
+			<Link to="/secure/glow/emails/order_status/60d4aae4726aa8002a5091a4/Manufactured">
+				<button className="btn primary">Manufactured</button>
+			</Link>
+
+			<Link to="/secure/glow/emails/order_status/60d4aae4726aa8002a5091a4/Delivered">
+				<button className="btn primary">Delivered</button>
+			</Link>
+			<Link to="/secure/glow/emails/order/60d4aae4726aa8002a5091a4/refunded/false">
+				<button className="btn primary">Refunded</button>
+			</Link>
+			<Link to="/secure/glow/emails/invoice">
+				<button className="btn primary">Invoice</button>
+			</Link>
+			<Link to="/secure/glow/emails/feature/cosmo_gloving_502/feature/false">
+				<button className="btn primary">Feature</button>
+			</Link>
+			<Link to="/secure/glow/emails/affiliate/po/affiliate/false">
+				<button className="btn primary">Affiliate</button>
+			</Link>
+			<Link to="/secure/glow/editemail">
+				<button className="btn primary">Create Email</button>
+			</Link>
 			<div className="wrap jc-b">
 				<div className="ai-c h-25px mv-15px jc-c">
 					<div className="custom-select">
@@ -132,88 +163,6 @@ const EmailsPage = (props) => {
 						<button className="btn primary">{humanize(link)}</button>
 					</a>
 				</div>
-
-				{/* <a href="/api/templates/review" target="_blank">
-					<button className="btn primary">Review</button>
-				</a>
-				<a href="/api/templates/account_created" target="_blank">
-					<button className="btn primary">Account Created</button>
-				</a>
-				<a href="/api/templates/reset_password" target="_blank">
-					<button className="btn primary">Reset Password</button>
-				</a>
-				<a href="/api/templates/password_changed" target="_blank">
-					<button className="btn primary">Password Changed</button>
-				</a>
-				<a href="/api/templates/email_subscription" target="_blank">
-					<button className="btn primary">Email Subscription</button>
-				</a>
-				<a href="/api/templates/order" target="_blank">
-					<button className="btn primary">Order</button>
-				</a>
-				<a href="/api/templates/review" target="_blank">
-					<button className="btn primary">Review</button>
-				</a>
-				<a href="/api/templates/affiliate" target="_blank">
-					<button className="btn primary">Affiliate</button>
-				</a>
-				<a href="/api/templates/feature" target="_blank">
-					<button className="btn primary">Feature</button>
-				</a>
-				<a href="/api/templates/announcement" target="_blank">
-					<button className="btn primary">Announcement</button>
-				</a>
-				<a href="/api/templates/contact" target="_blank">
-					<button className="btn primary">Contact</button>
-				</a>
-				<a href="/api/templates/contact_confirmation" target="_blank">
-					<button className="btn primary">Contact Confirmation</button>
-				</a>
-				<a href="/api/templates/reset_password" target="_blank">
-					<button className="btn primary">Reset Password</button>
-				</a>
-				<a href="/api/templates/password_reset" target="_blank">
-					<button className="btn primary">Password Reset</button>
-				</a>
-				<a href="/api/templates/account_created" target="_blank">
-					<button className="btn primary">Account Created</button>
-				</a> */}
-				{/* <Link to="/secure/glow/emails/announcement">
-					<button className="btn primary">Announcement</button>
-				</Link> */}
-				{/* <Link to="/secure/glow/emails/order/60d4aae4726aa8002a5091a4/order/false">
-					<button className="btn primary">Order</button>
-				</Link>
-				<Link to="/secure/glow/emails/order_status/60d4aae4726aa8002a5091a4/reassured">
-					<button className="btn primary">Reassurance</button>
-				</Link>
-				<Link to="/secure/glow/emails/order_status/60d4aae4726aa8002a5091a4/Manufactured">
-					<button className="btn primary">Manufactured</button>
-				</Link>
-				<Link to="/secure/glow/emails/order_status/60d4aae4726aa8002a5091a4/Packaged">
-					<button className="btn primary">Packaged</button>
-				</Link>
-				<Link to="/secure/glow/emails/order_status/60d4aae4726aa8002a5091a4/Shipped">
-					<button className="btn primary">Shipped</button>
-				</Link>
-				<Link to="/secure/glow/emails/order_status/60d4aae4726aa8002a5091a4/Delivered">
-					<button className="btn primary">Delivered</button>
-				</Link>
-				<Link to="/secure/glow/emails/order/60d4aae4726aa8002a5091a4/refunded/false">
-					<button className="btn primary">Refunded</button>
-				</Link>
-				<Link to="/secure/glow/emails/invoice">
-					<button className="btn primary">Invoice</button>
-				</Link>
-				<Link to="/secure/glow/emails/feature/cosmo_gloving_502/feature/false">
-					<button className="btn primary">Feature</button>
-				</Link>
-				<Link to="/secure/glow/emails/affiliate/po/affiliate/false">
-					<button className="btn primary">Affiliate</button>
-				</Link> */}
-				<Link to="/secure/glow/editemail">
-					<button className="btn primary">Create Email</button>
-				</Link>
 			</div>
 			<div className="wrap jc-b">
 				{colors.map((color, index) => {

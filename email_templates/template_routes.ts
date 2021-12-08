@@ -18,7 +18,7 @@ import {
 import email_subscription from './pages/email_subscription';
 import express from 'express';
 import { Header, Footer } from './components';
-import { content_db, user_db } from '../db';
+import { content_db, email_db, user_db } from '../db';
 const router = express.Router();
 
 // App({header: Header({title: 'Glow LEDs Reset Password'}), footer: Footer()})
@@ -74,14 +74,13 @@ router.get('/feature', async (req: { body: any }, res: { send: (arg0: string) =>
 	res.send(App({ body: feature(body), title: 'Enjoy 10% off your next purchase!' }));
 });
 router.get('/announcement', async (req: { body: any }, res: { send: (arg0: string) => void }) => {
-	const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 });
-	const body = {
-		email: 'info.glowleds@gmail.com',
-		promo_code: 'xoteag',
-		categories: contents && contents[0].home_page.slideshow
-	};
+	const emails = await email_db.findAll_emails_db({ deleted: false }, { _id: -1 });
+	// console.log({ emails });
+	// const body = {
+	// 	content: emails[0]
+	// };
 
-	res.send(App({ body: announcement(body), title: 'Enjoy 10% off your next purchase!' }));
+	res.send(App({ body: announcement(emails[0]), title: emails[0].h1 }));
 });
 
 router.get(
