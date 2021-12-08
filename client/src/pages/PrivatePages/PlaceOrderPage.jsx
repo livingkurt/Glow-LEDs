@@ -872,7 +872,7 @@ const PlaceOrderPage = (props) => {
 						{userInfo &&
 						!userInfo.first_name &&
 						create_account && (
-							<li className="">
+							<li className="column">
 								<label className="fs-16px jc-c ta-c mb-12px" style={{ color: '#3dff3d' }}>
 									{passwords_complete}
 								</label>
