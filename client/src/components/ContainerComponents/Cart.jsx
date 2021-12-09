@@ -231,8 +231,8 @@ const Cart = (props) => {
 		) {
 			return (
 				<div className="p-1rem ta-c w-100per" style={{ border: '0px !important' }}>
-					<div>
-						<h2 className="">Recently Viewed Products</h2>
+					<div className="mv-2rem">
+						<label className="title_font fs-20px lh-20px">Recently Viewed Products</label>
 					</div>
 					<div className="jc-c">
 						<div className="jc-c wrap w-100per">
@@ -464,10 +464,10 @@ const Cart = (props) => {
 				className="column w-100per pos-fix add_to_cart ph-1rem br-20px"
 				style={{ bottom: cartItems.length === 0 ? '-10px' : '0px' }}
 			>
-				<h3 className="subtotal_h3">
+				<label className="fs-17px title_font mv-1rem">
 					Subtotal ( {cartItems && cartItems.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)} items ) : ${' '}
 					{determine_total(cartItems).toFixed(2)}
-				</h3>
+				</label>
 				<Link to="/checkout/cart" className="w-100per">
 					<button className="btn secondary w-100per mb-2rem" onClick={closeMenu}>
 						View Cart

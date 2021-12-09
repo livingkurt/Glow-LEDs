@@ -86,7 +86,7 @@ const CartPage = (props) => {
 
 				<div className="cart-action-container jc-c">
 					<div className="cart-action">
-						<h3 className="subtotal_h3">
+						<h3 className="fs-17px">
 							Subtotal ( {cartItems.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)} items ) : ${' '}
 							{determine_total(cartItems).toFixed(2)}
 						</h3>
