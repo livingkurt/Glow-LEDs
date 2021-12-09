@@ -287,7 +287,10 @@ export default {
 		}
 	},
 	occurrences: async (req: any, res: any) => {
-		const orders = await Order.find({ deleted: false }).populate('orderItems.secondary_product');
+		const orders = await Order.find({ deleted: false, isPaid: true })
+			.sort({ _id: -1 })
+			.populate('orderItems.secondary_product')
+			.limit(50);
 		const products: any = [];
 		const ids: any = [];
 		orders.forEach((order: any) => {
