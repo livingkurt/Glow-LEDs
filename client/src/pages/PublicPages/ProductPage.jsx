@@ -436,13 +436,39 @@ const ProductPage = (props) => {
 			finite_stock: product.finite_stock,
 			count_in_stock: product.count_in_stock
 		};
-		dispatch(addToCart(cart_item));
+		if (preorder) {
+			const confirm = window.confirm(
+				'This product is not in stock. You are Preordering this Product and it will not ship within the usual time. It is best to preorder product with nothing else in cart so we can ship you your in stock products without needing more shipping'
+			);
+			if (confirm) {
+				dispatch(addToCart(cart_item));
+			}
+			return confirm;
+		} else {
+			dispatch(addToCart(cart_item));
+		}
 		// if (userInfo) {
 		// 	dispatch(saveCart(cart_item));
 		// }
 
 		open_cart();
 	};
+
+	// export const decide_warning = (preorder) => {
+	// 	if (new Date() > new Date(date_1) && new Date() < new Date(date_2)) {
+	// 		const confirm = window.confirm(
+	// 			`Glow LEDs will be out of office from ${format_date(date_1)} - ${format_date(
+	// 				date_2
+	// 			)}. \n\nYou may still place orders in this time, but orders will not be shipped until after ${format_date(
+	// 				date_2
+	// 			)} \n\nThank you so much for your support! 💙`
+	// 		);
+	// 		console.log({ confirm });
+	// 		return confirm;
+	// 	} else {
+	// 		return true;
+	// 	}
+	// };
 
 	const update_color = (e) => {
 		const option = JSON.parse(e.target.value);
