@@ -616,6 +616,7 @@ export const state_names = [
 ];
 
 export const categories = [
+	'gloves',
 	'accessories',
 	'decals',
 	'diffuser_caps',
@@ -626,6 +627,8 @@ export const categories = [
 	'glowskins'
 ];
 export const subcategories = [
+	'whites',
+	'refresh',
 	'battery_storage',
 	'batteries',
 	'stickers',

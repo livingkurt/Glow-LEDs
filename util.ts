@@ -359,20 +359,19 @@ export const determine_sponsor_code_tier = (code_usage: number) => {
 };
 
 export const categories = [
+	'gloves',
 	'accessories',
-	'casings',
 	'decals',
 	'diffuser_caps',
 	'diffusers',
 	'exo_diffusers',
-	'gift_card',
 	'glow_casings',
 	'glow_strings',
-	'glowskins',
-	'mega_diffuser_caps',
-	'options'
+	'glowskins'
 ];
 export const subcategories = [
+	'whites',
+	'refresh',
 	'battery_storage',
 	'batteries',
 	'stickers',
@@ -403,7 +402,6 @@ export const subcategories = [
 	'alt_novaskins',
 	'symbols',
 	'emoji',
-	'mega_diffuser_adapters',
 	'custom',
 	'colors',
 	'sizes',

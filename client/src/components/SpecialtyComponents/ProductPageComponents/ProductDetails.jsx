@@ -1,14 +1,32 @@
 // React
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import Overflow from 'react-overflow-indicator';
 import { Link, useHistory } from 'react-router-dom';
 import 'react-tabs/style/react-tabs.css';
 import { ReadMore, Reviews } from '..';
 import { humanize, toCapitalize } from '../../../utils/helper_functions';
+import useWindowDimensions from '../../Hooks/windowDimensions';
 
 const ProductDetails = ({ product, manuals, description, included_items, pathname }) => {
 	const [ canScroll, setCanScroll ] = useState(false);
+	const { width } = useWindowDimensions();
+	const [ sizing, set_sizing ] = useState([]);
+
+	useEffect(
+		() => {
+			const sizes = [
+				{ size: width > 500 ? 'Small' : 'S', hand_length: '5.5 - 6.5', hand_width: '2.9 - 3.2' },
+				{ size: width > 500 ? 'Medium' : 'M', hand_length: '6.5 - 7', hand_width: '3.2 - 3.5' },
+				{ size: width > 500 ? 'Large' : 'L', hand_length: '7 - 7.5', hand_width: '3.5 - 3.7' },
+				{ size: width > 500 ? 'X-Large' : 'XL', hand_length: '7.5 - 8', hand_width: '3.7 - 4' }
+			];
+			set_sizing(sizes);
+			return () => {};
+		},
+		[ width ]
+	);
+
 	return (
 		<div>
 			<Tabs>
@@ -16,6 +34,10 @@ const ProductDetails = ({ product, manuals, description, included_items, pathnam
 					<Overflow.Content>
 						<TabList>
 							<Tab style={{ padding: '10px', borderRadius: '10px 10px 0px 0px' }}>Description</Tab>
+							{(product.name === 'Supremes' ||
+								product.name === 'Refresh Pack (6 Supreme Pairs + 120 Batteries)') && (
+								<Tab style={{ padding: '10px', borderRadius: '10px 10px 0px 0px' }}>Sizing</Tab>
+							)}
 							<Tab style={{ padding: '10px', borderRadius: '10px 10px 0px 0px' }}>Included Items</Tab>
 							<Tab style={{ padding: '10px', borderRadius: '10px 10px 0px 0px' }}>Product Dimensions</Tab>
 							{product.chips &&
@@ -44,6 +66,50 @@ const ProductDetails = ({ product, manuals, description, included_items, pathnam
 					<ReadMore width={1000} className="paragraph_font" pre={true} length={100}>
 						{description}
 					</ReadMore>
+				</TabPanel>
+				<TabPanel style={{ borderRadius: '0px 10px 10px 10px' }}>
+					<div className="order-list responsive_table">
+						<h2 className="ta-c w-100per jc-c">Supreme Sizing</h2>
+						<p className="w-100per jc-c">
+							{' '}
+							<label className="jc-c title_font mr-10px">Hand Length:</label>{' '}
+							<label>Measures from Base of Palm to Tip of the Middle Finger</label>
+						</p>
+						<p className="w-100per jc-c">
+							<label className=" jc-c title_font mr-10px">Hand Width:</label>{' '}
+							<label>Across the middle of the palm not including Thumb</label>
+						</p>
+						<p className="w-100per jc-c">
+							<label className=" jc-c title_font mr-10px">Note:</label>{' '}
+							<label>All Measurments are in inches</label>
+						</p>
+						<table className="styled-table">
+							<thead>
+								<tr>
+									<th>Size</th>
+									<th>Hand Length</th>
+									<th>Hand Width</th>
+								</tr>
+							</thead>
+							<tbody>
+								{sizing.map((size) => (
+									<tr
+										style={{
+											backgroundColor: '#d1d1d1',
+											fontSize: '16px',
+											height: '50px',
+											color: '#4d5061'
+										}}
+										className=""
+									>
+										<th style={{ width: '10px' }}>{size.size}</th>
+										<th style={{ width: '10px' }}>{size.hand_length}</th>
+										<th style={{ width: '10px' }}>{size.hand_width}</th>
+									</tr>
+								))}
+							</tbody>
+						</table>
+					</div>
 				</TabPanel>
 				<TabPanel>
 					<div className="mt-1rem">
