@@ -438,7 +438,7 @@ const ProductPage = (props) => {
 		};
 		if (preorder) {
 			const confirm = window.confirm(
-				`${name} are out in stock.\n\nBy clicking ok you agree that you are preordering ${name} which will not ship within the usual time.\n\nIt is HIGHLY RECOMMENDED that you order ${name} with nothing else in your cart so we can ship you your in stock products without needing to wait for your out of stock products.\n\nThank you for your support!\n\nYou will be notified when your ${name} are restocked `
+				`${name} are out of stock in your selected size.\n\nBy clicking OK you agree that you are preordering ${name} which will not ship within the usual time.\n\nIt is HIGHLY RECOMMENDED that you order ${name} separately from any in-stock items so we can ship you your in-stock products without needing to wait for your out-of-stock products.\n\nThank you for your support!\n\nYou will be notified when ${name} are restocked. We anticipate they will be restocked by the end of January.`
 			);
 			if (confirm) {
 				dispatch(addToCart(cart_item));
@@ -556,6 +556,11 @@ const ProductPage = (props) => {
 		if (option.count_in_stock) {
 			set_count_in_stock(option.count_in_stock);
 		}
+		if (option.count_in_stock === 0) {
+			set_preorder(true);
+		} else {
+			set_preorder(false);
+		}
 
 		if (option.subcategory !== 'gloves') {
 			if (option.images && option.images[0]) {
@@ -601,11 +606,7 @@ const ProductPage = (props) => {
 		if (secondary.count_in_stock) {
 			set_count_in_stock(secondary.count_in_stock);
 		}
-		if (secondary.count_in_stock === 0) {
-			set_preorder(true);
-		} else {
-			set_preorder(false);
-		}
+
 		console.log({ secondary });
 		// set_color_products(secondary.color_products);
 		// set_secondary_color_products(secondary.secondary_color_products);
