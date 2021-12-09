@@ -1,3 +1,4 @@
+require('newrelic');
 export {};
 import sslRedirect from 'heroku-ssl-redirect';
 import express from 'express';
@@ -10,9 +11,20 @@ const passport = require('passport');
 const compression = require('compression');
 const expressAttack = require('express-attack');
 const requestIp = require('request-ip');
+const scout = require('@scout_apm/scout-apm');
 
 import routes from './routes';
 import template_routes from './email_templates/template_routes';
+
+// // The "main" function
+// async function start() {
+// 	// Trigger the download and installation of the core-agent
+// 	await scout.install({
+// 		allowShutdown: true, // allow shutting down spawned scout-agent processes from this program
+// 		monitor: true, // enable monitoring
+// 		name: '',
+// 		key: ''
+// 	});
 
 // let Bugsnag = require('@bugsnag/js');
 // let BugsnagPluginExpress = require('@bugsnag/plugin-express');
@@ -43,7 +55,16 @@ mongoose
 	})
 	.catch((error: { reason: any }) => console.log(error.reason));
 
+// Initialize your express application
+
 const app = express();
+
+// Enable the app-wide scout middleware
+// app.use(scout.expressMiddleware());
+
+// Add other middleware and routes
+// app.use( ... )
+// app.get( ... )
 
 // app.configure(function() {
 // 	// app.use(express.bodyParser());
@@ -136,3 +157,11 @@ app.get('*', (request, response) => {
 app.listen(config.PORT, () => {
 	console.log('Server started at http://localhost:5000');
 });
+
+// Start express
+// 	app.start();
+// }
+
+// if (require.main === module) {
+// 	start();
+// }
