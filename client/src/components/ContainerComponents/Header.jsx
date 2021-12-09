@@ -243,7 +243,7 @@ const Header = (props) => {
 														</button>
 													</Link>
 													<hr className="w-95per m-0px" />
-													<Link to="/collections/all/products/category/gloves">
+													<Link to="/collections/all/products/category/whites">
 														<button className="btn nav w-100per ta-l">New Releases!</button>
 													</Link>
 													<Link to="/collections/all/products/category/best_sellers">
@@ -269,7 +269,7 @@ const Header = (props) => {
 														</button>
 													</Link>
 													<hr className="w-95per m-0px" />
-													<Link to="/collections/all/products/category/gloves">
+													<Link to="/collections/all/products/category/whites">
 														<button className="btn nav w-100per ta-l">Whites (New!)</button>
 													</Link>
 													<Link to="/collections/all/products/collection/nova_glow_casings">
@@ -544,6 +544,11 @@ const Header = (props) => {
 															<button className="btn nav w-100per ta-l">
 																Refresh Pack
 															</button>
+														</div>
+													</Link>
+													<Link to="/collections/all/products/supremes">
+														<div className="row">
+															<button className="btn nav w-100per ta-l">Supremes</button>
 														</div>
 													</Link>
 													{browser_check() !== 'safari' ? (

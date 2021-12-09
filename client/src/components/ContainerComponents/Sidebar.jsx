@@ -190,7 +190,7 @@ const Sidebar = (props) => {
 								</button>
 							</div>
 							<ul className="sidebar_dropdown_secondary_container" id="gloving_dropdown">
-								<Link to="/collections/all/products/category/gloves">
+								<Link to="/collections/all/products/category/whites">
 									<button className="sidebar-btn nested" onClick={closeMenu}>
 										Whites (New!)
 									</button>
@@ -447,6 +447,11 @@ const Sidebar = (props) => {
 									Refresh Pack
 								</button>
 							</Link>
+							<Link to="/collections/all/products/supremes">
+								<button className="sidebar-btn nested" onClick={closeMenu}>
+									Supremes
+								</button>
+							</Link>
 							{browser_check() !== 'safari' ? (
 								<Link to="/collections/all/products/glow_strings_v2_50_led_3_5m">
 									<button
@@ -484,7 +489,7 @@ const Sidebar = (props) => {
 								</button>
 							</Link>
 						</ul>
-						<Link to="/collections/all/products/category/gloves">
+						<Link to="/collections/all/products/category/whites">
 							<button className="sidebar-btn secondary" onClick={closeMenu}>
 								New Releases
 							</button>
