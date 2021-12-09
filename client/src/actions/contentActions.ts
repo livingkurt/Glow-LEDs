@@ -14,14 +14,10 @@ import {
 } from '../constants/contentConstants';
 import axios from 'axios';
 
-export const listContents = (category = '', search = '', sortOrder = '') => async (
-	dispatch: (arg0: { type: string; payload?: any }) => void
-) => {
+export const listContents = (limit = '') => async (dispatch: (arg0: { type: string; payload?: any }) => void) => {
 	try {
 		dispatch({ type: CONTENT_LIST_REQUEST });
-		const { data } = await axios.get(
-			'/api/contents?category=' + category + '&search=' + search + '&sortOrder=' + sortOrder.toLowerCase()
-		);
+		const { data } = await axios.get('/api/contents?limit=' + limit);
 		dispatch({ type: CONTENT_LIST_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });

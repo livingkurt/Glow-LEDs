@@ -182,7 +182,7 @@ export default {
 	},
 	send_order_emails_c: async (req: any, res: any) => {
 		console.log({ send_order_emails_c: req.body });
-		const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 });
+		const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 }, 0);
 
 		const mailOptions = {
 			from: process.env.DISPLAY_EMAIL,
@@ -206,7 +206,7 @@ export default {
 	},
 	send_order_status_emails_c: async (req: any, res: any) => {
 		console.log({ send_order_status_emails_c: req.body });
-		const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 });
+		const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 }, 0);
 
 		const mailOptions = {
 			from: process.env.DISPLAY_EMAIL,
@@ -230,7 +230,7 @@ export default {
 	},
 	send_review_emails_c: async (req: any, res: any) => {
 		console.log({ send_order_status_emails_c: req.body });
-		const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 });
+		const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 }, 0);
 
 		const mailOptions = {
 			from: process.env.DISPLAY_EMAIL,
@@ -254,7 +254,7 @@ export default {
 	},
 	send_affiliate_emails_c: async (req: any, res: any) => {
 		console.log({ send_order_status_emails_c: req.body });
-		const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 });
+		const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 }, 0);
 
 		const mailOptions = {
 			from: process.env.DISPLAY_EMAIL,
@@ -278,7 +278,7 @@ export default {
 	},
 	send_feature_emails_c: async (req: any, res: any) => {
 		console.log({ send_order_status_emails_c: req.body });
-		const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 });
+		const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 }, 0);
 
 		const mailOptions = {
 			from: process.env.DISPLAY_EMAIL,
@@ -302,7 +302,7 @@ export default {
 	},
 	send_announcement_emails_c: async (req: any, res: any) => {
 		console.log({ send_announcement_emails_c: req.body });
-		const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 });
+		const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 }, 0);
 
 		const mailOptions = {
 			from: process.env.DISPLAY_EMAIL,
@@ -326,7 +326,7 @@ export default {
 	},
 	send_email_subscription_emails_c: async (req: any, res: any) => {
 		console.log({ send_email_subscription_emails_c: req.body });
-		const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 });
+		const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 }, 0);
 
 		const mailOptions = {
 			from: process.env.DISPLAY_EMAIL,
@@ -370,7 +370,7 @@ export default {
 	},
 	send_account_created_emails_c: async (req: any, res: any) => {
 		console.log({ send_email_subscription_emails_c: req.body });
-		const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 });
+		const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 }, 0);
 
 		const mailOptions = {
 			from: process.env.DISPLAY_EMAIL,

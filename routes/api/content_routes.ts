@@ -9,6 +9,7 @@ router
 	.post(isAuth, isAdmin, content_controller.create_contents_c);
 
 router.route('/events').get(content_controller.findAllEvents_contents_c);
+router.route('/display').get(content_controller.findDisplay_contents_c);
 
 router
 	.route('/:id')

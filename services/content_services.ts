@@ -5,7 +5,7 @@ import { parse } from 'node-html-parser';
 export default {
 	findAll_contents_s: async (query: any) => {
 		try {
-			const category = query.category ? { category: query.category } : {};
+			const limit = query.limit ? { limit: query.limit } : {};
 			const search = query.search
 				? {
 						p: {
@@ -16,8 +16,19 @@ export default {
 				: {};
 
 			const sortOrder = { _id: -1 };
-			const filter = { deleted: false, ...category, ...search };
-			return await content_db.findAll_contents_db(filter, sortOrder);
+			const filter = { deleted: false };
+			return await content_db.findAll_contents_db(filter, sortOrder, limit);
+		} catch (error) {
+			console.log({ findAll_contents_s_error: error });
+			throw new Error(error.message);
+		}
+	},
+	findDisplay_contents_s: async (query: any) => {
+		try {
+			const sortOrder = { _id: -1 };
+			const limit = 1;
+			const filter = { deleted: false, active: true };
+			return await content_db.findAll_contents_db(filter, sortOrder, limit);
 		} catch (error) {
 			console.log({ findAll_contents_s_error: error });
 			throw new Error(error.message);

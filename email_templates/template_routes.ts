@@ -24,7 +24,7 @@ const router = express.Router();
 // App({header: Header({title: 'Glow LEDs Reset Password'}), footer: Footer()})
 
 router.get('/email_subscription', async (req: { body: any }, res: { send: (arg0: string) => void }) => {
-	const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 });
+	const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 }, 0);
 	const body = {
 		email: 'info.glowleds@gmail.com',
 		promo_code: 'xoteag',
@@ -34,7 +34,7 @@ router.get('/email_subscription', async (req: { body: any }, res: { send: (arg0:
 	res.send(App({ body: email_subscription(body), title: 'Enjoy 10% off your next purchase!' }));
 });
 router.get('/order', async (req: { body: any }, res: { send: (arg0: string) => void }) => {
-	const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 });
+	const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 }, 0);
 	const body = {
 		email: 'info.glowleds@gmail.com',
 		promo_code: 'xoteag',
@@ -44,7 +44,7 @@ router.get('/order', async (req: { body: any }, res: { send: (arg0: string) => v
 	res.send(App({ body: order(body), title: 'Enjoy 10% off your next purchase!' }));
 });
 router.get('/review', async (req: { body: any }, res: { send: (arg0: string) => void }) => {
-	const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 });
+	const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 }, 0);
 	const body = {
 		email: 'info.glowleds@gmail.com',
 		promo_code: 'xoteag',
@@ -54,7 +54,7 @@ router.get('/review', async (req: { body: any }, res: { send: (arg0: string) => 
 	res.send(App({ body: review(body), title: 'Enjoy 10% off your next purchase!' }));
 });
 router.get('/affiliate', async (req: { body: any }, res: { send: (arg0: string) => void }) => {
-	const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 });
+	const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 }, 0);
 	const body = {
 		email: 'info.glowleds@gmail.com',
 		promo_code: 'xoteag',
@@ -64,7 +64,7 @@ router.get('/affiliate', async (req: { body: any }, res: { send: (arg0: string) 
 	res.send(App({ body: affiliate(body), title: 'Enjoy 10% off your next purchase!' }));
 });
 router.get('/feature', async (req: { body: any }, res: { send: (arg0: string) => void }) => {
-	const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 });
+	const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 }, 0);
 	const body = {
 		email: 'info.glowleds@gmail.com',
 		promo_code: 'xoteag',
@@ -144,7 +144,7 @@ router.get('/password_reset', async (req: { body: any }, res: { send: (arg0: str
 
 router.get('/account_created', async (req: { body: any }, res: { send: (arg0: string) => void }) => {
 	const user = await user_db.findById_users_db('5f2d7c0e9005a57059801ce8');
-	const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 });
+	const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 }, 0);
 	const body = {
 		user,
 		categories: contents && contents[0].home_page.slideshow

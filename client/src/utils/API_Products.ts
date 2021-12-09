@@ -104,6 +104,10 @@ const product_routes = {
 		// console.log({ not_paid_email: array });
 		return axios.get('/api/products/get_shown');
 	},
+	get_display_content: () => {
+		// console.log({ not_paid_email: array });
+		return axios.get('/api/contents/display');
+	},
 
 	// get_product_pictures: (category: string) => {
 	// 	return axios.get('/api/products/category/' + category);

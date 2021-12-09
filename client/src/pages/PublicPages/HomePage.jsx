@@ -60,33 +60,27 @@ const HomePage = (props) => {
 
 	const contentList = useSelector((state) => state.contentList);
 	const { contents } = contentList;
+
 	const featureList = useSelector((state) => state.featureList);
 	const { features } = featureList;
 
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch(listContents());
+		dispatch(listContents(3));
 		dispatch(listFeatures());
 		get_all_products();
+		get_display_content();
 		return () => {};
 	}, []);
-	useEffect(
-		() => {
-			if (contents) {
-				if (contents[0]) {
-					if (contents[0].home_page && contents[0].home_page.slideshow) {
-						console.log({ slideshow: contents[0].home_page.slideshow });
-						set_slideshow(contents[0].home_page.slideshow);
-					}
-				}
-			}
 
-			return () => {};
-		},
-		[ contents ]
-	);
-
+	const get_display_content = async () => {
+		const { data } = await API_Products.get_display_content();
+		console.log({ data });
+		if (data) {
+			set_slideshow(data[0].home_page.slideshow);
+		}
+	};
 	const get_all_products = async () => {
 		set_loading(true);
 		const { data } = await API_Products.get_all_products();
