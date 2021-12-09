@@ -363,8 +363,8 @@ export const determine_product_name = (item, show_qty, date) => {
 					{item.size !== 0 && ' - ' + item.size} {item.secondary_color && item.secondary_color + ' Cape'}{' '}
 				</div>
 			);
-		} else if (item.category === 'gloves') {
-			if (item.subcategory === 'whites') {
+		} else if (item.category === 'whites') {
+			if (item.subcategory === 'singles') {
 				return (
 					<div>
 						{show_qty && item.qty > 1 && item.qty + 'x'} {item.color && item.color + ' '} {item.name}{' '}
