@@ -10,7 +10,7 @@ import { API_Products } from '../../utils';
 import { MenuItemD } from '../DesktopComponents';
 import { MenuItemM } from '../MobileComponents';
 import { LazyImage, Loading } from '../UtilityComponents';
-import { determine_total, format_date, humanize, decide_warning } from '../../utils/helper_functions';
+import { determine_total, format_date, humanize, decide_warning, shuffle } from '../../utils/helper_functions';
 import useWindowDimensions from '../Hooks/windowDimensions';
 
 const Cart = (props) => {
@@ -47,9 +47,27 @@ const Cart = (props) => {
 	};
 	const dispatch = useDispatch();
 
-	// const [ first_name, set_first_name ] = useState('');
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
+
+	const contentList = useSelector((state) => state.contentList);
+	const { loading, contents, error } = contentList;
+
+	useEffect(
+		() => {
+			if (contents) {
+				if (contents[0]) {
+					if (contents[0].home_page && contents[0].home_page.slideshow) {
+						console.log({ slideshow: contents[0].home_page.slideshow });
+						set_category_items(contents[0].home_page.slideshow);
+					}
+				}
+			}
+
+			return () => {};
+		},
+		[ contents ]
+	);
 
 	const cart = useSelector((state) => state.cart);
 
@@ -75,36 +93,6 @@ const Cart = (props) => {
 			}
 			closeMenu();
 		}
-	};
-
-	useEffect(() => {
-		// console.log({ isMobile: mobile_check() });
-
-		get_category_occurrences();
-		return () => {};
-	}, []);
-
-	const get_category_occurrences = async () => {
-		set_loading_products(true);
-		console.log('Hello');
-		const { data } = await API_Products.get_category_occurrences();
-		console.log({ data });
-		set_loading_products(false);
-		const top_4_categories = data.slice(0, 5);
-		console.log({ top_4_categories });
-		set_loading_pictures(true);
-		const top_4 = await Promise.all(
-			top_4_categories
-				.filter((category) => category.category !== 'frosted_diffusers')
-				.map(async (category) => await API_Products.get_product_pictures(category.category))
-		);
-		set_loading_pictures(false);
-		console.log({ top_4 });
-		const top_4_products = top_4.map((item) => item.data.products[item.data.products.length - 1]);
-		// const top_4_products = top_4.map((item) => item.products.data[item.data.length - 1]);
-
-		console.log({ top_4_products });
-		set_category_items(top_4_products);
 	};
 
 	const { width, height } = useWindowDimensions();
@@ -142,31 +130,27 @@ const Cart = (props) => {
 				<div className="jc-c">
 					<div className="jc-c wrap">
 						{category_items &&
-							category_items.slice(0, 4).map((item, index) => {
+							shuffle(category_items).slice(0, 4).map((item, index) => {
 								return (
 									<div
 										className={`product p-${determine_picture_padding()} m-5px jc-c`}
 										style={{ height: 'unset' }}
 										key={index}
 									>
-										{item.category && (
-											<Link
-												to={`/collections/all/products/category/${item.category}`}
-												onClick={closeMenu}
-												className="column jc-c ta-c"
-											>
+										{item.label && (
+											<Link to={item.label} onClick={closeMenu} className="column jc-c ta-c">
 												<label className="mt-0px fs-14px title_font mb-10px">
 													{' '}
-													{humanize(item.category)}
+													{humanize(item.label)}
 												</label>
 												<div
 													className={`w-${determine_picture_size()} h-${determine_picture_size()}`}
 												>
 													{item &&
-													item.images && (
+													item.image && (
 														<LazyImage
 															className=" h-auto br-20px"
-															alt={item.category}
+															alt={item.label}
 															title="Product Image"
 															size={{
 																height: `${determine_picture_size()}`,
@@ -174,7 +158,7 @@ const Cart = (props) => {
 																objectFit: 'cover'
 															}}
 															effect="blur"
-															src={item.images[0]}
+															src={item.image}
 														/>
 													)}
 												</div>
@@ -188,6 +172,7 @@ const Cart = (props) => {
 			</div>
 		);
 	};
+
 	const recently_viewed_products = JSON.parse(sessionStorage.getItem('recently_viewed'))
 		? JSON.parse(sessionStorage.getItem('recently_viewed')).slice(0, 2)
 		: [];

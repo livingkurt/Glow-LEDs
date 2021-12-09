@@ -149,7 +149,7 @@ const ProductOptions = ({
 				)}
 			</li>
 			<li className="mv-1rem ai-c">
-				<h3 className="mv-0px mr-5px ">Status:</h3>{' '}
+				<label className="mv-0px mr-10px title_font">Status:</label>{' '}
 				<label>{count_in_stock > 0 ? 'In Stock' : 'Out of Stock'}</label>
 			</li>
 			{product.secondary_product_group &&
@@ -157,9 +157,9 @@ const ProductOptions = ({
 			product.secondary_products.length > 0 && (
 				<li>
 					<div className={`ai-c h-25px mb-25px ${width < 1150 ? 'jc-b' : ''}`}>
-						<h3 className="mv-0px mr-5px w-100per">
+						<label className="mv-0px mr-10px title_font">
 							{product.secondary_group_name ? product.secondary_group_name : 'Design'}: {' '}
-						</h3>
+						</label>
 						<div className="custom-select">
 							<select
 								className="qty_select_dropdown"
@@ -191,7 +191,9 @@ const ProductOptions = ({
 			color_products.length > 0 && (
 				<li>
 					<div className={`ai-c h-25px mb-25px ${width < 1150 ? 'jc-b' : ''}`}>
-						<h3 className="mv-0px ">{product.color_group_name ? product.color_group_name : 'Color'}: </h3>
+						<label className="mv-0px mr-10px title_font">
+							{product.color_group_name ? product.color_group_name : 'Color'}:{' '}
+						</label>
 						<div className="ai-c">
 							{color_code && (
 								<canvas
@@ -224,13 +226,13 @@ const ProductOptions = ({
 			secondary_color_products.length > 0 && (
 				<li>
 					<div className={`ai-c h-25px mb-25px ${width < 1150 ? 'jc-b' : ''}`}>
-						<h3 className="mv-0px ">
+						<label className="mv-0px mr-10px title_font">
 							{product.secondary_color_group_name ? (
 								product.secondary_color_group_name
 							) : (
 								'Secondary Color'
 							)}:{' '}
-						</h3>
+						</label>
 						<div className="ai-c">
 							{secondary_color_code && (
 								<canvas
@@ -290,7 +292,7 @@ const ProductOptions = ({
 			)}
 			<li>
 				<div className={`ai-c h-25px mb-20px ${width < 1150 ? 'jc-b' : ''}`}>
-					<h3 className="mv-0px mr-20px ">Qty:</h3>
+					<label className="mv-0px mr-10px title_font">Qty:</label>
 					<div className="custom-select">
 						<select
 							defaultValue={qty}

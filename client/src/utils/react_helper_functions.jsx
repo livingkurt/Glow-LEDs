@@ -363,6 +363,23 @@ export const determine_product_name = (item, show_qty, date) => {
 					{item.size !== 0 && ' - ' + item.size} {item.secondary_color && item.secondary_color + ' Cape'}{' '}
 				</div>
 			);
+		} else if (item.category === 'gloves') {
+			if (item.subcategory === 'whites') {
+				return (
+					<div>
+						{show_qty && item.qty > 1 && item.qty + 'x'} {item.color && item.color + ' '} {item.name}{' '}
+						{item.size !== '0' && ' - ' + item.size}{' '}
+					</div>
+				);
+			}
+			if (item.subcategory === 'refresh') {
+				return (
+					<div>
+						{show_qty && item.qty > 1 && item.qty + 'x'} {item.color && item.color + ' '} {item.name}{' '}
+						{item.size !== '0' && ' - ' + item.size} - {item.secondary_product_name.split(' ')[1].trim()}
+					</div>
+				);
+			}
 		} else if (item.category === 'accessories') {
 			if (item.subcategory === 'batteries') {
 				return (
@@ -372,14 +389,7 @@ export const determine_product_name = (item, show_qty, date) => {
 					</div>
 				);
 			}
-			if (item.subcategory === 'gloves') {
-				return (
-					<div>
-						{show_qty && item.qty > 1 && item.qty + 'x'} {item.color && item.color + ' '} {item.name}{' '}
-						{item.size !== '0' && ' - ' + item.size}{' '}
-					</div>
-				);
-			}
+
 			if (item.subcategory === 'chips') {
 				return (
 					<div>
@@ -491,6 +501,9 @@ export const determine_secondary_product_name = (name, category, subcategory) =>
 		}
 
 		if (subcategory === 'gloves' && name.includes('Bulk')) {
+			return name.split(' ')[1].trim();
+		}
+		if (subcategory === 'refresh' && name.includes('Bulk')) {
 			return name.split(' ')[1].trim();
 		}
 		if (name.split('-')[0].trim() === 'Supreme Gloves') {

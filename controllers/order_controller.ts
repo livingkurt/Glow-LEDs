@@ -324,8 +324,8 @@ export default {
 		console.log({ category_occurrences: 'Hello' });
 		const orders = await Order.find({ deleted: false, isPaid: true })
 			.sort({ _id: -1 })
-			.populate('orderItems.secondary_product');
-		// .limit(150);
+			.populate('orderItems.secondary_product')
+			.limit(50);
 		console.log({ orders });
 		const products: any = [];
 		const ids: any = [];
