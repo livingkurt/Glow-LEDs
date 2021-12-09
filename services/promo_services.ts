@@ -58,7 +58,7 @@ export default {
 		const private_code = {
 			promo_code: make_private_code(6),
 			admin_only: false,
-			affiliate_only: true,
+			affiliate_only: false,
 			single_use: true,
 			used_once: false,
 			excluded_categories: [],
