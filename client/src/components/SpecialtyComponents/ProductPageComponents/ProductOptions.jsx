@@ -6,6 +6,7 @@ import {
 	determine_secondary_product_name,
 	product_page_sale_price_switch
 } from '../../../utils/react_helper_functions';
+import useWindowDimensions from '../../Hooks/windowDimensions';
 
 const ProductOptions = ({
 	product,
@@ -33,6 +34,7 @@ const ProductOptions = ({
 	count_in_stock,
 	handleAddToCart
 }) => {
+	const { width } = useWindowDimensions();
 	return (
 		<ul>
 			<div className="jc-b ai-c">
@@ -58,7 +60,7 @@ const ProductOptions = ({
 			product.secondary_products &&
 			product.secondary_products.length > 0 && (
 				<li>
-					<div className="ai-c h-25px mb-25px">
+					<div className={`ai-c h-25px mb-25px ${width < 1119 ? 'jc-b' : ''}`}>
 						<h3 className="mv-0px mr-5px w-100per">
 							{product.secondary_group_name ? product.secondary_group_name : 'Design'}: {' '}
 						</h3>
@@ -92,7 +94,7 @@ const ProductOptions = ({
 			color_products &&
 			color_products.length > 0 && (
 				<li>
-					<div className="ai-c h-25px mb-25px">
+					<div className={`ai-c h-25px mb-25px ${width < 1119 ? 'jc-b' : ''}`}>
 						<h3 className="mv-0px ">{product.color_group_name ? product.color_group_name : 'Color'}: </h3>
 						<div className="ai-c">
 							{color_code && (
@@ -125,7 +127,7 @@ const ProductOptions = ({
 			secondary_color_products &&
 			secondary_color_products.length > 0 && (
 				<li>
-					<div className="ai-c h-25px mb-20px jc-b">
+					<div className={`ai-c h-25px mb-25px ${width < 1119 ? 'jc-b' : ''}`}>
 						<h3 className="mv-0px ">
 							{product.secondary_color_group_name ? (
 								product.secondary_color_group_name
@@ -197,7 +199,7 @@ const ProductOptions = ({
 			option_products &&
 			option_products.length > 0 && (
 				<li>
-					<div className="row">
+					<div className={`ai-c  ${width < 1119 ? 'jc-b' : ''}`}>
 						<h3 aria-label="sortOrder" htmlFor="sortOrder" className="select-label mr-1rem mt-1rem">
 							{product.option_group_name ? product.option_group_name : 'Size'}:
 						</h3>
@@ -226,7 +228,7 @@ const ProductOptions = ({
 			product.option_products &&
 			product.option_products.length > 0 && (
 				<li>
-					<div className="ai-c">
+					<div className={`ai-c  ${width < 1119 ? 'jc-b' : ''}`}>
 						<h3 className="mv-0px mr-5px w-7rem">Parts: </h3>
 						<div className="ai-c wrap">
 							{product.option_products.filter((option) => option.price === 2.99).map((option, index) => (
@@ -248,7 +250,7 @@ const ProductOptions = ({
 				</li>
 			)}
 			<li>
-				<div className="ai-c h-25px mb-20px ">
+				<div className={`ai-c h-25px mb-20px ${width < 1119 ? 'jc-b' : ''}`}>
 					<h3 className="mv-0px mr-20px ">Qty:</h3>
 					<div className="custom-select">
 						<select

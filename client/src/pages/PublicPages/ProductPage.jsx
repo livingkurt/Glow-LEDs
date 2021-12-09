@@ -763,6 +763,7 @@ const ProductPage = (props) => {
 								>
 									<ProductOptions
 										product={product}
+										width={width}
 										price={price}
 										sale_price={sale_price}
 										previous_price={previous_price}
