@@ -52,7 +52,6 @@ const CarouselItem = (props) => {
 				// secondary_product,
 				// secondary_product_name,
 				name: product.name,
-				// size: size ? size : option ? option.size || option.name : null,
 				size: size ? size : option.size,
 				color: color && color.color,
 				secondary_color: secondary_color && secondary_color.secondary_color,
@@ -150,7 +149,6 @@ const CarouselItem = (props) => {
 																			? 'secondary'
 																			: 'primary'}`}
 																	>
-																		{/* {option.size || option.name} */}
 																		{option.size}
 																	</button>
 																))}

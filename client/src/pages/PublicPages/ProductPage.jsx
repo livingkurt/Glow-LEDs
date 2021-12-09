@@ -26,6 +26,7 @@ import 'react-tabs/style/react-tabs.css';
 import { getUrlParameter, humanize, manuals, toCapitalize } from '../../utils/helper_functions';
 import Overflow from 'react-overflow-indicator';
 import RelatedProductsSlideshow from '../../components/SpecialtyComponents/RelatedProductsSlideshow';
+import { ProductFacts } from '../../components/SpecialtyComponents/ProductPageComponents';
 
 const ProductPage = (props) => {
 	const userLogin = useSelector((state) => state.userLogin);
@@ -45,12 +46,9 @@ const ProductPage = (props) => {
 	const [ size, set_size ] = useState();
 	const [ quantity, set_quantity ] = useState();
 	const [ count_in_stock, set_count_in_stock ] = useState();
-	const [ product_option, set_product_option ] = useState({});
 	const [ image, set_image ] = useState('');
 	const [ secondary_image, set_secondary_image ] = useState('');
 	const [ secondary_images, set_secondary_images ] = useState([]);
-
-	const [ added_to_cart_message, set_added_to_cart_message ] = useState('');
 
 	const [ dimensions, set_dimensions ] = useState({});
 
@@ -318,7 +316,6 @@ const ProductPage = (props) => {
 		// 	set_count_in_stock(option.count_in_stock);
 		// }
 
-		set_product_option(option);
 		set_dimensions({
 			weight_pounds: option.weight_pounds,
 			weight_ounces: option.weight_ounces,
@@ -427,7 +424,6 @@ const ProductPage = (props) => {
 		}
 
 		open_cart();
-		set_product_option({});
 	};
 
 	const update_color = (e) => {
@@ -540,7 +536,6 @@ const ProductPage = (props) => {
 		set_option_product(option._id);
 		set_option_product_name(option.name);
 		update_url(color, secondary_color, option.size);
-		// update_url(color, secondary_color, option.size || option.name, secondary_product_name);
 	};
 
 	const update_secondary = (e) => {
@@ -656,16 +651,6 @@ const ProductPage = (props) => {
 								}
 							/>
 						</Helmet>
-						<div>
-							{added_to_cart_message && (
-								<div className="jc-c column">
-									<div className="added_to_cart_message">
-										<h2 className="ta-c">{added_to_cart_message}</h2>
-										<p className="ta-c">Added to Cart!</p>
-									</div>
-								</div>
-							)}
-						</div>
 						{!secondary_image &&
 						width <= 819 && (
 							<div>
@@ -856,8 +841,8 @@ const ProductPage = (props) => {
 										'light'
 									)}
 								</div>
-
-								<div className="">
+								<ProductFacts facts={facts} />
+								{/* <div className="">
 									<div className="h-100per paragraph_font">
 										<ul style={{ marginLeft: '10px' }}>
 											{facts ? (
@@ -877,7 +862,7 @@ const ProductPage = (props) => {
 											)}
 										</ul>
 									</div>
-								</div>
+								</div> */}
 							</div>
 							<div
 								className="details-action desktop_product_view"
@@ -929,11 +914,6 @@ const ProductPage = (props) => {
 														value={JSON.stringify(secondary_product_object)}
 														defaultValue={JSON.stringify(secondary_product_object)}
 													>
-														{/* <option key={1} defaultValue="">
-															---Choose{' '}
-															{product.secondary_group_name &&
-																product.secondary_group_name}---
-														</option> */}
 														{product.secondary_products.map((secondary, index) => (
 															<option key={index} value={JSON.stringify(secondary)}>
 																{determine_secondary_product_name(
@@ -980,33 +960,6 @@ const ProductPage = (props) => {
 											</div>
 										</li>
 									)}
-									{/* {size !== '1 Sled' &&
-									product.color_product_group &&
-									color_products &&
-									color_products.length > 0 && (
-										<li>
-											<div className="ai-c h-25px mb-25px">
-												<label
-													aria-label="sortOrder"
-													htmlFor="sortOrder"
-													className="select-label mr-1rem"
-												>
-													{product.color_group_name ? product.color_group_name : 'Color'}:
-												</label>
-												<StyledDropdown
-													onChange={update_color}
-													items={color_products}
-													label={
-														product.color_product_group_name ? (
-															product.color_product_group_name
-														) : (
-															'Color'
-														)
-													}
-												/>
-											</div>
-										</li>
-									)} */}
 									{size !== '1 Skin' &&
 									product.secondary_color_product_group &&
 									secondary_color_products &&
@@ -1115,11 +1068,7 @@ const ProductPage = (props) => {
 																			? 'secondary'
 																			: 'primary'}`}
 																>
-																	{/* {console.log({ option })} */}
 																	{determine_option_product_name(option.size)}
-																	{/* {determine_option_product_name(
-																		option.size || option.name
-																	)} */}
 																</button>
 															))}
 														</div>
@@ -1376,7 +1325,7 @@ const ProductPage = (props) => {
 																		? 'secondary'
 																		: 'primary'}`}
 																>
-																	{option.size || option.name}
+																	{option.size}
 																</button>
 															))}
 													</div>
@@ -1415,9 +1364,6 @@ const ProductPage = (props) => {
 																	: option.default_option ? 'secondary' : 'primary'}`}
 															>
 																{determine_option_product_name(option.size)}
-																{/* {determine_option_product_name(
-																	option.size || option.name
-																)} */}
 															</button>
 														))}
 													</div>
@@ -1514,6 +1460,12 @@ const ProductPage = (props) => {
 									className="details-info mobile_product_view"
 									style={{ display: width <= 819 ? 'block' : 'none' }}
 								>
+									<ProductFacts facts={facts} />
+								</div>
+								{/* <div
+									className="details-info mobile_product_view"
+									style={{ display: width <= 819 ? 'block' : 'none' }}
+								>
 									<div className="mt-1rem">
 										<div className="h-100per paragraph_font">
 											<ul style={{ marginLeft: '10px' }}>
@@ -1535,47 +1487,9 @@ const ProductPage = (props) => {
 											</ul>
 										</div>
 									</div>
-								</div>
+								</div> */}
 							</div>
 						</div>
-						{/* {product.category === 'diffuser_caps' && (
-							<div>
-								<p className="w-100per ta-c fs-25px heading_font">Diffuser Caps V4</p>
-								<div className="ta-c jc-c">
-									<LazyImage
-										className="h-auto br-20px"
-										alt={product.category}
-										title="Product Image"
-										effect="blur"
-										src="https://thumbs2.imgbox.com/52/58/dl9PBtfO_t.jpeg"
-									/>
-								</div>
-								<pre className="  ">
-									🔷What is new with our Diffuser Caps V4 🔷 Diffuser Caps V4 includes a few new
-									features that we think really makes the Diffuser Cap experience even better 😱 V4
-									Features Include: 🔷Rounded Edged Design: In V3 the edge could be a little harsh on
-									sensitive finger tips, so in V4 we added a rounded edge around the design face for a
-									better grip and comfortability and to make it even easier to secure your Caps on
-									your gloves. 🙌 🔷Threading Overhaul: In V3 the threading came to a point as it
-									works with standard nuts and bolts.🔩 This design worked great but it wasn’t as
-									smooth as we prefer it to be. 🍦 We redesigned the threading in V4 to be rounded
-									instead of sharp which allows the cap to glide smoothly over the glove resulting in
-									a more secure fit 🤯 🔷Precision: One of the most important upgrades to the Diffuser
-									Caps V4 is the care we put into the creation of the caps.👨‍🍼. After much testing
-									and configuring, we slowed down our Diffuser Caps manufacturing process by 60% to
-									guarentee the precision of the cap design. Making for a more clean and consistent
-									experience 👌 We are super proud of these upgrades and we hope you will try them
-									out! 😊 We really believe in the Diffuser Caps! It’s an effect that you truly have
-									to see to believe. It does not translate as well on camera 📷 so get a pair and try
-									them out! You won’t be disappointed! 😌 Learn more about Diffuser Cap V4 here:
-									https://www.glow-leds.com/collections/all/products/category/diffuser_caps . . . . .
-									#gloving #glovingisnotacrime #supporttheflow #flowarts #lightshow #edm
-									#glovingislife #lightshows #glover #rave #flow #glovingisart #flowart #dance
-									#edmlifestyle #fingershow #art #love #diffusers #diffusercaps #dreamstate #festival
-									#ledlights #sale #edc #ledlights #ravelife #ravemob
-								</pre>
-							</div>
-						)} */}
 						<Tabs>
 							<Overflow onStateChange={(state) => setCanScroll(state.canScroll.right)}>
 								<Overflow.Content>
