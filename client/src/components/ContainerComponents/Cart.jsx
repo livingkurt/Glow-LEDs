@@ -94,12 +94,12 @@ const Cart = (props) => {
 	// 	}
 	// };
 
-	// useEffect(() => {
-	// 	// console.log({ isMobile: mobile_check() });
+	useEffect(() => {
+		// console.log({ isMobile: mobile_check() });
 
-	// 	get_category_occurrences();
-	// 	return () => {};
-	// }, []);
+		get_category_occurrences();
+		return () => {};
+	}, []);
 
 	const get_category_occurrences = async () => {
 		set_loading_products(true);
@@ -108,7 +108,7 @@ const Cart = (props) => {
 		console.log({ data });
 		set_loading_products(false);
 		const top_4_categories = data.slice(0, 5);
-		// console.log({ top_4_categories });
+		console.log({ top_4_categories });
 		set_loading_pictures(true);
 		const top_4 = await Promise.all(
 			top_4_categories
@@ -116,8 +116,9 @@ const Cart = (props) => {
 				.map(async (category) => await API_Products.get_product_pictures(category.category))
 		);
 		set_loading_pictures(false);
-		// console.log({ top_4 });
-		const top_4_products = top_4.map((item) => item.data[item.data.length - 1]);
+		console.log({ top_4 });
+		const top_4_products = top_4.map((item) => item.data.products[item.data.products.length - 1]);
+		// const top_4_products = top_4.map((item) => item.products.data[item.data.length - 1]);
 
 		console.log({ top_4_products });
 		set_category_items(top_4_products);
@@ -144,12 +145,22 @@ const Cart = (props) => {
 			return '140px';
 		} else if (width < 550 && width > 375) {
 			return '130px';
-		} else if (width < 375 && width > 350) {
+		} else if (width < 375 && width > 360) {
 			return '115px';
-		} else if (width < 350 && width > 325) {
-			return '100px';
+		} else if (width < 360 && width > 325) {
+			return '115px';
 		} else if (width < 325) {
 			return '100px';
+		}
+	};
+
+	const determine_picture_padding = () => {
+		if (width > 360) {
+			return '1rem';
+		} else if (width < 360 && width > 325) {
+			return '5px';
+		} else if (width < 325) {
+			return '2px';
 		}
 	};
 
@@ -157,20 +168,28 @@ const Cart = (props) => {
 		return (
 			<div className="p-1rem ta-c w-100per">
 				<div>
-					<h2 className="">Top Categories</h2>
+					<label className="fs-20px title_font">Top Categories</label>
 				</div>
 				<div className="jc-c">
 					<div className="jc-c wrap">
 						{category_items &&
-							category_items.map((item, index) => {
+							category_items.slice(0, 4).map((item, index) => {
 								return (
-									<div className="product m-5px jc-c" style={{ height: 'unset' }} key={index}>
+									<div
+										className={`product p-${determine_picture_padding()} m-5px jc-c`}
+										style={{ height: 'unset' }}
+										key={index}
+									>
 										{item.category && (
 											<Link
 												to={`/collections/all/products/category/${item.category}`}
 												onClick={closeMenu}
+												className="column jc-c ta-c"
 											>
-												<h3 className="mt-0px"> {humanize(item.category)}</h3>
+												<label className="mt-0px fs-14px title_font mb-10px">
+													{' '}
+													{humanize(item.category)}
+												</label>
 												<div
 													className={`w-${determine_picture_size()} h-${determine_picture_size()}`}
 												>
@@ -307,7 +326,7 @@ const Cart = (props) => {
 						<div className="p-1rem ta-c w-100per">
 							<div className="ta-c w-100per">Cart is Empty</div>
 							{recently_viewed_grid()}
-							{/* {top_categories_grid()} */}
+							{top_categories_grid()}
 						</div>
 					) : (
 						<div

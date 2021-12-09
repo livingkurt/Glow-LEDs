@@ -322,7 +322,10 @@ export default {
 	},
 	category_occurrences: async (req: any, res: any) => {
 		console.log({ category_occurrences: 'Hello' });
-		const orders = await Order.find({ deleted: false }).populate('orderItems.secondary_product');
+		const orders = await Order.find({ deleted: false })
+			.sort({ _id: -1 })
+			.populate('orderItems.secondary_product')
+			.limit(50);
 		console.log({ orders });
 		const products: any = [];
 		const ids: any = [];
