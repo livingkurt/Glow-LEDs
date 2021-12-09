@@ -26,7 +26,13 @@ import 'react-tabs/style/react-tabs.css';
 import { getUrlParameter, humanize, manuals, toCapitalize } from '../../utils/helper_functions';
 import Overflow from 'react-overflow-indicator';
 import RelatedProductsSlideshow from '../../components/SpecialtyComponents/RelatedProductsSlideshow';
-import { ProductFacts } from '../../components/SpecialtyComponents/ProductPageComponents';
+import {
+	ProductDetails,
+	ProductFacts,
+	ProductImages,
+	ProductOptions,
+	ProductSelection
+} from '../../components/SpecialtyComponents/ProductPageComponents';
 
 const ProductPage = (props) => {
 	const userLogin = useSelector((state) => state.userLogin);
@@ -564,8 +570,6 @@ const ProductPage = (props) => {
 		update_url(color, secondary_color, size || option_product_name, secondary.name);
 	};
 
-	const [ canScroll, setCanScroll ] = useState(false);
-
 	return (
 		<div className="">
 			<div className="p-1rem">
@@ -679,7 +683,12 @@ const ProductPage = (props) => {
 											{name}
 										</label>
 										<div className="details-image">
-											<div>
+											<ProductImages
+												secondary_image={secondary_image}
+												name={name}
+												image={image}
+											/>
+											{/* <div>
 												{!secondary_image && (
 													<img
 														id="expandedImg"
@@ -721,7 +730,7 @@ const ProductPage = (props) => {
 														/>
 													</div>
 												)}
-											</div>
+											</div> */}
 
 											{!secondary_image &&
 											width > 819 && (
@@ -743,7 +752,22 @@ const ProductPage = (props) => {
 								className="details-info desktop_product_view"
 								style={{ display: width > 819 ? 'block' : 'none' }}
 							>
-								<h1 className="product_title_side lh-50px fs-25px mv-0px">{name}</h1>
+								<ProductSelection
+									product={product}
+									secondary_product={secondary_product}
+									name={name}
+									secondary_product_name={secondary_product_name}
+									size={size}
+									color={color}
+									color_code={color_code}
+									secondary_color={secondary_color}
+									secondary_color_code={secondary_color_code}
+									price={price}
+									sale_price={sale_price}
+									previous_price={previous_price}
+									facts={facts}
+								/>
+								{/* <h1 className="product_title_side lh-50px fs-25px mv-0px">{name}</h1>
 
 								<div className="mb-15px mt-n9px">
 									<a href="#reviews">
@@ -769,7 +793,6 @@ const ProductPage = (props) => {
 											</label>
 										</div>
 									)}
-									{/* {console.log({ color, color_code })} */}
 									{size !== '1 Sled' &&
 									color && (
 										<div className="ai-c mv-20px jc-b w-100per">
@@ -816,18 +839,6 @@ const ProductPage = (props) => {
 											{size}
 										</div>
 									)}
-									{/* {product.category === 'accessories' && product.subcategory === 'clips' &&
-										<div className="ai-c  mv-20px">
-											<h3 className="mv-0px mr-5px">
-												{product.option_group_name ? product.option_group_name : 'Size'}:{' '}
-											</h3>
-											{determine_secondary_product_name(
-													secondary_product_name,
-													product.category,
-													product.subcategory
-												)}
-										</div>
-									} */}
 								</div>
 								<div className="row ai-c mv-20px">
 									<h3 className="mv-0px mr-5px">Price: </h3>
@@ -841,43 +852,41 @@ const ProductPage = (props) => {
 										'light'
 									)}
 								</div>
-								<ProductFacts facts={facts} />
-								{/* <div className="">
-									<div className="h-100per paragraph_font">
-										<ul style={{ marginLeft: '10px' }}>
-											{facts ? (
-												facts.split('\n').map((line, index) => {
-													return (
-														<li
-															key={index}
-															style={{ listStyleType: 'disc' }}
-															className="lh-2rem"
-														>
-															{line}
-														</li>
-													);
-												})
-											) : (
-												facts
-											)}
-										</ul>
-									</div>
-								</div> */}
+								<ProductFacts facts={facts} /> */}
 							</div>
 							<div
 								className="details-action desktop_product_view"
 								style={{ display: width > 819 ? 'block' : 'none' }}
 							>
-								<ul>
+								<ProductOptions
+									product={product}
+									price={price}
+									sale_price={sale_price}
+									previous_price={previous_price}
+									update_secondary={update_secondary}
+									secondary_product_object={secondary_product_object}
+									size={size}
+									color_products={color_products}
+									color_code={color_code}
+									update_color={update_color}
+									color_product_object={color_product_object}
+									secondary_color_products={secondary_color_products}
+									secondary_color_code={secondary_color_code}
+									update_secondary_color={update_secondary_color}
+									secondary_color_product_object={secondary_color_product_object}
+									option_products={option_products}
+									update_option={update_option}
+									option_product_object={option_product_object}
+									qty={qty}
+									setQty={setQty}
+									quantity={quantity}
+									secondary_product={secondary_product}
+									count_in_stock={count_in_stock}
+									handleAddToCart={handleAddToCart}
+								/>
+								{/* <ul>
 									<div className="row">
 										<label style={{ margin: 0, marginRight: 5 }}>Price: </label>
-										{/* {console.log({ price })} */}
-										{/* {sale_price_product_option_switch_product(
-											product,
-											product.product_options,
-											price
-										)} */}
-
 										{product_page_sale_price_switch(
 											price,
 											sale_price,
@@ -1139,7 +1148,7 @@ const ProductPage = (props) => {
 											)}
 										</li>
 									)}
-								</ul>
+								</ul> */}
 							</div>
 
 							{/* {width <= 819 && (
@@ -1159,7 +1168,33 @@ const ProductPage = (props) => {
 									className="details-action mobile_product_view"
 									style={{ display: width <= 819 ? 'block' : 'none' }}
 								>
-									<ul>
+									<ProductOptions
+										product={product}
+										price={price}
+										sale_price={sale_price}
+										previous_price={previous_price}
+										update_secondary={update_secondary}
+										secondary_product_object={secondary_product_object}
+										size={size}
+										color_products={color_products}
+										color_code={color_code}
+										update_color={update_color}
+										color_product_object={color_product_object}
+										secondary_color_products={secondary_color_products}
+										secondary_color_code={secondary_color_code}
+										update_secondary_color={update_secondary_color}
+										secondary_color_product_object={secondary_color_product_object}
+										option_products={option_products}
+										update_option={update_option}
+										option_product_object={option_product_object}
+										qty={qty}
+										setQty={setQty}
+										quantity={quantity}
+										secondary_product={secondary_product}
+										count_in_stock={count_in_stock}
+										handleAddToCart={handleAddToCart}
+									/>
+									{/* <ul>
 										<div className="jc-b ai-c">
 											<div className="ai-c mb-1rem">
 												<h3 className="mv-0px mr-5px">Price: </h3>
@@ -1298,40 +1333,6 @@ const ProductPage = (props) => {
 												</div>
 											</li>
 										)}
-										{/* {product.option_product_group &&
-										option_products &&
-										option_products.length > 0 && (
-											<li>
-												<div className="ai-c jc-b">
-													<h3 className="mv-0px mr-5px w-7rem">
-														{product.option_group_name ? (
-															product.option_group_name
-														) : (
-															'Size'
-														)}:{' '}
-													</h3>
-													<div className="ai-c wrap">
-														{option_products
-															.filter((option) => option.name !== '1 Sled')
-															.filter((option) => option.name !== '1 Skin')
-															.map((option, index) => (
-																<button
-																	key={index}
-																	selected={option.default_option}
-																	id={option.name}
-																	value={JSON.stringify(option)}
-																	onClick={(e) => update_option(e)}
-																	className={`packs fs-13px flex-s-0 min-w-40px mr-1rem mb-1rem btn ${option.default_option
-																		? 'secondary'
-																		: 'primary'}`}
-																>
-																	{option.size}
-																</button>
-															))}
-													</div>
-												</div>
-											</li>
-										)} */}
 										{product.option_product_group &&
 										option_products &&
 										option_products.length > 0 && (
@@ -1454,7 +1455,7 @@ const ProductPage = (props) => {
 												)}
 											</li>
 										)}
-									</ul>
+									</ul> */}
 								</div>
 								<div
 									className="details-info mobile_product_view"
@@ -1462,35 +1463,18 @@ const ProductPage = (props) => {
 								>
 									<ProductFacts facts={facts} />
 								</div>
-								{/* <div
-									className="details-info mobile_product_view"
-									style={{ display: width <= 819 ? 'block' : 'none' }}
-								>
-									<div className="mt-1rem">
-										<div className="h-100per paragraph_font">
-											<ul style={{ marginLeft: '10px' }}>
-												{facts ? (
-													facts.split('\n').map((line, index) => {
-														return (
-															<li
-																key={index}
-																style={{ listStyleType: 'disc' }}
-																className="lh-2rem"
-															>
-																{line}
-															</li>
-														);
-													})
-												) : (
-													facts
-												)}
-											</ul>
-										</div>
-									</div>
-								</div> */}
 							</div>
 						</div>
-						<Tabs>
+
+						<ProductDetails
+							product={product}
+							manuals={manuals}
+							description={description}
+							included_items={included_items}
+							pathname={props.match.params.pathname}
+						/>
+
+						{/* <Tabs>
 							<Overflow onStateChange={(state) => setCanScroll(state.canScroll.right)}>
 								<Overflow.Content>
 									<TabList>
@@ -1608,15 +1592,6 @@ const ProductPage = (props) => {
 							)}
 							<TabPanel>
 								<div className="content-margined">
-									{/* <h2
-										style={{
-											textAlign: 'center',
-											width: '100%',
-											justifyContent: 'center'
-										}}
-									>
-										Reviews
-									</h2> */}
 									{!product.reviews.length && (
 										<div style={{ marginBottom: '10px' }}>Be the First to Review this Product</div>
 									)}
@@ -1731,14 +1706,14 @@ const ProductPage = (props) => {
 								)}
 								<div className="p-1rem">
 									{product.category === 'glowskins' && (
-										// <Zoom>
+
 										<img
 											className="colored_caps_images"
 											src="https://images2.imgbox.com/d2/67/qjRp33SP_o.png"
 											alt="Glowskins Chip Compatibility"
 											title="Glowskins Chip Compatibility"
 										/>
-										// </Zoom>
+
 									)}
 
 									{(product.category === 'diffuser_caps' ||
@@ -1748,27 +1723,23 @@ const ProductPage = (props) => {
 											<div className="colored_caps">
 												<div className="colored_caps_item m-1rem">
 													<h3 className="colored_caps_images">Colored Caps</h3>
-													{/* <Zoom> */}
 													<img
 														className="colored_caps_images"
 														src="/images/optimized_images/product_page_images/img_2298_cropped_optimized.jpg"
 														alt="Colored Caps"
 														title="Colored Caps"
 													/>
-													{/* </Zoom> */}
 												</div>
 												<div className="colored_caps_item m-1rem">
 													<h3 className="colored_caps_images">
 														Colored Caps Under Blacklight
 													</h3>
-													{/* <Zoom> */}
 													<img
 														className="colored_caps_images"
 														src="/images/optimized_images/product_page_images/img_2331_cropped_optimized.jpg"
 														alt="Colored Caps Under Blacklight"
 														title="Colored Caps Under Blacklight"
 													/>
-													{/* </Zoom> */}
 												</div>
 											</div>
 										</div>
@@ -1779,25 +1750,21 @@ const ProductPage = (props) => {
 											<div className="colored_caps">
 												<div className="colored_caps_item m-1rem">
 													<h3 className="colored_caps_images">Colored Diffusers</h3>
-													{/* <Zoom> */}
 													<img
 														className="colored_caps_images"
 														src="https://thumbs2.imgbox.com/78/e1/DfIDjh1r_t.jpeg"
 														alt="Colored Caps"
 														title="Colored Caps"
 													/>
-													{/* </Zoom> */}
 												</div>
 												<div className="colored_caps_item m-1rem">
 													<h3 className="colored_caps_images">Colored Diffusers No Light</h3>
-													{/* <Zoom> */}
 													<img
 														className="colored_caps_images"
 														src="https://thumbs2.imgbox.com/b9/5c/9jcxAh23_t.jpeg"
 														alt="Colored Caps Under Blacklight"
 														title="Colored Caps Under Blacklight"
 													/>
-													{/* </Zoom> */}
 												</div>
 											</div>
 										</div>
@@ -1815,7 +1782,7 @@ const ProductPage = (props) => {
 									)}
 								</div>
 							</TabPanel>
-						</Tabs>
+						</Tabs> */}
 					</div>
 				)}
 			</Loading>
