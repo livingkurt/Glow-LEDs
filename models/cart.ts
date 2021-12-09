@@ -18,6 +18,7 @@ const cartItemsSchema = new mongoose.Schema(
 		category: { type: String, required: true },
 		pathname: { type: String },
 		size: { type: Number },
+		preorder: { type: Boolean },
 		sale_price: { type: Number },
 		sale_start_date: { type: Date },
 		sale_end_date: { type: Date },

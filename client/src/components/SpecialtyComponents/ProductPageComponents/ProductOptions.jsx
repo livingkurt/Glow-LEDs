@@ -1,5 +1,4 @@
-// React
-import React from 'react';
+import React, { useState } from 'react';
 import { Rating } from '..';
 import {
 	determine_option_product_name,
@@ -32,9 +31,99 @@ const ProductOptions = ({
 	quantity,
 	secondary_product,
 	count_in_stock,
-	handleAddToCart
+	handleAddToCart,
+	out_of_stock,
+	set_out_of_stock,
+	preorder,
+	set_preorder
 }) => {
 	const { width } = useWindowDimensions();
+
+	// const updateState = (newState) => setState(Object.assign({}, out_of_stock, newState));
+
+	// const func1 = useCallback((data) => set_out_of_stock(false), []);
+
+	const determine_option_styles = (option_product_object, option) => {
+		const classes = 'packs fs-13px flex-s-0 min-w-40px mr-1rem mb-1rem ';
+		if (option_product_object.hasOwnProperty('size')) {
+			if (option_product_object.size === option.size) {
+				return `${classes} ${determine_option_stock(option_product_object, 'btn secondary')}`;
+			} else {
+				return `${classes} ${determine_option_stock(option_product_object, 'btn primary')}`;
+			}
+		} else if (option.default_option) {
+			return `${classes} ${determine_option_stock(option_product_object, 'btn secondary')}`;
+		} else {
+			return `${classes} ${determine_option_stock(option_product_object, 'btn primary')}`;
+		}
+	};
+
+	const determine_option_stock = (option_product_object, class_name) => {
+		console.log({ determine_option_stock: option_product_object });
+		if (option_product_object.count_in_stock === 0) {
+			console.log({ option_product_object_count_in_stock: 'hello' });
+			set_out_of_stock(true);
+			return 'inactive';
+		} else {
+			set_out_of_stock(false);
+			return class_name;
+		}
+	};
+
+	const option_buttons = (option, index) => {
+		return (
+			<div>
+				<button
+					key={index}
+					selected={option.default_option}
+					id={option.size}
+					value={JSON.stringify(option)}
+					onClick={(e) => update_option(e)}
+					className={determine_option_styles(option, option_product_object)}
+				>
+					{determine_option_product_name(option.size)}
+				</button>
+			</div>
+		);
+	};
+
+	const determine_add_to_cart = (product, secondary_product, count_in_stock, out_of_stock, option_product_object) => {
+		// console.log({ out_of_stock });
+		console.log({ determine_add_to_cart: option_product_object });
+
+		if (product.name === 'Diffuser Caps + Adapters Starter Kit' && !secondary_product) {
+			return <div />;
+		} else if (product.name === 'Refresh Pack (6 Pairs + 120 Batteries)' && !secondary_product) {
+			return <div />;
+		} else {
+			return (
+				<li>
+					<button className="btn primary bob" onClick={handleAddToCart}>
+						{determine_preorder_add_to_cart(option_product_object, count_in_stock)}
+					</button>
+				</li>
+			);
+		}
+	};
+
+	const determine_preorder_add_to_cart = (option_product_object, count_in_stock) => {
+		if (option_product_object.count_in_stock > 0) {
+			if (count_in_stock > 0) {
+				return 'Add to Cart';
+			} else {
+				return 'Preorder';
+			}
+		} else if (count_in_stock > 0) {
+			if (option_product_object.count_in_stock > 0) {
+				return 'Add to Cart';
+			} else {
+				return 'Preorder';
+			}
+		} else {
+			return 'Preorder';
+		}
+	};
+
 	return (
 		<ul>
 			<div className="jc-b ai-c">
@@ -161,40 +250,6 @@ const ProductOptions = ({
 					</div>
 				</li>
 			)}
-			{/* {product.option_product_group &&
-		option_products &&
-		option_products.length > 0 && (
-			<li>
-				<div className="ai-c jc-b">
-					<h3 className="mv-0px mr-5px w-7rem">
-						{product.option_group_name ? (
-							product.option_group_name
-						) : (
-							'Size'
-						)}:{' '}
-					</h3>
-					<div className="ai-c wrap">
-						{option_products
-							.filter((option) => option.name !== '1 Sled')
-							.filter((option) => option.name !== '1 Skin')
-							.map((option, index) => (
-								<button
-									key={index}
-									selected={option.default_option}
-									id={option.name}
-									value={JSON.stringify(option)}
-									onClick={(e) => update_option(e)}
-									className={`packs fs-13px flex-s-0 min-w-40px mr-1rem mb-1rem btn ${option.default_option
-										? 'secondary'
-										: 'primary'}`}
-								>
-									{option.size}
-								</button>
-							))}
-					</div>
-				</div>
-			</li>
-		)} */}
 			{product.option_product_group &&
 			option_products &&
 			option_products.length > 0 && (
@@ -204,47 +259,24 @@ const ProductOptions = ({
 							{product.option_group_name ? product.option_group_name : 'Size'}:
 						</h3>
 						<div className="ai-c wrap">
-							{option_products.map((option, index) => (
-								<button
-									key={index}
-									id={option.size}
-									value={JSON.stringify(option)}
-									onClick={(e) => update_option(e)}
-									className={`packs fs-13px flex-s-0 min-w-40px mr-1rem mb-1rem btn ${option_product_object.hasOwnProperty(
-										'size'
-									)
-										? option_product_object.size === option.size ? 'secondary' : 'primary'
-										: option.default_option ? 'secondary' : 'primary'}`}
-								>
-									{determine_option_product_name(option.size)}
-								</button>
-							))}
+							{option_products
+								.filter((option) => option.price !== 2.99)
+								.map((option, index) => <div>{option_buttons(option, index)}</div>)}
 						</div>
 					</div>
 				</li>
 			)}
 			{(product.subcategory === 'novaskins' || product.subcategory === 'alt_novaskins') &&
 			product.option_product_group &&
-			product.option_products &&
-			product.option_products.length > 0 && (
+			option_products &&
+			option_products.length > 0 && (
 				<li>
 					<div className={`ai-c  ${width < 1119 ? 'jc-b' : ''}`}>
 						<h3 className="mv-0px mr-5px w-7rem">Parts: </h3>
 						<div className="ai-c wrap">
-							{product.option_products.filter((option) => option.price === 2.99).map((option, index) => (
-								<button
-									key={index}
-									selected={option.default_option}
-									id={option.size}
-									value={JSON.stringify(option)}
-									onClick={(e) => update_option(e)}
-									className={`packs fs-13px flex-s-0 min-w-40px mr-1rem mb-1rem btn ${option.default_option
-										? 'secondary'
-										: 'primary'}`}
-								>
-									{determine_option_product_name(option.size)}
-								</button>
-							))}
+							{option_products
+								.filter((option) => option.price === 2.99)
+								.map((option, index) => <div>{option_buttons(option, index)}</div>)}
 						</div>
 					</div>
 				</li>
@@ -272,35 +304,27 @@ const ProductOptions = ({
 
 				<h4 className="mb-0px mt-11px">Shipping Calculated at Checkout</h4>
 				<h4 className="mb-0px mt-11px" style={{ webkitTextStroke: '0.5px white' }}>
-					{(product.category === 'glow_strings' || product.name === 'coin_battery_holder') &&
-						'	This item ships in 6 - 10 business day.'}
+					{product.category === 'glow_strings' && '	This item ships in 6 - 10 business day.'}
 				</h4>
 
 				<h4 className="mb-0px mt-11px" style={{ webkitTextStroke: '0.5px white' }}>
 					{(product.category === 'exo_diffusers' ||
 						product.category === 'diffusers' ||
-						product.category === 'diffuser_caps' ||
-						product.category === 'exo_diffusers') &&
+						product.category === 'diffuser_caps') &&
 						'	This item ships in 2 - 5 business day.'}
+				</h4>
+				<h4 className="mb-0px mt-11px" style={{ webkitTextStroke: '0.5px white' }}>
+					{product.category === 'decals' && '	This item ships in 2 - 5 business day.'}
+				</h4>
+				<h4 className="mb-0px mt-11px" style={{ webkitTextStroke: '0.5px white' }}>
+					{product.subcategory === 'gloves' && '	This item ships in 2 - 3 business day.'}
 				</h4>
 				<h4 className="mb-0px mt-11px" style={{ webkitTextStroke: '0.5px white' }}>
 					{(product.category === 'glowskins' || product.category === 'glow_casings') &&
 						'	This item ships in 3 - 7 business day.'}
 				</h4>
 			</li>
-			{product.name === 'Diffuser Caps + Adapters Starter Kit' && !secondary_product ? (
-				<div />
-			) : (
-				<li>
-					{count_in_stock > 0 ? (
-						<button className="btn primary" onClick={handleAddToCart}>
-							Add to Cart
-						</button>
-					) : (
-						<button className="btn inactive">Out of Stock</button>
-					)}
-				</li>
-			)}
+			{determine_add_to_cart(product, secondary_product, count_in_stock, out_of_stock, option_product_object)}
 		</ul>
 	);
 };

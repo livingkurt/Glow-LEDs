@@ -138,12 +138,15 @@ export const product_page_sale_price_switch = (
 		}
 	}
 };
+const determine_preorder = (product) => {
+	if (product.preorder) {
+		return true;
+	} else {
+		return false;
+	}
+};
 export const sale_price_switch = (product, cartItem, background) => {
 	const color = cartItem ? { color: '#7e7e7e' } : { color: '#c5c5c5' };
-	// const color = cartItem ? { color: '#7e7e7e' } : { color: '#bf4444' };
-	// const color = cartItem
-	// 	? { color: '#7e7e7e' }
-	// 	: background === 'light' ? { color: '#283166' } : { color: '#757b99' };
 	if (product) {
 		if (
 			product.sale_price !== 0 &&
@@ -152,12 +155,13 @@ export const sale_price_switch = (product, cartItem, background) => {
 		) {
 			return (
 				<label className="fs-18px">
+					{determine_preorder(product) ? 'Preorder ' : ''}
 					<label>${product.sale_price ? product.sale_price.toFixed(2) : product.sale_price}</label>
 					<label> ({100 * (1 - product.sale_price / product.price).toFixed(2)}% Off) </label>
 					<label>
 						<del style={color}>
 							<label className="" style={color}>
-								{product.count_in_stock === 0 ? 'Preordered' : ''} ${product.price ? product.price.toFixed(2) : product.price}
+								${product.price ? product.price.toFixed(2) : product.price}
 							</label>
 						</del>{' '}
 					</label>
@@ -166,16 +170,13 @@ export const sale_price_switch = (product, cartItem, background) => {
 		} else if (product.hasOwnProperty('previous_price') && product.previous_price) {
 			return (
 				<label className="fs-18px">
+					{determine_preorder(product) ? 'Preorder ' : ''}
 					<label>${product.price ? product.price.toFixed(2) : product.price}</label>
 					<label> ({100 * (1 - product.price / product.previous_price).toFixed(2)}% Off) </label>
 					<label>
 						<del style={color}>
 							<label className="" style={color}>
-								{product.count_in_stock === 0 ? 'Preordered' : ''} ${product.previous_price ? (
-									product.previous_price.toFixed(2)
-								) : (
-									product.previous_price
-								)}
+								${product.previous_price ? product.previous_price.toFixed(2) : product.previous_price}
 							</label>
 						</del>{' '}
 					</label>
@@ -184,7 +185,7 @@ export const sale_price_switch = (product, cartItem, background) => {
 		} else {
 			return (
 				<label className="fs-18px">
-					{product.count_in_stock === 0 ? 'Preordered' : ''} ${product.price ? product.price.toFixed(2) : product.price}
+					{determine_preorder(product) ? 'Preorder ' : ''} ${product.price ? product.price.toFixed(2) : product.price}
 				</label>
 			);
 		}
@@ -192,12 +193,10 @@ export const sale_price_switch = (product, cartItem, background) => {
 };
 
 export const email_sale_price_switch = (item, color) => {
-	if (item.count_in_stock === 0) {
-		return <label className="fs-18px">Preorder</label>;
-	}
 	if (item.sale_price !== 0) {
 		return (
 			<label>
+				{determine_preorder(item) ? 'Preorder ' : ''}
 				{/* <label style={{ marginRight: '3px' }}>On Sale!</label> */}
 				<del style={{ color: '#a03131' }}>
 					<label style={{ color: color }}>${item.price && (item.price * item.qty).toFixed(2)}</label>
@@ -208,6 +207,7 @@ export const email_sale_price_switch = (item, color) => {
 	} else if (item.quantity === 0) {
 		return (
 			<label>
+				{determine_preorder(item) ? 'Preorder ' : ''}
 				<del style={{ color: '#a03131' }}>
 					<label style={{ color: color, marginLeft: '7px' }}>
 						${item.price && (item.price * item.qty).toFixed(2)}
@@ -217,7 +217,11 @@ export const email_sale_price_switch = (item, color) => {
 			</label>
 		);
 	} else {
-		return <label>${item.price && (item.price * item.qty).toFixed(2)}</label>;
+		return (
+			<label>
+				{determine_preorder(item) ? 'Preorder ' : ''} ${item.price && (item.price * item.qty).toFixed(2)}
+			</label>
+		);
 	}
 };
 

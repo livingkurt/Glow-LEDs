@@ -72,6 +72,7 @@ const ProductPage = (props) => {
 	const [ option_products, set_option_products ] = useState([]);
 	const [ secondary_product, set_secondary_product ] = useState(null);
 	const [ secondary_products, set_secondary_products ] = useState([]);
+	const [ preorder, set_preorder ] = useState(false);
 
 	const [ secondary_product_name, set_secondary_product_name ] = useState('');
 	const [ option_product_name, set_option_product_name ] = useState('');
@@ -139,6 +140,11 @@ const ProductPage = (props) => {
 			}
 			set_quantity(item.quantity);
 			set_count_in_stock(item.count_in_stock);
+			if (item.count_in_stock === 0) {
+				set_preorder(true);
+			} else {
+				set_preorder(false);
+			}
 			set_name(item.name);
 			set_description(item.description);
 			set_facts(item.facts);
@@ -315,6 +321,11 @@ const ProductPage = (props) => {
 		if (option.sale_price > 0) {
 			set_sale_price(option.sale_price);
 		}
+		if (option.count_in_stock === 0) {
+			set_preorder(true);
+		} else {
+			set_preorder(false);
+		}
 		// if (option.quantity) {
 		// set_quantity(option.quantity);
 		// }
@@ -407,6 +418,7 @@ const ProductPage = (props) => {
 			display_image: image ? image : images[0],
 			secondary_image: secondary_image ? secondary_image : '',
 			price,
+			preorder,
 			sale_price,
 			sale_start_date: product.sale_start_date,
 			sale_end_date: product.sale_end_date,
@@ -425,9 +437,9 @@ const ProductPage = (props) => {
 			count_in_stock: product.count_in_stock
 		};
 		dispatch(addToCart(cart_item));
-		if (userInfo) {
-			dispatch(saveCart(cart_item));
-		}
+		// if (userInfo) {
+		// 	dispatch(saveCart(cart_item));
+		// }
 
 		open_cart();
 	};
@@ -499,6 +511,11 @@ const ProductPage = (props) => {
 		if (option.size) {
 			set_size(option.size);
 		}
+		if (option.count_in_stock === 0) {
+			set_preorder(true);
+		} else {
+			set_preorder(false);
+		}
 		// else {
 		// 	set_size(option.name);
 		// }
@@ -559,6 +576,11 @@ const ProductPage = (props) => {
 		if (secondary.count_in_stock) {
 			set_count_in_stock(secondary.count_in_stock);
 		}
+		if (secondary.count_in_stock === 0) {
+			set_preorder(true);
+		} else {
+			set_preorder(false);
+		}
 		console.log({ secondary });
 		// set_color_products(secondary.color_products);
 		// set_secondary_color_products(secondary.secondary_color_products);
@@ -569,6 +591,8 @@ const ProductPage = (props) => {
 		set_secondary_product_object(secondary);
 		update_url(color, secondary_color, size || option_product_name, secondary.name);
 	};
+
+	const [ out_of_stock, set_out_of_stock ] = useState();
 
 	return (
 		<div className="">
@@ -753,6 +777,10 @@ const ProductPage = (props) => {
 									secondary_product={secondary_product}
 									count_in_stock={count_in_stock}
 									handleAddToCart={handleAddToCart}
+									out_of_stock={out_of_stock}
+									set_out_of_stock={set_out_of_stock}
+									preorder={preorder}
+									set_preorder={set_preorder}
 								/>
 							</div>
 
@@ -787,6 +815,8 @@ const ProductPage = (props) => {
 										secondary_product={secondary_product}
 										count_in_stock={count_in_stock}
 										handleAddToCart={handleAddToCart}
+										out_of_stock={out_of_stock}
+										set_out_of_stock={set_out_of_stock}
 									/>
 								</div>
 								<div
