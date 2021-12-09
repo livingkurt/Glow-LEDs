@@ -12,11 +12,6 @@ import useWindowDimensions from '../../components/Hooks/windowDimensions';
 
 const AboutPage = () => {
 	const { height, width } = useWindowDimensions();
-	const contentDetails = useSelector((state) => state.contentDetails);
-	const { content } = contentDetails;
-
-	const contentList = useSelector((state) => state.contentList);
-	const { contents } = contentList;
 
 	const dispatch = useDispatch();
 
@@ -26,23 +21,10 @@ const AboutPage = () => {
 	const { teams, loading: loading_team, error: error_team } = teamList;
 
 	useEffect(() => {
-		dispatch(listContents());
+		dispatch(listAffiliates('sponsored_glovers'));
+		dispatch(listTeams());
 		return () => {};
 	}, []);
-
-	useEffect(
-		() => {
-			const active_content = contents.find((content) => content.active === true);
-			if (active_content) {
-				dispatch(detailsContent(active_content._id));
-			}
-			dispatch(listAffiliates('sponsored_glovers'));
-			dispatch(listTeams());
-			return () => {};
-		},
-		[ contents ]
-	);
-
 	return (
 		<div className="main_container p-20px">
 			<Helmet>

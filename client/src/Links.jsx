@@ -10,22 +10,12 @@ import { hslToHex } from './utils/helper_functions';
 import { API_Products } from './utils';
 
 const Links = (props) => {
-	// const multiplier = 360 / content.links.length;
-
 	const [ multiplier, set_multiplier ] = useState(0);
 	const [ content, set_content ] = useState([]);
-	const dispatch = useDispatch();
 	useEffect(() => {
-		// dispatch(listContents());
 		get_display_content();
 		return () => {};
 	}, []);
-
-	// const contentDetails = useSelector((state) => state.contentDetails);
-	// const { content } = contentDetails;
-
-	// const contentList = useSelector((state) => state.contentList);
-	// const { contents } = contentList;
 
 	const get_display_content = async () => {
 		const { data } = await API_Products.get_display_content();
@@ -36,29 +26,6 @@ const Links = (props) => {
 		}
 	};
 
-	// useEffect(
-	// 	() => {
-	// 		if (contents) {
-	// 			const active_content = contents.find((content) => content.active === true);
-	// 			if (active_content) {
-	// 				dispatch(detailsContent(active_content._id));
-	// 			}
-	// 		}
-
-	// 		return () => {};
-	// 	},
-	// 	[ contents ]
-	// );
-	// useEffect(
-	// 	() => {
-	// 		if (content && content.links && content.links.length) {
-	// 			set_multiplier(360 / content.links.length);
-	// 		}
-
-	// 		return () => {};
-	// 	},
-	// 	[ content ]
-	// );
 	const { width, height } = useWindowDimensions();
 
 	let num = -multiplier;
