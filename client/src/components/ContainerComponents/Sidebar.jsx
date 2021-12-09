@@ -190,6 +190,11 @@ const Sidebar = (props) => {
 								</button>
 							</div>
 							<ul className="sidebar_dropdown_secondary_container" id="gloving_dropdown">
+								<Link to="/collections/all/products/category/gloves">
+									<button className="sidebar-btn nested" onClick={closeMenu}>
+										Whites (New!)
+									</button>
+								</Link>
 								<Link to="/collections/all/products/collection/nova_glow_casings">
 									<button className="sidebar-btn nested" onClick={closeMenu}>
 										Nova Glow Casings
@@ -437,6 +442,11 @@ const Sidebar = (props) => {
 							</button>
 						</div>
 						<ul className="sidebar_dropdown_secondary_container" id="glow_casings_dropdown_6">
+							<Link to="/collections/all/products/refresh_pack">
+								<button className="sidebar-btn nested" onClick={closeMenu}>
+									Refresh Pack
+								</button>
+							</Link>
 							{browser_check() !== 'safari' ? (
 								<Link to="/collections/all/products/glow_strings_v2_50_led_3_5m">
 									<button
@@ -474,6 +484,11 @@ const Sidebar = (props) => {
 								</button>
 							</Link>
 						</ul>
+						<Link to="/collections/all/products/category/gloves">
+							<button className="sidebar-btn secondary" onClick={closeMenu}>
+								New Releases
+							</button>
+						</Link>
 						<Link to="/collections/all/products/category/best_sellers">
 							<button className="sidebar-btn secondary" onClick={closeMenu}>
 								Best Sellers

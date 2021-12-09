@@ -243,7 +243,9 @@ const Header = (props) => {
 														</button>
 													</Link>
 													<hr className="w-95per m-0px" />
-
+													<Link to="/collections/all/products/category/gloves">
+														<button className="btn nav w-100per ta-l">New Releases!</button>
+													</Link>
 													<Link to="/collections/all/products/category/best_sellers">
 														<button className="btn nav w-100per ta-l">Best Sellers</button>
 													</Link>
@@ -267,13 +269,16 @@ const Header = (props) => {
 														</button>
 													</Link>
 													<hr className="w-95per m-0px" />
+													<Link to="/collections/all/products/category/gloves">
+														<button className="btn nav w-100per ta-l">Whites (New!)</button>
+													</Link>
 													<Link to="/collections/all/products/collection/nova_glow_casings">
 														<button className="btn nav w-100per ta-l">
-															Nova Glow Casings (New!)
+															Nova Glow Casings
 														</button>
 													</Link>
 													<Link to="/collections/all/products/category/decals">
-														<button className="btn nav w-100per ta-l">Decals (New!)</button>
+														<button className="btn nav w-100per ta-l">Decals</button>
 													</Link>
 													<Link to="/collections/all/products/category/exo_diffusers">
 														<button className="btn nav w-100per ta-l">EXO Diffusers</button>
@@ -534,6 +539,13 @@ const Header = (props) => {
 														</button>
 													</Link>
 													<hr className="w-95per m-0px" />
+													<Link to="/collections/all/products/refresh_pack">
+														<div className="row">
+															<button className="btn nav w-100per ta-l">
+																Refresh Pack
+															</button>
+														</div>
+													</Link>
 													{browser_check() !== 'safari' ? (
 														<Link to="/collections/all/products/glow_strings_v2_50_led_3_5m">
 															<button
