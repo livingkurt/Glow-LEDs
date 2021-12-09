@@ -126,7 +126,7 @@ const ProductOptions = ({
 
 	return (
 		<ul>
-			<div className="jc-b ai-c">
+			<li className="jc-b ai-c">
 				<div className="ai-c mb-1rem">
 					<h3 className="mv-0px mr-5px">Price: </h3>
 					{product_page_sale_price_switch(
@@ -139,17 +139,24 @@ const ProductOptions = ({
 						'dark'
 					)}
 				</div>
-				<div className="mb-20px">
-					<a href="#reviews">
-						<Rating rating={product.rating} numReviews={product.numReviews} />
-					</a>
-				</div>
-			</div>
+				{width < 1150 &&
+				width > 482 && (
+					<div className="mb-20px">
+						<a href="#reviews">
+							<Rating rating={product.rating} numReviews={product.numReviews} />
+						</a>
+					</div>
+				)}
+			</li>
+			<li className="mv-1rem ai-c">
+				<h3 className="mv-0px mr-5px ">Status:</h3>{' '}
+				<label>{count_in_stock > 0 ? 'In Stock' : 'Out of Stock'}</label>
+			</li>
 			{product.secondary_product_group &&
 			product.secondary_products &&
 			product.secondary_products.length > 0 && (
 				<li>
-					<div className={`ai-c h-25px mb-25px ${width < 1119 ? 'jc-b' : ''}`}>
+					<div className={`ai-c h-25px mb-25px ${width < 1150 ? 'jc-b' : ''}`}>
 						<h3 className="mv-0px mr-5px w-100per">
 							{product.secondary_group_name ? product.secondary_group_name : 'Design'}: {' '}
 						</h3>
@@ -183,7 +190,7 @@ const ProductOptions = ({
 			color_products &&
 			color_products.length > 0 && (
 				<li>
-					<div className={`ai-c h-25px mb-25px ${width < 1119 ? 'jc-b' : ''}`}>
+					<div className={`ai-c h-25px mb-25px ${width < 1150 ? 'jc-b' : ''}`}>
 						<h3 className="mv-0px ">{product.color_group_name ? product.color_group_name : 'Color'}: </h3>
 						<div className="ai-c">
 							{color_code && (
@@ -216,7 +223,7 @@ const ProductOptions = ({
 			secondary_color_products &&
 			secondary_color_products.length > 0 && (
 				<li>
-					<div className={`ai-c h-25px mb-25px ${width < 1119 ? 'jc-b' : ''}`}>
+					<div className={`ai-c h-25px mb-25px ${width < 1150 ? 'jc-b' : ''}`}>
 						<h3 className="mv-0px ">
 							{product.secondary_color_group_name ? (
 								product.secondary_color_group_name
@@ -254,7 +261,7 @@ const ProductOptions = ({
 			option_products &&
 			option_products.length > 0 && (
 				<li>
-					<div className={`ai-c  ${width < 1119 ? 'jc-b' : ''}`}>
+					<div className={`ai-c  ${width < 1150 ? 'jc-b' : ''}`}>
 						<h3 aria-label="sortOrder" htmlFor="sortOrder" className="select-label mr-1rem mt-1rem">
 							{product.option_group_name ? product.option_group_name : 'Size'}:
 						</h3>
@@ -271,7 +278,7 @@ const ProductOptions = ({
 			option_products &&
 			option_products.length > 0 && (
 				<li>
-					<div className={`ai-c  ${width < 1119 ? 'jc-b' : ''}`}>
+					<div className={`ai-c  ${width < 1150 ? 'jc-b' : ''}`}>
 						<h3 className="mv-0px mr-5px w-7rem">Parts: </h3>
 						<div className="ai-c wrap">
 							{option_products
@@ -282,7 +289,7 @@ const ProductOptions = ({
 				</li>
 			)}
 			<li>
-				<div className={`ai-c h-25px mb-20px ${width < 1119 ? 'jc-b' : ''}`}>
+				<div className={`ai-c h-25px mb-20px ${width < 1150 ? 'jc-b' : ''}`}>
 					<h3 className="mv-0px mr-20px ">Qty:</h3>
 					<div className="custom-select">
 						<select

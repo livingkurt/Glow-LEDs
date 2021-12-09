@@ -438,12 +438,11 @@ const ProductPage = (props) => {
 		};
 		if (preorder) {
 			const confirm = window.confirm(
-				'This product is not in stock. You are Preordering this Product and it will not ship within the usual time. It is best to preorder product with nothing else in cart so we can ship you your in stock products without needing more shipping'
+				`${name} are out in stock.\n\nBy clicking ok you agree that you are preordering ${name} which will not ship within the usual time.\n\nIt is HIGHLY RECOMMENDED that you order ${name} with nothing else in your cart so we can ship you your in stock products without needing to wait for your out of stock products.\n\nThank you for your support!\n\nYou will be notified when your ${name} are restocked `
 			);
 			if (confirm) {
 				dispatch(addToCart(cart_item));
 			}
-			return confirm;
 		} else {
 			dispatch(addToCart(cart_item));
 		}
