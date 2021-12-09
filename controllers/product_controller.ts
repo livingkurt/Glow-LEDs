@@ -406,7 +406,7 @@ export default {
 	},
 	get_all_products: async (req: any, res: any) => {
 		try {
-			const products = await Product.find({ deleted: false }).sort({ order: 1, _id: -1 });
+			const products = await Product.find({ deleted: false, option: false }).sort({ order: 1, _id: -1 });
 
 			res.send(products);
 		} catch (error) {
