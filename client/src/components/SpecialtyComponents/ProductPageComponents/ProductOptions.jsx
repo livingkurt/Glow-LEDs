@@ -93,7 +93,7 @@ const ProductOptions = ({
 
 		if (product.name === 'Diffuser Caps + Adapters Starter Kit' && !secondary_product) {
 			return <div />;
-		} else if (product.name === 'Refresh Pack (6 Pairs + 120 Batteries)' && !secondary_product) {
+		} else if (product.name === 'Refresh Pack (6 Supreme Pairs + 120 Batteries)' && !secondary_product) {
 			return <div />;
 		} else {
 			return (
