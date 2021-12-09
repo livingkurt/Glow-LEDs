@@ -92,7 +92,7 @@ const ProductOptions = ({
 			color_products &&
 			color_products.length > 0 && (
 				<li>
-					<div className="ai-c h-25px mb-25px jc-b">
+					<div className="ai-c h-25px mb-25px">
 						<h3 className="mv-0px ">{product.color_group_name ? product.color_group_name : 'Color'}: </h3>
 						<div className="ai-c">
 							{color_code && (
@@ -248,8 +248,8 @@ const ProductOptions = ({
 				</li>
 			)}
 			<li>
-				<div className="ai-c h-25px mb-20px jc-b">
-					<h3 className="mv-0px ">Qty:</h3>
+				<div className="ai-c h-25px mb-20px ">
+					<h3 className="mv-0px mr-20px ">Qty:</h3>
 					<div className="custom-select">
 						<select
 							defaultValue={qty}

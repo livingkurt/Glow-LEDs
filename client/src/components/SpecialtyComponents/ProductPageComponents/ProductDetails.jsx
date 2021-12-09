@@ -9,7 +9,6 @@ import { humanize, toCapitalize } from '../../../utils/helper_functions';
 
 const ProductDetails = ({ product, manuals, description, included_items, pathname }) => {
 	const [ canScroll, setCanScroll ] = useState(false);
-	console.log({ product, manuals, description, included_items, pathname });
 	return (
 		<div>
 			<Tabs>
