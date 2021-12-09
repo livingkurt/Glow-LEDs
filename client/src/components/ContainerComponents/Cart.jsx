@@ -77,23 +77,6 @@ const Cart = (props) => {
 		}
 	};
 
-	// const decide_warning = () => {
-	// 	const date_1 = '2021-11-20';
-	// 	const date_2 = '2021-12-02';
-	// 	if (new Date() > new Date(date_1) && new Date() < new Date(date_2)) {
-	// 		const confirm = window.confirm(
-	// 			`Glow LEDs will be out of office from ${format_date(date_1)} - ${format_date(
-	// 				date_2
-	// 			)}. Orders will not be shipped until after ${format_date(date_2)}`
-	// 		);
-	// 		if (confirm) {
-	// 			checkoutHandler();
-	// 		}
-	// 	} else {
-	// 		checkoutHandler();
-	// 	}
-	// };
-
 	useEffect(() => {
 		// console.log({ isMobile: mobile_check() });
 
@@ -123,21 +106,7 @@ const Cart = (props) => {
 		console.log({ top_4_products });
 		set_category_items(top_4_products);
 	};
-	const decide_url = (item) => {
-		if (item.category === 'gloving' || item.category === 'decor') {
-			if (item.subcategory) {
-				return `/collections/all/products/${item && item.category}/${item && item.subcategory}`;
-			} else {
-				return `/collections/all/products/category/${item.category}`;
-			}
-		} else if (item.category === 'featured') {
-			return `/collections/all/features/${item.category}`;
-		} else if (item.category === 'sponsored_artists') {
-			return `/collections/all/sponsors/${item.category}`;
-		} else {
-			return `/pages/${item.category}`;
-		}
-	};
+
 	const { width, height } = useWindowDimensions();
 
 	const determine_picture_size = () => {
