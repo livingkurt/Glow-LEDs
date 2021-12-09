@@ -156,7 +156,7 @@ const ProductOptions = ({
 			product.secondary_products &&
 			product.secondary_products.length > 0 && (
 				<li>
-					<div className={`ai-c h-25px mb-25px ${width < 1150 ? 'jc-b' : ''}`}>
+					<div className={`ai-c h-25px mv-20px ${width < 1150 ? 'jc-b' : ''}`}>
 						<label className="mv-0px mr-10px title_font">
 							{product.secondary_group_name ? product.secondary_group_name : 'Design'}: {' '}
 						</label>
@@ -263,7 +263,7 @@ const ProductOptions = ({
 			option_products &&
 			option_products.length > 0 && (
 				<li>
-					<div className={`ai-c  ${width < 1150 ? 'jc-b' : ''}`}>
+					<div className={`ai-c  mv-10px ${width < 1150 ? 'jc-b' : ''}`}>
 						<h3 aria-label="sortOrder" htmlFor="sortOrder" className="select-label mr-1rem mt-1rem">
 							{product.option_group_name ? product.option_group_name : 'Size'}:
 						</h3>
@@ -280,8 +280,8 @@ const ProductOptions = ({
 			option_products &&
 			option_products.length > 0 && (
 				<li>
-					<div className={`ai-c  ${width < 1150 ? 'jc-b' : ''}`}>
-						<h3 className="mv-0px mr-5px w-7rem">Parts: </h3>
+					<div className={`ai-c  mv-10px ${width < 1150 ? 'jc-b' : ''}`}>
+						<h3 className="mr-5px w-7rem">Parts: </h3>
 						<div className="ai-c wrap">
 							{option_products
 								.filter((option) => option.price === 2.99)
@@ -291,7 +291,7 @@ const ProductOptions = ({
 				</li>
 			)}
 			<li>
-				<div className={`ai-c h-25px mb-20px ${width < 1150 ? 'jc-b' : ''}`}>
+				<div className={`ai-c h-25px mv-10px ${width < 1150 ? 'jc-b' : ''}`}>
 					<label className="mv-0px mr-10px title_font">Qty:</label>
 					<div className="custom-select">
 						<select
@@ -310,28 +310,31 @@ const ProductOptions = ({
 						<span className="custom-arrow" />
 					</div>
 				</div>
+			</li>
+			<li>
+				<div className="mt-20px">
+					<h4 className="mb-0px mt-11px">Shipping Calculated at Checkout</h4>
+					<h4 className="mb-0px mt-11px" style={{ webkitTextStroke: '0.5px white' }}>
+						{product.category === 'glow_strings' && '	This item ships in 6 - 10 business day.'}
+					</h4>
 
-				<h4 className="mb-0px mt-11px">Shipping Calculated at Checkout</h4>
-				<h4 className="mb-0px mt-11px" style={{ webkitTextStroke: '0.5px white' }}>
-					{product.category === 'glow_strings' && '	This item ships in 6 - 10 business day.'}
-				</h4>
-
-				<h4 className="mb-0px mt-11px" style={{ webkitTextStroke: '0.5px white' }}>
-					{(product.category === 'exo_diffusers' ||
-						product.category === 'diffusers' ||
-						product.category === 'diffuser_caps') &&
-						'	This item ships in 2 - 5 business day.'}
-				</h4>
-				<h4 className="mb-0px mt-11px" style={{ webkitTextStroke: '0.5px white' }}>
-					{product.category === 'decals' && '	This item ships in 2 - 5 business day.'}
-				</h4>
-				<h4 className="mb-0px mt-11px" style={{ webkitTextStroke: '0.5px white' }}>
-					{product.subcategory === 'gloves' && '	This item ships in 2 - 3 business day.'}
-				</h4>
-				<h4 className="mb-0px mt-11px" style={{ webkitTextStroke: '0.5px white' }}>
-					{(product.category === 'glowskins' || product.category === 'glow_casings') &&
-						'	This item ships in 3 - 7 business day.'}
-				</h4>
+					<h4 className="mb-0px mt-11px" style={{ webkitTextStroke: '0.5px white' }}>
+						{(product.category === 'exo_diffusers' ||
+							product.category === 'diffusers' ||
+							product.category === 'diffuser_caps') &&
+							'	This item ships in 2 - 5 business day.'}
+					</h4>
+					<h4 className="mb-0px mt-11px" style={{ webkitTextStroke: '0.5px white' }}>
+						{product.category === 'decals' && '	This item ships in 2 - 5 business day.'}
+					</h4>
+					<h4 className="mb-0px mt-11px" style={{ webkitTextStroke: '0.5px white' }}>
+						{product.subcategory === 'gloves' && '	This item ships in 2 - 3 business day.'}
+					</h4>
+					<h4 className="mb-0px mt-11px" style={{ webkitTextStroke: '0.5px white' }}>
+						{(product.category === 'glowskins' || product.category === 'glow_casings') &&
+							'	This item ships in 3 - 7 business day.'}
+					</h4>
+				</div>
 			</li>
 			{determine_add_to_cart(product, secondary_product, count_in_stock, out_of_stock, option_product_object)}
 		</ul>
