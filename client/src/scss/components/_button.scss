@@ -52,6 +52,22 @@ button {
 	background-color: $theme_color_secondary_hover;
 }
 
+.unselected {
+	box-shadow: $bs_shallow;
+	color: $theme_color_phrase_font;
+	border: 0px;
+	font-family: $phrase_font;
+	border-radius: $br_small_containers;
+	transition: all .5s ease;
+	padding: 10px;
+	background-color: $theme_color_unselected;
+}
+
+// .unselected:hover {
+// 	box-shadow: $bs_deep;
+// 	background-color: $theme_color_unselected_hover;
+// 	color: $theme_color_primary !important;
+// }
 .selected {
 	box-shadow: $bs_shallow;
 	color: $theme_color_phrase_font;
@@ -66,22 +82,6 @@ button {
 .selected:hover {
 	box-shadow: $bs_deep;
 	background-color: $theme_color_selected_hover;
-	color: $theme_color_primary !important;
-}
-.unselected {
-	box-shadow: $bs_shallow;
-	color: $theme_color_phrase_font;
-	border: 0px;
-	font-family: $phrase_font;
-	border-radius: $br_small_containers;
-	transition: all .5s ease;
-	padding: 10px;
-	background-color: $theme_color_unselected;
-}
-
-.unselected:hover {
-	box-shadow: $bs_deep;
-	background-color: $theme_color_unselected_hover;
 	color: $theme_color_selected !important;
 }
 
