@@ -47,16 +47,31 @@ const ProductOptions = ({
 		const classes = 'packs fs-13px flex-s-0 min-w-40px mr-1rem mb-1rem ';
 		if (option_product_object.hasOwnProperty('size')) {
 			if (option_product_object.size === option.size) {
-				return `${classes} ${determine_option_stock(option_product_object, 'btn secondary')}`;
+				return `${classes} unselected ft-primary`;
 			} else {
-				return `${classes} ${determine_option_stock(option_product_object, 'btn primary')}`;
+				return `${classes} selected ft-white`;
 			}
 		} else if (option.default_option) {
-			return `${classes} ${determine_option_stock(option_product_object, 'btn secondary')}`;
+			return `${classes} unselected ft-primary`;
 		} else {
-			return `${classes} ${determine_option_stock(option_product_object, 'btn primary')}`;
+			return `${classes} selected ft-white`;
 		}
 	};
+
+	// const determine_option_styles = (option_product_object, option) => {
+	// 	const classes = 'packs fs-13px flex-s-0 min-w-40px mr-1rem mb-1rem ';
+	// 	if (option_product_object.hasOwnProperty('size')) {
+	// 		if (option_product_object.size === option.size) {
+	// 			return `${classes} ${determine_option_stock(option_product_object, 'btn unselected')}`;
+	// 		} else {
+	// 			return `${classes} ${determine_option_stock(option_product_object, 'btn selected')}`;
+	// 		}
+	// 	} else if (option.default_option) {
+	// 		return `${classes} ${determine_option_stock(option_product_object, 'btn unselected')}`;
+	// 	} else {
+	// 		return `${classes} ${determine_option_stock(option_product_object, 'btn selected')}`;
+	// 	}
+	// };
 
 	const determine_option_stock = (option_product_object, class_name) => {
 		console.log({ determine_option_stock: option_product_object });
