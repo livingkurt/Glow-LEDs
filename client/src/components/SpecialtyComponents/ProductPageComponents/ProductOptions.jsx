@@ -114,23 +114,23 @@ const ProductOptions = ({
 			return (
 				<li>
 					<button className="btn primary bob" onClick={handleAddToCart}>
-						{determine_preorder_add_to_cart(option_product_object, count_in_stock)}
+						{determine_preorder(option_product_object, count_in_stock, 'Add To Cart')}
 					</button>
 				</li>
 			);
 		}
 	};
 
-	const determine_preorder_add_to_cart = (option_product_object, count_in_stock) => {
+	const determine_preorder = (option_product_object, count_in_stock, text) => {
 		if (option_product_object.count_in_stock > 0) {
 			if (count_in_stock > 0) {
-				return 'Add to Cart';
+				return text;
 			} else {
 				return 'Preorder';
 			}
 		} else if (count_in_stock > 0) {
 			if (option_product_object.count_in_stock > 0) {
-				return 'Add to Cart';
+				return text;
 			} else {
 				return 'Preorder';
 			}
@@ -165,7 +165,8 @@ const ProductOptions = ({
 			</li>
 			<li className="mv-1rem ai-c">
 				<label className="mv-0px mr-10px title_font">Status:</label>{' '}
-				<label>{count_in_stock > 0 ? 'In Stock' : 'Out of Stock'}</label>
+				<label>{determine_preorder(option_product_object, count_in_stock, 'In Stock')}</label>
+				{/* <label>{count_in_stock > 0 ? 'In Stock' : 'Out of Stock'}</label> */}
 			</li>
 			{product.secondary_product_group &&
 			product.secondary_products &&
