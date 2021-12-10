@@ -573,7 +573,7 @@ export default {
 		const { cartItems } = req.body;
 		const save_product = async (id: string, qty: number) => {
 			const product: any = await Product.findOne({ _id: id });
-			console.log({ product });
+
 			const new_count = product.count_in_stock - qty;
 			console.log({ id, new_count });
 			if (product.finite_stock) {
@@ -587,27 +587,33 @@ export default {
 				} else {
 					product.count_in_stock = new_count;
 				}
-
-				if (product) {
-					const request = await product.save();
-					res.status(200).send(request);
-				}
+				console.log({ product });
+				return await Product.updateOne({ _id: id }, product);
+				// const request = await product.save();
 			}
 		};
 		try {
 			cartItems.forEach(async (item: any) => {
 				console.log({ item });
-				// if (item.product)
+
 				if (item.finite_stock) {
-					save_product(item.product, item.qty);
+					res.status(200).send(save_product(item.product, item.qty));
 				} else if (item.option_product) {
-					save_product(item.option_product, item.qty);
+					console.log({
+						update_stock: item.name,
+						name: 'Refresh Pack (6 Supreme Pairs + 120 Batteries)'
+					});
+					if (item.name === 'Refresh Pack (6 Supreme Pairs + 120 Batteries)') {
+						res.status(200).send(save_product(item.option_product, 6 * item.qty));
+					} else {
+						res.status(200).send(save_product(item.option_product, item.qty));
+					}
 				} else if (item.secondary_product) {
-					save_product(item.secondary_product, item.qty);
+					res.status(200).send(save_product(item.secondary_product, item.qty));
 				} else if (item.color_product) {
-					save_product(item.color_product, item.qty);
+					res.status(200).send(save_product(item.color_product, item.qty));
 				} else if (item.secondary_color_product) {
-					save_product(item.secondary_color_product, item.qty);
+					res.status(200).send(save_product(item.secondary_color_product, item.qty));
 				}
 			});
 		} catch (error) {

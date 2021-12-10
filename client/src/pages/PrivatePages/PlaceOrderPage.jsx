@@ -304,7 +304,8 @@ const PlaceOrderPage = (props) => {
 	};
 
 	const dimminish_stock = async () => {
-		await API_Products.update_stock(cartItems);
+		const request = await API_Products.update_stock(cartItems);
+		console.log({ dimminish_stock: request });
 	};
 
 	const promo_code_used = async () => {
