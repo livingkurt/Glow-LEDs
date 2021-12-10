@@ -48,57 +48,21 @@ const Sidebar = (props) => {
 
 	useEffect(
 		() => {
-			if (userInfo) {
-				set_first_name(userInfo.first_name);
+			let clean = true;
+			if (clean) {
+				if (userInfo) {
+					set_first_name(userInfo.first_name);
+				}
 			}
-
-			// }
+			return () => (clean = false);
 		},
 		[ userInfo ]
 	);
 
-	// const userUpdate = useSelector((state) => state.userUpdate);
-
-	// useEffect(
-	// 	() => {
-	// 		if (userUpdate.userInfo) {
-	// 			set_first_name(userUpdate.userInfo.first_name);
-	// 		}
-	// 		return () => {};
-	// 	},
-	// 	[ userUpdate.userInfo ]
-	// );
-	const navbarStyles = {
-		position: 'fixed',
-		// height: '160px',
-		// width: '100%',
-		// backgroundColor: 'grey',
-		// textAlign: 'center',
-		transition: 'top 0.2s'
-	};
-	const determine_top = () => {
-		if (props.width >= 1177) {
-			return '179px';
-		} else if (props.width < 1140 && props.width > 704) {
-			return '130px';
-		} else if (props.width < 704 && props.width > 528) {
-			return '116px';
-		} else if (props.width < 528) {
-			return '110px';
-		} else {
-			return '110px';
-		}
-	};
-
-	const [ last_id, set_last_id ] = useState('');
-	const [ current_id, set_current_id ] = useState('');
-
 	const show_hide = (id) => {
-		set_current_id(id);
 		const current_menu = document.getElementById(id);
 		console.log(current_menu.classList);
 		current_menu.classList.toggle('hide-menu');
-		set_last_id(id);
 	};
 
 	return (

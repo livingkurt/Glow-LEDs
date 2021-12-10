@@ -50,24 +50,24 @@ const Cart = (props) => {
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
 
-	const contentList = useSelector((state) => state.contentList);
-	const { loading, contents, error } = contentList;
+	useEffect(() => {
+		let clean = true;
+		if (clean) {
+			get_display_content();
+		}
+		return () => (clean = false);
+	}, []);
 
-	useEffect(
-		() => {
-			if (contents) {
-				if (contents[0]) {
-					if (contents[0].home_page && contents[0].home_page.slideshow) {
-						console.log({ slideshow: contents[0].home_page.slideshow });
-						set_category_items(contents[0].home_page.slideshow);
-					}
-				}
+	const get_display_content = async () => {
+		const { data } = await API_Products.get_display_content();
+		console.log({ data });
+		if (data && data[0]) {
+			if (data[0].home_page && data[0].home_page.slideshow) {
+				console.log({ slideshow: data[0].home_page.slideshow });
+				set_category_items(data[0].home_page.slideshow);
 			}
-
-			return () => {};
-		},
-		[ contents ]
-	);
+		}
+	};
 
 	const cart = useSelector((state) => state.cart);
 

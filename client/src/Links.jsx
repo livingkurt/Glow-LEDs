@@ -12,9 +12,13 @@ import { API_Products } from './utils';
 const Links = (props) => {
 	const [ multiplier, set_multiplier ] = useState(0);
 	const [ content, set_content ] = useState([]);
+
 	useEffect(() => {
-		get_display_content();
-		return () => {};
+		let clean = true;
+		if (clean) {
+			get_display_content();
+		}
+		return () => (clean = false);
 	}, []);
 
 	const get_display_content = async () => {

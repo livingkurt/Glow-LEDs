@@ -1,42 +1,26 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { detailsContent, listContents } from '../../actions/contentActions';
-import { Link, useHistory } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import useWindowDimensions from '../Hooks/windowDimensions';
+import { API_Products } from '../../utils';
 
 const Banner = (props) => {
-	const contentDetails = useSelector((state) => state.contentDetails);
-	const { content } = contentDetails;
-
-	const contentList = useSelector((state) => state.contentList);
-	const { contents } = contentList;
-
 	const { height, width } = useWindowDimensions();
-
-	const dispatch = useDispatch();
+	const [ content, set_content ] = useState([]);
 
 	useEffect(() => {
-		dispatch(listContents());
-		return () => {};
+		let clean = true;
+		if (clean) {
+			get_display_content();
+		}
+		return () => (clean = false);
 	}, []);
 
-	useEffect(
-		() => {
-			if (contents) {
-				const active_content = contents.find((content) => content.active === true);
-				if (active_content) {
-					dispatch(detailsContent(active_content._id));
-				}
-			}
-
-			return () => {};
-		},
-		[ contents, dispatch ]
-	);
-	const banner_styles = {
-		position: 'fixed',
-		width: '100%',
-		transition: 'top 0.2s'
+	const get_display_content = async () => {
+		const { data } = await API_Products.get_display_content();
+		console.log({ data });
+		if (data) {
+			set_content(data[0]);
+		}
 	};
 
 	return (

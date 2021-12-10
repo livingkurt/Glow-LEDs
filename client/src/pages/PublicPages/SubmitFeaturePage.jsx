@@ -58,31 +58,36 @@ const SubmitFeaturePage = (props) => {
 	console.log({ feature });
 
 	useEffect(() => {
-		if (props.match.params.pathname) {
-			console.log('Is ID');
-			dispatch(detailsFeature(props.match.params.pathname));
-			dispatch(detailsFeature(props.match.params.pathname));
-		} else {
-			dispatch(detailsFeature(''));
-		}
-		dispatch(listProducts(''));
-		dispatch(listUsers(''));
+		let clean = true;
+		if (clean) {
+			if (props.match.params.pathname) {
+				console.log('Is ID');
+				dispatch(detailsFeature(props.match.params.pathname));
+				dispatch(detailsFeature(props.match.params.pathname));
+			} else {
+				dispatch(detailsFeature(''));
+			}
+			dispatch(listProducts(''));
+			dispatch(listUsers(''));
 
-		set_state();
-		return () => {};
+			set_state();
+		}
+		return () => (clean = false);
 	}, []);
 
 	useEffect(
 		() => {
-			if (feature) {
-				console.log('Set');
-				set_state();
-			} else {
-				console.log('UnSet');
-				unset_state();
+			let clean = true;
+			if (clean) {
+				if (feature) {
+					console.log('Set');
+					set_state();
+				} else {
+					console.log('UnSet');
+					unset_state();
+				}
 			}
-
-			return () => {};
+			return () => (clean = false);
 		},
 		[ feature ]
 	);
@@ -163,10 +168,14 @@ const SubmitFeaturePage = (props) => {
 
 	useEffect(
 		() => {
-			if (success && feature_saved) {
-				console.log({ feature_saved });
-				history.push('/account/feature/receipt/' + feature_saved.data.pathname + '/feature/true');
+			let clean = true;
+			if (clean) {
+				if (success && feature_saved) {
+					console.log({ feature_saved });
+					history.push('/account/feature/receipt/' + feature_saved.data.pathname + '/feature/true');
+				}
 			}
+			return () => (clean = false);
 		},
 		[ success ]
 	);

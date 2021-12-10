@@ -19,9 +19,11 @@ const TeamPage = (props) => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch(detailsTeam(props.match.params.pathname));
-		console.log(props.match.params.pathname);
-		return () => {};
+		let clean = true;
+		if (clean) {
+			dispatch(detailsTeam(props.match.params.pathname));
+		}
+		return () => (clean = false);
 	}, []);
 
 	const date = new Date();

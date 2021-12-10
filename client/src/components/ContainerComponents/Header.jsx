@@ -41,9 +41,13 @@ const Header = (props) => {
 
 	useEffect(
 		() => {
-			if (userInfo) {
-				set_first_name(userInfo.first_name);
+			let clean = true;
+			if (clean) {
+				if (userInfo) {
+					set_first_name(userInfo.first_name);
+				}
 			}
+			return () => (clean = false);
 		},
 		[ userInfo ]
 	);
@@ -139,9 +143,11 @@ const Header = (props) => {
 	};
 
 	useEffect(() => {
-		// dispatch(listContents());
-		get_all_products();
-		return () => {};
+		let clean = true;
+		if (clean) {
+			get_all_products();
+		}
+		return () => (clean = false);
 	}, []);
 
 	const get_all_products = async () => {
