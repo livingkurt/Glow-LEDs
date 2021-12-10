@@ -43,25 +43,31 @@ const Footer = () => {
 								<i className="fab fa-tiktok zoom" />
 							</a>
 						</div>
-						<div className="mh-10px fs-40px">
-							<a
-								href="https://www.youtube.com/channel/UCm_gDyTIy7d0oR9LeowPkYw?sub_confirmation=1?sub_confirmation=1"
-								target="_blank"
-								rel="noopener noreferrer"
-							>
-								<i className="fab fa-youtube zoom" />
-							</a>
-						</div>
-						<div className="mh-10px fs-40px">
-							<a href="https://twitter.com/glow_leds" target="_blank" rel="noopener noreferrer">
-								<i className="fab fa-twitter zoom" />
-							</a>
-						</div>
-						<div className="mr-10px fs-40px">
-							<a href="https://soundcloud.com/ntre/tracks" target="_blank" rel="noopener noreferrer">
-								<i className="fab fa-soundcloud" />
-							</a>
-						</div>
+						{width > 500 && (
+							<div className="mh-10px fs-40px">
+								<a
+									href="https://www.youtube.com/channel/UCm_gDyTIy7d0oR9LeowPkYw?sub_confirmation=1?sub_confirmation=1"
+									target="_blank"
+									rel="noopener noreferrer"
+								>
+									<i className="fab fa-youtube zoom" />
+								</a>
+							</div>
+						)}
+						{width > 500 && (
+							<div className="mh-10px fs-40px">
+								<a href="https://twitter.com/glow_leds" target="_blank" rel="noopener noreferrer">
+									<i className="fab fa-twitter zoom" />
+								</a>
+							</div>
+						)}
+						{width > 500 && (
+							<div className="mr-10px fs-40px">
+								<a href="https://soundcloud.com/ntre/tracks" target="_blank" rel="noopener noreferrer">
+									<i className="fab fa-soundcloud" />
+								</a>
+							</div>
+						)}
 					</div>
 				</div>
 

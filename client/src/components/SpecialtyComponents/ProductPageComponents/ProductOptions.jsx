@@ -39,49 +39,18 @@ const ProductOptions = ({
 }) => {
 	const { width } = useWindowDimensions();
 
-	// const updateState = (newState) => setState(Object.assign({}, out_of_stock, newState));
-
-	// const func1 = useCallback((data) => set_out_of_stock(false), []);
-
 	const determine_option_styles = (option_product_object, option) => {
 		const classes = 'packs fs-13px flex-s-0 min-w-40px mr-1rem mb-1rem ';
 		if (option_product_object.hasOwnProperty('size')) {
 			if (option_product_object.size === option.size) {
-				return `${classes} unselected ft-primary`;
+				return `${classes} off ft-primary`;
 			} else {
-				return `${classes} selected ft-white`;
+				return `${classes} on ft-white`;
 			}
 		} else if (option.default_option) {
-			return `${classes} unselected ft-primary`;
+			return `${classes} off ft-primary`;
 		} else {
-			return `${classes} selected ft-white`;
-		}
-	};
-
-	// const determine_option_styles = (option_product_object, option) => {
-	// 	const classes = 'packs fs-13px flex-s-0 min-w-40px mr-1rem mb-1rem ';
-	// 	if (option_product_object.hasOwnProperty('size')) {
-	// 		if (option_product_object.size === option.size) {
-	// 			return `${classes} ${determine_option_stock(option_product_object, 'btn unselected')}`;
-	// 		} else {
-	// 			return `${classes} ${determine_option_stock(option_product_object, 'btn selected')}`;
-	// 		}
-	// 	} else if (option.default_option) {
-	// 		return `${classes} ${determine_option_stock(option_product_object, 'btn unselected')}`;
-	// 	} else {
-	// 		return `${classes} ${determine_option_stock(option_product_object, 'btn selected')}`;
-	// 	}
-	// };
-
-	const determine_option_stock = (option_product_object, class_name) => {
-		console.log({ determine_option_stock: option_product_object });
-		if (option_product_object.count_in_stock === 0) {
-			console.log({ option_product_object_count_in_stock: 'hello' });
-			set_out_of_stock(true);
-			return 'inactive';
-		} else {
-			set_out_of_stock(false);
-			return class_name;
+			return `${classes} on ft-white`;
 		}
 	};
 

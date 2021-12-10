@@ -205,14 +205,16 @@ const App = (props) => {
 	const [ show_modal, set_show_modal ] = useState(false);
 
 	useEffect(() => {
-		const popup = sessionStorage.getItem('popup');
-		if (!popup) {
-			setTimeout(() => {
-				set_show_modal(true);
-			}, 5000);
+		let clean = true;
+		if (clean) {
+			const popup = sessionStorage.getItem('popup');
+			if (!popup) {
+				setTimeout(() => {
+					set_show_modal(true);
+				}, 5000);
+			}
 		}
-
-		return () => {};
+		return () => (clean = false);
 	}, []);
 
 	return (

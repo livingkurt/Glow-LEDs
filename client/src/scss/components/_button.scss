@@ -52,7 +52,7 @@ button {
 	background-color: $theme_color_secondary_hover;
 }
 
-.unselected {
+.off {
 	box-shadow: $bs_shallow;
 	color: $theme_color_phrase_font;
 	border: 0px;
@@ -60,15 +60,15 @@ button {
 	border-radius: $br_small_containers;
 	transition: all .5s ease;
 	padding: 10px;
-	background-color: $theme_color_unselected;
+	background-color: $theme_color_off;
 }
 
-// .unselected:hover {
+// .off:hover {
 // 	box-shadow: $bs_deep;
-// 	background-color: $theme_color_unselected_hover;
+// 	background-color: $theme_color_off_hover;
 // 	color: $theme_color_primary !important;
 // }
-.selected {
+.on {
 	box-shadow: $bs_shallow;
 	color: $theme_color_phrase_font;
 	border: 0px;
@@ -76,13 +76,13 @@ button {
 	border-radius: $br_small_containers;
 	transition: all .5s ease;
 	padding: 10px;
-	background-color: $theme_color_selected;
+	background-color: $theme_color_on;
 }
 
-.selected:hover {
+.on:hover {
 	box-shadow: $bs_deep;
-	background-color: $theme_color_selected_hover;
-	color: $theme_color_selected !important;
+	background-color: $theme_color_on_hover;
+	color: $theme_color_on !important;
 }
 
 .inactive {

@@ -52,15 +52,11 @@ const EmailModal = (props) => {
 					&times;
 				</span>
 				<div className="h-100per jc-b column">
-					{/* <label className="title_font fs-30px ta-c jc-c lh-40px">
-						Sign up to our Email List for 10% off your first order!
-					</label> */}
 					<label className="p_descriptions fs-16px ta-c jc-c">Come Into the Light</label>
 					<label className="title_font fs-30px ta-c jc-c lh-40px">Get 10% Off Your Next Order</label>
 					<label className="p_descriptions fs-16px ta-c jc-c">It's Brighter Over Here</label>
 					<ul>
 						<li>
-							{/* <label htmlFor="email">Email</label> */}
 							<input
 								type="email"
 								name="email"

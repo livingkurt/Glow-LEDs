@@ -18,6 +18,7 @@ const HomeSlideshow = ({ slideshow }) => {
 			interval={5000}
 			swipeable={true}
 			transitionTime={1300}
+			preventMovementUntilSwipeScrollTolerance={true}
 			// selectedItem={start}
 			emulateTouch={true}
 			animationHandler="fade"
