@@ -597,6 +597,7 @@ export default {
 		try {
 			cartItems.forEach(async (item: any) => {
 				console.log({ item });
+				// if (item.product)
 				if (item.finite_stock) {
 					save_product(item.product, item.qty);
 				} else if (item.option_product) {

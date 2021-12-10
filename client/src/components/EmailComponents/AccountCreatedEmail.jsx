@@ -125,7 +125,7 @@ const AccountCreatedEmail = () => {
 																	}}
 																>
 																	<img
-																		src="https://images2.imgbox.com/63/e7/BPGMUlpc_o.png"
+																		src="https://thumbs2.imgbox.com/b1/08/2Dnle6TI_t.jpeg"
 																		alt="Glow LEDs Logo"
 																		title="Glow LEDs Logo"
 																		style={{

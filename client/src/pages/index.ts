@@ -85,8 +85,6 @@ export { default as FeaturedPage } from './PublicPages/FeaturedPage';
 export { default as GlowControlHomePage } from './PublicPages/GlowControlHomePage';
 export { default as MusicPage } from './PublicPages/MusicPage';
 export { default as GuestDecisionPage } from './PublicPages/GuestDecisionPage';
-export { default as PlaceOrderPublicPage } from './PublicPages/PlaceOrderPublicPage';
-export { default as ShippingPublicPage } from './PublicPages/ShippingPublicPage';
 export { default as MenuPage } from './PublicPages/MenuPage';
 export { default as TrackOrderPage } from './PublicPages/TrackOrderPage';
 export { default as OrderPublicPage } from './PublicPages/OrderPublicPage';
