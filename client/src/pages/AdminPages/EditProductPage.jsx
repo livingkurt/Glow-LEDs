@@ -63,6 +63,7 @@ const EditProductPage = (props) => {
 	const [ filament_used, set_filament_used ] = useState();
 	const [ printing_time, set_printing_time ] = useState();
 	const [ assembly_time, set_assembly_time ] = useState();
+	const [ preorder, set_preorder ] = useState();
 
 	const [ default_option, set_default_option ] = useState(false);
 	const [ option, set_option ] = useState();
@@ -291,6 +292,7 @@ const EditProductPage = (props) => {
 		set_product_height(product.product_height);
 		set_weight_pounds(product.weight_pounds);
 		set_weight_ounces(product.weight_ounces);
+		set_preorder(product.preorder);
 		// setDisplayImage(product.display_image);
 		set_images(product.images);
 		// set_images(product.images);
@@ -379,6 +381,7 @@ const EditProductPage = (props) => {
 		set_meta_description('');
 		set_meta_keywords('');
 		set_finite_stock(false);
+		set_preorder(false);
 		// set_package_length(1);
 		// set_package_width(1);
 		// set_package_height(1);
@@ -462,6 +465,7 @@ const EditProductPage = (props) => {
 				product_height,
 				weight_pounds,
 				weight_ounces,
+				preorder,
 				pathname: pathname ? pathname : snake_case(name),
 				order,
 				product_options,
@@ -1117,6 +1121,22 @@ const EditProductPage = (props) => {
 														id="finite_stock"
 														onChange={(e) => {
 															set_finite_stock(e.target.checked);
+														}}
+													/>
+												</li>
+											)}
+											{loading_checkboxes ? (
+												<div>Loading...</div>
+											) : (
+												<li>
+													<label htmlFor="preorder">Preorder</label>
+													<input
+														type="checkbox"
+														name="preorder"
+														defaultChecked={preorder}
+														id="preorder"
+														onChange={(e) => {
+															set_preorder(e.target.checked);
 														}}
 													/>
 												</li>

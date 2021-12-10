@@ -74,6 +74,7 @@ const productSchema = new mongoose.Schema(
 		sale_start_date: { type: Date },
 		sale_end_date: { type: Date },
 		deleted: { type: Boolean, default: false },
+		preorder: { type: Boolean, default: false },
 		pathname: { type: String },
 		meta_title: { type: String },
 		meta_description: { type: String },
