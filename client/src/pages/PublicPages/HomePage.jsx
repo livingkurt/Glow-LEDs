@@ -94,7 +94,7 @@ const HomePage = (props) => {
 			...subcategories.map((category) => {
 				return { name: humanize(category) };
 			}),
-			...data.filter((product) => !product.option).filter((product) => !product.hidden)
+			...data.products.filter((product) => !product.option).filter((product) => !product.hidden)
 		]);
 		set_loading(false);
 	};

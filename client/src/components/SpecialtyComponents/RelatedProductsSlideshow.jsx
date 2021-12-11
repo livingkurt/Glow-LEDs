@@ -46,10 +46,13 @@ const RelatedProductsSlideshow = ({
 		set_loading(true);
 		const { data } = await API_Products.findAll_products_a({ category });
 		console.log({ data });
-		set_products(typeof data === 'object' && data.filter((product) => product.pathname !== product_pathname));
+		set_products(
+			typeof data === 'object' && data.products.filter((product) => product.pathname !== product_pathname)
+		);
 		if (random) {
 			set_products(
-				typeof data === 'object' && shuffle(data.filter((product) => product.pathname !== product_pathname))
+				typeof data === 'object' &&
+					shuffle(data.products.filter((product) => product.pathname !== product_pathname))
 			);
 		}
 		set_loading(false);
