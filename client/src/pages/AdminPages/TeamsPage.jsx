@@ -24,7 +24,7 @@ const TeamsPage = (props) => {
 		() => {
 			let clean = true;
 			if (clean) {
-				dispatch(listTeams());
+				dispatch(listTeams({}));
 			}
 			return () => (clean = false);
 		},
@@ -32,19 +32,19 @@ const TeamsPage = (props) => {
 	);
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(listTeams(category, search, sort));
+		dispatch(listTeams({ category, search, sort }));
 	};
 
 	const sortHandler = (e) => {
 		setSortOrder(e.target.value);
-		dispatch(listTeams(category, search, e.target.value));
+		dispatch(listTeams({ category, search, sort: e.target.value }));
 	};
 
 	useEffect(
 		() => {
 			let clean = true;
 			if (clean) {
-				dispatch(listTeams(category, search, sort));
+				dispatch(listTeams({ category, search, sort }));
 			}
 			return () => (clean = false);
 		},

@@ -35,7 +35,7 @@ const LabelCreatorPage = (props) => {
 			if (userInfo.isAdmin) {
 				get_all_shipping();
 			}
-			dispatch(listParcels(''));
+			dispatch(listParcels({}));
 		}
 		return () => (clean = false);
 	}, []);

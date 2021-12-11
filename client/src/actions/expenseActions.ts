@@ -13,22 +13,20 @@ import {
 	EXPENSE_DELETE_REQUEST
 } from '../constants/expenseConstants';
 import axios from 'axios';
+import { create_query } from '../utils/helper_functions';
 
-export const listExpenses = (category = '', search = '', sort = '') => async (
+export const listExpenses = (query: any) => async (
 	dispatch: (arg0: { type: string; payload?: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }
 ) => {
 	try {
 		dispatch({ type: EXPENSE_LIST_REQUEST });
 		const { userLogin: { userInfo } } = getState();
-		const { data } = await axios.get(
-			'/api/expenses?category=' + category + '&search=' + search + '&sort=' + sort.toLowerCase(),
-			{
-				headers: {
-					Authorization: 'Bearer ' + userInfo.access_token
-				}
+		const { data } = await axios.get('/api/expenses?' + create_query(query), {
+			headers: {
+				Authorization: 'Bearer ' + userInfo.access_token
 			}
-		);
+		});
 		dispatch({ type: EXPENSE_LIST_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });

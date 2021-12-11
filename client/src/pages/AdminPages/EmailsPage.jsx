@@ -26,7 +26,7 @@ const EmailsPage = (props) => {
 		() => {
 			let clean = true;
 			if (clean) {
-				dispatch(listEmails());
+				dispatch(listEmails({}));
 			}
 			return () => (clean = false);
 		},
@@ -34,19 +34,19 @@ const EmailsPage = (props) => {
 	);
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(listEmails(category, search, sort));
+		dispatch(listEmails({ category, search, sort }));
 	};
 
 	const sortHandler = (e) => {
 		setSortOrder(e.target.value);
-		dispatch(listEmails(category, search, e.target.value));
+		dispatch(listEmails({ category, search, sort: e.target.value }));
 	};
 
 	useEffect(
 		() => {
 			let clean = true;
 			if (clean) {
-				dispatch(listEmails(category, search, sort));
+				dispatch(listEmails({ category, search, sort }));
 			}
 			return () => (clean = false);
 		},
@@ -76,8 +76,8 @@ const EmailsPage = (props) => {
 				active: email.active ? false : true
 			})
 		);
-		dispatch(listEmails(''));
-		dispatch(listEmails(''));
+		dispatch(listEmails({}));
+		dispatch(listEmails({}));
 	};
 
 	const sort_options = [ 'Email Type' ];

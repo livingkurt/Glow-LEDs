@@ -13,11 +13,12 @@ import {
 	CONTENT_DELETE_REQUEST
 } from '../constants/contentConstants';
 import axios from 'axios';
+import { create_query } from '../utils/helper_functions';
 
-export const listContents = (limit = '') => async (dispatch: (arg0: { type: string; payload?: any }) => void) => {
+export const listContents = (query: any) => async (dispatch: (arg0: { type: string; payload?: any }) => void) => {
 	try {
 		dispatch({ type: CONTENT_LIST_REQUEST });
-		const { data } = await axios.get('/api/contents?limit=' + limit);
+		const { data } = await axios.get('/api/contents?' + create_query(query));
 		dispatch({ type: CONTENT_LIST_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });

@@ -45,6 +45,7 @@ import {
 } from '../constants/userConstants';
 import setAuthToken from '../utils/setAuthToken';
 import jwt_decode from 'jwt-decode';
+import { create_query } from '../utils/helper_functions';
 
 // import { GET_ERRORS, SET_CURRENT_USER, USER_LOADING } from './types';
 
@@ -391,22 +392,16 @@ export const contact = (
 	}
 };
 
-export const listUsers = (category = '', search = '', sort = '') => async (
+export const listUsers = (query: any) => async (
 	dispatch: (arg0: { type: string; payload?: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }
 ) => {
 	try {
 		dispatch({ type: USER_LIST_REQUEST });
 		const { userLogin: { userInfo } } = getState();
-		// const { data } = await axios.get('/api/users', {
-		// 	headers: { Authorization: 'Bearer ' + userInfo.access_token }
-		// });
-		const { data } = await axios.get(
-			'/api/users?category=' + category + '&search=' + search + '&sort=' + sort.toLowerCase(),
-			{
-				headers: { Authorization: 'Bearer ' + userInfo.access_token }
-			}
-		);
+		const { data } = await axios.get('/api/users?' + create_query(query), {
+			headers: { Authorization: 'Bearer ' + userInfo.access_token }
+		});
 		dispatch({ type: USER_LIST_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });

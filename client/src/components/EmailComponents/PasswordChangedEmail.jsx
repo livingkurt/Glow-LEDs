@@ -22,7 +22,7 @@ const PasswordChangedEmail = () => {
 	useEffect(() => {
 		let clean = true;
 		if (clean) {
-			dispatch(listEmails('Password Changed'));
+			dispatch(listEmails({ category: 'Password Changed' }));
 		}
 		return () => (clean = false);
 	}, []);

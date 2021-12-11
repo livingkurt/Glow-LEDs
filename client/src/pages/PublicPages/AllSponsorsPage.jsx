@@ -15,7 +15,7 @@ const AllSponsorsPage = (props) => {
 		() => {
 			let clean = true;
 			if (clean) {
-				dispatch(listAffiliates('sponsored_glovers'));
+				dispatch(listAffiliates({ category: 'sponsored_glovers' }));
 			}
 			return () => (clean = false);
 		},

@@ -73,7 +73,7 @@ const EditPalettePage = (props) => {
 					dispatch(detailsPalette(props.match.params.id));
 					dispatch(detailsPalette(props.match.params.id));
 				} else {
-					dispatch(listChips(''));
+					dispatch(listChips({}));
 				}
 				set_state();
 			}

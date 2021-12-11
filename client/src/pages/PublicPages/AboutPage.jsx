@@ -21,8 +21,8 @@ const AboutPage = () => {
 	useEffect(() => {
 		let clean = true;
 		if (clean) {
-			dispatch(listAffiliates('sponsored_glovers'));
-			dispatch(listTeams());
+			dispatch(listAffiliates({ category: 'sponsored_glovers' }));
+			dispatch(listTeams({}));
 		}
 		return () => (clean = false);
 	}, []);

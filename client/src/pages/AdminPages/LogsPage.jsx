@@ -32,17 +32,17 @@ const LogsPage = (props) => {
 	);
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(listLogs(category, search, sort));
+		dispatch(listLogs({ category, search, sort }));
 	};
 
 	const sortHandler = (e) => {
 		setSortOrder(e.target.value);
-		dispatch(listLogs(category, search, e.target.value));
+		dispatch(listLogs({ category, search, sort: e.target.value }));
 	};
 
 	useEffect(
 		() => {
-			dispatch(listLogs(category, search, sort));
+			dispatch(listLogs({ category, search, sort }));
 		},
 		[ category, search, sort, dispatch ]
 	);

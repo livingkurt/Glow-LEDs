@@ -71,8 +71,8 @@ const MonthExpensesPage = (props) => {
 		if (clean) {
 			calculate_expenses(props.match.params.month);
 			get_all_categories();
-			dispatch(listAffiliates());
-			dispatch(listPromos());
+			dispatch(listAffiliates({}));
+			dispatch(listPromos({}));
 		}
 		return () => (clean = false);
 	}, []);

@@ -107,11 +107,11 @@ const ControlPanelPage = (props) => {
 	useEffect(() => {
 		let clean = true;
 		if (clean) {
-			dispatch(listExpenses());
+			dispatch(listExpenses({}));
 			dispatch(listProducts({}));
-			dispatch(listUsers());
-			dispatch(listAffiliates());
-			dispatch(listPromos());
+			dispatch(listUsers({}));
+			dispatch(listAffiliates({}));
+			dispatch(listPromos({}));
 			get_income();
 			get_occurrences();
 			get_orders();

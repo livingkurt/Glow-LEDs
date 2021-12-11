@@ -16,7 +16,7 @@ const AllTeamsPage = (props) => {
 		() => {
 			let clean = true;
 			if (clean) {
-				dispatch(listTeams(category));
+				dispatch(listTeams({ category }));
 			}
 			return () => (clean = false);
 		},

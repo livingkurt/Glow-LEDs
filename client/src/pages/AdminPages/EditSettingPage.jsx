@@ -1,12 +1,9 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { saveSetting, detailsSetting, listSettings } from '../../actions/settingActions';
 import { useHistory, Link } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
-import { listUsers } from '../../actions/userActions';
-import { format_date, snake_case, unformat_date } from '../../utils/helper_functions';
-import { listTeams } from '../../actions/teamActions';
 
 const EditSettingPage = (props) => {
 	const [ id, set_id ] = useState('');

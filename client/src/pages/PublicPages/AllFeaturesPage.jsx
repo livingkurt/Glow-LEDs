@@ -25,7 +25,7 @@ const AllFeaturesPage = (props) => {
 		() => {
 			let clean = true;
 			if (clean) {
-				dispatch(listFeatures(category, subcategory, search));
+				dispatch(listFeatures({ category, subcategory, search }));
 			}
 			return () => (clean = false);
 		},
@@ -42,7 +42,7 @@ const AllFeaturesPage = (props) => {
 					});
 				}
 
-				dispatch(listFeatures(category, subcategory, search));
+				dispatch(listFeatures({ category, subcategory, search }));
 			}
 			return () => (clean = false);
 		},
@@ -52,7 +52,7 @@ const AllFeaturesPage = (props) => {
 		() => {
 			let clean = true;
 			if (clean) {
-				dispatch(listFeatures(category, subcategory, search, sort));
+				dispatch(listFeatures({ category, subcategory, search, sort }));
 			}
 			return () => (clean = false);
 		},
@@ -68,12 +68,12 @@ const AllFeaturesPage = (props) => {
 		history.push({
 			search: '?search=' + search
 		});
-		dispatch(listFeatures(category, subcategory, search, sort));
+		dispatch(listFeatures({ category, subcategory, search, sort }));
 	};
 
 	const sortHandler = (e) => {
 		setSortOrder(e.target.value);
-		dispatch(listFeatures(category, subcategory, search, e.target.value));
+		dispatch(listFeatures({ category, subcategory, search, sort: e.target.value }));
 	};
 
 	const descriptions = {

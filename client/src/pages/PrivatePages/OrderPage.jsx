@@ -335,7 +335,7 @@ const OrderPage = (props) => {
 					.last_name} - Original Order Number is ${order._id}`
 			})
 		);
-		dispatch(listOrders());
+		dispatch(listOrders({}));
 	};
 
 	const move_left = (e) => {
@@ -458,7 +458,7 @@ const OrderPage = (props) => {
 					<div className="mb-10px ml-20px">
 						{userInfo &&
 						userInfo.isAdmin && (
-							<Link to={props.location.previous_path || '/secure/glow/orders?page=1'}>
+							<Link to={props.location.previous_path || '/secure/glow/orders?page=1?limit=10'}>
 								<button className="btn secondary">Back to Admin Orders</button>
 							</Link>
 						)}

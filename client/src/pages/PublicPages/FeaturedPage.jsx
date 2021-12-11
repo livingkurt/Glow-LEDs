@@ -2,11 +2,9 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import { detailsFeature, listFeatures } from '../../actions/featureActions';
+import { detailsFeature } from '../../actions/featureActions';
 import { humanize } from '../../utils/helper_functions';
 import { useHistory } from 'react-router-dom';
-import Zoom from 'react-medium-image-zoom';
-import 'react-medium-image-zoom/dist/styles.css';
 
 const FeaturedPage = (props) => {
 	const history = useHistory();

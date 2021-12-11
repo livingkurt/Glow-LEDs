@@ -19,21 +19,20 @@ import { USER_UPDATE_SUCCESS } from '../constants/userConstants';
 import setAuthToken from '../utils/setAuthToken';
 import jwt_decode from 'jwt-decode';
 
-export const listAffiliates = (category = '', search = '', sort = '') => async (
+import { create_query } from '../utils/helper_functions';
+
+export const listAffiliates = (query: any) => async (
 	dispatch: (arg0: { type: string; payload?: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }
 ) => {
 	try {
 		dispatch({ type: AFFILIATE_LIST_REQUEST });
 		const { userLogin: { userInfo } } = getState();
-		const { data } = await axios.get(
-			'/api/affiliates?category=' + category + '&search=' + search + '&sort=' + sort.toLowerCase(),
-			{
-				headers: {
-					Authorization: 'Bearer ' + userInfo.access_token
-				}
+		const { data } = await axios.get('/api/affiliates?' + create_query(query), {
+			headers: {
+				Authorization: 'Bearer ' + userInfo.access_token
 			}
-		);
+		});
 		dispatch({ type: AFFILIATE_LIST_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });

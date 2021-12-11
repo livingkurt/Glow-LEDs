@@ -18,7 +18,7 @@ const ReviewEmail = () => {
 	useEffect(() => {
 		let clean = true;
 		if (clean) {
-			dispatch(listEmails('Reviews'));
+			dispatch(listEmails({ category: 'Reviews' }));
 		}
 		return () => (clean = false);
 	}, []);

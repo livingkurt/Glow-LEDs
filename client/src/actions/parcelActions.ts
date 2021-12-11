@@ -16,15 +16,12 @@ import {
 	MY_PARCEL_LIST_FAIL
 } from '../constants/parcelConstants';
 import axios from 'axios';
+import { create_query } from '../utils/helper_functions';
 
-export const listParcels = (category = '', search = '', sort = '') => async (
-	dispatch: (arg0: { type: string; payload?: any }) => void
-) => {
+export const listParcels = (query: any) => async (dispatch: (arg0: { type: string; payload?: any }) => void) => {
 	try {
 		dispatch({ type: PARCEL_LIST_REQUEST });
-		const { data } = await axios.get(
-			'/api/parcels?category=' + category + '&search=' + search + '&sort=' + sort.toLowerCase()
-		);
+		const { data } = await axios.get('/api/parcels?' + create_query(query));
 		dispatch({ type: PARCEL_LIST_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });

@@ -23,7 +23,7 @@ const ContentsPage = (props) => {
 		() => {
 			let clean = true;
 			if (clean) {
-				dispatch(listContents());
+				dispatch(listContents({}));
 			}
 			return () => (clean = false);
 		},
@@ -31,7 +31,7 @@ const ContentsPage = (props) => {
 	);
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(listContents(category, search));
+		dispatch(listContents({ category, search }));
 	};
 
 	const deleteHandler = (content) => {
@@ -45,8 +45,8 @@ const ContentsPage = (props) => {
 				active: content.active ? false : true
 			})
 		);
-		dispatch(listContents(''));
-		dispatch(listContents(''));
+		dispatch(listContents({}));
+		dispatch(listContents({}));
 	};
 
 	return (

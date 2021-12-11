@@ -2,14 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import { detailsAffiliate, listAffiliates } from '../../actions/affiliateActions';
-import { humanize } from '../../utils/helper_functions';
+import { detailsAffiliate } from '../../actions/affiliateActions';
 import { useHistory } from 'react-router-dom';
-import Zoom from 'react-medium-image-zoom';
-import 'react-medium-image-zoom/dist/styles.css';
 import { LazyImage } from '../../components/UtilityComponents';
-import { Product, ProductSimple, ProductSimpleSmallScreen } from '../../components/SpecialtyComponents';
-import { listTeams } from '../../actions/teamActions';
+import { ProductSimple, ProductSimpleSmallScreen } from '../../components/SpecialtyComponents';
 import { API_Users } from '../../utils';
 
 const SponsorPage = (props) => {

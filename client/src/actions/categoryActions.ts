@@ -13,16 +13,13 @@ import {
 	CATEGORY_DELETE_REQUEST
 } from '../constants/categoryConstants';
 import axios from 'axios';
+import { create_query } from '../utils/helper_functions';
 
-export const listCategorys = (category = '', search = '', sort = '') => async (
-	dispatch: (arg0: { type: string; payload?: any }) => void
-) => {
+export const listCategorys = (query: any) => async (dispatch: (arg0: { type: string; payload?: any }) => void) => {
 	try {
 		dispatch({ type: CATEGORY_LIST_REQUEST });
 
-		const { data } = await axios.get(
-			'/api/categorys?category=' + category + '&search=' + search + '&sort=' + sort.toLowerCase()
-		);
+		const { data } = await axios.get('/api/categorys?' + create_query(query));
 		console.log({ listCategorys: data });
 		dispatch({ type: CATEGORY_LIST_SUCCESS, payload: data });
 	} catch (error) {

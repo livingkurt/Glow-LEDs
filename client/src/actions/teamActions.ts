@@ -13,15 +13,12 @@ import {
 	TEAM_DELETE_REQUEST
 } from '../constants/teamConstants';
 import axios from 'axios';
+import { create_query } from '../utils/helper_functions';
 
-export const listTeams = (category = '', search = '', sort = '') => async (
-	dispatch: (arg0: { type: string; payload?: any }) => void
-) => {
+export const listTeams = (query: any) => async (dispatch: (arg0: { type: string; payload?: any }) => void) => {
 	try {
 		dispatch({ type: TEAM_LIST_REQUEST });
-		const { data } = await axios.get(
-			'/api/teams?category=' + category + '&search=' + search + '&sort=' + sort.toLowerCase()
-		);
+		const { data } = await axios.get('/api/teams?' + create_query(query));
 		console.log({ data });
 		dispatch({ type: TEAM_LIST_SUCCESS, payload: data });
 	} catch (error) {

@@ -104,19 +104,21 @@ const AllProductsPage = (props) => {
 
 	const { width, height } = userWindowDimensions();
 
-	useEffect(() => {
-		let clean = true;
-		if (clean) {
-			dispatch(listChips(''));
-			determine_products();
-		}
-		return () => (clean = false);
-	}, []);
+	// useEffect(() => {
+	// 	let clean = true;
+	// 	if (clean) {
+	// 		dispatch(listChips({}));
+
+	// 		determine_products();
+	// 	}
+	// 	return () => (clean = false);
+	// }, []);
 
 	useEffect(
 		() => {
 			let clean = true;
 			if (clean) {
+				dispatch(listChips({}));
 				determine_products();
 			}
 			return () => (clean = false);
@@ -228,7 +230,7 @@ const AllProductsPage = (props) => {
 				subcategory,
 				filter,
 				search,
-				sort: sort,
+				sort,
 				page: new_page,
 				limit,
 				hidden: false

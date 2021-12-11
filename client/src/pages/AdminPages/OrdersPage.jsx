@@ -34,7 +34,7 @@ const OrdersPage = (props) => {
 					console.log({ page: query.page });
 					set_page(query.page);
 					set_limit(query.limit);
-					dispatch(listOrders(category, search, sort, query.page, query.limit));
+					dispatch(listOrders({ category, search, sort, page: query.page, limit: query.limit }));
 				}
 			}
 			return () => (clean = false);
@@ -57,12 +57,12 @@ const OrdersPage = (props) => {
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(listOrders(category, search, sort, page, limit));
+		dispatch(listOrders({ category, search, sort, page, limit }));
 	};
 
 	const sortHandler = (e) => {
 		setSortOrder(e.target.value);
-		dispatch(listOrders(category, search, e.target.value, page, limit));
+		dispatch(listOrders({ category, search, sort: e.target.value, page, limit }));
 	};
 
 	const colors = [
@@ -140,7 +140,7 @@ const OrdersPage = (props) => {
 			if (clean) {
 				if (error) {
 					check_authentication();
-					dispatch(listOrders(category, search, sort, page, limit));
+					dispatch(listOrders({ category, search, sort, page, limit }));
 				}
 			}
 			return () => (clean = false);
@@ -155,11 +155,11 @@ const OrdersPage = (props) => {
 		e.preventDefault();
 		const page = parseInt(new_page);
 		history.push({
-			search: '?page=' + page
+			search: '?page=' + page + '?limit=' + limit
 		});
 
 		console.log(new_page);
-		dispatch(listOrders(category, search, sort, new_page));
+		dispatch(listOrders({ category, search, sort, page: new_page, limit }));
 	};
 
 	useEffect(() => {

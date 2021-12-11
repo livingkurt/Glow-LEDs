@@ -109,7 +109,7 @@ const AllProductsPage = (props) => {
 						dispatch(listProducts({ category, subcategory, search, collection }));
 					}
 				}
-				dispatch(listChips());
+				dispatch(listChips({}));
 			}
 			return () => (clean = false);
 		},

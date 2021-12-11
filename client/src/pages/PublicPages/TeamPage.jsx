@@ -2,11 +2,8 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import { detailsTeam, listTeams } from '../../actions/teamActions';
-import { humanize } from '../../utils/helper_functions';
+import { detailsTeam } from '../../actions/teamActions';
 import { useHistory } from 'react-router-dom';
-import Zoom from 'react-medium-image-zoom';
-import 'react-medium-image-zoom/dist/styles.css';
 import { LazyImage } from '../../components/UtilityComponents';
 
 const TeamPage = (props) => {
@@ -26,9 +23,6 @@ const TeamPage = (props) => {
 		return () => (clean = false);
 	}, []);
 
-	const date = new Date();
-
-	const today = date.toISOString();
 	return (
 		<div className="main_container p-20px">
 			<Helmet>

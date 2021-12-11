@@ -146,12 +146,9 @@ const EditProductPage = (props) => {
 				} else {
 					dispatch(detailsProduct(''));
 				}
-
-				// dispatch(listCategorys());
 				get_all_options();
 				get_all_products();
 				get_all_secondary_products();
-				// set_loading_data(false);
 				set_state();
 			}
 			return () => (clean = false);

@@ -70,7 +70,7 @@ const EditUserPage = (props) => {
 				} else {
 					dispatch(detailsUser(''));
 				}
-				dispatch(listAffiliates(''));
+				dispatch(listAffiliates({}));
 				set_state();
 			}
 			return () => (clean = false);

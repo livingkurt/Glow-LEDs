@@ -92,8 +92,8 @@ const EditSurveyPage = (props) => {
 				} else {
 					dispatch(detailsSurvey(''));
 				}
-				dispatch(listUsers(''));
-				dispatch(listOrders(''));
+				dispatch(listUsers({}));
+				dispatch(listOrders({}));
 				stable_set_state();
 			}
 			return () => (clean = false);

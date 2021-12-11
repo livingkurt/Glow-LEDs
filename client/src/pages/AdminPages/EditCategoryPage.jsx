@@ -44,7 +44,7 @@ const EditCategoryPage = (props) => {
 			} else {
 				dispatch(detailsCategory(''));
 			}
-			dispatch(listCategorys(''));
+			dispatch(listCategorys({}));
 			set_state();
 		}
 		return () => (clean = false);

@@ -89,8 +89,8 @@ const PlaceOrderPage = (props) => {
 		() => {
 			let clean = true;
 			if (clean) {
-				dispatch(listPromos());
-				dispatch(listUsers(''));
+				dispatch(listPromos({}));
+				dispatch(listUsers({}));
 			}
 			return () => (clean = false);
 		},
@@ -351,7 +351,7 @@ const PlaceOrderPage = (props) => {
 		);
 
 		set_loading_payment(false);
-		props.history.push('/secure/glow/orders?page=1');
+		props.history.push('/secure/glow/orders?page=1?limit=10');
 		empty_cart();
 		// if (promo_code) {
 		// 	await API_Products.promo_code_used(promo_code);
@@ -395,7 +395,7 @@ const PlaceOrderPage = (props) => {
 			})
 		);
 
-		props.history.push('/secure/glow/orders?page=1');
+		props.history.push('/secure/glow/orders?page=1?limit=10');
 		empty_cart();
 		// if (promo_code) {
 		// 	await API_Products.promo_code_used(promo_code);

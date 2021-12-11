@@ -77,8 +77,8 @@ const Survey = (props) => {
 	useEffect(() => {
 		let clean = true;
 		if (clean) {
-			dispatch(listSurveys(''));
-			dispatch(listUsers(''));
+			dispatch(listSurveys({}));
+			dispatch(listUsers({}));
 
 			set_state();
 		}

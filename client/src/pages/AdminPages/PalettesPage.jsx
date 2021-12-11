@@ -50,10 +50,10 @@ const PalettesPage = (props) => {
 		() => {
 			let clean = true;
 			if (clean) {
-				dispatch(listPalettes());
-				dispatch(listAffiliates(''));
-				dispatch(listTeams(''));
-				dispatch(listOrders(''));
+				dispatch(listPalettes({}));
+				dispatch(listAffiliates({}));
+				dispatch(listTeams({}));
+				dispatch(listOrders({}));
 				get_last_months_orders();
 				get_total_orders();
 			}
@@ -74,19 +74,19 @@ const PalettesPage = (props) => {
 	};
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(listPalettes(category, search, sort));
+		dispatch(listPalettes({ category, search, sort }));
 	};
 
 	const sortHandler = (e) => {
 		setSortOrder(e.target.value);
-		dispatch(listPalettes(category, search, e.target.value));
+		dispatch(listPalettes({ category, search, sort: e.target.value }));
 	};
 
 	useEffect(
 		() => {
 			let clean = true;
 			if (clean) {
-				dispatch(listPalettes(category, search, sort));
+				dispatch(listPalettes({ category, search, sort }));
 			}
 			return () => (clean = false);
 		},
@@ -108,7 +108,7 @@ const PalettesPage = (props) => {
 				paid_at: format_date(today)
 			})
 		);
-		dispatch(listPalettes());
+		dispatch(listPalettes({}));
 	};
 
 	const sort_options = [ 'Newest', 'Artist Name', 'Facebook Name', 'Instagram Handle', 'Sponsor', 'Promoter' ];

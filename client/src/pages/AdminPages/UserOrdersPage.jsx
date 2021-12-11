@@ -16,16 +16,13 @@ const UserOrderPage = (props) => {
 	const myOrderList = useSelector((state) => state.myOrderList);
 	const { loading, orders, error } = myOrderList;
 
-	useEffect(
-		() => {
-			let clean = true;
-			if (clean) {
-				dispatch(listUserOrders(props.match.params.id));
-			}
-			return () => (clean = false);
-		},
-		[ userInfo, dispatch ]
-	);
+	useEffect(() => {
+		let clean = true;
+		if (clean) {
+			dispatch(listUserOrders(props.match.params.id));
+		}
+		return () => (clean = false);
+	}, []);
 	const change_view = (e) => {
 		if (e.target.value === 'Block View') {
 			set_block_list_view(true);

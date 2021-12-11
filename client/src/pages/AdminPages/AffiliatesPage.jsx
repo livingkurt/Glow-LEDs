@@ -32,8 +32,8 @@ const AffiliatesPage = (props) => {
 		() => {
 			let clean = true;
 			if (clean) {
-				dispatch(listAffiliates());
-				dispatch(listOrders());
+				dispatch(listAffiliates({}));
+				dispatch(listOrders({}));
 				get_last_months_orders();
 				get_total_orders();
 			}
@@ -43,22 +43,21 @@ const AffiliatesPage = (props) => {
 	);
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(listAffiliates(category, search, sort));
+		dispatch(listAffiliates({ category, search, sort }));
 	};
 
 	const sortHandler = (e) => {
 		setSortOrder(e.target.value);
-		dispatch(listAffiliates(category, search, e.target.value));
+		dispatch(listAffiliates({ category, search, sort: e.target.value }));
 	};
 
 	useEffect(() => {
 		let clean = true;
 		if (clean) {
-			dispatch(listAffiliates());
-			dispatch(listOrders());
+			dispatch(listOrders({}));
 			get_last_months_orders();
 			get_total_orders();
-			dispatch(listAffiliates(category, search, sort));
+			dispatch(listAffiliates({ category, search, sort }));
 		}
 		return () => (clean = false);
 	}, []);
@@ -101,7 +100,7 @@ const AffiliatesPage = (props) => {
 
 	// const update_ = (e) => {
 	// 	setSortOrder(e.target.value);
-	// 	dispatch(listAffiliates(category, search, e.target.value));
+	// 	dispatch(listAffiliates({category, search, sort: e.target.value}));
 	// };
 
 	const get_last_months_orders = async () => {
@@ -121,7 +120,7 @@ const AffiliatesPage = (props) => {
 		const request = await API_Promos.update_promo_code(affiliates, last_months_orders);
 		if (request) {
 			set_loading_promo_update(false);
-			dispatch(listAffiliates());
+			dispatch(listAffiliates({}));
 		}
 	};
 
@@ -141,15 +140,15 @@ const AffiliatesPage = (props) => {
 				active: affiliate.active ? false : true
 			})
 		);
-		dispatch(listAffiliates(''));
-		dispatch(listAffiliates(''));
+		dispatch(listAffiliates({}));
+		dispatch(listAffiliates({}));
 	};
 
 	const upload_rave_mob_csv = async (csv) => {
 		const { data } = API_Affiliates.upload_rave_mob_csv(csv);
 		console.log({ upload_rave_mob_csv: data });
-		dispatch(listAffiliates(''));
-		dispatch(listAffiliates(''));
+		dispatch(listAffiliates({}));
+		dispatch(listAffiliates({}));
 	};
 
 	return (

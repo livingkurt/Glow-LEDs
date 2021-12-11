@@ -26,7 +26,7 @@ const ParcelsPage = (props) => {
 		() => {
 			let clean = true;
 			if (clean) {
-				dispatch(listParcels());
+				dispatch(listParcels({}));
 			}
 			return () => (clean = false);
 		},
@@ -35,19 +35,19 @@ const ParcelsPage = (props) => {
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(listParcels(category, search, sort));
+		dispatch(listParcels({ category, search, sort }));
 	};
 
 	const sortHandler = (e) => {
 		setSortOrder(e.target.value);
-		dispatch(listParcels(category, search, e.target.value));
+		dispatch(listParcels({ category, search, sort: e.target.value }));
 	};
 
 	useEffect(
 		() => {
 			let clean = true;
 			if (clean) {
-				dispatch(listParcels(category, search, sort));
+				dispatch(listParcels({ category, search, sort }));
 			}
 			return () => (clean = false);
 		},

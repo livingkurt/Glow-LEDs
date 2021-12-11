@@ -43,10 +43,10 @@ const SettingsPage = (props) => {
 		() => {
 			let clean = true;
 			if (clean) {
-				dispatch(listSettings());
-				dispatch(listAffiliates(''));
-				dispatch(listTeams(''));
-				dispatch(listOrders(''));
+				dispatch(listSettings({}));
+				dispatch(listAffiliates({}));
+				dispatch(listTeams({}));
+				dispatch(listOrders({}));
 			}
 			return () => (clean = false);
 		},
@@ -55,19 +55,19 @@ const SettingsPage = (props) => {
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(listSettings(category, search, sort));
+		dispatch(listSettings({ category, search, sort }));
 	};
 
 	const sortHandler = (e) => {
 		setSortOrder(e.target.value);
-		dispatch(listSettings(category, search, e.target.value));
+		dispatch(listSettings({ category, search, sort: e.target.value }));
 	};
 
 	useEffect(
 		() => {
 			let clean = true;
 			if (clean) {
-				dispatch(listSettings(category, search, sort));
+				dispatch(listSettings({ category, search, sort }));
 			}
 			return () => (clean = false);
 		},

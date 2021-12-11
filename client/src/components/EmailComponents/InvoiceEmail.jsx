@@ -31,9 +31,9 @@ const InvoiceEmail = (props) => {
 		() => {
 			let clean = true;
 			if (clean) {
-				dispatch(listEmails('Invoice'));
+				dispatch(listEmails({ category: 'Invoice' }));
 				dispatch(detailsOrder(props.match.params.id || '5fa43d5f248dcacd5d8e2d3f'));
-				dispatch(listPromos());
+				dispatch(listPromos({}));
 			}
 			return () => (clean = false);
 		},
@@ -752,7 +752,7 @@ const InvoiceEmail = (props) => {
 						Back to Emails
 					</button>
 				)}
-				<Link to={props.location.previous_path || '/secure/glow/orders?page=1'}>
+				<Link to={props.location.previous_path || '/secure/glow/orders?page=1?limit=10'}>
 					<button className="btn primary mh-10px">Back to Orders</button>
 				</Link>
 

@@ -38,6 +38,7 @@ import {
 	USER_SAVE_REQUEST,
 	USER_SAVE_SUCCESS
 } from '../constants/userConstants';
+import { create_query } from '../utils/helper_functions';
 require('dotenv').config();
 
 export const createPayOrder = (
@@ -370,7 +371,7 @@ export const listUserOrders = (user_id: string) => async (
 	}
 };
 
-export const listOrders = (category = '', search = '', sort = '', page = '', limit = '') => async (
+export const listOrders = (query: any) => async (
 	dispatch: (arg0: { type: string; payload?: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }
 ) => {
@@ -378,21 +379,9 @@ export const listOrders = (category = '', search = '', sort = '', page = '', lim
 		dispatch({ type: ORDER_LIST_REQUEST });
 		const { userLogin: { userInfo } } = getState();
 		console.log({ userInfo });
-		const { data } = await axios.get(
-			'/api/orders/?category=' +
-				category +
-				'&search=' +
-				search +
-				'&sort=' +
-				sort.toLowerCase() +
-				'&page=' +
-				page +
-				'&limit=' +
-				limit,
-			{
-				headers: { Authorization: 'Bearer ' + userInfo.access_token }
-			}
-		);
+		const { data } = await axios.get('/api/orders/?' + create_query(query), {
+			headers: { Authorization: 'Bearer ' + userInfo.access_token }
+		});
 		console.log({ data });
 		dispatch({ type: ORDER_LIST_SUCCESS, payload: data });
 	} catch (error) {

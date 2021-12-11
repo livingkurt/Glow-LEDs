@@ -24,7 +24,7 @@ const ChipsPage = (props) => {
 		() => {
 			let clean = true;
 			if (clean) {
-				dispatch(listChips());
+				dispatch(listChips({}));
 			}
 			return () => (clean = false);
 		},
@@ -32,19 +32,19 @@ const ChipsPage = (props) => {
 	);
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(listChips(category, search, sort));
+		dispatch(listChips({ category, search, sort }));
 	};
 
 	const sortHandler = (e) => {
 		setSortOrder(e.target.value);
-		dispatch(listChips(category, search, e.target.value));
+		dispatch(listChips({ category, search, sort: e.target.value }));
 	};
 
 	useEffect(
 		() => {
 			let clean = true;
 			if (clean) {
-				dispatch(listChips(category, search, sort));
+				dispatch(listChips({ category, search, sort }));
 			}
 			return () => (clean = false);
 		},

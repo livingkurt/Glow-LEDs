@@ -1,17 +1,12 @@
-import React, { useEffect, useCallback, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { detailsEmail, listEmails } from '../../actions/emailActions';
 import { API_Emails, API_Orders } from '../../utils';
 import { determine_tracking_number, format_date, toCapitalize } from '../../utils/helper_functions';
-import { detailsOrder, detailsOrderPublic, update_order } from '../../actions/orderActions';
-import {
-	determine_product_name,
-	email_sale_price_switch,
-	order_status_steps
-} from '../../utils/react_helper_functions';
-import { listPromos } from '../../actions/promoActions';
+import { update_order } from '../../actions/orderActions';
+import { determine_product_name, order_status_steps } from '../../utils/react_helper_functions';
 import { Loading } from '../UtilityComponents';
 
 const OrderStatusEmail = (props) => {
@@ -36,7 +31,7 @@ const OrderStatusEmail = (props) => {
 	useEffect(() => {
 		let clean = true;
 		if (clean) {
-			dispatch(listEmails(toCapitalize(props.match.params.status)));
+			dispatch(listEmails({ category: toCapitalize(props.match.params.status) }));
 		}
 		return () => (clean = false);
 	}, []);
@@ -1037,7 +1032,7 @@ const OrderStatusEmail = (props) => {
 					<Link to="/secure/glow/emails">
 						<button className="btn primary">Back to Emails</button>
 					</Link>
-					<Link to={props.location.previous_path || '/secure/glow/orders?page=1'}>
+					<Link to={props.location.previous_path || '/secure/glow/orders?page=1?limit=10'}>
 						<button className="btn primary">Back to Orders</button>
 					</Link>
 					{order && (

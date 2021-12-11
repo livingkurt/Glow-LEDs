@@ -4,7 +4,6 @@ import { saveTeam, detailsTeam } from '../../actions/teamActions';
 import { useHistory } from 'react-router-dom';
 import { ImageDisplay, Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
-import { listUsers } from '../../actions/userActions';
 import { listAffiliates } from '../../actions/affiliateActions';
 import { snake_case } from '../../utils/helper_functions';
 import { listPromos } from '../../actions/promoActions';
@@ -107,8 +106,8 @@ const EditTeamPage = (props) => {
 				} else {
 					dispatch(detailsTeam(''));
 				}
-				dispatch(listAffiliates(''));
-				dispatch(listPromos(''));
+				dispatch(listAffiliates({}));
+				dispatch(listPromos({}));
 			}
 			return () => (clean = false);
 		},

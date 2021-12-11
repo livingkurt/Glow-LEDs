@@ -68,8 +68,8 @@ const EditPaycheckPage = (props) => {
 				} else {
 					dispatch(detailsPaycheck(''));
 				}
-				dispatch(listAffiliates(''));
-				dispatch(listTeams(''));
+				dispatch(listAffiliates({}));
+				dispatch(listTeams({}));
 				set_state();
 			}
 			return () => (clean = false);

@@ -43,19 +43,19 @@ const CartsPage = (props) => {
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(listCarts(category, search, sort));
+		dispatch(listCarts({ category, search, sort }));
 	};
 
 	const sortHandler = (e) => {
 		setSortOrder(e.target.value);
-		dispatch(listCarts(category, search, e.target.value));
+		dispatch(listCarts({ category, search, sort: e.target.value }));
 	};
 
 	useEffect(
 		() => {
 			let clean = true;
 			if (clean) {
-				dispatch(listCarts(category, search, sort));
+				dispatch(listCarts({ category, search, sort }));
 			}
 			return () => (clean = false);
 		},

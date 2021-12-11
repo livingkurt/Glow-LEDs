@@ -81,7 +81,7 @@ const EditContentPage = (props) => {
 				} else {
 					dispatch(detailsContent(''));
 				}
-				dispatch(listEmails(''));
+				dispatch(listEmails({}));
 
 				// set_loading_data(false);
 				set_state();

@@ -39,7 +39,7 @@ const CategorysPage = (props) => {
 		() => {
 			let clean = true;
 			if (clean) {
-				dispatch(listCategorys());
+				dispatch(listCategorys({}));
 			}
 			return () => (clean = false);
 		},
@@ -48,19 +48,19 @@ const CategorysPage = (props) => {
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(listCategorys(category, search, sort));
+		dispatch(listCategorys({ category, search, sort }));
 	};
 
 	const sortHandler = (e) => {
 		setSortOrder(e.target.value);
-		dispatch(listCategorys(category, search, e.target.value));
+		dispatch(listCategorys({ category, search, sort: e.target.value }));
 	};
 
 	useEffect(
 		() => {
 			let clean = true;
 			if (clean) {
-				dispatch(listCategorys(category, search, sort));
+				dispatch(listCategorys({ category, search, sort }));
 			}
 			return () => (clean = false);
 		},
@@ -68,7 +68,7 @@ const CategorysPage = (props) => {
 	);
 	const deleteHandler = (category) => {
 		dispatch(deleteCategory(category._id));
-		dispatch(listCategorys(category, search, sort));
+		dispatch(listCategorys({ category, search, sort }));
 	};
 
 	const sort_options = [ 'Newest', 'Artist Name', 'Facebook Name', 'Instagram Handle', 'Sponsor', 'Promoter' ];
@@ -116,7 +116,7 @@ const CategorysPage = (props) => {
 				})
 			);
 		});
-		dispatch(listCategorys());
+		dispatch(listCategorys({}));
 	};
 
 	const create_subcategories = async () => {
@@ -133,7 +133,7 @@ const CategorysPage = (props) => {
 				})
 			);
 		});
-		dispatch(listCategorys());
+		dispatch(listCategorys({}));
 	};
 
 	return (

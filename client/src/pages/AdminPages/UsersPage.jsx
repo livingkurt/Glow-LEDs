@@ -26,7 +26,7 @@ const UsersPage = (props) => {
 		() => {
 			let clean = true;
 			if (clean) {
-				dispatch(listUsers());
+				dispatch(listUsers({}));
 			}
 			return () => (clean = false);
 		},
@@ -39,19 +39,19 @@ const UsersPage = (props) => {
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(listUsers(category, search, sort));
+		dispatch(listUsers({ category, search, sort }));
 	};
 
 	const sortHandler = (e) => {
 		setSortOrder(e.target.value);
-		dispatch(listUsers(category, search, e.target.value));
+		dispatch(listUsers({ category, search, sort: e.target.value }));
 	};
 
 	useEffect(
 		() => {
 			let clean = true;
 			if (clean) {
-				dispatch(listUsers(category, search, sort));
+				dispatch(listUsers({ category, search, sort }));
 			}
 			return () => (clean = false);
 		},

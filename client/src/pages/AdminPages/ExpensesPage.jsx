@@ -35,7 +35,7 @@ const ExpensesPage = (props) => {
 		() => {
 			let clean = true;
 			if (clean) {
-				dispatch(listExpenses(category, search, sort));
+				dispatch(listExpenses({ category, search, sort }));
 			}
 			return () => (clean = false);
 		},
@@ -44,19 +44,19 @@ const ExpensesPage = (props) => {
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(listExpenses(category, search, sort));
+		dispatch(listExpenses({ category, search, sort }));
 	};
 
 	const sortHandler = (e) => {
 		setSortOrder(e.target.value);
-		dispatch(listExpenses(category, search, e.target.value));
+		dispatch(listExpenses({ category, search, sort: e.target.value }));
 	};
 
 	useEffect(
 		() => {
 			let clean = true;
 			if (clean) {
-				dispatch(listExpenses());
+				dispatch(listExpenses({}));
 			}
 			return () => (clean = false);
 		},
@@ -122,7 +122,7 @@ const ExpensesPage = (props) => {
 				}
 			}
 		});
-		dispatch(listExpenses(category, search, sort));
+		dispatch(listExpenses({ category, search, sort }));
 	};
 
 	const card_types = [ 'FID', 'GL AMEX', 'AMZNK' ];

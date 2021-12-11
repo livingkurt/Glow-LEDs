@@ -15,22 +15,20 @@ import {
 	HIDE_SEARCH_BAR
 } from '../constants/settingConstants';
 import axios from 'axios';
+import { create_query } from '../utils/helper_functions';
 
-export const listSettings = (category = '', search = '', sort = '') => async (
+export const listSettings = (query: any) => async (
 	dispatch: (arg0: { type: string; payload?: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }
 ) => {
 	try {
 		dispatch({ type: SETTING_LIST_REQUEST });
 		const { userLogin: { userInfo } } = getState();
-		const { data } = await axios.get(
-			'/api/settings?category=' + category + '&search=' + search + '&sort=' + sort.toLowerCase(),
-			{
-				headers: {
-					Authorization: 'Bearer ' + userInfo.access_token
-				}
+		const { data } = await axios.get('/api/settings?' + create_query(query), {
+			headers: {
+				Authorization: 'Bearer ' + userInfo.access_token
 			}
-		);
+		});
 		dispatch({ type: SETTING_LIST_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });

@@ -30,7 +30,7 @@ const MarkAsShippedEmail = (props) => {
 	useEffect(() => {
 		let clean = true;
 		if (clean) {
-			dispatch(listEmails(toCapitalize(props.match.params.status)));
+			dispatch(listEmails({ category: toCapitalize(props.match.params.status) }));
 			const message = localStorage.getItem('message_to_user');
 			console.log({ message });
 			if (message) {
@@ -999,7 +999,7 @@ const MarkAsShippedEmail = (props) => {
 			})(i);
 		});
 		setTimeout(() => {
-			history.push(props.location.previous_path || '/secure/glow/orders?page=1');
+			history.push(props.location.previous_path || '/secure/glow/orders?page=1?limit=10');
 		}, 2000 * orders.length - 1);
 	};
 
@@ -1020,7 +1020,7 @@ const MarkAsShippedEmail = (props) => {
 					<Link to="/secure/glow/emails">
 						<button className="btn primary">Back to Emails</button>
 					</Link>
-					<Link to={props.location.previous_path || '/secure/glow/orders?page=1'}>
+					<Link to={props.location.previous_path || '/secure/glow/orders?page=1?limit=10'}>
 						<button className="btn primary">Back to Orders</button>
 					</Link>
 					{order && (

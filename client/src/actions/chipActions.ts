@@ -13,15 +13,12 @@ import {
 	CHIP_DELETE_REQUEST
 } from '../constants/chipConstants';
 import axios from 'axios';
+import { create_query } from '../utils/helper_functions';
 
-export const listChips = (category = '', search = '', sort = '') => async (
-	dispatch: (arg0: { type: string; payload?: any }) => void
-) => {
+export const listChips = (query: any) => async (dispatch: (arg0: { type: string; payload?: any }) => void) => {
 	try {
 		dispatch({ type: CHIP_LIST_REQUEST });
-		const { data } = await axios.get(
-			'/api/chips?category=' + category + '&search=' + search + '&sort=' + sort.toLowerCase()
-		);
+		const { data } = await axios.get('/api/chips?' + create_query(query));
 		dispatch({ type: CHIP_LIST_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });

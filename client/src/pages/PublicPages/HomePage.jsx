@@ -69,8 +69,8 @@ const HomePage = (props) => {
 	useEffect(() => {
 		let clean = true;
 		if (clean) {
-			dispatch(listContents(3));
-			dispatch(listFeatures());
+			dispatch(listContents({ limit: 3 }));
+			dispatch(listFeatures({}));
 			get_all_products();
 			get_display_content();
 		}

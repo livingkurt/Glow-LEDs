@@ -874,11 +874,11 @@ export const description_determination = (category: any) => {
 	}
 };
 
-export const update_products_url = (history: any, search = '', sort = '', filter = '', page = 1) => {
+export const update_products_url = (history: any, search = '', sort = '', filter = '', page = 1, limit = 10) => {
 	history.push({
 		search: `${search ? '?search=' + search : ''}${sort ? '?sort=' + sort : ''}${filter
 			? '?filter=' + filter
-			: ''}${page ? '?page=' + page : ''}`
+			: ''}${page ? '?page=' + page : ''}${limit ? '?limit=' + limit : ''}`
 	});
 };
 

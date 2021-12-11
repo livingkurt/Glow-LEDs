@@ -16,22 +16,20 @@ import {
 	MY_PAYCHECK_LIST_FAIL
 } from '../constants/paycheckConstants';
 import axios from 'axios';
+import { create_query } from '../utils/helper_functions';
 
-export const listPaychecks = (category = '', search = '', sort = '') => async (
+export const listPaychecks = (query: any) => async (
 	dispatch: (arg0: { type: string; payload?: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }
 ) => {
 	try {
 		dispatch({ type: PAYCHECK_LIST_REQUEST });
 		const { userLogin: { userInfo } } = getState();
-		const { data } = await axios.get(
-			'/api/paychecks?category=' + category + '&search=' + search + '&sort=' + sort.toLowerCase(),
-			{
-				headers: {
-					Authorization: 'Bearer ' + userInfo.access_token
-				}
+		const { data } = await axios.get('/api/paychecks?' + create_query(query), {
+			headers: {
+				Authorization: 'Bearer ' + userInfo.access_token
 			}
-		);
+		});
 		dispatch({ type: PAYCHECK_LIST_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });

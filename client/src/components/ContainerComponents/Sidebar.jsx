@@ -131,7 +131,7 @@ const Sidebar = (props) => {
 					</button> */}
 					<div className="sidebar-btn-container">
 						<button className="sidebar-btn primary">
-							<Link to="/collections/all/products" onClick={closeMenu}>
+							<Link to="/collections/all/products?page=1?limit=21" onClick={closeMenu}>
 								Products{' '}
 							</Link>
 						</button>
@@ -716,7 +716,7 @@ const Sidebar = (props) => {
 									Control Panel
 								</button>
 							</Link>
-							<Link to="/secure/glow/orders?page=1">
+							<Link to="/secure/glow/orders?page=1?limit=10">
 								<button className="sidebar-btn secondary" onClick={closeMenu}>
 									Orders
 								</button>

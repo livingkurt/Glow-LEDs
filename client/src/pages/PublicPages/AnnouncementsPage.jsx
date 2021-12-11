@@ -15,7 +15,7 @@ const AnnouncementPage = (props) => {
 		() => {
 			let clean = true;
 			if (clean) {
-				dispatch(listEmails('Announcements'));
+				dispatch(listEmails({ category: 'Announcements' }));
 			}
 			return () => (clean = false);
 		},

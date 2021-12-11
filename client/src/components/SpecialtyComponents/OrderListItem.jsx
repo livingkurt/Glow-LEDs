@@ -50,12 +50,12 @@ const OrderListItem = (props) => {
 					.last_name} - Original Order Number is ${props.order._id}`
 			})
 		);
-		dispatch(listOrders());
+		dispatch(listOrders({}));
 	};
 
 	const delete_order = () => {
 		dispatch(deleteOrder(props.order._id));
-		dispatch(listOrders(''));
+		dispatch(listOrders({}));
 	};
 
 	return (

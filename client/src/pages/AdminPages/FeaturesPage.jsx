@@ -25,7 +25,7 @@ const FeaturesPage = (props) => {
 		() => {
 			let clean = true;
 			if (clean) {
-				dispatch(listFeatures());
+				dispatch(listFeatures({}));
 			}
 			return () => (clean = false);
 		},
@@ -33,19 +33,19 @@ const FeaturesPage = (props) => {
 	);
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(listFeatures(category, search, sort));
+		dispatch(listFeatures({ category, search, sort }));
 	};
 
 	const sortHandler = (e) => {
 		setSortOrder(e.target.value);
-		dispatch(listFeatures(category, search, e.target.value));
+		dispatch(listFeatures({ category, search, sort: e.target.value }));
 	};
 
 	useEffect(
 		() => {
 			let clean = true;
 			if (clean) {
-				dispatch(listFeatures(category, search, sort));
+				dispatch(listFeatures({ category, search, sort }));
 			}
 			return () => (clean = false);
 		},

@@ -13,15 +13,12 @@ import {
 	FEATURE_DELETE_REQUEST
 } from '../constants/featureConstants';
 import axios from 'axios';
+import { create_query } from '../utils/helper_functions';
 
-export const listFeatures = (category = '', search = '', sort = '') => async (
-	dispatch: (arg0: { type: string; payload?: any }) => void
-) => {
+export const listFeatures = (query: any) => async (dispatch: (arg0: { type: string; payload?: any }) => void) => {
 	try {
 		dispatch({ type: FEATURE_LIST_REQUEST });
-		const { data } = await axios.get(
-			'/api/features?category=' + category + '&search=' + search + '&sort=' + sort.toLowerCase()
-		);
+		const { data } = await axios.get('/api/features?' + create_query(query));
 		dispatch({ type: FEATURE_LIST_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });

@@ -2,10 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { humanize, snake_case } from '../../utils/helper_functions';
-import { listFeatures } from '../../actions/featureActions';
 import { useSelector, useDispatch } from 'react-redux';
-import { API_Features, API_Products } from '../../utils';
-import { LazyImage, Loading } from '../../components/UtilityComponents';
+import { API_Features } from '../../utils';
+import { Loading } from '../../components/UtilityComponents';
 import { MenuItemD } from '../../components/DesktopComponents';
 import { MenuItemM } from '../../components/MobileComponents';
 import { listContents } from '../../actions/contentActions';
@@ -31,7 +30,7 @@ const MenuPage = (props) => {
 					get_features();
 				}
 				if (pathname === 'gloving' || pathname === 'manuals' || pathname === 'support') {
-					dispatch(listContents());
+					dispatch(listContents({}));
 				}
 			}
 			return () => (clean = false);

@@ -13,15 +13,12 @@ import {
 	PROMO_DELETE_REQUEST
 } from '../constants/promoConstants';
 import axios from 'axios';
+import { create_query } from '../utils/helper_functions';
 
-export const listPromos = (category = '', search = '', sort = '') => async (
-	dispatch: (arg0: { type: string; payload?: any }) => void
-) => {
+export const listPromos = (query: any) => async (dispatch: (arg0: { type: string; payload?: any }) => void) => {
 	try {
 		dispatch({ type: PROMO_LIST_REQUEST });
-		const { data } = await axios.get(
-			'/api/promos?category=' + category + '&search=' + search + '&sort=' + sort.toLowerCase()
-		);
+		const { data } = await axios.get('/api/promos?' + create_query(query));
 		dispatch({ type: PROMO_LIST_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });

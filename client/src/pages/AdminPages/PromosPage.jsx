@@ -25,7 +25,7 @@ const PromosPage = (props) => {
 		() => {
 			let clean = true;
 			if (clean) {
-				dispatch(listPromos());
+				dispatch(listPromos({}));
 			}
 			return () => (clean = false);
 		},
@@ -33,19 +33,19 @@ const PromosPage = (props) => {
 	);
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(listPromos(category, search, sort));
+		dispatch(listPromos({ category, search, sort }));
 	};
 
 	const sortHandler = (e) => {
 		setSortOrder(e.target.value);
-		dispatch(listPromos(category, search, e.target.value));
+		dispatch(listPromos({ category, search, sort: e.target.value }));
 	};
 
 	useEffect(
 		() => {
 			let clean = true;
 			if (clean) {
-				dispatch(listPromos(category, search, sort));
+				dispatch(listPromos({ category, search, sort }));
 			}
 			return () => (clean = false);
 		},
@@ -139,8 +139,8 @@ const PromosPage = (props) => {
 				active: promo.active ? false : true
 			})
 		);
-		dispatch(listPromos(''));
-		dispatch(listPromos(''));
+		dispatch(listPromos({}));
+		dispatch(listPromos({}));
 	};
 
 	return (

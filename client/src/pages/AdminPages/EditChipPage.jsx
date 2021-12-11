@@ -1,10 +1,10 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { saveChip, detailsChip } from '../../actions/chipActions';
 import { useHistory, Link } from 'react-router-dom';
 import { Loading, Notification } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
-import { listUsers } from '../../actions/userActions';
+
 import { snake_case } from '../../utils/helper_functions';
 import { BlockPicker } from 'react-color';
 

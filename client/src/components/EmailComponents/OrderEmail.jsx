@@ -31,9 +31,9 @@ const OrderEmail = (props) => {
 	useEffect(() => {
 		let clean = true;
 		if (clean) {
-			dispatch(listEmails(toCapitalize(props.match.params.status)));
+			dispatch(listEmails({ category: toCapitalize(props.match.params.status) }));
 			dispatch(detailsOrderPublic(props.match.params.id));
-			dispatch(listPromos());
+			dispatch(listPromos({}));
 		}
 		return () => (clean = false);
 	}, []);
@@ -2144,7 +2144,7 @@ const OrderEmail = (props) => {
 					<Link to="/secure/glow/emails">
 						<button className="btn primary mh-10px">Back to Emails</button>
 					</Link>
-					<Link to={props.location.previous_path || '/secure/glow/orders?page=1'}>
+					<Link to={props.location.previous_path || '/secure/glow/orders?page=1?limit=10'}>
 						<button className="btn primary mh-10px">Back to Orders</button>
 					</Link>
 

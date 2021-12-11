@@ -229,22 +229,14 @@ const Header = (props) => {
 										<button className="btn nav title_font">Home</button>
 									</Link>
 									<div className="dropdown-nav">
-										<Link to="/collections/all/products">
-											<button
-												className="btn nav title_font"
-												onClick={() => dispatch(listProducts({}))}
-											>
-												Products
-											</button>
+										<Link to="/collections/all/products?page=1?limit=21">
+											<button className="btn nav title_font">Products</button>
 										</Link>
 										<div className="hover_fade_in nav-dropdown">
 											<div className="jc-c">
 												<div className="nav-column">
-													<Link to="/collections/all/products">
-														<button
-															className="btn nav  ta-l fs-18px title_font"
-															onClick={() => dispatch(listProducts({}))}
-														>
+													<Link to="/collections/all/products?page=1?limit=21">
+														<button className="btn nav  ta-l fs-18px title_font">
 															Products
 														</button>
 													</Link>
@@ -859,7 +851,7 @@ const Header = (props) => {
 											<Link to="/secure/glow/controlpanel">
 												<button className="btn nav">Control Panel</button>
 											</Link>
-											<Link to="/secure/glow/orders?page=1">
+											<Link to="/secure/glow/orders?page=1?limit=10">
 												<button className="btn nav">Orders</button>
 											</Link>
 											<Link to="/secure/glow/products">

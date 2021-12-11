@@ -19,7 +19,7 @@ const GlowControlHomePage = (props) => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch(listContents());
+		dispatch(listContents({}));
 		return () => {};
 	}, []);
 
@@ -57,17 +57,17 @@ const GlowControlHomePage = (props) => {
 
 	// const submitHandler = (e) => {
 	// 	e.preventDefault();
-	// 	dispatch(listMyDevices(category, search, sort));
+	// 	dispatch(listMyDevices({category, search, sort}));
 	// };
 
 	// const sortHandler = (e) => {
 	// 	setSortOrder(e.target.value);
-	// 	dispatch(listMyDevices(category, search, e.target.value));
+	// 	dispatch(listMyDevices({category, search, sort: e.target.value}));
 	// };
 
 	// useEffect(
 	// 	() => {
-	// 		dispatch(listMyDevices(category, search, sort));
+	// 		dispatch(listMyDevices({category, search, sort}));
 	// 	},
 	// 	[ sort ]
 	// );

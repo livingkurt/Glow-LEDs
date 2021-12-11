@@ -34,7 +34,7 @@ const OrderCombinerPage = (props) => {
 			if (userInfo.isAdmin) {
 				get_orders();
 			}
-			dispatch(listParcels(''));
+			dispatch(listParcels({}));
 		}
 		return () => (clean = false);
 	}, []);

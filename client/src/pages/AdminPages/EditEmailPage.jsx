@@ -99,8 +99,8 @@ const EditEmailPage = (props) => {
 				} else {
 					dispatch(detailsEmail(''));
 				}
-				dispatch(listEmails(''));
-				dispatch(listContents(''));
+				dispatch(listEmails({}));
+				dispatch(listContents({}));
 
 				set_email_state();
 			}
