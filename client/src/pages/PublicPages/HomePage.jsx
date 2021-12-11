@@ -5,7 +5,7 @@ import { Helmet } from 'react-helmet';
 import { listContents } from '../../actions/contentActions';
 import { ReadMore, HomeSlideshow } from '../../components/SpecialtyComponents';
 import { categories, homepage_videos, humanize, subcategories } from '../../utils/helper_functions';
-import { API_Products } from '../../utils';
+import { API_Content, API_Products } from '../../utils';
 import useWindowDimensions from '../../components/Hooks/windowDimensions';
 import { Loading } from '../../components/UtilityComponents';
 import { show_search_bar } from '../../actions/settingActions';
@@ -78,7 +78,7 @@ const HomePage = (props) => {
 	}, []);
 
 	const get_display_content = async () => {
-		const { data } = await API_Products.get_display_content();
+		const { data } = await API_Content.get_display_content();
 		console.log({ data });
 		if (data) {
 			set_slideshow(data[0].home_page.slideshow);

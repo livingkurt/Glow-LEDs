@@ -17,12 +17,6 @@ const product_routes = {
 	get_all_subcategories: () => {
 		return axios.get('/api/products/get_all_subcategories');
 	},
-
-	get_chip_by_name: (name: string) => {
-		// console.log({ not_paid_email: array });
-		return axios.get('/api/chips/' + name);
-	},
-
 	update_product_order: (product: any, order: any) => {
 		// console.log({ update_product_order: { product, order } });
 		return axios.put('/api/products/update_product_order', { product, order });
@@ -31,7 +25,6 @@ const product_routes = {
 		// console.log({ update_stock: { product_id, new_count_in_stock } });
 		return axios.put('/api/products/update_stock', { cartItems });
 	},
-
 	get_occurrences: () => {
 		// console.log({ not_paid_email: array });
 		return axios.get('/api/orders/occurrences');
@@ -40,7 +33,6 @@ const product_routes = {
 		console.log({ get_category_occurrences: 'Hello' });
 		return axios.get('/api/orders/category_occurrences');
 	},
-
 	get_best_sellers: (occurences: any) => {
 		// console.log({ not_paid_email: array });
 		return axios.post('/api/products/best_sellers', { occurences });
@@ -53,11 +45,6 @@ const product_routes = {
 		// console.log({ not_paid_email: array });
 		return axios.get('/api/products/essentials');
 	},
-	get_display_content: () => {
-		// console.log({ not_paid_email: array });
-		return axios.get('/api/contents/display');
-	},
-
 	batch_request: (
 		method: string,
 		collection: string,

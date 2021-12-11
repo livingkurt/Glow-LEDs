@@ -2,12 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { humanize, snake_case } from '../../utils/helper_functions';
-import { useSelector, useDispatch } from 'react-redux';
-import { API_Features, API_Products } from '../../utils';
+import { useDispatch } from 'react-redux';
+import { API_Content, API_Features } from '../../utils';
 import { Loading } from '../../components/UtilityComponents';
 import { MenuItemD } from '../../components/DesktopComponents';
 import { MenuItemM } from '../../components/MobileComponents';
-import { listContents } from '../../actions/contentActions';
 
 const MenuPage = (props) => {
 	const pathname = props.match.params.pathname;
@@ -35,7 +34,7 @@ const MenuPage = (props) => {
 
 	const get_display_content = async () => {
 		set_loading_pictures(true);
-		const { data } = await API_Products.get_display_content();
+		const { data } = await API_Content.get_display_content();
 		console.log({ data });
 		if (data) {
 			const menu_items = determine_menu_items(data[0]);

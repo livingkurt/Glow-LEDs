@@ -1,13 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
-
-import { Link } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import useWindowDimensions from './components/Hooks/windowDimensions';
-import { detailsContent, listContents } from './actions/contentActions';
 import { hslToHex } from './utils/helper_functions';
-import { API_Products } from './utils';
+import { API_Content } from './utils';
 
 const Links = (props) => {
 	const [ multiplier, set_multiplier ] = useState(0);
@@ -22,7 +18,7 @@ const Links = (props) => {
 	}, []);
 
 	const get_display_content = async () => {
-		const { data } = await API_Products.get_display_content();
+		const { data } = await API_Content.get_display_content();
 		console.log({ data });
 		if (data) {
 			set_content(data[0]);

@@ -13,7 +13,7 @@ import {
 	update_products_url
 } from '../../utils/helper_functions';
 import { Helmet } from 'react-helmet';
-import { API_Products } from '../../utils';
+import { API_Chips, API_Products } from '../../utils';
 import { listChips } from '../../actions/chipActions';
 import { ProductItemM } from '../../components/MobileComponents';
 import { ProductItemD } from '../../components/DesktopComponents';
@@ -141,7 +141,7 @@ const AllProductsPage = (props) => {
 				}
 				if (query.filter) {
 					// console.log({ filter: query.filter, chips_list });
-					const { data } = await API_Products.get_chip_by_name(query.filter);
+					const { data } = await API_Chips.get_chip_by_name(query.filter);
 					filter = data._id;
 					// filter = waitForElement(query.filter, chips_list);
 				}

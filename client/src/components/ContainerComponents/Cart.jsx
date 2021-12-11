@@ -1,16 +1,12 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { logout } from '../../actions/userActions';
-import { HashLink } from 'react-router-hash-link';
 import { removeFromCart } from '../../actions/cartActions';
 import { sale_price_switch, determine_product_name } from '../../utils/react_helper_functions';
 import { mobile_check } from '../../utils/react_helper_functions';
-import { API_Products } from '../../utils';
-import { MenuItemD } from '../DesktopComponents';
-import { MenuItemM } from '../MobileComponents';
+import { API_Content } from '../../utils';
 import { LazyImage, Loading } from '../UtilityComponents';
-import { determine_total, format_date, humanize, decide_warning, shuffle } from '../../utils/helper_functions';
+import { determine_total, humanize, decide_warning, shuffle } from '../../utils/helper_functions';
 import useWindowDimensions from '../Hooks/windowDimensions';
 
 const Cart = (props) => {
@@ -59,7 +55,7 @@ const Cart = (props) => {
 	}, []);
 
 	const get_display_content = async () => {
-		const { data } = await API_Products.get_display_content();
+		const { data } = await API_Content.get_display_content();
 		console.log({ data });
 		if (data && data[0]) {
 			if (data[0].home_page && data[0].home_page.slideshow) {

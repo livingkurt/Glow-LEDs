@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import useWindowDimensions from '../Hooks/windowDimensions';
-import { API_Products } from '../../utils';
+import { API_Content } from '../../utils';
 
 const Banner = (props) => {
 	const { height, width } = useWindowDimensions();
@@ -16,7 +16,7 @@ const Banner = (props) => {
 	}, []);
 
 	const get_display_content = async () => {
-		const { data } = await API_Products.get_display_content();
+		const { data } = await API_Content.get_display_content();
 		console.log({ data });
 		if (data) {
 			set_content(data[0]);
