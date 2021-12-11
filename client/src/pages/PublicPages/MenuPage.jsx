@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { humanize, snake_case } from '../../utils/helper_functions';
 import { useSelector, useDispatch } from 'react-redux';
-import { API_Features } from '../../utils';
+import { API_Features, API_Products } from '../../utils';
 import { Loading } from '../../components/UtilityComponents';
 import { MenuItemD } from '../../components/DesktopComponents';
 import { MenuItemM } from '../../components/MobileComponents';
@@ -15,11 +15,6 @@ const MenuPage = (props) => {
 	const [ items, set_items ] = useState([]);
 	const [ loading_pictures, set_loading_pictures ] = useState(false);
 
-	const featureList = useSelector((state) => state.featureList);
-	const { features, loading, error } = featureList;
-
-	const contentList = useSelector((state) => state.contentList);
-	const { contents, loading: loading_contents, error: error_contents } = contentList;
 	const dispatch = useDispatch();
 
 	useEffect(
@@ -30,13 +25,26 @@ const MenuPage = (props) => {
 					get_features();
 				}
 				if (pathname === 'gloving' || pathname === 'manuals' || pathname === 'support') {
-					dispatch(listContents({}));
+					get_display_content();
 				}
 			}
 			return () => (clean = false);
 		},
 		[ pathname ]
 	);
+
+	const get_display_content = async () => {
+		set_loading_pictures(true);
+		const { data } = await API_Products.get_display_content();
+		console.log({ data });
+		if (data) {
+			const menu_items = determine_menu_items(data[0]);
+			set_items(menu_items);
+			console.log({ determine_menu_items: menu_items });
+			set_loading_pictures(false);
+		}
+		set_loading_pictures(false);
+	};
 
 	const get_features = async () => {
 		const { data: glovers } = await API_Features.get_features_by_category('glovers');
@@ -56,21 +64,6 @@ const MenuPage = (props) => {
 	const date = new Date();
 
 	const today = date.toISOString();
-
-	useEffect(
-		() => {
-			let clean = true;
-			if (clean) {
-				if (contents) {
-					const menu_items = determine_menu_items();
-					set_items(menu_items);
-					console.log({ determine_menu_items: menu_items });
-				}
-			}
-			return () => (clean = false);
-		},
-		[ contents ]
-	);
 
 	const featured_menu_items = (glovers, artists, producers, vfx) => {
 		console.log({ featured: producers });
@@ -106,16 +99,17 @@ const MenuPage = (props) => {
 		}
 	};
 
-	const determine_menu_items = () => {
+	const determine_menu_items = (content) => {
+		console.log({ determine_menu_items: content });
 		if (pathname === 'gloving') {
-			if (contents) {
-				return contents[0] && contents[0].home_page && contents[0].home_page.slideshow;
+			if (content) {
+				return content && content.home_page && content.home_page.slideshow;
 			}
 		} else if (pathname === 'manuals') {
 			return (
-				contents[0] &&
-				contents[0].home_page &&
-				contents[0].home_page.slideshow
+				content &&
+				content.home_page &&
+				content.home_page.slideshow
 					.filter(
 						(item) =>
 							item.label === 'Glow Strings V2' ||

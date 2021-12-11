@@ -9,7 +9,6 @@ export default {
 			const collection = req.query.collection ? { product_collection: req.query.collection } : {};
 			const page: any = req.query.page ? req.query.page : 1;
 			const limit: any = req.query.limit ? req.query.limit : 21;
-			console.log({ limit });
 			const hidden: any = req.query.hidden
 				? req.query.hidden === 'true' ? {} : { hidden: false }
 				: { hidden: false };
@@ -17,7 +16,6 @@ export default {
 				? { option: req.query.option === 'true' ? true : false }
 				: { option: false };
 			const chips = req.query.chip ? { chips: { $in: [ req.query.chip ] } } : {};
-			// const chips = req.query.chip ? { chips: { $in: [ req.query.chip, '60203602dcf28a002a1a62ed' ] } } : {};
 			let search = {};
 			if (categories.includes(snake_case(req.query.search))) {
 				search = req.query.search
@@ -81,7 +79,6 @@ export default {
 				.limit(limit * 1)
 				.skip((page - 1) * limit)
 				.exec();
-			// console.log({ products });
 			const count = await Product.countDocuments({
 				deleted: false,
 				...option,
@@ -92,48 +89,12 @@ export default {
 				...search,
 				...chips
 			});
-			// console.log({ products, count });
 
 			res.json({
 				products,
 				totalPages: Math.ceil(count / limit),
 				currentPage: parseInt(page)
 			});
-
-			// if (chips && Object.keys(chips).length === 0 && Object.getPrototypeOf(chips) === Object.prototype) {
-			// 	// console.log('No Chip');
-			// 	// res.send(products);
-			// 	res.json({
-			// 		products,
-			// 		totalPages: Math.ceil(count / limit),
-			// 		currentPage: parseInt(page)
-			// 	});
-			// } else {
-			// 	// console.log('Yes Chip');
-			// 	const glowskins = products.filter((product: any) => product.category === 'glowskins');
-			// 	const glow_casings = products.filter((product: any) => product.category === 'glow_casings');
-			// 	const accessories = products.filter((product: any) => product.category === 'accessories');
-			// 	const diffusers = products.filter((product: any) => product.category === 'diffusers');
-			// 	const diffuser_caps = products.filter((product: any) => product.category === 'diffuser_caps');
-			// 	const decals = products.filter((product: any) => product.category === 'decals');
-			// 	const exo_diffusers = products.filter((product: any) => product.category === 'exo_diffusers');
-			// 	const glow_strings = products.filter((product: any) => product.category === 'glow_strings');
-
-			// 	res.json({
-			// 		products: [
-			// 			...glowskins,
-			// 			...glow_casings,
-			// 			...accessories,
-			// 			...exo_diffusers,
-			// 			...decals,
-			// 			...glow_strings,
-			// 			...diffuser_caps,
-			// 			...diffusers
-			// 		],
-			// 		totalPages: Math.ceil(count / limit),
-			// 		currentPage: parseInt(page)
-			// 	});
-			// }
 		} catch (error) {
 			console.log({ findAll_products_error: error });
 
