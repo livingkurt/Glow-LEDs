@@ -96,6 +96,7 @@ import {
 	EditPalettePage,
 	PalettesPage,
 	OrderCombinerPage,
+	EditChipPage,
 	EventsPage
 } from './pages/index';
 import { Header, Container, Content, Footer, Sidebar, Cart } from './components/ContainerComponents/index';
@@ -119,7 +120,6 @@ import { Helmet } from 'react-helmet';
 import { setCurrentUser, logout, check_refresh_token } from './actions/userActions';
 import jwt_decode from 'jwt-decode';
 import setAuthToken from './utils/setAuthToken';
-import EditChipPage from './pages/AdminPages/EditChipPage';
 import useWindowDimensions from './components/Hooks/windowDimensions';
 // import { Particles } from './components/SpecialtyComponents';
 import Particles from 'react-particles-js';
