@@ -341,12 +341,12 @@ const ProductPage = (props) => {
 		} else {
 			set_preorder(false);
 		}
-		// if (option.quantity) {
-		// set_quantity(option.quantity);
-		// }
-		// if (option.count_in_stock) {
-		// 	set_count_in_stock(option.count_in_stock);
-		// }
+		if (option.quantity) {
+			set_quantity(option.quantity);
+		}
+		if (option.count_in_stock) {
+			set_count_in_stock(option.count_in_stock);
+		}
 
 		set_dimensions({
 			weight_pounds: option.weight_pounds,

@@ -91,20 +91,38 @@ const ProductOptions = ({
 	};
 
 	const determine_preorder = (option_product_object, count_in_stock, text) => {
-		if (option_product_object.count_in_stock > 0) {
-			if (count_in_stock > 0) {
-				return text;
-			} else {
-				return 'Preorder';
-			}
-		} else if (count_in_stock > 0) {
-			if (option_product_object.count_in_stock > 0) {
-				return text;
+		if (product.name === 'Refresh Pack (6 Supreme Pairs + 120 Batteries)') {
+			if (option_product_object.count_in_stock > 5) {
+				if (count_in_stock > 0) {
+					return text;
+				} else {
+					return 'Preorder';
+				}
+			} else if (count_in_stock > 0) {
+				if (option_product_object.count_in_stock > 5) {
+					return text;
+				} else {
+					return 'Preorder';
+				}
 			} else {
 				return 'Preorder';
 			}
 		} else {
-			return 'Preorder';
+			if (option_product_object.count_in_stock > 0) {
+				if (count_in_stock > 0) {
+					return text;
+				} else {
+					return 'Preorder';
+				}
+			} else if (count_in_stock > 0) {
+				if (option_product_object.count_in_stock > 0) {
+					return text;
+				} else {
+					return 'Preorder';
+				}
+			} else {
+				return 'Preorder';
+			}
 		}
 	};
 
