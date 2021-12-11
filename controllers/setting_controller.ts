@@ -33,7 +33,7 @@ export default {
 		try {
 			const setting = await setting_services.create_settings_s(body);
 			if (setting) {
-				return res.status(201).send({ message: 'New Setting Created', data: setting });
+				return res.status(201).send(setting);
 			}
 			return res.status(500).send({ message: 'Error Creating Setting' });
 		} catch (error) {

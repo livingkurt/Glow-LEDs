@@ -45,7 +45,7 @@ export default {
 	create: async (req: any, res: any) => {
 		const newLog = await Log.create(req.body);
 		if (newLog) {
-			return res.status(201).send({ message: 'New Log Created', data: newLog });
+			return res.status(201).send(newLog);
 		}
 		return res.status(500).send({ message: ' Error in Creating Log.' });
 	},

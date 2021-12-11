@@ -36,7 +36,7 @@ export default {
 		try {
 			const product = await product_services.create_products_s(body);
 			if (product) {
-				return res.status(201).send({ message: 'New Product Created', data: product });
+				return res.status(201).send(product);
 			}
 			return res.status(500).send({ message: 'Error Creating Product' });
 		} catch (error) {
@@ -67,7 +67,7 @@ export default {
 			return res.status(500).send({ message: 'Error Deleting Product' });
 		} catch (error) {
 			console.log({ remove_products_c_error: error });
-			res.status(500).send({ error, message: 'Error Deleting Setting' });
+			res.status(500).send({ error, message: 'Error Deleting Product' });
 		}
 	},
 	get_best_sellers_products_c: async (req: any, res: any) => {
@@ -75,12 +75,12 @@ export default {
 		try {
 			const product = await product_services.get_best_sellers_products_s(body);
 			if (product) {
-				return res.status(201).send({ message: 'New Setting Created', data: product });
+				return res.status(201).send(product);
 			}
-			return res.status(500).send({ message: 'Error Creating Setting' });
+			return res.status(500).send({ message: 'Error Creating Product' });
 		} catch (error) {
 			console.log({ create_products_c_error: error });
-			res.status(500).send({ error, message: 'Error Creating Setting' });
+			res.status(500).send({ error, message: 'Error Creating Product' });
 		}
 	},
 	get_essentials_products_c: async (req: any, res: any) => {
@@ -90,10 +90,10 @@ export default {
 			if (product) {
 				return res.status(200).send(product);
 			}
-			return res.status(500).send({ message: 'Error Updating Setting' });
+			return res.status(500).send({ message: 'Error Updating Product' });
 		} catch (error) {
 			console.log({ update_products_c_error: error });
-			res.status(500).send({ error, message: 'Error Updating Setting' });
+			res.status(500).send({ error, message: 'Error Updating Product' });
 		}
 	},
 	get_all_categories_products_c: async (req: any, res: any) => {
@@ -115,7 +115,7 @@ export default {
 		try {
 			const product = await product_services.get_all_subcategories_products_s(body);
 			if (product) {
-				return res.status(201).send({ message: 'New Product Created', data: product });
+				return res.status(201).send(product);
 			}
 			return res.status(500).send({ message: 'Error Creating Product' });
 		} catch (error) {
@@ -154,7 +154,7 @@ export default {
 		try {
 			const product = await product_services.save_item_group_id_products_s(params, body);
 			if (product) {
-				return res.status(201).send({ message: 'New Product Created', data: product });
+				return res.status(201).send(product);
 			}
 			return res.status(500).send({ message: 'Error Creating Product' });
 		} catch (error) {

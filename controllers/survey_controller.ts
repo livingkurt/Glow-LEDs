@@ -32,7 +32,7 @@ export default {
 		try {
 			const survey = await survey_services.create_surveys_s(body);
 			if (survey) {
-				return res.status(201).send({ message: 'New Survey Created', data: survey });
+				return res.status(201).send(survey);
 			}
 			return res.status(500).send({ message: 'Error Creating Survey' });
 		} catch (error) {

@@ -46,7 +46,7 @@ export default {
 		try {
 			const expense = await expense_services.create_expenses_s(body);
 			if (expense) {
-				return res.status(201).send({ message: 'New Expense Created', data: expense });
+				return res.status(201).send(expense);
 			}
 			return res.status(500).send({ message: 'Error Creating Expense' });
 		} catch (error) {
@@ -59,7 +59,7 @@ export default {
 		try {
 			const expense = await expense_services.create_all_expenses_s(body);
 			if (expense) {
-				return res.status(201).send({ message: 'New Expenses Created', data: expense });
+				return res.status(201).send(expense);
 			}
 			return res.status(500).send({ message: 'Error Creating Expense' });
 		} catch (error) {

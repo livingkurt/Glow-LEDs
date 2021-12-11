@@ -45,7 +45,7 @@ export default {
 		try {
 			const chip = await chip_services.create_chips_s(body);
 			if (chip) {
-				return res.status(201).send({ message: 'New Chip Created', data: chip });
+				return res.status(201).send(chip);
 			}
 			return res.status(500).send({ message: 'Error Creating Chip' });
 		} catch (error) {

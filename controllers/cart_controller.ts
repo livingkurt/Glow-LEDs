@@ -46,7 +46,7 @@ export default {
 		try {
 			const cart = await cart_services.create_carts_s(body);
 			if (cart) {
-				return res.status(201).send({ message: 'New Cart Created', data: cart });
+				return res.status(201).send(cart);
 			}
 			return res.status(500).send({ message: 'Error Creating Cart' });
 		} catch (error) {

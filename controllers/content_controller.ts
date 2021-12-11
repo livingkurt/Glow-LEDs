@@ -58,7 +58,7 @@ export default {
 		try {
 			const content = await content_services.create_contents_s(body);
 			if (content) {
-				return res.status(201).send({ message: 'New Content Created', data: content });
+				return res.status(201).send(content);
 			}
 			return res.status(500).send({ message: 'Error Creating Content' });
 		} catch (error) {

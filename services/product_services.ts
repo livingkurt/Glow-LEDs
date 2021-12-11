@@ -104,7 +104,7 @@ export default {
 		try {
 			return await product_db.remove_products_db(params.pathname);
 		} catch (error) {
-			console.log({ remove_surveys_s_error: error });
+			console.log({ remove_products_s_error: error });
 			throw new Error(error.message);
 		}
 	},
@@ -199,12 +199,16 @@ export default {
 	update_stock_products_s: async (params: any, body: any) => {
 		const { cartItems } = body;
 		const save_product = async (id: string, qty: number) => {
+			console.log({
+				id,
+				qty
+			});
 			// const product: any = await Product.findOne({ _id: id });
-			const product: any = await product_db.findById_products_db(params.id);
+			const product: any = await product_db.findById_products_db(id);
 			const new_count = product.count_in_stock - qty;
 			console.log({ id, new_count });
 			if (product.finite_stock) {
-				console.log({ finite_stock: 'Hello' });
+				// console.log({ finite_stock: 'Hello' });
 				if (new_count <= 0) {
 					product.quantity = 30;
 					product.count_in_stock = 0;
@@ -216,21 +220,21 @@ export default {
 				}
 				console.log({ product });
 				// return await Product.updateOne({ _id: id }, product);
-				return await product_db.update_products_db(params.id, body);
+				return await product_db.update_products_db(product._id, product);
 				// const request = await product.save();
 			}
 		};
 		try {
 			cartItems.forEach(async (item: any) => {
-				console.log({ item });
+				// console.log({ item });
 
 				if (item.finite_stock) {
 					return save_product(item.product, item.qty);
 				} else if (item.option_product) {
-					console.log({
-						update_stock: item.name,
-						name: 'Refresh Pack (6 Supreme Pairs + 120 Batteries)'
-					});
+					// console.log({
+					// 	update_stock: item.name,
+					// 	name: 'Refresh Pack (6 Supreme Pairs + 120 Batteries)'
+					// });
 					if (item.name === 'Refresh Pack (6 Supreme Pairs + 120 Batteries)') {
 						return save_product(item.option_product, 6 * item.qty);
 					} else {
@@ -244,35 +248,44 @@ export default {
 					return save_product(item.secondary_color_product, item.qty);
 				}
 			});
-			return await product_db.update_products_db(params.id, body);
+			return 'Success';
 		} catch (error) {
-			console.log({ remove_surveys_s_error: error });
+			console.log({ update_stock_products_s_error: error });
 			throw new Error(error.message);
 		}
 	},
 	update_product_order_products_s: async (params: any, body: any) => {
+		console.log({ products: body.products });
 		try {
-			const product_id = body.product._id;
-			const order = body.order;
-			console.log({ product_id });
-			// const product = await Product.findById(product_id);
-			const product = await product_db.findById_products_db(product_id);
-			console.log({ product });
-			if (product) {
-				return await product_db.update_products_db(product_id, { ...body.product, order: order });
-				// const updatedProduct = await Product.updateOne({ _id: product_id }, { ...body.product, order: order });
-				// console.log({ updatedProduct });
-				// if (updatedProduct) {
-				// 	return updatedProduct
-				// }
-			} else {
-				console.log('Error in Updating Product.');
-				throw new Error('Error in Updating Product.');
-				// return res.status(500).send({ message: ' Error in Updating Product.' });
-			}
-			return await product_db.update_products_db(params.id, body);
+			// body.products.entities.columnOrder.map((columnId: any) => {
+			// 	const column = body.entities.columns[columnId];
+			// 	console.log({ column });
+			// // const products = column.product_ids.map((product_id, index) => body.entities.products[index]);
+			// const products: any = [];
+			// body.entities.products.forEach((a: any) => {
+			// 	products[column.product_ids.indexOf(a._id)] = a;
+			// });
+
+			// console.log({ products });
+			// products.forEach(async (item: any, index: string) => {
+			// 	const product_id = body.product._id;
+			// 	const order = body.order;
+			// 	console.log({ product_id });
+			// 	const product = await product_db.findById_products_db(product_id);
+			// 	console.log({ product });
+			// 	if (product) {
+			// 		return await product_db.update_products_db(product_id, { ...body.product, order: order });
+			// 	} else {
+			// 		console.log('Error in Updating Product.');
+			// 		throw new Error('Error in Updating Product.');
+			// 	}
+			// });
+			// });
+
+			// return await product_db.update_products_db(params.id, body);
+			return 'Success';
 		} catch (error) {
-			console.log({ remove_surveys_s_error: error });
+			console.log({ update_product_order_products_s_error: error });
 			throw new Error(error.message);
 		}
 	},
@@ -326,7 +339,7 @@ export default {
 				throw new Error('Product Not Found');
 			}
 		} catch (error) {
-			console.log({ remove_surveys_s_error: error });
+			console.log({ remove_products_s_error: error });
 			throw new Error(error.message);
 		}
 	}

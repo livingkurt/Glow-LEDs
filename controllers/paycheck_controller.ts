@@ -47,7 +47,7 @@ export default {
 		try {
 			const paycheck = await paycheck_services.create_paychecks_s(body);
 			if (paycheck) {
-				return res.status(201).send({ message: 'New Paycheck Created', data: paycheck });
+				return res.status(201).send(paycheck);
 			}
 			return res.status(500).send({ message: 'Error Creating Paycheck' });
 		} catch (error) {

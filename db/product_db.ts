@@ -20,9 +20,10 @@ export default {
 		}
 	},
 	findById_products_db: async (id: string) => {
+		console.log({ findById_products_db: id });
 		let query = {};
 		try {
-			if (id.match(/^[0-9a-fA-F]{24}$/)) {
+			if (id && id.match(/^[0-9a-fA-F]{24}$/)) {
 				query = { _id: id };
 			} else {
 				query = { pathname: id };
@@ -68,16 +69,17 @@ export default {
 	},
 
 	update_products_db: async (id: string, body: any) => {
+		console.log({ update_products_db: id });
 		let query = {};
 		try {
-			if (id.match(/^[0-9a-fA-F]{24}$/)) {
+			if (id && id.toString().match(/^[0-9a-fA-F]{24}$/)) {
 				query = { _id: id };
 			} else {
 				query = { pathname: id };
 			}
 			const product: any = await Product.findOne(query);
 			if (product) {
-				return await Product.updateOne({ _id: product._id }, body);
+				return await Product.updateOne({ _id: id }, body);
 			}
 		} catch (error) {
 			console.log({ update_products_db_error: error });

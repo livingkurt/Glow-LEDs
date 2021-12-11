@@ -32,7 +32,7 @@ export default {
 		try {
 			const category = await category_services.create_categorys_s(body);
 			if (category) {
-				return res.status(201).send({ message: 'New Category Created', data: category });
+				return res.status(201).send(category);
 			}
 			return res.status(500).send({ message: 'Error Creating Category' });
 		} catch (error) {

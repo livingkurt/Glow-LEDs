@@ -118,24 +118,26 @@ function ProductPage(props) {
 	// 	dispatch(listProducts());
 	// 	set_loading_upload(false);
 	// };
-	const update_order = () => {
+	const update_order = async () => {
 		set_loading_upload(true);
-		state.entities.columnOrder.map((columnId) => {
-			const column = state.entities.columns[columnId];
-			console.log({ column });
-			// const products = column.product_ids.map((product_id, index) => state.entities.products[index]);
-			let products = [];
-			state.entities.products.forEach(function(a) {
-				products[column.product_ids.indexOf(a._id)] = a;
-			});
 
-			console.log({ products });
-			products.forEach(async (item, index) => {
-				const update_product_order = await API_Products.update_product_order(item, index + 1);
-				console.log({ update_product_order });
-			});
-		});
-		dispatch(listProducts({}));
+		const { data } = await API_Products.update_product_order(state);
+		// state.entities.columnOrder.map((columnId) => {
+		// 	const column = state.entities.columns[columnId];
+		// 	console.log({ column });
+		// 	// const products = column.product_ids.map((product_id, index) => state.entities.products[index]);
+		// 	let products = [];
+		// 	state.entities.products.forEach(function(a) {
+		// 		products[column.product_ids.indexOf(a._id)] = a;
+		// 	});
+
+		// 	console.log({ products });
+		// 	products.forEach(async (item, index) => {
+		// 		const update_product_order = await API_Products.update_product_order(item, index + 1);
+		// 		console.log({ update_product_order });
+		// 	});
+		// });
+		// dispatch(listProducts({}));
 		set_loading_upload(false);
 	};
 

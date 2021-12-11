@@ -35,7 +35,7 @@ export default {
 		console.log('Post New Device');
 		const newDevice = await Device.create(req.body);
 		if (newDevice) {
-			return res.status(201).send({ message: 'New Device Created', data: newDevice });
+			return res.status(201).send(newDevice);
 		}
 		return res.status(500).send({ message: ' Error in Creating Device.' });
 	},

@@ -33,7 +33,7 @@ export default {
 		try {
 			const parcel = await parcel_services.create_parcels_s(body);
 			if (parcel) {
-				return res.status(201).send({ message: 'New Parcel Created', data: parcel });
+				return res.status(201).send(parcel);
 			}
 			return res.status(500).send({ message: 'Error Creating Parcel' });
 		} catch (error) {

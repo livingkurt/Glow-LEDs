@@ -48,7 +48,7 @@ export default {
 		try {
 			const feature = await feature_services.create_features_s(body);
 			if (feature) {
-				return res.status(201).send({ message: 'New Feature Created', data: feature });
+				return res.status(201).send(feature);
 			}
 			return res.status(500).send({ message: 'Error Creating Feature' });
 		} catch (error) {

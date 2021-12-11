@@ -59,7 +59,7 @@ export default {
 		try {
 			const email = await email_services.create_emails_s(body);
 			if (email) {
-				return res.status(201).send({ message: 'New Email Created', data: email });
+				return res.status(201).send(email);
 			}
 			return res.status(500).send({ message: 'Error Creating Email' });
 		} catch (error) {

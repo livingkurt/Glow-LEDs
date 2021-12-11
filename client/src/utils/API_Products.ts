@@ -17,10 +17,14 @@ const product_routes = {
 	get_all_subcategories: () => {
 		return axios.get('/api/products/get_all_subcategories');
 	},
-	update_product_order: (product: any, order: any) => {
+	update_product_order: (products: any) => {
 		// console.log({ update_product_order: { product, order } });
-		return axios.put('/api/products/update_product_order', { product, order });
+		return axios.put('/api/products/update_product_order', { products });
 	},
+	// update_product_order: (product: any, order: any) => {
+	// 	// console.log({ update_product_order: { product, order } });
+	// 	return axios.put('/api/products/update_product_order', { product, order });
+	// },
 	update_stock: (cartItems: any) => {
 		// console.log({ update_stock: { product_id, new_count_in_stock } });
 		return axios.put('/api/products/update_stock', { cartItems });

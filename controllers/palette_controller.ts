@@ -47,7 +47,7 @@ export default {
 		try {
 			const palette = await palette_services.create_palettes_s(body);
 			if (palette) {
-				return res.status(201).send({ message: 'New Palette Created', data: palette });
+				return res.status(201).send(palette);
 			}
 			return res.status(500).send({ message: 'Error Creating Palette' });
 		} catch (error) {
