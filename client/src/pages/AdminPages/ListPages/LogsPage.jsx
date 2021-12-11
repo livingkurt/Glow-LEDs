@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { listLogs, deleteLog } from '../../../actions/logActions';
 import { Link } from 'react-router-dom';
-import { Loading } from '../../../components/UtilityComponents';
+import { Loading, Notification } from '../../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { format_date, format_time } from '../../../utils/helper_functions';
 import { Search, Sort } from '../../../components/SpecialtyComponents';
@@ -12,7 +12,7 @@ const LogsPage = (props) => {
 	const [ sort, setSortOrder ] = useState('');
 	const category = props.match.params.category ? props.match.params.category : '';
 	const logList = useSelector((state) => state.logList);
-	const { loading, logs, error } = logList;
+	const { loading, logs, message, error } = logList;
 
 	const logSave = useSelector((state) => state.logSave);
 	const { success: successSave } = logSave;
@@ -81,6 +81,7 @@ const LogsPage = (props) => {
 			<Helmet>
 				<title>Admin Logs | Glow LEDs</title>
 			</Helmet>
+			<Notification message={message} />
 
 			<div className="wrap jc-b">
 				{colors.map((color, index) => {

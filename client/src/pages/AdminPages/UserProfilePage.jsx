@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { detailsUser } from '../../../actions/userActions';
-import { Loading } from '../../../components/UtilityComponents';
+import { detailsUser } from '../../actions/userActions';
+import { Loading, Notification } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
-import { API_Emails } from '../../../utils';
+import { API_Emails } from '../../utils';
 
 const UserProfilePage = (props) => {
 	const history = useHistory();
 	const userDetails = useSelector((state) => state.userDetails);
-	const { loading, user, error } = userDetails;
+	const { loading, user, message, error } = userDetails;
 
 	const [ first_name, set_first_name ] = useState('');
 	const [ last_name, set_last_name ] = useState('');
@@ -65,6 +65,7 @@ const UserProfilePage = (props) => {
 			<Helmet>
 				<title>Admin User Profile | Glow LEDs</title>
 			</Helmet>
+			<Notification message={message} />
 			<button className="btn secondary" onClick={() => history.goBack()}>
 				Back to Users
 			</button>

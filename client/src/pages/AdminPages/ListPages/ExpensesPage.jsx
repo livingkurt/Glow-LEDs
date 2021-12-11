@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { listExpenses, deleteExpense } from '../../../actions/expenseActions';
 import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { Loading } from '../../../components/UtilityComponents';
+import { Loading, Notification } from '../../../components/UtilityComponents';
 import { Search, Sort } from '../../../components/SpecialtyComponents/index';
 import { Helmet } from 'react-helmet';
 import { format_date, unformat_date } from '../../../utils/helper_functions';
@@ -22,7 +22,7 @@ const ExpensesPage = (props) => {
 	const { userInfo } = userLogin;
 
 	const expenseList = useSelector((state) => state.expenseList);
-	const { loading, expenses, error } = expenseList;
+	const { loading, expenses, message, error } = expenseList;
 
 	const expenseSave = useSelector((state) => state.expenseSave);
 	const { success: successSave } = expenseSave;
@@ -194,6 +194,7 @@ const ExpensesPage = (props) => {
 			<Helmet>
 				<title>Admin Expenses | Glow LEDs</title>
 			</Helmet>
+			<Notification message={message} />
 
 			<div className="wrap jc-b">
 				<div className="wrap jc-b">

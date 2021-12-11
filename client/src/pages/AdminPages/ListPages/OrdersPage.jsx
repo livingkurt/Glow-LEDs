@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { listOrders, update_order, update_payment } from '../../../actions/orderActions';
-import { Loading } from '../../../components/UtilityComponents';
+import { Loading, Notification } from '../../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { OrderListItem, OrderSmallScreen, Search, Sort, Pagination } from '../../../components/SpecialtyComponents';
 import { API_Orders } from '../../../utils';
@@ -18,7 +18,7 @@ const OrdersPage = (props) => {
 
 	const category = props.match.params.category ? props.match.params.category : '';
 	const orderList = useSelector((state) => state.orderList);
-	const { loading, orders, totalPages, currentPage, error } = orderList;
+	const { loading, orders, totalPages, message, currentPage, error } = orderList;
 
 	const dispatch = useDispatch();
 
@@ -182,6 +182,7 @@ const OrdersPage = (props) => {
 			<Helmet>
 				<title>Admin Orders | Glow LEDs</title>
 			</Helmet>
+			<Notification message={message} />
 			<div className="wrap jc-b">
 				<Link to="/secure/glow/controlpanel">
 					<button className="btn primary">Back to Control Panel</button>

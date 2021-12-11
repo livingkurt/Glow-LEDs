@@ -4,6 +4,7 @@ import { listCarts, deleteCart } from '../../../actions/cartActions';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { Search, Sort } from '../../../components/SpecialtyComponents';
+import { Notification } from '../../../components/UtilityComponents';
 
 const CartsPage = (props) => {
 	const [ search, set_search ] = useState('');
@@ -12,7 +13,7 @@ const CartsPage = (props) => {
 	const dispatch = useDispatch();
 
 	// const cartList = useSelector((state) => state.cartList);
-	// const { loading, carts, error } = cartList;
+	// const { loading, carts, message, error } = cartList;
 
 	// const cartSave = useSelector((state) => state.cartSave);
 	// const { success: successSave } = cartSave;
@@ -104,6 +105,7 @@ const CartsPage = (props) => {
 			<Helmet>
 				<title>Admin Carts | Glow LEDs</title>
 			</Helmet>
+			{/* <Notification message={message} /> */}
 			<div className="wrap jc-c">
 				<div className="wrap jc-c">
 					{colors.map((color, index) => {

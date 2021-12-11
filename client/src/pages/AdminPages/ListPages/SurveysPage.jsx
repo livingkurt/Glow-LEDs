@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { listSurveys, deleteSurvey } from '../../../actions/surveyActions';
 import { Link } from 'react-router-dom';
-import { Loading } from '../../../components/UtilityComponents';
+import { Loading, Notification } from '../../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { Search, Sort } from '../../../components/SpecialtyComponents';
 import { format_date } from '../../../utils/helper_functions';
@@ -18,7 +18,7 @@ const SurveysPage = (props) => {
 	const [ loading_surveys, set_loading_surveys ] = useState(false);
 	const category = props.match.params.category ? props.match.params.category : '';
 	const surveyList = useSelector((state) => state.surveyList);
-	const { loading, surveys, error } = surveyList;
+	const { loading, surveys, message, error } = surveyList;
 
 	const surveySave = useSelector((state) => state.surveySave);
 	const { success: successSave } = surveySave;
@@ -109,6 +109,7 @@ const SurveysPage = (props) => {
 			<Helmet>
 				<title>Admin Surveys | Glow LEDs</title>
 			</Helmet>
+			<Notification message={message} />
 			<Loading loading={loading_surveys} error={error} />
 			<div className="wrap jc-b">
 				<div className="wrap jc-b">

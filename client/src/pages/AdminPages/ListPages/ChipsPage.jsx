@@ -109,6 +109,7 @@ const ChipsPage = (props) => {
 			<Helmet>
 				<title>Admin Chips | Glow LEDs</title>
 			</Helmet>
+			<Notification message={message} />
 			<div className="wrap jc-b">
 				<div className="wrap jc-b">
 					{colors.map((color, index) => {

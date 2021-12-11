@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { listContents, deleteContent, saveContent } from '../../../actions/contentActions';
 import { Link } from 'react-router-dom';
-import { Loading } from '../../../components/UtilityComponents';
+import { Loading, Notification } from '../../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { Search } from '../../../components/SpecialtyComponents';
 
@@ -10,7 +10,7 @@ const ContentsPage = (props) => {
 	const [ search, set_search ] = useState('');
 	const category = props.match.params.category ? props.match.params.category : '';
 	const contentList = useSelector((state) => state.contentList);
-	const { loading, contents, error } = contentList;
+	const { loading, contents, message, error } = contentList;
 
 	const contentSave = useSelector((state) => state.contentSave);
 	const { success: successSave } = contentSave;
@@ -54,6 +54,7 @@ const ContentsPage = (props) => {
 			<Helmet>
 				<title>Admin Contents | Glow LEDs</title>
 			</Helmet>
+			<Notification message={message} />
 			<div className="wrap jc-b">
 				<a
 					href={

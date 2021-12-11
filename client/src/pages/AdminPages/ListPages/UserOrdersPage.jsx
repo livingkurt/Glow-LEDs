@@ -14,7 +14,7 @@ const UserOrderPage = (props) => {
 	const { userInfo } = userLogin;
 
 	const myOrderList = useSelector((state) => state.myOrderList);
-	const { loading, orders, error } = myOrderList;
+	const { loading, orders, message, error } = myOrderList;
 
 	useEffect(() => {
 		let clean = true;

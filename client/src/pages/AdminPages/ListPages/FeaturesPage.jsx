@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { listFeatures, deleteFeature } from '../../../actions/featureActions';
 import { Link } from 'react-router-dom';
-import { Loading } from '../../../components/UtilityComponents';
+import { Loading, Notification } from '../../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { format_date } from '../../../utils/helper_functions';
 import { Search, Sort } from '../../../components/SpecialtyComponents';
@@ -12,7 +12,7 @@ const FeaturesPage = (props) => {
 	const [ sort, setSortOrder ] = useState('');
 	const category = props.match.params.category ? props.match.params.category : '';
 	const featureList = useSelector((state) => state.featureList);
-	const { loading, features, error } = featureList;
+	const { loading, features, message, error } = featureList;
 
 	const featureSave = useSelector((state) => state.featureSave);
 	const { success: successSave } = featureSave;
@@ -99,6 +99,7 @@ const FeaturesPage = (props) => {
 			<Helmet>
 				<title>Admin Features | Glow LEDs</title>
 			</Helmet>
+			<Notification message={message} />
 			<div className="wrap jc-b">
 				<Link to="/secure/glow/editfeature">
 					<button className="btn primary" style={{ width: '160px' }}>

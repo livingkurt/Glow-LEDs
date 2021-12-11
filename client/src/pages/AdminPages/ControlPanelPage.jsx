@@ -268,6 +268,7 @@ const ControlPanelPage = (props) => {
 			<Helmet>
 				<title>Admin Control Panel | Glow LEDs</title>
 			</Helmet>
+			{/* <Notification message={message} /> */}
 
 			<div className="jc-c">
 				<h1 style={{ textAlign: 'center' }}>Control Panel</h1>

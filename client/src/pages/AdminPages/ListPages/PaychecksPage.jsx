@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { listPaychecks, deletePaycheck, savePaycheck } from '../../../actions/paycheckActions';
 import { Link } from 'react-router-dom';
-import { Loading } from '../../../components/UtilityComponents';
+import { Loading, Notification } from '../../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { Search, Sort } from '../../../components/SpecialtyComponents';
 import { format_date } from '../../../utils/helper_functions';
@@ -28,7 +28,7 @@ const PaychecksPage = (props) => {
 	const [ create_paychecks, set_create_paychecks ] = useState(true);
 	const category = props.match.params.category ? props.match.params.category : '';
 	const paycheckList = useSelector((state) => state.paycheckList);
-	const { loading, paychecks, error } = paycheckList;
+	const { loading, paychecks, message, error } = paycheckList;
 
 	const paycheckSave = useSelector((state) => state.paycheckSave);
 	const { success: successSave } = paycheckSave;
@@ -223,6 +223,7 @@ const PaychecksPage = (props) => {
 			<Helmet>
 				<title>Admin Paychecks | Glow LEDs</title>
 			</Helmet>
+			<Notification message={message} />
 			<Loading loading={loading_paychecks} error={error} />
 			<div className="wrap jc-b">
 				<div className="wrap jc-b">

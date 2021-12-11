@@ -5,7 +5,7 @@ import { listProducts } from '../../../actions/productActions';
 import { Pagination, ProductListItem } from '../../../components/SpecialtyComponents';
 import { API_Products } from '../../../utils';
 import { Link, useHistory } from 'react-router-dom';
-import { Loading } from '../../../components/UtilityComponents';
+import { Loading, Notification } from '../../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { Search, Sort } from '../../../components/SpecialtyComponents';
 import { facebook_catalog_upload, google_catalog_upload } from '../../../utils/google_sheets_upload';
@@ -33,7 +33,7 @@ function ProductPage(props) {
 	const [ products_list, updateProducts ] = useState([]);
 
 	const productList = useSelector((state) => state.productList);
-	const { loading, products: items, totalPages, currentPage, error } = productList;
+	const { loading, products: items, totalPages, message, currentPage, error } = productList;
 
 	useEffect(() => {
 		let clean = true;
@@ -523,6 +523,7 @@ function ProductPage(props) {
 			<Helmet>
 				<title>Admin Products | Glow LEDs</title>
 			</Helmet>
+			<Notification message={message} />
 			<div className="jc-b">
 				{/* <div className="w-20per">
 					{colors.map((color, index) => {

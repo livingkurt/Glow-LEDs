@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { listParcels, deleteParcel, saveParcel } from '../../../actions/parcelActions';
 import { Link } from 'react-router-dom';
-import { Loading } from '../../../components/UtilityComponents';
+import { Loading, Notification } from '../../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { Search, Sort } from '../../../components/SpecialtyComponents';
 import { format_date } from '../../../utils/helper_functions';
@@ -13,7 +13,7 @@ const ParcelsPage = (props) => {
 	const [ loading_parcels, set_loading_parcels ] = useState(false);
 	const category = props.match.params.category ? props.match.params.category : '';
 	const parcelList = useSelector((state) => state.parcelList);
-	const { loading, parcels, error } = parcelList;
+	const { loading, parcels, message, error } = parcelList;
 
 	const parcelSave = useSelector((state) => state.parcelSave);
 	const { success: successSave } = parcelSave;
@@ -80,6 +80,7 @@ const ParcelsPage = (props) => {
 			<Helmet>
 				<title>Admin Parcels | Glow LEDs</title>
 			</Helmet>
+			<Notification message={message} />
 			<Loading loading={loading_parcels} error={error} />
 			<div className="wrap jc-b">
 				<div className="wrap jc-b">

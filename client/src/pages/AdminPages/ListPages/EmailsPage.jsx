@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { listEmails, deleteEmail, saveEmail } from '../../../actions/emailActions';
 import { Link, useHistory } from 'react-router-dom';
-import { Loading } from '../../../components/UtilityComponents';
+import { Loading, Notification } from '../../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { Search, Sort } from '../../../components/SpecialtyComponents';
 import { humanize } from '../../../utils/helper_functions';
@@ -13,7 +13,7 @@ const EmailsPage = (props) => {
 	const [ sort, setSortOrder ] = useState('');
 	const category = props.match.params.category ? props.match.params.category : '';
 	const emailList = useSelector((state) => state.emailList);
-	const { loading, emails, error } = emailList;
+	const { loading, emails, message, error } = emailList;
 
 	const emailSave = useSelector((state) => state.emailSave);
 	const { success: successSave } = emailSave;
@@ -116,6 +116,7 @@ const EmailsPage = (props) => {
 			<Helmet>
 				<title>Admin Emails | Glow LEDs</title>
 			</Helmet>
+			<Notification message={message} />
 			<Link to="/secure/glow/emails/announcement">
 				<button className="btn primary">Announcement</button>
 			</Link>

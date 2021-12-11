@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { listPromos, deletePromo, savePromo } from '../../../actions/promoActions';
 import { Link } from 'react-router-dom';
-import { Loading } from '../../../components/UtilityComponents';
+import { Loading, Notification } from '../../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { Search, Sort } from '../../../components/SpecialtyComponents';
 import { format_date } from '../../../utils/helper_functions';
@@ -12,7 +12,7 @@ const PromosPage = (props) => {
 	const [ sort, setSortOrder ] = useState('');
 	const category = props.match.params.category ? props.match.params.category : '';
 	const promoList = useSelector((state) => state.promoList);
-	const { loading, promos, error } = promoList;
+	const { loading, promos, message, error } = promoList;
 
 	const promoSave = useSelector((state) => state.promoSave);
 	const { success: successSave } = promoSave;
@@ -148,6 +148,7 @@ const PromosPage = (props) => {
 			<Helmet>
 				<title>Admin Promos | Glow LEDs</title>
 			</Helmet>
+			<Notification message={message} />
 			<div className="wrap jc-b">
 				<div className="wrap jc-b">
 					{colors.map((color, index) => {

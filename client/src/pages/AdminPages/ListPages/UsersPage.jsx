@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { format_date } from '../../../utils/helper_functions';
-import { Loading } from '../../../components/UtilityComponents';
+import { Loading, Notification } from '../../../components/UtilityComponents';
 import { listUsers, deleteUser } from '../../../actions/userActions';
 import { Search, Sort } from '../../../components/SpecialtyComponents';
 import { Helmet } from 'react-helmet';
@@ -12,7 +12,7 @@ const UsersPage = (props) => {
 	const [ sort, setSortOrder ] = useState('');
 	const category = props.match.params.category ? props.match.params.category : '';
 	const userList = useSelector((state) => state.userList);
-	const { loading, users, error } = userList;
+	const { loading, users, message, error } = userList;
 
 	const userDelete = useSelector((state) => state.userDelete);
 	const { loading: loadingDelete, success: successDelete, error: errorDelete } = userDelete;
@@ -90,6 +90,7 @@ const UsersPage = (props) => {
 			<Helmet>
 				<title>Admin Users | Glow LEDs</title>
 			</Helmet>
+			<Notification message={message} />
 			<div className="wrap jc-b">
 				{colors.map((color, index) => {
 					return (

@@ -21,7 +21,7 @@ export { default as EditPalettePage } from './AdminPages/EditPages/EditPalettePa
 export { default as OrdersPage } from './AdminPages/ListPages/OrdersPage';
 export { default as ProductsPage } from './AdminPages/ListPages/ProductsPage';
 export { default as UsersPage } from './AdminPages/ListPages/UsersPage';
-export { default as UserProfilePage } from './AdminPages/ListPages/UserProfilePage';
+
 export { default as ExpensesPage } from './AdminPages/ListPages/ExpensesPage';
 export { default as AffiliatesPage } from './AdminPages/ListPages/AffiliatesPage';
 export { default as ChipsPage } from './AdminPages/ListPages/ChipsPage';
@@ -42,11 +42,11 @@ export { default as SettingsPage } from './AdminPages/ListPages/SettingsPage';
 export { default as PalettesPage } from './AdminPages/ListPages/PalettesPage';
 
 export { default as ControlPanelPage } from './AdminPages/ControlPanelPage';
+export { default as UserProfilePage } from './AdminPages/UserProfilePage';
 export { default as LabelCreatorPage } from './AdminPages/LabelCreatorPage';
 export { default as AdminChangePasswordPage } from './AdminPages/AdminChangePasswordPage';
 export { default as MonthlyExpensesPage } from './AdminPages/MonthlyExpensesPage';
 export { default as MonthExpensesPage } from './AdminPages/MonthExpensesPage';
-
 export { default as OrderCombinerPage } from './AdminPages/OrderCombinerPage';
 
 export { default as EditProfilePage } from './PrivatePages/EditProfilePage';

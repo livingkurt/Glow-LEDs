@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { listCategorys, deleteCategory, saveCategory } from '../../../actions/categoryActions';
 import { Link } from 'react-router-dom';
-import { Loading } from '../../../components/UtilityComponents';
+import { Loading, Notification } from '../../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { Search, Sort } from '../../../components/SpecialtyComponents';
 import { API_Products } from '../../../utils';
@@ -16,7 +16,7 @@ const CategorysPage = (props) => {
 	const [ loading_categorys, set_loading_categorys ] = useState(false);
 	const category = props.match.params.category ? props.match.params.category : '';
 	const categoryList = useSelector((state) => state.categoryList);
-	const { loading, categorys, error } = categoryList;
+	const { loading, categorys, message, error } = categoryList;
 
 	const categorySave = useSelector((state) => state.categorySave);
 	const { success: successSave } = categorySave;
@@ -141,6 +141,7 @@ const CategorysPage = (props) => {
 			<Helmet>
 				<title>Admin Categorys | Glow LEDs</title>
 			</Helmet>
+			<Notification message={message} />
 			<Loading loading={loading_categorys} error={error} />
 			<div className="wrap jc-b">
 				<div className="wrap jc-b">

@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { listTeams, deleteTeam } from '../../../actions/teamActions';
 import { Link } from 'react-router-dom';
-import { Loading } from '../../../components/UtilityComponents';
+import { Loading, Notification } from '../../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { Search, Sort } from '../../../components/SpecialtyComponents';
 
@@ -11,7 +11,7 @@ const TeamsPage = (props) => {
 	const [ sort, setSortOrder ] = useState('');
 	const category = props.match.params.category ? props.match.params.category : '';
 	const teamList = useSelector((state) => state.teamList);
-	const { loading, teams, error } = teamList;
+	const { loading, teams, message, error } = teamList;
 
 	const teamSave = useSelector((state) => state.teamSave);
 	const { success: successSave } = teamSave;
@@ -75,6 +75,7 @@ const TeamsPage = (props) => {
 			<Helmet>
 				<title>Admin Teams | Glow LEDs</title>
 			</Helmet>
+			<Notification message={message} />
 			<div className="wrap jc-b">
 				<div className="wrap jc-b">
 					{colors.map((color, index) => {

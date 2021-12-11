@@ -156,6 +156,7 @@ const AffiliatesPage = (props) => {
 			<Helmet>
 				<title>Admin Affiliates | Glow LEDs</title>
 			</Helmet>
+			<Notification message={message} />
 			<div className="wrap jc-b">
 				<div className="">
 					{colors.map((color, index) => {

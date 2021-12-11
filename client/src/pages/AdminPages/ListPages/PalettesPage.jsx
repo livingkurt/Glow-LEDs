@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { listPalettes, deletePalette, savePalette } from '../../../actions/paletteActions';
 import { Link } from 'react-router-dom';
-import { Loading } from '../../../components/UtilityComponents';
+import { Loading, Notification } from '../../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { Search, Sort } from '../../../components/SpecialtyComponents';
 import { format_date } from '../../../utils/helper_functions';
@@ -27,7 +27,7 @@ const PalettesPage = (props) => {
 	const [ create_palettes, set_create_palettes ] = useState(true);
 	const category = props.match.params.category ? props.match.params.category : '';
 	const paletteList = useSelector((state) => state.paletteList);
-	const { loading, palettes, error } = paletteList;
+	const { loading, palettes, message, error } = paletteList;
 
 	const paletteSave = useSelector((state) => state.paletteSave);
 	const { success: successSave } = paletteSave;
@@ -131,6 +131,7 @@ const PalettesPage = (props) => {
 			<Helmet>
 				<title>Admin Palettes | Glow LEDs</title>
 			</Helmet>
+			<Notification message={message} />
 			<Loading loading={loading_palettes} error={error} />
 			<div className="wrap jc-b">
 				<div className="wrap jc-b">

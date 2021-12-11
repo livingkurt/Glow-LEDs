@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { listSettings, deleteSetting, saveSetting } from '../../../actions/settingActions';
 import { Link } from 'react-router-dom';
-import { Loading } from '../../../components/UtilityComponents';
+import { Loading, Notification } from '../../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { Search, Sort } from '../../../components/SpecialtyComponents';
 import { format_date } from '../../../utils/helper_functions';
@@ -26,7 +26,7 @@ const SettingsPage = (props) => {
 	const category = props.match.params.category ? props.match.params.category : '';
 
 	const settingList = useSelector((state) => state.settingList);
-	const { loading, settings, error } = settingList;
+	const { loading, settings, message, error } = settingList;
 
 	const settingSave = useSelector((state) => state.settingSave);
 	const { success: successSave } = settingSave;
@@ -98,6 +98,7 @@ const SettingsPage = (props) => {
 			<Helmet>
 				<title>Admin Settings | Glow LEDs</title>
 			</Helmet>
+			<Notification message={message} />
 			<Loading loading={loading_settings} error={error} />
 			<div className="wrap jc-b">
 				<div className="wrap jc-b">

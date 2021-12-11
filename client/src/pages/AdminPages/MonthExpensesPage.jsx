@@ -342,6 +342,7 @@ const MonthExpensesPage = (props) => {
 					Admin {this_month} {this_year} Breakdown | Glow LEDs
 				</title>
 			</Helmet>
+			{/* <Notification message={message} /> */}
 			<Loading loading={loading} />
 			<div className="">
 				<Link to="/secure/glow/controlpanel">
