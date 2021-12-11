@@ -18,6 +18,7 @@ import {
 	CART_DELETE_REQUEST
 } from '../constants/cartConstants';
 import axios from 'axios';
+import { create_query } from '../utils/helper_functions';
 
 export const addToCart = (cart_item_1: any) => async (
 	dispatch: (arg0: any) => void,
@@ -143,14 +144,10 @@ export const savePayment = (data: { paymentMethod: any }) => (
 	dispatch({ type: CART_SAVE_PAYMENT, payload: data });
 };
 
-export const listCarts = (category = '', search = '', sort = '') => async (
-	dispatch: (arg0: { type: string; payload?: any }) => void
-) => {
+export const listCarts = (query: any) => async (dispatch: (arg0: { type: string; payload?: any }) => void) => {
 	try {
 		dispatch({ type: CART_LIST_REQUEST });
-		const { data } = await axios.get(
-			'/api/carts?category=' + category + '&search=' + search + '&sort=' + sort.toLowerCase()
-		);
+		const { data } = await axios.get('/api/carts?' + create_query(query));
 		dispatch({ type: CART_LIST_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });
