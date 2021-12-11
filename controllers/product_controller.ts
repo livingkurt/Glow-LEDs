@@ -1,21 +1,12 @@
 import { Product } from '../models';
-import { categories, snake_case, subcategories } from '../util';
+import { categories, determine_filter, snake_case, subcategories } from '../util';
 
 export default {
 	findAll: async (req: any, res: any) => {
 		try {
-			const category = req.query.category ? { category: req.query.category } : {};
-			const subcategory = req.query.subcategory ? { subcategory: req.query.subcategory } : {};
-			const collection = req.query.collection ? { product_collection: req.query.collection } : {};
 			const page: any = req.query.page ? req.query.page : 1;
 			const limit: any = req.query.limit ? req.query.limit : 21;
-			const hidden: any = req.query.hidden
-				? req.query.hidden === 'true' ? {} : { hidden: false }
-				: { hidden: false };
-			const option: any = req.query.option
-				? { option: req.query.option === 'true' ? true : false }
-				: { option: false };
-			const chips = req.query.chip ? { chips: { $in: [ req.query.chip ] } } : {};
+
 			let search = {};
 			if (categories.includes(snake_case(req.query.search))) {
 				search = req.query.search
@@ -45,30 +36,23 @@ export default {
 						}
 					: {};
 			}
-
+			const filter = determine_filter(req.query, search);
+			console.log({ filter });
+			const sort_query = req.query.sort.toLowerCase();
 			let sort = {};
-			if (req.query.sort === 'lowest') {
+			if (sort_query === 'lowest') {
 				sort = { price: 1 };
-			} else if (req.query.sort === 'highest') {
+			} else if (sort_query === 'highest') {
 				sort = { price: -1 };
-			} else if (req.query.sort === 'newest') {
-				sort = { _id: -1 };
-			} else if (req.query.sort === 'hidden') {
+			} else if (sort_query === 'category') {
+				sort = { category: -1 };
+			} else if (sort_query === 'hidden') {
 				sort = { hidden: -1 };
-			} else if (req.query.sort === 'category' || req.query.sort === '') {
+			} else if (sort_query === 'newest' || sort_query === '') {
 				sort = { order: 1, _id: -1 };
 			}
 
-			const products = await Product.find({
-				deleted: false,
-				...category,
-				...subcategory,
-				...collection,
-				...search,
-				...chips,
-				...option,
-				...hidden
-			})
+			const products = await Product.find(filter)
 				.sort(sort)
 				.populate('color_products')
 				.populate('secondary_color_products')
@@ -79,16 +63,7 @@ export default {
 				.limit(limit * 1)
 				.skip((page - 1) * limit)
 				.exec();
-			const count = await Product.countDocuments({
-				deleted: false,
-				...option,
-				...hidden,
-				...category,
-				...subcategory,
-				...collection,
-				...search,
-				...chips
-			});
+			const count = await Product.countDocuments(filter);
 
 			res.json({
 				products,
@@ -117,16 +92,17 @@ export default {
 					}
 				: {};
 
+			const sort_query = req.query.sort.toLowerCase();
 			let sort = {};
-			if (req.query.sort === 'lowest') {
+			if (sort_query === 'lowest') {
 				sort = { price: 1 };
-			} else if (req.query.sort === 'highest') {
+			} else if (sort_query === 'highest') {
 				sort = { price: -1 };
-			} else if (req.query.sort === 'newest') {
+			} else if (sort_query === 'newest') {
 				sort = { _id: -1 };
-			} else if (req.query.sort === 'hidden') {
+			} else if (sort_query === 'hidden') {
 				sort = { hidden: -1 };
-			} else if (req.query.sort === 'category' || req.query.sort === '') {
+			} else if (sort_query === 'category' || sort_query === '') {
 				sort = { order: 1, _id: -1 };
 			}
 
@@ -171,16 +147,17 @@ export default {
 					}
 				: {};
 
+			const sort_query = req.query.sort.toLowerCase();
 			let sort = {};
-			if (req.query.sort === 'lowest') {
+			if (sort_query === 'lowest') {
 				sort = { price: 1 };
-			} else if (req.query.sort === 'highest') {
+			} else if (sort_query === 'highest') {
 				sort = { price: -1 };
-			} else if (req.query.sort === 'newest') {
+			} else if (sort_query === 'newest') {
 				sort = { _id: -1 };
-			} else if (req.query.sort === 'hidden') {
+			} else if (sort_query === 'hidden') {
 				sort = { hidden: -1 };
-			} else if (req.query.sort === 'category' || req.query.sort === '') {
+			} else if (sort_query === 'category' || sort_query === '') {
 				sort = { order: 1, _id: -1 };
 			}
 

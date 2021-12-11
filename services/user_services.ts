@@ -20,12 +20,13 @@ export default {
 					}
 				: {};
 
+			const sort_query = query.sort.toLowerCase();
 			let sort = {};
-			if (query.sort === 'first name') {
+			if (sort_query === 'first name') {
 				sort = { first_name: 1 };
-			} else if (query.sort === 'last name') {
+			} else if (sort_query === 'last name') {
 				sort = { last_name: 1 };
-			} else if (query.sort === 'newest' || query.sort === '') {
+			} else if (sort_query === 'newest' || sort_query === '') {
 				sort = { _id: -1 };
 			}
 			const filter = { deleted: false, ...category, ...search };

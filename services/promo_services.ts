@@ -14,14 +14,15 @@ export default {
 					}
 				: {};
 
+			const sort_query = query.sort.toLowerCase();
 			let sort = {};
-			if (query.sort === 'admin only') {
+			if (sort_query === 'admin only') {
 				sort = { admin_only: -1 };
-			} else if (query.sort === 'affiliate only') {
+			} else if (sort_query === 'affiliate only') {
 				sort = { affiliate_only: -1 };
-			} else if (query.sort === 'active') {
+			} else if (sort_query === 'active') {
 				sort = { active: -1 };
-			} else if (query.sort === 'newest' || query.sort === '') {
+			} else if (sort_query === 'newest' || sort_query === '') {
 				sort = { _id: -1 };
 			}
 			return await promo_db.findAll_promos_db(category, search, sort);
@@ -169,14 +170,15 @@ export default {
 // 		}
 // 	: {};
 
-// let sort = {};
-// if (req.query.sort === 'admin only') {
+// const sort_query = query.sort.toLowerCase()
+let sort = {};
+// if (sort_query === 'admin only') {
 // 	sort = { admin_only: -1 };
-// } else if (req.query.sort === 'affiliate only') {
+// } else if (sort_query === 'affiliate only') {
 // 	sort = { affiliate_only: -1 };
-// } else if (req.query.sort === 'active') {
+// } else if (sort_query === 'active') {
 // 	sort = { active: -1 };
-// } else if (req.query.sort === 'newest' || req.query.sort === '') {
+// } else if (sort_query === 'newest' || sort_query === '') {
 // 	sort = { _id: -1 };
 // }
 

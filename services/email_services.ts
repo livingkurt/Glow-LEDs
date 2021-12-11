@@ -15,10 +15,11 @@ export default {
 					}
 				: {};
 
+			const sort_query = query.sort.toLowerCase();
 			let sort = {};
-			if (query.sort === 'email type') {
+			if (sort_query === 'email type') {
 				sort = { email_type: 1 };
-			} else if (query.sort === 'newest' || query.sort === '') {
+			} else if (sort_query === 'newest' || sort_query === '') {
 				sort = { _id: -1 };
 			}
 
@@ -138,10 +139,11 @@ export default {
 // 					}
 // 				: {};
 
-// 			let sort = {};
-// 			if (req.query.sort === 'email type') {
+// 			const sort_query = query.sort.toLowerCase()
+let sort = {};
+// 			if (sort_query === 'email type') {
 // 				sort = { email_type: 1 };
-// 			} else if (req.query.sort === 'newest' || req.query.sort === '') {
+// 			} else if (sort_query === 'newest' || sort_query === '') {
 // 				sort = { _id: -1 };
 // 			}
 

@@ -96,18 +96,19 @@ export default {
 // 					}
 // 				: {};
 
-// 			let sort = {};
-// 			if (req.query.sort === 'glover name') {
+// 			const sort_query = query.sort.toLowerCase()
+let sort = {};
+// 			if (sort_query === 'glover name') {
 // 				sort = { artist_name: 1 };
-// 			} else if (req.query.sort === 'facebook name') {
+// 			} else if (sort_query === 'facebook name') {
 // 				sort = { facebook_name: 1 };
-// 			} else if (req.query.sort === 'sponsor') {
+// 			} else if (sort_query === 'sponsor') {
 // 				sort = { sponsor: -1 };
-// 			} else if (req.query.sort === 'promoter') {
+// 			} else if (sort_query === 'promoter') {
 // 				sort = { promoter: -1 };
-// 			} else if (req.query.sort === 'active') {
+// 			} else if (sort_query === 'active') {
 // 				sort = { active: -1 };
-// 			} else if (req.query.sort === 'newest' || req.query.sort === '') {
+// 			} else if (sort_query === 'newest' || sort_query === '') {
 // 				sort = { _id: -1 };
 // 			}
 

@@ -104,16 +104,6 @@ const AllProductsPage = (props) => {
 
 	const { width, height } = userWindowDimensions();
 
-	// useEffect(() => {
-	// 	let clean = true;
-	// 	if (clean) {
-	// 		dispatch(listChips({}));
-
-	// 		determine_products();
-	// 	}
-	// 	return () => (clean = false);
-	// }, []);
-
 	useEffect(
 		() => {
 			let clean = true;
@@ -123,7 +113,7 @@ const AllProductsPage = (props) => {
 			}
 			return () => (clean = false);
 		},
-		[ props.match.params.category, props.match.params.subcategory, props.location ]
+		[ props.match.params.category, props.match.params.subcategory ]
 	);
 
 	const determine_products = async () => {

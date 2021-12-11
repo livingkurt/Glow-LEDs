@@ -62,15 +62,16 @@ export default {
 			const search = req.query.search ? { _id: req.query.search } : {};
 			// const search = { _id: req.query.search };
 			console.log({ search });
+			const sort_query = req.query.sort.toLowerCase();
 			let sort = {};
 			let filter = {};
-			if (req.query.sort === 'lowest') {
+			if (sort_query === 'lowest') {
 				sort = { totalPrice: 1 };
-			} else if (req.query.sort === 'highest') {
+			} else if (sort_query === 'highest') {
 				sort = { totalPrice: -1 };
-			} else if (req.query.sort === 'date' || req.query.sort === '') {
+			} else if (sort_query === 'date' || sort_query === '') {
 				sort = { createdAt: -1 };
-			} else if (req.query.sort === 'paid') {
+			} else if (sort_query === 'paid') {
 				filter = {
 					isPaid: true,
 					isManufactured: false,
@@ -78,7 +79,7 @@ export default {
 					isShipped: false,
 					isDelivered: false
 				};
-			} else if (req.query.sort === 'manufactured') {
+			} else if (sort_query === 'manufactured') {
 				filter = {
 					isPaid: true,
 					isManufactured: true,
@@ -86,11 +87,11 @@ export default {
 					isShipped: false,
 					isDelivered: false
 				};
-			} else if (req.query.sort === 'packaged') {
+			} else if (sort_query === 'packaged') {
 				filter = { isPaid: true, isManufactured: true, isPackaged: true, isShipped: false, isDelivered: false };
-			} else if (req.query.sort === 'shipped') {
+			} else if (sort_query === 'shipped') {
 				filter = { isPaid: true, isManufactured: true, isPackaged: true, isShipped: true, isDelivered: false };
-			} else if (req.query.sort === 'delivered') {
+			} else if (sort_query === 'delivered') {
 				filter = { isPaid: true, isManufactured: true, isPackaged: true, isShipped: true, isDelivered: true };
 			}
 			// execute query with page and limit values

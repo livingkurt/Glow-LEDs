@@ -25,18 +25,19 @@ export default {
 						}
 					}
 				: {};
+			const sort_query = query.sort.toLowerCase();
 			let sort = {};
-			if (query.sort === 'glover name') {
+			if (sort_query === 'glover name') {
 				sort = { artist_name: 1 };
-			} else if (query.sort === 'facebook name') {
+			} else if (sort_query === 'facebook name') {
 				sort = { facebook_name: 1 };
-			} else if (query.sort === 'sponsor') {
+			} else if (sort_query === 'sponsor') {
 				sort = { sponsor: -1 };
-			} else if (query.sort === 'promoter') {
+			} else if (sort_query === 'promoter') {
 				sort = { promoter: -1 };
-			} else if (query.sort === 'active') {
+			} else if (sort_query === 'active') {
 				sort = { active: -1 };
-			} else if (query.sort === 'newest' || query.sort === '') {
+			} else if (sort_query === 'newest' || sort_query === '') {
 				sort = { _id: -1 };
 			}
 			const filter = { deleted: false, ...search, ...sponsor, ...promoter };

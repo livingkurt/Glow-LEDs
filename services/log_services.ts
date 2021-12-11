@@ -13,18 +13,19 @@ export default {
 				}
 			: {};
 
+		const sort_query = req.query.sort.toLowerCase();
 		let sort = {};
-		if (req.query.sort === 'file') {
+		if (sort_query === 'file') {
 			sort = { file: 1 };
-		} else if (req.query.sort === 'method') {
+		} else if (sort_query === 'method') {
 			sort = { method: 1 };
-		} else if (req.query.sort === 'status') {
+		} else if (sort_query === 'status') {
 			sort = { status: -1 };
-		} else if (req.query.sort === 'success') {
+		} else if (sort_query === 'success') {
 			sort = { success: -1 };
-		} else if (req.query.sort === 'error') {
+		} else if (sort_query === 'error') {
 			sort = { error: -1 };
-		} else if (req.query.sort === 'newest' || req.query.sort === '') {
+		} else if (sort_query === 'newest' || sort_query === '') {
 			sort = { _id: -1 };
 		}
 

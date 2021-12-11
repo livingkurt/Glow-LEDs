@@ -13,18 +13,19 @@ export default {
 					}
 				: {};
 
+			const sort_query = query.sort.toLowerCase();
 			let sort = {};
-			if (query.sort === 'lowest') {
+			if (sort_query === 'lowest') {
 				sort = { amount: 1 };
-			} else if (query.sort === 'highest') {
+			} else if (sort_query === 'highest') {
 				sort = { amount: -1 };
-			} else if (query.sort === 'newest') {
+			} else if (sort_query === 'newest') {
 				sort = { _id: -1 };
-			} else if (query.sort === 'date' || query.sort === '') {
+			} else if (sort_query === 'date' || sort_query === '') {
 				sort = { date_of_purchase: -1 };
-			} else if (query.sort === 'category') {
+			} else if (sort_query === 'category') {
 				sort = { category: 1, createdAt: -1 };
-			} else if (query.sort === 'application') {
+			} else if (sort_query === 'application') {
 				sort = { application: 1, createdAt: -1 };
 			}
 			const filter = { deleted: false, ...category, ...search };

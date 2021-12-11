@@ -407,3 +407,26 @@ export const subcategories = [
 	'sizes',
 	'secondary_colors'
 ];
+
+export const determine_filter = (query: any, search: any) => {
+	const category = query.category ? { category: query.category } : {};
+	const subcategory = query.subcategory ? { subcategory: query.subcategory } : {};
+	const collection = query.collection ? { product_collection: query.collection } : {};
+
+	const hidden: any = query.hidden ? (query.hidden === 'true' ? {} : { hidden: false }) : { hidden: false };
+	const option: any = query.option ? { option: query.option === 'true' ? true : false } : { option: false };
+	const chips = query.chip ? { chips: { $in: [ query.chip ] } } : {};
+
+	const filter = {
+		deleted: false,
+		...option,
+		...hidden,
+		...category,
+		...subcategory,
+		...collection,
+		...search,
+		...chips
+	};
+
+	return filter;
+};

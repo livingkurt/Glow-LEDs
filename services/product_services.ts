@@ -17,16 +17,17 @@ export default {
 					}
 				: {};
 
+			const sort_query = req.query.sort.toLowerCase();
 			let sort = {};
-			if (req.query.sort === 'lowest') {
+			if (sort_query === 'lowest') {
 				sort = { price: 1 };
-			} else if (req.query.sort === 'highest') {
+			} else if (sort_query === 'highest') {
 				sort = { price: -1 };
-			} else if (req.query.sort === 'newest') {
+			} else if (sort_query === 'newest') {
 				sort = { _id: -1 };
-			} else if (req.query.sort === 'hidden') {
+			} else if (sort_query === 'hidden') {
 				sort = { hidden: -1 };
-			} else if (req.query.sort === 'category' || req.query.sort === '') {
+			} else if (sort_query === 'category' || sort_query === '') {
 				sort = { order: 1, _id: -1 };
 			}
 
@@ -94,16 +95,17 @@ export default {
 					}
 				: {};
 
+			const sort_query = req.query.sort.toLowerCase();
 			let sort = {};
-			if (req.query.sort === 'lowest') {
+			if (sort_query === 'lowest') {
 				sort = { price: 1 };
-			} else if (req.query.sort === 'highest') {
+			} else if (sort_query === 'highest') {
 				sort = { price: -1 };
-			} else if (req.query.sort === 'newest') {
+			} else if (sort_query === 'newest') {
 				sort = { _id: -1 };
-			} else if (req.query.sort === 'hidden') {
+			} else if (sort_query === 'hidden') {
 				sort = { hidden: -1 };
-			} else if (req.query.sort === 'category' || req.query.sort === '') {
+			} else if (sort_query === 'category' || sort_query === '') {
 				sort = { order: 1, _id: -1 };
 			}
 
@@ -148,16 +150,17 @@ export default {
 					}
 				: {};
 
+			const sort_query = req.query.sort.toLowerCase();
 			let sort = {};
-			if (req.query.sort === 'lowest') {
+			if (sort_query === 'lowest') {
 				sort = { price: 1 };
-			} else if (req.query.sort === 'highest') {
+			} else if (sort_query === 'highest') {
 				sort = { price: -1 };
-			} else if (req.query.sort === 'newest') {
+			} else if (sort_query === 'newest') {
 				sort = { _id: -1 };
-			} else if (req.query.sort === 'hidden') {
+			} else if (sort_query === 'hidden') {
 				sort = { hidden: -1 };
-			} else if (req.query.sort === 'category' || req.query.sort === '') {
+			} else if (sort_query === 'category' || sort_query === '') {
 				sort = { order: 1, _id: -1 };
 			}
 
