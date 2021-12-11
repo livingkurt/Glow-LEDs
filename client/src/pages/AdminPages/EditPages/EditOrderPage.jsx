@@ -371,7 +371,7 @@ const EditOrderPage = (props) => {
 	const get_products = async (orderItems) => {
 		const products = await Promise.all(
 			orderItems.map(async (item) => {
-				const { data } = await API_Products.get_product(item.pathname);
+				const { data } = await API_Products.findById_products_a(item.pathname);
 				return data;
 			})
 		);

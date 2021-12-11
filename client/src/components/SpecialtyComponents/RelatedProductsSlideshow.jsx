@@ -44,7 +44,7 @@ const RelatedProductsSlideshow = ({
 
 	const get_products = async (category) => {
 		set_loading(true);
-		const { data } = await API_Products.get_products_by_category(category);
+		const { data } = await API_Products.findAll_products_a({ category });
 		console.log({ data });
 		set_products(typeof data === 'object' && data.filter((product) => product.pathname !== product_pathname));
 		if (random) {

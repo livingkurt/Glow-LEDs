@@ -20,7 +20,7 @@ export default {
 					}
 				: {};
 
-			const sort_query = query.sort.toLowerCase();
+			const sort_query = query.sort && query.sort.toLowerCase();
 			let sort = {};
 			if (sort_query === 'first name') {
 				sort = { first_name: 1 };

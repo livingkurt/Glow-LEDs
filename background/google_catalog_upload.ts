@@ -47,7 +47,7 @@ const google_catalog_upload = async () => {
 			'sale_price',
 			'sale_price_effective_date'
 		]);
-		const { data: products } = await axios.get('https://www.glow-leds.com/api/products/get_all_products');
+		const { data: products } = await axios.get('https://www.glow-leds.com/api/products');
 
 		const new_rows = products.filter((product: any) => !product.hidden).map((product: any, i: number) => {
 			const id = product._id;

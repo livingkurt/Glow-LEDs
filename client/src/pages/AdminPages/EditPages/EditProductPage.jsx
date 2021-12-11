@@ -118,8 +118,8 @@ const EditProductPage = (props) => {
 	const productSave = useSelector((state) => state.productSave);
 	const { loading: loadingSave, success: successSave, error: errorSave } = productSave;
 
-	const productList = useSelector((state) => state.productList);
-	const { products: all_products } = productList;
+	// const productList = useSelector((state) => state.productList);
+	// const { products: all_products } = productList;
 
 	const chipList = useSelector((state) => state.chipList);
 	const { chips: chips_list } = chipList;
@@ -147,8 +147,7 @@ const EditProductPage = (props) => {
 					dispatch(detailsProduct(''));
 				}
 				get_all_options();
-				get_all_products();
-				get_all_secondary_products();
+				findAll_products_a();
 				set_state();
 			}
 			return () => (clean = false);
@@ -160,26 +159,21 @@ const EditProductPage = (props) => {
 		let clean = true;
 		if (clean) {
 			dispatch(listCategorys({}));
-			dispatch(listProducts({}));
+			// dispatch(listProducts({ limit: 300 }));
 			dispatch(listChips({}));
 		}
 		return () => (clean = false);
 	}, []);
 
-	const get_all_products = async () => {
-		const { data } = await API_Products.get_all_products();
+	const findAll_products_a = async () => {
+		const { data } = await API_Products.findAll_products_a({ option: false, limit: 300 });
 		console.log({ data });
-		set_macro_products_list(data);
+		set_macro_products_list(data.products);
 	};
 	const get_all_options = async () => {
-		const { data } = await API_Products.get_all_options();
+		const { data } = await API_Products.findAll_products_a({ option: true, limit: 300 });
 		console.log({ data });
-		set_option_products_list(data);
-	};
-	const get_all_secondary_products = async () => {
-		const { data } = await API_Products.get_all_diffuser_caps();
-		console.log({ data });
-		set_secondary_products_list(data);
+		set_option_products_list(data.products);
 	};
 
 	const use_template = (e) => {
@@ -230,13 +224,15 @@ const EditProductPage = (props) => {
 		() => {
 			let clean = true;
 			if (clean) {
-				if (all_products) {
-					set_filtered_products(all_products.filter((item) => !item.option).filter((item) => !item.hidden));
+				if (macro_products_list) {
+					set_filtered_products(
+						macro_products_list.filter((item) => !item.option).filter((item) => !item.hidden)
+					);
 				}
 			}
 			return () => (clean = false);
 		},
-		[ all_products ]
+		[ macro_products_list ]
 	);
 	useEffect(
 		() => {
@@ -510,16 +506,6 @@ const EditProductPage = (props) => {
 		e.target.reset();
 		unset_state();
 		history.push('/secure/glow/products');
-	};
-
-	const update_pathname = () => {
-		if (id && pathname) {
-			const response = API_Products.update_pathname(id, pathname, product);
-			console.log(response);
-			if (response) {
-				history.push('/secure/glow/products');
-			}
-		}
 	};
 
 	const remove_image = (image_index, e) => {
@@ -812,7 +798,7 @@ const EditProductPage = (props) => {
 													<option key={1} defaultValue="">
 														---Choose Product as a Template---
 													</option>
-													{all_products.map((product, index) => (
+													{macro_products_list.map((product, index) => (
 														<option key={index} value={product.pathname}>
 															{product.name}
 														</option>
@@ -1512,7 +1498,7 @@ const EditProductPage = (props) => {
 											</Link>
 											{/* <button
 												className="btn primary w-100per"
-												onClick={(e) => create_product_option(e)}
+												onClick={(e) => create_products_a(e)}
 											>
 												Create New Product Option
 											</button> */}
@@ -1765,7 +1751,7 @@ const EditProductPage = (props) => {
 															'Option Products'
 														)} */}
 														<DropdownDisplay
-															item_list={all_products}
+															item_list={macro_products_list}
 															// item_list={[
 															// 	...macro_products_list,
 															// 	...option_products_list
@@ -1820,7 +1806,7 @@ const EditProductPage = (props) => {
 													<option key={1} defaultValue="">
 														---Choose Product Option Template---
 													</option>
-													{all_products.map((product, index) => (
+													{macro_products_list.map((product, index) => (
 														<option key={index} value={product.pathname}>
 															{product.name}
 														</option>
@@ -1870,11 +1856,6 @@ const EditProductPage = (props) => {
 									<li>
 										<button type="submit" className="btn primary">
 											{id ? 'Update' : 'Create'}
-										</button>
-									</li>
-									<li>
-										<button type="button" onClick={update_pathname} className="btn primary">
-											Update Pathname
 										</button>
 									</li>
 									<li>

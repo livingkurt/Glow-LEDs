@@ -145,14 +145,15 @@ const Header = (props) => {
 	useEffect(() => {
 		let clean = true;
 		if (clean) {
-			get_all_products();
+			findAll_products_a();
 		}
 		return () => (clean = false);
 	}, []);
 
-	const get_all_products = async () => {
+	const findAll_products_a = async () => {
 		set_loading(true);
-		const { data } = await API_Products.get_all_products();
+		const { data } = await API_Products.findAll_products_a();
+		console.log({ data });
 		set_options([
 			...categories.map((category) => {
 				return { name: humanize(category) };
@@ -160,7 +161,7 @@ const Header = (props) => {
 			...subcategories.map((category) => {
 				return { name: humanize(category) };
 			}),
-			...data.filter((product) => !product.option).filter((product) => !product.hidden)
+			...data.products.filter((product) => !product.option).filter((product) => !product.hidden)
 		]);
 		set_loading(false);
 	};

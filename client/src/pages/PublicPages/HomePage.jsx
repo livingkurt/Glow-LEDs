@@ -71,7 +71,7 @@ const HomePage = (props) => {
 		if (clean) {
 			dispatch(listContents({ limit: 3 }));
 			dispatch(listFeatures({}));
-			get_all_products();
+			findAll_products_a();
 			get_display_content();
 		}
 		return () => (clean = false);
@@ -84,9 +84,9 @@ const HomePage = (props) => {
 			set_slideshow(data[0].home_page.slideshow);
 		}
 	};
-	const get_all_products = async () => {
+	const findAll_products_a = async () => {
 		set_loading(true);
-		const { data } = await API_Products.get_all_products();
+		const { data } = await API_Products.findAll_products_a();
 		set_options([
 			...categories.map((category) => {
 				return { name: humanize(category) };

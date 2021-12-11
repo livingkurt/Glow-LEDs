@@ -182,7 +182,7 @@ const AllProductsPage = (props) => {
 			// console.log({ data });
 			set_products(data);
 		} else if (category === 'discounted') {
-			const { data } = await API_Products.get_imperfect();
+			const { data } = await API_Products.findAll_products_a({ subcategory: 'imperfect' });
 			// console.log({ data });
 			set_products(data);
 		} else {

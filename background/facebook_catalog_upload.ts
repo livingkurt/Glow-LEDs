@@ -57,7 +57,7 @@ const facebook_catalog_upload = async () => {
 			// 'item_group_id'
 		]);
 
-		const { data: products } = await axios.get('https://www.glow-leds.com/api/products/get_all_products');
+		const { data: products } = await axios.get('https://www.glow-leds.com/api/products');
 
 		const new_rows = products
 			.filter((product: any) => !product.hidden)

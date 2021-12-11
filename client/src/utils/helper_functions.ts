@@ -2024,7 +2024,7 @@ export const create_color_products = async (
 		const new_product = { ...product, ...item };
 		delete new_product._id;
 		console.log({ new_product });
-		const { data } = await API_Products.create_product_option(new_product);
+		const { data } = await API_Products.create_products_a(new_product);
 		console.log({ data, index });
 		if (item.subcategory === 'colors' && type === 'colors') {
 			if (color_products) {

@@ -80,7 +80,20 @@ function ProductPage(props) {
 				}
 			}
 			console.log({ category, subcategory, search, sort, filter, collection });
-			dispatch(listProducts(category, subcategory, filter, search, sort, collection, page, 30, hidden, option));
+			dispatch(
+				listProducts({
+					category,
+					subcategory,
+					filter,
+					search,
+					sort,
+					collection,
+					page,
+					limit: 30,
+					hidden,
+					option
+				})
+			);
 		}
 	};
 
@@ -269,13 +282,36 @@ function ProductPage(props) {
 		updateProducts(items);
 	};
 	const update_page = (e, new_page) => {
+		let category = props.match.params.category ? props.match.params.category : '';
+		let subcategory = props.match.params.subcategory ? props.match.params.subcategory : '';
+		let search = '';
+		let sort = '';
+		let filter = '';
+		let collection = props.match.params.collection ? props.match.params.collection : '';
+		let limit = 30;
+		let hidden = true;
+		let option = false;
 		console.log({ e, new_page });
 		e.preventDefault();
 		const page = parseInt(new_page);
+		set_page(page);
 		update_products_url(history, search, '', '', page);
 
 		console.log(new_page);
-		dispatch(listProducts({ category, subcategory, search, page: new_page, limit, hidden: true, option: false }));
+		dispatch(
+			listProducts({
+				category,
+				subcategory,
+				collection,
+				filter,
+				search,
+				page: new_page,
+				limit,
+				hidden,
+				option,
+				sort
+			})
+		);
 	};
 
 	const onDragStart = (start) => {

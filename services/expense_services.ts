@@ -13,7 +13,7 @@ export default {
 					}
 				: {};
 
-			const sort_query = query.sort.toLowerCase();
+			const sort_query = query.sort && query.sort.toLowerCase();
 			let sort = {};
 			if (sort_query === 'lowest') {
 				sort = { amount: 1 };
