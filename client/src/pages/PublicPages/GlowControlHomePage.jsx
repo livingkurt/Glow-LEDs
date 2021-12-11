@@ -57,7 +57,7 @@ const GlowControlHomePage = (props) => {
 
 	// const submitHandler = (e) => {
 	// 	e.preventDefault();
-	// 	dispatch(listMyDevices(category, search, sortOrder));
+	// 	dispatch(listMyDevices(category, search, sort));
 	// };
 
 	// const sortHandler = (e) => {
@@ -67,9 +67,9 @@ const GlowControlHomePage = (props) => {
 
 	// useEffect(
 	// 	() => {
-	// 		dispatch(listMyDevices(category, search, sortOrder));
+	// 		dispatch(listMyDevices(category, search, sort));
 	// 	},
-	// 	[ sortOrder ]
+	// 	[ sort ]
 	// );
 
 	const deleteHandler = (device) => {

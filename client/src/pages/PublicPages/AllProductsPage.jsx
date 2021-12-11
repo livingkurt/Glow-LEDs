@@ -171,7 +171,8 @@ const AllProductsPage = (props) => {
 				}
 			}
 			// console.log({ category, subcategory, search, sort, filter, collection });
-			dispatch(listProducts(category, subcategory, filter, search, sort, collection, page, limit, hidden));
+			// dispatch(listProducts(category, subcategory, filter, search, sort, collection, page, limit, hidden));
+			dispatch(listProducts({ category, subcategory, filter, search, sort, collection, page, limit, hidden }));
 		}
 	};
 
@@ -201,7 +202,7 @@ const AllProductsPage = (props) => {
 	const sortHandler = (e) => {
 		set_sort(e.target.value);
 		update_products_url(history, search, e.target.value, filter);
-		dispatch(listProducts(category, subcategory, '', search, e.target.value, '', '', collection));
+		dispatch(listProducts({ category, subcategory, search, sort: e.target.value, collection }));
 	};
 
 	const filterHandler = (e) => {
@@ -211,7 +212,7 @@ const AllProductsPage = (props) => {
 		set_filter(chip_selected._id);
 		// console.log({ chip_selected });
 		update_products_url(history, '', sort, chip_selected.name);
-		dispatch(listProducts(category, subcategory, chip_selected._id, '', sort, collection));
+		dispatch(listProducts({ category, subcategory, chip: chip_selected._id, sort: sort, collection }));
 	};
 
 	const update_page = (e, new_page) => {
@@ -221,7 +222,18 @@ const AllProductsPage = (props) => {
 		update_products_url(history, search, sort, filter, page);
 
 		// console.log(new_page);
-		dispatch(listProducts(category, subcategory, filter, search, sort, '', new_page, limit, false));
+		dispatch(
+			listProducts({
+				category,
+				subcategory,
+				filter,
+				search,
+				sort: sort,
+				page: new_page,
+				limit,
+				hidden: false
+			})
+		);
 	};
 
 	return (

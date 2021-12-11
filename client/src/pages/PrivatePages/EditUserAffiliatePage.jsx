@@ -133,9 +133,9 @@ const EditUserAffiliatePage = (props) => {
 				} else {
 					dispatch(detailsAffiliate(''));
 				}
-				dispatch(listUsers(''));
-				dispatch(listProducts(''));
-				dispatch(listChips());
+				dispatch(listUsers({}));
+				dispatch(listProducts({}));
+				dispatch(listChips({}));
 				set_state();
 			}
 			return () => (clean = false);

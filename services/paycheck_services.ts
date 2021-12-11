@@ -13,16 +13,16 @@ export default {
 					}
 				: {};
 
-			let sortOrder = {};
-			if (query.sortOrder === 'glover name') {
-				sortOrder = { artist_name: 1 };
-			} else if (query.sortOrder === 'facebook name') {
-				sortOrder = { facebook_name: 1 };
-			} else if (query.sortOrder === 'newest' || query.sortOrder === '') {
-				sortOrder = { _id: -1 };
+			let sort = {};
+			if (query.sort === 'glover name') {
+				sort = { artist_name: 1 };
+			} else if (query.sort === 'facebook name') {
+				sort = { facebook_name: 1 };
+			} else if (query.sort === 'newest' || query.sort === '') {
+				sort = { _id: -1 };
 			}
 			const filter = { deleted: false, ...category, ...search };
-			return await paycheck_db.findAll_paychecks_db(filter, sortOrder);
+			return await paycheck_db.findAll_paychecks_db(filter, sort);
 		} catch (error) {
 			console.log({ findAll_paychecks_s_error: error });
 			throw new Error(error.message);

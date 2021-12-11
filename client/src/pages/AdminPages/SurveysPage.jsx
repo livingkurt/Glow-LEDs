@@ -14,7 +14,7 @@ import { listOrders } from '../../actions/orderActions';
 
 const SurveysPage = (props) => {
 	const [ search, set_search ] = useState('');
-	const [ sortOrder, setSortOrder ] = useState('');
+	const [ sort, setSortOrder ] = useState('');
 
 	const [ loading_surveys, set_loading_surveys ] = useState(false);
 	const category = props.match.params.category ? props.match.params.category : '';
@@ -43,7 +43,7 @@ const SurveysPage = (props) => {
 	);
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(listSurveys(category, search, sortOrder));
+		dispatch(listSurveys(category, search, sort));
 	};
 
 	const sortHandler = (e) => {
@@ -55,11 +55,11 @@ const SurveysPage = (props) => {
 		() => {
 			let clean = true;
 			if (clean) {
-				dispatch(listSurveys(category, search, sortOrder));
+				dispatch(listSurveys(category, search, sort));
 			}
 			return () => (clean = false);
 		},
-		[ dispatch, category, search, sortOrder ]
+		[ dispatch, category, search, sort ]
 	);
 	const deleteHandler = (survey) => {
 		dispatch(deleteSurvey(survey._id));

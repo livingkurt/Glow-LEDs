@@ -162,9 +162,9 @@ const EditProductPage = (props) => {
 	useEffect(() => {
 		let clean = true;
 		if (clean) {
-			dispatch(listCategorys(''));
-			dispatch(listProducts(''));
-			dispatch(listChips());
+			dispatch(listCategorys({}));
+			dispatch(listProducts({}));
+			dispatch(listChips({}));
 		}
 		return () => (clean = false);
 	}, []);
@@ -1463,8 +1463,8 @@ const EditProductPage = (props) => {
 
 													<li>
 														<label
-															aria-label="sortOrder"
-															htmlFor="sortOrder"
+															aria-label="sort"
+															htmlFor="sort"
 															className="select-label mb-15px"
 														>
 															Choose Macro Product

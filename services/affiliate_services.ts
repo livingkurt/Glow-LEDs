@@ -25,22 +25,22 @@ export default {
 						}
 					}
 				: {};
-			let sortOrder = {};
-			if (query.sortOrder === 'glover name') {
-				sortOrder = { artist_name: 1 };
-			} else if (query.sortOrder === 'facebook name') {
-				sortOrder = { facebook_name: 1 };
-			} else if (query.sortOrder === 'sponsor') {
-				sortOrder = { sponsor: -1 };
-			} else if (query.sortOrder === 'promoter') {
-				sortOrder = { promoter: -1 };
-			} else if (query.sortOrder === 'active') {
-				sortOrder = { active: -1 };
-			} else if (query.sortOrder === 'newest' || query.sortOrder === '') {
-				sortOrder = { _id: -1 };
+			let sort = {};
+			if (query.sort === 'glover name') {
+				sort = { artist_name: 1 };
+			} else if (query.sort === 'facebook name') {
+				sort = { facebook_name: 1 };
+			} else if (query.sort === 'sponsor') {
+				sort = { sponsor: -1 };
+			} else if (query.sort === 'promoter') {
+				sort = { promoter: -1 };
+			} else if (query.sort === 'active') {
+				sort = { active: -1 };
+			} else if (query.sort === 'newest' || query.sort === '') {
+				sort = { _id: -1 };
 			}
 			const filter = { deleted: false, ...search, ...sponsor, ...promoter };
-			return await affiliate_db.findAll_affiliates_db(filter, sortOrder);
+			return await affiliate_db.findAll_affiliates_db(filter, sort);
 		} catch (error) {
 			console.log({ error });
 			throw new Error(error.message);

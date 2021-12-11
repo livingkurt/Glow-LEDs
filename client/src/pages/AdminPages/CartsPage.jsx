@@ -7,7 +7,7 @@ import { Search, Sort } from '../../components/SpecialtyComponents';
 
 const CartsPage = (props) => {
 	const [ search, set_search ] = useState('');
-	const [ sortOrder, setSortOrder ] = useState('');
+	const [ sort, setSortOrder ] = useState('');
 	const category = props.match.params.category ? props.match.params.category : '';
 	const dispatch = useDispatch();
 
@@ -43,7 +43,7 @@ const CartsPage = (props) => {
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(listCarts(category, search, sortOrder));
+		dispatch(listCarts(category, search, sort));
 	};
 
 	const sortHandler = (e) => {
@@ -55,11 +55,11 @@ const CartsPage = (props) => {
 		() => {
 			let clean = true;
 			if (clean) {
-				dispatch(listCarts(category, search, sortOrder));
+				dispatch(listCarts(category, search, sort));
 			}
 			return () => (clean = false);
 		},
-		[ sortOrder, dispatch, category, search ]
+		[ sort, dispatch, category, search ]
 	);
 	const colors = [
 		{ name: 'Supplies', color: '#6d3e3e' },

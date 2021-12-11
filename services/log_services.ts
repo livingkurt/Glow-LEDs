@@ -13,22 +13,22 @@ export default {
 				}
 			: {};
 
-		let sortOrder = {};
-		if (req.query.sortOrder === 'file') {
-			sortOrder = { file: 1 };
-		} else if (req.query.sortOrder === 'method') {
-			sortOrder = { method: 1 };
-		} else if (req.query.sortOrder === 'status') {
-			sortOrder = { status: -1 };
-		} else if (req.query.sortOrder === 'success') {
-			sortOrder = { success: -1 };
-		} else if (req.query.sortOrder === 'error') {
-			sortOrder = { error: -1 };
-		} else if (req.query.sortOrder === 'newest' || req.query.sortOrder === '') {
-			sortOrder = { _id: -1 };
+		let sort = {};
+		if (req.query.sort === 'file') {
+			sort = { file: 1 };
+		} else if (req.query.sort === 'method') {
+			sort = { method: 1 };
+		} else if (req.query.sort === 'status') {
+			sort = { status: -1 };
+		} else if (req.query.sort === 'success') {
+			sort = { success: -1 };
+		} else if (req.query.sort === 'error') {
+			sort = { error: -1 };
+		} else if (req.query.sort === 'newest' || req.query.sort === '') {
+			sort = { _id: -1 };
 		}
 
-		const logs = await Log.find({ deleted: false, ...category, ...search }).sort(sortOrder).limit(100);
+		const logs = await Log.find({ deleted: false, ...category, ...search }).sort(sort).limit(100);
 		// console.log(logs);
 		res.send(logs);
 	},

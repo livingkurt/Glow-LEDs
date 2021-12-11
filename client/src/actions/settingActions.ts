@@ -16,7 +16,7 @@ import {
 } from '../constants/settingConstants';
 import axios from 'axios';
 
-export const listSettings = (category = '', search = '', sortOrder = '') => async (
+export const listSettings = (category = '', search = '', sort = '') => async (
 	dispatch: (arg0: { type: string; payload?: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }
 ) => {
@@ -24,7 +24,7 @@ export const listSettings = (category = '', search = '', sortOrder = '') => asyn
 		dispatch({ type: SETTING_LIST_REQUEST });
 		const { userLogin: { userInfo } } = getState();
 		const { data } = await axios.get(
-			'/api/settings?category=' + category + '&search=' + search + '&sortOrder=' + sortOrder.toLowerCase(),
+			'/api/settings?category=' + category + '&search=' + search + '&sort=' + sort.toLowerCase(),
 			{
 				headers: {
 					Authorization: 'Bearer ' + userInfo.access_token

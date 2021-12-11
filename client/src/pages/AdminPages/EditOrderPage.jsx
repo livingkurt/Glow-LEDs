@@ -146,9 +146,8 @@ const EditOrderPage = (props) => {
 					console.log('Is ID');
 					dispatch(detailsOrder(props.match.params.id));
 					dispatch(detailsOrder(props.match.params.id));
-					// dispatch(listProducts(''));
-					dispatch(listProducts('', '', '', '', '', '', '', 300, true));
-					dispatch(listUsers(''));
+					dispatch(listProducts({ limit: 300, hidden: true }));
+					dispatch(listUsers({}));
 				} else {
 					dispatch(detailsOrder(''));
 				}
@@ -902,8 +901,8 @@ const EditOrderPage = (props) => {
 
 														<li>
 															<label
-																aria-label="sortOrder"
-																htmlFor="sortOrder"
+																aria-label="sort"
+																htmlFor="sort"
 																className="select-label mb-15px"
 															>
 																Product
@@ -1231,8 +1230,8 @@ const EditOrderPage = (props) => {
 														</li>
 														<li>
 															<label
-																aria-label="sortOrder"
-																htmlFor="sortOrder"
+																aria-label="sort"
+																htmlFor="sort"
 																className="select-label mb-15px"
 															>
 																Color Product
@@ -1372,8 +1371,8 @@ const EditOrderPage = (props) => {
 														</li>
 														<li>
 															<label
-																aria-label="sortOrder"
-																htmlFor="sortOrder"
+																aria-label="sort"
+																htmlFor="sort"
 																className="select-label mb-15px"
 															>
 																Secondary Color Product
@@ -1487,8 +1486,8 @@ const EditOrderPage = (props) => {
 														</li>
 														<li>
 															<label
-																aria-label="sortOrder"
-																htmlFor="sortOrder"
+																aria-label="sort"
+																htmlFor="sort"
 																className="select-label mb-15px"
 															>
 																Option Product
@@ -1588,8 +1587,8 @@ const EditOrderPage = (props) => {
 														</li>
 														<li>
 															<label
-																aria-label="sortOrder"
-																htmlFor="sortOrder"
+																aria-label="sort"
+																htmlFor="sort"
 																className="select-label mb-15px"
 															>
 																Secondary Product

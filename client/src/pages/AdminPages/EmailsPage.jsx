@@ -10,7 +10,7 @@ import { humanize } from '../../utils/helper_functions';
 const EmailsPage = (props) => {
 	const history = useHistory();
 	const [ search, set_search ] = useState('');
-	const [ sortOrder, setSortOrder ] = useState('');
+	const [ sort, setSortOrder ] = useState('');
 	const category = props.match.params.category ? props.match.params.category : '';
 	const emailList = useSelector((state) => state.emailList);
 	const { loading, emails, error } = emailList;
@@ -34,7 +34,7 @@ const EmailsPage = (props) => {
 	);
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(listEmails(category, search, sortOrder));
+		dispatch(listEmails(category, search, sort));
 	};
 
 	const sortHandler = (e) => {
@@ -46,11 +46,11 @@ const EmailsPage = (props) => {
 		() => {
 			let clean = true;
 			if (clean) {
-				dispatch(listEmails(category, search, sortOrder));
+				dispatch(listEmails(category, search, sort));
 			}
 			return () => (clean = false);
 		},
-		[ dispatch, category, search, sortOrder ]
+		[ dispatch, category, search, sort ]
 	);
 	const deleteHandler = (email) => {
 		dispatch(deleteEmail(email._id));

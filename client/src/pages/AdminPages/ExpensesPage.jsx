@@ -12,7 +12,7 @@ import CSVReader from 'react-csv-reader';
 
 const ExpensesPage = (props) => {
 	const [ search, set_search ] = useState('');
-	const [ sortOrder, setSortOrder ] = useState('');
+	const [ sort, setSortOrder ] = useState('');
 	const [ card_type, set_card_type ] = useState('GL AMEX');
 	const history = useHistory();
 
@@ -35,16 +35,16 @@ const ExpensesPage = (props) => {
 		() => {
 			let clean = true;
 			if (clean) {
-				dispatch(listExpenses(category, search, sortOrder));
+				dispatch(listExpenses(category, search, sort));
 			}
 			return () => (clean = false);
 		},
-		[ sortOrder ]
+		[ sort ]
 	);
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(listExpenses(category, search, sortOrder));
+		dispatch(listExpenses(category, search, sort));
 	};
 
 	const sortHandler = (e) => {
@@ -122,7 +122,7 @@ const ExpensesPage = (props) => {
 				}
 			}
 		});
-		dispatch(listExpenses(category, search, sortOrder));
+		dispatch(listExpenses(category, search, sort));
 	};
 
 	const card_types = [ 'FID', 'GL AMEX', 'AMZNK' ];

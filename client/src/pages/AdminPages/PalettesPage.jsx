@@ -19,7 +19,7 @@ import { listOrders } from '../../actions/orderActions';
 
 const PalettesPage = (props) => {
 	const [ search, set_search ] = useState('');
-	const [ sortOrder, setSortOrder ] = useState('');
+	const [ sort, setSortOrder ] = useState('');
 	const [ last_months_orders, set_last_months_orders ] = useState([]);
 	const [ total_orders, set_total_orders ] = useState([]);
 	const [ loading_palettes, set_loading_palettes ] = useState(false);
@@ -74,7 +74,7 @@ const PalettesPage = (props) => {
 	};
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(listPalettes(category, search, sortOrder));
+		dispatch(listPalettes(category, search, sort));
 	};
 
 	const sortHandler = (e) => {
@@ -86,11 +86,11 @@ const PalettesPage = (props) => {
 		() => {
 			let clean = true;
 			if (clean) {
-				dispatch(listPalettes(category, search, sortOrder));
+				dispatch(listPalettes(category, search, sort));
 			}
 			return () => (clean = false);
 		},
-		[ dispatch, category, search, sortOrder ]
+		[ dispatch, category, search, sort ]
 	);
 	const deleteHandler = (palette) => {
 		dispatch(deletePalette(palette._id));

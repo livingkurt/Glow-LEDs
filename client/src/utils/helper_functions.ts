@@ -11,6 +11,13 @@ interface errors {
 	password: string;
 }
 
+export const create_query = (query: any) => {
+	console.log({ query });
+	const params = new URLSearchParams(query);
+	console.log({ params: params.toString() });
+	return params;
+};
+
 export const humanize = (str: string) => {
 	const frags = str.split('_');
 	for (let i = 0; i < frags.length; i++) {
@@ -867,9 +874,9 @@ export const description_determination = (category: any) => {
 	}
 };
 
-export const update_products_url = (history: any, search = '', sortOrder = '', filter = '', page = 1) => {
+export const update_products_url = (history: any, search = '', sort = '', filter = '', page = 1) => {
 	history.push({
-		search: `${search ? '?search=' + search : ''}${sortOrder ? '?sort=' + sortOrder : ''}${filter
+		search: `${search ? '?search=' + search : ''}${sort ? '?sort=' + sort : ''}${filter
 			? '?filter=' + filter
 			: ''}${page ? '?page=' + page : ''}`
 	});

@@ -1,14 +1,14 @@
 import Setting from '../models/setting';
 
 export default {
-	findAll_settings_db: async (category: any, search: any, sortOrder: any) => {
+	findAll_settings_db: async (category: any, search: any, sort: any) => {
 		try {
 			return await Setting.find({
 				deleted: false,
 				...category,
 				...search
 			})
-				.sort(sortOrder)
+				.sort(sort)
 				.populate('user')
 				.populate('affiliate')
 				.populate('team');

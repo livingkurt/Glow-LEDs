@@ -9,7 +9,7 @@ import { Helmet } from 'react-helmet';
 
 const UsersPage = (props) => {
 	const [ search, set_search ] = useState('');
-	const [ sortOrder, setSortOrder ] = useState('');
+	const [ sort, setSortOrder ] = useState('');
 	const category = props.match.params.category ? props.match.params.category : '';
 	const userList = useSelector((state) => state.userList);
 	const { loading, users, error } = userList;
@@ -39,7 +39,7 @@ const UsersPage = (props) => {
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(listUsers(category, search, sortOrder));
+		dispatch(listUsers(category, search, sort));
 	};
 
 	const sortHandler = (e) => {
@@ -51,11 +51,11 @@ const UsersPage = (props) => {
 		() => {
 			let clean = true;
 			if (clean) {
-				dispatch(listUsers(category, search, sortOrder));
+				dispatch(listUsers(category, search, sort));
 			}
 			return () => (clean = false);
 		},
-		[ sortOrder ]
+		[ sort ]
 	);
 
 	const colors = [

@@ -14,9 +14,9 @@ export default {
 					}
 				: {};
 
-			const sortOrder = {};
+			const sort = {};
 			const filter = { deleted: false, ...category, ...search };
-			return await cart_db.findAll_carts_db(filter, sortOrder);
+			return await cart_db.findAll_carts_db(filter, sort);
 		} catch (error) {
 			console.log({ findAll_carts_s_error: error });
 			throw new Error(error.message);

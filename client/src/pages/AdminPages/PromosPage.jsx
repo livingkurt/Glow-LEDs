@@ -9,7 +9,7 @@ import { format_date } from '../../utils/helper_functions';
 
 const PromosPage = (props) => {
 	const [ search, set_search ] = useState('');
-	const [ sortOrder, setSortOrder ] = useState('');
+	const [ sort, setSortOrder ] = useState('');
 	const category = props.match.params.category ? props.match.params.category : '';
 	const promoList = useSelector((state) => state.promoList);
 	const { loading, promos, error } = promoList;
@@ -33,7 +33,7 @@ const PromosPage = (props) => {
 	);
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(listPromos(category, search, sortOrder));
+		dispatch(listPromos(category, search, sort));
 	};
 
 	const sortHandler = (e) => {
@@ -45,11 +45,11 @@ const PromosPage = (props) => {
 		() => {
 			let clean = true;
 			if (clean) {
-				dispatch(listPromos(category, search, sortOrder));
+				dispatch(listPromos(category, search, sort));
 			}
 			return () => (clean = false);
 		},
-		[ dispatch, category, search, sortOrder ]
+		[ dispatch, category, search, sort ]
 	);
 	const deleteHandler = (promo) => {
 		dispatch(deletePromo(promo._id));

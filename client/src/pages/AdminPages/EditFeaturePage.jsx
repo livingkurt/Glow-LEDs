@@ -47,10 +47,10 @@ const EditFeaturePage = (props) => {
 				dispatch(detailsFeature(props.match.params.pathname));
 				dispatch(detailsFeature(props.match.params.pathname));
 			} else {
-				dispatch(detailsFeature(''));
+				dispatch(detailsFeature({}));
 			}
-			dispatch(listProducts(''));
-			dispatch(listUsers(''));
+			dispatch(listProducts({}));
+			dispatch(listUsers({}));
 
 			set_state();
 		}
@@ -279,8 +279,8 @@ const EditFeaturePage = (props) => {
 										<div className="w-420px m-10px">
 											<li>
 												<label
-													aria-label="sortOrder"
-													htmlFor="sortOrder"
+													aria-label="sort"
+													htmlFor="sort"
 													className="select-label mb-15px"
 												>
 													Users
@@ -382,8 +382,8 @@ const EditFeaturePage = (props) => {
 										<div className="w-420px m-10px">
 											<li>
 												<label
-													aria-label="sortOrder"
-													htmlFor="sortOrder"
+													aria-label="sort"
+													htmlFor="sort"
 													className="select-label mb-15px"
 												>
 													Product

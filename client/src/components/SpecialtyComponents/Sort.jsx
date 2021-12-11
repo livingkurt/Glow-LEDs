@@ -5,7 +5,7 @@ const Sort = (props) => {
 	return (
 		<div className="ai-c mv-1rem ">
 			<div className="custom-select">
-				<select name="sortOrder" className="sort_select w-221px" onChange={props.sortHandler}>
+				<select name="sort" className="sort_select w-221px" onChange={props.sortHandler}>
 					<option className="grey_option" disabled="disabled" selected="selected" defaultValue="">
 						Sort By
 					</option>

@@ -20,7 +20,7 @@ import { listOrders } from '../../actions/orderActions';
 
 const PaychecksPage = (props) => {
 	const [ search, set_search ] = useState('');
-	const [ sortOrder, setSortOrder ] = useState('');
+	const [ sort, setSortOrder ] = useState('');
 	const [ last_months_orders, set_last_months_orders ] = useState([]);
 	const [ total_orders, set_total_orders ] = useState([]);
 	const [ loading_paychecks, set_loading_paychecks ] = useState(false);
@@ -75,7 +75,7 @@ const PaychecksPage = (props) => {
 	};
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(listPaychecks(category, search, sortOrder));
+		dispatch(listPaychecks(category, search, sort));
 	};
 
 	const sortHandler = (e) => {
@@ -87,11 +87,11 @@ const PaychecksPage = (props) => {
 		() => {
 			let clean = true;
 			if (clean) {
-				dispatch(listPaychecks(category, search, sortOrder));
+				dispatch(listPaychecks(category, search, sort));
 			}
 			return () => (clean = false);
 		},
-		[ dispatch, category, search, sortOrder ]
+		[ dispatch, category, search, sort ]
 	);
 	const deleteHandler = (paycheck) => {
 		dispatch(deletePaycheck(paycheck._id));

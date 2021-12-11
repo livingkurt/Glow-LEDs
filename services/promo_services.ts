@@ -14,17 +14,17 @@ export default {
 					}
 				: {};
 
-			let sortOrder = {};
-			if (query.sortOrder === 'admin only') {
-				sortOrder = { admin_only: -1 };
-			} else if (query.sortOrder === 'affiliate only') {
-				sortOrder = { affiliate_only: -1 };
-			} else if (query.sortOrder === 'active') {
-				sortOrder = { active: -1 };
-			} else if (query.sortOrder === 'newest' || query.sortOrder === '') {
-				sortOrder = { _id: -1 };
+			let sort = {};
+			if (query.sort === 'admin only') {
+				sort = { admin_only: -1 };
+			} else if (query.sort === 'affiliate only') {
+				sort = { affiliate_only: -1 };
+			} else if (query.sort === 'active') {
+				sort = { active: -1 };
+			} else if (query.sort === 'newest' || query.sort === '') {
+				sort = { _id: -1 };
 			}
-			return await promo_db.findAll_promos_db(category, search, sortOrder);
+			return await promo_db.findAll_promos_db(category, search, sort);
 		} catch (error) {
 			console.log({ findAll_promos_s_error: error });
 			throw new Error(error.message);
@@ -169,18 +169,18 @@ export default {
 // 		}
 // 	: {};
 
-// let sortOrder = {};
-// if (req.query.sortOrder === 'admin only') {
-// 	sortOrder = { admin_only: -1 };
-// } else if (req.query.sortOrder === 'affiliate only') {
-// 	sortOrder = { affiliate_only: -1 };
-// } else if (req.query.sortOrder === 'active') {
-// 	sortOrder = { active: -1 };
-// } else if (req.query.sortOrder === 'newest' || req.query.sortOrder === '') {
-// 	sortOrder = { _id: -1 };
+// let sort = {};
+// if (req.query.sort === 'admin only') {
+// 	sort = { admin_only: -1 };
+// } else if (req.query.sort === 'affiliate only') {
+// 	sort = { affiliate_only: -1 };
+// } else if (req.query.sort === 'active') {
+// 	sort = { active: -1 };
+// } else if (req.query.sort === 'newest' || req.query.sort === '') {
+// 	sort = { _id: -1 };
 // }
 
-// 			const promos = await Promo.find({ deleted: false, ...category, ...search }).sort(sortOrder);
+// 			const promos = await Promo.find({ deleted: false, ...category, ...search }).sort(sort);
 
 // 			res.send(promos);
 // 		} catch (error) {

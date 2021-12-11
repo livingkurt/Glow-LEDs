@@ -20,7 +20,7 @@ import memoizeOne from 'memoize-one';
 function ProductPage(props) {
 	const history = useHistory();
 	const [ search, set_search ] = useState('');
-	const [ sortOrder, setSortOrder ] = useState('');
+	const [ sort, setSortOrder ] = useState('');
 	const [ loading_upload, set_loading_upload ] = useState(false);
 	const [ show_hidden, set_show_hidden ] = useState(false);
 	const [ page, set_page ] = useState(1);
@@ -86,12 +86,12 @@ function ProductPage(props) {
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(listProducts(category, subcategory, search, sortOrder));
+		dispatch(listProducts({ category, subcategory, search, sort }));
 	};
 
 	const sortHandler = (e) => {
 		setSortOrder(e.target.value);
-		dispatch(listProducts(category, subcategory, search, e.target.value));
+		dispatch(listProducts({ category, subcategory, search, sort: e.target.value }));
 	};
 	const sort_options = [ 'Category', 'Newest', 'Lowest', 'Highest', 'Hidden' ];
 
@@ -122,7 +122,7 @@ function ProductPage(props) {
 				console.log({ update_product_order });
 			});
 		});
-		dispatch(listProducts());
+		dispatch(listProducts({}));
 		set_loading_upload(false);
 	};
 
@@ -275,7 +275,7 @@ function ProductPage(props) {
 		update_products_url(history, search, '', '', page);
 
 		console.log(new_page);
-		dispatch(listProducts(category, subcategory, '', search, '', '', new_page, limit, true, false));
+		dispatch(listProducts({ category, subcategory, search, page: new_page, limit, hidden: true, option: false }));
 	};
 
 	const onDragStart = (start) => {

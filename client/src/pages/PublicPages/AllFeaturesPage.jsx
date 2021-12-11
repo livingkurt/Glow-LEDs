@@ -13,7 +13,7 @@ const AllFeaturesPage = (props) => {
 	const [ search, set_search ] = useState(
 		props.location.search.substring(8) ? props.location.search.substring(8) : ''
 	);
-	const [ sortOrder, setSortOrder ] = useState('');
+	const [ sort, setSortOrder ] = useState('');
 	const category = props.match.params.category ? props.match.params.category : '';
 	const subcategory = props.match.params.subcategory ? props.match.params.subcategory : '';
 
@@ -52,11 +52,11 @@ const AllFeaturesPage = (props) => {
 		() => {
 			let clean = true;
 			if (clean) {
-				dispatch(listFeatures(category, subcategory, search, sortOrder));
+				dispatch(listFeatures(category, subcategory, search, sort));
 			}
 			return () => (clean = false);
 		},
-		[ sortOrder ]
+		[ sort ]
 	);
 
 	const submitHandler = (e) => {
@@ -68,7 +68,7 @@ const AllFeaturesPage = (props) => {
 		history.push({
 			search: '?search=' + search
 		});
-		dispatch(listFeatures(category, subcategory, search, sortOrder));
+		dispatch(listFeatures(category, subcategory, search, sort));
 	};
 
 	const sortHandler = (e) => {

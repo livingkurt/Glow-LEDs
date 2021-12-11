@@ -20,7 +20,7 @@ import { listOrders } from '../../actions/orderActions';
 
 const SettingsPage = (props) => {
 	const [ search, set_search ] = useState('');
-	const [ sortOrder, setSortOrder ] = useState('');
+	const [ sort, setSortOrder ] = useState('');
 	const [ loading_settings, set_loading_settings ] = useState(false);
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(false);
 	const category = props.match.params.category ? props.match.params.category : '';
@@ -55,7 +55,7 @@ const SettingsPage = (props) => {
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(listSettings(category, search, sortOrder));
+		dispatch(listSettings(category, search, sort));
 	};
 
 	const sortHandler = (e) => {
@@ -67,11 +67,11 @@ const SettingsPage = (props) => {
 		() => {
 			let clean = true;
 			if (clean) {
-				dispatch(listSettings(category, search, sortOrder));
+				dispatch(listSettings(category, search, sort));
 			}
 			return () => (clean = false);
 		},
-		[ dispatch, category, search, sortOrder ]
+		[ dispatch, category, search, sort ]
 	);
 	const deleteHandler = (setting) => {
 		dispatch(deleteSetting(setting._id));

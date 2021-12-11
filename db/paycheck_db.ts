@@ -1,9 +1,9 @@
 import Paycheck from '../models/paycheck';
 
 export default {
-	findAll_paychecks_db: async (filter: any, sortOrder: any) => {
+	findAll_paychecks_db: async (filter: any, sort: any) => {
 		try {
-			return await Paycheck.find(filter).sort(sortOrder).populate('user').populate('affiliate');
+			return await Paycheck.find(filter).sort(sort).populate('user').populate('affiliate');
 		} catch (error) {
 			console.log({ findAll_paychecks_db_error: error });
 			throw new Error(error.message);

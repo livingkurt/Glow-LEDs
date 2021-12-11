@@ -14,13 +14,13 @@ import {
 } from '../constants/promoConstants';
 import axios from 'axios';
 
-export const listPromos = (category = '', search = '', sortOrder = '') => async (
+export const listPromos = (category = '', search = '', sort = '') => async (
 	dispatch: (arg0: { type: string; payload?: any }) => void
 ) => {
 	try {
 		dispatch({ type: PROMO_LIST_REQUEST });
 		const { data } = await axios.get(
-			'/api/promos?category=' + category + '&search=' + search + '&sortOrder=' + sortOrder.toLowerCase()
+			'/api/promos?category=' + category + '&search=' + search + '&sort=' + sort.toLowerCase()
 		);
 		dispatch({ type: PROMO_LIST_SUCCESS, payload: data });
 	} catch (error) {

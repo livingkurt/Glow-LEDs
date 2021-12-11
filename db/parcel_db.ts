@@ -1,14 +1,14 @@
 import Parcel from '../models/parcel';
 
 export default {
-	findAll_parcels_db: async (category: any, search: any, sortOrder: any) => {
+	findAll_parcels_db: async (category: any, search: any, sort: any) => {
 		try {
 			return await Parcel.find({
 				deleted: false,
 				...category,
 				...search
 			})
-				.sort(sortOrder)
+				.sort(sort)
 				.populate('user')
 				.populate('affiliate');
 		} catch (error) {

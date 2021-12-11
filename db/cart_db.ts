@@ -1,9 +1,9 @@
 import Cart from '../models/cart';
 
 export default {
-	findAll_carts_db: async (filter: any, sortOrder: any) => {
+	findAll_carts_db: async (filter: any, sort: any) => {
 		try {
-			return await Cart.find(filter).sort(sortOrder).populate('user');
+			return await Cart.find(filter).sort(sort).populate('user');
 		} catch (error) {
 			console.log({ findAll_carts_db_error: error });
 			throw new Error(error.message);

@@ -21,7 +21,7 @@ const AllProductsPage = (props) => {
 	const [ search, set_search ] = useState(
 		props.location.search.substring(8) ? props.location.search.substring(8) : ''
 	);
-	const [ sortOrder, setSortOrder ] = useState('');
+	const [ sort, setSortOrder ] = useState('');
 	const [ filter, set_filter ] = useState(
 		props.location.hasOwnProperty('filter') ? props.location.filter.substring(8) : ''
 	);
@@ -83,8 +83,8 @@ const AllProductsPage = (props) => {
 					history.push({
 						search: '?search=' + search
 					});
-					dispatch(listProducts('', '', search, '', '', '', collection));
-					dispatch(listChips());
+					dispatch(listProducts({ search, collection }));
+					dispatch(listChips({}));
 				}
 			}
 			return () => (clean = false);
@@ -106,7 +106,7 @@ const AllProductsPage = (props) => {
 					}
 					if (category !== 'essentials' || category === 'discounted' || category === 'best_sellers') {
 						console.log('All Products');
-						dispatch(listProducts(category, subcategory, search, '', '', '', collection));
+						dispatch(listProducts({ category, subcategory, search, collection }));
 					}
 				}
 				dispatch(listChips());
@@ -154,12 +154,12 @@ const AllProductsPage = (props) => {
 		// history.push({
 		// 	search: '?search=' + search + chip && '?filter=' + chip
 		// });
-		dispatch(listProducts('', '', search, sortOrder, '', '', collection));
+		dispatch(listProducts({ search, sort, collection }));
 	};
 
 	const sortHandler = (e) => {
 		setSortOrder(e.target.value);
-		dispatch(listProducts(category, subcategory, search, e.target.value, '', '', collection));
+		dispatch(listProducts({ category, subcategory, search, sort: e.target.value, collection }));
 	};
 	const filterHandler = (e) => {
 		const chip_selected = JSON.parse(e.target.value);
@@ -169,7 +169,7 @@ const AllProductsPage = (props) => {
 		history.push({
 			search: '?search=' + search + '?filter=' + chip_selected.name
 		});
-		dispatch(listProducts(category, subcategory, search, sortOrder, chip_selected._id, '', collection));
+		dispatch(listProducts({ category, subcategory, search, sort, chip: chip_selected._id, collection }));
 	};
 
 	const descriptions = {

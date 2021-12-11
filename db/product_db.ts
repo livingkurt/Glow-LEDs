@@ -1,10 +1,10 @@
 import Product from '../models/product';
 
 export default {
-	findAll_products_db: async (filter: any, sortOrder: any, limit: any, page: any) => {
+	findAll_products_db: async (filter: any, sort: any, limit: any, page: any) => {
 		try {
 			return await Product.find(filter)
-				.sort(sortOrder)
+				.sort(sort)
 				.populate('color_products')
 				.populate('secondary_color_products')
 				.populate('secondary_products')

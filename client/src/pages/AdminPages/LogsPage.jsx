@@ -9,7 +9,7 @@ import { Search, Sort } from '../../components/SpecialtyComponents';
 
 const LogsPage = (props) => {
 	const [ search, set_search ] = useState('');
-	const [ sortOrder, setSortOrder ] = useState('');
+	const [ sort, setSortOrder ] = useState('');
 	const category = props.match.params.category ? props.match.params.category : '';
 	const logList = useSelector((state) => state.logList);
 	const { loading, logs, error } = logList;
@@ -32,7 +32,7 @@ const LogsPage = (props) => {
 	);
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(listLogs(category, search, sortOrder));
+		dispatch(listLogs(category, search, sort));
 	};
 
 	const sortHandler = (e) => {
@@ -42,9 +42,9 @@ const LogsPage = (props) => {
 
 	useEffect(
 		() => {
-			dispatch(listLogs(category, search, sortOrder));
+			dispatch(listLogs(category, search, sort));
 		},
-		[ category, search, sortOrder, dispatch ]
+		[ category, search, sort, dispatch ]
 	);
 	const deleteHandler = (log) => {
 		dispatch(deleteLog(log._id));

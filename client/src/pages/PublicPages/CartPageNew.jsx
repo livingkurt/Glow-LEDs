@@ -106,8 +106,8 @@ const CartPage = (props) => {
 											<div>
 												<div className="ai-c h-25px">
 													<label
-														aria-label="sortOrder"
-														htmlFor="sortOrder"
+														aria-label="sort"
+														htmlFor="sort"
 														className="select-label mr-1rem"
 													>
 														Qty:

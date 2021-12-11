@@ -11,7 +11,7 @@ const fetch = require('node-fetch');
 
 const CategorysPage = (props) => {
 	const [ search, set_search ] = useState('');
-	const [ sortOrder, setSortOrder ] = useState('');
+	const [ sort, setSortOrder ] = useState('');
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(false);
 	const [ loading_categorys, set_loading_categorys ] = useState(false);
 	const category = props.match.params.category ? props.match.params.category : '';
@@ -48,7 +48,7 @@ const CategorysPage = (props) => {
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(listCategorys(category, search, sortOrder));
+		dispatch(listCategorys(category, search, sort));
 	};
 
 	const sortHandler = (e) => {
@@ -60,15 +60,15 @@ const CategorysPage = (props) => {
 		() => {
 			let clean = true;
 			if (clean) {
-				dispatch(listCategorys(category, search, sortOrder));
+				dispatch(listCategorys(category, search, sort));
 			}
 			return () => (clean = false);
 		},
-		[ dispatch, category, search, sortOrder ]
+		[ dispatch, category, search, sort ]
 	);
 	const deleteHandler = (category) => {
 		dispatch(deleteCategory(category._id));
-		dispatch(listCategorys(category, search, sortOrder));
+		dispatch(listCategorys(category, search, sort));
 	};
 
 	const sort_options = [ 'Newest', 'Artist Name', 'Facebook Name', 'Instagram Handle', 'Sponsor', 'Promoter' ];

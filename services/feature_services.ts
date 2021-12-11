@@ -13,16 +13,16 @@ export default {
 					}
 				: {};
 
-			let sortOrder = {};
-			if (query.sortOrder === 'glover name') {
-				sortOrder = { artist_name: 1 };
-			} else if (query.sortOrder === 'facebook name') {
-				sortOrder = { facebook_name: 1 };
-			} else if (query.sortOrder === 'newest' || query.sortOrder === '') {
-				sortOrder = { release_date: -1 };
+			let sort = {};
+			if (query.sort === 'glover name') {
+				sort = { artist_name: 1 };
+			} else if (query.sort === 'facebook name') {
+				sort = { facebook_name: 1 };
+			} else if (query.sort === 'newest' || query.sort === '') {
+				sort = { release_date: -1 };
 			}
 
-			return await feature_db.findAll_features_db(category, search, sortOrder);
+			return await feature_db.findAll_features_db(category, search, sort);
 		} catch (error) {
 			console.log({ findAll_features_s_error: error });
 			throw new Error(error.message);
@@ -38,9 +38,9 @@ export default {
 	},
 	findByCategory_features_s: async (query: any) => {
 		const category = query.category ? { category: query.category } : {};
-		const sortOrder = { _id: -1 };
+		const sort = { _id: -1 };
 		try {
-			return await feature_db.findAll_features_db(category, '', sortOrder);
+			return await feature_db.findAll_features_db(category, '', sort);
 		} catch (error) {
 			console.log({ findById_features_s_error: error });
 			throw new Error(error.message);

@@ -1,9 +1,9 @@
 import Content from '../models/content';
 
 export default {
-	findAll_contents_db: async (filter: any, sortOrder: any, limit: any) => {
+	findAll_contents_db: async (filter: any, sort: any, limit: any) => {
 		try {
-			return await Content.find(filter).sort(sortOrder).limit(parseInt(limit));
+			return await Content.find(filter).sort(sort).limit(parseInt(limit));
 		} catch (error) {
 			console.log({ findAll_contents_db_error: error });
 			throw new Error(error.message);

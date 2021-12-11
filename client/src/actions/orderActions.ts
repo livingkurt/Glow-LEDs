@@ -370,7 +370,7 @@ export const listUserOrders = (user_id: string) => async (
 	}
 };
 
-export const listOrders = (category = '', search = '', sortOrder = '', page = '', limit = '') => async (
+export const listOrders = (category = '', search = '', sort = '', page = '', limit = '') => async (
 	dispatch: (arg0: { type: string; payload?: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }
 ) => {
@@ -383,8 +383,8 @@ export const listOrders = (category = '', search = '', sortOrder = '', page = ''
 				category +
 				'&search=' +
 				search +
-				'&sortOrder=' +
-				sortOrder.toLowerCase() +
+				'&sort=' +
+				sort.toLowerCase() +
 				'&page=' +
 				page +
 				'&limit=' +

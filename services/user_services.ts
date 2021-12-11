@@ -20,16 +20,16 @@ export default {
 					}
 				: {};
 
-			let sortOrder = {};
-			if (query.sortOrder === 'first name') {
-				sortOrder = { first_name: 1 };
-			} else if (query.sortOrder === 'last name') {
-				sortOrder = { last_name: 1 };
-			} else if (query.sortOrder === 'newest' || query.sortOrder === '') {
-				sortOrder = { _id: -1 };
+			let sort = {};
+			if (query.sort === 'first name') {
+				sort = { first_name: 1 };
+			} else if (query.sort === 'last name') {
+				sort = { last_name: 1 };
+			} else if (query.sort === 'newest' || query.sort === '') {
+				sort = { _id: -1 };
 			}
 			const filter = { deleted: false, ...category, ...search };
-			return await user_db.findAll_users_db(filter, sortOrder);
+			return await user_db.findAll_users_db(filter, sort);
 		} catch (error) {
 			console.log({ findAll_users_s_error: error });
 			throw new Error(error.message);

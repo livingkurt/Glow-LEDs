@@ -11,7 +11,7 @@ import { check_authentication } from '../../utils/react_helper_functions';
 
 const OrdersPage = (props) => {
 	const [ search, set_search ] = useState('');
-	const [ sortOrder, setSortOrder ] = useState('');
+	const [ sort, setSortOrder ] = useState('');
 	const [ payment_method, set_payment_method ] = useState('');
 	const [ page, set_page ] = useState(1);
 	const [ limit, set_limit ] = useState(10);
@@ -34,7 +34,7 @@ const OrdersPage = (props) => {
 					console.log({ page: query.page });
 					set_page(query.page);
 					set_limit(query.limit);
-					dispatch(listOrders(category, search, sortOrder, query.page, query.limit));
+					dispatch(listOrders(category, search, sort, query.page, query.limit));
 				}
 			}
 			return () => (clean = false);
@@ -57,7 +57,7 @@ const OrdersPage = (props) => {
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(listOrders(category, search, sortOrder, page, limit));
+		dispatch(listOrders(category, search, sort, page, limit));
 	};
 
 	const sortHandler = (e) => {
@@ -140,7 +140,7 @@ const OrdersPage = (props) => {
 			if (clean) {
 				if (error) {
 					check_authentication();
-					dispatch(listOrders(category, search, sortOrder, page, limit));
+					dispatch(listOrders(category, search, sort, page, limit));
 				}
 			}
 			return () => (clean = false);
@@ -159,7 +159,7 @@ const OrdersPage = (props) => {
 		});
 
 		console.log(new_page);
-		dispatch(listOrders(category, search, sortOrder, new_page));
+		dispatch(listOrders(category, search, sort, new_page));
 	};
 
 	useEffect(() => {

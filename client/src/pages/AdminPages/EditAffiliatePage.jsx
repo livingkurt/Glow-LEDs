@@ -140,11 +140,11 @@ const EditAffiliatePage = (props) => {
 				} else {
 					dispatch(detailsAffiliate(''));
 				}
-				dispatch(listUsers(''));
-				dispatch(listProducts(''));
-				dispatch(listPromos(''));
-				dispatch(listPromos(''));
-				dispatch(listChips());
+				dispatch(listUsers({}));
+				dispatch(listProducts({}));
+				dispatch(listPromos({}));
+				dispatch(listPromos({}));
+				dispatch(listChips({}));
 				set_state();
 			}
 			return () => (clean = false);

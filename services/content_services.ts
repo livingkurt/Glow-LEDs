@@ -15,9 +15,9 @@ export default {
 					}
 				: {};
 
-			const sortOrder = { _id: -1 };
+			const sort = { _id: -1 };
 			const filter = { deleted: false };
-			return await content_db.findAll_contents_db(filter, sortOrder, limit);
+			return await content_db.findAll_contents_db(filter, sort, limit);
 		} catch (error) {
 			console.log({ findAll_contents_s_error: error });
 			throw new Error(error.message);
@@ -25,10 +25,10 @@ export default {
 	},
 	findDisplay_contents_s: async (query: any) => {
 		try {
-			const sortOrder = { _id: -1 };
+			const sort = { _id: -1 };
 			const limit = 1;
 			const filter = { deleted: false, active: true };
-			return await content_db.findAll_contents_db(filter, sortOrder, limit);
+			return await content_db.findAll_contents_db(filter, sort, limit);
 		} catch (error) {
 			console.log({ findAll_contents_s_error: error });
 			throw new Error(error.message);

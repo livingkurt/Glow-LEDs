@@ -1,9 +1,9 @@
 import Expense from '../models/expense';
 
 export default {
-	findAll_expenses_db: async (filter: any, sortOrder: any) => {
+	findAll_expenses_db: async (filter: any, sort: any) => {
 		try {
-			return await Expense.find({ ...filter }).sort(sortOrder).populate('user').populate('affiliate');
+			return await Expense.find({ ...filter }).sort(sort).populate('user').populate('affiliate');
 		} catch (error) {
 			console.log({ findAll_expenses_db_error: error });
 			throw new Error(error.message);

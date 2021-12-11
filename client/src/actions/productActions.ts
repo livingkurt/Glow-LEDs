@@ -22,44 +22,12 @@ import {
 	PRODUCT_REVIEW_DELETE_FAIL
 } from '../constants/productConstants';
 import axios from 'axios';
+import { create_query } from '../utils/helper_functions';
 
-export const listProducts = (
-	category = '',
-	subcategory = '',
-	chip = '',
-	search = '',
-	sortOrder = '',
-	collection = '',
-	page = '',
-	limit = '',
-	hidden = false,
-	option = false
-) => async (dispatch: (arg0: { type: string; payload?: any }) => void) => {
+export const listProducts = (query: any) => async (dispatch: (arg0: { type: string; payload?: any }) => void) => {
 	try {
 		dispatch({ type: PRODUCT_LIST_REQUEST });
-		// // console.log({ chip });
-		const { data } = await axios.get(
-			'/api/products/?category=' +
-				category +
-				'&subcategory=' +
-				subcategory +
-				'&chip=' +
-				chip +
-				'&search=' +
-				search +
-				'&sortOrder=' +
-				sortOrder.toLowerCase() +
-				'&collection=' +
-				collection +
-				'&page=' +
-				page +
-				'&limit=' +
-				limit +
-				'&hidden=' +
-				hidden +
-				'&option=' +
-				option
-		);
+		const { data } = await axios.get('/api/products?' + create_query(query));
 		dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
 	} catch (error) {
 		console.log({ error });

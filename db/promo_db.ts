@@ -1,14 +1,14 @@
 import Promo from '../models/promo';
 
 export default {
-	findAll_promos_db: async (category: any, search: any, sortOrder: any) => {
+	findAll_promos_db: async (category: any, search: any, sort: any) => {
 		try {
 			return await Promo.find({
 				deleted: false,
 				...category,
 				...search
 			})
-				.sort(sortOrder)
+				.sort(sort)
 				.populate('sponsor')
 				.populate('user');
 		} catch (error) {

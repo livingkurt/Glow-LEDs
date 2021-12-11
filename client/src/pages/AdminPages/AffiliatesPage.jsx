@@ -12,7 +12,7 @@ import CSVReader from 'react-csv-reader';
 
 const AffiliatesPage = (props) => {
 	const [ search, set_search ] = useState('');
-	const [ sortOrder, setSortOrder ] = useState('');
+	const [ sort, setSortOrder ] = useState('');
 	const category = props.match.params.category ? props.match.params.category : '';
 	const affiliateList = useSelector((state) => state.affiliateList);
 	const [ last_months_orders, set_last_months_orders ] = useState([]);
@@ -43,7 +43,7 @@ const AffiliatesPage = (props) => {
 	);
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(listAffiliates(category, search, sortOrder));
+		dispatch(listAffiliates(category, search, sort));
 	};
 
 	const sortHandler = (e) => {
@@ -58,7 +58,7 @@ const AffiliatesPage = (props) => {
 			dispatch(listOrders());
 			get_last_months_orders();
 			get_total_orders();
-			dispatch(listAffiliates(category, search, sortOrder));
+			dispatch(listAffiliates(category, search, sort));
 		}
 		return () => (clean = false);
 	}, []);

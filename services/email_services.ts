@@ -15,15 +15,15 @@ export default {
 					}
 				: {};
 
-			let sortOrder = {};
-			if (query.sortOrder === 'email type') {
-				sortOrder = { email_type: 1 };
-			} else if (query.sortOrder === 'newest' || query.sortOrder === '') {
-				sortOrder = { _id: -1 };
+			let sort = {};
+			if (query.sort === 'email type') {
+				sort = { email_type: 1 };
+			} else if (query.sort === 'newest' || query.sort === '') {
+				sort = { _id: -1 };
 			}
 
 			const filter = { deleted: false, ...email_type, ...search };
-			return await email_db.findAll_emails_db(filter, sortOrder);
+			return await email_db.findAll_emails_db(filter, sort);
 		} catch (error) {
 			console.log({ findAll_emails_s_error: error });
 			throw new Error(error.message);
@@ -138,14 +138,14 @@ export default {
 // 					}
 // 				: {};
 
-// 			let sortOrder = {};
-// 			if (req.query.sortOrder === 'email type') {
-// 				sortOrder = { email_type: 1 };
-// 			} else if (req.query.sortOrder === 'newest' || req.query.sortOrder === '') {
-// 				sortOrder = { _id: -1 };
+// 			let sort = {};
+// 			if (req.query.sort === 'email type') {
+// 				sort = { email_type: 1 };
+// 			} else if (req.query.sort === 'newest' || req.query.sort === '') {
+// 				sort = { _id: -1 };
 // 			}
 
-// 			const emails = await Email.find({ deleted: false, ...email_type, ...search }).sort(sortOrder);
+// 			const emails = await Email.find({ deleted: false, ...email_type, ...search }).sort(sort);
 
 // 			res.send(emails);
 // 		} catch (error) {

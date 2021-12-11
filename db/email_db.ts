@@ -1,9 +1,9 @@
 import { Email, User } from '../models';
 
 export default {
-	findAll_emails_db: async (filter: any, sortOrder: any) => {
+	findAll_emails_db: async (filter: any, sort: any) => {
 		try {
-			return await Email.find(filter).sort(sortOrder);
+			return await Email.find(filter).sort(sort);
 		} catch (error) {
 			console.log({ findAll_emails_db_error: error });
 			throw new Error(error.message);
@@ -88,14 +88,14 @@ export default {
 // 					}
 // 				: {};
 
-// 			let sortOrder = {};
-// 			if (req.query.sortOrder === 'email type') {
-// 				sortOrder = { email_type: 1 };
-// 			} else if (req.query.sortOrder === 'newest' || req.query.sortOrder === '') {
-// 				sortOrder = { _id: -1 };
+// 			let sort = {};
+// 			if (req.query.sort === 'email type') {
+// 				sort = { email_type: 1 };
+// 			} else if (req.query.sort === 'newest' || req.query.sort === '') {
+// 				sort = { _id: -1 };
 // 			}
 
-// 			const emails = await Email.find({ deleted: false, ...email_type, ...search }).sort(sortOrder);
+// 			const emails = await Email.find({ deleted: false, ...email_type, ...search }).sort(sort);
 
 // 			res.send(emails);
 // 		} catch (error) {

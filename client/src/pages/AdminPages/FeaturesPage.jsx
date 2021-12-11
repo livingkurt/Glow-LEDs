@@ -9,7 +9,7 @@ import { Search, Sort } from '../../components/SpecialtyComponents';
 
 const FeaturesPage = (props) => {
 	const [ search, set_search ] = useState('');
-	const [ sortOrder, setSortOrder ] = useState('');
+	const [ sort, setSortOrder ] = useState('');
 	const category = props.match.params.category ? props.match.params.category : '';
 	const featureList = useSelector((state) => state.featureList);
 	const { loading, features, error } = featureList;
@@ -33,7 +33,7 @@ const FeaturesPage = (props) => {
 	);
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(listFeatures(category, search, sortOrder));
+		dispatch(listFeatures(category, search, sort));
 	};
 
 	const sortHandler = (e) => {
@@ -45,11 +45,11 @@ const FeaturesPage = (props) => {
 		() => {
 			let clean = true;
 			if (clean) {
-				dispatch(listFeatures(category, search, sortOrder));
+				dispatch(listFeatures(category, search, sort));
 			}
 			return () => (clean = false);
 		},
-		[ category, search, sortOrder, dispatch ]
+		[ category, search, sort, dispatch ]
 	);
 	const deleteHandler = (feature) => {
 		dispatch(deleteFeature(feature._id));

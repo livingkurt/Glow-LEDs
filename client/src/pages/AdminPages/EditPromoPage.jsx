@@ -64,10 +64,10 @@ const EditPromoPage = (props) => {
 				} else {
 					dispatch(detailsPromo(''));
 				}
-				dispatch(listProducts(''));
+				dispatch(listProducts({}));
 				get_categories();
-				dispatch(listUsers(''));
-				dispatch(listAffiliates(''));
+				dispatch(listUsers({}));
+				dispatch(listAffiliates({}));
 				set_state();
 			}
 			return () => (clean = false);

@@ -13,23 +13,23 @@ export default {
 					}
 				: {};
 
-			let sortOrder = {};
-			if (query.sortOrder === 'lowest') {
-				sortOrder = { amount: 1 };
-			} else if (query.sortOrder === 'highest') {
-				sortOrder = { amount: -1 };
-			} else if (query.sortOrder === 'newest') {
-				sortOrder = { _id: -1 };
-			} else if (query.sortOrder === 'date' || query.sortOrder === '') {
-				sortOrder = { date_of_purchase: -1 };
-			} else if (query.sortOrder === 'category') {
-				sortOrder = { category: 1, createdAt: -1 };
-			} else if (query.sortOrder === 'application') {
-				sortOrder = { application: 1, createdAt: -1 };
+			let sort = {};
+			if (query.sort === 'lowest') {
+				sort = { amount: 1 };
+			} else if (query.sort === 'highest') {
+				sort = { amount: -1 };
+			} else if (query.sort === 'newest') {
+				sort = { _id: -1 };
+			} else if (query.sort === 'date' || query.sort === '') {
+				sort = { date_of_purchase: -1 };
+			} else if (query.sort === 'category') {
+				sort = { category: 1, createdAt: -1 };
+			} else if (query.sort === 'application') {
+				sort = { application: 1, createdAt: -1 };
 			}
 			const filter = { deleted: false, ...category, ...search };
 
-			return await expense_db.findAll_expenses_db(filter, sortOrder);
+			return await expense_db.findAll_expenses_db(filter, sort);
 		} catch (error) {
 			console.log({ findAll_expenses_s_error: error });
 			throw new Error(error.message);
@@ -44,9 +44,9 @@ export default {
 					$lt: new Date(body.date_2)
 				}
 			};
-			const sortOrder = { date_of_purchase: 1 };
+			const sort = { date_of_purchase: 1 };
 
-			return await expense_db.findAll_expenses_db(filter, sortOrder);
+			return await expense_db.findAll_expenses_db(filter, sort);
 		} catch (error) {
 			console.log({ findAll_expenses_s_error: error });
 			throw new Error(error.message);

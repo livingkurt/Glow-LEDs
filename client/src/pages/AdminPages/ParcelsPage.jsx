@@ -9,7 +9,7 @@ import { format_date } from '../../utils/helper_functions';
 
 const ParcelsPage = (props) => {
 	const [ search, set_search ] = useState('');
-	const [ sortOrder, setSortOrder ] = useState('');
+	const [ sort, setSortOrder ] = useState('');
 	const [ loading_parcels, set_loading_parcels ] = useState(false);
 	const category = props.match.params.category ? props.match.params.category : '';
 	const parcelList = useSelector((state) => state.parcelList);
@@ -35,7 +35,7 @@ const ParcelsPage = (props) => {
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(listParcels(category, search, sortOrder));
+		dispatch(listParcels(category, search, sort));
 	};
 
 	const sortHandler = (e) => {
@@ -47,11 +47,11 @@ const ParcelsPage = (props) => {
 		() => {
 			let clean = true;
 			if (clean) {
-				dispatch(listParcels(category, search, sortOrder));
+				dispatch(listParcels(category, search, sort));
 			}
 			return () => (clean = false);
 		},
-		[ dispatch, category, search, sortOrder ]
+		[ dispatch, category, search, sort ]
 	);
 
 	const deleteHandler = (parcel) => {

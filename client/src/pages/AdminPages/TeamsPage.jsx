@@ -8,7 +8,7 @@ import { Search, Sort } from '../../components/SpecialtyComponents';
 
 const TeamsPage = (props) => {
 	const [ search, set_search ] = useState('');
-	const [ sortOrder, setSortOrder ] = useState('');
+	const [ sort, setSortOrder ] = useState('');
 	const category = props.match.params.category ? props.match.params.category : '';
 	const teamList = useSelector((state) => state.teamList);
 	const { loading, teams, error } = teamList;
@@ -32,7 +32,7 @@ const TeamsPage = (props) => {
 	);
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(listTeams(category, search, sortOrder));
+		dispatch(listTeams(category, search, sort));
 	};
 
 	const sortHandler = (e) => {
@@ -44,11 +44,11 @@ const TeamsPage = (props) => {
 		() => {
 			let clean = true;
 			if (clean) {
-				dispatch(listTeams(category, search, sortOrder));
+				dispatch(listTeams(category, search, sort));
 			}
 			return () => (clean = false);
 		},
-		[ dispatch, category, search, sortOrder ]
+		[ dispatch, category, search, sort ]
 	);
 	const deleteHandler = (team) => {
 		dispatch(deleteTeam(team._id));

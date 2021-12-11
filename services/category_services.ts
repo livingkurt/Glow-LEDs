@@ -4,8 +4,8 @@ export default {
 	findAll_categorys_s: async (query: any) => {
 		try {
 			const filter = {};
-			const sortOrder = {};
-			return await category_db.findAll_categorys_db(filter, sortOrder);
+			const sort = {};
+			return await category_db.findAll_categorys_db(filter, sort);
 		} catch (error) {
 			console.log({ findAll_categorys_s_error: error });
 			throw new Error(error.message);

@@ -17,13 +17,13 @@ import {
 } from '../constants/parcelConstants';
 import axios from 'axios';
 
-export const listParcels = (category = '', search = '', sortOrder = '') => async (
+export const listParcels = (category = '', search = '', sort = '') => async (
 	dispatch: (arg0: { type: string; payload?: any }) => void
 ) => {
 	try {
 		dispatch({ type: PARCEL_LIST_REQUEST });
 		const { data } = await axios.get(
-			'/api/parcels?category=' + category + '&search=' + search + '&sortOrder=' + sortOrder.toLowerCase()
+			'/api/parcels?category=' + category + '&search=' + search + '&sort=' + sort.toLowerCase()
 		);
 		dispatch({ type: PARCEL_LIST_SUCCESS, payload: data });
 	} catch (error) {

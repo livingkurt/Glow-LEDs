@@ -14,13 +14,13 @@ import {
 } from '../constants/emailConstants';
 import axios from 'axios';
 
-export const listEmails = (category = '', search = '', sortOrder = '') => async (
+export const listEmails = (category = '', search = '', sort = '') => async (
 	dispatch: (arg0: { type: string; payload?: any }) => void
 ) => {
 	try {
 		dispatch({ type: EMAIL_LIST_REQUEST });
 		const { data } = await axios.get(
-			'/api/emails?category=' + category + '&search=' + search + '&sortOrder=' + sortOrder.toLowerCase()
+			'/api/emails?category=' + category + '&search=' + search + '&sort=' + sort.toLowerCase()
 		);
 		// console.log({ category });
 		dispatch({ type: EMAIL_LIST_SUCCESS, payload: data });

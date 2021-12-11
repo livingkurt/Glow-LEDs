@@ -15,13 +15,13 @@ import {
 } from '../constants/surveyConstants';
 import axios from 'axios';
 
-export const listSurveys = (category = '', search = '', sortOrder = '') => async (
+export const listSurveys = (category = '', search = '', sort = '') => async (
 	dispatch: (arg0: { type: string; payload?: any }) => void
 ) => {
 	try {
 		dispatch({ type: SURVEY_LIST_REQUEST });
 		const { data } = await axios.get(
-			'/api/surveys?category=' + category + '&search=' + search + '&sortOrder=' + sortOrder.toLowerCase()
+			'/api/surveys?category=' + category + '&search=' + search + '&sort=' + sort.toLowerCase()
 		);
 		dispatch({ type: SURVEY_LIST_SUCCESS, payload: data });
 	} catch (error) {

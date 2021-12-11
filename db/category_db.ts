@@ -1,9 +1,9 @@
 import Category from '../models/category';
 
 export default {
-	findAll_categorys_db: async (filter: any, sortOrder: any) => {
+	findAll_categorys_db: async (filter: any, sort: any) => {
 		try {
-			return await Category.find(filter).sort(sortOrder).populate('subcategorys');
+			return await Category.find(filter).sort(sort).populate('subcategorys');
 		} catch (error) {
 			console.log({ findAll_categorys_db_error: error });
 			throw new Error(error.message);

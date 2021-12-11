@@ -48,17 +48,17 @@ export default {
 					: {};
 			}
 
-			let sortOrder = {};
-			if (req.query.sortOrder === 'lowest') {
-				sortOrder = { price: 1 };
-			} else if (req.query.sortOrder === 'highest') {
-				sortOrder = { price: -1 };
-			} else if (req.query.sortOrder === 'newest') {
-				sortOrder = { _id: -1 };
-			} else if (req.query.sortOrder === 'hidden') {
-				sortOrder = { hidden: -1 };
-			} else if (req.query.sortOrder === 'category' || req.query.sortOrder === '') {
-				sortOrder = { order: 1, _id: -1 };
+			let sort = {};
+			if (req.query.sort === 'lowest') {
+				sort = { price: 1 };
+			} else if (req.query.sort === 'highest') {
+				sort = { price: -1 };
+			} else if (req.query.sort === 'newest') {
+				sort = { _id: -1 };
+			} else if (req.query.sort === 'hidden') {
+				sort = { hidden: -1 };
+			} else if (req.query.sort === 'category' || req.query.sort === '') {
+				sort = { order: 1, _id: -1 };
 			}
 
 			const products = await Product.find({
@@ -71,7 +71,7 @@ export default {
 				...option,
 				...hidden
 			})
-				.sort(sortOrder)
+				.sort(sort)
 				.populate('color_products')
 				.populate('secondary_color_products')
 				.populate('secondary_products')
@@ -156,17 +156,17 @@ export default {
 					}
 				: {};
 
-			let sortOrder = {};
-			if (req.query.sortOrder === 'lowest') {
-				sortOrder = { price: 1 };
-			} else if (req.query.sortOrder === 'highest') {
-				sortOrder = { price: -1 };
-			} else if (req.query.sortOrder === 'newest') {
-				sortOrder = { _id: -1 };
-			} else if (req.query.sortOrder === 'hidden') {
-				sortOrder = { hidden: -1 };
-			} else if (req.query.sortOrder === 'category' || req.query.sortOrder === '') {
-				sortOrder = { order: 1, _id: -1 };
+			let sort = {};
+			if (req.query.sort === 'lowest') {
+				sort = { price: 1 };
+			} else if (req.query.sort === 'highest') {
+				sort = { price: -1 };
+			} else if (req.query.sort === 'newest') {
+				sort = { _id: -1 };
+			} else if (req.query.sort === 'hidden') {
+				sort = { hidden: -1 };
+			} else if (req.query.sort === 'category' || req.query.sort === '') {
+				sort = { order: 1, _id: -1 };
 			}
 
 			const products = await Product.find({
@@ -178,7 +178,7 @@ export default {
 				...search,
 				...chips
 			})
-				.sort(sortOrder)
+				.sort(sort)
 				.populate('color_products')
 				.populate('secondary_color_products')
 				.populate('secondary_products')
@@ -210,17 +210,17 @@ export default {
 					}
 				: {};
 
-			let sortOrder = {};
-			if (req.query.sortOrder === 'lowest') {
-				sortOrder = { price: 1 };
-			} else if (req.query.sortOrder === 'highest') {
-				sortOrder = { price: -1 };
-			} else if (req.query.sortOrder === 'newest') {
-				sortOrder = { _id: -1 };
-			} else if (req.query.sortOrder === 'hidden') {
-				sortOrder = { hidden: -1 };
-			} else if (req.query.sortOrder === 'category' || req.query.sortOrder === '') {
-				sortOrder = { order: 1, _id: -1 };
+			let sort = {};
+			if (req.query.sort === 'lowest') {
+				sort = { price: 1 };
+			} else if (req.query.sort === 'highest') {
+				sort = { price: -1 };
+			} else if (req.query.sort === 'newest') {
+				sort = { _id: -1 };
+			} else if (req.query.sort === 'hidden') {
+				sort = { hidden: -1 };
+			} else if (req.query.sort === 'category' || req.query.sort === '') {
+				sort = { order: 1, _id: -1 };
 			}
 
 			const products = await Product.find({
@@ -232,7 +232,7 @@ export default {
 				...search,
 				...chips
 			})
-				.sort(sortOrder)
+				.sort(sort)
 				.populate('color_products')
 				.populate('secondary_color_products')
 				.populate('secondary_products')

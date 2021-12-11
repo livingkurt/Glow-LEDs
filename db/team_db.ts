@@ -4,14 +4,14 @@ import { make_private_code } from '../util';
 import { createFalse } from 'typescript';
 
 export default {
-	findAll_teams_db: async (filter: any, sortOrder: any) => {
+	findAll_teams_db: async (filter: any, sort: any) => {
 		try {
 			console.log({ filter });
 			return await Team.find(filter)
 				.populate('affiliates')
 				.populate('public_code')
 				.populate('private_code')
-				.sort(sortOrder);
+				.sort(sort);
 		} catch (error) {
 			console.log({ findAll_teams_db_error: error });
 			throw new Error(error.message);

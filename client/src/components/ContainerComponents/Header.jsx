@@ -232,7 +232,7 @@ const Header = (props) => {
 										<Link to="/collections/all/products">
 											<button
 												className="btn nav title_font"
-												onClick={() => dispatch(listProducts(''))}
+												onClick={() => dispatch(listProducts({}))}
 											>
 												Products
 											</button>
@@ -243,7 +243,7 @@ const Header = (props) => {
 													<Link to="/collections/all/products">
 														<button
 															className="btn nav  ta-l fs-18px title_font"
-															onClick={() => dispatch(listProducts(''))}
+															onClick={() => dispatch(listProducts({}))}
 														>
 															Products
 														</button>

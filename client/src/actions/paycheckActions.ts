@@ -17,7 +17,7 @@ import {
 } from '../constants/paycheckConstants';
 import axios from 'axios';
 
-export const listPaychecks = (category = '', search = '', sortOrder = '') => async (
+export const listPaychecks = (category = '', search = '', sort = '') => async (
 	dispatch: (arg0: { type: string; payload?: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }
 ) => {
@@ -25,7 +25,7 @@ export const listPaychecks = (category = '', search = '', sortOrder = '') => asy
 		dispatch({ type: PAYCHECK_LIST_REQUEST });
 		const { userLogin: { userInfo } } = getState();
 		const { data } = await axios.get(
-			'/api/paychecks?category=' + category + '&search=' + search + '&sortOrder=' + sortOrder.toLowerCase(),
+			'/api/paychecks?category=' + category + '&search=' + search + '&sort=' + sort.toLowerCase(),
 			{
 				headers: {
 					Authorization: 'Bearer ' + userInfo.access_token

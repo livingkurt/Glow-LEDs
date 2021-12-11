@@ -67,15 +67,15 @@ export default {
 			// 			}
 			// 		: {};
 			// }
-			let sortOrder = {};
+			let sort = {};
 			let filter = {};
-			if (req.query.sortOrder === 'lowest') {
-				sortOrder = { totalPrice: 1 };
-			} else if (req.query.sortOrder === 'highest') {
-				sortOrder = { totalPrice: -1 };
-			} else if (req.query.sortOrder === 'date' || req.query.sortOrder === '') {
-				sortOrder = { createdAt: -1 };
-			} else if (req.query.sortOrder === 'paid') {
+			if (req.query.sort === 'lowest') {
+				sort = { totalPrice: 1 };
+			} else if (req.query.sort === 'highest') {
+				sort = { totalPrice: -1 };
+			} else if (req.query.sort === 'date' || req.query.sort === '') {
+				sort = { createdAt: -1 };
+			} else if (req.query.sort === 'paid') {
 				filter = {
 					isPaid: true,
 					isManufactured: false,
@@ -83,7 +83,7 @@ export default {
 					isShipped: false,
 					isDelivered: false
 				};
-			} else if (req.query.sortOrder === 'manufactured') {
+			} else if (req.query.sort === 'manufactured') {
 				filter = {
 					isPaid: true,
 					isManufactured: true,
@@ -91,11 +91,11 @@ export default {
 					isShipped: false,
 					isDelivered: false
 				};
-			} else if (req.query.sortOrder === 'packaged') {
+			} else if (req.query.sort === 'packaged') {
 				filter = { isPaid: true, isManufactured: true, isPackaged: true, isShipped: false, isDelivered: false };
-			} else if (req.query.sortOrder === 'shipped') {
+			} else if (req.query.sort === 'shipped') {
 				filter = { isPaid: true, isManufactured: true, isPackaged: true, isShipped: true, isDelivered: false };
-			} else if (req.query.sortOrder === 'delivered') {
+			} else if (req.query.sort === 'delivered') {
 				filter = { isPaid: true, isManufactured: true, isPackaged: true, isShipped: true, isDelivered: true };
 			}
 			// execute query with page and limit values
@@ -103,7 +103,7 @@ export default {
 				.populate('user')
 				.populate('orderItems.product')
 				.populate('orderItems.secondary_product')
-				.sort(sortOrder)
+				.sort(sort)
 				.limit(limit * 1)
 				.skip((page - 1) * limit)
 				.exec();

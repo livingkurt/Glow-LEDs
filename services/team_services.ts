@@ -13,23 +13,23 @@ export default {
 					}
 				: {};
 
-			let sortOrder = {};
-			if (query.sortOrder === 'glover name') {
-				sortOrder = { artist_name: 1 };
-			} else if (query.sortOrder === 'facebook name') {
-				sortOrder = { facebook_name: 1 };
-			} else if (query.sortOrder === 'sponsor') {
-				sortOrder = { sponsor: -1 };
-			} else if (query.sortOrder === 'promoter') {
-				sortOrder = { promoter: -1 };
-			} else if (query.sortOrder === 'active') {
-				sortOrder = { active: -1 };
-			} else if (query.sortOrder === 'newest' || query.sortOrder === '') {
-				sortOrder = { _id: -1 };
+			let sort = {};
+			if (query.sort === 'glover name') {
+				sort = { artist_name: 1 };
+			} else if (query.sort === 'facebook name') {
+				sort = { facebook_name: 1 };
+			} else if (query.sort === 'sponsor') {
+				sort = { sponsor: -1 };
+			} else if (query.sort === 'promoter') {
+				sort = { promoter: -1 };
+			} else if (query.sort === 'active') {
+				sort = { active: -1 };
+			} else if (query.sort === 'newest' || query.sort === '') {
+				sort = { _id: -1 };
 			}
 			const filter = { deleted: false, ...promoter, ...search };
 			console.log({ filter });
-			return await team_db.findAll_teams_db(filter, sortOrder);
+			return await team_db.findAll_teams_db(filter, sort);
 		} catch (error) {
 			console.log({ findAll_teams_s_error: error });
 			throw new Error(error.message);
@@ -92,19 +92,19 @@ export default {
 // 				}
 // 			: {};
 
-// 		let sortOrder = {};
-// 		if (req.query.sortOrder === 'glover name') {
-// 			sortOrder = { artist_name: 1 };
-// 		} else if (req.query.sortOrder === 'facebook name') {
-// 			sortOrder = { facebook_name: 1 };
-// 		} else if (req.query.sortOrder === 'sponsor') {
-// 			sortOrder = { sponsor: -1 };
-// 		} else if (req.query.sortOrder === 'promoter') {
-// 			sortOrder = { promoter: -1 };
-// 		} else if (req.query.sortOrder === 'active') {
-// 			sortOrder = { active: -1 };
-// 		} else if (req.query.sortOrder === 'newest' || req.query.sortOrder === '') {
-// 			sortOrder = { _id: -1 };
+// 		let sort = {};
+// 		if (req.query.sort === 'glover name') {
+// 			sort = { artist_name: 1 };
+// 		} else if (req.query.sort === 'facebook name') {
+// 			sort = { facebook_name: 1 };
+// 		} else if (req.query.sort === 'sponsor') {
+// 			sort = { sponsor: -1 };
+// 		} else if (req.query.sort === 'promoter') {
+// 			sort = { promoter: -1 };
+// 		} else if (req.query.sort === 'active') {
+// 			sort = { active: -1 };
+// 		} else if (req.query.sort === 'newest' || req.query.sort === '') {
+// 			sort = { _id: -1 };
 // 		}
 
 // 		const teams = await Team.find({
@@ -112,7 +112,7 @@ export default {
 // 			...category,
 // 			...search
 // 		})
-// 			.sort(sortOrder)
+// 			.sort(sort)
 // 			.populate('affiliates')
 // 			.populate('public_code')
 // 			.populate('private_code');

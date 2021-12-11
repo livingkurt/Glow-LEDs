@@ -8,7 +8,7 @@ import { Search, Sort } from '../../components/SpecialtyComponents';
 
 const ChipsPage = (props) => {
 	const [ search, set_search ] = useState('');
-	const [ sortOrder, setSortOrder ] = useState('');
+	const [ sort, setSortOrder ] = useState('');
 	const category = props.match.params.category ? props.match.params.category : '';
 	const chipList = useSelector((state) => state.chipList);
 	const { loading, chips, message, error } = chipList;
@@ -32,7 +32,7 @@ const ChipsPage = (props) => {
 	);
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(listChips(category, search, sortOrder));
+		dispatch(listChips(category, search, sort));
 	};
 
 	const sortHandler = (e) => {
@@ -44,11 +44,11 @@ const ChipsPage = (props) => {
 		() => {
 			let clean = true;
 			if (clean) {
-				dispatch(listChips(category, search, sortOrder));
+				dispatch(listChips(category, search, sort));
 			}
 			return () => (clean = false);
 		},
-		[ dispatch, category, search, sortOrder ]
+		[ dispatch, category, search, sort ]
 	);
 	const deleteHandler = (chip) => {
 		dispatch(deleteChip(chip._id));
