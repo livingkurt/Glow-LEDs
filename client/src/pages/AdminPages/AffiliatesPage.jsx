@@ -62,6 +62,7 @@ const AffiliatesPage = (props) => {
 		}
 		return () => (clean = false);
 	}, []);
+
 	const deleteHandler = (pathname) => {
 		console.log({ pathname });
 		dispatch(deleteAffiliate(pathname));

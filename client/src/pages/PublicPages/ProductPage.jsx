@@ -643,6 +643,7 @@ const ProductPage = (props) => {
 	};
 
 	const [ out_of_stock, set_out_of_stock ] = useState();
+	const [ show_product_options, set_show_product_options ] = useState();
 
 	return (
 		<div className="">
@@ -655,11 +656,36 @@ const ProductPage = (props) => {
 					</div>
 					{userInfo &&
 					userInfo.isAdmin && (
-						<Link to={'/secure/glow/editproduct/' + props.match.params.pathname + '/false'}>
-							<button className="btn secondary" style={{ width: '156px' }}>
+						<div className=" pos-rel z-pos-1 br-10px">
+							<button
+								className="btn secondary  w-300px"
+								onClick={(e) => set_show_product_options((show) => (show ? false : true))}
+							>
 								Edit Product
 							</button>
-						</Link>
+							{show_product_options && (
+								<div className="pos-abs bg-secondary br-10px">
+									<div className="column bg-secondary br-10px">
+										<Link
+											to={'/secure/glow/editproduct/' + props.match.params.pathname + '/false'}
+											className="btn nav p-10px w-100per  br-10px"
+										>
+											Edit Macro
+										</Link>
+
+										{product &&
+											product.option_products.map((option) => (
+												<Link
+													to={'/secure/glow/editproduct/' + option.pathname + '/false'}
+													className="btn nav p-10px w-100per  br-10px"
+												>
+													Edit {option.name}
+												</Link>
+											))}
+									</div>
+								</div>
+							)}
+						</div>
 					)}
 				</div>
 			</div>
