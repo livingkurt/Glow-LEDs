@@ -62,8 +62,8 @@ const Pagination = (props) => {
 						>
 							<div
 								className={`btn ${pageNumber === parseInt(currentPage)
-									? 'secondary'
-									: 'primary'} w-40px`}
+									? 'off ft-primary'
+									: 'on ft-white'} w-40px`}
 							>
 								{pageNumber}
 							</div>
