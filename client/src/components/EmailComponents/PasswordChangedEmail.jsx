@@ -20,17 +20,23 @@ const PasswordChangedEmail = () => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch(listEmails('Password Changed'));
-		return () => {};
+		let clean = true;
+		if (clean) {
+			dispatch(listEmails('Password Changed'));
+		}
+		return () => (clean = false);
 	}, []);
 
 	useEffect(
 		() => {
-			const active_email = emails.find((email) => email.active === true);
-			if (active_email) {
-				dispatch(detailsEmail(active_email._id));
+			let clean = true;
+			if (clean) {
+				const active_email = emails.find((email) => email.active === true);
+				if (active_email) {
+					dispatch(detailsEmail(active_email._id));
+				}
 			}
-			return () => {};
+			return () => (clean = false);
 		},
 		[ emails ]
 	);

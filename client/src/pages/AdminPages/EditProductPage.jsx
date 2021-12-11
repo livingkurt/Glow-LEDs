@@ -134,33 +134,39 @@ const EditProductPage = (props) => {
 
 	useEffect(
 		() => {
-			if (props.match.params.pathname) {
-				console.log('Is ID');
-				// if (props.match.params.template) {
-				console.log({ template: props.match.params.template });
-				dispatch(detailsProduct(props.match.params.pathname));
-				dispatch(detailsProduct(props.match.params.pathname));
-				// }
-			} else {
-				dispatch(detailsProduct(''));
-			}
+			let clean = true;
+			if (clean) {
+				if (props.match.params.pathname) {
+					console.log('Is ID');
+					// if (props.match.params.template) {
+					console.log({ template: props.match.params.template });
+					dispatch(detailsProduct(props.match.params.pathname));
+					dispatch(detailsProduct(props.match.params.pathname));
+					// }
+				} else {
+					dispatch(detailsProduct(''));
+				}
 
-			// dispatch(listCategorys());
-			get_all_options();
-			get_all_products();
-			get_all_secondary_products();
-			// set_loading_data(false);
-			set_state();
-			return () => {};
+				// dispatch(listCategorys());
+				get_all_options();
+				get_all_products();
+				get_all_secondary_products();
+				// set_loading_data(false);
+				set_state();
+			}
+			return () => (clean = false);
 		},
 		[ dispatch, props.match.params.pathname ]
 	);
 
 	useEffect(() => {
-		dispatch(listCategorys(''));
-		dispatch(listProducts(''));
-		dispatch(listChips());
-		return () => {};
+		let clean = true;
+		if (clean) {
+			dispatch(listCategorys(''));
+			dispatch(listProducts(''));
+			dispatch(listChips());
+		}
+		return () => (clean = false);
 	}, []);
 
 	const get_all_products = async () => {
@@ -179,14 +185,8 @@ const EditProductPage = (props) => {
 		set_secondary_products_list(data);
 	};
 
-	// useEffect(() => {
-
-	// 	return () => {};
-	// }, [props.match.params.pathname]);
-
 	const use_template = (e) => {
 		dispatch(detailsProduct(e.target.value));
-		// history.push('/secure/glow/products');
 	};
 	const use_product_options_template = async (e) => {
 		const { data } = await API_Products.get_product(e.target.value);
@@ -212,49 +212,53 @@ const EditProductPage = (props) => {
 		set_macro_product(data.macro_product);
 		set_extra_cost(data.extra_cost);
 		set_item_group_id(data.tem_group_id);
-
-		// set_product_options(data.product_options);
-		// dispatch(detailsProduct(e.target.value));
-		// history.push('/secure/glow/products');
 	};
+
 	useEffect(
 		() => {
-			if (successSave && filtered_products.length > 0) {
-				if (filtered_products.map((item) => item.pathname).indexOf(product.pathname) !== -1) {
-					history.push('/secure/glow/editproduct/' + filtered_products[new_index].pathname);
+			let clean = true;
+			if (clean) {
+				if (successSave && filtered_products.length > 0) {
+					if (filtered_products.map((item) => item.pathname).indexOf(product.pathname) !== -1) {
+						history.push('/secure/glow/editproduct/' + filtered_products[new_index].pathname);
+					}
 				}
 			}
-
-			return () => {};
+			return () => (clean = false);
 		},
 		[ successSave ]
 	);
+
 	useEffect(
 		() => {
-			if (all_products) {
-				set_filtered_products(all_products.filter((item) => !item.option).filter((item) => !item.hidden));
+			let clean = true;
+			if (clean) {
+				if (all_products) {
+					set_filtered_products(all_products.filter((item) => !item.option).filter((item) => !item.hidden));
+				}
 			}
-
-			return () => {};
+			return () => (clean = false);
 		},
 		[ all_products ]
 	);
-
 	useEffect(
 		() => {
-			if (product) {
-				console.log('Set');
-				set_state();
-			} else {
-				console.log('UnSet');
-				unset_state();
-				set_product_options([ {} ]);
+			let clean = true;
+			if (clean) {
+				if (product) {
+					console.log('Set');
+					set_state();
+				} else {
+					console.log('UnSet');
+					unset_state();
+					set_product_options([ {} ]);
+				}
 			}
-
-			return () => {};
+			return () => (clean = false);
 		},
 		[ product, productDeleteSuccess ]
 	);
+
 	setTimeout(() => {
 		set_loading_checkboxes(false);
 	}, 500);

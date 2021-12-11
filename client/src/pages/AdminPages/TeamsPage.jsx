@@ -22,10 +22,11 @@ const TeamsPage = (props) => {
 
 	useEffect(
 		() => {
-			dispatch(listTeams());
-			return () => {
-				//
-			};
+			let clean = true;
+			if (clean) {
+				dispatch(listTeams());
+			}
+			return () => (clean = false);
 		},
 		[ successSave, successDelete, dispatch ]
 	);
@@ -41,7 +42,11 @@ const TeamsPage = (props) => {
 
 	useEffect(
 		() => {
-			dispatch(listTeams(category, search, sortOrder));
+			let clean = true;
+			if (clean) {
+				dispatch(listTeams(category, search, sortOrder));
+			}
+			return () => (clean = false);
 		},
 		[ dispatch, category, search, sortOrder ]
 	);

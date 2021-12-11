@@ -7,7 +7,7 @@ import { Helmet } from 'react-helmet';
 import { Search, Sort } from '../../components/SpecialtyComponents';
 import { format_date } from '../../utils/helper_functions';
 import { listAffiliates } from '../../actions/affiliateActions';
-import { API_Promos, API_Orders } from '../../utils';
+import { API_Orders } from '../../utils';
 import {
 	promoter_revenue_upload,
 	sponsor_revenue_upload,
@@ -49,15 +49,16 @@ const PaychecksPage = (props) => {
 
 	useEffect(
 		() => {
-			dispatch(listPaychecks());
-			dispatch(listAffiliates(''));
-			dispatch(listTeams(''));
-			dispatch(listOrders(''));
-			get_last_months_orders();
-			get_total_orders();
-			return () => {
-				//
-			};
+			let clean = true;
+			if (clean) {
+				dispatch(listPaychecks());
+				dispatch(listAffiliates(''));
+				dispatch(listTeams(''));
+				dispatch(listOrders(''));
+				get_last_months_orders();
+				get_total_orders();
+			}
+			return () => (clean = false);
 		},
 		[ successSave, successDelete, dispatch ]
 	);
@@ -84,7 +85,11 @@ const PaychecksPage = (props) => {
 
 	useEffect(
 		() => {
-			dispatch(listPaychecks(category, search, sortOrder));
+			let clean = true;
+			if (clean) {
+				dispatch(listPaychecks(category, search, sortOrder));
+			}
+			return () => (clean = false);
 		},
 		[ dispatch, category, search, sortOrder ]
 	);

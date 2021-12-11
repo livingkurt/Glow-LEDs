@@ -23,10 +23,11 @@ const FeaturesPage = (props) => {
 
 	useEffect(
 		() => {
-			dispatch(listFeatures());
-			return () => {
-				//
-			};
+			let clean = true;
+			if (clean) {
+				dispatch(listFeatures());
+			}
+			return () => (clean = false);
 		},
 		[ successSave, successDelete, dispatch ]
 	);
@@ -42,7 +43,11 @@ const FeaturesPage = (props) => {
 
 	useEffect(
 		() => {
-			dispatch(listFeatures(category, search, sortOrder));
+			let clean = true;
+			if (clean) {
+				dispatch(listFeatures(category, search, sortOrder));
+			}
+			return () => (clean = false);
 		},
 		[ category, search, sortOrder, dispatch ]
 	);

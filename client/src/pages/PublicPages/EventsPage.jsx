@@ -13,9 +13,13 @@ const EventsPage = (props) => {
 	setTimeout(() => {
 		set_loading_checkboxes(false);
 	}, 500);
+
 	useEffect(() => {
-		get_events();
-		return () => {};
+		let clean = true;
+		if (clean) {
+			get_events();
+		}
+		return () => (clean = false);
 	}, []);
 
 	const get_events = async () => {

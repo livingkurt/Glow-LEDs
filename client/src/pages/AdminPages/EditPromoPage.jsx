@@ -55,22 +55,26 @@ const EditPromoPage = (props) => {
 
 	useEffect(
 		() => {
-			if (props.match.params.id) {
-				console.log('Is ID');
-				dispatch(detailsPromo(props.match.params.id));
-				dispatch(detailsPromo(props.match.params.id));
-			} else {
-				dispatch(detailsPromo(''));
+			let clean = true;
+			if (clean) {
+				if (props.match.params.id) {
+					console.log('Is ID');
+					dispatch(detailsPromo(props.match.params.id));
+					dispatch(detailsPromo(props.match.params.id));
+				} else {
+					dispatch(detailsPromo(''));
+				}
+				dispatch(listProducts(''));
+				get_categories();
+				dispatch(listUsers(''));
+				dispatch(listAffiliates(''));
+				set_state();
 			}
-			dispatch(listProducts(''));
-			get_categories();
-			dispatch(listUsers(''));
-			dispatch(listAffiliates(''));
-			set_state();
-			return () => {};
+			return () => (clean = false);
 		},
 		[ dispatch, props.match.params.id ]
 	);
+
 	const get_categories = async () => {
 		const { data } = await API_Products.get_all_categories();
 		console.log(data);
@@ -79,18 +83,21 @@ const EditPromoPage = (props) => {
 
 	useEffect(
 		() => {
-			if (promo) {
-				console.log('Set');
-				set_state();
-			} else {
-				console.log('UnSet');
-				unset_state();
+			let clean = true;
+			if (clean) {
+				if (promo) {
+					console.log('Set');
+					set_state();
+				} else {
+					console.log('UnSet');
+					unset_state();
+				}
 			}
-
-			return () => {};
+			return () => (clean = false);
 		},
 		[ promo ]
 	);
+
 	setTimeout(() => {
 		set_loading_checkboxes(false);
 	}, 500);

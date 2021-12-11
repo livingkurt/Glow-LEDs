@@ -24,31 +24,34 @@ const EditExpensePage = (props) => {
 
 	const dispatch = useDispatch();
 
-	console.log({ expense });
-
 	useEffect(() => {
-		if (props.match.params.id) {
-			console.log('Is ID');
-			dispatch(detailsExpense(props.match.params.id));
-			dispatch(detailsExpense(props.match.params.id));
-		} else {
-			dispatch(detailsExpense(''));
+		let clean = true;
+		if (clean) {
+			if (props.match.params.id) {
+				console.log('Is ID');
+				dispatch(detailsExpense(props.match.params.id));
+				dispatch(detailsExpense(props.match.params.id));
+			} else {
+				dispatch(detailsExpense(''));
+			}
+			set_state();
 		}
-		set_state();
-		return () => {};
+		return () => (clean = false);
 	}, []);
 
 	useEffect(
 		() => {
-			if (expense) {
-				console.log('Set');
-				set_state();
-			} else {
-				console.log('UnSet');
-				unset_state();
+			let clean = true;
+			if (clean) {
+				if (expense) {
+					console.log('Set');
+					set_state();
+				} else {
+					console.log('UnSet');
+					unset_state();
+				}
 			}
-
-			return () => {};
+			return () => (clean = false);
 		},
 		[ expense ]
 	);

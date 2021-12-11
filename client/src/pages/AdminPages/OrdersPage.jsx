@@ -4,38 +4,21 @@ import { useSelector, useDispatch } from 'react-redux';
 import { listOrders, update_order, update_payment } from '../../actions/orderActions';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
-import {
-	JSONToCSV,
-	Order,
-	OrderListItem,
-	OrderSmallScreen,
-	Search,
-	Sort,
-	Pagination
-} from '../../components/SpecialtyComponents';
+import { OrderListItem, OrderSmallScreen, Search, Sort, Pagination } from '../../components/SpecialtyComponents';
 import { API_Orders } from '../../utils';
-import { format_date, getUrlParameter } from '../../utils/helper_functions';
+import { getUrlParameter } from '../../utils/helper_functions';
 import { check_authentication } from '../../utils/react_helper_functions';
-// import CsvDownload from 'react-json-to-csv';
 
 const OrdersPage = (props) => {
 	const [ search, set_search ] = useState('');
 	const [ sortOrder, setSortOrder ] = useState('');
 	const [ payment_method, set_payment_method ] = useState('');
-	const [ block_list_view, set_block_list_view ] = useState(false);
-	const [ loading_mark_as_shipped, set_loading_mark_as_shipped ] = useState(false);
-	const [ total_orders, set_total_orders ] = useState([]);
-	const [ total_expenses, set_total_expenses ] = useState([]);
 	const [ page, set_page ] = useState(1);
 	const [ limit, set_limit ] = useState(10);
 
 	const category = props.match.params.category ? props.match.params.category : '';
 	const orderList = useSelector((state) => state.orderList);
 	const { loading, orders, totalPages, currentPage, error } = orderList;
-	console.log({ orderList });
-
-	const orderDelete = useSelector((state) => state.orderDelete);
-	const { success: successDelete } = orderDelete;
 
 	const dispatch = useDispatch();
 
@@ -45,29 +28,32 @@ const OrdersPage = (props) => {
 
 	useEffect(
 		() => {
-			if (query.page) {
-				console.log({ page: query.page });
-				set_page(query.page);
-				set_limit(query.limit);
-				dispatch(listOrders(category, search, sortOrder, query.page, query.limit));
+			let clean = true;
+			if (clean) {
+				if (query.page) {
+					console.log({ page: query.page });
+					set_page(query.page);
+					set_limit(query.limit);
+					dispatch(listOrders(category, search, sortOrder, query.page, query.limit));
+				}
 			}
-			return () => {};
+			return () => (clean = false);
 		},
 		[ query.page ]
 	);
 
 	useEffect(
 		() => {
-			if (currentPage) {
-				set_page(currentPage);
+			let clean = true;
+			if (clean) {
+				if (currentPage) {
+					set_page(currentPage);
+				}
 			}
+			return () => (clean = false);
 		},
 		[ currentPage ]
 	);
-
-	// useEffect(() => {
-	// 	dispatch(listOrders(category, search, sortOrder, page, limit));
-	// }, []);
 
 	const submitHandler = (e) => {
 		e.preventDefault();
@@ -150,12 +136,14 @@ const OrdersPage = (props) => {
 
 	useEffect(
 		() => {
-			if (error) {
-				check_authentication();
-				dispatch(listOrders(category, search, sortOrder, page, limit));
+			let clean = true;
+			if (clean) {
+				if (error) {
+					check_authentication();
+					dispatch(listOrders(category, search, sortOrder, page, limit));
+				}
 			}
-
-			return () => {};
+			return () => (clean = false);
 		},
 		[ error ]
 	);
@@ -175,8 +163,11 @@ const OrdersPage = (props) => {
 	};
 
 	useEffect(() => {
-		mark_as_shipped();
-		return () => {};
+		let clean = true;
+		if (clean) {
+			mark_as_shipped();
+		}
+		return () => (clean = false);
 	}, []);
 
 	const [ not_shipped, set_not_shipped ] = useState([]);
@@ -294,28 +285,11 @@ const OrdersPage = (props) => {
 						/>
 					)}
 				</div>
-				<Loading loading={loading_mark_as_shipped} />
 				<Loading loading={loading} error={error}>
 					<div className="product_big_screen">
-						{!block_list_view &&
-							orders &&
+						{orders &&
 							orders.map((order, index) => (
 								<OrderListItem
-									key={index}
-									determine_color={determine_color}
-									update_order_payment_state={update_order_payment_state}
-									update_order_state={update_order_state}
-									set_payment_method={set_payment_method}
-									admin={true}
-									order={order}
-								/>
-							))}
-					</div>
-					<div className="product_big_screen">
-						{block_list_view &&
-							orders &&
-							orders.map((order, index) => (
-								<Order
 									key={index}
 									determine_color={determine_color}
 									update_order_payment_state={update_order_payment_state}

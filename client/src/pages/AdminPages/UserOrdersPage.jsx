@@ -12,14 +12,17 @@ const UserOrderPage = (props) => {
 	const [ block_list_view, set_block_list_view ] = useState(false);
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
-	console.log({ user_orders_page: userInfo });
 
 	const myOrderList = useSelector((state) => state.myOrderList);
 	const { loading, orders, error } = myOrderList;
 
 	useEffect(
 		() => {
-			dispatch(listUserOrders(props.match.params.id));
+			let clean = true;
+			if (clean) {
+				dispatch(listUserOrders(props.match.params.id));
+			}
+			return () => (clean = false);
 		},
 		[ userInfo, dispatch ]
 	);

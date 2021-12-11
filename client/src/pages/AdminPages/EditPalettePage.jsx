@@ -66,47 +66,56 @@ const EditPalettePage = (props) => {
 
 	useEffect(
 		() => {
-			if (props.match.params.id) {
-				console.log('Is ID');
-				dispatch(detailsPalette(props.match.params.id));
-				dispatch(detailsPalette(props.match.params.id));
-			} else {
-				dispatch(listChips(''));
+			let clean = true;
+			if (clean) {
+				if (props.match.params.id) {
+					console.log('Is ID');
+					dispatch(detailsPalette(props.match.params.id));
+					dispatch(detailsPalette(props.match.params.id));
+				} else {
+					dispatch(listChips(''));
+				}
+				set_state();
 			}
-			set_state();
-			return () => {};
+			return () => (clean = false);
 		},
 		[ dispatch, props.match.params.id ]
 	);
+
 	useEffect(
 		() => {
-			if (chip && chip.colors) {
-				// console.log({ chip });
-				const chip_colors = chip.colors.map((color) => color.color);
-				// console.log({ chip_colors });
-				set_preset_colors(chip_colors);
-				set_colors_per_mode(chip.colors_per_mode);
+			let clean = true;
+			if (clean) {
+				if (chip && chip.colors) {
+					// console.log({ chip });
+					const chip_colors = chip.colors.map((color) => color.color);
+					// console.log({ chip_colors });
+					set_preset_colors(chip_colors);
+					set_colors_per_mode(chip.colors_per_mode);
+				}
 			}
-
-			return () => {};
+			return () => (clean = false);
 		},
 		[ chip ]
 	);
 
 	useEffect(
 		() => {
-			if (palette) {
-				console.log('Set');
-				set_state();
-			} else {
-				console.log('UnSet');
-				unset_state();
+			let clean = true;
+			if (clean) {
+				if (palette) {
+					console.log('Set');
+					set_state();
+				} else {
+					console.log('UnSet');
+					unset_state();
+				}
 			}
-
-			return () => {};
+			return () => (clean = false);
 		},
 		[ palette ]
 	);
+
 	setTimeout(() => {
 		set_loading_checkboxes(false);
 	}, 500);

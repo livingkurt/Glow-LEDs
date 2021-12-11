@@ -54,6 +54,7 @@ const GlowControlHomePage = (props) => {
 		},
 		[ successSave, successDelete ]
 	);
+
 	// const submitHandler = (e) => {
 	// 	e.preventDefault();
 	// 	dispatch(listMyDevices(category, search, sortOrder));

@@ -59,35 +59,41 @@ const EditPaycheckPage = (props) => {
 
 	useEffect(
 		() => {
-			if (props.match.params.id) {
-				console.log('Is ID');
-				dispatch(detailsPaycheck(props.match.params.id));
-				dispatch(detailsPaycheck(props.match.params.id));
-			} else {
-				dispatch(detailsPaycheck(''));
+			let clean = true;
+			if (clean) {
+				if (props.match.params.id) {
+					console.log('Is ID');
+					dispatch(detailsPaycheck(props.match.params.id));
+					dispatch(detailsPaycheck(props.match.params.id));
+				} else {
+					dispatch(detailsPaycheck(''));
+				}
+				dispatch(listAffiliates(''));
+				dispatch(listTeams(''));
+				set_state();
 			}
-			dispatch(listAffiliates(''));
-			dispatch(listTeams(''));
-			set_state();
-			return () => {};
+			return () => (clean = false);
 		},
 		[ dispatch, props.match.params.id ]
 	);
 
 	useEffect(
 		() => {
-			if (paycheck) {
-				console.log('Set');
-				set_state();
-			} else {
-				console.log('UnSet');
-				unset_state();
+			let clean = true;
+			if (clean) {
+				if (paycheck) {
+					console.log('Set');
+					set_state();
+				} else {
+					console.log('UnSet');
+					unset_state();
+				}
 			}
-
-			return () => {};
+			return () => (clean = false);
 		},
 		[ paycheck ]
 	);
+
 	setTimeout(() => {
 		set_loading_checkboxes(false);
 	}, 500);

@@ -63,33 +63,38 @@ const EditChipPage = (props) => {
 
 	useEffect(
 		() => {
-			if (props.match.params.id) {
-				console.log('Is ID');
-				dispatch(detailsChip(props.match.params.id));
-				dispatch(detailsChip(props.match.params.id));
-			} else {
-				dispatch(detailsChip(''));
+			let clean = true;
+			if (clean) {
+				if (props.match.params.id) {
+					console.log('Is ID');
+					dispatch(detailsChip(props.match.params.id));
+					dispatch(detailsChip(props.match.params.id));
+				} else {
+					dispatch(detailsChip(''));
+				}
+				set_state();
 			}
-			set_state();
-			return () => {};
+			return () => (clean = false);
 		},
 		[ dispatch, props.match.params.id ]
 	);
-
 	useEffect(
 		() => {
-			if (chip) {
-				console.log('Set');
-				set_state();
-			} else {
-				console.log('UnSet');
-				unset_state();
+			let clean = true;
+			if (clean) {
+				if (chip) {
+					console.log('Set');
+					set_state();
+				} else {
+					console.log('UnSet');
+					unset_state();
+				}
 			}
-
-			return () => {};
+			return () => (clean = false);
 		},
 		[ chip ]
 	);
+
 	setTimeout(() => {
 		set_loading_checkboxes(false);
 	}, 500);

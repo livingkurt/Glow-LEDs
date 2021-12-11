@@ -1,12 +1,10 @@
 // React
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { determine_tracking_number, determnine_link, format_date } from '../../utils/helper_functions';
-import useClipboard from 'react-hook-clipboard';
-import { createOrder, deleteOrder, listOrders, refundOrder } from '../../actions/orderActions';
-import { API_Orders } from '../../utils';
+import { createOrder, deleteOrder, listOrders } from '../../actions/orderActions';
 import { LazyImage, Loading } from '../UtilityComponents';
 import { determine_product_name } from '../../utils/react_helper_functions';
 

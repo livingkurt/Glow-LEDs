@@ -14,7 +14,7 @@ export default (props: any) => {
                       <table style="width:100%;border-spacing:0;color:white">
                         <tr>
                           <td style="font-family:helvetica;color:white;padding:10px"><img
-                              src="https://images2.imgbox.com/63/e7/BPGMUlpc_o.png" alt="Glow LEDs Logo"
+                              src="https://thumbs2.imgbox.com/b1/08/2Dnle6TI_t.jpeg" alt="Glow LEDs Logo"
                               title="Glow LEDs Logo" style="width:100%;margin-left:-15px" /></td>
                         </tr>
                       </table>

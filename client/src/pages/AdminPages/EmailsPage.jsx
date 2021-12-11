@@ -24,10 +24,11 @@ const EmailsPage = (props) => {
 
 	useEffect(
 		() => {
-			dispatch(listEmails());
-			return () => {
-				//
-			};
+			let clean = true;
+			if (clean) {
+				dispatch(listEmails());
+			}
+			return () => (clean = false);
 		},
 		[ successSave, successDelete, dispatch ]
 	);
@@ -43,7 +44,11 @@ const EmailsPage = (props) => {
 
 	useEffect(
 		() => {
-			dispatch(listEmails(category, search, sortOrder));
+			let clean = true;
+			if (clean) {
+				dispatch(listEmails(category, search, sortOrder));
+			}
+			return () => (clean = false);
 		},
 		[ dispatch, category, search, sortOrder ]
 	);

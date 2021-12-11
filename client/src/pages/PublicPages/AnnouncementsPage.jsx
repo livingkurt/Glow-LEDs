@@ -1,19 +1,9 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Helmet } from 'react-helmet';
-import { useHistory } from 'react-router-dom';
 import { detailsEmail, listEmails } from '../../actions/emailActions';
 
 const AnnouncementPage = (props) => {
-	// const history = useHistory();
-	// const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
-	// const [ test, set_test ] = useState(true);
-	// const emailDetails = useSelector((state) => state.emailDetails);
-	// const { email } = emailDetails;
-
-	// const userLogin = useSelector((state) => state.userLogin);
-	// const { userInfo } = userLogin;
-
 	const emailList = useSelector((state) => state.emailList);
 	const { emails } = emailList;
 
@@ -23,30 +13,28 @@ const AnnouncementPage = (props) => {
 
 	useEffect(
 		() => {
-			dispatch(listEmails('Announcements'));
-			return () => {};
+			let clean = true;
+			if (clean) {
+				dispatch(listEmails('Announcements'));
+			}
+			return () => (clean = false);
 		},
 		[ dispatch ]
 	);
 
 	useEffect(
 		() => {
-			const active_email = emails.find((email) => email.active === true);
-			if (active_email) {
-				dispatch(detailsEmail(active_email._id));
+			let clean = true;
+			if (clean) {
+				const active_email = emails.find((email) => email.active === true);
+				if (active_email) {
+					dispatch(detailsEmail(active_email._id));
+				}
 			}
-			return () => {};
+			return () => (clean = false);
 		},
 		[ emails, dispatch ]
 	);
-
-	// setTimeout(() => {
-	// 	set_loading_checkboxes(false);
-	// }, 500);
-
-	// const date = new Date();
-
-	// const today = date.toISOString();
 	return (
 		<div className="main_container p-20px">
 			<Helmet>

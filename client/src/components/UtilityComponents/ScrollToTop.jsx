@@ -6,7 +6,11 @@ const ScrollToTop = ({ children }) => {
 
 	useEffect(
 		() => {
-			window.scrollTo(0, 0);
+			let clean = true;
+			if (clean) {
+				window.scrollTo(0, 0);
+			}
+			return () => (clean = false);
 		},
 		[ pathname ]
 	);

@@ -10,8 +10,6 @@ import { listFeatures } from '../../actions/featureActions';
 
 const AllFeaturesPage = (props) => {
 	const history = useHistory();
-	// const search = props.location.search.substring(8) ? props.location.search.substring(8) : '';
-	// console.log({ search_outside: search });
 	const [ search, set_search ] = useState(
 		props.location.search.substring(8) ? props.location.search.substring(8) : ''
 	);
@@ -19,78 +17,44 @@ const AllFeaturesPage = (props) => {
 	const category = props.match.params.category ? props.match.params.category : '';
 	const subcategory = props.match.params.subcategory ? props.match.params.subcategory : '';
 
-	console.log({ subcategory });
-	// console.log(props.match.params);
 	const featureList = useSelector((state) => state.featureList);
 	const { features, loading, error } = featureList;
 	const dispatch = useDispatch();
 
 	useEffect(
 		() => {
-			// dispatch(listFeatures(''));
-			// console.log({ search: search.substring(8) });
-			dispatch(listFeatures(category, subcategory, search));
+			let clean = true;
+			if (clean) {
+				dispatch(listFeatures(category, subcategory, search));
+			}
+			return () => (clean = false);
 		},
 		[ search ]
 	);
 
-	// useEffect(
-	// 	() => {
-	// 		// dispatch(listFeatures(''));
-	// 		console.log(props.location);
-	// 		// let params = new URLSearchParams(props.location);
-	// 		// params.delete('search');
-
-	// 		// let params = new URLSearchParams(props.location.pathmame + props.location.search);
-
-	// 		// params.delete('searcj'); //Query string is now: 'bar=2'
-	// 		set_search('');
-	// 		dispatch(listFeatures(category, subcategory));
-	// 	},
-	// 	[ props.location.pathname ]
-	// );
-
 	useEffect(
 		() => {
-			// console.log({ category });
-			// console.log({ subcategory });
-			// console.log({ search });
-			// console.log({ search });
-			// if (
-			// 	[
-			// 		'diffuser_caps',
-			// 		'infinity_mirrors',
-			// 		'accessories',
-			// 		'diffusers',
-			// 		'diffuser_adapters',
-			// 		'glow_strings',
-			// 		'mega_diffuser_caps',
-			// 		'mini_diffuser_adapters'
-			// 	].includes(category)
-			// ) {
-			if (search) {
-				history.push({
-					search: '?search=' + search
-				});
+			let clean = true;
+			if (clean) {
+				if (search) {
+					history.push({
+						search: '?search=' + search
+					});
+				}
+
+				dispatch(listFeatures(category, subcategory, search));
 			}
-			// else if (search) {
-			// 	history.push({
-			// 		search: '?search=' + search
-			// 	});
-			// }
-
-			dispatch(listFeatures(category, subcategory, search));
-			// } else {
-
-			// 	dispatch(listFeatures(''));
-			// }
+			return () => (clean = false);
 		},
 		[ category, subcategory, search ]
 	);
-
 	useEffect(
 		() => {
-			dispatch(listFeatures(category, subcategory, search, sortOrder));
+			let clean = true;
+			if (clean) {
+				dispatch(listFeatures(category, subcategory, search, sortOrder));
+			}
+			return () => (clean = false);
 		},
 		[ sortOrder ]
 	);

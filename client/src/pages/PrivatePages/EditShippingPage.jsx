@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { logout, update } from '../../actions/userActions';
+import { update } from '../../actions/userActions';
 import { listMyOrders } from '../../actions/orderActions';
 import { useDispatch, useSelector } from 'react-redux';
-import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 
 const ProfilePage = (props) => {
@@ -21,28 +20,21 @@ const ProfilePage = (props) => {
 		dispatch(update({ userId: userInfo._id, email, name, password }));
 		history.push('/secure/account/profile');
 	};
-	// const userUpdate = useSelector((state) => state.userUpdate);
-	// const { loading, success, error } = userUpdate;
-
-	const myOrderList = useSelector((state) => state.myOrderList);
-	const { loading: loadingOrders, orders, error: errorOrders } = myOrderList;
 
 	useEffect(
 		() => {
-			if (userInfo) {
-				console.log(userInfo.name);
-				setEmail(userInfo.email);
-				setName(userInfo.name);
-				console.log(name);
-				setPassword(userInfo.password);
+			let clean = true;
+			if (clean) {
+				if (userInfo) {
+					console.log(userInfo.name);
+					setEmail(userInfo.email);
+					setName(userInfo.name);
+					console.log(name);
+					setPassword(userInfo.password);
+				}
+				dispatch(listMyOrders());
 			}
-			// else {
-			//   setEmail(email);
-			//   setName(name);
-			//   setPassword(password);
-			// }
-			dispatch(listMyOrders());
-			return () => {};
+			return () => (clean = false);
 		},
 		[ userInfo ]
 	);
@@ -64,11 +56,7 @@ const ProfilePage = (props) => {
 								<h1 style={{ textAlign: 'center' }}>User Profile</h1>
 							</li>
 							<li>
-								<div className="jc-c">
-									{/* <Loading loading={loading} error={error}>
-										{success && <h3 style={{ textAlign: 'center' }}>Profile Saved Successfully</h3>}
-									</Loading> */}
-								</div>
+								<div className="jc-c" />
 							</li>
 							<li>
 								<label htmlFor="name">Name</label>

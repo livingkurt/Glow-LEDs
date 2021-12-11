@@ -9,7 +9,6 @@ export { default as Sort } from './Sort';
 export { default as Rating } from './Rating';
 export { default as CheckoutSteps } from './CheckoutSteps';
 export { default as GuestCheckoutSteps } from './GuestCheckoutSteps';
-export { default as PaypalButton } from './PaypalButton';
 export { default as Reviews } from './Reviews';
 export { default as PictureChooser } from './PictureChooser';
 export { default as SuggestedProducts } from './SuggestedProducts';

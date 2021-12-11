@@ -13,8 +13,11 @@ const ProductThumbCarouselItem = (props) => {
 
 	useEffect(
 		() => {
-			set_loading(false);
-			return () => {};
+			let clean = true;
+			if (clean) {
+				set_loading(false);
+			}
+			return () => (clean = false);
 		},
 		[ props.product ]
 	);

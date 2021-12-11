@@ -33,7 +33,11 @@ const ExpensesPage = (props) => {
 
 	useEffect(
 		() => {
-			dispatch(listExpenses(category, search, sortOrder));
+			let clean = true;
+			if (clean) {
+				dispatch(listExpenses(category, search, sortOrder));
+			}
+			return () => (clean = false);
 		},
 		[ sortOrder ]
 	);
@@ -48,18 +52,13 @@ const ExpensesPage = (props) => {
 		dispatch(listExpenses(category, search, e.target.value));
 	};
 
-	// useEffect(() => {
-	// 	dispatch(listExpenses());
-	// 	return () => {
-	// 		//
-	// 	};
-	// }, []);
 	useEffect(
 		() => {
-			dispatch(listExpenses());
-			return () => {
-				//
-			};
+			let clean = true;
+			if (clean) {
+				dispatch(listExpenses());
+			}
+			return () => (clean = false);
 		},
 		[ successSave, successDelete ]
 	);

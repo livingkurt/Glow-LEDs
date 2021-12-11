@@ -30,12 +30,14 @@ const LabelCreatorPage = (props) => {
 	const [ label, set_label ] = useState(false);
 
 	useEffect(() => {
-		if (userInfo.isAdmin) {
-			get_all_shipping();
+		let clean = true;
+		if (clean) {
+			if (userInfo.isAdmin) {
+				get_all_shipping();
+			}
+			dispatch(listParcels(''));
 		}
-		dispatch(listParcels(''));
-
-		return () => {};
+		return () => (clean = false);
 	}, []);
 
 	const get_all_shipping = async () => {

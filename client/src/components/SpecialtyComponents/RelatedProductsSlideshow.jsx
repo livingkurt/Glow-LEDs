@@ -29,11 +29,15 @@ const RelatedProductsSlideshow = ({
 
 	useEffect(
 		() => {
-			if (product.category) {
-				get_products(product.category);
-			} else {
-				get_products('all');
+			let clean = true;
+			if (clean) {
+				if (product.category) {
+					get_products(product.category);
+				} else {
+					get_products('all');
+				}
 			}
+			return () => (clean = false);
 		},
 		[ product.category ]
 	);

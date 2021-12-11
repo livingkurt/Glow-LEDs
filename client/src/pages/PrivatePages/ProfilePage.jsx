@@ -29,22 +29,26 @@ const ProfilePage = (props) => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		if (userInfo && userInfo.is_affiliated && userInfo.affiliate) {
-			console.log({ affiliate: userInfo.affiliate.pathname });
-			dispatch(detailsAffiliate(userInfo.affiliate.pathname));
-			dispatch(listMyPaychecks(userInfo.affiliate._id));
+		let clean = true;
+		if (clean) {
+			if (userInfo && userInfo.is_affiliated && userInfo.affiliate) {
+				console.log({ affiliate: userInfo.affiliate.pathname });
+				dispatch(detailsAffiliate(userInfo.affiliate.pathname));
+				dispatch(listMyPaychecks(userInfo.affiliate._id));
+			}
 		}
-
-		return () => {};
+		return () => (clean = false);
 	}, []);
 
 	useEffect(
 		() => {
-			if (affiliate && affiliate.public_code) {
-				get_code_usage(affiliate.public_code);
+			let clean = true;
+			if (clean) {
+				if (affiliate && affiliate.public_code) {
+					get_code_usage(affiliate.public_code);
+				}
 			}
-
-			return () => {};
+			return () => (clean = false);
 		},
 		[ affiliate ]
 	);

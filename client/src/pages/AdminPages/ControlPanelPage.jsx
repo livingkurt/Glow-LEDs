@@ -105,26 +105,30 @@ const ControlPanelPage = (props) => {
 	};
 
 	useEffect(() => {
-		// dispatch(listOrders('', '', '', 1, 10));
-		dispatch(listExpenses());
-		dispatch(listProducts());
-		dispatch(listUsers());
-		dispatch(listAffiliates());
-		dispatch(listPromos());
-		get_income();
-		get_occurrences();
-		get_orders();
-		get_top_customers();
-		// get_by_category();
+		let clean = true;
+		if (clean) {
+			dispatch(listExpenses());
+			dispatch(listProducts());
+			dispatch(listUsers());
+			dispatch(listAffiliates());
+			dispatch(listPromos());
+			get_income();
+			get_occurrences();
+			get_orders();
+			get_top_customers();
+		}
+		return () => (clean = false);
 	}, []);
 
 	useEffect(
 		() => {
-			if (orders && affiliates) {
-				get_total();
+			let clean = true;
+			if (clean) {
+				if (orders && affiliates) {
+					get_total();
+				}
 			}
-
-			return () => {};
+			return () => (clean = false);
 		},
 		[ affiliates, orders ]
 	);

@@ -8,7 +8,6 @@ import { Link, useHistory } from 'react-router-dom';
 import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { Search, Sort } from '../../components/SpecialtyComponents';
-import { sale_price_switch } from '../../utils/react_helper_functions';
 import { facebook_catalog_upload, google_catalog_upload } from '../../utils/google_sheets_upload';
 import {
 	mutliDragAwareReorder,
@@ -27,48 +26,21 @@ function ProductPage(props) {
 	const [ page, set_page ] = useState(1);
 	const [ limit, set_limit ] = useState(20);
 
-	// const [ hide_hidden, set_hide_hidden] = useState('');
 	const category = props.match.params.category ? props.match.params.category : '';
 	const subcategory = props.match.params.subcategory ? props.match.params.subcategory : '';
 
-	const productSave = useSelector((state) => state.productSave);
-	const { loading: loadingSave, success: successSave, error: errorSave } = productSave;
-
-	const productDelete = useSelector((state) => state.productDelete);
-	const { loading: loadingDelete, success: successDelete, error: errorDelete } = productDelete;
 	const dispatch = useDispatch();
 	const [ products_list, updateProducts ] = useState([]);
 
 	const productList = useSelector((state) => state.productList);
 	const { loading, products: items, totalPages, currentPage, error } = productList;
 
-	// useEffect(() => {
-	// 	dispatch(listProducts());
-	// 	return () => {
-	// 		//
-	// 	};
-	// }, []);
-	// useEffect(
-	// 	() => {
-	// 		if (items) {
-	// 			updateProducts(items);
-	// 		}
-
-	// 		return () => {
-	// 			//
-	// 		};
-	// 	},
-	// 	[ items ]
-	// );
-	// useEffect(
-	// 	() => {
-	// 		dispatch(listProducts(category.subcategory, search, sortOrder));
-	// 	},
-	// 	[ sortOrder ]
-	// );
 	useEffect(() => {
-		determine_products();
-		return () => {};
+		let clean = true;
+		if (clean) {
+			determine_products();
+		}
+		return () => (clean = false);
 	}, []);
 
 	const determine_products = () => {
@@ -253,11 +225,13 @@ function ProductPage(props) {
 
 	useEffect(
 		() => {
-			if (items) {
-				set_state();
+			let clean = true;
+			if (clean) {
+				if (items) {
+					set_state();
+				}
 			}
-
-			return () => {};
+			return () => (clean = false);
 		},
 		[ items ]
 	);

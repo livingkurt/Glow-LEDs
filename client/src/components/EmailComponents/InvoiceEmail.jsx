@@ -29,36 +29,32 @@ const InvoiceEmail = (props) => {
 
 	useEffect(
 		() => {
-			dispatch(listEmails('Invoice'));
-			dispatch(detailsOrder(props.match.params.id || '5fa43d5f248dcacd5d8e2d3f'));
-			dispatch(listPromos());
-			return () => {};
+			let clean = true;
+			if (clean) {
+				dispatch(listEmails('Invoice'));
+				dispatch(detailsOrder(props.match.params.id || '5fa43d5f248dcacd5d8e2d3f'));
+				dispatch(listPromos());
+			}
+			return () => (clean = false);
 		},
 		[ dispatch ]
 	);
 
 	useEffect(
 		() => {
-			if (emails) {
-				const active_email = emails.find((email) => email.active === true);
-				if (active_email) {
-					dispatch(detailsEmail(active_email._id));
+			let clean = true;
+			if (clean) {
+				if (emails) {
+					const active_email = emails.find((email) => email.active === true);
+					if (active_email) {
+						dispatch(detailsEmail(active_email._id));
+					}
 				}
 			}
-
-			return () => {};
+			return () => (clean = false);
 		},
 		[ emails, dispatch ]
 	);
-
-	// useEffect(
-	// 	() => {
-	// 		print_invoice();
-	// 		return () => {};
-	// 	},
-	// 	[ emails, order ]
-	// );
-
 	const determin_card_logo = (card_type) => {
 		switch (card_type) {
 			case 'amex':

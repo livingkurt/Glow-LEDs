@@ -13,22 +13,26 @@ const ReviewEmail = () => {
 	const emailList = useSelector((state) => state.emailList);
 	const { emails } = emailList;
 
-	console.log({ emails });
-
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch(listEmails('Reviews'));
-		return () => {};
+		let clean = true;
+		if (clean) {
+			dispatch(listEmails('Reviews'));
+		}
+		return () => (clean = false);
 	}, []);
 
 	useEffect(
 		() => {
-			const active_email = emails.find((email) => email.active === true);
-			if (active_email) {
-				dispatch(detailsEmail(active_email._id));
+			let clean = true;
+			if (clean) {
+				const active_email = emails.find((email) => email.active === true);
+				if (active_email) {
+					dispatch(detailsEmail(active_email._id));
+				}
 			}
-			return () => {};
+			return () => (clean = false);
 		},
 		[ emails ]
 	);

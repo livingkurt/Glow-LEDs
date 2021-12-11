@@ -90,18 +90,21 @@ const EditEmailPage = (props) => {
 
 	useEffect(
 		() => {
-			if (props.match.params.id) {
-				console.log('Is ID');
-				dispatch(detailsEmail(props.match.params.id));
-				dispatch(detailsEmail(props.match.params.id));
-			} else {
-				dispatch(detailsEmail(''));
-			}
-			dispatch(listEmails(''));
-			dispatch(listContents(''));
+			let clean = true;
+			if (clean) {
+				if (props.match.params.id) {
+					console.log('Is ID');
+					dispatch(detailsEmail(props.match.params.id));
+					dispatch(detailsEmail(props.match.params.id));
+				} else {
+					dispatch(detailsEmail(''));
+				}
+				dispatch(listEmails(''));
+				dispatch(listContents(''));
 
-			set_email_state();
-			return () => {};
+				set_email_state();
+			}
+			return () => (clean = false);
 		},
 		[ dispatch, props.match.params.id ]
 	);
@@ -125,29 +128,33 @@ const EditEmailPage = (props) => {
 
 	useEffect(
 		() => {
-			if (email) {
-				// console.log('Set');
-				set_email_state();
-			} else {
-				// console.log('UnSet');
-				unset_state();
+			let clean = true;
+			if (clean) {
+				if (email) {
+					// console.log('Set');
+					set_email_state();
+				} else {
+					// console.log('UnSet');
+					unset_state();
+				}
 			}
-
-			return () => {};
+			return () => (clean = false);
 		},
 		[ email ]
 	);
 	useEffect(
 		() => {
-			if (content && content.home_page) {
-				console.log('Set');
-				set_content_state(content.home_page);
-			} else {
-				console.log('UnSet');
-				unset_state();
+			let clean = true;
+			if (clean) {
+				if (content && content.home_page) {
+					console.log('Set');
+					set_content_state(content.home_page);
+				} else {
+					console.log('UnSet');
+					unset_state();
+				}
 			}
-
-			return () => {};
+			return () => (clean = false);
 		},
 		[ content ]
 	);

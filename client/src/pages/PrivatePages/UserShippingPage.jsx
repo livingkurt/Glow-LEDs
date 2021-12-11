@@ -26,20 +26,22 @@ const ShippingPage = (props) => {
 
 	useEffect(
 		() => {
-			if (shipping) {
-				set_email(shipping.email);
-				set_first_name(shipping.first_name);
-				set_last_name(shipping.last_name);
-				set_address_1(shipping.address_1);
-				set_address_2(shipping.address_2);
-				setCity(shipping.city);
-				setState(shipping.state);
-				setPostalCode(shipping.postalCode);
-				setCountry(shipping.country);
-				setInternational(shipping.international);
+			let clean = true;
+			if (clean) {
+				if (shipping) {
+					set_email(shipping.email);
+					set_first_name(shipping.first_name);
+					set_last_name(shipping.last_name);
+					set_address_1(shipping.address_1);
+					set_address_2(shipping.address_2);
+					setCity(shipping.city);
+					setState(shipping.state);
+					setPostalCode(shipping.postalCode);
+					setCountry(shipping.country);
+					setInternational(shipping.international);
+				}
 			}
-
-			return () => {};
+			return () => (clean = false);
 		},
 		[ shipping ]
 	);

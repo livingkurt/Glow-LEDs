@@ -124,33 +124,38 @@ const EditUserAffiliatePage = (props) => {
 
 	useEffect(
 		() => {
-			if (props.match.params.id) {
-				console.log('Is ID');
-				dispatch(detailsAffiliate(props.match.params.id));
-				dispatch(detailsAffiliate(props.match.params.id));
-			} else {
-				dispatch(detailsAffiliate(''));
+			let clean = true;
+			if (clean) {
+				if (props.match.params.id) {
+					console.log('Is ID');
+					dispatch(detailsAffiliate(props.match.params.id));
+					dispatch(detailsAffiliate(props.match.params.id));
+				} else {
+					dispatch(detailsAffiliate(''));
+				}
+				dispatch(listUsers(''));
+				dispatch(listProducts(''));
+				dispatch(listChips());
+				set_state();
 			}
-			dispatch(listUsers(''));
-			dispatch(listProducts(''));
-			dispatch(listChips());
-			set_state();
-			return () => {};
+			return () => (clean = false);
 		},
 		[ dispatch, props.match.params.id ]
 	);
 
 	useEffect(
 		() => {
-			if (affiliate) {
-				console.log('Set');
-				set_state();
-			} else {
-				console.log('UnSet');
-				unset_state();
+			let clean = true;
+			if (clean) {
+				if (affiliate) {
+					console.log('Set');
+					set_state();
+				} else {
+					console.log('UnSet');
+					unset_state();
+				}
 			}
-
-			return () => {};
+			return () => (clean = false);
 		},
 		[ affiliate ]
 	);
@@ -198,23 +203,32 @@ const EditUserAffiliatePage = (props) => {
 
 	useEffect(
 		() => {
-			if (success && affiliate_saved) {
-				if (props.match.params.id) {
-					history.push('/secure/account/profile');
-				} else {
-					// history.push('/secure/account/affiliate_sign_up_complete');
-					console.log({ affiliate_saved });
-					history.push('/account/affiliate/receipt/' + affiliate_saved.data.pathname + '/affiliate/true');
+			let clean = true;
+			if (clean) {
+				if (success && affiliate_saved) {
+					if (props.match.params.id) {
+						history.push('/secure/account/profile');
+					} else {
+						// history.push('/secure/account/affiliate_sign_up_complete');
+						console.log({ affiliate_saved });
+						history.push('/account/affiliate/receipt/' + affiliate_saved.data.pathname + '/affiliate/true');
+					}
 				}
 			}
+			return () => (clean = false);
 		},
 		[ success ]
 	);
+
 	useEffect(
 		() => {
-			if (userInfo && !userInfo.is_affiliated) {
-				history.push('/secure/account/profile');
+			let clean = true;
+			if (clean) {
+				if (userInfo && !userInfo.is_affiliated) {
+					history.push('/secure/account/profile');
+				}
 			}
+			return () => (clean = false);
 		},
 		[ userInfo ]
 	);

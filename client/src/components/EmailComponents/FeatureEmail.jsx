@@ -19,34 +19,35 @@ const FeatureEmail = (props) => {
 	const featureDetails = useSelector((state) => state.featureDetails);
 	const { feature } = featureDetails;
 
-	console.log({ feature });
-
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
 
 	const emailList = useSelector((state) => state.emailList);
 	const { emails } = emailList;
 
-	console.log({ emails });
-
 	const dispatch = useDispatch();
 
 	useEffect(
 		() => {
-			dispatch(detailsFeature(props.match.params.pathname));
-			dispatch(listEmails('Feature'));
-			return () => {};
+			let clean = true;
+			if (clean) {
+				dispatch(detailsFeature(props.match.params.pathname));
+				dispatch(listEmails('Feature'));
+			}
+			return () => (clean = false);
 		},
 		[ dispatch ]
 	);
-
 	useEffect(
 		() => {
-			const active_email = emails.find((email) => email.active === true);
-			if (active_email) {
-				dispatch(detailsEmail(active_email._id));
+			let clean = true;
+			if (clean) {
+				const active_email = emails.find((email) => email.active === true);
+				if (active_email) {
+					dispatch(detailsEmail(active_email._id));
+				}
 			}
-			return () => {};
+			return () => (clean = false);
 		},
 		[ emails, dispatch ]
 	);
@@ -903,11 +904,6 @@ const FeatureEmail = (props) => {
 
 	const email_template = ReactDOMServer.renderToStaticMarkup(jsx);
 
-	// const send_announcement_email = async (chunk) => {
-	// 	const data = await API_Emails.send_announcement_email(email_template, email.h1, test, chunk);
-	// 	console.log('Announcement Email Sent Successfully');
-	// 	console.log(data);
-	// };
 	const send_feature_email = async (email, first_name, subject) => {
 		console.log({ email_template });
 		const { data } = await API_Emails.send_user_email(email_template, subject, email);
@@ -925,44 +921,28 @@ const FeatureEmail = (props) => {
 		console.log('Success');
 	};
 
-	// useEffect(
-	// 	() => {
-	// 		if (props.match.params.send === 'true' && feature) {
-	// 			console.log({ 'props.match.params.send === true && feature': feature });
-	// 			// if (feature.orderItems.length > 0) {
-	// 			// 	console.log({ 'feature.orderItems.length > 0': feature });
-	// 			if (feature && feature.first_name && email_template.length > 1000) {
-	// 				// setTimeout(() => {
-	// 				send_feature_email(feature.email, feature.first_name, 'Your Glow LEDs Feature');
-	// 				// }, 3000);
-	// 			}
-
-	// 			// }
-	// 		}
-
-	// 		return () => {};
-	// 	},
-	// 	[ feature ]
-	// );
 	const [ num, set_num ] = useState(0);
+
 	useEffect(
 		() => {
-			if (num === 0) {
-				if (feature) {
-					if (email) {
-						if (props.match.params.send === 'true') {
-							if (props.match.params.id) {
-								send_feature_email(feature.email, feature.first_name, 'Your Glow LEDs Feature');
-								set_num(1);
+			let clean = true;
+			if (clean) {
+				if (num === 0) {
+					if (feature) {
+						if (email) {
+							if (props.match.params.send === 'true') {
+								if (props.match.params.id) {
+									send_feature_email(feature.email, feature.first_name, 'Your Glow LEDs Feature');
+									set_num(1);
+								}
 							}
 						}
 					}
 				}
 			}
-
-			return () => {};
+			return () => (clean = false);
 		},
-		[ email ]
+		[ emails ]
 	);
 
 	console.log({ email_template });

@@ -29,12 +29,14 @@ const OrderCombinerPage = (props) => {
 	const [ label, set_label ] = useState(false);
 
 	useEffect(() => {
-		if (userInfo.isAdmin) {
-			get_orders();
+		let clean = true;
+		if (clean) {
+			if (userInfo.isAdmin) {
+				get_orders();
+			}
+			dispatch(listParcels(''));
 		}
-		dispatch(listParcels(''));
-
-		return () => {};
+		return () => (clean = false);
 	}, []);
 
 	const get_orders = async () => {

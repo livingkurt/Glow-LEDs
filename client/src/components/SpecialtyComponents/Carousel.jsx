@@ -17,11 +17,15 @@ const Carousel = (props) => {
 
 	useEffect(
 		() => {
-			if (props.category) {
-				get_products(props.category);
-			} else {
-				get_products('all');
+			let clean = true;
+			if (clean) {
+				if (props.category) {
+					get_products(props.category);
+				} else {
+					get_products('all');
+				}
 			}
+			return () => (clean = false);
 		},
 		[ props.category ]
 	);
@@ -74,8 +78,11 @@ const Carousel = (props) => {
 
 	useEffect(
 		() => {
-			handleWindowResize();
-			return () => {};
+			let clean = true;
+			if (clean) {
+				handleWindowResize();
+			}
+			return () => (clean = false);
 		},
 		[ width ]
 	);

@@ -130,36 +130,40 @@ const EditAffiliatePage = (props) => {
 
 	useEffect(
 		() => {
-			if (props.match.params.pathname) {
-				// console.log('Is ID');
-				// console.log(props.match.params.pathname);
-				dispatch(detailsAffiliate(props.match.params.pathname));
-				dispatch(detailsAffiliate(props.match.params.pathname));
-			} else {
-				dispatch(detailsAffiliate(''));
+			let clean = true;
+			if (clean) {
+				if (props.match.params.pathname) {
+					// console.log('Is ID');
+					// console.log(props.match.params.pathname);
+					dispatch(detailsAffiliate(props.match.params.pathname));
+					dispatch(detailsAffiliate(props.match.params.pathname));
+				} else {
+					dispatch(detailsAffiliate(''));
+				}
+				dispatch(listUsers(''));
+				dispatch(listProducts(''));
+				dispatch(listPromos(''));
+				dispatch(listPromos(''));
+				dispatch(listChips());
+				set_state();
 			}
-			dispatch(listUsers(''));
-			dispatch(listProducts(''));
-			dispatch(listPromos(''));
-			dispatch(listPromos(''));
-			dispatch(listChips());
-			set_state();
-			return () => {};
+			return () => (clean = false);
 		},
 		[ dispatch, props.match.params.pathname ]
 	);
-
 	useEffect(
 		() => {
-			if (affiliate) {
-				console.log('Set');
-				set_state();
-			} else {
-				console.log('UnSet');
-				unset_state();
+			let clean = true;
+			if (clean) {
+				if (affiliate) {
+					console.log('Set');
+					set_state();
+				} else {
+					console.log('UnSet');
+					unset_state();
+				}
 			}
-
-			return () => {};
+			return () => (clean = false);
 		},
 		[ affiliate ]
 	);

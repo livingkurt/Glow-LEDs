@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 /**
  * This renders an item in the table of contents list.
@@ -54,7 +54,7 @@ const Headings = ({ headings, activeId }) => (
 const useHeadingsData = () => {
 	const [ nestedHeadings, setNestedHeadings ] = React.useState([]);
 
-	React.useEffect(() => {
+	useEffect(() => {
 		const headingElements = Array.from(document.querySelectorAll('main h2, main h3'));
 
 		// Created a list of headings, with H3s nested
@@ -86,7 +86,7 @@ const getNestedHeadings = (headingElements) => {
 
 const useIntersectionObserver = (setActiveId) => {
 	const headingElementsRef = React.useRef({});
-	React.useEffect(
+	useEffect(
 		() => {
 			const callback = (headings) => {
 				headingElementsRef.current = headings.reduce((map, headingElement) => {

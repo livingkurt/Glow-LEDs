@@ -21,17 +21,23 @@ const AccountCreatedEmail = () => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch(listEmails('Account Created'));
-		return () => {};
+		let clean = true;
+		if (clean) {
+			dispatch(listEmails('Account Created'));
+		}
+		return () => (clean = false);
 	}, []);
 
 	useEffect(
 		() => {
-			const active_email = emails.find((email) => email.active === true);
-			if (active_email) {
-				dispatch(detailsEmail(active_email._id));
+			let clean = true;
+			if (clean) {
+				const active_email = emails.find((email) => email.active === true);
+				if (active_email) {
+					dispatch(detailsEmail(active_email._id));
+				}
 			}
-			return () => {};
+			return () => (clean = false);
 		},
 		[ emails ]
 	);
@@ -125,7 +131,7 @@ const AccountCreatedEmail = () => {
 																	}}
 																>
 																	<img
-																		src="https://thumbs2.imgbox.com/b1/08/2Dnle6TI_t.jpeg"
+																		src="https://images2.imgbox.com/63/e7/BPGMUlpc_o.png"
 																		alt="Glow LEDs Logo"
 																		title="Glow LEDs Logo"
 																		style={{

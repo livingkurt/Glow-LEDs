@@ -24,7 +24,11 @@ const UsersPage = (props) => {
 
 	useEffect(
 		() => {
-			dispatch(listUsers());
+			let clean = true;
+			if (clean) {
+				dispatch(listUsers());
+			}
+			return () => (clean = false);
 		},
 		[ successDelete ]
 	);
@@ -45,7 +49,11 @@ const UsersPage = (props) => {
 
 	useEffect(
 		() => {
-			dispatch(listUsers(category, search, sortOrder));
+			let clean = true;
+			if (clean) {
+				dispatch(listUsers(category, search, sortOrder));
+			}
+			return () => (clean = false);
 		},
 		[ sortOrder ]
 	);

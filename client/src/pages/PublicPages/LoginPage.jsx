@@ -26,21 +26,17 @@ const LoginPage = (props) => {
 
 	useEffect(
 		() => {
-			if (userInfo && userInfo.hasOwnProperty('first_name')) {
-				props.history.push(redirect);
+			let clean = true;
+			if (clean) {
+				if (userInfo && userInfo.hasOwnProperty('first_name')) {
+					props.history.push(redirect);
+				}
 			}
-			return () => {
-				//
-			};
+			return () => (clean = false);
 		},
 		[ userInfo, props.history, redirect ]
 	);
-	useEffect(() => {
-		set_loading(false);
-		return () => {
-			//
-		};
-	}, []);
+
 	setTimeout(() => {
 		set_loading(false);
 	}, 3000);

@@ -1,5 +1,5 @@
 // React
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Loading } from '../UtilityComponents';
 import { ProductItemD } from '../DesktopComponents';

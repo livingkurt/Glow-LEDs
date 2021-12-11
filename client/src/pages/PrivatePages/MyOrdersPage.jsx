@@ -21,19 +21,25 @@ const UserOrderPage = (props) => {
 
 	useEffect(
 		() => {
-			if (error) {
-				check_authentication();
-				dispatch(listMyOrders());
+			let clean = true;
+			if (clean) {
+				if (error) {
+					check_authentication();
+					dispatch(listMyOrders());
+				}
 			}
-
-			return () => {};
+			return () => (clean = false);
 		},
 		[ error ]
 	);
 
 	useEffect(
 		() => {
-			dispatch(listMyOrders());
+			let clean = true;
+			if (clean) {
+				dispatch(listMyOrders());
+			}
+			return () => (clean = false);
 		},
 		[ userInfo, dispatch ]
 	);

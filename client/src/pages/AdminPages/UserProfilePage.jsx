@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { detailsUser } from '../../actions/userActions';
@@ -10,7 +10,6 @@ const UserProfilePage = (props) => {
 	const history = useHistory();
 	const userDetails = useSelector((state) => state.userDetails);
 	const { loading, user, error } = userDetails;
-	console.log({ user });
 
 	const [ first_name, set_first_name ] = useState('');
 	const [ last_name, set_last_name ] = useState('');
@@ -22,47 +21,35 @@ const UserProfilePage = (props) => {
 
 	const dispatch = useDispatch();
 
-	// const userUpdateUser = useSelector((state) => state.userUpdateUser);
-	// const { userInfo: userUpdate } = userUpdateUser;
-
 	useEffect(
 		() => {
-			dispatch(detailsUser(props.match.params.id));
-			return () => {};
+			let clean = true;
+			if (clean) {
+				dispatch(detailsUser(props.match.params.id));
+			}
+			return () => (clean = false);
 		},
 		[ dispatch ]
 	);
 
 	useEffect(
 		() => {
-			if (user) {
-				setEmail(user.email);
-				set_first_name(user.first_name);
-				set_last_name(user.last_name);
-				set_verified(user.isVerified);
-				set_admin(user.isAdmin);
-				set_shipping(user.shipping);
-				set_email_subscription(user.email_subscription);
+			let clean = true;
+			if (clean) {
+				if (user) {
+					setEmail(user.email);
+					set_first_name(user.first_name);
+					set_last_name(user.last_name);
+					set_verified(user.isVerified);
+					set_admin(user.isAdmin);
+					set_shipping(user.shipping);
+					set_email_subscription(user.email_subscription);
+				}
 			}
-			return () => {};
+			return () => (clean = false);
 		},
 		[ user ]
 	);
-
-	// useEffect(
-	// 	() => {
-	// 		if (userUpdate) {
-	// 			setEmail(userUpdate.email);
-	// 			set_first_name(userUpdate.first_name);
-	// 			set_last_name(userUpdate.last_name);
-	// 			set_verified(userUpdate.isVerified);
-	// 			set_admin(userUpdate.isAdmin);
-	// 			// setPassword(userUpdate.password);
-	// 		}
-	// 		return () => {};
-	// 	},
-	// 	[ userUpdate ]
-	// );
 
 	const container_styles = {
 		marginBottom: '20px'

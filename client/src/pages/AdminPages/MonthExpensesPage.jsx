@@ -57,19 +57,24 @@ const MonthExpensesPage = (props) => {
 
 	useEffect(
 		() => {
-			calculate_expenses(props.match.params.month);
-
-			return () => {};
+			let clean = true;
+			if (clean) {
+				calculate_expenses(props.match.params.month);
+			}
+			return () => (clean = false);
 		},
 		[ props.match.params.month ]
 	);
-	useEffect(() => {
-		calculate_expenses(props.match.params.month);
-		get_all_categories();
-		dispatch(listAffiliates());
-		dispatch(listPromos());
 
-		return () => {};
+	useEffect(() => {
+		let clean = true;
+		if (clean) {
+			calculate_expenses(props.match.params.month);
+			get_all_categories();
+			dispatch(listAffiliates());
+			dispatch(listPromos());
+		}
+		return () => (clean = false);
 	}, []);
 
 	const get_all_categories = async () => {
@@ -190,25 +195,29 @@ const MonthExpensesPage = (props) => {
 
 	useEffect(
 		() => {
-			if (affiliates) {
-				determine_affiliate_colors();
-				// determine_affiliate_code_usage();
+			let clean = true;
+			if (clean) {
+				if (affiliates) {
+					determine_affiliate_colors();
+				}
 			}
-			return () => {};
+			return () => (clean = false);
 		},
 		[ affiliates ]
 	);
+
 	useEffect(
 		() => {
-			if (promos) {
-				determine_promo_colors();
-				// determine_affiliate_code_usage();
+			let clean = true;
+			if (clean) {
+				if (promos) {
+					determine_promo_colors();
+				}
 			}
-			return () => {};
+			return () => (clean = false);
 		},
 		[ promos ]
 	);
-
 	const determine_affiliate_colors = () => {
 		const colors = [ ...affiliates, { promo_code: 'inkybois' } ].map((item) => {
 			affiliate_num += affiliate_multiplier;
@@ -227,51 +236,6 @@ const MonthExpensesPage = (props) => {
 		set_promo_colors(colors);
 	};
 
-	// const determine_affiliate_code_usage = () => {
-	// 	const total_rows = [ ...affiliates, { promo_code: 'inkybois' } ]
-	// 		.filter((affiliate) => affiliate.active)
-	// 		.map((affiliate) => {
-	// 			return {
-	// 				'Promo Code': toCapitalize(affiliate.public_code.promo_code),
-	// 				Uses: orders.filter((order) => {
-	// 					return (
-	// 						order.promo_code &&
-	// 						order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
-	// 					);
-	// 				}).length,
-	// 				Revenue: ` $${orders
-	// 					.filter(
-	// 						(order) =>
-	// 							order.promo_code &&
-	// 							order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
-	// 					)
-	// 					.reduce((a, order) => a + order.totalPrice - order.taxPrice, 0)
-	// 					.toFixed(2)}`,
-	// 		Earned: `$${affiliate.promoter
-	// 			? orders
-	// 					.filter(
-	// 						(order) =>
-	// 							order.promo_code &&
-	// 							order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
-	// 					)
-	// 					.reduce((a, order) => a + (order.totalPrice - order.taxPrice) * 0.1, 0)
-	// 					.toFixed(2)
-	// 			: orders
-	// 					.filter(
-	// 						(order) =>
-	// 							order.promo_code &&
-	// 							order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
-	// 					)
-	// 					.reduce((a, order) => a + (order.totalPrice - order.taxPrice) * 0.15, 0)
-	// 					.toFixed(2)}`
-	// 	};
-	// });
-
-	// 	const sorted_total_rows = total_rows.sort(
-	// 		(a, b) => (parseInt(a.Revenue.substring(2)) > parseInt(b.Revenue.substring(2)) ? -1 : 1)
-	// 	);
-	// 	set_affiliate_code_usage(sorted_total_rows);
-	// };
 	const [ total_affiliate_revenue, set_total_affiliate_revenue ] = useState();
 	const [ total_affiliate_promo_code_usage, set_total_affiliate_promo_code_usage ] = useState();
 	const [ total_affiliate_earned, set_total_affiliate_earned ] = useState();
@@ -321,13 +285,16 @@ const MonthExpensesPage = (props) => {
 		set_total_affiliate_earned(earned.reduce((a, c) => parseFloat(a) + parseFloat(c), 0));
 		console.log({ earned });
 	};
+
 	useEffect(
 		() => {
-			if (orders && affiliates) {
-				get_total();
+			let clean = true;
+			if (clean) {
+				if (orders && affiliates) {
+					get_total();
+				}
 			}
-
-			return () => {};
+			return () => (clean = false);
 		},
 		[ affiliates, orders ]
 	);
@@ -354,13 +321,16 @@ const MonthExpensesPage = (props) => {
 		set_total_promo_revenue(revenue.reduce((a, c) => parseFloat(a) + parseFloat(c), 0));
 		console.log({ revenue });
 	};
+
 	useEffect(
 		() => {
-			if (orders && promos) {
-				get_total_promos();
+			let clean = true;
+			if (clean) {
+				if (orders && promos) {
+					get_total_promos();
+				}
 			}
-
-			return () => {};
+			return () => (clean = false);
 		},
 		[ promos, orders ]
 	);
@@ -372,6 +342,7 @@ const MonthExpensesPage = (props) => {
 					Admin {this_month} {this_year} Breakdown | Glow LEDs
 				</title>
 			</Helmet>
+			<Loading loading={loading} />
 			<div className="">
 				<Link to="/secure/glow/controlpanel">
 					<button className="btn primary">Back to Control Panel</button>

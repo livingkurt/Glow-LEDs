@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { saveFeature, detailsFeature } from '../../actions/featureActions';
 import { useHistory } from 'react-router-dom';
@@ -25,14 +25,9 @@ const EditFeaturePage = (props) => {
 	const [ logo, set_logo ] = useState('');
 	const [ description, set_description ] = useState('');
 	const [ release_date, set_release_date ] = useState('');
-	// const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
 
 	const userList = useSelector((state) => state.userList);
 	const { users } = userList;
-	// console.log(users);
-	// setTimeout(() => {
-	// 	set_loading_checkboxes(false);
-	// }, 500);
 
 	const history = useHistory();
 
@@ -44,34 +39,37 @@ const EditFeaturePage = (props) => {
 
 	const dispatch = useDispatch();
 
-	console.log({ feature });
-
 	useEffect(() => {
-		if (props.match.params.pathname) {
-			console.log('Is ID');
-			dispatch(detailsFeature(props.match.params.pathname));
-			dispatch(detailsFeature(props.match.params.pathname));
-		} else {
-			dispatch(detailsFeature(''));
-		}
-		dispatch(listProducts(''));
-		dispatch(listUsers(''));
+		let clean = true;
+		if (clean) {
+			if (props.match.params.pathname) {
+				console.log('Is ID');
+				dispatch(detailsFeature(props.match.params.pathname));
+				dispatch(detailsFeature(props.match.params.pathname));
+			} else {
+				dispatch(detailsFeature(''));
+			}
+			dispatch(listProducts(''));
+			dispatch(listUsers(''));
 
-		set_state();
-		return () => {};
+			set_state();
+		}
+		return () => (clean = false);
 	}, []);
 
 	useEffect(
 		() => {
-			if (feature) {
-				console.log('Set');
-				set_state();
-			} else {
-				console.log('UnSet');
-				unset_state();
+			let clean = true;
+			if (clean) {
+				if (feature) {
+					console.log('Set');
+					set_state();
+				} else {
+					console.log('UnSet');
+					unset_state();
+				}
 			}
-
-			return () => {};
+			return () => (clean = false);
 		},
 		[ feature ]
 	);

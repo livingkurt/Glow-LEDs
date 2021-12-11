@@ -48,31 +48,36 @@ const GlowControl = (props) => {
 
 	useEffect(
 		() => {
-			if (device && device.query_url) {
-				get_all_settings(device.query_url);
-				console.log({ query_url: device.query_url });
+			let clean = true;
+			if (clean) {
+				if (device && device.query_url) {
+					get_all_settings(device.query_url);
+					console.log({ query_url: device.query_url });
+				}
+
+				// set_device(device);
+				console.log({ device });
+				// console.log({ query_url: device.query_url });
+
+				// set_leds(devices);
 			}
-
-			// set_device(device);
-			console.log({ device });
-			// console.log({ query_url: device.query_url });
-
-			// set_leds(devices);
-			return () => {};
+			return () => (clean = false);
 		},
 		[ device ]
 	);
 
 	useEffect(() => {
-		if (props.match.params.id) {
-			console.log('Is ID');
-			dispatch(detailsDevice(props.match.params.id));
-			dispatch(detailsDevice(props.match.params.id));
-		} else {
-			dispatch(detailsDevice(''));
+		let clean = true;
+		if (clean) {
+			if (props.match.params.id) {
+				console.log('Is ID');
+				dispatch(detailsDevice(props.match.params.id));
+				dispatch(detailsDevice(props.match.params.id));
+			} else {
+				dispatch(detailsDevice(''));
+			}
 		}
-		// set_state();
-		return () => {};
+		return () => (clean = false);
 	}, []);
 
 	function camelize(str) {

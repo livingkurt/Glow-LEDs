@@ -3,15 +3,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { saveCategory, detailsCategory, listCategorys } from '../../actions/categoryActions';
 import { useHistory } from 'react-router-dom';
 import { DropdownDisplay, Loading } from '../../components/UtilityComponents';
-import { format_date, unformat_date } from '../../utils/helper_functions';
 import { Helmet } from 'react-helmet';
-import { option_list } from '../../utils/react_helper_functions';
 
 const EditCategoryPage = (props) => {
 	const [ id, set_id ] = useState('');
 	const [ name, set_name ] = useState('');
 	const [ pathname, set_pathname ] = useState('');
-	// const [ subcategory, set_subcategory ] = useState('');
+
 	const [ subcategorys, set_subcategorys ] = useState('');
 	const [ nest_level, set_nest_level ] = useState('');
 	const [ display_order, set_display_order ] = useState('');
@@ -36,32 +34,34 @@ const EditCategoryPage = (props) => {
 		set_loading_checkboxes(false);
 	}, 500);
 
-	// console.log({ category });
-
 	useEffect(() => {
-		if (props.match.params.id) {
-			console.log('Is ID');
-			dispatch(detailsCategory(props.match.params.id));
-			dispatch(detailsCategory(props.match.params.id));
-		} else {
-			dispatch(detailsCategory(''));
+		let clean = true;
+		if (clean) {
+			if (props.match.params.id) {
+				console.log('Is ID');
+				dispatch(detailsCategory(props.match.params.id));
+				dispatch(detailsCategory(props.match.params.id));
+			} else {
+				dispatch(detailsCategory(''));
+			}
+			dispatch(listCategorys(''));
+			set_state();
 		}
-		dispatch(listCategorys(''));
-		set_state();
-		return () => {};
+		return () => (clean = false);
 	}, []);
-
 	useEffect(
 		() => {
-			if (category) {
-				console.log('Set');
-				set_state();
-			} else {
-				console.log('UnSet');
-				unset_state();
+			let clean = true;
+			if (clean) {
+				if (category) {
+					console.log('Set');
+					set_state();
+				} else {
+					console.log('UnSet');
+					unset_state();
+				}
 			}
-
-			return () => {};
+			return () => (clean = false);
 		},
 		[ category ]
 	);

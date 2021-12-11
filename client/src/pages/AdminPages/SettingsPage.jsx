@@ -41,13 +41,14 @@ const SettingsPage = (props) => {
 
 	useEffect(
 		() => {
-			dispatch(listSettings());
-			dispatch(listAffiliates(''));
-			dispatch(listTeams(''));
-			dispatch(listOrders(''));
-			return () => {
-				//
-			};
+			let clean = true;
+			if (clean) {
+				dispatch(listSettings());
+				dispatch(listAffiliates(''));
+				dispatch(listTeams(''));
+				dispatch(listOrders(''));
+			}
+			return () => (clean = false);
 		},
 		[ successSave, successDelete, dispatch ]
 	);
@@ -64,7 +65,11 @@ const SettingsPage = (props) => {
 
 	useEffect(
 		() => {
-			dispatch(listSettings(category, search, sortOrder));
+			let clean = true;
+			if (clean) {
+				dispatch(listSettings(category, search, sortOrder));
+			}
+			return () => (clean = false);
 		},
 		[ dispatch, category, search, sortOrder ]
 	);

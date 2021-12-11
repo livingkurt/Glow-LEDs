@@ -47,12 +47,13 @@ const RegisterPage = (props) => {
 
 	useEffect(
 		() => {
-			console.log({userInfo})
-			if (userInfo && userInfo.hasOwnProperty('first_name')) {
-				props.history.push('/account/login');
+			let clean = true;
+			if (clean) {
+				if (userInfo && userInfo.hasOwnProperty('first_name')) {
+					props.history.push('/account/login');
+				}
 			}
-
-			return () => {};
+			return () => (clean = false);
 		},
 		[ userInfo ]
 	);

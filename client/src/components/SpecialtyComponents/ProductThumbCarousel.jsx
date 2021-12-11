@@ -46,8 +46,11 @@ const ProductThumbCarousel = (props) => {
 
 	useEffect(
 		() => {
-			handleWindowResize();
-			return () => {};
+			let clean = true;
+			if (clean) {
+				handleWindowResize();
+			}
+			return () => (clean = false);
 		},
 		[ width ]
 	);

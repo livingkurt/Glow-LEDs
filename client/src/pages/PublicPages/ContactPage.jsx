@@ -40,18 +40,24 @@ const ContactPage = (props) => {
 
 	useEffect(
 		() => {
-			set_reason_for_contact(props.match.params.reason);
-			return () => {};
+			let clean = true;
+			if (clean) {
+				set_reason_for_contact(props.match.params.reason);
+			}
+			return () => (clean = false);
 		},
 		[ props.match.params.reason ]
 	);
+
 	useEffect(
 		() => {
-			if (completed) {
-				props.history.push('/account/emailsent');
+			let clean = true;
+			if (clean) {
+				if (completed) {
+					props.history.push('/account/emailsent');
+				}
 			}
-
-			return () => {};
+			return () => (clean = false);
 		},
 		[ completed ]
 	);

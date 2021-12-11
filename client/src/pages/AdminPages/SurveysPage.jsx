@@ -30,17 +30,17 @@ const SurveysPage = (props) => {
 
 	useEffect(
 		() => {
-			dispatch(listSurveys());
-			dispatch(listAffiliates(''));
-			dispatch(listTeams(''));
-			dispatch(listOrders(''));
-			return () => {
-				//
-			};
+			let clean = true;
+			if (clean) {
+				dispatch(listSurveys());
+				dispatch(listAffiliates(''));
+				dispatch(listTeams(''));
+				dispatch(listOrders(''));
+			}
+			return () => (clean = false);
 		},
 		[ successSave, successDelete, dispatch ]
 	);
-
 	const submitHandler = (e) => {
 		e.preventDefault();
 		dispatch(listSurveys(category, search, sortOrder));
@@ -53,7 +53,11 @@ const SurveysPage = (props) => {
 
 	useEffect(
 		() => {
-			dispatch(listSurveys(category, search, sortOrder));
+			let clean = true;
+			if (clean) {
+				dispatch(listSurveys(category, search, sortOrder));
+			}
+			return () => (clean = false);
 		},
 		[ dispatch, category, search, sortOrder ]
 	);

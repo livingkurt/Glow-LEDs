@@ -140,35 +140,40 @@ const EditOrderPage = (props) => {
 
 	useEffect(
 		() => {
-			if (props.match.params.id) {
-				console.log('Is ID');
-				dispatch(detailsOrder(props.match.params.id));
-				dispatch(detailsOrder(props.match.params.id));
-				// dispatch(listProducts(''));
-				dispatch(listProducts('', '', '', '', '', '', '', 300, true));
-				dispatch(listUsers(''));
-			} else {
-				dispatch(detailsOrder(''));
+			let clean = true;
+			if (clean) {
+				if (props.match.params.id) {
+					console.log('Is ID');
+					dispatch(detailsOrder(props.match.params.id));
+					dispatch(detailsOrder(props.match.params.id));
+					// dispatch(listProducts(''));
+					dispatch(listProducts('', '', '', '', '', '', '', 300, true));
+					dispatch(listUsers(''));
+				} else {
+					dispatch(detailsOrder(''));
+				}
+				set_state();
 			}
-			set_state();
-			return () => {};
+			return () => (clean = false);
 		},
 		[ dispatch ]
 	);
 
 	useEffect(
 		() => {
-			if (order) {
-				console.log('Set');
-				set_state();
-				get_products(order.orderItems);
-			} else {
-				console.log('UnSet');
-				unset_state();
-				set_orderItems([ {} ]);
+			let clean = true;
+			if (clean) {
+				if (order) {
+					console.log('Set');
+					set_state();
+					get_products(order.orderItems);
+				} else {
+					console.log('UnSet');
+					unset_state();
+					set_orderItems([ {} ]);
+				}
 			}
-
-			return () => {};
+			return () => (clean = false);
 		},
 		[ order ]
 	);

@@ -71,60 +71,53 @@ const OrderPage = (props) => {
 
 	useEffect(
 		() => {
-			if (refund) {
-				set_refund_state(refund.isRefunded);
-				dispatch(detailsOrder(props.match.params.id));
+			let clean = true;
+			if (clean) {
+				if (refund) {
+					set_refund_state(refund.isRefunded);
+					dispatch(detailsOrder(props.match.params.id));
+				}
 			}
+			return () => (clean = false);
 		},
 		[ refund ]
 	);
 
 	useEffect(
 		() => {
-			dispatch(detailsOrder(props.match.params.id));
+			let clean = true;
+			if (clean) {
+				dispatch(detailsOrder(props.match.params.id));
+			}
+			return () => (clean = false);
 		},
 		[ props.match.params.id ]
 	);
 
 	useEffect(
 		() => {
-			if (order) {
-				set_order_state(order);
+			let clean = true;
+			if (clean) {
+				if (order) {
+					set_order_state(order);
+				}
 			}
+			return () => (clean = false);
 		},
 		[ order ]
 	);
 
 	useEffect(
 		() => {
-			if (product_object) {
-				set_product(product_object._id);
+			let clean = true;
+			if (clean) {
+				if (product_object) {
+					set_product(product_object._id);
+				}
 			}
-			return () => {};
+			return () => (clean = false);
 		},
 		[ product_object ]
-	);
-	useEffect(() => {
-		// if (1 === 0) {
-		// 	get_total_orders();
-		// }
-
-		return () => {};
-	}, []);
-
-	useEffect(
-		() => {
-			if (successPay) {
-				dispatch(detailsOrder(props.match.params.id));
-			} else {
-				dispatch(detailsOrder(props.match.params.id));
-			}
-			set_payment_loading(false);
-			// if (1 === 0) {
-			// 	get_total_orders();
-			// }
-		},
-		[ successPay ]
 	);
 
 	const empty_cart = () => {
@@ -140,23 +133,32 @@ const OrderPage = (props) => {
 
 	useEffect(
 		() => {
-			if (successPay && order) {
-				// history.push('/secure/checkout/paymentcomplete/' + order._id);
-				history.push('/secure/checkout/order/receipt/' + order._id + '/order/true');
-				set_payment_loading(false);
-				empty_cart();
-			} else if (errorPay) {
-				console.log({ errorPay });
+			let clean = true;
+			if (clean) {
+				if (successPay && order) {
+					// history.push('/secure/checkout/paymentcomplete/' + order._id);
+					history.push('/secure/checkout/order/receipt/' + order._id + '/order/true');
+					dispatch(detailsOrder(props.match.params.id));
+					set_payment_loading(false);
+					empty_cart();
+				} else if (errorPay) {
+					console.log({ errorPay });
+				}
 			}
+			return () => (clean = false);
 		},
 		[ successPay ]
 	);
 
 	useEffect(
 		() => {
-			if (errorPay) {
-				set_payment_loading(false);
+			let clean = true;
+			if (clean) {
+				if (errorPay) {
+					set_payment_loading(false);
+				}
 			}
+			return () => (clean = false);
 		},
 		[ errorPay ]
 	);

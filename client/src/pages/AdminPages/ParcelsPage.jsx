@@ -24,10 +24,11 @@ const ParcelsPage = (props) => {
 
 	useEffect(
 		() => {
-			dispatch(listParcels());
-			return () => {
-				//
-			};
+			let clean = true;
+			if (clean) {
+				dispatch(listParcels());
+			}
+			return () => (clean = false);
 		},
 		[ successSave, successDelete, dispatch ]
 	);
@@ -44,10 +45,15 @@ const ParcelsPage = (props) => {
 
 	useEffect(
 		() => {
-			dispatch(listParcels(category, search, sortOrder));
+			let clean = true;
+			if (clean) {
+				dispatch(listParcels(category, search, sortOrder));
+			}
+			return () => (clean = false);
 		},
 		[ dispatch, category, search, sortOrder ]
 	);
+
 	const deleteHandler = (parcel) => {
 		dispatch(deleteParcel(parcel._id));
 	};

@@ -38,14 +38,19 @@ const MonthlyExpensesPage = (props) => {
 	];
 
 	useEffect(() => {
-		get_monthly_income(year);
-		return () => {};
+		let clean = true;
+		if (clean) {
+			get_monthly_income(year);
+		}
+		return () => (clean = false);
 	}, []);
-
 	useEffect(
 		() => {
-			get_monthly_income(year);
-			return () => {};
+			let clean = true;
+			if (clean) {
+				get_monthly_income(year);
+			}
+			return () => (clean = false);
 		},
 		[ year ]
 	);

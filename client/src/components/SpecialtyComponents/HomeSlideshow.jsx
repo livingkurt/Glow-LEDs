@@ -1,9 +1,8 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React from 'react';
 import { Carousel } from 'react-responsive-carousel';
 
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import { Link, useHistory } from 'react-router-dom';
-import { humanize, prnt } from '../../utils/helper_functions';
+import { Link } from 'react-router-dom';
 
 const HomeSlideshow = ({ slideshow }) => {
 	return (

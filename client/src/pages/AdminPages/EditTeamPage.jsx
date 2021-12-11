@@ -97,36 +97,41 @@ const EditTeamPage = (props) => {
 
 	useEffect(
 		() => {
-			if (props.match.params.pathname) {
-				console.log('Is ID');
-				dispatch(detailsTeam(props.match.params.pathname));
-				dispatch(detailsTeam(props.match.params.pathname));
-				set_state();
-			} else {
-				dispatch(detailsTeam(''));
+			let clean = true;
+			if (clean) {
+				if (props.match.params.pathname) {
+					console.log('Is ID');
+					dispatch(detailsTeam(props.match.params.pathname));
+					dispatch(detailsTeam(props.match.params.pathname));
+					set_state();
+				} else {
+					dispatch(detailsTeam(''));
+				}
+				dispatch(listAffiliates(''));
+				dispatch(listPromos(''));
 			}
-			dispatch(listAffiliates(''));
-			dispatch(listPromos(''));
-
-			return () => {};
+			return () => (clean = false);
 		},
 		[ dispatch, props.match.params.pathname ]
 	);
 
 	useEffect(
 		() => {
-			if (team) {
-				console.log('Set');
-				set_state();
-			} else {
-				console.log('UnSet');
-				unset_state();
+			let clean = true;
+			if (clean) {
+				if (team) {
+					console.log('Set');
+					set_state();
+				} else {
+					console.log('UnSet');
+					unset_state();
+				}
 			}
-
-			return () => {};
+			return () => (clean = false);
 		},
 		[ team ]
 	);
+
 	setTimeout(() => {
 		set_loading_checkboxes(false);
 	}, 500);

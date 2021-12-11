@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -19,34 +19,36 @@ const AffiliateEmail = (props) => {
 	const affiliateDetails = useSelector((state) => state.affiliateDetails);
 	const { affiliate } = affiliateDetails;
 
-	// console.log({ affiliate });
-
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
 
 	const emailList = useSelector((state) => state.emailList);
 	const { emails } = emailList;
 
-	console.log({ emails });
-
 	const dispatch = useDispatch();
 
 	useEffect(
 		() => {
-			dispatch(detailsAffiliate(props.match.params.pathname));
-			dispatch(listEmails('Affiliate'));
-			return () => {};
+			let clean = true;
+			if (clean) {
+				dispatch(detailsAffiliate(props.match.params.pathname));
+				dispatch(listEmails('Affiliate'));
+			}
+			return () => (clean = false);
 		},
 		[ dispatch ]
 	);
 
 	useEffect(
 		() => {
-			const active_email = emails.find((email) => email.active === true);
-			if (active_email) {
-				dispatch(detailsEmail(active_email._id));
+			let clean = true;
+			if (clean) {
+				const active_email = emails.find((email) => email.active === true);
+				if (active_email) {
+					dispatch(detailsEmail(active_email._id));
+				}
 			}
-			return () => {};
+			return () => (clean = false);
 		},
 		[ emails, dispatch ]
 	);
@@ -883,24 +885,26 @@ const AffiliateEmail = (props) => {
 
 	useEffect(
 		() => {
-			if (props.match.params.send === 'true' && affiliate) {
-				console.log({ 'props.match.params.send === true && affiliate': affiliate });
-				// if (order.orderItems.length > 0) {
-				// 	console.log({ 'order.orderItems.length > 0': order });
-				if (affiliate && affiliate.artist_name && email_template.length > 1000) {
-					// setTimeout(() => {
-					send_affiliate_email(
-						affiliate && affiliate.user && affiliate.user.email,
-						affiliate.artist_name,
-						'Your Glow LEDs Affiliate Application'
-					);
-					// }, 3000);
+			let clean = true;
+			if (clean) {
+				if (props.match.params.send === 'true' && affiliate) {
+					console.log({ 'props.match.params.send === true && affiliate': affiliate });
+					// if (order.orderItems.length > 0) {
+					// 	console.log({ 'order.orderItems.length > 0': order });
+					if (affiliate && affiliate.artist_name && email_template.length > 1000) {
+						// setTimeout(() => {
+						send_affiliate_email(
+							affiliate && affiliate.user && affiliate.user.email,
+							affiliate.artist_name,
+							'Your Glow LEDs Affiliate Application'
+						);
+						// }, 3000);
+					}
+
+					// }
 				}
-
-				// }
 			}
-
-			return () => {};
+			return () => (clean = false);
 		},
 		[ affiliate ]
 	);

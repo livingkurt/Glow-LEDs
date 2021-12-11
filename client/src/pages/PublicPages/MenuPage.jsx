@@ -25,13 +25,16 @@ const MenuPage = (props) => {
 
 	useEffect(
 		() => {
-			if (pathname === 'featured') {
-				get_features();
+			let clean = true;
+			if (clean) {
+				if (pathname === 'featured') {
+					get_features();
+				}
+				if (pathname === 'gloving' || pathname === 'manuals' || pathname === 'support') {
+					dispatch(listContents());
+				}
 			}
-			if (pathname === 'gloving' || pathname === 'manuals' || pathname === 'support') {
-				dispatch(listContents());
-			}
-			return () => {};
+			return () => (clean = false);
 		},
 		[ pathname ]
 	);
@@ -57,13 +60,15 @@ const MenuPage = (props) => {
 
 	useEffect(
 		() => {
-			if (contents) {
-				const menu_items = determine_menu_items();
-				set_items(menu_items);
-				console.log({ determine_menu_items: menu_items });
+			let clean = true;
+			if (clean) {
+				if (contents) {
+					const menu_items = determine_menu_items();
+					set_items(menu_items);
+					console.log({ determine_menu_items: menu_items });
+				}
 			}
-
-			return () => {};
+			return () => (clean = false);
 		},
 		[ contents ]
 	);

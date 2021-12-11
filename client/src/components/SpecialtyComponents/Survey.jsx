@@ -60,52 +60,44 @@ const Survey = (props) => {
 
 	useEffect(
 		() => {
-			const active_survey = surveys.find((survey) => survey.is_survey === true && survey.active === true);
-			if (active_survey) {
-				dispatch(detailsSurvey(active_survey._id));
-				set_survey_questions(active_survey._id);
+			let clean = true;
+			if (clean) {
+				const active_survey = surveys.find((survey) => survey.is_survey === true && survey.active === true);
+				if (active_survey) {
+					dispatch(detailsSurvey(active_survey._id));
+					set_survey_questions(active_survey._id);
+				}
+				dispatch(detailsOrderPublic(props.order_id));
 			}
-			dispatch(detailsOrderPublic(props.order_id));
-			return () => {};
+			return () => (clean = false);
 		},
 		[ surveys, dispatch ]
 	);
 
-	useEffect(
-		() => {
-			if (props.order_id) {
-			}
-			return () => {};
-		},
-		[ props.order_id ]
-	);
-
 	useEffect(() => {
-		// if (props.pathname) {
-		// 	console.log('Is ID');
-		// 	dispatch(detailsSurvey(props.pathname));
-		// 	dispatch(detailsSurvey(props.pathname));
-		// } else {
-		// 	dispatch(detailsSurvey(''));
-		// }
-		dispatch(listSurveys(''));
-		dispatch(listUsers(''));
+		let clean = true;
+		if (clean) {
+			dispatch(listSurveys(''));
+			dispatch(listUsers(''));
 
-		set_state();
-		return () => {};
+			set_state();
+		}
+		return () => (clean = false);
 	}, []);
 
 	useEffect(
 		() => {
-			if (survey) {
-				console.log('Set');
-				set_state();
-			} else {
-				console.log('UnSet');
-				unset_state();
+			let clean = true;
+			if (clean) {
+				if (survey) {
+					console.log('Set');
+					set_state();
+				} else {
+					console.log('UnSet');
+					unset_state();
+				}
 			}
-
-			return () => {};
+			return () => (clean = false);
 		},
 		[ survey ]
 	);
@@ -185,11 +177,15 @@ const Survey = (props) => {
 
 	useEffect(
 		() => {
-			if (success && survey_saved) {
-				console.log({ survey_saved });
-				// history.push('/account/survey/receipt/' + survey_saved.data.pathname + '/survey/true');
-				set_finished(true);
+			let clean = true;
+			if (clean) {
+				if (success && survey_saved) {
+					console.log({ survey_saved });
+					// history.push('/account/survey/receipt/' + survey_saved.data.pathname + '/survey/true');
+					set_finished(true);
+				}
 			}
+			return () => (clean = false);
 		},
 		[ success ]
 	);

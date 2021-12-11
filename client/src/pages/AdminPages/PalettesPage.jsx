@@ -48,15 +48,16 @@ const PalettesPage = (props) => {
 
 	useEffect(
 		() => {
-			dispatch(listPalettes());
-			dispatch(listAffiliates(''));
-			dispatch(listTeams(''));
-			dispatch(listOrders(''));
-			get_last_months_orders();
-			get_total_orders();
-			return () => {
-				//
-			};
+			let clean = true;
+			if (clean) {
+				dispatch(listPalettes());
+				dispatch(listAffiliates(''));
+				dispatch(listTeams(''));
+				dispatch(listOrders(''));
+				get_last_months_orders();
+				get_total_orders();
+			}
+			return () => (clean = false);
 		},
 		[ successSave, successDelete, dispatch ]
 	);
@@ -83,7 +84,11 @@ const PalettesPage = (props) => {
 
 	useEffect(
 		() => {
-			dispatch(listPalettes(category, search, sortOrder));
+			let clean = true;
+			if (clean) {
+				dispatch(listPalettes(category, search, sortOrder));
+			}
+			return () => (clean = false);
 		},
 		[ dispatch, category, search, sortOrder ]
 	);

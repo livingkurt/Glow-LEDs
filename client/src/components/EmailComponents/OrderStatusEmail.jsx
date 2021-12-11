@@ -32,33 +32,42 @@ const OrderStatusEmail = (props) => {
 	const dispatch = useDispatch();
 
 	const [ message_to_user, set_message_to_user ] = useState('');
-	// const message = props.match.params.message ? props.match.params.message : '';
 
 	useEffect(() => {
-		dispatch(listEmails(toCapitalize(props.match.params.status)));
-		// dispatch(detailsOrder(props.match.params.id));
-		return () => {};
-	}, []);
-
-	useEffect(() => {
-		const message = localStorage.getItem('message_to_user');
-		console.log({ message });
-		if (message) {
-			set_message_to_user(message);
+		let clean = true;
+		if (clean) {
+			dispatch(listEmails(toCapitalize(props.match.params.status)));
 		}
-		return () => {};
+		return () => (clean = false);
 	}, []);
 
 	useEffect(
 		() => {
-			if (emails) {
-				const active_email = emails.find((email) => email.active === true);
-				if (active_email) {
-					dispatch(detailsEmail(active_email._id));
+			let clean = true;
+			if (clean) {
+				const message = localStorage.getItem('message_to_user');
+				console.log({ message });
+				if (message) {
+					set_message_to_user(message);
 				}
 			}
+			return () => (clean = false);
+		},
+		[ emails ]
+	);
 
-			return () => {};
+	useEffect(
+		() => {
+			let clean = true;
+			if (clean) {
+				if (emails) {
+					const active_email = emails.find((email) => email.active === true);
+					if (active_email) {
+						dispatch(detailsEmail(active_email._id));
+					}
+				}
+			}
+			return () => (clean = false);
 		},
 		[ emails ]
 	);
@@ -997,24 +1006,26 @@ const OrderStatusEmail = (props) => {
 
 	useEffect(
 		() => {
-			if (num === 0) {
-				if (order) {
-					if (email) {
-						if (props.match.params.send === 'true') {
-							if (order.orderItems.length > 0) {
-								if (props.match.params.id) {
-									send_order_email(order.shipping.email, order.shipping.first_name, email.h1);
-									set_num(1);
+			let clean = true;
+			if (clean) {
+				if (num === 0) {
+					if (order) {
+						if (email) {
+							if (props.match.params.send === 'true') {
+								if (order.orderItems.length > 0) {
+									if (props.match.params.id) {
+										send_order_email(order.shipping.email, order.shipping.first_name, email.h1);
+										set_num(1);
+									}
 								}
 							}
 						}
 					}
 				}
 			}
-
-			return () => {};
+			return () => (clean = false);
 		},
-		[ email ]
+		[ emails ]
 	);
 
 	return (

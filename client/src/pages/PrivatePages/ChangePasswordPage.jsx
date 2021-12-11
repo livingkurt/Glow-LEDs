@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { password_reset } from '../../actions/userActions';
 import { listMyOrders } from '../../actions/orderActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { validate_password_change } from '../../utils/validations';
-import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 
 const ChangePasswordPage = (props) => {
@@ -37,30 +36,19 @@ const ChangePasswordPage = (props) => {
 		}
 	};
 
-	// const userUpdate = useSelector((state) => state.userUpdate);
-	// const { loading, success, error } = userUpdate;
-
 	useEffect(
 		() => {
-			if (userInfo) {
-				setPassword(userInfo.password);
+			let clean = true;
+			if (clean) {
+				if (userInfo) {
+					setPassword(userInfo.password);
+				}
+				dispatch(listMyOrders());
 			}
-			dispatch(listMyOrders());
-			return () => {};
+			return () => (clean = false);
 		},
 		[ userInfo, dispatch ]
 	);
-
-	// useEffect(
-	// 	() => {
-	// 		if (userUpdate.userInfo) {
-	// 			setPassword(userUpdate.userInfo.password);
-	// 		}
-
-	// 		return () => {};
-	// 	},
-	// 	[ userUpdate.userInfo ]
-	// );
 
 	return (
 		<div className="profile_container column p-20px">

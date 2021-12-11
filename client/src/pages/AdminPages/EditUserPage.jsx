@@ -61,31 +61,36 @@ const EditUserPage = (props) => {
 
 	useEffect(
 		() => {
-			if (props.match.params.id) {
-				console.log('Is ID');
-				dispatch(detailsUser(props.match.params.id));
-				dispatch(detailsUser(props.match.params.id));
-			} else {
-				dispatch(detailsUser(''));
+			let clean = true;
+			if (clean) {
+				if (props.match.params.id) {
+					console.log('Is ID');
+					dispatch(detailsUser(props.match.params.id));
+					dispatch(detailsUser(props.match.params.id));
+				} else {
+					dispatch(detailsUser(''));
+				}
+				dispatch(listAffiliates(''));
+				set_state();
 			}
-			dispatch(listAffiliates(''));
-			set_state();
-			return () => {};
+			return () => (clean = false);
 		},
 		[ dispatch, props.match.params.id ]
 	);
 
 	useEffect(
 		() => {
-			if (user) {
-				console.log('Set');
-				set_state();
-			} else {
-				console.log('UnSet');
-				unset_state();
+			let clean = true;
+			if (clean) {
+				if (user) {
+					console.log('Set');
+					set_state();
+				} else {
+					console.log('UnSet');
+					unset_state();
+				}
 			}
-
-			return () => {};
+			return () => (clean = false);
 		},
 		[ user ]
 	);

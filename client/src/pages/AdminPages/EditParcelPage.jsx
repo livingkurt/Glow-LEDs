@@ -48,33 +48,39 @@ const EditParcelPage = (props) => {
 
 	useEffect(
 		() => {
-			if (props.match.params.id) {
-				console.log('Is ID');
-				dispatch(detailsParcel(props.match.params.id));
-				dispatch(detailsParcel(props.match.params.id));
-			} else {
-				dispatch(detailsParcel(''));
+			let clean = true;
+			if (clean) {
+				if (props.match.params.id) {
+					console.log('Is ID');
+					dispatch(detailsParcel(props.match.params.id));
+					dispatch(detailsParcel(props.match.params.id));
+				} else {
+					dispatch(detailsParcel(''));
+				}
+				set_state();
 			}
-			set_state();
-			return () => {};
+			return () => (clean = false);
 		},
 		[ dispatch, props.match.params.id ]
 	);
 
 	useEffect(
 		() => {
-			if (parcel) {
-				console.log('Set');
-				set_state();
-			} else {
-				console.log('UnSet');
-				unset_state();
+			let clean = true;
+			if (clean) {
+				if (parcel) {
+					console.log('Set');
+					set_state();
+				} else {
+					console.log('UnSet');
+					unset_state();
+				}
 			}
-
-			return () => {};
+			return () => (clean = false);
 		},
 		[ parcel ]
 	);
+
 	setTimeout(() => {
 		set_loading_checkboxes(false);
 	}, 500);

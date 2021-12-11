@@ -60,33 +60,44 @@ const AllProductsPage = (props) => {
 
 	useEffect(
 		() => {
-			if (promo_code) {
-				sessionStorage.setItem('promo_code', promo_code);
-				set_message(`${promo_code} Added to Checkout`);
+			let clean = true;
+			if (clean) {
+				if (promo_code) {
+					sessionStorage.setItem('promo_code', promo_code);
+					set_message(`${promo_code} Added to Checkout`);
+				}
 			}
+			return () => (clean = false);
 		},
 		[ promo_code ]
 	);
 
 	useEffect(
 		() => {
-			console.log({ main_products });
-			if (main_products) {
-				if (category !== 'essentials' || category !== 'discounted' || category !== 'best_sellers') {
-					set_products(main_products);
-					if (currentPage) {
-						set_page(currentPage);
+			let clean = true;
+			if (clean) {
+				if (main_products) {
+					if (category !== 'essentials' || category !== 'discounted' || category !== 'best_sellers') {
+						set_products(main_products);
+						if (currentPage) {
+							set_page(currentPage);
+						}
+						set_loading_products(false);
 					}
-					set_loading_products(false);
 				}
 			}
+			return () => (clean = false);
 		},
 		[ main_products ]
 	);
 
 	useEffect(
 		() => {
-			get_occurrences(props.match.params.category);
+			let clean = true;
+			if (clean) {
+				get_occurrences(props.match.params.category);
+			}
+			return () => (clean = false);
 		},
 		[ props.match.params.category ]
 	);
@@ -94,15 +105,21 @@ const AllProductsPage = (props) => {
 	const { width, height } = userWindowDimensions();
 
 	useEffect(() => {
-		dispatch(listChips(''));
-		determine_products();
-		return () => {};
+		let clean = true;
+		if (clean) {
+			dispatch(listChips(''));
+			determine_products();
+		}
+		return () => (clean = false);
 	}, []);
 
 	useEffect(
 		() => {
-			determine_products();
-			return () => {};
+			let clean = true;
+			if (clean) {
+				determine_products();
+			}
+			return () => (clean = false);
 		},
 		[ props.match.params.category, props.match.params.subcategory, props.location ]
 	);

@@ -67,11 +67,14 @@ const HomePage = (props) => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch(listContents(3));
-		dispatch(listFeatures());
-		get_all_products();
-		get_display_content();
-		return () => {};
+		let clean = true;
+		if (clean) {
+			dispatch(listContents(3));
+			dispatch(listFeatures());
+			get_all_products();
+			get_display_content();
+		}
+		return () => (clean = false);
 	}, []);
 
 	const get_display_content = async () => {

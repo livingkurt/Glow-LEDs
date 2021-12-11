@@ -7,8 +7,6 @@ import { format_date, unformat_date } from '../../utils/helper_functions';
 import { Helmet } from 'react-helmet';
 
 const EditCartPage = (props) => {
-	// const [modalVisible, setModalVisible] = useState(false);
-
 	const [ id, set_id ] = useState('');
 	const [ user, set_user ] = useState('');
 	const [ artist_name, set_artist_name ] = useState('');
@@ -24,34 +22,35 @@ const EditCartPage = (props) => {
 
 	const cartDetails = useSelector((state) => state.cartDetails);
 	const { cart, loading, error } = cartDetails;
-	const cartList = useSelector((state) => state.cartList);
-	const { carts } = cartList;
 
 	const dispatch = useDispatch();
 
-	console.log({ cart });
-
 	useEffect(() => {
-		if (props.match.params.id) {
-			console.log('Is ID');
-			dispatch(detailsCart(props.match.params.id));
-			dispatch(detailsCart(props.match.params.id));
+		let clean = true;
+		if (clean) {
+			if (props.match.params.id) {
+				console.log('Is ID');
+				dispatch(detailsCart(props.match.params.id));
+				dispatch(detailsCart(props.match.params.id));
+			}
+			set_state();
 		}
-		set_state();
-		return () => {};
+		return () => (clean = false);
 	}, []);
 
 	useEffect(
 		() => {
-			if (cart) {
-				console.log('Set');
-				set_state();
-			} else {
-				console.log('UnSet');
-				unset_state();
+			let clean = true;
+			if (clean) {
+				if (cart) {
+					console.log('Set');
+					set_state();
+				} else {
+					console.log('UnSet');
+					unset_state();
+				}
 			}
-
-			return () => {};
+			return () => (clean = false);
 		},
 		[ cart ]
 	);

@@ -84,74 +84,83 @@ const PlaceOrderPage = (props) => {
 
 	const stable_setItemsPrice = useCallback(setItemsPrice, []);
 	const stable_set_loading_payment = useCallback(set_loading_payment, []);
-	// const stable_calculate_international = useCallback(calculate_international, []);
-	// const stable_calculate_shipping = useCallback(calculate_shipping, []);
 
 	useEffect(
 		() => {
-			dispatch(listPromos());
-			dispatch(listUsers(''));
-
-			return () => {};
+			let clean = true;
+			if (clean) {
+				dispatch(listPromos());
+				dispatch(listUsers(''));
+			}
+			return () => (clean = false);
 		},
 		[ dispatch ]
 	);
 
 	useEffect(
 		() => {
-			dispatch(savePayment({ paymentMethod }));
-
-			return () => {};
+			let clean = true;
+			if (clean) {
+				dispatch(savePayment({ paymentMethod }));
+			}
+			return () => (clean = false);
 		},
 		[ paymentMethod ]
 	);
 
 	useEffect(
 		() => {
-			const shipping_storage = sessionStorage.getItem('shippingAddress');
-			console.log({ shipping_storage });
-			if (shipping_storage) {
-				dispatch(saveShipping(JSON.parse(shipping_storage)));
+			let clean = true;
+			if (clean) {
+				const shipping_storage = sessionStorage.getItem('shippingAddress');
+				console.log({ shipping_storage });
+				if (shipping_storage) {
+					dispatch(saveShipping(JSON.parse(shipping_storage)));
+				}
+
+				dispatch(savePayment({ paymentMethod }));
+				stable_setItemsPrice(determine_total(cartItems));
 			}
-
-			dispatch(savePayment({ paymentMethod }));
-			stable_setItemsPrice(determine_total(cartItems));
-
-			return () => {};
+			return () => (clean = false);
 		},
 		[ cartItems, dispatch, stable_setItemsPrice ]
 	);
-
 	useEffect(
 		() => {
-			if (error_order) {
-				stable_set_loading_payment(false);
-				set_error(error_order);
+			let clean = true;
+			if (clean) {
+				if (error_order) {
+					stable_set_loading_payment(false);
+					set_error(error_order);
+				}
 			}
-			return () => {};
+			return () => (clean = false);
 		},
 		[ error_order, stable_set_loading_payment ]
 	);
 
 	useEffect(
 		() => {
-			if (shipping && Object.keys(shipping).length > 0) {
-				set_loading(true);
-				const package_volume = cartItems.reduce((a, c) => a + c.package_volume, 0);
-				console.log({ package_volume });
-				if (!package_volume) {
-					set_loading(false);
-					set_hide_pay_button(false);
-					setShippingPrice(0);
-					set_free_shipping_message('Free');
-				} else {
-					if (shipping.hasOwnProperty('first_name')) {
-						get_shipping_rates();
+			let clean = true;
+			if (clean) {
+				if (shipping && Object.keys(shipping).length > 0) {
+					set_loading(true);
+					const package_volume = cartItems.reduce((a, c) => a + c.package_volume, 0);
+					console.log({ package_volume });
+					if (!package_volume) {
+						set_loading(false);
+						set_hide_pay_button(false);
+						setShippingPrice(0);
+						set_free_shipping_message('Free');
+					} else {
+						if (shipping.hasOwnProperty('first_name')) {
+							get_shipping_rates();
+						}
 					}
+					get_tax_rates();
 				}
-				get_tax_rates();
 			}
-			return () => {};
+			return () => (clean = false);
 		},
 		[ shipping ]
 	);
@@ -416,51 +425,52 @@ const PlaceOrderPage = (props) => {
 
 	useEffect(
 		() => {
-			if (successPay && order) {
-				// props.history.push('/secure/checkout/paymentcomplete/' + order._id);
-				if (userInfo && userInfo.first_name) {
-					props.history.push('/secure/checkout/order/receipt/' + order._id + '/order/true');
-				} else {
-					props.history.push('/checkout/order/receipt/' + order._id + '/order/true');
+			let clean = true;
+			if (clean) {
+				if (successPay && order) {
+					// props.history.push('/secure/checkout/paymentcomplete/' + order._id);
+					if (userInfo && userInfo.first_name) {
+						props.history.push('/secure/checkout/order/receipt/' + order._id + '/order/true');
+					} else {
+						props.history.push('/checkout/order/receipt/' + order._id + '/order/true');
+					}
+					set_loading_payment(false);
+					empty_cart();
+				} else if (error_pay) {
 				}
-				set_loading_payment(false);
-				empty_cart();
-			} else if (error_pay) {
 			}
+			return () => (clean = false);
 		},
 		[ successPay ]
 	);
+
 	useEffect(
 		() => {
-			if (error_pay) {
-				set_loading_payment(false);
-				set_error(error_pay);
+			let clean = true;
+			if (clean) {
+				if (error_pay) {
+					set_loading_payment(false);
+					set_error(error_pay);
+				}
 			}
+			return () => (clean = false);
 		},
 		[ error_pay ]
 	);
 
-	const no_note_warning = () => {
-		const name = cartItems.map((cartItem) => {
-			return cartItem.name;
-		});
-		// if (name.includes('Diffuser Caps + Adapters Starter Kit')) {
-		// 	// console.log('Caps');
-		// 	// if (!categories.includes('diffuser_adapters')) {
-		// 	return "Don't Forget: Add a note of the caps you want or a random pair will be sent to you";
-		// 	// }
-		// }
-	};
-
 	useEffect(
 		() => {
-			console.log({ tip });
+			let clean = true;
+			if (clean) {
+				console.log({ tip });
 
-			setTotalPrice(
-				tip === 0 || tip === '' || isNaN(tip)
-					? itemsPrice + shippingPrice + taxPrice
-					: itemsPrice + shippingPrice + taxPrice + parseInt(tip)
-			);
+				setTotalPrice(
+					tip === 0 || tip === '' || isNaN(tip)
+						? itemsPrice + shippingPrice + taxPrice
+						: itemsPrice + shippingPrice + taxPrice + parseInt(tip)
+				);
+			}
+			return () => (clean = false);
 		},
 		[ itemsPrice, taxPrice, tip, shippingPrice ]
 	);

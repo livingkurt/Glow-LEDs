@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -16,25 +16,28 @@ const ResetPasswordEmail = () => {
 	const emailList = useSelector((state) => state.emailList);
 	const { emails } = emailList;
 
-	console.log({ emails });
-
 	const dispatch = useDispatch();
 
 	useEffect(
 		() => {
-			dispatch(listEmails('Reset Password'));
-			return () => {};
+			let clean = true;
+			if (clean) {
+				dispatch(listEmails('Reset Password'));
+			}
+			return () => (clean = false);
 		},
 		[ dispatch ]
 	);
-
 	useEffect(
 		() => {
-			const active_email = emails.find((email) => email.active === true);
-			if (active_email) {
-				dispatch(detailsEmail(active_email._id));
+			let clean = true;
+			if (clean) {
+				const active_email = emails.find((email) => email.active === true);
+				if (active_email) {
+					dispatch(detailsEmail(active_email._id));
+				}
 			}
-			return () => {};
+			return () => (clean = false);
 		},
 		[ emails, dispatch ]
 	);

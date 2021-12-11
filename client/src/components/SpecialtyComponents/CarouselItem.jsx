@@ -19,17 +19,17 @@ const CarouselItem = (props) => {
 
 	useEffect(
 		() => {
-			set_loading(false);
-			return () => {};
+			let clean = true;
+			if (clean) {
+				set_loading(false);
+			}
+			return () => (clean = false);
 		},
 		[ props.product ]
 	);
 
 	const handleAddToCart = (e) => {
 		e.preventDefault();
-		// const value = JSON.parse(e.target.value);
-		// console.log({ handleAddToCart: value });
-
 		const color = product.color_products && product.color_products.find((color) => color.default_option === true);
 		const secondary_color =
 			product.secondary_color_products &&

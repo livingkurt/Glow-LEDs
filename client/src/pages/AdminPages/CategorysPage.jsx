@@ -37,11 +37,11 @@ const CategorysPage = (props) => {
 
 	useEffect(
 		() => {
-			dispatch(listCategorys());
-
-			return () => {
-				//
-			};
+			let clean = true;
+			if (clean) {
+				dispatch(listCategorys());
+			}
+			return () => (clean = false);
 		},
 		[ successSave, successDelete, dispatch ]
 	);
@@ -58,7 +58,11 @@ const CategorysPage = (props) => {
 
 	useEffect(
 		() => {
-			dispatch(listCategorys(category, search, sortOrder));
+			let clean = true;
+			if (clean) {
+				dispatch(listCategorys(category, search, sortOrder));
+			}
+			return () => (clean = false);
 		},
 		[ dispatch, category, search, sortOrder ]
 	);

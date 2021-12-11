@@ -15,14 +15,17 @@ const ProductDetails = ({ product, manuals, description, included_items, pathnam
 
 	useEffect(
 		() => {
-			const sizes = [
-				{ size: width > 500 ? 'Small' : 'S', hand_length: '5.5 - 6.5', hand_width: '2.9 - 3.2' },
-				{ size: width > 500 ? 'Medium' : 'M', hand_length: '6.5 - 7', hand_width: '3.2 - 3.5' },
-				{ size: width > 500 ? 'Large' : 'L', hand_length: '7 - 7.5', hand_width: '3.5 - 3.7' },
-				{ size: width > 500 ? 'X-Large' : 'XL', hand_length: '7.5 - 8', hand_width: '3.7 - 4' }
-			];
-			set_sizing(sizes);
-			return () => {};
+			let clean = true;
+			if (clean) {
+				const sizes = [
+					{ size: width > 500 ? 'Small' : 'S', hand_length: '5.5 - 6.5', hand_width: '2.9 - 3.2' },
+					{ size: width > 500 ? 'Medium' : 'M', hand_length: '6.5 - 7', hand_width: '3.2 - 3.5' },
+					{ size: width > 500 ? 'Large' : 'L', hand_length: '7 - 7.5', hand_width: '3.5 - 3.7' },
+					{ size: width > 500 ? 'X-Large' : 'XL', hand_length: '7.5 - 8', hand_width: '3.7 - 4' }
+				];
+				set_sizing(sizes);
+			}
+			return () => (clean = false);
 		},
 		[ width ]
 	);

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { listContents, deleteContent, saveContent } from '../../actions/contentActions';
 import { Link } from 'react-router-dom';
@@ -21,10 +21,11 @@ const ContentsPage = (props) => {
 
 	useEffect(
 		() => {
-			dispatch(listContents());
-			return () => {
-				//
-			};
+			let clean = true;
+			if (clean) {
+				dispatch(listContents());
+			}
+			return () => (clean = false);
 		},
 		[ successSave, successDelete, dispatch ]
 	);

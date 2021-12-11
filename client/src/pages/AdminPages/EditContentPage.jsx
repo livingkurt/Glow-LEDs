@@ -72,18 +72,21 @@ const EditContentPage = (props) => {
 
 	useEffect(
 		() => {
-			if (props.match.params.id) {
-				console.log('Is ID');
-				dispatch(detailsContent(props.match.params.id));
-				dispatch(detailsContent(props.match.params.id));
-			} else {
-				dispatch(detailsContent(''));
-			}
-			dispatch(listEmails(''));
+			let clean = true;
+			if (clean) {
+				if (props.match.params.id) {
+					console.log('Is ID');
+					dispatch(detailsContent(props.match.params.id));
+					dispatch(detailsContent(props.match.params.id));
+				} else {
+					dispatch(detailsContent(''));
+				}
+				dispatch(listEmails(''));
 
-			// set_loading_data(false);
-			set_state();
-			return () => {};
+				// set_loading_data(false);
+				set_state();
+			}
+			return () => (clean = false);
 		},
 		[ dispatch ]
 	);
@@ -107,31 +110,19 @@ const EditContentPage = (props) => {
 		set_using_template(true);
 	};
 
-	// useEffect(
-	// 	() => {
-	// 		if (email) {
-	// 			console.log('Set');
-	// 			set_state(email);
-	// 		} else {
-	// 			console.log('UnSet');
-	// 			unset_state();
-	// 		}
-
-	// 		return () => {};
-	// 	},
-	// 	[ email ]
-	// );
 	useEffect(
 		() => {
-			if (content && content.home_page) {
-				console.log('Set');
-				set_state(content.home_page);
-			} else {
-				console.log('UnSet');
-				unset_state();
+			let clean = true;
+			if (clean) {
+				if (content && content.home_page) {
+					console.log('Set');
+					set_state(content.home_page);
+				} else {
+					console.log('UnSet');
+					unset_state();
+				}
 			}
-
-			return () => {};
+			return () => (clean = false);
 		},
 		[ content ]
 	);

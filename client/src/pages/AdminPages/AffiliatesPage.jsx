@@ -28,24 +28,16 @@ const AffiliatesPage = (props) => {
 
 	const dispatch = useDispatch();
 
-	useEffect(() => {
-		dispatch(listAffiliates());
-		dispatch(listOrders());
-		get_last_months_orders();
-		get_total_orders();
-		return () => {
-			//
-		};
-	}, []);
 	useEffect(
 		() => {
-			dispatch(listAffiliates());
-			dispatch(listOrders());
-			get_last_months_orders();
-			get_total_orders();
-			return () => {
-				//
-			};
+			let clean = true;
+			if (clean) {
+				dispatch(listAffiliates());
+				dispatch(listOrders());
+				get_last_months_orders();
+				get_total_orders();
+			}
+			return () => (clean = false);
 		},
 		[ successDelete ]
 	);
@@ -60,7 +52,15 @@ const AffiliatesPage = (props) => {
 	};
 
 	useEffect(() => {
-		dispatch(listAffiliates(category, search, sortOrder));
+		let clean = true;
+		if (clean) {
+			dispatch(listAffiliates());
+			dispatch(listOrders());
+			get_last_months_orders();
+			get_total_orders();
+			dispatch(listAffiliates(category, search, sortOrder));
+		}
+		return () => (clean = false);
 	}, []);
 	const deleteHandler = (pathname) => {
 		console.log({ pathname });

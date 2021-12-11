@@ -9,13 +9,11 @@ import { Helmet } from 'react-helmet';
 
 const AdminChangePasswordPage = (props) => {
 	const history = useHistory();
-	const [ current_password, setCurrentPassword ] = useState('');
 	const [ password, setPassword ] = useState('');
 	const [ rePassword, setRePassword ] = useState('');
 
 	const dispatch = useDispatch();
 
-	const [ current_password_validations, setCurrentPasswordValidations ] = useState('');
 	const [ password_validations, setPasswordValidations ] = useState('');
 	const [ re_password_validations, setRePasswordValidations ] = useState('');
 
@@ -24,43 +22,23 @@ const AdminChangePasswordPage = (props) => {
 
 	const submitHandler = async (e) => {
 		e.preventDefault();
-		// const validation_data = { id: userInfo._id, current_password, password, rePassword };
-		// const request = await validate_password_change(validation_data);
-		// console.log({ request });
-		// setCurrentPasswordValidations(request.errors.current_password);
-		// setPasswordValidations(request.errors.password);
-		// setRePasswordValidations(request.errors.rePassword);
-		// console.log({ isValid: request.isValid });
-		// if (request.isValid) {
 		dispatch(password_reset(props.match.params.id, password, rePassword));
 		history.push('/secure/glow/userprofile/' + props.match.params.id);
-		// }
 	};
-
-	// const userUpdate = useSelector((state) => state.userUpdate);
-	// const { loading, success, error } = userUpdate;
 
 	useEffect(
 		() => {
-			if (userInfo) {
-				setPassword(userInfo.password);
+			let clean = true;
+			if (clean) {
+				if (userInfo) {
+					setPassword(userInfo.password);
+				}
+				dispatch(listMyOrders());
 			}
-			dispatch(listMyOrders());
-			return () => {};
+			return () => (clean = false);
 		},
 		[ userInfo, dispatch ]
 	);
-
-	// useEffect(
-	// 	() => {
-	// 		if (userUpdate.userInfo) {
-	// 			setPassword(userUpdate.userInfo.password);
-	// 		}
-
-	// 		return () => {};
-	// 	},
-	// 	[ userUpdate.userInfo ]
-	// );
 
 	return (
 		<div className="profile_container column p-20px">
@@ -83,25 +61,6 @@ const AdminChangePasswordPage = (props) => {
 							<li>
 								<h1 style={{ textAlign: 'center' }}>Change Password</h1>
 							</li>
-							{/* <li>
-								<Loading loading={loading} error={error}>
-									<div className="jc-c">{success && <h3>Profile Saved Successfully</h3>}</div>
-								</Loading>
-							</li> */}
-							{/* <li>
-								<label htmlFor="current_password">Current Password</label>
-								<input
-									className="form_input"
-									defaultValue={current_password}
-									type="password"
-									id="current_password"
-									name="current_password"
-									onChange={(e) => setCurrentPassword(e.target.value)}
-								/>
-							</li> */}
-							{/* <label className="validation_text" styles={{ fontSize: 16, justifyContent: 'center' }}>
-								{current_password_validations}
-							</label> */}
 							<li>
 								<label htmlFor="password">Password</label>
 								<input

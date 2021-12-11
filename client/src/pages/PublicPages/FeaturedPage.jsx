@@ -18,9 +18,11 @@ const FeaturedPage = (props) => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch(detailsFeature(props.match.params.pathname));
-		console.log(props.match.params.pathname);
-		return () => {};
+		let clean = true;
+		if (clean) {
+			dispatch(detailsFeature(props.match.params.pathname));
+		}
+		return () => (clean = false);
 	}, []);
 
 	const date = new Date();

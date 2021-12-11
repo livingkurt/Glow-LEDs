@@ -83,35 +83,40 @@ const EditSurveyPage = (props) => {
 
 	useEffect(
 		() => {
-			if (props.match.params.id) {
-				console.log('Is ID');
-				dispatch(detailsSurvey(props.match.params.id));
-				dispatch(detailsSurvey(props.match.params.id));
-			} else {
-				dispatch(detailsSurvey(''));
+			let clean = true;
+			if (clean) {
+				if (props.match.params.id) {
+					console.log('Is ID');
+					dispatch(detailsSurvey(props.match.params.id));
+					dispatch(detailsSurvey(props.match.params.id));
+				} else {
+					dispatch(detailsSurvey(''));
+				}
+				dispatch(listUsers(''));
+				dispatch(listOrders(''));
+				stable_set_state();
 			}
-			dispatch(listUsers(''));
-			dispatch(listOrders(''));
-			stable_set_state();
-			return () => {};
+			return () => (clean = false);
 		},
 		[ dispatch, props.match.params.id, stable_set_state ]
 	);
-
 	useEffect(
 		() => {
-			if (survey) {
-				console.log('Set');
-				stable_set_state();
-			} else {
-				console.log('UnSet');
-				unset_state();
+			let clean = true;
+			if (clean) {
+				if (survey) {
+					console.log('Set');
+					stable_set_state();
+				} else {
+					console.log('UnSet');
+					unset_state();
+				}
 			}
-
-			return () => {};
+			return () => (clean = false);
 		},
 		[ survey ]
 	);
+
 	setTimeout(() => {
 		set_loading_checkboxes(false);
 	}, 500);

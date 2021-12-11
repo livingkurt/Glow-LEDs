@@ -23,10 +23,11 @@ const PromosPage = (props) => {
 
 	useEffect(
 		() => {
-			dispatch(listPromos());
-			return () => {
-				//
-			};
+			let clean = true;
+			if (clean) {
+				dispatch(listPromos());
+			}
+			return () => (clean = false);
 		},
 		[ successSave, successDelete, dispatch ]
 	);
@@ -42,7 +43,11 @@ const PromosPage = (props) => {
 
 	useEffect(
 		() => {
-			dispatch(listPromos(category, search, sortOrder));
+			let clean = true;
+			if (clean) {
+				dispatch(listPromos(category, search, sortOrder));
+			}
+			return () => (clean = false);
 		},
 		[ dispatch, category, search, sortOrder ]
 	);

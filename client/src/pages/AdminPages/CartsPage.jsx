@@ -30,6 +30,17 @@ const CartsPage = (props) => {
 	// 	[ successSave, successDelete ]
 	// );
 
+	// useEffect(
+	// 	() => {
+	// 		let clean = true;
+	// 		if (clean) {
+	// 			dispatch(listCarts());
+	// 		}
+	// 		return () => (clean = false);
+	// 	},
+	// 	[ successSave, successDelete  ]
+	// );
+
 	const submitHandler = (e) => {
 		e.preventDefault();
 		dispatch(listCarts(category, search, sortOrder));
@@ -42,7 +53,11 @@ const CartsPage = (props) => {
 
 	useEffect(
 		() => {
-			dispatch(listCarts(category, search, sortOrder));
+			let clean = true;
+			if (clean) {
+				dispatch(listCarts(category, search, sortOrder));
+			}
+			return () => (clean = false);
 		},
 		[ sortOrder, dispatch, category, search ]
 	);

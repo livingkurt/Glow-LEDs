@@ -109,16 +109,24 @@ const ProductPage = (props) => {
 	};
 
 	useEffect(() => {
-		dispatch(detailsProduct(props.match.params.pathname));
-		const video = document.getElementsByClassName('product_video');
-		video.muted = true;
-		video.autoplay = true;
-		const query = getUrlParameter(props.location);
+		let clean = true;
+		if (clean) {
+			dispatch(detailsProduct(props.match.params.pathname));
+			const video = document.getElementsByClassName('product_video');
+			video.muted = true;
+			video.autoplay = true;
+			const query = getUrlParameter(props.location);
+		}
+		return () => (clean = false);
 	}, []);
 
 	useEffect(
 		() => {
-			dispatch(detailsProduct(props.match.params.pathname));
+			let clean = true;
+			if (clean) {
+				dispatch(detailsProduct(props.match.params.pathname));
+			}
+			return () => (clean = false);
 		},
 		[ props.match.params.pathname ]
 	);
@@ -170,110 +178,117 @@ const ProductPage = (props) => {
 
 	useEffect(
 		() => {
-			if (product) {
-				update_universal_state(product);
-				const query = getUrlParameter(props.location);
-				if (props.location.search.length === 0) {
-					// console.log({ message: 'Query Does Not Exist' });
-					if (product.color_products) {
-						set_color_products(product.color_products);
-
-						const color = product.color_products.find((color) => color.default_option === true);
-						// console.log({ color });
-						if (color) {
-							update_color_product_state(color);
-						}
-					}
-					if (product.secondary_color_products) {
-						set_secondary_color_products(product.secondary_color_products);
-
-						const secondary_color = product.secondary_color_products.find(
-							(secondary_color) => secondary_color.default_option === true
-						);
-						// console.log({ secondary_color });
-						if (secondary_color) {
-							update_secondary_color_product_state(secondary_color);
-						}
-					}
-					if (product.option_products) {
-						set_option_products(product.option_products);
-
-						const option = product.option_products.find((option) => option.default_option === true);
-						if (option) {
-							update_option_product_state(option);
-						}
-					}
-					if (product.secondary_products && product.secondary_products.length > 0) {
-						// update_secondary_product_state(product.secondary_products[0]);
-					}
-				} else if (props.location.search.length > 0) {
-					// console.log({ message: 'Query Does Exist' });
-					if (product.color_products) {
-						const color = product.color_products.find((color) => color.color === query.color);
-						// console.log({ query_color: color });
-						if (color) {
-							update_color_product_state(color);
-						}
-					}
-					if (product.secondary_color_products) {
-						set_secondary_products(product.secondary_products);
-						const secondary_color = product.secondary_color_products.find(
-							(secondary_color) => secondary_color.color === query.secondary_color
-						);
-						if (secondary_color) {
-							update_secondary_color_product_state(secondary_color);
-						}
-					}
-					if (product.option_products) {
-						console.log({ query: query.option });
-						console.log({ option_products: product.option_products });
-						let query_option = query.option;
-						if (query.option && query.option.indexOf('%20') > -1) {
-							query_option = query.option.split('%20').join(' ');
-						}
-
-						const option = product.option_products.find(
-							(option) => option.size === query_option.split('%20').join(' ')
-						);
-						// const option = product.option_products.find(
-						// 	(option) =>
-						// 		option.size === parseInt(query.option) ||
-						// 		option.name === query_option.split('%20').join(' ')
-						// );
-						console.log({ option });
-						// const option =
-						// 	query.option &&
-						// 	product.option_products.find(
-						// 		(option) =>
-						// 			option.size === parseInt(query.option) ||
-						// 			option.name === query.option.split('%20').join(' ')
-						// 	);
-						if (option) {
-							update_option_product_state(option);
-						}
-					}
-					if (product.secondary_products && product.secondary_products.length > 0) {
-						console.log({ query_secondary: query.secondary });
-						set_secondary_products(product.secondary_products);
-						let query_secondary = query.secondary;
-						if (query.secondary && query.secondary.indexOf('%20') > -1) {
-							query_secondary = query.secondary.split('%20').join(' ');
-						}
-						const secondary =
-							query.secondary &&
-							product.secondary_products.find(
-								(secondary) => secondary.name === query_secondary.split('%20').join(' ')
-							);
-						if (secondary) {
-							update_secondary_product_state(secondary);
-						}
-					}
+			let clean = true;
+			if (clean) {
+				if (product) {
+					determine_options(product);
 				}
 			}
-			return () => {};
+			return () => (clean = false);
 		},
 		[ product ]
 	);
+
+	const determine_options = (product) => {
+		update_universal_state(product);
+		const query = getUrlParameter(props.location);
+		if (props.location.search.length === 0) {
+			// console.log({ message: 'Query Does Not Exist' });
+			if (product.color_products) {
+				set_color_products(product.color_products);
+
+				const color = product.color_products.find((color) => color.default_option === true);
+				// console.log({ color });
+				if (color) {
+					update_color_product_state(color);
+				}
+			}
+			if (product.secondary_color_products) {
+				set_secondary_color_products(product.secondary_color_products);
+
+				const secondary_color = product.secondary_color_products.find(
+					(secondary_color) => secondary_color.default_option === true
+				);
+				// console.log({ secondary_color });
+				if (secondary_color) {
+					update_secondary_color_product_state(secondary_color);
+				}
+			}
+			if (product.option_products) {
+				set_option_products(product.option_products);
+
+				const option = product.option_products.find((option) => option.default_option === true);
+				if (option) {
+					update_option_product_state(option);
+				}
+			}
+			if (product.secondary_products && product.secondary_products.length > 0) {
+				// update_secondary_product_state(product.secondary_products[0]);
+			}
+		} else if (props.location.search.length > 0) {
+			// console.log({ message: 'Query Does Exist' });
+			if (product.color_products) {
+				const color = product.color_products.find((color) => color.color === query.color);
+				// console.log({ query_color: color });
+				if (color) {
+					update_color_product_state(color);
+				}
+			}
+			if (product.secondary_color_products) {
+				set_secondary_products(product.secondary_products);
+				const secondary_color = product.secondary_color_products.find(
+					(secondary_color) => secondary_color.color === query.secondary_color
+				);
+				if (secondary_color) {
+					update_secondary_color_product_state(secondary_color);
+				}
+			}
+			if (product.option_products) {
+				console.log({ query: query.option });
+				console.log({ option_products: product.option_products });
+				let query_option = query.option;
+				if (query.option && query.option.indexOf('%20') > -1) {
+					query_option = query.option.split('%20').join(' ');
+				}
+
+				const option = product.option_products.find(
+					(option) => option.size === query_option.split('%20').join(' ')
+				);
+				// const option = product.option_products.find(
+				// 	(option) =>
+				// 		option.size === parseInt(query.option) ||
+				// 		option.name === query_option.split('%20').join(' ')
+				// );
+				console.log({ option });
+				// const option =
+				// 	query.option &&
+				// 	product.option_products.find(
+				// 		(option) =>
+				// 			option.size === parseInt(query.option) ||
+				// 			option.name === query.option.split('%20').join(' ')
+				// 	);
+				if (option) {
+					update_option_product_state(option);
+				}
+			}
+			if (product.secondary_products && product.secondary_products.length > 0) {
+				console.log({ query_secondary: query.secondary });
+				set_secondary_products(product.secondary_products);
+				let query_secondary = query.secondary;
+				if (query.secondary && query.secondary.indexOf('%20') > -1) {
+					query_secondary = query.secondary.split('%20').join(' ');
+				}
+				const secondary =
+					query.secondary &&
+					product.secondary_products.find(
+						(secondary) => secondary.name === query_secondary.split('%20').join(' ')
+					);
+				if (secondary) {
+					update_secondary_product_state(secondary);
+				}
+			}
+		}
+	};
 
 	const update_color_product_state = (color) => {
 		// console.log({ color });
@@ -375,25 +390,34 @@ const ProductPage = (props) => {
 
 	useEffect(
 		() => {
-			if (error) {
-				props.history.push('/collections/all/products');
+			let clean = true;
+			if (clean) {
+				if (error) {
+					props.history.push('/collections/all/products');
+				}
 			}
+			return () => (clean = false);
 		},
 		[ error ]
 	);
+
 	useEffect(() => {
-		const recently_viewed = sessionStorage.getItem('recently_viewed');
-		const products = JSON.parse(recently_viewed);
-		// console.log({ product });
-		if (recently_viewed) {
-			if (product && product.hasOwnProperty('name')) {
-				sessionStorage.setItem('recently_viewed', JSON.stringify([ product, ...products ]));
-			}
-		} else {
-			if (product && product.hasOwnProperty('name')) {
-				sessionStorage.setItem('recently_viewed', JSON.stringify([ product ]));
+		let clean = true;
+		if (clean) {
+			const recently_viewed = sessionStorage.getItem('recently_viewed');
+			const products = JSON.parse(recently_viewed);
+			// console.log({ product });
+			if (recently_viewed) {
+				if (product && product.hasOwnProperty('name')) {
+					sessionStorage.setItem('recently_viewed', JSON.stringify([ product, ...products ]));
+				}
+			} else {
+				if (product && product.hasOwnProperty('name')) {
+					sessionStorage.setItem('recently_viewed', JSON.stringify([ product ]));
+				}
 			}
 		}
+		return () => (clean = false);
 	}, []);
 
 	const handleAddToCart = () => {

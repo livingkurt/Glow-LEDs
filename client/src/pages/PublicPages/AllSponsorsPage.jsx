@@ -13,7 +13,11 @@ const AllSponsorsPage = (props) => {
 
 	useEffect(
 		() => {
-			dispatch(listAffiliates('sponsored_glovers'));
+			let clean = true;
+			if (clean) {
+				dispatch(listAffiliates('sponsored_glovers'));
+			}
+			return () => (clean = false);
 		},
 		[ dispatch ]
 	);

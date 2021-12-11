@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -21,25 +21,29 @@ const AnnouncementEmail = () => {
 	const emailList = useSelector((state) => state.emailList);
 	const { emails } = emailList;
 
-	console.log({ emails });
-
 	const dispatch = useDispatch();
 
 	useEffect(
 		() => {
-			dispatch(listEmails('Announcements'));
-			return () => {};
+			let clean = true;
+			if (clean) {
+				dispatch(listEmails('Announcements'));
+			}
+			return () => (clean = false);
 		},
 		[ dispatch ]
 	);
 
 	useEffect(
 		() => {
-			const active_email = emails.find((email) => email.active === true);
-			if (active_email) {
-				dispatch(detailsEmail(active_email._id));
+			let clean = true;
+			if (clean) {
+				const active_email = emails.find((email) => email.active === true);
+				if (active_email) {
+					dispatch(detailsEmail(active_email._id));
+				}
 			}
-			return () => {};
+			return () => (clean = false);
 		},
 		[ emails, dispatch ]
 	);

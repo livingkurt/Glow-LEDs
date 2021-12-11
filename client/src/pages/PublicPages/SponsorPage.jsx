@@ -20,38 +20,33 @@ const SponsorPage = (props) => {
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
 
-	// const teamList = useSelector((state) => state.teamList);
-	// const { teams, loading, error } = teamList;
-
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch(detailsAffiliate(props.match.params.promo_code));
-		// dispatch(detailsTeam('inky_bois'));
-		// dispatch(listTeams(''));
-		// find_team();
-		return () => {};
+		let clean = true;
+		if (clean) {
+			dispatch(detailsAffiliate(props.match.params.promo_code));
+		}
+		return () => (clean = false);
 	}, []);
 
 	useEffect(
 		() => {
-			if (affiliate && affiliate._id) {
-				find_team();
+			let clean = true;
+			if (clean) {
+				if (affiliate && affiliate._id) {
+					find_team();
+				}
 			}
-
-			return () => {};
+			return () => (clean = false);
 		},
 		[ affiliate ]
 	);
-
-	// const teamDetails = useSelector((state) => state.teamDetails);
-	// const { team } = teamDetails;
 
 	const find_team = async () => {
 		console.log({ affiliate: affiliate._id });
 		const { data } = await API_Users.get_teams(affiliate._id);
 		set_teams(data);
-		// const team = teams.map((team) => team.affiliates.find((member) => member._id === affiliate._id));
 		console.log({ data });
 	};
 

@@ -16,7 +16,6 @@ const OrderEmail = (props) => {
 	const [ loading, set_loading ] = useState(false);
 	const orderDetailsPublic = useSelector((state) => state.orderDetailsPublic);
 	const { order } = orderDetailsPublic;
-	console.log({ order });
 
 	const emailDetails = useSelector((state) => state.emailDetails);
 	const { email } = emailDetails;
@@ -27,31 +26,30 @@ const OrderEmail = (props) => {
 	const emailList = useSelector((state) => state.emailList);
 	const { emails } = emailList;
 
-	const promoList = useSelector((state) => state.promoList);
-	const { promos } = promoList;
-
 	const dispatch = useDispatch();
-	//
 
 	useEffect(() => {
-		dispatch(listEmails(toCapitalize(props.match.params.status)));
-		dispatch(detailsOrderPublic(props.match.params.id));
-		// dispatch(detailsOrderPublic(props.match.params.id));
-		dispatch(listPromos());
-		// dispatch(detailsOrder('5fa43d5f248dcacd5d8e2d3f'));
-		return () => {};
+		let clean = true;
+		if (clean) {
+			dispatch(listEmails(toCapitalize(props.match.params.status)));
+			dispatch(detailsOrderPublic(props.match.params.id));
+			dispatch(listPromos());
+		}
+		return () => (clean = false);
 	}, []);
 
 	useEffect(
 		() => {
-			if (emails) {
-				const active_email = emails.find((email) => email.active === true);
-				if (active_email) {
-					dispatch(detailsEmail(active_email._id));
+			let clean = true;
+			if (clean) {
+				if (emails) {
+					const active_email = emails.find((email) => email.active === true);
+					if (active_email) {
+						dispatch(detailsEmail(active_email._id));
+					}
 				}
 			}
-
-			return () => {};
+			return () => (clean = false);
 		},
 		[ emails ]
 	);
@@ -2042,91 +2040,36 @@ const OrderEmail = (props) => {
 		}
 	};
 
-	// useEffect(
-	// 	() => {
-	// 		if (props.match.params.send === 'true' && order) {
-	// 			console.log({ 'props.match.params.send === true && order': order });
-	// 			if (order.orderItems.length > 0) {
-	// 				console.log({ 'order.orderItems.length > 0': order });
-	// 				send_order_email(order.shipping.email, order.shipping.first_name, 'Your Glow LEDS Order');
-	// 			}
-	// 		}
-
-	// 		return () => {};
-	// 	},
-	// 	[ order ]
-	// );
 	const [ num, set_num ] = useState(0);
 	const [ show_modal, set_show_modal ] = useState(false);
 
 	useEffect(
 		() => {
-			if (num === 0) {
-				if (order) {
-					if (email) {
-						if (props.match.params.send === 'true') {
-							if (order.orderItems.length > 0) {
-								if (props.match.params.id) {
-									send_order_email(
-										order.shipping.email,
-										order.shipping.first_name,
-										'Your Glow LEDS Order'
-									);
-									set_num(1);
+			let clean = true;
+			if (clean) {
+				if (num === 0) {
+					if (order) {
+						if (email) {
+							if (props.match.params.send === 'true') {
+								if (order.orderItems.length > 0) {
+									if (props.match.params.id) {
+										send_order_email(
+											order.shipping.email,
+											order.shipping.first_name,
+											'Your Glow LEDS Order'
+										);
+										set_num(1);
+									}
 								}
 							}
 						}
 					}
 				}
 			}
-
-			return () => {};
+			return () => (clean = false);
 		},
-		[ email ]
+		[ emails ]
 	);
-
-	// const send_order_email = async (email, first_name, subject, refunded) => {
-	// 	// if (num === 1) {
-	// 	set_loading(true);
-	// 	console.log({ email_template });
-	// 	const response_1 = await API_Emails.send_user_email(email_template, subject, email);
-	// 	const response_2 = await API_Emails.send_admin_email(
-	// 		email_template,
-	// 		refunded ? 'Order Refunded for ' + first_name : 'New Order Created by ' + first_name
-	// 	);
-	// 	console.log({ response_1 });
-	// 	console.log({ response_2 });
-	// 	if (response_1 && response_2) {
-	// 		history.push('/pages/survey/' + order._id);
-	// 		set_loading(false);
-	// 	}
-	// 	// }
-	// };
-
-	// useEffect(() => {
-	// 	// if (num === 1) {
-	// 	if (props.match.params.send === 'true' && order) {
-	// 		console.log({ 'props.match.params.send === true && order': order });
-	// 		if (order.orderItems.length > 0) {
-	// 			console.log({ 'order.orderItems.length > 0': order });
-	// 			send_order_email(order.shipping.email, order.shipping.first_name, 'Your Glow LEDS Order');
-	// 			// num++;
-	// 		}
-	// 	}
-	// 	// }
-
-	// 	return () => {};
-	// }, []);
-
-	// // When the user clicks on the button, open the modal
-	// btn.onclick = function() {
-	// 	modal.style.display = 'block';
-	// };
-
-	// // When the user clicks on <span> (x), close the modal
-	// span.onclick = function() {
-	// 	modal.style.display = 'none';
-	// };
 
 	// When the user clicks anywhere outside of the modal, close it
 	window.onclick = function(event) {

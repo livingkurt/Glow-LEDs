@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Helmet } from 'react-helmet';
-import { Link } from 'react-router-dom';
-import { detailsContent, listContents } from '../../actions/contentActions';
 import MessengerCustomerChat from 'react-messenger-customer-chat';
 import { ReadMore, Sponsor, SponsorSmallScreen, Team, TeamSmallScreen } from '../../components/SpecialtyComponents';
 import { listAffiliates } from '../../actions/affiliateActions';
@@ -11,7 +9,7 @@ import { listTeams } from '../../actions/teamActions';
 import useWindowDimensions from '../../components/Hooks/windowDimensions';
 
 const AboutPage = () => {
-	const { height, width } = useWindowDimensions();
+	const { width } = useWindowDimensions();
 
 	const dispatch = useDispatch();
 
@@ -21,9 +19,12 @@ const AboutPage = () => {
 	const { teams, loading: loading_team, error: error_team } = teamList;
 
 	useEffect(() => {
-		dispatch(listAffiliates('sponsored_glovers'));
-		dispatch(listTeams());
-		return () => {};
+		let clean = true;
+		if (clean) {
+			dispatch(listAffiliates('sponsored_glovers'));
+			dispatch(listTeams());
+		}
+		return () => (clean = false);
 	}, []);
 	return (
 		<div className="main_container p-20px">

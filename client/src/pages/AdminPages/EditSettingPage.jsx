@@ -41,34 +41,39 @@ const EditSettingPage = (props) => {
 
 	useEffect(
 		() => {
-			if (props.match.params.id) {
-				console.log('Is ID');
-				dispatch(detailsSetting(props.match.params.id));
-				dispatch(detailsSetting(props.match.params.id));
-			} else {
-				dispatch(detailsSetting(''));
+			let clean = true;
+			if (clean) {
+				if (props.match.params.id) {
+					console.log('Is ID');
+					dispatch(detailsSetting(props.match.params.id));
+					dispatch(detailsSetting(props.match.params.id));
+				} else {
+					dispatch(detailsSetting(''));
+				}
+				dispatch(listSettings(''));
+				set_state();
 			}
-			dispatch(listSettings(''));
-			set_state();
-			return () => {};
+			return () => (clean = false);
 		},
 		[ dispatch, props.match.params.id ]
 	);
-
 	useEffect(
 		() => {
-			if (setting) {
-				console.log('Set');
-				set_state();
-			} else {
-				console.log('UnSet');
-				unset_state();
+			let clean = true;
+			if (clean) {
+				if (setting) {
+					console.log('Set');
+					set_state();
+				} else {
+					console.log('UnSet');
+					unset_state();
+				}
 			}
-
-			return () => {};
+			return () => (clean = false);
 		},
 		[ setting ]
 	);
+
 	setTimeout(() => {
 		set_loading_checkboxes(false);
 	}, 500);

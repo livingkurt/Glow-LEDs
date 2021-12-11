@@ -8,11 +8,7 @@ import { determine_total } from '../../utils/helper_functions';
 const CartPage = (props) => {
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
-	// const cart = useSelector((state) => state.cart);
 
-	// const { cart.cartItems } = cart;
-
-	// console.log({ cart.cartItems });
 	const pathname = props.match.params.pathname;
 	const qty = parseInt(props.location.search ? Number(props.location.search.split('=')[1]) : 1);
 	const dispatch = useDispatch();
@@ -21,26 +17,19 @@ const CartPage = (props) => {
 	const removeFromCartHandler = (product) => {
 		dispatch(removeFromCart(product));
 	};
-	// const addToCartHandler = (pathname, qty) => {
-	// 	console.log({ pathname, qty });
-	// 	dispatch(addToCart(pathname, qty));
-	// };
-
 	const cartDetails = useSelector((state) => state.cartDetails);
 	const { cart, loading, error } = cartDetails;
 
-	const handleAddToCart = (pathname, qty) => {
-		dispatch(addToCart(pathname, qty));
-	};
-
 	useEffect(
 		() => {
-			dispatch(detailsCart(userInfo.cart));
+			let clean = true;
+			if (clean) {
+				dispatch(detailsCart(userInfo.cart));
+			}
+			return () => (clean = false);
 		},
 		[ cart.cartItems ]
 	);
-
-	useEffect(() => {}, [ props.match.params.pathname ]);
 
 	const checkoutHandler = () => {
 		if (cart.cartItems.length === 0) {

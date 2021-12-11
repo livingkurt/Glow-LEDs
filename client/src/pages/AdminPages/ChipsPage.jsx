@@ -22,10 +22,11 @@ const ChipsPage = (props) => {
 
 	useEffect(
 		() => {
-			dispatch(listChips());
-			return () => {
-				//
-			};
+			let clean = true;
+			if (clean) {
+				dispatch(listChips());
+			}
+			return () => (clean = false);
 		},
 		[ successSave, successDelete, dispatch ]
 	);
@@ -41,7 +42,11 @@ const ChipsPage = (props) => {
 
 	useEffect(
 		() => {
-			dispatch(listChips(category, search, sortOrder));
+			let clean = true;
+			if (clean) {
+				dispatch(listChips(category, search, sortOrder));
+			}
+			return () => (clean = false);
 		},
 		[ dispatch, category, search, sortOrder ]
 	);

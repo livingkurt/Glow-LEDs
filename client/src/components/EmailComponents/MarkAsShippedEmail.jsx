@@ -1,30 +1,21 @@
-import React, { useEffect, useCallback, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { detailsEmail, listEmails } from '../../actions/emailActions';
 import { API_Emails, API_Orders } from '../../utils';
 import { determine_tracking_number, format_date, toCapitalize } from '../../utils/helper_functions';
-import { detailsOrder, detailsOrderPublic, update_order } from '../../actions/orderActions';
-import {
-	determine_product_name,
-	email_sale_price_switch,
-	order_status_steps
-} from '../../utils/react_helper_functions';
-import { listPromos } from '../../actions/promoActions';
+import { update_order } from '../../actions/orderActions';
+import { determine_product_name, order_status_steps } from '../../utils/react_helper_functions';
 import { Loading } from '../UtilityComponents';
 
 const MarkAsShippedEmail = (props) => {
 	const [ loading, set_loading ] = useState(false);
 	const [ order, set_order ] = useState();
 	const history = useHistory();
-	// const orderDetails = useSelector((state) => state.orderDetails);
-	// const { order } = orderDetails;
 
 	const emailDetails = useSelector((state) => state.emailDetails);
 	const { email } = emailDetails;
-	// const orderUpdate = useSelector((state) => state.orderUpdate);
-	// const { success } = orderUpdate;
 
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
@@ -35,33 +26,32 @@ const MarkAsShippedEmail = (props) => {
 	const dispatch = useDispatch();
 
 	const [ message_to_user, set_message_to_user ] = useState('');
-	// const message = props.match.params.message ? props.match.params.message : '';
 
 	useEffect(() => {
-		dispatch(listEmails(toCapitalize(props.match.params.status)));
-		// dispatch(detailsOrder(props.match.params.id));
-		return () => {};
-	}, []);
-
-	useEffect(() => {
-		const message = localStorage.getItem('message_to_user');
-		console.log({ message });
-		if (message) {
-			set_message_to_user(message);
+		let clean = true;
+		if (clean) {
+			dispatch(listEmails(toCapitalize(props.match.params.status)));
+			const message = localStorage.getItem('message_to_user');
+			console.log({ message });
+			if (message) {
+				set_message_to_user(message);
+			}
 		}
-		return () => {};
+		return () => (clean = false);
 	}, []);
 
 	useEffect(
 		() => {
-			if (emails) {
-				const active_email = emails.find((email) => email.active === true);
-				if (active_email) {
-					dispatch(detailsEmail(active_email._id));
+			let clean = true;
+			if (clean) {
+				if (emails) {
+					const active_email = emails.find((email) => email.active === true);
+					if (active_email) {
+						dispatch(detailsEmail(active_email._id));
+					}
 				}
 			}
-
-			return () => {};
+			return () => (clean = false);
 		},
 		[ emails ]
 	);
@@ -983,11 +973,13 @@ const MarkAsShippedEmail = (props) => {
 
 	useEffect(
 		() => {
-			if (order && email_template && email_template.length > 1000) {
-				send_order_email(email_template, order.shipping.email, order.shipping.first_name, email.h1);
+			let clean = true;
+			if (clean) {
+				if (order && email_template && email_template.length > 1000) {
+					send_order_email(email_template, order.shipping.email, order.shipping.first_name, email.h1);
+				}
 			}
-
-			return () => {};
+			return () => (clean = false);
 		},
 		[ email_template ]
 	);
@@ -1012,8 +1004,11 @@ const MarkAsShippedEmail = (props) => {
 	};
 
 	useEffect(() => {
-		mark_as_shipped();
-		return () => {};
+		let clean = true;
+		if (clean) {
+			mark_as_shipped();
+		}
+		return () => (clean = false);
 	}, []);
 
 	return (

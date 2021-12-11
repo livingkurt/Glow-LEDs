@@ -1,9 +1,8 @@
 // React
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import useClipboard from 'react-hook-clipboard';
-import { LazyImage, Loading } from '../UtilityComponents';
+import { useDispatch } from 'react-redux';
+import { LazyImage } from '../UtilityComponents';
 import { sale_price_switch } from '../../utils/react_helper_functions';
 import { deleteProduct, listProducts, saveProduct } from '../../actions/productActions';
 import styled from 'styled-components';

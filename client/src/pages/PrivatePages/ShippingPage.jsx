@@ -37,31 +37,35 @@ const ShippingPage = (props) => {
 
 	useEffect(
 		() => {
-			if (shipping && shipping.first_name && shipping.first_name.length > 1) {
-				console.log({ ShippingPage: shipping });
-				set_email(shipping.email);
-				set_first_name(shipping.first_name);
-				set_last_name(shipping.last_name);
-				set_address_1(shipping.address_1);
-				set_address_2(shipping.address_2);
-				setCity(shipping.city);
-				setState(shipping.state);
-				setPostalCode(shipping.postalCode);
-				setCountry(shipping.country);
-				setInternational(shipping.international);
+			let clean = true;
+			if (clean) {
+				if (shipping && shipping.first_name && shipping.first_name.length > 1) {
+					console.log({ ShippingPage: shipping });
+					set_email(shipping.email);
+					set_first_name(shipping.first_name);
+					set_last_name(shipping.last_name);
+					set_address_1(shipping.address_1);
+					set_address_2(shipping.address_2);
+					setCity(shipping.city);
+					setState(shipping.state);
+					setPostalCode(shipping.postalCode);
+					setCountry(shipping.country);
+					setInternational(shipping.international);
+				}
 			}
-
-			return () => {};
+			return () => (clean = false);
 		},
 		[ shipping ]
 	);
 
 	useEffect(() => {
-		if (userInfo.isAdmin) {
-			get_all_shipping();
+		let clean = true;
+		if (clean) {
+			if (userInfo.isAdmin) {
+				get_all_shipping();
+			}
 		}
-
-		return () => {};
+		return () => (clean = false);
 	}, []);
 
 	const get_all_shipping = async () => {
