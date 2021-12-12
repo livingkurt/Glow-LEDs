@@ -65,6 +65,7 @@ const productSchema = new mongoose.Schema(
 		finite_stock: { type: Boolean, default: false },
 		facts: { type: String },
 		included_items: { type: String },
+		contributers: [ { type: mongoose.Schema.Types.ObjectId, ref: 'User', default: '5f2d7c0e9005a57059801ce8' } ],
 		description: { type: String },
 		rating: { type: Number, default: 0 },
 		numReviews: { type: Number, default: 0 },

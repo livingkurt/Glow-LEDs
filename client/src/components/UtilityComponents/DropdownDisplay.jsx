@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const DropdownDisplay = ({ item_list, list_items, set_items, list_name, placement }) => {
+const DropdownDisplay = ({ item_list, list_items, set_items, list_name, placement, display_key }) => {
 	const remove_list_item = (item_index, e) => {
 		e.preventDefault();
 		set_items((items) =>
@@ -39,7 +39,11 @@ const DropdownDisplay = ({ item_list, list_items, set_items, list_name, placemen
 							</option>
 							{item_list.map((item, index) => (
 								<option key={index} value={JSON.stringify(item)}>
-									{item.name}
+									{display_key === 'first_name' ? (
+										`${item[display_key]} ${item.last_name}`
+									) : (
+										item[display_key]
+									)}
 								</option>
 							))}
 						</select>
@@ -62,7 +66,11 @@ const DropdownDisplay = ({ item_list, list_items, set_items, list_name, placemen
 													<i className="fas fa-times mr-5px" />
 												</button>
 												<Link to={'/secure/glow/editproduct/' + item.pathname + '/false'}>
-													{item.name}
+													{display_key === 'first_name' ? (
+														`${item[display_key]} ${item.last_name}`
+													) : (
+														item[display_key]
+													)}
 												</Link>
 											</div>
 										</div>

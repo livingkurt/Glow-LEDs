@@ -18,6 +18,7 @@ import { listChips } from '../../../actions/chipActions';
 import { API_Products } from '../../../utils';
 import { listCategorys } from '../../../actions/categoryActions';
 import { list_display, option_list } from '../../../utils/react_helper_functions';
+import { listUsers } from '../../../actions/userActions';
 
 const EditProductPage = (props) => {
 	// const [modalVisible, setModalVisible] = useState(false);
@@ -38,6 +39,7 @@ const EditProductPage = (props) => {
 	const [ description, setDescription ] = useState('');
 	const [ facts, setFacts ] = useState('');
 	const [ included_items, setIncludedItems ] = useState();
+	const [ contributers, set_contributers ] = useState();
 	const [ hidden, setHidden ] = useState(false);
 	const [ sale_price, setSalePrice ] = useState(0);
 	const [ sale_start_date, set_sale_start_date ] = useState('');
@@ -124,6 +126,9 @@ const EditProductPage = (props) => {
 	const chipList = useSelector((state) => state.chipList);
 	const { chips: chips_list } = chipList;
 
+	const userList = useSelector((state) => state.userList);
+	const { users } = userList;
+
 	const categoryList = useSelector((state) => state.categoryList);
 	const { categorys: categorys_list } = categoryList;
 
@@ -159,6 +164,7 @@ const EditProductPage = (props) => {
 		let clean = true;
 		if (clean) {
 			dispatch(listCategorys({}));
+			dispatch(listUsers({}));
 			// dispatch(listProducts({ limit: 300 }));
 			dispatch(listChips({}));
 		}
@@ -264,6 +270,7 @@ const EditProductPage = (props) => {
 		setDescription(product.description);
 		setFacts(product.facts);
 		setIncludedItems(product.included_items);
+		set_contributers(product.contributers);
 		setHidden(product.hidden);
 		setSalePrice(product.sale_price);
 		set_previous_price(product.previous_price);
@@ -350,6 +357,7 @@ const EditProductPage = (props) => {
 		setName('');
 		setPrice(0);
 		set_previous_price();
+		set_contributers();
 		setDescription('');
 		setFacts('');
 		setIncludedItems('');
@@ -463,6 +471,7 @@ const EditProductPage = (props) => {
 				weight_pounds,
 				weight_ounces,
 				preorder,
+				contributers: contributers.length === 0 ? '' : contributers,
 				pathname: pathname ? pathname : snake_case(name),
 				order,
 				product_options,
@@ -1149,6 +1158,17 @@ const EditProductPage = (props) => {
 													onChange={(e) => setIncludedItems(e.target.value)}
 												/>
 											</li>
+											{/* <li>
+												<label htmlFor="contributers">Contributers</label>
+												<textarea
+													className="edit_product_textarea"
+													name="contributers"
+													value={contributers}
+													id="contributers"
+													onChange={(e) => set_contributers(e.target.value)}
+												/>
+											</li> */}
+
 											<li>
 												<label htmlFor="description">Description</label>
 												<textarea
@@ -1380,19 +1400,29 @@ const EditProductPage = (props) => {
 									{image_display(images)} */}
 									<DropdownDisplay
 										item_list={categorys_list}
+										display_key={'name'}
 										list_items={categorys}
 										set_items={set_categorys}
 										list_name={'Categorys'}
 									/>
 									<DropdownDisplay
 										item_list={categorys_list}
+										display_key={'name'}
 										list_items={subcategorys}
 										set_items={set_subcategorys}
 										list_name={'Subcategorys'}
 									/>
 									{/* {option_list(categorys_list, categorys, set_categorys, 'Categorys')}
 									{option_list(categorys_list, subcategorys, set_subcategorys, 'Subcategorys')} */}
-
+									{users && (
+										<DropdownDisplay
+											item_list={users}
+											display_key={'first_name'}
+											list_items={contributers}
+											set_items={set_contributers}
+											list_name={'Contributers'}
+										/>
+									)}
 									{loading_checkboxes ? (
 										<div>Loading...</div>
 									) : (
@@ -1540,6 +1570,7 @@ const EditProductPage = (props) => {
 														)} */}
 														<DropdownDisplay
 															item_list={option_products_list}
+															display_key={'name'}
 															list_items={products}
 															set_items={set_products}
 															list_name={'Group Products'}
@@ -1591,6 +1622,7 @@ const EditProductPage = (props) => {
 														)} */}
 														<DropdownDisplay
 															item_list={option_products_list}
+															display_key={'name'}
 															list_items={color_products}
 															set_items={set_color_products}
 															list_name={'Color Products'}
@@ -1645,6 +1677,7 @@ const EditProductPage = (props) => {
 														)} */}
 														<DropdownDisplay
 															item_list={option_products_list}
+															display_key={'name'}
 															list_items={secondary_color_products}
 															set_items={set_secondary_color_products}
 															list_name={'Secondary Color Products'}
@@ -1698,6 +1731,7 @@ const EditProductPage = (props) => {
 														)} */}
 														<DropdownDisplay
 															item_list={option_products_list}
+															display_key={'name'}
 															list_items={option_products}
 															set_items={set_option_products}
 															list_name={'Option Products'}
@@ -1752,6 +1786,7 @@ const EditProductPage = (props) => {
 														)} */}
 														<DropdownDisplay
 															item_list={macro_products_list}
+															display_key={'name'}
 															// item_list={[
 															// 	...macro_products_list,
 															// 	...option_products_list
@@ -1769,6 +1804,7 @@ const EditProductPage = (props) => {
 									{/* {option_list(chips_list, chips, set_chips, 'Chips')} */}
 									<DropdownDisplay
 										item_list={chips_list}
+										display_key={'name'}
 										list_items={chips}
 										set_items={set_chips}
 										list_name={'Chips'}

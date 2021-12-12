@@ -55,6 +55,10 @@ const ProductDetails = ({ product, manuals, description, included_items, pathnam
 								<Tab style={{ padding: '10px', borderRadius: '10px 10px 0px 0px' }}>Manual</Tab>
 							)}
 							<Tab style={{ padding: '10px', borderRadius: '10px 10px 0px 0px' }}>Media</Tab>
+							{product.contributers &&
+							product.contributers.length > 0 && (
+								<Tab style={{ padding: '10px', borderRadius: '10px 10px 0px 0px' }}>Contributers</Tab>
+							)}
 						</TabList>
 					</Overflow.Content>
 					{canScroll && (
@@ -377,6 +381,36 @@ const ProductDetails = ({ product, manuals, description, included_items, pathnam
 						)}
 					</div>
 				</TabPanel>
+				{product.contributers &&
+				product.contributers.length > 0 && (
+					<TabPanel>
+						{product.contributers &&
+						product.contributers.length > 0 && (
+							<div className="mt-1rem">
+								<h2 className="m-0px mr-5px">Contributers</h2>
+								<div className="h-100per paragraph_font ">
+									<ul className="pl-2rem">
+										{product.contributers ? (
+											product.contributers.map((contributer, index) => {
+												return (
+													<li
+														key={index}
+														className="paragraph_font"
+														style={{ listStyleType: 'disc' }}
+													>
+														{contributer.first_name} {contributer.last_name}
+													</li>
+												);
+											})
+										) : (
+											product.contributers
+										)}
+									</ul>
+								</div>
+							</div>
+						)}
+					</TabPanel>
+				)}
 			</Tabs>
 		</div>
 	);

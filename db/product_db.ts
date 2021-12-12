@@ -11,6 +11,7 @@ export default {
 				.populate('option_products')
 				.populate('categorys')
 				.populate('subcategorys')
+				.populate('contributers')
 				.limit(limit * 1)
 				.skip((page - 1) * limit)
 				.exec();
@@ -52,7 +53,8 @@ export default {
 				})
 				.populate('option_products')
 				.populate('categorys')
-				.populate('subcategorys');
+				.populate('subcategorys')
+				.populate('contributers');
 		} catch (error) {
 			console.log({ findById_products_db_error: error });
 			throw new Error(error.message);
