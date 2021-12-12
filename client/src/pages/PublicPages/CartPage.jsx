@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import { removeFromCart } from '../../actions/cartActions';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { Carousel, CartItem } from '../../components/SpecialtyComponents';
 import { Helmet } from 'react-helmet';
 import { decide_warning, determine_total } from '../../utils/helper_functions';
@@ -13,13 +11,7 @@ const CartPage = (props) => {
 
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
-
-	const dispatch = useDispatch();
 	const [ no_items_in_cart, set_no_items_in_cart ] = useState('');
-
-	const removeFromCartHandler = (product) => {
-		dispatch(removeFromCart(product));
-	};
 
 	const checkoutHandler = () => {
 		if (decide_warning(props.date_1, props.date_2)) {
@@ -30,26 +22,6 @@ const CartPage = (props) => {
 					props.history.push('/account/login?redirect=/secure/checkout/placeorder');
 				} else {
 					props.history.push('/checkout/decision');
-				}
-			}
-		}
-	};
-
-	const no_adapters_warning = () => {
-		const categories = cartItems.map((cartItem) => {
-			return cartItem.category;
-		});
-		// const names = cartItems.map((cartItem) => {
-		// 	return cartItem.name;
-		// });
-		if (
-			!categories.includes('Custom Diffuser Caps Final Payment') ||
-			!categories.includes('Custom Diffuser Caps Deposit')
-		) {
-			if (categories.includes('diffuser_caps')) {
-				// console.log('Caps');
-				if (!categories.includes('diffuser_adapters')) {
-					return "Don't Forget: You'll need a set of Diffuser Adapters to use Diffuser Caps!";
 				}
 			}
 		}

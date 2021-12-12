@@ -36,7 +36,6 @@ const ContactPage = (props) => {
 
 	const userContact = useSelector((state) => state.userContact);
 	const { loading, completed, message: completed_message, error } = userContact;
-	console.log({ userContact });
 
 	useEffect(
 		() => {
@@ -81,16 +80,10 @@ const ContactPage = (props) => {
 		set_first_name_Validations(request.errors.first_name);
 		set_last_name_Validations(request.errors.last_name);
 		set_email_validations(request.errors.email);
-		// if ([ 'order_issues', 'returns', 'technical_support' ].includes(reason_for_contact)) {
-		// set_order_number_validations(request.errors.order_number);
-		// }
-		// else {
 		set_order_number_validations(request.errors.order_number);
-		// }
 		set_reason_for_contact_validations(request.errors.reason_for_contact);
 		set_message_validations(request.errors.message);
 
-		// console.log(request);
 		if (request.isValid) {
 			const reason = humanize(reason_for_contact);
 			dispatch(
@@ -121,29 +114,8 @@ const ContactPage = (props) => {
 					})
 				);
 			}
-			// set_last_name_Validations('');
-			// set_first_name_Validations('');
-			// set_email_validations('');
-			// set_order_number_validations('');
-			// set_reason_for_contact_validations('');
-			// set_message_validations('');
-			// // e.target.reset();
-			// document.getElementsByName('first_name').value = '';
-			// document.getElementsByName('last_name').value = '';
-			// document.getElementsByName('email').value = '';
-			// document.getElementsByName('order_number').value = '';
-			// document.getElementsByName('reason_for_contact').value = '';
-			// document.getElementsByName('message').value = '';
 		}
 	};
-
-	const finishUploading = async (fsData) => {
-		const pictures = [];
-		const src = fsData.filesUploaded[0].url;
-		// console.log(src);
-		set_inspirational_pictures((inspirational_pictures) => [ ...inspirational_pictures, src ]);
-	};
-	// console.log(process.env.REACT_APP_FILESTACK_API);
 
 	return (
 		<div className="main_container p-20px">

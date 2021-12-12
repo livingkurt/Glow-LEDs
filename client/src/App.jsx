@@ -45,15 +45,11 @@ import {
 	CartsPage,
 	ContentsPage,
 	EditContentPage,
-	GlowControlPage,
-	GlowControlHomePage,
-	EditDevicePage,
 	MusicPage,
 	EditEmailPage,
 	EmailsPage,
 	LogsPage,
 	GuestDecisionPage,
-	PlaceOrderPublicPage,
 	MenuPage,
 	ResetPasswordPage,
 	ProductsDisplayPage,
@@ -67,7 +63,6 @@ import {
 	SubmissionComplete,
 	EditUserAffiliatePage,
 	AffiliateCreationComplete,
-	ShippingPublicPage,
 	ChipsPage,
 	AllSponsorsPage,
 	SponsorPage,
@@ -102,7 +97,6 @@ import {
 import { Header, Container, Content, Footer, Sidebar, Cart } from './components/ContainerComponents/index';
 import { AdminRoute, PrivateRoute } from './components/RouteComponents';
 import { Notification, ScrollToTop } from './components/UtilityComponents';
-import DevicesPage from './pages/PrivatePages/DevicesPage';
 import MessengerCustomerChat from 'react-messenger-customer-chat';
 import {
 	AccountCreatedEmail,
@@ -296,9 +290,6 @@ const App = (props) => {
 							{/* <PrivateRoute path="/account/submit_feature" component={SubmitFeaturePage} /> */}
 							<PrivateRoute path="/secure/account/orders" component={MyOrdersPage} />
 							<PrivateRoute path="/secure/checkout/shipping" component={ShippingPage} />
-							<PrivateRoute path="/secure/account/glowcontrol/:id" component={GlowControlPage} />
-							<PrivateRoute path="/secure/account/devices" component={DevicesPage} />
-							<PrivateRoute path="/secure/account/editdevice/:id?" component={EditDevicePage} />
 							<PrivateRoute path="/secure/account/order/:id" component={OrderPage} />
 							<PrivateRoute path="/secure/checkout/placeorder" component={PlaceOrderPage} />
 							{/* <PrivateRoute

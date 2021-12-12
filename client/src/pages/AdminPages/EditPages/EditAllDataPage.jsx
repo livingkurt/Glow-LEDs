@@ -109,7 +109,6 @@ const EditAllDataPage = (props) => {
 		'features',
 		'expenses',
 		'emails',
-		'devices',
 		'contents',
 		'carts',
 		'affiliates',

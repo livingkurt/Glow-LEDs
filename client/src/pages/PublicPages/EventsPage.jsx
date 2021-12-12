@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-
-import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { API_External } from '../../utils';
 import { Loading } from '../../components/UtilityComponents';
@@ -59,22 +57,6 @@ const EventsPage = (props) => {
 			>
 				{going ? 'Show All Festivals' : 'Show Going Festivals'}
 			</button>
-			{/* {loading_checkboxes ? (
-				<div>Loading...</div>
-			) : (
-				<li className="w-100per row">
-					<label htmlFor="save">{going ? 'Show All Festivals' : 'Show Going Festivals'}</label>
-					<input
-						type="checkbox"
-						name="save"
-						defaultChecked={going}
-						id="save"
-						onChange={(e) => {
-							set_going(e.target.checked);
-						}}
-					/>
-				</li>
-			)} */}
 			<h1 style={{ textAlign: 'center' }}>US Festivals</h1>
 			<ul>
 				{!going &&

@@ -9,8 +9,6 @@ export { default as affiliate_controller } from './affiliate_controller';
 export { default as promo_controller } from './promo_controller';
 export { default as cart_controller } from './cart_controller';
 export { default as content_controller } from './content_controller';
-export { default as device_controller } from './device_controller';
-export { default as log_controller } from './log_controller';
 export { default as chip_controller } from './chip_controller';
 export { default as team_controller } from './team_controller';
 export { default as shipping_controller } from './shipping_controller';

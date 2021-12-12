@@ -9,8 +9,6 @@ export { default as affiliate_db } from './affiliate_db';
 export { default as promo_db } from './promo_db';
 export { default as cart_db } from './cart_db';
 export { default as content_db } from './content_db';
-export { default as device_db } from './device_db';
-export { default as log_db } from './log_db';
 export { default as chip_db } from './chip_db';
 export { default as team_db } from './team_db';
 export { default as shipping_db } from './shipping_db';

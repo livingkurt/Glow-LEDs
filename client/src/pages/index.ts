@@ -50,8 +50,6 @@ export { default as MonthExpensesPage } from './AdminPages/MonthExpensesPage';
 export { default as OrderCombinerPage } from './AdminPages/OrderCombinerPage';
 
 export { default as EditProfilePage } from './PrivatePages/EditProfilePage';
-export { default as EditDevicePage } from './PrivatePages/EditDevicePage';
-export { default as GlowControlPage } from './PrivatePages/GlowControlPage';
 export { default as MyOrdersPage } from './PrivatePages/MyOrdersPage';
 export { default as OrderPage } from './PrivatePages/OrderPage';
 export { default as PlaceOrderPage } from './PrivatePages/PlaceOrderPage';

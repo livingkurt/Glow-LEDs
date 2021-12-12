@@ -9,8 +9,6 @@ export { default as affiliate_services } from './affiliate_services';
 export { default as promo_services } from './promo_services';
 export { default as cart_services } from './cart_services';
 export { default as content_services } from './content_services';
-export { default as device_services } from './device_services';
-export { default as log_services } from './log_services';
 export { default as chip_services } from './chip_services';
 export { default as team_services } from './team_services';
 export { default as shipping_services } from './shipping_services';
