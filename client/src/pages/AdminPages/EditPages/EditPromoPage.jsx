@@ -76,7 +76,7 @@ const EditPromoPage = (props) => {
 	);
 
 	const get_categories = async () => {
-		const { data } = await API_Products.get_all_categories();
+		const { data } = await API_Products.findAll_products_a({ limit: 0, page: 1 });
 		console.log(data);
 		set_categories(data);
 	};

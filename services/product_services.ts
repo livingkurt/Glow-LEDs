@@ -167,35 +167,6 @@ export default {
 		}
 	},
 
-	get_all_categories_products_s: async (params: any) => {
-		try {
-			const sort = {};
-			const filter = { deleted: false };
-			const limit = 0;
-			const page = 1;
-			const products = await product_db.findAll_products_db(filter, sort, limit, page);
-			const categories = products.map((product: any) => product.category);
-			return categories.filter((value: any, index: any) => categories.indexOf(value) === index);
-		} catch (error) {
-			console.log({ findById_products_s_error: error });
-			throw new Error(error.message);
-		}
-	},
-	get_all_subcategories_products_s: async (body: any) => {
-		try {
-			const sort = {};
-			const filter = { deleted: false };
-			const limit = 0;
-			const page = 1;
-			const products = await product_db.findAll_products_db(filter, sort, limit, page);
-			const subcategories = products.map((product: any) => product.subcategory);
-			return subcategories.filter((value: any, index: any) => subcategories.indexOf(value) === index);
-		} catch (error) {
-			console.log({ create_products_s_error: error });
-			throw new Error(error.message);
-		}
-	},
-
 	update_stock_products_s: async (params: any, body: any) => {
 		const { cartItems } = body;
 		const save_product = async (id: string, qty: number) => {
@@ -203,12 +174,10 @@ export default {
 				id,
 				qty
 			});
-			// const product: any = await Product.findOne({ _id: id });
 			const product: any = await product_db.findById_products_db(id);
 			const new_count = product.count_in_stock - qty;
 			console.log({ id, new_count });
 			if (product.finite_stock) {
-				// console.log({ finite_stock: 'Hello' });
 				if (new_count <= 0) {
 					product.quantity = 30;
 					product.count_in_stock = 0;
@@ -219,22 +188,15 @@ export default {
 					product.count_in_stock = new_count;
 				}
 				console.log({ product });
-				// return await Product.updateOne({ _id: id }, product);
 				return await product_db.update_products_db(product._id, product);
 				// const request = await product.save();
 			}
 		};
 		try {
 			cartItems.forEach(async (item: any) => {
-				// console.log({ item });
-
 				if (item.finite_stock) {
 					return save_product(item.product, item.qty);
 				} else if (item.option_product) {
-					// console.log({
-					// 	update_stock: item.name,
-					// 	name: 'Refresh Pack (6 Supreme Pairs + 120 Batteries)'
-					// });
 					if (item.name === 'Refresh Pack (6 Supreme Pairs + 120 Batteries)') {
 						return save_product(item.option_product, 6 * item.qty);
 					} else {

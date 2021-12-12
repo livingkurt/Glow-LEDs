@@ -6,7 +6,7 @@ import { Loading, Notification } from '../../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { Search, Sort } from '../../../components/SpecialtyComponents';
 import { API_Products } from '../../../utils';
-import { snake_case } from '../../../utils/helper_functions';
+import { categories, snake_case, subcategories } from '../../../utils/helper_functions';
 const fetch = require('node-fetch');
 
 const CategorysPage = (props) => {
@@ -103,9 +103,7 @@ const CategorysPage = (props) => {
 	};
 
 	const create_categories = async () => {
-		const { data } = await API_Products.get_all_categories();
-		console.log({ data });
-		data.filter((category) => category !== null).forEach((category) => {
+		categories.filter((category) => category !== null).forEach((category) => {
 			dispatch(
 				saveCategory({
 					name: category,
@@ -120,9 +118,7 @@ const CategorysPage = (props) => {
 	};
 
 	const create_subcategories = async () => {
-		const { data } = await API_Products.get_all_subcategories();
-		console.log({ data });
-		data.filter((category) => category !== null).forEach((category) => {
+		subcategories.filter((category) => category !== null).forEach((category) => {
 			dispatch(
 				saveCategory({
 					name: category,

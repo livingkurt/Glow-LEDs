@@ -7,8 +7,6 @@ const router = express.Router();
 router.route('/best_sellers').post(product_controller.get_best_sellers_products_c);
 router.route('/essentials').get(product_controller.get_essentials_products_c);
 
-router.route('/get_all_categories').get(product_controller.get_all_categories_products_c);
-router.route('/get_all_subcategories').get(product_controller.get_all_subcategories_products_c);
 router.route('/update_stock').put(product_controller.update_stock_products_c);
 router.route('/update_product_order').put(product_controller.update_product_order_products_c);
 router.route('/save_item_group_id').put(product_controller.save_item_group_id_products_c);

@@ -149,9 +149,9 @@ const ProductPage = (props) => {
 			set_quantity(item.quantity);
 			set_count_in_stock(item.count_in_stock);
 			if (item.count_in_stock === 0) {
-				// set_preorder(true);
+				set_preorder(true);
 			} else {
-				// set_preorder(false);
+				set_preorder(false);
 			}
 			set_name(item.name);
 			set_description(item.description);
@@ -337,9 +337,9 @@ const ProductPage = (props) => {
 			set_sale_price(option.sale_price);
 		}
 		if (option.count_in_stock === 0) {
-			// set_preorder(true);
+			set_preorder(true);
 		} else {
-			// set_preorder(false);
+			set_preorder(false);
 		}
 		if (option.quantity) {
 			set_quantity(option.quantity);
@@ -561,9 +561,9 @@ const ProductPage = (props) => {
 			set_size(option.size);
 		}
 		if (option.count_in_stock === 0) {
-			// set_preorder(true);
+			set_preorder(true);
 		} else {
-			// set_preorder(false);
+			set_preorder(false);
 		}
 		// else {
 		// 	set_size(option.name);

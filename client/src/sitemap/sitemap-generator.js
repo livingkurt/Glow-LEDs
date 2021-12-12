@@ -6,14 +6,59 @@ const router = require('./sitemap-routes').default;
 const Sitemap = require('react-router-sitemap').default;
 const fetch = require('node-fetch');
 const API = 'http://localhost:5000';
+export const categories = [
+	'gloves',
+	'accessories',
+	'decals',
+	'diffuser_caps',
+	'diffusers',
+	'exo_diffusers',
+	'glow_casings',
+	'glow_strings',
+	'glowskins'
+];
+export const subcategories = [
+	'whites',
+	'refresh',
+	'battery_storage',
+	'batteries',
+	'stickers',
+	'clips',
+	'casings',
+	'universal',
+	'batman',
+	'outline',
+	'patterns',
+	'abstract',
+	'shapes',
+	'diffuser_adapters',
+	'geometric',
+	'starter_kit',
+	'sacred_geometry',
+	'imperfect',
+	'domes',
+	'closed_hole',
+	'fisheye',
+	'open_hole',
+	'polygons',
+	'cylinders',
+	'polyhedrons',
+	'gift_card',
+	'nova',
+	'classics',
+	'novaskins',
+	'alt_novaskins',
+	'symbols',
+	'emoji',
+	'custom',
+	'colors',
+	'sizes',
+	'secondary_colors'
+];
 
 async function generateSitemap() {
 	let products_res = await fetch(API + '/api/products/');
 	let products = await products_res.json();
-	let categories_res = await fetch(API + '/api/products/get_all_categories');
-	let categories = await categories_res.json();
-	let subcategories_res = await fetch(API + '/api/products/get_all_subcategories');
-	let subcategories = await subcategories_res.json();
 
 	let productMap = products.filter((product) => product.hidden === false).map((product) => {
 		return { pathname: product.pathname };

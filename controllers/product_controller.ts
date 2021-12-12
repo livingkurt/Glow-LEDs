@@ -96,33 +96,6 @@ export default {
 			res.status(500).send({ error, message: 'Error Updating Product' });
 		}
 	},
-	get_all_categories_products_c: async (req: any, res: any) => {
-		const { params } = req;
-		try {
-			const product = await product_services.get_all_categories_products_s(params);
-			console.log({ product });
-			if (product) {
-				return res.status(200).send(product);
-			}
-			return res.status(404).send({ message: 'Product Not Found' });
-		} catch (error) {
-			console.log({ findById_products_c_error: error });
-			res.status(500).send({ error, message: 'Error Finding Product' });
-		}
-	},
-	get_all_subcategories_products_c: async (req: any, res: any) => {
-		const { body } = req;
-		try {
-			const product = await product_services.get_all_subcategories_products_s(body);
-			if (product) {
-				return res.status(201).send(product);
-			}
-			return res.status(500).send({ message: 'Error Creating Product' });
-		} catch (error) {
-			console.log({ create_products_c_error: error });
-			res.status(500).send({ error, message: 'Error Creating Product' });
-		}
-	},
 	update_stock_products_c: async (req: any, res: any) => {
 		const { params, body } = req;
 		try {

@@ -4,7 +4,7 @@ import { Link, useHistory } from 'react-router-dom';
 
 // import { Chart, CategoryScale } from 'chart.js';
 import { Bar, Pie } from 'react-chartjs-2';
-import { hslToHex, humanize, toCapitalize } from '../../utils/helper_functions';
+import { hslToHex, humanize, toCapitalize, categories, subcategories } from '../../utils/helper_functions';
 import { API_Orders, API_Products } from '../../utils';
 import { useSelector, useDispatch } from 'react-redux';
 import { Helmet } from 'react-helmet';
@@ -27,7 +27,6 @@ const MonthExpensesPage = (props) => {
 	const [ website, set_website ] = useState({});
 	const [ shipping, set_shipping ] = useState({});
 	const [ equipment, set_equipment ] = useState({});
-	const [ categories, set_categories ] = useState([]);
 	const [ canScroll, setCanScroll ] = useState(false);
 	const affiliateList = useSelector((state) => state.affiliateList);
 	const { affiliates, loading: loading_affiliates, error_affiliates } = affiliateList;
@@ -70,18 +69,11 @@ const MonthExpensesPage = (props) => {
 		let clean = true;
 		if (clean) {
 			calculate_expenses(props.match.params.month);
-			get_all_categories();
 			dispatch(listAffiliates({}));
 			dispatch(listPromos({}));
 		}
 		return () => (clean = false);
 	}, []);
-
-	const get_all_categories = async () => {
-		const { data } = await API_Products.get_all_categories();
-		// console.log({ data });
-		set_categories(data.filter((category) => category.length > 0));
-	};
 
 	const calculate_expenses = (new_month) => {
 		console.log({ new_month });
@@ -175,14 +167,12 @@ const MonthExpensesPage = (props) => {
 		set_month(e.target.value);
 		history.push('/secure/glow/controlpanel/monthly_expenes/' + year + '/' + e.target.value);
 		calculate_expenses(e.target.value.toLowerCase());
-		get_all_categories();
 	};
 	const switch_year = (e) => {
 		e.preventDefault();
 		set_year(e.target.value);
 		history.push('/secure/glow/controlpanel/monthly_expenes/' + e.target.value + '/' + month);
 		calculate_expenses(month);
-		get_all_categories();
 	};
 
 	const [ affiliate_colors, set_affiliate_colors ] = useState([]);

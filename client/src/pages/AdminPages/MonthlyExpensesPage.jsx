@@ -568,29 +568,6 @@ const MonthlyExpensesPage = (props) => {
 	};
 	const history = useHistory();
 
-	// const switch_year = (e) => {
-	// 	// history('')
-	// 	get_monthly_income();
-	// 	// set_year(e.target.value);
-	// };
-	// const switch_month = (e) => {
-	// 	// history('')
-	// 	get_monthly_income();
-	// 	// set_month(e.target.value);
-	// };
-
-	// const switch_month = (e) => {
-	// 	e.preventDefault();
-	// 	set_month(e.target.value);
-	// 	calculate_expenses(e.target.value.toLowerCase());
-	// 	get_all_categories();
-	// };
-	// const switch_year = (e) => {
-	// 	e.preventDefault();
-	// 	set_year(year);
-	// 	get_monthly_income(year);
-	// };
-
 	const switch_year = (e) => {
 		e.preventDefault();
 		set_year(e.target.value);
