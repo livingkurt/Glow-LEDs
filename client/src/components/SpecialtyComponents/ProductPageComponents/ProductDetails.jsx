@@ -70,50 +70,52 @@ const ProductDetails = ({ product, manuals, description, included_items, pathnam
 						{description}
 					</ReadMore>
 				</TabPanel>
-				<TabPanel style={{ borderRadius: '0px 10px 10px 10px' }}>
-					<div className="order-list responsive_table">
-						<h2 className="ta-c w-100per jc-c">Supreme Sizing</h2>
-						<p className="w-100per jc-c">
-							{' '}
-							<label className="jc-c title_font mr-10px">Hand Length:</label>{' '}
-							<label>Measures from Base of Palm to Tip of the Middle Finger</label>
-						</p>
-						<p className="w-100per jc-c">
-							<label className=" jc-c title_font mr-10px">Hand Width:</label>{' '}
-							<label>Across the middle of the palm not including Thumb</label>
-						</p>
-						<p className="w-100per jc-c">
-							<label className=" jc-c title_font mr-10px">Note:</label>{' '}
-							<label>All Measurments are in inches</label>
-						</p>
-						<table className="styled-table">
-							<thead>
-								<tr>
-									<th>Size</th>
-									<th>Hand Length</th>
-									<th>Hand Width</th>
-								</tr>
-							</thead>
-							<tbody>
-								{sizing.map((size) => (
-									<tr
-										style={{
-											backgroundColor: '#d1d1d1',
-											fontSize: '16px',
-											height: '50px',
-											color: '#4d5061'
-										}}
-										className=""
-									>
-										<th style={{ width: '10px' }}>{size.size}</th>
-										<th style={{ width: '10px' }}>{size.hand_length}</th>
-										<th style={{ width: '10px' }}>{size.hand_width}</th>
+				{(product.name === 'Supremes' || product.name === 'Refresh Pack (6 Supreme Pairs + 120 Batteries)') && (
+					<TabPanel style={{ borderRadius: '0px 10px 10px 10px' }}>
+						<div className="order-list responsive_table">
+							<h2 className="ta-c w-100per jc-c">Supreme Sizing</h2>
+							<p className="w-100per jc-c">
+								{' '}
+								<label className="jc-c title_font mr-10px">Hand Length:</label>{' '}
+								<label>Measures from Base of Palm to Tip of the Middle Finger</label>
+							</p>
+							<p className="w-100per jc-c">
+								<label className=" jc-c title_font mr-10px">Hand Width:</label>{' '}
+								<label>Across the middle of the palm not including Thumb</label>
+							</p>
+							<p className="w-100per jc-c">
+								<label className=" jc-c title_font mr-10px">Note:</label>{' '}
+								<label>All Measurments are in inches</label>
+							</p>
+							<table className="styled-table">
+								<thead>
+									<tr>
+										<th>Size</th>
+										<th>Hand Length</th>
+										<th>Hand Width</th>
 									</tr>
-								))}
-							</tbody>
-						</table>
-					</div>
-				</TabPanel>
+								</thead>
+								<tbody>
+									{sizing.map((size) => (
+										<tr
+											style={{
+												backgroundColor: '#d1d1d1',
+												fontSize: '16px',
+												height: '50px',
+												color: '#4d5061'
+											}}
+											className=""
+										>
+											<th style={{ width: '10px' }}>{size.size}</th>
+											<th style={{ width: '10px' }}>{size.hand_length}</th>
+											<th style={{ width: '10px' }}>{size.hand_width}</th>
+										</tr>
+									))}
+								</tbody>
+							</table>
+						</div>
+					</TabPanel>
+				)}
 				<TabPanel>
 					<div className="mt-1rem">
 						<h2 className="m-0px mr-5px"> Included Items: </h2>
