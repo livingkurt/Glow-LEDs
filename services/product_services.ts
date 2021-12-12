@@ -104,7 +104,7 @@ export default {
 		try {
 			return await product_db.remove_products_db(params.pathname);
 		} catch (error) {
-			console.log({ remove_products_s_error: error });
+			console.log({ remove_surveys_s_error: error });
 			throw new Error(error.message);
 		}
 	},
@@ -250,42 +250,25 @@ export default {
 			});
 			return 'Success';
 		} catch (error) {
-			console.log({ update_stock_products_s_error: error });
+			console.log({ remove_surveys_s_error: error });
 			throw new Error(error.message);
 		}
 	},
 	update_product_order_products_s: async (params: any, body: any) => {
-		console.log({ products: body.products });
+		const { state } = body;
 		try {
-			// body.products.entities.columnOrder.map((columnId: any) => {
-			// 	const column = body.entities.columns[columnId];
-			// 	console.log({ column });
-			// // const products = column.product_ids.map((product_id, index) => body.entities.products[index]);
-			// const products: any = [];
-			// body.entities.products.forEach((a: any) => {
-			// 	products[column.product_ids.indexOf(a._id)] = a;
-			// });
-
-			// console.log({ products });
-			// products.forEach(async (item: any, index: string) => {
-			// 	const product_id = body.product._id;
-			// 	const order = body.order;
-			// 	console.log({ product_id });
-			// 	const product = await product_db.findById_products_db(product_id);
-			// 	console.log({ product });
-			// 	if (product) {
-			// 		return await product_db.update_products_db(product_id, { ...body.product, order: order });
-			// 	} else {
-			// 		console.log('Error in Updating Product.');
-			// 		throw new Error('Error in Updating Product.');
-			// 	}
-			// });
-			// });
-
-			// return await product_db.update_products_db(params.id, body);
-			return 'Success';
+			return state.entities.columnOrder.map((columnId: any) => {
+				const column = state.entities.columns[columnId];
+				const products: any = [];
+				state.entities.products.forEach(function(product: any) {
+					products[column.product_ids.indexOf(product._id)] = product;
+				});
+				products.forEach(async (item: any, index: any) => {
+					return await product_db.update_products_db(item._id, { ...item, order: index + 1 });
+				});
+			});
 		} catch (error) {
-			console.log({ update_product_order_products_s_error: error });
+			console.log({ remove_surveys_s_error: error });
 			throw new Error(error.message);
 		}
 	},
@@ -339,7 +322,7 @@ export default {
 				throw new Error('Product Not Found');
 			}
 		} catch (error) {
-			console.log({ remove_products_s_error: error });
+			console.log({ remove_surveys_s_error: error });
 			throw new Error(error.message);
 		}
 	}

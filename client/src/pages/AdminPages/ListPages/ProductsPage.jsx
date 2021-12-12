@@ -77,6 +77,7 @@ function ProductPage(props) {
 				}
 				if (query.limit) {
 					set_limit(query.limit);
+					limit = query.limit;
 				}
 			}
 			console.log({ category, subcategory, search, sort, filter, collection });
@@ -89,7 +90,7 @@ function ProductPage(props) {
 					sort,
 					collection,
 					page,
-					limit: 30,
+					limit,
 					hidden,
 					option
 				})
@@ -108,37 +109,23 @@ function ProductPage(props) {
 	};
 	const sort_options = [ 'Category', 'Newest', 'Lowest', 'Highest', 'Hidden' ];
 
-	// const update_order = () => {
-	// 	set_loading_upload(true);
-	// 	console.log({ products: state.entities.products });
-	// 	state.entities.products.forEach(async (item, index) => {
-	// 		const update_product_order = await API_Products.update_product_order(item, index + 1);
-	// 		console.log({ update_product_order });
-	// 	});
-	// 	dispatch(listProducts());
-	// 	set_loading_upload(false);
-	// };
 	const update_order = async () => {
 		set_loading_upload(true);
-
+		console.log({ state });
 		const { data } = await API_Products.update_product_order(state);
-		// state.entities.columnOrder.map((columnId) => {
-		// 	const column = state.entities.columns[columnId];
-		// 	console.log({ column });
-		// 	// const products = column.product_ids.map((product_id, index) => state.entities.products[index]);
-		// 	let products = [];
-		// 	state.entities.products.forEach(function(a) {
-		// 		products[column.product_ids.indexOf(a._id)] = a;
-		// 	});
-
-		// 	console.log({ products });
-		// 	products.forEach(async (item, index) => {
-		// 		const update_product_order = await API_Products.update_product_order(item, index + 1);
-		// 		console.log({ update_product_order });
-		// 	});
-		// });
-		// dispatch(listProducts({}));
-		set_loading_upload(false);
+		if (data) {
+			dispatch(
+				listProducts({
+					category,
+					subcategory,
+					search,
+					sort,
+					page,
+					limit
+				})
+			);
+			set_loading_upload(false);
+		}
 	};
 
 	const colors = [
@@ -290,7 +277,7 @@ function ProductPage(props) {
 		let sort = '';
 		let filter = '';
 		let collection = props.match.params.collection ? props.match.params.collection : '';
-		let limit = 30;
+
 		let hidden = true;
 		let option = false;
 		console.log({ e, new_page });
@@ -587,10 +574,33 @@ function ProductPage(props) {
 					<button className="btn primary h-35px" onClick={() => update_product_catelog()}>
 						Update Product Catalog
 					</button>
+					<Link to="/secure/glow/products?page=1?limit=500">
+						<button
+							className="btn primary h-35px "
+							onClick={() => {
+								set_show_hidden(true);
+								set_limit(500);
+								dispatch(
+									listProducts({
+										category,
+										subcategory,
+										search,
+										sort,
+										page,
+										limit: 500
+									})
+								);
+							}}
+						>
+							Show All Products
+						</button>
+					</Link>
 
-					<button className="btn primary h-35px" onClick={update_order}>
-						Update Order
-					</button>
+					{show_hidden && (
+						<button className="btn primary h-35px" onClick={update_order}>
+							Update Order
+						</button>
+					)}
 					<Link to="/secure/glow/editproduct">
 						<button className="btn primary h-35px">Create Product</button>
 					</Link>

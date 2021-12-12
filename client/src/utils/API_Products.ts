@@ -17,9 +17,9 @@ const product_routes = {
 	get_all_subcategories: () => {
 		return axios.get('/api/products/get_all_subcategories');
 	},
-	update_product_order: (products: any) => {
+	update_product_order: (state: any) => {
 		// console.log({ update_product_order: { product, order } });
-		return axios.put('/api/products/update_product_order', { products });
+		return axios.put('/api/products/update_product_order', { state });
 	},
 	// update_product_order: (product: any, order: any) => {
 	// 	// console.log({ update_product_order: { product, order } });
