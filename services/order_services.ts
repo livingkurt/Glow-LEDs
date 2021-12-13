@@ -1,5 +1,5 @@
-import { order_db, user_db } from '../db';
-import { dates_in_year } from '../util';
+import { affiliate_db, order_db, user_db } from '../db';
+import { dates_in_year, toCapitalize } from '../util';
 const scraper = require('table-scraper');
 
 const today = new Date();
@@ -270,19 +270,62 @@ export default {
 			throw new Error(error.message);
 		}
 	},
-	promo_code_usage_orders_s: async () => {
+	promo_code_usage_orders_s: async (params: any) => {
 		try {
-			const updatedSalesTaxes = 'http://www.salestaxinstitute.com/resources/rates';
-			const result: any = {};
-
-			const tableData = await scraper.get(updatedSalesTaxes);
-
-			const tempData = tableData[0];
-			tempData.map((state: any) => {
-				const percentage = state['State Rate'];
-				result[state['State']] = percentage.slice(0, percentage.indexOf('%') + 1);
+			const affiliates = await affiliate_db.findAll_affiliates_db({ deleted: false, active: true }, {});
+			const sort = {};
+			let filter = {};
+			if (params.days === 0) {
+				filter = { deleted: false, isPaid: true };
+			} else {
+				filter = {
+					deleted: false,
+					createdAt: {
+						$gte: new Date(<any>new Date() - params.days * 60 * 60 * 24 * 1000)
+					}
+				};
+			}
+			const limit = 0;
+			const page = 1;
+			const orders = await order_db.findAll_orders_db(filter, sort, limit, page);
+			const affiliates_w_inkybois = [ ...affiliates, { promo_code: 'inkybois' } ];
+			const rows = affiliates_w_inkybois.map((affiliate: any) => {
+				return {
+					'Promo Code': toCapitalize(affiliate.public_code.promo_code),
+					Uses: orders.filter((order: any) => {
+						return (
+							order.promo_code &&
+							order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
+						);
+					}).length,
+					Revenue: ` $${orders
+						.filter(
+							(order: any) =>
+								order.promo_code &&
+								order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
+						)
+						.reduce((a: any, order: any) => a + order.totalPrice - order.taxPrice, 0)
+						.toFixed(2)}`,
+					Earned: `${affiliate.promoter
+						? orders
+								.filter(
+									(order: any) =>
+										order.promo_code &&
+										order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
+								)
+								.reduce((a: any, order: any) => a + (order.totalPrice - order.taxPrice) * 0.1, 0)
+								.toFixed(2)
+						: orders
+								.filter(
+									(order: any) =>
+										order.promo_code &&
+										order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
+								)
+								.reduce((a: any, order: any) => a + (order.totalPrice - order.taxPrice) * 0.15, 0)
+								.toFixed(2)}`
+				};
 			});
-			return result;
+			return rows;
 		} catch (error) {
 			console.log({ remove_orders_s_error: error });
 			throw new Error(error.message);

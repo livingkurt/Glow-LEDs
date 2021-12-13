@@ -35,17 +35,13 @@ const affiliate_revenue_upload = async () => {
 		await sheet.clear();
 		await sheet.setHeaderRow([ 'Promo Code', 'Uses', 'Revenue', 'Earned' ]);
 
-		let total_promo_code_usage: any;
-		let total_affiliate_revenue: any;
-
 		// const { data: last_month_orders } = await axios.get(
 		// 	'https://glow-leds-dev.herokuapp.com/api/orders/last_months_orders'
 		// );
-		const { data: last_month_orders } = await axios.get('https://www.glow-leds.com/api/orders/previous_income/30');
-		const { data: orders } = await axios.get('https://www.glow-leds.com/api/orders?limit=0');
-		const { data: affiliates } = await axios.get('https://www.glow-leds.com/api/affiliates');
+		const { data: last_months_rows } = await axios.get('https://www.glow-leds.com/api/orders/promo_code_usage/30');
+		const { data: total_rows } = await axios.get('https://www.glow-leds.com/api/orders/promo_code_usage/0');
 
-		const affiliates_w_inkybois = [ ...affiliates, { promo_code: 'inkybois' } ];
+		// const affiliates_w_inkybois = [ ...affiliates, { promo_code: 'inkybois' } ];
 		// console.log({ last_month_orders });
 
 		// const get_total = () => {
@@ -71,82 +67,82 @@ const affiliate_revenue_upload = async () => {
 		// 	total_affiliate_revenue = revenue.reduce((a: string, c: string) => parseFloat(a) + parseFloat(c), 0);
 		// 	console.log({ revenue });
 		// };
-		const toCapitalize = (string: string) => {
-			return string.charAt(0).toUpperCase() + string.toLowerCase().slice(1);
-		};
+		// const toCapitalize = (string: string) => {
+		// 	return string.charAt(0).toUpperCase() + string.toLowerCase().slice(1);
+		// };
 
-		const last_months_rows = affiliates_w_inkybois.map((affiliate: any) => {
-			return {
-				'Promo Code': toCapitalize(affiliate.public_code.promo_code),
-				Uses: last_month_orders.filter((order: any) => {
-					return (
-						order.promo_code &&
-						order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
-					);
-				}).length,
-				Revenue: ` $${last_month_orders
-					.filter(
-						(order: any) =>
-							order.promo_code &&
-							order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
-					)
-					.reduce((a: any, order: any) => a + order.totalPrice - order.taxPrice, 0)
-					.toFixed(2)}`,
-				Earned: `${affiliate.promoter
-					? last_month_orders
-							.filter(
-								(order: any) =>
-									order.promo_code &&
-									order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
-							)
-							.reduce((a: any, order: any) => a + (order.totalPrice - order.taxPrice) * 0.1, 0)
-							.toFixed(2)
-					: last_month_orders
-							.filter(
-								(order: any) =>
-									order.promo_code &&
-									order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
-							)
-							.reduce((a: any, order: any) => a + (order.totalPrice - order.taxPrice) * 0.15, 0)
-							.toFixed(2)}`
-			};
-		});
-		const total_rows = affiliates_w_inkybois.map((affiliate: any) => {
-			return {
-				'Promo Code': toCapitalize(affiliate.public_code.promo_code),
-				Uses: orders.filter((order: any) => {
-					return (
-						order.promo_code &&
-						order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
-					);
-				}).length,
-				Revenue: ` $${orders
-					.filter(
-						(order: any) =>
-							order.promo_code &&
-							order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
-					)
-					.reduce((a: any, order: any) => a + order.totalPrice - order.taxPrice, 0)
-					.toFixed(2)}`,
-				Earned: `${affiliate.promoter
-					? orders
-							.filter(
-								(order: any) =>
-									order.promo_code &&
-									order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
-							)
-							.reduce((a: any, order: any) => a + (order.totalPrice - order.taxPrice) * 0.1, 0)
-							.toFixed(2)
-					: orders
-							.filter(
-								(order: any) =>
-									order.promo_code &&
-									order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
-							)
-							.reduce((a: any, order: any) => a + (order.totalPrice - order.taxPrice) * 0.15, 0)
-							.toFixed(2)}`
-			};
-		});
+		// const last_months_rows = affiliates_w_inkybois.map((affiliate: any) => {
+		// 	return {
+		// 		'Promo Code': toCapitalize(affiliate.public_code.promo_code),
+		// 		Uses: last_month_orders.filter((order: any) => {
+		// 			return (
+		// 				order.promo_code &&
+		// 				order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
+		// 			);
+		// 		}).length,
+		// 		Revenue: ` $${last_month_orders
+		// 			.filter(
+		// 				(order: any) =>
+		// 					order.promo_code &&
+		// 					order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
+		// 			)
+		// 			.reduce((a: any, order: any) => a + order.totalPrice - order.taxPrice, 0)
+		// 			.toFixed(2)}`,
+		// 		Earned: `${affiliate.promoter
+		// 			? last_month_orders
+		// 					.filter(
+		// 						(order: any) =>
+		// 							order.promo_code &&
+		// 							order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
+		// 					)
+		// 					.reduce((a: any, order: any) => a + (order.totalPrice - order.taxPrice) * 0.1, 0)
+		// 					.toFixed(2)
+		// 			: last_month_orders
+		// 					.filter(
+		// 						(order: any) =>
+		// 							order.promo_code &&
+		// 							order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
+		// 					)
+		// 					.reduce((a: any, order: any) => a + (order.totalPrice - order.taxPrice) * 0.15, 0)
+		// 					.toFixed(2)}`
+		// 	};
+		// });
+		// const total_rows = affiliates_w_inkybois.map((affiliate: any) => {
+		// 	return {
+		// 		'Promo Code': toCapitalize(affiliate.public_code.promo_code),
+		// 		Uses: orders.filter((order: any) => {
+		// 			return (
+		// 				order.promo_code &&
+		// 				order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
+		// 			);
+		// 		}).length,
+		// 		Revenue: ` $${orders
+		// 			.filter(
+		// 				(order: any) =>
+		// 					order.promo_code &&
+		// 					order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
+		// 			)
+		// 			.reduce((a: any, order: any) => a + order.totalPrice - order.taxPrice, 0)
+		// 			.toFixed(2)}`,
+		// 		Earned: `${affiliate.promoter
+		// 			? orders
+		// 					.filter(
+		// 						(order: any) =>
+		// 							order.promo_code &&
+		// 							order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
+		// 					)
+		// 					.reduce((a: any, order: any) => a + (order.totalPrice - order.taxPrice) * 0.1, 0)
+		// 					.toFixed(2)
+		// 			: orders
+		// 					.filter(
+		// 						(order: any) =>
+		// 							order.promo_code &&
+		// 							order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
+		// 					)
+		// 					.reduce((a: any, order: any) => a + (order.totalPrice - order.taxPrice) * 0.15, 0)
+		// 					.toFixed(2)}`
+		// 	};
+		// });
 
 		await sheet.addRows(total_rows);
 		await sheet.saveUpdatedCells();

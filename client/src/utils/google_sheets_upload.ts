@@ -143,8 +143,6 @@ export const top_earner_upload = async (affiliates: any, orders: any, last_month
 		await sheet.clear();
 		await sheet.setHeaderRow([ 'Promo Code', 'Uses', 'Revenue', 'Earned' ]);
 
-		// const affiliates_w_inkybois = [ ..affiliates, { public_code: { promo_code: 'inkybois' } } ];
-
 		const toCapitalize = (string: string) => {
 			return string.charAt(0).toUpperCase() + string.toLowerCase().slice(1);
 		};
@@ -294,12 +292,6 @@ export const promoter_revenue_upload = async (affiliates: any, orders: any, last
 		await sheet.clear();
 		await sheet.setHeaderRow([ 'Promo Code', 'Uses', 'Revenue', 'Earned' ]);
 
-		// const affiliates_w_inkybois = [ ..affiliates, { public_code: { promo_code: 'inkybois' } } ];
-
-		const toCapitalize = (string: string) => {
-			return string.charAt(0).toUpperCase() + string.toLowerCase().slice(1);
-		};
-
 		const last_months_rows = calculate_affiliate_usage(
 			affiliates.filter((affiliate: any) => affiliate.promoter).filter((affiliate: any) => affiliate.active),
 			last_months_orders
@@ -384,8 +376,6 @@ export const sponsor_revenue_upload = async (affiliates: any, orders: any, last_
 
 		await sheet.clear();
 		await sheet.setHeaderRow([ 'Promo Code', 'Uses', 'Revenue', 'Earned' ]);
-
-		// const affiliates_w_inkybois = [ ..affiliates, { public_code: { promo_code: 'inkybois' } } ];
 
 		const last_months_rows = calculate_sponsor_usage(
 			affiliates.filter((affiliate: any) => affiliate.sponsor).filter((affiliate: any) => affiliate.active),
@@ -473,8 +463,6 @@ export const team_revenue_upload = async (teams: any, orders: any, last_months_o
 		await sheet.setHeaderRow([ 'Promo Code', 'Uses', 'Revenue', 'Team Earned', 'Individual Earned' ]);
 
 		console.log({ teams });
-
-		// const affiliates_w_inkybois = [ ..affiliates, { public_code: { promo_code: 'inkybois' } } ];
 
 		const toCapitalize = (string: string) => {
 			return string.charAt(0).toUpperCase() + string.toLowerCase().slice(1);

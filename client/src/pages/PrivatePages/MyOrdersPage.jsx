@@ -1,5 +1,5 @@
-import React, { useEffect, useCallback, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { listMyOrders } from '../../actions/orderActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Loading } from '../../components/UtilityComponents';
@@ -8,7 +8,6 @@ import { Order, OrderListItem, OrderSmallScreen } from '../../components/Special
 import { check_authentication } from '../../utils/react_helper_functions';
 
 const UserOrderPage = (props) => {
-	const history = useHistory();
 	const dispatch = useDispatch();
 
 	const [ block_list_view, set_block_list_view ] = useState(false);
@@ -18,20 +17,6 @@ const UserOrderPage = (props) => {
 
 	const myOrderList = useSelector((state) => state.myOrderList);
 	const { loading, orders, error } = myOrderList;
-
-	// useEffect(
-	// 	() => {
-	// 		let clean = true;
-	// 		if (clean) {
-	// 			if (error) {
-	// 				check_authentication();
-	// 				dispatch(listMyOrders());
-	// 			}
-	// 		}
-	// 		return () => (clean = false);
-	// 	},
-	// 	[ error ]
-	// );
 
 	useEffect(() => {
 		let clean = true;
@@ -56,7 +41,6 @@ const UserOrderPage = (props) => {
 		{ name: 'Packaged', color: '#6f5f7d' },
 		{ name: 'Shipped', color: '#636363' },
 		{ name: 'Delivered', color: '#333333' }
-		// { name: 'Refunded', color: '#a9a9a9' }
 	];
 
 	const determine_color = (order) => {
@@ -79,10 +63,6 @@ const UserOrderPage = (props) => {
 		if (order.isDelivered) {
 			result = colors[5].color;
 		}
-		// if (order.isRefunded) {
-		// 	result = colors[6].color;
-		// }
-		// console.log(result);
 		return result;
 	};
 

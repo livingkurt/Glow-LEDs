@@ -10,10 +10,6 @@ const order_routes = {
 	top_customers: () => {
 		return axios.get('/api/orders/top_customers');
 	},
-	// monthly_income: (dates: any) => {
-	// 	console.log({ dates });
-	// 	return axios.get('/api/orders/monthly_income', {dates});
-	// },
 	specific_time_income: (date_1: string, date_2: string) => {
 		return axios.put('/api/orders/specific_time_income', { date_1, date_2 });
 	},

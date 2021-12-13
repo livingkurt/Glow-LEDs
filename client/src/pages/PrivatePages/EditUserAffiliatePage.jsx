@@ -173,9 +173,6 @@ const EditUserAffiliatePage = (props) => {
 				instagram_handle,
 				facebook_name,
 				tiktok,
-				// promo_code: promo_code ? promo_code : artist_name && artist_name.toLowerCase(),
-				// public_code: ,
-				// private_code,
 				active,
 				bio,
 				link,
@@ -194,11 +191,6 @@ const EditUserAffiliatePage = (props) => {
 
 		e.target.reset();
 		unset_state();
-		// if (props.match.params.id) {
-		// 	history.push('/secure/account/profile');
-		// } else {
-		// 	// history.push('/secure/account/affiliate_sign_up_complete');
-		// }
 	};
 
 	useEffect(
@@ -209,7 +201,6 @@ const EditUserAffiliatePage = (props) => {
 					if (props.match.params.id) {
 						history.push('/secure/account/profile');
 					} else {
-						// history.push('/secure/account/affiliate_sign_up_complete');
 						console.log({ affiliate_saved });
 						history.push('/account/affiliate/receipt/' + affiliate_saved.data.pathname + '/affiliate/true');
 					}
@@ -233,106 +224,6 @@ const EditUserAffiliatePage = (props) => {
 		[ userInfo ]
 	);
 
-	const add_product = (e) => {
-		e.preventDefault();
-		const product_object = JSON.parse(e.target.value);
-		if (products) {
-			console.log('products.length > 0');
-			set_products((products) => [ ...products, product_object ]);
-		} else {
-			console.log('products.length === 0');
-			set_products([ product_object ]);
-		}
-
-		set_product('');
-	};
-
-	const remove_product = (product_index, e) => {
-		e.preventDefault();
-		set_products((products) =>
-			products.filter((product, index) => {
-				return product_index !== index;
-			})
-		);
-	};
-
-	const product_display = (products) => {
-		return (
-			<div>
-				<div className="jc-b">
-					<div>
-						{products &&
-							products.map((product, index) => {
-								return (
-									<div className="promo_code mv-1rem row jc-b max-w-55rem w-100per" key={index}>
-										<div>
-											<button className="btn icon" onClick={(e) => remove_product(index, e)}>
-												<i className="fas fa-times mr-5px" />
-											</button>
-											{product.name}
-										</div>
-									</div>
-								);
-							})}
-					</div>
-				</div>
-			</div>
-		);
-	};
-
-	const add_chip = (e) => {
-		e.preventDefault();
-		const chip_object = JSON.parse(e.target.value);
-		// console.log(chip);
-		// if (chip.indexOf(' ') >= 0) {
-		// 	console.log('indexOf');
-		// 	chip.split(' ').map((chip) => {
-		// 		set_chips((chips) => [ ...chips, chip ]);
-		// 	});
-		// } else
-		if (chips) {
-			console.log('chips.length > 0');
-			set_chips((chips) => [ ...chips, chip_object ]);
-		} else {
-			console.log('chips.length === 0');
-			set_chips([ chip_object ]);
-		}
-
-		set_chip('');
-	};
-
-	const remove_chip = (chip_index, e) => {
-		e.preventDefault();
-		set_chips((chips) =>
-			chips.filter((chip, index) => {
-				return chip_index !== index;
-			})
-		);
-	};
-	const chip_display = (chips) => {
-		return (
-			<div>
-				<div className="jc-b">
-					<div>
-						{chips &&
-							chips.map((chip, index) => {
-								return (
-									<div className="promo_code mv-1rem row jc-b max-w-55rem w-100per" key={index}>
-										<div>
-											<button className="btn icon" onClick={(e) => remove_chip(index, e)}>
-												<i className="fas fa-times mr-5px" />
-											</button>
-											{chip.name}
-										</div>
-									</div>
-								);
-							})}
-					</div>
-				</div>
-			</div>
-		);
-	};
-
 	return (
 		<div className="main_container p-20px">
 			<h1 style={{ textAlign: 'center' }}>{props.match.params.id ? 'Update Affiliate' : 'Affiliate Sign Up'}</h1>
@@ -355,41 +246,6 @@ const EditUserAffiliatePage = (props) => {
 								>
 									<div className="wrap jc-b">
 										<div className={`${width > 617 ? 'w-228px' : 'max-w-500px w-100per'}`}>
-											{/* <li>
-												<label htmlFor="user">User</label>
-												<input
-													type="text"
-													name="user"
-													value={user}
-													id="user"
-													onChange={(e) => set_user(e.target.value)}
-												/>
-											</li>
-											{users && (
-												<div className="ai-c h-25px mv-10px mb-30px jc-c">
-													<div className="custom-select w-100per">
-														<select
-															className="qty_select_dropdown w-100per"
-															// defaultValue={{
-															// 	label: user.first_name + ' ' + user.last_name,
-															// 	value: user._id
-															// }}
-															onChange={(e) => set_user(e.target.value)}
-														>
-															<option key={1} defaultValue="">
-																---Choose User---
-															</option>
-															{users.map((user, index) => (
-																<option key={index} value={user._id}>
-																	{user.first_name} {user.last_name}
-																</option>
-															))}
-														</select>
-														<span className="custom-arrow" />
-													</div>
-												</div>
-											)} */}
-
 											<li>
 												<label htmlFor="artist_name">Artist Name</label>
 												<input

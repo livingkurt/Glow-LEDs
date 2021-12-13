@@ -17,8 +17,7 @@ router.route('/each_day_income/:date').get(order_controller.each_day_income_orde
 router.route('/each_month_income/:date').get(order_controller.each_month_income_orders_c);
 router.route('/previous_income/:days').get(order_controller.previous_income_orders_c);
 router.route('/mark_as_shipped').put(order_controller.mark_as_shipped_orders_c);
-router.route('/monthly_income').put(order_controller.specific_time_income_orders_s);
-router.route('/yearly_income').put(order_controller.specific_time_income_orders_s);
+router.route('/specific_time_income').put(order_controller.specific_time_income_orders_s);
 router.route('/user').get(isAuth, order_controller.findMy_orders_c);
 router.route('/guest').post(order_controller.create_orders_c);
 router.route('/guest/:id').get(order_controller.findById_orders_c);
