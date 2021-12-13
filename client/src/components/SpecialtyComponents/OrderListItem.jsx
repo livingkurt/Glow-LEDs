@@ -55,7 +55,7 @@ const OrderListItem = (props) => {
 
 	const delete_order = () => {
 		dispatch(deleteOrder(props.order._id));
-		dispatch(listOrders({}));
+		dispatch(listOrders({ limit: 10, page: 1 }));
 	};
 
 	return (

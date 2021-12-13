@@ -27,8 +27,8 @@ export default {
 					: {};
 			}
 			const sort_query = query.sort && query.sort.toLowerCase();
-			let sort = {};
-			let filter = {};
+			let sort: any = { createdAt: -1 };
+			let filter: any = { deleted: false };
 			if (sort_query === 'lowest') {
 				sort = { totalPrice: 1 };
 			} else if (sort_query === 'highest') {
@@ -37,6 +37,7 @@ export default {
 				sort = { createdAt: -1 };
 			} else if (sort_query === 'paid') {
 				filter = {
+					deleted: false,
 					isPaid: true,
 					isManufactured: false,
 					isPackaged: false,
@@ -45,6 +46,7 @@ export default {
 				};
 			} else if (sort_query === 'manufactured') {
 				filter = {
+					deleted: false,
 					isPaid: true,
 					isManufactured: true,
 					isPackaged: false,
@@ -52,11 +54,32 @@ export default {
 					isDelivered: false
 				};
 			} else if (sort_query === 'packaged') {
-				filter = { isPaid: true, isManufactured: true, isPackaged: true, isShipped: false, isDelivered: false };
+				filter = {
+					deleted: false,
+					isPaid: true,
+					isManufactured: true,
+					isPackaged: true,
+					isShipped: false,
+					isDelivered: false
+				};
 			} else if (sort_query === 'shipped') {
-				filter = { isPaid: true, isManufactured: true, isPackaged: true, isShipped: true, isDelivered: false };
+				filter = {
+					deleted: false,
+					isPaid: true,
+					isManufactured: true,
+					isPackaged: true,
+					isShipped: true,
+					isDelivered: false
+				};
 			} else if (sort_query === 'delivered') {
-				filter = { isPaid: true, isManufactured: true, isPackaged: true, isShipped: true, isDelivered: true };
+				filter = {
+					deleted: false,
+					isPaid: true,
+					isManufactured: true,
+					isPackaged: true,
+					isShipped: true,
+					isDelivered: true
+				};
 			}
 			console.log({ filter, sort, limit, page });
 			const orders = await order_db.findAll_orders_db(filter, sort, parseInt(limit), parseInt(page));
