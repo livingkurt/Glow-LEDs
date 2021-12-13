@@ -92,20 +92,14 @@ const ProductOptions = ({
 
 	const determine_preorder = (option_product_object, count_in_stock, text) => {
 		const choice = (num) => {
-			if (option_product_object.count_in_stock > num) {
-				if (count_in_stock > 0) {
+			if (option_product_object.hasOwnProperty('count_in_stock')) {
+				if (option_product_object.count_in_stock > num) {
 					return text;
 				} else {
 					return 'Preorder';
 				}
 			} else if (count_in_stock > 0) {
-				if (option_product_object.hasOwnProperty('count_in_stock')) {
-					if (option_product_object.count_in_stock > num) {
-						return text;
-					} else {
-						return 'Preorder';
-					}
-				}
+				return text;
 			} else {
 				return 'Preorder';
 			}
