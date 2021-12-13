@@ -22,8 +22,12 @@ export default {
 			} else if (sort_query === 'newest' || sort_query === '') {
 				sort = { name: 1 };
 			}
-
-			return await parcel_db.findAll_parcels_db(category, search, sort);
+			const filter = {
+				deleted: false,
+				...category,
+				...search
+			};
+			return await parcel_db.findAll_parcels_db(filter, sort);
 		} catch (error) {
 			console.log({ findAll_parcels_s_error: error });
 			throw new Error(error.message);

@@ -1,16 +1,9 @@
 import Parcel from '../models/parcel';
 
 export default {
-	findAll_parcels_db: async (category: any, search: any, sort: any) => {
+	findAll_parcels_db: async (filter: any, sort: any) => {
 		try {
-			return await Parcel.find({
-				deleted: false,
-				...category,
-				...search
-			})
-				.sort(sort)
-				.populate('user')
-				.populate('affiliate');
+			return await Parcel.find(filter).sort(sort).populate('user').populate('affiliate');
 		} catch (error) {
 			console.log({ findAll_parcels_db_error: error });
 			throw new Error(error.message);

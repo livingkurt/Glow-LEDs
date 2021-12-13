@@ -159,8 +159,9 @@ export default {
 		}
 	},
 	promo_code_usage_orders_c: async (req: any, res: any) => {
+		const { params } = req;
 		try {
-			const orders = await order_services.promo_code_usage_orders_s();
+			const orders = await order_services.promo_code_usage_orders_s(params);
 			if (orders) {
 				return res.status(200).send(orders);
 			}
