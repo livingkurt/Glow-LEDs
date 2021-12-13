@@ -111,14 +111,9 @@ import {
 	ReviewEmail
 } from './components/EmailComponents';
 import { Helmet } from 'react-helmet';
-import { setCurrentUser, logout, check_refresh_token } from './actions/userActions';
-import jwt_decode from 'jwt-decode';
-import setAuthToken from './utils/setAuthToken';
 import useWindowDimensions from './components/Hooks/windowDimensions';
-// import { Particles } from './components/SpecialtyComponents';
 import Particles from 'react-particles-js';
 import particlesjs_config from './particlesjs_config.json';
-import { API_Users } from './utils';
 import { check_authentication } from './utils/react_helper_functions';
 import MarkAsShippedEmail from './components/EmailComponents/MarkAsShippedEmail';
 import { EmailModal } from './components/SpecialtyComponents';
@@ -323,7 +318,6 @@ const App = (props) => {
 							<AdminRoute path="/secure/glow/edit_all_data" component={EditAllDataPage} />
 							<AdminRoute path="/secure/glow/products" component={ProductsPage} />
 							<AdminRoute path="/secure/glow/create_label" component={LabelCreatorPage} />
-							<AdminRoute path="/secure/glow/logs" component={LogsPage} />
 							<AdminRoute path="/secure/glow/orders" component={OrdersPage} />
 							<AdminRoute path="/secure/glow/users" component={UsersPage} />
 							<AdminRoute path="/secure/glow/paychecks" component={PaychecksPage} />

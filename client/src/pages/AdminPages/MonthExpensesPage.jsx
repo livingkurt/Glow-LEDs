@@ -89,7 +89,7 @@ const MonthExpensesPage = (props) => {
 
 	const get_month_income = async (start_date, end_date) => {
 		set_loading(true);
-		const { data: orders } = await API_Orders.monthly_income(start_date, end_date);
+		const { data: orders } = await API_Orders.monthlymonthly_income_income(start_date, end_date);
 		const { data: expenses } = await API_Orders.monthly_expenses(start_date, end_date);
 		console.log({ expenses });
 		set_expenses(expenses);

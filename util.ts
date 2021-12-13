@@ -408,6 +408,21 @@ export const subcategories = [
 	'secondary_colors'
 ];
 
+export const dates_in_year = [
+	{ month: 1, number_of_days: 31 },
+	{ month: 2, number_of_days: 28 },
+	{ month: 3, number_of_days: 31 },
+	{ month: 4, number_of_days: 30 },
+	{ month: 5, number_of_days: 31 },
+	{ month: 6, number_of_days: 30 },
+	{ month: 7, number_of_days: 31 },
+	{ month: 8, number_of_days: 31 },
+	{ month: 9, number_of_days: 30 },
+	{ month: 10, number_of_days: 31 },
+	{ month: 11, number_of_days: 30 },
+	{ month: 12, number_of_days: 31 }
+];
+
 export const determine_filter = (query: any, search: any) => {
 	const category = query.category ? { category: query.category } : {};
 	const subcategory = query.subcategory ? { subcategory: query.subcategory } : {};

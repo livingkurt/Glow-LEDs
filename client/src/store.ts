@@ -70,7 +70,7 @@ import {
 	contentSaveReducer
 } from './reducers/contentReducers';
 import { emailDeleteReducer, emailDetailsReducer, emailListReducer, emailSaveReducer } from './reducers/emailReducers';
-import { logDeleteReducer, logDetailsReducer, logListReducer, logSaveReducer } from './reducers/logReducers';
+
 import {
 	paycheckDeleteReducer,
 	paycheckDetailsReducer,
@@ -197,7 +197,6 @@ const reducer = combineReducers({
 	featureDetails: featureDetailsReducer,
 	featureSave: featureSaveReducer,
 	featureDelete: featureDeleteReducer,
-
 	promoList: promoListReducer,
 	promoDetails: promoDetailsReducer,
 	promoSave: promoSaveReducer,
@@ -222,10 +221,6 @@ const reducer = combineReducers({
 	emailDetails: emailDetailsReducer,
 	emailSave: emailSaveReducer,
 	emailDelete: emailDeleteReducer,
-	logList: logListReducer,
-	logDetails: logDetailsReducer,
-	logSave: logSaveReducer,
-	logDelete: logDeleteReducer,
 	paycheckList: paycheckListReducer,
 	paycheckDetails: paycheckDetailsReducer,
 	myPaycheckList: myPaycheckListReducer,

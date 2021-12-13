@@ -6,40 +6,29 @@ const { isAuth, isAdmin } = require('../../util');
 
 const router = express.Router();
 
-router.route('/monthly_income').put(order_controller.monthly_income);
-router.route('/yearly_income').put(order_controller.yearly_income);
-
-router.route('/').get(isAuth, isAdmin, order_controller.findAll);
-
-router.route('/user').get(isAuth, order_controller.get_my_orders);
-
-router.route('/guest').post(order_controller.create_guest_order);
-router.route('/guest/:id').get(order_controller.get_guest_order);
-// router.route('/glow').post(isAuth, isAdmin, order_controller.create_user_order);
-router.route('/secure').post(isAuth, order_controller.create_user_order);
-router.route('/secure/:id').get(isAuth, order_controller.get_one_order);
+router.route('/').get(isAuth, isAdmin, order_controller.findAll_orders_c);
+router.route('/occurrences').get(order_controller.occurrences_orders_c);
+router.route('/top_customers').get(order_controller.top_customers_orders_c);
+router.route('/category_occurrences').get(order_controller.category_occurrences_orders_c);
+router.route('/code_usage').put(order_controller.code_usage_orders_c);
+router.route('/tax_rates').get(order_controller.tax_rates_orders_c);
+router.route('/promo_code_usage').get(order_controller.promo_code_usage_orders_c);
+router.route('/each_day_income/:date').get(order_controller.each_day_income_orders_c);
+router.route('/each_month_income/:date').get(order_controller.each_month_income_orders_c);
+router.route('/previous_income/:days').get(order_controller.previous_income_orders_c);
+router.route('/mark_as_shipped').put(order_controller.mark_as_shipped_orders_c);
+router.route('/monthly_income').put(order_controller.specific_time_income_orders_s);
+router.route('/yearly_income').put(order_controller.specific_time_income_orders_s);
+router.route('/user').get(isAuth, order_controller.findMy_orders_c);
+router.route('/guest').post(order_controller.create_orders_c);
+router.route('/guest/:id').get(order_controller.findById_orders_c);
+router.route('/secure').post(isAuth, order_controller.create_orders_c);
+router.route('/secure/:id').get(isAuth, order_controller.findById_orders_c);
 
 router
 	.route('/glow/:id')
-	.get(isAuth, isAdmin, order_controller.get_user_orders)
-	.put(isAuth, isAdmin, order_controller.update)
-	.delete(isAuth, isAdmin, order_controller.remove);
-
-router.route('/occurrences').get(order_controller.occurrences);
-router.route('/top_customers').get(order_controller.top_customers);
-router.route('/category_occurrences').get(order_controller.category_occurrences);
-router.route('/code_usage').put(order_controller.code_usage);
-// router.route('/all_orders').get(order_controller.all_orders);
-router.route('/last_months_orders').get(order_controller.last_months_orders);
-router.route('/total_orders').get(order_controller.total_orders);
-router.route('/tax_rates').get(order_controller.tax_rates);
-router.route('/promo_code_usage').get(order_controller.promo_code_usage);
-router.route('/each_day_income/:date').get(order_controller.each_day_income);
-router.route('/each_month_income/:date').get(order_controller.each_month_income);
-router.route('/yesterday_income').get(order_controller.yesterday_income);
-router.route('/last_week_income').get(order_controller.last_week_income);
-router.route('/last_month_income').get(order_controller.last_month_income);
-
-router.route('/mark_as_shipped').put(order_controller.mark_as_shipped);
+	.get(isAuth, isAdmin, order_controller.findMy_orders_c)
+	.put(isAuth, isAdmin, order_controller.update_orders_c)
+	.delete(isAuth, isAdmin, order_controller.remove_orders_c);
 
 export default router;

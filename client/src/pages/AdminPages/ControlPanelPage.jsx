@@ -60,13 +60,13 @@ const ControlPanelPage = (props) => {
 	const [ year_2031, set_year_2031 ] = useState({});
 
 	const get_orders = async () => {
-		const { data } = await API_Orders.total_orders();
+		const { data } = await API_Orders.findAll_orders_a();
 		console.log({ data });
-		const batt_1620 = data
+		const batt_1620 = data.orders
 			.map((order) => order.orderItems)
 			.flat(1)
 			.filter((item) => item.name === 'Bulk CR1620 Batteries');
-		const batt_1225 = data
+		const batt_1225 = data.orders
 			.map((order) => order.orderItems)
 			.flat(1)
 			.filter((item) => item.name === 'Bulk CR1225 Batteries');
@@ -101,7 +101,7 @@ const ControlPanelPage = (props) => {
 			batteries_1620_total: batt_1620_options_total + batt_1620_size_total,
 			batteries_1225_total: batt_1225_options_total + batt_1225_size_total
 		});
-		set_orders(data);
+		set_orders(data.orders);
 	};
 
 	useEffect(() => {
@@ -173,16 +173,20 @@ const ControlPanelPage = (props) => {
 	};
 	const get_occurrences = async () => {
 		const { data: occurrences } = await API_Products.get_occurrences();
+		console.log({ occurrences });
 		set_product_occurrences(occurrences);
 		// initialize_occurrence_chart(occurrences);
 	};
 
 	const get_income = async () => {
-		const { data: daily } = await API_Revenue.get_yesterday_income();
+		const { data: daily } = await API_Revenue.get_previous_income(1);
+		console.log({ daily });
 		set_daily_orders(daily);
-		const { data: weekly } = await API_Revenue.get_last_week_income();
+		const { data: weekly } = await API_Revenue.get_previous_income(7);
+		console.log({ weekly });
 		set_weekly_orders(weekly);
-		const { data: monthly } = await API_Revenue.get_last_month_income();
+		const { data: monthly } = await API_Revenue.get_previous_income(30);
+		console.log({ monthly });
 		set_monthly_orders(monthly);
 	};
 

@@ -68,7 +68,7 @@ const PalettesPage = (props) => {
 		set_last_months_orders(data);
 	};
 	const get_total_orders = async () => {
-		const { data } = await API_Orders.total_orders();
+		const { data } = await API_Orders.findAll_orders_a();
 		console.log({ data });
 		set_total_orders(data);
 	};

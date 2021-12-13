@@ -40,7 +40,7 @@ const OrderCombinerPage = (props) => {
 	}, []);
 
 	const get_orders = async () => {
-		const { data } = await API_Orders.total_orders();
+		const { data } = await API_Orders.findAll_orders_a();
 		set_orders(data);
 		console.log({ data });
 	};

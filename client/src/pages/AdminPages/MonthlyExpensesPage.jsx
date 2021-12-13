@@ -307,7 +307,7 @@ const MonthlyExpensesPage = (props) => {
 		empty_income();
 		const income_each_month = await Promise.all(
 			dates_in_year.map(async (month, month_number) => {
-				const { data: orders } = await API_Orders.monthly_income(month.start_date, month.end_date);
+				const { data: orders } = await API_Orders.specific_time_income(month.start_date, month.end_date);
 				const { data: expenses } = await API_Orders.monthly_expenses(month.start_date, month.end_date);
 				let batteries = get_batteries(orders);
 				let decals = get_decals(orders);

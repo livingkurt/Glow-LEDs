@@ -2,10 +2,10 @@ import axios from 'axios';
 
 const order_routes = {
 	last_months_orders: () => {
-		return axios.get('/api/orders/last_months_orders');
+		return axios.get('/api/orders/previous_income/30');
 	},
-	total_orders: () => {
-		return axios.get('/api/orders/total_orders');
+	findAll_orders_a: () => {
+		return axios.get('/api/orders/?limit=0&page=1');
 	},
 	top_customers: () => {
 		return axios.get('/api/orders/top_customers');
@@ -14,14 +14,11 @@ const order_routes = {
 	// 	console.log({ dates });
 	// 	return axios.get('/api/orders/monthly_income', {dates});
 	// },
-	monthly_income: (date_1: string, date_2: string) => {
-		return axios.put('/api/orders/monthly_income', { date_1, date_2 });
+	specific_time_income: (date_1: string, date_2: string) => {
+		return axios.put('/api/orders/specific_time_income', { date_1, date_2 });
 	},
 	monthly_expenses: (date_1: string, date_2: string) => {
 		return axios.put('/api/expenses/monthly_expenses', { date_1, date_2 });
-	},
-	yearly_income: (date_1: string, date_2: string) => {
-		return axios.put('/api/orders/yearly_income', { date_1, date_2 });
 	},
 	yearly_expenses: (date_1: string, date_2: string) => {
 		return axios.put('/api/expenses/yearly_expenses', { date_1, date_2 });
