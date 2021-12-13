@@ -3,7 +3,7 @@ require('dotenv').config();
 const stripe = require('stripe')(process.env.REACT_APP_STRIPE_SECRET_KEY);
 
 export default {
-	secure_pay: async (req: any, res: any) => {
+	secure_pay_payments_c: async (req: any, res: any) => {
 		try {
 			const order = await Order.findById(req.params.id).populate('user');
 			await stripe.paymentIntents.create(
@@ -72,7 +72,7 @@ export default {
 			});
 		}
 	},
-	guest_pay: async (req: any, res: any) => {
+	guest_pay_payments_c: async (req: any, res: any) => {
 		try {
 			const order = await Order.findById(req.params.id);
 			await stripe.paymentIntents.create(
@@ -140,7 +140,7 @@ export default {
 			});
 		}
 	},
-	secure_refund: async (req: any, res: any) => {
+	secure_refund_payments_c: async (req: any, res: any) => {
 		try {
 			// console.log({ refund_amount: req.body.refund_amount });
 			const order = await Order.findById(req.params.id);
@@ -174,3 +174,47 @@ export default {
 		}
 	}
 };
+
+// import { payment_services } from '../services';
+
+// export default {
+// 	secure_pay_payments_c: async (req: any, res: any) => {
+// 		const { params, body } = req;
+// 		try {
+// 			const payment = await payment_services.secure_pay_payments_s(params, body);
+// 			if (payment) {
+// 				return res.status(200).send(payment);
+// 			}
+// 			return res.status(500).send({ message: 'Error Updating Chip' });
+// 		} catch (error) {
+// 			console.log({ secure_pay_payments_c_error: error });
+// 			res.status(500).send({ error, message: 'Error Updating Chip' });
+// 		}
+// 	},
+// 	guest_pay_payments_c: async (req: any, res: any) => {
+// 		const { params, body } = req;
+// 		try {
+// 			const payment = await payment_services.guest_pay_payments_s(params, body);
+// 			if (payment) {
+// 				return res.status(200).send(payment);
+// 			}
+// 			return res.status(500).send({ message: 'Error Updating Chip' });
+// 		} catch (error) {
+// 			console.log({ guest_pay_payments_c_error: error });
+// 			res.status(500).send({ error, message: 'Error Updating Chip' });
+// 		}
+// 	},
+// 	secure_refund_payments_c: async (req: any, res: any) => {
+// 		const { params, body } = req;
+// 		try {
+// 			const payment = await payment_services.secure_refund_payments_s(params, body);
+// 			if (payment) {
+// 				return res.status(200).send(payment);
+// 			}
+// 			return res.status(500).send({ message: 'Error Updating Chip' });
+// 		} catch (error) {
+// 			console.log({ secure_refund_payments_c_error: error });
+// 			res.status(500).send({ error, message: 'Error Updating Chip' });
+// 		}
+// 	}
+// };
