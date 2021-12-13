@@ -100,7 +100,7 @@ export default {
 		const { body } = req;
 		try {
 			console.log({ body });
-			const email = await email_services.send_emails_s(body);
+			const email = await email_services.send_all_emails_s(body);
 			transporter.sendMail(email, (error, data) => {
 				if (error) {
 					return res.status(500).send({ error, message: 'Error Updating Email' });

@@ -1,4 +1,4 @@
-import { email_db } from '../db';
+import { email_db, user_db } from '../db';
 require('dotenv').config();
 
 export default {
@@ -16,7 +16,7 @@ export default {
 				: {};
 
 			const sort_query = query.sort && query.sort.toLowerCase();
-			let sort = {};
+			let sort: any = { _id: -1 };
 			if (sort_query === 'email type') {
 				sort = { email_type: 1 };
 			} else if (sort_query === 'newest' || sort_query === '') {
@@ -74,11 +74,13 @@ export default {
 		return mailOptions;
 	},
 	send_all_emails_s: async (body: any) => {
-		const users = await User.find({ deleted: false, email_subscription: true });
+		// const users = await User.find({ deleted: false, email_subscription: true });
+		const users = await user_db.findAll_users_db({ deleted: false, email_subscription: true }, {});
 		const all_emails = users
 			.filter((user: any) => user.deleted === false)
 			.filter((user: any) => user.email_subscription === true)
 			.map((user: any) => user.email);
+		console.log({ all_emails });
 		const test = [
 			'lavacquek@icloud.com',
 			'lavacquek@gmail.com',
@@ -87,6 +89,7 @@ export default {
 			'zestanye@gmail.com'
 		];
 		const emails: any = body.test ? test : all_emails;
+		console.log({ emails });
 		const mailOptions = {
 			to: body.email ? body.email : process.env.EMAIL,
 			from: process.env.DISPLAY_EMAIL,
