@@ -171,7 +171,6 @@ export const determine_sponsor_code_tier = (code_usage: number) => {
 };
 
 export const format_date = (unformatted_date: string) => {
-	console.log({ unformatted_date });
 	const month = unformatted_date.slice(5, 7);
 	const day = unformatted_date.slice(8, 10);
 	const year = unformatted_date.slice(0, 4);
@@ -179,7 +178,6 @@ export const format_date = (unformatted_date: string) => {
 	return formatted_date;
 };
 export const format_time = (unformatted_time: any) => {
-	console.log({ unformatted_time });
 	let hour = unformatted_time.slice(11, 13);
 	let formatted_hour = hour > 12 ? hour - 12 : hour;
 	const minute = unformatted_time.slice(14, 16);

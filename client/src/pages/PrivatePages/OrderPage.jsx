@@ -28,6 +28,7 @@ const OrderPage = (props) => {
 
 	const orderDetails = useSelector((state) => state.orderDetails);
 	const { loading, order, error } = orderDetails;
+	console.log({ order });
 
 	const [ loading_label, set_loading_label ] = useState(false);
 	const [ product, set_product ] = useState('');

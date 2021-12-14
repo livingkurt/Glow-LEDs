@@ -3,7 +3,6 @@ import React from 'react';
 
 const ShippingSpeed = ({ rates, service, name, time, choose_shipping_rate }) => {
 	return rates.map((rate, index) => {
-		console.log({ rate });
 		return (
 			rate.service === service && (
 				<div className=" mv-1rem jc-b  ai-c" key={index}>

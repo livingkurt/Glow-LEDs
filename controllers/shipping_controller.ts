@@ -27,9 +27,10 @@ export default {
 		}
 	},
 	buy_label_shipping_c: async (req: any, res: any) => {
-		const { params } = req;
+		const { body } = req;
+		console.log({ body });
 		try {
-			const shipping = await shipping_services.buy_label_shipping_s(params);
+			const shipping = await shipping_services.buy_label_shipping_s(body);
 			if (shipping) {
 				return res.status(200).send(shipping);
 			}
