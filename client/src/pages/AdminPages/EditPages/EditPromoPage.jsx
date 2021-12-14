@@ -427,6 +427,7 @@ const EditPromoPage = (props) => {
 											{exclude && (
 												<li>
 													<DropdownDisplay
+														display_key={'name'}
 														item_list={
 															categories &&
 															categories.map((category) => ({
@@ -442,6 +443,7 @@ const EditPromoPage = (props) => {
 											{exclude && (
 												<li>
 													<DropdownDisplay
+														display_key={'name'}
 														item_list={products}
 														list_items={excluded_products}
 														set_items={set_excluded_products}
@@ -469,6 +471,7 @@ const EditPromoPage = (props) => {
 											{include && (
 												<li>
 													<DropdownDisplay
+														display_key={'name'}
 														item_list={
 															categories &&
 															categories.map((category) => ({
@@ -484,6 +487,7 @@ const EditPromoPage = (props) => {
 											{include && (
 												<li>
 													<DropdownDisplay
+														display_key={'name'}
 														item_list={products}
 														list_items={included_products}
 														set_items={set_included_products}

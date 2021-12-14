@@ -190,6 +190,7 @@ const EditCategoryPage = (props) => {
 												/>
 											</li>
 											<DropdownDisplay
+												display_key={'name'}
 												item_list={subcategorys_list}
 												list_items={subcategorys}
 												set_items={set_subcategorys}

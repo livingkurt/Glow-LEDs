@@ -645,12 +645,14 @@ const EditAffiliatePage = (props) => {
 											</li>
 											{/* {option_list(products_list, products, set_products, 'Glow Gear')} */}
 											<DropdownDisplay
+												display_key={'name'}
 												item_list={products_list}
 												list_items={products}
 												set_items={set_products}
 												list_name={'Glow Gear'}
 											/>
 											<DropdownDisplay
+												display_key={'name'}
 												item_list={chips_list}
 												list_items={chips}
 												set_items={set_chips}
