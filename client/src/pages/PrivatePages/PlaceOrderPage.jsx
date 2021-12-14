@@ -157,7 +157,11 @@ const PlaceOrderPage = (props) => {
 							get_shipping_rates();
 						}
 					}
-					get_tax_rates();
+					if (shipping.international) {
+						setTaxPrice(0);
+					} else {
+						get_tax_rates();
+					}
 				}
 			}
 			return () => (clean = false);
@@ -201,8 +205,8 @@ const PlaceOrderPage = (props) => {
 	};
 
 	const choose_shipping_rate = (rate, speed) => {
-		setShippingPrice(parseFloat(rate.retail_rate) + packaging_cost);
-		setPreviousShippingPrice(parseFloat(rate.retail_rate) + packaging_cost);
+		setShippingPrice(parseFloat(rate.retail_rate || rate.rate) + packaging_cost);
+		setPreviousShippingPrice(parseFloat(rate.retail_rate || rate.rate) + packaging_cost);
 		set_hide_pay_button(false);
 		set_shipping_rate(rate);
 		set_current_shipping_speed({ rate, speed });

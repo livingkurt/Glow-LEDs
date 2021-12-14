@@ -85,7 +85,7 @@ const ShippingChoice = ({
 					<div className="shipping_rates jc-b w-100per ">
 						<div>
 							{current_shipping_speed.speed} ${parseFloat(
-								current_shipping_speed.rate.retail_rate
+								current_shipping_speed.rate.retail_rate || current_shipping_speed.rate.rate
 							).toFixed(2)}{' '}
 							{current_shipping_speed.rate.est_delivery_days}{' '}
 							{current_shipping_speed.rate.est_delivery_days === 1 ? 'Day' : 'Days'}
