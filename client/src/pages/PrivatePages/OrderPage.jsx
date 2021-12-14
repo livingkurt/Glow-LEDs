@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { removeFromCart } from '../../actions/cartActions';
+import { addToCart, removeFromCart } from '../../actions/cartActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { createOrder, detailsOrder, payOrder, saveOrder } from '../../actions/orderActions';
@@ -436,6 +436,10 @@ const OrderPage = (props) => {
 		set_shipping_rate({});
 	};
 
+	const add_items_to_cart = () => {
+		order.orderItems.map((item) => dispatch(addToCart(item)));
+	};
+
 	return (
 		<Loading loading={loading} error={error}>
 			{order && (
@@ -455,18 +459,26 @@ const OrderPage = (props) => {
 					</Helmet>
 					<Loading loading={loading_shipping_rates} />
 					{order.isPaid ? <CheckoutSteps step1 step2 step3 step4 /> : <CheckoutSteps step1 step2 step3 />}
-					<div className="mb-10px ml-20px">
+					<div className="mb-10px ml-20px jc-b">
+						<div>
+							{userInfo &&
+							userInfo.isAdmin && (
+								<Link to={props.location.previous_path || '/secure/glow/orders?page=1?limit=10'}>
+									<button className="btn secondary">Back to Admin Orders</button>
+								</Link>
+							)}
+							<Link to="/secure/account/orders">
+								<button className="btn secondary">Back to Orders</button>
+							</Link>
+						</div>
 						{userInfo &&
 						userInfo.isAdmin && (
-							<Link to={props.location.previous_path || '/secure/glow/orders?page=1?limit=10'}>
-								<button className="btn secondary">Back to Admin Orders</button>
-							</Link>
+							<button className="btn secondary" onClick={() => add_items_to_cart()}>
+								Add Items to Cart
+							</button>
 						)}
-
-						<Link to="/secure/account/orders">
-							<button className="btn secondary">Back to Orders</button>
-						</Link>
 					</div>
+
 					{userInfo &&
 					userInfo.isAdmin && (
 						<div className="row">
