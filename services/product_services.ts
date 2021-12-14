@@ -37,7 +37,7 @@ export default {
 					: {};
 			}
 			const filter = determine_filter(query, search);
-			console.log({ filter });
+			console.log({ findAll_products_s: filter });
 			const sort_query = query.sort && query.sort.toLowerCase();
 			let sort = {};
 			if (sort_query === 'lowest') {
@@ -51,11 +51,8 @@ export default {
 			} else if (sort_query === 'newest' || sort_query === '') {
 				sort = { order: 1, _id: -1 };
 			}
-
-			// const filter = { deleted: false, ...category, ...search };
 			const products = await product_db.findAll_products_db(filter, sort, limit, page);
 			const count = await product_db.count_products_db(filter);
-			// const count = await Product.countDocuments(filter);
 			return {
 				products,
 				totalPages: Math.ceil(count / limit),

@@ -25,6 +25,7 @@ import axios from 'axios';
 import { create_query } from '../utils/helper_functions';
 
 export const listProducts = (query: any) => async (dispatch: (arg0: { type: string; payload?: any }) => void) => {
+	console.log({ query });
 	try {
 		dispatch({ type: PRODUCT_LIST_REQUEST });
 		const { data } = await axios.get('/api/products?' + create_query(query));

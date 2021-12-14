@@ -67,7 +67,7 @@ const SubmitFeaturePage = (props) => {
 			} else {
 				dispatch(detailsFeature(''));
 			}
-			dispatch(listProducts({}));
+			dispatch(listProducts({ option: false, hidden: false }));
 			dispatch(listUsers({}));
 
 			set_state();

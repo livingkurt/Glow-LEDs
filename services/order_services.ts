@@ -81,7 +81,6 @@ export default {
 					isDelivered: true
 				};
 			}
-			console.log({ filter, sort, limit, page });
 			const orders = await order_db.findAll_orders_db(filter, sort, parseInt(limit), parseInt(page));
 			const count = await order_db.count_orders_db(filter);
 			// const count = await Product.countDocuments(filter);
@@ -201,7 +200,6 @@ export default {
 				})
 				.sort((a: any, b: any) => (a.amount > b.amount ? -1 : 1))
 				.slice(0, 20);
-			console.log({ sorted_orders });
 			return sorted_orders;
 		} catch (error) {
 			console.log({ remove_orders_s_error: error });
@@ -215,7 +213,6 @@ export default {
 			const limit = 50;
 			const page = 1;
 			const orders = await order_db.findAll_orders_db(filter, sort, limit, page);
-			console.log({ orders });
 			const products: any = [];
 			const ids: any = [];
 			orders.forEach((order: any) => {

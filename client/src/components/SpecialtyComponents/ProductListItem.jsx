@@ -161,7 +161,7 @@ const ProductListItem = (props) => {
 				hidden: product.hidden ? false : true
 			})
 		);
-		dispatch(listProducts({}));
+		dispatch(listProducts({ option: false }));
 	};
 
 	return (

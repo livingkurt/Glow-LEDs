@@ -141,7 +141,7 @@ const EditAffiliatePage = (props) => {
 					dispatch(detailsAffiliate(''));
 				}
 				dispatch(listUsers({}));
-				dispatch(listProducts({}));
+				dispatch(listProducts({ option: false, hidden: false }));
 				dispatch(listPromos({}));
 				dispatch(listPromos({}));
 				dispatch(listChips({}));

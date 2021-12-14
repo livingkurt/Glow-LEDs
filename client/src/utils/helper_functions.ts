@@ -12,9 +12,7 @@ interface errors {
 }
 
 export const create_query = (query: any) => {
-	console.log({ query });
 	const params = new URLSearchParams(query);
-	console.log({ params: params.toString() });
 	return params;
 };
 

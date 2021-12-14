@@ -53,7 +53,7 @@ function ProductPage(props) {
 		let collection = props.match.params.collection ? props.match.params.collection : '';
 		let limit = 30;
 		let page = '';
-		let hidden = true;
+		let hidden = '';
 		let option = false;
 
 		// prnt({ query });
@@ -100,12 +100,12 @@ function ProductPage(props) {
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(listProducts({ category, subcategory, search, sort }));
+		dispatch(listProducts({ category, subcategory, search, sort, option: false }));
 	};
 
 	const sortHandler = (e) => {
 		setSortOrder(e.target.value);
-		dispatch(listProducts({ category, subcategory, search, sort: e.target.value }));
+		dispatch(listProducts({ category, subcategory, search, sort: e.target.value, option: false }));
 	};
 	const sort_options = [ 'Category', 'Newest', 'Lowest', 'Highest', 'Hidden' ];
 
@@ -121,7 +121,8 @@ function ProductPage(props) {
 					search,
 					sort,
 					page,
-					limit
+					limit,
+					option: false
 				})
 			);
 			set_loading_upload(false);
@@ -587,7 +588,8 @@ function ProductPage(props) {
 										search,
 										sort,
 										page,
-										limit: 500
+										limit: 500,
+										option: false
 									})
 								);
 							}}

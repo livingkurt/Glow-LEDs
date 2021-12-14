@@ -428,24 +428,44 @@ export const dates_in_year = [
 ];
 
 export const determine_filter = (query: any, search: any) => {
-	const category = query.category ? { category: query.category } : {};
-	const subcategory = query.subcategory ? { subcategory: query.subcategory } : {};
-	const collection = query.collection ? { product_collection: query.collection } : {};
+	const filter: any = {};
 
-	const hidden: any = query.hidden ? (query.hidden === 'true' ? {} : { hidden: false }) : { hidden: false };
-	const option: any = query.option ? { option: query.option === 'true' ? true : false } : { option: false };
-	const chips = query.chip ? { chips: { $in: [ query.chip ] } } : {};
-
-	const filter = {
-		deleted: false,
-		...option,
-		...hidden,
-		...category,
-		...subcategory,
-		...collection,
-		...search,
-		...chips
-	};
-
-	return filter;
+	Object.entries(query).forEach((item) => {
+		if (item[0] === 'search' || item[0] === 'limit' || item[0] === 'page' || item[0] === 'sort') {
+			return {};
+		} else {
+			if (item[1]) {
+				filter[item[0]] = item[1];
+			} else {
+				return {};
+			}
+		}
+	});
+	return { deleted: false, ...filter, ...search };
 };
+
+// const determine_search = () => {
+
+// }
+// export const determine_filter = (query: any, search: any) => {
+// 	const category = query.category ? { category: query.category } : {};
+// 	const subcategory = query.subcategory ? { subcategory: query.subcategory } : {};
+// 	const collection = query.collection ? { product_collection: query.collection } : {};
+
+// 	const hidden: any = query.hidden ? (query.hidden === 'true' ? {} : { hidden: false }) : { hidden: false };
+// 	const option: any = query.option ? { option: query.option === 'true' ? true : false } : { option: false };
+// 	const chips = query.chip ? { chips: { $in: [ query.chip ] } } : {};
+
+// 	const filter = {
+// 		deleted: false,
+// 		...option,
+// 		...hidden,
+// 		...category,
+// 		...subcategory,
+// 		...collection,
+// 		...search,
+// 		...chips
+// 	};
+
+// 	return filter;
+// };

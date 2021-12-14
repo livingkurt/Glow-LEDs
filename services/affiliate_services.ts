@@ -1,6 +1,6 @@
 import Affiliate from '../models/affiliate';
 import { Promo } from '../models';
-import { make_private_code, snake_case } from '../util';
+import { determine_filter, make_private_code, snake_case } from '../util';
 import { affiliate_db, user_db } from '../db';
 import dotenv from 'dotenv';
 import { user_controller } from '../controllers';
@@ -40,6 +40,8 @@ export default {
 			} else if (sort_query === 'newest' || sort_query === '') {
 				sort = { _id: -1 };
 			}
+			const fil = determine_filter(query, search);
+			// console.log({ fil });
 			const filter = { deleted: false, ...search, ...sponsor, ...promoter };
 			return await affiliate_db.findAll_affiliates_db(filter, sort);
 		} catch (error) {

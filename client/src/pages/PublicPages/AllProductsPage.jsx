@@ -31,6 +31,8 @@ const AllProductsPage = (props) => {
 	const [ products, set_products ] = useState([]);
 	const [ chip, set_chip ] = useState('');
 	const [ page, set_page ] = useState(1);
+	const [ hidden, set_hidden ] = useState(false);
+	const [ option, set_option ] = useState(false);
 	const [ limit, set_limit ] = useState(20);
 	const [ message, set_message ] = useState('');
 	// const [ currentPage, setCurrentPage ] = useState(1);
@@ -124,9 +126,10 @@ const AllProductsPage = (props) => {
 		let search = '';
 		let sort = '';
 		let filter = '';
-		let hidden = '';
+		let hidden = false;
 		let limit = '';
 		let page = '';
+		let option = false;
 		let collection = props.match.params.collection ? props.match.params.collection : '';
 		// prnt({ query });
 		if (category !== 'essentials' || category !== 'discounted' || category !== 'best_sellers') {
@@ -164,7 +167,9 @@ const AllProductsPage = (props) => {
 			}
 			// console.log({ category, subcategory, search, sort, filter, collection });
 			// dispatch(listProducts(category, subcategory, filter, search, sort, collection, page, limit, hidden));
-			dispatch(listProducts({ category, subcategory, filter, search, sort, collection, page, limit, hidden }));
+			dispatch(
+				listProducts({ category, subcategory, filter, search, sort, collection, page, limit, hidden, option })
+			);
 		}
 	};
 
@@ -194,7 +199,19 @@ const AllProductsPage = (props) => {
 	const sortHandler = (e) => {
 		set_sort(e.target.value);
 		update_products_url(history, search, e.target.value, filter);
-		dispatch(listProducts({ category, subcategory, search, sort: e.target.value, collection }));
+		dispatch(
+			listProducts({
+				category,
+				subcategory,
+				search,
+				sort: e.target.value,
+				collection,
+				page,
+				limit,
+				hidden,
+				option
+			})
+		);
 	};
 
 	const filterHandler = (e) => {
@@ -204,7 +221,19 @@ const AllProductsPage = (props) => {
 		set_filter(chip_selected._id);
 		// console.log({ chip_selected });
 		update_products_url(history, '', sort, chip_selected.name);
-		dispatch(listProducts({ category, subcategory, chip: chip_selected._id, sort: sort, collection }));
+		dispatch(
+			listProducts({
+				category,
+				subcategory,
+				chip: chip_selected._id,
+				sort,
+				collection,
+				page,
+				limit,
+				hidden,
+				option
+			})
+		);
 	};
 
 	const update_page = (e, new_page) => {
@@ -223,7 +252,8 @@ const AllProductsPage = (props) => {
 				sort,
 				page: new_page,
 				limit,
-				hidden: false
+				hidden,
+				option
 			})
 		);
 	};

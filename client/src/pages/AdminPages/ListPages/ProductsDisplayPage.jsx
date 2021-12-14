@@ -83,7 +83,7 @@ const AllProductsPage = (props) => {
 					history.push({
 						search: '?search=' + search
 					});
-					dispatch(listProducts({ search, collection }));
+					dispatch(listProducts({ search, collection, option: false }));
 					dispatch(listChips({}));
 				}
 			}
@@ -106,7 +106,7 @@ const AllProductsPage = (props) => {
 					}
 					if (category !== 'essentials' || category === 'discounted' || category === 'best_sellers') {
 						console.log('All Products');
-						dispatch(listProducts({ category, subcategory, search, collection }));
+						dispatch(listProducts({ category, subcategory, search, collection, option: false }));
 					}
 				}
 				dispatch(listChips({}));
@@ -154,12 +154,12 @@ const AllProductsPage = (props) => {
 		// history.push({
 		// 	search: '?search=' + search + chip && '?filter=' + chip
 		// });
-		dispatch(listProducts({ search, sort, collection }));
+		dispatch(listProducts({ search, sort, collection, option: false }));
 	};
 
 	const sortHandler = (e) => {
 		setSortOrder(e.target.value);
-		dispatch(listProducts({ category, subcategory, search, sort: e.target.value, collection }));
+		dispatch(listProducts({ category, subcategory, search, sort: e.target.value, collection, option: false }));
 	};
 	const filterHandler = (e) => {
 		const chip_selected = JSON.parse(e.target.value);
@@ -169,7 +169,9 @@ const AllProductsPage = (props) => {
 		history.push({
 			search: '?search=' + search + '?filter=' + chip_selected.name
 		});
-		dispatch(listProducts({ category, subcategory, search, sort, chip: chip_selected._id, collection }));
+		dispatch(
+			listProducts({ category, subcategory, search, sort, chip: chip_selected._id, collection, option: false })
+		);
 	};
 
 	const descriptions = {

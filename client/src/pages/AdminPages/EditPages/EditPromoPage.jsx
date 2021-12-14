@@ -64,7 +64,7 @@ const EditPromoPage = (props) => {
 				} else {
 					dispatch(detailsPromo(''));
 				}
-				dispatch(listProducts({}));
+				dispatch(listProducts({ option: false, hidden: false }));
 				get_categories();
 				dispatch(listUsers({}));
 				dispatch(listAffiliates({}));

@@ -108,7 +108,7 @@ const ControlPanelPage = (props) => {
 		let clean = true;
 		if (clean) {
 			dispatch(listExpenses({}));
-			dispatch(listProducts({}));
+			dispatch(listProducts({ option: false, hidden: false }));
 			dispatch(listUsers({}));
 			dispatch(listAffiliates({}));
 			dispatch(listPromos({}));
