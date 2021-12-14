@@ -32,7 +32,6 @@ export { default as EmailsPage } from './AdminPages/ListPages/EmailsPage';
 export { default as CartsPage } from './AdminPages/ListPages/CartsPage';
 export { default as TeamsPage } from './AdminPages/ListPages/TeamsPage';
 export { default as ProductsDisplayPage } from './AdminPages/ListPages/ProductsDisplayPage';
-export { default as UserOrdersPage } from './AdminPages/ListPages/UserOrdersPage';
 export { default as PaychecksPage } from './AdminPages/ListPages/PaychecksPage';
 export { default as SurveysPage } from './AdminPages/ListPages/SurveysPage';
 export { default as ParcelsPage } from './AdminPages/ListPages/ParcelsPage';

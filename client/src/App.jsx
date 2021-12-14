@@ -52,7 +52,6 @@ import {
 	MenuPage,
 	ResetPasswordPage,
 	ProductsDisplayPage,
-	UserOrdersPage,
 	TrackOrderPage,
 	OrderPublicPage,
 	AnnouncementsPage,
