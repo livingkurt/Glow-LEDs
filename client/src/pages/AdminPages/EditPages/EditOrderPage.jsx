@@ -1028,13 +1028,29 @@ const EditOrderPage = (props) => {
 															/>
 														</li>
 														<li>
-															<label htmlFor="product">Pathname</label>
+															<label htmlFor="count_in_stock">Count In Stock</label>
 															<input
 																type="text"
-																name="product"
+																name="count_in_stock"
+																defaultValue={item.count_in_stock}
+																value={item.count_in_stock}
+																id="count_in_stock"
+																onChange={(e) =>
+																	update_order_item_property(
+																		e.target.value,
+																		e.target.name,
+																		index
+																	)}
+															/>
+														</li>
+														<li>
+															<label htmlFor="pathname">Pathname</label>
+															<input
+																type="text"
+																name="pathname"
 																defaultValue={item.pathname}
 																value={item.pathname}
-																id="product"
+																id="pathname"
 																onChange={(e) =>
 																	update_order_item_property(
 																		e.target.value,
