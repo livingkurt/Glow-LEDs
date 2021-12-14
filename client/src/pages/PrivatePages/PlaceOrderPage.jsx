@@ -323,7 +323,8 @@ const PlaceOrderPage = (props) => {
 			await API_Promos.promo_code_used(promo_code.toLowerCase());
 		}
 	};
-
+	// const data = new Date()
+	const today = new Date();
 	const create_order_without_paying = async () => {
 		// create an order
 		console.log({ user });
@@ -346,8 +347,8 @@ const PlaceOrderPage = (props) => {
 				tip,
 				promo_code,
 				parcel: parcel ? parcel : null,
-				isPaid: paid ? paid : false
-				// paidAt: paid && date.toISOString()
+				isPaid: paid ? paid : false,
+				paidAt: paid && today
 			})
 		);
 
