@@ -1,3 +1,4 @@
+import { consoleLogFn } from '@scout_apm/scout-apm/dist/lib/types';
 import { order_services } from '../services';
 
 export default {
@@ -16,10 +17,12 @@ export default {
 	},
 	findMy_orders_c: async (req: any, res: any) => {
 		const { params } = req;
+		console.log({ params });
 		try {
 			const orders = await order_services.findMy_orders_s(params);
+			console.log({ orders });
 			if (orders) {
-				return res.status(204).send(orders);
+				return res.status(200).send(orders);
 			}
 			return res.status(500).send({ message: 'Error Deleting Order' });
 		} catch (error) {

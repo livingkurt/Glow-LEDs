@@ -336,14 +336,14 @@ export const payOrderGuest = (order: any, paymentMethod: any) => async (
 	}
 };
 
-export const listMyOrders = () => async (
+export const listMyOrders = (user_id: string) => async (
 	dispatch: (arg0: { type: string; payload?: any }) => void,
 	getState: () => { userLogin: { userInfo: any } }
 ) => {
 	try {
 		dispatch({ type: MY_ORDER_LIST_REQUEST });
 		const { userLogin: { userInfo } } = getState();
-		const { data } = await axios.get('/api/orders/user', {
+		const { data } = await axios.get('/api/orders/user/' + user_id, {
 			headers: { Authorization: 'Bearer ' + userInfo.access_token }
 		});
 		console.log({ Orders: data });

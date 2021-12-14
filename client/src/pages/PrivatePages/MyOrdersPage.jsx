@@ -7,10 +7,11 @@ import { Helmet } from 'react-helmet';
 import { Order, OrderListItem, OrderSmallScreen } from '../../components/SpecialtyComponents';
 import { check_authentication } from '../../utils/react_helper_functions';
 
-const UserOrderPage = (props) => {
+const MyOrdersPage = (props) => {
 	const dispatch = useDispatch();
 
 	const [ block_list_view, set_block_list_view ] = useState(false);
+	const [ user_orders, set_user_orders ] = useState(false);
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
 	console.log({ user_orders_page: userInfo });
@@ -21,7 +22,8 @@ const UserOrderPage = (props) => {
 	useEffect(() => {
 		let clean = true;
 		if (clean) {
-			dispatch(listMyOrders());
+			set_user_orders(props.match.params.id ? true : false);
+			dispatch(listMyOrders(props.match.params.id || userInfo._id));
 		}
 		return () => (clean = false);
 	}, []);
@@ -98,7 +100,11 @@ const UserOrderPage = (props) => {
 			<div className="profile-orders profile_orders_container" style={{ width: '100%' }}>
 				{/* <button type="button" onClick={handleLogout} className="btn secondary w-100per">Logout</button> */}
 
-				<h1 style={{ textAlign: 'center', width: '100%', justifyContent: 'center' }}>My Orders</h1>
+				<h1 style={{ textAlign: 'center', width: '100%', justifyContent: 'center' }}>
+					{' '}
+					{user_orders ? orders && orders[0] && orders[0].shipping.first_name + "'s Orders" : 'My Orders'}
+				</h1>
+				{/* <h1 style={{ textAlign: 'center', width: '100%', justifyContent: 'center' }}>My Orders</h1> */}
 				<div className="search_and_sort product_big_screen row jc-c ai-c" style={{ overflowX: 'scroll' }}>
 					<div className="mb-1rem">
 						<div className="custom-select w-100per">
@@ -140,4 +146,4 @@ const UserOrderPage = (props) => {
 	);
 };
 
-export default UserOrderPage;
+export default MyOrdersPage;

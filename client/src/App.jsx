@@ -48,7 +48,6 @@ import {
 	MusicPage,
 	EditEmailPage,
 	EmailsPage,
-	LogsPage,
 	GuestDecisionPage,
 	MenuPage,
 	ResetPasswordPage,
@@ -327,7 +326,7 @@ const App = (props) => {
 							<AdminRoute path="/secure/glow/parcels" component={ParcelsPage} />
 							<AdminRoute path="/secure/glow/palettes" component={PalettesPage} />
 							<AdminRoute path="/secure/glow/userprofile/:id" component={UserProfilePage} />
-							<AdminRoute path="/secure/glow/userorders/:id" component={UserOrdersPage} />
+							<AdminRoute path="/secure/glow/userorders/:id" component={MyOrdersPage} />
 							<AdminRoute path="/secure/glow/edituser/:id?" component={EditUserPage} />
 							<AdminRoute path="/secure/glow/editorder/:id?" component={EditOrderPage} />
 							<AdminRoute path="/secure/glow/editpaycheck/:id?" component={EditPaycheckPage} />

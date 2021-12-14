@@ -97,8 +97,8 @@ export default {
 	},
 	findMy_orders_s: async (params: any) => {
 		try {
-			const sort = {};
-			const filter = { deleted: false, user: params._id };
+			const sort = { _id: -1 };
+			const filter = { deleted: false, user: params.id };
 			const limit = 0;
 			const page = 1;
 			return await order_db.findAll_orders_db(filter, sort, limit, page);

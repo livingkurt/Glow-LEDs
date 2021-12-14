@@ -2,6 +2,7 @@ import Order from '../models/order';
 
 export default {
 	findAll_orders_db: async (filter: any, sort: any, limit = 10, page = 1) => {
+		console.log({ filter, sort, limit, page });
 		try {
 			return await Order.find(filter)
 				.sort(sort)
