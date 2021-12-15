@@ -85,11 +85,14 @@ const CartItem = (props) => {
 					<Link to={'/collections/all/products/' + props.item.pathname} className="m-0px">
 						<label className="paragraph_font lh-0px mv-0px fs-18px">{props.item.name}</label>
 					</Link>
-					<div className="ai-c">
-						<button className="btn icon" onClick={() => removeFromCartHandler(props.item)}>
-							<i className="fas fa-trash-alt" />
-						</button>
-					</div>
+					{userInfo &&
+					userInfo.isAdmin && (
+						<div className="ai-c">
+							<button className="btn icon" onClick={() => removeFromCartHandler(props.item)}>
+								<i className="fas fa-trash-alt" />
+							</button>
+						</div>
+					)}
 				</div>
 				{cart_item_name(props.item)}
 

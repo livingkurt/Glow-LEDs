@@ -468,9 +468,12 @@ const OrderPage = (props) => {
 									<button className="btn secondary">Back to Admin Orders</button>
 								</Link>
 							)}
-							<Link to="/secure/account/orders">
-								<button className="btn secondary">Back to Orders</button>
-							</Link>
+							{userInfo &&
+							userInfo.first_name && (
+								<Link to={'/secure/account/orders'}>
+									<button className="btn secondary">Back to Orders</button>
+								</Link>
+							)}
 						</div>
 						{userInfo &&
 						userInfo.isAdmin && (
@@ -887,27 +890,32 @@ ${order.shipping.email}`)}
 									</div>
 								</div>
 							</div>
-							<div className="column">
-								<label htmlFor="message_to_user">Message to User</label>
-								<input
-									type="text"
-									// value={message_to_user}
-									name="message_to_user"
-									id="message_to_user"
-									onChange={(e) => localStorage.setItem('message_to_user', e.target.value)}
-								/>
-							</div>
-							<button className="btn secondary w-100per mv-5px ">
-								{/* <Link to={'/secure/glow/emails/invoice/' + order._id}>View Invoice</Link> */}
-								<Link
-									to={{
-										pathname: '/secure/glow/emails/invoice/' + order._id,
-										previous_path: props.location.previous_path
-									}}
-								>
-									View Invoice
-								</Link>
-							</button>
+							{userInfo &&
+							userInfo.isAdmin && (
+								<div className="column">
+									<label htmlFor="message_to_user">Message to User</label>
+									<input
+										type="text"
+										// value={message_to_user}
+										name="message_to_user"
+										id="message_to_user"
+										onChange={(e) => localStorage.setItem('message_to_user', e.target.value)}
+									/>
+								</div>
+							)}
+							{userInfo &&
+							userInfo.isAdmin && (
+								<button className="btn secondary w-100per mv-5px ">
+									<Link
+										to={{
+											pathname: '/secure/glow/emails/invoice/' + order._id,
+											previous_path: props.location.previous_path
+										}}
+									>
+										View Invoice
+									</Link>
+								</button>
+							)}
 							{userInfo &&
 							userInfo.isAdmin && (
 								<div>

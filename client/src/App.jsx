@@ -457,7 +457,7 @@ const App = (props) => {
 									<CartPage {...props} date_1={out_of_office_date_1} date_2={out_of_office_date_2} />
 								)}
 							/> */}
-							<Route path="/checkout/order/:id" exact={true} component={OrderPublicPage} />
+							<Route path="/checkout/order/:id" exact={true} component={OrderPage} />
 							<Route path="/checkout/order/receipt/:id/:status/:send?" component={OrderEmail} />
 
 							{/* Collections */}

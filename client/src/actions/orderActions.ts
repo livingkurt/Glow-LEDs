@@ -397,10 +397,15 @@ export const detailsOrder = (orderId: string) => async (
 	try {
 		dispatch({ type: ORDER_DETAILS_REQUEST, payload: orderId });
 		const { userLogin: { userInfo } } = getState();
-		const { data } = await axios.get('/api/orders/secure/' + orderId, {
-			headers: { Authorization: 'Bearer ' + userInfo.access_token }
-		});
-		dispatch({ type: ORDER_DETAILS_SUCCESS, payload: data });
+		if (userInfo && userInfo.first_name) {
+			const { data } = await axios.get('/api/orders/secure/' + orderId, {
+				headers: { Authorization: 'Bearer ' + userInfo.access_token }
+			});
+			dispatch({ type: ORDER_DETAILS_SUCCESS, payload: data });
+		} else {
+			const { data } = await axios.get('/api/orders/guest/' + orderId);
+			dispatch({ type: ORDER_DETAILS_SUCCESS, payload: data });
+		}
 	} catch (error) {
 		console.log({ error });
 		dispatch({ type: ORDER_DETAILS_FAIL, payload: error });
