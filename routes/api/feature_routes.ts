@@ -4,8 +4,6 @@ const { isAuth, isAdmin } = require('../../util');
 
 const router = express.Router();
 
-router.route('/category').get(feature_controller.findByCategory_features_c);
-
 router.route('/').get(feature_controller.findAll_features_c).post(feature_controller.create_features_c);
 
 router

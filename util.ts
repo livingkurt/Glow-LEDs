@@ -434,7 +434,21 @@ export const determine_filter = (query: any, search: any) => {
 		if (item[0] === 'search' || item[0] === 'limit' || item[0] === 'page' || item[0] === 'sort') {
 			return {};
 		} else {
-			if (item[1]) {
+			if (item[0] === 'sale' && item[1] === 'true') {
+				console.log('sale');
+				filter.$or = [
+					{
+						sale_price: {
+							$gt: 0
+						}
+					},
+					{
+						previous_price: {
+							$gt: 0
+						}
+					}
+				];
+			} else if (item[1]) {
 				filter[item[0]] = item[1];
 			} else {
 				return {};
@@ -443,29 +457,28 @@ export const determine_filter = (query: any, search: any) => {
 	});
 	return { deleted: false, ...filter, ...search };
 };
+export const determine_sort = (query: any, type: string) => {
+	let sort = {};
+	const sort_query = query && query.toLowerCase();
 
-// const determine_search = () => {
+	if (type === 'product') {
+		if (sort_query === 'lowest') {
+			sort = { price: 1 };
+		} else if (sort_query === 'highest') {
+			sort = { price: -1 };
+		} else if (sort_query === 'category') {
+			sort = { category: -1 };
+		} else if (sort_query === 'hidden') {
+			sort = { hidden: -1 };
+		} else if (sort_query === 'newest' || sort_query === '') {
+			sort = { order: 1, _id: -1 };
+		}
+	}
 
-// }
-// export const determine_filter = (query: any, search: any) => {
-// 	const category = query.category ? { category: query.category } : {};
-// 	const subcategory = query.subcategory ? { subcategory: query.subcategory } : {};
-// 	const collection = query.collection ? { product_collection: query.collection } : {};
-
-// 	const hidden: any = query.hidden ? (query.hidden === 'true' ? {} : { hidden: false }) : { hidden: false };
-// 	const option: any = query.option ? { option: query.option === 'true' ? true : false } : { option: false };
-// 	const chips = query.chip ? { chips: { $in: [ query.chip ] } } : {};
-
-// 	const filter = {
-// 		deleted: false,
-// 		...option,
-// 		...hidden,
-// 		...category,
-// 		...subcategory,
-// 		...collection,
-// 		...search,
-// 		...chips
-// 	};
-
-// 	return filter;
-// };
+	if (sort_query === 'newest' || sort_query === '') {
+		sort = { _id: -1 };
+	} else if (sort_query === 'oldest' || sort_query === '') {
+		sort = { _id: 1 };
+	}
+	return sort;
+};

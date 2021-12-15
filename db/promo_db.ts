@@ -1,16 +1,9 @@
 import Promo from '../models/promo';
 
 export default {
-	findAll_promos_db: async (category: any, search: any, sort: any) => {
+	findAll_promos_db: async (filter: any, sort: any) => {
 		try {
-			return await Promo.find({
-				deleted: false,
-				...category,
-				...search
-			})
-				.sort(sort)
-				.populate('sponsor')
-				.populate('user');
+			return await Promo.find(filter).sort(sort).populate('sponsor').populate('user');
 		} catch (error) {
 			console.log({ findAll_promos_db_error: error });
 			throw new Error(error.message);

@@ -1,11 +1,10 @@
 import { email_db, user_db } from '../db';
+import { determine_filter } from '../util';
 require('dotenv').config();
 
 export default {
 	findAll_emails_s: async (query: any) => {
 		try {
-			const email_type = query.category ? { email_type: query.category } : {};
-			console.log(email_type);
 			const search = query.search
 				? {
 						email_type: {
@@ -14,7 +13,7 @@ export default {
 						}
 					}
 				: {};
-
+			const filter = determine_filter(query, search);
 			const sort_query = query.sort && query.sort.toLowerCase();
 			let sort: any = { _id: -1 };
 			if (sort_query === 'email type') {
@@ -23,7 +22,6 @@ export default {
 				sort = { _id: -1 };
 			}
 
-			const filter = { deleted: false, ...email_type, ...search };
 			return await email_db.findAll_emails_db(filter, sort);
 		} catch (error) {
 			console.log({ findAll_emails_s_error: error });

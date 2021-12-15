@@ -1,4 +1,5 @@
 import { paycheck_db } from '../db';
+import { determine_filter } from '../util';
 
 export default {
 	findAll_paychecks_s: async (query: any) => {
@@ -12,7 +13,7 @@ export default {
 						}
 					}
 				: {};
-
+			const filter = determine_filter(query, search);
 			const sort_query = query.sort && query.sort.toLowerCase();
 			let sort = {};
 			if (sort_query === 'glover name') {
@@ -22,7 +23,6 @@ export default {
 			} else if (sort_query === 'newest' || sort_query === '') {
 				sort = { _id: -1 };
 			}
-			const filter = { deleted: false, ...category, ...search };
 			return await paycheck_db.findAll_paychecks_db(filter, sort);
 		} catch (error) {
 			console.log({ findAll_paychecks_s_error: error });

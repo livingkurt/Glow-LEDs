@@ -37,7 +37,7 @@ export default {
 					: {};
 			}
 			const filter = determine_filter(query, search);
-			console.log({ findAll_products_s: filter });
+			console.log({ filter });
 			const sort_query = query.sort && query.sort.toLowerCase();
 			let sort = {};
 			if (sort_query === 'lowest') {

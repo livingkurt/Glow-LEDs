@@ -1,5 +1,10 @@
 import { promo_db } from '../db';
-import { determine_promoter_code_tier, determine_sponsor_code_tier, make_private_code } from '../util';
+import {
+	determine_filter,
+	determine_promoter_code_tier,
+	determine_sponsor_code_tier,
+	make_private_code
+} from '../util';
 
 export default {
 	findAll_promos_s: async (query: any) => {
@@ -13,7 +18,7 @@ export default {
 						}
 					}
 				: {};
-
+			const filter = determine_filter(query, search);
 			const sort_query = query.sort && query.sort.toLowerCase();
 			let sort = {};
 			if (sort_query === 'admin only') {
@@ -25,7 +30,7 @@ export default {
 			} else if (sort_query === 'newest' || sort_query === '') {
 				sort = { _id: -1 };
 			}
-			return await promo_db.findAll_promos_db(category, search, sort);
+			return await promo_db.findAll_promos_db(filter, sort);
 		} catch (error) {
 			console.log({ findAll_promos_s_error: error });
 			throw new Error(error.message);

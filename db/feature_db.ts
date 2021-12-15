@@ -1,16 +1,9 @@
 import Feature from '../models/feature';
 
 export default {
-	findAll_features_db: async (category: any, search: any, sort: any) => {
+	findAll_features_db: async (filter: any, sort: any) => {
 		try {
-			return await Feature.find({
-				deleted: false,
-				...category,
-				...search
-			})
-				.sort(sort)
-				.populate('user')
-				.populate('affiliate');
+			return await Feature.find(filter).sort(sort).populate('user').populate('affiliate');
 		} catch (error) {
 			console.log({ findAll_features_db_error: error });
 			throw new Error(error.message);

@@ -26,6 +26,7 @@ export default {
 						}
 					: {};
 			}
+
 			const sort_query = query.sort && query.sort.toLowerCase();
 			let sort: any = { createdAt: -1 };
 			let filter: any = { deleted: false };

@@ -29,20 +29,7 @@ export default {
 			res.status(500).send({ error, message: 'Error Finding Feature' });
 		}
 	},
-	findByCategory_features_c: async (req: any, res: any) => {
-		const { query } = req;
-		try {
-			const feature = await feature_services.findByCategory_features_s(query);
-			console.log({ feature });
-			if (feature) {
-				return res.status(200).send(feature);
-			}
-			return res.status(404).send({ message: 'Feature Not Found' });
-		} catch (error) {
-			console.log({ findById_features_c_error: error });
-			res.status(500).send({ error, message: 'Error Finding Feature' });
-		}
-	},
+
 	create_features_c: async (req: any, res: any) => {
 		const { body } = req;
 		try {

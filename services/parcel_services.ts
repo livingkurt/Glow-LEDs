@@ -1,4 +1,5 @@
 import { parcel_db } from '../db';
+import { determine_filter } from '../util';
 
 export default {
 	findAll_parcels_s: async (query: any) => {
@@ -12,7 +13,7 @@ export default {
 						}
 					}
 				: {};
-
+			const filter = determine_filter(query, search);
 			const sort_query = query.sort && query.sort.toLowerCase();
 			let sort = {};
 			if (sort_query === 'glover name') {
@@ -22,11 +23,6 @@ export default {
 			} else if (sort_query === 'newest' || sort_query === '') {
 				sort = { name: 1 };
 			}
-			const filter = {
-				deleted: false,
-				...category,
-				...search
-			};
 			return await parcel_db.findAll_parcels_db(filter, sort);
 		} catch (error) {
 			console.log({ findAll_parcels_s_error: error });

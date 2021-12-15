@@ -1,6 +1,6 @@
 import { isConstructorDeclaration } from 'typescript';
 import { user_db } from '../db';
-import { getAccessToken, getRefreshToken, prnt } from '../util';
+import { determine_filter, getAccessToken, getRefreshToken, prnt } from '../util';
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('../config');
@@ -19,7 +19,7 @@ export default {
 						}
 					}
 				: {};
-
+			const filter = determine_filter(query, search);
 			const sort_query = query.sort && query.sort.toLowerCase();
 			let sort = {};
 			if (sort_query === 'first name') {
@@ -29,7 +29,6 @@ export default {
 			} else if (sort_query === 'newest' || sort_query === '') {
 				sort = { _id: -1 };
 			}
-			const filter = { deleted: false, ...category, ...search };
 			return await user_db.findAll_users_db(filter, sort);
 		} catch (error) {
 			console.log({ findAll_users_s_error: error });

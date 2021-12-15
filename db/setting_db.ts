@@ -1,17 +1,9 @@
 import Setting from '../models/setting';
 
 export default {
-	findAll_settings_db: async (category: any, search: any, sort: any) => {
+	findAll_settings_db: async (filter: any, sort: any) => {
 		try {
-			return await Setting.find({
-				deleted: false,
-				...category,
-				...search
-			})
-				.sort(sort)
-				.populate('user')
-				.populate('affiliate')
-				.populate('team');
+			return await Setting.find(filter).sort(sort).populate('user').populate('affiliate').populate('team');
 		} catch (error) {
 			console.log({ findAll_settings_db_error: error });
 			throw new Error(error.message);

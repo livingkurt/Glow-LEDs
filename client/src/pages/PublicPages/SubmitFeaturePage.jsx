@@ -68,7 +68,7 @@ const SubmitFeaturePage = (props) => {
 				dispatch(detailsFeature(''));
 			}
 			dispatch(listProducts({ option: false, hidden: false }));
-			dispatch(listUsers({}));
+			dispatch(listUsers({ sort: 'newest' }));
 
 			set_state();
 		}

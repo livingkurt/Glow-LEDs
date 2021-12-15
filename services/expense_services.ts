@@ -1,9 +1,9 @@
 import { expense_db } from '../db';
+import { determine_filter } from '../util';
 
 export default {
 	findAll_expenses_s: async (query: any) => {
 		try {
-			const category = query.category ? { category: query.category } : {};
 			const search = query.search
 				? {
 						expense_name: {
@@ -12,7 +12,7 @@ export default {
 						}
 					}
 				: {};
-
+			const filter = determine_filter(query, search);
 			const sort_query = query.sort && query.sort.toLowerCase();
 			let sort = {};
 			if (sort_query === 'lowest') {
@@ -28,7 +28,6 @@ export default {
 			} else if (sort_query === 'application') {
 				sort = { application: 1, createdAt: -1 };
 			}
-			const filter = { deleted: false, ...category, ...search };
 
 			return await expense_db.findAll_expenses_db(filter, sort);
 		} catch (error) {

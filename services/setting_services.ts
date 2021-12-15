@@ -1,4 +1,5 @@
 import { setting_db } from '../db';
+import { determine_filter } from '../util';
 
 export default {
 	findAll_settings_s: async (query: any) => {
@@ -12,7 +13,7 @@ export default {
 						}
 					}
 				: {};
-
+			const filter = determine_filter(query, search);
 			const sort_query = query.sort && query.sort.toLowerCase();
 			let sort = {};
 			if (sort_query === 'glover name') {
@@ -23,7 +24,7 @@ export default {
 				sort = { name: 1 };
 			}
 
-			return await setting_db.findAll_settings_db(category, search, sort);
+			return await setting_db.findAll_settings_db(filter, sort);
 		} catch (error) {
 			console.log({ findAll_settings_s_error: error });
 			throw new Error(error.message);

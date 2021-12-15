@@ -1,9 +1,9 @@
 import { palette_db } from '../db';
+import { determine_filter } from '../util';
 
 export default {
 	findAll_palettes_s: async (query: any) => {
 		try {
-			const category = query.category ? { category: query.category } : {};
 			const search = query.search
 				? {
 						facebook_name: {
@@ -12,7 +12,7 @@ export default {
 						}
 					}
 				: {};
-
+			const filter = determine_filter(query, search);
 			const sort_query = query.sort && query.sort.toLowerCase();
 			let sort = {};
 			if (sort_query === 'glover name') {
@@ -23,7 +23,7 @@ export default {
 				sort = { name: 1 };
 			}
 
-			return await palette_db.findAll_palettes_db(category, search, sort);
+			return await palette_db.findAll_palettes_db(filter, sort);
 		} catch (error) {
 			console.log({ findAll_palettes_s_error: error });
 			throw new Error(error.message);

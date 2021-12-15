@@ -1,9 +1,10 @@
 import { category_db } from '../db';
+import { determine_filter } from '../util';
 
 export default {
 	findAll_categorys_s: async (query: any) => {
 		try {
-			const filter = {};
+			const filter = determine_filter(query, {});
 			const sort = {};
 			return await category_db.findAll_categorys_db(filter, sort);
 		} catch (error) {

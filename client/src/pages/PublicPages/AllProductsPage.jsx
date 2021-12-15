@@ -79,7 +79,7 @@ const AllProductsPage = (props) => {
 			let clean = true;
 			if (clean) {
 				if (main_products) {
-					if (category !== 'essentials' || category !== 'discounted' || category !== 'best_sellers') {
+					if (category !== 'essentials' || category !== 'best_sellers') {
 						set_products(main_products);
 						if (currentPage) {
 							set_page(currentPage);
@@ -122,7 +122,13 @@ const AllProductsPage = (props) => {
 		console.log({});
 		const query = getUrlParameter(props.location);
 		let category = props.match.params.category ? props.match.params.category : '';
+		let sale = '';
 		let subcategory = props.match.params.subcategory ? props.match.params.subcategory : '';
+		if (category === 'discounted') {
+			category = '';
+			// subcategory = 'sale';
+			sale = true;
+		}
 		let search = '';
 		let sort = '';
 		let filter = '';
@@ -132,7 +138,7 @@ const AllProductsPage = (props) => {
 		let option = false;
 		let collection = props.match.params.collection ? props.match.params.collection : '';
 		// prnt({ query });
-		if (category !== 'essentials' || category !== 'discounted' || category !== 'best_sellers') {
+		if (category !== 'essentials' || category !== 'best_sellers') {
 			if (Object.keys(query).length > 0) {
 				if (query.search) {
 					set_search(query.search.split('%20').join(' '));
@@ -157,18 +163,28 @@ const AllProductsPage = (props) => {
 				}
 			}
 			if (category) {
-				if (category === 'discounted') {
-					get_occurrences(category);
-				} else if (category === 'best_sellers') {
+				if (category === 'best_sellers') {
 					get_occurrences(category);
 				} else if (category === 'essentials') {
 					get_occurrences(category);
 				}
 			}
-			// console.log({ category, subcategory, search, sort, filter, collection });
+			console.log({ category, subcategory, search, sort, filter, collection });
 			// dispatch(listProducts(category, subcategory, filter, search, sort, collection, page, limit, hidden));
 			dispatch(
-				listProducts({ category, subcategory, filter, search, sort, collection, page, limit, hidden, option })
+				listProducts({
+					category,
+					subcategory,
+					filter,
+					search,
+					sort,
+					collection,
+					page,
+					limit,
+					hidden,
+					option,
+					sale
+				})
 			);
 		}
 	};
@@ -186,11 +202,12 @@ const AllProductsPage = (props) => {
 			const { data } = await API_Products.get_essentials();
 			// console.log({ data });
 			set_products(data);
-		} else if (category === 'discounted') {
-			const { data } = await API_Products.findAll_products_a({ subcategory: 'imperfect' });
-			// console.log({ data });
-			set_products(data);
 		} else {
+			// else if (category === 'discounted') {
+			// 	const { data } = await API_Products.findAll_products_a({ subcategory: 'imperfect' });
+			// 	// console.log({ data });
+			// 	set_products(data);
+			// }
 			set_best_sellers(false);
 		}
 		set_loading_products(false);

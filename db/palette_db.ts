@@ -1,15 +1,9 @@
 import Palette from '../models/palette';
 
 export default {
-	findAll_palettes_db: async (category: any, search: any, sort: any) => {
+	findAll_palettes_db: async (filter: any, sort: any) => {
 		try {
-			return await Palette.find({
-				deleted: false,
-				...category,
-				...search
-			})
-				.sort(sort)
-				.populate('user');
+			return await Palette.find(filter).sort(sort).populate('user');
 		} catch (error) {
 			console.log({ findAll_palettes_db_error: error });
 			throw new Error(error.message);

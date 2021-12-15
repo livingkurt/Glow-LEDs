@@ -1,6 +1,7 @@
 import { content_db } from '../db';
 const axios = require('axios');
 import { parse } from 'node-html-parser';
+import { determine_filter } from '../util';
 
 export default {
 	findAll_contents_s: async (query: any) => {
@@ -14,9 +15,9 @@ export default {
 						}
 					}
 				: {};
-
+			const filter = determine_filter(query, search);
 			const sort = { _id: -1 };
-			const filter = { deleted: false };
+
 			return await content_db.findAll_contents_db(filter, sort, limit);
 		} catch (error) {
 			console.log({ findAll_contents_s_error: error });

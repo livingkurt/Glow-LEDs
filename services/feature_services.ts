@@ -1,9 +1,9 @@
 import { feature_db } from '../db';
+import { determine_filter } from '../util';
 
 export default {
 	findAll_features_s: async (query: any) => {
 		try {
-			const category = query.category ? { category: query.category } : {};
 			const search = query.search
 				? {
 						facebook_name: {
@@ -12,7 +12,7 @@ export default {
 						}
 					}
 				: {};
-
+			const filter = determine_filter(query, search);
 			const sort_query = query.sort && query.sort.toLowerCase();
 			let sort = {};
 			if (sort_query === 'glover name') {
@@ -23,7 +23,7 @@ export default {
 				sort = { release_date: -1 };
 			}
 
-			return await feature_db.findAll_features_db(category, search, sort);
+			return await feature_db.findAll_features_db(filter, sort);
 		} catch (error) {
 			console.log({ findAll_features_s_error: error });
 			throw new Error(error.message);
@@ -37,16 +37,7 @@ export default {
 			throw new Error(error.message);
 		}
 	},
-	findByCategory_features_s: async (query: any) => {
-		const category = query.category ? { category: query.category } : {};
-		const sort = { _id: -1 };
-		try {
-			return await feature_db.findAll_features_db(category, '', sort);
-		} catch (error) {
-			console.log({ findById_features_s_error: error });
-			throw new Error(error.message);
-		}
-	},
+
 	create_features_s: async (body: any) => {
 		try {
 			return await feature_db.create_features_db(body);

@@ -20,7 +20,6 @@ export default {
 		console.log({ params });
 		try {
 			const orders = await order_services.findMy_orders_s(params);
-			console.log({ orders });
 			if (orders) {
 				return res.status(200).send(orders);
 			}
@@ -100,7 +99,6 @@ export default {
 		const { params } = req;
 		try {
 			const orders = await order_services.occurrences_orders_s(params);
-			console.log({ orders });
 			if (orders) {
 				return res.status(200).send(orders);
 			}
