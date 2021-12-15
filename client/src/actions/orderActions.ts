@@ -411,23 +411,6 @@ export const detailsOrder = (orderId: string) => async (
 		dispatch({ type: ORDER_DETAILS_FAIL, payload: error });
 	}
 };
-export const detailsOrderPublic = (orderId: string) => async (
-	dispatch: (arg0: { type: string; payload: any }) => void,
-	getState: () => { userLogin: { userInfo: any } }
-) => {
-	try {
-		dispatch({ type: ORDER_DETAILS_PUBLIC_REQUEST, payload: orderId });
-		console.log({ orderId });
-		const { data } = await axios.get('/api/orders/guest/' + orderId);
-		console.log({ data });
-		if (data) {
-			dispatch({ type: ORDER_DETAILS_PUBLIC_SUCCESS, payload: data });
-		}
-	} catch (error) {
-		console.log({ error });
-		dispatch({ type: ORDER_DETAILS_PUBLIC_FAIL, payload: error });
-	}
-};
 
 export const deleteOrder = (orderId: string) => async (
 	dispatch: (arg0: { type: string; payload: any }) => void,

@@ -68,27 +68,6 @@ export const orderDetailsReducer = (
 			return state;
 	}
 };
-export const orderDetailsPublicReducer = (
-	state = {
-		order: {
-			orderItems: [],
-			shipping: {},
-			payment: {}
-		}
-	},
-	action: { type: any; payload: any }
-) => {
-	switch (action.type) {
-		case ORDER_DETAILS_PUBLIC_REQUEST:
-			return { loading: true };
-		case ORDER_DETAILS_PUBLIC_SUCCESS:
-			return { loading: false, order: action.payload, message: 'Order Found' };
-		case ORDER_DETAILS_PUBLIC_FAIL:
-			return { loading: false, error: action.payload.error, message: action.payload.message };
-		default:
-			return state;
-	}
-};
 
 export const myOrderListReducer = (
 	state = {

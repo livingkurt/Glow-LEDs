@@ -5,7 +5,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { detailsEmail, listEmails } from '../../actions/emailActions';
 import { API_Emails } from '../../utils';
 import { format_date, toCapitalize } from '../../utils/helper_functions';
-import { detailsOrderPublic } from '../../actions/orderActions';
+import { detailsOrder } from '../../actions/orderActions';
 import { determine_product_name, email_sale_price_switch } from '../../utils/react_helper_functions';
 import { listPromos } from '../../actions/promoActions';
 import { Loading } from '../UtilityComponents';
@@ -14,8 +14,8 @@ import { Survey } from '../SpecialtyComponents';
 const OrderEmail = (props) => {
 	const history = useHistory();
 	const [ loading, set_loading ] = useState(false);
-	const orderDetailsPublic = useSelector((state) => state.orderDetailsPublic);
-	const { order } = orderDetailsPublic;
+	const orderDetails = useSelector((state) => state.orderDetails);
+	const { order } = orderDetails;
 
 	const emailDetails = useSelector((state) => state.emailDetails);
 	const { email } = emailDetails;
@@ -32,7 +32,7 @@ const OrderEmail = (props) => {
 		let clean = true;
 		if (clean) {
 			dispatch(listEmails({ category: toCapitalize(props.match.params.status) }));
-			dispatch(detailsOrderPublic(props.match.params.id));
+			dispatch(detailsOrder(props.match.params.id));
 			dispatch(listPromos({}));
 		}
 		return () => (clean = false);

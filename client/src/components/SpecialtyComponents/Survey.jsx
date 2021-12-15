@@ -7,7 +7,7 @@ import { Helmet } from 'react-helmet';
 import { listUsers } from '../../actions/userActions';
 import 'react-medium-image-zoom/dist/styles.css';
 import { StarRating } from '../../components/SpecialtyComponents';
-import { detailsOrderPublic } from '../../actions/orderActions';
+import { detailsOrder } from '../../actions/orderActions';
 
 const Survey = (props) => {
 	const [ question_1, set_question_1 ] = useState('');
@@ -42,8 +42,8 @@ const Survey = (props) => {
 
 	const history = useHistory();
 
-	const orderDetailsPublic = useSelector((state) => state.orderDetailsPublic);
-	const { order: user_order } = orderDetailsPublic;
+	const orderDetails = useSelector((state) => state.orderDetails);
+	const { order: user_order } = orderDetails;
 
 	const surveyDetails = useSelector((state) => state.surveyDetails);
 	const { survey, loading, error } = surveyDetails;
@@ -67,7 +67,7 @@ const Survey = (props) => {
 					dispatch(detailsSurvey(active_survey._id));
 					set_survey_questions(active_survey._id);
 				}
-				dispatch(detailsOrderPublic(props.order_id));
+				dispatch(detailsOrder(props.order_id));
 			}
 			return () => (clean = false);
 		},
