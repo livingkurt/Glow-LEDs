@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const ViewOrder = (props) => {
 	const [ order_number, set_order_number ] = useState('');
+
+	const userLogin = useSelector((state) => state.userLogin);
+	const { userInfo } = userLogin;
 	return (
 		<div className="form">
 			<Helmet>
@@ -26,7 +30,15 @@ const ViewOrder = (props) => {
 						/>
 					</li>
 					<li>
-						<Link to={'/checkout/order/' + order_number}>
+						<Link
+							to={
+								userInfo && userInfo.first_name ? (
+									'/secure/account/order/' + order_number
+								) : (
+									'/checkout/order/' + order_number
+								)
+							}
+						>
 							<button className="btn primary w-100per">View Order</button>
 						</Link>
 					</li>

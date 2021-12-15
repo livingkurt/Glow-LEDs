@@ -86,7 +86,6 @@ export { default as MusicPage } from './PublicPages/MusicPage';
 export { default as GuestDecisionPage } from './PublicPages/GuestDecisionPage';
 export { default as MenuPage } from './PublicPages/MenuPage';
 export { default as TrackOrderPage } from './PublicPages/TrackOrderPage';
-export { default as OrderPublicPage } from './PublicPages/OrderPublicPage';
 export { default as AnnouncementsPage } from './PublicPages/AnnouncementsPage';
 export { default as AllSponsorsPage } from './PublicPages/AllSponsorsPage';
 export { default as SponsorPage } from './PublicPages/SponsorPage';

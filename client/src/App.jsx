@@ -53,7 +53,6 @@ import {
 	ResetPasswordPage,
 	ProductsDisplayPage,
 	TrackOrderPage,
-	OrderPublicPage,
 	AnnouncementsPage,
 	EditAllDataPage,
 	AllFeaturesPage,
