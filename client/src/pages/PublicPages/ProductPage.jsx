@@ -547,15 +547,15 @@ const ProductPage = (props) => {
 
 	const update_option = (e) => {
 		const option = JSON.parse(e.target.value);
-		let button = document.getElementById(e.target.id);
-		let buttons = document.querySelectorAll('.packs');
-		buttons.forEach((node) => {
-			node.classList.remove('active');
-			node.classList.remove('secondary');
-			node.classList.add('primary');
-		});
-		button.classList.add('secondary');
-		button.classList.add('active');
+		// let button = document.getElementById(e.target.id);
+		// let buttons = document.querySelectorAll('.packs');
+		// buttons.forEach((node) => {
+		// 	node.classList.remove('active');
+		// 	node.classList.remove('secondary');
+		// 	node.classList.add('primary');
+		// });
+		// button.classList.add('secondary');
+		// button.classList.add('active');
 
 		if (option.size) {
 			set_size(option.size);
@@ -912,7 +912,7 @@ const ProductPage = (props) => {
 			{product && (
 				<div className=" w-100per m-auto">
 					<RelatedProductsSlideshow
-						product={product}
+						product_category={product.category}
 						random={false}
 						className=""
 						product_pathname={props.match.params.pathname}
@@ -925,7 +925,7 @@ const ProductPage = (props) => {
 			product.category !== 'accessories' && (
 				<div className=" w-100per m-auto">
 					<RelatedProductsSlideshow
-						product={product}
+						product_category={product.category}
 						random={false}
 						className=""
 						product_pathname={props.match.params.pathname}
@@ -938,7 +938,7 @@ const ProductPage = (props) => {
 			{product && (
 				<div className=" w-100per m-auto">
 					<RelatedProductsSlideshow
-						product={product}
+						product_category={product.category}
 						random={true}
 						className=""
 						product_pathname={props.match.params.pathname}

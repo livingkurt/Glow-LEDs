@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { Carousel, CartItem } from '../../components/SpecialtyComponents';
 import { Helmet } from 'react-helmet';
 import { decide_warning, determine_total } from '../../utils/helper_functions';
+import RelatedProductsSlideshow from '../../components/SpecialtyComponents/RelatedProductsSlideshow';
 
 const CartPage = (props) => {
 	const cart = useSelector((state) => state.cart);
@@ -69,13 +70,30 @@ const CartPage = (props) => {
 				</div>
 			</div>
 			<h4 style={{ textAlign: 'center' }}>{no_items_in_cart}</h4>
-			<Carousel
+
+			<RelatedProductsSlideshow
+				className=""
+				product_pathname={props.match.params.pathname}
+				title="Accessories You May Need"
+				category="accessories"
+				add_to_cart={true}
+			/>
+			<RelatedProductsSlideshow
+				random={true}
+				className=""
+				product_pathname={props.match.params.pathname}
+				title="Suggested Products"
+				category="all"
+				add_to_cart={true}
+			/>
+
+			{/* <Carousel
 				product_pathname={props.match.params.pathname}
 				category={'accessories'}
 				title="Accessories You May Need"
 				add_to_cart={true}
-			/>
-			<Carousel title="Suggested Products" add_to_cart={true} random={true} />
+			/> */}
+			{/* <Carousel title="Suggested Products" add_to_cart={true} random={true} /> */}
 		</div>
 	);
 };

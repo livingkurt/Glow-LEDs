@@ -2,34 +2,39 @@ import React, { useEffect, useState, useRef } from 'react';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import { Link, useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import { Rating } from '.';
+import { addToCart } from '../../actions/cartActions';
 import { API_Products } from '../../utils';
 import { humanize, prnt, shuffle } from '../../utils/helper_functions';
-import { determine_product_name_display, mobile_check, sale_price_switch } from '../../utils/react_helper_functions';
+import {
+	determine_option_product_name,
+	determine_product_name_display,
+	mobile_check,
+	sale_price_switch
+} from '../../utils/react_helper_functions';
 import useWindowDimensions from '../Hooks/windowDimensions';
 import { LazyImage } from '../UtilityComponents';
 
-const RelatedProductsSlideshow = ({ product, category, random, title, product_pathname }) => {
+const RelatedProductsSlideshow = ({ product_category, category, random, title, product_pathname, add_to_cart }) => {
 	const { height, width } = useWindowDimensions();
+	const dispatch = useDispatch();
+	const history = useHistory();
 
 	const [ products, set_products ] = useState([]);
 	const [ loading, set_loading ] = useState(false);
-
-	const history = useHistory();
+	const [ qty, set_qty ] = useState(1);
+	const [ size, set_size ] = useState('');
 
 	useEffect(
 		() => {
 			let clean = true;
 			if (clean) {
-				if (product.category) {
-					get_products(product.category);
-				} else {
-					get_products();
-				}
+				get_products();
 			}
 			return () => (clean = false);
 		},
-		[ product.category ]
+		[ product_category ]
 	);
 
 	const get_products = async () => {
@@ -40,7 +45,7 @@ const RelatedProductsSlideshow = ({ product, category, random, title, product_pa
 		} else if (category === 'all') {
 			query = { hidden: false, option: false };
 		} else if (category === 'related') {
-			query = { category: product.category, hidden: false, option: false };
+			query = { category: product_category, hidden: false, option: false };
 		}
 
 		const { data } = await API_Products.findAll_products_a(query);
@@ -88,8 +93,123 @@ const RelatedProductsSlideshow = ({ product, category, random, title, product_pa
 			slidesToSlide: 1 // optional, default to 1.
 		}
 	};
+
+	// const update_option = (e) => {
+	// 	const option = JSON.parse(e.target.value);
+	// 	let button = document.getElementById(e.target.id);
+	// 	let buttons = document.querySelectorAll('.packs');
+	// 	buttons.forEach((node) => {
+	// 		node.classList.remove('active');
+	// 		node.classList.remove('off ft-primary');
+	// 		node.classList.add('on ft-white');
+	// 	});
+	// 	button.classList.add('off ft-primary');
+	// 	button.classList.add('active');
+
+	// 	set_size(option.size);
+	// };
+
+	const handleAddToCart = (e, product) => {
+		e.preventDefault();
+		console.log({ product });
+		const color = product.color_products && product.color_products.find((color) => color.default_option === true);
+		const secondary_color =
+			product.secondary_color_products &&
+			product.secondary_color_products.find((secondary_color) => secondary_color.default_option === true);
+		const option =
+			product.option_products && product.option_products.find((option) => option.default_option === true);
+		dispatch(
+			addToCart({
+				product: product._id,
+				color_product: color && color,
+				color_code: color && color.color_code,
+				secondary_color_code: secondary_color && secondary_color.color_code,
+				secondary_color_product: secondary_color && secondary_color,
+				color_group_name: product.color_group_name,
+				secondary_color_group_name: product.secondary_color_group_name,
+				option_group_name: product.option_group_name,
+				secondary_group_name: product.secondary_group_name,
+				option_product: option && option,
+				// option_product_name:,
+				// secondary_product,
+				// secondary_product_name,
+				name: product.name,
+				size: size ? size : option.size,
+				color: color && color.color,
+				secondary_color: secondary_color && secondary_color.secondary_color,
+				display_image: product.images[0],
+				price: product.price,
+				sale_price: product.sale_price,
+				sale_start_date: product.sale_start_date,
+				sale_end_date: product.sale_end_date,
+				quantity: product.quantity,
+				weight_pounds: product.weight_pounds,
+				weight_ounces: product.weight_ounces,
+				package_length: product.package_length,
+				package_width: product.package_width,
+				package_height: product.package_height,
+				package_volume: product.package_volume,
+				pathname: product.pathname,
+				category: product.category,
+				subcategory: product.subcategory,
+				qty,
+				finite_stock: product.category
+				// // determine_default_color(color),
+				// diffuser_cap: diffuser_cap,
+			})
+		);
+	};
+
+	const determine_option_styles = (option_product_object, option) => {
+		const classes = 'packs fs-13px flex-s-0 min-w-40px mr-1rem mb-1rem ';
+		if (option_product_object.hasOwnProperty('size')) {
+			if (option_product_object.size === size) {
+				return `${classes} off ft-primary`;
+			} else {
+				return `${classes} on ft-white`;
+			}
+		} else if (option.default_option) {
+			return `${classes} off ft-primary`;
+		} else {
+			return `${classes} on ft-white`;
+		}
+	};
+
+	const option_buttons = (option, index, option_product_object) => {
+		return (
+			<div>
+				<button
+					key={index}
+					selected={option.default_option}
+					id={option.size}
+					value={JSON.stringify(option)}
+					onClick={(e) => update_option(e)}
+					className={determine_option_styles(option, option_product_object)}
+				>
+					{determine_option_product_name(option.size)}
+				</button>
+			</div>
+		);
+	};
+	const update_option = (e) => {
+		const option = JSON.parse(e.target.value);
+		console.log({ option });
+		// let button = document.getElementById(e.target.id);
+		// let buttons = document.querySelectorAll('.packs');
+		// buttons.forEach((node) => {
+		// 	node.classList.remove('active');
+		// 	node.classList.remove('secondary');
+		// 	node.classList.add('primary');
+		// });
+		// button.classList.add('secondary');
+		// button.classList.add('active');
+
+		set_size(option.size);
+	};
+
+	const [ show_options, set_show_options ] = useState(false);
 	return (
-		<div>
+		<div className="">
 			<h2 className="jc-c w-100per ta-c">{title}</h2>
 
 			<Carousel
@@ -112,35 +232,163 @@ const RelatedProductsSlideshow = ({ product, category, random, title, product_pa
 			>
 				{products &&
 					products.map((product, index) => (
-						<li key={product.pathname} className="product-thumb">
+						<li key={product.pathname} className="product-thumb pv-2rem">
 							<div className="tooltip">
-								<div className="tooltipoverlay">
-									<div className="product">
-										<Link
-											to={{
-												pathname: '/collections/all/products/' + product.pathname,
-												previous_path: history.location.pathname
-											}}
-											className="m-auto"
-										>
-											<div className="row mt-15px">
-												<div className="column ai-c pos-rel">
-													{/* <Link to={'/collections/all/products/' + item.pathname}> */}
-													{product.images.length === 1 && (
-														<LazyImage
-															className="product-image"
-															alt={product.name}
-															title="Product Image"
-															size={{ height: 200, width: 200 }}
-															effect="blur"
-															src={product.images && product.images[0]}
-														/>
-													)}
-													{product.images.length > 1 && (
-														// <div className="image-btn-container">
-														<div>
-															<div className="jc-b w-100per pos-rel ">
-																{/* {product.images.length > 1 && (
+								<span className="tooltiptext">
+									<li className="">
+										{product.quantity > 0 && add_to_cart ? (
+											<div>
+												{product.subcategory !== 'batteries' ? (
+													<button
+														onClick={(e) => handleAddToCart(e, product)}
+														className="btn primary"
+													>
+														Quick Add to Cart
+													</button>
+												) : (
+													<li>
+														{!show_options && (
+															<button
+																onClick={() => set_show_options(true)}
+																className="btn primary"
+															>
+																Quick Add to Cart
+															</button>
+														)}
+														{show_options && (
+															<div
+																className="w-250px br-20px m-auto br-20px p-10px"
+																style={{
+																	backgroundColor: '#27272780',
+																	color: 'white'
+																}}
+															>
+																{/* <label
+																	aria-label="sort"
+																	htmlFor="sort"
+																	className="select-label mr-1rem mt-1rem"
+																>
+																	{product.option_group_name ? product.option_group_name : 'Size'}:
+																</label>
+																<div className="ai-c wrap jc-c">
+																	{product.option_products &&
+																		product.option_products.map((option, index) => (
+																			<button
+																				key={index}
+																				id={option.size}
+																				value={JSON.stringify(option)}
+																				onClick={(e) => update_option(e)}
+																				className={`packs fs-13px flex-s-0 min-w-40px mr-2px mb-1rem btn ${option.default_option
+																					? 'off ft-primary'
+																					: 'on ft-white'}`}
+																			>
+																				{option.size}
+																			</button>
+																		))}
+																</div> */}
+																<div
+																	className={`ai-c  mv-10px ${width < 1150
+																		? 'jc-b'
+																		: ''}`}
+																>
+																	<h3
+																		aria-label="sort"
+																		htmlFor="sort"
+																		className="select-label mr-1rem mt-1rem"
+																	>
+																		{product.option_group_name ? product.option_group_name : 'Size'}:
+																	</h3>
+																	<div className="ai-c wrap">
+																		{product.option_products
+																			.filter((option) => option.price !== 2.99)
+																			.map((option, index) => (
+																				<div>
+																					{option_buttons(
+																						option,
+																						index,
+																						product.option_products.find(
+																							(option) =>
+																								option.default_option ===
+																								true
+																						)
+																					)}
+																				</div>
+																			))}
+																	</div>
+																</div>
+
+																<div className="ai-c h-25px max-w-500px w-100per jc-b mb-10px">
+																	<label
+																		aria-label="sort"
+																		htmlFor="sort"
+																		className="select-label mr-1rem"
+																	>
+																		Qty:
+																	</label>
+																	<div className="custom-select">
+																		<select
+																			defaultValue={qty}
+																			className="qty_select_dropdown"
+																			onChange={(e) => {
+																				set_qty(e.target.value);
+																			}}
+																		>
+																			{[ ...Array(10).keys() ].map((x, index) => (
+																				<option
+																					key={index}
+																					defaultValue={parseInt(x + 1)}
+																				>
+																					{parseInt(x + 1)}
+																				</option>
+																			))}
+																		</select>
+																		<span className="custom-arrow" />
+																	</div>
+																</div>
+																<button
+																	onClick={(e) => handleAddToCart(e, product)}
+																	className="btn primary w-100per"
+																>
+																	Add to Cart
+																</button>
+															</div>
+														)}
+													</li>
+												)}
+											</div>
+										) : (
+											<button className="button inactive">Out of Stock</button>
+										)}
+									</li>
+								</span>
+
+								<div className="product">
+									<Link
+										to={{
+											pathname: '/collections/all/products/' + product.pathname,
+											previous_path: history.location.pathname
+										}}
+										className="m-auto"
+									>
+										<div className="row mt-15px">
+											<div className="column ai-c pos-rel">
+												{/* <Link to={'/collections/all/products/' + item.pathname}> */}
+
+												{product.images.length === 1 && (
+													<LazyImage
+														className="product-image"
+														alt={product.name}
+														title="Product Image"
+														size={{ height: 200, width: 200 }}
+														effect="blur"
+														src={product.images && product.images[0]}
+													/>
+												)}
+												{product.images.length > 1 && (
+													// <div className="image-btn-container">
+													<div>
+														<div className="jc-b w-100per pos-rel ">
+															{/* {product.images.length > 1 && (
 																<div className="ai-c pos-abs left-0px top-125px image-btn">
 																	<button
 																		style={{ backgroundColor: 'transparent' }}
@@ -151,19 +399,20 @@ const RelatedProductsSlideshow = ({ product, category, random, title, product_pa
 																	</button>
 																</div>
 															)} */}
-																{[ ...Array(1).keys() ].map((x) => (
-																	<LazyImage
-																		key={image_number + x}
-																		className="product-image"
-																		alt={'Product'}
-																		title="Product Image"
-																		size={{ height: 200, width: 200 }}
-																		effect="blur"
-																		// src={images[image_number + x]}
-																		src={product.images[0]}
-																	/>
-																))}
-																{/* {product.images.length > 1 && (
+															{[ ...Array(1).keys() ].map((x) => (
+																<LazyImage
+																	key={image_number + x}
+																	className="product-image"
+																	alt={'Product'}
+																	title="Product Image"
+																	size={{ height: 200, width: 200 }}
+																	effect="blur"
+																	// src={images[image_number + x]}
+																	src={product.images[0]}
+																/>
+															))}
+
+															{/* {product.images.length > 1 && (
 																<div className="ai-c pos-abs right-0px top-125px image-btn">
 																	<button
 																		style={{ backgroundColor: 'transparent' }}
@@ -174,11 +423,11 @@ const RelatedProductsSlideshow = ({ product, category, random, title, product_pa
 																	</button>
 																</div>
 															)} */}
-																{/* </div> */}
-															</div>
+															{/* </div> */}
 														</div>
-													)}
-													{/* {[ ...Array(12).keys() ].map(
+													</div>
+												)}
+												{/* {[ ...Array(12).keys() ].map(
 										(x, index) =>
 											product_occurrences &&
 											product_occurrences[index] &&
@@ -193,35 +442,32 @@ const RelatedProductsSlideshow = ({ product, category, random, title, product_pa
 												</div>
 											)
 									)} */}
-												</div>
 											</div>
-										</Link>
+										</div>
+									</Link>
 
-										{/* <label className="mt-5px title_font" style={{ fontSize: '14px' }}>
+									{/* <label className="mt-5px title_font" style={{ fontSize: '14px' }}>
 							{product.brand}
 						</label> */}
-										<Link
-											to={{
-												pathname: '/collections/all/products/' + product.pathname,
-												previous_path: history.location.pathname
-											}}
-											className="mt-13px"
-										>
-											<label style={{ fontSize: '1.6rem' }}>
-												{determine_product_name_display(product, false)}
-											</label>
-										</Link>
-
-										<label className="product-price mv-3px">
-											{sale_price_switch(product, false)}
+									<Link
+										to={{
+											pathname: '/collections/all/products/' + product.pathname,
+											previous_path: history.location.pathname
+										}}
+										className="mt-13px"
+									>
+										<label style={{ fontSize: '1.6rem' }}>
+											{determine_product_name_display(product, false)}
 										</label>
+									</Link>
 
-										{product.rating ? (
-											<Rating rating={product.rating} numReviews={product.numReviews} />
-										) : (
-											<span className="rating vis-hid ta-c">No Reviews</span>
-										)}
-									</div>
+									<label className="product-price mv-3px">{sale_price_switch(product, false)}</label>
+
+									{product.rating ? (
+										<Rating rating={product.rating} numReviews={product.numReviews} />
+									) : (
+										<span className="rating vis-hid ta-c">No Reviews</span>
+									)}
 								</div>
 							</div>
 						</li>
