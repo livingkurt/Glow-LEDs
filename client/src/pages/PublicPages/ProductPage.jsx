@@ -909,38 +909,44 @@ const ProductPage = (props) => {
 					</div>
 				)}
 			</Loading>
-			<Carousel
-				product_pathname={props.match.params.pathname}
-				category={product && product.category}
-				title="Related Products"
-				random={false}
-			/>
+			{product && (
+				<div className=" w-100per m-auto">
+					<RelatedProductsSlideshow
+						product={product}
+						random={false}
+						className=""
+						product_pathname={props.match.params.pathname}
+						title="Related Products"
+						category="related"
+					/>
+				</div>
+			)}
 			{product &&
 			product.category !== 'accessories' && (
-				<Carousel
-					product_pathname={props.match.params.pathname}
-					category={'accessories'}
-					title="Accessories You May Need"
-				/>
-			)}
-			<Carousel product_pathname={props.match.params.pathname} random={true} title="Suggested Products" />
-			{/* {product && (
-				<div>
-					<div className=" w-100per m-auto">
-						<RelatedProductsSlideshow
-							product={product}
-							images={images}
-							secondary_images={secondary_images}
-							random={true}
-							className=""
-							product_pathname={props.match.params.pathname}
-							set_image={set_image}
-							interval={6000}
-							transitionTime={200}
-						/>
-					</div>
+				<div className=" w-100per m-auto">
+					<RelatedProductsSlideshow
+						product={product}
+						random={false}
+						className=""
+						product_pathname={props.match.params.pathname}
+						title="Accessories You May Need"
+						category="accessories"
+					/>
 				</div>
-			)} */}
+			)}
+
+			{product && (
+				<div className=" w-100per m-auto">
+					<RelatedProductsSlideshow
+						product={product}
+						random={true}
+						className=""
+						product_pathname={props.match.params.pathname}
+						title="Suggested Products"
+						category="all"
+					/>
+				</div>
+			)}
 		</div>
 	);
 };
