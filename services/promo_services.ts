@@ -9,7 +9,6 @@ import {
 export default {
 	findAll_promos_s: async (query: any) => {
 		try {
-			const category = query.category ? { category: query.category } : {};
 			const search = query.search
 				? {
 						facebook_name: {
@@ -20,14 +19,15 @@ export default {
 				: {};
 			const filter = determine_filter(query, search);
 			const sort_query = query.sort && query.sort.toLowerCase();
-			let sort = {};
+			console.log({ sort_query });
+			let sort: any = { _id: -1 };
 			if (sort_query === 'admin only') {
 				sort = { admin_only: -1 };
 			} else if (sort_query === 'affiliate only') {
 				sort = { affiliate_only: -1 };
 			} else if (sort_query === 'active') {
 				sort = { active: -1 };
-			} else if (sort_query === 'newest' || sort_query === '') {
+			} else if (sort_query === 'newest') {
 				sort = { _id: -1 };
 			}
 			return await promo_db.findAll_promos_db(filter, sort);

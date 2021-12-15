@@ -458,7 +458,7 @@ export const determine_filter = (query: any, search: any) => {
 	return { deleted: false, ...filter, ...search };
 };
 export const determine_sort = (query: any, type: string) => {
-	let sort = {};
+	let sort: any = { _id: -1 };
 	const sort_query = query && query.toLowerCase();
 
 	if (type === 'product') {
@@ -470,14 +470,14 @@ export const determine_sort = (query: any, type: string) => {
 			sort = { category: -1 };
 		} else if (sort_query === 'hidden') {
 			sort = { hidden: -1 };
-		} else if (sort_query === 'newest' || sort_query === '') {
+		} else if (sort_query === 'newest') {
 			sort = { order: 1, _id: -1 };
 		}
 	}
 
-	if (sort_query === 'newest' || sort_query === '') {
+	if (sort_query === 'newest') {
 		sort = { _id: -1 };
-	} else if (sort_query === 'oldest' || sort_query === '') {
+	} else if (sort_query === 'oldest') {
 		sort = { _id: 1 };
 	}
 	return sort;

@@ -4,7 +4,6 @@ import { deepEqual, determine_filter } from '../util';
 export default {
 	findAll_carts_s: async (query: any) => {
 		try {
-			const category = query.category ? { category: query.category } : {};
 			const search = query.search
 				? {
 						facebook_name: {

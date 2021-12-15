@@ -18,7 +18,7 @@ export default {
 			let sort: any = { _id: -1 };
 			if (sort_query === 'email type') {
 				sort = { email_type: 1 };
-			} else if (sort_query === 'newest' || sort_query === '') {
+			} else if (sort_query === 'newest') {
 				sort = { _id: -1 };
 			}
 

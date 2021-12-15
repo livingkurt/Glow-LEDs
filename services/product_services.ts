@@ -39,16 +39,16 @@ export default {
 			const filter = determine_filter(query, search);
 			console.log({ filter });
 			const sort_query = query.sort && query.sort.toLowerCase();
-			let sort = {};
+			let sort: any = { _id: -1 };
 			if (sort_query === 'lowest') {
 				sort = { price: 1 };
 			} else if (sort_query === 'highest') {
 				sort = { price: -1 };
 			} else if (sort_query === 'category') {
-				sort = { category: -1 };
+				sort = { category: 1 };
 			} else if (sort_query === 'hidden') {
 				sort = { hidden: -1 };
-			} else if (sort_query === 'newest' || sort_query === '') {
+			} else if (sort_query === 'newest') {
 				sort = { order: 1, _id: -1 };
 			}
 			const products = await product_db.findAll_products_db(filter, sort, limit, page);

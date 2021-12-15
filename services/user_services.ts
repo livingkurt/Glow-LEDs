@@ -10,7 +10,6 @@ require('dotenv');
 export default {
 	findAll_users_s: async (query: any) => {
 		try {
-			const category = query.category ? { category: query.category } : {};
 			const search = query.search
 				? {
 						first_name: {
@@ -21,12 +20,12 @@ export default {
 				: {};
 			const filter = determine_filter(query, search);
 			const sort_query = query.sort && query.sort.toLowerCase();
-			let sort = {};
+			let sort: any = { _id: -1 };
 			if (sort_query === 'first name') {
 				sort = { first_name: 1 };
 			} else if (sort_query === 'last name') {
 				sort = { last_name: 1 };
-			} else if (sort_query === 'newest' || sort_query === '') {
+			} else if (sort_query === 'newest') {
 				sort = { _id: -1 };
 			}
 			return await user_db.findAll_users_db(filter, sort);

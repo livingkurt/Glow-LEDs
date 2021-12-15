@@ -14,14 +14,14 @@ export default {
 				: {};
 			const filter = determine_filter(query, search);
 			const sort_query = query.sort && query.sort.toLowerCase();
-			let sort = {};
+			let sort: any = { date_of_purchase: -1 };
 			if (sort_query === 'lowest') {
 				sort = { amount: 1 };
 			} else if (sort_query === 'highest') {
 				sort = { amount: -1 };
 			} else if (sort_query === 'newest') {
 				sort = { _id: -1 };
-			} else if (sort_query === 'date' || sort_query === '') {
+			} else if (sort_query === 'date') {
 				sort = { date_of_purchase: -1 };
 			} else if (sort_query === 'category') {
 				sort = { category: 1, createdAt: -1 };
