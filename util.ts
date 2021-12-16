@@ -363,7 +363,7 @@ export const determine_sponsor_code_tier = (code_usage: number) => {
 };
 
 export const categories = [
-	'gloves',
+	'whites',
 	'accessories',
 	'decals',
 	'diffuser_caps',

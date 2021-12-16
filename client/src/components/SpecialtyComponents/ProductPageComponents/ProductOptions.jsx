@@ -316,7 +316,7 @@ const ProductOptions = ({
 						{product.category === 'decals' && '	This item ships in 2 - 5 business day.'}
 					</h4>
 					<h4 className="mb-0px mt-11px" style={{ webkitTextStroke: '0.5px white' }}>
-						{product.subcategory === 'gloves' && '	This item ships in 2 - 3 business day.'}
+						{product.subcategory === 'whites' && '	This item ships in 2 - 3 business day.'}
 					</h4>
 					<h4 className="mb-0px mt-11px" style={{ webkitTextStroke: '0.5px white' }}>
 						{(product.category === 'glowskins' || product.category === 'glow_casings') &&

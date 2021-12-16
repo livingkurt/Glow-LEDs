@@ -619,7 +619,7 @@ export const state_names = [
 ];
 
 export const categories = [
-	'gloves',
+	'whites',
 	'accessories',
 	'decals',
 	'diffuser_caps',

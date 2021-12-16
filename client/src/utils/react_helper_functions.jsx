@@ -500,7 +500,7 @@ export const determine_secondary_product_name = (name, category, subcategory) =>
 			return name.split('-')[1].trim();
 		}
 
-		if (subcategory === 'gloves' && name.includes('Bulk')) {
+		if (subcategory === 'whites' && name.includes('Bulk')) {
 			return name.split(' ')[1].trim();
 		}
 		if (subcategory === 'refresh' && name.includes('Bulk')) {

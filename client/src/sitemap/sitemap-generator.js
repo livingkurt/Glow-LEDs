@@ -7,7 +7,7 @@ const Sitemap = require('react-router-sitemap').default;
 const fetch = require('node-fetch');
 const API = 'http://localhost:5000';
 export const categories = [
-	'gloves',
+	'whites',
 	'accessories',
 	'decals',
 	'diffuser_caps',
