@@ -36,6 +36,7 @@ export default {
 						}
 					: {};
 			}
+			console.log({ search });
 			const filter = determine_filter(query, search);
 			console.log({ filter });
 			const sort_query = query.sort && query.sort.toLowerCase();

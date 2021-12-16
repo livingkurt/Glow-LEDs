@@ -93,17 +93,6 @@ const AllProductsPage = (props) => {
 		[ main_products ]
 	);
 
-	useEffect(
-		() => {
-			let clean = true;
-			if (clean) {
-				get_occurrences(props.match.params.category);
-			}
-			return () => (clean = false);
-		},
-		[ props.match.params.category ]
-	);
-
 	const { width, height } = userWindowDimensions();
 
 	useEffect(
@@ -112,10 +101,11 @@ const AllProductsPage = (props) => {
 			if (clean) {
 				dispatch(listChips({}));
 				determine_products();
+				get_occurrences(props.match.params.category);
 			}
 			return () => (clean = false);
 		},
-		[ props.match.params.category, props.match.params.subcategory ]
+		[ props.match.params.category, props.match.params.subcategory, getUrlParameter(props.location).search ]
 	);
 
 	const determine_products = async () => {
