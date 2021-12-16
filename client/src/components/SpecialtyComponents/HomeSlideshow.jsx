@@ -58,7 +58,7 @@ const HomeSlideshow = ({ slideshow }) => {
 					<Link to={slide.link}>
 						<button className="btn primary title_font">{slide.label}</button>
 					</Link>
-					<img key={index} src={slide.image} alt="carousel" title="carousel item" />
+					<img key={index} src={slide.image} draggable={false} alt="carousel" title="carousel item" />
 				</div>
 			))}
 		</Carousel>

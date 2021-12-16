@@ -151,6 +151,7 @@ const ProductSlideshow = ({ product, images, secondary_images, className, set_im
 				{images.map((image, index) => (
 					<div className={className}>
 						<img
+							draggable={false}
 							key={index}
 							src={image}
 							alt="carousel"
