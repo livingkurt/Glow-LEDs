@@ -211,20 +211,20 @@ const EditProductPage = (props) => {
 		set_item_group_id(data.tem_group_id);
 	};
 
-	useEffect(
-		() => {
-			let clean = true;
-			if (clean) {
-				if (successSave && filtered_products.length > 0) {
-					if (filtered_products.map((item) => item.pathname).indexOf(product.pathname) !== -1) {
-						history.push('/secure/glow/editproduct/' + filtered_products[new_index].pathname);
-					}
-				}
-			}
-			return () => (clean = false);
-		},
-		[ successSave ]
-	);
+	// useEffect(
+	// 	() => {
+	// 		let clean = true;
+	// 		if (clean) {
+	// 			if (successSave && filtered_products.length > 0) {
+	// 				if (filtered_products.map((item) => item.pathname).indexOf(product.pathname) !== -1) {
+	// 					history.push('/secure/glow/editproduct/' + filtered_products[new_index].pathname);
+	// 				}
+	// 			}
+	// 		}
+	// 		return () => (clean = false);
+	// 	},
+	// 	[ successSave ]
+	// );
 
 	useEffect(
 		() => {
@@ -514,7 +514,7 @@ const EditProductPage = (props) => {
 		save_product();
 		e.target.reset();
 		unset_state();
-		history.push('/secure/glow/products');
+		// history.push('/secure/glow/products');
 	};
 
 	const remove_image = (image_index, e) => {

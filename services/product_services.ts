@@ -5,7 +5,7 @@ export default {
 	findAll_products_s: async (query: any) => {
 		try {
 			const page: any = query.page ? query.page : 1;
-			const limit: any = query.limit ? query.limit : 21;
+			const limit: any = query.limit ? query.limit : 0;
 
 			let search = {};
 			if (categories.includes(snake_case(query.search))) {

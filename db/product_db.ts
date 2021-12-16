@@ -1,7 +1,9 @@
 import Product from '../models/product';
+import mongoose from 'mongoose';
 
 export default {
 	findAll_products_db: async (filter: any, sort: any, limit: any, page: any) => {
+		console.log({ filter });
 		try {
 			return await Product.find(filter)
 				.sort(sort)
@@ -71,21 +73,24 @@ export default {
 
 	update_products_db: async (id: string, body: any) => {
 		// console.log({ update_products_db: id });
-		let query = {};
+		// let query: any = { _id: mongoose.Types.ObjectId(id) };
 		try {
-			if (id && id.toString().match(/^[0-9a-fA-F]{24}$/)) {
-				query = { _id: id };
-			} else {
-				query = { pathname: id };
-			}
-			console.log({ query });
-			let product: any = await Product.findOne(query);
+			// if (id && id.toString().match(/^[0-9a-fA-F]{24}$/)) {
+			// 	query = { _id: mongoose.Types.ObjectId(id) };
+			// } else {
+			// 	query = { pathname: id };
+			// }
+
+			const product: any = await Product.findOne({ _id: id });
+			// let product: any = await Product.findOneAndUpdate(query, body);
+			// return await Product.updateOne({ _id: mongoose.Types.ObjectId(id) }, { ...body, _id: null });
 			console.log({ body });
-			product = Object.assign(body, product);
+			// product = Object.assign(body, product);
 			if (product) {
-				// return await Product.updateOne(query, body);
-				return await product.save();
+				return await Product.updateOne({ _id: id }, body);
+				// return await product.save();
 			}
+			return 'Success';
 		} catch (error) {
 			console.log({ update_products_db_error: error });
 			throw new Error(error.message);

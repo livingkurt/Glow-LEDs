@@ -24,7 +24,7 @@ function ProductPage(props) {
 	const [ loading_upload, set_loading_upload ] = useState(false);
 	const [ show_hidden, set_show_hidden ] = useState(false);
 	const [ page, set_page ] = useState(1);
-	const [ limit, set_limit ] = useState(20);
+	const [ limit, set_limit ] = useState(30);
 
 	const category = props.match.params.category ? props.match.params.category : '';
 	const subcategory = props.match.params.subcategory ? props.match.params.subcategory : '';
@@ -100,7 +100,7 @@ function ProductPage(props) {
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		dispatch(listProducts({ category, subcategory, search, sort, option: false }));
+		dispatch(listProducts({ category, subcategory, search, sort, option: false, limit }));
 	};
 
 	const sortHandler = (e) => {
@@ -279,13 +279,14 @@ function ProductPage(props) {
 		let filter = '';
 		let collection = props.match.params.collection ? props.match.params.collection : '';
 
-		let hidden = true;
+		let hidden = '';
+		let limit = 30;
 		let option = false;
 		console.log({ e, new_page });
 		e.preventDefault();
 		const page = parseInt(new_page);
 		set_page(page);
-		update_products_url(history, search, '', '', page);
+		update_products_url(history, search, '', '', page, limit);
 
 		console.log(new_page);
 		dispatch(
