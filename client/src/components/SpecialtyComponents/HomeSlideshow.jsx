@@ -37,7 +37,7 @@ const HomeSlideshow = ({ slideshow }) => {
 		<Carousel
 			swipeable={mobile_check() ? true : false}
 			draggable={mobile_check() ? true : false}
-			// showDots={true}
+			showDots={false}
 			// partialVisible={true}
 			// centerMode={true}
 			responsive={responsive}
