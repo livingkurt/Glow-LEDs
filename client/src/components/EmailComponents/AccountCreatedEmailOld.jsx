@@ -21,7 +21,7 @@ const AccountCreatedEmail = () => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch(listEmails({ email_type: 'Account Created' }));
+		dispatch(listEmails({ email_type: 'Account Created', active: true, limit: 1 }));
 		return () => {};
 	}, []);
 

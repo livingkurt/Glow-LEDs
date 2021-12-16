@@ -17,8 +17,7 @@ const OrderEmail = (props) => {
 	const orderDetails = useSelector((state) => state.orderDetails);
 	const { order } = orderDetails;
 
-	const emailDetails = useSelector((state) => state.emailDetails);
-	const { email } = emailDetails;
+	const [ email, set_email ] = useState({});
 
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
@@ -31,7 +30,7 @@ const OrderEmail = (props) => {
 	useEffect(() => {
 		let clean = true;
 		if (clean) {
-			dispatch(listEmails({ email_type: toCapitalize(props.match.params.status) }));
+			dispatch(listEmails({ email_type: toCapitalize(props.match.params.status), active: true, limit: 1 }));
 			dispatch(detailsOrder(props.match.params.id));
 			dispatch(listPromos({}));
 		}
@@ -43,10 +42,7 @@ const OrderEmail = (props) => {
 			let clean = true;
 			if (clean) {
 				if (emails) {
-					const active_email = emails.find((email) => email.active === true);
-					if (active_email) {
-						dispatch(detailsEmail(active_email._id));
-					}
+					set_email(emails[0]);
 				}
 			}
 			return () => (clean = false);

@@ -1,14 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { detailsEmail, listEmails } from '../../actions/emailActions';
+import { listEmails } from '../../actions/emailActions';
 import { API_Emails } from '../../utils';
 
 const AccountCreatedEmail = () => {
 	const history = useHistory();
-	const emailDetails = useSelector((state) => state.emailDetails);
-	const { email } = emailDetails;
 
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
@@ -16,14 +14,14 @@ const AccountCreatedEmail = () => {
 	const emailList = useSelector((state) => state.emailList);
 	const { emails } = emailList;
 
-	console.log({ emails });
+	const [ email, set_email ] = useState({});
 
 	const dispatch = useDispatch();
 
 	useEffect(() => {
 		let clean = true;
 		if (clean) {
-			dispatch(listEmails({ email_type: 'Account Created' }));
+			dispatch(listEmails({ email_type: 'Account Created', active: true, limit: 1 }));
 		}
 		return () => (clean = false);
 	}, []);
@@ -32,10 +30,7 @@ const AccountCreatedEmail = () => {
 		() => {
 			let clean = true;
 			if (clean) {
-				const active_email = emails.find((email) => email.active === true);
-				if (active_email) {
-					dispatch(detailsEmail(active_email._id));
-				}
+				set_email(emails[0]);
 			}
 			return () => (clean = false);
 		},

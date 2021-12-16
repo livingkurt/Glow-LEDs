@@ -12,8 +12,7 @@ const AnnouncementEmail = () => {
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
 	const [ test, set_test ] = useState(true);
 	const [ subject, set_subject ] = useState('');
-	const emailDetails = useSelector((state) => state.emailDetails);
-	const { email } = emailDetails;
+	const [ email, set_email ] = useState({});
 
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
@@ -27,7 +26,7 @@ const AnnouncementEmail = () => {
 		() => {
 			let clean = true;
 			if (clean) {
-				dispatch(listEmails({ email_type: 'Announcements' }));
+				dispatch(listEmails({ email_type: 'Announcements', active: true, limit: 1 }));
 			}
 			return () => (clean = false);
 		},
@@ -38,10 +37,7 @@ const AnnouncementEmail = () => {
 		() => {
 			let clean = true;
 			if (clean) {
-				const active_email = emails.find((email) => email.active === true);
-				if (active_email) {
-					dispatch(detailsEmail(active_email._id));
-				}
+				set_email(emails[0]);
 			}
 			return () => (clean = false);
 		},

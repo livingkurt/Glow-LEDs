@@ -22,7 +22,7 @@ const ResetPasswordEmail = () => {
 		() => {
 			let clean = true;
 			if (clean) {
-				dispatch(listEmails({ email_type: 'Reset Password' }));
+				dispatch(listEmails({ email_type: 'Reset Password', active: true, limit: 1 }));
 			}
 			return () => (clean = false);
 		},

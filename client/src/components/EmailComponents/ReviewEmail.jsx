@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -7,8 +7,7 @@ import { API_Emails } from '../../utils';
 
 const ReviewEmail = () => {
 	const history = useHistory();
-	const emailDetails = useSelector((state) => state.emailDetails);
-	const { email } = emailDetails;
+	const [ email, set_email ] = useState({});
 
 	const emailList = useSelector((state) => state.emailList);
 	const { emails } = emailList;
@@ -18,7 +17,7 @@ const ReviewEmail = () => {
 	useEffect(() => {
 		let clean = true;
 		if (clean) {
-			dispatch(listEmails({ email_type: 'Reviews' }));
+			dispatch(listEmails({ email_type: 'Reviews', active: true, limit: 1 }));
 		}
 		return () => (clean = false);
 	}, []);
@@ -27,10 +26,7 @@ const ReviewEmail = () => {
 		() => {
 			let clean = true;
 			if (clean) {
-				const active_email = emails.find((email) => email.active === true);
-				if (active_email) {
-					dispatch(detailsEmail(active_email._id));
-				}
+				set_email(emails[0]);
 			}
 			return () => (clean = false);
 		},

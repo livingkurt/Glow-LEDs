@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -8,8 +8,7 @@ import { API_Emails } from '../../utils/';
 
 const PasswordChangedEmail = () => {
 	const history = useHistory();
-	const emailDetails = useSelector((state) => state.emailDetails);
-	const { email } = emailDetails;
+	const [ email, set_email ] = useState({});
 
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
@@ -22,7 +21,7 @@ const PasswordChangedEmail = () => {
 	useEffect(() => {
 		let clean = true;
 		if (clean) {
-			dispatch(listEmails({ email_type: 'Password Changed' }));
+			dispatch(listEmails({ email_type: 'Password Changed', active: true, limit: 1 }));
 		}
 		return () => (clean = false);
 	}, []);
@@ -31,10 +30,7 @@ const PasswordChangedEmail = () => {
 		() => {
 			let clean = true;
 			if (clean) {
-				const active_email = emails.find((email) => email.active === true);
-				if (active_email) {
-					dispatch(detailsEmail(active_email._id));
-				}
+				set_email(emails[0]);
 			}
 			return () => (clean = false);
 		},

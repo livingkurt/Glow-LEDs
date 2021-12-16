@@ -2,7 +2,7 @@ import React, { useEffect, useCallback, createElement } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
-import { detailsEmail, listEmails } from '../../actions/emailActions';
+import { listEmails } from '../../actions/emailActions';
 import { format_date } from '../../utils/helper_functions';
 import { detailsOrder } from '../../actions/orderActions';
 import { determine_product_name, email_sale_price_switch } from '../../utils/react_helper_functions';
@@ -31,7 +31,7 @@ const InvoiceEmail = (props) => {
 		() => {
 			let clean = true;
 			if (clean) {
-				dispatch(listEmails({ email_type: 'Invoice' }));
+				dispatch(listEmails({ email_type: 'Invoice', active: true, limit: 1 }));
 				dispatch(detailsOrder(props.match.params.id || '5fa43d5f248dcacd5d8e2d3f'));
 				dispatch(listPromos({}));
 			}
@@ -40,21 +40,6 @@ const InvoiceEmail = (props) => {
 		[ dispatch ]
 	);
 
-	useEffect(
-		() => {
-			let clean = true;
-			if (clean) {
-				if (emails) {
-					const active_email = emails.find((email) => email.active === true);
-					if (active_email) {
-						dispatch(detailsEmail(active_email._id));
-					}
-				}
-			}
-			return () => (clean = false);
-		},
-		[ emails, dispatch ]
-	);
 	const determin_card_logo = (card_type) => {
 		switch (card_type) {
 			case 'amex':

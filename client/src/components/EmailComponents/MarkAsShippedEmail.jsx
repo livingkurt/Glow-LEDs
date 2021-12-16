@@ -14,8 +14,7 @@ const MarkAsShippedEmail = (props) => {
 	const [ order, set_order ] = useState();
 	const history = useHistory();
 
-	const emailDetails = useSelector((state) => state.emailDetails);
-	const { email } = emailDetails;
+	const [ email, set_email ] = useState({});
 
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
@@ -30,7 +29,7 @@ const MarkAsShippedEmail = (props) => {
 	useEffect(() => {
 		let clean = true;
 		if (clean) {
-			dispatch(listEmails({ email_type: toCapitalize(props.match.params.status) }));
+			dispatch(listEmails({ email_type: toCapitalize(props.match.params.status), active: true, limit: 1 }));
 			const message = localStorage.getItem('message_to_user');
 			console.log({ message });
 			if (message) {
@@ -45,10 +44,7 @@ const MarkAsShippedEmail = (props) => {
 			let clean = true;
 			if (clean) {
 				if (emails) {
-					const active_email = emails.find((email) => email.active === true);
-					if (active_email) {
-						dispatch(detailsEmail(active_email._id));
-					}
+					set_email(emails[0]);
 				}
 			}
 			return () => (clean = false);

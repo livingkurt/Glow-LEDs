@@ -13,8 +13,7 @@ const AffiliateEmail = (props) => {
 	const history = useHistory();
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
 	const [ test, set_test ] = useState(true);
-	const emailDetails = useSelector((state) => state.emailDetails);
-	const { email } = emailDetails;
+	const [ email, set_email ] = useState({});
 
 	const affiliateDetails = useSelector((state) => state.affiliateDetails);
 	const { affiliate } = affiliateDetails;
@@ -32,7 +31,7 @@ const AffiliateEmail = (props) => {
 			let clean = true;
 			if (clean) {
 				dispatch(detailsAffiliate(props.match.params.pathname));
-				dispatch(listEmails({ email_type: 'Affiliate' }));
+				dispatch(listEmails({ email_type: 'Affiliate', active: true, limit: 1 }));
 			}
 			return () => (clean = false);
 		},
@@ -43,10 +42,7 @@ const AffiliateEmail = (props) => {
 		() => {
 			let clean = true;
 			if (clean) {
-				const active_email = emails.find((email) => email.active === true);
-				if (active_email) {
-					dispatch(detailsEmail(active_email._id));
-				}
+				set_email(emails[0]);
 			}
 			return () => (clean = false);
 		},

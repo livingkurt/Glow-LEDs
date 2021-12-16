@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
-import { detailsEmail, listEmails } from '../../actions/emailActions';
+import { listEmails } from '../../actions/emailActions';
 import { API_Emails, API_Orders } from '../../utils';
 import { determine_tracking_number, format_date, toCapitalize } from '../../utils/helper_functions';
 import { update_order } from '../../actions/orderActions';
@@ -15,9 +15,6 @@ const OrderStatusEmail = (props) => {
 	const orderDetails = useSelector((state) => state.orderDetails);
 	const { order } = orderDetails;
 
-	const emailDetails = useSelector((state) => state.emailDetails);
-	const { email } = emailDetails;
-
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
 
@@ -27,11 +24,12 @@ const OrderStatusEmail = (props) => {
 	const dispatch = useDispatch();
 
 	const [ message_to_user, set_message_to_user ] = useState('');
+	const [ email, set_email ] = useState({});
 
 	useEffect(() => {
 		let clean = true;
 		if (clean) {
-			dispatch(listEmails({ email_type: toCapitalize(props.match.params.status) }));
+			dispatch(listEmails({ email_type: toCapitalize(props.match.params.status), active: true, limit: 1 }));
 		}
 		return () => (clean = false);
 	}, []);
@@ -56,10 +54,7 @@ const OrderStatusEmail = (props) => {
 			let clean = true;
 			if (clean) {
 				if (emails) {
-					const active_email = emails.find((email) => email.active === true);
-					if (active_email) {
-						dispatch(detailsEmail(active_email._id));
-					}
+					set_email(emails[0]);
 				}
 			}
 			return () => (clean = false);

@@ -13,7 +13,7 @@ const AnnouncementPage = (props) => {
 		() => {
 			let clean = true;
 			if (clean) {
-				dispatch(listEmails({ email_type: 'Announcements' }));
+				dispatch(listEmails({ email_type: 'Announcements', active: true, limit: 1 }));
 			}
 			return () => (clean = false);
 		},

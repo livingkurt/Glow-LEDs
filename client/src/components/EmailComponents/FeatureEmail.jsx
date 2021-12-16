@@ -13,8 +13,7 @@ const FeatureEmail = (props) => {
 	const history = useHistory();
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
 	const [ test, set_test ] = useState(true);
-	const emailDetails = useSelector((state) => state.emailDetails);
-	const { email } = emailDetails;
+	const [ email, set_email ] = useState({});
 
 	const featureDetails = useSelector((state) => state.featureDetails);
 	const { feature } = featureDetails;
@@ -32,7 +31,7 @@ const FeatureEmail = (props) => {
 			let clean = true;
 			if (clean) {
 				dispatch(detailsFeature(props.match.params.pathname));
-				dispatch(listEmails({ email_type: 'Feature' }));
+				dispatch(listEmails({ email_type: 'Feature', active: true, limit: 1 }));
 			}
 			return () => (clean = false);
 		},
@@ -42,10 +41,7 @@ const FeatureEmail = (props) => {
 		() => {
 			let clean = true;
 			if (clean) {
-				const active_email = emails.find((email) => email.active === true);
-				if (active_email) {
-					dispatch(detailsEmail(active_email._id));
-				}
+				set_email(emails[0]);
 			}
 			return () => (clean = false);
 		},
