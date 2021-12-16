@@ -276,7 +276,7 @@ const Cart = (props) => {
 						<div className="p-1rem ta-c w-100per">
 							<div className="ta-c w-100per">Cart is Empty</div>
 							{recently_viewed_grid()}
-							{top_categories_grid()}
+							{/* {top_categories_grid()} */}
 						</div>
 					) : (
 						<div
