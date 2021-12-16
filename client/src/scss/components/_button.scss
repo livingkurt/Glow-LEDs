@@ -16,6 +16,15 @@ button {
 	transition: all .5s ease;
 	padding: 10px;
 }
+.btn-no-s {
+	background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+}
 
 .btn:hover {
 	box-shadow: $bs_deep;

@@ -754,16 +754,18 @@ const ProductPage = (props) => {
 						width <= 819 && (
 							<div>
 								<h1 className="product_title_side ta-c lh-50px fs-25px mv-0px">{name}</h1>
-								<div className=" w-100per max-w-400px m-auto">
-									<ProductSlideshow
-										product={product}
-										images={images}
-										secondary_images={secondary_images}
-										className=""
-										set_image={set_image}
-										interval={6000}
-										transitionTime={200}
-									/>
+								<div className=" w-100per h-auto m-auto br-20px ">
+									{images && (
+										<ProductSlideshow
+											product={product}
+											images={images}
+											secondary_images={secondary_images}
+											className=""
+											set_image={set_image}
+											interval={6000}
+											transitionTime={200}
+										/>
+									)}
 								</div>
 							</div>
 						)}

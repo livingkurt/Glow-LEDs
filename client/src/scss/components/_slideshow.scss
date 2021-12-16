@@ -79,6 +79,31 @@
 // 	box-shadow: $bs_shallow;
 // }
 
+.carousel-item {
+	width: 100%;
+	height: auto;
+	padding: 10px;
+	border-radius: 20px;
+}
+
+.slide-thumb {
+	width: 50px;
+	// width: 20px;
+}
+
+.react-multi-carousel-dot-list {
+	bottom: unset !important;
+	position: relative !important;
+	display: flex;
+	left: unset !important;
+	right: unset !important;
+	justify-content: space-between !important;
+	margin: auto;
+	width: 100% !important;
+	list-style: none;
+	text-align: center;
+	overflow-x: scroll;
+}
 // .carousel-item {
 // 	box-shadow: $bs_shallow;
 // }
