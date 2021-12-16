@@ -105,7 +105,7 @@ const ProductSlideshow = ({ product, images, secondary_images, className, set_im
 	const CustomDot = ({ onClick, active, index, carouselState }) => {
 		const { currentSlide } = carouselState;
 		return (
-			<li style={{ background: active ? 'grey' : 'initial' }} className="br-10px mh-10px">
+			<li style={{ background: active ? 'grey' : 'initial' }} className="br-10px ">
 				<button
 					style={{ background: active ? 'grey' : 'initial' }}
 					className="btn-no-s p-0px br-10px p-5px"

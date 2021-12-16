@@ -2,29 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { detailsProduct } from '../../actions/productActions';
-import {
-	Rating,
-	Reviews,
-	PictureChooser,
-	ReadMore,
-	Carousel,
-	ProductSlideshow
-} from '../../components/SpecialtyComponents';
-import { LazyImage, Loading } from '../../components/UtilityComponents';
+import { PictureChooser, ProductSlideshow } from '../../components/SpecialtyComponents';
+import { Loading } from '../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
-import { addToCart, saveCart } from '../../actions/cartActions';
-import 'react-medium-image-zoom/dist/styles.css';
-import {
-	determine_option_product_name,
-	determine_secondary_product_name,
-	product_page_sale_price_switch
-} from '../../utils/react_helper_functions';
+import { addToCart } from '../../actions/cartActions';
 import useWindowDimensions from '../../components/Hooks/windowDimensions';
-import 'react-awesome-slider/dist/styles.css';
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import 'react-tabs/style/react-tabs.css';
-import { getUrlParameter, humanize, manuals, toCapitalize } from '../../utils/helper_functions';
-import Overflow from 'react-overflow-indicator';
+import { getUrlParameter, manuals } from '../../utils/helper_functions';
 import RelatedProductsSlideshow from '../../components/SpecialtyComponents/RelatedProductsSlideshow';
 import {
 	ProductDetails,
