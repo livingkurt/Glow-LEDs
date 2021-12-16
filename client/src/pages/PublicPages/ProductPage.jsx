@@ -737,7 +737,10 @@ const ProductPage = (props) => {
 						width <= 819 && (
 							<div>
 								<h1 className="product_title_side ta-c lh-50px fs-25px mv-0px">{name}</h1>
-								<div className=" w-100per h-auto m-auto br-20px ">
+								<div
+									className=" w-100per h-auto m-auto br-20px pos-rel"
+									style={{ overflowX: 'hidden' }}
+								>
 									{images && (
 										<ProductSlideshow
 											product={product}
@@ -749,6 +752,12 @@ const ProductPage = (props) => {
 											transitionTime={200}
 										/>
 									)}
+									{/* {images.length > 4 &&
+									width < 1000 && (
+										<div className="tab_indicator pos-abs bottom-21px bob br-5px ta-c bg-primary h-30px w-30px p-4px box-s-d b-1px">
+											{'>'}
+										</div>
+									)} */}
 								</div>
 							</div>
 						)}

@@ -102,26 +102,26 @@ const ProductSlideshow = ({ product, images, secondary_images, className, set_im
 	// 	);
 	// };
 
-	const CustomDot = ({ onClick, active, index, carouselState }) => {
-		const { currentSlide } = carouselState;
-		return (
-			<li style={{ background: active ? 'grey' : 'initial' }} className="br-10px ">
-				<button
-					style={{ background: active ? 'grey' : 'initial' }}
-					className="btn-no-s p-0px br-10px p-5px"
-					onClick={() => onClick()}
-				>
-					<img
-						key={index}
-						src={images[index]}
-						alt="carousel"
-						title="carousel item"
-						className={`slide-thumb br-10px m-3px`}
-					/>
-				</button>
-			</li>
-		);
-	};
+	// const CustomDot = ({ onClick, active, index, carouselState }) => {
+	// 	const { currentSlide } = carouselState;
+	// 	return (
+	// 		<li style={{ background: active ? 'grey' : 'initial' }} className="br-10px ">
+	// 			<button
+	// 				style={{ background: active ? 'grey' : 'initial' }}
+	// 				className="btn-no-s p-0px br-10px p-5px"
+	// 				onClick={() => onClick()}
+	// 			>
+	// 				<img
+	// 					key={index}
+	// 					src={images[index]}
+	// 					alt="carousel"
+	// 					title="carousel item"
+	// 					className={`slide-thumb br-10px m-3px`}
+	// 				/>
+	// 			</button>
+	// 		</li>
+	// 	);
+	// };
 
 	return (
 		images && (
@@ -131,7 +131,7 @@ const ProductSlideshow = ({ product, images, secondary_images, className, set_im
 				swipeable={true}
 				// draggable={true}
 				showDots
-				customDot={images && <CustomDot />}
+				// customDot={images && <CustomDot />}
 				// partialVisible={true}
 				// centerMode={true}
 				responsive={responsive}
@@ -144,9 +144,9 @@ const ProductSlideshow = ({ product, images, secondary_images, className, set_im
 				// transitionDuration={5000}
 				// containerClass="carousel-container"
 				containerClass="carousel-with-custom-dots"
-				// removeArrowOnDeviceType={[ 'tablet', 'mobile' ]}
+				removeArrowOnDeviceType={[ 'tablet', 'mobile' ]}
 				deviceType={mobile_check() ? 'mobile' : 'desktop'}
-				dotListClass="custom-dot-list-style"
+				// dotListClass="custom-dot-list-style"
 				itemClass="carousel-item-padding-40-px br-20px "
 			>
 				{images.map((image, index) => (
@@ -156,7 +156,7 @@ const ProductSlideshow = ({ product, images, secondary_images, className, set_im
 							src={image}
 							alt="carousel"
 							title="carousel item"
-							className="carousel-item br-40px"
+							className="carousel-item br-40px mb-10px"
 						/>
 					</div>
 				))}
