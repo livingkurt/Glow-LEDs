@@ -126,9 +126,8 @@ const ProductSlideshow = ({ product, images, secondary_images, className, set_im
 	return (
 		images && (
 			<Carousel
-				// swipeable={mobile_check() ? true : false}
-				// draggable={mobile_check() ? true : false}
-				swipeable={true}
+				swipeable={mobile_check() ? true : false}
+				draggable={mobile_check() ? true : false}
 				// draggable={true}
 				showDots
 				// customDot={images && <CustomDot />}
