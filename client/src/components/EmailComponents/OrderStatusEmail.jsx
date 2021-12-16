@@ -31,7 +31,7 @@ const OrderStatusEmail = (props) => {
 	useEffect(() => {
 		let clean = true;
 		if (clean) {
-			dispatch(listEmails({ category: toCapitalize(props.match.params.status) }));
+			dispatch(listEmails({ email_type: toCapitalize(props.match.params.status) }));
 		}
 		return () => (clean = false);
 	}, []);

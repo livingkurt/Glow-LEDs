@@ -3,6 +3,7 @@ import { Email, User } from '../models';
 export default {
 	findAll_emails_db: async (filter: any, sort: any) => {
 		try {
+			console.log({ filter });
 			return await Email.find(filter).sort(sort);
 		} catch (error) {
 			console.log({ findAll_emails_db_error: error });

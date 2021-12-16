@@ -30,7 +30,7 @@ const MarkAsShippedEmail = (props) => {
 	useEffect(() => {
 		let clean = true;
 		if (clean) {
-			dispatch(listEmails({ category: toCapitalize(props.match.params.status) }));
+			dispatch(listEmails({ email_type: toCapitalize(props.match.params.status) }));
 			const message = localStorage.getItem('message_to_user');
 			console.log({ message });
 			if (message) {

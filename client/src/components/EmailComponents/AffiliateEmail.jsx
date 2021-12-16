@@ -32,7 +32,7 @@ const AffiliateEmail = (props) => {
 			let clean = true;
 			if (clean) {
 				dispatch(detailsAffiliate(props.match.params.pathname));
-				dispatch(listEmails({ category: 'Affiliate' }));
+				dispatch(listEmails({ email_type: 'Affiliate' }));
 			}
 			return () => (clean = false);
 		},

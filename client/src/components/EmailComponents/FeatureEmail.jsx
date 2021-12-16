@@ -32,7 +32,7 @@ const FeatureEmail = (props) => {
 			let clean = true;
 			if (clean) {
 				dispatch(detailsFeature(props.match.params.pathname));
-				dispatch(listEmails({ category: 'Feature' }));
+				dispatch(listEmails({ email_type: 'Feature' }));
 			}
 			return () => (clean = false);
 		},

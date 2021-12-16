@@ -23,7 +23,7 @@ const AccountCreatedEmail = () => {
 	useEffect(() => {
 		let clean = true;
 		if (clean) {
-			dispatch(listEmails({ category: 'Account Created' }));
+			dispatch(listEmails({ email_type: 'Account Created' }));
 		}
 		return () => (clean = false);
 	}, []);

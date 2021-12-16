@@ -31,7 +31,7 @@ const InvoiceEmail = (props) => {
 		() => {
 			let clean = true;
 			if (clean) {
-				dispatch(listEmails({ category: 'Invoice' }));
+				dispatch(listEmails({ email_type: 'Invoice' }));
 				dispatch(detailsOrder(props.match.params.id || '5fa43d5f248dcacd5d8e2d3f'));
 				dispatch(listPromos({}));
 			}
