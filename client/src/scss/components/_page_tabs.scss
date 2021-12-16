@@ -11,7 +11,8 @@
 	margin: 0px !important;
 	border: unset !important;
 	display: flex;
-	overflow-x: auto;
+	overflow-x: hidden;
+	overflow-y: hidden;
 	-webkit-overflow-scrolling: touch;
 }
 .react_tabs {

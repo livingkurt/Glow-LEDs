@@ -300,7 +300,7 @@ const AllProductsPage = (props) => {
 				</div>
 			</div>
 
-			<div className="jc-c ai-c wrap m-auto pb-1rem" style={{ overflowX: 'scroll' }}>
+			<div className="jc-c ai-c wrap m-auto pb-1rem">
 				<Sort sortHandler={sortHandler} sort_options={sort_options} />
 				{/* {category === 'glowskins' && <Filter filterHandler={filterHandler} filter_options={chips_list} />} */}
 				<Filter filterHandler={filterHandler} filter_options={chips_list} />
