@@ -80,9 +80,9 @@ const HomePage = (props) => {
 	const get_display_content = async () => {
 		const { data } = await API_Content.get_display_content();
 		console.log({ data });
-		// if (data) {
-		// 	set_slideshow(data[0].home_page.slideshow);
-		// }
+		if (data) {
+			set_slideshow(data[0].home_page.slideshow);
+		}
 	};
 	const findAll_products_a = async () => {
 		set_loading(true);
@@ -157,74 +157,340 @@ const HomePage = (props) => {
 					content="https://www.glow-leds.com/images/optimized_images/logo_images/glow_leds_link_logo_optimized.png"
 				/>
 			</Helmet>
-			{/* <Loading loading={slideshow.length === 0} /> */}
+			<Loading loading={slideshow.length === 0} />
 			{/* <div className="carousel-wrapper pos-rel w-100per"> */}
 			{/* <div className="skeleton-img-container "> */}
 
 			{/* </div> */}
 			{/* </div> */}
+			<div>
+				{width > 1019 && (
+					<div>
+						{console.log({ slideshow })}
+						{slideshow.length > 0 ? (
+							<div className="carousel-wrapper pos-rel">
+								{<HomeSlideshow slideshow={slideshow} />}
+								{/* {start !== 0 && <HomeSlideshow products={products} start={start} />} */}
 
-			<div
-				className="max-w-900px m-auto p-10px ph-20px br-10px w-100per mb-2rem"
-				style={{
-					backgroundColor: '#6a6c8091'
-				}}
-			>
-				<div className="jc-c">
-					<h1 className={`welcome_text mv-2rem ta-c ${determine_welcome_font_size(width)}`}>
-						Welcome to Glow-LEDs
-					</h1>
-				</div>
-				<div className="jc-c">
-					<h2 className={`mb-1rem ta-c lh-25px ${determine_innovators_font_size(width)}`}>
-						Innovators of Gloving and Flow Art Technology
-					</h2>
-				</div>
-
-				<div className="jc-c">
-					<form onSubmit={submitHandler} className="jc-c w-100per mv-20px">
-						<div className="jc-b ai-c search_container w-100per max-w-600px">
-							<div ref={wrapperRef} className="flex-container flex-column pos-rel w-100per max-w-600px">
-								<input
-									id="auto"
-									autoComplete="off"
-									onClick={() => setDisplay(true)}
-									className="form_input search mv-0px w-100per fs-20px"
-									placeholder="Find Your Glow Here"
-									value={search}
-									onChange={(e) => set_search(e.target.value)}
-								/>
-								{display && (
-									<div className="pos-abs bg-primary br-10px z-pos-2">
-										{options
-											.filter(({ name }) => name.toLowerCase().indexOf(search.toLowerCase()) > -1)
-											.slice(0, 20)
-											.map((value, i) => {
-												return (
-													<div
-														onClick={() => update_list(value.name)}
-														className="auto-option ai-c jc-b w-600px p-5px"
-														key={i}
-														tabIndex="0"
-													>
-														<span className="fs-20px" style={{ color: 'white' }}>
-															{value.name}
-														</span>
-													</div>
-												);
-											})}
+								<div
+									className="pos-abs max-w-900px m-auto p-10px ph-20px br-10px w-100per"
+									style={{
+										backgroundColor: '#6a6c8091',
+										top: '100px',
+										left: '50%',
+										transform: 'translate(-50%, 50%)'
+									}}
+								>
+									<div className="jc-c">
+										<h1
+											className={`welcome_text mb-1rem ta-c ${determine_welcome_font_size(
+												width
+											)}`}
+										>
+											Welcome to Glow-LEDs
+										</h1>
 									</div>
-								)}
+									<div className="jc-c">
+										<h2 className={`mb-1rem ta-c lh-25px ${determine_innovators_font_size(width)}`}>
+											Innovators of Gloving and Flow Art Technology
+										</h2>
+									</div>
+
+									<div className="jc-c">
+										<form onSubmit={submitHandler} className="jc-c w-100per mv-20px">
+											<div className="jc-b ai-c search_container w-100per max-w-600px">
+												<div
+													ref={wrapperRef}
+													className="flex-container flex-column pos-rel w-100per max-w-600px"
+												>
+													<input
+														id="auto"
+														autoComplete="off"
+														onClick={() => setDisplay(true)}
+														className="form_input search mv-0px w-100per fs-20px"
+														placeholder="Find Your Glow Here"
+														value={search}
+														onChange={(e) => set_search(e.target.value)}
+													/>
+													{display && (
+														<div className="pos-abs bg-primary br-10px">
+															{options
+																.filter(
+																	({ name }) =>
+																		name
+																			.toLowerCase()
+																			.indexOf(search.toLowerCase()) > -1
+																)
+																.slice(0, 20)
+																.map((value, i) => {
+																	return (
+																		<div
+																			onClick={() => update_list(value.name)}
+																			className="auto-option ai-c jc-b w-600px p-5px"
+																			key={i}
+																			tabIndex="0"
+																		>
+																			<span
+																				className="fs-20px"
+																				style={{ color: 'white' }}
+																			>
+																				{value.name}
+																			</span>
+																		</div>
+																	);
+																})}
+														</div>
+													)}
+												</div>
+												<button type="submit" className="btn primary w-50px fs-20px mb-0px">
+													<i className="fas fa-search" />
+												</button>
+											</div>
+										</form>
+									</div>
+								</div>
 							</div>
-							<button type="submit" className="btn primary w-50px fs-20px mb-0px">
-								<i className="fas fa-search" />
-							</button>
-						</div>
-					</form>
-				</div>
+						) : (
+							<div className="carousel-wrapper pos-rel">
+								<div className="skeleton-img skeleton" />
+								<div
+									className="pos-abs max-w-900px m-auto p-10px ph-20px br-10px w-100per"
+									style={{
+										backgroundColor: '#6a6c8091',
+										top: '100px',
+										left: '50%',
+										transform: 'translate(-50%, 50%)'
+									}}
+								>
+									<div className="jc-c">
+										<h1
+											className={`welcome_text mv-2rem ta-c ${determine_welcome_font_size(
+												width
+											)}`}
+										>
+											Welcome to Glow-LEDs
+										</h1>
+									</div>
+									<div className="jc-c">
+										<h2 className={`mb-1rem ta-c lh-25px ${determine_innovators_font_size(width)}`}>
+											Innovators of Gloving and Flow Art Technology
+										</h2>
+									</div>
+
+									<div className="jc-c">
+										<form onSubmit={submitHandler} className="jc-c w-100per mv-20px">
+											<div className="jc-b ai-c search_container w-100per max-w-600px">
+												<div
+													ref={wrapperRef}
+													className="flex-container flex-column pos-rel w-100per max-w-600px"
+												>
+													<input
+														id="auto"
+														autoComplete="off"
+														onClick={() => setDisplay(true)}
+														className="form_input search mv-0px w-100per fs-20px"
+														placeholder="Find Your Glow Here"
+														value={search}
+														onChange={(e) => set_search(e.target.value)}
+													/>
+													{display && (
+														<div className="pos-abs bg-primary br-10px">
+															{options
+																.filter(
+																	({ name }) =>
+																		name
+																			.toLowerCase()
+																			.indexOf(search.toLowerCase()) > -1
+																)
+																.slice(0, 20)
+																.map((value, i) => {
+																	return (
+																		<div
+																			onClick={() => update_list(value.name)}
+																			className="auto-option ai-c jc-b w-600px p-5px"
+																			key={i}
+																			tabIndex="0"
+																		>
+																			<span
+																				className="fs-20px"
+																				style={{ color: 'white' }}
+																			>
+																				{value.name}
+																			</span>
+																		</div>
+																	);
+																})}
+														</div>
+													)}
+												</div>
+												<button type="submit" className="btn primary w-50px fs-20px mb-0px">
+													<i className="fas fa-search" />
+												</button>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						)}
+					</div>
+				)}
+				{width < 1019 && (
+					<div>
+						{slideshow.length > 0 ? (
+							<div className="carousel-wrapper ">
+								<div
+									className="max-w-900px m-auto p-10px ph-20px br-10px w-100per mb-2rem"
+									style={{
+										// backgroundColor: '#6a6c8091'
+									}}
+								>
+									<div className="jc-c">
+										<h1
+											className={`welcome_text mv-2rem ta-c ${determine_welcome_font_size(
+												width
+											)}`}
+										>
+											Welcome to Glow-LEDs
+										</h1>
+									</div>
+									<div className="jc-c">
+										<h2 className={`mb-1rem ta-c lh-25px ${determine_innovators_font_size(width)}`}>
+											Innovators of Gloving and Flow Art Technology
+										</h2>
+									</div>
+
+									<div className="jc-c">
+										<form onSubmit={submitHandler} className="jc-c w-100per mv-20px">
+											<div className="jc-b ai-c search_container w-100per max-w-600px">
+												<div
+													ref={wrapperRef}
+													className="flex-container flex-column pos-rel w-100per max-w-600px"
+												>
+													<input
+														id="auto"
+														autoComplete="off"
+														onClick={() => setDisplay(true)}
+														className="form_input search mv-0px w-100per fs-20px"
+														placeholder="Find Your Glow Here"
+														value={search}
+														onChange={(e) => set_search(e.target.value)}
+													/>
+													{display && (
+														<div className="pos-abs bg-primary br-10px z-pos-2">
+															{options
+																.filter(
+																	({ name }) =>
+																		name
+																			.toLowerCase()
+																			.indexOf(search.toLowerCase()) > -1
+																)
+																.slice(0, 20)
+																.map((value, i) => {
+																	return (
+																		<div
+																			onClick={() => update_list(value.name)}
+																			className="auto-option ai-c jc-b w-600px p-5px"
+																			key={i}
+																			tabIndex="0"
+																		>
+																			<span
+																				className="fs-20px"
+																				style={{ color: 'white' }}
+																			>
+																				{value.name}
+																			</span>
+																		</div>
+																	);
+																})}
+														</div>
+													)}
+												</div>
+												<button type="submit" className="btn primary w-50px fs-20px mb-0px">
+													<i className="fas fa-search" />
+												</button>
+											</div>
+										</form>
+									</div>
+								</div>
+								{/* {start > 0 && <HomeSlideshow products={products} start={start} />} */}
+								{<HomeSlideshow slideshow={slideshow} />}
+							</div>
+						) : (
+							<div
+								className="max-w-900px m-auto p-10px ph-20px br-10px w-100per mb-2rem"
+								style={{
+									// backgroundColor: '#6a6c8091'
+								}}
+							>
+								<div className="jc-c">
+									<h1 className={`welcome_text mb-1rem ta-c ${determine_welcome_font_size(width)}`}>
+										Welcome to Glow-LEDs
+									</h1>
+								</div>
+								<div className="jc-c">
+									<h2 className={`mb-1rem ta-c lh-30px ${determine_innovators_font_size(width)}`}>
+										Innovators of Gloving and Flow Art Technology
+									</h2>
+								</div>
+
+								<div className="jc-c">
+									<form onSubmit={submitHandler} className="jc-c w-100per mv-20px">
+										<div className="jc-b ai-c search_container w-100per max-w-600px">
+											<div
+												ref={wrapperRef}
+												className="flex-container flex-column pos-rel w-100per max-w-600px"
+											>
+												<input
+													id="auto"
+													autoComplete="off"
+													onClick={() => setDisplay(true)}
+													className="form_input search mv-0px w-100per fs-20px"
+													placeholder="Find Your Glow Here"
+													value={search}
+													onChange={(e) => set_search(e.target.value)}
+												/>
+												{display && (
+													<div className="pos-abs bg-primary br-10px z-pos-2">
+														{options
+															.filter(
+																({ name }) =>
+																	name.toLowerCase().indexOf(search.toLowerCase()) >
+																	-1
+															)
+															.slice(0, 20)
+															.map((value, i) => {
+																return (
+																	<div
+																		onClick={() => update_list(value.name)}
+																		className="auto-option ai-c jc-b w-600px p-5px"
+																		key={i}
+																		tabIndex="0"
+																	>
+																		<span
+																			className="fs-20px"
+																			style={{ color: 'white' }}
+																		>
+																			{value.name}
+																		</span>
+																	</div>
+																);
+															})}
+													</div>
+												)}
+											</div>
+											<button type="submit" className="btn primary w-50px fs-20px mb-0px">
+												<i className="fas fa-search" />
+											</button>
+										</div>
+									</form>
+								</div>
+							</div>
+						)}
+					</div>
+				)}
 			</div>
 
-			<div className="pv-2rem">
+			<div style={{ marginTop: slideshow.length === 0 ? 0 : '-25%' }} className="pv-2rem">
 				<ReadMore width={1000} className="p_descriptions paragraph_font ta-c" length={100}>
 					Here at Glow LEDs we offer a wide variety of Gloving and Flow Art accessories. Including EXO
 					Diffusers, Glow Casings and our most popular product Glowskins! We are based in Austin, TX ran by a
