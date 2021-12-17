@@ -33,7 +33,7 @@ const AllProductsPage = (props) => {
 	const [ page, set_page ] = useState(1);
 	const [ hidden, set_hidden ] = useState(false);
 	const [ option, set_option ] = useState(false);
-	const [ limit, set_limit ] = useState(20);
+	const [ limit, set_limit ] = useState(21);
 	const [ message, set_message ] = useState('');
 	// const [ currentPage, setCurrentPage ] = useState(1);
 
@@ -109,7 +109,6 @@ const AllProductsPage = (props) => {
 	);
 
 	const determine_products = async () => {
-		console.log({});
 		const query = getUrlParameter(props.location);
 		let category = props.match.params.category ? props.match.params.category : '';
 		let sale = '';
@@ -150,6 +149,7 @@ const AllProductsPage = (props) => {
 				}
 				if (query.limit) {
 					set_limit(query.limit);
+					limit = query.limit;
 				}
 			}
 			if (category) {
@@ -159,8 +159,6 @@ const AllProductsPage = (props) => {
 					get_occurrences(category);
 				}
 			}
-			console.log({ category, subcategory, search, sort, filter, collection });
-			// dispatch(listProducts(category, subcategory, filter, search, sort, collection, page, limit, hidden));
 			dispatch(
 				listProducts({
 					category,
@@ -205,7 +203,7 @@ const AllProductsPage = (props) => {
 
 	const sortHandler = (e) => {
 		set_sort(e.target.value);
-		update_products_url(history, search, e.target.value, filter);
+		update_products_url(history, search, e.target.value, filter, limit);
 		dispatch(
 			listProducts({
 				category,
@@ -227,7 +225,7 @@ const AllProductsPage = (props) => {
 		set_search('');
 		set_filter(chip_selected._id);
 		// console.log({ chip_selected });
-		update_products_url(history, '', sort, chip_selected.name);
+		update_products_url(history, '', sort, chip_selected.name, limit);
 		dispatch(
 			listProducts({
 				category,
@@ -247,7 +245,7 @@ const AllProductsPage = (props) => {
 		// console.log({ e, new_page });
 		e.preventDefault();
 		const page = parseInt(new_page);
-		update_products_url(history, search, sort, filter, page);
+		update_products_url(history, search, sort, filter, page, limit);
 
 		// console.log(new_page);
 		dispatch(
