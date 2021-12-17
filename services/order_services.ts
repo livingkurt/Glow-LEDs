@@ -81,8 +81,13 @@ export default {
 					isDelivered: true
 				};
 			}
-			const orders = await order_db.findAll_orders_db(filter, sort, parseInt(limit), parseInt(page));
-			const count = await order_db.count_orders_db(filter);
+			const orders = await order_db.findAll_orders_db(
+				{ ...filter, ...search },
+				sort,
+				parseInt(limit),
+				parseInt(page)
+			);
+			const count = await order_db.count_orders_db({ ...filter, ...search });
 			// const count = await Product.countDocuments(filter);
 			return {
 				orders,
