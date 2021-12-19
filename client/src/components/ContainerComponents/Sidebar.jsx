@@ -127,9 +127,9 @@ const Sidebar = (props) => {
 					<button className="sidebar_close_button" aria-label="close" onClick={closeMenu}>
 						<div className="box ">
 							<div className="side-btn active">
-								<span />
-								<span />
-								<span />
+								<span className="span" />
+								<span className="span" />
+								<span className="span" />
 							</div>
 						</div>
 					</button>

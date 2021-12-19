@@ -214,9 +214,9 @@ const Header = (props) => {
 										{/* <i className="fas fa-bars" /> */}
 										<div className="box">
 											<div className="head-btn not-active">
-												<span />
-												<span />
-												<span />
+												<span className="span" />
+												<span className="span" />
+												<span className="span" />
 											</div>
 										</div>
 									</button>
