@@ -60,9 +60,19 @@ const Header = (props) => {
 		const sidebar = document.querySelector('.sidebar');
 		console.log(sidebar.classList.value);
 		if (sidebar.classList.value === 'sidebar open') {
+			console.log('Close');
 			document.querySelector('.sidebar').classList.remove('open');
+			document.querySelector('.side-btn').classList.remove('active');
+			document.querySelector('.side-btn').classList.add('not-active');
+			document.querySelector('.head-btn').classList.remove('active');
+			document.querySelector('.head-btn').classList.add('not-active');
 		} else if (sidebar.classList.value === 'sidebar') {
+			console.log('Open');
 			document.querySelector('.sidebar').classList.add('open');
+			document.querySelector('.side-btn').classList.remove('not-active');
+			document.querySelector('.side-btn').classList.add('active');
+			document.querySelector('.head-btn').classList.remove('not-active');
+			document.querySelector('.head-btn').classList.add('active');
 		}
 	};
 	const open_cart = () => {
@@ -165,6 +175,14 @@ const Header = (props) => {
 		]);
 		set_loading(false);
 	};
+	// var btn = document.querySelector('.side-btn');
+	// console.log({ btn });
+
+	// btn.addEventListener('click', function(e) {
+	// 	// check the target has an attribute of `a[href^="http"]`
+	// 	btn.classList.toggle('active');
+	// 	btn.classList.toggle('not-active');
+	// });
 
 	return (
 		<div>
@@ -188,12 +206,19 @@ const Header = (props) => {
 								</Link>
 								{width < 1106 && (
 									<button
-										className="side-bar-open fs-25px h-50px w-50px p-10px"
+										className="side-bar-open p-10px"
 										onClick={open_sidebar}
 										aria-label="sidebar"
 										style={{ fontSize: '30px !important' }}
 									>
-										<i className="fas fa-bars" />
+										{/* <i className="fas fa-bars" /> */}
+										<div className="box">
+											<div className="head-btn not-active">
+												<span />
+												<span />
+												<span />
+											</div>
+										</div>
 									</button>
 								)}
 							</div>

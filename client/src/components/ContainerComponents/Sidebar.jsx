@@ -15,7 +15,13 @@ const Sidebar = (props) => {
 				function handleClickOutside(event) {
 					if (ref.current && !ref.current.contains(event.target)) {
 						// alert('You clicked outside of me!');
-						document.querySelector('.sidebar').classList.remove('open');
+						if (document.querySelector('.sidebar').classList) {
+							document.querySelector('.sidebar').classList.remove('open');
+							document.querySelector('.side-btn').classList.remove('active');
+							document.querySelector('.side-btn').classList.add('not-active');
+							document.querySelector('.head-btn').classList.remove('active');
+							document.querySelector('.head-btn').classList.add('not-active');
+						}
 					}
 				}
 				// Bind the event listener
@@ -33,6 +39,10 @@ const Sidebar = (props) => {
 
 	const closeMenu = () => {
 		document.querySelector('.sidebar').classList.remove('open');
+		document.querySelector('.side-btn').classList.remove('active');
+		document.querySelector('.side-btn').classList.add('not-active');
+		document.querySelector('.head-btn').classList.remove('active');
+		document.querySelector('.head-btn').classList.add('not-active');
 	};
 	const dispatch = useDispatch();
 
@@ -65,11 +75,24 @@ const Sidebar = (props) => {
 		current_menu.classList.toggle('hide-menu');
 	};
 
+	// var btn = $('.side-btn');
+	// var btn = document.querySelector('.side-btn');
+
+	// btn.on('click', function() {
+	//   $(this).toggleClass('active');
+	//   $(this).toggleClass('not-active');
+	// });
+	// btn.addEventListener('click', function(e) {
+	// 	// check the target has an attribute of `a[href^="http"]`
+	// 	btn.classList.toggle('active');
+	// 	btn.classList.toggle('not-active');
+	// });
+
 	return (
 		<aside ref={wrapperRef} className="sidebar" style={{ top: '0px', overflowY: 'scroll', zIndex: 4 }}>
-			<div className="logo_text mh-auto ai-c p-1rem pb-0px">
+			{/* <div className="logo_text mh-auto ai-c p-1rem pb-0px">
 				<Link to="/">
-					<div className="h-50px w-50px">
+					<div className="h-40px w-40px">
 						<img
 							className="zoom logo_s"
 							src="/images/optimized_images/logo_images/glow_logo_optimized.png"
@@ -83,10 +106,39 @@ const Sidebar = (props) => {
 						<label className="ml-5px fs-25px mv-0px ff-h">Glow LEDs</label>
 					</div>
 				</Link>
+			</div> */}
+			<div />
+			<div className="h-40px bg-primary ta-c title_font ai-c w-100per">
+				<p className="w-100per fs-20px mt-24px">Find Your Glow</p>
 			</div>
-			<button className="sidebar_close_button" aria-label="close" onClick={closeMenu}>
-				<i className="fas fa-times" />
-			</button>
+			<div className="ai-c">
+				<div className="ai-c">
+					<Link to="/">
+						<div className="h-30px w-30px">
+							<img
+								className="zoom logo_s"
+								src="/images/optimized_images/logo_images/glow_logo_optimized.png"
+								alt="Glow LEDs Logo"
+								title="Small Logo"
+							/>
+						</div>
+					</Link>
+
+					<button className="sidebar_close_button" aria-label="close" onClick={closeMenu}>
+						<div className="box ">
+							<div className="side-btn active">
+								<span />
+								<span />
+								<span />
+							</div>
+						</div>
+					</button>
+				</div>
+				<Link to="/">
+					<label className="fs-20px mv-0px ff-h mr-20px ta-c">GL</label>
+				</Link>
+			</div>
+
 			<nav className="h-63vh">
 				<Link to="/">
 					<button className="sidebar-btn primary" onClick={closeMenu}>

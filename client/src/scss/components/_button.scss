@@ -142,7 +142,9 @@ button {
 }
 .side-bar-open {
 	font-size: 30px !important;
-
+	// position: relative;
+	// top: -27px;
+	// left: 0;
 	background-color: transparent;
 	color: $theme_color_phrase_font;
 	border: 0px;
@@ -152,10 +154,10 @@ button {
 	padding: 10px;
 }
 
-.side-bar-open:hover {
-	box-shadow: $bs_deep;
-	background-color: gray;
-}
+// .side-bar-open:hover {
+// 	box-shadow: $bs_deep;
+// 	background-color: gray;
+// }
 
 // .nav-dropdown:hover {
 // 	box-shadow: $bs_deep;
@@ -176,17 +178,23 @@ button {
 }
 
 .sidebar_close_button {
-	border-radius: 50%;
+	margin-left: -5px;
+	border-radius: 10px;
 	font-size: 2rem;
-	padding-top: 0;
+	height: 56px;
+	padding: 0;
 	cursor: pointer;
-	position: absolute;
-	right: .5rem;
-	top: 1.5rem;
+	// position: absolute;
+	// right: .5rem;
+	// top: 1.5rem;
 	background-color: transparent;
 	border: 0;
 	color: $theme_color_phrase_font;
 }
+// .sidebar_close_button:hover {
+// 	box-shadow: $bs_deep;
+// 	background-color: gray;
+// }
 
 .sidebar-btn {
 	box-shadow: $bs_shallow;

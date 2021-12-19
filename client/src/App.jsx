@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import {
 	HomePage,
@@ -203,6 +203,87 @@ const App = (props) => {
 		return () => (clean = false);
 	}, []);
 
+	const [ active, set_active ] = useState(false);
+	console.log({ active });
+
+	const open_sidebar = () => {
+		const sidebar = document.querySelector('.sidebar');
+		console.log({ classList: sidebar.classList });
+		// if (active) {
+		// 	console.log('Close', active);
+		// 	set_active(false);
+		// 	document.querySelector('.sidebar').classList.remove('open');
+		// } else {
+		// 	set_active(true);
+		// 	console.log('Open', active);
+
+		// 	document.querySelector('.sidebar').classList.add('open');
+		// }
+		// if (sidebar.classList.value === 'sidebar') {
+		// 	console.log('Close');
+		// document.querySelector('.sidebar').classList.add('open');
+		// 	// document.querySelector('.side-btn').classList.remove('active');
+		// 	// document.querySelector('.side-btn').classList.add('not-active');
+		// 	document.querySelector('.head-btn').classList.remove('active');
+		// 	document.querySelector('.head-btn').classList.add('not-active');
+		// } else if (sidebar.classList.value === 'sidebar open') {
+		// 	console.log('Open');
+		// document.querySelector('.sidebar').classList.remove('open');
+		// 	// document.querySelector('.side-btn').classList.remove('not-active');
+		// 	// document.querySelector('.side-btn').classList.add('active');
+		// 	document.querySelector('.head-btn').classList.remove('not-active');
+		// 	document.querySelector('.head-btn').classList.add('active');
+		// }
+	};
+
+	// function useOutsideAlerter(ref) {
+	// 	useEffect(
+	// 		() => {
+	// 			/** Alert if clicked on outside of element */
+	// 			function handleClickOutside(event) {
+	// 				if (ref.current && !ref.current.contains(event.target)) {
+	// 					// alert('You clicked outside of me!');
+	// 					// if (!active) {
+	// 					console.log('Outside Click', active);
+	// 					// set_active(false);
+	// 					document.querySelector('.sidebar').classList.remove('open');
+	// 					// document.querySelector('.side-btn').classList.remove('active');
+	// 					// document.querySelector('.side-btn').classList.add('not-active');
+	// 					// document.querySelector('.head-btn').classList.remove('active');
+	// 					// document.querySelector('.head-btn').classList.add('not-active');
+	// 					// setTimeout(() => {
+	// 					// 	set_active(false);
+	// 					// }, 3000);
+
+	// 					// }
+	// 				}
+	// 				// set_active(false);
+	// 			}
+	// 			// Bind the event listener
+	// 			document.addEventListener('mousedown', handleClickOutside);
+	// 			return () => {
+	// 				// Unbind the event listener on clean up
+	// 				document.removeEventListener('mousedown', handleClickOutside);
+	// 			};
+	// 		},
+	// 		[ ref ]
+	// 	);
+	// }
+	const wrapperRef = useRef(null);
+	// useOutsideAlerter(wrapperRef);
+
+	const open_close = () => {
+		open_sidebar();
+		const sidebar = document.querySelector('.head-btn');
+		if (sidebar.classList.value === 'head-btn not-active') {
+			document.querySelector('.head-btn').classList.remove('not-active');
+			document.querySelector('.head-btn').classList.add('active');
+		} else {
+			document.querySelector('.head-btn').classList.remove('active');
+			document.querySelector('.head-btn').classList.add('not-active');
+		}
+	};
+
 	return (
 		<Router>
 			<Container>
@@ -253,8 +334,23 @@ const App = (props) => {
 				<Notification message={message} />
 				<EmailModal set_show_modal={set_show_modal} show_modal={show_modal} />
 				<Particles params={particlesjs_config} className="zi-n5" style={{ zIndex: -5, position: 'fixed' }} />
+				{/* <button
+					className={`side-bar-open  p-10px ${active ? 'z-pos-10' : 'z-pos-2'}`}
+					onClick={open_close}
+					aria-label="sidebar"
+					style={{ fontSize: '30px !important' }}
+				>
+					<div className="box">
+						<div className={`head-btn ${active ? 'active' : 'not-active'}`}>
+							<span />
+							<span />
+							<span />
+						</div>
+					</div>
+				</button> */}
 				<Header visible={visible} />
-				<Sidebar visible={visible} height={height} width={width} />
+				<Sidebar visible={visible} height={height} width={width} wrapperRef={wrapperRef} />
+
 				<Cart
 					visible={visible}
 					height={height}
