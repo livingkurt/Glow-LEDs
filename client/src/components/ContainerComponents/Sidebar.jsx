@@ -15,7 +15,11 @@ const Sidebar = (props) => {
 				function handleClickOutside(event) {
 					if (ref.current && !ref.current.contains(event.target)) {
 						// alert('You clicked outside of me!');
-						if (document.querySelector('.sidebar').classList) {
+						if (
+							document.querySelector('.sidebar') &&
+							document.querySelector('.side-btn') &&
+							document.querySelector('.head-btn')
+						) {
 							document.querySelector('.sidebar').classList.remove('open');
 							document.querySelector('.side-btn').classList.remove('active');
 							document.querySelector('.side-btn').classList.add('not-active');
