@@ -114,6 +114,7 @@ import particlesjs_config from './particlesjs_config.json';
 import { check_authentication } from './utils/react_helper_functions';
 import MarkAsShippedEmail from './components/EmailComponents/MarkAsShippedEmail';
 import { EmailModal } from './components/SpecialtyComponents';
+import { daysBetween } from './utils/helper_functions';
 
 const App = (props) => {
 	const theme_colors = {
@@ -190,15 +191,29 @@ const App = (props) => {
 	var modal = document.getElementById('myModal');
 	const [ show_modal, set_show_modal ] = useState(false);
 
+	const date = new Date();
+
+	const today = date.toISOString();
+
 	useEffect(() => {
 		let clean = true;
 		if (clean) {
 			const popup = sessionStorage.getItem('popup');
-			if (!popup) {
+			const popup_email = localStorage.getItem('popup_email');
+			if (!popup_email) {
+				setTimeout(() => {
+					set_show_modal(true);
+				}, 5000);
+			} else if (daysBetween(popup_email, today) > 2) {
 				setTimeout(() => {
 					set_show_modal(true);
 				}, 5000);
 			}
+			// if (!popup) {
+			// 	setTimeout(() => {
+			// 		set_show_modal(true);
+			// 	}, 5000);
+			// }
 		}
 		return () => (clean = false);
 	}, []);

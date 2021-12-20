@@ -9,6 +9,10 @@ const EmailModal = (props) => {
 	const [ email, set_email ] = useState('');
 	const dispatch = useDispatch();
 
+	const date = new Date();
+
+	const today = date.toISOString();
+
 	const submitHandler = async (e) => {
 		e.preventDefault();
 		dispatch(
@@ -29,7 +33,8 @@ const EmailModal = (props) => {
 		const { data } = await API_Emails.send_email_subscription(email, promo.promo_code);
 		console.log({ data });
 		props.set_show_modal(false);
-		sessionStorage.setItem('popup', 'exited');
+		// sessionStorage.setItem('popup', 'exited');
+		localStorage.setItem('popup_email', today);
 	};
 
 	const { width, height } = useWindowDimensions();
@@ -39,21 +44,23 @@ const EmailModal = (props) => {
 			style={{
 				display: props.show_modal ? 'block' : 'none'
 			}}
-			className={`modal-floating fade_in`}
+			className={`modal-floating max-h-300px max-w-500px fade_in ${width < 535 && 'mh-auto-20px'}`}
 		>
-			<form onSubmit={submitHandler} className="modal-content-floating">
-				<span
-					className="close"
-					onClick={() => {
-						props.set_show_modal(false);
-						sessionStorage.setItem('popup', 'exited');
-					}}
-				>
-					&times;
-				</span>
+			<span
+				className="pos-abs right-15px top-10px close"
+				onClick={() => {
+					props.set_show_modal(false);
+					localStorage.setItem('popup_email', today);
+				}}
+			>
+				&times;
+			</span>
+			<form onSubmit={submitHandler} className="modal-content-floating ">
 				<div className="h-100per jc-b column">
 					<label className="p_descriptions fs-16px ta-c jc-c">Come Into the Light</label>
-					<label className="title_font fs-30px ta-c jc-c lh-40px">Get 10% Off Your Next Order</label>
+					<label className={`title_font ${width < 535 ? 'fs-20px lh-30px' : 'fs-30px lh-40px'} ta-c jc-c `}>
+						Get 10% Off Your Next Order
+					</label>
 					<label className="p_descriptions fs-16px ta-c jc-c">It's Brighter Over Here</label>
 					<ul>
 						<li>
