@@ -79,6 +79,7 @@ export const addToCart = (cart_item_1: any) => async (
 			subcategory: cart_data.subcategory,
 			category: cart_data.category,
 			qty: cart_data.qty,
+			quantity: cart_data.quantity,
 			finite_stock: cart_data.finite_stock
 		};
 		console.log({ cartItem });

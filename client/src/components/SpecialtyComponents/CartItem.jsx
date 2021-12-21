@@ -100,11 +100,12 @@ const CartItem = (props) => {
 					<label aria-label="sort" htmlFor="sort" className="select-label mr-1rem">
 						Qty:
 					</label>
+					{console.log({ qty: props.item.quantity })}
 					{props.show_qty ? (
 						<div className="custom-select">
 							<select
-								defaultValue={props.item.qty}
-								value={props.item.qty}
+								defaultValue={parseInt(props.item.qty)}
+								value={parseInt(props.item.qty)}
 								className="qty_select_dropdown"
 								onChange={(e) => {
 									dispatch(
