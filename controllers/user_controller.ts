@@ -410,6 +410,19 @@ export default {
 			console.log({ check_password_c_error: error });
 			res.status(500).send({ error, message: 'Error Finding User' });
 		}
+	},
+	validate_email_c: async (req: any, res: any) => {
+		const { params, body } = req;
+		try {
+			const user = await user_services.validate_email_s(params, body);
+			if (user !== undefined) {
+				return res.status(200).send(user);
+			}
+			return res.status(404).send({ message: 'User Not Found' });
+		} catch (error) {
+			console.log({ check_password_c_error: error });
+			res.status(500).send({ error, message: 'Error Finding User' });
+		}
 	}
 	// checkemail_users_c: async (req: any, res: any) => {
 	// 	const { params } = req;

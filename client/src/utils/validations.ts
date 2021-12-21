@@ -112,6 +112,29 @@ export const validate_promo_code = (data: any) => {
 	};
 };
 
+export const validate_email = async (data: { email: any; password: any }) => {
+	let errors: any = {};
+	interface errors {
+		email: string;
+	}
+	// Convert empty fields to an empty string so we can use validator functions
+	data.email = !isEmpty(data.email) ? data.email : '';
+	// Email checks
+	const { data: user } = await axios.post('/api/users/validate_email/' + data.email);
+	if (user) {
+		errors.email = 'Email Already Registered';
+	}
+	if (isEmpty2(data.email)) {
+		errors.email = 'Email field is required';
+	} else if (!isEmail(data.email)) {
+		errors.email = 'Valid email required';
+	}
+	return {
+		errors,
+		isValid: isEmpty(errors)
+	};
+};
+
 export const validate_login = (data: { email: any; password: any }) => {
 	let errors: any = {};
 	interface errors {

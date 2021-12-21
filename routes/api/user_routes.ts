@@ -6,6 +6,7 @@ const router = express.Router();
 router.route('/email/:email').get(user_controller.findByEmail_users_c);
 
 router.route('/check_password/:id').post(user_controller.check_password_c);
+router.route('/validate_email/:email').post(user_controller.validate_email_c);
 router.route('/register').post(user_controller.register_users_c);
 router.route('/login').post(user_controller.login_users_c);
 router.route('/update/:id').put(user_controller.update_profile_users_c);

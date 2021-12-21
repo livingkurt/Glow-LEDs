@@ -397,6 +397,18 @@ export default {
 			console.log({ check_password_s_error: error });
 			throw new Error(error.message);
 		}
+	},
+	validate_email_s: async (params: any, body: any) => {
+		try {
+			const user = await user_db.findByEmail_users_db(params.email);
+			if (user) {
+				return true;
+			}
+			return false;
+		} catch (error) {
+			console.log({ check_password_s_error: error });
+			throw new Error(error.message);
+		}
 	}
 	// checkemail_users_s: async (req: any, res: any) => {
 	// 	try {
