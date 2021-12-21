@@ -198,13 +198,12 @@ const App = (props) => {
 	useEffect(() => {
 		let clean = true;
 		if (clean) {
-			const popup = sessionStorage.getItem('popup');
-			const popup_email = localStorage.getItem('popup_email');
-			if (!popup_email) {
+			const popup = JSON.parse(localStorage.getItem('popup'));
+			if (!popup) {
 				setTimeout(() => {
 					set_show_modal(true);
 				}, 5000);
-			} else if (daysBetween(popup_email, today) > 2) {
+			} else if (daysBetween(popup.date, today) > 2 && !popup.email) {
 				setTimeout(() => {
 					set_show_modal(true);
 				}, 5000);
