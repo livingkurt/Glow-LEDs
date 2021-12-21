@@ -34,7 +34,7 @@ const EmailModal = (props) => {
 		console.log({ data });
 		props.set_show_modal(false);
 		// sessionStorage.setItem('popup', 'exited');
-		localStorage.setItem('popup', JSON.stringify({ date: today, email: email }));
+		localStorage.setItem('popup', JSON.stringify({ date: today, email: true }));
 	};
 
 	const { width, height } = useWindowDimensions();
@@ -51,7 +51,7 @@ const EmailModal = (props) => {
 				onClick={() => {
 					props.set_show_modal(false);
 					// localStorage.setItem('popup', today);
-					localStorage.setItem('popup', JSON.stringify({ date: today, email: '' }));
+					localStorage.setItem('popup', JSON.stringify({ date: today, email: false }));
 				}}
 			>
 				&times;
