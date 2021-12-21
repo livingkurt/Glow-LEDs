@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { removeFromCart } from '../../actions/cartActions';
+import { addToCart, removeFromCart } from '../../actions/cartActions';
 import { sale_price_switch, determine_product_name } from '../../utils/react_helper_functions';
 import { mobile_check } from '../../utils/react_helper_functions';
 import { API_Content } from '../../utils';
@@ -350,15 +350,28 @@ const Cart = (props) => {
 												</div>
 											</div>
 
-											<div className="jc-b">
-												<div className="ai-c h-25px">
-													<label
-														aria-label="sort"
-														htmlFor="sort"
-														className="select-label mr-1rem "
+											<div className="jc-b mb-10px">
+												<div className="custom-select">
+													<select
+														defaultValue={parseInt(item.qty)}
+														value={parseInt(item.qty)}
+														className="qty_select_dropdown"
+														onChange={(e) => {
+															dispatch(
+																addToCart({
+																	pathname: item.pathname,
+																	qty: e.target.value
+																})
+															);
+														}}
 													>
-														Qty: {item.qty}
-													</label>
+														{[ ...Array(item.quantity).keys() ].map((x, index) => (
+															<option key={index} defaultValue={parseInt(x + 1)}>
+																{parseInt(x + 1)}
+															</option>
+														))}
+													</select>
+													<span className="custom-arrow" />
 												</div>
 												<div className="cart_sidebar-price fs-16px">
 													{sale_price_switch(item, true, 'light')}
