@@ -482,3 +482,37 @@ export const determine_sort = (query: any, type: string) => {
 	}
 	return sort;
 };
+
+// export const month_dates = (year: number) => {
+// 	return [
+// 		{ month: 'january', number_of_days: 31, start_date: year + '-01-01', end_date: year + '-01-31' },
+// 		{ month: 'february', number_of_days: 28, start_date: year + '-02-01', end_date: year + '-02-28' },
+// 		{ month: 'march', number_of_days: 31, start_date: year + '-03-01', end_date: year + '-03-31' },
+// 		{ month: 'april', number_of_days: 30, start_date: year + '-04-01', end_date: year + '-04-30' },
+// 		{ month: 'may', number_of_days: 31, start_date: year + '-05-01', end_date: year + '-05-31' },
+// 		{ month: 'june', number_of_days: 30, start_date: year + '-06-01', end_date: year + '-06-30' },
+// 		{ month: 'july', number_of_days: 31, start_date: year + '-07-01', end_date: year + '-07-31' },
+// 		{ month: 'august', number_of_days: 31, start_date: year + '-08-01', end_date: year + '-08-31' },
+// 		{ month: 'september', number_of_days: 30, start_date: year + '-09-01', end_date: year + '-09-30' },
+// 		{ month: 'october', number_of_days: 31, start_date: year + '-10-01', end_date: year + '-10-31' },
+// 		{ month: 'november', number_of_days: 30, start_date: year + '-11-01', end_date: year + '-11-30' },
+// 		{ month: 'december', number_of_days: 31, start_date: year + '-12-01', end_date: year + '-12-31' }
+// 	];
+// };
+export const month_dates = (month: string, year: number) => {
+	const month_date: any = {
+		january: { month: 'january', number_of_days: 31, start_date: year + '-01-01', end_date: year + '-01-31' },
+		february: { month: 'february', number_of_days: 28, start_date: year + '-02-01', end_date: year + '-02-28' },
+		march: { month: 'march', number_of_days: 31, start_date: year + '-03-01', end_date: year + '-03-31' },
+		april: { month: 'april', number_of_days: 30, start_date: year + '-04-01', end_date: year + '-04-30' },
+		may: { month: 'may', number_of_days: 31, start_date: year + '-05-01', end_date: year + '-05-31' },
+		june: { month: 'june', number_of_days: 30, start_date: year + '-06-01', end_date: year + '-06-30' },
+		july: { month: 'july', number_of_days: 31, start_date: year + '-07-01', end_date: year + '-07-31' },
+		august: { month: 'august', number_of_days: 31, start_date: year + '-08-01', end_date: year + '-08-31' },
+		september: { month: 'september', number_of_days: 30, start_date: year + '-09-01', end_date: year + '-09-30' },
+		october: { month: 'october', number_of_days: 31, start_date: year + '-10-01', end_date: year + '-10-31' },
+		november: { month: 'november', number_of_days: 30, start_date: year + '-11-01', end_date: year + '-11-30' },
+		december: { month: 'december', number_of_days: 31, start_date: year + '-12-01', end_date: year + '-12-31' }
+	};
+	return month_date[month];
+};

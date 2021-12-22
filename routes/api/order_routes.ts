@@ -8,6 +8,7 @@ const router = express.Router();
 
 router.route('/').get(isAuth, isAdmin, order_controller.findAll_orders_c);
 router.route('/occurrences').get(order_controller.occurrences_orders_c);
+
 router.route('/top_customers').get(order_controller.top_customers_orders_c);
 router.route('/category_occurrences').get(order_controller.category_occurrences_orders_c);
 router.route('/code_usage').put(order_controller.code_usage_orders_c);
@@ -23,6 +24,7 @@ router.route('/guest').post(order_controller.create_orders_c);
 router.route('/guest/:id').get(order_controller.findById_orders_c);
 router.route('/secure').post(isAuth, order_controller.create_orders_c);
 router.route('/secure/:id').get(isAuth, order_controller.findById_orders_c);
+router.route('/monthly_income/:month/:year').get(order_controller.monthly_income_orders_c);
 
 router
 	.route('/glow/:id')

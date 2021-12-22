@@ -79,8 +79,8 @@ const MonthlyExpensesPage = (props) => {
 				color: '#b33434',
 				batteries_1620: batteries.batteries_1620,
 				batteries_1620_total: batteries.batteries_1620_total,
-				batteries_1616: batteries.batteries_1616,
-				batteries_1616_total: batteries.batteries_1616_total,
+				batteries_1620: batteries.batteries_1620,
+				batteries_1620_tot16: batteries.batteries_1620_tot16,
 				batter16s_1225: batteries.batter16s_1225,
 				batteries_1225_total: batteries.batteries_1225_total,
 				decals_amount: decals.amount,
@@ -307,46 +307,32 @@ const MonthlyExpensesPage = (props) => {
 		empty_income();
 		const income_each_month = await Promise.all(
 			dates_in_year.map(async (month, month_number) => {
-				console.log({ month: month.month, year });
-				const { data } = await API_Orders.monthly_income(month.month, year);
-				console.log({ data });
-				const { macro_income, batteries, decals, whites } = data;
-				const { monthly_income, monthly_expenses, profit } = macro_income;
-				// const { data: orders } = await API_Orders.specific_time_income(month.start_date, month.end_date);
-				// const { data: expenses } = await API_Orders.monthly_expenses(month.start_date, month.end_date);
-				// let batteries = get_batteries(orders);
-				// let decals = get_decals(orders);
-				// let income = 0;
-				// let total_expenses = 0;
-				// if (orders.length > 1) {
-				// 	income = orders.reduce((a, c) => a + c.totalPrice - c.taxPrice, 0);
-				// 	total_expenses = expenses.reduce((a, c) => a + c.amount, 0);
-				// }
-				if (data) {
-					update_income(
-						dates_in_year[month_number].month,
-						monthly_income,
-						monthly_expenses,
-						batteries,
-						decals,
-						whites
-					);
-					return {
-						month: dates_in_year[month_number].month,
-						income: monthly_income,
-						decals_amount: decals.amount,
-						decals_total: decals.total,
-						decals_sets: decals.sets,
-						expenses: monthly_expenses,
-						profit,
-						batteries_1620: batteries.batteries_1620,
-						batteries_1616: batteries.batteries_1616,
-						batteries_1225: batteries.batteries_1225,
-						batteries_1620_total: batteries.batteries_1620_total,
-						batteries_1616_total: batteries.batteries_1616_total,
-						batteries_1225_total: batteries.batteries_1225_total
-					};
+				const { data: orders } = await API_Orders.specific_time_income(month.start_date, month.end_date);
+				const { data: expenses } = await API_Orders.monthly_expenses(month.start_date, month.end_date);
+				let batteries = get_batteries(orders);
+				let decals = get_decals(orders);
+				let income = 0;
+				let total_expenses = 0;
+				if (orders.length > 1) {
+					income = orders.reduce((a, c) => a + c.totalPrice - c.taxPrice, 0);
+					total_expenses = expenses.reduce((a, c) => a + c.amount, 0);
 				}
+				update_income(dates_in_year[month_number].month, income, total_expenses, batteries, decals);
+				return {
+					month: dates_in_year[month_number].month,
+					income,
+					decals_amount: decals.amount,
+					decals_total: decals.total,
+					decals_sets: decals.sets,
+					expenses: total_expenses,
+					profit: income + total_expenses,
+					batteries_1620: batteries.batteries_1620,
+					batteries_1616: batteries.batteries_1616,
+					batteries_1225: batteries.batteries_1225,
+					batteries_1620_total: batteries.batteries_1620_total,
+					batteries_1616_total: batteries.batteries_1616_total,
+					batteries_1225_total: batteries.batteries_1225_total
+				};
 			})
 		);
 		console.log({ income_each_month });

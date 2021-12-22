@@ -1,5 +1,5 @@
-import { affiliate_db, order_db, user_db } from '../db';
-import { dates_in_year, toCapitalize } from '../util';
+import { affiliate_db, expense_db, order_db, user_db } from '../db';
+import { dates_in_year, month_dates, toCapitalize } from '../util';
 const scraper = require('table-scraper');
 
 const today = new Date();
@@ -415,57 +415,6 @@ export default {
 			throw new Error(error.message);
 		}
 	},
-	// yesterday_income_orders_s: async (params: any) => {
-	// 	try {
-	// 		const sort = {};
-	// 		const filter = {
-	// 			deleted: false,
-	// 			createdAt: {
-	// 				$gte: new Date(<any>new Date() - 1 * 60 * 60 * 24 * 1000)
-	// 			}
-	// 		};
-	// 		const limit = 50;
-	// 		const page = 1;
-	// 		return await order_db.findAll_orders_db(filter, sort, limit, page);
-	// 	} catch (error) {
-	// 		console.log({ remove_orders_s_error: error });
-	// 		throw new Error(error.message);
-	// 	}
-	// },
-	// last_week_income_orders_s: async (params: any) => {
-	// 	try {
-	// 		const sort = {};
-	// 		const filter = {
-	// 			deleted: false,
-	// 			createdAt: {
-	// 				$gte: new Date(<any>new Date() - 7 * 60 * 60 * 24 * 1000)
-	// 			}
-	// 		};
-	// 		const limit = 50;
-	// 		const page = 1;
-	// 		return await order_db.findAll_orders_db(filter, sort, limit, page);
-	// 	} catch (error) {
-	// 		console.log({ remove_orders_s_error: error });
-	// 		throw new Error(error.message);
-	// 	}
-	// },
-	// last_month_income_orders_s: async (params: any) => {
-	// 	try {
-	// 		const sort = {};
-	// 		const filter = {
-	// 			deleted: false,
-	// 			createdAt: {
-	// 				$gte: new Date(<any>new Date() - 30 * 60 * 60 * 24 * 1000)
-	// 			}
-	// 		};
-	// 		const limit = 50;
-	// 		const page = 1;
-	// 		return await order_db.findAll_orders_db(filter, sort, limit, page);
-	// 	} catch (error) {
-	// 		console.log({ remove_orders_s_error: error });
-	// 		throw new Error(error.message);
-	// 	}
-	// },
 	specific_time_income_orders_s: async (body: any) => {
 		try {
 			const sort = {};
@@ -497,6 +446,139 @@ export default {
 			const limit = 0;
 			const page = 1;
 			return await order_db.findAll_orders_db(filter, sort, limit, page);
+		} catch (error) {
+			console.log({ remove_orders_s_error: error });
+			throw new Error(error.message);
+		}
+	},
+	monthly_income_orders_s: async (params: any) => {
+		const { month, year } = params;
+		try {
+			const sort = {};
+			const o_filter = {
+				deleted: false,
+				isPaid: true,
+				createdAt: {
+					$gte: new Date(month_dates(month, year).start_date),
+					$lte: new Date(month_dates(month, year).end_date)
+				}
+			};
+			const e_filter = {
+				deleted: false,
+				date_of_purchase: {
+					$gte: new Date(month_dates(month, year).start_date),
+					$lte: new Date(month_dates(month, year).end_date)
+				}
+			};
+			const limit = 0;
+			const page = 1;
+			const orders = await order_db.findAll_orders_db(o_filter, sort, limit, page);
+			const expenses = await expense_db.findAll_expenses_db(e_filter, sort);
+			const montly_income = orders.reduce(
+				(a: any, c: any) =>
+					a +
+					c.totalPrice -
+					c.taxPrice -
+					(c.refundAmmount ? c.refundAmmount.reduce((a: any, c: any) => a + c, 0) / 100 : 0),
+				0
+			);
+			const monthly_expenses = expenses.reduce((a: any, c: any) => a + c.amount, 0);
+			// console.log({ montly_income, monthly_expenses, profit: montly_income + monthly_expenses });
+			const batt_1620 = orders
+				.map((order: any) => order.orderItems)
+				.flat(1)
+				.filter((item: any) => item.name === 'Bulk CR1620 Batteries');
+			const batt_1616 = orders
+				.map((order: any) => order.orderItems)
+				.flat(1)
+				.filter((item: any) => item.name === 'Bulk CR1616 Batteries');
+			const batt_1225 = orders
+				.map((order: any) => order.orderItems)
+				.flat(1)
+				.filter((item: any) => item.name === 'Bulk CR1225 Batteries');
+			const batt_1620_options = batt_1620
+				.filter((item: any) => item.product_option)
+				.reduce((a: any, c: any) => a + c.product_option.size, 0);
+			const batt_1616_options = batt_1616
+				.filter((item: any) => item.product_option)
+				.reduce((a: any, c: any) => a + c.product_option.size, 0);
+			const batt_1225_options = batt_1225
+				.filter((item: any) => item.product_option)
+				.reduce((a: any, c: any) => a + c.product_option.size, 0);
+			const batt_1620_size = batt_1620
+				.filter((item: any) => item.size > 0)
+				.reduce((a: any, c: any) => parseInt(a) + parseInt(c.size), 0);
+			const batt_1616_size = batt_1616
+				.filter((item: any) => item.size > 0)
+				.reduce((a: any, c: any) => parseInt(a) + parseInt(c.size), 0);
+			const batt_1225_size = batt_1225
+				.filter((item: any) => item.size > 0)
+				.reduce((a: any, c: any) => parseInt(a) + parseInt(c.size), 0);
+			const batt_1620_options_total = batt_1620
+				.filter((item: any) => item.product_option)
+				.reduce((a: any, c: any) => a + c.product_option.price, 0);
+			const batt_1616_options_total = batt_1616
+				.filter((item: any) => item.product_option)
+				.reduce((a: any, c: any) => a + c.product_option.price, 0);
+			const batt_1225_options_total = batt_1225
+				.filter((item: any) => item.product_option)
+				.reduce((a: any, c: any) => a + c.product_option.price, 0);
+			const batt_1620_size_total = batt_1620
+				.filter((item: any) => item.size > 0)
+				.reduce((a: any, c: any) => parseFloat(a) + parseFloat(c.price), 0);
+			const batt_1616_size_total = batt_1616
+				.filter((item: any) => item.size > 0)
+				.reduce((a: any, c: any) => parseFloat(a) + parseFloat(c.price), 0);
+			const batt_1225_size_total = batt_1225
+				.filter((item: any) => item.size > 0)
+				.reduce((a: any, c: any) => parseFloat(a) + parseFloat(c.price), 0);
+
+			const decals = orders
+				.map((order: any) => order.orderItems)
+				.flat(1)
+				.filter((item: any) => item.category === 'decals');
+			const decals_total = orders
+				.map((order: any) => order.orderItems)
+				.flat(1)
+				.filter((item: any) => item.category === 'decals')
+				.reduce((a: any, c: any) => parseFloat(a) + parseFloat(c.price), 0);
+			const whites = orders
+				.map((order: any) => order.orderItems)
+				.flat(1)
+				.filter((item: any) => item.subcategory === 'singles');
+			const refresh = orders
+				.map((order: any) => order.orderItems)
+				.flat(1)
+				.filter((item: any) => item.subcategory === 'refresh');
+			const whites_total = orders
+				.map((order: any) => order.orderItems)
+				.flat(1)
+				.filter((item: any) => item.category === 'whites')
+				.reduce((a: any, c: any) => parseFloat(a) + parseFloat(c.price), 0);
+			const breakdown = {
+				macro_income: {
+					monthly_income: montly_income,
+					monthly_expenses: monthly_expenses,
+					profit: montly_income + monthly_expenses
+				},
+				batteries: {
+					batteries_1620: batt_1620_options + batt_1620_size,
+					batteries_1616: batt_1616_options + batt_1616_size,
+					batteries_1225: batt_1225_options + batt_1225_size,
+					batteries_1620_total: batt_1620_options_total + batt_1620_size_total,
+					batteries_1616_total: batt_1616_options_total + batt_1616_size_total,
+					batteries_1225_total: batt_1225_options_total + batt_1225_size_total
+				},
+				decals: { amount: decals.length * 11, sets: decals.length, total: decals_total },
+				whites: {
+					amount: whites.length + refresh.length * 6,
+					singles: whites.length,
+					refresh: refresh.length,
+					total: whites_total
+				}
+			};
+			console.log({ breakdown });
+			return breakdown;
 		} catch (error) {
 			console.log({ remove_orders_s_error: error });
 			throw new Error(error.message);
