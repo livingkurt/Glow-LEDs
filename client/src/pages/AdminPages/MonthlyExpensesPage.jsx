@@ -466,12 +466,9 @@ const MonthlyExpensesPage = (props) => {
 							<thead>
 								<tr>
 									<th>Date</th>
-									<th>Singles</th>
-									<th>Refresh Packs</th>
-									<th>All Whites</th>
-									<th>Whites Expenses</th>
-									<th>Whites Total</th>
-									<th>Whites Profit</th>
+									<th>Income</th>
+									<th>Expenses</th>
+									<th>Profit</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -483,9 +480,9 @@ const MonthlyExpensesPage = (props) => {
 										className=""
 									>
 										<th>{month.month}</th>
-										<th>{month.whites.singles_qty_sold ? month.whites.singles_qty_sold : '0'}</th>
-										<th>{month.whites.refresh_qty_sold ? month.whites.refresh_qty_sold : '0'}</th>
-										<th>{month.whites.total_qty_sold ? month.whites.total_qty_sold : '0'}</th>
+										<th>
+											${month.whites.total_income ? month.whites.total_income.toFixed(2) : '0.00'}
+										</th>
 										<th>
 											${month.whites.total_expenses ? (
 												month.whites.total_expenses.toFixed(2)
@@ -493,11 +490,96 @@ const MonthlyExpensesPage = (props) => {
 												'0.00'
 											)}
 										</th>
-										<th>
-											${month.whites.total_income ? month.whites.total_income.toFixed(2) : '0.00'}
-										</th>
+
 										<th>
 											${month.whites.total_profit ? month.whites.total_profit.toFixed(2) : '0.00'}
+										</th>
+									</tr>
+								))}
+							</tbody>
+
+							{yearly_income &&
+							Object.keys(yearly_income).length > 0 && (
+								<tfoot>
+									<tr>
+										<th>Total</th>
+										<th>
+											${yearly_income.whites.total_income ? (
+												yearly_income.whites.total_income.toFixed(2)
+											) : (
+												'0.00'
+											)}
+										</th>
+										<th>
+											${yearly_income.whites.total_expenses ? (
+												yearly_income.whites.total_expenses.toFixed(2)
+											) : (
+												'0.00'
+											)}
+										</th>
+
+										<th>
+											${yearly_income.whites.total_profit ? (
+												yearly_income.whites.total_profit.toFixed(2)
+											) : (
+												'0.00'
+											)}
+										</th>
+									</tr>
+								</tfoot>
+							)}
+						</table>
+						<h2 className="ta-c w-100per jc-c">{year} Whites Income By Size</h2>
+						<table className="styled-table">
+							<thead>
+								<tr>
+									<th>Date</th>
+									<th>S Income</th>
+									<th>M Income</th>
+									<th>L Income</th>
+									<th>XL Income</th>
+									<th>Total Income</th>
+								</tr>
+							</thead>
+							<tbody>
+								{monthly_income.map((month) => (
+									<tr
+										style={{
+											backgroundColor: month.color
+										}}
+										className=""
+									>
+										<th>{month.month}</th>
+										<th>
+											${month.whites.s_total_income ? (
+												month.whites.s_total_income.toFixed(2)
+											) : (
+												'0.00'
+											)}
+										</th>
+										<th>
+											${month.whites.m_total_income ? (
+												month.whites.m_total_income.toFixed(2)
+											) : (
+												'0.00'
+											)}
+										</th>
+										<th>
+											${month.whites.l_total_income ? (
+												month.whites.l_total_income.toFixed(2)
+											) : (
+												'0.00'
+											)}
+										</th>
+										<th>
+											${month.whites.xl_total_income ? (
+												month.whites.xl_total_income.toFixed(2)
+											) : (
+												'0.00'
+											)}
+										</th>
+										<th>
+											${month.whites.total_income ? month.whites.total_income.toFixed(2) : '0.00'}
 										</th>
 									</tr>
 								))}
@@ -506,31 +588,74 @@ const MonthlyExpensesPage = (props) => {
 							Object.keys(yearly_income).length > 0 && (
 								<tfoot>
 									<tr>
+										<th>Profit</th>
+										<th>
+											${yearly_income.whites.s_total_profit ? (
+												yearly_income.whites.s_total_profit.toFixed(2)
+											) : (
+												'0.00'
+											)}
+										</th>
+										<th>
+											${yearly_income.whites.m_total_profit ? (
+												yearly_income.whites.m_total_profit.toFixed(2)
+											) : (
+												'0.00'
+											)}
+										</th>
+										<th>
+											${yearly_income.whites.l_total_profit ? (
+												yearly_income.whites.l_total_profit.toFixed(2)
+											) : (
+												'0.00'
+											)}
+										</th>
+										<th>
+											${yearly_income.whites.xl_total_profit ? (
+												yearly_income.whites.xl_total_profit.toFixed(2)
+											) : (
+												'0.00'
+											)}
+										</th>
+										<th>
+											${yearly_income.whites.total_profit ? (
+												yearly_income.whites.total_profit.toFixed(2)
+											) : (
+												'0.00'
+											)}
+										</th>
+									</tr>
+								</tfoot>
+							)}
+							{yearly_income &&
+							Object.keys(yearly_income).length > 0 && (
+								<tfoot>
+									<tr>
 										<th>Total</th>
 										<th>
-											{yearly_income.whites.singles_qty_sold ? (
-												yearly_income.whites.singles_qty_sold
+											${yearly_income.whites.s_total_income ? (
+												yearly_income.whites.s_total_income.toFixed(2)
 											) : (
-												'0'
+												'0.00'
 											)}
 										</th>
 										<th>
-											{yearly_income.whites.refresh_qty_sold ? (
-												yearly_income.whites.refresh_qty_sold
+											${yearly_income.whites.m_total_income ? (
+												yearly_income.whites.m_total_income.toFixed(2)
 											) : (
-												'0'
+												'0.00'
 											)}
 										</th>
 										<th>
-											{yearly_income.whites.total_qty_sold ? (
-												yearly_income.whites.total_qty_sold
+											${yearly_income.whites.l_total_income ? (
+												yearly_income.whites.l_total_income.toFixed(2)
 											) : (
-												'0'
+												'0.00'
 											)}
 										</th>
 										<th>
-											${yearly_income.whites.total_expenses ? (
-												yearly_income.whites.total_expenses.toFixed(2)
+											${yearly_income.whites.xl_total_income ? (
+												yearly_income.whites.xl_total_income.toFixed(2)
 											) : (
 												'0.00'
 											)}
@@ -542,11 +667,104 @@ const MonthlyExpensesPage = (props) => {
 												'0.00'
 											)}
 										</th>
+									</tr>
+								</tfoot>
+							)}
+							{yearly_income &&
+							Object.keys(yearly_income).length > 0 && (
+								<tfoot>
+									<tr>
+										<th>Expenses</th>
 										<th>
-											${yearly_income.whites.total_profit ? (
-												yearly_income.whites.total_profit.toFixed(2)
+											${yearly_income.whites.s_total_expenses ? (
+												yearly_income.whites.s_total_expenses.toFixed(2)
 											) : (
 												'0.00'
+											)}
+										</th>
+										<th>
+											${yearly_income.whites.m_total_expenses ? (
+												yearly_income.whites.m_total_expenses.toFixed(2)
+											) : (
+												'0.00'
+											)}
+										</th>
+										<th>
+											${yearly_income.whites.l_total_expenses ? (
+												yearly_income.whites.l_total_expenses.toFixed(2)
+											) : (
+												'0.00'
+											)}
+										</th>
+										<th>
+											${yearly_income.whites.xl_total_expenses ? (
+												yearly_income.whites.xl_total_expenses.toFixed(2)
+											) : (
+												'0.00'
+											)}
+										</th>
+										<th>
+											${yearly_income.whites.total_expenses ? (
+												yearly_income.whites.total_expenses.toFixed(2)
+											) : (
+												'0.00'
+											)}
+										</th>
+									</tr>
+								</tfoot>
+							)}
+						</table>
+						<h2 className="ta-c w-100per jc-c">{year} Whites Sold</h2>
+						<table className="styled-table">
+							<thead>
+								<tr>
+									<th>Date</th>
+									<th>S Qty</th>
+									<th>M Qty</th>
+									<th>L Qty</th>
+									<th>XL Qty</th>
+									<th>Total Qty</th>
+								</tr>
+							</thead>
+							<tbody>
+								{monthly_income.map((month) => (
+									<tr
+										style={{
+											backgroundColor: month.color
+										}}
+										className=""
+									>
+										<th>{month.month}</th>
+										<th>{month.whites.s_qty_sold ? month.whites.s_qty_sold : '0'}</th>
+										<th>{month.whites.m_qty_sold ? month.whites.m_qty_sold : '0'}</th>
+										<th>{month.whites.l_qty_sold ? month.whites.l_qty_sold : '0'}</th>
+										<th>{month.whites.xl_qty_sold ? month.whites.xl_qty_sold : '0'}</th>
+										<th>{month.whites.total_qty_sold ? month.whites.total_qty_sold : '0'}</th>
+									</tr>
+								))}
+							</tbody>
+							{yearly_income &&
+							Object.keys(yearly_income).length > 0 && (
+								<tfoot>
+									<tr>
+										<th>Total</th>
+										<th>
+											{yearly_income.whites.s_qty_sold ? yearly_income.whites.s_qty_sold : '0'}
+										</th>
+										<th>
+											{yearly_income.whites.m_qty_sold ? yearly_income.whites.m_qty_sold : '0'}
+										</th>
+										<th>
+											{yearly_income.whites.l_qty_sold ? yearly_income.whites.l_qty_sold : '0'}
+										</th>
+										<th>
+											{yearly_income.whites.xl_qty_sold ? yearly_income.whites.xl_qty_sold : '0'}
+										</th>
+										<th>
+											{yearly_income.whites.total_qty_sold ? (
+												yearly_income.whites.total_qty_sold
+											) : (
+												'0'
 											)}
 										</th>
 									</tr>

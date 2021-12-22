@@ -553,14 +553,118 @@ export default {
 				.map((order: any) => order.orderItems)
 				.flat(1)
 				.filter((item: any) => item.subcategory === 'singles');
+			const s_whites = orders_data
+				.map((order: any) => order.orderItems)
+				.flat(1)
+				.filter(
+					(item: any) => item.subcategory === 'singles' && item.option_product_name === 'Supreme Gloves - S'
+				);
+			const m_whites = orders_data
+				.map((order: any) => order.orderItems)
+				.flat(1)
+				.filter(
+					(item: any) => item.subcategory === 'singles' && item.option_product_name === 'Supreme Gloves - M'
+				);
+			const l_whites = orders_data
+				.map((order: any) => order.orderItems)
+				.flat(1)
+				.filter(
+					(item: any) => item.subcategory === 'singles' && item.option_product_name === 'Supreme Gloves - L'
+				);
+			const xl_whites = orders_data
+				.map((order: any) => order.orderItems)
+				.flat(1)
+				.filter(
+					(item: any) => item.subcategory === 'singles' && item.option_product_name === 'Supreme Gloves - XL'
+				);
 			const refresh = orders_data
 				.map((order: any) => order.orderItems)
 				.flat(1)
 				.filter((item: any) => item.subcategory === 'refresh');
+			const s_refresh = orders_data
+				.map((order: any) => order.orderItems)
+				.flat(1)
+				.filter(
+					(item: any) => item.subcategory === 'refresh' && item.option_product_name === 'Supreme Gloves - S'
+				);
+			const m_refresh = orders_data
+				.map((order: any) => order.orderItems)
+				.flat(1)
+				.filter(
+					(item: any) => item.subcategory === 'refresh' && item.option_product_name === 'Supreme Gloves - M'
+				);
+			const l_refresh = orders_data
+				.map((order: any) => order.orderItems)
+				.flat(1)
+				.filter(
+					(item: any) => item.subcategory === 'refresh' && item.option_product_name === 'Supreme Gloves - L'
+				);
+			const xl_refresh = orders_data
+				.map((order: any) => order.orderItems)
+				.flat(1)
+				.filter(
+					(item: any) => item.subcategory === 'refresh' && item.option_product_name === 'Supreme Gloves - XL'
+				);
 			const whites_total = orders_data
 				.map((order: any) => order.orderItems)
 				.flat(1)
 				.filter((item: any) => item.category === 'whites')
+				.reduce((a: any, c: any) => parseFloat(a) + parseFloat(c.price), 0);
+			const s_whites_total = orders_data
+				.map((order: any) => order.orderItems)
+				.flat(1)
+				.filter(
+					(item: any) => item.subcategory === 'singles' && item.option_product_name === 'Supreme Gloves - S'
+				)
+				.reduce((a: any, c: any) => parseFloat(a) + parseFloat(c.price), 0);
+			const m_whites_total = orders_data
+				.map((order: any) => order.orderItems)
+				.flat(1)
+				.filter(
+					(item: any) => item.subcategory === 'singles' && item.option_product_name === 'Supreme Gloves - M'
+				)
+				.reduce((a: any, c: any) => parseFloat(a) + parseFloat(c.price), 0);
+			const l_whites_total = orders_data
+				.map((order: any) => order.orderItems)
+				.flat(1)
+				.filter(
+					(item: any) => item.subcategory === 'singles' && item.option_product_name === 'Supreme Gloves - L'
+				)
+				.reduce((a: any, c: any) => parseFloat(a) + parseFloat(c.price), 0);
+			const xl_whites_total = orders_data
+				.map((order: any) => order.orderItems)
+				.flat(1)
+				.filter(
+					(item: any) => item.subcategory === 'singles' && item.option_product_name === 'Supreme Gloves - XL'
+				)
+				.reduce((a: any, c: any) => parseFloat(a) + parseFloat(c.price), 0);
+			const s_refresh_total = orders_data
+				.map((order: any) => order.orderItems)
+				.flat(1)
+				.filter(
+					(item: any) => item.subcategory === 'refresh' && item.option_product_name === 'Supreme Gloves - S'
+				)
+				.reduce((a: any, c: any) => parseFloat(a) + parseFloat(c.price), 0);
+			const m_refresh_total = orders_data
+				.map((order: any) => order.orderItems)
+				.flat(1)
+				.filter(
+					(item: any) => item.subcategory === 'refresh' && item.option_product_name === 'Supreme Gloves - M'
+				)
+				.reduce((a: any, c: any) => parseFloat(a) + parseFloat(c.price), 0);
+			const l_refresh_total = orders_data
+				.map((order: any) => order.orderItems)
+				.flat(1)
+				.filter(
+					(item: any) => item.subcategory === 'refresh' && item.option_product_name === 'Supreme Gloves - L'
+				)
+				.reduce((a: any, c: any) => parseFloat(a) + parseFloat(c.price), 0);
+			const xl_refresh_total = orders_data
+				.map((order: any) => order.orderItems)
+				.flat(1)
+				.filter(
+					(item: any) => item.subcategory === 'refresh' && item.option_product_name === 'Supreme Gloves - XL'
+				)
 				.reduce((a: any, c: any) => parseFloat(a) + parseFloat(c.price), 0);
 			const breakdown = {
 				macro_income: {
@@ -627,10 +731,30 @@ export default {
 				decals: { qty_sold: decals.length * 11, sets: decals.length, total_income: decals_total },
 				whites: {
 					singles_qty_sold: whites.length,
-					s_qty_sold: whites.length,
-					m_qty_sold: whites.length,
-					l_qty_sold: whites.length,
-					xl_qty_sold: whites.length,
+					s_qty_sold: s_whites.length + s_refresh.length * 6,
+					m_qty_sold: m_whites.length + m_refresh.length * 6,
+					l_qty_sold: l_whites.length + l_refresh.length * 6,
+					xl_qty_sold: xl_whites.length + xl_refresh.length * 6,
+					s_total_income: s_whites_total + s_refresh_total,
+					m_total_income: m_whites_total + m_refresh_total,
+					l_total_income: l_whites_total + l_refresh_total,
+					xl_total_income: xl_whites_total + xl_refresh_total,
+					s_total_expenses: -(s_whites.length + s_refresh.length * 6) * 0.7,
+					m_total_expenses: -(m_whites.length + m_refresh.length * 6) * 0.7,
+					l_total_expenses: -(l_whites.length + l_refresh.length * 6) * 0.7,
+					xl_total_expenses: -(xl_whites.length + xl_refresh.length * 6) * 0.7,
+					s_total_profit:
+						(s_whites.length + s_refresh.length * 6) * 3.95 -
+						(s_whites.length + s_refresh.length * 6) * 0.7,
+					m_total_profit:
+						(m_whites.length + m_refresh.length * 6) * 3.95 -
+						(m_whites.length + m_refresh.length * 6) * 0.7,
+					l_total_profit:
+						(l_whites.length + l_refresh.length * 6) * 3.95 -
+						(l_whites.length + l_refresh.length * 6) * 0.7,
+					xl_total_profit:
+						(xl_whites.length + xl_refresh.length * 6) * 3.95 -
+						(xl_whites.length + xl_refresh.length * 6) * 0.7,
 					refresh_qty_sold: refresh.length,
 					total_expenses: -(whites.length + refresh.length * 6) * 0.7,
 					total_profit: whites_total - (whites.length + refresh.length * 6) * 0.7,
