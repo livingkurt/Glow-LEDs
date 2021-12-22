@@ -16,9 +16,12 @@ const order_routes = {
 	monthly_expenses: (date_1: string, date_2: string) => {
 		return axios.put('/api/expenses/monthly_expenses', { date_1, date_2 });
 	},
-	monthly_income: (month: string, year: number) => {
-		return axios.get(`/api/orders/monthly_income/${month}/${year}`);
+	income: (year: number, month: string) => {
+		return axios.get(`/api/orders/income/${year}${month ? '/' + month : ''}`);
 	},
+	// yearly_income: (year: number) => {
+	// 	return axios.get(`/api/orders/yearly_income/${year}`);
+	// },
 	yearly_expenses: (date_1: string, date_2: string) => {
 		return axios.put('/api/expenses/yearly_expenses', { date_1, date_2 });
 	},

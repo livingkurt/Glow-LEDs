@@ -24,7 +24,8 @@ router.route('/guest').post(order_controller.create_orders_c);
 router.route('/guest/:id').get(order_controller.findById_orders_c);
 router.route('/secure').post(isAuth, order_controller.create_orders_c);
 router.route('/secure/:id').get(isAuth, order_controller.findById_orders_c);
-router.route('/monthly_income/:month/:year').get(order_controller.monthly_income_orders_c);
+router.route('/income/:year/:month?').get(order_controller.income_orders_c);
+// router.route('/income/:year').get(order_controller.yearly_income_orders_c);
 
 router
 	.route('/glow/:id')

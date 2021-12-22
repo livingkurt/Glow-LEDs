@@ -17,7 +17,9 @@ const MonthlyExpensesPage = (props) => {
 	const monthly_income_chart_ref = useRef();
 
 	const [ monthly_income, set_monthly_income ] = useState([]);
-	const [ batteries, set_batteries ] = useState({});
+	const [ yearly_income, set_yearly_income ] = useState({});
+	const [ month, set_month ] = useState();
+	const [ loading, set_loading ] = useState(false);
 
 	const [ year, set_year ] = useState(this_year);
 	const [ canScroll, setCanScroll ] = useState(false);
@@ -41,6 +43,7 @@ const MonthlyExpensesPage = (props) => {
 		let clean = true;
 		if (clean) {
 			get_monthly_income(year);
+			get_yearly_income(year);
 		}
 		return () => (clean = false);
 	}, []);
@@ -49,378 +52,52 @@ const MonthlyExpensesPage = (props) => {
 			let clean = true;
 			if (clean) {
 				get_monthly_income(year);
+				get_yearly_income(year);
 			}
 			return () => (clean = false);
 		},
 		[ year ]
 	);
 
-	const [ january, set_january ] = useState({});
-	const [ february, set_february ] = useState({});
-	const [ march, set_march ] = useState({});
-	const [ april, set_april ] = useState({});
-	const [ may, set_may ] = useState({});
-	const [ june, set_june ] = useState({});
-	const [ july, set_july ] = useState({});
-	const [ august, set_august ] = useState({});
-	const [ september, set_september ] = useState({});
-	const [ october, set_october ] = useState({});
-	const [ november, set_november ] = useState({});
-	const [ december, set_december ] = useState({});
-	const [ month, set_month ] = useState();
-
-	const update_income = (month, income, expenses, batteries, decals) => {
-		if (month === 'january') {
-			set_january({
-				month: 'january',
-				income,
-				expenses,
-				profit: income + expenses,
-				color: '#b33434',
-				batteries_1620: batteries.batteries_1620,
-				batteries_1620_total: batteries.batteries_1620_total,
-				batteries_1616: batteries.batteries_1616,
-				batteries_1616_total: batteries.batteries_1616_total,
-				batter16s_1225: batteries.batter16s_1225,
-				batteries_1225_total: batteries.batteries_1225_total,
-				decals_amount: decals.amount,
-				decals_sets: decals.sets,
-				decals_total: decals.total
-			});
-		}
-		if (month === 'february') {
-			set_february({
-				month: 'february',
-				income,
-				expenses,
-				profit: income + expenses,
-				color: '#b9742f',
-				batteries_1620: batteries.batteries_1620,
-				batteries_1620_total: batteries.batteries_1620_total,
-				batteries_1616: batteries.batteries_1616,
-				batteries_1616_total: batteries.batteries_1616_total,
-				batteries_1225: batteries.batteries_1225,
-				batteries_1225_total: batteries.batteries_1225_total,
-				decals_amount: decals.amount,
-				decals_sets: decals.sets,
-				decals_total: decals.total
-			});
-		}
-		if (month === 'march') {
-			set_march({
-				month: 'march',
-				income,
-				expenses,
-				profit: income + expenses,
-				color: '#bfbf26',
-				batteries_1620: batteries.batteries_1620,
-				batteries_1620_total: batteries.batteries_1620_total,
-				batteries_1616: batteries.batteries_1616,
-				batteries_1616_total: batteries.batteries_1616_total,
-				batteries_1225: batteries.batteries_1225,
-				batteries_1225_total: batteries.batteries_1225_total,
-				decals_amount: decals.amount,
-				decals_sets: decals.sets,
-				decals_total: decals.total
-			});
-		}
-		if (month === 'april') {
-			set_april({
-				month: 'april',
-				income,
-				expenses,
-				profit: income + expenses,
-				color: '#7ccd2a',
-				batteries_1620: batteries.batteries_1620,
-				batteries_1620_total: batteries.batteries_1620_total,
-				batteries_1616: batteries.batteries_1616,
-				batteries_1616_total: batteries.batteries_1616_total,
-				batteries_1225: batteries.batteries_1225,
-				batteries_1225_total: batteries.batteries_1225_total,
-				decals_amount: decals.amount,
-				decals_sets: decals.sets,
-				decals_total: decals.total
-			});
-		}
-		if (month === 'may') {
-			set_may({
-				month: 'may',
-				income,
-				expenses,
-				profit: income + expenses,
-				color: '#2bc92b',
-				batteries_1620: batteries.batteries_1620,
-				batteries_1620_total: batteries.batteries_1620_total,
-				batteries_1616: batteries.batteries_1616,
-				batteries_1616_total: batteries.batteries_1616_total,
-				batteries_1225: batteries.batteries_1225,
-				batteries_1225_total: batteries.batteries_1225_total,
-				decals_amount: decals.amount,
-				decals_sets: decals.sets,
-				decals_total: decals.total
-			});
-		}
-		if (month === 'june') {
-			set_june({
-				month: 'june',
-				income,
-				expenses,
-				profit: income + expenses,
-				color: '#29c779',
-				batteries_1620: batteries.batteries_1620,
-				batteries_1620_total: batteries.batteries_1620_total,
-				batteries_1616: batteries.batteries_1616,
-				batteries_1616_total: batteries.batteries_1616_total,
-				batteries_1225: batteries.batteries_1225,
-				batteries_1225_total: batteries.batteries_1225_total,
-				decals_amount: decals.amount,
-				decals_sets: decals.sets,
-				decals_total: decals.total
-			});
-		}
-		if (month === 'july') {
-			set_july({
-				month: 'july',
-				income,
-				expenses,
-				profit: income + expenses,
-				color: '#27bfbf',
-				batteries_1620: batteries.batteries_1620,
-				batteries_1620_total: batteries.batteries_1620_total,
-				batteries_1616: batteries.batteries_1616,
-				batteries_1616_total: batteries.batteries_1616_total,
-				batteries_1225: batteries.batteries_1225,
-				batteries_1225_total: batteries.batteries_1225_total,
-				decals_amount: decals.amount,
-				decals_sets: decals.sets,
-				decals_total: decals.total
-			});
-		}
-		if (month === 'august') {
-			set_august({
-				month: 'august',
-				income,
-				expenses,
-				profit: income + expenses,
-				color: '#2873bd',
-				batteries_1620: batteries.batteries_1620,
-				batteries_1620_total: batteries.batteries_1620_total,
-				batteries_1616: batteries.batteries_1616,
-				batteries_1616_total: batteries.batteries_1616_total,
-				batteries_1225: batteries.batteries_1225,
-				batteries_1225_total: batteries.batteries_1225_total,
-				decals_amount: decals.amount,
-				decals_sets: decals.sets,
-				decals_total: decals.total
-			});
-		}
-		if (month === 'september') {
-			set_september({
-				month: 'september',
-				income,
-				expenses,
-				profit: income + expenses,
-				color: '#2a2ab5',
-				batteries_1620: batteries.batteries_1620,
-				batteries_1620_total: batteries.batteries_1620_total,
-				batteries_1616: batteries.batteries_1616,
-				batteries_1616_total: batteries.batteries_1616_total,
-				batteries_1225: batteries.batteries_1225,
-				batteries_1225_total: batteries.batteries_1225_total,
-				decals_amount: decals.amount,
-				decals_sets: decals.sets,
-				decals_total: decals.total
-			});
-		}
-		if (month === 'october') {
-			set_october({
-				month: 'october',
-				income,
-				expenses,
-				profit: income + expenses,
-				color: '#742bbd',
-				batteries_1620: batteries.batteries_1620,
-				batteries_1620_total: batteries.batteries_1620_total,
-				batteries_1616: batteries.batteries_1616,
-				batteries_1616_total: batteries.batteries_1616_total,
-				batteries_1225: batteries.batteries_1225,
-				batteries_1225_total: batteries.batteries_1225_total,
-				decals_amount: decals.amount,
-				decals_sets: decals.sets,
-				decals_total: decals.total
-			});
-		}
-		if (month === 'november') {
-			set_november({
-				month: 'november',
-				income,
-				expenses,
-				profit: income + expenses,
-				color: '#bd28bd',
-				batteries_1620: batteries.batteries_1620,
-				batteries_1620_total: batteries.batteries_1620_total,
-				batteries_1616: batteries.batteries_1616,
-				batteries_1616_total: batteries.batteries_1616_total,
-				batteries_1225: batteries.batteries_1225,
-				batteries_1225_total: batteries.batteries_1225_total,
-				decals_amount: decals.amount,
-				decals_sets: decals.sets,
-				decals_total: decals.total
-			});
-		}
-		if (month === 'december') {
-			set_december({
-				month: 'december',
-				income,
-				expenses,
-				profit: income + expenses,
-				color: '#c12573',
-				batteries_1620: batteries.batteries_1620,
-				batteries_1620_total: batteries.batteries_1620_total,
-				batteries_1616: batteries.batteries_1616,
-				batteries_1616_total: batteries.batteries_1616_total,
-				batteries_1225: batteries.batteries_1225,
-				batteries_1225_total: batteries.batteries_1225_total,
-				decals_amount: decals.amount,
-				decals_sets: decals.sets,
-				decals_total: decals.total
-			});
-		}
-	};
-	const empty_income = () => {
-		set_january({});
-		set_february({});
-		set_march({});
-		set_april({});
-		set_may({});
-		set_june({});
-		set_july({});
-		set_august({});
-		set_september({});
-		set_october({});
-		set_november({});
-		set_december({});
-		set_monthly_income([]);
-	};
+	const colors = [
+		'#b33434',
+		'#b9742f',
+		'#bfbf26',
+		'#7ccd2a',
+		'#2bc92b',
+		'#29c779',
+		'#27bfbf',
+		'#2873bd',
+		'#2a2ab5',
+		'#742bbd',
+		'#bd28bd',
+		'#c12573'
+	];
 
 	const get_monthly_income = async (year) => {
-		empty_income();
+		set_loading(true);
 		const income_each_month = await Promise.all(
 			dates_in_year.map(async (month, month_number) => {
 				console.log({ month: month.month, year });
-				const { data } = await API_Orders.monthly_income(month.month, year);
-				console.log({ data });
-				const { macro_income, batteries, decals, whites } = data;
-				const { monthly_income, monthly_expenses, profit } = macro_income;
-				// const { data: orders } = await API_Orders.specific_time_income(month.start_date, month.end_date);
-				// const { data: expenses } = await API_Orders.monthly_expenses(month.start_date, month.end_date);
-				// let batteries = get_batteries(orders);
-				// let decals = get_decals(orders);
-				// let income = 0;
-				// let total_expenses = 0;
-				// if (orders.length > 1) {
-				// 	income = orders.reduce((a, c) => a + c.totalPrice - c.taxPrice, 0);
-				// 	total_expenses = expenses.reduce((a, c) => a + c.amount, 0);
-				// }
+				const { data } = await API_Orders.income(year, month.month);
 				if (data) {
-					update_income(
-						dates_in_year[month_number].month,
-						monthly_income,
-						monthly_expenses,
-						batteries,
-						decals,
-						whites
-					);
-					return {
-						month: dates_in_year[month_number].month,
-						income: monthly_income,
-						decals_amount: decals.amount,
-						decals_total: decals.total,
-						decals_sets: decals.sets,
-						expenses: monthly_expenses,
-						profit,
-						batteries_1620: batteries.batteries_1620,
-						batteries_1616: batteries.batteries_1616,
-						batteries_1225: batteries.batteries_1225,
-						batteries_1620_total: batteries.batteries_1620_total,
-						batteries_1616_total: batteries.batteries_1616_total,
-						batteries_1225_total: batteries.batteries_1225_total
-					};
+					return { ...data, color: colors[month_number], month: month.month };
 				}
 			})
 		);
 		console.log({ income_each_month });
 		set_monthly_income(income_each_month);
 		// initialize_monthly_income_chart(income_each_month);
+		set_loading(false);
 	};
-
-	const get_batteries = (data) => {
-		const batt_1620 = data
-			.map((order) => order.orderItems)
-			.flat(1)
-			.filter((item) => item.name === 'Bulk CR1620 Batteries');
-		const batt_1616 = data
-			.map((order) => order.orderItems)
-			.flat(1)
-			.filter((item) => item.name === 'Bulk CR1616 Batteries');
-		const batt_1225 = data
-			.map((order) => order.orderItems)
-			.flat(1)
-			.filter((item) => item.name === 'Bulk CR1225 Batteries');
-
-		const batt_1620_options = batt_1620
-			.filter((item) => item.product_option)
-			.reduce((a, c) => a + c.product_option.size, 0);
-		const batt_1616_options = batt_1616
-			.filter((item) => item.product_option)
-			.reduce((a, c) => a + c.product_option.size, 0);
-		const batt_1225_options = batt_1225
-			.filter((item) => item.product_option)
-			.reduce((a, c) => a + c.product_option.size, 0);
-		const batt_1620_size = batt_1620
-			.filter((item) => item.size > 0)
-			.reduce((a, c) => parseInt(a) + parseInt(c.size), 0);
-		const batt_1616_size = batt_1616
-			.filter((item) => item.size > 0)
-			.reduce((a, c) => parseInt(a) + parseInt(c.size), 0);
-		const batt_1225_size = batt_1225
-			.filter((item) => item.size > 0)
-			.reduce((a, c) => parseInt(a) + parseInt(c.size), 0);
-		const batt_1620_options_total = batt_1620
-			.filter((item) => item.product_option)
-			.reduce((a, c) => a + c.product_option.price, 0);
-		const batt_1616_options_total = batt_1616
-			.filter((item) => item.product_option)
-			.reduce((a, c) => a + c.product_option.price, 0);
-		const batt_1225_options_total = batt_1225
-			.filter((item) => item.product_option)
-			.reduce((a, c) => a + c.product_option.price, 0);
-		const batt_1620_size_total = batt_1620
-			.filter((item) => item.size > 0)
-			.reduce((a, c) => parseFloat(a) + parseFloat(c.price), 0);
-		const batt_1616_size_total = batt_1616
-			.filter((item) => item.size > 0)
-			.reduce((a, c) => parseFloat(a) + parseFloat(c.price), 0);
-		const batt_1225_size_total = batt_1225
-			.filter((item) => item.size > 0)
-			.reduce((a, c) => parseFloat(a) + parseFloat(c.price), 0);
-		return {
-			batteries_1620: batt_1620_options + batt_1620_size,
-			batteries_1616: batt_1616_options + batt_1616_size,
-			batteries_1225: batt_1225_options + batt_1225_size,
-			batteries_1620_total: batt_1620_options_total + batt_1620_size_total,
-			batteries_1616_total: batt_1616_options_total + batt_1616_size_total,
-			batteries_1225_total: batt_1225_options_total + batt_1225_size_total
-		};
-	};
-	const get_decals = (data) => {
-		const decals = data.map((order) => order.orderItems).flat(1).filter((item) => item.category === 'decals');
-		const decals_total = data
-			.map((order) => order.orderItems)
-			.flat(1)
-			.filter((item) => item.category === 'decals')
-			.reduce((a, c) => parseFloat(a) + parseFloat(c.price), 0);
-		return { amount: decals.length * 11, sets: decals.length, total: decals_total };
+	const get_yearly_income = async (year) => {
+		set_loading(true);
+		const { data } = await API_Orders.income(year);
+		if (data) {
+			console.log({ get_yearly_income: data });
+			set_yearly_income(data);
+			set_loading(false);
+		}
 	};
 
 	const multiplier = 360 / monthly_income.length;
@@ -637,18 +314,9 @@ const MonthlyExpensesPage = (props) => {
 								}}
 							>
 								<option value="">---Choose Month---</option>
-								<option value="january">{toCapitalize('january')}</option>
-								<option value="february">{toCapitalize('february')}</option>
-								<option value="march">{toCapitalize('march')}</option>
-								<option value="april">{toCapitalize('april')}</option>
-								<option value="may">{toCapitalize('may')}</option>
-								<option value="june">{toCapitalize('june')}</option>
-								<option value="july">{toCapitalize('july')}</option>
-								<option value="august">{toCapitalize('august')}</option>
-								<option value="september">{toCapitalize('september')}</option>
-								<option value="october">{toCapitalize('october')}</option>
-								<option value="november">{toCapitalize('november')}</option>
-								<option value="december">{toCapitalize('december')}</option>
+								{dates_in_year.map((month) => (
+									<option value="january">{toCapitalize(month.month)}</option>
+								))}
 							</select>
 							<span className="custom-arrow" />
 						</div>
@@ -659,31 +327,22 @@ const MonthlyExpensesPage = (props) => {
 				</div>
 			</div>
 			<h2 className="ta-c w-100per jc-c">{year} Monthly Breakdown</h2>
-			<Loading loading={monthly_income.length === 0} />
-			{monthly_income &&
-			monthly_income.length > 0 && (
+			<Loading loading={loading} />
+			{console.log({ yearly_income })}
+			{yearly_income &&
+			Object.keys(yearly_income).length > 0 && (
 				<div className="jc-b mb-1rem">
 					<div>
 						<h2>{year} Income</h2>
 						<div className="fs-25px">
-							${monthly_income && monthly_income.length > 0 ? (
-								monthly_income
-									.filter((month) => month !== undefined)
-									.reduce((a, c) => parseFloat(a) + parseFloat(c.income), 0)
-									.toFixed(2)
-							) : (
-								'0.00'
-							)}
+							${yearly_income.macro_income.income ? yearly_income.macro_income.income.toFixed(2) : '0.00'}
 						</div>
 					</div>
 					<div>
 						<h2>{year} Expenses</h2>
 						<div className="fs-25px">
-							${monthly_income && monthly_income.length > 0 ? (
-								monthly_income
-									.filter((month) => month !== undefined)
-									.reduce((a, c) => parseFloat(a) + parseFloat(c.expenses), 0)
-									.toFixed(2)
+							${yearly_income.macro_income.expenses ? (
+								yearly_income.macro_income.expenses.toFixed(2)
 							) : (
 								'0.00'
 							)}
@@ -692,20 +351,11 @@ const MonthlyExpensesPage = (props) => {
 					<div>
 						<h2>{year} Profit</h2>
 						<div className="fs-25px">
-							${monthly_income && monthly_income.length > 0 ? (
-								monthly_income
-									.filter((month) => month !== undefined)
-									.reduce((a, c) => parseFloat(a) + parseFloat(c.profit), 0)
-									.toFixed(2)
-							) : (
-								'0.00'
-							)}
+							${yearly_income.macro_income.profit ? yearly_income.macro_income.profit.toFixed(2) : '0.00'}
 						</div>
 					</div>
 				</div>
 			)}
-			{/* <h2 className="ta-c w-100per jc-c">{year} Monthly Income</h2> */}
-
 			{monthly_income &&
 			monthly_income.length > 0 && (
 				<Tabs>
@@ -714,6 +364,9 @@ const MonthlyExpensesPage = (props) => {
 							<TabList>
 								<Tab style={{ padding: '10px', borderRadius: '10px 10px 0px 0px' }}>
 									{year} Monthly Expenses
+								</Tab>
+								<Tab style={{ padding: '10px', borderRadius: '10px 10px 0px 0px' }}>
+									{year} Whites Sold
 								</Tab>
 								<Tab style={{ padding: '10px', borderRadius: '10px 10px 0px 0px' }}>
 									{year} Batteries Sold
@@ -752,917 +405,438 @@ const MonthlyExpensesPage = (props) => {
 								</tr>
 							</thead>
 							<tbody>
-								<tr
-									style={{
-										backgroundColor: january.color
-									}}
-									className=""
-								>
-									<th>January</th>
-									<th>${january.income ? january.income.toFixed(2) : '0.00'}</th>
-									<th>${january.expenses ? january.expenses.toFixed(2) : '0.00'}</th>
-									<th>${january.profit ? january.profit.toFixed(2) : '0.00'}</th>
-								</tr>
-
-								<tr
-									style={{
-										backgroundColor: february.color
-									}}
-									className=""
-								>
-									<th>Feburary</th>
-									<th>${february.income ? february.income.toFixed(2) : '0.00'}</th>
-									<th>${february.expenses ? february.expenses.toFixed(2) : '0.00'}</th>
-									<th>${february.profit ? february.profit.toFixed(2) : '0.00'}</th>
-								</tr>
-								<tr
-									style={{
-										backgroundColor: march.color
-									}}
-									className=""
-								>
-									<th>March</th>
-									<th>${march.income ? march.income.toFixed(2) : '0.00'}</th>
-									<th>${march.expenses ? march.expenses.toFixed(2) : '0.00'}</th>
-									<th>${march.profit ? march.profit.toFixed(2) : '0.00'}</th>
-								</tr>
-								<tr
-									style={{
-										backgroundColor: april.color
-									}}
-									className=""
-								>
-									<th>April</th>
-									<th>${april.income ? april.income.toFixed(2) : '0.00'}</th>
-									<th>${april.expenses ? april.expenses.toFixed(2) : '0.00'}</th>
-									<th>${april.profit ? april.profit.toFixed(2) : '0.00'}</th>
-								</tr>
-								<tr
-									style={{
-										backgroundColor: may.color
-									}}
-									className=""
-								>
-									<th>May</th>
-									<th>${may.income ? may.income.toFixed(2) : '0.00'}</th>
-									<th>${may.expenses ? may.expenses.toFixed(2) : '0.00'}</th>
-									<th>${may.profit ? may.profit.toFixed(2) : '0.00'}</th>
-								</tr>
-								<tr
-									style={{
-										backgroundColor: june.color
-									}}
-									className=""
-								>
-									<th>June</th>
-									<th>${june.income ? june.income.toFixed(2) : '0.00'}</th>
-									<th>${june.expenses ? june.expenses.toFixed(2) : '0.00'}</th>
-									<th>${june.profit ? june.profit.toFixed(2) : '0.00'}</th>
-								</tr>
-								<tr
-									style={{
-										backgroundColor: july.color
-									}}
-									className=""
-								>
-									<th>July</th>
-									<th>${july.income ? july.income.toFixed(2) : '0.00'}</th>
-									<th>${july.expenses ? july.expenses.toFixed(2) : '0.00'}</th>
-									<th>${july.profit ? july.profit.toFixed(2) : '0.00'}</th>
-								</tr>
-								<tr
-									style={{
-										backgroundColor: august.color
-									}}
-									className=""
-								>
-									<th>August</th>
-									<th>${august.income ? august.income.toFixed(2) : '0.00'}</th>
-									<th>${august.expenses ? august.expenses.toFixed(2) : '0.00'}</th>
-									<th>${august.profit ? august.profit.toFixed(2) : '0.00'}</th>
-								</tr>
-								<tr
-									style={{
-										backgroundColor: september.color
-									}}
-									className=""
-								>
-									<th>September</th>
-									<th>${september.income ? september.income.toFixed(2) : '0.00'}</th>
-									<th>${september.expenses ? september.expenses.toFixed(2) : '0.00'}</th>
-									<th>${september.profit ? september.profit.toFixed(2) : '0.00'}</th>
-								</tr>
-								<tr
-									style={{
-										backgroundColor: october.color
-									}}
-									className=""
-								>
-									<th>October</th>
-									<th>${october.income ? october.income.toFixed(2) : '0.00'}</th>
-									<th>${october.expenses ? october.expenses.toFixed(2) : '0.00'}</th>
-									<th>${october.profit ? october.profit.toFixed(2) : '0.00'}</th>
-								</tr>
-								<tr
-									style={{
-										backgroundColor: november.color
-									}}
-									className=""
-								>
-									<th>November</th>
-									<th>${november.income ? november.income.toFixed(2) : '0.00'}</th>
-									<th>${november.expenses ? november.expenses.toFixed(2) : '0.00'}</th>
-									<th>${november.profit ? november.profit.toFixed(2) : '0.00'}</th>
-								</tr>
-								<tr
-									style={{
-										backgroundColor: december.color
-									}}
-									className=""
-								>
-									<th>December</th>
-									<th>${december.income ? december.income.toFixed(2) : '0.00'}</th>
-									<th>${december.expenses ? december.expenses.toFixed(2) : '0.00'}</th>
-									<th>${december.profit ? december.profit.toFixed(2) : '0.00'}</th>
-								</tr>
+								{monthly_income.map((month) => (
+									<tr
+										style={{
+											backgroundColor: month.color
+										}}
+										className=""
+									>
+										<th>{month.month}</th>
+										<th>
+											${month.macro_income.income ? month.macro_income.income.toFixed(2) : '0.00'}
+										</th>
+										<th>
+											${month.macro_income.expenses ? (
+												month.macro_income.expenses.toFixed(2)
+											) : (
+												'0.00'
+											)}
+										</th>
+										<th>
+											${month.macro_income.profit ? month.macro_income.profit.toFixed(2) : '0.00'}
+										</th>
+									</tr>
+								))}
 							</tbody>
-
-							<tfoot>
-								<tr>
-									<th>Total</th>
-									<th>
-										${monthly_income && monthly_income.length > 0 ? (
-											monthly_income
-												.filter((month) => month !== undefined)
-												.reduce((a, c) => parseFloat(a) + parseFloat(c.income), 0)
-												.toFixed(2)
-										) : (
-											'0.00'
-										)}
-									</th>
-									<th>
-										${monthly_income && monthly_income.length > 0 ? (
-											monthly_income
-												.filter((month) => month !== undefined)
-												.reduce((a, c) => parseFloat(a) + parseFloat(c.expenses), 0)
-												.toFixed(2)
-										) : (
-											'0.00'
-										)}
-									</th>
-									<th>
-										${monthly_income && monthly_income.length > 0 ? (
-											monthly_income
-												.filter((month) => month !== undefined)
-												.reduce((a, c) => parseFloat(a) + parseFloat(c.profit), 0)
-												.toFixed(2)
-										) : (
-											'0.00'
-										)}
-									</th>
-								</tr>
-							</tfoot>
+							{yearly_income &&
+							Object.keys(yearly_income).length > 0 && (
+								<tfoot>
+									<tr>
+										<th>Total</th>
+										<th>
+											${yearly_income.macro_income.income ? (
+												yearly_income.macro_income.income.toFixed(2)
+											) : (
+												'0.00'
+											)}
+										</th>
+										<th>
+											${yearly_income.macro_income.expenses ? (
+												yearly_income.macro_income.expenses.toFixed(2)
+											) : (
+												'0.00'
+											)}
+										</th>
+										<th>
+											${yearly_income.macro_income.profit ? (
+												yearly_income.macro_income.profit.toFixed(2)
+											) : (
+												'0.00'
+											)}
+										</th>
+									</tr>
+								</tfoot>
+							)}
 						</table>
 					</TabPanel>
 					<TabPanel>
+						<h2 className="ta-c w-100per jc-c">{year} Whites Sold</h2>
+						<table className="styled-table">
+							<thead>
+								<tr>
+									<th>Date</th>
+									<th>Singles</th>
+									<th>Refresh Packs</th>
+									<th>All Whites</th>
+									<th>Whites Expenses</th>
+									<th>Whites Total</th>
+									<th>Whites Profit</th>
+								</tr>
+							</thead>
+							<tbody>
+								{monthly_income.map((month) => (
+									<tr
+										style={{
+											backgroundColor: month.color
+										}}
+										className=""
+									>
+										<th>{month.month}</th>
+										<th>{month.whites.singles_qty_sold ? month.whites.singles_qty_sold : '0'}</th>
+										<th>{month.whites.refresh_qty_sold ? month.whites.refresh_qty_sold : '0'}</th>
+										<th>{month.whites.total_qty_sold ? month.whites.total_qty_sold : '0'}</th>
+										<th>
+											${month.whites.total_expenses ? (
+												month.whites.total_expenses.toFixed(2)
+											) : (
+												'0.00'
+											)}
+										</th>
+										<th>
+											${month.whites.total_income ? month.whites.total_income.toFixed(2) : '0.00'}
+										</th>
+										<th>
+											${month.whites.total_profit ? month.whites.total_profit.toFixed(2) : '0.00'}
+										</th>
+									</tr>
+								))}
+							</tbody>
+							{yearly_income &&
+							Object.keys(yearly_income).length > 0 && (
+								<tfoot>
+									<tr>
+										<th>Total</th>
+										<th>
+											{yearly_income.whites.singles_qty_sold ? (
+												yearly_income.whites.singles_qty_sold
+											) : (
+												'0'
+											)}
+										</th>
+										<th>
+											{yearly_income.whites.refresh_qty_sold ? (
+												yearly_income.whites.refresh_qty_sold
+											) : (
+												'0'
+											)}
+										</th>
+										<th>
+											{yearly_income.whites.total_qty_sold ? (
+												yearly_income.whites.total_qty_sold
+											) : (
+												'0'
+											)}
+										</th>
+										<th>
+											${yearly_income.whites.total_expenses ? (
+												yearly_income.whites.total_expenses.toFixed(2)
+											) : (
+												'0.00'
+											)}
+										</th>
+										<th>
+											${yearly_income.whites.total_income ? (
+												yearly_income.whites.total_income.toFixed(2)
+											) : (
+												'0.00'
+											)}
+										</th>
+										<th>
+											${yearly_income.whites.total_profit ? (
+												yearly_income.whites.total_profit.toFixed(2)
+											) : (
+												'0.00'
+											)}
+										</th>
+									</tr>
+								</tfoot>
+							)}
+						</table>
+					</TabPanel>
+					<TabPanel>
+						<h2 className="ta-c w-100per jc-c">{year} Batteries Income</h2>
+						<table className="styled-table">
+							<thead>
+								<tr>
+									<th>Date</th>
+									<th>CR1620 Income</th>
+									<th>CR1616 Income</th>
+									<th>CR1225 Income</th>
+									<th>Batteries Income</th>
+									<th>Batteries Expenses</th>
+									<th>Batteries Profit</th>
+								</tr>
+							</thead>
+							<tbody>
+								{monthly_income.map((month) => (
+									<tr
+										style={{
+											backgroundColor: month.color
+										}}
+										className=""
+									>
+										<th>{month.month}</th>
+										<th>
+											${month.batteries.batt_1620_total_income ? (
+												month.batteries.batt_1620_total_income.toFixed(2)
+											) : (
+												'0.00'
+											)}
+										</th>
+
+										<th>
+											${month.batteries.batt_1616_total_income ? (
+												month.batteries.batt_1616_total_income.toFixed(2)
+											) : (
+												'0.00'
+											)}
+										</th>
+
+										<th>
+											${month.batteries.batt_1225_total_income ? (
+												month.batteries.batt_1225_total_income.toFixed(2)
+											) : (
+												'0.00'
+											)}
+										</th>
+										<th>
+											${month.batteries.total_income ? (
+												month.batteries.total_income.toFixed(2)
+											) : (
+												'0.00'
+											)}
+										</th>
+										<th>
+											${month.batteries.total_expenses ? (
+												month.batteries.total_expenses.toFixed(2)
+											) : (
+												'0.00'
+											)}
+										</th>
+										<th>
+											${month.batteries.total_profit ? (
+												month.batteries.total_profit.toFixed(2)
+											) : (
+												'0.00'
+											)}
+										</th>
+									</tr>
+								))}
+							</tbody>
+							{yearly_income &&
+							Object.keys(yearly_income).length > 0 && (
+								<tfoot>
+									<tr>
+										<th>Profit</th>
+										<th>
+											${yearly_income.batteries.batt_1620_total_profit ? (
+												yearly_income.batteries.batt_1620_total_profit.toFixed(2)
+											) : (
+												'0.00'
+											)}
+										</th>
+										<th>
+											${yearly_income.batteries.batt_1616_total_profit ? (
+												yearly_income.batteries.batt_1616_total_profit.toFixed(2)
+											) : (
+												'0.00'
+											)}
+										</th>
+										<th>
+											${yearly_income.batteries.batt_1225_total_profit ? (
+												yearly_income.batteries.batt_1225_total_profit.toFixed(2)
+											) : (
+												'0.00'
+											)}
+										</th>
+										<th>
+											${yearly_income.batteries.total_profit ? (
+												yearly_income.batteries.total_profit.toFixed(2)
+											) : (
+												'0.00'
+											)}
+										</th>
+										<th />
+										<th />
+									</tr>
+								</tfoot>
+							)}
+							{yearly_income &&
+							Object.keys(yearly_income).length > 0 && (
+								<tfoot>
+									<tr>
+										<th>Expenses</th>
+										<th>
+											${yearly_income.batteries.batt_1620_total_expenses ? (
+												yearly_income.batteries.batt_1620_total_expenses.toFixed(2)
+											) : (
+												'0.00'
+											)}
+										</th>
+										<th>
+											${yearly_income.batteries.batt_1616_total_expenses ? (
+												yearly_income.batteries.batt_1616_total_expenses.toFixed(2)
+											) : (
+												'0.00'
+											)}
+										</th>
+										<th>
+											${yearly_income.batteries.batt_1225_total_expenses ? (
+												yearly_income.batteries.batt_1225_total_expenses.toFixed(2)
+											) : (
+												'0.00'
+											)}
+										</th>
+										<th>
+											${yearly_income.batteries.total_expenses ? (
+												yearly_income.batteries.total_expenses.toFixed(2)
+											) : (
+												'0.00'
+											)}
+										</th>
+										<th />
+										<th />
+									</tr>
+								</tfoot>
+							)}
+							{yearly_income &&
+							Object.keys(yearly_income).length > 0 && (
+								<tfoot>
+									<tr>
+										<th>Total</th>
+										<th>
+											${yearly_income.batteries.batt_1620_total_income ? (
+												yearly_income.batteries.batt_1620_total_income.toFixed(2)
+											) : (
+												'0.00'
+											)}
+										</th>
+										<th>
+											${yearly_income.batteries.batt_1616_total_income ? (
+												yearly_income.batteries.batt_1616_total_income.toFixed(2)
+											) : (
+												'0.00'
+											)}
+										</th>
+										<th>
+											${yearly_income.batteries.batt_1225_total_income ? (
+												yearly_income.batteries.batt_1225_total_income.toFixed(2)
+											) : (
+												'0.00'
+											)}
+										</th>
+										<th>
+											${yearly_income.batteries.total_income ? (
+												yearly_income.batteries.total_income.toFixed(2)
+											) : (
+												'0.00'
+											)}
+										</th>
+										<th>
+											${yearly_income.batteries.total_expenses ? (
+												yearly_income.batteries.total_expenses.toFixed(2)
+											) : (
+												'0.00'
+											)}
+										</th>
+										<th>
+											${yearly_income.batteries.total_profit ? (
+												yearly_income.batteries.total_profit.toFixed(2)
+											) : (
+												'0.00'
+											)}
+										</th>
+									</tr>
+								</tfoot>
+							)}
+						</table>
 						<h2 className="ta-c w-100per jc-c">{year} Batteries Sold</h2>
 						<table className="styled-table">
 							<thead>
 								<tr>
 									<th>Date</th>
-									<th>Bulk CR1620 Batteries</th>
-									<th>Bulk CR1620 Batteries Total</th>
-									<th>Bulk CR1616 Batteries</th>
-									<th>Bulk CR1616 Batteries Total</th>
-									<th>Bulk CR1225 Batteries</th>
-									<th>Bulk CR1225 Batteries Total</th>
-									<th>Bulk Batteries Amount</th>
-									<th>Bulk Batteries Total</th>
+									<th>CR1620 Qty Sold </th>
+									<th>CR1616 Qty Sold </th>
+									<th>CR1225 Qty Sold </th>
+									<th>Batteries Qty</th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr
-									style={{
-										backgroundColor: january.color
-									}}
-									className=""
-								>
-									<th>January</th>
-									<th>{january.batteries_1620 ? january.batteries_1620 : '0'}</th>
-									<th>
-										${january.batteries_1620_total ? (
-											january.batteries_1620_total.toFixed(2)
-										) : (
-											'0.00'
-										)}
-									</th>
-									<th>{january.batteries_1616 ? january.batteries_1616 : '0'}</th>
-									<th>
-										${january.batteries_1616_total ? (
-											january.batteries_1616_total.toFixed(2)
-										) : (
-											'0.00'
-										)}
-									</th>
-									<th>{january.batteries_1225 ? january.batteries_1225 : '0'}</th>
-									<th>
-										${january.batteries_1225_total ? (
-											january.batteries_1225_total.toFixed(2)
-										) : (
-											'0.00'
-										)}
-									</th>
-									<th>
-										{january.batteries_1225 ? (
-											january.batteries_1225 + january.batteries_1620 + january.batteries_1616
-										) : (
-											'0'
-										)}
-									</th>
-									<th>
-										${january.batteries_1225_total ? (
-											(january.batteries_1225_total +
-												january.batteries_1620_total +
-												january.batteries_1616_total).toFixed(2)
-										) : (
-											'0.00'
-										)}
-									</th>
-								</tr>
-
-								<tr
-									style={{
-										backgroundColor: february.color
-									}}
-									className=""
-								>
-									<th>Feburary</th>
-									<th>{february.batteries_1620 ? february.batteries_1620 : '0'}</th>
-									<th>
-										${february.batteries_1620_total ? (
-											february.batteries_1620_total.toFixed(2)
-										) : (
-											'0.00'
-										)}
-									</th>
-									<th>{february.batteries_1616 ? february.batteries_1616 : '0'}</th>
-									<th>
-										${february.batteries_1616_total ? (
-											february.batteries_1616_total.toFixed(2)
-										) : (
-											'0.00'
-										)}
-									</th>
-									<th>{february.batteries_1225 ? february.batteries_1225 : '0'}</th>
-									<th>
-										${february.batteries_1225_total ? (
-											february.batteries_1225_total.toFixed(2)
-										) : (
-											'0.00'
-										)}
-									</th>
-									<th>
-										{february.batteries_1225 ? (
-											february.batteries_1225 + february.batteries_1620 + february.batteries_1616
-										) : (
-											'0'
-										)}
-									</th>
-									<th>
-										${february.batteries_1225_total ? (
-											(february.batteries_1225_total +
-												february.batteries_1620_total +
-												february.batteries_1616_total).toFixed(2)
-										) : (
-											'0.00'
-										)}
-									</th>
-								</tr>
-								<tr
-									style={{
-										backgroundColor: march.color
-									}}
-									className=""
-								>
-									<th>March</th>
-									<th>{march.batteries_1620 ? march.batteries_1620 : '0'}</th>
-									<th>
-										${march.batteries_1620_total ? march.batteries_1620_total.toFixed(2) : '0.00'}
-									</th>
-									<th>{march.batteries_1616 ? march.batteries_1616 : '0'}</th>
-									<th>
-										${march.batteries_1616_total ? march.batteries_1616_total.toFixed(2) : '0.00'}
-									</th>
-									<th>{march.batteries_1225 ? march.batteries_1225 : '0'}</th>
-									<th>
-										${march.batteries_1225_total ? march.batteries_1225_total.toFixed(2) : '0.00'}
-									</th>
-									<th>
-										{march.batteries_1225 ? (
-											march.batteries_1225 + march.batteries_1620 + march.batteries_1616
-										) : (
-											'0'
-										)}
-									</th>
-									<th>
-										${march.batteries_1225_total ? (
-											(march.batteries_1225_total +
-												march.batteries_1620_total +
-												march.batteries_1616_total).toFixed(2)
-										) : (
-											'0.00'
-										)}
-									</th>
-								</tr>
-								<tr
-									style={{
-										backgroundColor: april.color
-									}}
-									className=""
-								>
-									<th>April</th>
-									<th>{april.batteries_1620 ? april.batteries_1620 : '0'}</th>
-									<th>
-										${april.batteries_1620_total ? april.batteries_1620_total.toFixed(2) : '0.00'}
-									</th>
-									<th>{april.batteries_1616 ? april.batteries_1616 : '0'}</th>
-									<th>
-										${april.batteries_1616_total ? april.batteries_1616_total.toFixed(2) : '0.00'}
-									</th>
-									<th>{april.batteries_1225 ? april.batteries_1225 : '0'}</th>
-									<th>
-										${april.batteries_1225_total ? april.batteries_1225_total.toFixed(2) : '0.00'}
-									</th>
-									<th>
-										{april.batteries_1225 ? (
-											april.batteries_1225 + april.batteries_1620 + april.batteries_1616
-										) : (
-											'0'
-										)}
-									</th>
-									<th>
-										${april.batteries_1225_total ? (
-											(april.batteries_1225_total +
-												april.batteries_1620_total +
-												april.batteries_1616_total).toFixed(2)
-										) : (
-											'0.00'
-										)}
-									</th>
-								</tr>
-
-								<tr
-									style={{
-										backgroundColor: may.color
-									}}
-									className=""
-								>
-									<th>May</th>
-									<th>{may.batteries_1620 ? may.batteries_1620 : '0'}</th>
-									<th>{may.batteries_1620_total ? may.batteries_1620_total.toFixed(2) : '0.00'}</th>
-									<th>{may.batteries_1616 ? may.batteries_1616 : '0'}</th>
-									<th>{may.batteries_1616_total ? may.batteries_1616_total.toFixed(2) : '0.00'}</th>
-									<th>{may.batteries_1225 ? may.batteries_1225 : '0'}</th>
-									<th>{may.batteries_1225_total ? may.batteries_1225_total.toFixed(2) : '0.00'}</th>
-									<th>
-										{may.batteries_1225 ? (
-											may.batteries_1225 + may.batteries_1620 + may.batteries_1616
-										) : (
-											'0'
-										)}
-									</th>
-									<th>
-										${may.batteries_1225_total ? (
-											(may.batteries_1225_total +
-												may.batteries_1620_total +
-												may.batteries_1616_total).toFixed(2)
-										) : (
-											'0.00'
-										)}
-									</th>
-								</tr>
-								<tr
-									style={{
-										backgroundColor: june.color
-									}}
-									className=""
-								>
-									<th>June</th>
-									<th>{june.batteries_1620 ? june.batteries_1620 : '0'}</th>
-									<th>
-										${june.batteries_1620_total ? june.batteries_1620_total.toFixed(2) : '0.00'}
-									</th>
-									<th>{june.batteries_1616 ? june.batteries_1616 : '0'}</th>
-									<th>
-										${june.batteries_1616_total ? june.batteries_1616_total.toFixed(2) : '0.00'}
-									</th>
-									<th>{june.batteries_1225 ? june.batteries_1225 : '0'}</th>
-									<th>
-										${june.batteries_1225_total ? june.batteries_1225_total.toFixed(2) : '0.00'}
-									</th>
-
-									<th>
-										{june.batteries_1225 ? (
-											june.batteries_1225 + june.batteries_1620 + june.batteries_1616
-										) : (
-											'0'
-										)}
-									</th>
-									<th>
-										${june.batteries_1225_total ? (
-											(june.batteries_1225_total +
-												june.batteries_1620_total +
-												june.batteries_1616_total).toFixed(2)
-										) : (
-											'0.00'
-										)}
-									</th>
-								</tr>
-								<tr
-									style={{
-										backgroundColor: july.color
-									}}
-									className=""
-								>
-									<th>July</th>
-									<th>{july.batteries_1620 ? july.batteries_1620 : '0'}</th>
-									<th>
-										${july.batteries_1620_total ? july.batteries_1620_total.toFixed(2) : '0.00'}
-									</th>
-									<th>{july.batteries_1616 ? july.batteries_1616 : '0'}</th>
-									<th>
-										${july.batteries_1616_total ? july.batteries_1616_total.toFixed(2) : '0.00'}
-									</th>
-									<th>{july.batteries_1225 ? july.batteries_1225 : '0'}</th>
-									<th>
-										${july.batteries_1225_total ? july.batteries_1225_total.toFixed(2) : '0.00'}
-									</th>
-									<th>
-										{july.batteries_1225 ? (
-											july.batteries_1225 + july.batteries_1620 + july.batteries_1616
-										) : (
-											'0'
-										)}
-									</th>
-									<th>
-										${july.batteries_1225_total ? (
-											(july.batteries_1225_total +
-												july.batteries_1620_total +
-												july.batteries_1616_total).toFixed(2)
-										) : (
-											'0.00'
-										)}
-									</th>
-								</tr>
-								<tr
-									style={{
-										backgroundColor: august.color
-									}}
-									className=""
-								>
-									<th>August</th>
-									<th>{august.batteries_1620 ? august.batteries_1620 : '0'}</th>
-									<th>
-										${august.batteries_1620_total ? august.batteries_1620_total.toFixed(2) : '0.00'}
-									</th>
-									<th>{august.batteries_1616 ? august.batteries_1616 : '0'}</th>
-									<th>
-										${august.batteries_1616_total ? august.batteries_1616_total.toFixed(2) : '0.00'}
-									</th>
-									<th>{august.batteries_1225 ? august.batteries_1225 : '0'}</th>
-									<th>
-										${august.batteries_1225_total ? august.batteries_1225_total.toFixed(2) : '0.00'}
-									</th>
-									<th>
-										{august.batteries_1225 ? (
-											august.batteries_1225 + august.batteries_1620 + august.batteries_1616
-										) : (
-											'0'
-										)}
-									</th>
-									<th>
-										${august.batteries_1225_total ? (
-											(august.batteries_1225_total +
-												august.batteries_1620_total +
-												august.batteries_1616_total).toFixed(2)
-										) : (
-											'0.00'
-										)}
-									</th>
-								</tr>
-								<tr
-									style={{
-										backgroundColor: september.color
-									}}
-									className=""
-								>
-									<th>September</th>
-									<th>{september.batteries_1620 ? september.batteries_1620 : '0'}</th>
-									<th>
-										${september.batteries_1620_total ? (
-											september.batteries_1620_total.toFixed(2)
-										) : (
-											'0.00'
-										)}
-									</th>
-									<th>{september.batteries_1616 ? september.batteries_1616 : '0'}</th>
-									<th>
-										${september.batteries_1616_total ? (
-											september.batteries_1616_total.toFixed(2)
-										) : (
-											'0.00'
-										)}
-									</th>
-									<th>{september.batteries_1225 ? september.batteries_1225 : '0'}</th>
-									<th>
-										${september.batteries_1225_total ? (
-											september.batteries_1225_total.toFixed(2)
-										) : (
-											'0.00'
-										)}
-									</th>
-									<th>
-										{september.batteries_1225 ? (
-											september.batteries_1225 +
-											september.batteries_1620 +
-											september.batteries_1616
-										) : (
-											'0'
-										)}
-									</th>
-									<th>
-										${september.batteries_1225_total ? (
-											(september.batteries_1225_total +
-												september.batteries_1620_total +
-												september.batteries_1616_total).toFixed(2)
-										) : (
-											'0.00'
-										)}
-									</th>
-								</tr>
-								<tr
-									style={{
-										backgroundColor: october.color
-									}}
-									className=""
-								>
-									<th>October</th>
-									<th>{october.batteries_1620 ? october.batteries_1620 : '0'}</th>
-									<th>
-										${october.batteries_1620_total ? (
-											october.batteries_1620_total.toFixed(2)
-										) : (
-											'0.00'
-										)}
-									</th>
-									<th>{october.batteries_1616 ? october.batteries_1616 : '0'}</th>
-									<th>
-										${october.batteries_1616_total ? (
-											october.batteries_1616_total.toFixed(2)
-										) : (
-											'0.00'
-										)}
-									</th>
-									<th>{october.batteries_1225 ? october.batteries_1225 : '0'}</th>
-									<th>
-										${october.batteries_1225_total ? (
-											october.batteries_1225_total.toFixed(2)
-										) : (
-											'0.00'
-										)}
-									</th>
-									<th>
-										{october.batteries_1225 ? (
-											october.batteries_1225 + october.batteries_1620 + october.batteries_1616
-										) : (
-											'0'
-										)}
-									</th>
-									<th>
-										${october.batteries_1225_total ? (
-											(october.batteries_1225_total +
-												october.batteries_1620_total +
-												october.batteries_1616_total).toFixed(2)
-										) : (
-											'0.00'
-										)}
-									</th>
-								</tr>
-								<tr
-									style={{
-										backgroundColor: november.color
-									}}
-									className=""
-								>
-									<th>November</th>
-									<th>{november.batteries_1620 ? november.batteries_1620 : '0'}</th>
-									<th>
-										${november.batteries_1620_total ? (
-											november.batteries_1620_total.toFixed(2)
-										) : (
-											'0.00'
-										)}
-									</th>
-									<th>{november.batteries_1616 ? november.batteries_1616 : '0'}</th>
-									<th>
-										${november.batteries_1616_total ? (
-											november.batteries_1616_total.toFixed(2)
-										) : (
-											'0.00'
-										)}
-									</th>
-									<th>{november.batteries_1225 ? november.batteries_1225 : '0'}</th>
-									<th>
-										${november.batteries_1225_total ? (
-											november.batteries_1225_total.toFixed(2)
-										) : (
-											'0.00'
-										)}
-									</th>
-									<th>
-										{november.batteries_1225 ? (
-											november.batteries_1225 + november.batteries_1620 + november.batteries_1616
-										) : (
-											'0'
-										)}
-									</th>
-									<th>
-										${november.batteries_1225_total ? (
-											(november.batteries_1225_total +
-												november.batteries_1620_total +
-												november.batteries_1616_total).toFixed(2)
-										) : (
-											'0.00'
-										)}
-									</th>
-								</tr>
-								<tr
-									style={{
-										backgroundColor: december.color
-									}}
-									className=""
-								>
-									<th>December</th>
-									<th>{december.batteries_1620 ? december.batteries_1620 : '0'}</th>
-									<th>
-										${december.batteries_1620_total ? (
-											december.batteries_1620_total.toFixed(2)
-										) : (
-											'0.00'
-										)}
-									</th>
-									<th>{december.batteries_1616 ? december.batteries_1616 : '0'}</th>
-									<th>
-										${december.batteries_1616_total ? (
-											december.batteries_1616_total.toFixed(2)
-										) : (
-											'0.00'
-										)}
-									</th>
-									<th>{december.batteries_1225 ? december.batteries_1225 : '0'}</th>
-									<th>
-										${december.batteries_1225_total ? (
-											december.batteries_1225_total.toFixed(2)
-										) : (
-											'0.00'
-										)}
-									</th>
-									<th>
-										{december.batteries_1225 ? (
-											december.batteries_1225 + december.batteries_1620 + december.batteries_1616
-										) : (
-											'0'
-										)}
-									</th>
-									<th>
-										${december.batteries_1225_total ? (
-											(december.batteries_1225_total +
-												december.batteries_1620_total +
-												december.batteries_1616_total).toFixed(2)
-										) : (
-											'0.00'
-										)}
-									</th>
-								</tr>
+								{monthly_income.map((month) => (
+									<tr
+										style={{
+											backgroundColor: month.color
+										}}
+										className=""
+									>
+										<th>{month.month}</th>
+										<th>
+											{month.batteries.batt_1620_qty_sold ? (
+												month.batteries.batt_1620_qty_sold
+											) : (
+												'0'
+											)}
+										</th>
+										<th>
+											{month.batteries.batt_1616_qty_sold ? (
+												month.batteries.batt_1616_qty_sold
+											) : (
+												'0'
+											)}
+										</th>
+										<th>
+											{month.batteries.batt_1225_qty_sold ? (
+												month.batteries.batt_1225_qty_sold
+											) : (
+												'0'
+											)}
+										</th>
+										<th>{month.batteries.total_qty_sold ? month.batteries.total_qty_sold : '0'}</th>
+									</tr>
+								))}
 							</tbody>
-
-							<tfoot>
-								<tr>
-									<th>Profit</th>
-									<th />
-									<th>
-										${monthly_income && monthly_income.length > 0 ? (
-											(monthly_income
-												.filter((month) => month !== undefined)
-												.reduce((a, c) => a + c.batteries_1620_total, 0) -
-												monthly_income
-													.filter((month) => month !== undefined)
-													.reduce((a, c) => a + c.batteries_1620, 0) *
-													0.0685).toFixed(2)
-										) : (
-											'0'
-										)}
-									</th>
-									<th />
-									<th>
-										${monthly_income && monthly_income.length > 0 ? (
-											(monthly_income
-												.filter((month) => month !== undefined)
-												.reduce((a, c) => a + c.batteries_1616_total, 0) -
-												monthly_income
-													.filter((month) => month !== undefined)
-													.reduce((a, c) => a + c.batteries_1616, 0) *
-													0.0685).toFixed(2)
-										) : (
-											'0'
-										)}
-									</th>
-									<th />
-									<th>
-										${monthly_income && monthly_income.length > 0 ? (
-											(monthly_income
-												.filter((month) => month !== undefined)
-												.reduce((a, c) => a + c.batteries_1225_total, 0) -
-												monthly_income
-													.filter((month) => month !== undefined)
-													.reduce((a, c) => a + c.batteries_1225, 0) *
-													0.0685).toFixed(2)
-										) : (
-											'0'
-										)}
-									</th>
-									<th />
-									<th>
-										${monthly_income && monthly_income.length > 0 ? (
-											(monthly_income
-												.filter((month) => month !== undefined)
-												.reduce(
-													(a, c) =>
-														a +
-														c.batteries_1225_total +
-														c.batteries_1620_total +
-														c.batteries_1616_total,
-													0
-												) -
-												monthly_income
-													.filter((month) => month !== undefined)
-													.reduce(
-														(a, c) =>
-															a + c.batteries_1225 + c.batteries_1620 + c.batteries_1616,
-														0
-													) *
-													0.0685).toFixed(2)
-										) : (
-											'0'
-										)}
-									</th>
-								</tr>
-							</tfoot>
-							<tfoot>
-								<tr>
-									<th>Total</th>
-									<th>
-										{monthly_income && monthly_income.length > 0 ? (
-											monthly_income
-												.filter((month) => month !== undefined)
-												.reduce((a, c) => a + c.batteries_1620, 0)
-										) : (
-											'0'
-										)}
-									</th>
-									<th>
-										${monthly_income && monthly_income.length > 0 ? (
-											monthly_income
-												.filter((month) => month !== undefined)
-												.reduce((a, c) => a + c.batteries_1620_total, 0)
-												.toFixed(2)
-										) : (
-											'0'
-										)}
-									</th>
-									<th>
-										{monthly_income && monthly_income.length > 0 ? (
-											monthly_income
-												.filter((month) => month !== undefined)
-												.reduce((a, c) => a + c.batteries_1616, 0)
-										) : (
-											'0'
-										)}
-									</th>
-									<th>
-										${monthly_income && monthly_income.length > 0 ? (
-											monthly_income
-												.filter((month) => month !== undefined)
-												.reduce((a, c) => a + c.batteries_1616_total, 0)
-												.toFixed(2)
-										) : (
-											'0'
-										)}
-									</th>
-									<th>
-										{monthly_income && monthly_income.length > 0 ? (
-											monthly_income
-												.filter((month) => month !== undefined)
-												.reduce((a, c) => a + c.batteries_1225, 0)
-										) : (
-											'0'
-										)}
-									</th>
-									<th>
-										${monthly_income && monthly_income.length > 0 ? (
-											monthly_income
-												.filter((month) => month !== undefined)
-												.reduce((a, c) => a + c.batteries_1225_total, 0)
-												.toFixed(2)
-										) : (
-											'0'
-										)}
-									</th>
-									<th>
-										{monthly_income && monthly_income.length > 0 ? (
-											monthly_income
-												.filter((month) => month !== undefined)
-												.reduce(
-													(a, c) =>
-														a + c.batteries_1225 + c.batteries_1620 + c.batteries_1616,
-													0
-												)
-										) : (
-											'0'
-										)}
-									</th>
-									<th>
-										${monthly_income && monthly_income.length > 0 ? (
-											monthly_income
-												.filter((month) => month !== undefined)
-												.reduce(
-													(a, c) =>
-														a +
-														c.batteries_1225_total +
-														c.batteries_1620_total +
-														c.batteries_1616_total,
-													0
-												)
-												.toFixed(2)
-										) : (
-											'0'
-										)}
-									</th>
-								</tr>
-							</tfoot>
-							<tfoot>
-								<tr>
-									<th>Expense</th>
-									<th />
-									<th>
-										-${monthly_income && monthly_income.length > 0 ? (
-											(monthly_income
-												.filter((month) => month !== undefined)
-												.reduce((a, c) => a + c.batteries_1620, 0) * 0.0685).toFixed(2)
-										) : (
-											'0'
-										)}
-									</th>
-									<th />
-									<th>
-										-${monthly_income && monthly_income.length > 0 ? (
-											(monthly_income
-												.filter((month) => month !== undefined)
-												.reduce((a, c) => a + c.batteries_1616, 0) * 0.0685).toFixed(2)
-										) : (
-											'0'
-										)}
-									</th>
-									<th />
-									<th>
-										-${monthly_income && monthly_income.length > 0 ? (
-											(monthly_income
-												.filter((month) => month !== undefined)
-												.reduce((a, c) => a + c.batteries_1225, 0) * 0.0685).toFixed(2)
-										) : (
-											'0'
-										)}
-									</th>
-									<th />
-									<th>
-										-${monthly_income && monthly_income.length > 0 ? (
-											(monthly_income
-												.filter((month) => month !== undefined)
-												.reduce(
-													(a, c) =>
-														a + c.batteries_1225 + c.batteries_1620 + c.batteries_1616,
-													0
-												) * 0.0685).toFixed(2)
-										) : (
-											'0'
-										)}
-									</th>
-								</tr>
-							</tfoot>
+							{yearly_income &&
+							Object.keys(yearly_income).length > 0 && (
+								<tfoot>
+									<tr>
+										<th>Total</th>
+										<th>
+											{yearly_income.batteries.batt_1620_qty_sold ? (
+												yearly_income.batteries.batt_1620_qty_sold
+											) : (
+												'0'
+											)}
+										</th>
+										<th>
+											{yearly_income.batteries.batt_1616_qty_sold ? (
+												yearly_income.batteries.batt_1616_qty_sold
+											) : (
+												'0'
+											)}
+										</th>
+										<th>
+											{yearly_income.batteries.batt_1225_qty_sold ? (
+												yearly_income.batteries.batt_1225_qty_sold
+											) : (
+												'0'
+											)}
+										</th>
+										<th>
+											{yearly_income.batteries.total_qty_sold ? (
+												yearly_income.batteries.total_qty_sold
+											) : (
+												'0'
+											)}
+										</th>
+									</tr>
+								</tfoot>
+							)}
 						</table>
 					</TabPanel>
+
 					<TabPanel>
-						<h2 className="ta-c w-100per jc-c">{year} Batteries Sold</h2>
+						<h2 className="ta-c w-100per jc-c">{year} Decals Sold</h2>
 						<table className="styled-table">
 							<thead>
 								<tr>
@@ -1673,210 +847,41 @@ const MonthlyExpensesPage = (props) => {
 								</tr>
 							</thead>
 							<tbody>
-								<tr
-									style={{
-										backgroundColor: january.color
-									}}
-									className=""
-								>
-									<th>January</th>
-									<th>{january.decals_amount ? january.decals_amount : '0'}</th>
-									<th>{january.decals_sets ? january.decals_sets : '0'}</th>
-									<th>${january.decals_total ? january.decals_total.toFixed(2) : '0.00'}</th>
-								</tr>
-
-								<tr
-									style={{
-										backgroundColor: february.color
-									}}
-									className=""
-								>
-									<th>Feburary</th>
-									<th>{february.decals_amount ? february.decals_amount : '0'}</th>
-									<th>{february.decals_sets ? february.decals_sets : '0'}</th>
-									<th>${february.decals_total ? february.decals_total.toFixed(2) : '0.00'}</th>
-								</tr>
-								<tr
-									style={{
-										backgroundColor: march.color
-									}}
-									className=""
-								>
-									<th>March</th>
-									<th>{march.decals_amount ? march.decals_amount : '0'}</th>
-									<th>{march.decals_sets ? march.decals_sets : '0'}</th>
-									<th>${march.decals_total ? march.decals_total.toFixed(2) : '0.00'}</th>
-								</tr>
-								<tr
-									style={{
-										backgroundColor: april.color
-									}}
-									className=""
-								>
-									<th>April</th>
-									<th>{april.decals_amount ? april.decals_amount : '0'}</th>
-									<th>{april.decals_sets ? april.decals_sets : '0'}</th>
-									<th>${april.decals_total ? april.decals_total.toFixed(2) : '0.00'}</th>
-								</tr>
-
-								<tr
-									style={{
-										backgroundColor: may.color
-									}}
-									className=""
-								>
-									<th>May</th>
-									<th>{may.decals_amount ? may.decals_amount : '0'}</th>
-									<th>{may.decals_sets ? may.decals_sets : '0'}</th>
-									<th>{may.decals_total ? may.decals_total.toFixed(2) : '0.00'}</th>
-								</tr>
-								<tr
-									style={{
-										backgroundColor: june.color
-									}}
-									className=""
-								>
-									<th>June</th>
-									<th>{june.decals_amount ? june.decals_amount : '0'}</th>
-									<th>{june.decals_sets ? june.decals_sets : '0'}</th>
-									<th>${june.decals_total ? june.decals_total.toFixed(2) : '0.00'}</th>
-								</tr>
-								<tr
-									style={{
-										backgroundColor: july.color
-									}}
-									className=""
-								>
-									<th>July</th>
-									<th>{july.decals_amount ? july.decals_amount : '0'}</th>
-									<th>{july.decals_sets ? july.decals_sets : '0'}</th>
-									<th>${july.decals_total ? july.decals_total.toFixed(2) : '0.00'}</th>
-								</tr>
-								<tr
-									style={{
-										backgroundColor: august.color
-									}}
-									className=""
-								>
-									<th>August</th>
-									<th>{august.decals_amount ? august.decals_amount : '0'}</th>
-									<th>{august.decals_sets ? august.decals_sets : '0'}</th>
-									<th>${august.decals_total ? august.decals_total.toFixed(2) : '0.00'}</th>
-								</tr>
-								<tr
-									style={{
-										backgroundColor: september.color
-									}}
-									className=""
-								>
-									<th>September</th>
-									<th>{september.decals_amount ? september.decals_amount : '0'}</th>
-									<th>{september.decals_sets ? september.decals_sets : '0'}</th>
-									<th>${september.decals_total ? september.decals_total.toFixed(2) : '0.00'}</th>
-								</tr>
-								<tr
-									style={{
-										backgroundColor: october.color
-									}}
-									className=""
-								>
-									<th>October</th>
-									<th>{october.decals_amount ? october.decals_amount : '0'}</th>
-									<th>{october.decals_sets ? october.decals_sets : '0'}</th>
-									<th>${october.decals_total ? october.decals_total.toFixed(2) : '0.00'}</th>
-								</tr>
-								<tr
-									style={{
-										backgroundColor: november.color
-									}}
-									className=""
-								>
-									<th>November</th>
-									<th>{november.decals_amount ? november.decals_amount : '0'}</th>
-									<th>{november.decals_sets ? november.decals_sets : '0'}</th>
-									<th>${november.decals_total ? november.decals_total.toFixed(2) : '0.00'}</th>
-								</tr>
-								<tr
-									style={{
-										backgroundColor: december.color
-									}}
-									className=""
-								>
-									<th>December</th>
-									<th>{december.decals_amount ? december.decals_amount : '0'}</th>
-									<th>{december.decals_sets ? december.decals_sets : '0'}</th>
-									<th>${december.decals_total ? december.decals_total.toFixed(2) : '0.00'}</th>
-								</tr>
+								{monthly_income.map((month) => (
+									<tr
+										style={{
+											backgroundColor: month.color
+										}}
+										className=""
+									>
+										<th>{month.month}</th>
+										<th>{month.decals.qty_sold ? month.decals.qty_sold : '0'}</th>
+										<th>{month.decals.sets ? month.decals.sets : '0'}</th>
+										<th>
+											${month.decals.total_income ? month.decals.total_income.toFixed(2) : '0.00'}
+										</th>
+									</tr>
+								))}
 							</tbody>
 
-							<tfoot>
-								<tr>
-									<th>Total</th>
+							{yearly_income &&
+							Object.keys(yearly_income).length > 0 && (
+								<tfoot>
+									<tr>
+										<th>Total</th>
 
-									<th>
-										{monthly_income && monthly_income.length > 0 ? (
-											monthly_income
-												.filter((month) => month !== undefined)
-												.reduce((a, c) => a + c.decals_amount, 0)
-										) : (
-											'0'
-										)}
-									</th>
-									<th>
-										{monthly_income && monthly_income.length > 0 ? (
-											monthly_income
-												.filter((month) => month !== undefined)
-												.reduce((a, c) => a + c.decals_sets, 0)
-										) : (
-											'0'
-										)}
-									</th>
-									<th>
-										${monthly_income && monthly_income.length > 0 ? (
-											monthly_income
-												.filter((month) => month !== undefined)
-												.reduce((a, c) => a + c.decals_total, 0)
-												.toFixed(2)
-										) : (
-											'0.00'
-										)}
-									</th>
-								</tr>
-							</tfoot>
-							{/* <tfoot>
-								<tr>
-									<th>Total</th>
-									<th />
-									<th>
-										${monthly_income && monthly_income.length > 0 ? (
-											monthly_income
-												.filter((month) => month !== undefined)
-												.reduce((a, c) => a + parseInt(c.decals_total), 0)
-												.toFixed(2)
-										) : (
-											'0'
-										)}
-									</th>
-								</tr>
-							</tfoot>
-							<tfoot>
-								<tr>
-									<th>Expense</th>
-
-									<th />
-
-									<th>
-										-${monthly_income && monthly_income.length > 0 ? (
-											(monthly_income
-												.filter((month) => month !== undefined)
-												.reduce((a, c) => a + parseInt(c.decals_total), 0) *
-												0.7263636364).toFixed(2)
-										) : (
-											'0'
-										)}
-									</th>
-								</tr>
-							</tfoot> */}
+										<th>{yearly_income.decals.qty_sold ? yearly_income.decals.qty_sold : '0'}</th>
+										<th>{yearly_income.decals.sets ? yearly_income.decals.sets : '0'}</th>
+										<th>
+											${yearly_income.decals.total_income ? (
+												yearly_income.decals.total_income.toFixed(2)
+											) : (
+												'0.00'
+											)}
+										</th>
+									</tr>
+								</tfoot>
+							)}
 						</table>
 					</TabPanel>
 					<TabPanel>

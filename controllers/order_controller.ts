@@ -224,17 +224,30 @@ export default {
 			res.status(500).send({ error, message: 'Error Deleting Order' });
 		}
 	},
-	monthly_income_orders_c: async (req: any, res: any) => {
+	income_orders_c: async (req: any, res: any) => {
 		const { params } = req;
 		try {
-			const orders = await order_services.monthly_income_orders_s(params);
+			const orders = await order_services.income_orders_s(params);
 			if (orders) {
 				return res.status(200).send(orders);
 			}
 			return res.status(500).send({ message: 'Error Deleting Order' });
 		} catch (error) {
-			console.log({ monthly_income_orders_c_error: error });
+			console.log({ income_orders_c_error: error });
 			res.status(500).send({ error, message: 'Error Deleting Order' });
 		}
 	}
+	// yearly_income_orders_c: async (req: any, res: any) => {
+	// 	const { params } = req;
+	// 	try {
+	// 		const orders = await order_services.yearly_income_orders_s(params);
+	// 		if (orders) {
+	// 			return res.status(200).send(orders);
+	// 		}
+	// 		return res.status(500).send({ message: 'Error Deleting Order' });
+	// 	} catch (error) {
+	// 		console.log({ yearly_income_orders_c_error: error });
+	// 		res.status(500).send({ error, message: 'Error Deleting Order' });
+	// 	}
+	// }
 };

@@ -451,30 +451,37 @@ export default {
 			throw new Error(error.message);
 		}
 	},
-	monthly_income_orders_s: async (params: any) => {
-		const { month, year } = params;
+	income_orders_s: async (params: any) => {
+		// const { month, year } = params;
+		console.log({ params });
+		let start_date = params.year + '-01-01';
+		let end_date = params.year + '-12-31';
+		if (params.month) {
+			start_date = month_dates(params.month, params.year).start_date;
+			end_date = month_dates(params.month, params.year).end_date;
+		}
 		try {
 			const sort = {};
 			const o_filter = {
 				deleted: false,
 				isPaid: true,
 				createdAt: {
-					$gte: new Date(month_dates(month, year).start_date),
-					$lte: new Date(month_dates(month, year).end_date)
+					$gte: new Date(start_date),
+					$lte: new Date(end_date)
 				}
 			};
 			const e_filter = {
 				deleted: false,
 				date_of_purchase: {
-					$gte: new Date(month_dates(month, year).start_date),
-					$lte: new Date(month_dates(month, year).end_date)
+					$gte: new Date(start_date),
+					$lte: new Date(end_date)
 				}
 			};
 			const limit = 0;
 			const page = 1;
-			const orders = await order_db.findAll_orders_db(o_filter, sort, limit, page);
-			const expenses = await expense_db.findAll_expenses_db(e_filter, sort);
-			const montly_income = orders.reduce(
+			const orders_data = await order_db.findAll_orders_db(o_filter, sort, limit, page);
+			const expenses_data = await expense_db.findAll_expenses_db(e_filter, sort);
+			const income = orders_data.reduce(
 				(a: any, c: any) =>
 					a +
 					c.totalPrice -
@@ -482,17 +489,17 @@ export default {
 					(c.refundAmmount ? c.refundAmmount.reduce((a: any, c: any) => a + c, 0) / 100 : 0),
 				0
 			);
-			const monthly_expenses = expenses.reduce((a: any, c: any) => a + c.amount, 0);
-			// console.log({ montly_income, monthly_expenses, profit: montly_income + monthly_expenses });
-			const batt_1620 = orders
+			const expenses = expenses_data.reduce((a: any, c: any) => a + c.amount, 0);
+			// console.log({ income, expenses, profit: income + expenses });
+			const batt_1620 = orders_data
 				.map((order: any) => order.orderItems)
 				.flat(1)
 				.filter((item: any) => item.name === 'Bulk CR1620 Batteries');
-			const batt_1616 = orders
+			const batt_1616 = orders_data
 				.map((order: any) => order.orderItems)
 				.flat(1)
 				.filter((item: any) => item.name === 'Bulk CR1616 Batteries');
-			const batt_1225 = orders
+			const batt_1225 = orders_data
 				.map((order: any) => order.orderItems)
 				.flat(1)
 				.filter((item: any) => item.name === 'Bulk CR1225 Batteries');
@@ -533,51 +540,105 @@ export default {
 				.filter((item: any) => item.size > 0)
 				.reduce((a: any, c: any) => parseFloat(a) + parseFloat(c.price), 0);
 
-			const decals = orders
+			const decals = orders_data
 				.map((order: any) => order.orderItems)
 				.flat(1)
 				.filter((item: any) => item.category === 'decals');
-			const decals_total = orders
+			const decals_total = orders_data
 				.map((order: any) => order.orderItems)
 				.flat(1)
 				.filter((item: any) => item.category === 'decals')
 				.reduce((a: any, c: any) => parseFloat(a) + parseFloat(c.price), 0);
-			const whites = orders
+			const whites = orders_data
 				.map((order: any) => order.orderItems)
 				.flat(1)
 				.filter((item: any) => item.subcategory === 'singles');
-			const refresh = orders
+			const refresh = orders_data
 				.map((order: any) => order.orderItems)
 				.flat(1)
 				.filter((item: any) => item.subcategory === 'refresh');
-			const whites_total = orders
+			const whites_total = orders_data
 				.map((order: any) => order.orderItems)
 				.flat(1)
 				.filter((item: any) => item.category === 'whites')
 				.reduce((a: any, c: any) => parseFloat(a) + parseFloat(c.price), 0);
 			const breakdown = {
 				macro_income: {
-					monthly_income: montly_income,
-					monthly_expenses: monthly_expenses,
-					profit: montly_income + monthly_expenses
+					income,
+					expenses,
+					profit: income + expenses
 				},
 				batteries: {
-					batteries_1620: batt_1620_options + batt_1620_size,
-					batteries_1616: batt_1616_options + batt_1616_size,
-					batteries_1225: batt_1225_options + batt_1225_size,
-					batteries_1620_total: batt_1620_options_total + batt_1620_size_total,
-					batteries_1616_total: batt_1616_options_total + batt_1616_size_total,
-					batteries_1225_total: batt_1225_options_total + batt_1225_size_total
+					batt_1620_qty_sold: batt_1620_options + batt_1620_size,
+					batt_1616_qty_sold: batt_1616_options + batt_1616_size,
+					batt_1225_qty_sold: batt_1225_options + batt_1225_size,
+					batt_1620_total_income: batt_1620_options_total + batt_1620_size_total,
+					batt_1616_total_income: batt_1616_options_total + batt_1616_size_total,
+					batt_1225_total_income: batt_1225_options_total + batt_1225_size_total,
+					batt_1620_total_expenses: -(batt_1620_options + batt_1620_size) * 0.0632,
+					batt_1616_total_expenses: -(batt_1616_options + batt_1616_size) * 0.0632,
+					batt_1225_total_expenses: -(batt_1225_options + batt_1225_size) * 0.0632,
+					batt_1620_profit:
+						batt_1620_options_total + batt_1620_size_total - (batt_1620_options + batt_1620_size) * 0.0632,
+					batt_1616_profit:
+						batt_1616_options_total + batt_1616_size_total - (batt_1616_options + batt_1616_size) * 0.0632,
+					batt_1225_profit:
+						batt_1225_options_total + batt_1225_size_total - (batt_1225_options + batt_1225_size) * 0.0632,
+
+					refresh_qty_sold: refresh.length,
+					total_qty_sold:
+						batt_1620_options +
+						batt_1620_size +
+						batt_1616_options +
+						batt_1616_size +
+						batt_1225_options +
+						batt_1225_size,
+					total_expenses:
+						-(
+							batt_1620_options +
+							batt_1620_size +
+							batt_1616_options +
+							batt_1616_size +
+							batt_1225_options +
+							batt_1225_size
+						) * 0.0632,
+					total_profit:
+						batt_1620_options_total +
+						batt_1620_size_total +
+						batt_1616_options_total +
+						batt_1616_size_total +
+						batt_1225_options_total +
+						batt_1225_size_total -
+						(batt_1620_options +
+							batt_1620_size +
+							batt_1616_options +
+							batt_1616_size +
+							batt_1225_options +
+							batt_1225_size) *
+							0.0632,
+					total_income:
+						batt_1620_options_total +
+						batt_1620_size_total +
+						batt_1616_options_total +
+						batt_1616_size_total +
+						batt_1225_options_total +
+						batt_1225_size_total
 				},
-				decals: { amount: decals.length * 11, sets: decals.length, total: decals_total },
+				decals: { qty_sold: decals.length * 11, sets: decals.length, total_income: decals_total },
 				whites: {
-					amount: whites.length + refresh.length * 6,
-					singles: whites.length,
-					refresh: refresh.length,
-					total: whites_total
+					singles_qty_sold: whites.length,
+					s_qty_sold: whites.length,
+					m_qty_sold: whites.length,
+					l_qty_sold: whites.length,
+					xl_qty_sold: whites.length,
+					refresh_qty_sold: refresh.length,
+					total_expenses: -(whites.length + refresh.length * 6) * 0.7,
+					total_profit: whites_total - (whites.length + refresh.length * 6) * 0.7,
+					total_qty_sold: whites.length + refresh.length * 6,
+					total_income: whites_total
 				}
 			};
-			console.log({ breakdown });
+			console.log({ yearly: breakdown });
 			return breakdown;
 		} catch (error) {
 			console.log({ remove_orders_s_error: error });
