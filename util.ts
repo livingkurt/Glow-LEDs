@@ -374,7 +374,7 @@ export const categories = [
 	'glowskins'
 ];
 export const subcategories = [
-	'whites',
+	'singles',
 	'refresh',
 	'battery_storage',
 	'batteries',
@@ -515,4 +515,18 @@ export const month_dates = (month: string, year: number) => {
 		december: { month: 'december', number_of_days: 31, start_date: year + '-12-01', end_date: year + '-12-31' }
 	};
 	return month_date[month];
+};
+
+export const removeDuplicates = (originalArray: any, prop: any) => {
+	const newArray = [];
+	const lookupObject: any = {};
+
+	for (const i in originalArray) {
+		lookupObject[originalArray[i][prop]] = originalArray[i];
+	}
+
+	for (const i in lookupObject) {
+		newArray.push(lookupObject[i]);
+	}
+	return newArray;
 };

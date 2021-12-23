@@ -13,7 +13,7 @@ router.route('/top_customers').get(order_controller.top_customers_orders_c);
 router.route('/category_occurrences').get(order_controller.category_occurrences_orders_c);
 router.route('/code_usage').put(order_controller.code_usage_orders_c);
 router.route('/tax_rates').get(order_controller.tax_rates_orders_c);
-router.route('/promo_code_usage').get(order_controller.promo_code_usage_orders_c);
+router.route('/promo_code_usage/:year?/:month?').get(order_controller.promo_code_usage_orders_c);
 router.route('/each_day_income/:date').get(order_controller.each_day_income_orders_c);
 router.route('/each_month_income/:date').get(order_controller.each_month_income_orders_c);
 router.route('/previous_income/:days').get(order_controller.previous_income_orders_c);

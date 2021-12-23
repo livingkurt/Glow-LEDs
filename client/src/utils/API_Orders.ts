@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { create_query } from './helper_functions';
 
 const order_routes = {
 	last_months_orders: () => {
@@ -18,6 +19,10 @@ const order_routes = {
 	},
 	income: (year: number, month: string) => {
 		return axios.get(`/api/orders/income/${year}${month ? '/' + month : ''}`);
+	},
+	promo_code_usage_orders_a: (year: number, month: string) => {
+		// console.log({ query });
+		return axios.get(`/api/orders/promo_code_usage/${year}${month ? '/' + month : ''}`);
 	},
 	// yearly_income: (year: number) => {
 	// 	return axios.get(`/api/orders/yearly_income/${year}`);

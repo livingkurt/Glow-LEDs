@@ -4,7 +4,7 @@ import { Link, useHistory } from 'react-router-dom';
 
 // import { Chart, CategoryScale } from 'chart.js';
 import { Bar, Pie } from 'react-chartjs-2';
-import { hslToHex, toCapitalize } from '../../utils/helper_functions';
+import { dates_in_year, hslToHex, toCapitalize } from '../../utils/helper_functions';
 import { API_Orders } from '../../utils';
 import { Helmet } from 'react-helmet';
 import { Loading } from '../../components/UtilityComponents';
@@ -23,21 +23,6 @@ const MonthlyExpensesPage = (props) => {
 
 	const [ year, set_year ] = useState(this_year);
 	const [ canScroll, setCanScroll ] = useState(false);
-
-	const dates_in_year = [
-		{ month: 'january', number_of_days: 31, start_date: year + '-01-01', end_date: year + '-01-31' },
-		{ month: 'february', number_of_days: 28, start_date: year + '-02-01', end_date: year + '-02-28' },
-		{ month: 'march', number_of_days: 31, start_date: year + '-03-01', end_date: year + '-03-31' },
-		{ month: 'april', number_of_days: 30, start_date: year + '-04-01', end_date: year + '-04-30' },
-		{ month: 'may', number_of_days: 31, start_date: year + '-05-01', end_date: year + '-05-31' },
-		{ month: 'june', number_of_days: 30, start_date: year + '-06-01', end_date: year + '-06-30' },
-		{ month: 'july', number_of_days: 31, start_date: year + '-07-01', end_date: year + '-07-31' },
-		{ month: 'august', number_of_days: 31, start_date: year + '-08-01', end_date: year + '-08-31' },
-		{ month: 'september', number_of_days: 30, start_date: year + '-09-01', end_date: year + '-09-30' },
-		{ month: 'october', number_of_days: 31, start_date: year + '-10-01', end_date: year + '-10-31' },
-		{ month: 'november', number_of_days: 30, start_date: year + '-11-01', end_date: year + '-11-30' },
-		{ month: 'december', number_of_days: 31, start_date: year + '-12-01', end_date: year + '-12-31' }
-	];
 
 	useEffect(() => {
 		let clean = true;
@@ -77,7 +62,7 @@ const MonthlyExpensesPage = (props) => {
 	const get_monthly_income = async (year) => {
 		set_loading(true);
 		const income_each_month = await Promise.all(
-			dates_in_year.map(async (month, month_number) => {
+			dates_in_year(year).map(async (month, month_number) => {
 				console.log({ month: month.month, year });
 				const { data } = await API_Orders.income(year, month.month);
 				if (data) {
@@ -314,8 +299,8 @@ const MonthlyExpensesPage = (props) => {
 								}}
 							>
 								<option value="">---Choose Month---</option>
-								{dates_in_year.map((month) => (
-									<option value="january">{toCapitalize(month.month)}</option>
+								{dates_in_year(year).map((month) => (
+									<option value={month.month}>{toCapitalize(month.month)}</option>
 								))}
 							</select>
 							<span className="custom-arrow" />

@@ -1,5 +1,13 @@
 import { affiliate_db, expense_db, order_db, user_db } from '../db';
-import { dates_in_year, month_dates, toCapitalize } from '../util';
+import {
+	categories,
+	dates_in_year,
+	determine_filter,
+	month_dates,
+	removeDuplicates,
+	subcategories,
+	toCapitalize
+} from '../util';
 const scraper = require('table-scraper');
 
 const today = new Date();
@@ -296,24 +304,52 @@ export default {
 	},
 	promo_code_usage_orders_s: async (params: any) => {
 		try {
-			const affiliates = await affiliate_db.findAll_affiliates_db({ deleted: false, active: true }, {});
 			const sort = {};
+			console.log({ params });
 			let filter = {};
-			if (params.days === 0) {
-				filter = { deleted: false, isPaid: true };
-			} else {
+
+			console.log({
+				month: params.month,
+				year: params.year
+			});
+			if (params.month && params.month.length > 0) {
+				console.log('Month True');
+				const start_date = month_dates(params.month, params.year).start_date;
+				const end_date = month_dates(params.month, params.year).end_date;
 				filter = {
 					deleted: false,
+					isPaid: true,
 					createdAt: {
-						$gte: new Date(<any>new Date() - params.days * 60 * 60 * 24 * 1000)
+						$gte: new Date(start_date),
+						$lte: new Date(end_date)
 					}
 				};
+			} else if (params.year && params.year.length > 0) {
+				console.log('Year True');
+				const start_date = params.year + '-01-01';
+				const end_date = params.year + '-12-31';
+				filter = {
+					deleted: false,
+					isPaid: true,
+					createdAt: {
+						$gte: new Date(start_date),
+						$lte: new Date(end_date)
+					}
+				};
+			} else {
+				console.log('No True');
+				filter = { deleted: false, isPaid: true };
 			}
+			console.log({ filter });
+
+			// const filter = determine_filter(query, {});
 			const limit = 0;
 			const page = 1;
 			const orders = await order_db.findAll_orders_db(filter, sort, limit, page);
-			const affiliates_w_inkybois = [ ...affiliates, { promo_code: 'inkybois' } ];
-			const rows = affiliates_w_inkybois.map((affiliate: any) => {
+			const affiliates = await affiliate_db.findAll_affiliates_db({ deleted: false, active: true }, {});
+			const affiliates_w_inkybois = [ ...affiliates, { public_code: { promo_code: 'inkybois' } } ];
+			// console.log({ affiliates_w_inkybois, orders });
+			const affiliate_earnings_dups: any = affiliates_w_inkybois.map((affiliate: any) => {
 				return {
 					'Promo Code': toCapitalize(affiliate.public_code.promo_code),
 					Uses: orders.filter((order: any) => {
@@ -322,15 +358,15 @@ export default {
 							order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
 						);
 					}).length,
-					Revenue: ` $${orders
+					Revenue: orders
 						.filter(
 							(order: any) =>
 								order.promo_code &&
 								order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
 						)
 						.reduce((a: any, order: any) => a + order.totalPrice - order.taxPrice, 0)
-						.toFixed(2)}`,
-					Earned: `${affiliate.promoter
+						.toFixed(2),
+					Earned: affiliate.promoter
 						? orders
 								.filter(
 									(order: any) =>
@@ -346,10 +382,71 @@ export default {
 										order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
 								)
 								.reduce((a: any, order: any) => a + (order.totalPrice - order.taxPrice) * 0.15, 0)
-								.toFixed(2)}`
+								.toFixed(2)
 				};
 			});
-			return rows;
+			const sorted_by_uses = affiliate_earnings_dups.sort(
+				(a: any, b: any) => (parseFloat(a.Uses) > parseFloat(b.Uses) ? -1 : 1)
+			);
+			const sorted_by_earned = affiliate_earnings_dups.sort(
+				(a: any, b: any) => (parseFloat(a.Earned) > parseFloat(b.Earned) ? -1 : 1)
+			);
+			const sorted_by_revenue = affiliate_earnings_dups.sort(
+				(a: any, b: any) => (parseFloat(a.Revenue) > parseFloat(b.Revenue) ? -1 : 1)
+			);
+			const affiliate_s_earned: any = removeDuplicates(sorted_by_earned, 'Promo Code');
+			const uses_s_earned: any = affiliate_s_earned.reduce((a: any, affiliate: any) => a + affiliate.Uses, 0);
+			const revenue_s_earned: any = affiliate_s_earned.reduce(
+				(a: any, affiliate: any) => parseFloat(a) + parseFloat(affiliate.Revenue),
+				0
+			);
+			const earned_s_earned: any = affiliate_s_earned.reduce(
+				(a: any, affiliate: any) => parseFloat(a) + parseFloat(affiliate.Earned),
+				0
+			);
+			const affiliate_s_revenue: any = removeDuplicates(sorted_by_revenue, 'Promo Code');
+			const uses_s_revenue: any = affiliate_s_revenue.reduce((a: any, affiliate: any) => a + affiliate.Uses, 0);
+			const revenue_s_revenue: any = affiliate_s_revenue.reduce(
+				(a: any, affiliate: any) => parseFloat(a) + parseFloat(affiliate.Revenue),
+				0
+			);
+			const earned_s_revenue: any = affiliate_s_revenue.reduce(
+				(a: any, affiliate: any) => parseFloat(a) + parseFloat(affiliate.Earned),
+				0
+			);
+			const affiliate_s_uses: any = removeDuplicates(sorted_by_uses, 'Promo Code');
+			const uses_s_uses: any = affiliate_s_uses.reduce((a: any, affiliate: any) => a + affiliate.Uses, 0);
+			const revenue_s_uses: any = affiliate_s_uses.reduce(
+				(a: any, affiliate: any) => parseFloat(a) + parseFloat(affiliate.Revenue),
+				0
+			);
+			const earned_s_uses: any = affiliate_s_uses.reduce(
+				(a: any, affiliate: any) => parseFloat(a) + parseFloat(affiliate.Earned),
+				0
+			);
+			// console.log({ rows });
+
+			// return { affiliate_earnings, uses, revenue, earned };
+			return {
+				earned: {
+					affiliates: affiliate_s_earned,
+					uses: uses_s_earned,
+					revenue: revenue_s_earned,
+					earned: earned_s_earned
+				},
+				revenue: {
+					affiliates: affiliate_s_revenue,
+					uses: uses_s_revenue,
+					revenue: revenue_s_revenue,
+					earned: earned_s_revenue
+				},
+				uses: {
+					affiliates: affiliate_s_uses,
+					uses: uses_s_uses,
+					revenue: revenue_s_uses,
+					earned: earned_s_uses
+				}
+			};
 		} catch (error) {
 			console.log({ remove_orders_s_error: error });
 			throw new Error(error.message);
@@ -490,7 +587,44 @@ export default {
 				0
 			);
 			const expenses = expenses_data.reduce((a: any, c: any) => a + c.amount, 0);
-			// console.log({ income, expenses, profit: income + expenses });
+			const category_income = categories.map((category, index) => {
+				return {
+					category: category,
+					income: orders_data
+						.map((order: any) => order.orderItems)
+						.flat(1)
+						.filter((item: any) => item.category === category)
+						.flat(1)
+						.reduce((a: any, c: any) => parseFloat(a) + parseFloat(c.price), 0)
+				};
+			});
+			const subcategory_income = subcategories.map((subcategory, index) => {
+				return {
+					subcategory: subcategory,
+					income: orders_data
+						.map((order: any) => order.orderItems)
+						.flat(1)
+						.filter((item: any) => item.subcategory === subcategory)
+						.flat(1)
+						.reduce((a: any, c: any) => parseFloat(a) + parseFloat(c.price), 0)
+				};
+			});
+			const category_expenses = [
+				'Supplies',
+				'Entertainment',
+				'Website',
+				'Shipping',
+				'Equipment'
+			].map((category, index) => {
+				return {
+					category: category,
+					expense: expenses_data
+						.filter((expense: any) => expense.category === category)
+						.reduce((a: any, c: any) => parseFloat(a) + parseFloat(c.amount), 0)
+				};
+			});
+			console.log({ category_expenses });
+
 			const batt_1620 = orders_data
 				.map((order: any) => order.orderItems)
 				.flat(1)
@@ -680,7 +814,10 @@ export default {
 				macro_income: {
 					income,
 					expenses,
-					profit: income + expenses
+					profit: income + expenses,
+					category_income,
+					subcategory_income,
+					category_expenses
 				},
 				batteries: {
 					batt_1620_qty_sold: batt_1620_options + batt_1620_size,
