@@ -78,7 +78,7 @@ export const addToCart = (cart_item_1: any) => async (
 			pathname: cart_data.pathname,
 			subcategory: cart_data.subcategory,
 			category: cart_data.category,
-			qty: cart_data.qty,
+			qty: parseInt(cart_data.qty),
 			quantity: cart_data.quantity,
 			finite_stock: cart_data.finite_stock
 		};

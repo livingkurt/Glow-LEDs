@@ -500,7 +500,7 @@ const MonthExpensesPage = (props) => {
 														<tr
 															key={index}
 															style={{
-																backgroundColor: '#626262',
+																backgroundColor: '#2f3244',
 																fontSize: '16px',
 																height: '50px'
 															}}
@@ -548,7 +548,7 @@ const MonthExpensesPage = (props) => {
 															<tr
 																key={index}
 																style={{
-																	backgroundColor: '#626262',
+																	backgroundColor: '#2f3244',
 																	fontSize: '16px',
 																	height: '50px'
 																}}
@@ -846,7 +846,7 @@ const MonthExpensesPage = (props) => {
 													.map((promo, index) => (
 														<tr
 															style={{
-																backgroundColor: promo_colors && promo_colors[index],
+																backgroundColor: '#2f3244',
 																height: '50px'
 															}}
 															// className="title_font"
