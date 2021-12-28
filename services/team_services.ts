@@ -4,7 +4,7 @@ import { determine_filter } from '../util';
 export default {
 	findAll_teams_s: async (query: any) => {
 		try {
-			const promoter = query.category === 'rave_mob' ? { promoter: true } : {};
+			const promoter = query.category === 'rave_mob' ? { rave_mob: true } : {};
 			const search = query.search
 				? {
 						team_name: {

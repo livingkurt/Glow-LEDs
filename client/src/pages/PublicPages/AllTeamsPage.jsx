@@ -16,7 +16,11 @@ const AllTeamsPage = (props) => {
 		() => {
 			let clean = true;
 			if (clean) {
-				dispatch(listTeams({ category }));
+				if (category === 'rave_mob') {
+					dispatch(listTeams({ rave_mob: true }));
+				} else {
+					dispatch(listTeams({}));
+				}
 			}
 			return () => (clean = false);
 		},
