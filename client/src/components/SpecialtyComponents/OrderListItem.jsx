@@ -61,8 +61,8 @@ const OrderListItem = (props) => {
 	return (
 		<div className="container" style={{ backgroundColor: props.determine_color(props.order) }}>
 			<Loading loading={loading_label} />
-			<div className="pb-15px mb-10px row" style={{ borderBottom: '1px solid white' }}>
-				<div className="w-50per jc-b ">
+			<div className="pb-15px mb-10px jc-b" style={{ borderBottom: '1px solid white' }}>
+				<div className="w-60per jc-b ">
 					<div className="fs-16px">
 						<h3>Order Placed</h3>
 						<div>{props.order.createdAt && format_date(props.order.createdAt)}</div>
@@ -127,8 +127,16 @@ const OrderListItem = (props) => {
 							{props.order.shipping.first_name} {props.order.shipping.last_name}
 						</Link>
 					</div>
+					{props.order.shipping.shipping_rate && (
+						<div className="fs-16px">
+							<p className="title_font ai-c fs-30px">
+								{props.order.shipping.shipping_rate.service !== 'First' &&
+									props.order.shipping.shipping_rate.service}{' '}
+							</p>
+						</div>
+					)}
 				</div>
-				<div className="w-50per jc-fe">
+				<div className="w-40per jc-fe">
 					<div className="">
 						<div className="fs-16px">
 							<div className="row ai-c">
@@ -259,6 +267,7 @@ const OrderListItem = (props) => {
 				<Link to={'/collections/all/products/' + props.order.orderItems[0].category} className="ai-c ml-1rem">
 					<button className="btn primary">Buy Again</button>
 				</Link>
+
 				{props.admin && (
 					<div className="jc-fe column ml-auto ">
 						<button className="btn icon h-3rem " onClick={() => show_hide(props.order._id)}>
