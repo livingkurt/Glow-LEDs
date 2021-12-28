@@ -12,7 +12,11 @@ const AdminRoute = ({ component: Component, ...rest }) => {
 		<Route
 			{...rest}
 			render={(props) =>
-				userInfo.isAdmin ? <Component {...props} /> : <Redirect to="/collections/all/products" />}
+				userInfo.isAdmin ? (
+					<Component {...props} />
+				) : (
+					<Redirect to={'/account/login?redirect=' + props.location.pathname} />
+				)}
 		/>
 	);
 };
