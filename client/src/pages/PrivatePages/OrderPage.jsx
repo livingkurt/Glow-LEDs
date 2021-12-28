@@ -171,7 +171,8 @@ const OrderPage = (props) => {
 		{ name: 'Packaged', color: '#6f5f7d' },
 		{ name: 'Shipped', color: '#636363' },
 		{ name: 'Delivered', color: '#333333' },
-		{ name: 'Refunded', color: '#a9a9a9' }
+		{ name: 'Refunded', color: '#a9a9a9' },
+		{ name: 'Priority', color: '#874d72' }
 	];
 
 	const determine_color = (order) => {
@@ -181,6 +182,9 @@ const OrderPage = (props) => {
 		}
 		if (order.isPaid) {
 			result = colors[1].color;
+		}
+		if (order.shipping.shipping_rate && order.shipping.shipping_rate.service !== 'First') {
+			result = colors[7].color;
 		}
 		if (order.isManufactured) {
 			result = colors[2].color;

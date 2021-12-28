@@ -85,7 +85,7 @@ const OrdersPage = (props) => {
 			result = colors[1].color;
 		}
 		if (order.shipping.shipping_rate && order.shipping.shipping_rate.service !== 'First') {
-			result = colors[1].color;
+			result = colors[6].color;
 		}
 		if (order.isManufactured) {
 			result = colors[2].color;
