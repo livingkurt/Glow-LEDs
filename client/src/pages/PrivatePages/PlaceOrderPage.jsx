@@ -120,6 +120,9 @@ const PlaceOrderPage = (props) => {
 
 				dispatch(savePayment({ paymentMethod }));
 				stable_setItemsPrice(determine_total(cartItems));
+				if (!show_message && promo_code) {
+					activate_promo_code(promo_code.toLowerCase());
+				}
 			}
 			return () => (clean = false);
 		},
@@ -162,6 +165,9 @@ const PlaceOrderPage = (props) => {
 					} else {
 						get_tax_rates();
 					}
+				}
+				if (!show_message && promo_code) {
+					activate_promo_code(promo_code.toLowerCase());
 				}
 			}
 			return () => (clean = false);
@@ -475,6 +481,9 @@ const PlaceOrderPage = (props) => {
 						? itemsPrice + shippingPrice + taxPrice
 						: itemsPrice + shippingPrice + taxPrice + parseInt(tip)
 				);
+				if (!show_message && promo_code) {
+					activate_promo_code(promo_code.toLowerCase());
+				}
 			}
 			return () => (clean = false);
 		},

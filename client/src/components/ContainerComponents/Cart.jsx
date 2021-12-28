@@ -359,8 +359,9 @@ const Cart = (props) => {
 														onChange={(e) => {
 															dispatch(
 																addToCart({
+																	...item,
 																	pathname: item.pathname,
-																	qty: e.target.value
+																	qty: parseInt(e.target.value)
 																})
 															);
 														}}

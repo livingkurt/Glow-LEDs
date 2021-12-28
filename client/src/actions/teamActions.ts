@@ -58,9 +58,13 @@ export const saveTeam = (team: any) => async (
 
 export const detailsTeam = (pathname: string) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
 	try {
-		dispatch({ type: TEAM_DETAILS_REQUEST, payload: pathname });
-		const { data } = await axios.get('/api/teams/' + pathname);
-		dispatch({ type: TEAM_DETAILS_SUCCESS, payload: data });
+		dispatch({ type: TEAM_DETAILS_REQUEST, payload: {} });
+		if (pathname) {
+			const { data } = await axios.get('/api/teams/' + pathname);
+			dispatch({ type: TEAM_DETAILS_SUCCESS, payload: data });
+		} else {
+			dispatch({ type: TEAM_DETAILS_SUCCESS, payload: {} });
+		}
 	} catch (error) {
 		console.log({ error });
 		dispatch({ type: TEAM_DETAILS_FAIL, payload: error });

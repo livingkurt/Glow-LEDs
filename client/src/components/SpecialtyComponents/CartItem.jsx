@@ -110,8 +110,9 @@ const CartItem = (props) => {
 								onChange={(e) => {
 									dispatch(
 										addToCart({
+											...props.item,
 											pathname: props.item.pathname,
-											qty: e.target.value
+											qty: parseInt(e.target.value)
 										})
 									);
 								}}

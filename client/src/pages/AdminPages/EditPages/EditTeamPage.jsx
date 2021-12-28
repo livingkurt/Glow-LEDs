@@ -101,9 +101,10 @@ const EditTeamPage = (props) => {
 				if (props.match.params.pathname) {
 					console.log('Is ID');
 					dispatch(detailsTeam(props.match.params.pathname));
-					dispatch(detailsTeam(props.match.params.pathname));
-					set_state();
+					// dispatch(detailsTeam(props.match.params.pathname));
+					// set_state();
 				} else {
+					unset_state();
 					dispatch(detailsTeam(''));
 				}
 				dispatch(listAffiliates({}));
@@ -111,7 +112,7 @@ const EditTeamPage = (props) => {
 			}
 			return () => (clean = false);
 		},
-		[ dispatch, props.match.params.pathname ]
+		[ props.match.params.pathname ]
 	);
 
 	useEffect(
@@ -293,13 +294,6 @@ const EditTeamPage = (props) => {
 										<div className="w-228px m-10px">
 											<li>
 												<label htmlFor="affiliate">Affiliate</label>
-												{/* <input
-													type="text"
-													name="affiliate"
-													value={affiliate}
-													id="affiliate"
-													onChange={(e) => set_affiliate(e.target.value)}
-												/> */}
 												<div className="ai-c h-25px mv-15px jc-c">
 													<div className="custom-select">
 														<select
@@ -385,43 +379,12 @@ const EditTeamPage = (props) => {
 													onChange={(e) => set_video(e.target.value)}
 												/>
 											</li>
-											{/* <li>
-											<label htmlFor="style">Your Style</label>
-											<input
-												type="text"
-												name="style"
-												value={style}
-												placeholder="Wave Tuts, Clusters, Whips..."
-												onFocus={() => this.placeholder('')}
-												onBlur={() => this.placeholder('Wave Tuts, Clusters, Whips...')}
-												id="style"
-												onChange={(e) => set_style(e.target.value)}
-											/>
-										</li>
-										<li>
-											<label htmlFor="inspiration">Inspiration</label>
-											<input
-												type="text"
-												name="inspiration"
-												value={inspiration}
-												placeholder="Flow, Megasloth, Jest..."
-												onFocus={() => this.placeholder('')}
-												onBlur={() => this.placeholder(''Flow, Megasloth, Jest...)}
-												id="inspiration"
-												onChange={(e) => set_inspiration(e.target.value)}
-											/>
-										</li> */}
 											<li>
 												<label htmlFor="bio">Bio</label>
 												<textarea
 													className="edit_product_textarea"
 													name="bio"
 													placeholder="Write a little something to introduce yourself..."
-													// onFocus={() => this.placeholder('')}
-													// onBlur={() =>
-													// 	this.placeholder(
-													// 		'Write a little something to introduce yourself...'
-													// 	)}
 													defaultValue={bio}
 													id="bio"
 													onChange={(e) => set_bio(e.target.value)}
@@ -472,27 +435,6 @@ const EditTeamPage = (props) => {
 													onChange={(e) => set_percentage_off(e.target.value)}
 												/>
 											</li>
-
-											{/* <li>
-												<label htmlFor="funds_generated">Funds Generated</label>
-												<input
-													type="text"
-													name="funds_generated"
-													value={funds_generated}
-													id="funds_generated"
-													onChange={(e) => set_funds_generated(e.target.value)}
-												/>
-											</li> */}
-											{/* <li>
-												<label htmlFor="promo_code">Promo Code</label>
-												<input
-													type="text"
-													name="promo_code"
-													value={promo_code}
-													id="promo_code"
-													onChange={(e) => set_promo_code(e.target.value)}
-												/>
-											</li> */}
 											<ImageDisplay
 												images={images}
 												set_images={set_images}
@@ -525,16 +467,7 @@ const EditTeamPage = (props) => {
 
 												{promo_display(public_code, 'public')}
 											</li>
-											{/* <li>
-												<label htmlFor="public_code">Public Code</label>
-												<input
-													type="text"
-													name="public_code"
-													value={public_code && public_code.promo_code}
-													id="public_code"
-													onChange={(e) => set_public_code(e.target.value)}
-												/>
-											</li> */}
+
 											<li>
 												<label htmlFor="promo">Private Code</label>
 												<div className="ai-c h-25px mv-15px jc-c">
@@ -559,16 +492,7 @@ const EditTeamPage = (props) => {
 												</div>
 												{promo_display(private_code, 'private')}
 											</li>
-											{/* <li>
-												<label htmlFor="private_code">Private Code</label>
-												<input
-													type="text"
-													name="private_code"
-													value={private_code && private_code.promo_code}
-													id="private_code"
-													onChange={(e) => set_private_code(e.target.value)}
-												/>
-											</li> */}
+
 											{loading_checkboxes ? (
 												<div>Loading...</div>
 											) : (
@@ -577,10 +501,7 @@ const EditTeamPage = (props) => {
 													<input
 														type="checkbox"
 														name="sponsor"
-														// defaultChecked={sponsor ? 'checked' : 'unchecked'}
-														// defaultValue={sponsor}
 														defaultChecked={sponsor}
-														// value={sponsor ? '1' : '0'}
 														id="sponsor"
 														onChange={(e) => {
 															set_sponsor(e.target.checked);
@@ -596,10 +517,7 @@ const EditTeamPage = (props) => {
 													<input
 														type="checkbox"
 														name="rave_mob"
-														// defaultChecked={rave_mob ? 'checked' : 'unchecked'}
-														// defaultValue={rave_mob}
 														defaultChecked={rave_mob}
-														// value={rave_mob ? '1' : '0'}
 														id="rave_mob"
 														onChange={(e) => {
 															set_rave_mob(e.target.checked);
@@ -615,10 +533,7 @@ const EditTeamPage = (props) => {
 													<input
 														type="checkbox"
 														name="promoter"
-														// defaultChecked={promoter ? 'checked' : 'unchecked'}
-														// defaultValue={promoter}
 														defaultChecked={promoter}
-														// value={promoter ? '1' : '0'}
 														id="promoter"
 														onChange={(e) => {
 															set_promoter(e.target.checked);
@@ -634,10 +549,7 @@ const EditTeamPage = (props) => {
 													<input
 														type="checkbox"
 														name="active"
-														// defaultChecked={active ? 'checked' : 'unchecked'}
-														// defaultValue={active}
 														defaultChecked={active}
-														// value={active ? '1' : '0'}
 														id="active"
 														onChange={(e) => {
 															set_active(e.target.checked);
@@ -661,7 +573,6 @@ const EditTeamPage = (props) => {
 							</div>
 						)}
 					</Loading>
-					{/* )} */}
 				</form>
 			</div>
 		</div>

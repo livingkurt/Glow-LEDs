@@ -24,6 +24,7 @@ export const addToCart = (cart_item_1: any) => async (
 	dispatch: (arg0: any) => void,
 	getState: () => { cart: { cartItems: any }; userLogin: { userInfo: any } }
 ) => {
+	console.log({ cart_item_1 });
 	try {
 		let cart_data = cart_item_1;
 
