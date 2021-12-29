@@ -72,25 +72,17 @@ export default {
 	},
 
 	update_products_db: async (id: string, body: any) => {
-		// console.log({ update_products_db: id });
-		// let query: any = { _id: mongoose.Types.ObjectId(id) };
+		let query = {};
+		if (id && id.match(/^[0-9a-fA-F]{24}$/)) {
+			query = { _id: id };
+		} else {
+			query = { pathname: id };
+		}
 		try {
-			// if (id && id.toString().match(/^[0-9a-fA-F]{24}$/)) {
-			// 	query = { _id: mongoose.Types.ObjectId(id) };
-			// } else {
-			// 	query = { pathname: id };
-			// }
-
-			const product: any = await Product.findOne({ _id: id });
-			// let product: any = await Product.findOneAndUpdate(query, body);
-			// return await Product.updateOne({ _id: mongoose.Types.ObjectId(id) }, { ...body, _id: null });
-			console.log({ body });
-			// product = Object.assign(body, product);
+			const product: any = await Product.findOne(query);
 			if (product) {
 				return await Product.updateOne({ _id: id }, body);
-				// return await product.save();
 			}
-			return 'Success';
 		} catch (error) {
 			console.log({ update_products_db_error: error });
 			throw new Error(error.message);

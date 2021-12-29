@@ -38,6 +38,7 @@ const ProductOptions = ({
 	set_preorder
 }) => {
 	const { width } = useWindowDimensions();
+	console.log({ ProductOptions: option_products });
 
 	const determine_option_styles = (option_product_object, option) => {
 		const classes = 'packs fs-13px flex-s-0 min-w-40px mr-1rem mb-1rem ';
@@ -55,6 +56,7 @@ const ProductOptions = ({
 	};
 
 	const option_buttons = (option, index) => {
+		console.log({ option_buttons: option });
 		return (
 			<div>
 				<button

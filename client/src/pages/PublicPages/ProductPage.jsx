@@ -115,7 +115,6 @@ const ProductPage = (props) => {
 	);
 
 	const update_universal_state = (item) => {
-		// console.log({ item });
 		if (item) {
 			set_image(item.images && item.images[0]);
 			set_images(item.images);
@@ -144,6 +143,7 @@ const ProductPage = (props) => {
 			set_color_products(item.color_products);
 			set_secondary_color_products(item.secondary_color_products);
 			set_option_products(item.option_products);
+			console.log({ option_products: item.option_products });
 			set_secondary_products(item.secondary_products);
 			set_included_items(item.included_items);
 
@@ -197,14 +197,14 @@ const ProductPage = (props) => {
 					update_secondary_color_product_state(secondary_color);
 				}
 			}
-			if (product.option_products) {
-				set_option_products(product.option_products);
+			// if (product.option_products) {
+			// 	set_option_products(product.option_products);
 
-				const option = product.option_products.find((option) => option.default_option === true);
-				if (option) {
-					update_option_product_state(option);
-				}
-			}
+			// 	const option = product.option_products.find((option) => option.default_option === true);
+			// 	if (option) {
+			// 		update_option_product_state(option);
+			// 	}
+			// }
 			if (product.secondary_products && product.secondary_products.length > 0) {
 				// update_secondary_product_state(product.secondary_products[0]);
 			}
@@ -227,8 +227,6 @@ const ProductPage = (props) => {
 				}
 			}
 			if (product.option_products) {
-				console.log({ query: query.option });
-				console.log({ option_products: product.option_products });
 				let query_option = query.option;
 				if (query.option && query.option.indexOf('%20') > -1) {
 					query_option = query.option.split('%20').join(' ');
@@ -237,19 +235,6 @@ const ProductPage = (props) => {
 				const option = product.option_products.find(
 					(option) => option.size === query_option.split('%20').join(' ')
 				);
-				// const option = product.option_products.find(
-				// 	(option) =>
-				// 		option.size === parseInt(query.option) ||
-				// 		option.name === query_option.split('%20').join(' ')
-				// );
-				console.log({ option });
-				// const option =
-				// 	query.option &&
-				// 	product.option_products.find(
-				// 		(option) =>
-				// 			option.size === parseInt(query.option) ||
-				// 			option.name === query.option.split('%20').join(' ')
-				// 	);
 				if (option) {
 					update_option_product_state(option);
 				}
@@ -530,16 +515,6 @@ const ProductPage = (props) => {
 
 	const update_option = (e) => {
 		const option = JSON.parse(e.target.value);
-		// let button = document.getElementById(e.target.id);
-		// let buttons = document.querySelectorAll('.packs');
-		// buttons.forEach((node) => {
-		// 	node.classList.remove('active');
-		// 	node.classList.remove('secondary');
-		// 	node.classList.add('primary');
-		// });
-		// button.classList.add('secondary');
-		// button.classList.add('active');
-
 		if (option.size) {
 			set_size(option.size);
 		}

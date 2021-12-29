@@ -22,7 +22,7 @@ import { listUsers } from '../../../actions/userActions';
 
 const EditProductPage = (props) => {
 	// const [modalVisible, setModalVisible] = useState(false);
-	const [ id, setId ] = useState('');
+	const [ product_id, set_product_id ] = useState('');
 	const [ name, setName ] = useState('');
 	const [ price, setPrice ] = useState();
 	const [ previous_price, set_previous_price ] = useState();
@@ -211,20 +211,23 @@ const EditProductPage = (props) => {
 		set_item_group_id(data.tem_group_id);
 	};
 
-	// useEffect(
-	// 	() => {
-	// 		let clean = true;
-	// 		if (clean) {
-	// 			if (successSave && filtered_products.length > 0) {
-	// 				if (filtered_products.map((item) => item.pathname).indexOf(product.pathname) !== -1) {
-	// 					history.push('/secure/glow/editproduct/' + filtered_products[new_index].pathname);
-	// 				}
-	// 			}
-	// 		}
-	// 		return () => (clean = false);
-	// 	},
-	// 	[ successSave ]
-	// );
+	useEffect(
+		() => {
+			let clean = true;
+			if (clean) {
+				if (successSave && filtered_products.length > 0) {
+					history.push('/secure/glow/products');
+				}
+				// if (successSave && filtered_products.length > 0) {
+				// 	if (filtered_products.map((item) => item.pathname).indexOf(product.pathname) !== -1) {
+				// 		history.push('/secure/glow/editproduct/' + filtered_products[new_index].pathname);
+				// 	}
+				// }
+			}
+			return () => (clean = false);
+		},
+		[ successSave ]
+	);
 
 	useEffect(
 		() => {
@@ -264,7 +267,7 @@ const EditProductPage = (props) => {
 
 	const set_state = () => {
 		// console.log({ product_length: product.length });
-		setId(product._id);
+		set_product_id(product._id);
 		setName(product.name);
 		setPrice(product.price);
 		setDescription(product.description);
@@ -353,7 +356,7 @@ const EditProductPage = (props) => {
 		set_item_group_id(product.item_group_id);
 	};
 	const unset_state = () => {
-		setId('');
+		set_product_id('');
 		setName('');
 		setPrice(0);
 		set_previous_price();
@@ -435,7 +438,7 @@ const EditProductPage = (props) => {
 		const end_date = new Date(unformat_date_and_time(sale_end_date, sale_end_time));
 		dispatch(
 			saveProduct({
-				_id: props.match.params.pathname && props.match.params.template === 'false' ? id : null,
+				_id: props.match.params.pathname && props.match.params.template === 'false' ? product._id : null,
 				// _id: props.match.params.pathname && !props.match.params.template === 'true' ? id : null,
 				name,
 				price,
@@ -471,7 +474,7 @@ const EditProductPage = (props) => {
 				weight_pounds,
 				weight_ounces,
 				preorder,
-				contributers: contributers.length === 0 ? '' : contributers,
+				contributers: contributers.length === 0 ? [] : contributers,
 				pathname: pathname ? pathname : snake_case(name),
 				order,
 				product_options,
@@ -1891,7 +1894,7 @@ const EditProductPage = (props) => {
 
 									<li>
 										<button type="submit" className="btn primary">
-											{id ? 'Update' : 'Create'}
+											{product_id ? 'Update' : 'Create'}
 										</button>
 									</li>
 									<li>
