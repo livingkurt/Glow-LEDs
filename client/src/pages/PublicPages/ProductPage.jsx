@@ -197,14 +197,14 @@ const ProductPage = (props) => {
 					update_secondary_color_product_state(secondary_color);
 				}
 			}
-			// if (product.option_products) {
-			// 	set_option_products(product.option_products);
+			if (product.option_products) {
+				set_option_products(product.option_products);
 
-			// 	const option = product.option_products.find((option) => option.default_option === true);
-			// 	if (option) {
-			// 		update_option_product_state(option);
-			// 	}
-			// }
+				const option = product.option_products.find((option) => option.default_option === true);
+				if (option) {
+					update_option_product_state(option);
+				}
+			}
 			if (product.secondary_products && product.secondary_products.length > 0) {
 				// update_secondary_product_state(product.secondary_products[0]);
 			}
