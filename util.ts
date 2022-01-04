@@ -358,7 +358,7 @@ export const determine_sponsor_code_tier = (code_usage: number) => {
 	} else if (code_usage >= 10 && code_usage <= 14) {
 		return 50;
 	} else if (code_usage >= 15) {
-		return 75;
+		return 60;
 	}
 };
 

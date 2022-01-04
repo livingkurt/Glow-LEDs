@@ -567,39 +567,33 @@ export default {
 						.toFixed(2)
 				};
 			});
-			const sorted_by_uses = promos_earnings.sort(
-				(a: any, b: any) => (parseFloat(a.Uses) > parseFloat(b.Uses) ? -1 : 1)
-			);
-			const sorted_by_discount = promos_earnings.sort(
-				(a: any, b: any) => (parseFloat(a.Discount) > parseFloat(b.Discount) ? -1 : 1)
-			);
-			const sorted_by_revenue = promos_earnings.sort(
-				(a: any, b: any) => (parseFloat(a.Revenue) > parseFloat(b.Revenue) ? -1 : 1)
-			);
-			const uses_s_discount: any = sorted_by_discount.reduce((a: any, promo: any) => a + promo.Uses, 0);
-			const revenue_s_discount: any = sorted_by_discount.reduce(
+			// const sorted_by_uses = promos_earnings.sort(
+			// 	(a: any, b: any) => (parseFloat(a.Uses) > parseFloat(b.Uses) ? -1 : 1)
+			// );
+			// const uses_s_discount: any = sorted_by_discount.reduce((a: any, promo: any) => a + promo.Uses, 0);
+			// const revenue_s_discount: any = sorted_by_discount.reduce(
+			// 	(a: any, promo: any) => parseFloat(a) + parseFloat(promo.Revenue),
+			// 	0
+			// );
+			// const discount_s_discount: any = sorted_by_discount.reduce(
+			// 	(a: any, promo: any) => parseFloat(a) + parseFloat(promo.Discount),
+			// 	0
+			// );
+			// const uses_s_revenue: any = sorted_by_revenue.reduce((a: any, promo: any) => a + promo.Uses, 0);
+			// const revenue_s_revenue: any = sorted_by_revenue.reduce(
+			// 	(a: any, promo: any) => parseFloat(a) + parseFloat(promo.Revenue),
+			// 	0
+			// );
+			// const discount_s_revenue: any = sorted_by_revenue.reduce(
+			// 	(a: any, promo: any) => parseFloat(a) + parseFloat(promo.Discount),
+			// 	0
+			// );
+			const uses_s: any = promos_earnings.reduce((a: any, promo: any) => a + promo.Uses, 0);
+			const revenue_s: any = promos_earnings.reduce(
 				(a: any, promo: any) => parseFloat(a) + parseFloat(promo.Revenue),
 				0
 			);
-			const discount_s_discount: any = sorted_by_discount.reduce(
-				(a: any, promo: any) => parseFloat(a) + parseFloat(promo.Discount),
-				0
-			);
-			const uses_s_revenue: any = sorted_by_revenue.reduce((a: any, promo: any) => a + promo.Uses, 0);
-			const revenue_s_revenue: any = sorted_by_revenue.reduce(
-				(a: any, promo: any) => parseFloat(a) + parseFloat(promo.Revenue),
-				0
-			);
-			const discount_s_revenue: any = sorted_by_revenue.reduce(
-				(a: any, promo: any) => parseFloat(a) + parseFloat(promo.Discount),
-				0
-			);
-			const uses_s_uses: any = sorted_by_uses.reduce((a: any, promo: any) => a + promo.Uses, 0);
-			const revenue_s_uses: any = sorted_by_uses.reduce(
-				(a: any, promo: any) => parseFloat(a) + parseFloat(promo.Revenue),
-				0
-			);
-			const discount_s_uses: any = sorted_by_uses.reduce(
+			const discount_s: any = promos_earnings.reduce(
 				(a: any, promo: any) => parseFloat(a) + parseFloat(promo.Discount),
 				0
 			);
@@ -607,24 +601,10 @@ export default {
 
 			// return { promo_earnings, uses, revenue, discount };
 			return {
-				discount: {
-					promos: sorted_by_discount,
-					uses: uses_s_discount,
-					revenue: revenue_s_discount,
-					discount: discount_s_discount
-				},
-				revenue: {
-					promos: sorted_by_revenue,
-					uses: uses_s_revenue,
-					revenue: revenue_s_revenue,
-					discount: discount_s_revenue
-				},
-				uses: {
-					promos: sorted_by_uses,
-					uses: uses_s_uses,
-					revenue: revenue_s_uses,
-					discount: discount_s_uses
-				}
+				promos: promos_earnings,
+				uses: uses_s,
+				revenue: revenue_s,
+				discount: discount_s
 			};
 		} catch (error) {
 			console.log({ promo_code_usage_orders_s_error: error });
