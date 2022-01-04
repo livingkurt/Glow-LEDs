@@ -5,6 +5,7 @@ const { isAuth, isAdmin } = require('../../util');
 const router = express.Router();
 
 router.route('/user').get(isAuth, paycheck_controller.findMy_paychecks);
+router.route('/pay/:position/:year/:month').get(isAuth, paycheck_controller.create_affiliate_paychecks_c);
 
 router
 	.route('/:id')

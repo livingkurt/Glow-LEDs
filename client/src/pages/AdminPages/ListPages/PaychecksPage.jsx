@@ -5,10 +5,11 @@ import { Link } from 'react-router-dom';
 import { Loading, Notification } from '../../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { Search, Sort } from '../../../components/SpecialtyComponents';
-import { format_date } from '../../../utils/helper_functions';
+import { dates_in_year, format_date, toCapitalize } from '../../../utils/helper_functions';
 import { listAffiliates } from '../../../actions/affiliateActions';
-import { API_Orders } from '../../../utils';
+import { API_Orders, API_Paychecks } from '../../../utils';
 import {
+	affiliate_revenue_upload,
 	promoter_revenue_upload,
 	sponsor_revenue_upload,
 	team_revenue_upload,
@@ -26,6 +27,7 @@ const PaychecksPage = (props) => {
 	const [ loading_paychecks, set_loading_paychecks ] = useState(false);
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(false);
 	const [ create_paychecks, set_create_paychecks ] = useState(true);
+
 	const category = props.match.params.category ? props.match.params.category : '';
 	const paycheckList = useSelector((state) => state.paycheckList);
 	const { loading, paychecks, message, error } = paycheckList;
@@ -42,10 +44,39 @@ const PaychecksPage = (props) => {
 
 	const teamList = useSelector((state) => state.teamList);
 	const { teams } = teamList;
+	const months = [
+		'January',
+		'February',
+		'March',
+		'April',
+		'May',
+		'June',
+		'July',
+		'August',
+		'September',
+		'October',
+		'November',
+		'December'
+	];
+
+	const date = new Date();
+	const [ month, set_month ] = useState(months[date.getMonth()]);
+	const [ year, set_year ] = useState(date.getFullYear());
 
 	setTimeout(() => {
 		set_loading_checkboxes(false);
 	}, 500);
+
+	// useEffect(() => {
+	// 	let clean = true;
+	// 	if (clean) {
+	// 		const month = months[date.getMonth()];
+	// 		const year = months[date.getFullYear()];
+	// 		set_month(month);
+	// 		set_month(year);
+	// 	}
+	// 	return () => {};
+	// }, []);
 
 	useEffect(
 		() => {
@@ -71,7 +102,7 @@ const PaychecksPage = (props) => {
 	const get_total_orders = async () => {
 		const { data } = await API_Orders.findAll_orders_a();
 		console.log({ data: data.length });
-		set_total_orders(data.filter((order) => order.deleted === false));
+		set_total_orders(data);
 	};
 	const submitHandler = (e) => {
 		e.preventDefault();
@@ -96,8 +127,6 @@ const PaychecksPage = (props) => {
 	const deleteHandler = (paycheck) => {
 		dispatch(deletePaycheck(paycheck._id));
 	};
-
-	const date = new Date();
 
 	const today = date.toISOString();
 
@@ -128,93 +157,48 @@ const PaychecksPage = (props) => {
 	};
 	console.log({ paychecks });
 
-	const create_promoter_paychecks = async () => {
+	const create_affiliate_paychecks = async () => {
 		set_loading_paychecks(true);
+		console.log({ year, month });
 		if (create_paychecks) {
-			affiliates.filter((affiliate) => affiliate.promoter).forEach((affiliate) => {
-				dispatch(
-					savePaycheck({
-						affiliate: affiliate._id,
-						amount: last_months_orders
-							.filter(
-								(order) =>
-									order.promo_code &&
-									order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
-							)
-							.reduce((a, order) => a + (order.totalPrice - order.taxPrice) * 0.1, 0)
-							.toFixed(2),
-
-						venmo: affiliate.venmo
-					})
-				);
-			});
-		}
-		console.log({ affiliates, total_orders, last_months_orders });
-		await promoter_revenue_upload(affiliates, total_orders, last_months_orders);
-		set_loading_paychecks(false);
-	};
-
-	const create_sponsor_paychecks = async () => {
-		set_loading_paychecks(true);
-		if (create_paychecks) {
-			affiliates.filter((affiliate) => affiliate.sponsor).forEach((affiliate) => {
-				dispatch(
-					savePaycheck({
-						affiliate: affiliate._id,
-						amount:
-							affiliate.sponsor &&
-							last_months_orders
-								.filter(
-									(order) =>
-										order.promo_code &&
-										order.promo_code.toLowerCase() ===
-											affiliate.public_code.promo_code.toLowerCase()
-								)
-								.reduce((a, order) => a + (order.totalPrice - order.taxPrice) * 0.15, 0)
-								.toFixed(2),
-						venmo: affiliate.venmo
-					})
-				);
-			});
+			const { data: p_paychecks } = await API_Paychecks.create_affiliate_paychecks_a(
+				'promoter',
+				year,
+				month.toLowerCase()
+			);
+			const { data: s_paychecks } = await API_Paychecks.create_affiliate_paychecks_a(
+				'sponsor',
+				year,
+				month.toLowerCase()
+			);
+			const { data: t_paychecks } = await API_Paychecks.create_affiliate_paychecks_a(
+				'team',
+				year,
+				month.toLowerCase()
+			);
 		}
 
-		await sponsor_revenue_upload(affiliates, total_orders, last_months_orders);
-		set_loading_paychecks(false);
-	};
-
-	const create_team_paychecks = async () => {
-		set_loading_paychecks(true);
-		if (create_paychecks) {
-			teams.forEach((team) => {
-				dispatch(
-					savePaycheck({
-						team: team._id,
-						amount: (team &&
-							last_months_orders
-								.filter(
-									(order) => order.promo_code && order.promo_code.toLowerCase() === team.promo_code
-								)
-								.reduce((a, order) => a + (order.totalPrice - order.taxPrice) * 0.15, 0))
-							.toFixed(2),
-						venmo: team.venmo
-					})
-				);
-			});
-		}
-
-		await team_revenue_upload(teams, total_orders, last_months_orders);
-		set_loading_paychecks(false);
-	};
-
-	const top_earner_creator = async () => {
-		set_loading_paychecks(true);
-		await top_earner_upload(affiliates, total_orders, last_months_orders);
-		set_loading_paychecks(false);
-	};
-
-	const top_code_uses_creator = async () => {
-		set_loading_paychecks(true);
-		await top_code_usage_upload(affiliates, total_orders, last_months_orders);
+		await affiliate_revenue_upload(
+			'promoter',
+			year,
+			month.toLowerCase(),
+			'1vy1OKH0P96cDkjuq-_yBT56CA1yQRMY3XZ2kgN95Spg'
+		);
+		await affiliate_revenue_upload(
+			'sponsor',
+			year,
+			month.toLowerCase(),
+			'1nxYhdgGqme0tSvOrYeb6oU9RIOLeA2aik3-K4H1dRpA'
+		);
+		await affiliate_revenue_upload(
+			'team',
+			year,
+			month.toLowerCase(),
+			'1OmtRqSVEBCZCamz1qPceXW8CPfuwvWwGxIiu1YzMtMI'
+		);
+		await top_earner_upload(year, month.toLowerCase());
+		await top_code_usage_upload(year, month.toLowerCase());
+		dispatch(listPaychecks({}));
 		set_loading_paychecks(false);
 	};
 
@@ -246,39 +230,65 @@ const PaychecksPage = (props) => {
 				<Link to="/secure/glow/editpaycheck">
 					<button className="btn primary">Create Paycheck</button>
 				</Link>
-
-				<button className="btn primary" onClick={create_promoter_paychecks}>
-					Create Promoter Paychecks
-				</button>
-				<button className="btn primary" onClick={create_sponsor_paychecks}>
-					Create Sponsor Paychecks
-				</button>
-				<button className="btn primary" onClick={create_team_paychecks}>
-					Create Team Paychecks
-				</button>
-				<button className="btn primary" onClick={top_earner_creator}>
-					Top Earner
-				</button>
-				<button className="btn primary" onClick={top_code_uses_creator}>
-					Top Code Uses
-				</button>
-				{loading_checkboxes ? (
-					<div>Loading...</div>
-				) : (
-					<div>
-						<label htmlFor="create_paychecks">Create Paychecks</label>
-						<input
-							type="checkbox"
-							name="create_paychecks"
-							defaultChecked={create_paychecks}
-							id="create_paychecks"
-							onChange={(e) => {
-								set_create_paychecks(e.target.checked);
-							}}
-						/>
-					</div>
-				)}
 			</div>
+			<p className="fs-20px title_font">Choose Paycheck Month</p>
+			{loading_checkboxes ? (
+				<div>Loading...</div>
+			) : (
+				<div>
+					<label htmlFor="create_paychecks">Create Paychecks</label>
+					<input
+						type="checkbox"
+						name="create_paychecks"
+						defaultChecked={create_paychecks}
+						id="create_paychecks"
+						onChange={(e) => {
+							set_create_paychecks(e.target.checked);
+						}}
+					/>
+				</div>
+			)}
+			<div className="ai-c jc-b w-100per max-w-600px">
+				<div className="mv-2rem mr-2rem">
+					<div className="row">
+						<div className="custom-select ">
+							<select
+								defaultValue={year}
+								className="qty_select_dropdown"
+								onChange={(e) => {
+									set_year(e.target.value);
+								}}
+							>
+								{[ 2022, 2021, 2020 ].map((year) => <option value={year}>{year}</option>)}
+							</select>
+							<span className="custom-arrow" />
+						</div>
+					</div>
+				</div>
+
+				<div className="mv-2rem">
+					<div className="row">
+						<div className="custom-select ">
+							<select
+								defaultValue={month && month.toLowerCase()}
+								className="qty_select_dropdown"
+								onChange={(e) => {
+									set_month(e.target.value);
+								}}
+							>
+								{dates_in_year(year).map((month) => (
+									<option value={month.month}>{toCapitalize(month.month)}</option>
+								))}
+							</select>
+							<span className="custom-arrow" />
+						</div>
+					</div>
+				</div>
+				<button className="btn primary h-40px" onClick={create_affiliate_paychecks}>
+					Create Affiliate Paychecks
+				</button>
+			</div>
+
 			<div className="jc-c">
 				<h1 style={{ textAlign: 'center' }}>Paychecks</h1>
 			</div>

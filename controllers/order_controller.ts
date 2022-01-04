@@ -82,19 +82,6 @@ export default {
 			res.status(500).send({ error, message: 'Error Deleting Order' });
 		}
 	},
-	specific_time_income_orders_s: async (req: any, res: any) => {
-		const { body } = req;
-		try {
-			const orders = await order_services.specific_time_income_orders_s(body);
-			if (orders) {
-				return res.status(200).send(orders);
-			}
-			return res.status(500).send({ message: 'Error Deleting Order' });
-		} catch (error) {
-			console.log({ monthly_income_orders_c_error: error });
-			res.status(500).send({ error, message: 'Error Deleting Order' });
-		}
-	},
 	occurrences_orders_c: async (req: any, res: any) => {
 		const { params } = req;
 		try {
@@ -159,10 +146,23 @@ export default {
 			res.status(500).send({ error, message: 'Error Deleting Order' });
 		}
 	},
-	promo_code_usage_orders_c: async (req: any, res: any) => {
-		const { params } = req;
+	affiliate_code_usage_orders_c: async (req: any, res: any) => {
+		const { params, query } = req;
 		try {
-			const orders = await order_services.promo_code_usage_orders_s(params);
+			const orders = await order_services.affiliate_code_usage_orders_s(params, query);
+			if (orders) {
+				return res.status(200).send(orders);
+			}
+			return res.status(500).send({ message: 'Error Deleting Order' });
+		} catch (error) {
+			console.log({ affiliate_code_usage_orders_c_error: error });
+			res.status(500).send({ error, message: 'Error Deleting Order' });
+		}
+	},
+	promo_code_usage_orders_c: async (req: any, res: any) => {
+		const { params, query } = req;
+		try {
+			const orders = await order_services.promo_code_usage_orders_s(params, query);
 			if (orders) {
 				return res.status(200).send(orders);
 			}

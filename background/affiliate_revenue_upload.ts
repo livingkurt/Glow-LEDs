@@ -38,8 +38,10 @@ const affiliate_revenue_upload = async () => {
 		// const { data: last_month_orders } = await axios.get(
 		// 	'https://glow-leds-dev.herokuapp.com/api/orders/last_months_orders'
 		// );
-		const { data: last_months_rows } = await axios.get('https://www.glow-leds.com/api/orders/promo_code_usage/30');
-		const { data: total_rows } = await axios.get('https://www.glow-leds.com/api/orders/promo_code_usage/0');
+		const { data: last_months_rows } = await axios.get(
+			'https://www.glow-leds.com/api/orders/affiliate_code_usage/30'
+		);
+		const { data: total_rows } = await axios.get('https://www.glow-leds.com/api/orders/affiliate_code_usage/0');
 
 		// const affiliates_w_inkybois = [ ...affiliates, { promo_code: 'inkybois' } ];
 		// console.log({ last_month_orders });
@@ -50,7 +52,7 @@ const affiliate_revenue_upload = async () => {
 		// 			return order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase();
 		// 		}).length;
 		// 	});
-		// 	total_promo_code_usage = uses.reduce((a: any, c: any) => a + c, 0);
+		// 	total_affiliate_code_usage = uses.reduce((a: any, c: any) => a + c, 0);
 		// 	console.log({ uses });
 		// 	const revenue = affiliates.map((affiliate: { promo_code: string }) => {
 		// 		return orders

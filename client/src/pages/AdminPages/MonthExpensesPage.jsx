@@ -37,6 +37,7 @@ const MonthExpensesPage = (props) => {
 	const [ orders, set_orders ] = useState([]);
 	const [ monthly_income, set_monthly_income ] = useState([]);
 	const [ affiliate_earnings, set_affiliate_earnings ] = useState([]);
+	const [ promo_earnings, set_promo_earnings ] = useState([]);
 	const [ month, set_month ] = useState(props.match.params.month);
 	const [ year, set_year ] = useState(this_year);
 	const [ loading, set_loading ] = useState(false);
@@ -50,7 +51,7 @@ const MonthExpensesPage = (props) => {
 				if (props.match.params.month) {
 					get_monthly_income(year, props.match.params.month);
 				}
-				// promo_code_usage(year, props.match.params.mont);
+				// affiliate_code_usage(year, props.match.params.mont);
 			}
 			return () => (clean = false);
 		},
@@ -64,19 +65,35 @@ const MonthExpensesPage = (props) => {
 			if (props.match.params.month) {
 				get_monthly_income(year, props.match.params.month);
 			}
-			promo_code_usage(year, props.match.params.month);
+			affiliate_code_usage(year, props.match.params.month);
+			promo_code_usage(year, props.match.params.month, { single_use: true });
+			promo_code_usage(year, props.match.params.month, { used_once: true });
+			promo_code_usage(year, props.match.params.month, { affiliate_only: true });
+			promo_code_usage(year, props.match.params.month, { sponsor_only: true });
+			promo_code_usage(year, props.match.params.month, { admin_only: true });
 			dispatch(listPromos({}));
 		}
 		return () => (clean = false);
 	}, []);
 
-	const promo_code_usage = async (year, month) => {
+	const affiliate_code_usage = async (year, month) => {
 		set_loading(true);
-		const { data } = await API_Orders.promo_code_usage_orders_a(year, month);
-		console.log({ promo_code_usage: data });
-		set_affiliate_earnings(data);
+		const { data } = await API_Orders.affiliate_code_usage_orders_a(year, month);
+		console.log({ data });
+		// set_affiliate_earnings(data);
 		set_loading(false);
 	};
+
+	const promo_code_usage = async (year, month, query) => {
+		set_loading(true);
+		const { data } = await API_Orders.promo_code_usage_orders_a(year, month, query);
+		console.log({ promo_code_usage: data });
+		set_promo_earnings((promo) => {
+			return { ...promo, [Object.keys(query)[0]]: data };
+		});
+		set_loading(false);
+	};
+	console.log({ promo_earnings });
 
 	const get_monthly_income = async (year, month) => {
 		set_loading(true);
@@ -167,122 +184,8 @@ const MonthExpensesPage = (props) => {
 		get_monthly_income(year, month);
 	};
 
-	const [ affiliate_colors, set_affiliate_colors ] = useState([]);
-	const [ promo_colors, set_promo_colors ] = useState([]);
-	const [ affiliate_code_usage, set_affiliate_code_usage ] = useState([]);
-	const affiliate_multiplier = 360 / [ ...affiliates, { promo_code: 'inkybois' } ].length;
-	let affiliate_num = -affiliate_multiplier;
-	const promo_multiplier = 360 / promos.length;
-	let promo_num = -promo_multiplier;
-
-	useEffect(
-		() => {
-			let clean = true;
-			if (clean) {
-				if (affiliates) {
-					determine_affiliate_colors();
-				}
-			}
-			return () => (clean = false);
-		},
-		[ affiliates ]
-	);
-
-	useEffect(
-		() => {
-			let clean = true;
-			if (clean) {
-				if (promos) {
-					determine_promo_colors();
-				}
-			}
-			return () => (clean = false);
-		},
-		[ promos ]
-	);
-	const determine_affiliate_colors = () => {
-		const colors = [ ...affiliates, { promo_code: 'inkybois' } ].map((item) => {
-			affiliate_num += affiliate_multiplier;
-			let color = hslToHex(affiliate_num, 25, 50);
-			return color;
-		});
-		set_affiliate_colors(colors);
-	};
-
-	const determine_promo_colors = () => {
-		const colors = [ ...promos, { promo_code: 'inkybois' } ].map((item) => {
-			promo_num += promo_multiplier;
-			let color = hslToHex(promo_num, 25, 50);
-			return color;
-		});
-		set_promo_colors(colors);
-	};
-
-	const [ total_affiliate_revenue, set_total_affiliate_revenue ] = useState();
-	const [ total_affiliate_promo_code_usage, set_total_affiliate_promo_code_usage ] = useState();
-	const [ total_affiliate_earned, set_total_affiliate_earned ] = useState();
-
-	const get_total = () => {
-		const uses = affiliates.map((affiliate) => {
-			return orders.filter((order) => {
-				return (
-					order.promo_code &&
-					order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
-				);
-			}).length;
-		});
-		set_total_affiliate_promo_code_usage(uses.reduce((a, c) => a + c, 0));
-		console.log({ uses });
-		const revenue = affiliates.map((affiliate) => {
-			return orders
-				.filter(
-					(order) =>
-						order.promo_code &&
-						order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
-				)
-				.reduce((a, order) => a + order.totalPrice - order.taxPrice, 0)
-				.toFixed(2);
-		});
-		set_total_affiliate_revenue(revenue.reduce((a, c) => parseFloat(a) + parseFloat(c), 0));
-		console.log({ revenue });
-		const earned = affiliates.map((affiliate) => {
-			return affiliate.promoter
-				? orders
-						.filter(
-							(order) =>
-								order.promo_code &&
-								order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
-						)
-						.reduce((a, order) => a + (order.totalPrice - order.taxPrice) * 0.1, 0)
-						.toFixed(2)
-				: orders
-						.filter(
-							(order) =>
-								order.promo_code &&
-								order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
-						)
-						.reduce((a, order) => a + (order.totalPrice - order.taxPrice) * 0.15, 0)
-						.toFixed(2);
-		});
-		set_total_affiliate_earned(earned.reduce((a, c) => parseFloat(a) + parseFloat(c), 0));
-		console.log({ earned });
-	};
-
-	useEffect(
-		() => {
-			let clean = true;
-			if (clean) {
-				if (orders && affiliates) {
-					get_total();
-				}
-			}
-			return () => (clean = false);
-		},
-		[ affiliates, orders ]
-	);
-
 	const [ total_promo_revenue, set_total_promo_revenue ] = useState();
-	const [ total_promo_promo_code_usage, set_total_promo_promo_code_usage ] = useState();
+	const [ total_promo_affiliate_code_usage, set_total_promo_affiliate_code_usage ] = useState();
 
 	const get_total_promos = () => {
 		const uses = promos.map((promo) => {
@@ -290,7 +193,7 @@ const MonthExpensesPage = (props) => {
 				return order.promo_code && order.promo_code.toLowerCase() === promo.promo_code.toLowerCase();
 			}).length;
 		});
-		set_total_promo_promo_code_usage(uses.reduce((a, c) => a + c, 0));
+		set_total_promo_affiliate_code_usage(uses.reduce((a, c) => a + c, 0));
 		console.log({ uses });
 		const revenue = promos.map((promo) => {
 			return orders
@@ -352,6 +255,7 @@ const MonthExpensesPage = (props) => {
 								<option value="">---Choose Year---</option>
 								<option value="2020">2020</option>
 								<option value="2021">2021</option>
+								<option value="2022">2022</option>
 							</select>
 							<span className="custom-arrow" />
 						</div>
@@ -625,8 +529,6 @@ const MonthExpensesPage = (props) => {
 					)}
 				</TabPanel>
 				<TabPanel>
-					{/* <Loading loading={expenses.length === 0} /> */}
-					{console.log({ affiliate_earnings })}
 					<div>
 						<h2 className="ta-c w-100per jc-c">
 							{this_month} {this_year} Top Code Revenue
@@ -645,40 +547,40 @@ const MonthExpensesPage = (props) => {
 										</thead>
 										<tbody>
 											{affiliate_earnings &&
-												affiliate_earnings.revenue &&
-												affiliate_earnings.revenue.affiliates.map((affiliate, index) => (
-													<tr
-														style={{
-															backgroundColor: '#2f3244',
-															fontSize: '1.6rem',
-															height: '50px'
-														}}
-													>
-														<th style={{ padding: '15px' }}>{affiliate['Promo Code']}</th>
-														<th style={{ padding: '15px' }}>{affiliate.Uses}</th>
-														<th style={{ padding: '15px' }}>
-															${affiliate.Revenue ? parseInt(affiliate.Revenue) : '0.00'}
-														</th>
-														<th style={{ padding: '15px' }}>
-															${affiliate.Earned ? parseInt(affiliate.Earned) : '0.00'}
-														</th>
-													</tr>
-												))}
+												affiliate_earnings.affiliates &&
+												affiliate_earnings.affiliates.sort((a, b) =>
+													(parseFloat(a.Revenue) > parseFloat(b.Revenue)
+														? -1
+														: 1).map((affiliate, index) => (
+														<tr
+															style={{
+																backgroundColor: '#2f3244',
+																fontSize: '1.6rem',
+																height: '50px'
+															}}
+														>
+															<th style={{ padding: '15px' }}>
+																{affiliate['Promo Code']}
+															</th>
+															<th style={{ padding: '15px' }}>{affiliate.Uses}</th>
+															<th style={{ padding: '15px' }}>
+																${affiliate.Revenue ? parseFloat(affiliate.Revenue) : '0.00'}
+															</th>
+															<th style={{ padding: '15px' }}>
+																${affiliate.Earned ? parseFloat(affiliate.Earned) : '0.00'}
+															</th>
+														</tr>
+													))
+												)}
 										</tbody>
-										{affiliate_earnings.revenue && (
+										{affiliate_earnings && (
 											<tfoot>
 												<tr>
 													<th>Total</th>
-													<th>{affiliate_earnings.revenue.uses}</th>
-													<th>
-														${affiliate_earnings.revenue.revenue &&
-															affiliate_earnings.revenue.revenue}
-													</th>
+													<th>{affiliate_earnings.uses}</th>
+													<th>${affiliate_earnings.revenue && affiliate_earnings.revenue}</th>
 
-													<th>
-														${affiliate_earnings.revenue.earned &&
-															affiliate_earnings.revenue.earned}
-													</th>
+													<th>${affiliate_earnings.earned && affiliate_earnings.earned}</th>
 												</tr>
 											</tfoot>
 										)}
@@ -689,8 +591,6 @@ const MonthExpensesPage = (props) => {
 					</div>
 				</TabPanel>
 				<TabPanel>
-					{/* <Loading loading={expenses.length === 0} /> */}
-					{console.log({ affiliate_earnings })}
 					<div>
 						<h2 className="ta-c w-100per jc-c">
 							{this_month} {this_year} Top Code Earned
@@ -709,40 +609,40 @@ const MonthExpensesPage = (props) => {
 										</thead>
 										<tbody>
 											{affiliate_earnings &&
-												affiliate_earnings.earned &&
-												affiliate_earnings.earned.affiliates.map((affiliate, index) => (
-													<tr
-														style={{
-															backgroundColor: '#2f3244',
-															fontSize: '1.6rem',
-															height: '50px'
-														}}
-													>
-														<th style={{ padding: '15px' }}>{affiliate['Promo Code']}</th>
-														<th style={{ padding: '15px' }}>{affiliate.Uses}</th>
-														<th style={{ padding: '15px' }}>
-															${affiliate.Revenue ? parseInt(affiliate.Revenue) : '0.00'}
-														</th>
-														<th style={{ padding: '15px' }}>
-															${affiliate.Earned ? parseInt(affiliate.Earned) : '0.00'}
-														</th>
-													</tr>
-												))}
+												affiliate_earnings.affiliates &&
+												affiliate_earnings.affiliates.sort((a, b) =>
+													(parseFloat(a.Earnings) > parseFloat(b.Earnings)
+														? -1
+														: 1).map((affiliate, index) => (
+														<tr
+															style={{
+																backgroundColor: '#2f3244',
+																fontSize: '1.6rem',
+																height: '50px'
+															}}
+														>
+															<th style={{ padding: '15px' }}>
+																{affiliate['Promo Code']}
+															</th>
+															<th style={{ padding: '15px' }}>{affiliate.Uses}</th>
+															<th style={{ padding: '15px' }}>
+																${affiliate.Revenue ? parseFloat(affiliate.Revenue) : '0.00'}
+															</th>
+															<th style={{ padding: '15px' }}>
+																${affiliate.Earned ? parseFloat(affiliate.Earned) : '0.00'}
+															</th>
+														</tr>
+													))
+												)}
 										</tbody>
-										{affiliate_earnings.earned && (
+										{affiliate_earnings && (
 											<tfoot>
 												<tr>
 													<th>Total</th>
-													<th>{affiliate_earnings.earned.uses}</th>
-													<th>
-														${affiliate_earnings.earned.revenue &&
-															affiliate_earnings.earned.revenue}
-													</th>
+													<th>{affiliate_earnings.uses}</th>
+													<th>${affiliate_earnings.revenue && affiliate_earnings.revenue}</th>
 
-													<th>
-														${affiliate_earnings.earned.earned &&
-															affiliate_earnings.earned.earned}
-													</th>
+													<th>${affiliate_earnings.earned && affiliate_earnings.earned}</th>
 												</tr>
 											</tfoot>
 										)}
@@ -753,8 +653,6 @@ const MonthExpensesPage = (props) => {
 					</div>
 				</TabPanel>
 				<TabPanel>
-					{/* <Loading loading={expenses.length === 0} /> */}
-					{console.log({ affiliate_earnings })}
 					<div>
 						<h2 className="ta-c w-100per jc-c">
 							{this_month} {this_year} Top Code Usage
@@ -773,40 +671,40 @@ const MonthExpensesPage = (props) => {
 										</thead>
 										<tbody>
 											{affiliate_earnings &&
-												affiliate_earnings.uses &&
-												affiliate_earnings.uses.affiliates.map((affiliate, index) => (
-													<tr
-														style={{
-															backgroundColor: '#2f3244',
-															fontSize: '1.6rem',
-															height: '50px'
-														}}
-													>
-														<th style={{ padding: '15px' }}>{affiliate['Promo Code']}</th>
-														<th style={{ padding: '15px' }}>{affiliate.Uses}</th>
-														<th style={{ padding: '15px' }}>
-															${affiliate.Revenue ? parseInt(affiliate.Revenue) : '0.00'}
-														</th>
-														<th style={{ padding: '15px' }}>
-															${affiliate.Earned ? parseInt(affiliate.Earned) : '0.00'}
-														</th>
-													</tr>
-												))}
+												affiliate_earnings.affiliates &&
+												affiliate_earnings.affiliates.sort((a, b) =>
+													(parseFloat(a.Uses) > parseFloat(b.Uses)
+														? -1
+														: 1).map((affiliate, index) => (
+														<tr
+															style={{
+																backgroundColor: '#2f3244',
+																fontSize: '1.6rem',
+																height: '50px'
+															}}
+														>
+															<th style={{ padding: '15px' }}>
+																{affiliate['Promo Code']}
+															</th>
+															<th style={{ padding: '15px' }}>{affiliate.Uses}</th>
+															<th style={{ padding: '15px' }}>
+																${affiliate.Revenue ? parseFloat(affiliate.Revenue) : '0.00'}
+															</th>
+															<th style={{ padding: '15px' }}>
+																${affiliate.Earned ? parseFloat(affiliate.Earned) : '0.00'}
+															</th>
+														</tr>
+													))
+												)}
 										</tbody>
-										{affiliate_earnings.uses && (
+										{affiliate_earnings && (
 											<tfoot>
 												<tr>
 													<th>Total</th>
-													<th>{affiliate_earnings.uses.uses}</th>
-													<th>
-														${affiliate_earnings.uses.revenue &&
-															affiliate_earnings.uses.revenue}
-													</th>
+													<th>{affiliate_earnings.uses}</th>
+													<th>${affiliate_earnings.revenue && affiliate_earnings.revenue}</th>
 
-													<th>
-														${affiliate_earnings.uses.earned &&
-															affiliate_earnings.uses.earned}
-													</th>
+													<th>${affiliate_earnings.earned && affiliate_earnings.earned}</th>
 												</tr>
 											</tfoot>
 										)}
@@ -816,89 +714,67 @@ const MonthExpensesPage = (props) => {
 						</div>
 					</div>
 				</TabPanel>
-				<TabPanel>
-					{/* <Loading loading={expenses.length === 0} /> */}
-					{promos &&
-					promos.length > 0 && (
-						<div>
-							<h2 className="ta-c w-100per jc-c">
-								{this_month} {this_year} Promo Code Usage
-							</h2>
-							<div className="">
+				{promo_earnings &&
+					Object.entries(promo_earnings).map((promo) => (
+						<TabPanel>
+							<div>
+								<h2 className="ta-c w-100per jc-c">
+									{this_month} {this_year} Top Code Usage
+								</h2>
 								<div className="">
-									<div className="order-list responsive_table">
-										<table className="styled-table">
-											<thead>
-												<tr>
-													<th>Promo Code</th>
-													<th>Uses</th>
-													<th>Revenue</th>
-												</tr>
-											</thead>
-											<tbody>
-												{promos
-													.filter(
-														(promo) =>
-															!affiliates
-																.map((affiliate) => affiliate.public_code.promo_code)
-																.includes(promo.promo_code.toLowerCase())
-													)
-													.map((promo, index) => (
-														<tr
-															style={{
-																backgroundColor: '#2f3244',
-																height: '50px'
-															}}
-															// className="title_font"
-														>
-															<th style={{ padding: '15px' }}>
-																{toCapitalize(promo.promo_code)}
-															</th>
-															<th style={{ padding: '15px' }}>
-																{
-																	orders.filter((order) => {
-																		return (
-																			order.promo_code &&
-																			order.promo_code.toLowerCase() ===
-																				promo.promo_code.toLowerCase()
-																		);
-																	}).length
-																}
-															</th>
-															<th style={{ padding: '15px' }}>
-																${orders
-																	.filter(
-																		(order) =>
-																			order.promo_code &&
-																			order.promo_code.toLowerCase() ===
-																				promo.promo_code.toLowerCase()
-																	)
-																	.reduce(
-																		(a, order) =>
-																			a + order.totalPrice - order.taxPrice,
-																		0
-																	)
-																	.toFixed(2)}
-															</th>
+									<div className="">
+										<div className="order-list responsive_table">
+											<table className="styled-table">
+												<thead>
+													<tr>
+														<th>Promo Code</th>
+														<th>Uses</th>
+														<th>Revenue</th>
+														<th>Earned</th>
+													</tr>
+												</thead>
+												<tbody>
+													{promo &&
+														promo.uses &&
+														promo.uses.affiliates.map((affiliate, index) => (
+															<tr
+																style={{
+																	backgroundColor: '#2f3244',
+																	fontSize: '1.6rem',
+																	height: '50px'
+																}}
+															>
+																<th style={{ padding: '15px' }}>
+																	{affiliate['Promo Code']}
+																</th>
+																<th style={{ padding: '15px' }}>{affiliate.Uses}</th>
+																<th style={{ padding: '15px' }}>
+																	${affiliate.Revenue ? parseInt(affiliate.Revenue) : '0.00'}
+																</th>
+																<th style={{ padding: '15px' }}>
+																	${affiliate.Earned ? parseInt(affiliate.Earned) : '0.00'}
+																</th>
+															</tr>
+														))}
+												</tbody>
+												{promo.uses && (
+													<tfoot>
+														<tr>
+															<th>Total</th>
+															<th>{promo.uses.uses}</th>
+															<th>${promo.uses.revenue && promo.uses.revenue}</th>
+
+															<th>${promo.uses.earned && promo.uses.earned}</th>
 														</tr>
-													))}
-											</tbody>
-											<tfoot>
-												<tr>
-													<th>Total</th>
-													<th>{total_promo_promo_code_usage}</th>
-													<th>
-														${total_promo_revenue > 0 && total_promo_revenue.toFixed(2)}
-													</th>
-												</tr>
-											</tfoot>
-										</table>
+													</tfoot>
+												)}
+											</table>
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-					)}
-				</TabPanel>
+						</TabPanel>
+					))}
 			</Tabs>
 		</div>
 	);

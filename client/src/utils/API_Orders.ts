@@ -11,18 +11,23 @@ const order_routes = {
 	top_customers: () => {
 		return axios.get('/api/orders/top_customers');
 	},
-	specific_time_income: (date_1: string, date_2: string) => {
-		return axios.put('/api/orders/specific_time_income', { date_1, date_2 });
-	},
 	monthly_expenses: (date_1: string, date_2: string) => {
 		return axios.put('/api/expenses/monthly_expenses', { date_1, date_2 });
 	},
 	income: (year: number, month: string) => {
 		return axios.get(`/api/orders/income/${year}${month ? '/' + month : ''}`);
 	},
-	promo_code_usage_orders_a: (year: number, month: string) => {
+	affiliate_code_usage_orders_a: (arg: any) => {
+		console.log({ arg });
+		return axios.get(
+			`/api/orders/affiliate_code_usage/${arg.year}${arg.month ? '/' + arg.month : ''}${arg.position
+				? `?position=${arg.position}`
+				: ''}`
+		);
+	},
+	promo_code_usage_orders_a: (year: number, month: string, query: string) => {
 		// console.log({ query });
-		return axios.get(`/api/orders/promo_code_usage/${year}${month ? '/' + month : ''}`);
+		return axios.get(`/api/orders/promo_code_usage/${year}${month ? '/' + month : ''}?${create_query(query)}`);
 	},
 	// yearly_income: (year: number) => {
 	// 	return axios.get(`/api/orders/yearly_income/${year}`);

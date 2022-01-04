@@ -39,7 +39,7 @@ const ControlPanelPage = (props) => {
 	const [ yesterday_income, set_yesterday_income ] = useState([]);
 	const [ monthly_income, set_monthly_income ] = useState([]);
 	const [ total_affiliate_revenue, set_total_affiliate_revenue ] = useState([]);
-	const [ total_promo_code_usage, set_total_promo_code_usage ] = useState([]);
+	const [ total_affiliate_code_usage, set_total_affiliate_code_usage ] = useState([]);
 	const [ yearly_income, set_yearly_income ] = useState([]);
 	const [ year, set_year ] = useState(2021);
 	const [ month, set_month ] = useState();
@@ -142,7 +142,7 @@ const ControlPanelPage = (props) => {
 				);
 			}).length;
 		});
-		set_total_promo_code_usage(uses.reduce((a, c) => a + c, 0));
+		set_total_affiliate_code_usage(uses.reduce((a, c) => a + c, 0));
 		console.log({ uses });
 		const revenue = affiliates.map((affiliate) => {
 			return orders
@@ -362,6 +362,7 @@ const ControlPanelPage = (props) => {
 								<option value="">---Choose Year---</option>
 								<option value="2020">2020</option>
 								<option value="2021">2021</option>
+								<option value="2022">2022</option>
 							</select>
 							<span className="custom-arrow" />
 						</div>
@@ -769,7 +770,7 @@ const ControlPanelPage = (props) => {
 											}).length
 										} */}
 
-										{total_promo_code_usage}
+										{total_affiliate_code_usage}
 									</th>
 									<th style={{ padding: '15px' }}>
 										${total_affiliate_revenue > 0 && total_affiliate_revenue.toFixed(2)}

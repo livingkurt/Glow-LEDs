@@ -254,7 +254,7 @@ const MonthlyExpensesPage = (props) => {
 	return (
 		<div className="main_container p-20px">
 			<Helmet>
-				<title>Admin {year} Monthly Income | Glow LEDs</title>8
+				<title>Admin {year} Monthly Income | Glow LEDs</title>
 			</Helmet>
 			<div className="">
 				<Link to="/secure/glow/controlpanel">
@@ -274,8 +274,10 @@ const MonthlyExpensesPage = (props) => {
 								}}
 							>
 								<option value="">---Choose Year---</option>
+								{/* {[...Array().keys].map} */}
 								<option value="2020">2020</option>
 								<option value="2021">2021</option>
+								<option value="2022">2022</option>
 							</select>
 							<span className="custom-arrow" />
 						</div>

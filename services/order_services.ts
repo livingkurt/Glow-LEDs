@@ -1,8 +1,10 @@
-import { affiliate_db, expense_db, order_db, user_db } from '../db';
+import { affiliate_db, expense_db, order_db, promo_db, user_db } from '../db';
 import {
 	categories,
 	dates_in_year,
 	determine_filter,
+	determine_promoter_code_tier,
+	determine_sponsor_code_tier,
 	month_dates,
 	removeDuplicates,
 	subcategories,
@@ -189,7 +191,7 @@ export default {
 			final_result.sort((a, b) => (a.occurrence > b.occurrence ? -1 : 1));
 			return final_result;
 		} catch (error) {
-			console.log({ remove_orders_s_error: error });
+			console.log({ occurrences_orders_s_error: error });
 			throw new Error(error.message);
 		}
 	},
@@ -214,7 +216,7 @@ export default {
 				.slice(0, 20);
 			return sorted_orders;
 		} catch (error) {
-			console.log({ remove_orders_s_error: error });
+			console.log({ top_customers_orders_s_error: error });
 			throw new Error(error.message);
 		}
 	},
@@ -257,7 +259,7 @@ export default {
 			final_result.sort((a, b) => (a.occurrence > b.occurrence ? -1 : 1));
 			return final_result;
 		} catch (error) {
-			console.log({ remove_orders_s_error: error });
+			console.log({ category_occurrences_orders_s_error: error });
 			throw new Error(error.message);
 		}
 	},
@@ -280,7 +282,7 @@ export default {
 			// console.log({ number_of_uses, revenue });
 			return { number_of_uses, revenue };
 		} catch (error) {
-			console.log({ remove_orders_s_error: error });
+			console.log({ code_usage_orders_s_error: error });
 			throw new Error(error.message);
 		}
 	},
@@ -298,25 +300,26 @@ export default {
 			});
 			return result;
 		} catch (error) {
-			console.log({ remove_orders_s_error: error });
+			console.log({ tax_rates_orders_s_error: error });
 			throw new Error(error.message);
 		}
 	},
-	promo_code_usage_orders_s: async (params: any) => {
+	affiliate_code_usage_orders_s: async (params: any, query: any) => {
 		try {
 			const sort = {};
 			console.log({ params });
-			let filter = {};
+			let o_filter = {};
 
 			console.log({
 				month: params.month,
-				year: params.year
+				year: params.year,
+				position: query.position
 			});
 			if (params.month && params.month.length > 0) {
 				console.log('Month True');
 				const start_date = month_dates(params.month, params.year).start_date;
 				const end_date = month_dates(params.month, params.year).end_date;
-				filter = {
+				o_filter = {
 					deleted: false,
 					isPaid: true,
 					createdAt: {
@@ -328,7 +331,7 @@ export default {
 				console.log('Year True');
 				const start_date = params.year + '-01-01';
 				const end_date = params.year + '-12-31';
-				filter = {
+				o_filter = {
 					deleted: false,
 					isPaid: true,
 					createdAt: {
@@ -338,117 +341,293 @@ export default {
 				};
 			} else {
 				console.log('No True');
-				filter = { deleted: false, isPaid: true };
+				o_filter = { deleted: false, isPaid: true };
 			}
-			console.log({ filter });
+			console.log({ query });
+			let a_filter: any = { deleted: false, active: true };
+			if (query.position === 'promoter') {
+				a_filter = { deleted: false, active: true, promoter: true };
+			} else if (query.position === 'sponsor') {
+				a_filter = { deleted: false, active: true, sponsor: true };
+			}
 
-			// const filter = determine_filter(query, {});
+			// const o_filter = determine_o_filter(query, {});
 			const limit = 0;
 			const page = 1;
-			const orders = await order_db.findAll_orders_db(filter, sort, limit, page);
-			const affiliates = await affiliate_db.findAll_affiliates_db({ deleted: false, active: true }, {});
-			const affiliates_w_inkybois = [ ...affiliates, { public_code: { promo_code: 'inkybois' } } ];
-			// console.log({ affiliates_w_inkybois, orders });
-			const affiliate_earnings_dups: any = affiliates_w_inkybois.map((affiliate: any) => {
+			console.log({ o_filter, a_filter });
+			const orders = await order_db.findAll_orders_db(o_filter, sort, limit, page);
+			let affiliates = await affiliate_db.findAll_affiliates_db(a_filter, {});
+			if (!query.position) {
+				affiliates = [ ...affiliates, { public_code: { promo_code: 'inkybois' } } ];
+			}
+
+			const affiliate_earnings_dups: any = affiliates.map((affiliate: any) => {
+				const code_usage = orders.filter((order: any) => {
+					return (
+						order.promo_code &&
+						order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
+					);
+				}).length;
 				return {
 					'Promo Code': toCapitalize(affiliate.public_code.promo_code),
+					Uses: code_usage,
+					Revenue: `${orders &&
+						orders
+							.filter(
+								(order: any) =>
+									order.promo_code &&
+									order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
+							)
+							.reduce(
+								(a: any, order: any) =>
+									a +
+									order.totalPrice -
+									order.taxPrice -
+									(order.payment.refund
+										? order.payment.refund.reduce((a: any, c: any) => a + c.amount, 0) / 100
+										: 0),
+								0
+							)
+							.toFixed(2)}`,
+					Earned: affiliate.promoter
+						? orders &&
+							orders
+								.filter(
+									(order: any) =>
+										order.promo_code &&
+										order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
+								)
+								.reduce(
+									(a: any, order: any) =>
+										a +
+										(order.totalPrice -
+											order.taxPrice -
+											(order.payment.refund
+												? order.payment.refund.reduce((a: any, c: any) => a + c.amount, 0) / 100
+												: 0)) *
+											0.1,
+									0
+								)
+								.toFixed(2)
+						: orders &&
+							orders
+								.filter(
+									(order: any) =>
+										order.promo_code &&
+										order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
+								)
+								.reduce(
+									(a: any, order: any) =>
+										a +
+										(order.totalPrice -
+											order.taxPrice -
+											(order.payment.refund
+												? order.payment.refund.reduce((a: any, c: any) => a + c.amount, 0) / 100
+												: 0)) *
+											0.15,
+									0
+								)
+								.toFixed(2),
+					'Percentage Off':
+						!affiliate.team && affiliate.promoter
+							? `${determine_promoter_code_tier(code_usage)}%`
+							: `${determine_sponsor_code_tier(code_usage)}%`
+				};
+			});
+			// console.log({ affiliate_earnings_dups });
+			// const sorted_by_uses = affiliate_earnings_dups.sort(
+			// 	(a: any, b: any) => (parseFloat(a.Uses) > parseFloat(b.Uses) ? -1 : 1)
+			// );
+			// const sorted_by_earned = affiliate_earnings_dups.sort(
+			// 	(a: any, b: any) => (parseFloat(a.Earned) > parseFloat(b.Earned) ? -1 : 1)
+			// );
+			// const sorted_by_revenue = affiliate_earnings_dups.sort(
+			// 	(a: any, b: any) => (parseFloat(a.Revenue) > parseFloat(b.Revenue) ? -1 : 1)
+			// );
+			// const affiliate_s_earned: any = removeDuplicates(sorted_by_earned, 'Promo Code');
+			// const uses_s_earned: any = affiliate_s_earned.reduce((a: any, affiliate: any) => a + affiliate.Uses, 0);
+			// const revenue_s_earned: any = affiliate_s_earned.reduce(
+			// 	(a: any, affiliate: any) => parseFloat(a) + parseFloat(affiliate.Revenue),
+			// 	0
+			// );
+			// const earned_s_earned: any = affiliate_s_earned.reduce(
+			// 	(a: any, affiliate: any) => parseFloat(a) + parseFloat(affiliate.Earned),
+			// 	0
+			// );
+			const affiliate_s: any = removeDuplicates(affiliate_earnings_dups, 'Promo Code');
+			const uses_s: any = affiliate_s.reduce((a: any, affiliate: any) => a + affiliate.Uses, 0);
+			const revenue_s: any = affiliate_s.reduce(
+				(a: any, affiliate: any) => parseFloat(a) + parseFloat(affiliate.Revenue),
+				0
+			);
+			const earned_s: any = affiliate_s.reduce(
+				(a: any, affiliate: any) => parseFloat(a) + parseFloat(affiliate.Earned),
+				0
+			);
+			// const affiliate_s_uses: any = removeDuplicates(sorted_by_uses, 'Promo Code');
+			// const uses_s_uses: any = affiliate_s_uses.reduce((a: any, affiliate: any) => a + affiliate.Uses, 0);
+			// const revenue_s_uses: any = affiliate_s_uses.reduce(
+			// 	(a: any, affiliate: any) => parseFloat(a) + parseFloat(affiliate.Revenue),
+			// 	0
+			// );
+			// const earned_s_uses: any = affiliate_s_uses.reduce(
+			// 	(a: any, affiliate: any) => parseFloat(a) + parseFloat(affiliate.Earned),
+			// 	0
+			// );
+			// console.log({ rows });
+
+			// return { affiliate_earnings, uses, revenue, earned };
+			console.log({
+				affiliates: affiliate_s,
+				uses: uses_s,
+				revenue: revenue_s,
+				earned: earned_s
+			});
+			return {
+				affiliates: affiliate_s,
+				uses: uses_s,
+				revenue: revenue_s,
+				earned: earned_s
+			};
+			// return 'Success';
+		} catch (error) {
+			console.log({ affiliate_code_usage_orders_s_error: error });
+			throw new Error(error.message);
+		}
+	},
+	promo_code_usage_orders_s: async (params: any, query: any) => {
+		try {
+			const sort = {};
+			console.log({ params, query });
+			let o_filter = {};
+
+			console.log({
+				month: params.month,
+				year: params.year
+			});
+			if (params.month && params.month.length > 0) {
+				console.log('Month True');
+				const start_date = month_dates(params.month, params.year).start_date;
+				const end_date = month_dates(params.month, params.year).end_date;
+				o_filter = {
+					deleted: false,
+					isPaid: true,
+					createdAt: {
+						$gte: new Date(start_date),
+						$lte: new Date(end_date)
+					}
+				};
+			} else if (params.year && params.year.length > 0) {
+				console.log('Year True');
+				const start_date = params.year + '-01-01';
+				const end_date = params.year + '-12-31';
+				o_filter = {
+					deleted: false,
+					isPaid: true,
+					createdAt: {
+						$gte: new Date(start_date),
+						$lte: new Date(end_date)
+					}
+				};
+			} else {
+				console.log('No True');
+				o_filter = { deleted: false, isPaid: true };
+			}
+			console.log({ o_filter });
+
+			const p_filter = determine_filter(query, {});
+			console.log({ p_filter });
+			const limit = 0;
+			const page = 1;
+			const orders = await order_db.findAll_orders_db(o_filter, sort, limit, page);
+			const promos = await promo_db.findAll_promos_db(p_filter, {});
+			// console.log({ affiliates_w_inkybois, orders });
+			const promos_earnings: any = promos.map((code: any) => {
+				return {
+					'Promo Code': toCapitalize(code.promo_code),
 					Uses: orders.filter((order: any) => {
-						return (
-							order.promo_code &&
-							order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
-						);
+						return order.promo_code && order.promo_code.toLowerCase() === code.promo_code.toLowerCase();
 					}).length,
 					Revenue: orders
 						.filter(
 							(order: any) =>
-								order.promo_code &&
-								order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
+								order.promo_code && order.promo_code.toLowerCase() === code.promo_code.toLowerCase()
 						)
 						.reduce((a: any, order: any) => a + order.totalPrice - order.taxPrice, 0)
 						.toFixed(2),
-					Earned: affiliate.promoter
-						? orders
-								.filter(
-									(order: any) =>
-										order.promo_code &&
-										order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
-								)
-								.reduce((a: any, order: any) => a + (order.totalPrice - order.taxPrice) * 0.1, 0)
-								.toFixed(2)
-						: orders
-								.filter(
-									(order: any) =>
-										order.promo_code &&
-										order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
-								)
-								.reduce((a: any, order: any) => a + (order.totalPrice - order.taxPrice) * 0.15, 0)
-								.toFixed(2)
+					Discount: orders
+						.filter(
+							(order: any) =>
+								order.promo_code && order.promo_code.toLowerCase() === code.promo_code.toLowerCase()
+						)
+						.reduce(
+							(a: any, order: any) => a + (order.totalPrice - order.taxPrice) * code.percentage_off / 100,
+							0
+						)
+						.toFixed(2)
 				};
 			});
-			const sorted_by_uses = affiliate_earnings_dups.sort(
+			const sorted_by_uses = promos_earnings.sort(
 				(a: any, b: any) => (parseFloat(a.Uses) > parseFloat(b.Uses) ? -1 : 1)
 			);
-			const sorted_by_earned = affiliate_earnings_dups.sort(
-				(a: any, b: any) => (parseFloat(a.Earned) > parseFloat(b.Earned) ? -1 : 1)
+			const sorted_by_discount = promos_earnings.sort(
+				(a: any, b: any) => (parseFloat(a.Discount) > parseFloat(b.Discount) ? -1 : 1)
 			);
-			const sorted_by_revenue = affiliate_earnings_dups.sort(
+			const sorted_by_revenue = promos_earnings.sort(
 				(a: any, b: any) => (parseFloat(a.Revenue) > parseFloat(b.Revenue) ? -1 : 1)
 			);
-			const affiliate_s_earned: any = removeDuplicates(sorted_by_earned, 'Promo Code');
-			const uses_s_earned: any = affiliate_s_earned.reduce((a: any, affiliate: any) => a + affiliate.Uses, 0);
-			const revenue_s_earned: any = affiliate_s_earned.reduce(
-				(a: any, affiliate: any) => parseFloat(a) + parseFloat(affiliate.Revenue),
+			const uses_s_discount: any = sorted_by_discount.reduce((a: any, promo: any) => a + promo.Uses, 0);
+			const revenue_s_discount: any = sorted_by_discount.reduce(
+				(a: any, promo: any) => parseFloat(a) + parseFloat(promo.Revenue),
 				0
 			);
-			const earned_s_earned: any = affiliate_s_earned.reduce(
-				(a: any, affiliate: any) => parseFloat(a) + parseFloat(affiliate.Earned),
+			const discount_s_discount: any = sorted_by_discount.reduce(
+				(a: any, promo: any) => parseFloat(a) + parseFloat(promo.Discount),
 				0
 			);
-			const affiliate_s_revenue: any = removeDuplicates(sorted_by_revenue, 'Promo Code');
-			const uses_s_revenue: any = affiliate_s_revenue.reduce((a: any, affiliate: any) => a + affiliate.Uses, 0);
-			const revenue_s_revenue: any = affiliate_s_revenue.reduce(
-				(a: any, affiliate: any) => parseFloat(a) + parseFloat(affiliate.Revenue),
+			const uses_s_revenue: any = sorted_by_revenue.reduce((a: any, promo: any) => a + promo.Uses, 0);
+			const revenue_s_revenue: any = sorted_by_revenue.reduce(
+				(a: any, promo: any) => parseFloat(a) + parseFloat(promo.Revenue),
 				0
 			);
-			const earned_s_revenue: any = affiliate_s_revenue.reduce(
-				(a: any, affiliate: any) => parseFloat(a) + parseFloat(affiliate.Earned),
+			const discount_s_revenue: any = sorted_by_revenue.reduce(
+				(a: any, promo: any) => parseFloat(a) + parseFloat(promo.Discount),
 				0
 			);
-			const affiliate_s_uses: any = removeDuplicates(sorted_by_uses, 'Promo Code');
-			const uses_s_uses: any = affiliate_s_uses.reduce((a: any, affiliate: any) => a + affiliate.Uses, 0);
-			const revenue_s_uses: any = affiliate_s_uses.reduce(
-				(a: any, affiliate: any) => parseFloat(a) + parseFloat(affiliate.Revenue),
+			const uses_s_uses: any = sorted_by_uses.reduce((a: any, promo: any) => a + promo.Uses, 0);
+			const revenue_s_uses: any = sorted_by_uses.reduce(
+				(a: any, promo: any) => parseFloat(a) + parseFloat(promo.Revenue),
 				0
 			);
-			const earned_s_uses: any = affiliate_s_uses.reduce(
-				(a: any, affiliate: any) => parseFloat(a) + parseFloat(affiliate.Earned),
+			const discount_s_uses: any = sorted_by_uses.reduce(
+				(a: any, promo: any) => parseFloat(a) + parseFloat(promo.Discount),
 				0
 			);
 			// console.log({ rows });
 
-			// return { affiliate_earnings, uses, revenue, earned };
+			// return { promo_earnings, uses, revenue, discount };
 			return {
-				earned: {
-					affiliates: affiliate_s_earned,
-					uses: uses_s_earned,
-					revenue: revenue_s_earned,
-					earned: earned_s_earned
+				discount: {
+					promos: sorted_by_discount,
+					uses: uses_s_discount,
+					revenue: revenue_s_discount,
+					discount: discount_s_discount
 				},
 				revenue: {
-					affiliates: affiliate_s_revenue,
+					promos: sorted_by_revenue,
 					uses: uses_s_revenue,
 					revenue: revenue_s_revenue,
-					earned: earned_s_revenue
+					discount: discount_s_revenue
 				},
 				uses: {
-					affiliates: affiliate_s_uses,
+					promos: sorted_by_uses,
 					uses: uses_s_uses,
 					revenue: revenue_s_uses,
-					earned: earned_s_uses
+					discount: discount_s_uses
 				}
 			};
 		} catch (error) {
-			console.log({ remove_orders_s_error: error });
+			console.log({ promo_code_usage_orders_s_error: error });
 			throw new Error(error.message);
 		}
 	},
@@ -468,7 +647,7 @@ export default {
 			const page = 1;
 			return await order_db.findAll_orders_db(filter, sort, limit, page);
 		} catch (error) {
-			console.log({ remove_orders_s_error: error });
+			console.log({ each_day_income_orders_s_error: error });
 			throw new Error(error.message);
 		}
 	},
@@ -491,7 +670,7 @@ export default {
 			const page = 1;
 			return await order_db.findAll_orders_db(filter, sort, limit, page);
 		} catch (error) {
-			console.log({ remove_orders_s_error: error });
+			console.log({ each_month_income_orders_s_error: error });
 			throw new Error(error.message);
 		}
 	},
@@ -508,25 +687,7 @@ export default {
 			const page = 1;
 			return await order_db.findAll_orders_db(filter, sort, limit, page);
 		} catch (error) {
-			console.log({ remove_orders_s_error: error });
-			throw new Error(error.message);
-		}
-	},
-	specific_time_income_orders_s: async (body: any) => {
-		try {
-			const sort = {};
-			const filter = {
-				deleted: false,
-				createdAt: {
-					$gte: new Date(body.date_1),
-					$lt: new Date(body.date_2)
-				}
-			};
-			const limit = 50;
-			const page = 1;
-			return await order_db.findAll_orders_db(filter, sort, limit, page);
-		} catch (error) {
-			console.log({ remove_orders_s_error: error });
+			console.log({ previous_income_orders_s_error: error });
 			throw new Error(error.message);
 		}
 	},
@@ -544,7 +705,7 @@ export default {
 			const page = 1;
 			return await order_db.findAll_orders_db(filter, sort, limit, page);
 		} catch (error) {
-			console.log({ remove_orders_s_error: error });
+			console.log({ mark_as_shipped_orders_s_error: error });
 			throw new Error(error.message);
 		}
 	},
@@ -959,7 +1120,7 @@ export default {
 			console.log({ yearly: breakdown });
 			return breakdown;
 		} catch (error) {
-			console.log({ remove_orders_s_error: error });
+			console.log({ income_orders_s_error: error });
 			throw new Error(error.message);
 		}
 	}
