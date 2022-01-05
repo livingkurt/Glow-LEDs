@@ -62,7 +62,8 @@ const google_catalog_upload = async () => {
 			const mpn = product.pathname;
 			const google_product_category = 'Toys & Games > Toys > Visual Toys';
 			const sale_price = product.sale_price + ' USD';
-			const sale_price_effective_date = '';
+			const sale_price_effective_date = `${product.sale_start_date &&
+				product.sale_start_date.slice(0, -1)}/${product.sale_end_date && product.sale_end_date.slice(0, -1)}`;
 
 			return {
 				id,
