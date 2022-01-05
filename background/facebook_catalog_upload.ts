@@ -57,9 +57,9 @@ const facebook_catalog_upload = async () => {
 			// 'item_group_id'
 		]);
 
-		const { data: products } = await axios.get('https://www.glow-leds.com/api/products');
+		const { data } = await axios.get('https://www.glow-leds.com/api/products?limit=0&hidden=false&option=false');
 
-		const new_rows = products
+		const new_rows = data.products
 			.filter((product: any) => !product.hidden)
 			.filter((product: any) => product.category !== 'options')
 			.map((product: any, i: number) => {
@@ -76,8 +76,10 @@ const facebook_catalog_upload = async () => {
 				const inventory = product.quantity;
 				const fb_product_category = 'toys & games > electronic toys';
 				const google_product_category = 'Toys & Games > Toys > Visual Toys';
-				const sale_price = product.sale_price;
-				const sale_price_effective_date = product.sale_price_effective_date;
+				const sale_price = `${product.sale_price && product.sale_price.toFixed(2)} USD`;
+				const sale_price_effective_date = `${product.sale_start_date &&
+					product.sale_start_date.slice(0, -1)}/${product.sale_end_date &&
+					product.sale_end_date.slice(0, -1)}`;
 				const product_type = product.category;
 				const color = product.color;
 				const size = product.size;

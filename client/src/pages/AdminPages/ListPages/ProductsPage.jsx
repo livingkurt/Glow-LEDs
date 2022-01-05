@@ -183,10 +183,15 @@ function ProductPage(props) {
 
 	const update_product_catelog = async () => {
 		set_loading_upload(true);
-		const { data } = await API_Products.get_all_products();
+		const { data } = await API_Products.findAll_products_a({
+			limit: 0,
+			hidden: false,
+			deleted: false,
+			option: false
+		});
 		console.log({ data });
-		await facebook_catalog_upload(data);
-		await google_catalog_upload(items);
+		await facebook_catalog_upload(data.products);
+		await google_catalog_upload(data.products);
 		set_loading_upload(false);
 	};
 

@@ -47,16 +47,16 @@ const google_catalog_upload = async () => {
 			'sale_price',
 			'sale_price_effective_date'
 		]);
-		const { data: products } = await axios.get('https://www.glow-leds.com/api/products');
+		const { data } = await axios.get('https://www.glow-leds.com/api/products?limit=0&hidden=false&option=false');
 
-		const new_rows = products.filter((product: any) => !product.hidden).map((product: any, i: number) => {
+		const new_rows = data.products.filter((product: any) => !product.hidden).map((product: any, i: number) => {
 			const id = product._id;
 			const title = product.name;
 			const description = product.description;
 			const availability = 'In Stock';
 			const condition = 'New';
 			const price = `${product.price} USD`;
-			const link = `https://www.glow-leds.com/collections/all/products/${product.category}/${product.subcategory}/${product.pathname}`;
+			const link = `https://www.glow-leds.com/collections/all/products/${product.pathname}`;
 			const image_link = product.images[0];
 			const brand = 'Glow LEDs';
 			const mpn = product.pathname;
