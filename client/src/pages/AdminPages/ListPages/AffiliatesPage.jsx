@@ -6,7 +6,12 @@ import { Loading, Notification } from '../../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { Search, Sort } from '../../../components/SpecialtyComponents';
 import { listOrders } from '../../../actions/orderActions';
-import { determine_promoter_code_tier, determine_sponsor_code_tier } from '../../../utils/helper_functions';
+import {
+	dates_in_year,
+	determine_promoter_code_tier,
+	determine_sponsor_code_tier,
+	toCapitalize
+} from '../../../utils/helper_functions';
 import { API_Affiliates, API_Orders, API_Promos, API_Revenue } from '../../../utils';
 import CSVReader from 'react-csv-reader';
 
@@ -27,6 +32,25 @@ const AffiliatesPage = (props) => {
 	const { success: successDelete } = affiliateDelete;
 
 	const dispatch = useDispatch();
+
+	const months = [
+		'January',
+		'February',
+		'March',
+		'April',
+		'May',
+		'June',
+		'July',
+		'August',
+		'September',
+		'October',
+		'November',
+		'December'
+	];
+
+	const date = new Date();
+	const [ month, set_month ] = useState(months[date.getMonth()]);
+	const [ year, set_year ] = useState(date.getFullYear());
 
 	useEffect(
 		() => {
@@ -114,10 +138,10 @@ const AffiliatesPage = (props) => {
 		set_total_orders(data);
 	};
 
-	const update_percentage_off = async (e) => {
+	const update_discount = async (e) => {
 		e.preventDefault();
 		set_loading_promo_update(true);
-		const request = await API_Promos.update_promo_code(affiliates, last_months_orders);
+		const request = await API_Promos.update_discount(year, month);
 		if (request) {
 			set_loading_promo_update(false);
 			dispatch(listAffiliates({}));
@@ -175,11 +199,11 @@ const AffiliatesPage = (props) => {
 						);
 					})}
 				</div>
-				{total_orders && (
-					<button className="btn primary h-40px" onClick={(e) => update_percentage_off(e)}>
+				{/* {total_orders && (
+					<button className="btn primary h-40px" onClick={(e) => update_discount(e)}>
 						Update Percentage Off
 					</button>
-				)}
+				)} */}
 				<Link to="/pages/affiliate_terms">
 					<button className="btn primary">Affiliate Terms</button>
 				</Link>
@@ -192,6 +216,47 @@ const AffiliatesPage = (props) => {
 					<button className="btn primary">Create Affiliate</button>
 				</Link>
 			</div>
+			{/* <div className="ai-c jc-b w-100per max-w-600px">
+				<div className="mv-2rem mr-2rem">
+					<div className="row">
+						<div className="custom-select ">
+							<select
+								defaultValue={year}
+								className="qty_select_dropdown"
+								onChange={(e) => {
+									set_year(e.target.value);
+								}}
+							>
+								{[ 2022, 2021, 2020 ].map((year) => <option value={year}>{year}</option>)}
+							</select>
+							<span className="custom-arrow" />
+						</div>
+					</div>
+				</div>
+
+				<div className="mv-2rem">
+					<div className="row">
+						<div className="custom-select ">
+							<select
+								defaultValue={month && month.toLowerCase()}
+								className="qty_select_dropdown"
+								onChange={(e) => {
+									set_month(e.target.value);
+								}}
+							>
+								{dates_in_year(year).map((month) => (
+									<option value={month.month}>{toCapitalize(month.month)}</option>
+								))}
+							</select>
+							<span className="custom-arrow" />
+						</div>
+					</div>
+				</div>
+				<button className="btn primary h-40px" onClick={update_discount}>
+					Update Percentage Off
+				</button>
+			</div> */}
+
 			<div className="jc-c">
 				<h1 style={{ textAlign: 'center' }}>Affiliates</h1>
 			</div>

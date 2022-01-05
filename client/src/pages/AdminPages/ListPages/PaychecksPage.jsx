@@ -7,7 +7,7 @@ import { Helmet } from 'react-helmet';
 import { Search, Sort } from '../../../components/SpecialtyComponents';
 import { dates_in_year, format_date, toCapitalize } from '../../../utils/helper_functions';
 import { listAffiliates } from '../../../actions/affiliateActions';
-import { API_Orders, API_Paychecks } from '../../../utils';
+import { API_Orders, API_Paychecks, API_Promos } from '../../../utils';
 import {
 	affiliate_revenue_upload,
 	promoter_revenue_upload,
@@ -22,11 +22,10 @@ import { listOrders } from '../../../actions/orderActions';
 const PaychecksPage = (props) => {
 	const [ search, set_search ] = useState('');
 	const [ sort, setSortOrder ] = useState('');
-	const [ last_months_orders, set_last_months_orders ] = useState([]);
-	const [ total_orders, set_total_orders ] = useState([]);
+	const [ message_note, set_message_note ] = useState([]);
 	const [ loading_paychecks, set_loading_paychecks ] = useState(false);
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(false);
-	const [ create_paychecks, set_create_paychecks ] = useState(true);
+	const [ create_paychecks, set_create_paychecks ] = useState(false);
 
 	const category = props.match.params.category ? props.match.params.category : '';
 	const paycheckList = useSelector((state) => state.paycheckList);
@@ -86,24 +85,25 @@ const PaychecksPage = (props) => {
 				dispatch(listAffiliates({}));
 				dispatch(listTeams({}));
 				dispatch(listOrders({}));
-				get_last_months_orders();
-				get_total_orders();
 			}
 			return () => (clean = false);
 		},
 		[ successSave, successDelete, dispatch ]
 	);
 
-	const get_last_months_orders = async () => {
-		const { data } = await API_Orders.last_months_orders();
-		console.log({ data });
-		set_last_months_orders(data.filter((order) => order.deleted === false));
-	};
-	const get_total_orders = async () => {
-		const { data } = await API_Orders.findAll_orders_a();
-		console.log({ data: data.length });
-		set_total_orders(data);
-	};
+	useEffect(
+		() => {
+			let clean = true;
+			if (clean) {
+				if (paychecks) {
+					set_message_note(message);
+				}
+			}
+			return () => {};
+		},
+		[ paychecks ]
+	);
+
 	const submitHandler = (e) => {
 		e.preventDefault();
 		dispatch(listPaychecks({ category, search, sort }));
@@ -155,7 +155,6 @@ const PaychecksPage = (props) => {
 		}
 		return result;
 	};
-	console.log({ paychecks });
 
 	const create_affiliate_paychecks = async () => {
 		set_loading_paychecks(true);
@@ -165,27 +164,34 @@ const PaychecksPage = (props) => {
 			await API_Paychecks.create_affiliate_paychecks_a('sponsor', year, month.toLowerCase());
 			await API_Paychecks.create_affiliate_paychecks_a('team', year, month.toLowerCase());
 		}
-
+		set_message_note('paychecks');
 		await affiliate_revenue_upload(
 			'promoter',
 			year,
 			month.toLowerCase(),
 			'1vy1OKH0P96cDkjuq-_yBT56CA1yQRMY3XZ2kgN95Spg'
 		);
+		set_message_note('promoter');
 		await affiliate_revenue_upload(
 			'sponsor',
 			year,
 			month.toLowerCase(),
 			'1nxYhdgGqme0tSvOrYeb6oU9RIOLeA2aik3-K4H1dRpA'
 		);
+		set_message_note('sponsor');
 		await affiliate_revenue_upload(
 			'team',
 			year,
 			month.toLowerCase(),
 			'1OmtRqSVEBCZCamz1qPceXW8CPfuwvWwGxIiu1YzMtMI'
 		);
+		set_message_note('team');
 		await top_earner_upload(year, month.toLowerCase());
+		set_message_note('top_earner_upload');
 		await top_code_usage_upload(year, month.toLowerCase());
+		set_message_note('top_code_usage_upload');
+		await API_Promos.update_discount(year, month.toLowerCase());
+		set_message_note('update_discount');
 		dispatch(listPaychecks({}));
 		set_loading_paychecks(false);
 	};
@@ -195,7 +201,7 @@ const PaychecksPage = (props) => {
 			<Helmet>
 				<title>Admin Paychecks | Glow LEDs</title>
 			</Helmet>
-			<Notification message={message} />
+			<Notification message={message_note} />
 			<Loading loading={loading_paychecks} error={error} />
 			<div className="wrap jc-b">
 				<div className="wrap jc-b">

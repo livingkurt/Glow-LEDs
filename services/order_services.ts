@@ -567,27 +567,6 @@ export default {
 						.toFixed(2)
 				};
 			});
-			// const sorted_by_uses = promos_earnings.sort(
-			// 	(a: any, b: any) => (parseFloat(a.Uses) > parseFloat(b.Uses) ? -1 : 1)
-			// );
-			// const uses_s_discount: any = sorted_by_discount.reduce((a: any, promo: any) => a + promo.Uses, 0);
-			// const revenue_s_discount: any = sorted_by_discount.reduce(
-			// 	(a: any, promo: any) => parseFloat(a) + parseFloat(promo.Revenue),
-			// 	0
-			// );
-			// const discount_s_discount: any = sorted_by_discount.reduce(
-			// 	(a: any, promo: any) => parseFloat(a) + parseFloat(promo.Discount),
-			// 	0
-			// );
-			// const uses_s_revenue: any = sorted_by_revenue.reduce((a: any, promo: any) => a + promo.Uses, 0);
-			// const revenue_s_revenue: any = sorted_by_revenue.reduce(
-			// 	(a: any, promo: any) => parseFloat(a) + parseFloat(promo.Revenue),
-			// 	0
-			// );
-			// const discount_s_revenue: any = sorted_by_revenue.reduce(
-			// 	(a: any, promo: any) => parseFloat(a) + parseFloat(promo.Discount),
-			// 	0
-			// );
 			const uses_s: any = promos_earnings.reduce((a: any, promo: any) => a + promo.Uses, 0);
 			const revenue_s: any = promos_earnings.reduce(
 				(a: any, promo: any) => parseFloat(a) + parseFloat(promo.Revenue),
@@ -597,9 +576,6 @@ export default {
 				(a: any, promo: any) => parseFloat(a) + parseFloat(promo.Discount),
 				0
 			);
-			// console.log({ rows });
-
-			// return { promo_earnings, uses, revenue, discount };
 			return {
 				promos: promos_earnings,
 				uses: uses_s,

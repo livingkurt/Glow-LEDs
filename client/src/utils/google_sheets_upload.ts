@@ -40,35 +40,6 @@ export const top_code_usage_upload = async (year: number, month: string) => {
 		// console.log(doc.title);
 		// await doc.updateProperties({ title: 'KYEO FB Product Sheet' });
 
-		const sheet = doc.sheetsByIndex[0]; // or use doc.sheetsById[id] or doc.sheetsByTitle[title]
-
-		await sheet.clear();
-		await sheet.setHeaderRow([ 'Promo Code', 'Uses' ]);
-
-		// const affiliates_w_inkybois = [ ..affiliates, { public_code: { promo_code: 'inkybois' } } ];
-
-		// const last_months_rows = affiliates.filter((affiliate: any) => affiliate.active).map((affiliate: any) => {
-		// 	return {
-		// 		'Promo Code': toCapitalize(affiliate.public_code.promo_code),
-		// 		Uses: last_months_orders.filter((order: any) => {
-		// 			return (
-		// 				order.promo_code &&
-		// 				order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
-		// 			);
-		// 		}).length
-		// 	};
-		// });
-		// const total_rows = affiliates.filter((affiliate: any) => affiliate.active).map((affiliate: any) => {
-		// 	return {
-		// 		'Promo Code': toCapitalize(affiliate.public_code.promo_code),
-		// 		Uses: orders.filter((order: any) => {
-		// 			return (
-		// 				order.promo_code &&
-		// 				order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
-		// 			);
-		// 		}).length
-		// 	};
-		// });
 		const { data: last_months_rows } = await API_Orders.affiliate_code_usage_orders_a({
 			year,
 			month,
@@ -89,6 +60,19 @@ export const top_code_usage_upload = async (year: number, month: string) => {
 		const formated_total = removeDuplicates(sorted_total_rows, 'Promo Code').map((affiliate: any) => {
 			return { ...affiliate, Revenue: `$${affiliate.Revenue}` };
 		});
+
+		const sorted_last_months_rows = last_months_rows.affiliates.sort(
+			(a: any, b: any) => (parseFloat(a.Uses) > parseFloat(b.Uses) ? -1 : 1)
+		);
+		const formated_last_month = removeDuplicates(sorted_last_months_rows, 'Promo Code').map((affiliate: any) => {
+			return { ...affiliate, Revenue: `$${affiliate.Revenue}` };
+		});
+
+		const sheet = doc.sheetsByIndex[0]; // or use doc.sheetsById[id] or doc.sheetsByTitle[title]
+
+		await sheet.clear();
+		await sheet.setHeaderRow([ 'Promo Code', 'Uses' ]);
+
 		await sheet.addRows(formated_total);
 		await sheet.saveUpdatedCells();
 		// adding / removing sheets
@@ -97,12 +81,6 @@ export const top_code_usage_upload = async (year: number, month: string) => {
 			title: `${toCapitalize(month)} ${year} Affiliate Revenue`
 		});
 		await newSheet.setHeaderRow([ 'Promo Code', 'Uses', 'Revenue' ]);
-		const sorted_last_months_rows = last_months_rows.affiliates.sort(
-			(a: any, b: any) => (parseFloat(a.Uses) > parseFloat(b.Uses) ? -1 : 1)
-		);
-		const formated_last_month = removeDuplicates(sorted_last_months_rows, 'Promo Code').map((affiliate: any) => {
-			return { ...affiliate, Revenue: `$${affiliate.Revenue}` };
-		});
 
 		await newSheet.addRows(formated_last_month);
 		await newSheet.saveUpdatedCells();
@@ -138,10 +116,6 @@ export const top_earner_upload = async (year: number, month: string) => {
 		// console.log(doc.title);
 		// await doc.updateProperties({ title: 'KYEO FB Product Sheet' });
 
-		const sheet = doc.sheetsByIndex[0]; // or use doc.sheetsById[id] or doc.sheetsByTitle[title]
-
-		await sheet.clear();
-		await sheet.setHeaderRow([ 'Promo Code', 'Revenue', 'Uses' ]);
 		const { data: last_months_rows } = await API_Orders.affiliate_code_usage_orders_a({
 			year,
 			month,
@@ -155,6 +129,13 @@ export const top_earner_upload = async (year: number, month: string) => {
 		console.log({ last_months_rows });
 		console.log({ total_rows });
 
+		const sorted_last_months_rows = last_months_rows.affiliates.sort(
+			(a: any, b: any) => (parseFloat(a.Revenue) > parseFloat(b.Revenue) ? -1 : 1)
+		);
+		const formated_last_month = removeDuplicates(sorted_last_months_rows, 'Promo Code').map((affiliate: any) => {
+			return { ...affiliate, Revenue: `$${affiliate.Revenue}` };
+		});
+
 		const sorted_total_rows = total_rows.affiliates.sort(
 			(a: any, b: any) => (parseFloat(a.Revenue) > parseFloat(b.Revenue) ? -1 : 1)
 		);
@@ -162,6 +143,12 @@ export const top_earner_upload = async (year: number, month: string) => {
 		const formated_total = removeDuplicates(sorted_total_rows, 'Promo Code').map((affiliate: any) => {
 			return { ...affiliate, Revenue: `$${affiliate.Revenue}` };
 		});
+
+		const sheet = doc.sheetsByIndex[0]; // or use doc.sheetsById[id] or doc.sheetsByTitle[title]
+
+		await sheet.clear();
+		await sheet.setHeaderRow([ 'Promo Code', 'Revenue', 'Uses' ]);
+
 		await sheet.addRows(formated_total);
 		await sheet.saveUpdatedCells();
 		// adding / removing sheets
@@ -170,12 +157,6 @@ export const top_earner_upload = async (year: number, month: string) => {
 			title: `${toCapitalize(month)} ${year} Affiliate Revenue`
 		});
 		await newSheet.setHeaderRow([ 'Promo Code', 'Revenue', 'Uses' ]);
-		const sorted_last_months_rows = last_months_rows.affiliates.sort(
-			(a: any, b: any) => (parseFloat(a.Revenue) > parseFloat(b.Revenue) ? -1 : 1)
-		);
-		const formated_last_month = removeDuplicates(sorted_last_months_rows, 'Promo Code').map((affiliate: any) => {
-			return { ...affiliate, Revenue: `$${affiliate.Revenue}` };
-		});
 
 		await newSheet.addRows(formated_last_month);
 		await newSheet.saveUpdatedCells();
@@ -211,11 +192,6 @@ export const affiliate_revenue_upload = async (position: any, year: number, mont
 		// console.log(doc.title);
 		// await doc.updateProperties({ title: 'KYEO FB Product Sheet' });
 
-		const sheet = doc.sheetsByIndex[0]; // or use doc.sheetsById[id] or doc.sheetsByTitle[title]
-
-		await sheet.clear();
-		await sheet.setHeaderRow([ 'Promo Code', 'Uses', 'Revenue', 'Earned' ]);
-
 		const { data: last_months_rows } = await API_Orders.affiliate_code_usage_orders_a({
 			year,
 			month,
@@ -229,10 +205,21 @@ export const affiliate_revenue_upload = async (position: any, year: number, mont
 		const sorted_total_rows = total_rows.affiliates.sort(
 			(a: any, b: any) => (parseFloat(a.Revenue) > parseFloat(b.Revenue) ? -1 : 1)
 		);
-
+		const sorted_last_months_rows = last_months_rows.affiliates.sort(
+			(a: any, b: any) => (parseFloat(a.Revenue) > parseFloat(b.Revenue) ? -1 : 1)
+		);
 		const formated_total = removeDuplicates(sorted_total_rows, 'Promo Code').map((affiliate: any) => {
 			return { ...affiliate, Revenue: `$${affiliate.Revenue}` };
 		});
+		const formated_last_month = removeDuplicates(sorted_last_months_rows, 'Promo Code').map((affiliate: any) => {
+			return { ...affiliate, Revenue: `$${affiliate.Revenue}` };
+		});
+
+		const sheet = doc.sheetsByIndex[0]; // or use doc.sheetsById[id] or doc.sheetsByTitle[title]
+
+		await sheet.clear();
+		await sheet.setHeaderRow([ 'Promo Code', 'Uses', 'Revenue' ]);
+
 		await sheet.addRows(formated_total);
 		await sheet.saveUpdatedCells();
 		// adding / removing sheets
@@ -240,36 +227,11 @@ export const affiliate_revenue_upload = async (position: any, year: number, mont
 		const newSheet = await doc.addSheet({
 			title: `${toCapitalize(month)} ${year} ${position ? toCapitalize(position) : 'Affiliate'} Revenue`
 		});
-		await newSheet.setHeaderRow([ 'Promo Code', 'Uses', 'Revenue', 'Earned', 'Percentage Off' ]);
-		const sorted_last_months_rows = last_months_rows.affiliates.sort(
-			(a: any, b: any) => (parseFloat(a.Revenue) > parseFloat(b.Revenue) ? -1 : 1)
-		);
-		const formated_last_month = removeDuplicates(sorted_last_months_rows, 'Promo Code').map((affiliate: any) => {
-			return { ...affiliate, Revenue: `$${affiliate.Revenue}` };
-		});
+		await newSheet.setHeaderRow([ 'Promo Code', 'Uses', 'Revenue', 'Percentage Off' ]);
 
 		await newSheet.addRows(formated_last_month);
 		await newSheet.saveUpdatedCells();
 
-		// await sheet.addRows(
-		// 	total_rows.sort(
-		// 		(a: any, b: any) => (parseInt(a.Revenue.substring(2)) > parseInt(b.Revenue.substring(2)) ? -1 : 1)
-		// 	)
-		// );
-
-		// await sheet.saveUpdatedCells();
-		// adding / removing sheets
-
-		// const newSheet = await doc.addSheet({
-		// 	title: `${month} ${year} Promoter Revenue`
-		// });
-		// await newSheet.setHeaderRow([ 'Promo Code', 'Uses', 'Revenue', 'Earned', 'Percentage Off' ]);
-		// await newSheet.addRows(
-		// 	last_months_rows.sort(
-		// 		(a: any, b: any) => (parseInt(a.Revenue.substring(2)) > parseInt(b.Revenue.substring(2)) ? -1 : 1)
-		// 	)
-		// );
-		// await newSheet.saveUpdatedCells();
 		// await newSheet.delete();
 	} catch (error) {
 		console.log({ error });

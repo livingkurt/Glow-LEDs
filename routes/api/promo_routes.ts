@@ -9,7 +9,7 @@ router
 	.get(promo_controller.findByCode_promos_c)
 	.put(promo_controller.update_code_used_promos_c);
 
-router.route('/update_discount').put(isAuth, isAdmin, promo_controller.update_affiliate_codes_promos_c);
+router.route('/update_discount/:year?/:month?').put(isAuth, isAdmin, promo_controller.update_affiliate_codes_promos_c);
 router.route('/create_one_time_use_code').put(promo_controller.create_one_time_use_code_promos_c);
 
 router.route('/').get(promo_controller.findAll_promos_c).post(isAuth, isAdmin, promo_controller.create_promos_c);

@@ -93,9 +93,9 @@ export default {
 		}
 	},
 	update_affiliate_codes_promos_c: async (req: any, res: any) => {
-		const { params, body } = req;
+		const { params, query } = req;
 		try {
-			const promo = await promo_services.update_affiliate_codes_promos_s(params, body);
+			const promo = await promo_services.update_affiliate_codes_promos_s(params, query);
 			if (promo) {
 				return res.status(200).send(promo);
 			}
