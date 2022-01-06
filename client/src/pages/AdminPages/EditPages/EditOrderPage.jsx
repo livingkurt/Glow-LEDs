@@ -8,7 +8,8 @@ import { Helmet } from 'react-helmet';
 import { listProducts } from '../../../actions/productActions';
 import { listUsers } from '../../../actions/userActions';
 import { API_External, API_Products } from '../../../utils';
-import { isError } from 'util';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import Overflow from 'react-overflow-indicator';
 
 const EditOrderPage = (props) => {
 	const [ id, set_id ] = useState('');
@@ -45,6 +46,7 @@ const EditOrderPage = (props) => {
 	const [ update_total_prices, set_update_total_prices ] = useState(true);
 	// const [ product_option, set_product_option ] = useState({});
 	// const [ product_option_images, set_product_option_images ] = useState([] ]);
+	const [ canScroll, setCanScroll ] = useState(false);
 
 	const history = useHistory();
 
@@ -869,783 +871,848 @@ const EditOrderPage = (props) => {
 											/>
 										</li>
 									)}
-									<div className="row wrap jc-b">
-										{orderItems &&
-											orderItems.map((item, index) => {
-												return (
-													<div key={index} className="w-410px m-10px">
-														<h2>Order Item {index + 1}</h2>
-														<button
-															className="btn primary w-4rem h-4rem p-14px mr-1rem mb-1rem"
-															onClick={(e) => remove_order_item(index, e)}
-														>
-															<i className="fas fa-times mr-5px" />
-														</button>
-														<li>
-															<label htmlFor="product">Product</label>
-															{console.log({ product: item.product })}
-															<input
-																type="text"
-																name="product"
-																defaultValue={item.product && item.product._id}
-																value={item.product && item.product._id}
-																id="product"
-																onChange={(e) =>
-																	update_order_item_property(
-																		e.target.value,
-																		e.target.name,
-																		index
-																	)}
-															/>
-														</li>
+									<Tabs>
+										<Overflow onStateChange={(state) => setCanScroll(state.canScroll.right)}>
+											<Overflow.Content>
+												<TabList>
+													{orderItems &&
+														orderItems.map((item, index) => {
+															return (
+																<Tab
+																	style={{
+																		padding: '10px',
+																		borderRadius: '10px 10px 0px 0px'
+																	}}
+																>
+																	{item.name}
+																</Tab>
+															);
+														})}
+												</TabList>
+											</Overflow.Content>
+											{canScroll && (
+												<div className="tab_indicator bob br-5px ta-c bg-primary h-30px w-30px p-4px box-s-d b-1px">
+													{'>'}
+												</div>
+											)}
+										</Overflow>
+										<div className="w-100per h-500px scroll-y">
+											{orderItems &&
+												orderItems.map((item, index) => {
+													return (
+														<TabPanel>
+															<div key={index} className="m-20px ">
+																<h2>Order Item {index + 1}</h2>
+																<button
+																	className="btn primary w-4rem h-4rem p-14px mr-1rem mb-1rem"
+																	onClick={(e) => remove_order_item(index, e)}
+																>
+																	<i className="fas fa-times mr-5px" />
+																</button>
+																<li>
+																	<label htmlFor="product">Product</label>
+																	{console.log({ product: item.product })}
+																	<input
+																		type="text"
+																		name="product"
+																		defaultValue={item.product && item.product._id}
+																		value={item.product && item.product._id}
+																		id="product"
+																		onChange={(e) =>
+																			update_order_item_property(
+																				e.target.value,
+																				e.target.name,
+																				index
+																			)}
+																	/>
+																</li>
 
-														<li>
-															<label
-																aria-label="sort"
-																htmlFor="sort"
-																className="select-label mb-15px"
-															>
-																Product
-															</label>
-															<div className="ai-c h-25px mb-15px">
-																<div className="custom-select">
-																	<select
-																		className="qty_select_dropdown"
-																		onChange={(e) => update_order_item(e, index)}
+																<li>
+																	<label
+																		aria-label="sort"
+																		htmlFor="sort"
+																		className="select-label mb-15px"
 																	>
-																		<option key={1} defaultValue="">
-																			---Choose Product---
-																		</option>
-																		{products
-																			.filter((product) => !product.option)
-																			.map((product, index) => (
-																				<option
-																					key={index}
-																					value={JSON.stringify(product)}
-																				>
-																					{product.name}
+																		Product
+																	</label>
+																	<div className="ai-c h-25px mb-15px">
+																		<div className="custom-select">
+																			<select
+																				className="qty_select_dropdown"
+																				onChange={(e) =>
+																					update_order_item(e, index)}
+																			>
+																				<option key={1} defaultValue="">
+																					---Choose Product---
 																				</option>
-																			))}
-																	</select>
-																	<span className="custom-arrow" />
-																</div>
-															</div>
-														</li>
-														<li>
-															<label htmlFor="name">Order Item Name</label>
-															<input
-																type="text"
-																name="name"
-																defaultValue={item.name}
-																value={item.name}
-																id="name"
-																onChange={(e) =>
-																	update_order_item_property(
-																		e.target.value,
-																		e.target.name,
-																		index
-																	)}
-															/>
-														</li>
-														<li>
-															<label htmlFor="qty">Quantity</label>
-															<input
-																type="text"
-																name="qty"
-																defaultValue={item.qty}
-																value={item.qty}
-																id="qty"
-																onChange={(e) =>
-																	update_order_item_property(
-																		e.target.value,
-																		e.target.name,
-																		index
-																	)}
-															/>
-														</li>
-														<li>
-															<label htmlFor="display_image">Display Image</label>
-															<input
-																type="text"
-																name="display_image"
-																defaultValue={item.display_image}
-																value={item.display_image}
-																id="display_image"
-																onChange={(e) =>
-																	update_order_item_property(
-																		e.target.value,
-																		e.target.name,
-																		index
-																	)}
-															/>
-														</li>
-														<li>
-															<label htmlFor="price">Price</label>
-															<input
-																type="text"
-																name="price"
-																defaultValue={item.price}
-																value={item.price}
-																id="price"
-																onChange={(e) =>
-																	update_order_item_property(
-																		e.target.value,
-																		e.target.name,
-																		index
-																	)}
-															/>
-														</li>
-														<li>
-															<label htmlFor="category">Category</label>
-															<input
-																type="text"
-																name="category"
-																defaultValue={item.category}
-																value={item.category}
-																id="category"
-																onChange={(e) =>
-																	update_order_item_property(
-																		e.target.value,
-																		e.target.name,
-																		index
-																	)}
-															/>
-														</li>
-														<li>
-															<label htmlFor="sale_price">Sale Price</label>
-															<input
-																type="text"
-																name="sale_price"
-																defaultValue={item.sale_price}
-																value={item.sale_price}
-																id="sale_price"
-																onChange={(e) =>
-																	update_order_item_property(
-																		e.target.value,
-																		e.target.name,
-																		index
-																	)}
-															/>
-														</li>
-														<li>
-															<label htmlFor="count_in_stock">Count In Stock</label>
-															<input
-																type="text"
-																name="count_in_stock"
-																defaultValue={item.count_in_stock}
-																value={item.count_in_stock}
-																id="count_in_stock"
-																onChange={(e) =>
-																	update_order_item_property(
-																		e.target.value,
-																		e.target.name,
-																		index
-																	)}
-															/>
-														</li>
-														<li>
-															<label htmlFor="pathname">Pathname</label>
-															<input
-																type="text"
-																name="pathname"
-																defaultValue={item.pathname}
-																value={item.pathname}
-																id="pathname"
-																onChange={(e) =>
-																	update_order_item_property(
-																		e.target.value,
-																		e.target.name,
-																		index
-																	)}
-															/>
-														</li>
-														<li>
-															<h3>Dimmensions</h3>
-														</li>
-														<li>
-															<label htmlFor="package_length">Length</label>
-															<input
-																type="text"
-																name="package_length"
-																defaultValue={item.package_length}
-																value={item.package_length}
-																id="package_length"
-																onChange={(e) =>
-																	update_order_item_property(
-																		e.target.value,
-																		e.target.name,
-																		index
-																	)}
-															/>
-														</li>
-														<li>
-															<label htmlFor="package_width">Width</label>
-															<input
-																type="text"
-																name="package_width"
-																defaultValue={item.package_width}
-																value={item.package_width}
-																id="package_width"
-																onChange={(e) =>
-																	update_order_item_property(
-																		e.target.value,
-																		e.target.name,
-																		index
-																	)}
-															/>
-														</li>
-														<li>
-															<label htmlFor="package_height">Height</label>
-															<input
-																type="text"
-																name="package_height"
-																defaultValue={item.package_height}
-																value={item.package_height}
-																id="package_height"
-																onChange={(e) =>
-																	update_order_item_property(
-																		e.target.value,
-																		e.target.name,
-																		index
-																	)}
-															/>
-														</li>
-														<li>
-															<label htmlFor="package_volume">Volume</label>
-															<input
-																type="text"
-																name="package_volume"
-																defaultValue={item.package_volume}
-																value={item.package_volume}
-																id="package_volume"
-																onChange={(e) =>
-																	update_order_item_property(
-																		e.target.value,
-																		e.target.name,
-																		index
-																	)}
-															/>
-														</li>
-														<li>
-															<label htmlFor="weight_pounds">Weight Pounds</label>
-															<input
-																type="text"
-																name="weight_pounds"
-																defaultValue={item.weight_pounds}
-																value={item.weight_pounds}
-																id="weight_pounds"
-																onChange={(e) =>
-																	update_order_item_property(
-																		e.target.value,
-																		e.target.name,
-																		index
-																	)}
-															/>
-														</li>
-														<li>
-															<label htmlFor="weight_ounces">Weight Ounces</label>
-															<input
-																type="text"
-																name="weight_ounces"
-																defaultValue={item.weight_ounces}
-																value={item.weight_ounces}
-																id="weight_ounces"
-																onChange={(e) =>
-																	update_order_item_property(
-																		e.target.value,
-																		e.target.name,
-																		index
-																	)}
-															/>
-														</li>
-														<li>
-															<h3>Color</h3>
-														</li>
-														<li>
-															<label htmlFor="color_group_name">Color Group Name</label>
-															<input
-																type="text"
-																name="color_group_name"
-																defaultValue={item.color_group_name}
-																value={item.color_group_name}
-																id="color_group_name"
-																onChange={(e) =>
-																	update_order_item_property(
-																		e.target.value,
-																		e.target.name,
-																		index
-																	)}
-															/>
-														</li>
-														<li>
-															<label htmlFor="color">Color</label>
-															<input
-																type="text"
-																name="color"
-																defaultValue={item.color}
-																value={item.color}
-																id="color"
-																onChange={(e) =>
-																	update_order_item_property(
-																		e.target.value,
-																		e.target.name,
-																		index
-																	)}
-															/>
-														</li>
-														<li>
-															<label htmlFor="color_code">Color Code</label>
-															<input
-																type="text"
-																name="color_code"
-																defaultValue={item.color_code}
-																value={item.color_code}
-																id="color_code"
-																onChange={(e) =>
-																	update_order_item_property(
-																		e.target.value,
-																		e.target.name,
-																		index
-																	)}
-															/>
-														</li>
+																				{products
+																					.filter(
+																						(product) => !product.option
+																					)
+																					.map((product, index) => (
+																						<option
+																							key={index}
+																							value={JSON.stringify(
+																								product
+																							)}
+																						>
+																							{product.name}
+																						</option>
+																					))}
+																			</select>
+																			<span className="custom-arrow" />
+																		</div>
+																	</div>
+																</li>
+																<li>
+																	<label htmlFor="name">Order Item Name</label>
+																	<input
+																		type="text"
+																		name="name"
+																		defaultValue={item.name}
+																		value={item.name}
+																		id="name"
+																		onChange={(e) =>
+																			update_order_item_property(
+																				e.target.value,
+																				e.target.name,
+																				index
+																			)}
+																	/>
+																</li>
+																<li>
+																	<label htmlFor="qty">Quantity</label>
+																	<input
+																		type="text"
+																		name="qty"
+																		defaultValue={item.qty}
+																		value={item.qty}
+																		id="qty"
+																		onChange={(e) =>
+																			update_order_item_property(
+																				e.target.value,
+																				e.target.name,
+																				index
+																			)}
+																	/>
+																</li>
+																<li>
+																	<label htmlFor="display_image">Display Image</label>
+																	<input
+																		type="text"
+																		name="display_image"
+																		defaultValue={item.display_image}
+																		value={item.display_image}
+																		id="display_image"
+																		onChange={(e) =>
+																			update_order_item_property(
+																				e.target.value,
+																				e.target.name,
+																				index
+																			)}
+																	/>
+																</li>
+																<li>
+																	<label htmlFor="price">Price</label>
+																	<input
+																		type="text"
+																		name="price"
+																		defaultValue={item.price}
+																		value={item.price}
+																		id="price"
+																		onChange={(e) =>
+																			update_order_item_property(
+																				e.target.value,
+																				e.target.name,
+																				index
+																			)}
+																	/>
+																</li>
+																<li>
+																	<label htmlFor="category">Category</label>
+																	<input
+																		type="text"
+																		name="category"
+																		defaultValue={item.category}
+																		value={item.category}
+																		id="category"
+																		onChange={(e) =>
+																			update_order_item_property(
+																				e.target.value,
+																				e.target.name,
+																				index
+																			)}
+																	/>
+																</li>
+																<li>
+																	<label htmlFor="sale_price">Sale Price</label>
+																	<input
+																		type="text"
+																		name="sale_price"
+																		defaultValue={item.sale_price}
+																		value={item.sale_price}
+																		id="sale_price"
+																		onChange={(e) =>
+																			update_order_item_property(
+																				e.target.value,
+																				e.target.name,
+																				index
+																			)}
+																	/>
+																</li>
+																<li>
+																	<label htmlFor="count_in_stock">
+																		Count In Stock
+																	</label>
+																	<input
+																		type="text"
+																		name="count_in_stock"
+																		defaultValue={item.count_in_stock}
+																		value={item.count_in_stock}
+																		id="count_in_stock"
+																		onChange={(e) =>
+																			update_order_item_property(
+																				e.target.value,
+																				e.target.name,
+																				index
+																			)}
+																	/>
+																</li>
+																<li>
+																	<label htmlFor="pathname">Pathname</label>
+																	<input
+																		type="text"
+																		name="pathname"
+																		defaultValue={item.pathname}
+																		value={item.pathname}
+																		id="pathname"
+																		onChange={(e) =>
+																			update_order_item_property(
+																				e.target.value,
+																				e.target.name,
+																				index
+																			)}
+																	/>
+																</li>
+																<li>
+																	<h3>Dimmensions</h3>
+																</li>
+																<li>
+																	<label htmlFor="package_length">Length</label>
+																	<input
+																		type="text"
+																		name="package_length"
+																		defaultValue={item.package_length}
+																		value={item.package_length}
+																		id="package_length"
+																		onChange={(e) =>
+																			update_order_item_property(
+																				e.target.value,
+																				e.target.name,
+																				index
+																			)}
+																	/>
+																</li>
+																<li>
+																	<label htmlFor="package_width">Width</label>
+																	<input
+																		type="text"
+																		name="package_width"
+																		defaultValue={item.package_width}
+																		value={item.package_width}
+																		id="package_width"
+																		onChange={(e) =>
+																			update_order_item_property(
+																				e.target.value,
+																				e.target.name,
+																				index
+																			)}
+																	/>
+																</li>
+																<li>
+																	<label htmlFor="package_height">Height</label>
+																	<input
+																		type="text"
+																		name="package_height"
+																		defaultValue={item.package_height}
+																		value={item.package_height}
+																		id="package_height"
+																		onChange={(e) =>
+																			update_order_item_property(
+																				e.target.value,
+																				e.target.name,
+																				index
+																			)}
+																	/>
+																</li>
+																<li>
+																	<label htmlFor="package_volume">Volume</label>
+																	<input
+																		type="text"
+																		name="package_volume"
+																		defaultValue={item.package_volume}
+																		value={item.package_volume}
+																		id="package_volume"
+																		onChange={(e) =>
+																			update_order_item_property(
+																				e.target.value,
+																				e.target.name,
+																				index
+																			)}
+																	/>
+																</li>
+																<li>
+																	<label htmlFor="weight_pounds">Weight Pounds</label>
+																	<input
+																		type="text"
+																		name="weight_pounds"
+																		defaultValue={item.weight_pounds}
+																		value={item.weight_pounds}
+																		id="weight_pounds"
+																		onChange={(e) =>
+																			update_order_item_property(
+																				e.target.value,
+																				e.target.name,
+																				index
+																			)}
+																	/>
+																</li>
+																<li>
+																	<label htmlFor="weight_ounces">Weight Ounces</label>
+																	<input
+																		type="text"
+																		name="weight_ounces"
+																		defaultValue={item.weight_ounces}
+																		value={item.weight_ounces}
+																		id="weight_ounces"
+																		onChange={(e) =>
+																			update_order_item_property(
+																				e.target.value,
+																				e.target.name,
+																				index
+																			)}
+																	/>
+																</li>
+																<li>
+																	<h3>Color</h3>
+																</li>
+																<li>
+																	<label htmlFor="color_group_name">
+																		Color Group Name
+																	</label>
+																	<input
+																		type="text"
+																		name="color_group_name"
+																		defaultValue={item.color_group_name}
+																		value={item.color_group_name}
+																		id="color_group_name"
+																		onChange={(e) =>
+																			update_order_item_property(
+																				e.target.value,
+																				e.target.name,
+																				index
+																			)}
+																	/>
+																</li>
+																<li>
+																	<label htmlFor="color">Color</label>
+																	<input
+																		type="text"
+																		name="color"
+																		defaultValue={item.color}
+																		value={item.color}
+																		id="color"
+																		onChange={(e) =>
+																			update_order_item_property(
+																				e.target.value,
+																				e.target.name,
+																				index
+																			)}
+																	/>
+																</li>
+																<li>
+																	<label htmlFor="color_code">Color Code</label>
+																	<input
+																		type="text"
+																		name="color_code"
+																		defaultValue={item.color_code}
+																		value={item.color_code}
+																		id="color_code"
+																		onChange={(e) =>
+																			update_order_item_property(
+																				e.target.value,
+																				e.target.name,
+																				index
+																			)}
+																	/>
+																</li>
 
-														<li>
-															<label htmlFor="color_product_name">
-																Color Product Name
-															</label>
-															<input
-																type="text"
-																name="color_product_name"
-																defaultValue={item.color_product_name}
-																value={item.color_product_name}
-																id="color_product_name"
-																onChange={(e) =>
-																	update_order_item_property(
-																		e.target.value,
-																		e.target.name,
-																		index
-																	)}
-															/>
-														</li>
-														<li>
-															<label htmlFor="color_product">Color Product</label>
-															<input
-																type="text"
-																name="color_product"
-																defaultValue={item.color_product && item.color_product}
-																value={item.color_product && item.color_product}
-																id="color_product"
-																onChange={(e) =>
-																	update_order_item_property(
-																		e.target.value,
-																		e.target.name,
-																		index
-																	)}
-															/>
-														</li>
-														<li>
-															<label
-																aria-label="sort"
-																htmlFor="sort"
-																className="select-label mb-15px"
-															>
-																Color Product
-															</label>
-															<div className="ai-c h-25px mb-15px">
-																<div className="custom-select">
-																	<select
-																		defaultValue={item.color_product}
-																		value={item.color_product}
-																		className="qty_select_dropdown"
+																<li>
+																	<label htmlFor="color_product_name">
+																		Color Product Name
+																	</label>
+																	<input
+																		type="text"
+																		name="color_product_name"
+																		defaultValue={item.color_product_name}
+																		value={item.color_product_name}
+																		id="color_product_name"
+																		onChange={(e) =>
+																			update_order_item_property(
+																				e.target.value,
+																				e.target.name,
+																				index
+																			)}
+																	/>
+																</li>
+																<li>
+																	<label htmlFor="color_product">Color Product</label>
+																	<input
+																		type="text"
 																		name="color_product"
+																		defaultValue={
+																			item.color_product && item.color_product
+																		}
+																		value={item.color_product && item.color_product}
+																		id="color_product"
 																		onChange={(e) =>
-																			update_order_item_property_by_template(
+																			update_order_item_property(
 																				e.target.value,
 																				e.target.name,
 																				index
 																			)}
+																	/>
+																</li>
+																<li>
+																	<label
+																		aria-label="sort"
+																		htmlFor="sort"
+																		className="select-label mb-15px"
 																	>
-																		<option key={1} defaultValue="">
-																			---Choose Product---
-																		</option>
-																		{order_products &&
-																			order_products[index] &&
-																			order_products[
-																				index
-																			].color_products.map((product, index) => (
-																				<option
-																					key={index}
-																					value={JSON.stringify(product)}
-																				>
-																					{product.name}
+																		Color Product
+																	</label>
+																	<div className="ai-c h-25px mb-15px">
+																		<div className="custom-select">
+																			<select
+																				defaultValue={item.color_product}
+																				value={item.color_product}
+																				className="qty_select_dropdown"
+																				name="color_product"
+																				onChange={(e) =>
+																					update_order_item_property_by_template(
+																						e.target.value,
+																						e.target.name,
+																						index
+																					)}
+																			>
+																				<option key={1} defaultValue="">
+																					---Choose Product---
 																				</option>
-																			))}
-																	</select>
-																	<span className="custom-arrow" />
-																</div>
-															</div>
-														</li>
-														<li>
-															<h3>Secondary Color</h3>
-														</li>
-														<li>
-															<label htmlFor="secondary_color_group_name">
-																Secondary Color Group Name
-															</label>
-															<input
-																type="text"
-																name="secondary_color_group_name"
-																defaultValue={item.secondary_color_group_name}
-																value={item.secondary_color_group_name}
-																id="secondary_color_group_name"
-																onChange={(e) =>
-																	update_order_item_property(
-																		e.target.value,
-																		e.target.name,
-																		index
-																	)}
-															/>
-														</li>
-														<li>
-															<label htmlFor="secondary_color">Secondary Color</label>
-															<input
-																type="text"
-																name="secondary_color"
-																defaultValue={item.secondary_color}
-																value={item.secondary_color}
-																id="secondary_color"
-																onChange={(e) =>
-																	update_order_item_property(
-																		e.target.value,
-																		e.target.name,
-																		index
-																	)}
-															/>
-														</li>
+																				{order_products &&
+																					order_products[index] &&
+																					order_products[
+																						index
+																					].color_products.map(
+																						(product, index) => (
+																							<option
+																								key={index}
+																								value={JSON.stringify(
+																									product
+																								)}
+																							>
+																								{product.name}
+																							</option>
+																						)
+																					)}
+																			</select>
+																			<span className="custom-arrow" />
+																		</div>
+																	</div>
+																</li>
+																<li>
+																	<h3>Secondary Color</h3>
+																</li>
+																<li>
+																	<label htmlFor="secondary_color_group_name">
+																		Secondary Color Group Name
+																	</label>
+																	<input
+																		type="text"
+																		name="secondary_color_group_name"
+																		defaultValue={item.secondary_color_group_name}
+																		value={item.secondary_color_group_name}
+																		id="secondary_color_group_name"
+																		onChange={(e) =>
+																			update_order_item_property(
+																				e.target.value,
+																				e.target.name,
+																				index
+																			)}
+																	/>
+																</li>
+																<li>
+																	<label htmlFor="secondary_color">
+																		Secondary Color
+																	</label>
+																	<input
+																		type="text"
+																		name="secondary_color"
+																		defaultValue={item.secondary_color}
+																		value={item.secondary_color}
+																		id="secondary_color"
+																		onChange={(e) =>
+																			update_order_item_property(
+																				e.target.value,
+																				e.target.name,
+																				index
+																			)}
+																	/>
+																</li>
 
-														<li>
-															<label htmlFor="secondary_color_code">
-																Secondary Color Code
-															</label>
-															<input
-																type="text"
-																name="secondary_color_code"
-																defaultValue={item.secondary_color_code}
-																value={item.secondary_color_code}
-																id="secondary_color_code"
-																onChange={(e) =>
-																	update_order_item_property(
-																		e.target.value,
-																		e.target.name,
-																		index
-																	)}
-															/>
-														</li>
+																<li>
+																	<label htmlFor="secondary_color_code">
+																		Secondary Color Code
+																	</label>
+																	<input
+																		type="text"
+																		name="secondary_color_code"
+																		defaultValue={item.secondary_color_code}
+																		value={item.secondary_color_code}
+																		id="secondary_color_code"
+																		onChange={(e) =>
+																			update_order_item_property(
+																				e.target.value,
+																				e.target.name,
+																				index
+																			)}
+																	/>
+																</li>
 
-														<li>
-															<label htmlFor="secondary_color_product_name">
-																Secondary Color Product Name
-															</label>
-															<input
-																type="text"
-																name="secondary_color_product_name"
-																defaultValue={item.secondary_color_product_name}
-																value={item.secondary_color_product_name}
-																id="secondary_color_product_name"
-																onChange={(e) =>
-																	update_order_item_property(
-																		e.target.value,
-																		e.target.name,
-																		index
-																	)}
-															/>
-														</li>
-														<li>
-															<label htmlFor="secondary_color_product">
-																Secondary Color Product
-															</label>
-															<input
-																type="text"
-																name="secondary_color_product"
-																defaultValue={
-																	item.secondary_color_product &&
-																	item.secondary_color_product
-																}
-																value={
-																	item.secondary_color_product &&
-																	item.secondary_color_product
-																}
-																id="secondary_color_product"
-																onChange={(e) =>
-																	update_order_item_property(
-																		e.target.value,
-																		e.target.name,
-																		index
-																	)}
-															/>
-														</li>
-														<li>
-															<label
-																aria-label="sort"
-																htmlFor="sort"
-																className="select-label mb-15px"
-															>
-																Secondary Color Product
-															</label>
-															<div className="ai-c h-25px mb-15px">
-																<div className="custom-select">
-																	<select
-																		defaultValue={item.secondary_color_product}
-																		value={item.secondary_color_product}
-																		className="qty_select_dropdown"
+																<li>
+																	<label htmlFor="secondary_color_product_name">
+																		Secondary Color Product Name
+																	</label>
+																	<input
+																		type="text"
+																		name="secondary_color_product_name"
+																		defaultValue={item.secondary_color_product_name}
+																		value={item.secondary_color_product_name}
+																		id="secondary_color_product_name"
+																		onChange={(e) =>
+																			update_order_item_property(
+																				e.target.value,
+																				e.target.name,
+																				index
+																			)}
+																	/>
+																</li>
+																<li>
+																	<label htmlFor="secondary_color_product">
+																		Secondary Color Product
+																	</label>
+																	<input
+																		type="text"
 																		name="secondary_color_product"
+																		defaultValue={
+																			item.secondary_color_product &&
+																			item.secondary_color_product
+																		}
+																		value={
+																			item.secondary_color_product &&
+																			item.secondary_color_product
+																		}
+																		id="secondary_color_product"
 																		onChange={(e) =>
-																			update_order_item_property_by_template(
+																			update_order_item_property(
 																				e.target.value,
 																				e.target.name,
 																				index
 																			)}
+																	/>
+																</li>
+																<li>
+																	<label
+																		aria-label="sort"
+																		htmlFor="sort"
+																		className="select-label mb-15px"
 																	>
-																		<option key={1} defaultValue="">
-																			---Choose Product---
-																		</option>
-																		{order_products &&
-																			order_products[index] &&
-																			order_products[
-																				index
-																			].secondary_color_products.map(
-																				(product, index) => (
-																					<option
-																						key={index}
-																						value={JSON.stringify(product)}
-																					>
-																						{product.name}
-																					</option>
-																				)
-																			)}
-																	</select>
-																	<span className="custom-arrow" />
-																</div>
-															</div>
-														</li>
-														<li>
-															<h3>Option</h3>
-														</li>
-														<li>
-															<label htmlFor="option_group_name">Option Group Name</label>
-															<input
-																type="text"
-																name="option_group_name"
-																defaultValue={item.option_group_name}
-																value={item.option_group_name}
-																id="option_group_name"
-																onChange={(e) =>
-																	update_order_item_property(
-																		e.target.value,
-																		e.target.name,
-																		index
-																	)}
-															/>
-														</li>
-														<li>
-															<label htmlFor="option_product_name">
-																Option Product Name
-															</label>
-															<input
-																type="text"
-																name="option_product_name"
-																defaultValue={item.option_product_name}
-																value={item.option_product_name}
-																id="option_product_name"
-																onChange={(e) =>
-																	update_order_item_property(
-																		e.target.value,
-																		e.target.name,
-																		index
-																	)}
-															/>
-														</li>
-														<li>
-															<label htmlFor="size">Size</label>
-															<input
-																type="text"
-																name="size"
-																defaultValue={item.size}
-																value={item.size}
-																id="size"
-																onChange={(e) =>
-																	update_order_item_property(
-																		e.target.value,
-																		e.target.name,
-																		index
-																	)}
-															/>
-														</li>
-														<li>
-															<label htmlFor="option_product">Option Product</label>
-															<input
-																type="text"
-																name="option_product"
-																defaultValue={
-																	item.option_product && item.option_product
-																}
-																value={item.option_product && item.option_product}
-																id="option_product"
-																onChange={(e) =>
-																	update_order_item_property(
-																		e.target.value,
-																		e.target.name,
-																		index
-																	)}
-															/>
-														</li>
-														<li>
-															<label
-																aria-label="sort"
-																htmlFor="sort"
-																className="select-label mb-15px"
-															>
-																Option Product
-															</label>
-															<div className="ai-c h-25px mb-15px">
-																<div className="custom-select">
-																	<select
-																		defaultValue={item.option_product}
-																		value={item.option_product}
-																		className="qty_select_dropdown"
-																		name="option_product"
-																		onChange={(e) =>
-																			update_order_item_property_by_template(
-																				e.target.value,
-																				e.target.name,
-																				index
-																			)}
-																	>
-																		<option key={1} defaultValue="">
-																			---Choose Product---
-																		</option>
-																		{order_products &&
-																			order_products[index] &&
-																			order_products[
-																				index
-																			].option_products.map((product, index) => (
-																				<option
-																					key={index}
-																					value={JSON.stringify(product)}
-																				>
-																					{product.name}
+																		Secondary Color Product
+																	</label>
+																	<div className="ai-c h-25px mb-15px">
+																		<div className="custom-select">
+																			<select
+																				defaultValue={
+																					item.secondary_color_product
+																				}
+																				value={item.secondary_color_product}
+																				className="qty_select_dropdown"
+																				name="secondary_color_product"
+																				onChange={(e) =>
+																					update_order_item_property_by_template(
+																						e.target.value,
+																						e.target.name,
+																						index
+																					)}
+																			>
+																				<option key={1} defaultValue="">
+																					---Choose Product---
 																				</option>
-																			))}
-																	</select>
-																	<span className="custom-arrow" />
-																</div>
-															</div>
-														</li>
-
-														<li>
-															<h3>Secondary Product</h3>
-														</li>
-														<li>
-															<label htmlFor="secondary_group_name">
-																Secondary Group Name
-															</label>
-															<input
-																type="text"
-																name="secondary_group_name"
-																defaultValue={item.secondary_group_name}
-																value={item.secondary_group_name}
-																id="secondary_group_name"
-																onChange={(e) =>
-																	update_order_item_property(
-																		e.target.value,
-																		e.target.name,
-																		index
-																	)}
-															/>
-														</li>
-														<li>
-															<label htmlFor="secondary_product_name">
-																Secondary Product Name
-															</label>
-															<input
-																type="text"
-																name="secondary_product_name"
-																defaultValue={item.secondary_product_name}
-																value={item.secondary_product_name}
-																id="secondary_product_name"
-																onChange={(e) =>
-																	update_order_item_property(
-																		e.target.value,
-																		e.target.name,
-																		index
-																	)}
-															/>
-														</li>
-
-														<li>
-															<label htmlFor="secondary_product">Secondary Product</label>
-															<input
-																type="text"
-																name="secondary_product"
-																defaultValue={
-																	item.secondary_product && item.secondary_product
-																}
-																value={item.secondary_product && item.secondary_product}
-																id="secondary_product"
-																onChange={(e) =>
-																	update_order_item_property(
-																		e.target.value,
-																		e.target.name,
-																		index
-																	)}
-															/>
-														</li>
-														<li>
-															<label
-																aria-label="sort"
-																htmlFor="sort"
-																className="select-label mb-15px"
-															>
-																Secondary Product
-															</label>
-															<div className="ai-c h-25px mb-15px">
-																<div className="custom-select">
-																	<select
-																		defaultValue={item.secondary_product}
-																		value={item.secondary_product}
-																		className="qty_select_dropdown"
-																		name="secondary_product"
+																				{order_products &&
+																					order_products[index] &&
+																					order_products[
+																						index
+																					].secondary_color_products.map(
+																						(product, index) => (
+																							<option
+																								key={index}
+																								value={JSON.stringify(
+																									product
+																								)}
+																							>
+																								{product.name}
+																							</option>
+																						)
+																					)}
+																			</select>
+																			<span className="custom-arrow" />
+																		</div>
+																	</div>
+																</li>
+																<li>
+																	<h3>Option</h3>
+																</li>
+																<li>
+																	<label htmlFor="option_group_name">
+																		Option Group Name
+																	</label>
+																	<input
+																		type="text"
+																		name="option_group_name"
+																		defaultValue={item.option_group_name}
+																		value={item.option_group_name}
+																		id="option_group_name"
 																		onChange={(e) =>
-																			update_order_item_property_by_template(
+																			update_order_item_property(
 																				e.target.value,
 																				e.target.name,
 																				index
 																			)}
-																	>
-																		<option key={1} defaultValue="">
-																			---Choose Product---
-																		</option>
-																		{order_products &&
-																			order_products[index] &&
-																			order_products[
+																	/>
+																</li>
+																<li>
+																	<label htmlFor="option_product_name">
+																		Option Product Name
+																	</label>
+																	<input
+																		type="text"
+																		name="option_product_name"
+																		defaultValue={item.option_product_name}
+																		value={item.option_product_name}
+																		id="option_product_name"
+																		onChange={(e) =>
+																			update_order_item_property(
+																				e.target.value,
+																				e.target.name,
 																				index
-																			].secondary_products.map(
-																				(product, index) => (
-																					<option
-																						key={index}
-																						value={JSON.stringify(product)}
-																					>
-																						{product.name}
-																					</option>
-																				)
 																			)}
-																	</select>
-																	<span className="custom-arrow" />
-																</div>
-															</div>
-														</li>
-														{/* {item.product_option && (
+																	/>
+																</li>
+																<li>
+																	<label htmlFor="size">Size</label>
+																	<input
+																		type="text"
+																		name="size"
+																		defaultValue={item.size}
+																		value={item.size}
+																		id="size"
+																		onChange={(e) =>
+																			update_order_item_property(
+																				e.target.value,
+																				e.target.name,
+																				index
+																			)}
+																	/>
+																</li>
+																<li>
+																	<label htmlFor="option_product">
+																		Option Product
+																	</label>
+																	<input
+																		type="text"
+																		name="option_product"
+																		defaultValue={
+																			item.option_product && item.option_product
+																		}
+																		value={
+																			item.option_product && item.option_product
+																		}
+																		id="option_product"
+																		onChange={(e) =>
+																			update_order_item_property(
+																				e.target.value,
+																				e.target.name,
+																				index
+																			)}
+																	/>
+																</li>
+																<li>
+																	<label
+																		aria-label="sort"
+																		htmlFor="sort"
+																		className="select-label mb-15px"
+																	>
+																		Option Product
+																	</label>
+																	<div className="ai-c h-25px mb-15px">
+																		<div className="custom-select">
+																			<select
+																				defaultValue={item.option_product}
+																				value={item.option_product}
+																				className="qty_select_dropdown"
+																				name="option_product"
+																				onChange={(e) =>
+																					update_order_item_property_by_template(
+																						e.target.value,
+																						e.target.name,
+																						index
+																					)}
+																			>
+																				<option key={1} defaultValue="">
+																					---Choose Product---
+																				</option>
+																				{order_products &&
+																					order_products[index] &&
+																					order_products[
+																						index
+																					].option_products.map(
+																						(product, index) => (
+																							<option
+																								key={index}
+																								value={JSON.stringify(
+																									product
+																								)}
+																							>
+																								{product.name}
+																							</option>
+																						)
+																					)}
+																			</select>
+																			<span className="custom-arrow" />
+																		</div>
+																	</div>
+																</li>
+
+																<li>
+																	<h3>Secondary Product</h3>
+																</li>
+																<li>
+																	<label htmlFor="secondary_group_name">
+																		Secondary Group Name
+																	</label>
+																	<input
+																		type="text"
+																		name="secondary_group_name"
+																		defaultValue={item.secondary_group_name}
+																		value={item.secondary_group_name}
+																		id="secondary_group_name"
+																		onChange={(e) =>
+																			update_order_item_property(
+																				e.target.value,
+																				e.target.name,
+																				index
+																			)}
+																	/>
+																</li>
+																<li>
+																	<label htmlFor="secondary_product_name">
+																		Secondary Product Name
+																	</label>
+																	<input
+																		type="text"
+																		name="secondary_product_name"
+																		defaultValue={item.secondary_product_name}
+																		value={item.secondary_product_name}
+																		id="secondary_product_name"
+																		onChange={(e) =>
+																			update_order_item_property(
+																				e.target.value,
+																				e.target.name,
+																				index
+																			)}
+																	/>
+																</li>
+
+																<li>
+																	<label htmlFor="secondary_product">
+																		Secondary Product
+																	</label>
+																	<input
+																		type="text"
+																		name="secondary_product"
+																		defaultValue={
+																			item.secondary_product &&
+																			item.secondary_product._id
+																		}
+																		value={
+																			item.secondary_product &&
+																			item.secondary_product._id
+																		}
+																		id="secondary_product"
+																		onChange={(e) =>
+																			update_order_item_property(
+																				e.target.value,
+																				e.target.name,
+																				index
+																			)}
+																	/>
+																</li>
+																<li>
+																	<label
+																		aria-label="sort"
+																		htmlFor="sort"
+																		className="select-label mb-15px"
+																	>
+																		Secondary Product
+																	</label>
+																	<div className="ai-c h-25px mb-15px">
+																		<div className="custom-select">
+																			<select
+																				defaultValue={item.secondary_product}
+																				value={item.secondary_product}
+																				className="qty_select_dropdown"
+																				name="secondary_product"
+																				onChange={(e) =>
+																					update_order_item_property_by_template(
+																						e.target.value,
+																						e.target.name,
+																						index
+																					)}
+																			>
+																				<option key={1} defaultValue="">
+																					---Choose Product---
+																				</option>
+																				{order_products &&
+																					order_products[index] &&
+																					order_products[
+																						index
+																					].secondary_products.map(
+																						(product, index) => (
+																							<option
+																								key={index}
+																								value={JSON.stringify(
+																									product
+																								)}
+																							>
+																								{product.name}
+																							</option>
+																						)
+																					)}
+																			</select>
+																			<span className="custom-arrow" />
+																		</div>
+																	</div>
+																</li>
+																{/* {item.product_option && (
 															<div key={index} className="">
 																<div className="jc-b">
 																	<h2>Product Option {index + 1}</h2>
@@ -1785,10 +1852,12 @@ const EditOrderPage = (props) => {
 																</li>
 															</div>
 														)} */}
-													</div>
-												);
-											})}
-									</div>
+															</div>
+														</TabPanel>
+													);
+												})}
+										</div>
+									</Tabs>
 									<li>
 										<button type="submit" className="btn primary">
 											{id ? 'Update' : 'Create'}
