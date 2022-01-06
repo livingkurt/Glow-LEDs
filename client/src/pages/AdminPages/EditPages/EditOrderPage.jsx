@@ -146,7 +146,7 @@ const EditOrderPage = (props) => {
 					console.log('Is ID');
 					dispatch(detailsOrder(props.match.params.id));
 					dispatch(detailsOrder(props.match.params.id));
-					dispatch(listProducts({ limit: 300, hidden: true }));
+					dispatch(listProducts({ limit: 0, option: false }));
 					dispatch(listUsers({}));
 				} else {
 					dispatch(detailsOrder(''));
