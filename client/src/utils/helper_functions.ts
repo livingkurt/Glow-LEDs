@@ -325,9 +325,9 @@ export const determine_total = (cartItems: any) => {
 				today <= new Date(item.sale_end_date) &&
 				item.sale_price !== 0
 			) {
-				total = (total + item.sale_price) * item.qty;
+				total = total + item.sale_price * item.qty;
 			} else {
-				total = (total + item.price) * item.qty;
+				total = total + item.price * item.qty;
 			}
 		});
 		return total;

@@ -424,7 +424,7 @@ const ProductPage = (props) => {
 			pathname: props.match.params.pathname,
 			category: product.category,
 			subcategory: product.subcategory,
-			qty,
+			qty: parseInt(qty),
 			finite_stock: product.finite_stock,
 			count_in_stock: product.count_in_stock
 		};

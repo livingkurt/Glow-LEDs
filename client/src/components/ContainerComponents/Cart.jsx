@@ -68,7 +68,7 @@ const Cart = (props) => {
 	const cart = useSelector((state) => state.cart);
 
 	const { cartItems } = cart;
-	// console.log({ cartItems });
+	console.log({ cartItems_qty: cartItems.map((item) => item.qty) });
 
 	const [ no_items_in_cart, set_no_items_in_cart ] = useState('');
 
