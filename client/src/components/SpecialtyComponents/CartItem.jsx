@@ -32,9 +32,10 @@ const CartItem = (props) => {
 		<li key={props.index} className="">
 			<div className="cart-image m-auto ai-c">
 				{userInfo &&
-				userInfo.isAdmin && (
+				userInfo.isAdmin &&
+				props.item.isPaid && (
 					<button className="btn primary mr-10px" onClick={() => show_hidden_products(props.item)}>
-						{props.item.is_manufactured ? <i class="fas fa-check-square" /> : <i class="far fa-square" />}
+						{props.item.isManufactured ? <i class="fas fa-check-square" /> : <i class="far fa-square" />}
 					</button>
 				)}
 				<Link to={determnine_link(props.item)}>

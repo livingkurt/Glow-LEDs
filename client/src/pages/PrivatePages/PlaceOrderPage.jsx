@@ -120,9 +120,9 @@ const PlaceOrderPage = (props) => {
 
 				dispatch(savePayment({ paymentMethod }));
 				stable_setItemsPrice(determine_total(cartItems));
-				if (!show_message && promo_code) {
-					activate_promo_code(promo_code.toLowerCase());
-				}
+				// if (!show_message && promo_code) {
+				// 	activate_promo_code(promo_code.toLowerCase());
+				// }
 			}
 			return () => (clean = false);
 		},
@@ -166,9 +166,9 @@ const PlaceOrderPage = (props) => {
 						get_tax_rates();
 					}
 				}
-				if (!show_message && promo_code) {
-					activate_promo_code(promo_code.toLowerCase());
-				}
+				// if (!show_message && promo_code) {
+				// 	activate_promo_code(promo_code.toLowerCase());
+				// }
 			}
 			return () => (clean = false);
 		},
@@ -481,9 +481,9 @@ const PlaceOrderPage = (props) => {
 						? itemsPrice + shippingPrice + taxPrice
 						: itemsPrice + shippingPrice + taxPrice + parseInt(tip)
 				);
-				if (!show_message && promo_code) {
-					activate_promo_code(promo_code.toLowerCase());
-				}
+				// if (!show_message && promo_code) {
+				// 	activate_promo_code(promo_code.toLowerCase());
+				// }
 			}
 			return () => (clean = false);
 		},
@@ -598,11 +598,6 @@ const PlaceOrderPage = (props) => {
 			setShippingPrice(previousShippingPrice);
 		}
 		set_show_promo_code_input_box(true);
-	};
-	const handleChangeFor = (type) => ({ error }) => {
-		/* handle error */
-		console.log({ type });
-		console.log({ error });
 	};
 
 	const check_password = async (e) => {
