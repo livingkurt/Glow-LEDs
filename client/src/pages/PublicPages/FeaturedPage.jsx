@@ -111,7 +111,12 @@ const FeaturedPage = (props) => {
 						<div className="ml-10px fs-25px jc-b w-100per max-w-500px">
 							{feature.facebook_name && (
 								<div className="ml-10px fs-40px">
-									<a href={feature.facebook_name} target="_blank" rel="noopener noreferrer">
+									<a
+										href={feature.facebook_name}
+										target="_blank"
+										rel="noopener noreferrer"
+										aria-label="Facebook"
+									>
 										<i className="fab fa-facebook zoom" />
 									</a>
 								</div>
@@ -122,6 +127,7 @@ const FeaturedPage = (props) => {
 										href={'https://www.instagram.com/' + feature.instagram_handle}
 										target="_blank"
 										rel="noopener noreferrer"
+										aria-label="Instagram"
 									>
 										<i className="fab fa-instagram zoom" />
 									</a>

@@ -141,7 +141,7 @@ const QuickButtons = () => {
 	useIntersectionObserver(setActiveId);
 
 	return (
-		<nav className="faq-nav" aria-label="Table of contents">
+		<nav className="faq-nav" aria-label="Table of Contents">
 			<Headings headings={nestedHeadings} activeId={activeId} />
 		</nav>
 	);

@@ -495,6 +495,7 @@ const OrderPage = (props) => {
 									style={{ borderRadius: '50%' }}
 									className="btn icon h-59px"
 									onClick={(e) => move_left(e)}
+									aria-label="Previous"
 								>
 									<i className="fas fa-arrow-circle-left fs-40px" />
 								</button>
@@ -522,6 +523,7 @@ const OrderPage = (props) => {
 									style={{ borderRadius: '50%' }}
 									className="btn icon h-59px"
 									onClick={(e) => move_right(e)}
+									aria-label="Next"
 								>
 									<i className="fas fa-arrow-circle-right fs-40px" />
 								</button>
@@ -941,7 +943,7 @@ ${order.shipping.email}`)}
 												<Link
 													to={`/secure/glow/emails/order/${order._id}/order/false/${message_to_user}`}
 												>
-													<button className="btn secondary">
+													<button className="btn secondary" aria-label="Send">
 														<i className="fas fa-paper-plane" />
 													</button>
 												</Link>
@@ -962,7 +964,7 @@ ${order.shipping.email}`)}
 												<Link
 													to={`/secure/glow/emails/order_status/${order._id}/reassured/false/${message_to_user}`}
 												>
-													<button className="btn secondary">
+													<button className="btn secondary" aria-label="Send">
 														<i className="fas fa-paper-plane" />
 													</button>
 												</Link>
@@ -987,7 +989,7 @@ ${order.shipping.email}`)}
 												<Link
 													to={`/secure/glow/emails/order_status/${order._id}/manufactured/false/${message_to_user}`}
 												>
-													<button className="btn secondary">
+													<button className="btn secondary" aria-label="Send">
 														<i className="fas fa-paper-plane" />
 													</button>
 												</Link>
@@ -1008,7 +1010,7 @@ ${order.shipping.email}`)}
 												<Link
 													to={`/secure/glow/emails/order_status/${order._id}/packaged/false/${message_to_user}`}
 												>
-													<button className="btn secondary">
+													<button className="btn secondary" aria-label="Send">
 														<i className="fas fa-paper-plane" />
 													</button>
 												</Link>
@@ -1029,7 +1031,7 @@ ${order.shipping.email}`)}
 												<Link
 													to={`/secure/glow/emails/order_status/${order._id}/shipped/false/${message_to_user}`}
 												>
-													<button className="btn secondary">
+													<button className="btn secondary" aria-label="Send">
 														<i className="fas fa-paper-plane" />
 													</button>
 												</Link>
@@ -1050,7 +1052,7 @@ ${order.shipping.email}`)}
 												<Link
 													to={`/secure/glow/emails/order_status/${order._id}/delivered/false/${message_to_user}`}
 												>
-													<button className="btn secondary">
+													<button className="btn secondary" aria-label="Send">
 														<i className="fas fa-paper-plane" />
 													</button>
 												</Link>
@@ -1071,7 +1073,7 @@ ${order.shipping.email}`)}
 												<Link
 													to={`/secure/glow/emails/order/${order._id}/refunded/false/${message_to_user}`}
 												>
-													<button className="btn secondary">
+													<button className="btn secondary" aria-label="Send">
 														<i className="fas fa-paper-plane" />
 													</button>
 												</Link>

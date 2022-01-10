@@ -184,6 +184,7 @@ const ResetPasswordEmail = () => {
 										href="https://www.facebook.com/Glow-LEDscom-100365571740684"
 										target="_blank"
 										rel="noopener noreferrer"
+										aria-label="Facebook"
 									>
 										<i className="fab fa-facebook zoom" style={{ color: 'white' }} />
 									</a>
@@ -198,6 +199,7 @@ const ResetPasswordEmail = () => {
 										href="https://www.instagram.com/glow_leds/"
 										target="_blank"
 										rel="noopener noreferrer"
+										aria-label="Instagram"
 									>
 										<i className="fab fa-instagram zoom" style={{ color: 'white' }} />
 									</a>
@@ -212,6 +214,7 @@ const ResetPasswordEmail = () => {
 										href="https://www.youtube.com/channel/UCm_gDyTIy7d0oR9LeowPkYw?sub_confirmation=1"
 										target="_blank"
 										rel="noopener noreferrer"
+										aria-label="Youtube"
 									>
 										<i className="fab fa-youtube zoom" style={{ color: 'white' }} />
 									</a>
@@ -226,6 +229,7 @@ const ResetPasswordEmail = () => {
 										href="https://soundcloud.com/ntre/tracks"
 										target="_blank"
 										rel="noopener noreferrer"
+										aria-label="Soundcloud"
 									>
 										<i className="fab fa-soundcloud" style={{ color: 'white' }} />
 									</a>

@@ -424,6 +424,7 @@ const EditContentPage = (props) => {
 																<button
 																	className="btn primary w-4rem h-4rem p-14px mr-1rem mb-1rem"
 																	onClick={(e) => remove_slideshow(index, e)}
+																	aria-label="Delete"
 																>
 																	<i className="fas fa-times mr-5px" />
 																</button>
@@ -568,6 +569,7 @@ const EditContentPage = (props) => {
 																<button
 																	className="btn primary w-4rem h-4rem p-14px mr-1rem mb-1rem"
 																	onClick={(e) => remove_link(index, e)}
+																	aria-label="Delete"
 																>
 																	<i className="fas fa-times mr-5px" />
 																</button>

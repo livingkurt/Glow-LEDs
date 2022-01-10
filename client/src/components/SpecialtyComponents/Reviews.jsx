@@ -76,7 +76,11 @@ const Review = (props) => {
 						{userInfo &&
 						userInfo.isAdmin && (
 							<div className="ta-r">
-								<button className="btn icon" onClick={() => remove_review(review._id)}>
+								<button
+									className="btn icon"
+									onClick={() => remove_review(review._id)}
+									aria-label="Delete"
+								>
 									<i className="fas fa-trash-alt" />
 								</button>
 							</div>

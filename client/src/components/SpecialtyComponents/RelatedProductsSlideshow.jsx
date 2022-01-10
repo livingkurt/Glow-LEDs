@@ -262,7 +262,7 @@ const RelatedProductsSlideshow = ({ product_category, category, random, title, p
 																}}
 															>
 																{/* <label
-																	aria-label="sort"
+																	aria-label="Sort"
 																	htmlFor="sort"
 																	className="select-label mr-1rem mt-1rem"
 																>
@@ -290,7 +290,7 @@ const RelatedProductsSlideshow = ({ product_category, category, random, title, p
 																		: ''}`}
 																>
 																	<h3
-																		aria-label="sort"
+																		aria-label="Sort"
 																		htmlFor="sort"
 																		className="select-label mr-1rem mt-1rem"
 																	>
@@ -317,7 +317,7 @@ const RelatedProductsSlideshow = ({ product_category, category, random, title, p
 
 																<div className="ai-c h-25px max-w-500px w-100per jc-b mb-10px">
 																	<label
-																		aria-label="sort"
+																		aria-label="Sort"
 																		htmlFor="sort"
 																		className="select-label mr-1rem"
 																	>

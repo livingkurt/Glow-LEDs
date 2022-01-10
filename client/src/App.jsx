@@ -351,7 +351,7 @@ const App = (props) => {
 				{/* <button
 					className={`side-bar-open  p-10px ${active ? 'z-pos-10' : 'z-pos-2'}`}
 					onClick={open_close}
-					aria-label="sidebar"
+					aria-label="Sidebar"
 					style={{ fontSize: '30px !important' }}
 				>
 					<div className="box">

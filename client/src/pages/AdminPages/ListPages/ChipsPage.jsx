@@ -179,11 +179,15 @@ const ChipsPage = (props) => {
 										<td className="p-10px">
 											<div className="jc-b">
 												<Link to={'/secure/glow/editchip/' + chip._id}>
-													<button className="btn icon">
+													<button className="btn icon" aria-label="Edit">
 														<i className="fas fa-edit" />
 													</button>
 												</Link>
-												<button className="btn icon" onClick={() => deleteHandler(chip)}>
+												<button
+													className="btn icon"
+													onClick={() => deleteHandler(chip)}
+													aria-label="Delete"
+												>
 													<i className="fas fa-trash-alt" />
 												</button>
 											</div>

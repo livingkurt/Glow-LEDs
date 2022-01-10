@@ -106,7 +106,7 @@ const CartPage = (props) => {
 											<div>
 												<div className="ai-c h-25px">
 													<label
-														aria-label="sort"
+														aria-label="Sort"
 														htmlFor="sort"
 														className="select-label mr-1rem"
 													>
@@ -152,6 +152,7 @@ const CartPage = (props) => {
 												<button
 													className="btn icon"
 													onClick={() => removeFromCartHandler(item)}
+													aria-label="detete"
 												>
 													<i className="fas fa-trash-alt" />
 												</button>

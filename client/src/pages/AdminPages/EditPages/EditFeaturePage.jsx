@@ -226,12 +226,17 @@ const EditFeaturePage = (props) => {
 										<button
 											className="btn icon pos-abs right-10px top-15px"
 											onClick={(e) => remove_image(index, e)}
+											aria-label="Delete"
 										>
 											<i className="fas fa-times" />
 										</button>
 										<div className="pos-abs right-40px top-15px column">
 											{index > 0 && (
-												<button className="btn icon" onClick={(e) => move_image_up(index, e)}>
+												<button
+													className="btn icon"
+													onClick={(e) => move_image_up(index, e)}
+													aria-label="Move Up"
+												>
 													<i className=" fas fa-sort-up" />
 												</button>
 											)}
@@ -279,7 +284,7 @@ const EditFeaturePage = (props) => {
 										<div className="w-420px m-10px">
 											<li>
 												<label
-													aria-label="sort"
+													aria-label="Sort"
 													htmlFor="sort"
 													className="select-label mb-15px"
 												>
@@ -382,7 +387,7 @@ const EditFeaturePage = (props) => {
 										<div className="w-420px m-10px">
 											<li>
 												<label
-													aria-label="sort"
+													aria-label="Sort"
 													htmlFor="sort"
 													className="select-label mb-15px"
 												>

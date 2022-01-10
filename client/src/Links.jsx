@@ -133,6 +133,7 @@ const Links = (props) => {
 								<a
 									className="link special_font"
 									rel="noreferrer"
+									aria-label={link.label}
 									key={index}
 									style={{
 										borderColor: hslToHex(num, 100, 100),
@@ -150,6 +151,7 @@ const Links = (props) => {
 								<a
 									className="link special_font"
 									rel="noreferrer"
+									aria-label={link.label}
 									key={index}
 									style={{
 										borderColor: hslToHex(num, 100, 100),

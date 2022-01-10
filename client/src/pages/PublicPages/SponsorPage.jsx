@@ -201,6 +201,7 @@ const SponsorPage = (props) => {
 													href={affiliate.facebook_name}
 													target="_blank"
 													rel="noopener noreferrer"
+													aria-label="Facebook"
 												>
 													<i className="fab fa-facebook zoom" />
 												</a>
@@ -212,6 +213,7 @@ const SponsorPage = (props) => {
 													href={'https://www.instagram.com/' + affiliate.instagram_handle}
 													target="_blank"
 													rel="noopener noreferrer"
+													aria-label="Instagram"
 												>
 													<i className="fab fa-instagram zoom" />
 												</a>

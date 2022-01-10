@@ -242,7 +242,7 @@ const Cart = (props) => {
 				<div>
 					<li className="w-100per pb-5px">
 						<div className="p-1rem w-100per">
-							<button className="cart_sidebar_close_button" aria-label="close" onClick={closeMenu}>
+							<button className="cart_sidebar_close_button" aria-label="Close" onClick={closeMenu}>
 								<i className="fas fa-times" />
 							</button>
 							<div className="jc-b">
@@ -344,6 +344,7 @@ const Cart = (props) => {
 													<button
 														className="btn icon"
 														onClick={() => removeFromCartHandler(item)}
+														aria-label="Delete"
 													>
 														<i className="fas fa-trash-alt" />
 													</button>
@@ -390,7 +391,7 @@ const Cart = (props) => {
 											<div>
 												<div className="ai-c h-25px">
 													<label
-														aria-label="sort"
+														aria-label="Sort"
 														htmlFor="sort"
 														className="select-label mr-1rem"
 													>
@@ -408,6 +409,7 @@ const Cart = (props) => {
 												<button
 													className="btn icon"
 													onClick={() => removeFromCartHandler(item)}
+													 aria-label="Delete"
 												>
 													<i className="fas fa-trash-alt" />
 												</button>

@@ -338,14 +338,22 @@ const PaychecksPage = (props) => {
 										<td className="p-10px">
 											<div className="jc-b">
 												<Link to={'/secure/glow/editpaycheck/' + paycheck._id}>
-													<button className="btn icon">
+													<button className="btn icon" aria-label="Edit">
 														<i className="fas fa-edit" />
 													</button>
 												</Link>
-												<button className="btn icon" onClick={() => mark_paid(paycheck)}>
+												<button
+													className="btn icon"
+													onClick={() => mark_paid(paycheck)}
+													aria-label="mark paid"
+												>
 													<i className="fas fa-check-circle" />
 												</button>
-												<button className="btn icon" onClick={() => deleteHandler(paycheck)}>
+												<button
+													className="btn icon"
+													onClick={() => deleteHandler(paycheck)}
+													aria-label="Delete"
+												>
 													<i className="fas fa-trash-alt" />
 												</button>
 											</div>

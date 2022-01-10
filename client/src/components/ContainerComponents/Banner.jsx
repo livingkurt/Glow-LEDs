@@ -49,12 +49,18 @@ const Banner = (props) => {
 								href="https://www.facebook.com/Glow-LEDscom-100365571740684"
 								target="_blank"
 								rel="noopener noreferrer"
+								aria-label="Facebook"
 							>
 								<i className="fab fa-facebook zoom" />
 							</a>
 						</div>
 						<div className="ml-10px">
-							<a href="https://www.instagram.com/glow_leds/" target="_blank" rel="noopener noreferrer">
+							<a
+								href="https://www.instagram.com/glow_leds/"
+								target="_blank"
+								rel="noopener noreferrer"
+								aria-label="Instagram"
+							>
 								<i className="fab fa-instagram zoom" />
 							</a>
 						</div>
@@ -63,6 +69,7 @@ const Banner = (props) => {
 								href="https://www.tiktok.com/@glow_leds?lang=en"
 								target="_blank"
 								rel="noopener noreferrer"
+								aria-label="TikTok"
 							>
 								<i className="fab fa-tiktok zoom" />
 							</a>
@@ -72,17 +79,28 @@ const Banner = (props) => {
 								href="https://www.youtube.com/channel/UCm_gDyTIy7d0oR9LeowPkYw?sub_confirmation=1"
 								target="_blank"
 								rel="noopener noreferrer"
+								aria-label="Youtube"
 							>
 								<i className="fab fa-youtube zoom" />
 							</a>
 						</div>
 						<div className="">
-							<a href="https://soundcloud.com/ntre/tracks" target="_blank" rel="noopener noreferrer">
+							<a
+								href="https://soundcloud.com/ntre/tracks"
+								target="_blank"
+								rel="noopener noreferrer"
+								aria-label="Twitter"
+							>
 								<i className="fab fa-soundcloud" />
 							</a>
 						</div>
 						<div className="mh-10px mr-10px">
-							<a href="https://twitter.com/glow_leds" target="_blank" rel="noopener noreferrer">
+							<a
+								href="https://twitter.com/glow_leds"
+								target="_blank"
+								rel="noopener noreferrer"
+								aria-label="Soundcloud"
+							>
 								<i className="fab fa-twitter zoom" />
 							</a>
 						</div>

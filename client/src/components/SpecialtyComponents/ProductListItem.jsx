@@ -190,7 +190,11 @@ const ProductListItem = (props) => {
 				{/* <label className="w-100px">
 					{product.hidden ? <i className="fas fa-eye-slash" /> : <i className="fas fa-eye" />}
 				</label> */}
-				<button className="btn icon" onClick={() => show_hide_product(product)}>
+				<button
+					className="btn icon"
+					onClick={() => show_hide_product(product)}
+					aria-label={product.hidden ? 'hide' : 'show'}
+				>
 					{product.hidden ? <i className="fas fa-eye-slash" /> : <i className="fas fa-eye" />}
 				</button>
 				<label className="w-200px">{product.category}</label>
@@ -204,11 +208,11 @@ const ProductListItem = (props) => {
 					<div>
 						<div className="jc-b">
 							<Link to={'/secure/glow/editproduct/' + product.pathname + '/' + false}>
-								<button className="btn icon">
+								<button className="btn icon" aria-label="Edit">
 									<i className="fas fa-edit" />
 								</button>
 							</Link>
-							<button className="btn icon" onClick={() => deleteHandler(product)}>
+							<button className="btn icon" onClick={() => deleteHandler(product)} aria-label="Delete">
 								<i className="fas fa-trash-alt" />
 							</button>
 							{admin && (
@@ -282,11 +286,15 @@ const ProductListItem = (props) => {
 									<div>
 										<div className="jc-b">
 											<Link to={'/secure/glow/editproduct/' + product.pathname + '/' + false}>
-												<button className="btn icon">
+												<button className="btn icon" aria-label="Edit">
 													<i className="fas fa-edit" />
 												</button>
 											</Link>
-											<button className="btn icon" onClick={() => deleteHandler(product)}>
+											<button
+												className="btn icon"
+												onClick={() => deleteHandler(product)}
+												aria-label="Delete"
+											>
 												<i className="fas fa-trash-alt" />
 											</button>
 											{/* {admin && (
@@ -333,11 +341,15 @@ const ProductListItem = (props) => {
 									<div>
 										<div className="jc-b">
 											<Link to={'/secure/glow/editproduct/' + product.pathname + '/' + false}>
-												<button className="btn icon">
+												<button className="btn icon" aria-label="Edit">
 													<i className="fas fa-edit" />
 												</button>
 											</Link>
-											<button className="btn icon" onClick={() => deleteHandler(product)}>
+											<button
+												className="btn icon"
+												onClick={() => deleteHandler(product)}
+												aria-label="Delete"
+											>
 												<i className="fas fa-trash-alt" />
 											</button>
 											{/* {admin && (
@@ -384,11 +396,15 @@ const ProductListItem = (props) => {
 									<div>
 										<div className="jc-b">
 											<Link to={'/secure/glow/editproduct/' + product.pathname + '/' + false}>
-												<button className="btn icon">
+												<button className="btn icon" aria-label="Edit">
 													<i className="fas fa-edit" />
 												</button>
 											</Link>
-											<button className="btn icon" onClick={() => deleteHandler(product)}>
+											<button
+												className="btn icon"
+												onClick={() => deleteHandler(product)}
+												aria-label="Delete"
+											>
 												<i className="fas fa-trash-alt" />
 											</button>
 											{/* {admin && (
@@ -435,11 +451,15 @@ const ProductListItem = (props) => {
 									<div>
 										<div className="jc-b">
 											<Link to={'/secure/glow/editproduct/' + product.pathname + '/' + false}>
-												<button className="btn icon">
+												<button className="btn icon" aria-label="Edit">
 													<i className="fas fa-edit" />
 												</button>
 											</Link>
-											<button className="btn icon" onClick={() => deleteHandler(product)}>
+											<button
+												className="btn icon"
+												onClick={() => deleteHandler(product)}
+												aria-label="Delete"
+											>
 												<i className="fas fa-trash-alt" />
 											</button>
 										</div>

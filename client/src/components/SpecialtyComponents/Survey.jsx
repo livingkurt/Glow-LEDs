@@ -331,6 +331,7 @@ const Survey = (props) => {
 															href="https://www.facebook.com/Glow-LEDscom-100365571740684"
 															target="_blank"
 															rel="noopener noreferrer"
+															aria-label="Facebook"
 														>
 															<i className="fab fa-facebook zoom" />
 														</a>
@@ -340,6 +341,7 @@ const Survey = (props) => {
 															href="https://www.instagram.com/glow_leds/"
 															target="_blank"
 															rel="noopener noreferrer"
+															aria-label="Instagram"
 														>
 															<i className="fab fa-instagram zoom" />
 														</a>
@@ -349,6 +351,7 @@ const Survey = (props) => {
 															href="https://www.tiktok.com/@glow_leds?lang=en"
 															target="_blank"
 															rel="noopener noreferrer"
+															aria-label="Youtube"
 														>
 															<i className="fab fa-tiktok zoom" />
 														</a>
@@ -358,6 +361,7 @@ const Survey = (props) => {
 															href="https://www.youtube.com/channel/UCm_gDyTIy7d0oR9LeowPkYw?sub_confirmation=1?sub_confirmation=1"
 															target="_blank"
 															rel="noopener noreferrer"
+															aria-label="TikTok"
 														>
 															<i className="fab fa-youtube zoom" />
 														</a>
@@ -367,6 +371,7 @@ const Survey = (props) => {
 															href="https://soundcloud.com/ntre/tracks"
 															target="_blank"
 															rel="noopener noreferrer"
+															aria-label="Soundcloud"
 														>
 															<i className="fab fa-soundcloud" />
 														</a>

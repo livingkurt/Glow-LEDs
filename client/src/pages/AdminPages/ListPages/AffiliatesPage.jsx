@@ -339,6 +339,7 @@ const AffiliatesPage = (props) => {
 											<button
 												className="btn icon"
 												onClick={() => change_affiliate_status(affiliate)}
+												aria-label={affiliate.active ? 'deactivate' : 'activate'}
 											>
 												{affiliate.active ? (
 													<i className="fas fa-check-circle" />
@@ -351,13 +352,14 @@ const AffiliatesPage = (props) => {
 										<td className="p-10px">
 											<div className="jc-b">
 												<Link to={'/secure/glow/editaffiliate/' + affiliate.pathname}>
-													<button className="btn icon">
+													<button className="btn icon" aria-label="Edit">
 														<i className="fas fa-edit" />
 													</button>
 												</Link>
 												<button
 													className="btn icon"
 													onClick={() => deleteHandler(affiliate.pathname)}
+													aria-label="Delete"
 												>
 													<i className="fas fa-trash-alt" />
 												</button>

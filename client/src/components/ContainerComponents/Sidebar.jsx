@@ -128,7 +128,7 @@ const Sidebar = (props) => {
 						</div>
 					</Link>
 
-					<button className="sidebar_close_button" aria-label="close" onClick={closeMenu}>
+					<button className="sidebar_close_button" aria-label="Close" onClick={closeMenu}>
 						<div className="box ">
 							<div className="side-btn active">
 								<span className="span" />
@@ -153,7 +153,11 @@ const Sidebar = (props) => {
 					<div className="sidebar_dropdown">
 						<div className="sidebar-btn-container">
 							<button className="sidebar-btn primary">{first_name}</button>
-							<button className="sidebar-btn-dropdown" onClick={() => show_hide('user_dropdown')}>
+							<button
+								className="sidebar-btn-dropdown"
+								onClick={() => show_hide('user_dropdown')}
+								aria-label="Show"
+							>
 								<i className="fas fa-sort-up" />
 							</button>
 						</div>
@@ -191,7 +195,11 @@ const Sidebar = (props) => {
 								Products{' '}
 							</Link>
 						</button>
-						<button className="sidebar-btn-dropdown" onClick={() => show_hide('products_dropdown')}>
+						<button
+							className="sidebar-btn-dropdown"
+							onClick={() => show_hide('products_dropdown')}
+							aria-label="Show"
+						>
 							<i className="fas fa-sort-up" />
 						</button>
 					</div>
@@ -205,7 +213,11 @@ const Sidebar = (props) => {
 								<button className="sidebar-btn secondary" onClick={closeMenu}>
 									<Link to="/pages/menu/gloving">Gloving </Link>
 								</button>
-								<button className="sidebar-btn-dropdown" onClick={() => show_hide('gloving_dropdown')}>
+								<button
+									className="sidebar-btn-dropdown"
+									onClick={() => show_hide('gloving_dropdown')}
+									aria-label="Show"
+								>
 									<i className="fas fa-sort-up" />
 								</button>
 							</div>
@@ -259,6 +271,7 @@ const Sidebar = (props) => {
 										<button
 											className="sidebar-btn-dropdown"
 											onClick={() => show_hide('glow_casings_dropdown_2')}
+											aria-label="Show"
 										>
 											<i className="fas fa-sort-up" />
 										</button>
@@ -297,6 +310,7 @@ const Sidebar = (props) => {
 										<button
 											className="sidebar-btn-dropdown"
 											onClick={() => show_hide('glow_casings_dropdown_3')}
+											aria-label="Show"
 										>
 											<i className="fas fa-sort-up" />
 										</button>
@@ -336,6 +350,7 @@ const Sidebar = (props) => {
 									{/* <button
 								className="sidebar-btn icon trans-neg-180 pos-abs right-10px top-4px "
 								onClick={() => show_hide('glow_casings_dropdown_3')}
+								aria-label="Show"
 							>
 								<i className="fas fa-sort-up" />
 							</button> */}
@@ -353,6 +368,7 @@ const Sidebar = (props) => {
 										<button
 											className="sidebar-btn-dropdown"
 											onClick={() => show_hide('glow_casings_dropdown_4')}
+											aria-label="Show"
 										>
 											<i className="fas fa-sort-up" />
 										</button>
@@ -369,6 +385,7 @@ const Sidebar = (props) => {
 												<button
 													className="sidebar-btn-dropdown"
 													onClick={() => show_hide('glow_casings_dropdown_5')}
+													aria-label="Show"
 												>
 													<i className="fas fa-sort-up" />
 												</button>
@@ -406,6 +423,7 @@ const Sidebar = (props) => {
 											{/* <button
 										className="sidebar-btn icon trans-neg-180 pos-abs right-10px top-4px "
 										onClick={() => show_hide('glow_casings_dropdown_5')}
+										aria-label="Show"
 									>
 										<i className="fas fa-sort-up" />
 									</button> */}
@@ -439,6 +457,7 @@ const Sidebar = (props) => {
 									{/* <button
 								className="sidebar-btn icon trans-neg-180 pos-abs right-10px top-4px "
 								onClick={() => show_hide('glow_casings_dropdown_4')}
+								aria-label="Show"
 							>
 								<i className="fas fa-sort-up" />
 							</button> */}
@@ -457,6 +476,7 @@ const Sidebar = (props) => {
 							<button
 								className="sidebar-btn-dropdown"
 								onClick={() => show_hide('glow_casings_dropdown_6')}
+								aria-label="Show"
 							>
 								<i className="fas fa-sort-up" />
 							</button>
@@ -567,7 +587,11 @@ const Sidebar = (props) => {
 						<button className="sidebar-btn primary" onClick={closeMenu}>
 							<Link to="/pages/menu/featured">Featured</Link>
 						</button>
-						<button className="sidebar-btn-dropdown" onClick={() => show_hide('featured_dropdown')}>
+						<button
+							className="sidebar-btn-dropdown"
+							onClick={() => show_hide('featured_dropdown')}
+							aria-label="Show"
+						>
 							<i className="fas fa-sort-up" />
 						</button>
 					</div>
@@ -586,6 +610,7 @@ const Sidebar = (props) => {
 								<button
 									className="sidebar-btn-dropdown"
 									onClick={() => show_hide('nested_sponsor_dropdown')}
+									aria-label="Show"
 								>
 									<i className="fas fa-sort-up" />
 								</button>
@@ -605,6 +630,7 @@ const Sidebar = (props) => {
 							{/* <button
 								className="sidebar-btn icon trans-neg-180 pos-abs right-10px top-4px "
 								onClick={() => show_hide('nested_sponsor_dropdown')}
+								aria-label="Show"
 							>
 								<i className="fas fa-sort-up" />
 							</button> */}
@@ -639,6 +665,7 @@ const Sidebar = (props) => {
 					{/* <button
 						className="sidebar-btn icon trans-neg-180 pos-abs right-10px top-4px "
 						onClick={() => show_hide('featured_dropdown')}
+						aria-label="Show"
 					>
 						<i className="fas fa-sort-up" />
 					</button> */}
@@ -651,7 +678,11 @@ const Sidebar = (props) => {
 						<button className="sidebar-btn primary" onClick={closeMenu}>
 							<Link to="/pages/menu/support">Support</Link>
 						</button>
-						<button className="sidebar-btn-dropdown" onClick={() => show_hide('support_dropdown')}>
+						<button
+							className="sidebar-btn-dropdown"
+							onClick={() => show_hide('support_dropdown')}
+							aria-label="Show"
+						>
 							<i className="fas fa-sort-up" />
 						</button>
 					</div>
@@ -687,6 +718,7 @@ const Sidebar = (props) => {
 								<button
 									className="sidebar-btn-dropdown"
 									onClick={() => show_hide('nested_faq_dropdown')}
+									aria-label="Show"
 								>
 									<i className="fas fa-sort-up" />
 								</button>
@@ -762,7 +794,11 @@ const Sidebar = (props) => {
 							<button className="sidebar-btn primary" onClick={closeMenu}>
 								Admin
 							</button>
-							<button className="sidebar-btn-dropdown" onClick={() => show_hide('admin_dropdown')}>
+							<button
+								className="sidebar-btn-dropdown"
+								onClick={() => show_hide('admin_dropdown')}
+								aria-label="Show"
+							>
 								<i className="fas fa-sort-up" />
 							</button>
 						</div>

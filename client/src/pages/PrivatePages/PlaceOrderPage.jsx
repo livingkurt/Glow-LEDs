@@ -587,14 +587,6 @@ const PlaceOrderPage = (props) => {
 		set_free_shipping_message('');
 		set_show_message('');
 		if (shipping) {
-			// if (shipping.international) {
-			// 	calculate_international();
-			// } else {
-			// 	calculate_shipping();
-			// 	calculate_shipping();
-			// }
-			// set_loading(true);
-			// get_shipping_rates();
 			setShippingPrice(previousShippingPrice);
 		}
 		set_show_promo_code_input_box(true);
@@ -831,7 +823,7 @@ const PlaceOrderPage = (props) => {
 								</label>
 								{show_message && (
 									<div className="promo_code mv-1rem">
-										<button className="btn icon" onClick={() => remove_promo()}>
+										<button className="btn icon" onClick={() => remove_promo()} aria-label="Detete">
 											<i className="fas fa-times mr-5px" />
 										</button>
 										{show_message}

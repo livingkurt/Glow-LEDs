@@ -906,6 +906,7 @@ const EditOrderPage = (props) => {
 																<button
 																	className="btn primary w-4rem h-4rem p-14px mr-1rem mb-1rem"
 																	onClick={(e) => remove_order_item(index, e)}
+																	aria-label="Delete"
 																>
 																	<i className="fas fa-times mr-5px" />
 																</button>
@@ -929,7 +930,7 @@ const EditOrderPage = (props) => {
 
 																<li>
 																	<label
-																		aria-label="sort"
+																		aria-label="Sort"
 																		htmlFor="sort"
 																		className="select-label mb-15px"
 																	>
@@ -1285,7 +1286,7 @@ const EditOrderPage = (props) => {
 																</li>
 																<li>
 																	<label
-																		aria-label="sort"
+																		aria-label="Sort"
 																		htmlFor="sort"
 																		className="select-label mb-15px"
 																	>
@@ -1432,7 +1433,7 @@ const EditOrderPage = (props) => {
 																</li>
 																<li>
 																	<label
-																		aria-label="sort"
+																		aria-label="Sort"
 																		htmlFor="sort"
 																		className="select-label mb-15px"
 																	>
@@ -1557,7 +1558,7 @@ const EditOrderPage = (props) => {
 																</li>
 																<li>
 																	<label
-																		aria-label="sort"
+																		aria-label="Sort"
 																		htmlFor="sort"
 																		className="select-label mb-15px"
 																	>
@@ -1668,7 +1669,7 @@ const EditOrderPage = (props) => {
 																</li>
 																<li>
 																	<label
-																		aria-label="sort"
+																		aria-label="Sort"
 																		htmlFor="sort"
 																		className="select-label mb-15px"
 																	>

@@ -181,7 +181,11 @@ const PasswordChangedEmail = () => {
 										target="_blank"
 										rel="noopener noreferrer"
 									>
-										<i className="fab fa-facebook zoom" style={{ color: 'white' }} />
+										<i
+											className="fab fa-facebook zoom"
+											aria-label="Facebook"
+											style={{ color: 'white' }}
+										/>
 									</a>
 								</div>
 								<div
@@ -195,7 +199,11 @@ const PasswordChangedEmail = () => {
 										target="_blank"
 										rel="noopener noreferrer"
 									>
-										<i className="fab fa-instagram zoom" style={{ color: 'white' }} />
+										<i
+											className="fab fa-instagram zoom"
+											aria-label="Instagram"
+											style={{ color: 'white' }}
+										/>
 									</a>
 								</div>
 								<div
@@ -209,7 +217,11 @@ const PasswordChangedEmail = () => {
 										target="_blank"
 										rel="noopener noreferrer"
 									>
-										<i className="fab fa-youtube zoom" style={{ color: 'white' }} />
+										<i
+											className="fab fa-youtube zoom"
+											aria-label="Youtube"
+											style={{ color: 'white' }}
+										/>
 									</a>
 								</div>
 								<div
@@ -223,7 +235,11 @@ const PasswordChangedEmail = () => {
 										target="_blank"
 										rel="noopener noreferrer"
 									>
-										<i className="fab fa-soundcloud" style={{ color: 'white' }} />
+										<i
+											className="fab fa-soundcloud"
+											aria-label="Soundcloud"
+											style={{ color: 'white' }}
+										/>
 									</a>
 								</div>
 							</div>

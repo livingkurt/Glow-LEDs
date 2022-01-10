@@ -89,7 +89,11 @@ const CartItem = (props) => {
 					{userInfo &&
 					userInfo.isAdmin && (
 						<div className="ai-c">
-							<button className="btn icon" onClick={() => removeFromCartHandler(props.item)}>
+							<button
+								className="btn icon"
+								onClick={() => removeFromCartHandler(props.item)}
+								aria-label="Delete"
+							>
 								<i className="fas fa-trash-alt" />
 							</button>
 						</div>
@@ -98,7 +102,7 @@ const CartItem = (props) => {
 				{cart_item_name(props.item)}
 
 				<div className="ai-c h-25px  w-100per jc-b mb-10px">
-					<label aria-label="sort" htmlFor="sort" className="select-label mr-1rem">
+					<label aria-label="Sort" htmlFor="sort" className="select-label mr-1rem">
 						Qty:
 					</label>
 					{console.log({ qty: props.item.quantity })}

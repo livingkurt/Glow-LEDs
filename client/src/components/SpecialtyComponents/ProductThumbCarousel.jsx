@@ -69,6 +69,7 @@ const ProductThumbCarousel = (props) => {
 									style={{ borderRadius: '50%' }}
 									className="btn icon h-59px"
 									onClick={() => move_left()}
+									aria-label="Previous"
 								>
 									<i className="fas fa-arrow-circle-left fs-40px" />
 								</button>
@@ -94,6 +95,7 @@ const ProductThumbCarousel = (props) => {
 									style={{ borderRadius: '50%' }}
 									className="btn icon h-59px"
 									onClick={() => move_right()}
+									aria-label="Next"
 								>
 									<i className="fas fa-arrow-circle-right fs-40px" />
 								</button>

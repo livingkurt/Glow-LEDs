@@ -260,7 +260,7 @@ const ProductOptions = ({
 			option_products.length > 0 && (
 				<li>
 					<div className={`ai-c  mv-10px ${width < 1150 ? 'jc-b' : ''}`}>
-						<h3 aria-label="sort" htmlFor="sort" className="select-label mr-1rem mt-1rem">
+						<h3 aria-label="Sort" htmlFor="sort" className="select-label mr-1rem mt-1rem">
 							{product.option_group_name ? product.option_group_name : 'Size'}:
 						</h3>
 						<div className="ai-c wrap">

@@ -590,17 +590,25 @@ const EditProductPage = (props) => {
 											className="btn icon pos-abs right-10px top-15px"
 											onClick={(e) => remove_image(index, e)}
 										>
-											<i className="fas fa-times" />
+											<i className="fas fa-times" aria-label="Delete" />
 										</button>
 										<div className="pos-abs right-40px top-15px column">
 											{index > 0 && (
-												<button className="btn icon" onClick={(e) => move_image_up(index, e)}>
+												<button
+													className="btn icon"
+													onClick={(e) => move_image_up(index, e)}
+													aria-label="Move Up"
+												>
 													<i className=" fas fa-sort-up" />
 												</button>
 											)}
 
 											{index < images.length - 1 && (
-												<button className="btn icon" onClick={(e) => move_image_down(index, e)}>
+												<button
+													className="btn icon"
+													onClick={(e) => move_image_down(index, e)}
+													aria-label="Move Down"
+												>
 													<i
 														style={{ WebkitTransform: 'rotate(-180deg)' }}
 														className=" fas fa-sort-up"
@@ -767,6 +775,7 @@ const EditProductPage = (props) => {
 												style={{ borderRadius: '50%' }}
 												className="btn icon h-59px"
 												onClick={(e) => move_left(e)}
+												aria-label="Previous"
 											>
 												<i className="fas fa-arrow-circle-left fs-40px" />
 											</button>
@@ -795,6 +804,7 @@ const EditProductPage = (props) => {
 												style={{ borderRadius: '50%' }}
 												className="btn icon h-59px"
 												onClick={(e) => move_right(e)}
+												aria-label="Next"
 											>
 												<i className="fas fa-arrow-circle-right fs-40px" />
 											</button>
@@ -1479,7 +1489,7 @@ const EditProductPage = (props) => {
 
 													<li>
 														<label
-															aria-label="sort"
+															aria-label="Sort"
 															htmlFor="sort"
 															className="select-label mb-15px"
 														>
@@ -1861,6 +1871,7 @@ const EditProductPage = (props) => {
 												style={{ borderRadius: '50%' }}
 												className="btn icon h-59px"
 												onClick={(e) => move_left(e)}
+												aria-label="Previous"
 											>
 												<i className="fas fa-arrow-circle-left fs-40px" />
 											</button>
@@ -1880,6 +1891,7 @@ const EditProductPage = (props) => {
 												style={{ borderRadius: '50%' }}
 												className="btn icon h-59px"
 												onClick={(e) => move_right(e)}
+												aria-label="Next"
 											>
 												<i className="fas fa-arrow-circle-right fs-40px" />
 											</button>

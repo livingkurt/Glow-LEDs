@@ -594,6 +594,7 @@ export const list_display = (list_items, set_items) => {
 										<button
 											className="btn icon"
 											onClick={(e) => remove_list_item(index, e, set_items)}
+											aria-label="Delete"
 										>
 											<i className="fas fa-times mr-5px" />
 										</button>
@@ -689,7 +690,6 @@ export const order_status_steps = (order, status) => {
 				}
 			>
 				<div style={{ fontSize: '16px' }}>Ordered</div>
-				{/* <i className="fas fa-check-square" /> */}
 			</div>
 			<div
 				style={
@@ -713,7 +713,6 @@ export const order_status_steps = (order, status) => {
 				}
 			>
 				<div style={{ fontSize: '16px' }}>Paid </div>
-				{/* <i className="fas fa-money-bill-wave" /> */}
 			</div>
 			<div
 				style={
@@ -737,7 +736,6 @@ export const order_status_steps = (order, status) => {
 				}
 			>
 				<div style={{ fontSize: '16px' }}>Manufactured </div>
-				{/* <i className="fas fa-hammer" /> */}
 			</div>
 			<div
 				style={
@@ -761,7 +759,6 @@ export const order_status_steps = (order, status) => {
 				}
 			>
 				<div style={{ fontSize: '16px' }}>Packaged </div>
-				{/* <i className="fas fa-box" /> */}
 			</div>
 			<div
 				style={

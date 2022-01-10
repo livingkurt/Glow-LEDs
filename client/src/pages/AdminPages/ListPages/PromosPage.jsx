@@ -216,7 +216,11 @@ const PromosPage = (props) => {
 										}}
 									>
 										<td className="p-10px">
-											<button className="btn icon" onClick={() => change_promo_status(promo)}>
+											<button
+												className="btn icon"
+												onClick={() => change_promo_status(promo)}
+												aria-label={promo.active ? 'deactive' : 'activate'}
+											>
 												{promo.active ? (
 													<i className="fas fa-check-circle" />
 												) : (
@@ -295,11 +299,15 @@ const PromosPage = (props) => {
 										<td className="p-10px">
 											<div className="jc-b">
 												<Link to={'/secure/glow/editpromo/' + promo._id}>
-													<button className="btn icon">
+													<button className="btn icon" aria-label="Edit">
 														<i className="fas fa-edit" />
 													</button>
 												</Link>
-												<button className="btn icon" onClick={() => deleteHandler(promo)}>
+												<button
+													className="btn icon"
+													onClick={() => deleteHandler(promo)}
+													aria-label="Delete"
+												>
 													<i className="fas fa-trash-alt" />
 												</button>
 											</div>

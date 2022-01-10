@@ -54,6 +54,7 @@ const DropdownDisplay = ({ item_list, list_items, set_items, list_name }) => {
 												<button
 													className="btn icon"
 													onClick={(e) => remove_list_item(index, e, set_items)}
+													aria-label="Delete"
 												>
 													<i className="fas fa-times mr-5px" />
 												</button>

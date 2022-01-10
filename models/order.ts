@@ -32,6 +32,13 @@ const paymentSchema = {
 	refund_reason: { type: Array }
 };
 
+const messageSchema = {
+	message: { type: String },
+	user: { type: Boolean },
+	admin: { type: Boolean },
+	deleted: { type: Boolean, default: false }
+};
+
 const productOptionsSchema = new mongoose.Schema({
 	name: { type: String },
 	price: { type: Number },
@@ -110,6 +117,7 @@ const orderSchema = new mongoose.Schema(
 	{
 		user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 		orderItems: [ orderItemSchema ],
+		messages: [ messageSchema ],
 		shipping: shippingSchema,
 		payment: paymentSchema,
 		itemsPrice: { type: Number },
@@ -140,6 +148,9 @@ const orderSchema = new mongoose.Schema(
 		promo_code: { type: String },
 		tracking_number: { type: String },
 		return_tracking_number: { type: String },
+		is_error: { type: Boolean, default: false },
+		error_at: { type: Date },
+		error: { type: Object },
 		deleted: { type: Boolean, default: false }
 	},
 	{

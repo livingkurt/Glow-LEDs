@@ -69,6 +69,7 @@ const ProductItemD = (props) => {
 															style={{ backgroundColor: 'transparent' }}
 															className="btn icon "
 															onClick={(e) => move_left(e)}
+															aria-label="Previous"
 														>
 															<i className="fas fa-chevron-left fs-40px" />
 														</button>
@@ -91,6 +92,7 @@ const ProductItemD = (props) => {
 															style={{ backgroundColor: 'transparent' }}
 															className="btn icon "
 															onClick={(e) => move_right(e)}
+															aria-label="Next"
 														>
 															<i className="fas fa-chevron-right fs-40px" />
 														</button>

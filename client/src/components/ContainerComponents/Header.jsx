@@ -208,7 +208,7 @@ const Header = (props) => {
 									<button
 										className="side-bar-open p-10px"
 										onClick={open_sidebar}
-										aria-label="sidebar"
+										aria-label="Sidebar"
 										style={{ fontSize: '30px !important' }}
 									>
 										{/* <i className="fas fa-bars" /> */}
@@ -323,6 +323,7 @@ const Header = (props) => {
 														<button
 															className="nav-btn-dropdown"
 															onClick={() => show_hide('glowskins_dropdown')}
+															aria-label="Show"
 														>
 															<i className="fas fa-sort-up" />
 														</button>
@@ -337,6 +338,7 @@ const Header = (props) => {
 														<button
 															className="nav-btn-dropdown"
 															onClick={() => show_hide('diffusers_dropdown')}
+															aria-label="Show"
 														>
 															<i className="fas fa-sort-up" />
 														</button>
@@ -351,6 +353,7 @@ const Header = (props) => {
 														<button
 															className="nav-btn-dropdown"
 															onClick={() => show_hide('diffuser_caps_dropdown')}
+															aria-label="Show"
 														>
 															<i className="fas fa-sort-up" />
 														</button>
@@ -365,6 +368,7 @@ const Header = (props) => {
 											<button
 												className="nav-btn-dropdown"
 												onClick={() => show_hide('accessories_dropdown')}
+												aria-label="Show"
 											>
 												<i className="fas fa-sort-up" />
 											</button>
@@ -497,6 +501,7 @@ const Header = (props) => {
 														<button
 															className="nav-btn-dropdown"
 															onClick={() => show_hide_nested('collections_dropdown')}
+															aria-label="Show"
 														>
 															<i className="fas fa-sort-up" />
 														</button>
@@ -648,6 +653,7 @@ const Header = (props) => {
 														<button
 															className="nav-btn-dropdown"
 															onClick={() => show_hide('sponsored_artists_dropdown')}
+															aria-label="Show"
 														>
 															<i className="fas fa-sort-up" />
 														</button>
@@ -737,6 +743,7 @@ const Header = (props) => {
 														<button
 															className="nav-btn-dropdown"
 															onClick={() => show_hide('faq_dropdown')}
+															aria-label="Show"
 														>
 															<i className="fas fa-sort-up" />
 														</button>

@@ -44,8 +44,8 @@ const LoadingPayment = ({ loading, error, children, set_error, set_loading_payme
 						<h2 className="ta-c mv-5px">Error: {error.data.message}</h2>
 						<p className="ta-c mv-5px fs">{error.data.solution && error.data.solution}</p>
 					</div>
-					<button className="sidebar_close_button" aria-label="close" onClick={() => close_error()}>
-						<i className="fas fa-times" />
+					<button className="sidebar_close_button" aria-label="Close" onClick={() => close_error()}>
+						<i className="fas fa-times" aria-label="Close" />
 					</button>
 				</div>
 			) : (

@@ -104,7 +104,11 @@ const ContentsPage = (props) => {
 										}}
 									>
 										<td className="p-10px">
-											<button className="btn icon" onClick={() => change_content_status(content)}>
+											<button
+												className="btn icon"
+												onClick={() => change_content_status(content)}
+												aria-label={content.active ? 'deactive' : 'activate'}
+											>
 												{content.active ? (
 													<i className="fas fa-check-circle" />
 												) : (
@@ -122,11 +126,15 @@ const ContentsPage = (props) => {
 										<td className="p-10px">
 											<div className="jc-c">
 												<Link to={'/secure/glow/editcontent/' + content._id}>
-													<button className="btn icon">
+													<button className="btn icon" aria-label="Edit">
 														<i className="fas fa-edit" />
 													</button>
 												</Link>
-												<button className="btn icon" onClick={() => deleteHandler(content)}>
+												<button
+													className="btn icon"
+													onClick={() => deleteHandler(content)}
+													aria-label="Delete"
+												>
 													<i className="fas fa-trash-alt" />
 												</button>
 											</div>

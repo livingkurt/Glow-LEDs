@@ -127,7 +127,7 @@ const CarouselItem = (props) => {
 														style={{ backgroundColor: '#27272780', color: 'white' }}
 													>
 														<label
-															aria-label="sort"
+															aria-label="Sort"
 															htmlFor="sort"
 															className="select-label mr-1rem mt-1rem"
 														>
@@ -156,7 +156,7 @@ const CarouselItem = (props) => {
 
 														<div className="ai-c h-25px max-w-500px w-100per jc-b mb-10px">
 															<label
-																aria-label="sort"
+																aria-label="Sort"
 																htmlFor="sort"
 																className="select-label mr-1rem"
 															>

@@ -39,7 +39,7 @@ const OrderSmallScreen = (props) => {
 							}}
 							className="m-auto"
 						>
-							<button className="btn icon fs-25px">
+							<button className="btn icon fs-25px" aria-label="Info">
 								<i className="fas fa-info-circle" />
 							</button>
 						</Link>

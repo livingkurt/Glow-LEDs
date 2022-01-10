@@ -156,7 +156,7 @@ const EditPalettePage = (props) => {
 				{/* <MaterialPicker color={color} onChangeComplete={handleChangeComplete} /> */}
 				{/* <PhotoshopPicker color={color} onChangeComplete={handleChangeComplete} /> */}
 				<li className="mb-20px">
-					<label aria-label="sort" htmlFor="sort" className="select-label mb-20px">
+					<label aria-label="Sort" htmlFor="sort" className="select-label mb-20px">
 						Chips
 					</label>
 				</li>

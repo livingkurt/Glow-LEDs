@@ -209,7 +209,11 @@ const EditTeamPage = (props) => {
 								return (
 									<div className="promo_code mv-1rem row jc-b max-w-55rem w-100per" key={index}>
 										<div>
-											<button className="btn icon" onClick={(e) => remove_affiliate(index, e)}>
+											<button
+												className="btn icon"
+												onClick={(e) => remove_affiliate(index, e)}
+												aria-label="Delete"
+											>
 												<i className="fas fa-times mr-5px" />
 											</button>
 											{affiliate.artist_name}
@@ -262,7 +266,11 @@ const EditTeamPage = (props) => {
 						<div>
 							<div className="promo_code mv-1rem row jc-b max-w-55rem w-100per">
 								<div>
-									<button className="btn icon" onClick={(e) => remove_promo(e, code_type)}>
+									<button
+										className="btn icon"
+										onClick={(e) => remove_promo(e, code_type)}
+										aria-label="Delete"
+									>
 										<i className="fas fa-times mr-5px" />
 									</button>
 									{promo && promo.promo_code}

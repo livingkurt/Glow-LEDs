@@ -127,6 +127,7 @@ const TeamPage = (props) => {
 														href={'https://www.facebook.com/' + team.facebook_name}
 														target="_blank"
 														rel="noopener noreferrer"
+														aria-label="Facebook"
 													>
 														<i className="fab fa-facebook zoom" />
 													</a>
@@ -138,6 +139,7 @@ const TeamPage = (props) => {
 														href={'https://www.instagram.com/' + team.instagram_handle}
 														target="_blank"
 														rel="noopener noreferrer"
+														aria-label="Instagram"
 													>
 														<i className="fab fa-instagram zoom" />
 													</a>

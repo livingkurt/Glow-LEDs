@@ -203,11 +203,15 @@ const SurveysPage = (props) => {
 										<td className="p-10px">
 											<div className="jc-b">
 												<Link to={'/secure/glow/editsurvey/' + survey._id}>
-													<button className="btn icon">
+													<button className="btn icon" aria-label="Edit">
 														<i className="fas fa-edit" />
 													</button>
 												</Link>
-												<button className="btn icon" onClick={() => deleteHandler(survey)}>
+												<button
+													className="btn icon"
+													onClick={() => deleteHandler(survey)}
+													aria-label="Delete"
+												>
 													<i className="fas fa-trash-alt" />
 												</button>
 											</div>

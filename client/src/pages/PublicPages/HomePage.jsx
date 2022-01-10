@@ -242,7 +242,11 @@ const HomePage = (props) => {
 														</div>
 													)}
 												</div>
-												<button type="submit" className="btn primary w-50px fs-20px mb-0px">
+												<button
+													type="submit"
+													className="btn primary w-50px fs-20px mb-0px"
+													aria-label="Search"
+												>
 													<i className="fas fa-search" />
 												</button>
 											</div>
@@ -323,7 +327,11 @@ const HomePage = (props) => {
 														</div>
 													)}
 												</div>
-												<button type="submit" className="btn primary w-50px fs-20px mb-0px">
+												<button
+													type="submit"
+													className="btn primary w-50px fs-20px mb-0px"
+													aria-label="Search"
+												>
 													<i className="fas fa-search" />
 												</button>
 											</div>
@@ -405,7 +413,11 @@ const HomePage = (props) => {
 														</div>
 													)}
 												</div>
-												<button type="submit" className="btn primary w-50px fs-20px mb-0px">
+												<button
+													type="submit"
+													className="btn primary w-50px fs-20px mb-0px"
+													aria-label="Search"
+												>
 													<i className="fas fa-search" />
 												</button>
 											</div>
@@ -478,7 +490,11 @@ const HomePage = (props) => {
 													</div>
 												)}
 											</div>
-											<button type="submit" className="btn primary w-50px fs-20px mb-0px">
+											<button
+												type="submit"
+												className="btn primary w-50px fs-20px mb-0px"
+												aria-label="Search"
+											>
 												<i className="fas fa-search" />
 											</button>
 										</div>
