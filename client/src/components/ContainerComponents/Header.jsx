@@ -192,9 +192,9 @@ const Header = (props) => {
 					<header>
 						<div className="header">
 							<div className="menu_button w-233px">
-								<Link to="/">
+								<Link to="/" aria-label="Home Page">
 									<div className="row">
-										<div className="logo h-125px w-125px">
+										<div className="logo h-125px w-125px" aria-label="Home Page" role="button">
 											<img
 												className="zoom logo_s"
 												src="/images/optimized_images/logo_images/glow_logo_optimized.png"
@@ -225,8 +225,8 @@ const Header = (props) => {
 
 							<div className="column jc-c mh-auto">
 								<div className="logo_text jc-c mh-auto ai-c">
-									<Link to="/">
-										<div className="logo_2 h-80px w-80px none">
+									<Link to="/" aria-label="Home Page">
+										<div className="logo_2 h-80px w-80px none" aria-label="Home Page" role="button">
 											<img
 												className="zoom logo_s"
 												src="/images/optimized_images/logo_images/glow_logo_optimized.png"
@@ -235,7 +235,7 @@ const Header = (props) => {
 											/>
 										</div>
 									</Link>
-									<Link to="/">
+									<Link to="/" aria-label="Home Page">
 										{/* <div className="pos-rel"> */}
 										<div className="row pos-rel">
 											<label className="glow_leds_text">Glow LEDs</label>
@@ -251,7 +251,7 @@ const Header = (props) => {
 								</div>
 
 								<nav className="jc-b nav_bar">
-									<Link to="/">
+									<Link to="/" aria-label="Home Page">
 										<button className="btn nav title_font">Home</button>
 									</Link>
 									<div className="dropdown-nav">

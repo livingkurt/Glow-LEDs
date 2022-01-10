@@ -8,7 +8,7 @@ const Footer = () => {
 	return (
 		<footer className="ta-c w-100per mt-5rem h-400px" style={{ backgroundColor: '#333333' }}>
 			<div className="footer-image">
-				<Link to="/">
+				<Link to="/" aria-label="Home Page">
 					<div className="">
 						<img
 							className=""

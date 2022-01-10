@@ -506,8 +506,8 @@ const EditAffiliatePage = (props) => {
 													name="style"
 													value={style}
 													placeholder="Wave Tuts, Clusters, Whips..."
-													onFocus={() => this.placeholder('')}
-													onBlur={() => this.placeholder('Wave Tuts, Clusters, Whips...')}
+													// onFocus={() => this.placeholder('')}
+													// onBlur={() => this.placeholder('Wave Tuts, Clusters, Whips...')}
 													id="style"
 													onChange={(e) => set_style(e.target.value)}
 												/>
@@ -519,8 +519,8 @@ const EditAffiliatePage = (props) => {
 													name="inspiration"
 													value={inspiration}
 													placeholder="Flow, Megasloth, Jest..."
-													onFocus={() => this.placeholder('')}
-													onBlur={() => this.placeholder('Flow, Megasloth, Jest...')}
+													// onFocus={() => this.placeholder('')}
+													// onBlur={() => this.placeholder('Flow, Megasloth, Jest...')}
 													id="inspiration"
 													onChange={(e) => set_inspiration(e.target.value)}
 												/>
@@ -532,11 +532,11 @@ const EditAffiliatePage = (props) => {
 													className="edit_product_textarea"
 													name="bio"
 													placeholder="Write a little something to introduce yourself..."
-													onFocus={() => this.placeholder('')}
-													onBlur={() =>
-														this.placeholder(
-															'Write a little something to introduce yourself...'
-														)}
+													// onFocus={() => this.placeholder('')}
+													// onBlur={() =>
+													// this.placeholder(
+													// 	'Write a little something to introduce yourself...'
+													// )}
 													defaultValue={bio}
 													id="bio"
 													onChange={(e) => set_bio(e.target.value)}
@@ -549,8 +549,8 @@ const EditAffiliatePage = (props) => {
 													name="link"
 													value={link}
 													placeholder="https://www..."
-													onFocus={() => this.placeholder('')}
-													onBlur={() => this.placeholder('https://www...')}
+													// onFocus={() => this.placeholder('')}
+													// onBlur={() => this.placeholder('https://www...')}
 													id="link"
 													onChange={(e) => set_link(e.target.value)}
 												/>

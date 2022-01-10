@@ -95,7 +95,7 @@ const Sidebar = (props) => {
 	return (
 		<aside ref={wrapperRef} className="sidebar" style={{ top: '0px', overflowY: 'scroll', zIndex: 4 }}>
 			{/* <div className="logo_text mh-auto ai-c p-1rem pb-0px">
-				<Link to="/">
+				<Link to="/" aria-label="Home Page">
 					<div className="h-40px w-40px">
 						<img
 							className="zoom logo_s"
@@ -105,7 +105,7 @@ const Sidebar = (props) => {
 						/>
 					</div>
 				</Link>
-				<Link to="/">
+				<Link to="/" aria-label="Home Page">
 					<div className="row">
 						<label className="ml-5px fs-25px mv-0px ff-h">Glow LEDs</label>
 					</div>
@@ -117,7 +117,7 @@ const Sidebar = (props) => {
 			</div>
 			<div className="ai-c">
 				<div className="ai-c">
-					<Link to="/">
+					<Link to="/" aria-label="Home Page">
 						<div className="h-30px w-30px">
 							<img
 								className="zoom logo_s"
@@ -138,7 +138,7 @@ const Sidebar = (props) => {
 						</div>
 					</button>
 				</div>
-				<Link to="/">
+				<Link to="/" aria-label="Home Page">
 					<label className="fs-20px mv-0px ff-h mr-20px ta-c">GL</label>
 				</Link>
 			</div>

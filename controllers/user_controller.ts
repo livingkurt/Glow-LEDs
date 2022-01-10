@@ -119,7 +119,7 @@ export default {
 		const { body } = req;
 		//get refreshToken
 		const { refresh_token } = body;
-		// console.log({ refresh_token });
+		console.log({ refresh_token });
 		try {
 			//send error if no refresh_token is sent
 			if (!refresh_token) {

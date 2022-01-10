@@ -58,7 +58,7 @@ export const affiliateSaveReducer = (state = { affiliate: {} }, action: { type: 
 		case AFFILIATE_SAVE_REQUEST:
 			return { loading: true };
 		case AFFILIATE_SAVE_SUCCESS:
-			return { loading: false, success: true, affiliates: action.payload, message: 'Affiliate Saved' };
+			return { loading: false, success: true, affiliate: action.payload, message: 'Affiliate Saved' };
 		case AFFILIATE_SAVE_FAIL:
 			return { loading: false, error: action.payload.error, message: action.payload.message };
 		case AFFILIATE_REMOVE_STATE:

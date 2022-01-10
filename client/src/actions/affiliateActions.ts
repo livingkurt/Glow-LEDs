@@ -54,6 +54,7 @@ export const saveAffiliate = (affiliate: any) => async (
 					Authorization: 'Bearer ' + userInfo.access_token
 				}
 			});
+			console.log({ AFFILIATE_SAVE_SUCCESS: data });
 			dispatch({ type: AFFILIATE_SAVE_SUCCESS, payload: data });
 			const { data: user } = await axios.put(
 				'/api/users/update/' + userInfo._id,
@@ -67,7 +68,9 @@ export const saveAffiliate = (affiliate: any) => async (
 					affiliate: data._id,
 					shipping: userInfo.shipping,
 					isVerified: userInfo.isVerified,
-					isAdmin: userInfo.isAdmin
+					isAdmin: userInfo.isAdmin,
+					access_token: userInfo.access_token,
+					refresh_token: userInfo.refresh_token
 				},
 				{
 					headers: {

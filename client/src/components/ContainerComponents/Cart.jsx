@@ -247,7 +247,7 @@ const Cart = (props) => {
 							</button>
 							<div className="jc-b">
 								<div className="logo_text ai-c">
-									<Link to="/">
+									<Link to="/" aria-label="Home Page">
 										<div className="h-50px w-50px">
 											<img
 												className="zoom logo_s"
@@ -257,7 +257,7 @@ const Cart = (props) => {
 											/>
 										</div>
 									</Link>
-									<Link to="/">
+									<Link to="/" aria-label="Home Page">
 										<div className="row">
 											<label className="ml-5px fs-25px mv-0px ff-h title_font">
 												Shopping Cart
