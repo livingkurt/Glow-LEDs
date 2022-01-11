@@ -2040,28 +2040,28 @@ const OrderEmail = (props) => {
 		}
 	};
 
-	const [ num, set_num ] = useState(0);
+	// const [ num, set_num ] = useState(0);
 	const [ show_modal, set_show_modal ] = useState(false);
 
 	useEffect(
 		() => {
 			let clean = true;
 			if (clean) {
-				if (num === 0) {
-					if (order) {
-						if (email) {
-							if (props.match.params.send === 'true') {
-								if (order.orderItems.length > 0) {
-									if (props.match.params.id) {
-										send_order_email(
-											order.shipping.email,
-											order.shipping.first_name,
-											'Your Glow LEDS Order'
-										);
-										set_num(1);
-									}
+				// if (num === 0) {
+				if (order) {
+					if (email) {
+						if (props.match.params.send === 'true') {
+							if (order.orderItems.length > 0) {
+								if (props.match.params.id) {
+									send_order_email(
+										order.shipping.email,
+										order.shipping.first_name,
+										'Your Glow LEDS Order'
+									);
+									// set_num(1);
 								}
 							}
+							// }
 						}
 					}
 				}
