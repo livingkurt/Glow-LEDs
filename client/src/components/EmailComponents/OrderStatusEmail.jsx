@@ -996,24 +996,24 @@ const OrderStatusEmail = (props) => {
 			localStorage.removeItem('message_to_user');
 		}
 	};
-	const [ num, set_num ] = useState(0);
+	// const [ num, set_num ] = useState(0);
 
 	useEffect(
 		() => {
 			let clean = true;
 			if (clean) {
-				if (num === 0) {
-					if (order) {
-						if (email) {
-							if (props.match.params.send === 'true') {
-								if (order.orderItems.length > 0) {
-									if (props.match.params.id) {
-										send_order_email(order.shipping.email, order.shipping.first_name, email.h1);
-										set_num(1);
-									}
+				// if (num === 0) {
+				if (order) {
+					if (email) {
+						if (props.match.params.send === 'true') {
+							if (order.orderItems.length > 0) {
+								if (props.match.params.id) {
+									send_order_email(order.shipping.email, order.shipping.first_name, email.h1);
+									// set_num(1);
 								}
 							}
 						}
+						// }
 					}
 				}
 			}

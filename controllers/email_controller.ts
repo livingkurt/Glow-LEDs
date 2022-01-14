@@ -126,6 +126,23 @@ export default {
 			res.status(500).send({ error, message: 'Error Deleting Email' });
 		}
 	},
+	send_external_contact_emails_c: async (req: any, res: any) => {
+		const mailOptions = {
+			to: process.env.PERSONAL_EMAIL,
+			from: req.body.email,
+			subject: req.body.subject,
+			html: req.body.message
+		};
+		transporter.sendMail(mailOptions, (err, data) => {
+			if (err) {
+				console.log('Error Occurs', err);
+				res.status(500).send({ error: err, message: 'Error Sending Email' });
+			} else {
+				console.log('Contact Email Sent to ' + req.body.first_name);
+				res.status(200).send({ message: 'Email Successfully Sent' });
+			}
+		});
+	},
 	send_user_contact_emails_c: async (req: any, res: any) => {
 		const mailOptions = {
 			to: process.env.DISPLAY_EMAIL,
