@@ -2,6 +2,7 @@ import express from 'express';
 import { email_controller } from '../../controllers';
 const { isAuth, isAdmin } = require('../../util');
 const router = express.Router();
+const cors = require('cors');
 
 router.route('/email_subscription').post(email_controller.send_email_subscription_emails_c);
 router.route('/order').post(email_controller.send_order_emails_c);
@@ -11,6 +12,7 @@ router.route('/affiliate').post(email_controller.send_affiliate_emails_c);
 router.route('/feature').post(email_controller.send_feature_emails_c);
 router.route('/announcement').post(email_controller.send_announcement_emails_c);
 
+router.route('/external_contact').post(cors(), email_controller.send_external_contact_emails_c);
 router.route('/contact').post(email_controller.send_user_contact_emails_c);
 router.route('/contact_confirmation').post(email_controller.send_admin_contact_emails_c);
 router.route('/password_reset').post(email_controller.send_password_reset_emails_c);

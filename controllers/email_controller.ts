@@ -130,7 +130,7 @@ export default {
 		const mailOptions = {
 			to: process.env.PERSONAL_EMAIL,
 			from: req.body.email,
-			subject: req.body.subject,
+			subject: `${req.body.subject} - ${req.body.name}`,
 			html: req.body.message
 		};
 		res.set('Access-Control-Allow-Origin', 'https://livingkurt.github.io/');
