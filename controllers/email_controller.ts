@@ -133,6 +133,7 @@ export default {
 			subject: req.body.subject,
 			html: req.body.message
 		};
+		res.set('Access-Control-Allow-Origin', 'https://livingkurt.github.io/');
 		transporter.sendMail(mailOptions, (err, data) => {
 			if (err) {
 				console.log('Error Occurs', err);
@@ -150,6 +151,7 @@ export default {
 			subject: `New message from ${req.body.first_name} - ${req.body.reason_for_contact}`,
 			html: contact(req.body)
 		};
+
 		transporter.sendMail(mailOptions, (err, data) => {
 			if (err) {
 				console.log('Error Occurs', err);
