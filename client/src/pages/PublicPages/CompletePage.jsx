@@ -60,6 +60,9 @@ const CompletePage = (props) => {
 				'New Order Created by ' + order.shipping.first_name,
 				'info.glowleds@gmail.com'
 			);
+			setTimeout(() => {
+				set_show_modal(true);
+			}, 2000);
 		} else if (props.match.params.type === 'affiliate') {
 			const { data: affiliate } = await API_Affiliates.findById_affiliates_a(props.match.params.id);
 			await API_Emails.send_affiliate_email(affiliate, 'Welcome to the Team!', affiliate.user.email);
@@ -69,10 +72,6 @@ const CompletePage = (props) => {
 				'info.glowleds@gmail.com'
 			);
 		}
-
-		setTimeout(() => {
-			set_show_modal(true);
-		}, 2000);
 		set_loading(false);
 	};
 
