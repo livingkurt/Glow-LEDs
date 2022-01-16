@@ -1,14 +1,11 @@
 import axios from 'axios';
 
 const email_routes = {
-	send_order_email: (order: object, subject: string, email: string) => {
-		return axios.post('/api/emails/order', { order, subject, email });
-	},
-	send_affiliate_email: (affiliate: object, subject: string, email: string) => {
-		return axios.post('/api/emails/affiliate', { affiliate, subject, email });
-	},
 	send_email_subscription: (email: string, promo_code: string) => {
 		return axios.post('/api/emails/email_subscription', { email, promo_code });
+	},
+	send_order_email: (order: object, subject: string, email: string) => {
+		return axios.post('/api/emails/order', { order, subject, email });
 	},
 	send_order_status_email: (
 		order: object,
@@ -24,6 +21,12 @@ const email_routes = {
 			status,
 			message_to_user
 		});
+	},
+	send_affiliate_email: (affiliate: object, subject: string, email: string) => {
+		return axios.post('/api/emails/affiliate', { affiliate, subject, email });
+	},
+	send_feature_email: (feature: object, subject: string, email: string) => {
+		return axios.post('/api/emails/feature', { feature, subject, email });
 	},
 	send_contact: (email: string, promo_code: string) => {
 		return axios.post('/api/emails/contact', { email, promo_code });

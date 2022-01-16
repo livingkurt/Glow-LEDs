@@ -172,7 +172,8 @@ const SubmitFeaturePage = (props) => {
 			if (clean) {
 				if (success && feature_saved) {
 					console.log({ feature_saved });
-					history.push('/account/feature/receipt/' + feature_saved.data.pathname + '/feature/true');
+					props.history.push('/pages/complete/feature/' + feature_saved.pathname);
+					// history.push('/account/feature/receipt/' + feature_saved.pathname + '/feature/true');
 				}
 			}
 			return () => (clean = false);
@@ -273,8 +274,8 @@ const SubmitFeaturePage = (props) => {
 												name="category"
 												value={category}
 												placeholder="Type Category if Not Listed"
-												onFocus={() => this.placeholder('')}
-												onBlur={() => this.placeholder('Type Category if Not Listed')}
+												// onFocus={() => this.placeholder('')}
+												// onBlur={() => this.placeholder('Type Category if Not Listed')}
 												id="category"
 												onChange={(e) => set_category(e.target.value)}
 											/>
@@ -285,8 +286,8 @@ const SubmitFeaturePage = (props) => {
 												type="text"
 												name="artist_name"
 												placeholder="Glover Name... DJ Name..."
-												onFocus={() => this.placeholder('')}
-												onBlur={() => this.placeholder('Glover Name... DJ Name...')}
+												// onFocus={() => this.placeholder('')}
+												// onBlur={() => this.placeholder('Glover Name... DJ Name...')}
 												value={artist_name}
 												id="artist_name"
 												onChange={(e) => set_artist_name(e.target.value)}
@@ -308,11 +309,11 @@ const SubmitFeaturePage = (props) => {
 												className="edit_product_textarea"
 												name="description"
 												placeholder="Write a little something to introduce yourself..."
-												onFocus={() => this.placeholder('')}
-												onBlur={() =>
-													this.placeholder(
-														'Write a little something to introduce yourself...'
-													)}
+												// onFocus={() => this.placeholder('')}
+												// onBlur={() =>
+												// this.placeholder(
+												// 	'Write a little something to introduce yourself...'
+												// )}
 												defaultValue={description}
 												id="description"
 												onChange={(e) => set_description(e.target.value)}
@@ -337,8 +338,8 @@ const SubmitFeaturePage = (props) => {
 												value={facebook_name}
 												id="facebook_name"
 												placeholder="https://www.facebook.com/..."
-												onFocus={() => this.placeholder('')}
-												onBlur={() => this.placeholder('https://www.facebook.com/...')}
+												// onFocus={() => this.placeholder('')}
+												// onBlur={() => this.placeholder('https://www.facebook.com/...')}
 												onChange={(e) => set_facebook_name(e.target.value)}
 											/>
 										</li>
@@ -349,8 +350,8 @@ const SubmitFeaturePage = (props) => {
 												name="link"
 												value={link}
 												placeholder="https://www..."
-												onFocus={() => this.placeholder('')}
-												onBlur={() => this.placeholder('https://www...')}
+												// onFocus={() => this.placeholder('')}
+												// onBlur={() => this.placeholder('https://www...')}
 												id="link"
 												onChange={(e) => set_link(e.target.value)}
 											/>

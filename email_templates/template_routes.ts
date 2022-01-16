@@ -905,14 +905,32 @@ router.get('/affiliate', async (req: { body: any }, res: { send: (arg0: string) 
 	res.send(App({ body: affiliate(body), title: 'Welcome to the Team!' }));
 });
 router.get('/feature', async (req: { body: any }, res: { send: (arg0: string) => void }) => {
-	const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 }, 0);
 	const body = {
-		email: 'info.glowleds@gmail.com',
-		promo_code: 'xoteag',
-		categories: contents && contents[0].home_page.slideshow
+		feature: {
+			_id: '609013742c7976002ad6f8b3',
+			images: [],
+			deleted: false,
+			user: '60243f3bfe97542f0f15d668',
+			artist_name: 'lilwhip ',
+			instagram_handle: 'lilwhip_gloving ',
+			facebook_name: 'Dylan Arrazati',
+			email: 'arraz100@mail.chapman.edu',
+			first_name: 'Dylan',
+			last_name: 'Arrazati',
+			song_id: 'Song: Schedules, Artist: David Cutter Music ',
+			link: 'https://youtu.be/AHfQ2U5Gg4E',
+			video: 'QoagvTQgsJ8',
+			description:
+				'My name is Dylan Arrazati, but I go by lilwhip in the gloving community. I’m about to graduate with a bachelors in biochemistry and Spanish so that’s exciting. I also just hit the one year mark of my gloving journey, and I’m so excited to continue growing as a glover:) In the video I’m sharing, I’m using the frosted glowskins for my atoms🙌🏼 I also have them for my spectras and both sets of skins work amazing. ',
+			pathname: 'lilwhip _glovers_945',
+			category: 'glovers',
+			createdAt: '2021-05-03T15:15:00.977Z',
+			updatedAt: '2021-05-13T02:36:44.136Z',
+			__v: 0,
+			release_date: '2021-05-12T00:00:00.000Z'
+		}
 	};
-
-	res.send(App({ body: feature(body), title: 'Enjoy 10% off your next purchase!' }));
+	res.send(App({ body: feature(body), title: 'Thank you for sending us your art!' }));
 });
 router.get('/announcement', async (req: { body: any }, res: { send: (arg0: string) => void }) => {
 	const emails = await email_db.findAll_emails_db({ deleted: false, active: true }, { _id: -1 });

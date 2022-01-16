@@ -1,358 +1,192 @@
+import { toCapitalize } from '../../util';
+
 export default (props: any) => {
+	const { feature } = props;
 	return `
-<table style="border-spacing:0;width:100%;">
-  <tbody>
-    <tr style="font-size:16px">
-      <td>
-        <p
-          style="font-family:helvetica; font-weight: 800;  text-align: center;overflow-x:auto;white-space:-o-pre-wrap;word-wrap:break-word;max-width:800px;width:100%;margin: auto; margin-top: 20px;color:white;font-size:25px;line-height:50px">
-          Thank you for Signing Up!
-      </td>
-    </tr>
-  </tbody>
-</table>
-<table style="border-spacing:0;width:100%;">
-  <tbody>
-    <tr style="font-size:16px">
-      <td>
-        <p
-          style="font-family:helvetica; font-weight: 800;  text-align: center;overflow-x:auto;white-space:-o-pre-wrap;word-wrap:break-word;max-width:800px;width:100%;margin: auto; color:white;font-size:30px;line-height:50px">
-          ⬇️ Scroll Down for Promo Code ⬇️</p>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-
-<table style="border-spacing:0;width:100%;">
-  <tbody>
-    <tr style="font-size:16px">
-      <td>
-        <p
-          style="font-family:helvetica; font-weight: 800;  text-align: center;overflow-x:auto;white-space:-o-pre-wrap;word-wrap:break-word;max-width:800px;width:100%;margin: auto; color:white;font-size:25px;line-height:50px">
-          Check Out What We Offer!
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<table style="width:100%;border-spacing:0">
-  <tbody>
-    <tr>
-      <td style="font-family:helvetica">
-        <center>
-          <table style="max-width:800px;padding:20px;width:100%;text-align:left;border-spacing:0;margin:0 auto">
-            <tbody>
-              <tr>
-                <td style="font-family:helvetica">
-
-                  <table style="width:100%;border-spacing:0">
-                    <tbody>
-                      <tr>
-                        ${props.categories[0]
-							? `<td style="font-family:helvetica;width:50%">
-                          <table width="100%" style="max-width:800px">
-                            <tr>
-                              <td style="position: relative;">
-
-                                <a href=${props.categories[0].link} target="_blank" rel="noopener noreferrer"><img
-                                    src=${props.categories[0].image} alt="Glow LEDs" title="Email Image"
-                                    style="text-decoration: none; text-align:center;width:100%;border-radius:20px; " />
-                                  <h3
-                                    style="color: white; font-size: 25px; width: 100%; text-align: center;  position: absolute; top: 10%; left: 50%; transform: translate(-50%, -50%);">
-                                    ${props.categories[0].label}</h3>
-                                </a>
-                              </td>
-                            </tr>
-                          </table>
-                        </td>`
-							: ''}
-                        ${props.categories[1]
-							? `<td style="font-family:helvetica;width:50%">
-                          <table width="100%" style="max-width:800px">
-                            <tr>
-                              <td style="position: relative;">
-
-                                <a href=${props.categories[1].link} target="_blank" rel="noopener noreferrer"><img
-                                    src=${props.categories[1].image} alt="Glow LEDs" title="Email Image"
-                                    style="text-decoration: none; text-align:center;width:100%;border-radius:20px; " />
-                                  <h3
-                                    style="color: white; font-size: 25px; width: 100%; text-align: center; margin-left: auto; position: absolute; top: 10%; left: 50%; transform: translate(-50%, -50%);">
-                                    ${props.categories[1].label}</h3>
-                                </a>
-                              </td>
-                            </tr>
-                          </table>
-                        </td>`
-							: ''}
-
-                      </tr>
-                    </tbody>
-                  </table>
-                  <table style="width:100%;border-spacing:0">
-                    <tbody>
-                      <tr>
-                        ${props.categories[2]
-							? `<td style="font-family:helvetica;width:50%">
-                          <table width="100%" style="max-width:800px">
-                            <tr>
-                              <td style="position: relative;">
-
-                                <a href=${props.categories[2].link} target="_blank" rel="noopener noreferrer"><img
-                                    src=${props.categories[2].image} alt="Glow LEDs" title="Email Image"
-                                    style="text-decoration: none; text-align:center;width:100%;border-radius:20px; " />
-                                  <h3
-                                    style="color: white; font-size: 25px; width: 100%; text-align: center;  position: absolute; top: 10%; left: 50%; transform: translate(-50%, -50%);">
-                                    ${props.categories[2].label}</h3>
-                                </a>
-                              </td>
-                            </tr>
-                          </table>
-                        </td>`
-							: ''}
-                        ${props.categories[3]
-							? `<td style="font-family:helvetica;width:50%">
-                          <table width="100%" style="max-width:800px">
-                            <tr>
-                              <td style="position: relative;">
-
-                                <a href=${props.categories[3].link} target="_blank" rel="noopener noreferrer"><img
-                                    src=${props.categories[3].image} alt="Glow LEDs" title="Email Image"
-                                    style="text-decoration: none; text-align:center;width:100%;border-radius:20px; " />
-                                  <h3
-                                    style="color: white; font-size: 25px; width: 100%; text-align: center; margin-left: auto; position: absolute; top: 10%; left: 50%; transform: translate(-50%, -50%);">
-                                    ${props.categories[3].label}</h3>
-                                </a>
-                              </td>
-                            </tr>
-                          </table>
-                        </td>`
-							: ''}
-
-                      </tr>
-                    </tbody>
-                  </table>
-                  <table style="width:100%;border-spacing:0">
-                    <tbody>
-                      <tr>
-                        ${props.categories[4]
-							? `<td style="font-family:helvetica;width:50%">
-                          <table width="100%" style="max-width:800px">
-                            <tr>
-                              <td style="position: relative;">
-
-                                <a href=${props.categories[4].link} target="_blank" rel="noopener noreferrer"><img
-                                    src=${props.categories[4].image} alt="Glow LEDs" title="Email Image"
-                                    style="text-decoration: none; text-align:center;width:100%;border-radius:20px; " />
-                                  <h3
-                                    style="color: white; font-size: 25px; width: 100%; text-align: center;  position: absolute; top: 10%; left: 50%; transform: translate(-50%, -50%);">
-                                    ${props.categories[4].label}</h3>
-                                </a>
-                              </td>
-                            </tr>
-                          </table>
-                        </td>`
-							: ''}
-                        ${props.categories[5]
-							? `<td style="font-family:helvetica;width:50%">
-                          <table width="100%" style="max-width:800px">
-                            <tr>
-                              <td style="position: relative;">
-
-                                <a href=${props.categories[5].link} target="_blank" rel="noopener noreferrer"><img
-                                    src=${props.categories[5].image} alt="Glow LEDs" title="Email Image"
-                                    style="text-decoration: none; text-align:center;width:100%;border-radius:20px; " />
-                                  <h3
-                                    style="color: white; font-size: 25px; width: 100%; text-align: center; margin-left: auto; position: absolute; top: 10%; left: 50%; transform: translate(-50%, -50%);">
-                                    ${props.categories[5].label}</h3>
-                                </a>
-                              </td>
-                            </tr>
-                          </table>
-                        </td>`
-							: ''}
-
-                      </tr>
-                    </tbody>
-                  </table>
-                  <table style="width:100%;border-spacing:0">
-                    <tbody>
-                      <tr>
-                        ${props.categories[6]
-							? `<td style="font-family:helvetica;width:50%">
-                          <table width="100%" style="max-width:800px">
-                            <tr>
-                              <td style="position: relative;">
-
-                                <a href=${props.categories[6].link} target="_blank" rel="noopener noreferrer"><img
-                                    src=${props.categories[6].image} alt="Glow LEDs" title="Email Image"
-                                    style="text-decoration: none; text-align:center;width:100%;border-radius:20px; " />
-                                  <h3
-                                    style="color: white; font-size: 25px; width: 100%; text-align: center;  position: absolute; top: 10%; left: 50%; transform: translate(-50%, -50%);">
-                                    ${props.categories[6].label}</h3>
-                                </a>
-                              </td>
-                            </tr>
-                          </table>
-                        </td>`
-							: ''}
-                        ${props.categories[7]
-							? `<td style="font-family:helvetica;width:50%">
-                          <table width="100%" style="max-width:800px">
-                            <tr>
-                              <td style="position: relative;">
-
-                                <a href=${props.categories[7].link} target="_blank" rel="noopener noreferrer"><img
-                                    src=${props.categories[7].image} alt="Glow LEDs" title="Email Image"
-                                    style="text-decoration: none; text-align:center;width:100%;border-radius:20px; " />
-                                  <h3
-                                    style="color: white; font-size: 25px; width: 100%; text-align: center; margin-left: auto; position: absolute; top: 10%; left: 50%; transform: translate(-50%, -50%);">
-                                    ${props.categories[7].label}</h3>
-                                </a>
-                              </td>
-                            </tr>
-                          </table>
-                        </td>`
-							: ''}
-
-                      </tr>
-                    </tbody>
-                  </table>
-                  <table style="width:100%;border-spacing:0">
-                    <tbody>
-                      <tr>
-                        ${props.categories[8]
-							? `<td style="font-family:helvetica;width:50%">
-                          <table width="100%" style="max-width:800px">
-                            <tr>
-                              <td style="position: relative;">
-
-                                <a href=${props.categories[8].link} target="_blank" rel="noopener noreferrer"><img
-                                    src=${props.categories[8].image} alt="Glow LEDs" title="Email Image"
-                                    style="text-decoration: none; text-align:center;width:100%;border-radius:20px; " />
-                                  <h3
-                                    style="color: white; font-size: 25px; width: 100%; text-align: center;  position: absolute; top: 10%; left: 50%; transform: translate(-50%, -50%);">
-                                    ${props.categories[8].label}</h3>
-                                </a>
-                              </td>
-                            </tr>
-                          </table>
-                        </td>`
-							: ''}
-                        ${props.categories[9]
-							? `<td style="font-family:helvetica;width:50%">
-                          <table width="100%" style="max-width:800px">
-                            <tr>
-                              <td style="position: relative;">
-
-                                <a href=${props.categories[9].link} target="_blank" rel="noopener noreferrer"><img
-                                    src=${props.categories[9].image} alt="Glow LEDs" title="Email Image"
-                                    style="text-decoration: none; text-align:center;width:100%;border-radius:20px; " />
-                                  <h3
-                                    style="color: white; font-size: 25px; width: 100%; text-align: center; margin-left: auto; position: absolute; top: 10%; left: 50%; transform: translate(-50%, -50%);">
-                                    ${props.categories[9].label}</h3>
-                                </a>
-                              </td>
-                            </tr>
-                          </table>
-                        </td>`
-							: ''}
-
-                      </tr>
-                    </tbody>
-                  </table>
-                  <table style="width:100%;border-spacing:0">
-                    <tbody>
-                      <tr>
-                        ${props.categories[10]
-							? `<td style="font-family:helvetica;width:50%">
-                          <table width="100%" style="max-width:800px">
-                            <tr>
-                              <td style="position: relative;">
-
-                                <a href=${props.categories[10].link} target="_blank" rel="noopener noreferrer"><img
-                                    src=${props.categories[10].image} alt="Glow LEDs" title="Email Image"
-                                    style="text-decoration: none; text-align:center;width:100%;border-radius:20px; " />
-                                  <h3
-                                    style="color: white; font-size: 25px; width: 100%; text-align: center;  position: absolute; top: 10%; left: 50%; transform: translate(-50%, -50%);">
-                                    ${props.categories[10].label}</h3>
-                                </a>
-                              </td>
-                            </tr>
-                          </table>
-                        </td>`
-							: ''}
-                        ${props.categories[11]
-							? `<td style="font-family:helvetica;width:50%">
-                          <table width="100%" style="max-width:800px">
-                            <tr>
-                              <td style="position: relative;">
-
-                                <a href=${props.categories[11].link} target="_blank" rel="noopener noreferrer"><img
-                                    src=${props.categories[11].image} alt="Glow LEDs" title="Email Image"
-                                    style="text-decoration: none; text-align:center;width:100%;border-radius:20px; " />
-                                  <h3
-                                    style="color: white; font-size: 25px; width: 100%; text-align: center; margin-left: auto; position: absolute; top: 10%; left: 50%; transform: translate(-50%, -50%);">
-                                    ${props.categories[11].label}</h3>
-                                </a>
-                              </td>
-                            </tr>
-                          </table>
-                        </td>`
-							: ''}
-
-                      </tr>
-                    </tbody>
-                  </table>
-
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </center>
-      </td>
-    </tr>
-  </tbody>
-</table>
-<table width="100%" style="max-width:800px;margin:auto;">
-  <tr>
-    <table style="border-spacing:0;margin:auto">
-      <tbody>
-        <tr style="font-family:helvetica;border-radius:4px">
-          <td>
-            <h2 style="text-align:center;font-family:helvetica;color:white;font-size:20px;margin-bottom:0">
-              Let your light glow as bright ever!</h2>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <table style="border-spacing:0;width:100%;padding:10px">
-      <tbody>
-        <tr style="font-size:16px">
-          <td>
-            <p
-              style="font-family:helvetica; font-weight: 800;  text-align: center;overflow-x:auto;white-space:-o-pre-wrap;word-wrap:break-word;max-width:800px;width:100%;margin:20px auto;color:white;font-size:30px;line-height:50px">
-              Promo Code: ${props.promo_code.toUpperCase()}</p>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <table style="border-spacing:0;margin:auto">
-      <tbody>
-        <tr style="font-family:helvetica;border-radius:4px">
-          <td>
-            <h2 style="text-align:center;font-family:helvetica;color:white;font-size:20px;margin-bottom:10px">
-              Enter this Code at Checkout</h2>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  
-    <div style="display:flex;justify-content:center;margin:10px 0"><a
-        href="/collections/all/products/code/${props.promo_code.toUpperCase()}"
-        style="background-color:#4c4f60;color:white;border-radius:10px;border:0;padding:15px;text-decoration:none" target="_blank">
-        <h4 style="font-family:helvetica;margin:0;font-size:20px;text-align:center">Make it Glow with Glow LEDs</h4>
-      </a></div>
-  </tr>
-</table>`;
+        <table width="100%" style="max-width:800px;margin:auto;padding:20px">
+          <tr>
+            <td><img src="https://thumbs2.imgbox.com/b1/08/2Dnle6TI_t.jpeg" alt="Glow LEDs" title="Email Image"
+                style="text-align:center;width:100%;border-radius:20px" /></td>
+          </tr>
+          <tr>
+            <table style="border-spacing:0;margin:auto">
+              <tbody>
+                <tr style="font-family:helvetica;border-radius:4px">
+                  <td>
+                    <h3
+                      style="text-align:center;font-family:helvetica;color:white;font-size:20px;margin-top:20px;margin-bottom:0">
+                      Feature Submitted Successfully!</h3>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <table style="border-spacing:0;width:100%;max-width:800px;margin:auto;padding:10px;margin-top:19px">
+              <tbody>
+                <tr>
+                  <td style="font-size:20px;text-align:center">Feature Info</td>
+                </tr>
+                <tr>
+                  <td style="font-size:16px;height:30px"><strong>Artist Name:</strong> ${feature.artist_name}</td>
+                </tr>
+                <tr>
+                  <td style="font-size:16px;height:30px"><strong>Email:</strong> ${feature.email}</td>
+                </tr>
+                <tr>
+                  <td style="font-size:16px;height:30px"><strong>Category:</strong> ${feature && feature.category
+						? toCapitalize(feature.category)
+						: ''}</td>
+                </tr>
+                ${feature.instagram_handle
+					? `<tr>
+                  <td style="font-size:16px;height:30px"><strong>Instagram:</strong> ${feature.instagram_handle}</td>
+                </tr>`
+					: ''}
+                ${feature.facebook_name
+					? `<tr>
+                  <td style="font-size:16px;height:30px"><strong>Facebook:</strong> ${feature.facebook_name}</td>
+                </tr>`
+					: ''}
+                ${feature.description
+					? `<tr>
+                  <td style="font-size:16px;height:30px"><p style="line-height: 30px;"><strong>Bio:</strong> ${feature.description}</p></td>
+                </tr>`
+					: ''}
+                ${feature.song_id
+					? `<tr>
+                  <td style="font-size:16px;height:30px"><strong>Song ID:</strong> ${feature.song_id}</td>
+                </tr>`
+					: ''}
+              </tbody>
+            </table>
+            <table style="border-spacing:0;margin-top:19px;width:100%;padding:10px">
+              <tbody>
+                <tr style="font-size:20px;text-align:center">
+                  <td>
+                    <p
+                      style="font-size:16px;line-height:30px;max-width:800px;text-align:center;width:100%;margin:20px auto;color:white">
+                      Please follow the steps below to sending us your art. Your content will be featured on our
+                      Facebook and Instagram pages as well as a spot on our website! We really appreciate you taking the
+                      time to submit your pictures and videos to us! We love posting your art so everyone can see!
+                      Whenever you feel inspired please do not hesitate to send us a video. We will be honored to
+                      feature it! </p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <table style="border-spacing:0;margin:19px 0;width:100%">
+              <tbody>
+                <tr style="font-size:20px;text-align:center">
+                  <td>
+                    <h4
+                      style="text-align:center;font-family:helvetica;color:white;font-size:20px;margin-top:0px;margin-bottom:0">
+                      How to Send Content via WeTansfer</h4>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <ol width="100%" style="color:white;max-width:800px;margin:auto">
+              <li>
+                <div>
+                  <div class="[object Object]">
+                    <div>Click the WeTransfer button to begin</div>
+                    <div style="display:flex;justify-content:center"><a href="https://wetransfer.com/"
+                        style="background-color:#4c4f60;color:white;border-radius:10px;border:0;padding:15px;margin:20px;text-decoration:none">
+                        <h4 style="font-family:helvetica;margin:0;font-size:20px;text-align:center">WeTransfer.com</h4>
+                      </a></div>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div>Look for a window that looks like this:</div>
+                <table width="100%" style="max-width:400px;width:100%;margin:auto">
+                  <tr>
+                    <td><img src="https://thumbs2.imgbox.com/d0/ef/EWIZve42_t.png" alt="Glow LEDs" title="Email Image"
+                        style="margin-left:-20px;text-align:center;width:100%;border-radius:20px" /></td>
+                  </tr>
+                </table>
+              </li>
+              <li>
+                <div>Click &quot;Add your files&quot; to choose the content you wish to send</div>
+                <table width="100%" style="max-width:400px;width:100%;margin:auto">
+                  <tr>
+                    <td><img src="https://thumbs2.imgbox.com/90/f3/LA7rHfAH_t.png" alt="Glow LEDs" title="Email Image"
+                        style="margin-left:-20px;text-align:center;width:100%;border-radius:20px" /></td>
+                  </tr>
+                </table>
+              </li>
+              <li>
+                <div>Type or paste info.glowleds@gmail.com into the &quot;Email To&quot; field</div>
+                <table width="100%" style="max-width:400px;width:100%;margin:auto">
+                  <tr>
+                    <td><img src="https://thumbs2.imgbox.com/b9/4f/IW8ZTgwp_t.png" alt="Glow LEDs" title="Email Image"
+                        style="margin-left:-20px;text-align:center;width:100%;border-radius:20px" /></td>
+                  </tr>
+                </table>
+              </li>
+              <li>
+                <div>Type your email into the &quot;Email From&quot; field</div>
+                <table width="100%" style="max-width:400px;width:100%;margin:auto">
+                  <tr>
+                    <td><img src="https://thumbs2.imgbox.com/b8/34/sEXmUSJH_t.png" alt="Glow LEDs" title="Email Image"
+                        style="margin-left:-20px;text-align:center;width:100%;border-radius:20px" /></td>
+                  </tr>
+                </table>
+              </li>
+              <li>
+                <div>Click the transfer button</div>
+                <table width="100%" style="max-width:400px;width:100%;margin:auto">
+                  <tr>
+                    <td><img src="https://thumbs2.imgbox.com/bd/c4/Lxu9OfEp_t.png" alt="Glow LEDs" title="Email Image"
+                        style="margin-left:-20px;text-align:center;width:100%;border-radius:20px" /></td>
+                  </tr>
+                </table>
+              </li>
+              <li>
+                <div>You may need to verify your email</div>
+                <table width="100%" style="max-width:400px;width:100%;margin:auto">
+                  <tr>
+                    <td><img src="https://thumbs2.imgbox.com/2b/9e/UwReXG8i_t.png" alt="Glow LEDs" title="Email Image"
+                        style="margin-left:-20px;text-align:center;width:100%;border-radius:20px" /></td>
+                  </tr>
+                </table>
+              </li>
+              <li>
+                <div>Once verified your transfer will begin!</div>
+                <table width="100%" style="max-width:400px;width:100%;margin:auto">
+                  <tr>
+                    <td><img src="https://thumbs2.imgbox.com/f5/b2/jibRBVhN_t.png" alt="Glow LEDs" title="Email Image"
+                        style="margin-left:-20px;text-align:center;width:100%;border-radius:20px" /></td>
+                  </tr>
+                </table>
+              </li>
+              <li>
+                <div>In a few minutes your transfer will finish</div>
+                <table width="100%" style="max-width:400px;width:100%;margin:auto">
+                  <tr>
+                    <td><img src="https://thumbs2.imgbox.com/60/44/pU1uEWBN_t.png" alt="Glow LEDs" title="Email Image"
+                        style="margin-left:-20px;text-align:center;width:100%;border-radius:20px" /></td>
+                  </tr>
+                </table>
+              </li>
+            </ol>
+            <table style="border-spacing:0;margin-top:19px;width:100%">
+              <tbody>
+                <tr style="font-size:16px;text-align:center">
+                  <td>
+                    <h4
+                      style="text-align:center;font-family:helvetica;color:white;font-size:20px;margin-top:20px;margin-bottom:0;margin:10px">
+                      You have completed transferring content to Glow LEDs via WeTransfer</h4>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div style="display:flex;justify-content:center;margin:10px 0"><a
+                href="https://www.glow-leds.com/pages/menu/featured"
+                style="background-color:#4c4f60;color:white;border-radius:10px;border:0;padding:15px;text-decoration:none">
+                <h4 style="font-family:helvetica;margin:0;font-size:20px;text-align:center">Check Out the Glow LEDs
+                  Feature Section</h4>
+              </a></div>
+          </tr>
+        </table>
+        `;
 };

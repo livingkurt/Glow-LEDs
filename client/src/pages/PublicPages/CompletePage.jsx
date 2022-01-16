@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { Survey } from '../../components/SpecialtyComponents';
 import { Loading } from '../../components/UtilityComponents';
-import { API_Affiliates, API_Emails, API_Orders } from '../../utils';
+import { API_Affiliates, API_Emails, API_Features, API_Orders } from '../../utils';
 
 const CompletePage = (props) => {
 	const [ data, set_data ] = useState();
@@ -47,6 +47,16 @@ const CompletePage = (props) => {
 				button_link: '',
 				link: 'https://www.glow-leds.com/pages/complete/affiliate'
 			});
+		} else if (props.match.params.type === 'feature') {
+			set_data({
+				title: 'Feature Sign Up Complete',
+				h1: 'Thank you for sending us your art!',
+				h2: '',
+				p: 'You will be recieving a conformation email with your feature details',
+				button_label: '',
+				button_link: '',
+				link: 'https://www.glow-leds.com/pages/complete/feature'
+			});
 		}
 	};
 
@@ -69,6 +79,14 @@ const CompletePage = (props) => {
 			await API_Emails.send_affiliate_email(
 				affiliate,
 				'New Affiliate Created by ' + affiliate.artist_name,
+				'info.glowleds@gmail.com'
+			);
+		} else if (props.match.params.type === 'feature') {
+			const { data: feature } = await API_Features.findById_features_a(props.match.params.id);
+			await API_Emails.send_feature_email(feature, 'Your Glow LEDs Feature', feature.user.email);
+			await API_Emails.send_feature_email(
+				feature,
+				'New Feature Created by ' + feature.artist_name,
 				'info.glowleds@gmail.com'
 			);
 		}
@@ -161,7 +179,7 @@ const CompletePage = (props) => {
 									<Link to="/collections/all/products">
 										<button className="btn primary mh-10px">Products</button>
 									</Link>
-									<Link to="/pages/featured">
+									<Link to="collections/all/features/category/glovers">
 										<button className="btn primary mh-10px">Featured Videos</button>
 									</Link>
 									<Link to="/collections/all/sponsors">

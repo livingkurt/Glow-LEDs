@@ -127,6 +127,100 @@ export default {
 			res.status(500).send({ error, message: 'Error Deleting Email' });
 		}
 	},
+
+	send_order_emails_c: async (req: any, res: any) => {
+		const body = {
+			email: {
+				h1: 'Thank you for your Order!',
+				h2: 'We are starting production on your order. We will notify your as your order progresses.'
+			},
+			order: req.body.order
+		};
+		const mailOptions = {
+			from: process.env.DISPLAY_EMAIL,
+			to: req.body.email,
+			subject: req.body.subject,
+			html: App({ body: order(body), title: 'Thank you for your purchase!' })
+		};
+		transporter.sendMail(mailOptions, (err, data) => {
+			if (err) {
+				console.log('Error Occurs', err);
+				res.status(500).send({ error: err, message: 'Error Sending Email' });
+			} else {
+				console.log('Email Sent to ' + req.body.email);
+				res.status(200).send({ message: 'Email Successfully Sent' });
+			}
+		});
+	},
+	send_order_status_emails_c: async (req: any, res: any) => {
+		const body = {
+			email: {
+				h1: 'Thank you for your Order!',
+				h2: 'We are starting production on your order. We will notify your as your order progresses.'
+			},
+			order: req.body.order,
+			status: req.body.status,
+			message_to_user: req.body.message_to_user
+		};
+		const mailOptions = {
+			from: process.env.DISPLAY_EMAIL,
+			to: req.body.email,
+			subject: req.body.subject,
+			html: App({ body: order_status(body), title: 'Your Order has been ' + toCapitalize(status) })
+		};
+
+		transporter.sendMail(mailOptions, (err, data) => {
+			if (err) {
+				console.log('Error Occurs', err);
+				res.status(500).send({ error: err, message: 'Error Sending Email' });
+			} else {
+				console.log('Email Sent to ' + req.body.email);
+				res.status(200).send({ message: 'Email Successfully Sent' });
+			}
+		});
+	},
+	send_affiliate_emails_c: async (req: any, res: any) => {
+		const body = {
+			affiliate: req.body.affiliate
+		};
+		const mailOptions = {
+			from: process.env.DISPLAY_EMAIL,
+			to: req.body.email,
+			subject: req.body.subject,
+			html: App({ body: affiliate(body), title: 'Thank you for signing up!' })
+		};
+
+		transporter.sendMail(mailOptions, (err, data) => {
+			if (err) {
+				console.log('Error Occurs', err);
+				res.status(500).send({ error: err, message: 'Error Sending Email' });
+			} else {
+				console.log('Email Sent to ' + req.body.email);
+				res.status(200).send({ message: 'Email Successfully Sent' });
+			}
+		});
+	},
+	send_feature_emails_c: async (req: any, res: any) => {
+		const body = {
+			feature: req.body.feature
+		};
+		const mailOptions = {
+			from: process.env.DISPLAY_EMAIL,
+			to: req.body.email,
+			subject: req.body.subject,
+			html: App({ body: feature(body), title: 'Thank you for sending us your art!' })
+		};
+
+		transporter.sendMail(mailOptions, (err, data) => {
+			if (err) {
+				console.log('Error Occurs', err);
+				res.status(500).send({ error: err, message: 'Error Sending Email' });
+			} else {
+				console.log('Email Sent to ' + req.body.email);
+				res.status(200).send({ message: 'Email Successfully Sent' });
+			}
+		});
+	},
 	send_external_contact_emails_c: async (req: any, res: any) => {
 		const mailOptions = {
 			to: process.env.PERSONAL_EMAIL,
@@ -200,78 +294,6 @@ export default {
 			}
 		});
 	},
-	send_order_emails_c: async (req: any, res: any) => {
-		const body = {
-			email: {
-				h1: 'Thank you for your Order!',
-				h2: 'We are starting production on your order. We will notify your as your order progresses.'
-			},
-			order: req.body.order
-		};
-		const mailOptions = {
-			from: process.env.DISPLAY_EMAIL,
-			to: req.body.email,
-			subject: req.body.subject,
-			html: App({ body: order(body), title: 'Thank you for your purchase!' })
-		};
-		transporter.sendMail(mailOptions, (err, data) => {
-			if (err) {
-				console.log('Error Occurs', err);
-				res.status(500).send({ error: err, message: 'Error Sending Email' });
-			} else {
-				console.log('Email Sent to ' + req.body.email);
-				res.status(200).send({ message: 'Email Successfully Sent' });
-			}
-		});
-	},
-	send_affiliate_emails_c: async (req: any, res: any) => {
-		const body = {
-			affiliate: req.body.affiliate
-		};
-		const mailOptions = {
-			from: process.env.DISPLAY_EMAIL,
-			to: req.body.email,
-			subject: req.body.subject,
-			html: App({ body: affiliate(body), title: 'Thank you for signing up!' })
-		};
-
-		transporter.sendMail(mailOptions, (err, data) => {
-			if (err) {
-				console.log('Error Occurs', err);
-				res.status(500).send({ error: err, message: 'Error Sending Email' });
-			} else {
-				console.log('Email Sent to ' + req.body.email);
-				res.status(200).send({ message: 'Email Successfully Sent' });
-			}
-		});
-	},
-	send_order_status_emails_c: async (req: any, res: any) => {
-		const body = {
-			email: {
-				h1: 'Thank you for your Order!',
-				h2: 'We are starting production on your order. We will notify your as your order progresses.'
-			},
-			order: req.body.order,
-			status: req.body.status,
-			message_to_user: req.body.message_to_user
-		};
-		const mailOptions = {
-			from: process.env.DISPLAY_EMAIL,
-			to: req.body.email,
-			subject: req.body.subject,
-			html: App({ body: order_status(body), title: 'Your Order has been ' + toCapitalize(status) })
-		};
-
-		transporter.sendMail(mailOptions, (err, data) => {
-			if (err) {
-				console.log('Error Occurs', err);
-				res.status(500).send({ error: err, message: 'Error Sending Email' });
-			} else {
-				console.log('Email Sent to ' + req.body.email);
-				res.status(200).send({ message: 'Email Successfully Sent' });
-			}
-		});
-	},
 	send_review_emails_c: async (req: any, res: any) => {
 		console.log({ send_order_status_emails_c: req.body });
 		const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 }, 0);
@@ -296,30 +318,7 @@ export default {
 			}
 		});
 	},
-	send_feature_emails_c: async (req: any, res: any) => {
-		console.log({ send_order_status_emails_c: req.body });
-		const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 }, 0);
 
-		const mailOptions = {
-			from: process.env.DISPLAY_EMAIL,
-			to: req.body.email,
-			subject: 'Enjoy 10% off your next purchase!',
-			html: App({
-				body: feature({ ...req.body, categories: contents && contents[0].home_page.slideshow }),
-				title: 'Enjoy 10% off your next purchase!'
-			})
-		};
-
-		transporter.sendMail(mailOptions, (err, data) => {
-			if (err) {
-				console.log('Error Occurs', err);
-				res.status(500).send({ error: err, message: 'Error Sending Email' });
-			} else {
-				console.log('Email Sent to ' + req.body.email);
-				res.status(200).send({ message: 'Email Successfully Sent' });
-			}
-		});
-	},
 	send_announcement_emails_c: async (req: any, res: any) => {
 		console.log({ send_announcement_emails_c: req.body });
 		const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 }, 0);

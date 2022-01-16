@@ -1,7 +1,5 @@
 export default (props: any) => {
 	const { affiliate } = props;
-	console.log({ affiliate });
-	// return 'Hello';
 	return `<table width="100%" style="max-width:800px;margin:auto;padding:20px">
 	        <tr>
 	          <td><img src="https://thumbs2.imgbox.com/b1/08/2Dnle6TI_t.jpeg" alt="Glow LEDs" title="Email Image"
