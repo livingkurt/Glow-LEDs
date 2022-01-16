@@ -32,6 +32,17 @@ const shipping_routes = {
 			}
 		);
 	},
+	// get_different_shipping_rates: (data: any) => {
+	// 	return axios.put(
+	// 		'/api/shipping/get_different_shipping_rates',
+	// 		{ data },
+	// 		{
+	// 			headers: {
+	// 				Authorization: 'Bearer ' + data.userInfo.access_token
+	// 			}
+	// 		}
+	// 	);
+	// },
 	add_tracking_number: (order: any, tracking_number: any, label: any) => {
 		return axios.put('/api/shipping/tracking_number', { order, tracking_number, label });
 	},

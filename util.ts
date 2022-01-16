@@ -535,3 +535,273 @@ export const removeDuplicates = (originalArray: any, prop: any) => {
 	}
 	return newArray;
 };
+
+export const format_date = (unformatted_date: any) => {
+	const month = unformatted_date.slice(5, 7);
+	const day = unformatted_date.slice(8, 10);
+	const year = unformatted_date.slice(0, 4);
+	const formatted_date = `${month}/${day}/20`;
+	return formatted_date;
+};
+
+export const determin_card_logo = (card_type: string) => {
+	switch (card_type) {
+		case 'American Express':
+			return `<i class="fab fa-cc-amex" />`;
+		case 'Visa':
+			return `<i class="fab fa-cc-visa" />`;
+		case 'Mastercard':
+			return `<i class="fab fa-cc-mastercard" />`;
+		case 'Discover':
+			return `<i class="fab fa-cc-discover" />`;
+	}
+};
+const determine_preorder = (product: any) => {
+	if (product.preorder) {
+		return true;
+	} else {
+		return false;
+	}
+};
+
+export const email_sale_price_switch = (item: any, color: any) => {
+	if (item.sale_price !== 0) {
+		return `<label>
+				${determine_preorder(item) ? 'Preorder ' : ''}
+				<del style='color: #a03131;'>
+					<label style='${`color: ${color};`}'>$${item.price && (item.price * item.qty).toFixed(2)}</label>
+				</del>${' '}
+				${'-->'} $${item.sale_price && (item.sale_price * item.qty).toFixed(2)}
+			</label>`;
+	} else if (item.quantity === 0) {
+		return `<label>
+				${determine_preorder(item) ? 'Preorder ' : ''}
+				<del style='color: #a03131;'>
+					<label style='${`color: ${color}; margin-left: 7px;`}'>
+						${item.price && (item.price * item.qty).toFixed(2)}
+					</label>
+				</del>${' '}
+				${'-->'} <label style='${`color: ${color}; margin-left: 7px;`}'>Sold Out</label>
+			</label>`;
+	} else {
+		return `<label>
+				${determine_preorder(item) ? 'Preorder ' : ''} $${item.price && (item.price * item.qty).toFixed(2)}
+			</label>`;
+	}
+};
+
+const determine_secondary_product_name = (name: any, category: any, subcategory: any) => {
+	// console.log({ name: name.split('-')[0], category, subcategory });
+	if (name) {
+		if (category === 'diffuser_caps') {
+			return name.slice(0, -17);
+		}
+		if (name.split('-')[0].trim() === 'Nanoskins') {
+			return name.split('-')[1].trim();
+		}
+
+		if (subcategory === 'whites' && name.includes('Bulk')) {
+			return name.split(' ')[1].trim();
+		}
+		if (subcategory === 'refresh' && name.includes('Bulk')) {
+			return name.split(' ')[1].trim();
+		}
+		if (name.split('-')[0].trim() === 'Supreme Gloves') {
+			return name.split('-')[1].trim();
+		}
+		if (name.split('-')[0].trim() === 'Nano Glow Casings') {
+			return name.split('-')[1].trim();
+		}
+		if (name.split('-')[0].trim() === 'Alt Novaskins w Nano Sleds') {
+			return name.split('-')[1].trim();
+		}
+		if (name.split('-')[0].trim() === 'Novaskins') {
+			return name.split('-')[1].trim();
+		}
+		if (category === 'decals') {
+			if (name.split(' ')[1] === 'V2') {
+				return name.split(' ')[0] + ' V2';
+			} else {
+				return name.split(' ')[0];
+			}
+		} else {
+			// if (category === 'accessories' && subcategory === 'clips') {
+			// 	return name.split(' ')[3] + ' ' + name.split(' ')[4];
+			// }
+			return name;
+		}
+	}
+};
+
+export const determine_product_name = (item: any, show_qty: any, date: any) => {
+	const date_1 = new Date('2021-07-16');
+	const date_1_s = date_1.toISOString();
+	const date_2 = date;
+	if (date_1_s <= date_2 || !date) {
+		if (item.subcategory === 'alt_novaskins') {
+			if (item.name === 'Alt Novaskins w Nano Sleds') {
+				return `<div>
+						${show_qty && item.qty > 1 && item.qty + 'x'} ${item.name}
+						${item.size !== 0 && ' - ' + item.size} ${item.color && '(' + item.color + ' Skin'}
+						${item.color && ' & '}
+						${item.secondary_color && item.secondary_color + ' Sled)'}${' '}
+						${item.secondary_product_name &&
+							item.secondary_product_name.length > 0 &&
+							` - $${determine_secondary_product_name(
+								item.secondary_product_name,
+								item.category,
+								''
+							)}`}${' '}
+					</div>`;
+			} else {
+				return `<div>
+						${show_qty && item.qty > 1 && item.qty + 'x'} ${item.name} ${item.size !== 0 && ' - ' + item.size}{' '}
+						${item.color && '(' + item.color + ' Skin'}
+						${item.color && ' & '}
+						${item.secondary_color && item.secondary_color + ' Sled)'}{' '}
+					</div>`;
+			}
+		} else if (item.subcategory === 'novaskins') {
+			if (item.name === 'Novaskins') {
+				return `<div>
+						${show_qty && item.qty > 1 && item.qty + 'x'} ${item.name}
+						${item.size !== 0 && ' - ' + item.size} ${item.color && '(' + item.color + ' Skin'}
+						${item.color && ' & '}
+						${item.secondary_color && item.secondary_color + ' Sled)'}${' '}
+						${item.secondary_product_name &&
+							item.secondary_product_name.length > 0 &&
+							` - $${determine_secondary_product_name(
+								item.secondary_product_name,
+								item.category,
+								''
+							)}`}{' '}
+					</div>`;
+			}
+			// else {
+			// 	return (
+			// 		<div>
+			// 			{show_qty && item.qty > 1 && item.qty + 'x'} {item.name} {item.size !== 0 && ' - ' + item.size}{' '}
+			// 			{item.color && '(' + item.color + ' Skin'}
+			// 			{item.color && ' & '}
+			// 			{item.secondary_color && item.secondary_color + ' Sled)'}{' '}
+			// 		</div>
+			// 	);
+			// }
+		} else if (item.name === 'Nanoskins') {
+			return `<div>
+					${show_qty && item.qty > 1 && item.qty + 'x'} ${item.color && item.color + ' '} ${item.name}
+					${item.secondary_product_name &&
+						item.secondary_product_name.length > 0 &&
+						` - $${determine_secondary_product_name(item.secondary_product_name, item.category, '')}`}${' '}
+					${item.size !== 0 && ' - ' + item.size}
+				</div>`;
+		} else if (item.name === 'Nano Glow Casings') {
+			return `<div>
+					${show_qty && item.qty > 1 && item.qty + 'x'} ${item.color && item.color + ' '} ${item.name}
+					${item.secondary_product_name &&
+						item.secondary_product_name.length > 0 &&
+						` - ${determine_secondary_product_name(item.secondary_product_name, item.category, '')}`}${' '}
+					${item.size !== 0 && ' - ' + item.size}
+				</div>`;
+		} else if (item.category === 'glowskins' || item.category === 'glow_casings') {
+			return `<div>
+					${show_qty && item.qty > 1 && item.qty + 'x'} ${item.color && item.color + ' '} ${item.name}${' '}
+					${item.size !== 0 && ' - ' + item.size} ${item.secondary_color && item.secondary_color + ' Cape'}${' '}
+				</div>`;
+		} else if (item.category === 'whites') {
+			if (item.subcategory === 'singles') {
+				return `<div>
+						${show_qty && item.qty > 1 && item.qty + 'x'} ${item.color && item.color + ' '} ${item.name}${' '}
+						${item.size !== '0' && ' - ' + item.size}${' '}
+					</div>`;
+			}
+			if (item.subcategory === 'refresh') {
+				return `<div>
+						${show_qty && item.qty > 1 && item.qty + 'x'} ${item.color && item.color + ' '} ${item.name}${' '}
+						${item.size !== '0' && ' - ' + item.size} - ${item.secondary_product_name.split(' ')[1].trim()}
+					</div>`;
+			}
+		} else if (item.category === 'accessories') {
+			if (item.subcategory === 'batteries') {
+				return `<div>
+						${show_qty && item.qty > 1 && item.qty + 'x'} ${item.color && item.color + ' '} ${item.name}${' '}
+						${item.size !== '0' && ' - ' + item.size}${' '}
+					</div>`;
+			}
+
+			if (item.subcategory === 'chips') {
+				return `<div>
+						${show_qty && item.qty > 1 && item.qty + 'x'} ${item.color && item.color + ' '} ${item.name}${' '}
+						${item.size !== '0' && ' - ' + item.size}${' '}
+					</div>`;
+			} else if (item.subcategory === 'clips') {
+				return `<div>
+						${show_qty && item.qty > 1 && item.qty + 'x'} ${item.color && item.color + ' '} ${item.name}${' '}
+						${item.secondary_product_name !== '0' && ' - ' + item.secondary_product_name.split('-')[1]}${' '}
+					</div>`;
+			} else {
+				return `<div>
+						${show_qty && item.qty > 1 && item.qty + 'x'} ${item.color && !item.secondary_color && item.color}${' '}
+						${item.name} ${item.secondary_color && ' -'}${' '}
+						${item.secondary_color && '(' + item.color + ' Cap/Slide'}
+						${item.secondary_color && ' & '}
+						${item.secondary_color && item.secondary_color + ' Body)'}${' '}
+					</div>`;
+			}
+		} else if (item.category === 'exo_diffusers') {
+			return `<div>
+					${show_qty && item.qty > 1 && item.qty + 'x'} ${item.name} (${item.color && item.color + ' Skeleton Color'}
+					${item.color && ' & '}
+					${item.secondary_color && item.secondary_color + ' Plug Color) '}${' '}
+				</div>`;
+		} else if (item.name === 'Diffuser Caps + Adapters Starter Kit') {
+			return `<div>
+					${show_qty && item.qty > 1 && item.qty + 'x'} {item.name}
+					${item.secondary_product_name &&
+						item.secondary_product_name.length > 0 &&
+						` - ${item.option_product_name} w ${item.color} ${item.secondary_product_name.slice(
+							0,
+							-14
+						)} Caps & ${item.secondary_color} Adapters`}
+				</div>`;
+		} else if (item.category === 'diffusers' || item.category === 'frosted_diffusers') {
+			return `<div>
+					${show_qty && item.qty > 1 && item.qty + 'x'} ${item.color && item.color + ' '} ${item.name}
+				</div>`;
+		} else if (item.category === 'diffuser_caps') {
+			return `<div>
+					${show_qty && item.qty > 1 && item.qty + 'x'} ${item.color && item.color + ' '} ${item.name}${' '}
+					${item.size !== 0 && ' - ' + item.size}${' '}
+				</div>`;
+		} else if (item.name === 'Outline + Batman Decals' || 'Batman Decals') {
+			return `<div>
+					${show_qty && item.qty > 1 && item.qty + 'x'} ${item.name}
+					${item.secondary_product_name &&
+						item.secondary_product_name.length > 0 &&
+						` - ${determine_secondary_product_name(item.secondary_product_name, item.category, '')}`}
+				</div>`;
+		} else if (item.category === 'decals') {
+			return `<div>
+				${show_qty && item.qty > 1 && item.qty + 'x'} ${item.name}
+				</div>`;
+		} else {
+			return `<div>
+					${show_qty && item.qty > 1 && item.qty + 'x'} ${item.name}
+				</div>`;
+		}
+	} else if (date_1 > date_2) {
+		return `<div>
+				${show_qty && item.qty > 1 && item.qty + 'x'}${' '}
+				${item.name !== 'Diffuser Caps + Adapters Starter Kit' &&
+					item.category !== 'diffusers' &&
+					item.color &&
+					item.color}${' '}
+				${item.name}
+				${item.product_option && item.product_option.name && ` - ${item.product_option.name}`}
+				${(item.secondary_product || item.diffuser_cap) &&
+					` w (${item.name === 'Diffuser Caps + Adapters Starter Kit' &&
+						item.color} ${(item.secondary_product && item.product.name) ||
+						(item.diffuser_cap && item.diffuser_cap.name)})`}{' '}
+			</div>`;
+	}
+};

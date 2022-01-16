@@ -10,3 +10,4 @@ export { default as review } from './review';
 export { default as affiliate } from './affiliate';
 export { default as feature } from './feature';
 export { default as announcement } from './announcement';
+export { default as email_subscription } from './email_subscription';

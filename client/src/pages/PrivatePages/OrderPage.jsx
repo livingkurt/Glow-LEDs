@@ -370,12 +370,15 @@ const OrderPage = (props) => {
 	const get_shipping_rates = async (e) => {
 		e.preventDefault();
 		set_loading_shipping_rates(true);
+
 		const { data } = await API_Shipping.get_different_shipping_rates({
 			shipment_id: order.shipping.shipment_id,
-			userInfo
+			userInfo,
+			order
 		});
-		set_shipping_rates(data.rates);
-		set_shipment_id(data.id);
+		console.log({ get_shipping_rates: data });
+		set_shipping_rates(data.shipment.rates);
+		set_shipment_id(data.shipment.id);
 		set_loading_shipping_rates(false);
 	};
 

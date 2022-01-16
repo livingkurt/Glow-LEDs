@@ -2047,12 +2047,18 @@ const OrderEmail = (props) => {
 		() => {
 			let clean = true;
 			if (clean) {
+				console.log('Clean');
 				// if (num === 0) {
 				if (order) {
+					console.log('Order');
 					if (email) {
+						console.log('Email');
 						if (props.match.params.send === 'true') {
+							console.log('True');
 							if (order.orderItems.length > 0) {
+								console.log('OrderItems');
 								if (props.match.params.id) {
+									console.log('Id');
 									send_order_email(
 										order.shipping.email,
 										order.shipping.first_name,
