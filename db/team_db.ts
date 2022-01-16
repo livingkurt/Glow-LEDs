@@ -6,7 +6,6 @@ import { createFalse } from 'typescript';
 export default {
 	findAll_teams_db: async (filter: any, sort: any) => {
 		try {
-			console.log({ filter });
 			return await Team.find(filter)
 				.populate('affiliates')
 				.populate('public_code')
