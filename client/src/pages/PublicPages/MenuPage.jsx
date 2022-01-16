@@ -23,7 +23,12 @@ const MenuPage = (props) => {
 				if (pathname === 'featured') {
 					get_features();
 				}
-				if (pathname === 'gloving' || pathname === 'manuals' || pathname === 'support') {
+				if (
+					pathname === 'gloving' ||
+					pathname === 'manuals' ||
+					pathname === 'support' ||
+					pathname === 'sponsored_artists'
+				) {
 					get_display_content();
 				}
 			}
