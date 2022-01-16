@@ -5,7 +5,6 @@ import { LazyImage } from '../UtilityComponents';
 // import Resizer from 'react-image-file-resizer';
 
 const Sponsor = (props) => {
-	console.log({ props });
 	return (
 		<li key={props.affiliate._id} style={{ ...props.styles, textDecoration: 'none' }}>
 			<Link to={`/collections/all/sponsors/${props.affiliate && props.affiliate.pathname}`}>

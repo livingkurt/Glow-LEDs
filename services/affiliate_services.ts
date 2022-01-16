@@ -10,13 +10,14 @@ dotenv.config();
 export default {
 	findAll_affiliates_s: async (query: any) => {
 		try {
-			let sponsor = {};
-			let promoter = {};
-			if (query.category === 'sponsored_glovers') {
-				sponsor = { sponsor: true };
-			} else if (query.category === 'affiliated_glovers') {
-				promoter = { promoter: true };
-			}
+			// let filter: any = {};
+			// if (query.category === 'sponsored_glovers') {
+			// 	filter = { deleted: false, sponsor: true };
+			// } else if (query.category === 'affiliated_glovers') {
+			// 	filter = { deleted: false, promoter: true };
+			// } else {
+			// 	filter = { deleted: false };
+			// }
 			const search = query.search
 				? {
 						facebook_name: {
@@ -26,6 +27,7 @@ export default {
 					}
 				: {};
 			const filter = determine_filter(query, search);
+			console.log({ filter });
 			const sort_query = query.sort && query.sort.toLowerCase();
 			let sort: any = { _id: -1 };
 			if (sort_query === 'glover name') {
