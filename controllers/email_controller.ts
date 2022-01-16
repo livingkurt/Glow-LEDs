@@ -16,6 +16,7 @@ import {
 } from '../email_templates/pages/index';
 import email_subscription from '../email_templates/pages/email_subscription';
 import { affiliate_db, content_db, order_db } from '../db';
+import { toCapitalize } from '../util';
 
 const transporter = nodemailer.createTransport({
 	service: 'gmail',
@@ -261,17 +262,20 @@ export default {
 		}
 	},
 	send_order_status_emails_c: async (req: any, res: any) => {
-		console.log({ send_order_status_emails_c: req.body });
-		const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 }, 0);
-
+		const body = {
+			email: {
+				h1: 'Thank you for your Order!',
+				h2: 'We are starting production on your order. We will notify your as your order progresses.'
+			},
+			order: req.body.order,
+			status: req.body.status,
+			message_to_user: req.body.message_to_user
+		};
 		const mailOptions = {
 			from: process.env.DISPLAY_EMAIL,
 			to: req.body.email,
-			subject: 'Enjoy 10% off your next purchase!',
-			html: App({
-				body: order_status({ ...req.body, categories: contents && contents[0].home_page.slideshow }),
-				title: 'Enjoy 10% off your next purchase!'
-			})
+			subject: req.body.subject,
+			html: App({ body: order_status(body), title: 'Your Order has been ' + toCapitalize(req.body.status) })
 		};
 
 		transporter.sendMail(mailOptions, (err, data) => {

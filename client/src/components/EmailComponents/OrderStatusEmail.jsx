@@ -962,6 +962,7 @@ const OrderStatusEmail = (props) => {
 	);
 
 	const email_template = ReactDOMServer.renderToStaticMarkup(jsx);
+	console.log({ email_template });
 
 	const send_order_email = async (email, first_name, subject) => {
 		set_loading(true);

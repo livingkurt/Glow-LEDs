@@ -10,12 +10,20 @@ const email_routes = {
 	send_email_subscription: (email: string, promo_code: string) => {
 		return axios.post('/api/emails/email_subscription', { email, promo_code });
 	},
-	send_order: (order: string, promo_code: string) => {
-		return axios.post('/api/emails/order_subscription', { order });
-	},
-
-	send_order_status: (order: string, promo_code: string) => {
-		return axios.post('/api/emails/order_status', { order, promo_code });
+	send_order_status_email: (
+		order: object,
+		subject: string,
+		email: string,
+		status: string,
+		message_to_user: string
+	) => {
+		return axios.post('/api/emails/order_status', {
+			order,
+			subject,
+			email,
+			status,
+			message_to_user
+		});
 	},
 	send_contact: (email: string, promo_code: string) => {
 		return axios.post('/api/emails/contact', { email, promo_code });

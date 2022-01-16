@@ -3,12 +3,12 @@ import { addToCart, removeFromCart } from '../../actions/cartActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { createOrder, detailsOrder, payOrder, saveOrder } from '../../actions/orderActions';
-import { determine_tracking_number, format_date } from '../../utils/helper_functions';
+import { determine_tracking_number, format_date, toCapitalize } from '../../utils/helper_functions';
 import { CartItem, CheckoutSteps, Stripe } from '../../components/SpecialtyComponents';
 import { Helmet } from 'react-helmet';
 import { Loading, LoadingPayments } from '../../components/UtilityComponents';
 import { deleteOrder, listOrders, update_order, update_payment, refundOrder } from '../../actions/orderActions';
-import { API_Orders, API_Shipping } from '../../utils';
+import { API_Emails, API_Orders, API_Shipping } from '../../utils';
 import useClipboard from 'react-hook-clipboard';
 import useWindowDimensions from '../../components/Hooks/windowDimensions';
 
@@ -36,6 +36,7 @@ const OrderPage = (props) => {
 	const [ product_object, set_product_object ] = useState('');
 	const [ payment_loading, set_payment_loading ] = useState(false);
 	const [ payment_method, set_payment_method ] = useState('');
+	const [ loading_email, set_loading_email ] = useState('');
 
 	const [ order_state, set_order_state ] = useState({});
 	const [ clipboard, copyToClipboard ] = useClipboard();
@@ -209,16 +210,37 @@ const OrderPage = (props) => {
 	const [ show_color, set_show_color ] = useState(false);
 
 	const update_order_state = (order, state, is_action, action_at) => {
+		set_loading_email(true);
 		if (state) {
 			set_order_state({ ...order_state, [is_action]: false });
 			dispatch(update_order(order, false, is_action, action_at));
 		} else {
 			set_order_state({ ...order_state, [is_action]: true });
 			dispatch(update_order(order, true, is_action, action_at));
-
-			history.push(`/secure/glow/emails/order_status/${order._id}/${is_action.substring(2)}/true`);
+			send_email(action_at.slice(0, -2));
 		}
-		dispatch(detailsOrder(props.match.params.id));
+		setTimeout(() => {
+			dispatch(detailsOrder(props.match.params.id));
+		}, 200);
+		set_loading_email(false);
+	};
+
+	const send_email = async (status, message_to_user) => {
+		// const { data: order } = await API_Orders.findById_orders_a(props.match.params.id);
+		await API_Emails.send_order_status_email(
+			order,
+			'Your Order has been ' + toCapitalize(status),
+			order.shipping.email,
+			status,
+			message_to_user
+		);
+		await API_Emails.send_order_status_email(
+			order,
+			order.shipping.first_name + "'s Order has been " + toCapitalize(status),
+			'info.glowleds@gmail.com',
+			status,
+			message_to_user
+		);
 	};
 	const update_order_payment_state = (order, state, is_action) => {
 		if (state) {
@@ -229,7 +251,10 @@ const OrderPage = (props) => {
 			dispatch(update_payment(order, true, payment_method));
 			history.push(`/secure/glow/emails/order/${order._id}/order/false`);
 		}
-		dispatch(detailsOrder(props.match.params.id));
+		setTimeout(() => {
+			dispatch(detailsOrder(props.match.params.id));
+			dispatch(detailsOrder(props.match.params.id));
+		}, 1000);
 	};
 
 	const create_label = async () => {
@@ -534,6 +559,7 @@ const OrderPage = (props) => {
 						</div>
 					)}
 					<Loading loading={loading_label} />
+					<Loading loading={loading_email} />
 					<LoadingPayments loading={payment_loading} error={errorPay} />
 					<div className="placeorder br-20px" style={{}}>
 						<div className="placeorder-info">
@@ -943,13 +969,13 @@ ${order.shipping.email}`)}
 												>
 													{order.isPaid ? 'Unset to Paid' : 'Set to Paid'}
 												</button>
-												<Link
+												{/* <Link
 													to={`/secure/glow/emails/order/${order._id}/order/false/${message_to_user}`}
 												>
 													<button className="btn secondary" aria-label="Send">
 														<i className="fas fa-paper-plane" />
 													</button>
-												</Link>
+												</Link> */}
 											</div>
 											<div className="row ai-c">
 												<button
@@ -964,13 +990,13 @@ ${order.shipping.email}`)}
 												>
 													{order.isReassured ? 'Unset to Reassured' : 'Set to Reassured'}
 												</button>
-												<Link
+												{/* <Link
 													to={`/secure/glow/emails/order_status/${order._id}/reassured/false/${message_to_user}`}
 												>
 													<button className="btn secondary" aria-label="Send">
 														<i className="fas fa-paper-plane" />
 													</button>
-												</Link>
+												</Link> */}
 											</div>
 											<div className="row ai-c">
 												<button
@@ -989,13 +1015,13 @@ ${order.shipping.email}`)}
 														'Set to Manufactured'
 													)}
 												</button>
-												<Link
+												{/* <Link
 													to={`/secure/glow/emails/order_status/${order._id}/manufactured/false/${message_to_user}`}
 												>
 													<button className="btn secondary" aria-label="Send">
 														<i className="fas fa-paper-plane" />
 													</button>
-												</Link>
+												</Link> */}
 											</div>
 											<div className="row ai-c">
 												<button
@@ -1010,13 +1036,13 @@ ${order.shipping.email}`)}
 												>
 													{order.isPackaged ? 'Unset to Packaged' : 'Set to Packaged'}
 												</button>
-												<Link
+												{/* <Link
 													to={`/secure/glow/emails/order_status/${order._id}/packaged/false/${message_to_user}`}
 												>
 													<button className="btn secondary" aria-label="Send">
 														<i className="fas fa-paper-plane" />
 													</button>
-												</Link>
+												</Link> */}
 											</div>
 											<div className="row ai-c">
 												<button
@@ -1031,13 +1057,13 @@ ${order.shipping.email}`)}
 												>
 													{order.isShipped ? 'Unset to Shipped' : 'Set to Shipped'}
 												</button>
-												<Link
+												{/* <Link
 													to={`/secure/glow/emails/order_status/${order._id}/shipped/false/${message_to_user}`}
 												>
 													<button className="btn secondary" aria-label="Send">
 														<i className="fas fa-paper-plane" />
 													</button>
-												</Link>
+												</Link> */}
 											</div>
 											<div className="row ai-c">
 												<button
@@ -1052,13 +1078,13 @@ ${order.shipping.email}`)}
 												>
 													{order.isDelivered ? 'Unset to Delivered' : 'Set to Delivered'}
 												</button>
-												<Link
+												{/* <Link
 													to={`/secure/glow/emails/order_status/${order._id}/delivered/false/${message_to_user}`}
 												>
 													<button className="btn secondary" aria-label="Send">
 														<i className="fas fa-paper-plane" />
 													</button>
-												</Link>
+												</Link> */}
 											</div>
 											<div className="row ai-c">
 												<button
@@ -1073,13 +1099,13 @@ ${order.shipping.email}`)}
 												>
 													{order.isRefunded ? 'Unset to Refunded' : 'Set to Refunded'}
 												</button>
-												<Link
+												{/* <Link
 													to={`/secure/glow/emails/order/${order._id}/refunded/false/${message_to_user}`}
 												>
 													<button className="btn secondary" aria-label="Send">
 														<i className="fas fa-paper-plane" />
 													</button>
-												</Link>
+												</Link> */}
 											</div>
 											{order.shipping.shipping_label && (
 												<button className="btn secondary mv-5px" onClick={() => view_label()}>

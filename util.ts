@@ -3,6 +3,8 @@ import jwt from 'jsonwebtoken';
 const config = require('./config');
 import { Request } from 'express';
 import { Token } from './models';
+
+import { getTracking } from 'ts-tracking-number';
 export interface IGetUserAuthInfoRequest extends Request {
 	user: any; // or any other type
 }
@@ -540,7 +542,7 @@ export const format_date = (unformatted_date: any) => {
 	const month = unformatted_date.slice(5, 7);
 	const day = unformatted_date.slice(8, 10);
 	const year = unformatted_date.slice(0, 4);
-	const formatted_date = `${month}/${day}/20`;
+	const formatted_date = `${month}/${day}/${year}`;
 	return formatted_date;
 };
 
@@ -641,7 +643,7 @@ export const determine_product_name = (item: any, show_qty: any, date: any) => {
 		if (item.subcategory === 'alt_novaskins') {
 			if (item.name === 'Alt Novaskins w Nano Sleds') {
 				return `<div>
-						${show_qty && item.qty > 1 && item.qty + 'x'} ${item.name}
+						${show_qty && item.qty > 1 ? item.qty + 'x' : ''}  ${item.name}
 						${item.size !== 0 && ' - ' + item.size} ${item.color && '(' + item.color + ' Skin'}
 						${item.color && ' & '}
 						${item.secondary_color && item.secondary_color + ' Sled)'}${' '}
@@ -655,7 +657,7 @@ export const determine_product_name = (item: any, show_qty: any, date: any) => {
 					</div>`;
 			} else {
 				return `<div>
-						${show_qty && item.qty > 1 && item.qty + 'x'} ${item.name} ${item.size !== 0 && ' - ' + item.size}{' '}
+						${show_qty && item.qty > 1 ? item.qty + 'x' : ''}  ${item.name} ${item.size !== 0 && ' - ' + item.size}{' '}
 						${item.color && '(' + item.color + ' Skin'}
 						${item.color && ' & '}
 						${item.secondary_color && item.secondary_color + ' Sled)'}{' '}
@@ -664,7 +666,7 @@ export const determine_product_name = (item: any, show_qty: any, date: any) => {
 		} else if (item.subcategory === 'novaskins') {
 			if (item.name === 'Novaskins') {
 				return `<div>
-						${show_qty && item.qty > 1 && item.qty + 'x'} ${item.name}
+						${show_qty && item.qty > 1 ? item.qty + 'x' : ''}  ${item.name}
 						${item.size !== 0 && ' - ' + item.size} ${item.color && '(' + item.color + ' Skin'}
 						${item.color && ' & '}
 						${item.secondary_color && item.secondary_color + ' Sled)'}${' '}
@@ -689,7 +691,7 @@ export const determine_product_name = (item: any, show_qty: any, date: any) => {
 			// }
 		} else if (item.name === 'Nanoskins') {
 			return `<div>
-					${show_qty && item.qty > 1 && item.qty + 'x'} ${item.color && item.color + ' '} ${item.name}
+					${show_qty && item.qty > 1 ? item.qty + 'x' : ''}  ${item.color ? item.color + ' ' : ''} ${item.name}
 					${item.secondary_product_name &&
 						item.secondary_product_name.length > 0 &&
 						` - $${determine_secondary_product_name(item.secondary_product_name, item.category, '')}`}${' '}
@@ -697,7 +699,7 @@ export const determine_product_name = (item: any, show_qty: any, date: any) => {
 				</div>`;
 		} else if (item.name === 'Nano Glow Casings') {
 			return `<div>
-					${show_qty && item.qty > 1 && item.qty + 'x'} ${item.color && item.color + ' '} ${item.name}
+					${show_qty && item.qty > 1 ? item.qty + 'x' : ''}  ${item.color ? item.color + ' ' : ''} ${item.name}
 					${item.secondary_product_name &&
 						item.secondary_product_name.length > 0 &&
 						` - ${determine_secondary_product_name(item.secondary_product_name, item.category, '')}`}${' '}
@@ -705,43 +707,43 @@ export const determine_product_name = (item: any, show_qty: any, date: any) => {
 				</div>`;
 		} else if (item.category === 'glowskins' || item.category === 'glow_casings') {
 			return `<div>
-					${show_qty && item.qty > 1 && item.qty + 'x'} ${item.color && item.color + ' '} ${item.name}${' '}
+					${show_qty && item.qty > 1 ? item.qty + 'x' : ''}  ${item.color ? item.color + ' ' : ''} ${item.name}${' '}
 					${item.size !== 0 && ' - ' + item.size} ${item.secondary_color && item.secondary_color + ' Cape'}${' '}
 				</div>`;
 		} else if (item.category === 'whites') {
 			if (item.subcategory === 'singles') {
 				return `<div>
-						${show_qty && item.qty > 1 ? item.qty + 'x' : ''} ${item.color && item.color + ' '} ${item.name}${' '}
+						${show_qty && item.qty > 1 ? item.qty + 'x' : ''} ${item.color ? item.color + ' ' : ''} ${item.name}${' '}
 						${item.size !== '0' && ' - ' + item.size}${' '}
 					</div>`;
 			}
 			if (item.subcategory === 'refresh') {
 				return `<div>
-						${show_qty && item.qty > 1 ? item.qty + 'x' : ''} ${item.color && item.color + ' '} ${item.name}${' '}
+						${show_qty && item.qty > 1 ? item.qty + 'x' : ''} ${item.color ? item.color + ' ' : ''} ${item.name}${' '}
 						${item.size !== '0' && ' - ' + item.size} - ${item.secondary_product_name.split(' ')[1].trim()}
 					</div>`;
 			}
 		} else if (item.category === 'accessories') {
 			if (item.subcategory === 'batteries') {
 				return `<div>
-						${show_qty && item.qty > 1 && item.qty + 'x'} ${item.color && item.color + ' '} ${item.name}${' '}
+						${show_qty && item.qty > 1 ? item.qty + 'x' : ''} ${item.color ? item.color + ' ' : ''} ${item.name}${' '}
 						${item.size !== '0' && ' - ' + item.size}${' '}
 					</div>`;
 			}
 
 			if (item.subcategory === 'chips') {
 				return `<div>
-						${show_qty && item.qty > 1 && item.qty + 'x'} ${item.color && item.color + ' '} ${item.name}${' '}
+						${show_qty && item.qty > 1 ? item.qty + 'x' : ''}  ${item.color ? item.color + ' ' : ''} ${item.name}${' '}
 						${item.size !== '0' && ' - ' + item.size}${' '}
 					</div>`;
 			} else if (item.subcategory === 'clips') {
 				return `<div>
-						${show_qty && item.qty > 1 && item.qty + 'x'} ${item.color && item.color + ' '} ${item.name}${' '}
+						${show_qty && item.qty > 1 ? item.qty + 'x' : ''}  ${item.color ? item.color + ' ' : ''} ${item.name}${' '}
 						${item.secondary_product_name !== '0' && ' - ' + item.secondary_product_name.split('-')[1]}${' '}
 					</div>`;
 			} else {
 				return `<div>
-						${show_qty && item.qty > 1 && item.qty + 'x'} ${item.color && !item.secondary_color && item.color}${' '}
+						${show_qty && item.qty > 1 ? item.qty + 'x' : ''}  ${item.color && !item.secondary_color && item.color}${' '}
 						${item.name} ${item.secondary_color && ' -'}${' '}
 						${item.secondary_color && '(' + item.color + ' Cap/Slide'}
 						${item.secondary_color && ' & '}
@@ -750,13 +752,13 @@ export const determine_product_name = (item: any, show_qty: any, date: any) => {
 			}
 		} else if (item.category === 'exo_diffusers') {
 			return `<div>
-					${show_qty && item.qty > 1 && item.qty + 'x'} ${item.name} (${item.color && item.color + ' Skeleton Color'}
+					${show_qty && item.qty > 1 ? item.qty + 'x' : ''}  ${item.name} (${item.color && item.color + ' Skeleton Color'}
 					${item.color && ' & '}
 					${item.secondary_color && item.secondary_color + ' Plug Color) '}${' '}
 				</div>`;
 		} else if (item.name === 'Diffuser Caps + Adapters Starter Kit') {
 			return `<div>
-					${show_qty && item.qty > 1 && item.qty + 'x'} {item.name}
+					${show_qty && item.qty > 1 ? item.qty + 'x' : ''}  {item.name}
 					${item.secondary_product_name &&
 						item.secondary_product_name.length > 0 &&
 						` - ${item.option_product_name} w ${item.color} ${item.secondary_product_name.slice(
@@ -766,32 +768,32 @@ export const determine_product_name = (item: any, show_qty: any, date: any) => {
 				</div>`;
 		} else if (item.category === 'diffusers' || item.category === 'frosted_diffusers') {
 			return `<div>
-					${show_qty && item.qty > 1 && item.qty + 'x'} ${item.color && item.color + ' '} ${item.name}
+					${show_qty && item.qty > 1 ? item.qty + 'x' : ''}  ${item.color ? item.color + ' ' : ''} ${item.name}
 				</div>`;
 		} else if (item.category === 'diffuser_caps') {
 			return `<div>
-					${show_qty && item.qty > 1 && item.qty + 'x'} ${item.color && item.color + ' '} ${item.name}${' '}
+					${show_qty && item.qty > 1 ? item.qty + 'x' : ''}  ${item.color ? item.color + ' ' : ''} ${item.name}${' '}
 					${item.size !== 0 && ' - ' + item.size}${' '}
 				</div>`;
 		} else if (item.name === 'Outline + Batman Decals' || 'Batman Decals') {
 			return `<div>
-					${show_qty && item.qty > 1 && item.qty + 'x'} ${item.name}
+					${show_qty && item.qty > 1 ? item.qty + 'x' : ''}  ${item.name}
 					${item.secondary_product_name &&
 						item.secondary_product_name.length > 0 &&
 						` - ${determine_secondary_product_name(item.secondary_product_name, item.category, '')}`}
 				</div>`;
 		} else if (item.category === 'decals') {
 			return `<div>
-				${show_qty && item.qty > 1 && item.qty + 'x'} ${item.name}
+				${show_qty && item.qty > 1 ? item.qty + 'x' : ''}  ${item.name}
 				</div>`;
 		} else {
 			return `<div>
-					${show_qty && item.qty > 1 && item.qty + 'x'} ${item.name}
+					${show_qty && item.qty > 1 ? item.qty + 'x' : ''}  ${item.name}
 				</div>`;
 		}
 	} else if (date_1 > date_2) {
 		return `<div>
-				${show_qty && item.qty > 1 && item.qty + 'x'}${' '}
+				${show_qty && item.qty > 1 ? item.qty + 'x' : ''} ${' '}
 				${item.name !== 'Diffuser Caps + Adapters Starter Kit' &&
 					item.category !== 'diffusers' &&
 					item.color &&
@@ -803,5 +805,75 @@ export const determine_product_name = (item: any, show_qty: any, date: any) => {
 						item.color} ${(item.secondary_product && item.product.name) ||
 						(item.diffuser_cap && item.diffuser_cap.name)})`}{' '}
 			</div>`;
+	}
+};
+
+export const order_status_steps = (order: any, status: any) => {
+	status = status.toLowerCase();
+	return `<div
+			style='display: flex;justify-content: space-between;max-width: 58rem;width: 100%;margin: 1rem auto;'
+		>
+			<div
+				style='${'width:100%; display:flex; justify-content: center;'} ${order
+		? 'border-top: .3rem white solid; color: white;flex: 1 1;padding-top: 1rem; text-align: center; '
+		: '	border-top: .3rem #c0c0c0 solid;color: white;flex: 1 1;padding-top: 1rem;text-align: center;'}'
+			>
+				<div style='font-size: 16px;'>Ordered</div>
+			</div>
+			<div
+				style='${'width:100%; display:flex; justify-content: center;'} ${order.isPaid
+		? 'border-top: .3rem white solid; color: white;flex: 1 1;padding-top: 1rem; text-align: center; '
+		: '	border-top: .3rem #c0c0c0 solid;color: white;flex: 1 1;padding-top: 1rem;text-align: center;'}'
+			>
+				<div style='font-size: 16px;'>Paid</div>
+			</div>
+			<div
+				style='${'width:100%; display:flex; justify-content: center;'} ${status === 'manufactured' ||
+	status === 'packaged' ||
+	status === 'shipped'
+		? 'border-top: .3rem white solid; color: white;flex: 1 1;padding-top: 1rem; text-align: center; '
+		: '	border-top: .3rem #c0c0c0 solid;color: white;flex: 1 1;padding-top: 1rem;text-align: center;'}'
+			>
+				<div style='font-size: 16px;'>Manufactured</div>
+			</div>
+			<div
+				style='${'width:100%; display:flex; justify-content: center;'} ${status === 'packaged' || status === 'shipped'
+		? 'border-top: .3rem white solid; color: white;flex: 1 1;padding-top: 1rem; text-align: center; '
+		: '	border-top: .3rem #c0c0c0 solid;color: white;flex: 1 1;padding-top: 1rem;text-align: center;'}'
+			>
+				<div style='font-size: 16px;'>Packaged</div>
+			</div>
+			<div
+				style='${'width:100%; display:flex; justify-content: center;'} ${status === 'shipped'
+		? 'border-top: .3rem white solid; color: white;flex: 1 1;padding-top: 1rem; text-align: center; '
+		: '	border-top: .3rem #c0c0c0 solid;color: white;flex: 1 1;padding-top: 1rem;text-align: center;'}'
+			>
+				<div style='font-size: 16px;'>Shipped</div>
+			</div>		
+		</div>`;
+};
+
+export const determine_tracking_number = (tracking_number: string) => {
+	if (tracking_number) {
+		const tracking: any = getTracking(tracking_number);
+		if (tracking.name.includes('USPS')) {
+			return 'https://tools.usps.com/go/TrackConfirmAction_input?qtc_tLabels1=' + tracking_number;
+		}
+		if (tracking.name.includes('UPS')) {
+			return (
+				'https://wwwapps.ups.com/WebTracking/processInputRequest?AgreeToTermsAndConditions=yes&loc=en_US&tracknum=' +
+				tracking_number +
+				'&requester=ST/trackdetails'
+			);
+		}
+		if (tracking.name.includes('FedEx')) {
+			return (
+				'https://www.fedex.com/fedextrack/?trknbr=' +
+				tracking_number +
+				'&trkqual=2459474000~' +
+				tracking_number +
+				'~FX'
+			);
+		}
 	}
 };

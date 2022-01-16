@@ -40,7 +40,8 @@
 		"stripe": "^8.89.0",
 		"styled-components": "^5.2.1",
 		"table-scraper": "^1.0.3",
-		"ts-node": "^8.10.2"
+		"ts-node": "^8.10.2",
+		"ts-tracking-number": "^1.0.13"
 	},
 	"devDependencies": {
 		"@types/bcryptjs": "^2.4.2",
