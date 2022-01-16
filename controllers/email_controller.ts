@@ -228,7 +228,6 @@ export default {
 			subject: `${req.body.subject} - ${req.body.name}`,
 			html: req.body.message
 		};
-		res.set('Access-Control-Allow-Origin', 'https://livingkurt.github.io/');
 		transporter.sendMail(mailOptions, (err, data) => {
 			if (err) {
 				console.log('Error Occurs', err);
