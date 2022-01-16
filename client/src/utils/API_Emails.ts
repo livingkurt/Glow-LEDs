@@ -1,12 +1,19 @@
 import axios from 'axios';
 
 const email_routes = {
+	send_order_email: (order: object, subject: string, email: string) => {
+		return axios.post('/api/emails/order', { order, subject, email });
+	},
+	send_affiliate_email: (affiliate: object, subject: string, email: string) => {
+		return axios.post('/api/emails/affiliate', { affiliate, subject, email });
+	},
 	send_email_subscription: (email: string, promo_code: string) => {
 		return axios.post('/api/emails/email_subscription', { email, promo_code });
 	},
 	send_order: (order: string, promo_code: string) => {
 		return axios.post('/api/emails/order_subscription', { order });
 	},
+
 	send_order_status: (order: string, promo_code: string) => {
 		return axios.post('/api/emails/order_status', { order, promo_code });
 	},

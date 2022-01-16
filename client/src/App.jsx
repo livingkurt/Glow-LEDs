@@ -89,7 +89,8 @@ import {
 	PalettesPage,
 	OrderCombinerPage,
 	EditChipPage,
-	EventsPage
+	EventsPage,
+	CompletePage
 } from './pages/index';
 import { Header, Container, Content, Footer, Sidebar, Cart } from './components/ContainerComponents/index';
 import { AdminRoute, PrivateRoute } from './components/RouteComponents';
@@ -640,6 +641,7 @@ const App = (props) => {
 							<Route path="/pages/sitemap" exact={true} component={SitemapPage} />
 							<Route path="/pages/music" exact={true} component={MusicPage} />
 							<Route path="/pages/track_your_order" exact={true} component={TrackOrderPage} />
+							<Route path="/pages/complete/:type/:id" exact={true} component={CompletePage} />
 
 							<Route component={Four04Page} />
 						</Switch>

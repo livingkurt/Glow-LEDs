@@ -711,13 +711,13 @@ export const determine_product_name = (item: any, show_qty: any, date: any) => {
 		} else if (item.category === 'whites') {
 			if (item.subcategory === 'singles') {
 				return `<div>
-						${show_qty && item.qty > 1 && item.qty + 'x'} ${item.color && item.color + ' '} ${item.name}${' '}
+						${show_qty && item.qty > 1 ? item.qty + 'x' : ''} ${item.color && item.color + ' '} ${item.name}${' '}
 						${item.size !== '0' && ' - ' + item.size}${' '}
 					</div>`;
 			}
 			if (item.subcategory === 'refresh') {
 				return `<div>
-						${show_qty && item.qty > 1 && item.qty + 'x'} ${item.color && item.color + ' '} ${item.name}${' '}
+						${show_qty && item.qty > 1 ? item.qty + 'x' : ''} ${item.color && item.color + ' '} ${item.name}${' '}
 						${item.size !== '0' && ' - ' + item.size} - ${item.secondary_product_name.split(' ')[1].trim()}
 					</div>`;
 			}

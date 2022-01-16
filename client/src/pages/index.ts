@@ -23,6 +23,8 @@ export { default as ProductsPage } from './AdminPages/ListPages/ProductsPage';
 export { default as UsersPage } from './AdminPages/ListPages/UsersPage';
 
 export { default as ExpensesPage } from './AdminPages/ListPages/ExpensesPage';
+export {};
+
 export { default as AffiliatesPage } from './AdminPages/ListPages/AffiliatesPage';
 export { default as ChipsPage } from './AdminPages/ListPages/ChipsPage';
 export { default as PromosPage } from './AdminPages/ListPages/PromosPage';
@@ -60,6 +62,7 @@ export { default as SubmissionComplete } from './PrivatePages/SubmissionComplete
 export { default as EditUserAffiliatePage } from './PrivatePages/EditUserAffiliatePage';
 export { default as AffiliateCreationComplete } from './PrivatePages/AffiliateCreationComplete';
 
+export { default as CompletePage } from './PublicPages/CompletePage';
 export { default as CartPage } from './PublicPages/CartPage';
 export { default as HomePage } from './PublicPages/HomePage';
 export { default as ProductPage } from './PublicPages/ProductPage';

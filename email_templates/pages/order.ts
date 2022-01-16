@@ -2,7 +2,6 @@ import { format_date, email_sale_price_switch, determine_product_name, determin_
 
 export default (props: any) => {
 	const { email, order } = props;
-	console.log({ props });
 	return `
 	        <table style="width:100%;border-spacing:0;padding:10px">
 	          <tr>
@@ -20,8 +19,8 @@ export default (props: any) => {
 	                          ${order.payment.refund_reason[order.payment.refund_reason.length - 1]}${' '}
 	                          on ${format_date(order.refundedAt)}
 	                        </h4>`
-									: `<p style='font-size: 16px; lineHeight: 2;'>
-	                          Hi {order.shipping.first_name},${' '}
+									: `<p style='font-size: 16px; lineHeight: 20px;'>
+	                          Hi ${order.shipping.first_name},${' '}
 	                          ${email && email.h2 ? email.h2 : ''}
 	                        </p>`}
 	                        <table style="width:100%;border-spacing:0;margin-top:20px">

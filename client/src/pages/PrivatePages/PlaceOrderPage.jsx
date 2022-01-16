@@ -441,11 +441,12 @@ const PlaceOrderPage = (props) => {
 			if (clean) {
 				if (successPay && order) {
 					// props.history.push('/secure/checkout/paymentcomplete/' + order._id);
-					if (userInfo && userInfo.first_name) {
-						props.history.push('/secure/checkout/order/receipt/' + order._id + '/order/true');
-					} else {
-						props.history.push('/checkout/order/receipt/' + order._id + '/order/true');
-					}
+					props.history.push('/pages/complete/order/' + order._id);
+					// if (userInfo && userInfo.first_name) {
+					// 	props.history.push('/secure/checkout/order/receipt/' + order._id + '/order/true');
+					// } else {
+					// 	props.history.push('/checkout/order/receipt/' + order._id + '/order/true');
+					// }
 					set_loading_payment(false);
 					empty_cart();
 				} else if (error_pay) {
@@ -455,6 +456,26 @@ const PlaceOrderPage = (props) => {
 		},
 		[ successPay ]
 	);
+	// useEffect(
+	// 	() => {
+	// 		let clean = true;
+	// 		if (clean) {
+	// 			if (successPay && order) {
+	// 				// props.history.push('/secure/checkout/paymentcomplete/' + order._id);
+	// 				if (userInfo && userInfo.first_name) {
+	// 					props.history.push('/secure/checkout/order/receipt/' + order._id + '/order/true');
+	// 				} else {
+	// 					props.history.push('/checkout/order/receipt/' + order._id + '/order/true');
+	// 				}
+	// 				set_loading_payment(false);
+	// 				empty_cart();
+	// 			} else if (error_pay) {
+	// 			}
+	// 		}
+	// 		return () => (clean = false);
+	// 	},
+	// 	[ successPay ]
+	// );
 
 	useEffect(
 		() => {

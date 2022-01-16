@@ -8,6 +8,9 @@ const order_routes = {
 	findAll_orders_a: () => {
 		return axios.get('/api/orders/?limit=0&page=1');
 	},
+	findById_orders_a: (order_id: string) => {
+		return axios.get('/api/orders/guest/' + order_id);
+	},
 	top_customers: () => {
 		return axios.get('/api/orders/top_customers');
 	},

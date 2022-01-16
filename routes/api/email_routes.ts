@@ -6,6 +6,7 @@ const cors = require('cors');
 
 router.route('/email_subscription').post(email_controller.send_email_subscription_emails_c);
 router.route('/order').post(email_controller.send_order_emails_c);
+router.route('/affiliate').post(email_controller.send_affiliate_emails_c);
 router.route('/order_status').post(email_controller.send_order_status_emails_c);
 router.route('/review').post(email_controller.send_review_emails_c);
 router.route('/affiliate').post(email_controller.send_affiliate_emails_c);
