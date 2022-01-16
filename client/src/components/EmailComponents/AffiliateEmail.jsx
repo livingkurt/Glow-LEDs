@@ -357,7 +357,7 @@ const AffiliateEmail = (props) => {
 													<tr>
 														<td
 															style={{ fontSize: '16px', height: '30px' }}
-														>{`Facebook: ${affiliate.tiktok}`}</td>
+														>{`Tiktok: ${affiliate.tiktok}`}</td>
 													</tr>
 												)}
 												{affiliate.bio && (
@@ -860,6 +860,7 @@ const AffiliateEmail = (props) => {
 	);
 
 	const email_template = ReactDOMServer.renderToStaticMarkup(jsx);
+	console.log({ email_template });
 
 	// const send_announcement_email = async (chunk) => {
 	// 	const data = await API_Emails.send_announcement_email(email_template, email.h1, test, chunk);

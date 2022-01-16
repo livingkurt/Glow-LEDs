@@ -40,10 +40,9 @@ const CompletePage = (props) => {
 		} else if (props.match.params.type === 'affiliate') {
 			set_data({
 				title: 'Affiliate Sign Up Complete',
-				id: 'Affiliate ID: ' + props.match.params.id,
 				h1: 'Thank you for Applying!',
-				h2: 'You will be recieving a conformation email with your affiliate details',
-				p: '',
+				h2: '',
+				p: 'You will be recieving a conformation email with your affiliate details',
 				button_label: '',
 				button_link: '',
 				link: 'https://www.glow-leds.com/pages/complete/affiliate'
@@ -63,8 +62,7 @@ const CompletePage = (props) => {
 			);
 		} else if (props.match.params.type === 'affiliate') {
 			const { data: affiliate } = await API_Affiliates.findById_affiliates_a(props.match.params.id);
-			await API_Emails.send_affiliate_email(affiliate);
-			await API_Emails.send_affiliate_admin_email(affiliate);
+			await API_Emails.send_affiliate_email(affiliate, 'Welcome to the Team!', affiliate.user.email);
 			await API_Emails.send_affiliate_email(
 				affiliate,
 				'New Affiliate Created by ' + affiliate.artist_name,

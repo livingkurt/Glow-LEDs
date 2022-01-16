@@ -225,41 +225,25 @@ export default {
 		});
 	},
 	send_affiliate_emails_c: async (req: any, res: any) => {
-		const affiliate = await affiliate_db.findById_affiliates_db(req.params.id);
-		if (affiliate) {
-			const body = {
-				email: {
-					show_image: true,
-					active: true,
-					deleted: false,
-					email_type: 'Order',
-					h1: 'Thank you for your purchase!',
-					image: '',
-					h2: 'We are starting production on your order. We will notify your as your order progresses.',
-					createdAt: '2020-11-19T16:24:12.273Z',
-					updatedAt: '2021-07-06T18:52:09.037Z',
-					images: [],
-					p: ''
-				},
-				affiliate
-			};
-			const mailOptions = {
-				from: process.env.DISPLAY_EMAIL,
-				to: [ req.body.email, process.env.DISPLAY_EMAIL ],
-				subject: 'Affiliate Sign Up Complete',
-				html: App({ body: affiliate(body), title: 'Thank you for signing up!' })
-			};
+		const body = {
+			affiliate: req.body.affiliate
+		};
+		const mailOptions = {
+			from: process.env.DISPLAY_EMAIL,
+			to: req.body.email,
+			subject: req.body.subject,
+			html: App({ body: affiliate(body), title: 'Thank you for signing up!' })
+		};
 
-			transporter.sendMail(mailOptions, (err, data) => {
-				if (err) {
-					console.log('Error Occurs', err);
-					res.status(500).send({ error: err, message: 'Error Sending Email' });
-				} else {
-					console.log('Email Sent to ' + req.body.email);
-					res.status(200).send({ message: 'Email Successfully Sent' });
-				}
-			});
-		}
+		transporter.sendMail(mailOptions, (err, data) => {
+			if (err) {
+				console.log('Error Occurs', err);
+				res.status(500).send({ error: err, message: 'Error Sending Email' });
+			} else {
+				console.log('Email Sent to ' + req.body.email);
+				res.status(200).send({ message: 'Email Successfully Sent' });
+			}
+		});
 	},
 	send_order_status_emails_c: async (req: any, res: any) => {
 		const body = {
@@ -275,7 +259,7 @@ export default {
 			from: process.env.DISPLAY_EMAIL,
 			to: req.body.email,
 			subject: req.body.subject,
-			html: App({ body: order_status(body), title: 'Your Order has been ' + toCapitalize(req.body.status) })
+			html: App({ body: order_status(body), title: 'Your Order has been ' + toCapitalize(status) })
 		};
 
 		transporter.sendMail(mailOptions, (err, data) => {
@@ -312,30 +296,6 @@ export default {
 			}
 		});
 	},
-	// send_affiliate_emails_c: async (req: any, res: any) => {
-	// 	console.log({ send_order_status_emails_c: req.body });
-	// 	const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 }, 0);
-
-	// 	const mailOptions = {
-	// 		from: process.env.DISPLAY_EMAIL,
-	// 		to: req.body.email,
-	// 		subject: 'Enjoy 10% off your next purchase!',
-	// 		html: App({
-	// 			body: affiliate({ ...req.body, categories: contents && contents[0].home_page.slideshow }),
-	// 			title: 'Enjoy 10% off your next purchase!'
-	// 		})
-	// 	};
-
-	// 	transporter.sendMail(mailOptions, (err, data) => {
-	// 		if (err) {
-	// 			console.log('Error Occurs', err);
-	// 			res.status(500).send({ error: err, message: 'Error Sending Email' });
-	// 		} else {
-	// 			console.log('Email Sent to ' + req.body.email);
-	// 			res.status(200).send({ message: 'Email Successfully Sent' });
-	// 		}
-	// 	});
-	// },
 	send_feature_emails_c: async (req: any, res: any) => {
 		console.log({ send_order_status_emails_c: req.body });
 		const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 }, 0);

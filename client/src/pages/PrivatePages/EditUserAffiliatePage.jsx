@@ -199,12 +199,7 @@ const EditUserAffiliatePage = (props) => {
 			if (clean) {
 				console.log({ success, affiliate_saved });
 				if (success && affiliate_saved) {
-					if (props.match.params.id) {
-						history.push('/secure/account/profile');
-					} else {
-						console.log({ affiliate_saved });
-						history.push('/account/affiliate/receipt/' + affiliate_saved.pathname + '/affiliate/true');
-					}
+					props.history.push('/pages/complete/affiliate/' + affiliate_saved.pathname);
 				}
 			}
 			return () => (clean = false);
@@ -373,8 +368,8 @@ const EditUserAffiliatePage = (props) => {
 													type="text"
 													name="venmo"
 													value={venmo}
-													// placeholder="https://www..."
-													onFocus={() => this.placeholder('')}
+													placeholder="https://www..."
+													// onFocus={() => this.placeholder('')}
 													// onBlur={() => this.placeholder('https://www...')}
 													id="venmo"
 													onChange={(e) => set_venmo(e.target.value)}
