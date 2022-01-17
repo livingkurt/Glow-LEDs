@@ -227,6 +227,14 @@ const OrderPage = (props) => {
 
 	const send_email = async (status, message_to_user) => {
 		// const { data: order } = await API_Orders.findById_orders_a(props.match.params.id);
+
+		console.log(
+			order,
+			'Your Order has been ' + toCapitalize(status),
+			order.shipping.email,
+			status,
+			message_to_user
+		);
 		await API_Emails.send_order_status_email(
 			order,
 			'Your Order has been ' + toCapitalize(status),

@@ -162,11 +162,12 @@ export default {
 			status: req.body.status,
 			message_to_user: req.body.message_to_user
 		};
+		console.log({ body });
 		const mailOptions = {
 			from: process.env.DISPLAY_EMAIL,
 			to: req.body.email,
 			subject: req.body.subject,
-			html: App({ body: order_status(body), title: 'Your Order has been ' + toCapitalize(status) })
+			html: App({ body: order_status(body), title: 'Your Order has been ' + toCapitalize(req.body.status) })
 		};
 
 		transporter.sendMail(mailOptions, (err, data) => {
