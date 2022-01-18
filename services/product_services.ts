@@ -52,7 +52,7 @@ export default {
 			} else if (sort_query === 'hidden') {
 				sort = { hidden: -1 };
 			} else if (sort_query === 'newest') {
-				sort = { order: 1, _id: -1 };
+				sort = { _id: -1 };
 			}
 			const products = await product_db.findAll_products_db(filter, sort, limit, page);
 			const count = await product_db.count_products_db(filter);
