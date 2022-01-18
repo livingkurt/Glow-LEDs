@@ -3,6 +3,12 @@ import mongoose from 'mongoose';
 
 export default {
 	findAll_products_db: async (filter: any, sort: any, limit: any, page: any) => {
+		console.log({
+			filter,
+			sort,
+			limit,
+			page
+		});
 		try {
 			return await Product.find(filter)
 				.sort(sort)

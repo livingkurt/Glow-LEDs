@@ -42,7 +42,7 @@ export default {
 				limit
 			});
 			const sort_query = query.sort && query.sort.toLowerCase();
-			let sort: any = { _id: -1 };
+			let sort: any = { order: 1, _id: -1 };
 			if (sort_query === 'lowest') {
 				sort = { price: 1 };
 			} else if (sort_query === 'highest') {
