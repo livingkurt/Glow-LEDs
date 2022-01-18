@@ -620,6 +620,9 @@ const determine_secondary_product_name = (name: any, category: any, subcategory:
 		if (name.split('-')[0].trim() === 'Novaskins') {
 			return name.split('-')[1].trim();
 		}
+		if (name.split('-')[0].trim() === 'EXO Diffusers') {
+			return name.split('-')[1].trim();
+		}
 		if (category === 'decals') {
 			if (name.split(' ')[1] === 'V2') {
 				return name.split(' ')[0] + ' V2';
@@ -738,7 +741,10 @@ export const determine_product_name = (item: any, show_qty: any, date: any) => {
 				? item.color + ' Skeleton Color'
 				: ''}
 					${item.color ? ' & ' : ''}
-					${item.secondary_color ? item.secondary_color + ' Plug Color) ' : ''}${' '}
+					${item.secondary_color ? item.secondary_color + ' Plug Color) ' : ''} ${item.secondary_product_name &&
+			item.secondary_product_name.length > 0
+				? ` - ${determine_secondary_product_name(item.secondary_product_name, item.category, '')}`
+				: ''}${' '}
 				</div>`;
 		} else if (item.name === 'Diffuser Caps + Adapters Starter Kit') {
 			return `<div>

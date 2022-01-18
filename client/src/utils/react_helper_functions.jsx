@@ -233,7 +233,9 @@ export const cart_item_name = (item) => {
 					<label className="mv-0px mr-5px">
 						{item.secondary_group_name ? item.secondary_group_name : 'Cap Design'}: {' '}
 					</label>
-					<label className=" mv-0px">{item.secondary_product_name}</label>
+					<label className=" mv-0px">
+						{determine_secondary_product_name(item.secondary_product_name, item.category, '')}
+					</label>
 				</div>
 			)}
 			{item.size !== '1 Sled' &&
@@ -419,9 +421,14 @@ export const determine_product_name = (item, show_qty, date) => {
 		} else if (item.category === 'exo_diffusers') {
 			return (
 				<div>
-					{show_qty && item.qty > 1 && item.qty + 'x'} {item.name} ({item.color && item.color + ' Skeleton Color'}
+					{show_qty && item.qty > 1 && item.qty + 'x'} {item.name} ({item.color && item.color + ' Skeleton'}
 					{item.color && ' & '}
-					{item.secondary_color && item.secondary_color + ' Plug Color) '}{' '}
+					{item.secondary_color && item.secondary_color + ' Plug)'}{' '}
+					{item.secondary_product_name && item.secondary_product_name.length > 0 ? (
+						` - ${determine_secondary_product_name(item.secondary_product_name, item.category, '')}`
+					) : (
+						''
+					)}{' '}
 				</div>
 			);
 		} else if (item.name === 'Diffuser Caps + Adapters Starter Kit') {
@@ -516,6 +523,9 @@ export const determine_secondary_product_name = (name, category, subcategory) =>
 			return name.split('-')[1].trim();
 		}
 		if (name.split('-')[0].trim() === 'Novaskins') {
+			return name.split('-')[1].trim();
+		}
+		if (name.split('-')[0].trim() === 'EXO Diffusers') {
 			return name.split('-')[1].trim();
 		}
 		if (category === 'decals') {
