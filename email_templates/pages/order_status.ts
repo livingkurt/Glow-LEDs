@@ -22,10 +22,10 @@ export default (props: any) => {
                                       </h3>`
 							: `<p style='font-size: 16px;line-height: 20px;'>
                                         Hi ${order.shipping.first_name},${' '}
-                                        ${email && email.h2 ? email.h2 : ''}
+                                        ${email.h2 ? email.h2 : ''}
                                       </p>`}
                         </p>
-                        <p>${email ? email.p : ''}</p>
+                        <p>${email.p ? email.p : ''}</p>
                         <table style="width:100%;border-spacing:0;margin-top:20px">
                           <tbody>
                             <tr style="font-family:helvetica;line-height:0em">

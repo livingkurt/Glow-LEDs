@@ -132,6 +132,7 @@ export const prnt = (info: any) => {
 };
 
 export const toCapitalize = (string: string) => {
+	console.log({ toCapitalize: string });
 	return string.charAt(0).toUpperCase() + string.slice(1);
 };
 

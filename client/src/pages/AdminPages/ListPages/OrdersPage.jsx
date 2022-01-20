@@ -5,8 +5,8 @@ import { listOrders, update_order, update_payment } from '../../../actions/order
 import { Loading, Notification } from '../../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { OrderListItem, OrderSmallScreen, Search, Sort, Pagination } from '../../../components/SpecialtyComponents';
-import { API_Orders } from '../../../utils';
-import { getUrlParameter } from '../../../utils/helper_functions';
+import { API_Emails, API_Orders } from '../../../utils';
+import { getUrlParameter, toCapitalize } from '../../../utils/helper_functions';
 import { check_authentication } from '../../../utils/react_helper_functions';
 
 const OrdersPage = (props) => {
@@ -15,6 +15,7 @@ const OrdersPage = (props) => {
 	const [ payment_method, set_payment_method ] = useState('');
 	const [ page, set_page ] = useState(1);
 	const [ limit, set_limit ] = useState(10);
+	const [ loading_email, set_loading_email ] = useState('');
 
 	const category = props.match.params.category ? props.match.params.category : '';
 	const orderList = useSelector((state) => state.orderList);
@@ -117,16 +118,43 @@ const OrdersPage = (props) => {
 		'Highest'
 	];
 
+	// const update_order_state = (order, state, is_action, action_at) => {
+	// 	if (state) {
+	// 		set_order_state({ ...order_state, [is_action]: false });
+	// 		dispatch(update_order(order, false, is_action, action_at));
+	// 	} else {
+	// 		set_order_state({ ...order_state, [is_action]: true });
+	// 		dispatch(update_order(order, true, is_action, action_at));
+	// 		history.push(`/secure/glow/emails/order_status/${order._id}/${is_action.substring(2)}/true`);
+	// 	}
+	// };
+
 	const update_order_state = (order, state, is_action, action_at) => {
+		set_loading_email(true);
 		if (state) {
 			set_order_state({ ...order_state, [is_action]: false });
 			dispatch(update_order(order, false, is_action, action_at));
 		} else {
 			set_order_state({ ...order_state, [is_action]: true });
 			dispatch(update_order(order, true, is_action, action_at));
-			history.push(`/secure/glow/emails/order_status/${order._id}/${is_action.substring(2)}/true`);
+			send_email(order, action_at.slice(0, -2));
 		}
+		setTimeout(() => {
+			dispatch(listOrders({ category, search, sort, page, limit }));
+		}, 200);
+		set_loading_email(false);
 	};
+
+	// const update_order_payment_state = (order, state, is_action) => {
+	// 	if (state) {
+	// 		set_order_state({ ...order_state, [is_action]: false });
+	// 		dispatch(update_payment(order, false, payment_method));
+	// 	} else {
+	// 		set_order_state({ ...order_state, [is_action]: true });
+	// 		dispatch(update_payment(order, true, payment_method));
+	// 		history.push(`/secure/glow/emails/order/${order._id}/order/false`);
+	// 	}
+	// };
 	const update_order_payment_state = (order, state, is_action) => {
 		if (state) {
 			set_order_state({ ...order_state, [is_action]: false });
@@ -134,8 +162,11 @@ const OrdersPage = (props) => {
 		} else {
 			set_order_state({ ...order_state, [is_action]: true });
 			dispatch(update_payment(order, true, payment_method));
-			history.push(`/secure/glow/emails/order/${order._id}/order/false`);
+			// send_email('paid'));
 		}
+		setTimeout(() => {
+			dispatch(listOrders({ category, search, sort, page, limit }));
+		}, 1000);
 	};
 
 	useEffect(
@@ -166,19 +197,76 @@ const OrdersPage = (props) => {
 		dispatch(listOrders({ category, search, sort, page: new_page, limit }));
 	};
 
-	useEffect(() => {
-		let clean = true;
-		if (clean) {
-			mark_as_shipped();
-		}
-		return () => (clean = false);
-	}, []);
+	useEffect(
+		() => {
+			let clean = true;
+			if (clean) {
+				is_shipped();
+			}
+			return () => (clean = false);
+		},
+		[ orders ]
+	);
 
 	const [ not_shipped, set_not_shipped ] = useState([]);
-	const mark_as_shipped = async () => {
+
+	const is_shipped = async () => {
 		const { data: orders } = await API_Orders.mark_as_shipped();
 		console.log({ orders });
 		set_not_shipped(orders);
+	};
+
+	// const update_order_state = (order, state, is_action, action_at) => {
+	// 	set_loading_email(true);
+	// 	if (state) {
+	// 		set_order_state({ ...order_state, [is_action]: false });
+	// 		dispatch(update_order(order, false, is_action, action_at));
+	// 	} else {
+	// 		set_order_state({ ...order_state, [is_action]: true });
+	// 		dispatch(update_order(order, true, is_action, action_at));
+	// 		send_email(order, action_at.slice(0, -2));
+	// 	}
+	// 	setTimeout(() => {
+	// 		dispatch(detailsOrder(props.match.params.id));
+	// 	}, 200);
+	// 	set_loading_email(false);
+	// };
+
+	const mark_as_shipped = async () => {
+		const { data: orders } = await API_Orders.mark_as_shipped();
+		orders.forEach(async (order) => {
+			await dispatch(update_order(order, true, 'isShipped', 'shippedAt'));
+			await send_email(order, 'shipped');
+		});
+		setTimeout(() => {
+			dispatch(listOrders({ category, search, sort, page, limit }));
+		}, 200);
+	};
+
+	const send_email = async (order, status, message_to_user) => {
+		set_loading_email(true);
+		console.log(
+			order,
+			'Your Order has been ' + toCapitalize(status),
+			order.shipping.email,
+			status,
+			message_to_user
+		);
+		await API_Emails.send_order_status_email(
+			order,
+			'Your Order has been ' + toCapitalize(status),
+			order.shipping.email,
+			status,
+			message_to_user
+		);
+		await API_Emails.send_order_status_email(
+			order,
+			order.shipping.first_name + "'s Order has been " + toCapitalize(status),
+			'info.glowleds@gmail.com',
+			status,
+			message_to_user
+		);
+		set_loading_email(false);
 	};
 
 	return (
@@ -199,11 +287,12 @@ const OrdersPage = (props) => {
 				</Link>
 				{not_shipped &&
 				not_shipped.length > 0 && (
-					<Link to="/secure/glow/mark_as_shipped/shipped/true">
-						<button className="btn primary">Mark as Shipped</button>
-					</Link>
+					<button className="btn primary" onClick={() => mark_as_shipped()}>
+						Mark as Shipped
+					</button>
 				)}
 			</div>
+			<Loading loading={loading_email} />
 			<div className="profile-orders profile_orders_container" style={{ width: '100%' }}>
 				<div className="search_and_sort jc-b ai-c mt-2rem" style={{ overflowX: 'scroll' }}>
 					<div className="w-40rem">

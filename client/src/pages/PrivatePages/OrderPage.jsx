@@ -11,6 +11,7 @@ import { deleteOrder, listOrders, update_order, update_payment, refundOrder } fr
 import { API_Emails, API_Orders, API_Shipping } from '../../utils';
 import useClipboard from 'react-hook-clipboard';
 import useWindowDimensions from '../../components/Hooks/windowDimensions';
+import { OrderStatusButtons } from '../../components/SpecialtyComponents/OrderPageComponents';
 
 require('dotenv').config();
 
@@ -226,8 +227,6 @@ const OrderPage = (props) => {
 	};
 
 	const send_email = async (status, message_to_user) => {
-		// const { data: order } = await API_Orders.findById_orders_a(props.match.params.id);
-
 		console.log(
 			order,
 			'Your Order has been ' + toCapitalize(status),
@@ -257,12 +256,11 @@ const OrderPage = (props) => {
 		} else {
 			set_order_state({ ...order_state, [is_action]: true });
 			dispatch(update_payment(order, true, payment_method));
-			history.push(`/secure/glow/emails/order/${order._id}/order/false`);
+			// send_email('paid');
 		}
 		setTimeout(() => {
 			dispatch(detailsOrder(props.match.params.id));
-			dispatch(detailsOrder(props.match.params.id));
-		}, 1000);
+		}, 200);
 	};
 
 	const create_label = async () => {
@@ -964,157 +962,11 @@ ${order.shipping.email}`)}
 								<div>
 									<div className="jc-b">
 										<div className="column jc-b w-100per">
-											<div className="row ai-c">
-												<button
-													className="btn primary mv-5px w-100per"
-													onClick={() =>
-														update_order_payment_state(
-															order,
-															order.isPaid,
-															'isPaid',
-															'paidAt'
-														)}
-												>
-													{order.isPaid ? 'Unset to Paid' : 'Set to Paid'}
-												</button>
-												{/* <Link
-													to={`/secure/glow/emails/order/${order._id}/order/false/${message_to_user}`}
-												>
-													<button className="btn secondary" aria-label="Send">
-														<i className="fas fa-paper-plane" />
-													</button>
-												</Link> */}
-											</div>
-											<div className="row ai-c">
-												<button
-													className="btn primary mv-5px w-100per"
-													onClick={() =>
-														update_order_state(
-															order,
-															order.isReassured,
-															'isReassured',
-															'reassuredAt'
-														)}
-												>
-													{order.isReassured ? 'Unset to Reassured' : 'Set to Reassured'}
-												</button>
-												{/* <Link
-													to={`/secure/glow/emails/order_status/${order._id}/reassured/false/${message_to_user}`}
-												>
-													<button className="btn secondary" aria-label="Send">
-														<i className="fas fa-paper-plane" />
-													</button>
-												</Link> */}
-											</div>
-											<div className="row ai-c">
-												<button
-													className="btn primary mv-5px w-100per"
-													onClick={() =>
-														update_order_state(
-															order,
-															order.isManufactured,
-															'isManufactured',
-															'manufacturedAt'
-														)}
-												>
-													{order.isManufactured ? (
-														'Unset to Manufactured'
-													) : (
-														'Set to Manufactured'
-													)}
-												</button>
-												{/* <Link
-													to={`/secure/glow/emails/order_status/${order._id}/manufactured/false/${message_to_user}`}
-												>
-													<button className="btn secondary" aria-label="Send">
-														<i className="fas fa-paper-plane" />
-													</button>
-												</Link> */}
-											</div>
-											<div className="row ai-c">
-												<button
-													className="btn primary mv-5px w-100per"
-													onClick={() =>
-														update_order_state(
-															order,
-															order.isPackaged,
-															'isPackaged',
-															'packagedAt'
-														)}
-												>
-													{order.isPackaged ? 'Unset to Packaged' : 'Set to Packaged'}
-												</button>
-												{/* <Link
-													to={`/secure/glow/emails/order_status/${order._id}/packaged/false/${message_to_user}`}
-												>
-													<button className="btn secondary" aria-label="Send">
-														<i className="fas fa-paper-plane" />
-													</button>
-												</Link> */}
-											</div>
-											<div className="row ai-c">
-												<button
-													className="btn primary mv-5px w-100per"
-													onClick={() =>
-														update_order_state(
-															order,
-															order.isShipped,
-															'isShipped',
-															'shippedAt'
-														)}
-												>
-													{order.isShipped ? 'Unset to Shipped' : 'Set to Shipped'}
-												</button>
-												{/* <Link
-													to={`/secure/glow/emails/order_status/${order._id}/shipped/false/${message_to_user}`}
-												>
-													<button className="btn secondary" aria-label="Send">
-														<i className="fas fa-paper-plane" />
-													</button>
-												</Link> */}
-											</div>
-											<div className="row ai-c">
-												<button
-													className="btn primary mv-5px w-100per"
-													onClick={() =>
-														update_order_state(
-															order,
-															order.isDelivered,
-															'isDelivered',
-															'deliveredAt'
-														)}
-												>
-													{order.isDelivered ? 'Unset to Delivered' : 'Set to Delivered'}
-												</button>
-												{/* <Link
-													to={`/secure/glow/emails/order_status/${order._id}/delivered/false/${message_to_user}`}
-												>
-													<button className="btn secondary" aria-label="Send">
-														<i className="fas fa-paper-plane" />
-													</button>
-												</Link> */}
-											</div>
-											<div className="row ai-c">
-												<button
-													className="btn primary mv-5px w-100per"
-													onClick={() =>
-														update_order_state(
-															order,
-															order.isRefunded,
-															'isRefunded',
-															'refundedAt'
-														)}
-												>
-													{order.isRefunded ? 'Unset to Refunded' : 'Set to Refunded'}
-												</button>
-												{/* <Link
-													to={`/secure/glow/emails/order/${order._id}/refunded/false/${message_to_user}`}
-												>
-													<button className="btn secondary" aria-label="Send">
-														<i className="fas fa-paper-plane" />
-													</button>
-												</Link> */}
-											</div>
+											<OrderStatusButtons
+												order={order}
+												update_order_payment_state={update_order_payment_state}
+												update_order_state={update_order_state}
+											/>
 											{order.shipping.shipping_label && (
 												<button className="btn secondary mv-5px" onClick={() => view_label()}>
 													View Label

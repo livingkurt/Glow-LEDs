@@ -7,8 +7,9 @@ import { determine_tracking_number, determnine_link, format_date } from '../../u
 import { createOrder, deleteOrder, listOrders } from '../../actions/orderActions';
 import { LazyImage, Loading } from '../UtilityComponents';
 import { determine_product_name } from '../../utils/react_helper_functions';
+import { OrderStatusButtons } from './OrderPageComponents';
 
-const OrderListItem = (props) => {
+const OrderListItem = ({ order, determine_color, admin, update_order_payment_state, update_order_state }) => {
 	const history = useHistory();
 	const dispatch = useDispatch();
 	const [ loading_label, set_loading_label ] = useState(false);
@@ -27,111 +28,97 @@ const OrderListItem = (props) => {
 	const today = new Date();
 
 	const sendEmail = (message) => {
-		const email = props.order.shipping.email;
+		const email = order.shipping.email;
 		const subject = 'Your Glow LEDs Order';
-		const emailBody = 'Hi ' + props.order.user.first_name + ',';
+		const emailBody = 'Hi ' + order.user.first_name + ',';
 		document.location = 'mailto:' + email + '?subject=' + subject + '&body=' + emailBody;
 	};
 
 	const create_duplicate_order = () => {
-		console.log({ create_duplicate_order: props.order });
-		console.log({ create_duplicate_order_user: props.order.user._id });
-		// console.log({ user: props.order.user });
+		console.log({ create_duplicate_order: order });
+		console.log({ create_duplicate_order_user: order.user._id });
+		// console.log({ user: order.user });
 		dispatch(
 			createOrder({
-				orderItems: props.order.orderItems,
-				shipping: { ...props.order.shipping, shipment_id: null, shipping_rate: null, shipping_label: null },
-				itemsPrice: props.order.itemsPrice,
+				orderItems: order.orderItems,
+				shipping: { ...order.shipping, shipment_id: null, shipping_rate: null, shipping_label: null },
+				itemsPrice: order.itemsPrice,
 				shippingPrice: 0,
 				taxPrice: 0,
 				totalPrice: 0,
-				user: props.order.user._id,
-				order_note: `Replacement Order for ${props.order.shipping.first_name} ${props.order.shipping
-					.last_name} - Original Order Number is ${props.order._id}`
+				user: order.user._id,
+				order_note: `Replacement Order for ${order.shipping.first_name} ${order.shipping
+					.last_name} - Original Order Number is ${order._id}`
 			})
 		);
 		dispatch(listOrders({}));
 	};
 
 	const delete_order = () => {
-		dispatch(deleteOrder(props.order._id));
+		dispatch(deleteOrder(order._id));
 		dispatch(listOrders({ limit: 10, page: 1 }));
 	};
 
 	return (
-		<div className="container" style={{ backgroundColor: props.determine_color(props.order) }}>
+		<div className="container" style={{ backgroundColor: determine_color(order) }}>
 			<Loading loading={loading_label} />
 			<div className="pb-15px mb-10px jc-b" style={{ borderBottom: '1px solid white' }}>
 				<div className="w-60per jc-b ">
 					<div className="fs-16px">
 						<h3>Order Placed</h3>
-						<div>{props.order.createdAt && format_date(props.order.createdAt)}</div>
+						<div>{order.createdAt && format_date(order.createdAt)}</div>
 					</div>
 					<div className="fs-16px">
 						<h3>Total</h3>
-						{!props.order.isRefunded && (
+						{!order.isRefunded && (
 							<div>
-								<div>
-									${props.order.totalPrice ? (
-										props.order.totalPrice.toFixed(2)
-									) : (
-										props.order.totalPrice
-									)}
-								</div>
+								<div>${order.totalPrice ? order.totalPrice.toFixed(2) : order.totalPrice}</div>
 							</div>
 						)}
-						{props.order.isRefunded && (
+						{order.isRefunded && (
 							<div>
 								<del style={{ color: 'red' }}>
 									<label style={{ color: 'white' }}>
-										<div>
-											${props.order.totalPrice ? (
-												props.order.totalPrice.toFixed(2)
-											) : (
-												props.order.totalPrice
-											)}
-										</div>
+										<div>${order.totalPrice ? order.totalPrice.toFixed(2) : order.totalPrice}</div>
 									</label>
 								</del>
 							</div>
 						)}
-						{props.order.isRefunded && (
+						{order.isRefunded && (
 							<div>
-								<div>
-									-${(props.order.payment.refund.reduce((a, c) => a + c.amount, 0) / 100).toFixed(2)}
-								</div>
+								<div>-${(order.payment.refund.reduce((a, c) => a + c.amount, 0) / 100).toFixed(2)}</div>
 							</div>
 						)}
-						{props.order.isRefunded && (
+						{order.isRefunded && (
 							<div>
 								<div>
-									${(props.order.totalPrice -
-										props.order.payment.refund.reduce((a, c) => a + c.amount, 0) / 100).toFixed(2)}
+									${(order.totalPrice -
+										order.payment.refund.reduce((a, c) => a + c.amount, 0) / 100).toFixed(2)}
 								</div>
 							</div>
 						)}
 					</div>
-					{props.admin && (
+					{admin && (
 						<div className="fs-16px">
 							<h3>Since Order</h3>
-							{daysBetween(today, props.order.createdAt) > 1 ? (
-								`${daysBetween(today, props.order.createdAt)} Days`
+							{daysBetween(today, order.createdAt) > 1 ? (
+								`${daysBetween(today, order.createdAt)} Days`
 							) : (
-								`${daysBetween(today, props.order.createdAt)} Day`
+								`${daysBetween(today, order.createdAt)} Day`
 							)}
 						</div>
 					)}
 					<div className="fs-16px">
 						<h3>Ship To</h3>
-						<Link to={`/secure/glow/userprofile/${props.order.user && props.order.user._id}`}>
-							{props.order.shipping.first_name} {props.order.shipping.last_name}
+						<Link to={`/secure/glow/userprofile/${order.user && order.user._id}`}>
+							{order.shipping.first_name} {order.shipping.last_name}
 						</Link>
 					</div>
-					{props.order.shipping.shipping_rate && (
+					{order.shipping.shipping_rate && (
 						<div className="fs-16px">
 							<p className="title_font ai-c fs-30px">
-								{props.order.shipping.shipping_rate.service !== 'First' &&
-									props.order.shipping.shipping_rate.service}{' '}
+								{order.shipping.shipping_rate.service !== 'First' &&
+									order.shipping.shipping_rate.service}{' '}
 							</p>
 						</div>
 					)}
@@ -141,15 +128,15 @@ const OrderListItem = (props) => {
 						<div className="fs-16px">
 							<div className="row ai-c">
 								<h3 className="mr-10px">Order Number: </h3>
-								<div>{props.order._id}</div>
+								<div>{order._id}</div>
 							</div>
-							{props.order.tracking_number && (
+							{order.tracking_number && (
 								<div className="row ai-c mb-2rem">
 									<h3 className="mr-10px  mv-0px">Tracking Number: </h3>
 									<div className="mt-0px">
 										{' '}
 										<a
-											href={determine_tracking_number(props.order.tracking_number)}
+											href={determine_tracking_number(order.tracking_number)}
 											target="_blank"
 											rel="noopener noreferrer"
 											className="mv-2rem"
@@ -158,7 +145,7 @@ const OrderListItem = (props) => {
 												color: 'white'
 											}}
 										>
-											{props.order.tracking_number}
+											{order.tracking_number}
 										</a>
 									</div>
 								</div>
@@ -167,7 +154,7 @@ const OrderListItem = (props) => {
 						<div className="row fs-16px jc-b ai-c">
 							<Link
 								to={{
-									pathname: '/secure/account/order/' + props.order._id,
+									pathname: '/secure/account/order/' + order._id,
 									previous_path: history.location.pathname + history.location.search
 								}}
 							>
@@ -175,10 +162,10 @@ const OrderListItem = (props) => {
 							</Link>
 							<div>|</div>
 							<button className="btn secondary">
-								{/* <Link to={'/secure/glow/emails/invoice/' + props.order._id}>View Invoice</Link> */}
+								{/* <Link to={'/secure/glow/emails/invoice/' + order._id}>View Invoice</Link> */}
 								<Link
 									to={{
-										pathname: '/secure/glow/emails/invoice/' + props.order._id,
+										pathname: '/secure/glow/emails/invoice/' + order._id,
 										previous_path: history.location.pathname + history.location.search
 									}}
 								>
@@ -193,7 +180,7 @@ const OrderListItem = (props) => {
 			<div className="row">
 				<div className="small_screen_order jc-b ">
 					<div className="wrap">
-						{props.order.orderItems.map((item, index) => {
+						{order.orderItems.map((item, index) => {
 							return (
 								<div className="row mt-15px" key={index}>
 									<div className="column ai-c pos-rel">
@@ -259,43 +246,42 @@ const OrderListItem = (props) => {
 				</div>
 				<div className="small_screen_order jc-b">
 					<div className="mv-auto">
-						{props.order.orderItems.map((item, index) => {
-							return <div key={index}>{determine_product_name(item, true, props.order.createdAt)}</div>;
+						{order.orderItems.map((item, index) => {
+							return <div key={index}>{determine_product_name(item, true, order.createdAt)}</div>;
 						})}
 					</div>
 				</div>
-				<Link to={'/collections/all/products/' + props.order.orderItems[0].category} className="ai-c ml-1rem">
+				<Link to={'/collections/all/products/' + order.orderItems[0].category} className="ai-c ml-1rem">
 					<button className="btn primary">Buy Again</button>
 				</Link>
 
-				{props.admin && (
+				{admin && (
 					<div className="jc-fe column ml-auto ">
-						<button className="btn icon h-3rem " onClick={() => show_hide(props.order._id)}>
+						<button className="btn icon h-3rem " onClick={() => show_hide(order._id)}>
 							<i style={{ WebkitTransform: 'rotate(-180deg)' }} className="top-8px fas fa-sort-up" />
 						</button>
 					</div>
 				)}
 			</div>
 
-			{props.admin && (
-				<div id={props.order._id} className="expanded-row-content hide-row">
+			{admin && (
+				<div id={order._id} className="expanded-row-content hide-row">
 					<div className="jc-b pt-10px mt-10px" style={{ borderTop: '1px solid white' }}>
 						<div className=" ">
 							<h2>Shipping</h2>
 							<div className="paragraph_font lh-25px">
 								<div>
-									{props.order.shipping.first_name} {props.order.shipping.last_name}
+									{order.shipping.first_name} {order.shipping.last_name}
 								</div>
 								<div>
-									{props.order.shipping.address_1} {props.order.shipping.address_2}
+									{order.shipping.address_1} {order.shipping.address_2}
 								</div>
 								<div>
-									{props.order.shipping.city}, {props.order.shipping.state}{' '}
-									{props.order.shipping.postalCode}
+									{order.shipping.city}, {order.shipping.state} {order.shipping.postalCode}
 								</div>
-								<div>{props.order.shipping.country}</div>
-								<div>{props.order.shipping.international && 'International'}</div>
-								<div>{props.order.shipping.email}</div>
+								<div>{order.shipping.country}</div>
+								<div>{order.shipping.international && 'International'}</div>
+								<div>{order.shipping.email}</div>
 							</div>
 						</div>
 						<div className="column jc-b h-10rem w-20rem ml-1rem">
@@ -303,20 +289,20 @@ const OrderListItem = (props) => {
 							<div>
 								<div className="row ai-c">
 									<div className="mv-5px">
-										{props.order.isPaid ? (
+										{order.isPaid ? (
 											<i className="fas fa-check-circle" />
 										) : (
 											<i className="fas fa-times-circle" />
 										)}
 									</div>
 									<div className="mh-10px">Paid</div>
-									<div>{!props.order.paidAt ? '' : format_date(props.order.paidAt)}</div>
+									<div>{!order.paidAt ? '' : format_date(order.paidAt)}</div>
 								</div>
 							</div>
 							<div>
 								<div className="row ai-c">
 									<div className="mv-5px">
-										{props.order.isManufactured ? (
+										{order.isManufactured ? (
 											<i className="fas fa-check-circle" />
 										) : (
 											<i className="fas fa-times-circle" />
@@ -324,15 +310,13 @@ const OrderListItem = (props) => {
 									</div>
 									<div className="mh-10px">Manufactured</div>
 
-									<div>
-										{!props.order.manufacturedAt ? '' : format_date(props.order.manufacturedAt)}
-									</div>
+									<div>{!order.manufacturedAt ? '' : format_date(order.manufacturedAt)}</div>
 								</div>
 							</div>
 							<div>
 								<div className="row ai-c">
 									<div className="mv-5px">
-										{props.order.isPackaged ? (
+										{order.isPackaged ? (
 											<i className="fas fa-check-circle" />
 										) : (
 											<i className="fas fa-times-circle" />
@@ -340,13 +324,13 @@ const OrderListItem = (props) => {
 									</div>
 									<div className="mh-10px">Packaged</div>
 
-									<div>{!props.order.packagedAt ? '' : format_date(props.order.packagedAt)}</div>
+									<div>{!order.packagedAt ? '' : format_date(order.packagedAt)}</div>
 								</div>
 							</div>
 							<div>
 								<div className="row ai-c">
 									<div className="mv-5px">
-										{props.order.isShipped ? (
+										{order.isShipped ? (
 											<i className="fas fa-check-circle" />
 										) : (
 											<i className="fas fa-times-circle" />
@@ -354,13 +338,13 @@ const OrderListItem = (props) => {
 									</div>
 									<div className="mh-10px">Shipped</div>
 
-									<div>{!props.order.shippedAt ? '' : format_date(props.order.shippedAt)}</div>
+									<div>{!order.shippedAt ? '' : format_date(order.shippedAt)}</div>
 								</div>
 							</div>
 							<div>
 								<div className="row ai-c">
 									<div className="mv-5px row">
-										{props.order.isDelivered ? (
+										{order.isDelivered ? (
 											<i className="fas fa-check-circle" />
 										) : (
 											<i className="fas fa-times-circle" />
@@ -368,7 +352,7 @@ const OrderListItem = (props) => {
 									</div>
 									<div className="mh-10px">Delivered</div>
 
-									<div>{!props.order.deliveredAt ? '' : format_date(props.order.deliveredAt)}</div>
+									<div>{!order.deliveredAt ? '' : format_date(order.deliveredAt)}</div>
 								</div>
 							</div>
 						</div>
@@ -376,21 +360,21 @@ const OrderListItem = (props) => {
 							<h2>Meta Data</h2>
 							<li className="row mv-2rem">
 								<label className="phrase_font">Payment Method </label>
-								<label className="ml-1rem">{props.order.payment.paymentMethod}</label>
+								<label className="ml-1rem">{order.payment.paymentMethod}</label>
 							</li>
 							<li className="row mv-2rem">
 								<label className="phrase_font">Order Note: </label>
-								<label className="ml-1rem">{props.order.order_note}</label>
+								<label className="ml-1rem">{order.order_note}</label>
 							</li>
 							<li className="row mv-2rem">
 								<label className="phrase_font">Promo Code: </label>
-								<label className="ml-1rem">{props.order.promo_code}</label>
+								<label className="ml-1rem">{order.promo_code}</label>
 							</li>
 							<li className="row">
 								<label className="phrase_font">Tracking Number: </label>
 
 								<a
-									href={determine_tracking_number(props.order.tracking_number)}
+									href={determine_tracking_number(order.tracking_number)}
 									target="_blank"
 									rel="noopener noreferrer"
 									className="mv-2rem ml-1rem"
@@ -399,15 +383,15 @@ const OrderListItem = (props) => {
 										color: 'white'
 									}}
 								>
-									{props.order.tracking_number}
+									{order.tracking_number}
 								</a>
 							</li>
-							{props.order.return_tracking_number && (
+							{order.return_tracking_number && (
 								<li className="row">
 									<label className="phrase_font">Return Tracking Number: </label>
 
 									<a
-										href={determine_tracking_number(props.order.return_tracking_number)}
+										href={determine_tracking_number(order.return_tracking_number)}
 										target="_blank"
 										rel="noopener noreferrer"
 										className="mv-2rem ml-1rem"
@@ -416,15 +400,15 @@ const OrderListItem = (props) => {
 											color: 'white'
 										}}
 									>
-										{props.order.return_tracking_number}
+										{order.return_tracking_number}
 									</a>
 								</li>
 							)}
 
-							{props.order.guest && (
+							{order.guest && (
 								<li className="row">
 									<label className="phrase_font">
-										Guest Order: {props.order.guest ? 'True' : 'False'}{' '}
+										Guest Order: {order.guest ? 'True' : 'False'}{' '}
 									</label>
 								</li>
 							)}
@@ -432,12 +416,12 @@ const OrderListItem = (props) => {
 
 						<div className="jc-b">
 							<div className="column w-25rem">
-								{/* {props.order.shipping.shipping_label && (
+								{/* {order.shipping.shipping_label && (
 									<button className="btn secondary mv-5px" onClick={() => view_label()}>
 										View Label
 									</button>
 								)}
-								{props.order.shipping.return_shipping_label && (
+								{order.shipping.return_shipping_label && (
 									<button className="btn secondary mv-5px" onClick={() => view_return_label()}>
 										View Return Label
 									</button>
@@ -447,12 +431,12 @@ const OrderListItem = (props) => {
 								</button>
 								<button
 									className="btn secondary mv-5px"
-									onClick={() => create_duplicate_order(props.order._id)}
+									onClick={() => create_duplicate_order(order._id)}
 								>
 									Create Duplicate Order
 								</button>
 								<button className="btn secondary mv-5px">
-									<Link to={'/secure/glow/editorder/' + props.order._id}>Edit Order</Link>
+									<Link to={'/secure/glow/editorder/' + order._id}>Edit Order</Link>
 								</button>
 
 								<button className="btn secondary mv-5px" onClick={() => delete_order()}>
@@ -460,6 +444,11 @@ const OrderListItem = (props) => {
 								</button>
 							</div>
 						</div>
+						<OrderStatusButtons
+							order={order}
+							update_order_payment_state={update_order_payment_state}
+							update_order_state={update_order_state}
+						/>
 					</div>
 				</div>
 			)}
