@@ -525,7 +525,7 @@ export const determine_secondary_product_name = (name, category, subcategory) =>
 		if (name.split('-')[0].trim() === 'Novaskins') {
 			return name.split('-')[1].trim();
 		}
-		if (name.split('-')[0].trim() === 'EXO Diffusers') {
+		if (name.split('-')[0].trim().includes('EXO Diffusers')) {
 			return name.split('-')[1].trim();
 		}
 		if (category === 'decals') {
