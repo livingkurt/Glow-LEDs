@@ -6,6 +6,7 @@ import { API_Shipping } from '../../utils';
 import { useHistory } from 'react-router-dom';
 import { listParcels } from '../../actions/parcelActions';
 import { Loading } from '../../components/UtilityComponents';
+import Autocomplete from 'react-google-autocomplete';
 
 const LabelCreatorPage = (props) => {
 	const userLogin = useSelector((state) => state.userLogin);
@@ -148,6 +149,12 @@ const LabelCreatorPage = (props) => {
 		set_shipment_id(data.shipment.id);
 		set_loading_shipping_rates(false);
 	};
+	const reset_rates = async (e) => {
+		e.preventDefault();
+
+		set_shipping_rates([]);
+		set_shipment_id('');
+	};
 
 	setTimeout(() => {
 		set_loading(false);
@@ -210,12 +217,25 @@ const LabelCreatorPage = (props) => {
 		address_1: '404 Kenniston Dr',
 		address_2: 'Apt D',
 		city: 'Austin',
-		state: 'Texas',
+		state: 'TX',
 		postalCode: '78752',
 		country: 'United States',
 		phone: '906-284-2208',
 		email: 'info.glowleds@gmail.com',
 		company: 'Glow LEDs'
+	};
+	const destanye_address = {
+		first_name: 'Destanye',
+		last_name: 'Salinas',
+		address_1: '404 Kenniston Dr',
+		address_2: 'Apt D',
+		city: 'Austin',
+		state: 'TX',
+		postalCode: '78752',
+		country: 'United States',
+		phone: '',
+		email: 'destanyesalinas@gmail.com',
+		company: ''
 	};
 
 	const choose_shipping_rate = (e, rate, speed) => {
@@ -243,6 +263,53 @@ const LabelCreatorPage = (props) => {
 			return 1;
 		}
 		return 0;
+	};
+
+	const update_google_shipping = (shipping, type) => {
+		console.log({ shipping });
+
+		const street_number = shipping.address_components.filter((comp) => comp.types.includes('street_number'))[0];
+		const address = shipping.address_components.filter((comp) => comp.types.includes('route'))[0];
+		const address_1 = `${street_number.long_name} ${address.short_name}`;
+		const city = shipping.address_components.filter((comp) => comp.types.includes('locality'))[0];
+		const state = shipping.address_components.filter((comp) =>
+			comp.types.includes('administrative_area_level_1')
+		)[0];
+		const country = shipping.address_components.filter((comp) => comp.types.includes('country'))[0];
+		const postal_code = shipping.address_components.filter((comp) => comp.types.includes('postal_code'))[0];
+		if (type === 'to') {
+			set_to_shipping({
+				...to_shipping,
+				address_1,
+				city: city.long_name,
+				state: state.short_name,
+				postalCode: postal_code.long_name,
+				country: country.short_name !== 'US' ? country.long_name : country.short_name,
+				international: country.short_name !== 'US' ? true : false
+			});
+		} else if (type === 'from') {
+			set_from_shipping({
+				...from_shipping,
+				address_1,
+				city: city.long_name,
+				state: state.short_name,
+				postalCode: postal_code.long_name,
+				country: country.short_name !== 'US' ? country.long_name : country.short_name,
+				international: country.short_name !== 'US' ? true : false
+			});
+		}
+
+		// set_address_1(address_1);
+		// setCity(city.long_name);
+		// setState(state.short_name);
+		// setPostalCode(postal_code.long_name);
+		// console.log({ country: country.short_name });
+		// setCountry(country.short_name);
+		// if (country.short_name !== 'US') {
+		// 	setInternational(true);
+		// 	setState(state.short_name);
+		// 	setCountry(country.long_name);
+		// }
 	};
 
 	return (
@@ -355,7 +422,7 @@ const LabelCreatorPage = (props) => {
 										onChange={(e) => set_to_shipping({ ...to_shipping, company: e.target.value })}
 									/>
 								</li>
-								<li>
+								{/* <li>
 									<label htmlFor="address_1">Address</label>
 									<input
 										type="text"
@@ -363,6 +430,23 @@ const LabelCreatorPage = (props) => {
 										name="address_1"
 										id="address_1"
 										onChange={(e) => set_to_shipping({ ...to_shipping, address_1: e.target.value })}
+									/>
+								</li> */}
+								<li>
+									<label htmlFor="address_autocomplete">Address</label>
+									<Autocomplete
+										apiKey={process.env.REACT_APP_GOOGLE_PLACES_KEY}
+										className="fs-16px"
+										// placeholder="Start typing Address"
+										value={to_shipping.address_1}
+										// onChange={(e) => set_address_1(e.target.value)}
+										onChange={(e) => set_to_shipping({ ...to_shipping, address_1: e.target.value })}
+										options={{
+											types: [ 'address' ]
+										}}
+										onPlaceSelected={(place) => {
+											update_google_shipping(place, 'to');
+										}}
 									/>
 								</li>
 								{/* <label className="validation_text" style={{ justifyContent: 'center' }}>
@@ -495,6 +579,14 @@ const LabelCreatorPage = (props) => {
 										From Glow LEDs
 									</button>
 								</li>
+								<li>
+									<button
+										className="btn primary"
+										onClick={(e) => update_from_shipping(e, JSON.stringify(destanye_address))}
+									>
+										From Destanye
+									</button>
+								</li>
 								{userInfo &&
 								userInfo.isAdmin && (
 									<li>
@@ -578,7 +670,7 @@ const LabelCreatorPage = (props) => {
 											set_from_shipping({ ...from_shipping, company: e.target.value })}
 									/>
 								</li>
-								<li>
+								{/* <li>
 									<label htmlFor="address_1">Address</label>
 									<input
 										type="text"
@@ -587,6 +679,24 @@ const LabelCreatorPage = (props) => {
 										id="address_1"
 										onChange={(e) =>
 											set_from_shipping({ ...from_shipping, address_1: e.target.value })}
+									/>
+								</li> */}
+								<li>
+									<label htmlFor="address_autocomplete">Address</label>
+									<Autocomplete
+										apiKey={process.env.REACT_APP_GOOGLE_PLACES_KEY}
+										className="fs-16px"
+										// placeholder="Start typing Address"
+										value={from_shipping.address_1}
+										// onChange={(e) => set_address_1(e.target.value)}
+										onChange={(e) =>
+											set_from_shipping({ ...from_shipping, address_1: e.target.value })}
+										options={{
+											types: [ 'address' ]
+										}}
+										onPlaceSelected={(place) => {
+											update_google_shipping(place, 'from');
+										}}
 									/>
 								</li>
 								{/* <label className="validation_text" style={{ justifyContent: 'center' }}>
@@ -855,6 +965,12 @@ const LabelCreatorPage = (props) => {
 									</button>
 								</div>
 							)}
+						</li>
+
+						<li>
+							<button className="btn primary" onClick={(e) => reset_rates(e)}>
+								Reset Rates
+							</button>
 						</li>
 						{hide_label_button && (
 							<li>

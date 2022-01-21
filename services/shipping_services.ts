@@ -266,6 +266,7 @@ export default {
 			const to_shipping = body.data.to_shipping;
 			const from_shipping = body.data.from_shipping;
 			const package_dimensions = body.data.package_dimensions;
+			console.log({ package_dimensions });
 			const toAddress = new EasyPost.Address({
 				name: to_shipping.company ? '' : to_shipping.first_name + ' ' + to_shipping.last_name,
 				street1: to_shipping.address_1,
