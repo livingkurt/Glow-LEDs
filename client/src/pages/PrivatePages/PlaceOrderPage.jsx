@@ -320,6 +320,7 @@ const PlaceOrderPage = (props) => {
 		set_loading_payment(true);
 		dimminish_stock();
 		promo_code_used();
+		empty_cart();
 		sessionStorage.removeItem('shippingAddress');
 	};
 
@@ -358,29 +359,31 @@ const PlaceOrderPage = (props) => {
 				promo_code,
 				parcel: parcel ? parcel : null,
 				isPaid: paid ? paid : false,
-				paidAt: paid && today
+				paidAt: paid ? today : null
 			})
 		);
 
 		set_loading_payment(false);
+		// empty_cart();
+		dimminish_stock();
+		promo_code_used();
 		props.history.push('/secure/glow/orders?page=1?limit=10');
-		empty_cart();
 		// if (promo_code) {
 		// 	await API_Products.promo_code_used(promo_code);
 		// }
-		cartItems.forEach(async (item) => {
-			if (item.finite_stock) {
-				const new_count = item.quantity - item.qty;
-				const { data: res } = await API_Products.update_stock(item.product, new_count);
-			}
-		});
-		if (promo_code) {
-			const { data } = await API_Promos.get_promo(promo_code.toLowerCase());
-			console.log({ data });
-			if (data.single_use) {
-				await API_Promos.promo_code_used(promo_code.toLowerCase());
-			}
-		}
+		// cartItems.forEach(async (item) => {
+		// 	if (item.finite_stock) {
+		// 		const new_count = item.quantity - item.qty;
+		// 		const { data: res } = await API_Products.update_stock(item.product, new_count);
+		// 	}
+		// });
+		// if (promo_code) {
+		// 	const { data } = await API_Promos.get_promo(promo_code.toLowerCase());
+		// 	console.log({ data });
+		// 	if (data.single_use) {
+		// 		await API_Promos.promo_code_used(promo_code.toLowerCase());
+		// 	}
+		// }
 		sessionStorage.removeItem('shippingAddress');
 	};
 
@@ -408,23 +411,9 @@ const PlaceOrderPage = (props) => {
 		);
 
 		props.history.push('/secure/glow/orders?page=1?limit=10');
-		empty_cart();
-		// if (promo_code) {
-		// 	await API_Products.promo_code_used(promo_code);
-		// }
-		cartItems.forEach(async (item) => {
-			if (item.finite_stock) {
-				const new_count = item.quantity - item.qty;
-				const { data: res } = await API_Products.update_stock(item.product, new_count);
-			}
-		});
-		if (promo_code) {
-			const { data } = await API_Promos.get_promo(promo_code.toLowerCase());
-			console.log({ data });
-			if (data.single_use) {
-				await API_Promos.promo_code_used(promo_code.toLowerCase());
-			}
-		}
+		// empty_cart();
+		dimminish_stock();
+		promo_code_used();
 		sessionStorage.removeItem('shippingAddress');
 	};
 
@@ -440,15 +429,9 @@ const PlaceOrderPage = (props) => {
 			let clean = true;
 			if (clean) {
 				if (successPay && order) {
-					// props.history.push('/secure/checkout/paymentcomplete/' + order._id);
-					props.history.push('/pages/complete/order/' + order._id);
-					// if (userInfo && userInfo.first_name) {
-					// 	props.history.push('/secure/checkout/order/receipt/' + order._id + '/order/true');
-					// } else {
-					// 	props.history.push('/checkout/order/receipt/' + order._id + '/order/true');
-					// }
+					// props.history.push('/pages/complete/order/' + order._id);
 					set_loading_payment(false);
-					empty_cart();
+					// empty_cart();
 				} else if (error_pay) {
 				}
 			}

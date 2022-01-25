@@ -129,6 +129,7 @@ export default {
 		}
 	},
 	create_orders_s: async (body: any) => {
+		console.log({ body });
 		try {
 			return await order_db.create_orders_db(body);
 		} catch (error) {

@@ -105,7 +105,6 @@ const CartItem = (props) => {
 					<label aria-label="Sort" htmlFor="sort" className="select-label mr-1rem">
 						Qty:
 					</label>
-					{console.log({ qty: props.item.quantity })}
 					{props.show_qty ? (
 						<div className="custom-select">
 							<select

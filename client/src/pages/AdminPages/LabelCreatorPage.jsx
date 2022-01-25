@@ -267,7 +267,7 @@ const LabelCreatorPage = (props) => {
 
 	const update_google_shipping = (shipping, type) => {
 		console.log({ shipping });
-
+		console.log({ to_shipping, from_shipping });
 		const street_number = shipping.address_components.filter((comp) => comp.types.includes('street_number'))[0];
 		const address = shipping.address_components.filter((comp) => comp.types.includes('route'))[0];
 		const address_1 = `${street_number.long_name} ${address.short_name}`;
@@ -298,6 +298,7 @@ const LabelCreatorPage = (props) => {
 				international: country.short_name !== 'US' ? true : false
 			});
 		}
+		console.log({ to_shipping, from_shipping });
 
 		// set_address_1(address_1);
 		// setCity(city.long_name);
