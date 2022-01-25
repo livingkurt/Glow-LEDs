@@ -155,6 +155,16 @@ const OrdersPage = (props) => {
 	// 		history.push(`/secure/glow/emails/order/${order._id}/order/false`);
 	// 	}
 	// };
+
+	const send_paid_email = async (order_id) => {
+		const { data: order } = await API_Orders.findById_orders_a(order_id);
+		await API_Emails.send_order_email(order, 'Your Glow LEDs Order', order.shipping.email);
+		await API_Emails.send_order_email(
+			order,
+			'New Order Created by ' + order.shipping.first_name,
+			'info.glowleds@gmail.com'
+		);
+	};
 	const update_order_payment_state = (order, state, is_action) => {
 		if (state) {
 			set_order_state({ ...order_state, [is_action]: false });
@@ -162,7 +172,7 @@ const OrdersPage = (props) => {
 		} else {
 			set_order_state({ ...order_state, [is_action]: true });
 			dispatch(update_payment(order, true, payment_method));
-			// send_email('paid'));
+			send_paid_email(order._id);
 		}
 		setTimeout(() => {
 			dispatch(listOrders({ category, search, sort, page, limit }));
