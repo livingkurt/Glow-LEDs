@@ -67,8 +67,12 @@ const OrderPage = (props) => {
 
 	const update_refund_state = (amount) => {
 		set_loading_label(true);
-		dispatch(refundOrder(order, true, parseFloat(amount).toFixed(2), refund_reason));
-		set_refund_state(true);
+		const confirm = window.confirm('Are you sure you want to Refund this Order?');
+		if (confirm) {
+			dispatch(refundOrder(order, true, parseFloat(amount).toFixed(2), refund_reason));
+			set_refund_state(true);
+		}
+
 		set_loading_label(false);
 	};
 
