@@ -320,7 +320,6 @@ const PlaceOrderPage = (props) => {
 		set_loading_payment(true);
 		dimminish_stock();
 		promo_code_used();
-		empty_cart();
 		sessionStorage.removeItem('shippingAddress');
 	};
 
@@ -429,9 +428,9 @@ const PlaceOrderPage = (props) => {
 			let clean = true;
 			if (clean) {
 				if (successPay && order) {
-					// props.history.push('/pages/complete/order/' + order._id);
+					props.history.push('/pages/complete/order/' + order._id);
 					set_loading_payment(false);
-					// empty_cart();
+					empty_cart();
 				} else if (error_pay) {
 				}
 			}
