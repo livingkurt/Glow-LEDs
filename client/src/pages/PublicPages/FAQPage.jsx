@@ -526,7 +526,7 @@ const FAQPage = () => {
 
 								<ul className="paragraph_font" style={{ padding: '18px', marginBottom: 0 }}>
 									<li>
-										Glow-LEDs.com is headquartered in Austin, Texas{' '}
+										Glow-LEDs.com is headquartered in Baytown, Texas{' '}
 										<span aria-label="emoji" role="img" style={{ marginRight: '3px' }}>
 											🇨🇱
 										</span>️ and orders are processed as they are received{' '}

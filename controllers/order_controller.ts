@@ -1,4 +1,5 @@
 import { consoleLogFn } from '@scout_apm/scout-apm/dist/lib/types';
+import invoice from '../email_templates/pages/invoice';
 import { order_services } from '../services';
 
 export default {
@@ -236,18 +237,14 @@ export default {
 			console.log({ income_orders_c_error: error });
 			res.status(500).send({ error, message: 'Error Deleting Order' });
 		}
+	},
+	invoice_orders_c: async (req: any, res: any) => {
+		const { body } = req;
+		try {
+			return res.status(200).send(invoice(body));
+		} catch (error) {
+			console.log({ invoice_orders_c_error: error });
+			res.status(500).send({ error, message: 'Error Deleting Order' });
+		}
 	}
-	// yearly_income_orders_c: async (req: any, res: any) => {
-	// 	const { params } = req;
-	// 	try {
-	// 		const orders = await order_services.yearly_income_orders_s(params);
-	// 		if (orders) {
-	// 			return res.status(200).send(orders);
-	// 		}
-	// 		return res.status(500).send({ message: 'Error Deleting Order' });
-	// 	} catch (error) {
-	// 		console.log({ yearly_income_orders_c_error: error });
-	// 		res.status(500).send({ error, message: 'Error Deleting Order' });
-	// 	}
-	// }
 };

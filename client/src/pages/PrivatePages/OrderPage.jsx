@@ -281,7 +281,7 @@ const OrderPage = (props) => {
 		set_loading_label(true);
 		const { data } = await API_Shipping.create_label(order, order.shipping.shipping_rate);
 		// show_label(data.postage_label.label_url);
-		print_invoice(data.postage_label.label_url);
+		print_label(data.postage_label.label_url);
 		console.log({ data });
 		if (data) {
 			set_loading_label(false);
@@ -297,7 +297,7 @@ const OrderPage = (props) => {
 		set_loading_label(true);
 		const { data } = await API_Shipping.create_return_label(order, order.shipping.shipping_rate);
 		// show_label(data.postage_label.label_url);
-		print_invoice(data.postage_label.label_url);
+		print_label(data.postage_label.label_url);
 		console.log({ data });
 		if (data) {
 			set_loading_label(false);
@@ -317,8 +317,10 @@ const OrderPage = (props) => {
 		set_loading_label(true);
 		console.log({ shipment_id: order.shipping.shipment_id, shipping_rate: order.shipping.shipping_rate });
 		const { data } = await API_Shipping.buy_label(order.shipping.shipment_id, order.shipping.shipping_rate);
+		const { data: invoice } = await API_Orders.get_invoice(order);
 		// show_label(data.postage_label.label_url);
-		print_invoice(data.postage_label.label_url);
+		print_label(data.postage_label.label_url);
+		print_invoice(invoice);
 		if (data) {
 			set_loading_label(false);
 		}
@@ -327,22 +329,45 @@ const OrderPage = (props) => {
 		console.log(request);
 		dispatch(detailsOrder(props.match.params.id));
 		// history.push('/secure/glow/emails/invoice/' + order._id);
-		history.push({
-			pathname: '/secure/glow/emails/invoice/' + order._id,
-			previous_path: props.location.previous_path
-		});
+		// history.push({
+		// 	pathname: '/secure/glow/emails/invoice/' + order._id,
+		// 	previous_path: props.location.previous_path
+		// });
+	};
+
+	const print_invoice = (contents) => {
+		// const contents = document.getElementById(id).innerHTML;
+		const frame1 = document.createElement('iframe');
+		frame1.name = 'frame1';
+		frame1.style.position = 'absolute';
+		frame1.style.top = '-1000000px';
+		document.body.appendChild(frame1);
+		const frameDoc = frame1.contentWindow
+			? frame1.contentWindow
+			: frame1.contentDocument.document ? frame1.contentDocument.document : frame1.contentDocument;
+		frameDoc.document.open();
+		frameDoc.document.write('</head><body>');
+		frameDoc.document.write(contents);
+		frameDoc.document.write('</body></html>');
+		frameDoc.document.close();
+		setTimeout(function() {
+			window.frames['frame1'].focus();
+			window.frames['frame1'].print();
+			document.body.removeChild(frame1);
+		}, 500);
+		return false;
 	};
 
 	const view_label = async () => {
 		// show_label(order.shipping.shipping_label.postage_label.label_url);
-		print_invoice(order.shipping.shipping_label.postage_label.label_url);
+		print_label(order.shipping.shipping_label.postage_label.label_url);
 	};
 	const view_return_label = async () => {
 		// show_label(order.shipping.shipping_label.postage_label.label_url);
-		print_invoice(order.shipping.return_shipping_label.postage_label.label_url);
+		print_label(order.shipping.return_shipping_label.postage_label.label_url);
 	};
 
-	const print_invoice = (content) => {
+	const print_label = (content) => {
 		// const content = document.getElementById(id).innerHTML;
 		const frame1 = document.createElement('iframe');
 		frame1.name = 'frame1';
@@ -430,7 +455,7 @@ const OrderPage = (props) => {
 	const buy_new_speed_label = async () => {
 		set_loading_label(true);
 		const { data } = await API_Shipping.buy_label(order.shipping.shipment_id, shipping_rate);
-		print_invoice(data.postage_label.label_url);
+		print_label(data.postage_label.label_url);
 		if (data) {
 			set_loading_label(false);
 		}
@@ -448,11 +473,11 @@ const OrderPage = (props) => {
 	const address = {
 		first_name: 'Kurt',
 		last_name: 'LaVacque',
-		address_1: '404 Kenniston Dr',
+		address_1: '230 Hackberry St',
 		address_2: 'Apt D',
-		city: 'Austin',
+		city: 'Baytown',
 		state: 'Texas',
-		postalCode: '78752',
+		postalCode: '77520',
 		country: 'United States',
 		phone: '906-284-2208',
 		email: 'info.glowleds@gmail.com',

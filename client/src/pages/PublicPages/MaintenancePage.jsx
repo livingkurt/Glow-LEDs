@@ -82,8 +82,8 @@ const MaintenancePage = (props) => {
 				</div>
 				<p className="p_descriptions" style={{ textAlign: 'center' }}>
 					Here at Glow-LEDs.com we strive to bring as much light in to as many lives as possible. All items
-					are handmade at my home in Austin, TX and all ideas came from my own brain. Our items were dreamt up
-					with the intention of turning your home into a glowing rainbow dreamland with infinite hours of
+					are handmade at my home in Baytown, TX and all ideas came from my own brain. Our items were dreamt
+					up with the intention of turning your home into a glowing rainbow dreamland with infinite hours of
 					entertainment. You don’t need a party to enjoy our products (although parties are definitely
 					encouraged). The beautiful colors have the ability to turn your home into the next best festival or
 					into a relaxing retreat, you decide.

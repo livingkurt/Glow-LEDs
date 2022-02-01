@@ -244,7 +244,7 @@ const ResetPasswordEmail = () => {
 								}}
 							/>
 							<p style={{ textAlign: 'center', fontSize: '14px', color: 'white' }}>
-								Our mailing address is: <br />404 Kenniston Dr Apt D, Austin, TX 78752{' '}
+								Our mailing address is: <br />230 Hackberry St, Baytown, TX 77520{' '}
 							</p>
 							<p style={{ textAlign: 'center', fontSize: '14px', color: 'white' }}>
 								If you have any questions or concerns <br /> You can visit our {' '}

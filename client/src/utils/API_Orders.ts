@@ -11,6 +11,9 @@ const order_routes = {
 	findById_orders_a: (order_id: string) => {
 		return axios.get('/api/orders/guest/' + order_id);
 	},
+	get_invoice: (order: object) => {
+		return axios.get('/api/orders/guest/' + order);
+	},
 	top_customers: () => {
 		return axios.get('/api/orders/top_customers');
 	},

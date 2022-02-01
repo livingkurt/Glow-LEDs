@@ -33,11 +33,11 @@ export default {
 				country: order.shipping.country
 			});
 			const fromAddress = new EasyPost.Address({
-				street1: '404 Kenniston Dr',
+				street1: '230 Hackberry St',
 				street2: 'Apt D',
-				city: 'Austin',
+				city: 'Baytown',
 				state: 'TX',
-				zip: '78752',
+				zip: '77520',
 				country: 'United States',
 				company: 'Glow LEDs',
 				phone: '906-284-2208',
@@ -181,11 +181,11 @@ export default {
 				country: order.shipping.country
 			});
 			const fromAddress = new EasyPost.Address({
-				street1: '404 Kenniston Dr',
+				street1: '230 Hackberry St',
 				street2: 'Apt D',
-				city: 'Austin',
+				city: 'Baytown',
 				state: 'TX',
-				zip: '78752',
+				zip: '77520',
 				country: 'United States',
 				company: 'Glow LEDs',
 				phone: '906-284-2208',
@@ -324,11 +324,11 @@ export default {
 			const order = body.order;
 
 			const toAddress = new EasyPost.Address({
-				street1: '404 Kenniston Dr',
+				street1: '230 Hackberry St',
 				street2: 'Apt D',
-				city: 'Austin',
+				city: 'Baytown',
 				state: 'TX',
-				zip: '78752',
+				zip: '77520',
 				country: 'United States',
 				company: 'Glow LEDs',
 				phone: '906-284-2208',
@@ -463,11 +463,11 @@ export default {
 // 	country: order.shipping.country
 // });
 // const fromAddress = new EasyPost.Address({
-// 	street1: '404 Kenniston Dr',
+// 	street1: '230 Hackberry St',
 // 	street2: 'Apt D',
-// 	city: 'Austin',
+// 	city: 'Baytown',
 // 	state: 'TX',
-// 	zip: '78752',
+// 	zip: '77520',
 // 	country: 'United States',
 // 	company: 'Glow LEDs',
 // 	phone: '906-284-2208',
@@ -618,11 +618,11 @@ export default {
 // const order = req.body.order;
 
 // const toAddress = new EasyPost.Address({
-// 	street1: '404 Kenniston Dr',
+// 	street1: '230 Hackberry St',
 // 	street2: 'Apt D',
-// 	city: 'Austin',
+// 	city: 'Baytown',
 // 	state: 'TX',
-// 	zip: '78752',
+// 	zip: '77520',
 // 	country: 'United States',
 // 	company: 'Glow LEDs',
 // 	phone: '906-284-2208',
@@ -708,11 +708,11 @@ export default {
 // 	country: order.shipping.country
 // });
 // const fromAddress = new EasyPost.Address({
-// 	street1: '404 Kenniston Dr',
+// 	street1: '230 Hackberry St',
 // 	street2: 'Apt D',
-// 	city: 'Austin',
+// 	city: 'Baytown',
 // 	state: 'TX',
-// 	zip: '78752',
+// 	zip: '77520',
 // 	country: 'United States',
 // 	company: 'Glow LEDs',
 // 	phone: '906-284-2208',

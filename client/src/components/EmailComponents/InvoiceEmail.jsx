@@ -129,8 +129,8 @@ const InvoiceEmail = (props) => {
 									<tr>
 										<td valign="top">
 											Glow LEDs<br />
-											404 Kenniston Dr<br />
-											Austin, TX 78752<br />
+											230 Hackberry St<br />
+											Baytown, TX 77520<br />
 											info.glowleds@gmail.com
 										</td>
 
@@ -675,6 +675,7 @@ const InvoiceEmail = (props) => {
 	);
 
 	const email_template = ReactDOMServer.renderToStaticMarkup(jsx);
+	console.log({ email_template });
 
 	const print_invoice = (id) => {
 		const contents = document.getElementById(id).innerHTML;

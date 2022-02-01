@@ -25,7 +25,7 @@ export default (props: any) => {
           <p style="font-size:16px;line-height:30px;max-width:800px;width:100%;margin:20px auto;color:white;">Here at
             Glow LEDs
             we offer a wide variety of Gloving and Flow Art accessories. Including EXO
-            Diffusers, Glow Casings and our most popular product Glowskins! We are based in Austin, TX ran by a
+            Diffusers, Glow Casings and our most popular product Glowskins! We are based in Baytown, TX ran by a
             small team of people that are dedicated to creating new and innovative technology for flow artists
             everywhere. The majority of our products are made by hand to order, so you know you're getting a
             quality product every time! If you have an idea you want us to try please do not hesitate to reach

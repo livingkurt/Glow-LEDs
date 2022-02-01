@@ -1,4 +1,4 @@
-# GlowLEDs
+# Glow LEDs
 
 <p align="center">
   <img style="text-align: center;" src="./client/public/images/optimized_images/logo_images/glow_logo_optimized.png">

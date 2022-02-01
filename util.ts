@@ -558,6 +558,21 @@ export const determin_card_logo = (card_type: string) => {
 			return `<i class="fab fa-cc-discover" />`;
 	}
 };
+
+export const determin_card_logo_images = (card_type: any) => {
+	switch (card_type) {
+		case 'amex':
+			return 'https://thumbs2.imgbox.com/c9/a5/0AsOySyq_b.png';
+		case 'visa':
+			return 'https://images2.imgbox.com/73/a0/efpzYR25_o.png';
+		case 'mastercard':
+			return 'https://images2.imgbox.com/63/92/Z3KHgTl4_o.png';
+		case 'discover':
+			return 'https://images2.imgbox.com/96/cd/hXyv0MRB_o.png';
+		default:
+			return;
+	}
+};
 const determine_preorder = (product: any) => {
 	if (product.preorder) {
 		return true;

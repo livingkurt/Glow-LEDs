@@ -502,8 +502,8 @@ const AccountCreatedEmail = () => {
 																	color: 'white'
 																}}
 															>
-																Our mailing address is: <br />404 Kenniston Dr Apt D,
-																Austin, TX 78752{' '}
+																Our mailing address is: <br />230 Hackberry St, Baytown,
+																TX 77520{' '}
 															</p>
 															<p
 																style={{
