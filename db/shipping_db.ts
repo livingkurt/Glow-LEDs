@@ -30,7 +30,6 @@ export default {
 			});
 			const fromAddress = new EasyPost.Address({
 				street1: '230 Hackberry St',
-				street2: 'Apt D',
 				city: 'Baytown',
 				state: 'TX',
 				zip: '77520',
@@ -185,7 +184,6 @@ export default {
 
 			const toAddress = new EasyPost.Address({
 				street1: '230 Hackberry St',
-				street2: 'Apt D',
 				city: 'Baytown',
 				state: 'TX',
 				zip: '77520',
@@ -275,7 +273,6 @@ export default {
 			});
 			const fromAddress = new EasyPost.Address({
 				street1: '230 Hackberry St',
-				street2: 'Apt D',
 				city: 'Baytown',
 				state: 'TX',
 				zip: '77520',

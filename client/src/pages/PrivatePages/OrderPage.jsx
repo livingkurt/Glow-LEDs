@@ -474,7 +474,6 @@ const OrderPage = (props) => {
 		first_name: 'Kurt',
 		last_name: 'LaVacque',
 		address_1: '230 Hackberry St',
-		address_2: 'Apt D',
 		city: 'Baytown',
 		state: 'Texas',
 		postalCode: '77520',
