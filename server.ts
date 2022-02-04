@@ -15,6 +15,7 @@ const expressAttack = require('express-attack');
 const requestIp = require('request-ip');
 const scout = require('@scout_apm/scout-apm');
 const express = require('express');
+const fs = require('fs');
 
 // The "main" function
 async function start() {
@@ -88,6 +89,24 @@ async function start() {
 		console.log('Server started at http://localhost:5000');
 	});
 
+	app.post('/api/gcode', async (req: any, res: any) => {
+		try {
+			const filename = req.body.filename;
+			const data = req.body.gcode;
+			fs.writeFile(
+				`/Volumes/macOS Data/Users/kurtlavacque/Documents/3D Printing/Projects/Printed/Glow LEDs/${filename}`,
+				data,
+				(err: any) => {
+					if (err) throw err;
+					console.log('Gcode Continous File Created');
+					res.send('Gcode Continous File Created');
+				}
+			);
+		} catch (err) {
+			console.log(err);
+		}
+	});
+
 	// Start express
 	app.start();
 }
@@ -96,118 +115,3 @@ async function start() {
 if (require.main === module) {
 	start();
 }
-
-// require('newrelic');
-// export {};
-// import sslRedirect from 'heroku-ssl-redirect';
-// import express from 'express';
-// import path from 'path';
-// import mongoose from 'mongoose';
-// import routes from './routes';
-// import template_routes from './email_templates/template_routes';
-// const config = require('./config');
-// const cors = require('cors');
-// require('dotenv').config();
-// const passport = require('passport');
-// const compression = require('compression');
-// const expressAttack = require('express-attack');
-// const requestIp = require('request-ip');
-// const scout = require('@scout_apm/scout-apm');
-
-// // const allowCrossDomain = function(req: any, res: any, next: any) {
-// // 	res.header('Access-Control-Allow-Origin', '*');
-// // 	res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-// // 	res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
-
-// // 	// intercept OPTIONS method
-// // 	if ('OPTIONS' == req.method) {
-// // 		res.send(200);
-// // 	} else {
-// // 		next();
-// // 	}
-// // };
-
-// mongoose
-// 	.connect(config.RESTORED_MONGODB_URI, {
-// 		useNewUrlParser: true,
-// 		useUnifiedTopology: true,
-// 		useCreateIndex: true
-// 	})
-// 	.catch((error: { reason: any }) => console.log(error.reason));
-
-// // Initialize your express application
-
-// const app = express();
-
-// app.all('*', function(req, res, next) {
-// 	const origin = req.get('origin');
-// 	res.header('Access-Control-Allow-Origin', origin);
-// 	res.header('Access-Control-Allow-Headers', 'X-Requested-With');
-// 	res.header('Access-Control-Allow-Headers', 'Content-Type');
-// 	next();
-// });
-// app.use(allowCrossDomain);
-// app.use(cors());
-// app.use(express.json({ limit: '50mb' }));
-// app.use(express.urlencoded({ limit: '50mb' }));
-// // app.use(express.urlencoded({ extended: true }));
-// app.use(express.json());
-// app.use(compression());
-// app.use(sslRedirect());
-
-// // throttle request when given IP hit 50 times over 300 seconds
-// function throttleByIp(req: any) {
-// 	const clientIp = requestIp.getClientIp(req);
-
-// 	return {
-// 		key: clientIp,
-// 		limit: 200,
-// 		period: 60
-// 	};
-// }
-
-// app.use(
-// 	expressAttack({
-// 		throttles: [ throttleByIp ]
-// 	})
-// );
-// // Passport middleware
-// app.use(passport.initialize());
-
-// // Passport config
-// require('./passport')(passport);
-// // Bugsnag.notify(new Error('Test error'));
-
-// app.use(routes);
-// app.use('/api/templates', template_routes);
-
-// // app.use('/', htmlRoutes);
-// app.get('/api/config/paypal', (req, res) => {
-// 	res.send(config.PAYPAL_CLIENT_ID);
-// });
-
-// app.use((req, res, next) => {
-// 	const host = req.get('Host');
-// 	if (host === 'http://Glow-LEDs.com') {
-// 		return res.redirect(301, 'https://wwww.glow-leds.com/' + req.originalUrl);
-// 	}
-// 	if (host === 'Glow-LEDs.com') {
-// 		return res.redirect(301, 'https://wwww.glow-leds.com/' + req.originalUrl);
-// 	}
-// 	if (host === 'http://glow-leds.com') {
-// 		return res.redirect(301, 'https://wwww.glow-leds.com/' + req.originalUrl);
-// 	}
-// 	return next();
-// });
-
-// if (process.env.NODE_ENV === 'production') {
-// 	app.use(express.static('client/build'));
-// }
-
-// app.get('*', (request, response) => {
-// 	response.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-// });
-
-// app.listen(config.PORT, () => {
-// 	console.log('Server started at http://localhost:5000');
-// });

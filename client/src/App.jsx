@@ -90,7 +90,8 @@ import {
 	OrderCombinerPage,
 	EditChipPage,
 	EventsPage,
-	CompletePage
+	CompletePage,
+	GcodeContinousPage
 } from './pages/index';
 import { Header, Container, Content, Footer, Sidebar, Cart } from './components/ContainerComponents/index';
 import { AdminRoute, PrivateRoute } from './components/RouteComponents';
@@ -423,6 +424,7 @@ const App = (props) => {
 								path="/secure/glow/editproduct/:pathname?/:template?"
 								component={EditProductPage}
 							/>
+							<AdminRoute path="/secure/glow/gcode_continous" component={GcodeContinousPage} />
 							<AdminRoute path="/secure/glow/edit_all_data" component={EditAllDataPage} />
 							<AdminRoute path="/secure/glow/products" component={ProductsPage} />
 							<AdminRoute path="/secure/glow/create_label" component={LabelCreatorPage} />

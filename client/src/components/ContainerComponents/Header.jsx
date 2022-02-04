@@ -944,6 +944,9 @@ const Header = (props) => {
 											<Link to="/secure/glow/edit_all_data">
 												<button className="btn nav">Edit All Data</button>
 											</Link>
+											<Link to="/secure/glow/gcode_continous">
+												<button className="btn nav">Gcode Continous</button>
+											</Link>
 										</ul>
 									</div>
 								)}

@@ -23,7 +23,6 @@ export { default as ProductsPage } from './AdminPages/ListPages/ProductsPage';
 export { default as UsersPage } from './AdminPages/ListPages/UsersPage';
 
 export { default as ExpensesPage } from './AdminPages/ListPages/ExpensesPage';
-export {};
 
 export { default as AffiliatesPage } from './AdminPages/ListPages/AffiliatesPage';
 export { default as ChipsPage } from './AdminPages/ListPages/ChipsPage';
@@ -42,6 +41,7 @@ export { default as SettingsPage } from './AdminPages/ListPages/SettingsPage';
 export { default as PalettesPage } from './AdminPages/ListPages/PalettesPage';
 
 export { default as ControlPanelPage } from './AdminPages/ControlPanelPage';
+export { default as GcodeContinousPage } from './AdminPages/GcodeContinousPage';
 export { default as UserProfilePage } from './AdminPages/UserProfilePage';
 export { default as LabelCreatorPage } from './AdminPages/LabelCreatorPage';
 export { default as AdminChangePasswordPage } from './AdminPages/AdminChangePasswordPage';
