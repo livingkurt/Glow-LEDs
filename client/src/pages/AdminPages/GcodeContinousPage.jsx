@@ -143,18 +143,8 @@ function GcodeContinousPage() {
 
 	return (
 		<div className="m-auto">
-			<header className="p-1rem mb-2rem jc-b">
-				<div className="logo h-125px w-125px">
-					<img
-						className="zoom logo_s"
-						src="/images/optimized_images/logo_images/glow_logo_optimized.png"
-						alt="Glow LEDs Logo"
-						title="Big Logo"
-					/>
-				</div>
-				<h1 className="ta-c fs-50px ">Gcode Continous Printing</h1>
-				<div className="w-125px" />
-			</header>
+			<h2 className="ta-c fs-25px ">Gcode Continous Printing</h2>
+
 			<div>
 				<Loading loading={loading} />
 				<div className="column m-auto max-w-500px w-100per form">

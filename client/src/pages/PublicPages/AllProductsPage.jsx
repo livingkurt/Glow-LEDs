@@ -31,6 +31,7 @@ const AllProductsPage = (props) => {
 	const [ products, set_products ] = useState([]);
 	const [ chip, set_chip ] = useState('');
 	const [ page, set_page ] = useState(1);
+	const [ page_title, set_page_title ] = useState();
 	const [ hidden, set_hidden ] = useState(false);
 	const [ option, set_option ] = useState(false);
 	const [ limit, set_limit ] = useState(21);
@@ -126,6 +127,7 @@ const AllProductsPage = (props) => {
 		let page = '';
 		let option = false;
 		let collection = props.match.params.collection ? props.match.params.collection : '';
+		determine_page_name(category, subcategory, collection);
 		// prnt({ query });
 		if (category !== 'essentials' || category !== 'best_sellers') {
 			if (Object.keys(query).length > 0) {
@@ -263,19 +265,8 @@ const AllProductsPage = (props) => {
 		);
 	};
 
-	return (
-		<div>
-			<Helmet>
-				<title>{category ? humanize(category) : 'Products'} | Glow LEDs</title>
-				<meta property="og:title" content={category ? humanize(category) : 'Products'} />
-				<meta name="twitter:title" content={category ? humanize(category) : 'Products'} />
-				<link rel="canonical" href="https://www.glow-leds.com/collections/all/products" />
-				<meta property="og:url" content="https://www.glow-leds.com/collections/all/products" />
-				<meta name="description" content={description_determination(category)} />
-				<meta property="og:description" content={description_determination(category)} />
-				<meta name="twitter:description" content={description_determination(category)} />
-			</Helmet>
-			<Notification message={message} />
+	const determine_page_name = (category, subcategory, collection) => {
+		set_page_title(
 			<div className="jc-c">
 				<div className="row">
 					<h1 className="fs-25px mb-5px ta-c">
@@ -297,10 +288,26 @@ const AllProductsPage = (props) => {
 					</label>
 				</div>
 			</div>
+		);
+	};
+
+	return (
+		<div>
+			<Helmet>
+				<title>{category ? humanize(category) : 'Products'} | Glow LEDs</title>
+				<meta property="og:title" content={category ? humanize(category) : 'Products'} />
+				<meta name="twitter:title" content={category ? humanize(category) : 'Products'} />
+				<link rel="canonical" href="https://www.glow-leds.com/collections/all/products" />
+				<meta property="og:url" content="https://www.glow-leds.com/collections/all/products" />
+				<meta name="description" content={description_determination(category)} />
+				<meta property="og:description" content={description_determination(category)} />
+				<meta name="twitter:description" content={description_determination(category)} />
+			</Helmet>
+			<Notification message={message} />
+			{page_title}
 
 			<div className="jc-c ai-c wrap m-auto pb-1rem">
 				<Sort sortHandler={sortHandler} sort_options={sort_options} />
-				{/* {category === 'glowskins' && <Filter filterHandler={filterHandler} filter_options={chips_list} />} */}
 				<Filter filterHandler={filterHandler} filter_options={chips_list} />
 			</div>
 			<Loading loading={loading_products} />
