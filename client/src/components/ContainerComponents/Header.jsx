@@ -880,7 +880,7 @@ const Header = (props) => {
 								userInfo.isAdmin && (
 									<div className="dropdown ">
 										<button className="btn nav title_font">Admin</button>
-										<ul className="dropdown-content hover_fade_in w-152px">
+										<ul className="dropdown-content hover_fade_in w-180px">
 											<Link to="/secure/glow/controlpanel">
 												<button className="btn nav">Control Panel</button>
 											</Link>
@@ -945,7 +945,7 @@ const Header = (props) => {
 												<button className="btn nav">Edit All Data</button>
 											</Link>
 											<Link to="/secure/glow/gcode_continous">
-												<button className="btn nav">Gcode Continous</button>
+												<button className="btn nav">Gcode</button>
 											</Link>
 										</ul>
 									</div>

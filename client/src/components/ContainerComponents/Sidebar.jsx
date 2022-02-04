@@ -910,7 +910,7 @@ const Sidebar = (props) => {
 							</Link>
 							<Link to="/secure/glow/gcode_continous">
 								<button className="sidebar-btn secondary" onClick={closeMenu}>
-									Gcode Continous
+									Gcode
 								</button>
 							</Link>
 						</ul>

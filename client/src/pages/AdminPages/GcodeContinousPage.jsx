@@ -4,7 +4,7 @@ import { API_Content } from '../../utils';
 
 function GcodeContinousPage() {
 	const [ number_of_copies, set_number_of_copies ] = useState(2);
-	const [ gcode_name, set_gcode_name ] = useState('');
+	const [ gcode_name, set_gcode_name ] = useState([]);
 	const [ gcode_parts, set_gcode_parts ] = useState({});
 
 	const [ filename, set_filename ] = useState('');
@@ -37,9 +37,7 @@ function GcodeContinousPage() {
 		for (let index = 0; index < e.target.files.length; index++) {
 			const reader = new FileReader();
 			let text = [];
-			console.log(e.target.files[0]);
 			const file = e.target.files[index];
-			console.log({ file });
 			reader.onload = async (e) => {
 				text = e.target.result;
 				const gcode = text.split('\n');
@@ -86,7 +84,9 @@ function GcodeContinousPage() {
 
 			reader.readAsText(file);
 			set_filename(document.getElementById('file').files[0].name);
-			set_gcode_name(document.getElementById('file').files[0].name);
+			set_gcode_name((name) => {
+				return [ ...name, document.getElementById('file').files[index].name ];
+			});
 		}
 	};
 
@@ -129,9 +129,10 @@ function GcodeContinousPage() {
 		});
 		const gcode = array.join('\n');
 		const response = await API_Content.export_gcode(update_filename(filename), gcode);
-		console.log({ response });
-		set_loading(false);
-		set_status(`Created ${update_filename(filename)}`);
+		if (response) {
+			set_loading(false);
+			set_status(`Created ${update_filename(filename)}`);
+		}
 	};
 
 	const update_filename = (filename) => {
@@ -161,7 +162,8 @@ function GcodeContinousPage() {
 							/>
 						</label>
 					</div>
-					<label className="form-item">{gcode_name}</label>
+					{gcode_name.map((name) => <label className="form-item bg-secondary p-15px br-20px">{name}</label>)}
+
 					<div className="form-item">
 						<label className="mr-1rem w-50per fw-800">Number of Copies</label>
 						<input
