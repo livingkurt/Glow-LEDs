@@ -11,6 +11,7 @@ function GcodeContinousPage() {
 	const [ status, set_status ] = useState('');
 	const [ loading, set_loading ] = useState(false);
 	const [ color_change, set_color_change ] = useState(false);
+	const [ cascade, set_cascade ] = useState(false);
 
 	const remove_print = `G1 X105 Y195 Z50 F8000 ; Move up and back
   
@@ -90,12 +91,10 @@ function GcodeContinousPage() {
 		}
 	};
 
-	const create_new_gcode = async () => {
-		console.log({ gcode_parts });
-		set_loading(true);
-		let gcode_array = [ gcode_parts.file_1.beginning_1 ];
-		console.log(number_of_copies);
-		if (number_of_copies === 2) {
+	const gcode_placer = async (gcode_array, number_of_copies) => {
+		if (number_of_copies === 1) {
+			gcode_array = [ ...gcode_array, gcode_parts.file_1.middle_1, remove_print, gcode_parts.file_2.ending_2 ];
+		} else if (number_of_copies === 2) {
 			gcode_array = [
 				...gcode_array,
 				gcode_parts.file_1.middle_1,
@@ -128,18 +127,37 @@ function GcodeContinousPage() {
 			return item.join('\n');
 		});
 		const gcode = array.join('\n');
-		const response = await API_Content.export_gcode(update_filename(filename), gcode);
-		if (response) {
-			set_loading(false);
-			set_status(`Created ${update_filename(filename)}`);
+		if (number_of_copies !== 0) {
+			const response = await API_Content.export_gcode(update_filename(filename, number_of_copies), gcode);
+			if (response) {
+				set_loading(false);
+				set_status(`Created ${update_filename(filename, number_of_copies)}`);
+			}
 		}
 	};
 
-	const update_filename = (filename) => {
+	const update_filename = (filename, number_of_copies) => {
 		const removed = filename.slice(4);
 		const new_filename = `${number_of_copies}x ${removed}`;
 		console.log({ new_filename });
 		return new_filename;
+	};
+
+	const create_new_gcode = async (e) => {
+		e.preventDefault();
+		console.log({ gcode_parts });
+		set_loading(true);
+		let gcode_array = [ gcode_parts.file_1.beginning_1 ];
+		gcode_placer(gcode_array, number_of_copies);
+	};
+	const create_cascade_gcode = async (e) => {
+		e.preventDefault();
+		console.log({ gcode_parts });
+		set_loading(true);
+		let gcode_array = [ gcode_parts.file_1.beginning_1 ];
+		for (var i = 0; i <= number_of_copies; i += 2) {
+			gcode_placer(gcode_array, i);
+		}
 	};
 
 	return (
@@ -178,9 +196,26 @@ function GcodeContinousPage() {
 						}}
 					/>
 				</div>
+				{/* <div className="w-100per mb-2rem">
+					<label htmlFor="color_change">Cascade</label>
+					<input
+						type="checkbox"
+						name="color_change"
+						defaultChecked={color_change}
+						id="color_change"
+						onChange={(e) => {
+							set_cascade(e.target.checked);
+						}}
+					/>
+				</div> */}
 				<div className="form-item">
-					<button className="btn primary w-100per" onClick={() => create_new_gcode()}>
+					<button className="btn primary w-100per" onClick={(e) => create_new_gcode(e)}>
 						Make Continuous Gcode
+					</button>
+				</div>
+				<div className="form-item">
+					<button className="btn primary w-100per" onClick={(e) => create_cascade_gcode(e)}>
+						Make Cascade Continuous Gcode
 					</button>
 				</div>
 				{status && <label className="form-item btn secondary">{status}</label>}
