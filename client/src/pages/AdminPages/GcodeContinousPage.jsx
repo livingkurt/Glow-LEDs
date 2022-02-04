@@ -146,53 +146,45 @@ function GcodeContinousPage() {
 		<div className="m-auto">
 			<h2 className="ta-c fs-25px ">Gcode Continous Printing</h2>
 
-			<div>
-				<Loading loading={loading} />
-				<div className="column m-auto max-w-500px w-100per form">
-					<div className="form-item">
-						<label className="mr-1rem fw-800">Select Gcode</label>
-						<label className="btn primary">
-							<label className="">Choose gcode files</label>
-							<input
-								className="btn primary"
-								type="file"
-								id="file"
-								multiple
-								onChange={(e) => showFiles(e)}
-							/>
-						</label>
-					</div>
-					{gcode_name.map((name) => <label className="form-item bg-secondary p-15px br-20px">{name}</label>)}
-
-					<div className="form-item">
-						<label className="mr-1rem w-50per fw-800">Number of Copies</label>
-						<input
-							type="number"
-							className="w-50per"
-							defaultValue={number_of_copies}
-							onChange={(e) => set_number_of_copies(e.target.value)}
-						/>
-					</div>
-					<div className="w-100per mb-2rem">
-						<label htmlFor="color_change">Color Change</label>
-						<input
-							type="checkbox"
-							name="color_change"
-							defaultChecked={color_change}
-							id="color_change"
-							onChange={(e) => {
-								set_color_change(e.target.checked);
-							}}
-						/>
-					</div>
-					<div className="form-item">
-						<button className="btn primary w-100per" onClick={() => create_new_gcode()}>
-							Make Continuous Gcode
-						</button>
-					</div>
-					{status && <label className="form-item btn secondary">{status}</label>}
+			<Loading loading={loading} />
+			<form className="column m-auto max-w-500px w-100per form">
+				<div className="form-item">
+					<label className="mr-1rem fw-800">Select Gcode</label>
+					<label className="btn primary">
+						<label className="">Choose gcode files</label>
+						<input className="btn primary" type="file" id="file" multiple onChange={(e) => showFiles(e)} />
+					</label>
 				</div>
-			</div>
+				{gcode_name.map((name) => <label className="form-item bg-secondary p-15px br-20px">{name}</label>)}
+
+				<div className="form-item">
+					<label className="mr-1rem w-50per fw-800">Number of Copies</label>
+					<input
+						type="number"
+						className="w-50per"
+						defaultValue={number_of_copies}
+						onChange={(e) => set_number_of_copies(e.target.value)}
+					/>
+				</div>
+				<div className="w-100per mb-2rem">
+					<label htmlFor="color_change">Color Change</label>
+					<input
+						type="checkbox"
+						name="color_change"
+						defaultChecked={color_change}
+						id="color_change"
+						onChange={(e) => {
+							set_color_change(e.target.checked);
+						}}
+					/>
+				</div>
+				<div className="form-item">
+					<button className="btn primary w-100per" onClick={() => create_new_gcode()}>
+						Make Continuous Gcode
+					</button>
+				</div>
+				{status && <label className="form-item btn secondary">{status}</label>}
+			</form>
 		</div>
 	);
 }
