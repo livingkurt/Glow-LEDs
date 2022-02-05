@@ -4,15 +4,17 @@ import { Link, useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import { determine_tracking_number, determnine_link, format_date } from '../../utils/helper_functions';
-import { createOrder, deleteOrder, listOrders } from '../../actions/orderActions';
+import { createOrder, deleteOrder, detailsOrder, listOrders } from '../../actions/orderActions';
 import { LazyImage, Loading } from '../UtilityComponents';
 import { determine_product_name } from '../../utils/react_helper_functions';
 import { OrderStatusButtons } from './OrderPageComponents';
+import { API_Orders, API_Shipping } from '../../utils';
 
 const OrderListItem = ({ order, determine_color, admin, update_order_payment_state, update_order_state }) => {
 	const history = useHistory();
 	const dispatch = useDispatch();
 	const [ loading_label, set_loading_label ] = useState(false);
+	const [ hide_label_button, set_hide_label_button ] = useState(true);
 
 	const show_hide = (id) => {
 		const row = document.getElementById(id);
@@ -57,6 +59,92 @@ const OrderListItem = ({ order, determine_color, admin, update_order_payment_sta
 	const delete_order = () => {
 		dispatch(deleteOrder(order._id));
 		dispatch(listOrders({ limit: 10, page: 1 }));
+	};
+
+	const view_label = async () => {
+		// show_label(order.shipping.shipping_label.postage_label.label_url);
+		print_label(order.shipping.shipping_label.postage_label.label_url);
+	};
+
+	const print_label = (content) => {
+		// const content = document.getElementById(id).innerHTML;
+		const frame1 = document.createElement('iframe');
+		frame1.name = 'frame1';
+		frame1.style.position = 'absolute';
+		frame1.style.top = '-1000000px';
+		document.body.appendChild(frame1);
+		const frameDoc = frame1.contentWindow
+			? frame1.contentWindow
+			: frame1.contentDocument.document ? frame1.contentDocument.document : frame1.contentDocument;
+		frameDoc.document.open();
+		frameDoc.document.write('</head><body>');
+		frameDoc.document.write(`<div style="width: 100%;
+    display: flex;
+    height: 100%;
+    align-items: center;;">
+        <img style="margin: auto; text-align: center;" src="${content}" alt="label" />
+    </div>`);
+		frameDoc.document.write('</body></html>');
+		frameDoc.document.close();
+		setTimeout(function() {
+			window.frames['frame1'].focus();
+			window.frames['frame1'].print();
+			document.body.removeChild(frame1);
+		}, 500);
+		return false;
+	};
+
+	const get_invoice = async () => {
+		const { data: invoice } = await API_Orders.get_invoice(order);
+		console.log({ invoice });
+		print_invoice(invoice);
+	};
+
+	const print_invoice = (contents) => {
+		// const contents = document.getElementById(id).innerHTML;
+		const frame1 = document.createElement('iframe');
+		frame1.name = 'frame1';
+		frame1.style.position = 'absolute';
+		frame1.style.top = '-1000000px';
+		document.body.appendChild(frame1);
+		const frameDoc = frame1.contentWindow
+			? frame1.contentWindow
+			: frame1.contentDocument.document ? frame1.contentDocument.document : frame1.contentDocument;
+		frameDoc.document.open();
+		frameDoc.document.write('</head><body>');
+		frameDoc.document.write(contents);
+		frameDoc.document.write('</body></html>');
+		frameDoc.document.close();
+		setTimeout(function() {
+			window.frames['frame1'].focus();
+			window.frames['frame1'].print();
+			document.body.removeChild(frame1);
+		}, 500);
+		return false;
+	};
+
+	const buy_label = async () => {
+		set_loading_label(true);
+		console.log({ shipment_id: order.shipping.shipment_id, shipping_rate: order.shipping.shipping_rate });
+		const { data } = await API_Shipping.buy_label(order.shipping.shipment_id, order.shipping.shipping_rate);
+		const { data: invoice } = await API_Orders.get_invoice(order);
+		// show_label(data.postage_label.label_url);
+		print_label(data.postage_label.label_url);
+		print_invoice(invoice);
+		if (data) {
+			set_loading_label(false);
+		}
+		console.log({ tracking_code: data.tracking_code });
+		const request = await API_Shipping.add_tracking_number(order, data.tracking_code, data);
+		console.log(request);
+		// dispatch(detailsOrder(props.match.params.id));
+		set_hide_label_button(false);
+		dispatch(listOrders({}));
+		// history.push('/secure/glow/emails/invoice/' + order._id);
+		// history.push({
+		// 	pathname: '/secure/glow/emails/invoice/' + order._id,
+		// 	previous_path: props.location.previous_path
+		// });
 	};
 
 	return (
@@ -441,6 +529,20 @@ const OrderListItem = ({ order, determine_color, admin, update_order_payment_sta
 
 								<button className="btn secondary mv-5px" onClick={() => delete_order()}>
 									Delete Order
+								</button>
+								{hide_label_button &&
+								!order.shipping.shipping_label && (
+									<button className="btn primary mv-5px" onClick={() => buy_label()}>
+										Buy Label
+									</button>
+								)}
+								{order.shipping.shipping_label && (
+									<button className="btn secondary mv-5px" onClick={() => view_label()}>
+										Print Label
+									</button>
+								)}
+								<button className="btn secondary w-100per mv-5px " onClick={get_invoice}>
+									Print Invoice
 								</button>
 							</div>
 						</div>
