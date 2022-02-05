@@ -128,6 +128,30 @@ export default {
 		}
 	},
 
+	get_invoice_emails_c: async (req: any, res: any) => {
+		const body = {
+			email: {
+				h1: 'Thank you for your Order!',
+				h2: 'We are starting production on your order. We will notify your as your order progresses.'
+			},
+			order: req.body.order
+		};
+		const mailOptions = {
+			from: process.env.DISPLAY_EMAIL,
+			to: req.body.email,
+			subject: req.body.subject,
+			html: App({ body: order(body), title: 'Thank you for your purchase!' })
+		};
+		transporter.sendMail(mailOptions, (err, data) => {
+			if (err) {
+				console.log('Error Occurs', err);
+				res.status(500).send({ error: err, message: 'Error Sending Email' });
+			} else {
+				console.log('Email Sent to ' + req.body.email);
+				res.status(200).send({ message: 'Email Successfully Sent' });
+			}
+		});
+	},
 	send_order_emails_c: async (req: any, res: any) => {
 		const body = {
 			email: {

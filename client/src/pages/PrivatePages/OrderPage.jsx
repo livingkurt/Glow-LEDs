@@ -335,6 +335,12 @@ const OrderPage = (props) => {
 		// });
 	};
 
+	const get_invoice = async () => {
+		const { data: invoice } = await API_Orders.get_invoice(order);
+		console.log({ invoice });
+		print_invoice(invoice);
+	};
+
 	const print_invoice = (contents) => {
 		// const contents = document.getElementById(id).innerHTML;
 		const frame1 = document.createElement('iframe');
@@ -984,6 +990,19 @@ ${order.shipping.email}`)}
 							)}
 							{userInfo &&
 							userInfo.isAdmin && (
+								<button className="btn secondary w-100per mv-5px " onClick={get_invoice}>
+									{/* <Link
+										to={{
+											pathname: '/secure/glow/emails/invoice/' + order._id,
+											previous_path: props.location.previous_path
+										}}
+									> */}
+									Print Invoice
+									{/* </Link> */}
+								</button>
+							)}
+							{/* {userInfo &&
+							userInfo.isAdmin && (
 								<button className="btn secondary w-100per mv-5px ">
 									<Link
 										to={{
@@ -994,7 +1013,7 @@ ${order.shipping.email}`)}
 										View Invoice
 									</Link>
 								</button>
-							)}
+							)} */}
 							{userInfo &&
 							userInfo.isAdmin && (
 								<div>

@@ -12,7 +12,7 @@ const order_routes = {
 		return axios.get('/api/orders/guest/' + order_id);
 	},
 	get_invoice: (order: object) => {
-		return axios.get('/api/orders/guest/' + order);
+		return axios.put('/api/orders/invoice', order);
 	},
 	top_customers: () => {
 		return axios.get('/api/orders/top_customers');
