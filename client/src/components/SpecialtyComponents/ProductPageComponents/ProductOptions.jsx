@@ -73,31 +73,24 @@ const ProductOptions = ({
 		);
 	};
 
-	const determine_add_to_cart = (product, secondary_product, count_in_stock, out_of_stock, option_product_object) => {
-		// console.log({ out_of_stock });
+	const hide_add_to_cart = [
+		'Diffuser Caps + Adapters Starter Kit',
+		'Refresh Pack (6 Supreme Pairs + 120 Batteries)',
+		'Batman Decals',
+		'Outline + Slim Batman Decals',
+		'Nanoskins',
+		'Alt Novaskins w Nano Sleds',
+		'Nano Glow Casings'
+	];
+
+	const determine_add_to_cart = (product, secondary_product, count_in_stock, option_product_object) => {
 		console.log({ determine_add_to_cart: option_product_object });
 
-		if (product.name === 'Diffuser Caps + Adapters Starter Kit' && !secondary_product) {
-			return <div />;
-		} else if (product.name === 'Refresh Pack (6 Supreme Pairs + 120 Batteries)' && !secondary_product) {
-			return <div />;
-		} else if (product.name === 'Batman Decals' && !secondary_product) {
-			return <div />;
-		} else if (product.name === 'Outline + Slim Batman Decals' && !secondary_product) {
-			return <div />;
-		} else if (product.name === 'Nanoskins' && !secondary_product) {
-			return <div />;
-		} else if (product.name === 'Alt Novaskins w Nano Sleds' && !secondary_product) {
-			return <div />;
-		} else if (product.name === 'Nano Glow Casings' && !secondary_product) {
-			return <div />;
-		} else {
+		if (hide_add_to_cart.includes(product.name) && secondary_product) {
 			return (
-				<li>
-					<button className="btn primary bob" onClick={handleAddToCart}>
-						{determine_preorder(option_product_object, count_in_stock, 'Add To Cart')}
-					</button>
-				</li>
+				<button className="btn primary bob mt-10px" onClick={handleAddToCart}>
+					{determine_preorder(option_product_object, count_in_stock, 'Add To Cart')}
+				</button>
 			);
 		}
 	};
@@ -311,32 +304,32 @@ const ProductOptions = ({
 					</div>
 				</div>
 			</li>
-			<li>
-				<div className="mt-20px">
-					<h4 className="mb-0px mt-11px">Shipping Calculated at Checkout</h4>
-					<h4 className="mb-0px mt-11px" style={{ webkitTextStroke: '0.5px white' }}>
+			<li className="mb-0px">
+				<div className="">
+					<h4 className="mb-10px mt-10px">Shipping Calculated at Checkout</h4>
+					<h4 className="mb-0px mt-0px" style={{ webkitTextStroke: '0.5px white' }}>
 						{product.category === 'glow_strings' && '	This item ships in 6 - 10 business day.'}
 					</h4>
 
-					<h4 className="mb-0px mt-11px" style={{ webkitTextStroke: '0.5px white' }}>
+					<h4 className="mb-0px mt-0px" style={{ webkitTextStroke: '0.5px white' }}>
 						{(product.category === 'exo_diffusers' ||
 							product.category === 'diffusers' ||
 							product.category === 'diffuser_caps') &&
 							'	This item ships in 2 - 5 business day.'}
 					</h4>
-					<h4 className="mb-0px mt-11px" style={{ webkitTextStroke: '0.5px white' }}>
+					<h4 className="mb-0px mt-0px" style={{ webkitTextStroke: '0.5px white' }}>
 						{product.category === 'decals' && '	This item ships in 2 - 5 business day.'}
 					</h4>
-					<h4 className="mb-0px mt-11px" style={{ webkitTextStroke: '0.5px white' }}>
+					<h4 className="mb-0px mt-0px" style={{ webkitTextStroke: '0.5px white' }}>
 						{product.subcategory === 'whites' && '	This item ships in 2 - 3 business day.'}
 					</h4>
-					<h4 className="mb-0px mt-11px" style={{ webkitTextStroke: '0.5px white' }}>
+					<h4 className="mb-0px mt-0px" style={{ webkitTextStroke: '0.5px white' }}>
 						{(product.category === 'glowskins' || product.category === 'glow_casings') &&
 							'	This item ships in 3 - 7 business day.'}
 					</h4>
 				</div>
+				{determine_add_to_cart(product, secondary_product, count_in_stock, option_product_object)}
 			</li>
-			{determine_add_to_cart(product, secondary_product, count_in_stock, out_of_stock, option_product_object)}
 		</ul>
 	);
 };
