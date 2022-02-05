@@ -45,8 +45,36 @@ export default {
 										charge: result,
 										payment: req.body.paymentMethod
 									};
+									console.log({ first_pm: req.body.paymentMethod.id });
+									console.log({ second_pm: result.payment_method });
 
 									const updatedOrder = await order.save();
+									stripe.customers.create({
+										address: {
+											city: order.shipping.city,
+											country: order.shipping.country,
+											line1: order.shipping.address_1,
+											line2: order.shipping.address_2,
+											postal_code: order.shipping.postalCode,
+											state: order.shipping.state
+										},
+										email: order.shipping.email,
+										description: 'My First Test Customer (created for API docs)',
+										name: order.shipping.first_name + ' ' + order.shipping.last_name,
+										payment_method: req.body.paymentMethod.id,
+										shipping: {
+											address: {
+												city: order.shipping.city,
+												country: order.shipping.country,
+												line1: order.shipping.address_1,
+												line2: order.shipping.address_2,
+												postal_code: order.shipping.postalCode,
+												state: order.shipping.state
+											},
+											name: order.shipping.first_name + ' ' + order.shipping.last_name
+										}
+									});
+									console.log({ customer });
 									if (updatedOrder) {
 										res.send({ message: 'Order Paid.', order: updatedOrder });
 									} else {
