@@ -74,7 +74,6 @@ export default {
 											name: order.shipping.first_name + ' ' + order.shipping.last_name
 										}
 									});
-									console.log({ customer });
 									if (updatedOrder) {
 										res.send({ message: 'Order Paid.', order: updatedOrder });
 									} else {
