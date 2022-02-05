@@ -73,7 +73,8 @@ const OrdersPage = (props) => {
 		{ name: 'Packaged', color: '#6f5f7d' },
 		{ name: 'Shipped', color: '#636363' },
 		{ name: 'Delivered', color: '#333333' },
-		{ name: 'Priority', color: '#874d72' }
+		{ name: 'Priority', color: '#874d72' },
+		{ name: 'Label Created', color: '#3ca99a' }
 		// { name: 'Refunded', color: '#a9a9a9' }
 	];
 
@@ -88,11 +89,15 @@ const OrdersPage = (props) => {
 		if (order.shipping.shipping_rate && order.shipping.shipping_rate.service !== 'First') {
 			result = colors[6].color;
 		}
+
 		if (order.isManufactured) {
 			result = colors[2].color;
 		}
 		if (order.isPackaged) {
 			result = colors[3].color;
+		}
+		if (order.shipping.shipping_label) {
+			result = colors[7].color;
 		}
 		if (order.isShipped) {
 			result = colors[4].color;
