@@ -24,7 +24,8 @@ export default (props: any) => {
           <td colspan="2" valign="top">
             <table style="width:100%;line-height:inherit;text-align:left;font-size:25px" width="100%" align="left">
               <tr>
-                <td valign="top">Glow LEDs<br />230 Hackberry St<br />Baytown, TX 77520<br />info.glowleds@gmail.com</td>
+                <td valign="top">Glow LEDs<br />230 Hackberry St<br />Baytown, TX 77520<br />info.glowleds@gmail.com
+                </td>
                 <td style="text-align:right" valign="top" align="right">Mckinnley Riojas<br />2104 Collington Drive
                   <br />Roanoke, TX 76262<br />starstreamtut@gmail.com
                 </td>
@@ -116,100 +117,147 @@ export default (props: any) => {
         </tr>
       </tbody>
     </table>
+
     <table cellpadding="0" cellspacing="0" style="width:100%;line-height:inherit;text-align:left;font-size:25px"
       width="100%" align="left">
       <tbody>
         <tr>
-          <td colspan="2" style="padding:0" valign="top">
-            <table style="width:100%;line-height:inherit;text-align:left" width="100%" align="left">
-              <tr>
-                <td style="color:#333" valign="top"><img alt="Logo"
-                    src="https://images2.imgbox.com/cd/00/K5HGEKDJ_o.png" style="width:500px;margin-left:-5px" /></td>
-                <td style="text-align:right;font-size:25px" valign="top" align="right"><strong>Invoice #:</strong>
-                  61ef74b018e233b38fb278b6<br /><strong>Created:</strong> 01/25/2022</td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-        <tr>
           <td colspan="2" valign="top">
             <table style="width:100%;line-height:inherit;text-align:left;font-size:25px" width="100%" align="left">
               <tr>
-                <td valign="top">Glow LEDs<br />230 Hackberry St<br />Baytown, TX 77520<br />info.glowleds@gmail.com</td>
-                <td style="text-align:right" valign="top" align="right">Mckinnley Riojas<br />2104 Collington Drive
-                  <br />Roanoke, TX 76262<br />starstreamtut@gmail.com
+                <td valign="top" style="width:50%;">
+                  <div style="padding:5px;vertical-align:top;text-align:left;display:flex" valign="top" align="right">
+                    <strong style="margin-right:3px">Promo Code: </strong>
+                  </div>
+                  <div style="padding:5px;vertical-align:top;text-align:left" valign="top" align="right"><strong
+                      style="margin-right:3px">Order Note: </strong> </div>
+                </td>
+                <td style="text-align:right; width:50%" valign="top" align="right">
+                  <table cellpadding="0" cellspacing="0"
+                    style="width:100%;line-height:inherit;text-align:left;font-size:25px" width="100%" align="left">
+                    <tbody>
+                      <tr>
+                        <td colspan="2" valign="top">
+                          <table style="width:100%;line-height:inherit;text-align:left;font-size:25px" width="100%"
+                            align="left">
+                            <tr>
+                              <td valign="top">
+                                <del style="color:red">
+                                  <div style="padding:5px;vertical-align:top;text-align:left;display:flex;color:black"
+                                    valign="top" align="right">Subtotal:</div>
+                                </del>
+
+                              </td>
+                              <td style="text-align:right; margin-right:3px;" valign="top" align="right">
+                                <del style="color:red">
+                                  <div style="padding:5px;vertical-align:top;text-align:right;color:black" valign="top"
+                                    align="right">$148.75
+                                  </div>
+                                </del>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td valign="top">
+                                <div
+                                  style="padding:5px;vertical-align:top;text-align:left;display:flex; margin-right:3px;"
+                                  valign="top" align="right">Discount:</div>
+
+                              </td>
+                              <td style="text-align:right; margin-right:3px;" valign="top" align="right">
+                                <div style="padding:5px;vertical-align:top;text-align:right" valign="top" align="right">
+                                  <div>-$37.19</div>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td valign="top">
+                                <div style="padding:5px;vertical-align:top;text-align:left" valign="top" align="right">
+                                  New Subtotal: </div>
+
+                              </td>
+                              <td style="text-align:right; margin-right:3px;" valign="top" align="right">
+                                <div style="padding:5px;vertical-align:top;text-align:right" valign="top" align="right">
+                                  <div>$111.56</div>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td valign="top">
+                                <div style="padding:5px;vertical-align:top;text-align:left" valign="top" align="right">
+                                  Tax: </div>
+
+                              </td>
+                              <td style="text-align:right; margin-right:3px;" valign="top" align="right">
+                                <div style="padding:5px;vertical-align:top;text-align:right" valign="top" align="right">
+                                  $6.97</div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td valign="top">
+                                <div style="padding:5px;vertical-align:top;text-align:left" valign="top" align="right">
+                                  Shipping: </div>
+
+                              </td>
+                              <td style="text-align:right; margin-right:3px;" valign="top" align="right">
+                                <div style="padding:5px;vertical-align:top;text-align:right" valign="top" align="right">
+                                  $9.90</div>
+                              </td>
+                            </tr>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <table cellpadding="0" cellspacing="0"
+                    style="width:100%;line-height:inherit;text-align:left;font-size:25px" width="100%" align="left">
+                    <tbody>
+                      <tr>
+                        <td colspan="2" valign="top">
+                          <table style="width:100%;line-height:inherit;text-align:left;font-size:25px" width="100%"
+                            align="left">
+                            <tr>
+
+                              <td>
+                                <div style="vertical-align:top;width:100%;margin-left:auto;border-top:1px solid black"
+                                  valign="top"></div>
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <table cellpadding="0" cellspacing="0"
+                    style="width:100%;line-height:inherit;text-align:left;font-size:25px" width="100%" align="left">
+                    <tbody>
+                      <tr>
+                        <td colspan="2" valign="top">
+                          <table style="width:100%;line-height:inherit;text-align:left;font-size:25px" width="100%"
+                            align="left">
+                            <tr>
+                              <td valign="top">
+                                <div style="padding:5px;vertical-align:top;text-align:left; font-weight:bold"
+                                  valign="top" align="right">
+                                  Total: </div>
+
+                              </td>
+                              <td style="text-align:right; margin-right:3px;" valign="top" align="right">
+                                <div style="padding:5px;vertical-align:top;text-align:right; font-weight:bold;"
+                                  valign="top" align="right">
+                                  $128.44</div>
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </td>
               </tr>
+
             </table>
           </td>
         </tr>
       </tbody>
     </table>
-    <div style="display:flex;justify-content:space-between">
-      <div style="width:50%">
-        <div style="vertical-align:top" valign="top"></div>
-        <div style="display:flex;flex-direction:column;justify-content:flex-end">
-          <div style="padding:5px;vertical-align:top;text-align:left;display:flex" valign="top" align="right"><strong
-              style="margin-right:3px">Promo Code: </strong> </div>
-          <div style="padding:5px;vertical-align:top;text-align:left" valign="top" align="right"><strong
-              style="margin-right:3px">Order Note: </strong> </div>
-        </div>
-      </div>
-      <div style="width:284px">
-        <div style="vertical-align:top" valign="top"></div>
-        <div><del style="color:red">
-            <div style="padding:5px;vertical-align:top;text-align:left;display:flex;color:black" valign="top"
-              align="right">Subtotal:</div>
-          </del>
-          <div style="padding:5px;vertical-align:top;text-align:left" valign="top" align="right">Discount:</div>
-          <div style="padding:5px;vertical-align:top;text-align:left" valign="top" align="right">New Subtotal:</div>
-          <div style="padding:5px;vertical-align:top;text-align:left" valign="top" align="right">Tax:</div>
-          <div style="padding:5px;vertical-align:top;text-align:left" valign="top" align="right">Shipping:</div>
-        </div>
-      </div>
-      <div style="width:259px">
-        <div style="vertical-align:top" valign="top"></div>
-        <div style="display:flex;flex-direction:column;justify-content:flex-end">
-          <div style="vertical-align:top;text-align:right;display:flex;margin-left:auto" valign="top" align="right">
-          </div><del style="color:red">
-            <div style="padding:5px;vertical-align:top;text-align:right;color:black" valign="top" align="right">$148.75
-            </div>
-          </del>
-          <div style="padding:5px;vertical-align:top;text-align:right" valign="top" align="right">
-            <div>-$37.19</div>
-          </div>
-          <div style="padding:5px;vertical-align:top;text-align:right" valign="top" align="right">
-            <div>$111.56</div>
-          </div>
-          <div style="padding:5px;vertical-align:top;text-align:right" valign="top" align="right">$6.97</div>
-          <div style="padding:5px;vertical-align:top;text-align:right" valign="top" align="right">$9.90</div>
-        </div>
-      </div>
-    </div>
-    <div style="vertical-align:top;width:50%;margin-left:auto;border-top:1px solid black" valign="top"></div>
-    <div style="display:flex;justify-content:space-between">
-      <div>
-        <div style="vertical-align:top" valign="top"></div>
-        <div style="display:flex;flex-direction:column;justify-content:flex-end">
-          <div style="padding-left:70px;vertical-align:top;text-align:left;width:135px;color:white;font-weight:bold"
-            valign="top" align="right"></div>
-        </div>
-      </div>
-      <div>
-        <div style="vertical-align:top" valign="top"></div>
-        <div style="display:flex;flex-direction:column;justify-content:flex-end">
-          <div style="padding:5px;vertical-align:top;text-align:left;width:11px;font-weight:bold" valign="top"
-            align="right">Total:</div>
-        </div>
-      </div>
-      <div>
-        <div style="vertical-align:top" valign="top"></div>
-        <div style="display:flex;flex-direction:column;justify-content:flex-end">
-          <div style="padding:5px;vertical-align:top;text-align:right;width:109px;font-weight:bold" valign="top"
-            align="right">$128.44</div>
-        </div>
-      </div>
-    </div>
     <div>
       <h3 style="text-align:center">Welcome to the Glow LEDs family!</h3>
       <div style="text-align:center">We are so happy to share our art with you.</div>

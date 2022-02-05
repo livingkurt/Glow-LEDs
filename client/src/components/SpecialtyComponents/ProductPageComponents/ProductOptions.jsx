@@ -84,8 +84,6 @@ const ProductOptions = ({
 	];
 
 	const determine_add_to_cart = (product, secondary_product, count_in_stock, option_product_object) => {
-		console.log({ determine_add_to_cart: option_product_object });
-
 		if (hide_add_to_cart.includes(product.name) && secondary_product) {
 			return (
 				<button className="btn primary bob mt-10px" onClick={handleAddToCart}>
