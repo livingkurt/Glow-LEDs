@@ -988,19 +988,7 @@ ${order.shipping.email}`)}
 									/>
 								</div>
 							)}
-							{userInfo &&
-							userInfo.isAdmin && (
-								<button className="btn secondary w-100per mv-5px " onClick={get_invoice}>
-									{/* <Link
-										to={{
-											pathname: '/secure/glow/emails/invoice/' + order._id,
-											previous_path: props.location.previous_path
-										}}
-									> */}
-									Print Invoice
-									{/* </Link> */}
-								</button>
-							)}
+
 							{/* {userInfo &&
 							userInfo.isAdmin && (
 								<button className="btn secondary w-100per mv-5px ">
@@ -1026,7 +1014,16 @@ ${order.shipping.email}`)}
 											/>
 											{order.shipping.shipping_label && (
 												<button className="btn secondary mv-5px" onClick={() => view_label()}>
-													View Label
+													Print Label
+												</button>
+											)}
+											{userInfo &&
+											userInfo.isAdmin && (
+												<button
+													className="btn secondary w-100per mv-5px "
+													onClick={get_invoice}
+												>
+													Print Invoice
 												</button>
 											)}
 											{hide_label_button &&
