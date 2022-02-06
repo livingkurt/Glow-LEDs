@@ -73,29 +73,64 @@ const ProductOptions = ({
 		);
 	};
 
-	const hide_add_to_cart = [
-		'Diffuser Caps + Adapters Starter Kit',
-		'Refresh Pack (6 Supreme Pairs + 120 Batteries)',
-		'Batman Decals',
-		'Outline + Slim Batman Decals',
-		'Nanoskins',
-		'Alt Novaskins w Nano Sleds',
-		'Nano Glow Casings'
-	];
+	// const hide_add_to_cart = [
+	// 	'Diffuser Caps + Adapters Starter Kit',
+	// 	'Refresh Pack (6 Supreme Pairs + 120 Batteries)',
+	// 	'Batman Decals',
+	// 	'Outline + Slim Batman Decals',
+	// 	'Nanoskins',
+	// 	'Alt Novaskins w Nano Sleds',
+	// 	'Nano Glow Casings',
+	// 	'Novaskins'
+	// ];
 
-	const determine_add_to_cart = (product, secondary_product, count_in_stock, option_product_object) => {
-		if (hide_add_to_cart.includes(product.name) && secondary_product) {
+	// const determine_add_to_cart = (product, secondary_product, count_in_stock, option_product_object) => {
+	// 	console.log({ hide_add_to_cart: hide_add_to_cart.includes(product.name) && secondary_product });
+	// 	if (hide_add_to_cart.includes(product.name) && secondary_product) {
+	// 		return <div />;
+	// 	} else {
+	// 		return (
+	// 			<button className="btn primary bob mt-10px" onClick={handleAddToCart}>
+	// 				{determine_preorder(option_product_object, count_in_stock, 'Add To Cart')}
+	// 			</button>
+	// 		);
+	// 	}
+	// };
+
+	const determine_add_to_cart = (product, secondary_product, count_in_stock, out_of_stock, option_product_object) => {
+		// console.log({ out_of_stock });
+		console.log({ determine_add_to_cart: option_product_object });
+
+		if (product.name === 'Diffuser Caps + Adapters Starter Kit' && !secondary_product) {
+			return <div />;
+		} else if (product.name === 'Refresh Pack (6 Supreme Pairs + 120 Batteries)' && !secondary_product) {
+			return <div />;
+		} else if (product.name === 'Batman Decals' && !secondary_product) {
+			return <div />;
+		} else if (product.name === 'Outline + Slim Batman Decals' && !secondary_product) {
+			return <div />;
+		} else if (product.name === 'Nanoskins' && !secondary_product) {
+			return <div />;
+		} else if (product.name === 'Alt Novaskins w Nano Sleds' && !secondary_product) {
+			return <div />;
+		} else if (product.name === 'Nano Glow Casings' && !secondary_product) {
+			return <div />;
+		} else if (product.name === 'Novaskins' && !secondary_product) {
+			return <div />;
+		} else {
 			return (
-				<button className="btn primary bob mt-10px" onClick={handleAddToCart}>
-					{determine_preorder(option_product_object, count_in_stock, 'Add To Cart')}
-				</button>
+				<li>
+					<button className="btn primary bob" onClick={handleAddToCart}>
+						{determine_preorder(option_product_object, count_in_stock, 'Add To Cart')}
+					</button>
+				</li>
 			);
 		}
 	};
 
 	const determine_preorder = (option_product_object, count_in_stock, text) => {
 		const choice = (num) => {
-			if (option_product_object.hasOwnProperty('count_in_stock')) {
+			if (option_product_object && option_product_object.hasOwnProperty('count_in_stock')) {
 				if (option_product_object.count_in_stock > num) {
 					return text;
 				} else {
