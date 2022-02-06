@@ -10,6 +10,7 @@ import { Loading, LoadingPayments } from '../../components/UtilityComponents';
 import { deleteOrder, listOrders, update_order, update_payment, refundOrder } from '../../actions/orderActions';
 import { API_Emails, API_Orders, API_Shipping } from '../../utils';
 import useClipboard from 'react-hook-clipboard';
+import iframe2image from 'iframe2image';
 import useWindowDimensions from '../../components/Hooks/windowDimensions';
 import { OrderStatusButtons } from '../../components/SpecialtyComponents/OrderPageComponents';
 
@@ -307,10 +308,10 @@ const OrderPage = (props) => {
 		console.log(request);
 		dispatch(detailsOrder(props.match.params.id));
 		// history.push('/secure/glow/emails/invoice/' + order._id);
-		history.push({
-			pathname: '/secure/glow/emails/invoice/' + order._id,
-			previous_path: props.location.previous_path
-		});
+		// history.push({
+		// 	pathname: '/secure/glow/emails/invoice/' + order._id,
+		// 	previous_path: props.location.previous_path
+		// });
 	};
 
 	const buy_label = async () => {
@@ -372,7 +373,86 @@ const OrderPage = (props) => {
 		// show_label(order.shipping.shipping_label.postage_label.label_url);
 		print_label(order.shipping.return_shipping_label.postage_label.label_url);
 	};
+	// 	const download_return_label = async () => {
+	// 		// show_label(order.shipping.shipping_label.postage_label.label_url);
+	// 		print_label(order.shipping.return_shipping_label.postage_label.label_url);
+	// 		var canvas = document.getElementById('canvas'),
+	//     context = canvas.getContext('2d');
+	// canvas.width = 500;
+	// canvas.height = 600;
 
+	// // Grab the iframe
+	// var inner = document.getElementById('inner');
+
+	// // Get the image
+	// iframe2image(inner, function (err, img) {
+	//   // If there is an error, log it
+	//   if (err) { return console.error(err); }
+
+	//   // Otherwise, add the image to the canvas
+	//   context.drawImage(img, 0, 0);
+	// });
+	// 	};
+
+	// const download_return_label = (content) => {
+	// 	// // const content = document.getElementById(id).innerHTML;
+	// 	// const frame1 = document.createElement('iframe');
+	// 	// frame1.name = 'frame1';
+	// 	// frame1.style.position = 'absolute';
+	// 	// frame1.style.top = '-1000000px';
+	// 	// document.body.appendChild(frame1);
+	// 	// const frameDoc = frame1.contentWindow
+	// 	// 	? frame1.contentWindow
+	// 	// 	: frame1.contentDocument.document ? frame1.contentDocument.document : frame1.contentDocument;
+	// 	// frameDoc.document.open();
+	// 	// frameDoc.document.write('</head><body>');
+	// 	// frameDoc.document.write(`<div style="width: 100%;
+	// 	// display: flex;
+	// 	// height: 100%;
+	// 	// align-items: center;;">
+	// 	//     <img style="margin: auto; text-align: center;" src="${content}" alt="label" />
+	// 	// </div>`);
+	// 	// frameDoc.document.write('</body></html>');
+	// 	// frameDoc.document.close();
+	// 	// iframe2image(inner, function (err, img) {
+	// 	// 	// If there is an error, log it
+	// 	// 	if (err) { return console.error(err); }
+	// 	// 	// Otherwise, add the image to the canvas
+	// 	// 	context.drawImage(img, 0, 0);
+	// 	// });
+	// 	// // setTimeout(function() {
+	// 	// // 	window.frames['frame1'].focus();
+	// 	// // 	window.frames['frame1'].print();
+	// 	// // 	document.body.removeChild(frame1);
+	// 	// // }, 500);
+	// 	// return false;
+	// };
+
+	const [ fetching, setFetching ] = useState(false);
+	const [ error_img, set_error_img ] = useState(false);
+
+	const download_return_label = (url, name, e) => {
+		console.log({ url });
+		e.preventDefault();
+		if (!url) {
+			throw new Error('Resource URL not provided! You need to provide one');
+		}
+		setFetching(true);
+		fetch(url)
+			.then((response) => response.blob())
+			.then((blob) => {
+				setFetching(false);
+				const blobURL = URL.createObjectURL(blob);
+				const a = document.createElement('a');
+				a.href = blobURL;
+				a.style = 'display: none';
+
+				if (name && name.length) a.download = name;
+				document.body.appendChild(a);
+				a.click();
+			})
+			.catch(() => set_error_img(true));
+	};
 	const print_label = (content) => {
 		// const content = document.getElementById(id).innerHTML;
 		const frame1 = document.createElement('iframe');
@@ -1119,6 +1199,35 @@ ${order.shipping.email}`)}
 												>
 													View Return Label
 												</button>
+											)}
+											{/* {order.shipping.return_shipping_label && (
+												<button
+													className="btn secondary mv-5px w-100per"
+													onClick={(e) =>
+														download_return_label(
+															order.shipping.return_shipping_label.postage_label
+																.label_url,
+															'Return Label',
+															e
+														)}
+												>
+													Download Return Label
+												</button>
+											)} */}
+											{order.shipping.return_shipping_label && (
+												<a
+													href={order.shipping.return_shipping_label.postage_label.label_url}
+													style={{ width: '100%' }}
+													target="_blank"
+													rel="noreferrer"
+													download={
+														order.shipping.return_shipping_label.postage_label.label_url
+													}
+												>
+													<button className="btn secondary mv-5px w-100per">
+														Download Return Label
+													</button>
+												</a>
 											)}
 											<button
 												className="btn secondary mv-5px"
