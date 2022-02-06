@@ -285,6 +285,11 @@ const Header = (props) => {
 													<Link to="/collections/all/products/category/accessories/subcategory/stickers">
 														<button className="btn nav w-100per ta-l">Stickers</button>
 													</Link>
+													<Link to="/collections/all/products/custom_product_deposit">
+														<button className="btn nav w-100per ta-l">
+															Customize Any Product!
+														</button>
+													</Link>
 												</div>
 												<div className="nav-column">
 													<Link to="/pages/menu/gloving">

@@ -549,6 +549,11 @@ const Sidebar = (props) => {
 								On Sale
 							</button>
 						</Link>
+						<Link to="/collections/all/products/custom_product_deposit">
+							<button className="sidebar-btn secondary" onClick={closeMenu}>
+								Customize Any Product!
+							</button>
+						</Link>
 						{/* <Link to="/collections/all/products/glow_strings_v2_50_led_3_5m">
 							<button className="sidebar-btn secondary special_font gradient-btn" onClick={closeMenu}>
 								Glow Strings V2
