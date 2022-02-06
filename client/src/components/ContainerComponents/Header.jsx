@@ -880,72 +880,72 @@ const Header = (props) => {
 								userInfo.isAdmin && (
 									<div className="dropdown ">
 										<button className="btn nav title_font">Admin</button>
-										<ul className="dropdown-content hover_fade_in w-180px">
+										<ul className="dropdown-content hover_fade_in w-px">
 											<Link to="/secure/glow/controlpanel">
-												<button className="btn nav">Control Panel</button>
+												<button className="btn nav w-100per">Control Panel</button>
 											</Link>
 											<Link to="/secure/glow/orders?page=1?limit=10">
-												<button className="btn nav">Orders</button>
+												<button className="btn nav w-100per">Orders</button>
 											</Link>
 											<Link to="/secure/glow/products">
-												<button className="btn nav"> Products</button>
+												<button className="btn nav w-100per"> Products</button>
 											</Link>
 											<Link to="/secure/glow/users">
-												<button className="btn nav"> Users</button>
+												<button className="btn nav w-100per"> Users</button>
 											</Link>
 											<Link to="/secure/glow/expenses">
-												<button className="btn nav"> Expenses</button>
+												<button className="btn nav w-100per"> Expenses</button>
 											</Link>
 											<Link to="/secure/glow/features">
-												<button className="btn nav"> Features</button>
+												<button className="btn nav w-100per"> Features</button>
 											</Link>
 											<Link to="/secure/glow/paychecks">
-												<button className="btn nav"> Paychecks</button>
+												<button className="btn nav w-100per"> Paychecks</button>
 											</Link>
 											<Link to="/secure/glow/affiliates">
-												<button className="btn nav"> Affiliates</button>
+												<button className="btn nav w-100per"> Affiliates</button>
 											</Link>
 											<Link to="/secure/glow/teams">
-												<button className="btn nav"> Teams</button>
+												<button className="btn nav w-100per"> Teams</button>
 											</Link>
 											<Link to="/secure/glow/promos">
-												<button className="btn nav">Promos</button>
+												<button className="btn nav w-100per">Promos</button>
 											</Link>
 											<Link to="/secure/glow/carts">
-												<button className="btn nav">Carts</button>
+												<button className="btn nav w-100per">Carts</button>
 											</Link>
 											<Link to="/secure/glow/contents">
-												<button className="btn nav">Contents</button>
+												<button className="btn nav w-100per">Contents</button>
 											</Link>
 											<Link to="/secure/glow/emails">
-												<button className="btn nav">Emails</button>
+												<button className="btn nav w-100per">Emails</button>
 											</Link>
 											<Link to="/secure/glow/logs">
-												<button className="btn nav">Logs</button>
+												<button className="btn nav w-100per">Logs</button>
 											</Link>
 											<Link to="/secure/glow/chips">
-												<button className="btn nav">Chips</button>
+												<button className="btn nav w-100per">Chips</button>
 											</Link>
 											<Link to="/secure/glow/surveys">
-												<button className="btn nav">Surveys</button>
+												<button className="btn nav w-100per">Surveys</button>
 											</Link>
 											<Link to="/secure/glow/parcels">
-												<button className="btn nav">Parcels</button>
+												<button className="btn nav w-100per">Parcels</button>
 											</Link>
 											<Link to="/secure/glow/categorys">
-												<button className="btn nav">Categorys</button>
+												<button className="btn nav w-100per">Categorys</button>
 											</Link>
 											<Link to="/secure/glow/settings">
-												<button className="btn nav">Settings</button>
+												<button className="btn nav w-100per">Settings</button>
 											</Link>
 											<Link to="/secure/glow/palettes">
-												<button className="btn nav">Palettes</button>
+												<button className="btn nav w-100per">Palettes</button>
 											</Link>
 											<Link to="/secure/glow/edit_all_data">
-												<button className="btn nav">Edit All Data</button>
+												<button className="btn nav w-100per">Edit All Data</button>
 											</Link>
 											<Link to="/secure/glow/gcode_continous">
-												<button className="btn nav">Gcode</button>
+												<button className="btn nav w-100per">Gcode</button>
 											</Link>
 										</ul>
 									</div>
