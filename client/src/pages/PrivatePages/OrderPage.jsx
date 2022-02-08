@@ -10,7 +10,6 @@ import { Loading, LoadingPayments } from '../../components/UtilityComponents';
 import { deleteOrder, listOrders, update_order, update_payment, refundOrder } from '../../actions/orderActions';
 import { API_Emails, API_Orders, API_Shipping } from '../../utils';
 import useClipboard from 'react-hook-clipboard';
-import iframe2image from 'iframe2image';
 import useWindowDimensions from '../../components/Hooks/windowDimensions';
 import { OrderStatusButtons } from '../../components/SpecialtyComponents/OrderPageComponents';
 
