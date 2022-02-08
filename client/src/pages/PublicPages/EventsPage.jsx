@@ -6,7 +6,7 @@ import { Loading } from '../../components/UtilityComponents';
 const EventsPage = (props) => {
 	const [ events, set_events ] = useState([]);
 	const [ loading, set_loading ] = useState(false);
-	const [ going, set_going ] = useState(true);
+	const [ going, set_going ] = useState(false);
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
 	setTimeout(() => {
 		set_loading_checkboxes(false);
@@ -28,11 +28,7 @@ const EventsPage = (props) => {
 		set_loading(false);
 	};
 
-	const festivals_going = [
-		'Festival: Freaky Deaky Texas Houston, Tex.',
-		'Festival: Lights All Night Dallas, Tex.',
-		'Festival: Okeechobee Music Arts Festival Okeechobee, Fla.'
-	];
+	const festivals_going = [];
 	const determine_color = (event) => {
 		if (festivals_going.includes(event.title)) {
 			return 'bg-primary';
