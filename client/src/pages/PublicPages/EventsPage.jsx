@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { API_External } from '../../utils';
+import { useDispatch, useSelector } from 'react-redux';
 import { Loading } from '../../components/UtilityComponents';
+import { daysBetween, format_date } from '../../utils/helper_functions';
 
 const EventsPage = (props) => {
 	const [ events, set_events ] = useState([]);
 	const [ loading, set_loading ] = useState(false);
 	const [ going, set_going ] = useState(false);
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
+
+	const userLogin = useSelector((state) => state.userLogin);
+	const { userInfo } = userLogin;
 	setTimeout(() => {
 		set_loading_checkboxes(false);
 	}, 500);
@@ -28,13 +33,61 @@ const EventsPage = (props) => {
 		set_loading(false);
 	};
 
-	const festivals_going = [];
+	const today = new Date();
+
+	const festivals_going = 'Festival: ILLfest Music Arts Festival Austin, Tex.';
 	const determine_color = (event) => {
-		if (festivals_going.includes(event.title)) {
-			return 'bg-primary';
-		} else {
-			return 'bg-secondary';
+		const days = daysBetween(event.date, today);
+
+		if (days < 7) {
+			return '#4a4a4a';
 		}
+		if (days >= 7 && days <= 14) {
+			return '#3e4c6d';
+		}
+		if (days >= 14 && days <= 28) {
+			return '#3f6561';
+		}
+		if (days > 28) {
+			return '#6d3e3e';
+		}
+		if (days === 7) {
+			return '#323232';
+		}
+		if (days === 14) {
+			return '#5f75a9';
+		}
+		if (days === 28) {
+			return '#6aa59e';
+		}
+	};
+	const determine_font = (date, days_until) => {
+		const d = new Date(date);
+		d.setDate(d.getDate() - days_until).toLocaleString();
+		// return format_date(d.toISOString());
+		const days = daysBetween(d, today);
+		console.log({ days });
+		if (days <= 0) {
+			return { backgroundColor: '#810000' };
+		}
+		if (days === 1) {
+			return { backgroundColor: '#006258' };
+		}
+		if (days === 2) {
+			return { backgroundColor: '#001f68' };
+		}
+	};
+	const determine_alt_days_until = (date, days_until) => {
+		const d = new Date(date);
+		d.setDate(d.getDate() - days_until).toLocaleString();
+		// return format_date(d.toISOString());
+		return daysBetween(d, today);
+	};
+
+	const determine_action_dates = (date, days) => {
+		const d = new Date(date);
+		d.setDate(d.getDate() - days).toLocaleString();
+		return format_date(d.toISOString());
 	};
 
 	return (
@@ -58,21 +111,72 @@ const EventsPage = (props) => {
 				{!going &&
 					events &&
 					events.map((event) => (
-						<li className={`container ${determine_color(event)}`}>
-							<div className="title_font">{event.title}</div>
-							<div className="mt-5px">{event.date}</div>
-							<div className="mt-5px">
-								{event.city}, {event.state}
+						<li
+							className={`container`}
+							style={{
+								backgroundColor:
+									userInfo && userInfo.isAdmin
+										? determine_color(event)
+										: festivals_going.includes(event.title) ? '#4d5061' : '#6a6c80'
+							}}
+						>
+							<div className="jc-b">
+								<div>
+									<a
+										href={event.link}
+										target="_blank"
+										rel="noopener noreferrer"
+										aria-label="Event Title"
+									>
+										<div className="title_font">{event.title}</div>
+									</a>
+
+									<div className="mt-5px">
+										{event.date} - {daysBetween(event.date, today)} Days Until{' '}
+									</div>
+
+									<div className="mt-5px">
+										{event.city}, {event.state}
+									</div>
+									<div className="mt-5px">{event.age}</div>
+								</div>
+								{userInfo &&
+								userInfo.isAdmin && (
+									<div>
+										<div className="mt-5px p-5px br-10px" style={determine_font(event.date, 28)}>
+											Sale Date: {determine_action_dates(event.date, 28)} - {' '}
+											{determine_alt_days_until(event.date, 28)} Days Until{' '}
+										</div>
+										<div className="mt-5px p-5px br-10px" style={determine_font(event.date, 14)}>
+											Reminder Date: {determine_action_dates(event.date, 14)} - {' '}
+											{determine_alt_days_until(event.date, 14)} Days Until{' '}
+										</div>
+										<div className="mt-5px p-5px br-10px" style={determine_font(event.date, 7)}>
+											Last Chance Date: {determine_action_dates(event.date, 7)} -{' '}
+											{determine_alt_days_until(event.date, 7)} Days Until{' '}
+										</div>
+										<div className="mt-5px p-5px br-10px" style={determine_font(event.date, 0)}>
+											Festival Date: {determine_action_dates(event.date, 0)} - {' '}
+											{determine_alt_days_until(event.date, 0)} Days Until{' '}
+										</div>
+									</div>
+								)}
 							</div>
-							<div className="mt-5px">{event.age}</div>
 						</li>
 					))}
 				{going &&
 					events &&
 					events.filter((event) => festivals_going.includes(event.title)).map((event) => (
-						<li className={`container ${determine_color(event)}`}>
-							<div className="title_font">{event.title}</div>
-							<div className="mt-5px">{event.date}</div>
+						<li
+							className={`container`}
+							style={{ backgroundColor: festivals_going.includes(event.title) ? '#4d5061' : '#6a6c80' }}
+						>
+							<a href={event.link} target="_blank" rel="noopener noreferrer" aria-label="Event Title">
+								<div className="title_font">{event.title}</div>
+							</a>
+							<div className="mt-5px">
+								{event.date} - {daysBetween(event.date, today)} Days Until{' '}
+							</div>
 							<div className="mt-5px">
 								{event.city}, {event.state}
 							</div>

@@ -269,12 +269,12 @@ export const format_date_and_time = (formatted_date: string, formatted_time: str
 };
 
 export const daysBetween = (date1: any, date2: any) => {
-	console.log({ date1, date2 });
+	// console.log({ date1, date2 });
 	const date_1: any = new Date(date1);
 	const date_2: any = new Date(date2);
 	const diffTime = Math.abs(date_2 - date_1);
 	const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) - 1;
-	console.log({ diffDays });
+	// console.log({ diffDays });
 	return diffDays;
 };
 

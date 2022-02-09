@@ -46,6 +46,11 @@ export default {
 			const titles = titles_html.map((node: any) =>
 				node.childNodes.map((node: any) => node.childNodes[0].childNodes[0]._rawText)
 			);
+			// console.log({ links: titles_html[0].childNodes[0].rawAttrs.split("'")[1] });
+			const links = titles_html.map((node: any) =>
+				node.childNodes.map((node: any) => node.rawAttrs.split("'")[1])
+			);
+			console.log({ links });
 			const dates = dates_html.map((node: any) => node.childNodes[0]._rawText);
 			const cities = venues_html.map((node: any) => node.childNodes[0].childNodes[0].childNodes[0]._rawText);
 			const states = venues_html.map((node: any) => node.childNodes[0].childNodes[2].childNodes[0]._rawText);
@@ -61,7 +66,8 @@ export default {
 						venue: venues[index],
 						city: cities[index],
 						state: states[index],
-						age: ages[index]
+						age: ages[index],
+						link: links[index]
 					}
 				];
 			});
