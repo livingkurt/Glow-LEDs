@@ -67,7 +67,7 @@ const EventsPage = (props) => {
 		// return format_date(d.toISOString());
 		const days = daysBetween(d, today);
 		console.log({ days });
-		if (days <= 0) {
+		if (days === 0) {
 			return { backgroundColor: '#810000' };
 		}
 		if (days === 1) {
@@ -142,22 +142,42 @@ const EventsPage = (props) => {
 								</div>
 								{userInfo &&
 								userInfo.isAdmin && (
-									<div>
+									<div className="w-350px">
 										<div className="mt-5px p-5px br-10px" style={determine_font(event.date, 28)}>
-											Sale Date: {determine_action_dates(event.date, 28)} - {' '}
-											{determine_alt_days_until(event.date, 28)} Days Until{' '}
+											Sale: {determine_action_dates(event.date, 28)}
+											{determine_alt_days_until(event.date, 28) > 0 ? (
+												' | ' + determine_alt_days_until(event.date, 28) + ' Days Until'
+											) : (
+												' | ' +
+												Math.abs(determine_alt_days_until(event.date, 28)) +
+												' Days Past'
+											)}
 										</div>
 										<div className="mt-5px p-5px br-10px" style={determine_font(event.date, 14)}>
-											Reminder Date: {determine_action_dates(event.date, 14)} - {' '}
-											{determine_alt_days_until(event.date, 14)} Days Until{' '}
+											Reminder: {determine_action_dates(event.date, 14)}
+											{determine_alt_days_until(event.date, 14) > 0 ? (
+												' | ' + determine_alt_days_until(event.date, 14) + ' Days Until'
+											) : (
+												' | ' +
+												Math.abs(determine_alt_days_until(event.date, 14)) +
+												' Days Past'
+											)}
 										</div>
 										<div className="mt-5px p-5px br-10px" style={determine_font(event.date, 7)}>
-											Last Chance Date: {determine_action_dates(event.date, 7)} -{' '}
-											{determine_alt_days_until(event.date, 7)} Days Until{' '}
+											Last Chance: {determine_action_dates(event.date, 7)}
+											{determine_alt_days_until(event.date, 7) > 0 ? (
+												' | ' + determine_alt_days_until(event.date, 7) + ' Days Until'
+											) : (
+												' | ' + Math.abs(determine_alt_days_until(event.date, 7)) + ' Days Past'
+											)}
 										</div>
 										<div className="mt-5px p-5px br-10px" style={determine_font(event.date, 0)}>
-											Festival Date: {determine_action_dates(event.date, 0)} - {' '}
-											{determine_alt_days_until(event.date, 0)} Days Until{' '}
+											Festival: {determine_action_dates(event.date, 0)}
+											{determine_alt_days_until(event.date, 0) > 0 ? (
+												' | ' + determine_alt_days_until(event.date, 0) + ' Days Until'
+											) : (
+												' | ' + Math.abs(determine_alt_days_until(event.date, 0)) + ' Days Past'
+											)}
 										</div>
 									</div>
 								)}
