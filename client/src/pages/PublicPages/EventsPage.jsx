@@ -35,6 +35,16 @@ const EventsPage = (props) => {
 
 	const today = new Date();
 
+	const colors = [
+		{ name: '< 7 Days', color: '#4a4a4a' },
+		{ name: '7-14 Days', color: '#3e4c6d' },
+		{ name: '14-28 Days', color: '#3f6561' },
+		{ name: '> 28', color: '#6d3e3e' },
+		{ name: '7 Days', color: '#323232' },
+		{ name: '14 Days', color: '#5f75a9' },
+		{ name: '28 Days', color: '#6aa59e' }
+	];
+
 	const festivals_going = 'Festival: ILLfest Music Arts Festival Austin, Tex.';
 	const determine_color = (event) => {
 		const days = daysBetween(event.date, today);
@@ -100,12 +110,34 @@ const EventsPage = (props) => {
 				<meta property="og:url" content="https://www.glow-leds.com/account/checkemail" />
 			</Helmet>
 			<Loading loading={loading} />
-			<button
-				className={`btn ${!going ? 'primary' : 'secondary'}`}
-				onClick={() => set_going((going) => (going ? false : true))}
-			>
-				{going ? 'Show All Festivals' : 'Show Going Festivals'}
-			</button>
+			<div className="wrap jc-b">
+				<div className="wrap jc-b">
+					{userInfo &&
+						userInfo.isAdmin &&
+						colors.map((color, index) => {
+							return (
+								<div className="wrap jc-b w-16rem m-1rem" key={index}>
+									<label style={{ marginRight: '1rem' }}>{color.name}</label>
+									<div
+										style={{
+											backgroundColor: color.color,
+											height: '20px',
+											width: '60px',
+											borderRadius: '5px'
+										}}
+									/>
+								</div>
+							);
+						})}
+				</div>
+				<button
+					className={`btn ${!going ? 'primary' : 'secondary'}`}
+					onClick={() => set_going((going) => (going ? false : true))}
+				>
+					{going ? 'Show All Festivals' : 'Show Going Festivals'}
+				</button>
+			</div>
+
 			<h1 style={{ textAlign: 'center' }}>US Festivals</h1>
 			<ul>
 				{!going &&

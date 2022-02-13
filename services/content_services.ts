@@ -50,7 +50,7 @@ export default {
 			const links = titles_html.map((node: any) =>
 				node.childNodes.map((node: any) => node.rawAttrs.split("'")[1])
 			);
-			console.log({ links });
+			// console.log({ links });
 			const dates = dates_html.map((node: any) => node.childNodes[0]._rawText);
 			const cities = venues_html.map((node: any) => node.childNodes[0].childNodes[0].childNodes[0]._rawText);
 			const states = venues_html.map((node: any) => node.childNodes[0].childNodes[2].childNodes[0]._rawText);
