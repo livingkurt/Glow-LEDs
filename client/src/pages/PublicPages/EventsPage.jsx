@@ -6,103 +6,103 @@ import { Loading } from '../../components/UtilityComponents';
 import { daysBetween, format_date } from '../../utils/helper_functions';
 
 const EventsPage = (props) => {
-	const [ events, set_events ] = useState([]);
-	const [ loading, set_loading ] = useState(false);
-	const [ going, set_going ] = useState(false);
-	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
+	// const [ events, set_events ] = useState([]);
+	// const [ loading, set_loading ] = useState(false);
+	// const [ going, set_going ] = useState(false);
+	// const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
 
-	const userLogin = useSelector((state) => state.userLogin);
-	const { userInfo } = userLogin;
-	setTimeout(() => {
-		set_loading_checkboxes(false);
-	}, 500);
+	// const userLogin = useSelector((state) => state.userLogin);
+	// const { userInfo } = userLogin;
+	// setTimeout(() => {
+	// 	set_loading_checkboxes(false);
+	// }, 500);
 
-	useEffect(() => {
-		let clean = true;
-		if (clean) {
-			get_events();
-		}
-		return () => (clean = false);
-	}, []);
+	// useEffect(() => {
+	// 	let clean = true;
+	// 	if (clean) {
+	// 		get_events();
+	// 	}
+	// 	return () => (clean = false);
+	// }, []);
 
-	const get_events = async () => {
-		set_loading(true);
-		const { data } = await API_External.get_events();
-		console.log({ events: data });
-		set_events(data);
-		set_loading(false);
-	};
+	// const get_events = async () => {
+	// 	set_loading(true);
+	// 	const { data } = await API_External.get_events();
+	// 	console.log({ events: data });
+	// 	set_events(data);
+	// 	set_loading(false);
+	// };
 
-	const today = new Date();
+	// const today = new Date();
 
-	const colors = [
-		{ name: '< 7 Days', color: '#4a4a4a' },
-		{ name: '7-14 Days', color: '#3e4c6d' },
-		{ name: '14-28 Days', color: '#3f6561' },
-		{ name: '> 28', color: '#6d3e3e' },
-		{ name: '7 Days', color: '#323232' },
-		{ name: '14 Days', color: '#5f75a9' },
-		{ name: '28 Days', color: '#6aa59e' }
-	];
+	// const colors = [
+	// 	{ name: '< 7 Days', color: '#4a4a4a' },
+	// 	{ name: '7-14 Days', color: '#3e4c6d' },
+	// 	{ name: '14-28 Days', color: '#3f6561' },
+	// 	{ name: '> 28', color: '#6d3e3e' },
+	// 	{ name: '7 Days', color: '#323232' },
+	// 	{ name: '14 Days', color: '#5f75a9' },
+	// 	{ name: '28 Days', color: '#6aa59e' }
+	// ];
 
-	const festivals_going = 'Festival: ILLfest Music Arts Festival Austin, Tex.';
-	const determine_color = (event) => {
-		const days = daysBetween(event.date, today);
+	// const festivals_going = 'Festival: ILLfest Music Arts Festival Austin, Tex.';
+	// const determine_color = (event) => {
+	// 	const days = daysBetween(event.date, today);
 
-		if (days < 7) {
-			return '#4a4a4a';
-		}
-		if (days >= 7 && days <= 14) {
-			return '#3e4c6d';
-		}
-		if (days >= 14 && days <= 28) {
-			return '#3f6561';
-		}
-		if (days > 28) {
-			return '#6d3e3e';
-		}
-		if (days === 7) {
-			return '#323232';
-		}
-		if (days === 14) {
-			return '#5f75a9';
-		}
-		if (days === 28) {
-			return '#6aa59e';
-		}
-	};
-	const determine_font = (date, days_until) => {
-		const d = new Date(date);
-		d.setDate(d.getDate() - days_until).toLocaleString();
-		// return format_date(d.toISOString());
-		const days = daysBetween(d, today);
-		console.log({ days });
-		if (days === 0) {
-			return { backgroundColor: '#810000' };
-		}
-		if (days === 1) {
-			return { backgroundColor: '#006258' };
-		}
-		if (days === 2) {
-			return { backgroundColor: '#001f68' };
-		}
-	};
-	const determine_alt_days_until = (date, days_until) => {
-		const d = new Date(date);
-		d.setDate(d.getDate() - days_until).toLocaleString();
-		// return format_date(d.toISOString());
-		return daysBetween(d, today);
-	};
+	// 	if (days < 7) {
+	// 		return '#4a4a4a';
+	// 	}
+	// 	if (days >= 7 && days <= 14) {
+	// 		return '#3e4c6d';
+	// 	}
+	// 	if (days >= 14 && days <= 28) {
+	// 		return '#3f6561';
+	// 	}
+	// 	if (days > 28) {
+	// 		return '#6d3e3e';
+	// 	}
+	// 	if (days === 7) {
+	// 		return '#323232';
+	// 	}
+	// 	if (days === 14) {
+	// 		return '#5f75a9';
+	// 	}
+	// 	if (days === 28) {
+	// 		return '#6aa59e';
+	// 	}
+	// };
+	// const determine_font = (date, days_until) => {
+	// 	const d = new Date(date);
+	// 	d.setDate(d.getDate() - days_until).toLocaleString();
+	// 	// return format_date(d.toISOString());
+	// 	const days = daysBetween(d, today);
+	// 	console.log({ days });
+	// 	if (days === 0) {
+	// 		return { backgroundColor: '#810000' };
+	// 	}
+	// 	if (days === 1) {
+	// 		return { backgroundColor: '#006258' };
+	// 	}
+	// 	if (days === 2) {
+	// 		return { backgroundColor: '#001f68' };
+	// 	}
+	// };
+	// const determine_alt_days_until = (date, days_until) => {
+	// 	const d = new Date(date);
+	// 	d.setDate(d.getDate() - days_until).toLocaleString();
+	// 	// return format_date(d.toISOString());
+	// 	return daysBetween(d, today);
+	// };
 
-	const determine_action_dates = (date, days) => {
-		const d = new Date(date);
-		d.setDate(d.getDate() - days).toLocaleString();
-		return format_date(d.toISOString());
-	};
+	// const determine_action_dates = (date, days) => {
+	// 	const d = new Date(date);
+	// 	d.setDate(d.getDate() - days).toLocaleString();
+	// 	return format_date(d.toISOString());
+	// };
 
 	return (
 		<div className="">
-			<Helmet>
+			{/* <Helmet>
 				<title>Events Page | Glow LEDs</title>
 				<meta property="og:title" content="Events Page" />
 				<meta name="twitter:title" content="Events Page" />
@@ -235,7 +235,7 @@ const EventsPage = (props) => {
 							<div className="mt-5px">{event.age}</div>
 						</li>
 					))}
-			</ul>
+			</ul> */}
 		</div>
 	);
 };

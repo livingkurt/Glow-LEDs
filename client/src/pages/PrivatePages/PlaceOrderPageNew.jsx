@@ -15,6 +15,7 @@ import { ShippingChoice, ShippingSpeed } from '../../components/SpecialtyCompone
 import Autocomplete from 'react-google-autocomplete';
 import { determine_total, prnt, state_names } from '../../utils/helper_functions';
 import { check_authentication } from '../../utils/react_helper_functions';
+import { Email, Shipping } from '../../components/SpecialtyComponents/PlaceOrderPageComponents';
 
 const PlaceOrderPage = (props) => {
 	// const promo_code_ref = useRef(null);
@@ -631,7 +632,53 @@ const PlaceOrderPage = (props) => {
 
 			<div className="placeorder">
 				<div className="placeorder-info">
-					<div>
+					{/* <div>
+						<h2>Email</h2>
+						<div className="wrap jc-b w-100per">
+							{shipping &&
+							shipping.hasOwnProperty('first_name') && (
+								<div className="paragraph_font lh-25px">
+									<div>
+										{shipping.first_name} {shipping.last_name}
+									</div>
+									<div>
+										{shipping.address_1} {shipping.address_2}
+									</div>
+									<div>
+										{shipping.city}, {shipping.state} {shipping.postalCode}, {shipping.country}
+									</div>
+									<div>{shipping.international && 'International'}</div>
+									<div>{shipping.email}</div>
+								</div>
+							)}
+							<div style={{ marginTop: '5px' }}>
+								<Link
+									to={
+										userInfo.hasOwnProperty('first_name') ? (
+											'/secure/checkout/shipping'
+										) : (
+											'/checkout/shipping'
+										)
+									}
+								>
+									<button
+										className={`btn primary ${shipping && !shipping.hasOwnProperty('first_name')
+											? 'bob'
+											: ''}`}
+									>
+										{shipping && shipping.hasOwnProperty('first_name') ? (
+											'Edit Shipping'
+										) : (
+											'Add Shipping'
+										)}
+									</button>
+								</Link>
+							</div>
+						</div>
+					</div> */}
+					<Email />
+					<Shipping shipping={shipping} userInfo={userInfo} />
+					{/* <div>
 						<h2>Shipping</h2>
 						<div className="wrap jc-b w-100per">
 							{shipping &&
@@ -674,7 +721,7 @@ const PlaceOrderPage = (props) => {
 								</Link>
 							</div>
 						</div>
-					</div>
+					</div> */}
 
 					<div>
 						<ul className="cart-list-container">
