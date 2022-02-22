@@ -72,19 +72,24 @@ const ProductOptions = ({
 			</div>
 		);
 	};
-	const hide_add_to_cart = [
-		'Diffuser Caps + Adapters Starter Kit',
+	const names_hide_add_to_cart = [
+		'Diffuser Caps + Adapters Starter Kit V4',
 		'Refresh Pack (6 Supreme Pairs + 120 Batteries)',
 		'Batman Decals',
 		'Outline + Slim Batman Decals',
 		'Nanoskins',
 		'Alt Novaskins w Nano Sleds',
 		'Nano Glow Casings',
-		'Novaskins'
+		'Novaskins',
+		'Supreme Sizing Sampler Pack'
 	];
+	const categories_hide_add_to_cart = [ 'exo_diffusers' ];
 
 	const determine_add_to_cart = (product, secondary_product, count_in_stock, option_product_object) => {
-		if (hide_add_to_cart.includes(product.name) && !secondary_product) {
+		if (names_hide_add_to_cart.includes(product.name) && !secondary_product) {
+			return <div />;
+		}
+		if (categories_hide_add_to_cart.includes(product.category) && !secondary_product) {
 			return <div />;
 		}
 		return (
