@@ -52,7 +52,7 @@ export { default as OrderCombinerPage } from './AdminPages/OrderCombinerPage';
 export { default as EditProfilePage } from './PrivatePages/EditProfilePage';
 export { default as MyOrdersPage } from './PrivatePages/MyOrdersPage';
 export { default as OrderPage } from './PrivatePages/OrderPage';
-export { default as PlaceOrderPage } from './PrivatePages/PlaceOrderPageNew';
+export { default as PlaceOrderPage } from './PrivatePages/PlaceOrderPage';
 export { default as ProfilePage } from './PrivatePages/ProfilePage';
 export { default as ShippingPage } from './PrivatePages/ShippingPage';
 export { default as EditShippingPage } from './PrivatePages/EditShippingPage';
