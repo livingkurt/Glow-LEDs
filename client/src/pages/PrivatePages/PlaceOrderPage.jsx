@@ -282,7 +282,7 @@ const PlaceOrderPage = (props) => {
 						order_note,
 						tip,
 						promo_code: show_message && promo_code,
-						parcel
+						parcel: parcel || null
 					},
 					paymentMethod
 				)
@@ -307,7 +307,7 @@ const PlaceOrderPage = (props) => {
 						order_note,
 						tip,
 						promo_code: show_message && promo_code,
-						parcel,
+						parcel: parcel || null,
 						guest: true
 					},
 					create_account,
