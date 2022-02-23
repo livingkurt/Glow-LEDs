@@ -1,10 +1,10 @@
 import React from 'react';
+import { Stripe } from '../../SpecialtyComponents';
 
-const Payment = () => {
+const Payment = (props) => {
 	return (
-		<div>
-			<h2>Payment</h2>
-			<div className="wrap jc-b w-100per" />
+		<div className="w-100per">
+			<Stripe pay_order={props.placeOrderHandler} loading_payment={props.loading_payment} />
 		</div>
 	);
 };

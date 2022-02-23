@@ -27,6 +27,24 @@
 		margin-top: 1rem;
 	}
 }
+.shipping-container {
+	display: flex;
+	// width: 28rem;
+	flex-direction: column;
+	// max-width: 32rem;
+	padding: 2rem;
+	// box-shadow: $bs_deep;
+	// background-color: $theme_color_form;
+	// border-radius: $br_small_containers;
+	list-style-type: none;
+	// margin: 0 auto;
+	li {
+		display: flex;
+		flex-direction: column;
+		margin-bottom: 1rem;
+		margin-top: 1rem;
+	}
+}
 .edit-form-container {
 	display: flex;
 	// width: 80rem;

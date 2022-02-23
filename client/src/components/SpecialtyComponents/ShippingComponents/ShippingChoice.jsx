@@ -11,7 +11,7 @@ const ShippingChoice = ({
 	re_choose_shipping_rate
 }) => {
 	return (
-		<li className="w-100per">
+		<div className="w-100per">
 			{hide_pay_button &&
 			rates && (
 				<div className="w-100per">
@@ -96,7 +96,7 @@ const ShippingChoice = ({
 					</button>
 				</div>
 			)}
-		</li>
+		</div>
 	);
 };
 

@@ -1,4 +1,3 @@
-import { consoleLogFn } from '@scout_apm/scout-apm/dist/lib/types';
 import invoice from '../email_templates/pages/invoice';
 import { order_services } from '../services';
 

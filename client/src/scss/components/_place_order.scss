@@ -11,14 +11,17 @@
 }
 
 .placeorder-info {
-	flex: 6 1 60rem;
+	// flex: 6 1 60rem;
+	flex: 1 0 34rem;
 }
 
 .placeorder-action {
-	flex: 1 0 34rem;
+	flex: 1 1 60rem;
+	// flex: 1 0 34rem;
 	box-shadow: $bs_deep;
 	border-radius: $br_small_containers;
 	// background-color: #fcfcfc;
+	height: 100%;
 	padding: 2rem;
 	background-color: transparent;
 	margin-bottom: 10px;

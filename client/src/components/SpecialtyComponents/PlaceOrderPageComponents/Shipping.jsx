@@ -10,6 +10,7 @@ import { API_Shipping } from '../../../utils';
 import { update } from '../../../actions/userActions';
 import { useAddressPredictions } from '../../../components/Hooks';
 import Autocomplete from 'react-google-autocomplete';
+import { ShippingChoice } from '../ShippingComponents';
 
 const Shipping = (props) => {
 	const cart = useSelector((state) => state.cart);
@@ -130,7 +131,7 @@ const Shipping = (props) => {
 			const paymentMethod = 'stripe';
 			dispatch(savePayment({ paymentMethod }));
 			save_shipping_to_user();
-			props.history.push('placeorder');
+			// props.history.push('placeorder');
 		}
 	};
 	setTimeout(() => {
@@ -274,105 +275,110 @@ const Shipping = (props) => {
 					</Link>
 				</div>
 			</div> */}
-			<div className="form">
-				<form onSubmit={submitHandler}>
-					<ul className="form-container">
-						{userInfo &&
-						userInfo.shipping &&
-						userInfo.shipping.hasOwnProperty('first_name') && (
-							<li>
-								<button
-									onClick={(e) => use_saved_shipping(e, userInfo.shipping, userInfo)}
-									className="btn primary"
-								>
-									Use Saved Shipping
-								</button>
-							</li>
-						)}
-						{userInfo &&
-						userInfo.isAdmin && (
-							<li className="w-100per">
-								<div className="ai-c h-25px mv-10px mb-30px jc-c w-100per">
-									<div className="custom-select w-100per">
-										<select
-											className="qty_select_dropdown w-100per"
-											style={{ width: '100%' }}
-											onChange={(e) => update_shipping(e.target.value)}
-										>
-											<option key={1} defaultValue="">
-												---Choose Shipping for Order---
-											</option>
-											{all_shipping &&
-												all_shipping.map((shipping, index) => (
-													<option key={index} value={JSON.stringify(shipping)}>
-														{shipping.first_name} {shipping.last_name}
-													</option>
-												))}
-										</select>
-										<span className="custom-arrow" />
-									</div>
+			<form onSubmit={submitHandler}>
+				<ul className="shipping-container">
+					{userInfo &&
+					userInfo.shipping &&
+					userInfo.shipping.hasOwnProperty('first_name') && (
+						<li>
+							<button
+								onClick={(e) => use_saved_shipping(e, userInfo.shipping, userInfo)}
+								className="btn primary"
+							>
+								Use Saved Shipping
+							</button>
+						</li>
+					)}
+					{userInfo &&
+					userInfo.isAdmin && (
+						<li className="w-100per">
+							<div className="ai-c h-25px mv-10px mb-30px jc-c w-100per">
+								<div className="custom-select w-100per">
+									<select
+										className="qty_select_dropdown w-100per"
+										style={{ width: '100%' }}
+										onChange={(e) => update_shipping(e.target.value)}
+									>
+										<option key={1} defaultValue="">
+											---Choose Shipping for Order---
+										</option>
+										{all_shipping &&
+											all_shipping.map((shipping, index) => (
+												<option key={index} value={JSON.stringify(shipping)}>
+													{shipping.first_name} {shipping.last_name}
+												</option>
+											))}
+									</select>
+									<span className="custom-arrow" />
 								</div>
-							</li>
-						)}
-						{userInfo &&
-						!userInfo.first_name && (
-							<li>
-								<label htmlFor="email">Email</label>
+							</div>
+						</li>
+					)}
+					{userInfo &&
+					!userInfo.first_name && (
+						<li>
+							<label htmlFor="email">Email</label>
+							<input
+								type="text"
+								value={email}
+								name="email"
+								id="email"
+								onChange={(e) => set_email(e.target.value)}
+							/>
+						</li>
+					)}
+					<label className="validation_text" style={{ justifyContent: 'center' }}>
+						{email_validations}
+					</label>
+					<li>
+						<div className="jc-b">
+							<div className="column mr-1rem w-50per">
+								<label htmlFor="first_name">First Name</label>
 								<input
 									type="text"
-									value={email}
-									name="email"
-									id="email"
-									onChange={(e) => set_email(e.target.value)}
+									value={first_name}
+									name="first_name"
+									id="first_name"
+									onChange={(e) => set_first_name(e.target.value)}
 								/>
-							</li>
-						)}
-						<label className="validation_text" style={{ justifyContent: 'center' }}>
-							{email_validations}
-						</label>
-						<li>
-							<label htmlFor="first_name">First Name</label>
-							<input
-								type="text"
-								value={first_name}
-								name="first_name"
-								id="first_name"
-								onChange={(e) => set_first_name(e.target.value)}
-							/>
-						</li>
-						<label className="validation_text" style={{ justifyContent: 'center' }}>
-							{first_name_validations}
-						</label>
-						<li>
-							<label htmlFor="last_name">Last Name</label>
-							<input
-								type="text"
-								value={last_name}
-								name="last_name"
-								id="last_name"
-								onChange={(e) => set_last_name(e.target.value)}
-							/>
-						</li>
-						<label className="validation_text" style={{ justifyContent: 'center' }}>
-							{last_name_validations}
-						</label>
-						<li>
-							<label htmlFor="address_autocomplete">Address</label>
-							<Autocomplete
-								apiKey={process.env.REACT_APP_GOOGLE_PLACES_KEY}
-								className="fs-16px"
-								// placeholder="Start typing Address"
-								value={address_1}
-								onChange={(e) => set_address_1(e.target.value)}
-								options={{
-									types: [ 'address' ]
-								}}
-								onPlaceSelected={(place) => {
-									update_google_shipping(place);
-								}}
-							/>
-						</li>
-						{/* <li>
+
+								<label className="validation_text" style={{ justifyContent: 'center' }}>
+									{first_name_validations}
+								</label>
+							</div>
+							<div className="column  w-50per">
+								<label htmlFor="last_name">Last Name</label>
+								<input
+									type="text"
+									value={last_name}
+									name="last_name"
+									id="last_name"
+									onChange={(e) => set_last_name(e.target.value)}
+								/>
+								<label className="validation_text" style={{ justifyContent: 'center' }}>
+									{last_name_validations}
+								</label>
+							</div>
+						</div>
+					</li>
+
+					<li>
+						<label htmlFor="address_autocomplete">Address</label>
+						<Autocomplete
+							apiKey={process.env.REACT_APP_GOOGLE_PLACES_KEY}
+							className="fs-16px"
+							// placeholder="Start typing Address"
+							value={address_1}
+							onChange={(e) => set_address_1(e.target.value)}
+							options={{
+								types: [ 'address' ]
+							}}
+							onPlaceSelected={(place) => {
+								update_google_shipping(place);
+							}}
+						/>
+					</li>
+					{/* <li>
 							<label htmlFor="address_1">Address</label>
 							<input
 								type="text"
@@ -382,154 +388,161 @@ const Shipping = (props) => {
 								onChange={(e) => set_address_1(e.target.value)}
 							/>
 						</li> */}
-						<label className="validation_text" style={{ justifyContent: 'center' }}>
-							{address_validations}
-						</label>
+					<label className="validation_text" style={{ justifyContent: 'center' }}>
+						{address_validations}
+					</label>
+					<li>
+						<label htmlFor="address_2">Apt/Suite</label>
+						<input
+							type="text"
+							value={address_2}
+							name="address_2"
+							id="address_2"
+							onChange={(e) => set_address_2(e.target.value)}
+						/>
+					</li>
+					<li>
+						<label htmlFor="city">City</label>
+						<input
+							type="text"
+							value={city}
+							name="city"
+							id="city"
+							onChange={(e) => setCity(e.target.value)}
+						/>
+					</li>
+					<label className="validation_text" style={{ justifyContent: 'center' }}>
+						{city_validations}
+					</label>
+					{!international && (
 						<li>
-							<label htmlFor="address_2">Apt/Suite</label>
-							<input
-								type="text"
-								value={address_2}
-								name="address_2"
-								id="address_2"
-								onChange={(e) => set_address_2(e.target.value)}
-							/>
-						</li>
-						<li>
-							<label htmlFor="city">City</label>
-							<input
-								type="text"
-								value={city}
-								name="city"
-								id="city"
-								onChange={(e) => setCity(e.target.value)}
-							/>
-						</li>
-						<label className="validation_text" style={{ justifyContent: 'center' }}>
-							{city_validations}
-						</label>
-						{!international && (
-							<li>
-								<label className="mb-1rem" htmlFor="state">
-									State
-								</label>
-								<div className="ai-c h-25px mb-15px jc-c">
-									<div className="custom-select w-100per">
-										<select
-											className="qty_select_dropdown w-100per"
-											onChange={(e) => setState(e.target.value)}
-											value={state && state}
-										>
-											{state_names.map((state, index) => (
-												<option key={index} value={state.short_name}>
-													{state.long_name}
-												</option>
-											))}
-										</select>
-										<span className="custom-arrow" />
-									</div>
+							<label className="mb-1rem" htmlFor="state">
+								State
+							</label>
+							<div className="ai-c h-25px mb-15px jc-c">
+								<div className="custom-select w-100per">
+									<select
+										className="qty_select_dropdown w-100per"
+										onChange={(e) => setState(e.target.value)}
+										value={state && state}
+									>
+										{state_names.map((state, index) => (
+											<option key={index} value={state.short_name}>
+												{state.long_name}
+											</option>
+										))}
+									</select>
+									<span className="custom-arrow" />
 								</div>
-							</li>
-						)}
-						{international && (
+							</div>
+						</li>
+					)}
+					{international && (
+						<li>
+							<label htmlFor="state">State</label>
+							<input
+								type="text"
+								value={state}
+								name="state"
+								id="state"
+								onChange={(e) => setState(e.target.value)}
+							/>
+						</li>
+					)}
+					<label className="validation_text" style={{ justifyContent: 'center' }}>
+						{state_validations}
+					</label>
+					<li>
+						<label htmlFor="postalCode">Postal Code</label>
+						<input
+							type="text"
+							value={postalCode}
+							name="postalCode"
+							id="postalCode"
+							onChange={(e) => setPostalCode(e.target.value)}
+						/>
+					</li>
+					<label className="validation_text" style={{ justifyContent: 'center' }}>
+						{postal_code_validations}
+					</label>
+					{loading ? (
+						<div>Loading...</div>
+					) : (
+						<div>
 							<li>
-								<label htmlFor="state">State</label>
+								<label htmlFor="international">International</label>
 								<input
-									type="text"
-									value={state}
-									name="state"
-									id="state"
-									onChange={(e) => setState(e.target.value)}
+									type="checkbox"
+									name="international"
+									// defaultChecked={international ? 'checked' : 'unchecked'}
+									defaultValue={international}
+									defaultChecked={international}
+									value={international}
+									id="international"
+									onChange={(e) => {
+										setInternational(e.target.checked);
+									}}
 								/>
 							</li>
-						)}
-						<label className="validation_text" style={{ justifyContent: 'center' }}>
-							{state_validations}
-						</label>
-						<li>
-							<label htmlFor="postalCode">Postal Code</label>
-							<input
-								type="text"
-								value={postalCode}
-								name="postalCode"
-								id="postalCode"
-								onChange={(e) => setPostalCode(e.target.value)}
-							/>
-						</li>
-						<label className="validation_text" style={{ justifyContent: 'center' }}>
-							{postal_code_validations}
-						</label>
-						{loading ? (
-							<div>Loading...</div>
-						) : (
-							<div>
+							{international && (
 								<li>
-									<label htmlFor="international">International</label>
+									<label htmlFor="country">Country</label>
 									<input
-										type="checkbox"
-										name="international"
-										// defaultChecked={international ? 'checked' : 'unchecked'}
-										defaultValue={international}
-										defaultChecked={international}
-										value={international}
-										id="international"
-										onChange={(e) => {
-											setInternational(e.target.checked);
-										}}
+										type="text"
+										value={country}
+										name="country"
+										id="country"
+										onChange={(e) => setCountry(e.target.value)}
 									/>
 								</li>
-								{international && (
+							)}
+						</div>
+					)}
+					<label className="validation_text" style={{ justifyContent: 'center' }}>
+						{country_validations}
+					</label>
+					<li>
+						<button type="submit" className="btn primary">
+							Continue
+						</button>
+					</li>
+
+					{userInfo &&
+					userInfo.first_name && (
+						<div>
+							{loading ? (
+								<div>Loading...</div>
+							) : (
+								<div>
 									<li>
-										<label htmlFor="country">Country</label>
+										<label htmlFor="save_shipping">Save Shipping</label>
 										<input
-											type="text"
-											value={country}
-											name="country"
-											id="country"
-											onChange={(e) => setCountry(e.target.value)}
+											type="checkbox"
+											name="save_shipping"
+											// defaultChecked={save_shipping ? 'checked' : 'unchecked'}
+											defaultValue={save_shipping}
+											defaultChecked={save_shipping}
+											// value={save_shipping}
+											id="save_shipping"
+											onChange={(e) => {
+												set_save_shipping(e.target.checked);
+											}}
 										/>
 									</li>
-								)}
-							</div>
-						)}
-						<label className="validation_text" style={{ justifyContent: 'center' }}>
-							{country_validations}
-						</label>
-						<li>
-							<button type="submit" className="btn primary">
-								Continue
-							</button>
-						</li>
-
-						{userInfo &&
-						userInfo.first_name && (
-							<div>
-								{loading ? (
-									<div>Loading...</div>
-								) : (
-									<div>
-										<li>
-											<label htmlFor="save_shipping">Save Shipping</label>
-											<input
-												type="checkbox"
-												name="save_shipping"
-												// defaultChecked={save_shipping ? 'checked' : 'unchecked'}
-												defaultValue={save_shipping}
-												defaultChecked={save_shipping}
-												// value={save_shipping}
-												id="save_shipping"
-												onChange={(e) => {
-													set_save_shipping(e.target.checked);
-												}}
-											/>
-										</li>
-									</div>
-								)}
-							</div>
-						)}
-					</ul>
-				</form>
-			</div>
+								</div>
+							)}
+						</div>
+					)}
+					<ShippingChoice
+						rates={props.shipping_rates.rates}
+						choose_shipping_rate={props.choose_shipping_rate}
+						hide_pay_button={props.hide_pay_button}
+						shipping={shipping}
+						current_shipping_speed={props.current_shipping_speed}
+						re_choose_shipping_rate={props.re_choose_shipping_rate}
+					/>
+				</ul>
+			</form>
 		</div>
 	);
 };
