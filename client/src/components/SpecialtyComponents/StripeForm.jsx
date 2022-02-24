@@ -11,6 +11,7 @@ const StripeForm = (props) => {
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
+		set_remove_button(true);
 		console.log({ CardElement: elements.getElement(CardElement) });
 		const { error, paymentMethod } = await stripe.createPaymentMethod({
 			type: 'card',
@@ -56,12 +57,7 @@ const StripeForm = (props) => {
 				</li>
 			)}
 			{!remove_button && (
-				<button
-					type="submit"
-					className="btn primary w-100per mt-1rem bob"
-					onClick={() => set_remove_button(true)}
-					disabled={!stripe}
-				>
+				<button type="submit" className="btn primary w-100per mt-1rem bob" disabled={!stripe}>
 					Complete Order
 				</button>
 			)}
