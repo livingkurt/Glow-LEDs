@@ -11,6 +11,7 @@ const StripeForm = (props) => {
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
+		props.set_loading_payment(true);
 		set_remove_button(true);
 		console.log({ CardElement: elements.getElement(CardElement) });
 		const { error, paymentMethod } = await stripe.createPaymentMethod({

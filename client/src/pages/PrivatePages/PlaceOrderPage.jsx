@@ -347,8 +347,6 @@ const PlaceOrderPage = (props) => {
 				)
 			);
 		}
-
-		set_loading_payment(true);
 		// dimminish_stock();
 		promo_code_used();
 		sessionStorage.removeItem('shippingAddress');
@@ -1641,7 +1639,11 @@ const PlaceOrderPage = (props) => {
 									<li>
 										{!loading &&
 										!hide_pay_button && (
-											<Stripe pay_order={placeOrderHandler} loading_payment={loading_payment} />
+											<Stripe
+												pay_order={placeOrderHandler}
+												loading_payment={loading_payment}
+												set_loading_payment={set_loading_payment}
+											/>
 										)}
 										{/* {!hide_pay_button &&
 										shipping &&
