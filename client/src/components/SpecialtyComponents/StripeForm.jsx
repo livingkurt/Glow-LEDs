@@ -10,6 +10,7 @@ const StripeForm = (props) => {
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
+		console.log({ CardElement: elements.getElement(CardElement) });
 		const { error, paymentMethod } = await stripe.createPaymentMethod({
 			type: 'card',
 			card: elements.getElement(CardElement)
@@ -20,13 +21,8 @@ const StripeForm = (props) => {
 			return;
 		}
 		console.log({ paymentMethod });
-		// if (props.guest){
-		// 	props.pay_order(paymentMethod);
-		// }
-		// else {
 
 		props.pay_order(paymentMethod);
-		// }
 	};
 
 	return (

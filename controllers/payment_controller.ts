@@ -24,10 +24,7 @@ export default {
 						await stripe.paymentIntents.confirm(
 							result.id,
 							{
-								payment_method:
-									process.env.NODE_ENV === 'production'
-										? req.body.paymentMethod.id
-										: 'pm_card_' + req.body.paymentMethod.card.brand
+								payment_method: req.body.paymentMethod.id
 							},
 							async (err: any, result: any) => {
 								if (err) {
@@ -49,31 +46,31 @@ export default {
 									console.log({ second_pm: result.payment_method });
 
 									const updatedOrder = await order.save();
-									stripe.customers.create({
-										address: {
-											city: order.shipping.city,
-											country: order.shipping.country,
-											line1: order.shipping.address_1,
-											line2: order.shipping.address_2,
-											postal_code: order.shipping.postalCode,
-											state: order.shipping.state
-										},
-										email: order.shipping.email,
-										description: 'My First Test Customer (created for API docs)',
-										name: order.shipping.first_name + ' ' + order.shipping.last_name,
-										payment_method: req.body.paymentMethod.id,
-										shipping: {
-											address: {
-												city: order.shipping.city,
-												country: order.shipping.country,
-												line1: order.shipping.address_1,
-												line2: order.shipping.address_2,
-												postal_code: order.shipping.postalCode,
-												state: order.shipping.state
-											},
-											name: order.shipping.first_name + ' ' + order.shipping.last_name
-										}
-									});
+									// stripe.customers.create({
+									// 	address: {
+									// 		city: order.shipping.city,
+									// 		country: order.shipping.country,
+									// 		line1: order.shipping.address_1,
+									// 		line2: order.shipping.address_2,
+									// 		postal_code: order.shipping.postalCode,
+									// 		state: order.shipping.state
+									// 	},
+									// 	email: order.shipping.email,
+									// 	description: 'My First Test Customer (created for API docs)',
+									// 	name: order.shipping.first_name + ' ' + order.shipping.last_name,
+									// 	payment_method: req.body.paymentMethod.id,
+									// 	shipping: {
+									// 		address: {
+									// 			city: order.shipping.city,
+									// 			country: order.shipping.country,
+									// 			line1: order.shipping.address_1,
+									// 			line2: order.shipping.address_2,
+									// 			postal_code: order.shipping.postalCode,
+									// 			state: order.shipping.state
+									// 		},
+									// 		name: order.shipping.first_name + ' ' + order.shipping.last_name
+									// 	}
+									// });
 									if (updatedOrder) {
 										res.send({ message: 'Order Paid.', order: updatedOrder });
 									} else {
@@ -120,10 +117,7 @@ export default {
 						await stripe.paymentIntents.confirm(
 							result.id,
 							{
-								payment_method:
-									process.env.NODE_ENV === 'production'
-										? req.body.paymentMethod.id
-										: 'pm_card_' + req.body.paymentMethod.card.brand
+								payment_method: req.body.paymentMethod.id
 							},
 							async (err: any, result: any) => {
 								if (err) {
@@ -142,6 +136,31 @@ export default {
 										payment: req.body.paymentMethod
 									};
 									const updatedOrder = await order.save();
+									// stripe.customers.create({
+									// 	address: {
+									// 		city: order.shipping.city,
+									// 		country: order.shipping.country,
+									// 		line1: order.shipping.address_1,
+									// 		line2: order.shipping.address_2,
+									// 		postal_code: order.shipping.postalCode,
+									// 		state: order.shipping.state
+									// 	},
+									// 	email: order.shipping.email,
+									// 	description: 'My First Test Customer (created for API docs)',
+									// 	name: order.shipping.first_name + ' ' + order.shipping.last_name,
+									// 	payment_method: req.body.paymentMethod.id,
+									// 	shipping: {
+									// 		address: {
+									// 			city: order.shipping.city,
+									// 			country: order.shipping.country,
+									// 			line1: order.shipping.address_1,
+									// 			line2: order.shipping.address_2,
+									// 			postal_code: order.shipping.postalCode,
+									// 			state: order.shipping.state
+									// 		},
+									// 		name: order.shipping.first_name + ' ' + order.shipping.last_name
+									// 	}
+									// });
 									if (updatedOrder) {
 										res.send({ message: 'Order Paid.', order: updatedOrder });
 									} else {

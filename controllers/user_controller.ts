@@ -38,6 +38,7 @@ export default {
 		const { params } = req;
 		try {
 			const user = await user_services.findByEmail_users_s(params);
+			console.log({ findByEmail_users_c: user });
 			if (user) {
 				return res.status(200).send(user);
 			}

@@ -33,13 +33,14 @@ import {
 } from '../constants/orderConstants';
 
 export const orderCreateReducer = (state = {}, action: { type: any; payload: any }) => {
+	console.log({ payload: action.payload });
 	switch (action.type) {
 		case ORDER_CREATE_REQUEST:
 			return { loading: true };
 		case ORDER_CREATE_SUCCESS:
 			return { loading: false, order: action.payload, success: true, message: 'Order Created' };
 		case ORDER_CREATE_FAIL:
-			return { loading: false, error: action.payload.error, message: action.payload.message };
+			return { loading: false, error: action.payload, message: action.payload.message };
 		// case ORDER_REMOVE_STATE:
 		// 	return { loading: false, order: action.payload, success: false };
 		default:

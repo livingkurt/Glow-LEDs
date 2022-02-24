@@ -62,7 +62,7 @@ export const createPayOrder = (
 	try {
 		dispatch({ type: ORDER_CREATE_REQUEST, payload: order });
 		const { userLogin: { userInfo } } = getState();
-		const order_create_res = await axios.post(
+		const { data: order_created } = await axios.post(
 			'/api/orders/secure',
 			{ ...order, user: userInfo._id },
 			{
@@ -71,34 +71,97 @@ export const createPayOrder = (
 				}
 			}
 		);
-		console.log({ order_create_res });
-		if (order_create_res.data) {
-			dispatch({ type: ORDER_CREATE_SUCCESS, payload: order_create_res.data });
-			const payment_res = await axios.put(
-				'/api/payments/secure/pay/' + order_create_res.data._id,
-				{ paymentMethod },
-				{
-					headers: { Authorization: 'Bearer ' + userInfo.access_token }
-				}
-			);
-			console.log({ payment_res });
-			if (payment_res.data) {
-				dispatch({ type: ORDER_PAY_SUCCESS, payload: payment_res.data });
-				sessionStorage.removeItem('shippingAddress');
-				dispatch({ type: ORDER_REMOVE_STATE, payload: {} });
-			} else {
-				dispatch({ type: ORDER_CREATE_FAIL, payload: payment_res });
+		dispatch({ type: ORDER_CREATE_SUCCESS, payload: order_created });
+		dispatch({ type: ORDER_PAY_REQUEST, payload: order });
+		const { data: payment_created } = await axios.put(
+			'/api/payments/secure/pay/' + order_created._id,
+			{ paymentMethod },
+			{
+				headers: { Authorization: 'Bearer ' + userInfo.access_token }
 			}
-		} else {
-			dispatch({ type: ORDER_CREATE_FAIL, payload: order_create_res });
-		}
+		);
+		dispatch({ type: ORDER_PAY_SUCCESS, payload: payment_created });
+		sessionStorage.removeItem('shippingAddress');
 	} catch (error) {
 		console.log({ error });
-		dispatch({ type: ORDER_CREATE_FAIL, payload: error });
+		dispatch({ type: ORDER_CREATE_FAIL, payload: error.response.data });
 	}
 };
 
 export const createPayOrderGuest = (
+	order: {
+		orderItems: object;
+		shipping: any;
+		payment: any;
+		itemsPrice: number;
+		shippingPrice: number;
+		taxPrice: number;
+		totalPrice: number;
+		order_note: string;
+		promo_code: string;
+	},
+	create_account: boolean,
+	password: string,
+	paymentMethod: any
+) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
+	try {
+		let user_id = '';
+		if (create_account) {
+			dispatch({
+				type: USER_REGISTER_REQUEST,
+				payload: {
+					first_name: order.shipping.first_name,
+					last_name: order.shipping.last_name,
+					email: order.shipping.email,
+					password: password
+				}
+			});
+			const { data: user } = await axios.get('/api/users/email/' + order.shipping.email);
+			const { data: create_user } = await axios.post('/api/users/register', {
+				first_name: order.shipping.first_name,
+				last_name: order.shipping.last_name,
+				email: order.shipping.email,
+				password: password
+			});
+			user_id = create_user._id;
+			dispatch({ type: USER_REGISTER_SUCCESS, payload: create_user });
+			axios.post('/api/emails/account_created', create_user);
+		} else if (!create_account) {
+			const { data: user } = await axios.get('/api/users/email/' + order.shipping.email);
+			if (user && Object.keys(user).length > 0) {
+				user_id = user._id;
+			} else {
+				dispatch({ type: USER_SAVE_REQUEST, payload: {} });
+				const { data: new_user } = await axios.post('/api/users/', {
+					first_name: order.shipping.first_name,
+					last_name: order.shipping.last_name,
+					email: order.shipping.email,
+					isVerified: true,
+					email_subscription: true,
+					guest: true,
+					password: process.env.REACT_APP_TEMP_PASS
+				});
+				dispatch({ type: USER_SAVE_SUCCESS, payload: new_user });
+				user_id = new_user._id;
+			}
+		}
+
+		dispatch({ type: ORDER_CREATE_REQUEST, payload: order });
+		const { data: order_created } = await axios.post('/api/orders/guest', { ...order, user: user_id });
+		dispatch({ type: ORDER_CREATE_SUCCESS, payload: order_created });
+		dispatch({ type: ORDER_PAY_REQUEST, payload: order });
+		const { data: payment_created } = await axios.put('/api/payments/guest/pay/' + order_created._id, {
+			paymentMethod
+		});
+		dispatch({ type: ORDER_PAY_SUCCESS, payload: payment_created });
+		sessionStorage.removeItem('shippingAddress');
+	} catch (error) {
+		console.log({ error });
+		dispatch({ type: ORDER_CREATE_FAIL, payload: error.response.data });
+	}
+};
+
+export const createPayOrderGuest2 = (
 	order: {
 		orderItems: object;
 		shipping: any;
@@ -232,6 +295,140 @@ export const createPayOrderGuest = (
 		dispatch({ type: ORDER_CREATE_FAIL, payload: error });
 	}
 };
+// export const createPayOrderGuest = (
+// 	order: {
+// 		orderItems: object;
+// 		shipping: any;
+// 		payment: any;
+// 		itemsPrice: number;
+// 		shippingPrice: number;
+// 		taxPrice: number;
+// 		totalPrice: number;
+// 		order_note: string;
+// 		promo_code: string;
+// 	},
+// 	create_account: boolean,
+// 	password: string,
+// 	paymentMethod: any
+// ) => async (
+// 	dispatch: (arg0: { type: string; payload: any }) => void,
+// 	getState: () => { userLogin: { userInfo: any } }
+// ) => {
+// 	try {
+// 		if (create_account) {
+// 			dispatch({
+// 				type: USER_REGISTER_REQUEST,
+// 				payload: {
+// 					first_name: order.shipping.first_name,
+// 					last_name: order.shipping.last_name,
+// 					email: order.shipping.email,
+// 					password: password
+// 				}
+// 			});
+// 			const create_account_res = await axios.post('/api/users/register', {
+// 				first_name: order.shipping.first_name,
+// 				last_name: order.shipping.last_name,
+// 				email: order.shipping.email,
+// 				password: password
+// 			});
+// 			if (create_account_res.data) {
+// 				dispatch({ type: USER_REGISTER_SUCCESS, payload: create_account_res.data });
+// 				axios.post('/api/emails/account_created', create_account_res.data);
+// 				dispatch({ type: ORDER_CREATE_REQUEST, payload: order });
+// 				const create_guest_order_res = await axios.post('/api/orders/guest', {
+// 					...order,
+// 					user: create_account_res.data._id
+// 				});
+// 				if (create_guest_order_res.data) {
+// 					dispatch({ type: ORDER_CREATE_SUCCESS, payload: create_guest_order_res.data });
+// 					const guest_payment_res = await axios.put(
+// 						'/api/payments/guest/pay/' + create_guest_order_res.data._id,
+// 						{
+// 							paymentMethod
+// 						}
+// 					);
+// 					if (guest_payment_res.data) {
+// 						dispatch({ type: ORDER_PAY_SUCCESS, payload: guest_payment_res.data });
+// 						sessionStorage.removeItem('shippingAddress');
+// 						dispatch({ type: ORDER_REMOVE_STATE, payload: {} });
+// 					}
+// 					dispatch({ type: ORDER_CREATE_FAIL, payload: guest_payment_res });
+// 				}
+// 				dispatch({ type: ORDER_CREATE_FAIL, payload: create_guest_order_res });
+// 			} else {
+// 				dispatch({ type: ORDER_CREATE_FAIL, payload: create_account_res });
+// 			}
+// 		} else {
+// 			const user_email_res = await axios.get('/api/users/email/' + order.shipping.email);
+// 			// console.log({ createPayOrderGuest_user_email_res: user_email_res });
+// 			if (user_email_res.data && Object.keys(user_email_res.data).length > 0) {
+// 				dispatch({ type: ORDER_CREATE_REQUEST, payload: order });
+// 				const create_guest_order_res = await axios.post('/api/orders/guest', {
+// 					...order,
+// 					user: user_email_res.data._id
+// 				});
+// 				if (create_guest_order_res.data) {
+// 					dispatch({ type: ORDER_CREATE_SUCCESS, payload: create_guest_order_res.data });
+
+// 					const guest_payment_res = await axios.put(
+// 						'/api/payments/guest/pay/' + create_guest_order_res.data._id,
+// 						{
+// 							paymentMethod
+// 						}
+// 					);
+// 					if (guest_payment_res.data) {
+// 						dispatch({ type: ORDER_PAY_SUCCESS, payload: guest_payment_res.data });
+// 						sessionStorage.removeItem('shippingAddress');
+// 						dispatch({ type: ORDER_REMOVE_STATE, payload: {} });
+// 					} else {
+// 						dispatch({ type: ORDER_CREATE_FAIL, payload: guest_payment_res });
+// 					}
+// 				} else {
+// 					dispatch({ type: ORDER_CREATE_FAIL, payload: create_guest_order_res });
+// 				}
+// 			} else {
+// 				dispatch({ type: USER_SAVE_REQUEST, payload: {} });
+// 				// console.log('User Doesnt Exist');
+// 				const { data } = await axios.post('/api/users/', {
+// 					first_name: order.shipping.first_name,
+// 					last_name: order.shipping.last_name,
+// 					email: order.shipping.email,
+// 					isVerified: true,
+// 					email_subscription: true,
+// 					guest: true,
+// 					password: process.env.REACT_APP_TEMP_PASS
+// 				});
+// 				console.log({ createPayOrderGuest_user_create: data });
+// 				dispatch({ type: USER_SAVE_SUCCESS, payload: data });
+// 				dispatch({ type: ORDER_CREATE_REQUEST, payload: order });
+// 				const create_guest_order_res = await axios.post('/api/orders/guest', {
+// 					...order,
+// 					user: data._id
+// 				});
+// 				console.log({ create_guest_order_res });
+// 				if (create_guest_order_res.data && Object.keys(create_guest_order_res.data).length > 0) {
+// 					dispatch({ type: ORDER_CREATE_SUCCESS, payload: create_guest_order_res.data });
+
+// 					const guest_payment_res = await axios.put(
+// 						'/api/payments/guest/pay/' + create_guest_order_res.data._id,
+// 						{ paymentMethod }
+// 					);
+// 					if (guest_payment_res.data) {
+// 						dispatch({ type: ORDER_PAY_SUCCESS, payload: guest_payment_res.data });
+// 						sessionStorage.removeItem('shippingAddress');
+// 						dispatch({ type: ORDER_REMOVE_STATE, payload: {} });
+// 					} else {
+// 						dispatch({ type: ORDER_CREATE_FAIL, payload: guest_payment_res });
+// 					}
+// 				} else {
+// 					dispatch({ type: ORDER_CREATE_FAIL, payload: create_guest_order_res });
+// 				}
+// 			}
+// 		}
+// 	} catch (error) {
+// 		dispatch({ type: ORDER_CREATE_FAIL, payload: error });
+// 	}
+// };
 
 export const createOrderGuest = (order: {
 	orderItems: object;

@@ -15,6 +15,7 @@ const LoadingPayment = ({ loading, error, children, set_error, set_loading_payme
 		// set_loading_payment(false);
 		set_error();
 	};
+	console.log({ error });
 
 	return (
 		<div>
@@ -41,8 +42,8 @@ const LoadingPayment = ({ loading, error, children, set_error, set_loading_payme
 			) : error ? (
 				<div className="error_message_payment jc-c column">
 					<div>
-						<h2 className="ta-c mv-5px">Error: {error.data.message}</h2>
-						<p className="ta-c mv-5px fs">{error.data.solution && error.data.solution}</p>
+						<h2 className="ta-c mv-5px">Error: {error.message}</h2>
+						<p className="ta-c mv-5px fs">{error.solution && error.solution}</p>
 					</div>
 					<button className="sidebar_close_button" aria-label="Close" onClick={() => close_error()}>
 						<i className="fas fa-times" aria-label="Close" />
