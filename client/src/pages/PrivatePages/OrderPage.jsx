@@ -693,6 +693,108 @@ const OrderPage = (props) => {
 					<div className="placeorder br-20px" style={{}}>
 						<div className="placeorder-info">
 							<div style={{ backgroundColor: width > 407 && determine_color(order) }}>
+								<div className="column jc-b h-22rem w-25remm mb-1rem">
+									<h2>Order Status</h2>
+									<div>
+										<div className="row ai-c">
+											<div className="mv-5px">
+												{order.isPaid ? (
+													<i className="fas fa-check-circle" />
+												) : (
+													<i className="fas fa-times-circle" />
+												)}
+											</div>
+											<div className="mh-10px">Paid</div>
+
+											<div>{!order.paidAt ? '' : format_date(order.paidAt)}</div>
+										</div>
+									</div>
+									<div>
+										<div className="row ai-c">
+											<div className="mv-5px">
+												{order.isManufactured ? (
+													<i className="fas fa-check-circle" />
+												) : (
+													<i className="fas fa-times-circle" />
+												)}
+											</div>
+											<div className="mh-10px">Manufactured</div>
+
+											<div>{!order.manufacturedAt ? '' : format_date(order.manufacturedAt)}</div>
+										</div>
+									</div>
+									<div>
+										<div className="row ai-c">
+											<div className="mv-5px">
+												{order.isPackaged ? (
+													<i className="fas fa-check-circle" />
+												) : (
+													<i className="fas fa-times-circle" />
+												)}
+											</div>
+											<div className="mh-10px">Packaged</div>
+
+											<div>{!order.packagedAt ? '' : format_date(order.packagedAt)}</div>
+										</div>
+									</div>
+									<div>
+										<div className="row ai-c">
+											<div className="mv-5px">
+												{order.isShipped ? (
+													<i className="fas fa-check-circle" />
+												) : (
+													<i className="fas fa-times-circle" />
+												)}
+											</div>
+											<div className="mh-10px">Shipped</div>
+
+											<div>{!order.shippedAt ? '' : format_date(order.shippedAt)}</div>
+										</div>
+									</div>
+									<div>
+										<div className="row ai-c">
+											<div className="mv-5px row">
+												{order.isDelivered ? (
+													<i className="fas fa-check-circle" />
+												) : (
+													<i className="fas fa-times-circle" />
+												)}
+											</div>
+											<div className="mh-10px">Delivered</div>
+
+											<div>{!order.deliveredAt ? '' : format_date(order.deliveredAt)}</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div style={{ backgroundColor: width > 407 && determine_color(order) }}>
+								<label>Order #: {order._id}</label>
+								{order.tracking_number && (
+									<label>
+										Tracking #:{' '}
+										<a
+											href={determine_tracking_number(order.tracking_number)}
+											target="_blank"
+											rel="noopener noreferrer"
+											className="mv-2rem"
+											style={{
+												textDecoration: 'underline',
+												color: 'white'
+											}}
+										>
+											{order.tracking_number}
+										</a>
+									</label>
+								)}
+								<h2>Email</h2>
+								<div className="jc-b w-100per mb-1rem" style={{ borderTop: '.1rem white solid' }} />
+								<div className="jc-b wrap w-100per">
+									<div className="paragraph_font lh-25px mb-1rem">
+										<div>{order.shipping.email}</div>
+									</div>
+								</div>
+							</div>
+							<div style={{ backgroundColor: width > 407 && determine_color(order) }}>
 								{order.isRefunded && (
 									<h1>
 										Refunded: {
@@ -702,24 +804,6 @@ const OrderPage = (props) => {
 									</h1>
 								)}
 								<div className="w-100per column">
-									<label>Order #: {order._id}</label>
-									{order.tracking_number && (
-										<label>
-											Tracking #:{' '}
-											<a
-												href={determine_tracking_number(order.tracking_number)}
-												target="_blank"
-												rel="noopener noreferrer"
-												className="mv-2rem"
-												style={{
-													textDecoration: 'underline',
-													color: 'white'
-												}}
-											>
-												{order.tracking_number}
-											</a>
-										</label>
-									)}
 									{userInfo &&
 									userInfo.isAdmin &&
 									order.return_tracking_number && (
@@ -760,7 +844,6 @@ const OrderPage = (props) => {
 													{order.shipping.postalCode}, {order.shipping.country}
 												</div>
 												<div>{order.shipping.international && 'International'}</div>
-												<div>{order.shipping.email}</div>
 											</div>
 											{order.shipping.shipping_rate && (
 												<div className="max-w-300px w-100per lh-25px">
@@ -839,22 +922,6 @@ ${order.shipping.email}`)}
 									</div>
 								)}
 							</div>
-							<div style={{ backgroundColor: width > 407 && determine_color(order) }}>
-								<ul className="cart-list-container mt-0px">
-									<li>
-										<h2>Shopping Cart</h2>
-										<div>Price</div>
-									</li>
-									{console.log({ orderItems: order.orderItems })}
-									{order.orderItems.length === 0 ? (
-										<div>Cart is empty</div>
-									) : (
-										order.orderItems.map((item, index) => (
-											<CartItem item={item} index={index} show_qty={false} />
-										))
-									)}
-								</ul>
-							</div>
 						</div>
 						<div
 							className="placeorder-action"
@@ -864,6 +931,21 @@ ${order.shipping.email}`)}
 								<li>
 									<h2 style={{ marginTop: 0 }}>Order Summary</h2>
 								</li>
+								<div style={{ backgroundColor: width > 407 && determine_color(order) }}>
+									<ul className="cart-list-container mt-0px">
+										<li>
+											<div>Price</div>
+										</li>
+										{console.log({ orderItems: order.orderItems })}
+										{order.orderItems.length === 0 ? (
+											<div>Cart is empty</div>
+										) : (
+											order.orderItems.map((item, index) => (
+												<CartItem item={item} index={index} show_qty={false} />
+											))
+										)}
+									</ul>
+								</div>
 								{!order.promo_code && (
 									<li>
 										<div>Subtotal</div>
@@ -981,79 +1063,7 @@ ${order.shipping.email}`)}
 									</div>
 								)}
 							</ul>
-							<div className="column jc-b h-22rem w-25remm mb-1rem">
-								<h2>Order Status</h2>
-								<div>
-									<div className="row ai-c">
-										<div className="mv-5px">
-											{order.isPaid ? (
-												<i className="fas fa-check-circle" />
-											) : (
-												<i className="fas fa-times-circle" />
-											)}
-										</div>
-										<div className="mh-10px">Paid</div>
 
-										<div>{!order.paidAt ? '' : format_date(order.paidAt)}</div>
-									</div>
-								</div>
-								<div>
-									<div className="row ai-c">
-										<div className="mv-5px">
-											{order.isManufactured ? (
-												<i className="fas fa-check-circle" />
-											) : (
-												<i className="fas fa-times-circle" />
-											)}
-										</div>
-										<div className="mh-10px">Manufactured</div>
-
-										<div>{!order.manufacturedAt ? '' : format_date(order.manufacturedAt)}</div>
-									</div>
-								</div>
-								<div>
-									<div className="row ai-c">
-										<div className="mv-5px">
-											{order.isPackaged ? (
-												<i className="fas fa-check-circle" />
-											) : (
-												<i className="fas fa-times-circle" />
-											)}
-										</div>
-										<div className="mh-10px">Packaged</div>
-
-										<div>{!order.packagedAt ? '' : format_date(order.packagedAt)}</div>
-									</div>
-								</div>
-								<div>
-									<div className="row ai-c">
-										<div className="mv-5px">
-											{order.isShipped ? (
-												<i className="fas fa-check-circle" />
-											) : (
-												<i className="fas fa-times-circle" />
-											)}
-										</div>
-										<div className="mh-10px">Shipped</div>
-
-										<div>{!order.shippedAt ? '' : format_date(order.shippedAt)}</div>
-									</div>
-								</div>
-								<div>
-									<div className="row ai-c">
-										<div className="mv-5px row">
-											{order.isDelivered ? (
-												<i className="fas fa-check-circle" />
-											) : (
-												<i className="fas fa-times-circle" />
-											)}
-										</div>
-										<div className="mh-10px">Delivered</div>
-
-										<div>{!order.deliveredAt ? '' : format_date(order.deliveredAt)}</div>
-									</div>
-								</div>
-							</div>
 							{userInfo &&
 							userInfo.isAdmin && (
 								<div className="column">
@@ -1085,12 +1095,14 @@ ${order.shipping.email}`)}
 							userInfo.isAdmin && (
 								<div>
 									<div className="jc-b">
-										<div className="column jc-b w-100per">
+										<div className="column jc-b w-100per mr-1rem">
 											<OrderStatusButtons
 												order={order}
 												update_order_payment_state={update_order_payment_state}
 												update_order_state={update_order_state}
 											/>
+										</div>
+										<div className="column jc-b w-100per">
 											{order.shipping.shipping_label && (
 												<button className="btn secondary mv-5px" onClick={() => view_label()}>
 													Print Label
@@ -1234,6 +1246,7 @@ ${order.shipping.email}`)}
 											>
 												Create Duplicate Order
 											</button>
+
 											{/* <button
 										className="btn primary mv-5px "
 										onClick={() =>
