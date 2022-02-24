@@ -1023,6 +1023,18 @@ const PlaceOrderPage = (props) => {
 		history.push('/checkout/placeorder');
 	};
 
+	const decide_steps = () => {
+		if (successPay) {
+			return <CheckoutSteps step1 step2 step3 step4 />;
+		} else if (show_payment) {
+			return <CheckoutSteps step1 step2 step3 />;
+		} else if (shipping_completed) {
+			return <CheckoutSteps step1 step2 />;
+		} else {
+			return <CheckoutSteps step1 />;
+		}
+	};
+
 	return (
 		<div>
 			<Helmet>
@@ -1032,13 +1044,14 @@ const PlaceOrderPage = (props) => {
 				<link rel="canonical" href="https://www.glow-leds.com/secure/checkout/placeorder" />
 				<meta property="og:url" content="https://www.glow-leds.com/secure/checkout/placeorder" />
 			</Helmet>
-			{successPay ? (
+			{/* {successPay ? (
 				<CheckoutSteps step1 step2 step3 step4 />
 			) : shipping && shipping.hasOwnProperty('first_name') ? (
-				<CheckoutSteps step1 step2 step3 />
+				<CheckoutSteps step1 step2 />
 			) : (
 				<CheckoutSteps step1 />
-			)}
+			)} */}
+			{decide_steps()}
 			<LoadingPayments loading={loading_payment} error={error} set_error={set_error} />
 			<Loading loading={user_loading} />
 			<div className="placeorder">

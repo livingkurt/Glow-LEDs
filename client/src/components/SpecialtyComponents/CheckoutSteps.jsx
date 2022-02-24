@@ -7,7 +7,7 @@ const CheckoutSteps = (props) => {
 	const { userInfo } = userLogin;
 	return (
 		<div className="checkout-steps">
-			<div className={props.step1 ? 'active' : ''}>{userInfo && userInfo.first_name ? 'Login' : 'Guest'}</div>
+			<div className={props.step1 ? 'active' : ''}>{userInfo && userInfo.first_name ? 'Login' : 'Email'}</div>
 			<div className={props.step2 ? 'active' : ''}>
 				<Link to={userInfo && userInfo.first_name ? '/secure/checkout/shipping' : '/checkout/shipping'}>
 					Shipping
