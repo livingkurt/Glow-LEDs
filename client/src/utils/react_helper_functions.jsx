@@ -227,7 +227,7 @@ export const email_sale_price_switch = (item, color) => {
 
 export const cart_item_name = (item) => {
 	return (
-		<div className="max-w-500px">
+		<div className="">
 			{item.secondary_product && (
 				<div className="ai-c mb-20px jc-b w-100per">
 					<label className="mv-0px mr-5px">

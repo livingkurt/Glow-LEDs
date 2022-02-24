@@ -56,6 +56,26 @@ const PlaceOrderPage = (props) => {
 	// const [ passwords_complete, set_passwords_complete ] = useState('');
 	// const [ passwords_check, set_passwords_check ] = useState(false);
 
+	const [ show_email, set_show_email ] = useState(true);
+	const [ show_shipping, set_show_shipping ] = useState(false);
+	const [ show_payment, set_show_payment ] = useState(false);
+	const [ show_review, set_show_review ] = useState(false);
+
+	const [ is_guest, set_is_guest ] = useState(true);
+
+	const [ email_completed, set_email_completed ] = useState(false);
+	const [ shipping_completed, set_shipping_completed ] = useState(false);
+	const [ payment_completed, set_payment_completed ] = useState(false);
+	const [ review_completed, set_review_completed ] = useState(false);
+
+	// const [ email, setEmail ] = useState('');
+	const [ password, set_password ] = useState('');
+	const [ new_password, set_new_password ] = useState('');
+
+	const [ email_validations, setEmailValidations ] = useState('');
+	const [ password_validations, setPasswordValidations ] = useState('');
+	const [ loading_login, set_loading_login ] = useState(false);
+
 	const [ shippingPrice, setShippingPrice ] = useState(0);
 	const [ previousShippingPrice, setPreviousShippingPrice ] = useState(0);
 	const [ promo_code, set_promo_code ] = useState('');
@@ -322,7 +342,7 @@ const PlaceOrderPage = (props) => {
 						guest: true
 					},
 					create_account,
-					password,
+					new_password,
 					paymentMethod
 				)
 			);
@@ -857,18 +877,6 @@ const PlaceOrderPage = (props) => {
 
 	// const [ login, set_login ] = useState(userInfo.hasOwnProperty('first_name') ? true : false);
 
-	const [ show_email, set_show_email ] = useState(true);
-	const [ show_shipping, set_show_shipping ] = useState(false);
-	const [ show_payment, set_show_payment ] = useState(false);
-	const [ show_review, set_show_review ] = useState(false);
-
-	const [ is_guest, set_is_guest ] = useState(true);
-
-	const [ email_completed, set_email_completed ] = useState(false);
-	const [ shipping_completed, set_shipping_completed ] = useState(false);
-	const [ payment_completed, set_payment_completed ] = useState(false);
-	const [ review_completed, set_review_completed ] = useState(false);
-
 	console.log({ email_completed });
 
 	const show_hide_steps = (step) => {
@@ -916,13 +924,18 @@ const PlaceOrderPage = (props) => {
 			set_shipping_completed(true);
 		}
 		if (step === 'shipping') {
-			set_show_shipping(true);
-			set_show_email(false);
-			set_show_payment(false);
-			set_show_review(false);
-			set_email_completed(true);
-			set_shipping_completed(true);
-			re_choose_shipping_rate();
+			if (email.length > 0) {
+				set_show_shipping(true);
+				set_show_email(false);
+				set_show_payment(false);
+				set_show_review(false);
+				set_email_completed(true);
+				set_shipping_completed(true);
+				re_choose_shipping_rate();
+				setEmailValidations('');
+			} else {
+				setEmailValidations('Email Field Empty');
+			}
 		}
 		if (step === 'payment') {
 			set_show_payment(true);
@@ -941,13 +954,6 @@ const PlaceOrderPage = (props) => {
 			set_payment_completed(true);
 		}
 	};
-
-	// const [ email, setEmail ] = useState('');
-	const [ password, set_password ] = useState('');
-
-	const [ email_validations, setEmailValidations ] = useState('');
-	const [ password_validations, setPasswordValidations ] = useState('');
-	const [ loading_login, set_loading_login ] = useState(false);
 
 	// const userLogin = useSelector((state) => state.userLogin);
 	// const { loading: user_loading, userInfo, error } = userLogin;
@@ -1065,7 +1071,7 @@ const PlaceOrderPage = (props) => {
 											</li>
 											<li className="mv-0px">
 												<button
-													className="btn primary w-100per"
+													className="btn primary w-100per bob"
 													onClick={() => next_step('shipping')}
 												>
 													Continue
@@ -1085,8 +1091,11 @@ const PlaceOrderPage = (props) => {
 												onChange={(e) => set_email(e.target.value)}
 											/>
 										</li>
+										<label className="validation_text" style={{ justifyContent: 'center' }}>
+											{email_validations}
+										</label>
 										<pre className="phrase_font mv-0px mt-10px">
-											You'll receieve receipts and notifications at this email address.{'\n'}Already
+											You'll recieve receipts and notifications at this email address.{'\n'}Already
 											have an account?{' '}
 											<button
 												className="btn nav title_font mb-15px"
@@ -1096,7 +1105,7 @@ const PlaceOrderPage = (props) => {
 											</button>
 										</pre>
 
-										<button className="btn primary" onClick={() => next_step('shipping')}>
+										<button className="btn primary bob" onClick={() => next_step('shipping')}>
 											Continue
 										</button>
 									</ul>
@@ -1132,7 +1141,7 @@ const PlaceOrderPage = (props) => {
 											</button>
 										</pre>
 										<li>
-											<button className="btn primary" onClick={(e) => submit_login(e)}>
+											<button className="btn primary bob" onClick={(e) => submit_login(e)}>
 												{/* <button className="btn primary" onClick={() => next_step('shipping')}> */}
 												Continue
 											</button>
@@ -1143,7 +1152,7 @@ const PlaceOrderPage = (props) => {
 						) : (
 							<div className="wrap jc-b w-100per">
 								<div className="paragraph_font lh-25px">
-									<div>{shipping.email || userInfo.email}</div>
+									<div>{email}</div>
 								</div>
 							</div>
 						)}
@@ -1400,7 +1409,7 @@ const PlaceOrderPage = (props) => {
 											<li>
 												<button
 													type="submit"
-													className="btn primary"
+													className="btn primary bob"
 													// onClick={() => next_step('payment')}
 												>
 													Continue
@@ -1469,7 +1478,7 @@ const PlaceOrderPage = (props) => {
 										{show_shipping_complete && (
 											<button
 												type="submit"
-												className="btn primary w-100per"
+												className="btn primary w-100per bob mt-1rem"
 												onClick={() => next_step('payment')}
 											>
 												Continue
@@ -1651,11 +1660,49 @@ const PlaceOrderPage = (props) => {
 										</div>
 									</li>
 									<li>
+										{loading_checkboxes ? (
+											<div>Loading...</div>
+										) : (
+											<div className="mv-2rem">
+												<input
+													type="checkbox"
+													name="create_account"
+													defaultChecked={create_account}
+													style={{
+														transform: 'scale(1.5)'
+													}}
+													className="mr-1rem"
+													id="create_account"
+													onChange={(e) => {
+														set_create_account(e.target.checked);
+													}}
+												/>
+												<label htmlFor="create_account mb-20px">
+													Create an account for faster checkout
+												</label>
+											</div>
+										)}
+									</li>
+									{userInfo &&
+									!userInfo.first_name &&
+									create_account && (
+										<li className="column mb-2rem">
+											<label htmlFor="password">Password</label>
+											<input
+												// className="form_input"
+												type="password"
+												id="password"
+												name="password"
+												onChange={(e) => set_new_password(e.target.value)}
+											/>
+											<label className="validation_text fs-16px jc-c ">
+												{password_validations}
+											</label>
+										</li>
+									)}
+									<li>
 										{!loading &&
-										!hide_pay_button &&
-										shipping &&
-										shipping.hasOwnProperty('first_name') &&
-										!create_account && (
+										!hide_pay_button && (
 											<Stripe pay_order={placeOrderHandler} loading_payment={loading_payment} />
 										)}
 										{/* {!hide_pay_button &&

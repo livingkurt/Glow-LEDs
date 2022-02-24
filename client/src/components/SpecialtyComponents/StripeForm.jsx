@@ -59,7 +59,7 @@ const StripeForm = (props) => {
 				</li>
 			)}
 			{!props.loading_payment && (
-				<button type="submit" className="btn primary w-100per mb-12px bob" disabled={!stripe}>
+				<button type="submit" className="btn primary w-100per mt-1rem bob" disabled={!stripe}>
 					Complete Order
 				</button>
 			)}
