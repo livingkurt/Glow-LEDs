@@ -1375,19 +1375,25 @@ const PlaceOrderPage = (props) => {
 											) : (
 												<div>
 													<li>
-														<label htmlFor="international">International</label>
-														<input
-															type="checkbox"
-															name="international"
-															// defaultChecked={international ? 'checked' : 'unchecked'}
-															defaultValue={international}
-															defaultChecked={international}
-															value={international}
-															id="international"
-															onChange={(e) => {
-																setInternational(e.target.checked);
-															}}
-														/>
+														<div>
+															<input
+																type="checkbox"
+																name="international"
+																// defaultChecked={international ? 'checked' : 'unchecked'}
+																defaultValue={international}
+																defaultChecked={international}
+																value={international}
+																id="international"
+																style={{
+																	transform: 'scale(1.5)'
+																}}
+																className="mr-1rem"
+																onChange={(e) => {
+																	setInternational(e.target.checked);
+																}}
+															/>
+															<label htmlFor="international">International</label>
+														</div>
 													</li>
 													{international && (
 														<li>
@@ -1422,22 +1428,21 @@ const PlaceOrderPage = (props) => {
 													{loading ? (
 														<div>Loading...</div>
 													) : (
-														<div>
-															<li>
-																<label htmlFor="save_shipping">Save Shipping</label>
-																<input
-																	type="checkbox"
-																	name="save_shipping"
-																	// defaultChecked={save_shipping ? 'checked' : 'unchecked'}
-																	defaultValue={save_shipping}
-																	defaultChecked={save_shipping}
-																	// value={save_shipping}
-																	id="save_shipping"
-																	onChange={(e) => {
-																		set_save_shipping(e.target.checked);
-																	}}
-																/>
-															</li>
+														<div className="mv-2rem">
+															<input
+																type="checkbox"
+																name="save_shipping"
+																defaultChecked={save_shipping}
+																style={{
+																	transform: 'scale(1.5)'
+																}}
+																className="mr-1rem"
+																id="save_shipping"
+																onChange={(e) => {
+																	set_save_shipping(e.target.checked);
+																}}
+															/>
+															<label htmlFor="save_shipping mb-20px">Save Shipping</label>
 														</div>
 													)}
 												</div>
@@ -1506,96 +1511,15 @@ const PlaceOrderPage = (props) => {
 							</div>
 							{show_payment && (
 								<div>
-									{/* {userInfo &&
-									!userInfo.first_name && (
-										<li>
-											{loading_checkboxes ? (
-												<div>Loading...</div>
-											) : (
-												<div>
-													<label htmlFor="create_account mb-20px">Create Account</label>
-													<input
-														type="checkbox"
-														name="create_account"
-														defaultChecked={create_account}
-														id="create_account"
-														onChange={(e) => {
-															set_create_account(e.target.checked);
-														}}
-													/>
-												</div>
-											)}
-										</li>
-									)}
-									{userInfo &&
-									!userInfo.first_name &&
-									create_account && (
-										<li className="column">
-											<label htmlFor="password">Password</label>
-											<input
-												// className="form_input"
-												type="password"
-												id="password"
-												name="password"
-												onChange={(e) => setPassword(e.target.value)}
-											/>
-											<label className="validation_text fs-16px jc-c ">
-												{password_validations}
-											</label>
-										</li>
-									)}
-									{userInfo &&
-									!userInfo.first_name &&
-									create_account && (
-										<li className="column">
-											<label htmlFor="rePassword">Re-Enter Password</label>
-											<input
-												// className="form_input"
-												type="password"
-												id="rePassword"
-												name="rePassword"
-												onChange={(e) => setRePassword(e.target.value)}
-											/>
-											<label className="validation_text fs-16px jc-c ">
-												{re_password_validations}
-											</label>
-										</li>
-									)}
-									{userInfo &&
-									!userInfo.first_name &&
-									create_account && (
-										<li className="column">
-											<label className="fs-16px jc-c ta-c mb-12px" style={{ color: '#3dff3d' }}>
-												{passwords_complete}
-											</label>
-											<button className="btn primary" onClick={(e) => check_password(e)}>
-												Check Password
-											</button>
-										</li>
-									)} */}
-									{/* {!loading &&
-						!hide_pay_button &&
-						shipping &&
-						shipping.hasOwnProperty('first_name') && (
-							<Stripe
-								pay_order={placeOrderHandler}
-								loading_payment={loading_payment}
-								date_1={props.date_1}
-								date_2={props.date_2}
-							/>
-						)} */}{' '}
 									<div className="w-100per ">
 										<div htmlFor="order_note">Add a note</div>
 										<input
 											type="text"
 											name="order_note"
-											// value={order_note}
 											id="order_note"
 											className="w-100per"
-											// ref={order_note_ref}
 											onChange={(e) => set_order_note(e.target.value)}
 										/>
-										{/* <h4>{no_note_warning()}</h4> */}
 									</div>
 									{show_promo_code && (
 										<div>
@@ -1605,12 +1529,10 @@ const PlaceOrderPage = (props) => {
 													<form onSubmit={(e) => check_code(e)} className="row">
 														<input
 															type="text"
-															// value={promo_code}
 															name="promo_code"
 															id="promo_code"
 															className="w-100per"
 															style={{ textTransform: 'uppercase' }}
-															// ref={promo_code_ref}
 															onChange={(e) => {
 																set_promo_code(e.target.value.toUpperCase());
 															}}
@@ -1650,10 +1572,7 @@ const PlaceOrderPage = (props) => {
 												name="tip"
 												id="tip"
 												placeholder="$0.00"
-												// onFocus={() => this.placeholder('')}
-												// onBlur={() => this.placeholder('$0.00')}
 												defaultValue={`$${tip && parseFloat(tip).toFixed(2)}`}
-												// defaultValue={tip}
 												className="w-100per"
 												onChange={(e) => set_tip(parseFloat(e.target.value))}
 											/>
