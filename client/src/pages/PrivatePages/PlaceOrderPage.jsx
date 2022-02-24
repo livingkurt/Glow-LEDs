@@ -350,7 +350,7 @@ const PlaceOrderPage = (props) => {
 
 		set_loading_payment(true);
 		// dimminish_stock();
-		// promo_code_used();
+		promo_code_used();
 		sessionStorage.removeItem('shippingAddress');
 	};
 
@@ -441,7 +441,7 @@ const PlaceOrderPage = (props) => {
 		);
 
 		props.history.push('/secure/glow/orders?page=1?limit=10');
-		// empty_cart();
+		empty_cart();
 		dimminish_stock();
 		promo_code_used();
 		sessionStorage.removeItem('shippingAddress');
@@ -461,7 +461,7 @@ const PlaceOrderPage = (props) => {
 				if (successPay && order) {
 					props.history.push('/pages/complete/order/' + order._id);
 					set_loading_payment(false);
-					// empty_cart();
+					empty_cart();
 				} else if (error_pay) {
 				}
 			}
@@ -787,44 +787,44 @@ const PlaceOrderPage = (props) => {
 		setInternational(shipping.international);
 	};
 
-	const address = {
-		first_name: 'Kurt',
-		last_name: 'LaVacque',
-		address_1: '230 Hackberry St',
-		city: 'Baytown',
-		state: 'TX',
-		postalCode: '77520',
-		country: 'United States',
-		phone: '906-284-2208',
-		company: 'Glow LEDs'
-	};
-	const use_saved_shipping = (e, shipping, user) => {
-		e.preventDefault();
-		console.log({ shipping });
-		set_first_name(address.first_name);
-		set_last_name(address.last_name);
-		set_address_1(address.address_1);
-		set_address_2(address.address_2);
-		setCity(address.city);
-		setState(address.state);
-		setPostalCode(address.postalCode);
-		setCountry(address.country);
-		setInternational(address.international);
-	};
+	// const address = {
+	// 	first_name: 'Kurt',
+	// 	last_name: 'LaVacque',
+	// 	address_1: '230 Hackberry St',
+	// 	city: 'Baytown',
+	// 	state: 'TX',
+	// 	postalCode: '77520',
+	// 	country: 'United States',
+	// 	phone: '906-284-2208',
+	// 	company: 'Glow LEDs'
+	// };
 	// const use_saved_shipping = (e, shipping, user) => {
 	// 	e.preventDefault();
 	// 	console.log({ shipping });
-	// 	set_email(user.email);
-	// 	set_first_name(shipping.first_name);
-	// 	set_last_name(shipping.last_name);
-	// 	set_address_1(shipping.address_1);
-	// 	set_address_2(shipping.address_2);
-	// 	setCity(shipping.city);
-	// 	setState(shipping.state);
-	// 	setPostalCode(shipping.postalCode);
-	// 	setCountry(shipping.country);
-	// 	setInternational(shipping.international);
+	// 	set_first_name(address.first_name);
+	// 	set_last_name(address.last_name);
+	// 	set_address_1(address.address_1);
+	// 	set_address_2(address.address_2);
+	// 	setCity(address.city);
+	// 	setState(address.state);
+	// 	setPostalCode(address.postalCode);
+	// 	setCountry(address.country);
+	// 	setInternational(address.international);
 	// };
+	const use_saved_shipping = (e, shipping, user) => {
+		e.preventDefault();
+		console.log({ shipping });
+		set_email(user.email);
+		set_first_name(shipping.first_name);
+		set_last_name(shipping.last_name);
+		set_address_1(shipping.address_1);
+		set_address_2(shipping.address_2);
+		setCity(shipping.city);
+		setState(shipping.state);
+		setPostalCode(shipping.postalCode);
+		setCountry(shipping.country);
+		setInternational(shipping.international);
+	};
 
 	// const [ address, setAddress ] = React.useState('');
 	// const [ coordinates, setCoordinates ] = React.useState({
@@ -1191,18 +1191,19 @@ const PlaceOrderPage = (props) => {
 								{show_shipping ? (
 									<form onSubmit={submitHandler}>
 										<ul className="shipping-container mv-0px pv-0px ph-2rem">
-											{/* {userInfo &&
+											{userInfo &&
 											userInfo.shipping &&
-											userInfo.shipping.hasOwnProperty('first_name') && ( */}
-											<li>
-												<button
-													onClick={(e) => use_saved_shipping(e, userInfo.shipping, userInfo)}
-													className="btn primary"
-												>
-													Use Saved Shipping
-												</button>
-											</li>
-											{/* )} */}
+											userInfo.shipping.hasOwnProperty('first_name') && (
+												<li>
+													<button
+														onClick={(e) =>
+															use_saved_shipping(e, userInfo.shipping, userInfo)}
+														className="btn primary"
+													>
+														Use Saved Shipping
+													</button>
+												</li>
+											)}
 											{userInfo &&
 											userInfo.isAdmin && (
 												<li className="w-100per">

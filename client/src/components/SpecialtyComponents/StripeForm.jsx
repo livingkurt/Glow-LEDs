@@ -1,5 +1,5 @@
 // React
-import React from 'react';
+import React, { useState } from 'react';
 import { CardElement, Elements, useStripe, useElements } from '@stripe/react-stripe-js';
 import { PromosPage } from '../../pages';
 import { decide_warning } from '../../utils/helper_functions';
@@ -7,6 +7,7 @@ import { decide_warning } from '../../utils/helper_functions';
 const StripeForm = (props) => {
 	const stripe = useStripe();
 	const elements = useElements();
+	const [ remove_button, set_remove_button ] = useState(false);
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
@@ -54,8 +55,13 @@ const StripeForm = (props) => {
 					<p style={{ color: '#ffca00' }}>Your Order will ship after 12/02/2021 🚚</p>
 				</li>
 			)}
-			{!props.loading_payment && (
-				<button type="submit" className="btn primary w-100per mt-1rem bob" disabled={!stripe}>
+			{!remove_button && (
+				<button
+					type="submit"
+					className="btn primary w-100per mt-1rem bob"
+					onClick={() => set_remove_button(true)}
+					disabled={!stripe}
+				>
 					Complete Order
 				</button>
 			)}
