@@ -61,7 +61,8 @@ export const userLoginReducer = (state = {}, action: { type: any; payload: any }
 				// isAuthenticated: !isEmpty(action.payload),
 				userInfo: action.payload,
 				message: 'User Login Success',
-				success: true
+				success: true,
+				loading: false
 			};
 		case USER_LOGIN_FAIL:
 			return { loading: false, error: action.payload.error, message: action.payload.message };

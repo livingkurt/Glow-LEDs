@@ -84,7 +84,7 @@ const Cart = (props) => {
 				if (userInfo.hasOwnProperty('first_name')) {
 					history.push('/account/login?redirect=/secure/checkout/placeorder');
 				} else {
-					history.push('/checkout/decision');
+					history.push('/checkout/placeorder');
 				}
 			}
 			closeMenu();

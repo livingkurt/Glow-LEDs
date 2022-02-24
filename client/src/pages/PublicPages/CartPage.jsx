@@ -22,7 +22,7 @@ const CartPage = (props) => {
 				if (userInfo.hasOwnProperty('first_name')) {
 					props.history.push('/account/login?redirect=/secure/checkout/placeorder');
 				} else {
-					props.history.push('/checkout/decision');
+					props.history.push('/checkout/placeorder');
 				}
 			}
 		}
