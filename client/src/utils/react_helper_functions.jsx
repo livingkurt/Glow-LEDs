@@ -383,10 +383,11 @@ export const determine_product_name = (item, show_qty, date) => {
 				);
 			}
 			if (item.subcategory === 'sampler') {
+				console.log({ secondary_product_name: item.secondary_product_name });
 				return (
 					<div>
-						{show_qty && item.qty > 1 && item.qty + 'x'} {item.color && item.color + ' '} {item.name}{' '}
-						{item.size !== '0' && ' - ' + item.size} - {item.secondary_product_name.split(' ')[1].trim()}
+						{show_qty && item.qty > 1 && item.qty + 'x'} {item.color && item.color + ' '} {item.name} -{' '}
+						{item.secondary_product_name.split('-')[1].trim()}
 					</div>
 				);
 			}
