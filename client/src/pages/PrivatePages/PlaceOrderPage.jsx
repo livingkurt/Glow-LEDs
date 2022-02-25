@@ -223,7 +223,8 @@ const PlaceOrderPage = (props) => {
 			});
 			console.log(get_shipping_rates_res);
 			if (get_shipping_rates_res.data.message) {
-				set_error(get_shipping_rates_res);
+				set_error(get_shipping_rates_res.data);
+				set_loading_shipping(false);
 			} else {
 				console.log('Shipment Ran');
 				set_shipping_rates(get_shipping_rates_res.data.shipment);
@@ -1655,7 +1656,7 @@ const PlaceOrderPage = (props) => {
 									</li>
 									{userInfo &&
 									userInfo.isAdmin && (
-										<div>
+										<div className="mt-2rem">
 											{userInfo &&
 											userInfo.isAdmin &&
 											users &&
@@ -1665,15 +1666,19 @@ const PlaceOrderPage = (props) => {
 														<div>Loading...</div>
 													) : (
 														<li>
-															<label htmlFor="paid mb-20px ">Already Paid?</label>
 															<input
 																type="checkbox"
 																name="paid"
 																id="paid"
+																style={{
+																	transform: 'scale(1.5)'
+																}}
+																className="mr-1rem"
 																onChange={(e) => {
 																	set_paid(e.target.checked);
 																}}
 															/>
+															<label htmlFor="paid mb-20px ">Already Paid?</label>
 														</li>
 													)}
 													{paid && (
