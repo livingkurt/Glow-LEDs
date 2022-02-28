@@ -768,9 +768,9 @@ const OrderPage = (props) => {
 								</div>
 							</div>
 							<div style={{ backgroundColor: width > 407 && determine_color(order) }}>
-								<label>Order #: {order._id}</label>
+								<div className="mb-1rem">Order #: {order._id}</div>
 								{order.tracking_number && (
-									<label>
+									<div>
 										Tracking #:{' '}
 										<a
 											href={determine_tracking_number(order.tracking_number)}
@@ -784,8 +784,31 @@ const OrderPage = (props) => {
 										>
 											{order.tracking_number}
 										</a>
-									</label>
+									</div>
 								)}
+
+								{userInfo &&
+								userInfo.isAdmin &&
+								order.return_tracking_number && (
+									<div className="w-100per column mt-1rem">
+										<label>
+											Return Tracking #:{' '}
+											<a
+												href={determine_tracking_number(order.return_tracking_number)}
+												target="_blank"
+												rel="noopener noreferrer"
+												className="mv-2rem"
+												style={{
+													textDecoration: 'underline',
+													color: 'white'
+												}}
+											>
+												{order.return_tracking_number}
+											</a>
+										</label>
+									</div>
+								)}
+
 								<h2>Email</h2>
 								<div className="jc-b w-100per mb-1rem" style={{ borderTop: '.1rem white solid' }} />
 								<div className="jc-b wrap w-100per">
@@ -803,27 +826,7 @@ const OrderPage = (props) => {
 										on {format_date(order.refundedAt)}
 									</h1>
 								)}
-								<div className="w-100per column">
-									{userInfo &&
-									userInfo.isAdmin &&
-									order.return_tracking_number && (
-										<label>
-											Return Tracking #:{' '}
-											<a
-												href={determine_tracking_number(order.return_tracking_number)}
-												target="_blank"
-												rel="noopener noreferrer"
-												className="mv-2rem"
-												style={{
-													textDecoration: 'underline',
-													color: 'white'
-												}}
-											>
-												{order.return_tracking_number}
-											</a>
-										</label>
-									)}
-								</div>
+
 								<div className="wrap jc-b">
 									<div className="w-100per ">
 										<h2>Shipping</h2>
