@@ -398,12 +398,12 @@ const ControlPanelPage = (props) => {
 							</select>
 							<span className="custom-arrow" />
 						</div>
-						<Link to={'/secure/glow/controlpanel/monthly_expenes/' + year + '/' + month}>
-							<button className="btn primary">Go</button>
-						</Link>
 					</div>
 				</div>
 			</div>
+			<Link to={'/secure/glow/controlpanel/monthly_expenes'}>
+				<button className="btn primary">All Time</button>
+			</Link>
 			<Loading loading={orders && orders.length === 0} />
 			{/* {orders &&
 			orders.length > 0 && (

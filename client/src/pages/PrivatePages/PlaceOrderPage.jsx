@@ -177,6 +177,8 @@ const PlaceOrderPage = (props) => {
 						set_hide_pay_button(false);
 						setShippingPrice(0);
 						set_free_shipping_message('Free');
+						set_loading_shipping(false);
+						set_show_shipping_complete(true);
 					} else {
 						if (shipping.hasOwnProperty('first_name')) {
 							get_shipping_rates();
@@ -205,10 +207,13 @@ const PlaceOrderPage = (props) => {
 			cartItems.reduce((a, c) => a + c.package_width, 0) === 0 &&
 			cartItems.reduce((a, c) => a + c.package_width, 0) === 0
 		) {
+			console.log('hello1');
 			setShippingPrice(0);
 			set_free_shipping_message('Free');
+			set_loading_shipping(false);
 		} else {
-			const get_shipping_rates_res = await API_Shipping.get_shipping_rates({
+			console.log('hello2');
+			const { data } = await API_Shipping.get_shipping_rates({
 				orderItems: cartItems,
 				shipping,
 				payment,
@@ -221,15 +226,15 @@ const PlaceOrderPage = (props) => {
 				order_note,
 				promo_code: show_message && promo_code
 			});
-			console.log(get_shipping_rates_res);
-			if (get_shipping_rates_res.data.message) {
-				set_error(get_shipping_rates_res.data);
+			console.log({ get_shipping_rates: data });
+			if (data.message) {
+				set_error(data);
 				set_loading_shipping(false);
 			} else {
 				console.log('Shipment Ran');
-				set_shipping_rates(get_shipping_rates_res.data.shipment);
-				set_shipment_id(get_shipping_rates_res.data.shipment.id);
-				set_parcel(get_shipping_rates_res.data.parcel._id);
+				set_shipping_rates(data.shipment);
+				set_shipment_id(data.shipment.id);
+				set_parcel(data.parcel._id);
 				// setTimeout(() => {
 				set_loading_shipping(false);
 				// }, 1000);
