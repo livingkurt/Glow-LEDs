@@ -280,7 +280,9 @@ const OrderPage = (props) => {
 	const create_label = async () => {
 		set_loading_label(true);
 		const { data } = await API_Shipping.create_label(order, order.shipping.shipping_rate);
+		const { data: invoice } = await API_Orders.get_invoice(order);
 		// show_label(data.postage_label.label_url);
+		print_invoice(invoice);
 		print_label(data.postage_label.label_url);
 		console.log({ data });
 		if (data) {
@@ -290,7 +292,7 @@ const OrderPage = (props) => {
 		const request = await API_Shipping.add_tracking_number(order, data.tracking_code, data);
 		console.log(request);
 		dispatch(detailsOrder(props.match.params.id));
-		history.push('/secure/glow/emails/invoice/' + order._id);
+		// history.push('/secure/glow/emails/invoice/' + order._id);
 	};
 
 	const create_return_label = async () => {
@@ -319,8 +321,9 @@ const OrderPage = (props) => {
 		const { data } = await API_Shipping.buy_label(order.shipping.shipment_id, order.shipping.shipping_rate);
 		const { data: invoice } = await API_Orders.get_invoice(order);
 		// show_label(data.postage_label.label_url);
-		print_label(data.postage_label.label_url);
 		print_invoice(invoice);
+		print_label(data.postage_label.label_url);
+
 		if (data) {
 			set_loading_label(false);
 		}

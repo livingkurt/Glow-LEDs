@@ -125,26 +125,31 @@ const OrderListItem = ({ order, determine_color, admin, update_order_payment_sta
 
 	const buy_label = async () => {
 		set_loading_label(true);
-		console.log({ shipment_id: order.shipping.shipment_id, shipping_rate: order.shipping.shipping_rate });
 		const { data } = await API_Shipping.buy_label(order.shipping.shipment_id, order.shipping.shipping_rate);
 		const { data: invoice } = await API_Orders.get_invoice(order);
-		// show_label(data.postage_label.label_url);
-		print_label(data.postage_label.label_url);
 		print_invoice(invoice);
+		print_label(data.postage_label.label_url);
+
 		if (data) {
 			set_loading_label(false);
 		}
-		console.log({ tracking_code: data.tracking_code });
-		const request = await API_Shipping.add_tracking_number(order, data.tracking_code, data);
-		console.log(request);
-		// dispatch(detailsOrder(props.match.params.id));
+		await API_Shipping.add_tracking_number(order, data.tracking_code, data);
 		set_hide_label_button(false);
 		dispatch(listOrders({}));
-		// history.push('/secure/glow/emails/invoice/' + order._id);
-		// history.push({
-		// 	pathname: '/secure/glow/emails/invoice/' + order._id,
-		// 	previous_path: props.location.previous_path
-		// });
+	};
+
+	const create_label = async () => {
+		set_loading_label(true);
+		const { data } = await API_Shipping.create_label(order, order.shipping.shipping_rate);
+		const { data: invoice } = await API_Orders.get_invoice(order);
+		print_invoice(invoice);
+		print_label(data.postage_label.label_url);
+		if (data) {
+			set_loading_label(false);
+		}
+		await API_Shipping.add_tracking_number(order, data.tracking_code, data);
+		set_hide_label_button(false);
+		dispatch(listOrders({}));
 	};
 
 	return (
@@ -534,6 +539,12 @@ const OrderListItem = ({ order, determine_color, admin, update_order_payment_sta
 								!order.shipping.shipping_label && (
 									<button className="btn primary mv-5px" onClick={() => buy_label()}>
 										Buy Label
+									</button>
+								)}
+								{hide_label_button &&
+								!order.shipping.shipping_label && (
+									<button className="btn primary mv-5px" onClick={() => create_label()}>
+										Create Label
 									</button>
 								)}
 								{order.shipping.shipping_label && (
