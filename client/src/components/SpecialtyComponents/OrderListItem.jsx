@@ -125,10 +125,14 @@ const OrderListItem = ({ order, determine_color, admin, update_order_payment_sta
 
 	const buy_label = async () => {
 		set_loading_label(true);
-		const { data } = await API_Shipping.buy_label(order.shipping.shipment_id, order.shipping.shipping_rate);
 		const { data: invoice } = await API_Orders.get_invoice(order);
-		print_invoice(invoice);
-		print_label(data.postage_label.label_url);
+		const { data } = await API_Shipping.buy_label(order.shipping.shipment_id, order.shipping.shipping_rate);
+		setTimeout(() => {
+			print_invoice(invoice);
+		}, 1000);
+		setTimeout(() => {
+			print_label(data.postage_label.label_url);
+		}, 1000);
 
 		if (data) {
 			set_loading_label(false);
@@ -140,10 +144,14 @@ const OrderListItem = ({ order, determine_color, admin, update_order_payment_sta
 
 	const create_label = async () => {
 		set_loading_label(true);
-		const { data } = await API_Shipping.create_label(order, order.shipping.shipping_rate);
 		const { data: invoice } = await API_Orders.get_invoice(order);
-		print_invoice(invoice);
-		print_label(data.postage_label.label_url);
+		const { data } = await API_Shipping.create_label(order, order.shipping.shipping_rate);
+		setTimeout(() => {
+			print_invoice(invoice);
+		}, 1000);
+		setTimeout(() => {
+			print_label(data.postage_label.label_url);
+		}, 1000);
 		if (data) {
 			set_loading_label(false);
 		}

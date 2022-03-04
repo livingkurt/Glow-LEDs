@@ -74,7 +74,7 @@ const OrdersPage = (props) => {
 		{ name: 'Shipped', color: '#636363' },
 		{ name: 'Delivered', color: '#333333' },
 		{ name: 'Priority', color: '#874d72' },
-		{ name: 'Label Created', color: '#3ca99a' }
+		{ name: 'Label Created', color: '#31887c' }
 		// { name: 'Refunded', color: '#a9a9a9' }
 	];
 
@@ -317,8 +317,8 @@ const OrdersPage = (props) => {
 									<div className="wrap jc-b m-1rem " key={index}>
 										<label className="w-10rem mr-1rem">{color.name}</label>
 
-										{color.name === 'Paid' && orders.filter((order) => !order.isPaid).length}
-										{color.name === 'Not Paid' &&
+										{color.name === 'Not Paid' && orders.filter((order) => !order.isPaid).length}
+										{color.name === 'Paid' &&
 											orders.filter(
 												(order) =>
 													order.isPaid &&
@@ -359,6 +359,14 @@ const OrdersPage = (props) => {
 													order.isShipped &&
 													order.isDelievered
 											).length}
+										{color.name === 'Priority' &&
+											orders.filter(
+												(order) =>
+													order.shipping.shipping_rate &&
+													order.shipping.shipping_rate.service !== 'First'
+											).length}
+										{color.name === 'Label Created' &&
+											orders.filter((order) => order.shipping.shipping_label).length}
 										<div
 											style={{
 												backgroundColor: color.color,

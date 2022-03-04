@@ -282,8 +282,12 @@ const OrderPage = (props) => {
 		const { data } = await API_Shipping.create_label(order, order.shipping.shipping_rate);
 		const { data: invoice } = await API_Orders.get_invoice(order);
 		// show_label(data.postage_label.label_url);
-		print_invoice(invoice);
-		print_label(data.postage_label.label_url);
+		setTimeout(() => {
+			print_invoice(invoice);
+		}, 1000);
+		setTimeout(() => {
+			print_label(data.postage_label.label_url);
+		}, 1000);
 		console.log({ data });
 		if (data) {
 			set_loading_label(false);
@@ -321,8 +325,12 @@ const OrderPage = (props) => {
 		const { data } = await API_Shipping.buy_label(order.shipping.shipment_id, order.shipping.shipping_rate);
 		const { data: invoice } = await API_Orders.get_invoice(order);
 		// show_label(data.postage_label.label_url);
-		print_invoice(invoice);
-		print_label(data.postage_label.label_url);
+		setTimeout(() => {
+			print_invoice(invoice);
+		}, 1000);
+		setTimeout(() => {
+			print_label(data.postage_label.label_url);
+		}, 1000);
 
 		if (data) {
 			set_loading_label(false);
