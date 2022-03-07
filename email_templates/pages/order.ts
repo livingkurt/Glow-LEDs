@@ -223,7 +223,7 @@ export default (props: any) => {
 	                      <table style="width:100%;border-spacing:0">
 	                        <tbody>
 	                          <tr>
-	                            <td style="font-family:helvetica;width:40%"></td>
+	                            <td style="font-family:helvetica;width:30%"></td>
 	                            <td style="font-family:helvetica">
 	                              <table style="width:100%;border-spacing:0;margin-top:20px">
 	                                <tbody>
