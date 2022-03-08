@@ -1,27 +1,34 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { saveShipping, savePayment } from '../../../actions/cartActions';
-import { CheckoutSteps } from '../../../components/SpecialtyComponents';
-import { validate_shipping } from '../../../utils/validations';
 import { state_names } from '../../../utils/helper_functions';
-import { Helmet } from 'react-helmet';
-import { API_Shipping } from '../../../utils';
-import { update } from '../../../actions/userActions';
-import { useAddressPredictions } from '../../../components/Hooks';
-import Autocomplete from 'react-google-autocomplete';
+import { Loading } from '../../UtilityComponents';
 import { ShippingChoice } from '../ShippingComponents';
+import Autocomplete from 'react-google-autocomplete';
+import { useDispatch, useSelector } from 'react-redux';
+import { API_Shipping } from '../../../utils';
+import { validate_shipping } from '../../../utils/validations';
+import { savePayment, saveShipping } from '../../../actions/cartActions';
+import { update } from '../../../actions/userActions';
 
-const Shipping = (props) => {
-	const cart = useSelector((state) => state.cart);
-	const { shipping } = cart;
-	const userLogin = useSelector((state) => state.userLogin);
-	const { userInfo } = userLogin;
-
-	// const AddressPredictions = useAddressPredictions('Aus');
-	// console.log({ AddressPredictions });
-
-	const [ email, set_email ] = useState('');
+export function Shipping({
+	shipping_completed,
+	set_shipping_completed,
+	show_shipping,
+	set_show_shipping,
+	show_hide_steps,
+	loading,
+	set_loading,
+	shipping,
+	email,
+	set_email,
+	loading_shipping,
+	choose_shipping_rate,
+	hide_pay_button,
+	current_shipping_speed,
+	re_choose_shipping_rate,
+	show_shipping_complete,
+	next_step,
+	shipping_rates
+}) {
 	const [ first_name, set_first_name ] = useState('');
 	const [ last_name, set_last_name ] = useState('');
 	const [ address_1, set_address_1 ] = useState('');
@@ -31,9 +38,13 @@ const Shipping = (props) => {
 	const [ postalCode, setPostalCode ] = useState('');
 	const [ country, setCountry ] = useState('United States');
 	const [ international, setInternational ] = useState(false);
-	const [ loading, set_loading ] = useState(true);
 	const [ all_shipping, set_all_shipping ] = useState([]);
 	const [ save_shipping, set_save_shipping ] = useState(false);
+
+	const dispatch = useDispatch();
+
+	const userLogin = useSelector((state) => state.userLogin);
+	const { userInfo } = userLogin;
 
 	useEffect(
 		() => {
@@ -74,7 +85,7 @@ const Shipping = (props) => {
 		console.log({ data });
 	};
 
-	const [ email_validations, set_email_validations ] = useState('');
+	// const [ email_validations, set_email_validations ] = useState('');
 	const [ first_name_validations, set_first_name_validations ] = useState('');
 	const [ last_name_validations, set_last_name_validations ] = useState('');
 	const [ address_validations, set_address_validations ] = useState('');
@@ -83,7 +94,7 @@ const Shipping = (props) => {
 	const [ postal_code_validations, set_postal_code_validations ] = useState('');
 	const [ country_validations, set_country_validations ] = useState('');
 	const [ international_validations, set_international_validations ] = useState('');
-	const dispatch = useDispatch();
+	// const dispatch = useDispatch();
 
 	const submitHandler = (e) => {
 		e.preventDefault();
@@ -101,7 +112,7 @@ const Shipping = (props) => {
 		};
 		console.log({ data });
 		const request = validate_shipping(data);
-		set_email_validations(request.errors.email);
+		// set_email_validations(request.errors.email);
 		set_first_name_validations(request.errors.first_name);
 		set_last_name_validations(request.errors.last_name);
 		set_address_validations(request.errors.address_1);
@@ -131,7 +142,8 @@ const Shipping = (props) => {
 			const paymentMethod = 'stripe';
 			dispatch(savePayment({ paymentMethod }));
 			save_shipping_to_user();
-			// props.history.push('placeorder');
+			set_show_shipping(false);
+			set_shipping_completed(true);
 		}
 	};
 	setTimeout(() => {
@@ -162,7 +174,6 @@ const Shipping = (props) => {
 
 	const update_shipping = (shipping) => {
 		shipping = JSON.parse(shipping);
-		console.log({ shipping });
 		set_email(shipping.email);
 		set_first_name(shipping.first_name);
 		set_last_name(shipping.last_name);
@@ -174,9 +185,9 @@ const Shipping = (props) => {
 		setCountry(shipping.country);
 		setInternational(shipping.international);
 	};
+
 	const use_saved_shipping = (e, shipping, user) => {
 		e.preventDefault();
-		console.log({ shipping });
 		set_email(user.email);
 		set_first_name(shipping.first_name);
 		set_last_name(shipping.last_name);
@@ -188,30 +199,6 @@ const Shipping = (props) => {
 		setCountry(shipping.country);
 		setInternational(shipping.international);
 	};
-
-	// const [ address, setAddress ] = React.useState('');
-	// const [ coordinates, setCoordinates ] = React.useState({
-	// 	lat: null,
-	// 	lng: null
-	// });
-
-	// const handleSelect = async (value) => {
-	// 	const results = await geocodeByAddress(value);
-	// 	const latLng = await getLatLng(results[0]);
-	// 	setAddress(value);
-	// 	setCoordinates(latLng);
-	// };
-
-	// const [ searchValue, setSearchValue ] = useState('');
-	// const [ predictions, setPredictions ] = useState([]);
-
-	// const handleSubmit = async (e) => {
-	// 	e.preventDefault();
-	// 	const results = await googleAutocomplete(searchValue);
-	// 	if (results) {
-	// 		setPredictions(results);
-	// 	}
-	// };
 
 	const update_google_shipping = (shipping) => {
 		console.log({ shipping });
@@ -243,308 +230,367 @@ const Shipping = (props) => {
 			setCountry(country.long_name);
 		}
 	};
+
 	return (
 		<div>
-			<h2>Shipping</h2>
-			{/* <div className="wrap jc-b w-100per">
-				{shipping &&
-				shipping.hasOwnProperty('first_name') && (
-					<div className="paragraph_font lh-25px">
-						<div>
-							{shipping.first_name} {shipping.last_name}
-						</div>
-						<div>
-							{shipping.address_1} {shipping.address_2}
-						</div>
-						<div>
-							{shipping.city}, {shipping.state} {shipping.postalCode}, {shipping.country}
-						</div>
-						<div>{shipping.international && 'International'}</div>
-						<div>{shipping.email}</div>
-					</div>
+			<div className="jc-b">
+				<h2>2. Shipping</h2>
+				{shipping_completed &&
+				!show_shipping && (
+					<button className="btn secondary mv-10px" onClick={() => show_hide_steps('shipping')}>
+						Edit
+					</button>
 				)}
-				<div style={{ marginTop: '5px' }}>
-					<Link
-						to={userInfo.hasOwnProperty('first_name') ? '/secure/checkout/shipping' : '/checkout/shipping'}
-					>
-						<button
-							className={`btn primary ${shipping && !shipping.hasOwnProperty('first_name') ? 'bob' : ''}`}
-						>
-							{shipping && shipping.hasOwnProperty('first_name') ? 'Edit Shipping' : 'Add Shipping'}
-						</button>
-					</Link>
-				</div>
-			</div> */}
-			<form onSubmit={submitHandler}>
-				<ul className="shipping-container">
-					{userInfo &&
-					userInfo.shipping &&
-					userInfo.shipping.hasOwnProperty('first_name') && (
-						<li>
-							<button
-								onClick={(e) => use_saved_shipping(e, userInfo.shipping, userInfo)}
-								className="btn primary"
-							>
-								Use Saved Shipping
-							</button>
-						</li>
-					)}
-					{userInfo &&
-					userInfo.isAdmin && (
-						<li className="w-100per">
-							<div className="ai-c h-25px mv-10px mb-30px jc-c w-100per">
-								<div className="custom-select w-100per">
-									<select
-										className="qty_select_dropdown w-100per"
-										style={{ width: '100%' }}
-										onChange={(e) => update_shipping(e.target.value)}
-									>
-										<option key={1} defaultValue="">
-											---Choose Shipping for Order---
-										</option>
-										{all_shipping &&
-											all_shipping.map((shipping, index) => (
-												<option key={index} value={JSON.stringify(shipping)}>
-													{shipping.first_name} {shipping.last_name}
-												</option>
-											))}
-									</select>
-									<span className="custom-arrow" />
-								</div>
-							</div>
-						</li>
-					)}
-					{userInfo &&
-					!userInfo.first_name && (
-						<li>
-							<label htmlFor="email">Email</label>
-							<input
-								type="text"
-								value={email}
-								name="email"
-								id="email"
-								onChange={(e) => set_email(e.target.value)}
-							/>
-						</li>
-					)}
-					<label className="validation_text" style={{ justifyContent: 'center' }}>
-						{email_validations}
-					</label>
-					<li>
-						<div className="jc-b">
-							<div className="column mr-1rem w-50per">
-								<label htmlFor="first_name">First Name</label>
-								<input
-									type="text"
-									value={first_name}
-									name="first_name"
-									id="first_name"
-									onChange={(e) => set_first_name(e.target.value)}
-								/>
-
-								<label className="validation_text" style={{ justifyContent: 'center' }}>
-									{first_name_validations}
-								</label>
-							</div>
-							<div className="column  w-50per">
-								<label htmlFor="last_name">Last Name</label>
-								<input
-									type="text"
-									value={last_name}
-									name="last_name"
-									id="last_name"
-									onChange={(e) => set_last_name(e.target.value)}
-								/>
-								<label className="validation_text" style={{ justifyContent: 'center' }}>
-									{last_name_validations}
-								</label>
-							</div>
-						</div>
-					</li>
-
-					<li>
-						<label htmlFor="address_autocomplete">Address</label>
-						<Autocomplete
-							apiKey={process.env.REACT_APP_GOOGLE_PLACES_KEY}
-							className="fs-16px"
-							// placeholder="Start typing Address"
-							value={address_1}
-							onChange={(e) => set_address_1(e.target.value)}
-							options={{
-								types: [ 'address' ]
-							}}
-							onPlaceSelected={(place) => {
-								update_google_shipping(place);
-							}}
-						/>
-					</li>
-					{/* <li>
-							<label htmlFor="address_1">Address</label>
-							<input
-								type="text"
-								value={address_1}
-								name="address_1"
-								id="address_1"
-								onChange={(e) => set_address_1(e.target.value)}
-							/>
-						</li> */}
-					<label className="validation_text" style={{ justifyContent: 'center' }}>
-						{address_validations}
-					</label>
-					<li>
-						<label htmlFor="address_2">Apt/Suite</label>
-						<input
-							type="text"
-							value={address_2}
-							name="address_2"
-							id="address_2"
-							onChange={(e) => set_address_2(e.target.value)}
-						/>
-					</li>
-					<li>
-						<label htmlFor="city">City</label>
-						<input
-							type="text"
-							value={city}
-							name="city"
-							id="city"
-							onChange={(e) => setCity(e.target.value)}
-						/>
-					</li>
-					<label className="validation_text" style={{ justifyContent: 'center' }}>
-						{city_validations}
-					</label>
-					{!international && (
-						<li>
-							<label className="mb-1rem" htmlFor="state">
-								State
-							</label>
-							<div className="ai-c h-25px mb-15px jc-c">
-								<div className="custom-select w-100per">
-									<select
-										className="qty_select_dropdown w-100per"
-										onChange={(e) => setState(e.target.value)}
-										value={state && state}
-									>
-										{state_names.map((state, index) => (
-											<option key={index} value={state.short_name}>
-												{state.long_name}
-											</option>
-										))}
-									</select>
-									<span className="custom-arrow" />
-								</div>
-							</div>
-						</li>
-					)}
-					{international && (
-						<li>
-							<label htmlFor="state">State</label>
-							<input
-								type="text"
-								value={state}
-								name="state"
-								id="state"
-								onChange={(e) => setState(e.target.value)}
-							/>
-						</li>
-					)}
-					<label className="validation_text" style={{ justifyContent: 'center' }}>
-						{state_validations}
-					</label>
-					<li>
-						<label htmlFor="postalCode">Postal Code</label>
-						<input
-							type="text"
-							value={postalCode}
-							name="postalCode"
-							id="postalCode"
-							onChange={(e) => setPostalCode(e.target.value)}
-						/>
-					</li>
-					<label className="validation_text" style={{ justifyContent: 'center' }}>
-						{postal_code_validations}
-					</label>
-					{loading ? (
-						<div>Loading...</div>
-					) : (
-						<div>
-							<li>
-								<label htmlFor="international">International</label>
-								<input
-									type="checkbox"
-									name="international"
-									// defaultChecked={international ? 'checked' : 'unchecked'}
-									defaultValue={international}
-									defaultChecked={international}
-									value={international}
-									id="international"
-									onChange={(e) => {
-										setInternational(e.target.checked);
-									}}
-								/>
-							</li>
-							{international && (
+			</div>
+			{shipping_completed && (
+				<div>
+					{show_shipping ? (
+						<form onSubmit={submitHandler}>
+							<ul className="shipping-container mv-0px pv-0px ph-2rem">
+								{userInfo &&
+								userInfo.shipping &&
+								userInfo.shipping.hasOwnProperty('first_name') && (
+									<li>
+										<button
+											onClick={(e) => use_saved_shipping(e, userInfo.shipping, userInfo)}
+											className="btn primary"
+										>
+											Use Saved Shipping
+										</button>
+									</li>
+								)}
+								{userInfo &&
+								userInfo.isAdmin && (
+									<li className="w-100per">
+										<div className="ai-c h-25px mv-10px mb-30px jc-c w-100per">
+											<div className="custom-select w-100per">
+												<select
+													className="qty_select_dropdown w-100per"
+													style={{
+														width: '100%'
+													}}
+													onChange={(e) => update_shipping(e.target.value)}
+												>
+													<option key={1} defaultValue="">
+														---Choose Shipping for Order---
+													</option>
+													{all_shipping &&
+														all_shipping.map((shipping, index) => (
+															<option key={index} value={JSON.stringify(shipping)}>
+																{shipping.first_name} {shipping.last_name}
+															</option>
+														))}
+												</select>
+												<span className="custom-arrow" />
+											</div>
+										</div>
+									</li>
+								)}
+								{/* {userInfo &&
+            !userInfo.first_name && (
+            <li>
+            <label htmlFor="email">Email</label>
+            <input
+            type="text"
+            value={email}
+            name="email"
+            id="email"
+            onChange={(e) => set_email(e.target.value)}
+            />
+            </li>
+            )}
+            <label className="validation_text" style={{ justifyContent: 'center' }}>
+            {email_validations}
+            </label> */}
 								<li>
-									<label htmlFor="country">Country</label>
-									<input
-										type="text"
-										value={country}
-										name="country"
-										id="country"
-										onChange={(e) => setCountry(e.target.value)}
+									<div className="jc-b">
+										<div className="column mr-1rem w-50per">
+											<label htmlFor="first_name">First Name</label>
+											<input
+												type="text"
+												value={first_name}
+												name="first_name"
+												id="first_name"
+												onChange={(e) => set_first_name(e.target.value)}
+											/>
+
+											<label
+												className="validation_text"
+												style={{
+													justifyContent: 'center'
+												}}
+											>
+												{first_name_validations}
+											</label>
+										</div>
+										<div className="column  w-50per">
+											<label htmlFor="last_name">Last Name</label>
+											<input
+												type="text"
+												value={last_name}
+												name="last_name"
+												id="last_name"
+												onChange={(e) => set_last_name(e.target.value)}
+											/>
+											<label
+												className="validation_text"
+												style={{
+													justifyContent: 'center'
+												}}
+											>
+												{last_name_validations}
+											</label>
+										</div>
+									</div>
+								</li>
+
+								<li>
+									<label htmlFor="address_autocomplete">Address</label>
+									<Autocomplete
+										apiKey={process.env.REACT_APP_GOOGLE_PLACES_KEY}
+										className="fs-16px" // placeholder="Start typing Address"
+										value={address_1}
+										onChange={(e) => set_address_1(e.target.value)}
+										options={{
+											types: [ 'address' ]
+										}}
+										onPlaceSelected={(place) => {
+											update_google_shipping(place);
+										}}
 									/>
 								</li>
-							)}
-						</div>
-					)}
-					<label className="validation_text" style={{ justifyContent: 'center' }}>
-						{country_validations}
-					</label>
-					<li>
-						<button type="submit" className="btn primary">
-							Continue
-						</button>
-					</li>
-
-					{userInfo &&
-					userInfo.first_name && (
-						<div>
-							{loading ? (
-								<div>Loading...</div>
-							) : (
-								<div>
+								{/* <li>
+            <label htmlFor="address_1">Address</label>
+            <input
+            type="text"
+            value={address_1}
+            name="address_1"
+            id="address_1"
+            onChange={(e) => set_address_1(e.target.value)}
+            />
+            </li> */}
+								<label
+									className="validation_text"
+									style={{
+										justifyContent: 'center'
+									}}
+								>
+									{address_validations}
+								</label>
+								<li>
+									<label htmlFor="address_2">Apt/Suite</label>
+									<input
+										type="text"
+										value={address_2}
+										name="address_2"
+										id="address_2"
+										onChange={(e) => set_address_2(e.target.value)}
+									/>
+								</li>
+								<li>
+									<label htmlFor="city">City</label>
+									<input
+										type="text"
+										value={city}
+										name="city"
+										id="city"
+										onChange={(e) => setCity(e.target.value)}
+									/>
+								</li>
+								<label
+									className="validation_text"
+									style={{
+										justifyContent: 'center'
+									}}
+								>
+									{city_validations}
+								</label>
+								{!international && (
 									<li>
-										<label htmlFor="save_shipping">Save Shipping</label>
+										<label className="mb-1rem" htmlFor="state">
+											State
+										</label>
+										<div className="ai-c h-25px mb-15px jc-c">
+											<div className="custom-select w-100per">
+												<select
+													className="qty_select_dropdown w-100per"
+													onChange={(e) => setState(e.target.value)}
+													value={state && state}
+												>
+													{state_names.map((state, index) => (
+														<option key={index} value={state.short_name}>
+															{state.long_name}
+														</option>
+													))}
+												</select>
+												<span className="custom-arrow" />
+											</div>
+										</div>
+									</li>
+								)}
+								{international && (
+									<li>
+										<label htmlFor="state">State</label>
 										<input
-											type="checkbox"
-											name="save_shipping"
-											// defaultChecked={save_shipping ? 'checked' : 'unchecked'}
-											defaultValue={save_shipping}
-											defaultChecked={save_shipping}
-											// value={save_shipping}
-											id="save_shipping"
-											onChange={(e) => {
-												set_save_shipping(e.target.checked);
-											}}
+											type="text"
+											value={state}
+											name="state"
+											id="state"
+											onChange={(e) => setState(e.target.value)}
 										/>
 									</li>
+								)}
+								<label
+									className="validation_text"
+									style={{
+										justifyContent: 'center'
+									}}
+								>
+									{state_validations}
+								</label>
+								<li>
+									<label htmlFor="postalCode">Postal Code</label>
+									<input
+										type="text"
+										value={postalCode}
+										name="postalCode"
+										id="postalCode"
+										onChange={(e) => setPostalCode(e.target.value)}
+									/>
+								</li>
+								<label
+									className="validation_text"
+									style={{
+										justifyContent: 'center'
+									}}
+								>
+									{postal_code_validations}
+								</label>
+								{loading ? (
+									<div>Loading...</div>
+								) : (
+									<div>
+										<li>
+											<div>
+												<input
+													type="checkbox"
+													name="international" // defaultChecked={international ? 'checked' : 'unchecked'}
+													defaultValue={international}
+													defaultChecked={international}
+													value={international}
+													id="international"
+													style={{
+														transform: 'scale(1.5)'
+													}}
+													className="mr-1rem"
+													onChange={(e) => {
+														setInternational(e.target.checked);
+													}}
+												/>
+												<label htmlFor="international">International</label>
+											</div>
+										</li>
+										{international && (
+											<li>
+												<label htmlFor="country">Country</label>
+												<input
+													type="text"
+													value={country}
+													name="country"
+													id="country"
+													onChange={(e) => setCountry(e.target.value)}
+												/>
+											</li>
+										)}
+									</div>
+								)}
+								<label
+									className="validation_text"
+									style={{
+										justifyContent: 'center'
+									}}
+								>
+									{country_validations}
+								</label>
+								<li>
+									<button
+										type="submit"
+										className="btn primary bob" // onClick={() => next_step('payment')}
+									>
+										Continue
+									</button>
+								</li>
+
+								{userInfo &&
+								userInfo.first_name && (
+									<div>
+										{loading ? (
+											<div>Loading...</div>
+										) : (
+											<div className="mv-2rem">
+												<input
+													type="checkbox"
+													name="save_shipping"
+													defaultChecked={save_shipping}
+													style={{
+														transform: 'scale(1.5)'
+													}}
+													className="mr-1rem"
+													id="save_shipping"
+													onChange={(e) => {
+														set_save_shipping(e.target.checked);
+													}}
+												/>
+												<label htmlFor="save_shipping mb-20px">Save Shipping</label>
+											</div>
+										)}
+									</div>
+								)}
+							</ul>
+						</form>
+					) : (
+						<div className="wrap jc-b w-100per pos-rel">
+							{shipping &&
+							shipping.hasOwnProperty('first_name') && (
+								<div className="paragraph_font lh-25px mb-10px">
+									<div>
+										{shipping.first_name} {shipping.last_name}
+									</div>
+									<div>
+										{shipping.address_1} {shipping.address_2}
+									</div>
+									<div>
+										{shipping.city}, {shipping.state} {shipping.postalCode}, {shipping.country}
+									</div>
+									<div>{shipping.international && 'International'}</div>
 								</div>
+							)}
+
+							{/* <div className="pos-abs "> */}
+							<Loading loading={loading_shipping} />
+							{/* </div> */}
+
+							<ShippingChoice
+								rates={shipping_rates.rates}
+								choose_shipping_rate={choose_shipping_rate}
+								hide_pay_button={hide_pay_button}
+								shipping={shipping}
+								current_shipping_speed={current_shipping_speed}
+								re_choose_shipping_rate={re_choose_shipping_rate}
+							/>
+							{show_shipping_complete && (
+								<button
+									type="submit"
+									className="btn primary w-100per bob mt-1rem"
+									onClick={() => next_step('payment')}
+								>
+									Continue
+								</button>
 							)}
 						</div>
 					)}
-					<ShippingChoice
-						rates={props.shipping_rates.rates}
-						choose_shipping_rate={props.choose_shipping_rate}
-						hide_pay_button={props.hide_pay_button}
-						shipping={shipping}
-						current_shipping_speed={props.current_shipping_speed}
-						re_choose_shipping_rate={props.re_choose_shipping_rate}
-					/>
-				</ul>
-			</form>
+				</div>
+			)}
 		</div>
 	);
-};
-
-export default Shipping;
+}
