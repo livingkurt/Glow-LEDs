@@ -21,7 +21,7 @@ const order_routes = {
 		return axios.put('/api/expenses/monthly_expenses', { date_1, date_2 });
 	},
 	income: (year: number, month: string) => {
-		return axios.get(`/api/orders/income/${year}${month ? '/' + month : ''}`);
+		return axios.get(`/api/orders/income/${year ? '/' + year : ''}${month ? '/' + month : ''}`);
 	},
 	affiliate_code_usage_orders_a: (arg: any) => {
 		console.log({ arg });

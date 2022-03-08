@@ -66,7 +66,7 @@ export function Shipping({
 			}
 			return () => (clean = false);
 		},
-		[ shipping ]
+		[ set_email, shipping ]
 	);
 
 	useEffect(() => {
