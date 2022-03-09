@@ -451,14 +451,20 @@ export const determine_filter = (query: any, search: any) => {
 					}
 				];
 			} else if (item[1]) {
-				filter[item[0]] = item[1];
+				if (item[0] === 'chip') {
+					filter['chips'] = { $in: [ item[1] ] };
+				} else {
+					filter[item[0]] = item[1];
+				}
 			} else {
 				return {};
 			}
 		}
 	});
+	console.log({ determine_filter: filter });
 	return { deleted: false, ...filter, ...search };
 };
+
 export const determine_sort = (query: any, type: string) => {
 	let sort: any = { _id: -1 };
 	const sort_query = query && query.toLowerCase();

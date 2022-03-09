@@ -36,6 +36,10 @@ export default {
 						}
 					: {};
 			}
+			console.log({
+				query
+			});
+
 			const filter = determine_filter(query, search);
 			console.log({
 				page,

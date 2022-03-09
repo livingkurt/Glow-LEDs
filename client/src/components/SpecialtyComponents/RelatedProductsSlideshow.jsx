@@ -16,7 +16,15 @@ import {
 import useWindowDimensions from '../Hooks/windowDimensions';
 import { LazyImage } from '../UtilityComponents';
 
-const RelatedProductsSlideshow = ({ product_category, category, random, title, product_pathname, add_to_cart }) => {
+const RelatedProductsSlideshow = ({
+	product_category,
+	category,
+	random,
+	title,
+	product_pathname,
+	add_to_cart,
+	product
+}) => {
 	const { height, width } = useWindowDimensions();
 	const dispatch = useDispatch();
 	const history = useHistory();
@@ -40,7 +48,10 @@ const RelatedProductsSlideshow = ({ product_category, category, random, title, p
 	const get_products = async () => {
 		set_loading(true);
 		let query = {};
-		if (category === 'accessories') {
+		console.log({ chip: product && product.chips && product.chips[0]._id });
+		if (product && product.chips && product.chips[0]) {
+			query = { chip: product.chips[0]._id, hidden: false, option: false };
+		} else if (category === 'accessories') {
 			query = { category: 'accessories', hidden: false, option: false };
 		} else if (category === 'all') {
 			query = { hidden: false, option: false };
@@ -204,6 +215,7 @@ const RelatedProductsSlideshow = ({ product_category, category, random, title, p
 	};
 
 	const [ show_options, set_show_options ] = useState(false);
+
 	return (
 		<div className="">
 			<h2 className="jc-c w-100per ta-c">{title}</h2>

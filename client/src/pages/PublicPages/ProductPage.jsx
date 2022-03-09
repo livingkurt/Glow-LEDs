@@ -882,6 +882,19 @@ const ProductPage = (props) => {
 				<div className=" w-100per m-auto">
 					<RelatedProductsSlideshow
 						product_category={product.category}
+						product={product}
+						random={false}
+						className=""
+						product_pathname={props.match.params.pathname}
+						title="Fits the Same Microlight"
+						category="related"
+					/>
+				</div>
+			)}
+			{product && (
+				<div className=" w-100per m-auto">
+					<RelatedProductsSlideshow
+						product_category={product.category}
 						random={false}
 						className=""
 						product_pathname={props.match.params.pathname}

@@ -165,7 +165,7 @@ const AllProductsPage = (props) => {
 				listProducts({
 					category,
 					subcategory,
-					filter,
+					chip: filter,
 					search,
 					sort,
 					collection,
@@ -254,7 +254,7 @@ const AllProductsPage = (props) => {
 			listProducts({
 				category,
 				subcategory,
-				filter,
+				chip: filter,
 				search,
 				sort,
 				page: new_page,
