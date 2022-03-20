@@ -60,7 +60,6 @@ export const getRefreshToken = (user: any) => {
 		console.error(error);
 		return;
 	}
-	return;
 };
 
 // //middleware function to check if the incoming request in authenticated:
@@ -641,6 +640,9 @@ const determine_secondary_product_name = (name: any, category: any, subcategory:
 		if (name.split('-')[0].trim() === 'Novaskins') {
 			return name.split('-')[1].trim();
 		}
+		if (name.split('-')[0].trim() === 'Supreme Sizing Sampler Pack') {
+			return name.split('-')[1].trim();
+		}
 		if (name.split('-')[0].trim().includes('EXO Diffusers')) {
 			return name.split('-')[1].trim();
 		}
@@ -728,6 +730,13 @@ export const determine_product_name = (item: any, show_qty: any, date: any) => {
 						${show_qty && item.qty > 1 ? item.qty + 'x' : ''} ${item.color ? item.color + ' ' : ''} ${item.name}${' '}
 						${item.size !== '0' ? ' - ' + item.size : ''} - ${item.secondary_product_name.split(' ')[1].trim()}
 					</div>`;
+			}
+			if (item.subcategory === 'sampler') {
+				console.log({ secondary_product_name: item.secondary_product_name });
+				return `<div>
+				${show_qty && item.qty > 1 ? item.qty + 'x' : ''} ${item.name} -${' '}
+				 ${determine_secondary_product_name(item.secondary_product_name, item.category, '')}
+			</div>`;
 			}
 		} else if (item.category === 'accessories') {
 			if (item.subcategory === 'batteries') {
