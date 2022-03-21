@@ -152,12 +152,11 @@ export default {
 				'Coinskins V2',
 				'Visor Diffusers',
 				'Hybridskins',
-				'Diffuser Caps + Adapters Starter Kit',
+				'Diffuser Caps + Adapters Starter Kit V4',
 				'Space Cadet Diffuser Caps',
 				'Apollo Glow Casings',
 				'1225 Coin Battery Dispenser',
 				'1620 Coin Battery Dispenser',
-				'Coin Battery Storage'
 			];
 			console.log({ names });
 			const sort = {};
