@@ -383,11 +383,10 @@ export const determine_product_name = (item, show_qty, date) => {
 				);
 			}
 			if (item.subcategory === 'sampler') {
-				console.log({ secondary_product_name: item.secondary_product_name });
 				return (
 					<div>
 						{show_qty && item.qty > 1 && item.qty + 'x'} {item.color && item.color + ' '} {item.name} -{' '}
-						{item.secondary_product_name.split('-')[0].trim()}
+						{item.secondary_product_name.split('-')[1].trim()}
 					</div>
 				);
 			}
@@ -440,16 +439,14 @@ export const determine_product_name = (item, show_qty, date) => {
 					)}{' '}
 				</div>
 			);
-		} else if (item.name === 'Diffuser Caps + Adapters Starter Kit') {
+		} else if (item.name === 'Diffuser Caps + Adapters Starter Kit V4') {
+			console.log({item})
 			return (
 				<div>
 					{show_qty && item.qty > 1 && item.qty + 'x'} {item.name}
 					{item.secondary_product_name &&
 						item.secondary_product_name.length > 0 &&
-						` - ${item.option_product_name} w ${item.color} ${item.secondary_product_name.slice(
-							0,
-							-14
-						)} Caps & ${item.secondary_color} Adapters`}
+						` w ${item.color} ${item.secondary_product_name.split(" ")[0]} Caps & ${item.secondary_color} Adapters`}
 				</div>
 			);
 		} else if (item.category === 'diffusers' || item.category === 'frosted_diffusers') {

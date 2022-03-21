@@ -776,14 +776,11 @@ export const determine_product_name = (item: any, show_qty: any, date: any) => {
 				? ` - ${determine_secondary_product_name(item.secondary_product_name, item.category, '')}`
 				: ''}${' '}
 				</div>`;
-		} else if (item.name === 'Diffuser Caps + Adapters Starter Kit') {
+		} else if (item.name === 'Diffuser Caps + Adapters Starter Kit V4') {
 			return `<div>
 					${show_qty && item.qty > 1 ? item.qty + 'x' : ''}  {item.name}
 					${item.secondary_product_name && item.secondary_product_name.length > 0
-						? ` - ${item.option_product_name} w ${item.color} ${item.secondary_product_name.slice(
-								0,
-								-14
-							)} Caps & ${item.secondary_color} Adapters`
+						? ` w ${item.color} ${item.secondary_product_name.split(" ")[0]} Caps & ${item.secondary_color} Adapters`
 						: ''}
 				</div>`;
 		} else if (item.category === 'diffusers' || item.category === 'frosted_diffusers') {
