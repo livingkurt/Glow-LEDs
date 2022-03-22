@@ -569,7 +569,7 @@ const Header = (props) => {
 												<div className="nav-column">
 													<Link to="/collections/all/products/category/accessories">
 														<button className="btn nav w-100per ta-l fs-18px title_font max-w-244px">
-															Flow Art Essensials
+															Flow Art Essentials
 														</button>
 													</Link>
 													<hr className="w-95per m-0px" />

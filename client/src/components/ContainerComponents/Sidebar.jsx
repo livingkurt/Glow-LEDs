@@ -471,7 +471,7 @@ const Sidebar = (props) => {
 						</div>
 						<div className="sidebar-btn-container">
 							<button className="sidebar-btn secondary" onClick={closeMenu}>
-								Flow Art Essensials
+								Flow Art Essentials
 							</button>
 							<button
 								className="sidebar-btn-dropdown"

@@ -100,7 +100,7 @@ const Footer = () => {
 									<Link to="/collections/all/products/best_sellers">Best Sellers</Link>
 								</li>
 								<li className="ta-l mv-2rem">
-									<Link to="/collections/all/products/essentials">Glow LEDs Essensials</Link>
+									<Link to="/collections/all/products/essentials">Glow LEDs Essentials</Link>
 								</li>
 								<li className="ta-l mv-2rem">
 									<Link to="/collections/all/products/discounted">On Sale!</Link>
@@ -141,7 +141,7 @@ const Footer = () => {
 						</div>
 						<div style={{ display: width < 750 ? 'none' : 'block' }}>
 							<h2 className="ta-l">
-								<Link to="/collections/all/products">Flow Art Essensials</Link>
+								<Link to="/collections/all/products">Flow Art Essentials</Link>
 							</h2>
 							<ul className="lst-none">
 								<li className="ta-l mv-2rem">
