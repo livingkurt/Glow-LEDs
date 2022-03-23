@@ -279,7 +279,7 @@ export const daysBetween = (date1: any, date2: any) => {
 };
 
 export const occurrence = function(array: any) {
-	'use strict';
+	
 	// console.log(array);
 	const result: any = {};
 	if (array instanceof Array) {
@@ -1802,6 +1802,98 @@ export const create_color_products = async (
 				default_option: false,
 				...no_state
 			}
+		];
+	} else if (product.category === 'accessories') {
+		list = [
+			{
+				name: `White ${product.name}`,
+				pathname: snake_case(`White ${product.name}`),
+				color: 'White',
+				color_code: 'white',
+				category: 'options',
+				subcategory: 'colors',
+				item_group_id: product._id,
+				default_option: false,
+				...no_state
+			},
+			{
+				name: `Red ${product.name}`,
+				pathname: snake_case(`Red ${product.name}`),
+				color: 'Red',
+				color_code: '#c11c22',
+				category: 'options',
+				subcategory: 'colors',
+				item_group_id: product._id,
+				default_option: false,
+				...no_state
+			},
+			{
+				name: `Green ${product.name}`,
+				pathname: snake_case(`Green ${product.name}`),
+				color: 'Green',
+				color_code: '#00c700',
+				category: 'options',
+				subcategory: 'colors',
+				item_group_id: product._id,
+				default_option: false,
+				...no_state
+			},
+			{
+				name: `Blue ${product.name}`,
+				pathname: snake_case(`Blue ${product.name}`),
+				color: 'Blue',
+				color_code: '#0014ff',
+				category: 'options',
+				subcategory: 'colors',
+				item_group_id: product._id,
+				default_option: false,
+				...no_state
+			},
+			{
+				name: `Purple ${product.name}`,
+				pathname: snake_case(`Purple ${product.name}`),
+				color: 'Purple',
+				color_code: 'purple',
+				category: 'options',
+				subcategory: 'colors',
+				item_group_id: product._id,
+				default_option: false,
+				...no_state
+			},
+			{
+				name: `Violet ${product.name}`,
+				pathname: snake_case(`Violet ${product.name}`),
+				color: 'Violet',
+				color_code: '#543abb',
+				category: 'options',
+				subcategory: 'colors',
+				item_group_id: product._id,
+				default_option: false,
+				...no_state
+			},
+			{
+				name: `Black ${product.name}`,
+				pathname: snake_case(`Black ${product.name}`),
+				color: 'Black',
+				color_code: 'black',
+				category: 'options',
+				subcategory: 'colors',
+				item_group_id: product._id,
+				default_option: false,
+				...no_state
+			},
+			{
+				name: `Clear ${product.name}`,
+				pathname: snake_case(`Clear ${product.name}`),
+				color: 'Clear',
+				color_code: 'black',
+				category: '#4b4b4b',
+				subcategory: 'colors',
+				item_group_id: product._id,
+				default_option: false,
+				...no_state
+			},
+			
 		];
 	} else if (product.subcategory === 'novaskins' || product.subcategory === 'alt_novaskins') {
 		list = [
