@@ -462,6 +462,11 @@ const Sidebar = (props) => {
 								<i className="fas fa-sort-up" />
 							</button> */}
 								</div>
+								<Link to="/collections/all/products/category/accessories/subcategory/batteries">
+									<button className="sidebar-btn nested" onClick={closeMenu}>
+										Batteries
+									</button>
+								</Link>
 								<Link to="/collections/all/products/category/accessories">
 									<button className="sidebar-btn nested" onClick={closeMenu}>
 										Accessories

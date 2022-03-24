@@ -378,6 +378,12 @@ const Header = (props) => {
 												<i className="fas fa-sort-up" />
 											</button>
 										</div> */}
+													<Link to="/collections/all/products/category/accessories/subcategory/batteries">
+														<button className="btn nav w-100per ta-l jc-b">
+															Batteries
+															{/* <i className=" trans-neg-270 fas fa-sort-up" /> */}
+														</button>
+													</Link>
 													<Link to="/collections/all/products/category/accessories">
 														<button className="btn nav w-100per ta-l jc-b">
 															Accessories
