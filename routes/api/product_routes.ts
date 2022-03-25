@@ -8,6 +8,7 @@ router.route('/reviews/:pathname').post(product_controller.reviews_products_c);
 
 router.route('/best_sellers').post(product_controller.get_best_sellers_products_c);
 router.route('/essentials').get(product_controller.get_essentials_products_c);
+router.route('/new_releases').get(product_controller.get_new_releases_products_c);
 
 router.route('/update_stock').put(product_controller.update_stock_products_c);
 router.route('/update_product_order').put(product_controller.update_product_order_products_c);

@@ -32,6 +32,9 @@ const product_routes = {
 	get_essentials: () => {
 		return axios.get('/api/products/essentials');
 	},
+	get_new_releases: () => {
+		return axios.get('/api/products/new_releases');
+	},
 	set_sale_price: (discount_percentage: any, sale_start_date: any, sale_end_date: any) => {
 		return axios.put('/api/all/product_sale_price', { discount_percentage, sale_start_date, sale_end_date });
 	},

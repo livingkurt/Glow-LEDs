@@ -267,7 +267,7 @@ const Header = (props) => {
 														</button>
 													</Link>
 													<hr className="w-95per m-0px" />
-													<Link to="/collections/all/products/category/accessories">
+													<Link to="/collections/all/products/category/new_releases">
 														<button className="btn nav w-100per ta-l">New Releases!</button>
 													</Link>
 													<Link to="/collections/all/products/category/best_sellers">

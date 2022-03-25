@@ -9,6 +9,7 @@ import {
 	getUrlParameter,
 	humanize,
 	prnt,
+	shuffle,
 	sort_options,
 	update_products_url
 } from '../../utils/helper_functions';
@@ -129,7 +130,7 @@ const AllProductsPage = (props) => {
 		let collection = props.match.params.collection ? props.match.params.collection : '';
 		determine_page_name(category, subcategory, collection);
 		// prnt({ query });
-		if (category !== 'essentials' || category !== 'best_sellers') {
+		if (category !== 'essentials' || category !== 'best_sellers' || category !== "new_releases") {
 			if (Object.keys(query).length > 0) {
 				if (query.search) {
 					set_search(query.search.split('%20').join(' '));
@@ -154,13 +155,7 @@ const AllProductsPage = (props) => {
 					limit = query.limit;
 				}
 			}
-			if (category) {
-				if (category === 'best_sellers') {
-					get_occurrences(category);
-				} else if (category === 'essentials') {
-					get_occurrences(category);
-				}
-			}
+			
 			dispatch(
 				listProducts({
 					category,
@@ -177,6 +172,17 @@ const AllProductsPage = (props) => {
 				})
 			);
 		}
+		else {
+			if (category) {
+				if (category === 'best_sellers') {
+					get_occurrences(category);
+				} else if (category === 'essentials') {
+					get_occurrences(category);
+				} else if (category === 'new_releases') {
+					get_occurrences(category);
+				}
+			}
+		}
 	};
 
 	const get_occurrences = async (category) => {
@@ -192,6 +198,10 @@ const AllProductsPage = (props) => {
 			const { data } = await API_Products.get_essentials();
 			// console.log({ data });
 			set_products(data);
+		} else if (occurrences && category === 'new_releases') {
+			const { data } = await API_Products.get_new_releases();
+			console.log({ data });
+			set_products(shuffle(data));
 		} else {
 			// else if (category === 'discounted') {
 			// 	const { data } = await API_Products.findAll_products_a({ subcategory: 'imperfect' });

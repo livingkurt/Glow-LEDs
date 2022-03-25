@@ -96,6 +96,19 @@ export default {
 			res.status(500).send({ error, message: 'Error Updating Product' });
 		}
 	},
+	get_new_releases_products_c: async (req: any, res: any) => {
+		const { params, body } = req;
+		try {
+			const product = await product_services.get_new_releases_products_s(params, body);
+			if (product) {
+				return res.status(200).send(product);
+			}
+			return res.status(500).send({ message: 'Error Updating Product' });
+		} catch (error) {
+			console.log({ update_products_c_error: error });
+			res.status(500).send({ error, message: 'Error Updating Product' });
+		}
+	},
 	update_stock_products_c: async (req: any, res: any) => {
 		const { params, body } = req;
 		try {

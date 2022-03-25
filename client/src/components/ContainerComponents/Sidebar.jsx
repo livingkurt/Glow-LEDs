@@ -534,7 +534,7 @@ const Sidebar = (props) => {
 								</button>
 							</Link>
 						</ul>
-						<Link to="/collections/all/products/category/accessories">
+						<Link to="/collections/all/products/category/new_releases">
 							<button className="sidebar-btn secondary" onClick={closeMenu}>
 								New Releases
 							</button>
