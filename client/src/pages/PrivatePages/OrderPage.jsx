@@ -1010,6 +1010,12 @@ ${order.shipping.email}`)}
 									</div>
 								</li>
 
+								{order.tip && (
+									<li>
+										<div>Tip</div>
+										<div>${order.tip ? order.tip.toFixed(2) : order.tip}</div>
+									</li>
+								)}
 								{!order.isRefunded && (
 									<li>
 										<div>Order Total</div>
