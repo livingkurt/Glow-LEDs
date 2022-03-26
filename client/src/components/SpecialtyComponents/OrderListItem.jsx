@@ -129,7 +129,7 @@ const OrderListItem = ({ order, determine_color, admin, update_order_payment_sta
 		const { data } = await API_Shipping.buy_label(order.shipping.shipment_id, order.shipping.shipping_rate);
 		setTimeout(() => {
 			print_invoice(invoice);
-		}, 1000);
+		}, 1500);
 		setTimeout(() => {
 			print_label(data.postage_label.label_url);
 		}, 1000);
@@ -142,13 +142,13 @@ const OrderListItem = ({ order, determine_color, admin, update_order_payment_sta
 		dispatch(listOrders({}));
 	};
 
-	const create_label = async () => {
+	const create_label = async (speed) => {
 		set_loading_label(true);
 		const { data: invoice } = await API_Orders.get_invoice(order);
-		const { data } = await API_Shipping.create_label(order, order.shipping.shipping_rate);
+		const { data } = await API_Shipping.create_label(order, order.shipping.shipping_rate, speed);
 		setTimeout(() => {
 			print_invoice(invoice);
-		}, 1000);
+		}, 1500);
 		setTimeout(() => {
 			print_label(data.postage_label.label_url);
 		}, 1000);
@@ -551,8 +551,20 @@ const OrderListItem = ({ order, determine_color, admin, update_order_payment_sta
 								)}
 								{hide_label_button &&
 								!order.shipping.shipping_label && (
-									<button className="btn primary mv-5px" onClick={() => create_label()}>
-										Create Label
+									<button className="btn primary mv-5px" onClick={() => create_label('first')}>
+										{!order.shipping.shipping_label ? 'Create First Class Label' : 'Create New First Class  Label'}
+									</button>
+								)}
+								{hide_label_button &&
+								!order.shipping.shipping_label && (
+									<button className="btn primary mv-5px" onClick={() => create_label('priority')}>
+										{!order.shipping.shipping_label ? 'Create Priority Label' : 'Create New Prioirty Label'}
+									</button>
+								)}
+								{hide_label_button &&
+								!order.shipping.shipping_label && (
+									<button className="btn primary mv-5px" onClick={() => create_label('express')}>
+										{!order.shipping.shipping_label ? 'Create Express Label' : 'Create New Express Label'}
 									</button>
 								)}
 								{order.shipping.shipping_label && (

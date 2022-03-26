@@ -277,14 +277,14 @@ const OrderPage = (props) => {
 		}, 200);
 	};
 
-	const create_label = async () => {
+	const create_label = async (speed) => {
 		set_loading_label(true);
-		const { data } = await API_Shipping.create_label(order, order.shipping.shipping_rate);
+		const { data } = await API_Shipping.create_label(order, order.shipping.shipping_rate, speed);
 		const { data: invoice } = await API_Orders.get_invoice(order);
 		// show_label(data.postage_label.label_url);
 		setTimeout(() => {
 			print_invoice(invoice);
-		}, 1000);
+		}, 1500);
 		setTimeout(() => {
 			print_label(data.postage_label.label_url);
 		}, 1000);
@@ -327,7 +327,7 @@ const OrderPage = (props) => {
 		// show_label(data.postage_label.label_url);
 		setTimeout(() => {
 			print_invoice(invoice);
-		}, 1000);
+		}, 1500);
 		setTimeout(() => {
 			print_label(data.postage_label.label_url);
 		}, 1000);
@@ -1211,8 +1211,15 @@ ${order.shipping.email}`)}
 													Buy New Speed Label
 												</button>
 											)}
-											<button className="btn secondary mv-5px" onClick={() => create_label()}>
-												{!order.shipping.shipping_label ? 'Create Label' : 'Create New Label'}
+
+											<button className="btn secondary mv-5px" onClick={() => create_label('first')}>
+												{!order.shipping.shipping_label ? 'Create First Class Label' : 'Create First Class New Label'}
+											</button>
+											<button className="btn secondary mv-5px" onClick={() => create_label("priority")}>
+												{!order.shipping.shipping_label ? 'Create Priority Label' : 'Create New Prioirty Label'}
+											</button>
+											<button className="btn secondary mv-5px" onClick={() => create_label("express")}>
+												{!order.shipping.shipping_label ? 'Create Express Label' : 'Create New Express Label'}
 											</button>
 
 											{!order.shipping.return_shipping_label && (
