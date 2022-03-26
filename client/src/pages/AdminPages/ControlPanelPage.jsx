@@ -406,10 +406,10 @@ const ControlPanelPage = (props) => {
 										className=""
 									>
 										<th>
-											${month.macro_income.income ? month.macro_income.income.toFixed(2) : '0.00'}
+											${month.macro_income && month.macro_income.income ? month.macro_income.income.toFixed(2) : '0.00'}
 										</th>
 										<th>
-											${month.macro_income.expenses ? (
+											${month.macro_income && month.macro_income.expenses ? (
 												month.macro_income.expenses.toFixed(2)
 											) : (
 												'0.00'
