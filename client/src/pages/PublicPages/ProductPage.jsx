@@ -960,34 +960,32 @@ const ProductPage = props => {
         )}
       </Loading>
       {product &&
-        (product.name !== "Glow Strings V2 50 LED / 3.5m") &
-          (
-            <div className=" w-100per m-auto">
-              <RelatedProductsSlideshow
-                product_category={product.category}
-                product={product}
-                random={false}
-                className=""
-                product_pathname={props.match.params.pathname}
-                title="Fits the Same Microlight"
-                category="related"
-              />
-            </div>
-          )}
+      product.name !== "Glow Strings V2 50 LED / 3.5m" && (
+        <div className=" w-100per m-auto">
+          <RelatedProductsSlideshow
+            product_category={product.category}
+            product={product}
+            random={false}
+            className=""
+            product_pathname={props.match.params.pathname}
+            title="Fits the Same Microlight"
+            category="related"
+          />
+        </div>
+      )}
       {product &&
-        (product.name !== "Glow Strings V2 50 LED / 3.5m") &
-          (
-            <div className=" w-100per m-auto">
-              <RelatedProductsSlideshow
-                product_category={product.category}
-                random={false}
-                className=""
-                product_pathname={props.match.params.pathname}
-                title="Related Products"
-                category="related"
-              />
-            </div>
-          )}
+      product.name !== "Glow Strings V2 50 LED / 3.5m" && (
+        <div className=" w-100per m-auto">
+          <RelatedProductsSlideshow
+            product_category={product.category}
+            random={false}
+            className=""
+            product_pathname={props.match.params.pathname}
+            title="Related Products"
+            category="related"
+          />
+        </div>
+      )}
       {product &&
       product.category !== "accessories" &&
       product.name !== "Glow Strings V2 50 LED / 3.5m" && (

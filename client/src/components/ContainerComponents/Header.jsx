@@ -290,7 +290,10 @@ const Header = props => {
                           <hr className="w-95per m-0px" />
 
                           <Link to="/collections/all/products/category/new_releases">
-                            <button className="btn nav w-100per ta-l">
+                            <button
+                              className="btn nav w-100per ta-l"
+                              style={{ padding: "7px 10px 7px 10px" }}
+                            >
                               New Releases!{" "}
                               <span aria-label="emoji" role="img">
                                 🆕
@@ -298,17 +301,29 @@ const Header = props => {
                             </button>
                           </Link>
                           <Link to="/collections/all/products/category/best_sellers">
-                            <button className="btn nav w-100per ta-l">
-                              Best Sellers ✅
+                            <button
+                              className="btn nav w-100per ta-l"
+                              style={{ padding: "7px 10px 7px 10px" }}
+                            >
+                              Best Sellers<span aria-label="emoji" role="img">
+                                {" "}
+                                ✅
+                              </span>
                             </button>
                           </Link>
                           <Link to="/collections/all/products/category/essentials">
-                            <button className="btn nav w-100per ta-l jc-b">
+                            <button
+                              className="btn nav w-100per ta-l jc-b"
+                              style={{ padding: "7px 10px 7px 10px" }}
+                            >
                               Our Picks ⭐
                             </button>
                           </Link>
                           <Link to="/collections/all/products/category/discounted">
-                            <button className="btn nav w-100per ta-l">
+                            <button
+                              className="btn nav w-100per ta-l"
+                              style={{ padding: "7px 10px 7px 10px" }}
+                            >
                               On Sale! 💰
                             </button>
                           </Link>

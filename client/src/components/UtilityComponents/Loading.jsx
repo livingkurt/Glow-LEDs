@@ -35,7 +35,6 @@ const Loading = props => {
       ) : props.error ? (
         <div className="error_message jc-c column">
           <p className="ta-c  fs-14px">Error: {props.error.message}</p>
-          {/* <p className="ta-c mv-5px">Please Try a Different Card if Error Persists.</p> */}
         </div>
       ) : (
         props.children
