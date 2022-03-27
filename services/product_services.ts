@@ -176,22 +176,26 @@ export default {
   get_essentials_products_s: async (params: any, body: any) => {
     try {
       const names = [
-        "Bulk CR1620 Batteries",
+        "Refresh Pack (6 Supreme Pairs + 120 Batteries)",
+        "Supreme Sizing Sampler Pack",
         "Bulk CR1225 Batteries",
+        "Bulk CR1616 Batteries",
+        "Bulk CR1620 Batteries",
+        "Universal Battery Dispenser",
         "Glow Strings V2 50 LED / 3.5m",
-        "Wiffle Ball EXO Diffusers",
-        "Dome Diffusers",
-        "Coinskins V2",
-        "Visor Diffusers",
-        "Hybridskins",
+        "Platonic Solids EXO Diffusers",
         "Diffuser Caps + Adapters Starter Kit V4",
-        "Space Cadet Diffuser Caps",
-        "Apollo Glow Casings",
-        "1225 Coin Battery Dispenser",
-        "1620 Coin Battery Dispenser",
+        "Dome Diffusers",
+        "Fisheye Dome Diffusers",
+        "Mini Dome Diffusers",
+        "Cube Diffusers",
+        "Coinskins V2",
+        "Nanoskins",
+        "Alt Novaskins w Nano Sleds",
+        "Batman Decals",
       ];
       console.log({ names });
-      const sort = {};
+      const sort = { _id: -1 };
       const filter = { name: { $in: names } };
       const limit = 0;
       const page = 1;
