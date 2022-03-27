@@ -1,136 +1,146 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { login } from '../../actions/userActions';
-import { validate_login } from '../../utils/validations';
-import { Helmet } from 'react-helmet';
-import { Loading } from '../../components/UtilityComponents';
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { login } from "../../actions/userActions";
+import { validate_login } from "../../utils/validations";
+import { Helmet } from "react-helmet";
+import { Loading } from "../../components/UtilityComponents";
 
-const LoginPage = (props) => {
-	const [ email, setEmail ] = useState('');
-	const [ password, setPassword ] = useState('');
+const LoginPage = props => {
+  const [ email, setEmail ] = useState("");
+  const [ password, setPassword ] = useState("");
 
-	const [ email_validations, setEmailValidations ] = useState('');
-	const [ password_validations, setPasswordValidations ] = useState('');
-	const [ loading, set_loading ] = useState(false);
+  const [ email_validations, setEmailValidations ] = useState("");
+  const [ password_validations, setPasswordValidations ] = useState("");
+  const [ loading, set_loading ] = useState(false);
 
-	const userLogin = useSelector((state) => state.userLogin);
-	const { loading: user_loading, userInfo, error } = userLogin;
-	// const errors = useSelector((state) => state.errors);
-	// console.log({ errors });
-	// console.log({ error });
-	// const { loading, userInfo, error } = errors;
-	// console.log({ userInfo });
-	const dispatch = useDispatch();
-	const redirect = props.location.search ? props.location.search.split('=')[1] : '/';
+  const userLogin = useSelector(state => state.userLogin);
+  const { loading: user_loading, userInfo, error } = userLogin;
+  // const errors = useSelector((state) => state.errors);
+  // console.log({ errors });
+  console.log({ userLogin });
+  // const { loading, userInfo, error } = errors;
+  // console.log({ userInfo });
+  const dispatch = useDispatch();
+  const redirect = props.location.search
+    ? props.location.search.split("=")[1]
+    : "/";
 
-	useEffect(
-		() => {
-			let clean = true;
-			if (clean) {
-				if (userInfo && userInfo.hasOwnProperty('first_name')) {
-					props.history.push(redirect);
-				}
-			}
-			return () => (clean = false);
-		},
-		[ userInfo, props.history, redirect ]
-	);
+  useEffect(
+    () => {
+      let clean = true;
+      if (clean) {
+        if (userInfo && userInfo.hasOwnProperty("first_name")) {
+          props.history.push(redirect);
+        }
+      }
+      return () => (clean = false);
+    },
+    [ userInfo, props.history, redirect ]
+  );
 
-	setTimeout(() => {
-		set_loading(false);
-	}, 3000);
+  setTimeout(() => {
+    set_loading(false);
+  }, 3000);
 
-	const submitHandler = (e) => {
-		e.preventDefault();
-		const data = { email, password };
-		const request = validate_login(data);
+  const submitHandler = e => {
+    e.preventDefault();
+    const data = { email, password };
+    const request = validate_login(data);
 
-		setEmailValidations(request.errors.email);
-		setPasswordValidations(request.errors.password);
-		if (request.isValid) {
-			dispatch(login({ email: email.toLowerCase(), password }));
-			// console.log({ email, password });
-			set_loading(user_loading);
-			// dispatch(loginUser(email, password));
-		}
-	};
+    setEmailValidations(request.errors.email);
+    setPasswordValidations(request.errors.password);
+    console.log({ isValid: request.isValid });
+    if (request.isValid) {
+      dispatch(login({ email: email.toLowerCase(), password }));
+      // console.log({ email, password });
+      set_loading(user_loading);
+      // dispatch(loginUser(email, password));
+    }
+  };
 
-	return (
-		<div className="form">
-			<Helmet>
-				<title>Login | Glow LEDs</title>
-				<meta property="og:title" content="Login" />
-				<meta name="twitter:title" content="Login" />
-				<link rel="canonical" href="https://www.glow-leds.com/account/login" />
-				<meta property="og:url" content="https://www.glow-leds.com/account/login" />
-				<meta
-					name="description"
-					content="Come in the LEDs are fine. Come into our Glowing realm of wonderfulness. Where you just might find what you have been missing."
-				/>
-				<meta
-					property="og:description"
-					content="Come in the LEDs are fine. Come into our Glowing realm of wonderfulness. Where you just might find what you have been missing."
-				/>
-				<meta
-					name="twitter:description"
-					content="Come in the LEDs are fine. Come into our Glowing realm of wonderfulness. Where you just might find what you have been missing."
-				/>
-			</Helmet>
+  return (
+    <div className="form">
+      <Helmet>
+        <title>Login | Glow LEDs</title>
+        <meta property="og:title" content="Login" />
+        <meta name="twitter:title" content="Login" />
+        <link rel="canonical" href="https://www.glow-leds.com/account/login" />
+        <meta
+          property="og:url"
+          content="https://www.glow-leds.com/account/login"
+        />
+        <meta
+          name="description"
+          content="Come in the LEDs are fine. Come into our Glowing realm of wonderfulness. Where you just might find what you have been missing."
+        />
+        <meta
+          property="og:description"
+          content="Come in the LEDs are fine. Come into our Glowing realm of wonderfulness. Where you just might find what you have been missing."
+        />
+        <meta
+          name="twitter:description"
+          content="Come in the LEDs are fine. Come into our Glowing realm of wonderfulness. Where you just might find what you have been missing."
+        />
+      </Helmet>
 
-			<form onSubmit={submitHandler}>
-				<ul className="form-container">
-					<li style={{ display: 'flex', flexDirection: 'column' }}>
-						<h1>Login </h1>
-					</li>
-					<Loading loading={loading} error={error} />
-					<li>
-						<label htmlFor="email">Email</label>
-						<input
-							style={{ textTransform: 'lowercase' }}
-							type="text"
-							name="email"
-							id="email"
-							onChange={(e) => setEmail(e.target.value.toLowerCase())}
-						/>
-					</li>
-					<label className="validation_text" style={{ textAlign: 'center' }}>
-						{email_validations}
-					</label>
-					<li>
-						<label htmlFor="password">Password</label>
-						<input
-							type="password"
-							C
-							id="password"
-							name="password"
-							onChange={(e) => setPassword(e.target.value)}
-						/>
-					</li>
-					<label className="validation_text" style={{ textAlign: 'center' }}>
-						{password_validations}
-					</label>
+      <form onSubmit={submitHandler}>
+        <ul className="form-container">
+          <li style={{ display: "flex", flexDirection: "column" }}>
+            <h1>Login </h1>
+          </li>
+          <Loading loading={loading} error={error} />
+          <li>
+            <label htmlFor="email">Email</label>
+            <input
+              style={{ textTransform: "lowercase" }}
+              type="text"
+              name="email"
+              id="email"
+              onChange={e => setEmail(e.target.value.toLowerCase())}
+            />
+          </li>
+          <label className="validation_text" style={{ textAlign: "center" }}>
+            {email_validations}
+          </label>
+          <li>
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              C
+              id="password"
+              name="password"
+              onChange={e => setPassword(e.target.value)}
+            />
+          </li>
+          <label className="validation_text" style={{ textAlign: "center" }}>
+            {password_validations}
+          </label>
 
-					<li>
-						<button type="submit" className="btn primary">
-							Login
-						</button>
-					</li>
-					<li>
-						<Link to="/account/passwordreset">
-							<button className="btn secondary w-100per">Forgot Password?</button>
-						</Link>
-					</li>
-					<li>New to Glow LEDs?</li>
-					<li>
-						<Link
-							to={redirect === '/' ? 'register' : 'register?redirect=' + redirect}
-							className="btn primary ta-c"
-						>
-							Create Account
-						</Link>
-					</li>
-					{/* <li style={{ marginBottom: '-20px' }}>
+          <li>
+            <button type="submit" className="btn primary">
+              Login
+            </button>
+          </li>
+          <li>
+            <Link to="/account/passwordreset">
+              <button className="btn secondary w-100per">
+                Forgot Password?
+              </button>
+            </Link>
+          </li>
+          <li>New to Glow LEDs?</li>
+          <li>
+            <Link
+              to={
+                redirect === "/" ? "register" : "register?redirect=" + redirect
+              }
+              className="btn primary ta-c"
+            >
+              Create Account
+            </Link>
+          </li>
+          {/* <li style={{ marginBottom: '-20px' }}>
 							<Link
 								to={redirect === '/' ? 'register' : 'register?redirect=' + redirect}
 								className="btn secondary ta-c"
@@ -138,9 +148,9 @@ const LoginPage = (props) => {
 								New User
 							</Link>
 						</li> */}
-				</ul>
-			</form>
-		</div>
-	);
+        </ul>
+      </form>
+    </div>
+  );
 };
 export default LoginPage;
