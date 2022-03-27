@@ -185,14 +185,18 @@ export default {
         "Glow Strings V2 50 LED / 3.5m",
         "Platonic Solids EXO Diffusers",
         "Diffuser Caps + Adapters Starter Kit V4",
+        "Kaleidoscope Diffuser Caps V4",
         "Dome Diffusers",
-        "Fisheye Dome Diffusers",
         "Mini Dome Diffusers",
+        "Mega Dome Diffusers",
         "Cube Diffusers",
+        "Visor Diffusers",
         "Coinskins V2",
         "Nanoskins",
+        "Hybridskins (Coin/Coffin Chips)",
         "Alt Novaskins w Nano Sleds",
         "Batman Decals",
+        "X Decals",
       ];
       console.log({ names });
       const sort = { _id: -1 };
