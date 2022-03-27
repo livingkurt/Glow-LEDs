@@ -291,22 +291,25 @@ const Header = props => {
 
                           <Link to="/collections/all/products/category/new_releases">
                             <button className="btn nav w-100per ta-l">
-                              New Releases!
+                              New Releases!{" "}
+                              <span aria-label="emoji" role="img">
+                                🆕
+                              </span>️
                             </button>
                           </Link>
                           <Link to="/collections/all/products/category/best_sellers">
                             <button className="btn nav w-100per ta-l">
-                              Best Sellers
+                              Best Sellers ✅
                             </button>
                           </Link>
                           <Link to="/collections/all/products/category/essentials">
                             <button className="btn nav w-100per ta-l jc-b">
-                              Our Picks
+                              Our Picks ⭐
                             </button>
                           </Link>
                           <Link to="/collections/all/products/category/discounted">
                             <button className="btn nav w-100per ta-l">
-                              On Sale!
+                              On Sale! 💰
                             </button>
                           </Link>
 
@@ -658,13 +661,6 @@ const Header = props => {
                             </button>
                           </Link>
                           <hr className="w-95per m-0px" />
-                          <Link to="/collections/all/products/refresh_pack">
-                            <div className="row">
-                              <button className="btn nav w-100per ta-l">
-                                Refresh Pack
-                              </button>
-                            </div>
-                          </Link>
                           <Link to="/collections/all/products/supremes">
                             <div className="row">
                               <button className="btn nav w-100per ta-l">
@@ -672,17 +668,25 @@ const Header = props => {
                               </button>
                             </div>
                           </Link>
+                          <Link to="/collections/all/products/refresh_pack">
+                            <div className="row">
+                              <button className="btn nav w-100per ta-l">
+                                Refresh Pack
+                              </button>
+                            </div>
+                          </Link>
+                          <Link to="/collections/all/products/supremes_sizing_sampler_pack">
+                            <div className="row">
+                              <button className="btn nav w-100per ta-l">
+                                Sizing Sampler
+                              </button>
+                            </div>
+                          </Link>
+
                           <Link to="/collections/all/products/1225_batteries">
                             <div className="row">
                               <button className="btn nav w-100per ta-l">
                                 1225 Batteries
-                              </button>
-                            </div>
-                          </Link>
-                          <Link to="/collections/all/products/1620_batteries">
-                            <div className="row">
-                              <button className="btn nav w-100per ta-l">
-                                1620 Batteries
                               </button>
                             </div>
                           </Link>
@@ -693,8 +697,14 @@ const Header = props => {
                               </button>
                             </div>
                           </Link>
-
-                          <Link to="/collections/all/products/category/accessories/subcategory/battery_storage">
+                          <Link to="/collections/all/products/1620_batteries">
+                            <div className="row">
+                              <button className="btn nav w-100per ta-l">
+                                1620 Batteries
+                              </button>
+                            </div>
+                          </Link>
+                          <Link to="/collections/all/products/category/batteries/subcategory/storage">
                             <div className="row">
                               <button className="btn nav w-100per ta-l">
                                 Battery Storage
