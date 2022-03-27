@@ -936,15 +936,27 @@ export const update_products_url = (
   sort = "",
   filter = "",
   page = 1,
-  limit = 0
+  limit = 0,
+  pathname = ""
 ) => {
-  history.push({
-    search: `${search ? "?search=" + search : ""}${sort
-      ? "?sort=" + sort
-      : ""}${filter ? "?filter=" + filter : ""}${page
-      ? "?page=" + page
-      : ""}${limit ? "?limit=" + limit : ""}`,
-  });
+  if (pathname) {
+    history.push({
+      pathname: pathname,
+      search: `${search ? "?search=" + search : ""}${sort
+        ? "?sort=" + sort
+        : ""}${filter ? "?filter=" + filter : ""}${page
+        ? "?page=" + page
+        : ""}${limit ? "?limit=" + limit : ""}`,
+    });
+  } else {
+    history.push({
+      search: `${search ? "?search=" + search : ""}${sort
+        ? "?sort=" + sort
+        : ""}${filter ? "?filter=" + filter : ""}${page
+        ? "?page=" + page
+        : ""}${limit ? "?limit=" + limit : ""}`,
+    });
+  }
 };
 
 export const getUrlParameter = (location: any) => {

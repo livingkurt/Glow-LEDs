@@ -13,6 +13,7 @@ import {
   categories,
   humanize,
   subcategories,
+  update_products_url,
 } from "../../utils/helper_functions";
 import {
   DirectLink,
@@ -23,6 +24,8 @@ import {
   scroller,
 } from "react-scroll";
 import { hide_search_bar, show_search_bar } from "../../actions/settingActions";
+import { Filter } from "../SpecialtyComponents";
+import { listChips } from "../../actions/chipActions";
 
 const Header = props => {
   const history = useHistory();
@@ -167,6 +170,7 @@ const Header = props => {
     let clean = true;
     if (clean) {
       findAll_products_a();
+      dispatch(listChips({}));
     }
     return () => (clean = false);
   }, []);
@@ -196,6 +200,28 @@ const Header = props => {
   // 	btn.classList.toggle('active');
   // 	btn.classList.toggle('not-active');
   // });
+
+  const chipList = useSelector(state => state.chipList);
+  const { chips: chips_list } = chipList;
+
+  const filterHandler = e => {
+    const chip_selected = JSON.parse(e.target.value);
+    update_products_url(
+      history,
+      "",
+      "",
+      chip_selected.name,
+      "",
+      "0",
+      "/collections/all/products"
+    );
+    dispatch(
+      listProducts({
+        chip: chip_selected._id,
+        hidden: false,
+      })
+    );
+  };
 
   return (
     <div>
@@ -288,7 +314,18 @@ const Header = props => {
                             </button>
                           </Link>
                           <hr className="w-95per m-0px" />
-
+                          {/* <Link to="/collections/all/products/shop_by_chip">
+                            <button className="btn nav w-100per ta-l">
+                              Shop by Chip
+                            </button>
+                          </Link> */}
+                          <div style={{ marginLeft: -"5px" }}>
+                            <Filter
+                              title="Shop By Chip"
+                              filterHandler={filterHandler}
+                              filter_options={chips_list}
+                            />
+                          </div>
                           <Link to="/collections/all/products/category/new_releases">
                             <button
                               className="btn nav w-100per ta-l"

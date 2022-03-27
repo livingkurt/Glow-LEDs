@@ -589,6 +589,15 @@ const Sidebar = props => {
                 </button>
               </Link>
             </ul>
+            <Link to="/collections/all/products/shop_by_chip">
+              <button
+                className="sidebar-btn secondary"
+                style={{ padding: "7px 10px 7px 20px" }}
+                onClick={closeMenu}
+              >
+                Shop By Chip
+              </button>
+            </Link>
             <Link to="/collections/all/products/category/new_releases">
               <button
                 className="sidebar-btn secondary"
