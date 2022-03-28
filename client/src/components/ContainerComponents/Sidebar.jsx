@@ -4,6 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../actions/userActions";
 import { HashLink } from "react-router-hash-link";
 import { browser_check } from "../../utils/react_helper_functions";
+import { listProducts } from "../../actions/productActions";
+import { update_products_url } from "../../utils/helper_functions";
+import { Filter } from "../SpecialtyComponents";
+import { listChips } from "../../actions/chipActions";
 
 const Sidebar = props => {
   const history = useHistory();
@@ -79,6 +83,14 @@ const Sidebar = props => {
     current_menu.classList.toggle("hide-menu");
   };
 
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      dispatch(listChips({}));
+    }
+    return () => (clean = false);
+  }, []);
+
   // var btn = $('.side-btn');
   // var btn = document.querySelector('.side-btn');
 
@@ -91,6 +103,31 @@ const Sidebar = props => {
   // 	btn.classList.toggle('active');
   // 	btn.classList.toggle('not-active');
   // });
+
+  const chipList = useSelector(state => state.chipList);
+  const { chips: chips_list } = chipList;
+
+  const [ chip_name, set_chip_name ] = useState();
+
+  const filterHandler = e => {
+    const chip_selected = JSON.parse(e.target.value);
+    update_products_url(
+      history,
+      "",
+      "",
+      chip_selected.name,
+      "",
+      "0",
+      "/collections/all/products"
+    );
+    dispatch(
+      listProducts({
+        chip: chip_selected._id,
+        hidden: false,
+      })
+    );
+    set_chip_name({});
+  };
 
   return (
     <aside
@@ -589,7 +626,7 @@ const Sidebar = props => {
                 </button>
               </Link>
             </ul>
-            <Link to="/collections/all/products/shop_by_chip">
+            {/* <Link to="/collections/all/products/shop_by_chip">
               <button
                 className="sidebar-btn secondary"
                 style={{ padding: "7px 10px 7px 20px" }}
@@ -597,7 +634,19 @@ const Sidebar = props => {
               >
                 Shop By Chip
               </button>
-            </Link>
+            </Link> */}
+            <div
+              style={{ marginLeft: -"5px" }}
+              className="sidebar-btn secondary pl-0px"
+            >
+              <Filter
+                title="Shop By Chip"
+                width="100per"
+                state={chip_name}
+                filterHandler={filterHandler}
+                filter_options={chips_list}
+              />
+            </div>
             <Link to="/collections/all/products/category/new_releases">
               <button
                 className="sidebar-btn secondary"

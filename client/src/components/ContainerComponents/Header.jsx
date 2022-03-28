@@ -204,6 +204,8 @@ const Header = props => {
   const chipList = useSelector(state => state.chipList);
   const { chips: chips_list } = chipList;
 
+  const [ chip_name, set_chip_name ] = useState();
+
   const filterHandler = e => {
     const chip_selected = JSON.parse(e.target.value);
     update_products_url(
@@ -221,6 +223,7 @@ const Header = props => {
         hidden: false,
       })
     );
+    set_chip_name({});
   };
 
   return (
@@ -314,14 +317,11 @@ const Header = props => {
                             </button>
                           </Link>
                           <hr className="w-95per m-0px" />
-                          {/* <Link to="/collections/all/products/shop_by_chip">
-                            <button className="btn nav w-100per ta-l">
-                              Shop by Chip
-                            </button>
-                          </Link> */}
-                          <div style={{ marginLeft: -"5px" }}>
+                          <div style={{ marginLeft: -"5px" }} className="">
                             <Filter
                               title="Shop By Chip"
+                              width="100per"
+                              state={chip_name}
                               filterHandler={filterHandler}
                               filter_options={chips_list}
                             />

@@ -1,25 +1,27 @@
 // React
 import React from "react";
 
-const Filter = props => {
+const Filter = ({ filterHandler, filter_options, state, title, width }) => {
   // console.log({ props });
   return (
     <div className="ai-c ml-1rem mh-1rem">
-      <div className="custom-select">
+      <div className={`custom-select ${width && "w-100per"}`}>
         <select
           name="filterOrder"
-          className="filter_select w-221px"
-          onChange={props.filterHandler}
+          className={`filter_select w-${width || "221px"}`}
+          onChange={filterHandler}
+          defaultValue={JSON.stringify(state)}
+          value={JSON.stringify(state)}
         >
           <option
             className="grey_option"
-            disabled="disabled"
+            // disabled="disabled"
             selected="selected"
-            value=""
+            value={""}
           >
-            {props.title || "Filter By Chip"}
+            {title || "Filter By Chip"}
           </option>
-          {props.filter_options.map((option, index) => {
+          {filter_options.map((option, index) => {
             return (
               <option key={index} value={JSON.stringify(option)}>
                 {option.name}
