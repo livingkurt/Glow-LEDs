@@ -64,3 +64,14 @@ select:hover {
 	top: 65%;
 }
 
+
+.custom-select {
+	select {
+		overflow: hidden;
+		overflow: -moz-hidden-unscrollable;
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		height: 39px;
+	}
+	
+}
