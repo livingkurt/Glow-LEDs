@@ -178,8 +178,6 @@ const AllProductsPage = props => {
           console.log({ "query.filter": data });
           set_chip_name(data);
           set_filter_on(true);
-          // set_chip_name(e.target.value);
-          // filter = waitForElement(query.filter, chips_list);
         }
         if (query.page) {
           set_page(query.page);

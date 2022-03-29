@@ -1,8 +1,13 @@
-import { format_date, determine_product_name, order_status_steps, determine_tracking_number } from '../../util';
+import {
+  format_date,
+  determine_product_name,
+  order_status_steps,
+  determine_tracking_number,
+} from "../../util";
 
 export default (props: any) => {
-	const { email, order, status, message_to_user } = props;
-	return `
+  const { email, order, status, message_to_user } = props;
+  return `
         <table style="width:100%;border-spacing:0;padding:10px">
           <tr>
             <td style="font-family:helvetica;border:0">
@@ -15,17 +20,19 @@ export default (props: any) => {
 
                         <p style="color:white;line-height:150%;font-size:16px;margin:0">
                         ${order.isRefunded
-							? `<h3 style='font-family: helvetica;'>
-                                        Your Order has been refunded for${' '}
-                                        ${order.payment.refund_reason[order.payment.refund_reason.length - 1]}${' '}
+                          ? `<h3 style='font-family: helvetica;'>
+                                        Your Order has been refunded for${" "}
+                                        ${order.payment.refund_reason[
+                                          order.payment.refund_reason.length - 1
+                                        ]}${" "}
                                         on ${format_date(order.refundedAt)}
                                       </h3>`
-							: `<p style='font-size: 16px;line-height: 20px;'>
-                                        Hi ${order.shipping.first_name},${' '}
-                                        ${email.h2 ? email.h2 : ''}
+                          : `<p style='font-size: 16px;line-height: 20px;'>
+                                        Hi ${order.shipping.first_name},${" "}
+                                        ${email.h2 ? email.h2 : ""}
                                       </p>`}
                         </p>
-                        <p>${email.p ? email.p : ''}</p>
+                        <p>${email.p ? email.p : ""}</p>
                         <table style="width:100%;border-spacing:0;margin-top:20px">
                           <tbody>
                             <tr style="font-family:helvetica;line-height:0em">
@@ -79,13 +86,16 @@ export default (props: any) => {
                               <td style="vertical-align:top;text-align:right;color:white;font-size:16px" valign="top"
                                 align="right"><strong>Order #:</strong>
                                 ${order._id}<br /><strong>Created:</strong> ${order.createdAt
-		? format_date(order.createdAt)
-		: ''}
-                                ${order.tracking_number
-									? `<div>
+    ? format_date(order.createdAt)
+    : ""}
+                                ${order.status === "shipped"
+                                  ? order.tracking_number
+                                    ? `<div>
                                     <strong>Tracking Number: </strong>{' '}
                                     <a
-                                      href=${determine_tracking_number(order.tracking_number)}
+                                      href=${determine_tracking_number(
+                                        order.tracking_number
+                                      )}
                                       target="_blank"
                                       rel="noopener noreferrer"
                                       style='text-decoration: underline;color: white;'
@@ -93,7 +103,8 @@ export default (props: any) => {
                                       ${order.tracking_number}
                                     </a>
                                   </div>`
-									: ''}
+                                    : ""
+                                  : ""}
                                 <br /></td>
                             </tr>
                           </tbody>
@@ -101,7 +112,7 @@ export default (props: any) => {
                       </td>
                     </tr>
                     ${order.order_note
-						? `<tr>
+                      ? `<tr>
                         <td
                           style='vertical-align: top;color: white;font-size: 16px;line-height: 40px;'
                           valign="top"
@@ -111,16 +122,16 @@ export default (props: any) => {
                             <strong>Order Note:</strong> ${order.order_note}
                           </div>
                           ${message_to_user
-								? `<div>
+                            ? `<div>
                               <strong>Message To User:</strong>{' '}
                               ${message_to_user}
                             </div>`
-								: ''}
+                            : ""}
                           <br />
                           <br />
                         </td>
                       </tr>`
-						: ''}
+                      : ""}
                     <tr>
                       <td style="font-family:helvetica">
                         <h3 style="font-weight:normal;font-size:20px;margin:0 0 25px"><strong>Items in this
@@ -136,9 +147,9 @@ export default (props: any) => {
         <table style="max-width:500px;text-align:center;border-spacing:0px;margin:10px auto;width:100%">
           <tbody>
           ${order.orderItems
-				.map(
-					(item: any, index: any) =>
-						`<tr>
+            .map(
+              (item: any, index: any) =>
+                `<tr>
                           <td
                             style='font-family: helvetica;'
                           >
@@ -165,7 +176,7 @@ export default (props: any) => {
                                               style='margin-bottom: 10px; margin-right: 10px;'
                                             >
                                               ${!item.secondary_image
-													? `<img
+                                                ? `<img
                                                   src=${item.display_image}
                                                   alt=${item.name}
                                                   width="60"
@@ -173,28 +184,32 @@ export default (props: any) => {
                                                   style='border-radius:8px;'
                                                   title="Product Image"
                                                 />`
-													: `<div/>`}
+                                                : `<div/>`}
                                               ${item.secondary_image
-													? `<div
-                                                  style='${'width:100%; display:flex;'} ${item.name
-															? item.name.split('-')[1]
-																? 'flex-direction: column;'
-																: 'flex-direction: row;'
-															: ''}'
+                                                ? `<div
+                                                  style='${"width:100%; display:flex;"} ${item.name
+                                                    ? item.name.split("-")[1]
+                                                      ? "flex-direction: column;"
+                                                      : "flex-direction: row;"
+                                                    : ""}'
                                                 >
                                                   <img
                                                     id="expandedImg"
                                                     alt=${item.name}
                                                     title=${item.name}
-                                                    style='${'object-fit:cover; object-position:50% 50%; max-width:70px; max-height:70px; margin:0px;'} ${item.name
-															? item.name.split('-')[1]
-																? 'border-radius: 0rem 1rem 1rem 0rem;'
-																: 'border-radius: 1rem 0rem 0rem 1rem;'
-															: ''} ${item.name
-															? item.name.split('-')[1] ? 'width: 70px;' : 'width: 35px;'
-															: ''} ${item.name
-															? item.name.split('-')[1] ? 'height: 35px;' : 'height: 70px;'
-															: ''}'
+                                                    style='${"object-fit:cover; object-position:50% 50%; max-width:70px; max-height:70px; margin:0px;"} ${item.name
+                                                    ? item.name.split("-")[1]
+                                                      ? "border-radius: 0rem 1rem 1rem 0rem;"
+                                                      : "border-radius: 1rem 0rem 0rem 1rem;"
+                                                    : ""} ${item.name
+                                                    ? item.name.split("-")[1]
+                                                      ? "width: 70px;"
+                                                      : "width: 35px;"
+                                                    : ""} ${item.name
+                                                    ? item.name.split("-")[1]
+                                                      ? "height: 35px;"
+                                                      : "height: 70px;"
+                                                    : ""}'
 
                                                     src=${item.display_image}
                                                   />
@@ -202,19 +217,23 @@ export default (props: any) => {
                                                     id="expandedSecondaryImg"
                                                     alt=${item.name}
                                                     title=${item.name}
-                                                    style='${'object-fit:cover; object-position:50% 50%; max-width:70px; max-height:70px; margin:0px;'} ${item.name
-															? item.name.split('-')[1]
-																? 'border-radius: 0rem 1rem 1rem 0rem;'
-																: 'border-radius: 1rem 0rem 0rem 1rem;'
-															: ''} ${item.name
-															? item.name.split('-')[1] ? 'width: 70px;' : 'width: 35px;'
-															: ''} ${item.name
-															? item.name.split('-')[1] ? 'height: 35px;' : 'height: 70px;'
-															: ''}'
+                                                    style='${"object-fit:cover; object-position:50% 50%; max-width:70px; max-height:70px; margin:0px;"} ${item.name
+                                                    ? item.name.split("-")[1]
+                                                      ? "border-radius: 0rem 1rem 1rem 0rem;"
+                                                      : "border-radius: 1rem 0rem 0rem 1rem;"
+                                                    : ""} ${item.name
+                                                    ? item.name.split("-")[1]
+                                                      ? "width: 70px;"
+                                                      : "width: 35px;"
+                                                    : ""} ${item.name
+                                                    ? item.name.split("-")[1]
+                                                      ? "height: 35px;"
+                                                      : "height: 70px;"
+                                                    : ""}'
                                                     src=${item.secondary_image}
                                                   />
                                                 </div>`
-													: `<div />`}
+                                                : `<div />`}
                                             </div>
                                           </td>
                                           <td
@@ -223,7 +242,11 @@ export default (props: any) => {
                                             <span
                                               style='font-size:16px;font-weight:600;line-height:1.4;color:white;'
                                             >
-                                              ${determine_product_name(item, true, order.createdAt)}
+                                              ${determine_product_name(
+                                                item,
+                                                true,
+                                                order.createdAt
+                                              )}
                                             </span>
                                             <br />
                                           </td>
@@ -236,8 +259,8 @@ export default (props: any) => {
                             </table>
                           </td>
                         </tr>`
-				)
-				.join('')}
+            )
+            .join("")}
           </tbody>
         </table>
       </td>
