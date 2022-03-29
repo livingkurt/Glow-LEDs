@@ -31,7 +31,7 @@ const OrderListItem = ({ order, determine_color, admin, update_order_payment_sta
 
 	const sendEmail = (message) => {
 		const email = order.shipping.email;
-		const subject = 'Your Glow LEDs Order';
+		const subject = 'About Your Glow LEDs Order';
 		const emailBody = 'Hi ' + order.user.first_name + ',';
 		document.location = 'mailto:' + email + '?subject=' + subject + '&body=' + emailBody;
 	};
