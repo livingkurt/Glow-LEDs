@@ -74,8 +74,6 @@ export default (props: any) => {
                     style="max-width:800px;width:100%;text-align:left;border-spacing:0;margin:0 auto;color:white;margin-bottom:10px">
                     <tr>
                       <td style="font-family:helvetica;color:white">
-                        <p style="text-align:center;font-size:14px;color:white">Our mailing address is: <br />230
-                          Hackberry St, Baytown, TX 77520 </p>
                         <p style="text-align:center;font-size:14px;color:white">Want to change how you receive these
                           emails? <br /> You can <a
                             href="https://www.glow-leds.com/account/login?redirect=/secure/account/editprofile"

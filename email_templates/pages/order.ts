@@ -87,18 +87,17 @@ export default (props: any) => {
 
 											<td style="font-family:helvetica;border-radius:10px" align="center" bgcolor="#6a6c80" ;
 												margin-left:10px; border-spacing: 2px;><a
-													style="font-size:20px;text-decoration:none;display:block;color:white;padding:20px 25px;border:none; font-weight: 800;"
+													style="font-size:16px;text-decoration:none;display:block;color:white; padding: 15px 0px;border:none; font-weight: 800;"
 													target="_blank"
-													href="https://www.glow-leds.com/account/login?redirect=/secure/account/order/${order._id}">VIEW
-													YOUR ORDER</a></td>
+													href="https://www.glow-leds.com/account/login?redirect=/secure/account/order/${order._id}">VIEW ORDER</a></td>
 
 											<td style="font-family:helvetica;border-radius:4px; padding: 3px;" align="center"></td>
 
 
 											<td style="font-family:helvetica;border-radius:10px; margin-right:10px; border-spacing: 2px;"
 												align="center" bgcolor="#4c4f60"><a
-													style="font-size:20px;text-decoration:none;display:block;color:white;padding:20px 25px;border:none; font-family:helvetica; font-weight: 800;"
-													target="_blank" href="https://www.glow-leds.com/">VISIT WEBSITE</a></td>
+													style="font-size:16px;text-decoration:none;display:block;color:white; padding: 15px 0px;border:none; font-family:helvetica; font-weight: 800;"
+													target="_blank" href="https://www.glow-leds.com/">WEBSITE</a></td>
 
 
 
@@ -437,7 +436,7 @@ export default (props: any) => {
 <tbody>
 	<tr>
 	<td style="font-family:helvetica">
-	<h4 style="font-weight:normal;font-size:25px;margin:0; margin-bottom: 5px; text-align: left;"><strong>Shipping To:</strong></h4>
+	<h4 style="font-weight:normal;font-size:25px;margin:0; margin-bottom: 5px; text-align: left;"><strong>Shipping:</strong></h4>
 </td>
 
 				<td style="font-family:helvetica;width:50%;">
@@ -472,19 +471,25 @@ export default (props: any) => {
 <tbody>
 	<tr>
 	<td style="font-family:helvetica">
-	<h4 style="font-weight:normal;font-size:25px;margin:0; margin-bottom: 5px; text-align: left;"><strong>Payment Method:</strong></h4>
+	<h4 style="font-weight:normal;font-size:25px;margin:0; margin-bottom: 5px; text-align: left;"><strong>Payment:</strong></h4>
 </td>
 
 <td style="font-family:helvetica;width:50%">
 
 <p style="color:white;line-height:150%;font-size:16px;margin:0;text-align:left;">
-	${order.payment.payment
+	${order.payment &&
+  order.payment.payment &&
+  order.payment.payment.card &&
+  order.payment.payment.card.brand
     ? `<img src=${determin_card_logo_images_white(
         order.payment.payment.card.brand
       )}
 		style="height:24px;display:inline-block;margin-right:5px;margin-top:5px;margin-bottom:-6px"
 		alt="card_logo">`
-    : ""} <span style="font-size:16px">ending with ${order.payment.payment
+    : ""} <span style="font-size:16px">ending with ${order.payment &&
+  order.payment.payment &&
+  order.payment.payment.card &&
+  order.payment.payment.card
     ? order.payment.payment.card.last4
     : ""}</span></p>
 </td>
@@ -537,7 +542,7 @@ export default (props: any) => {
 										</tr>
 									</tbody>
 								</table>
-								<p style="text-align:center;font-size:14px">We appreciate all of the love and support! It truely
+								<p style="text-align:center;font-size:14px">We appreciate all of the love and support! It truly
 									drives us to do what we do. Thank you so much 💙</p>
 							</td>
 						</tr>

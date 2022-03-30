@@ -21,9 +21,9 @@ const determine_emoji = (status: string) => {
 const determine_message = (status: string) => {
   switch (status) {
     case "manufactured":
-      return "your items just finished being hand crafted. We will notify you when you items have been cleaned up and packaged.";
+      return "your items just finished being hand crafted! We will notify you when you items have been cleaned up and packaged.";
     case "packaged":
-      return "your order has been packaged and is ready to ship. We will notify you when it has been sent.";
+      return "your order has been packaged and is ready to ship! We will notify you when it has been sent.";
     case "shipped":
       return "your shipment is on the way! Track your shipment to see the delivery status.";
 
@@ -100,7 +100,7 @@ export default (props: any) => {
                   on ${format_date(order.refundedAt)}
                 </h3>`
                     : `<p style='font-size: 16px;line-height: 30px;'>
-                  Hi ${order.shipping.first_name},${" "}
+                  Hi ${order.shipping.first_name}${" "}
 
                   ${determine_message(status)}
                 </p>`}
@@ -119,7 +119,7 @@ export default (props: any) => {
                             ? `
                            
                               <td style="font-family:helvetica;border-radius:10px; margin-right:10px; border-spacing: 2px;" align="center" bgcolor="#6a6c80"><a
-                                  style="font-size:20px;text-decoration:none;display:block;color:white;padding:20px 25px;border:none; font-family:helvetica; font-weight: 800;"
+                                  style="font-size:20px;text-decoration:none;display:block;color:white;    padding: 15px 0px;border:none; font-family:helvetica; font-weight: 800;"
                                   href="${determine_tracking_number(
                                     order.tracking_number
                                   )}">TRACK YOUR ORDER</a></td>
@@ -136,16 +136,16 @@ export default (props: any) => {
                               "shipped"
                                 ? "#4c4f60"
                                 : "#6a6c80"}";     margin-left:10px; border-spacing: 2px;><a
-                                  style="font-size:20px;text-decoration:none;display:block;color:white;padding:20px 25px;border:none;  font-weight: 800;"
-                                  href="https://www.glow-leds.com/account/login?redirect=/secure/account/order/${order._id}">VIEW YOUR ORDER</a></td>
+                                  style="font-size:16px;text-decoration:none;display:block;color:white;border:none;    padding: 15px 0px;  font-weight: 800;"
+                                  href="https://www.glow-leds.com/account/login?redirect=/secure/account/order/${order._id}">VIEW ORDER</a></td>
                 
                                   ${status !== "shipped"
                                     ? `
                                       <td style="font-family:helvetica;border-radius:4px; padding: 3px;" align="center"></td>
-                                    <td style="font-family:helvetica;border-radius:10px; margin-right:10px; border-spacing: 2px;" align="center" bgcolor="#4c4f60"><a
-                                  style="font-size:20px;text-decoration:none;display:block;color:white;padding:20px 25px;border:none; font-family:helvetica; font-weight: 800;"
+                                    <td style="font-family:helvetica;border-radius:10px; margin-right:10px;    padding: 15px 0px; border-spacing: 2px;" align="center" bgcolor="#4c4f60"><a
+                                  style="font-size:16px;text-decoration:none;display:block;color:white;border:none; font-family:helvetica; font-weight: 800;"
                                   target="_blank" 
-                                  href="https://www.glow-leds.com/">VISIT WEBSITE</a></td>`
+                                  href="https://www.glow-leds.com/">WEBSITE</a></td>`
                                     : ""}
 
                       </td>
@@ -292,7 +292,7 @@ export default (props: any) => {
 	                    <tbody>
 	                      <tr>
 												<td style="font-family:helvetica">
-												<h4 style="font-weight:normal;font-size:25px;margin:0; margin-bottom: 5px; text-align: left;"><strong>Shipping To:</strong></h4>
+												<h4 style="font-weight:normal;font-size:25px;margin:0; margin-bottom: 5px; text-align: left;"><strong>Shipping:</strong></h4>
 											</td>
 									
                               <td style="font-family:helvetica;width:50%;">

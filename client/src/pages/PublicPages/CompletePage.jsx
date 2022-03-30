@@ -64,7 +64,7 @@ const CompletePage = (props) => {
 		set_loading(true);
 		if (props.match.params.type === 'order') {
 			const { data: order } = await API_Orders.findById_orders_a(props.match.params.id);
-			await API_Emails.send_order_email(order, 'Your Glow LEDs Order', order.shipping.email);
+			await API_Emails.send_order_email(order, 'Thank you for your Glow LEDs Order', order.shipping.email);
 			await API_Emails.send_order_email(
 				order,
 				'New Order Created by ' + order.shipping.first_name,

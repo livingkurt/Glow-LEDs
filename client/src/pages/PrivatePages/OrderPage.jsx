@@ -233,21 +233,21 @@ const OrderPage = (props) => {
 	const send_email = async (status, message_to_user) => {
 		console.log(
 			order,
-			'Your Order has been ' + toCapitalize(status),
+				status === "manufactured" ? 'Your Order has been Crafted!' : 'Your Order has been ' + toCapitalize(status) + "!",
 			order.shipping.email,
 			status,
 			message_to_user
 		);
 		await API_Emails.send_order_status_email(
 			order,
-			'Your Order has been ' + toCapitalize(status),
+				status === "manufactured" ? 'Your Order has been Crafted!' : 'Your Order has been ' + toCapitalize(status) + "!",
 			order.shipping.email,
 			status,
 			message_to_user
 		);
 		await API_Emails.send_order_status_email(
 			order,
-			order.shipping.first_name + "'s Order has been " + toCapitalize(status),
+			status === "manufactured" ? order.shipping.first_name + "'s Order has been Crafted!" : 		order.shipping.first_name + "'s Order has been " + toCapitalize(status) + "!",
 			'info.glowleds@gmail.com',
 			status,
 			message_to_user
@@ -256,7 +256,7 @@ const OrderPage = (props) => {
 
 	const send_paid_email = async () => {
 		const { data: order } = await API_Orders.findById_orders_a(props.match.params.id);
-		await API_Emails.send_order_email(order, 'Your Glow LEDs Order', order.shipping.email);
+		await API_Emails.send_order_email(order, 'Thank you for your Glow LEDs Order!', order.shipping.email);
 		await API_Emails.send_order_email(
 			order,
 			'New Order Created by ' + order.shipping.first_name,
