@@ -8,10 +8,7 @@ import {
 
 export default (props: any) => {
   const { email, order } = props;
-  console.log({
-    payment: order.payment.payment.card.brand,
-  });
-  return `<table style="width:100%;border-spacing:0;">
+  return `<table style="width:100%;border-spacing:0; padding: 10px;">
 	<tr>
 		<td style="font-family:helvetica;border:0">
 			<center>
@@ -28,23 +25,24 @@ export default (props: any) => {
 
 					</tr>
 				</table>
-				<table style="max-width:560px;width:100%;text-align:left;border-spacing:0;">
-	<tbody>
-		<tr>
-			<td style="font-family:helvetica">
-				<table style="width:100%;line-height:inherit;text-align:center" width="100%" align="left">
+				<table style="max-width:560px;width:100%;text-align:left;border-spacing:0; padding: 10px;">
 					<tbody>
 						<tr>
-							<td style="vertical-align:top;color:#333333;font-size:20px" valign="top" align="center">
-								<strong>Order #:</strong>
-								${order._id}<br /><strong></td>
+							<td style="font-family:helvetica">
+								<table style="width:100%;line-height:inherit;text-align:center" width="100%" align="left">
+									<tbody>
+										<tr>
+											<td style="vertical-align:top;color:#333333;font-size:20px" valign="top" align="center">
+												<strong>Order #:</strong>
+												${order._id}<br /><strong>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</td>
 						</tr>
 					</tbody>
 				</table>
-			</td>
-		</tr>
-	</tbody>
-</table>
 				<table style="max-width:560px;width:100%;text-align:left;border-spacing:0;margin:0 auto; ">
 					<tbody>
 						<tr>
@@ -54,7 +52,7 @@ export default (props: any) => {
 						</tr>
 					</tbody>
 				</table>
-				
+
 				<table
 					style="max-width:560px;width:100%;text-align:left;border-spacing:0;margin:0 auto; background-color: #585858; border-radius: 20px; padding:15px;">
 					<tbody>
@@ -89,7 +87,8 @@ export default (props: any) => {
 												margin-left:10px; border-spacing: 2px;><a
 													style="font-size:16px;text-decoration:none;display:block;color:white; padding: 15px 0px;border:none; font-weight: 800;"
 													target="_blank"
-													href="https://www.glow-leds.com/account/login?redirect=/secure/account/order/${order._id}">VIEW ORDER</a></td>
+													href="https://www.glow-leds.com/account/login?redirect=/secure/account/order/${order._id}">VIEW
+													ORDER</a></td>
 
 											<td style="font-family:helvetica;border-radius:4px; padding: 3px;" align="center"></td>
 
@@ -99,21 +98,17 @@ export default (props: any) => {
 													style="font-size:16px;text-decoration:none;display:block;color:white; padding: 15px 0px;border:none; font-family:helvetica; font-weight: 800;"
 													target="_blank" href="https://www.glow-leds.com/">WEBSITE</a></td>
 
-
-
+										</tr>
+									</tbody>
+								</table>
 							</td>
 						</tr>
 					</tbody>
 				</table>
+			</center>
 		</td>
 	</tr>
-	</tbody>
 </table>
-</center>
-</td>
-</tr>
-</table>
-
 <table style="width:100%;border-spacing:0; ">
 	<tr>
 		<td style="font-family:helvetica;">
@@ -125,7 +120,6 @@ export default (props: any) => {
 							<td style="font-family:helvetica">
 								<table style="max-width:560px;width:100%;text-align:left;border-spacing:0;padding:10px;margin:0 auto; ">
 									<tbody>
-
 										<tr>
 											<td style="font-family:helvetica">
 												<h3 style="font-weight:normal;font-size:25px; margin: 0;"><strong>Your Order:</strong></h3>
@@ -394,36 +388,33 @@ export default (props: any) => {
 												</tbody>
 											</table>
 										</td>
-
 									</tr>
 								</table>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								${order.order_note
+                  ? `<table
+									style='max-width: 560px;text-align: left;border-spacing: 0;margin: 0 auto;padding-bottom: 10px;width: 100%; '>
+									<tbody>
+										<tr>
+											<td style='font-family: helvetica;'>
+												<p style='color: white;line-height: 30px;font-size: 16px;margin: 0;'>
+													<strong>Order Note:</strong> ${order.order_note}
+												</p>
+											</td>
+										</tr>
+									</tbody>
+								</table>`
+                  : ""}
+							</td>
+						</tr>
+					</tbody>
+				</table>
 			</center>
 		</td>
-
 	</tr>
-	<tr>
-		<td>
-			${order.order_note
-        ? `<table
-				style='max-width: 560px;text-align: left;border-spacing: 0;margin: 0 auto;padding-bottom: 10px;width: 100%; '>
-				<tbody>
-					<tr>
-						<td style='font-family: helvetica;'>
-							<p style='color: white;line-height: 30px;font-size: 16px;margin: 0;'>
-								<strong>Order Note:</strong> ${order.order_note}
-							</p>
-						</td>
-					</tr>
-				</tbody>
-			</table>`
-        : ""}
-		</td>
-	</tr>
-	</tbody>
-</table>
-
-</td>
-</tr>
 </table>
 
 <table style="width:100%;border-spacing:0; ">
@@ -431,128 +422,89 @@ export default (props: any) => {
 		<tr>
 			<td style="font-family:helvetica;">
 				<center>
-					
-<table style="max-width:560px;width:100%;text-align:left;border-spacing:0;margin:0 auto; background-color: #585858; border-radius: 20px; padding:15px; margin-bottom: 10px;">
-<tbody>
-	<tr>
-	<td style="font-family:helvetica">
-	<h4 style="font-weight:normal;font-size:25px;margin:0; margin-bottom: 5px; text-align: left;"><strong>Shipping:</strong></h4>
-</td>
+					<table
+						style="max-width:560px;width:100%;text-align:left;border-spacing:0;margin:0 auto; background-color: #585858; border-radius: 20px; padding:15px; margin-bottom: 10px;">
+						<tbody>
+							<tr>
+								<td style="font-family:helvetica">
+									<h4 style="font-weight:normal;font-size:25px;margin:0; margin-bottom: 5px; text-align: left;">
+										<strong>Shipping:</strong>
+									</h4>
+								</td>
+								<td style="font-family:helvetica;width:50%;">
+									<p style="color:white;line-height:150%;font-size:16px;margin:0;">${order
+                    .shipping.first_name}${" "}
+										${order.shipping.last_name}
+										<br>
+										${order.shipping.address_1}${" "}
+										${order.shipping.address_2}
+										<br>
+										${order.shipping.city},${" "}
+										${order.shipping.state}${" "}
+										${order.shipping.postalCode}${" "}${order.shipping.country}
+									</p>
+									<p style="color:white;line-height:150%;font-size:16px;margin:0"><strong>${order.shipping &&
+                  order.shipping.shipping_rate
+                    ? order.shipping.shipping_rate.service === "First"
+                      ? "First Class"
+                      : order.shipping.shipping_rate.service
+                    : ""} Shipping</strong></p>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<table
+						style="max-width:560px;width:100%;text-align:left;border-spacing:0;margin:0 auto; background-color: #585858; border-radius: 20px; padding:15px;">
+						<tbody>
+							<tr>
+								<td style="font-family:helvetica">
+									<h4 style="font-weight:normal;font-size:25px;margin:0; margin-bottom: 5px; text-align: left;">
+										<strong>Payment:</strong>
+									</h4>
+								</td>
 
-				<td style="font-family:helvetica;width:50%;">
-					<p style="color:white;line-height:150%;font-size:16px;margin:0;">${order
-            .shipping.first_name}${" "}
-					${order.shipping.last_name}
-					<br>
-					${order.shipping.address_1}${" "}
-					${order.shipping.address_2}
-					<br>
-					${order.shipping.city},${" "}
-					${order.shipping.state}${" "}
-					${order.shipping.postalCode}${" "}${order.shipping.country}</p>
+								<td style="font-family:helvetica;width:50%">
 
-	
-	<p style="color:white;line-height:150%;font-size:16px;margin:0"><strong>${order.shipping &&
-  order.shipping.shipping_rate
-    ? order.shipping.shipping_rate.service === "First"
-      ? "First Class"
-      : order.shipping.shipping_rate.service
-    : ""} Shipping</strong></p>
-</td>
- 
-</tr>
-<tr>
-
-
-</tr>
-</tbody>
-</table>
-<table style="max-width:560px;width:100%;text-align:left;border-spacing:0;margin:0 auto; background-color: #585858; border-radius: 20px; padding:15px;">
-<tbody>
-	<tr>
-	<td style="font-family:helvetica">
-	<h4 style="font-weight:normal;font-size:25px;margin:0; margin-bottom: 5px; text-align: left;"><strong>Payment:</strong></h4>
-</td>
-
-<td style="font-family:helvetica;width:50%">
-
-<p style="color:white;line-height:150%;font-size:16px;margin:0;text-align:left;">
-	${order.payment &&
-  order.payment.payment &&
-  order.payment.payment.card &&
-  order.payment.payment.card.brand
-    ? `<img src=${determin_card_logo_images_white(
-        order.payment.payment.card.brand
-      )}
-		style="height:24px;display:inline-block;margin-right:5px;margin-top:5px;margin-bottom:-6px"
-		alt="card_logo">`
-    : ""} <span style="font-size:16px">ending with ${order.payment &&
+									<p style="color:white;line-height:150%;font-size:16px;margin:0;text-align:left;">
+										${order.payment &&
+                    order.payment.payment &&
+                    order.payment.payment.card &&
+                    order.payment.payment.card.brand
+                      ? `<img src=${determin_card_logo_images_white(
+                          order.payment.payment.card.brand
+                        )}
+											style="height:24px;display:inline-block;margin-right:5px;margin-top:5px;margin-bottom:-6px"
+											alt="card_logo">`
+                      : ""} <span style="font-size:16px">ending with ${order.payment &&
   order.payment.payment &&
   order.payment.payment.card &&
   order.payment.payment.card
     ? order.payment.payment.card.last4
     : ""}</span></p>
-</td>
- 
-</tr>
-	 
-</tbody>
-</table>
-<table style="text-align:left;border-spacing:0;margin:0 auto; max-width:560px;width:100%;">
-	<tbody>
-		<tr>
-			<td style="font-family:helvetica">
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<table
+						style="text-align:left;border-spacing:0;margin:0 auto; margin-bottom: 10px;max-width:560px;width:100%; ">
+						<tbody>
+							<tr>
+								<td style="font-family:helvetica">
 
-				<p style="font-size:16px;text-decoration:none;display:block;color:white;padding: 10px; line-height: 25px;background-color:#333333;border:none; border-radius: 14px; margin-top: 10px; text-align: center;"
-					href="">
-					Please DO NOT reply to this email :)
-					<br>
-					For any questions, email <a href="mailto:info.glowleds@gmail.com"
-						style="font-size:14px;text-decoration:none;color:#009eff;">info.glowleds@gmail.com
-				</p>
-			</td>
-			</td>
-		</tr>
-	</tbody>
-</table>
-</center>
-</td>
-</tr>
-</tbody>
-</table>
-<table
-	style="max-width:560px;text-align:center;border-spacing:0px;margin:10px auto;width:100%;border-top:1px white solid">
-	<tbody>
-		<tr>
-			<td style="font-family:helvetica;font-size:30px;color:white">
-				<table style="max-width:400px;text-align:left;border-spacing:0;margin:0 auto">
-					<tbody>
-						<tr>
-							<td style="font-family:helvetica">
-								<p style="text-align:center;font-size:14px;color:white;line-height:2"><strong>Tag us in your
-										videos and pictures!</strong><br /> We want to feature you!</p>
-								<p style="text-align:center;font-size:14px;color:white;margin-bottom:-10px"></p>
-								<table style="border-spacing:0;text-align:center;margin:auto">
-									<tbody>
-										<tr>
-											<td style="font-family:helvetica;border-radius:4px" align="center" bgcolor="#4c4f60"><a
-													style="font-size:16px;text-decoration:none;display:block;color:white;padding:20px 25px;background-color:#4c4f60;border:none"
-													href="https://www.glow-leds.com/pages/contact/submit_content_to_be_featured">Feature
-													Content</a></td>
-										</tr>
-									</tbody>
-								</table>
-								<p style="text-align:center;font-size:14px">We appreciate all of the love and support! It truly
-									drives us to do what we do. Thank you so much 💙</p>
-							</td>
-						</tr>
-					</tbody>
-				</table>
+									<p style="font-size:16px;text-decoration:none;display:block;color:white;padding: 10px; line-height: 25px;background-color:#333333;border:none; border-radius: 14px; margin-top: 10px; text-align: center;"
+										href="">
+										Please DO NOT reply to this email.
+										<br>
+										For any questions email <a href="mailto:info.glowleds@gmail.com"
+											style="font-size:16px;text-decoration:none;color:#009eff;">info.glowleds@gmail.com
+									</p>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</center>
 			</td>
 		</tr>
 	</tbody>
-</table>
-</td>
-</tr>
 </table>`;
 };

@@ -1,5 +1,5 @@
 export default (props: any) => {
-  return `"
+  return `
 <body style="background:unset;color:white;padding:0;margin:0;font-size:16px">
   <table style="width:100%;border-spacing:0;color:white;margin:auto;font-size:16px;background-color:#7d7c7c">
     <tr>
@@ -31,7 +31,6 @@ export default (props: any) => {
             </td>
           </tr>
         </table>
-       
        ${props.body}
         <table style="width:100%;border-spacing:0;background-color:#333333">
           <tbody>
@@ -93,8 +92,6 @@ export default (props: any) => {
       </td>
     </tr>
   </table>
-</body>"
-
-
+</body>
 `;
 };

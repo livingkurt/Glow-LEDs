@@ -100,7 +100,7 @@ export default (props: any) => {
                   on ${format_date(order.refundedAt)}
                 </h3>`
                     : `<p style='font-size: 16px;line-height: 30px;'>
-                  Hi ${order.shipping.first_name}${" "}
+                  Hi ${order.shipping.first_name},${" "}
 
                   ${determine_message(status)}
                 </p>`}
@@ -190,7 +190,9 @@ export default (props: any) => {
                 <table style='
                                 width: 100%;
                                 border-spacing: 0;
-                                border-bottom: 1px white solid;'>
+                                "border-bottom:  ${order.orderItems.length === 1
+                                  ? "0px"
+                                  : "1px"} white solid;'>
                   <tbody>
                     <tr style='width: 100%'>
                       <td style='font-family: helvetica'>
@@ -329,10 +331,10 @@ export default (props: any) => {
 
         <p style="font-size:16px;text-decoration:none;display:block;color:white;padding: 10px; line-height: 25px;background-color:#333333;border:none; border-radius: 14px;  text-align: center;"
           href="">
-          Please DO NOT reply to this email :)
+          Please DO NOT reply to this email.
           <br>
-          For any questions, email <a href="mailto:info.glowleds@gmail.com"
-            style="font-size:14px;text-decoration:none;color:#009eff;">info.glowleds@gmail.com
+          For any questions email <a href="mailto:info.glowleds@gmail.com"
+            style="font-size:16px;text-decoration:none;color:#009eff;">info.glowleds@gmail.com
         </p>
       </td>
       </td>
