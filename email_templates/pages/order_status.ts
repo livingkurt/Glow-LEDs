@@ -157,189 +157,193 @@ export default (props: any) => {
           </tbody>
         </table>
         <table
-  style="max-width:560px;width:100%;text-align:left;border-spacing:0;padding:10px;margin:10px auto;  background-color: #585858; border-radius: 20px;">
-  <tbody>
-    <tr>
-      <td style="font-family:helvetica">
-        <table style="width:100%; max-width:560px;border-spacing:0;">
-          <tr>
-            <td style="font-family:helvetica">
-              <center>
-                <table style="max-width:560px;width:100%;text-align:left;border-spacing:0;padding:10px;margin:0 auto; ">
-                  <tbody>
-                    <tr>
-                      <td style="font-family:helvetica">
-                        <h3 style="font-weight:normal;font-size:25px; margin: 0;"><strong>Your Order:</strong></h3>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </center>
-            </td>
-          </tr>
-        </table>
-        <table style="max-width:560px;text-align:center;border-spacing:0px;margin:10px auto;width:100%; padding: 10px;">
+          style="max-width:560px;width:100%;text-align:left;border-spacing:0;padding:10px;margin:10px auto;  background-color: #585858; border-radius: 20px;">
           <tbody>
-            ${order.orderItems
-              .map(
-                (item: any, index: any) =>
-                  `<tr>
-              <td style='font-family: helvetica;'>
-                <table style='
+            <tr>
+              <td style="font-family:helvetica">
+                <table style="width:100%; max-width:560px;border-spacing:0;">
+                  <tr>
+                    <td style="font-family:helvetica">
+                      <center>
+                        <table
+                          style="max-width:560px;width:100%;text-align:left;border-spacing:0;padding:10px;margin:0 auto; ">
+                          <tbody>
+                            <tr>
+                              <td style="font-family:helvetica">
+                                <h3 style="font-weight:normal;font-size:25px; margin: 0;"><strong>Your Order:</strong>
+                                </h3>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </center>
+                    </td>
+                  </tr>
+                </table>
+                <table
+                  style="max-width:560px;text-align:center;border-spacing:0px;margin:10px auto;width:100%; padding: 10px;">
+                  <tbody>
+                    ${order.orderItems
+                      .map(
+                        (item: any, index: any) =>
+                          `<tr>
+                      <td style='font-family: helvetica;'>
+                        <table style='
                                 width: 100%;
                                 border-spacing: 0;
                                 "border-bottom:  ${order.orderItems.length === 1
                                   ? "0px"
                                   : "1px"} white solid;'>
-                  <tbody>
-                    <tr style='width: 100%'>
-                      <td style='font-family: helvetica'>
-                        <table style='border-spacing: 0px; width: 100%; margin: 10px auto;'>
                           <tbody>
-                            <tr>
-                              <td style='font-family: helvetica;'>
-                                <div style='margin-bottom: 10px; margin-right: 10px;'>
-                                  ${!item.secondary_image
-                                    ? `<img src=${item.display_image} alt=${item.name} width="60" height="60"
-                                    style='border-radius:8px;' title="Product Image" />`
-                                    : `
-                                  <div />`}
-                                  ${item.secondary_image
-                                    ? `<div style='${"width:100%; display:flex;"} ${item.name
-                                        ? item.name.split("-")[1]
-                                          ? "flex-direction: column;"
-                                          : "flex-direction: row;"
-                                        : ""}'>
-                                    <img id="expandedImg" alt=${item.name} title=${item.name} style='${"object-fit:cover; object-position:50% 50%; max-width:70px; max-height:70px; margin:0px;"} ${item.name
-                                        ? item.name.split("-")[1]
-                                          ? "border-radius: 0rem 1rem 1rem 0rem;"
-                                          : "border-radius: 1rem 0rem 0rem 1rem;"
-                                        : ""} ${item.name
-                                        ? item.name.split("-")[1]
-                                          ? "width: 70px;"
-                                          : "width: 35px;"
-                                        : ""} ${item.name
-                                        ? item.name.split("-")[1]
-                                          ? "height: 35px;"
-                                          : "height: 70px;"
-                                        : ""}' src=${item.display_image} />
-                                    <img id="expandedSecondaryImg" alt=${item.name} title=${item.name} style='${"object-fit:cover; object-position:50% 50%; max-width:70px; max-height:70px; margin:0px;"} ${item.name
-                                        ? item.name.split("-")[1]
-                                          ? "border-radius: 0rem 1rem 1rem 0rem;"
-                                          : "border-radius: 1rem 0rem 0rem 1rem;"
-                                        : ""} ${item.name
-                                        ? item.name.split("-")[1]
-                                          ? "width: 70px;"
-                                          : "width: 35px;"
-                                        : ""} ${item.name
-                                        ? item.name.split("-")[1]
-                                          ? "height: 35px;"
-                                          : "height: 70px;"
-                                        : ""}' src=${item.secondary_image} />
-                                  </div>`
-                                    : `
-                                  <div />`}
-                                </div>
-                              </td>
-                              <td style='font-family:helvetica;width:100%;'>
-                                <span style='font-size:16px;font-weight:600;line-height:1.4;color:white;'>
-                                  ${determine_product_name(
-                                    item,
-                                    true,
-                                    order.createdAt
-                                  )}
-                                </span>
-                                <br />
+                            <tr style='width: 100%'>
+                              <td style='font-family: helvetica'>
+                                <table style='border-spacing: 0px; width: 100%; margin: 10px auto;'>
+                                  <tbody>
+                                    <tr>
+                                      <td style='font-family: helvetica;'>
+                                        <div style='margin-bottom: 10px; margin-right: 10px;'>
+                                          ${!item.secondary_image
+                                            ? `<img src=${item.display_image} alt=${item.name} width="60" height="60"
+                                            style='border-radius:8px;' title="Product Image" />`
+                                            : `
+                                          <div />`}
+                                          ${item.secondary_image
+                                            ? `<div style='${"width:100%; display:flex;"} ${item.name
+                                                ? item.name.split("-")[1]
+                                                  ? "flex-direction: column;"
+                                                  : "flex-direction: row;"
+                                                : ""}'>
+                                            <img id="expandedImg" alt=${item.name} title=${item.name} style='${"object-fit:cover; object-position:50% 50%; max-width:70px; max-height:70px; margin:0px;"} ${item.name
+                                                ? item.name.split("-")[1]
+                                                  ? "border-radius: 0rem 1rem 1rem 0rem;"
+                                                  : "border-radius: 1rem 0rem 0rem 1rem;"
+                                                : ""} ${item.name
+                                                ? item.name.split("-")[1]
+                                                  ? "width: 70px;"
+                                                  : "width: 35px;"
+                                                : ""} ${item.name
+                                                ? item.name.split("-")[1]
+                                                  ? "height: 35px;"
+                                                  : "height: 70px;"
+                                                : ""}' src=${item.display_image} />
+                                            <img id="expandedSecondaryImg" alt=${item.name} title=${item.name} style='${"object-fit:cover; object-position:50% 50%; max-width:70px; max-height:70px; margin:0px;"} ${item.name
+                                                ? item.name.split("-")[1]
+                                                  ? "border-radius: 0rem 1rem 1rem 0rem;"
+                                                  : "border-radius: 1rem 0rem 0rem 1rem;"
+                                                : ""} ${item.name
+                                                ? item.name.split("-")[1]
+                                                  ? "width: 70px;"
+                                                  : "width: 35px;"
+                                                : ""} ${item.name
+                                                ? item.name.split("-")[1]
+                                                  ? "height: 35px;"
+                                                  : "height: 70px;"
+                                                : ""}' src=${item.secondary_image} />
+                                          </div>`
+                                            : `
+                                          <div />`}
+                                        </div>
+                                      </td>
+                                      <td style='font-family:helvetica;width:100%;'>
+                                        <span style='font-size:16px;font-weight:600;line-height:1.4;color:white;'>
+                                          ${determine_product_name(
+                                            item,
+                                            true,
+                                            order.createdAt
+                                          )}
+                                        </span>
+                                        <br />
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
                               </td>
                             </tr>
                           </tbody>
                         </table>
                       </td>
-                    </tr>
+                    </tr>`
+                      )
+                      .join("")}
+                    ${order.order_note
+                      ? `<tr>
+                      <td style='vertical-align: top;color: white;font-size: 16px;line-height: 30px;' valign="top"
+                        align="left">
+                        <div>
+                          <strong>Order Note:</strong> ${order.order_note}
+                        </div>
+                        ${message_to_user
+                          ? `<div>
+                          <strong>Message To User:</strong>{' '}
+                          ${message_to_user}
+                        </div>`
+                          : ""}
+                      </td>
+                    </tr>`
+                      : ""}
                   </tbody>
                 </table>
               </td>
-            </tr>`
-              )
-              .join("")}
-            ${order.order_note
-              ? `<tr>
-              <td style='vertical-align: top;color: white;font-size: 16px;line-height: 30px;' valign="top" align="left">
-                <div>
-                  <strong>Order Note:</strong> ${order.order_note}
-                </div>
-                ${message_to_user
-                  ? `<div>
-                  <strong>Message To User:</strong>{' '}
-                  ${message_to_user}
-                </div>`
-                  : ""}
-              </td>
-            </tr>`
-              : ""}
+            </tr>
           </tbody>
         </table>
-      </td>
-    </tr>
-  </tbody>
-</table>
-<table style="width:100%;border-spacing:0; ">
-  <tbody>
-    <tr>
-      <td style="font-family:helvetica;">
-        <center>
-          <table
-            style="max-width:560px;width:100%;text-align:left;border-spacing:0;margin:0 auto; background-color: #585858; border-radius: 20px; padding:15px;">
-            <tbody>
-              <tr>
-                <td style="font-family:helvetica">
-                  <h4 style="font-weight:normal;font-size:25px;margin:0; margin-bottom: 5px; text-align: left;">
-                    <strong>Shipping:</strong>
-                  </h4>
-                </td>
+        <table style="width:100%;border-spacing:0; ">
+          <tbody>
+            <tr>
+              <td style="font-family:helvetica;">
+                <center>
+                  <table
+                    style="max-width:560px;width:100%;text-align:left;border-spacing:0;margin:0 auto; background-color: #585858; border-radius: 20px; padding:15px;">
+                    <tbody>
+                      <tr>
+                        <td style="font-family:helvetica">
+                          <h4 style="font-weight:normal;font-size:25px;margin:0; margin-bottom: 5px; text-align: left;">
+                            <strong>Shipping:</strong>
+                          </h4>
+                        </td>
 
-                <td style="font-family:helvetica;width:50%;">
-                  <p style="">
-                  <p style="color:white;line-height:150%;font-size:16px;margin:0;">${order
-                    .shipping.first_name}${" "}
-                    ${order.shipping.last_name}
-                    <br>
-                    ${order.shipping.address_1}${" "}
-                    ${order.shipping.address_2}
-                    <br>
-                    ${order.shipping.city},${" "}
-                    ${order.shipping.state}${" "}
-                    ${order.shipping.postalCode}${" "}${order.shipping.country}
-                    <br>
-                  </p>
-                  </p>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </center>
-      </td>
-    </tr>
-  </tbody>
-</table>
-<table style="text-align:left;border-spacing:0;margin: auto; max-width:560px;width:100%; margin-top: 10px;">
-  <tbody>
-    <tr>
-      <td style="font-family:helvetica">
-        <p style="font-size:16px;text-decoration:none;display:block;color:white;padding: 10px; line-height: 25px;background-color:#333333;border:none; border-radius: 14px;  text-align: center;"
-          href="">
-          Please DO NOT reply to this email.
-          <br>
-          For any questions email <a href="mailto:info.glowleds@gmail.com"
-            style="font-size:16px;text-decoration:none;color:#009eff;">info.glowleds@gmail.com
-        </p>
-      </td>
-    </tr>
-  </tbody>
-</table>
+                        <td style="font-family:helvetica;width:50%;">
+                          <p style="">
+                          <p style="color:white;line-height:150%;font-size:16px;margin:0;">${order
+                            .shipping.first_name}${" "}
+                            ${order.shipping.last_name}
+                            <br>
+                            ${order.shipping.address_1}${" "}
+                            ${order.shipping.address_2}
+                            <br>
+                            ${order.shipping.city},${" "}
+                            ${order.shipping.state}${" "}
+                            ${order.shipping.postalCode}${" "}${order.shipping
+    .country}
+                            <br>
+                          </p>
+                          </p>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </center>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <table style="text-align:left;border-spacing:0;margin: auto; max-width:560px;width:100%; margin-top: 10px;">
+          <tbody>
+            <tr>
+              <td style="font-family:helvetica">
+                <p style="font-size:16px;text-decoration:none;display:block;color:white;padding: 10px; line-height: 25px;background-color:#333333;border:none; border-radius: 14px;  text-align: center;"
+                  href="">
+                  Please DO NOT reply to this email.
+                  <br>
+                  For any questions email <a href="mailto:info.glowleds@gmail.com"
+                    style="font-size:16px;text-decoration:none;color:#009eff;">info.glowleds@gmail.com
+                </p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </center>
     </td>
   </tr>
-</table>
-`;
+</table>`;
 };
