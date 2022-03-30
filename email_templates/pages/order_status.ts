@@ -38,18 +38,16 @@ export default (props: any) => {
   <tr>
     <td style="font-family:helvetica;border:0">
       <center>
-
         <table style="max-width:800px;width:100%;text-align:left;border-spacing:0;margin:0 auto;color:white">
           <tr>
             <td style="font-family:helvetica;color:white">
               <h1
                 style="text-align:center;font-family:helvetica;width:100%;margin:10px auto;line-height:50px;color:#333333;font-size:50px; padding-bottom: 7px;">
                 ${order.shipping.first_name.toUpperCase()}, </h1>
-              <h1
-                style="text-align:center;font-family:helvetica;width:100%;margin:0px;line-height:50px;color:#333333;font-size:${status ===
-                "manufactured"
-                  ? "30px"
-                  : "30px"}; padding-bottom: 7px;">
+              <h1 style="text-align:center;font-family:helvetica;width:100%;margin:0px;line-height:50px;color:#333333;font-size:${status ===
+              " manufactured"
+                ? "30px"
+                : "30px"}; padding-bottom: 7px;">
                 YOUR ORDER HAS BEEN ${status === "manufactured"
                   ? "CRAFTED"
                   : status.toUpperCase()} ${determine_emoji(status)}</h1>
@@ -57,22 +55,23 @@ export default (props: any) => {
           </tr>
         </table>
         <table style="max-width:560px;width:100%;text-align:left;border-spacing:0;">
-        <tbody>
-          <tr>
-            <td style="font-family:helvetica">
-              <table style="width:100%;line-height:inherit;text-align:center" width="100%" align="left">
-                <tbody>
-                  <tr>
-                    <td style="vertical-align:top;color:#333333;font-size:20px" valign="top" align="center">
-                      <strong>Order #:</strong>
-                      ${order._id}<br /><strong></td>
-                  </tr>
-                </tbody>
-              </table>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+          <tbody>
+            <tr>
+              <td style="font-family:helvetica">
+                <table style="width:100%;line-height:inherit;text-align:center" width="100%" align="left">
+                  <tbody>
+                    <tr>
+                      <td style="vertical-align:top;color:#333333;font-size:20px" valign="top" align="center">
+                        <strong>Order #:</strong>
+                        ${order._id}<br /><strong>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
         <table style="max-width:560px;width:100%;text-align:left;border-spacing:0;margin:0 auto; ">
           <tbody>
             <tr>
@@ -117,38 +116,39 @@ export default (props: any) => {
                         ${status === "shipped"
                           ? order.tracking_number
                             ? `
-                           
-                              <td style="font-family:helvetica;border-radius:10px; margin-right:10px; border-spacing: 2px;" align="center" bgcolor="#6a6c80"><a
-                                  style="font-size:20px;text-decoration:none;display:block;color:white;    padding: 15px 0px;border:none; font-family:helvetica; font-weight: 800;"
-                                  href="${determine_tracking_number(
-                                    order.tracking_number
-                                  )}">TRACK YOUR ORDER</a></td>
-                                  <td style="font-family:helvetica;border-radius:4px; padding: 3px;" align="center"></td>
-                      
-                        `
+
+                      <td style="font-family:helvetica;border-radius:10px; margin-right:10px; border-spacing: 2px;"
+                        align="center" bgcolor="#6a6c80"><a
+                          style="font-size:20px;text-decoration:none;display:block;color:white;    padding: 15px 0px;border:none; font-family:helvetica; font-weight: 800;"
+                          href="${determine_tracking_number(
+                            order.tracking_number
+                          )}">TRACK YOUR ORDER</a></td>
+                      <td style="font-family:helvetica;border-radius:4px; padding: 3px;" align="center"></td>
+
+                      `
                             : ""
                           : ""}
-                       
-                     
-                          
-                     
-                              <td style="font-family:helvetica;border-radius:10px" align="center" bgcolor="${status ===
-                              "shipped"
-                                ? "#4c4f60"
-                                : "#6a6c80"}";     margin-left:10px; border-spacing: 2px;><a
-                                  style="font-size:16px;text-decoration:none;display:block;color:white;border:none;    padding: 15px 0px;  font-weight: 800;"
-                                  href="https://www.glow-leds.com/account/login?redirect=/secure/account/order/${order._id}">VIEW ORDER</a></td>
-                
-                                  ${status !== "shipped"
-                                    ? `
-                                      <td style="font-family:helvetica;border-radius:4px; padding: 3px;" align="center"></td>
-                                    <td style="font-family:helvetica;border-radius:10px; margin-right:10px;    padding: 15px 0px; border-spacing: 2px;" align="center" bgcolor="#4c4f60"><a
-                                  style="font-size:16px;text-decoration:none;display:block;color:white;border:none; font-family:helvetica; font-weight: 800;"
-                                  target="_blank" 
-                                  href="https://www.glow-leds.com/">WEBSITE</a></td>`
-                                    : ""}
 
-                      </td>
+
+
+
+                      <td style="font-family:helvetica;border-radius:10px" align="center" bgcolor="${status ===
+                      " shipped"
+                        ? "#4c4f60"
+                        : "#6a6c80"}"; margin-left:10px; border-spacing: 2px;><a
+                          style="font-size:16px;text-decoration:none;display:block;color:white;border:none;    padding: 15px 0px;  font-weight: 800;"
+                          href="https://www.glow-leds.com/account/login?redirect=/secure/account/order/${order._id}">VIEW
+                          ORDER</a></td>
+
+                      ${status !== "shipped"
+                        ? `
+                      <td style="font-family:helvetica;border-radius:4px; padding: 3px;" align="center"></td>
+                      <td
+                        style="font-family:helvetica;border-radius:10px; margin-right:10px;    padding: 15px 0px; border-spacing: 2px;"
+                        align="center" bgcolor="#4c4f60"><a
+                          style="font-size:16px;text-decoration:none;display:block;color:white;border:none; font-family:helvetica; font-weight: 800;"
+                          target="_blank" href="https://www.glow-leds.com/">WEBSITE</a></td>`
+                        : ""}
                     </tr>
                   </tbody>
                 </table>
@@ -165,17 +165,15 @@ export default (props: any) => {
           <tr>
             <td style="font-family:helvetica">
               <center>
-
-              <table style="max-width:560px;width:100%;text-align:left;border-spacing:0;padding:10px;margin:0 auto; ">
-              <tbody>
-
-                <tr>
-                  <td style="font-family:helvetica">
-                    <h3 style="font-weight:normal;font-size:25px; margin: 0;"><strong>Your Order:</strong></h3>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+                <table style="max-width:560px;width:100%;text-align:left;border-spacing:0;padding:10px;margin:0 auto; ">
+                  <tbody>
+                    <tr>
+                      <td style="font-family:helvetica">
+                        <h3 style="font-weight:normal;font-size:25px; margin: 0;"><strong>Your Order:</strong></h3>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </center>
             </td>
           </tr>
@@ -286,49 +284,48 @@ export default (props: any) => {
   </tbody>
 </table>
 <table style="width:100%;border-spacing:0; ">
-	          <tbody>
-	            <tr>
-	              <td style="font-family:helvetica;">
-	                <center>
-	                  <table style="max-width:560px;width:100%;text-align:left;border-spacing:0;margin:0 auto; background-color: #585858; border-radius: 20px; padding:15px;">
-	                    <tbody>
-	                      <tr>
-												<td style="font-family:helvetica">
-												<h4 style="font-weight:normal;font-size:25px;margin:0; margin-bottom: 5px; text-align: left;"><strong>Shipping:</strong></h4>
-											</td>
-									
-                              <td style="font-family:helvetica;width:50%;">
-                              <p style="">
-                                <p style="color:white;line-height:150%;font-size:16px;margin:0;">${order
-                                  .shipping.first_name}${" "}
-                                ${order.shipping.last_name}
-                                <br>
-                                ${order.shipping.address_1}${" "}
-                                ${order.shipping.address_2}
-                                <br>
-                                ${order.shipping.city},${" "}
-                                ${order.shipping.state}${" "}
-                                ${order.shipping.postalCode}${" "}${order
-    .shipping.country}
-                                <br></p>
-                                </p>
-                              </td>
-                       
-										</tr>
-	                       
-	                    </tbody>
-	                  </table>
-										
-	                </center>
-	              </td>
-	            </tr>
-	          </tbody>
-	        </table>
+  <tbody>
+    <tr>
+      <td style="font-family:helvetica;">
+        <center>
+          <table
+            style="max-width:560px;width:100%;text-align:left;border-spacing:0;margin:0 auto; background-color: #585858; border-radius: 20px; padding:15px;">
+            <tbody>
+              <tr>
+                <td style="font-family:helvetica">
+                  <h4 style="font-weight:normal;font-size:25px;margin:0; margin-bottom: 5px; text-align: left;">
+                    <strong>Shipping:</strong>
+                  </h4>
+                </td>
+
+                <td style="font-family:helvetica;width:50%;">
+                  <p style="">
+                  <p style="color:white;line-height:150%;font-size:16px;margin:0;">${order
+                    .shipping.first_name}${" "}
+                    ${order.shipping.last_name}
+                    <br>
+                    ${order.shipping.address_1}${" "}
+                    ${order.shipping.address_2}
+                    <br>
+                    ${order.shipping.city},${" "}
+                    ${order.shipping.state}${" "}
+                    ${order.shipping.postalCode}${" "}${order.shipping.country}
+                    <br>
+                  </p>
+                  </p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </center>
+      </td>
+    </tr>
+  </tbody>
+</table>
 <table style="text-align:left;border-spacing:0;margin: auto; max-width:560px;width:100%; margin-top: 10px;">
   <tbody>
     <tr>
       <td style="font-family:helvetica">
-
         <p style="font-size:16px;text-decoration:none;display:block;color:white;padding: 10px; line-height: 25px;background-color:#333333;border:none; border-radius: 14px;  text-align: center;"
           href="">
           Please DO NOT reply to this email.
@@ -337,7 +334,6 @@ export default (props: any) => {
             style="font-size:16px;text-decoration:none;color:#009eff;">info.glowleds@gmail.com
         </p>
       </td>
-      </td>
     </tr>
   </tbody>
 </table>
@@ -345,8 +341,5 @@ export default (props: any) => {
     </td>
   </tr>
 </table>
-
-</td>
-</tr>
-</table>`;
+`;
 };
