@@ -28,21 +28,18 @@ const Banner = (props) => {
 			<div className="max-w-1500px m-auto jc-b">
 				{content &&
 				content.banner && (
-					<div className="row">
-						<div className="ml-10px mt-5px fs-12px">
-							<label>{content.banner.label}</label>
-						</div>
-						{width > 490 &&
-						content.banner.button &&
+					<div className={`row ${width < 600 ? 'm-auto' : 'ml-10px'}`}>
+					
+						{content.banner.button &&
 						content.banner.link && (
-							<Link to={content.banner.link && content.banner.link} className="ml-10px">
-								<button className="banner-button">{content.banner.button}</button>
+							<Link to={content.banner.link && content.banner.link}>
+								<button className="banner-button">{content.banner.label}</button>
 							</Link>
 						)}
 					</div>
 				)}
 				{/* </div> */}
-				{width > 400 && (
+				{width > 600 && (
 					<div className="row mt-3px social_media_banner">
 						<div className="ml-10px">
 							<a
@@ -84,7 +81,7 @@ const Banner = (props) => {
 								<i className="fab fa-youtube zoom" />
 							</a>
 						</div>
-						<div className="">
+					<div className="">
 							<a
 								href="https://soundcloud.com/ntre/tracks"
 								target="_blank"
@@ -94,7 +91,7 @@ const Banner = (props) => {
 								<i className="fab fa-soundcloud" />
 							</a>
 						</div>
-						<div className="mh-10px mr-10px">
+					 <div className="mh-10px mr-10px">
 							<a
 								href="https://twitter.com/glow_leds"
 								target="_blank"
