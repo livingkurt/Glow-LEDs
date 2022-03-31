@@ -116,8 +116,7 @@ export default (props: any) => {
 
                       ${props.p
                         ? `<pre
-                                style="max-width: 800px; font-family:helvetica;overflow-x:auto;white-space: pre-wrap;word-wrap:break-word;max-width:800px;width:100%;margin:0px;color:white;font-size:16px;line-height:30px">
-                            ${props.p}</pre>
+                                style="max-width: 800px; font-family:helvetica;overflow-x:auto;white-space: pre-wrap;word-wrap:break-word;max-width:800px;width:100%;margin:0px;color:white;font-size:16px;line-height:30px">${props.p}</pre>
                            `
                         : ""}
 
