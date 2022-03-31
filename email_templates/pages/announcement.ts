@@ -34,6 +34,7 @@ export default (props: any) => {
       </tr>
     </tbody>
   </table>
+  <a href=${props.link} style="text-decoration:none;" target="_blank">
   <table
             style="max-width:800px;width:100%;text-align:left;border-spacing:0;margin:0 auto;   background-color: #585858; border-radius: 20px; padding:15px;">
             <tbody>
@@ -104,6 +105,7 @@ export default (props: any) => {
               </tr>
             </tbody>
           </table>
+          </a>
           <table
             style="max-width:800px;width:100%;text-align:left;border-spacing:0;margin:0 auto;   background-color: #585858; border-radius: 20px; padding:15px; margin: 10px auto;">
             <tbody>
