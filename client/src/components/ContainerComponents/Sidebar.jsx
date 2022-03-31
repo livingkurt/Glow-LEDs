@@ -597,7 +597,7 @@ const Sidebar = props => {
               </Link>
               <Link to="/collections/all/products/refresh_pack">
                 <button className="sidebar-btn nested" onClick={closeMenu}>
-                  Refresh Pack
+                  Refresh Packs
                 </button>
               </Link>
               <Link to="/collections/all/products/supremes_sizing_sampler_pack">

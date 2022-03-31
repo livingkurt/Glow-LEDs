@@ -723,7 +723,7 @@ const Header = props => {
                           <Link to="/collections/all/products/refresh_pack">
                             <div className="row">
                               <button className="btn nav w-100per ta-l">
-                                Refresh Pack
+                                Refresh Packs
                               </button>
                             </div>
                           </Link>
