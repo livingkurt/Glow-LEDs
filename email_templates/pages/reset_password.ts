@@ -21,7 +21,7 @@ export default (props: any) => {
           ? "http://www.glow-leds.com"
           : "http://localhost:3000"}/account/resetpassword/${props._id}" alt="discount image"
             style="background-color:#4c4f60;color:white;border-radius:10px;border:0;padding:15px; width: 100%;     text-decoration: none;">
-            <h4 style="font-family:helvetica;margin:0;font-size:1.2em;text-align:center; ">Reset Password</h4>
+            <h4 style="font-family:helvetica;margin:0;font-size:1.2em;text-align:center; " target="_blank">Reset Password</h4>
           </a></div>
 
         <p
