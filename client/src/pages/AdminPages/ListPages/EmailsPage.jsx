@@ -6,11 +6,16 @@ import { Loading, Notification } from '../../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { Search, Sort } from '../../../components/SpecialtyComponents';
 import { humanize } from '../../../utils/helper_functions';
+import { API_Emails } from '../../../utils';
 
 const EmailsPage = (props) => {
 	const history = useHistory();
 	const [ search, set_search ] = useState('');
 	const [ sort, setSortOrder ] = useState('');
+	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
+	const [ test, set_test ] = useState(true);
+	const [ subject, set_subject ] = useState('');
+	const [ email, set_email ] = useState({});
 	const category = props.match.params.category ? props.match.params.category : '';
 	const emailList = useSelector((state) => state.emailList);
 	const { loading, emails, message, error } = emailList;
@@ -27,11 +32,18 @@ const EmailsPage = (props) => {
 			let clean = true;
 			if (clean) {
 				dispatch(listEmails({}));
+				get_last_active_email()
 			}
 			return () => (clean = false);
 		},
 		[ successSave, successDelete, dispatch ]
 	);
+
+	const get_last_active_email = async () => {
+			const {data} = await API_Emails.get_last_active_email()
+			console.log({data: data[0]})
+			set_email(data[0])
+	}
 	const submitHandler = (e) => {
 		e.preventDefault();
 		dispatch(listEmails({ category, search, sort }));
@@ -100,24 +112,32 @@ const EmailsPage = (props) => {
 
 	const [ link, set_link ] = useState('announcement');
 
-	const go_to_template = (e) => {
-		e.preventDefault();
-		// history.push('/api/templates/' + e.target.value);
-		window.history.pushState({}, '', '/api/templates/' + e.target.value);
-		window.history.pushState(
-			{ urlPath: '/api/templates/' + e.target.value },
-			'',
-			'/api/templates/' + e.target.value
-		);
+	// const go_to_template = (e) => {
+	// 	e.preventDefault();
+	// 	// history.push('/api/templates/' + e.target.value);
+	// 	window.history.pushState({}, '', '/api/templates/' + e.target.value);
+	// 	window.history.pushState(
+	// 		{ urlPath: '/api/templates/' + e.target.value },
+	// 		'',
+	// 		'/api/templates/' + e.target.value
+	// 	);
+	// };
+	const send_announcement_email = async () => {
+		const data = await API_Emails.send_announcement_email(email, subject ? subject : email.h1, test);
+		console.log('Announcement Email Sent Successfully');
+		console.log(data);
 	};
 
+	setTimeout(() => {
+		set_loading_checkboxes(false);
+	}, 500);
 	return (
 		<div className="main_container p-20px">
 			<Helmet>
 				<title>Admin Emails | Glow LEDs</title>
 			</Helmet>
 			<Notification message={message} />
-			<Link to="/secure/glow/emails/announcement">
+			{/* <Link to="/secure/glow/emails/announcement">
 				<button className="btn primary">Announcement</button>
 			</Link>
 			<Link to="/secure/glow/emails/order/60d4aae4726aa8002a5091a4/order/false">
@@ -147,8 +167,8 @@ const EmailsPage = (props) => {
 			</Link>
 			<Link to="/secure/glow/editemail">
 				<button className="btn primary">Create Email</button>
-			</Link>
-			<div className="wrap jc-b">
+			</Link> */}
+			<div className="wrap jc-b ai-c">
 				<div className="ai-c h-25px mv-15px jc-c">
 					<div className="custom-select">
 						<select className="qty_select_dropdown" onChange={(e) => set_link(e.target.value)}>
@@ -167,7 +187,29 @@ const EmailsPage = (props) => {
 						<button className="btn primary">{humanize(link)}</button>
 					</a>
 				</div>
+				<input type="text" placeholder="Subject" onChange={(e) => set_subject(e.target.value)} />
+				{loading_checkboxes ? (
+					<div>Loading...</div>
+				) : (
+					<div>
+						<label htmlFor="test">Test</label>
+						<input
+							type="checkbox"
+							name="test"
+							defaultChecked={test}
+							id="test"
+							onChange={(e) => {
+								set_test(e.target.checked);
+							}}
+						/>
+					</div>
+				)}
+			<button className="btn primary mb-1rem" onClick={() => send_announcement_email()}>
+					Send Announcement Email
+				</button>
+
 			</div>
+			
 			<div className="wrap jc-b">
 				{colors.map((color, index) => {
 					return (

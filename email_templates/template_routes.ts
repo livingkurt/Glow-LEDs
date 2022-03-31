@@ -1553,11 +1553,47 @@ router.get(
 router.get(
   "/announcement",
   async (req: { body: any }, res: { send: (arg0: string) => void }) => {
-    const emails = await email_db.findAll_emails_db(
-      { deleted: false, active: true },
-      { _id: -1 }
-    );
-    res.send(App({ body: announcement(emails[0]) }));
+    const email = {
+      images: [
+        "https://thumbs2.imgbox.com/39/50/LkEvk42D_t.jpg",
+        "https://thumbs2.imgbox.com/c8/cd/d545uQ3z_t.jpg",
+        "https://thumbs2.imgbox.com/cd/b7/9NU1wna4_t.jpg",
+        "https://thumbs2.imgbox.com/26/c1/RzDD7XuU_t.jpeg",
+      ],
+      show_image: false,
+      active: true,
+      deleted: false,
+      _id: "62448ed914e358002bfa0934",
+      email_type: "Announcements",
+      h1: "NEW Universal Battery Dispensers! 🥳",
+      image: "https://thumbs2.imgbox.com/d2/b7/Fq5Colql_t.jpeg",
+      h2:
+        "Welcome the new Universal Battery Dispenser and Mega Universal Battery Dispenser to the family! These babies are able to hold <strong>20 or 60</strong> of all 3 of the most common Gloving Battery types at once: <strong>CR1225, CR1620 and CR1616!</strong>",
+      p:
+        '<div style="text-align:center;line-height: 22px;">Our Standard size Universal Battery Dispenser holds 20 batteries which is enough for a full gloveset!\n' +
+        "This will be more than enough to glove your heart out all night with no worries 🙌\n" +
+        "Then multiply it by 3 and what do you get?! The MEGA Universal Battery Dispenser!\n" +
+        "It still fits all 3 of the most popular microlight battery sizes but holds a total of 60 batteries at once 🤯\n" +
+        "Fill it with whatever battery combo suits your needs best.\n" +
+        "Any way you slice it, you'll have 3 gloveset's worth of batteries on you for whenever you need them, which can last you through an entire 3 day music festival!\n" +
+        "And the best part is, you never have to worry about either spilling in your backpack 😁\n" +
+        "<table\n" +
+        '            style="width:100%;text-align:left;border-spacing:0;margin:15px auto;color:white">\n' +
+        "            <tr>\n" +
+        '              <td style="font-family:helvetica;color:white">\n' +
+        '                <div style="border-bottom:1px white solid"></div>\n' +
+        "              </td>\n" +
+        "            </tr>\n" +
+        "          </table>\n" +
+        '<div style="text-align:center;">We’re so excited to make such a critical part of gloving more convenient, it’s well overdue if you ask us 👍</div>',
+      button: "Shop Universal Battery Dispensers Now",
+      link:
+        "https://www.glow-leds.com/collections/all/products/category/batteries/subcategory/storage",
+      createdAt: "2022-03-30T17:09:44.999Z",
+      updatedAt: "2022-03-31T16:48:56.713Z",
+      __v: 0,
+    };
+    res.send(App({ body: announcement(email) }));
   }
 );
 

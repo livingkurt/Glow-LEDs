@@ -15,7 +15,7 @@ import {
   announcement,
 } from "../email_templates/pages/index";
 import email_subscription from "../email_templates/pages/email_subscription";
-import { affiliate_db, content_db, order_db } from "../db";
+import { affiliate_db, content_db, order_db, user_db } from "../db";
 import { toCapitalize } from "../util";
 
 const transporter = nodemailer.createTransport({
@@ -379,24 +379,35 @@ export default {
 
   send_announcement_emails_c: async (req: any, res: any) => {
     console.log({ send_announcement_emails_c: req.body });
-    const contents = await content_db.findAll_contents_db(
-      { deleted: false },
-      { _id: -1 },
-      0
+    const { template, subject, test } = req.body;
+    const users = await user_db.findAll_users_db(
+      { deleted: false, email_subscription: true },
+      {}
     );
+    const all_emails = users
+      .filter((user: any) => user.deleted === false)
+      .filter((user: any) => user.email_subscription === true)
+      .map((user: any) => user.email);
+    console.log({ all_emails });
+    const test_emails = [
+      "lavacquek@icloud.com",
+      "lavacquek@gmail.com",
+      "livingkurt222@gmail.com",
+      "destanyesalinas@gmail.com",
+      "zestanye@gmail.com",
+    ];
+    const emails: any = test ? test_emails : all_emails;
+    console.log({ emails });
 
     const mailOptions = {
+      to: process.env.EMAIL,
       from: process.env.DISPLAY_EMAIL,
-      to: req.body.email,
-      subject: "Enjoy 10% off your next purchase!",
+      subject: subject,
       html: App({
-        body: announcement({
-          ...req.body,
-          categories: contents && contents[0].home_page.slideshow,
-          title: "Enjoy 10% off your next purchase!",
-        }),
+        body: announcement(template),
         unsubscribe: true,
       }),
+      bcc: emails,
     };
 
     transporter.sendMail(mailOptions, (err, data) => {
@@ -404,7 +415,7 @@ export default {
         console.log("Error Occurs", err);
         res.status(500).send({ error: err, message: "Error Sending Email" });
       } else {
-        console.log("Email Sent to " + req.body.email);
+        console.log("Email " + subject + " to everyone");
         res.status(200).send({ message: "Email Successfully Sent" });
       }
     });

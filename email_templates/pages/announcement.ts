@@ -140,8 +140,5 @@ export default (props: any) => {
             </tr>
           </tbody>
         </table>
-      </td>
-    </tr>
-  </tbody>
-</table>`;
+     `;
 };
