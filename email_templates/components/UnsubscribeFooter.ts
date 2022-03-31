@@ -52,6 +52,32 @@ export default () => {
               </td>
             </tr>
           </table>
+           <table
+            style="max-width:560px;width:100%;text-align:left;border-spacing:0;margin:15px auto;color:white">
+            <tr>
+              <td style="font-family:helvetica;color:white">
+                <div style="border-bottom:1px white solid"></div>
+              </td>
+            </tr>
+          </table>
+          <table
+            style="max-width:800px;width:100%;text-align:left;border-spacing:0;margin:0 auto;color:white;margin-bottom:10px">
+            <tr>
+              <td style="font-family:helvetica;color:white">
+                <p style="text-align:center;font-size:16px;color:white"><strong>Glow LEDs</strong> <br /><br />230
+                  Hackberry St, <br />Baytown, TX 77520 </p>
+                <p style="text-align:center;font-size:16px;color:white">Copyright © 2022</p>
+              </td>
+            </tr>
+          </table>
+          <table
+            style="max-width:800px;width:100%;text-align:left;border-spacing:0;margin:0 auto;color:white;margin-bottom:10px">
+            <tr>
+              <td style="font-family:helvetica;color:white; width: 100%;margin: auto;text-align: center;">
+               <img src="https://images2.imgbox.com/78/52/dfNQTgC3_o.png" alt="logo" style="width:143px;">
+              </td>
+            </tr>
+          </table>
         </center>
       </td>
     </tr>

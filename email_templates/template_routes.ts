@@ -41,8 +41,11 @@ router.get(
 
     res.send(
       App({
-        body: email_subscription(body),
-        title: "Enjoy 10% off your next purchase!",
+        body: email_subscription({
+          ...body,
+          title: "Enjoy 10% off your next purchase!",
+        }),
+        unsubscribe: true,
       })
     );
   }
