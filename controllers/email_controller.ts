@@ -139,13 +139,14 @@ export default {
         h2:
           "We are starting production on your order! We will notify your as your order progresses.",
       },
+      title: "Thank you for your purchase!",
       order: req.body.order,
     };
     const mailOptions = {
       from: process.env.DISPLAY_EMAIL,
       to: req.body.email,
       subject: req.body.subject,
-      html: App({ body: order(body), title: "Thank you for your purchase!" }),
+      html: App({ body: order(body), unsubscribe: false }),
     };
     transporter.sendMail(mailOptions, (err, data) => {
       if (err) {
@@ -164,13 +165,14 @@ export default {
         h2:
           "We are starting production on your order! We will notify your as your order progresses.",
       },
+      title: "Thank you for your purchase!",
       order: req.body.order,
     };
     const mailOptions = {
       from: process.env.DISPLAY_EMAIL,
       to: req.body.email,
       subject: req.body.subject,
-      html: App({ body: order(body), title: "Thank you for your purchase!" }),
+      html: App({ body: order(body), unsubscribe: false }),
     };
     transporter.sendMail(mailOptions, (err, data) => {
       if (err) {
@@ -189,6 +191,7 @@ export default {
         h2:
           "We are starting production on your order! We will notify your as your order progresses.",
       },
+      title: "Your Order has been " + toCapitalize(req.body.status),
       order: req.body.order,
       status: req.body.status,
       message_to_user: req.body.message_to_user,
@@ -200,7 +203,7 @@ export default {
       subject: req.body.subject,
       html: App({
         body: order_status(body),
-        title: "Your Order has been " + toCapitalize(req.body.status),
+        unsubscribe: false,
       }),
     };
 
@@ -217,12 +220,13 @@ export default {
   send_affiliate_emails_c: async (req: any, res: any) => {
     const body = {
       affiliate: req.body.affiliate,
+      title: "Thank you for signing up!",
     };
     const mailOptions = {
       from: process.env.DISPLAY_EMAIL,
       to: req.body.email,
       subject: req.body.subject,
-      html: App({ body: affiliate(body), title: "Thank you for signing up!" }),
+      html: App({ body: affiliate(body), unsubscribe: false }),
     };
 
     transporter.sendMail(mailOptions, (err, data) => {
@@ -238,6 +242,7 @@ export default {
   send_feature_emails_c: async (req: any, res: any) => {
     const body = {
       feature: req.body.feature,
+      title: "Thank you for sending us your art!",
     };
     const mailOptions = {
       from: process.env.DISPLAY_EMAIL,
@@ -245,7 +250,7 @@ export default {
       subject: req.body.subject,
       html: App({
         body: feature(body),
-        title: "Thank you for sending us your art!",
+        unsubscribe: false,
       }),
     };
 
@@ -320,8 +325,11 @@ export default {
       to: req.body.data.email,
       subject: "Glow LEDs Password Reset",
       html: App({
-        body: password_reset(req.body),
-        title: "Glow LEDs Password Reset",
+        body: password_reset({
+          ...req.body,
+          title: "Glow LEDs Password Reset",
+        }),
+        unsubscribe: false,
       }),
     };
 
@@ -351,8 +359,10 @@ export default {
         body: review({
           ...req.body,
           categories: contents && contents[0].home_page.slideshow,
+          title: "Enjoy 10% off your next purchase!",
         }),
-        title: "Enjoy 10% off your next purchase!",
+
+        unsubscribe: false,
       }),
     };
 
@@ -383,8 +393,9 @@ export default {
         body: announcement({
           ...req.body,
           categories: contents && contents[0].home_page.slideshow,
+          title: "Enjoy 10% off your next purchase!",
         }),
-        title: "Enjoy 10% off your next purchase!",
+        unsubscribe: true,
       }),
     };
 
@@ -414,8 +425,9 @@ export default {
         body: email_subscription({
           ...req.body,
           categories: contents && contents[0].home_page.slideshow,
+          title: "Enjoy 10% off your next purchase!",
         }),
-        title: "Enjoy 10% off your next purchase!",
+        unsubscribe: true,
       }),
     };
 
@@ -437,8 +449,11 @@ export default {
       to: req.body.email,
       subject: "Glow LEDs Reset Password",
       html: App({
-        body: reset_password(req.body),
-        title: "Glow LEDs Reset Password",
+        body: reset_password({
+          ...req.body,
+          title: "Glow LEDs Reset Password",
+        }),
+        unsubscribe: false,
       }),
     };
 
@@ -468,8 +483,10 @@ export default {
         body: account_created({
           user: req.body,
           categories: contents && contents[0].home_page.slideshow,
+          title: "Glow LEDs Account Created",
         }),
-        title: "Glow LEDs Account Created",
+
+        unsubscribe: false,
       }),
     };
 
@@ -491,8 +508,12 @@ export default {
       to: req.body.email,
       subject: "Glow LEDs Account Created",
       html: App({
-        body: account_created(req.body),
-        title: "Glow LEDs Account Created",
+        body: account_created({
+          ...req.body,
+          title: "Glow LEDs Account Created",
+        }),
+
+        unsubscribe: false,
       }),
     };
 

@@ -66,6 +66,7 @@ router.get(
         images: [],
         p: "",
       },
+
       title: "Thank you for your purchase!",
       order: {
         _id: "61b2e51ca58ea5002bbb6de1",
@@ -481,7 +482,7 @@ router.get(
         refundedAt: "2021-12-10T18:10:35.453Z",
       },
     };
-    res.send(App({ body: order(body), title: "Thank you for your purchase!" }));
+    res.send(App({ body: order(body), unsubscribe: false }));
   }
 );
 router.get(
@@ -1405,9 +1406,7 @@ router.get(
         refundedAt: "2021-12-10T18:10:35.453Z",
       },
     };
-    res.send(
-      App({ body: order_status(body), title: "Thank you for your purchase!" })
-    );
+    res.send(App({ body: order_status(body), unsubscribe: false }));
   }
 );
 router.get(
@@ -1555,12 +1554,7 @@ router.get(
       { deleted: false, active: true },
       { _id: -1 }
     );
-    // console.log({ emails });
-    // const body = {
-    // 	content: emails[0]
-    // };
-
-    res.send(App({ body: announcement(emails[0]), title: emails[0].h1 }));
+    res.send(App({ body: announcement(emails[0]) }));
   }
 );
 
