@@ -207,7 +207,9 @@ const EmailsPage = (props) => {
 			<button className="btn primary mb-1rem" onClick={() => send_announcement_email()}>
 					Send Announcement Email
 				</button>
-
+				<Link to="/secure/glow/editemail">
+				<button className="btn primary">Create Email</button>
+			</Link> 
 			</div>
 			
 			<div className="wrap jc-b">
