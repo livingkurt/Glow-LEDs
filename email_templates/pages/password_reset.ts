@@ -1,29 +1,28 @@
 export default (props: any) => {
-	return `
+  return `
 
 <table style="border-spacing:0;width:100%; padding: 20px; max-width: 600px; width: 100%; margin: auto;">
   <tbody>
     <tr style="font-size:16px">
       <td>
-        <p
-          style=" font-family:helvetica;overflow-x:auto;word-wrap:break-word;max-width:600px;width:100%;margin:0px auto;color:white;font-size:16px;line-height:30px; margin-bottom: 20px;">
-          Hello ${props.first_name},
-        </p>
+      <h2
+      style=" font-family:helvetica;overflow-x:auto;word-wrap:break-word;max-width:600px;width:100%;margin:0px auto;color:#333333;font-size:20px;line-height:30px; margin-bottom: 20px;">
+      Hello ${props.first_name},
+    </h2>
+        <table
+            style="max-width:800px;width:100%;text-align:left;border-spacing:0;margin:0 auto;   background-color: #585858; border-radius: 20px; padding:15px; ">
+            <tbody>
+              <tr>
+                <td style="font-family:helvetica">
         <p
           style=" font-family:helvetica;overflow-x:auto;word-wrap:break-word;max-width:600px;width:100%;margin:0px auto;color:white;font-size:16px;line-height:30px; ">
-          You have successfully changed your Epic Games account password. If you did not make this request, please reset the passwords of your email address and Glow LEDs account.
+          You have successfully changed your Glow LEDs account password. If you did not make this request, please reset the passwords of your email address and Glow LEDs account.
         </p>
-    
-        <p style="
-              font-family:helvetica;overflow-x:auto;word-wrap:break-word;max-width:600px;width:100%;margin:0px
-              auto;color:white;font-size:16px;line-height:30px; margin-top:20px;">
-          Thank you,
-        </p>
-        <p style="
-              font-family:helvetica;overflow-x:auto;word-wrap:break-word;max-width:600px;width:100%;margin:0px
-              auto;color:white;font-size:16px;line-height:30px;">
-          The Glow LEDs Team
-        </p>
+        </td>
+        </tr>
+      </tbody>
+    </table>
+      
       </td>
     </tr>
   </tbody>

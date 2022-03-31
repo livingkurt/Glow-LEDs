@@ -327,21 +327,7 @@ export default (props: any) => {
             </tr>
           </tbody>
         </table>
-        <table style="text-align:left;border-spacing:0;margin: auto; max-width:560px;width:100%; margin-top: 10px;">
-          <tbody>
-            <tr>
-              <td style="font-family:helvetica">
-                <p style="font-size:16px;text-decoration:none;display:block;color:white;padding: 10px; line-height: 25px;background-color:#333333;border:none; border-radius: 14px;  text-align: center;"
-                  href="">
-                  Please DO NOT reply to this email.
-                  <br>
-                  For any questions email <a href="mailto:info.glowleds@gmail.com"
-                    style="font-size:16px;text-decoration:none;color:#009eff;">info.glowleds@gmail.com
-                </p>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      
       </center>
     </td>
   </tr>
