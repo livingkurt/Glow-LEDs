@@ -10,7 +10,7 @@ export default (props: any) => {
 						<tr style="font-family:helvetica;border-radius:4px">
 							<td>
 								<h4
-									style="text-align:center;font-family:helvetica;color:#333333;font-size:25px;margin-top:0px;margin-bottom:0">
+									style="text-align:center;font-family:helvetica;color:#333333;font-size:25px;margin-top:0px;margin-bottom:10px;">
 									Thank you for signing up to be a part of the Glow LEDs Affiliate Team!</h4>
 							</td>
 						</tr>
@@ -31,7 +31,7 @@ export default (props: any) => {
 										<p
 											style="font-size:16px;line-height:30px;max-width:800px;text-align:center;width:100%;color:white;margin:auto">
 											We really appreciate you taking the time to sign up. We are super excited to have on our team!
-											Please contact us after you finish signing up!
+											Please contact us after you finish signing up.
 											If you need to edit any of the information you can do so from your User Profile Page. Note: You
 											might have to logout and log back in for the Edit Affiliate Button to show in your profile.
 
@@ -93,19 +93,25 @@ export default (props: any) => {
 										</td>
 									</tr>
 									<tr>
-										<td style="font-size:16px;height:30px; line-height: 30px;">
-											<div>Auto Input Code Link: 
-											</div>
-											<div>https://www.glow-leds.com/collections/all/products/code/${affiliate.public_code.promo_code.toUpperCase()}
-											</div>
+									<td style="font-size:16px;height:30px">
+										<div>Private Code: ${affiliate.private_code.promo_code.toUpperCase()} - DO NOT SHARE PRIVATE CODE
+										</div>
+									</td>
+								</tr>
+									<tr>
+										<td style="font-size:16px;height:30px">
+											<p style="text-align: left;">Public Link: Use Link Below to give to friends to automatically use your public promo code during checkout</p>
 										</td>
 									</tr>
 									<tr>
-										<td style="font-size:16px;height:30px">
-											<div>Private Code: ${affiliate.private_code.promo_code.toUpperCase()} - DO NOT SHARE PRIVATE CODE
-											</div>
+										<td style="font-size:16px; line-height: 20px; height: 50px; text-align:center;">
+											<a href="https://www.glow-leds.com/collections/all/products/code/${affiliate.public_code.promo_code.toUpperCase()}" alt="discount image"
+													style="background-color:#4c4f60;color:white;border-radius:10px;border:0;padding:15px; width: 100%; text-decoration: none;" target="_blank">
+												Link
+												</a>
 										</td>
 									</tr>
+								
 
 								</tbody>
 							</table>
