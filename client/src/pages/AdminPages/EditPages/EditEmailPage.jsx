@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { saveEmail, detailsEmail, listEmails } from '../../../actions/emailActions';
 import { useHistory, Link } from 'react-router-dom';
-import { ImageDisplay, Loading } from '../../../components/UtilityComponents';
+import { ImageDisplay, Loading, Notification } from '../../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { detailsContent, listContents } from '../../../actions/contentActions';
 import { API_Emails } from '../../../utils';
@@ -28,6 +28,9 @@ const EditEmailPage = (props) => {
 
 	const emailDetails = useSelector((state) => state.emailDetails);
 	const { email, loading, error } = emailDetails;
+
+	const emailSave = useSelector((state) => state.emailSave);
+	const { message} = emailSave;
 
 	const emailList = useSelector((state) => state.emailList);
 	const { emails } = emailList;
@@ -180,8 +183,8 @@ const EditEmailPage = (props) => {
 			})
 		);
 		e.target.reset();
-		unset_state();
-		history.push('/secure/glow/emails');
+		// unset_state();
+		// history.push('/secure/glow/emails');
 	};
 
 
@@ -194,6 +197,7 @@ const EditEmailPage = (props) => {
 					{/* {loading_data ? (
 						<div>Loading...</div>
 					) : ( */}
+					<Notification message={message}/>
 					<Loading loading={loading} error={error}>
 						{email && (
 							<div>
