@@ -25,7 +25,7 @@ const EditEmailPage = props => {
   const [ email_images, set_email_images ] = useState([]);
   const [ background_color, set_background_color ] = useState("#7d7c7c");
   const [ module_color, set_module_color ] = useState("#585858");
-  const [ button_color, set_button_color ] = useState("#6a6c80");
+  const [ button_color, set_button_color ] = useState("#4c4f60");
   const [ text_color, set_text_color ] = useState("#FFFFFF");
   const [ title_color, set_title_color ] = useState("#333333");
   const [ header_footer_color, set_header_footer_color ] = useState("#333333");
@@ -86,6 +86,12 @@ const EditEmailPage = props => {
     set_email_button(email.button);
     set_email_link(email.link);
     set_email_active(email.active);
+    set_background_color(email.background_color);
+    set_module_color(email.module_color);
+    set_button_color(email.button_color);
+    set_text_color(email.text_color);
+    set_title_color(email.title_color);
+    set_header_footer_color(email.header_footer_color);
   };
   const unset_state = () => {
     set_id("");
@@ -100,6 +106,12 @@ const EditEmailPage = props => {
     set_email_active("");
     set_images([]);
     set_image("");
+    set_background_color("");
+    set_module_color("");
+    set_button_color("");
+    set_text_color("");
+    set_title_color("");
+    set_header_footer_color("");
     // dispatch(detailsEmail(''));
     // dispatch(detailsContent(''));
   };
@@ -192,6 +204,12 @@ const EditEmailPage = props => {
         p: email_p,
         button: email_button,
         link: email_link,
+        header_footer_color,
+        background_color,
+        module_color,
+        button_color,
+        text_color,
+        title_color,
         active: email_active,
       })
     );
@@ -235,6 +253,15 @@ const EditEmailPage = props => {
       },
     },
   });
+
+  const preset_colors = [
+    "#333333",
+    "#333333",
+    "#FFFFFF",
+    "#7d7c7c",
+    "#585858",
+    "#4c4f60",
+  ];
 
   return (
     <div className="main_container p-20px">
@@ -349,13 +376,7 @@ const EditEmailPage = props => {
                                 />
                                 <SketchPicker
                                   color={header_footer_color}
-                                  presetColors={[
-                                    "#333333",
-                                    "#FFFFFF",
-                                    "#7d7c7c",
-                                    "#585858",
-                                    "#6a6c80",
-                                  ]}
+                                  presetColors={preset_colors}
                                   onChange={color =>
                                     set_header_footer_color(color.hex)}
                                 />
@@ -398,13 +419,7 @@ const EditEmailPage = props => {
                                 />
                                 <SketchPicker
                                   color={title_color}
-                                  presetColors={[
-                                    "#333333",
-                                    "#FFFFFF",
-                                    "#7d7c7c",
-                                    "#585858",
-                                    "#6a6c80",
-                                  ]}
+                                  presetColors={preset_colors}
                                   onChange={color => set_title_color(color.hex)}
                                 />
                               </div>
@@ -443,13 +458,7 @@ const EditEmailPage = props => {
                                 />
                                 <SketchPicker
                                   color={text_color}
-                                  presetColors={[
-                                    "#333333",
-                                    "#FFFFFF",
-                                    "#7d7c7c",
-                                    "#585858",
-                                    "#6a6c80",
-                                  ]}
+                                  presetColors={preset_colors}
                                   onChange={color => set_text_color(color.hex)}
                                 />
                               </div>
@@ -491,13 +500,7 @@ const EditEmailPage = props => {
                                 />
                                 <SketchPicker
                                   color={background_color}
-                                  presetColors={[
-                                    "#333333",
-                                    "#FFFFFF",
-                                    "#7d7c7c",
-                                    "#585858",
-                                    "#6a6c80",
-                                  ]}
+                                  presetColors={preset_colors}
                                   onChange={color =>
                                     set_background_color(color.hex)}
                                 />
@@ -537,13 +540,7 @@ const EditEmailPage = props => {
                                 />
                                 <SketchPicker
                                   color={module_color}
-                                  presetColors={[
-                                    "#333333",
-                                    "#FFFFFF",
-                                    "#7d7c7c",
-                                    "#585858",
-                                    "#6a6c80",
-                                  ]}
+                                  presetColors={preset_colors}
                                   onChange={color =>
                                     set_module_color(color.hex)}
                                 />
@@ -583,13 +580,7 @@ const EditEmailPage = props => {
                                 />
                                 <SketchPicker
                                   color={button_color}
-                                  presetColors={[
-                                    "#333333",
-                                    "#FFFFFF",
-                                    "#7d7c7c",
-                                    "#585858",
-                                    "#6a6c80",
-                                  ]}
+                                  presetColors={preset_colors}
                                   onChange={color =>
                                     set_button_color(color.hex)}
                                 />

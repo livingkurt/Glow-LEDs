@@ -1561,6 +1561,12 @@ router.get(
         "https://thumbs2.imgbox.com/26/c1/RzDD7XuU_t.jpeg",
       ],
       show_image: false,
+      header_footer_color: "#333333",
+      title_color: "#333333",
+      text_color: "#FFFFFF",
+      background_color: "#7d7c7c",
+      module_color: "#585858",
+      button_color: "#4c4f60",
       active: true,
       deleted: false,
       _id: "62448ed914e358002bfa0934",
@@ -1593,7 +1599,13 @@ router.get(
       updatedAt: "2022-03-31T16:48:56.713Z",
       __v: 0,
     };
-    res.send(App({ body: announcement(email) }));
+    res.send(
+      App({
+        body: announcement(email),
+        header_footer_color: email.header_footer_color,
+        background_color: email.background_color,
+      })
+    );
   }
 );
 

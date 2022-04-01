@@ -1,22 +1,34 @@
 export default (props: any) => {
+  const {
+    h1,
+    h2,
+    images,
+    p,
+    button,
+    link,
+    module_color,
+    button_color,
+    text_color,
+    title_color,
+  } = props;
   return `<table style="border-spacing:0;width:100%; padding: 20px; max-width: 800px; width: 100%; margin: auto;">
   <tbody>
     <tr style="font-size:16px">
       <td>
-      <table style="max-width:800px;width:100%;text-align:left;border-spacing:0;margin:0 auto;color:white">
+      <table style="max-width:800px;width:100%;text-align:left;border-spacing:0;margin:0 auto;">
       <tr>
-        <td style="font-family:helvetica;color:white">
-          ${props.h1
+        <td style="font-family:helvetica;">
+          ${h1
             ? `<h1
-            style="text-align:center;font-family:helvetica;width:100%;margin:10px auto;line-height:50px;color:#333333;font-size:50px; padding-bottom: 7px;">
-            ${props.h1}
+            style="text-align:center;font-family:helvetica;width:100%;margin:10px auto;line-height:50px;color:${title_color};font-size:50px; padding-bottom: 7px;">
+            ${h1}
           </h1>`
             : ""}
         </td>
       </tr>
     </table>
     <table
-    style="max-width:800px;width:100%;text-align:left;border-spacing:0;margin:0 auto;   background-color: #585858; border-radius: 20px; padding:15px; margin: 10px auto;">
+    style="max-width:800px;width:100%;text-align:left;border-spacing:0;margin:0 auto;   background-color: ${module_color}; border-radius: 20px; padding:15px; margin: 10px auto;">
     <tbody>
       <tr>
         <td style="font-family:helvetica">
@@ -26,7 +38,7 @@ export default (props: any) => {
               <tr>
                 <p
                   style="text-align:center;line-height:20px;font-family:helvetica;color:;font-size:16px;margin-top:10px;margin-bottom:10px;">
-                  ${props.h2}</p>
+                  ${h2}</p>
               </tr>
             </tbody>
           </table>
@@ -34,33 +46,31 @@ export default (props: any) => {
       </tr>
     </tbody>
   </table>
-  <a href=${props.link} style="text-decoration:none;" target="_blank">
+  <a href=${link} style="text-decoration:none;" target="_blank">
   <table
-            style="max-width:800px;width:100%;text-align:left;border-spacing:0;margin:0 auto;   background-color: #585858; border-radius: 20px; padding:15px;">
+            style="max-width:800px;width:100%;text-align:left;border-spacing:0;margin:0 auto;   background-color: ${module_color}; border-radius: 20px; padding:15px;">
             <tbody>
               <tr>
                 <td style="font-family:helvetica">
                   <table style="width:100%;border-spacing:0">
                     <tbody>
                       <tr>
-                        ${props.images[0]
+                        ${images[0]
                           ? ` <td style="font-family:helvetica;width:50%">
                           <table width="100%" style="max-width:800px">
                             <tr>
-                              <td><img src=${props
-                                .images[0]} alt="Glow LEDs" title="Email Image"
+                              <td><img src=${images[0]} alt="Glow LEDs" title="Email Image"
                                   style="text-align:center;width:100%;border-radius:20px" />
                               </td>
                             </tr>
                           </table>
                         </td>`
                           : ""}
-                        ${props.images[1]
+                        ${images[1]
                           ? ` <td style="font-family:helvetica;width:50%">
                           <table width="100%" style="max-width:800px">
                             <tr>
-                              <td><img src=${props
-                                .images[1]} alt="Glow LEDs" title="Email Image"
+                              <td><img src=${images[1]} alt="Glow LEDs" title="Email Image"
                                   style="text-align:center;width:100%;border-radius:20px" />
                               </td>
                             </tr>
@@ -73,24 +83,22 @@ export default (props: any) => {
                   <table style="width:100%;border-spacing:0">
                     <tbody>
                       <tr>
-                        ${props.images[2]
+                        ${images[2]
                           ? ` <td style="font-family:helvetica;width:50%">
                           <table width="100%" style="max-width:800px">
                             <tr>
-                              <td><img src=${props
-                                .images[2]} alt="Glow LEDs" title="Email Image"
+                              <td><img src=${images[2]} alt="Glow LEDs" title="Email Image"
                                   style="text-align:center;width:100%;border-radius:20px" />
                               </td>
                             </tr>
                           </table>
                         </td>`
                           : ""}
-                        ${props.images[3]
+                        ${images[3]
                           ? ` <td style="font-family:helvetica;width:50%">
                           <table width="100%" style="max-width:800px">
                             <tr>
-                              <td><img src=${props
-                                .images[3]} alt="Glow LEDs" title="Email Image"
+                              <td><img src=${images[3]} alt="Glow LEDs" title="Email Image"
                                   style="text-align:center;width:100%;border-radius:20px" />
                               </td>
                             </tr>
@@ -103,24 +111,22 @@ export default (props: any) => {
                   <table style="width:100%;border-spacing:0">
                     <tbody>
                       <tr>
-                        ${props.images[4]
+                        ${images[4]
                           ? ` <td style="font-family:helvetica;width:50%">
                           <table width="100%" style="max-width:800px">
                             <tr>
-                              <td><img src=${props
-                                .images[4]} alt="Glow LEDs" title="Email Image"
+                              <td><img src=${images[4]} alt="Glow LEDs" title="Email Image"
                                   style="text-align:center;width:100%;border-radius:20px" />
                               </td>
                             </tr>
                           </table>
                         </td>`
                           : ""}
-                        ${props.images[5]
+                        ${images[5]
                           ? ` <td style="font-family:helvetica;width:50%">
                           <table width="100%" style="max-width:800px">
                             <tr>
-                              <td><img src=${props
-                                .images[5]} alt="Glow LEDs" title="Email Image"
+                              <td><img src=${images[5]} alt="Glow LEDs" title="Email Image"
                                   style="text-align:center;width:100%;border-radius:20px" />
                               </td>
                             </tr>
@@ -134,24 +140,22 @@ export default (props: any) => {
                   <table style="width:100%;border-spacing:0">
                     <tbody>
                       <tr>
-                        ${props.images[6]
+                        ${images[6]
                           ? ` <td style="font-family:helvetica;width:50%">
                           <table width="100%" style="max-width:800px">
                             <tr>
-                              <td><img src=${props
-                                .images[6]} alt="Glow LEDs" title="Email Image"
+                              <td><img src=${images[6]} alt="Glow LEDs" title="Email Image"
                                   style="text-align:center;width:100%;border-radius:20px" />
                               </td>
                             </tr>
                           </table>
                         </td>`
                           : ""}
-                        ${props.images[7]
+                        ${images[7]
                           ? ` <td style="font-family:helvetica;width:50%">
                           <table width="100%" style="max-width:800px">
                             <tr>
-                              <td><img src=${props
-                                .images[7]} alt="Glow LEDs" title="Email Image"
+                              <td><img src=${images[7]} alt="Glow LEDs" title="Email Image"
                                   style="text-align:center;width:100%;border-radius:20px" />
                               </td>
                             </tr>
@@ -168,7 +172,7 @@ export default (props: any) => {
           </table>
           </a>
           <table
-            style="max-width:800px;width:100%;text-align:left;border-spacing:0;margin:0 auto;   background-color: #585858; border-radius: 20px; padding:15px; margin: 10px auto;">
+            style="max-width:800px;width:100%;text-align:left;border-spacing:0;margin:0 auto;   background-color: ${module_color}; border-radius: 20px; padding:15px; margin: 10px auto;">
             <tbody>
               <tr>
                 <td style="font-family:helvetica">
@@ -177,9 +181,9 @@ export default (props: any) => {
                     <tbody>
                       <tr>
 
-                      ${props.p
+                      ${p
                         ? `<pre
-                                style="max-width: 800px; font-family:helvetica;overflow-x:auto;white-space: pre-wrap;word-wrap:break-word;max-width:800px;width:100%;margin:0px;color:white;font-size:16px;line-height:20px">${props.p}</pre>
+                                style="max-width: 800px; font-family:helvetica;overflow-x:auto;white-space: pre-wrap;word-wrap:break-word;max-width:800px;width:100%;margin:0px;color:${text_color};font-size:16px;line-height:20px">${p}</pre>
                            `
                         : ""}
 
@@ -194,9 +198,9 @@ export default (props: any) => {
           <tbody>
             <tr>
               <td>
-              <div style="display:flex;justify-content:center;margin:10px 0"><a href=${props.link}
-                  style="background-color:#4c4f60;color:white;border-radius:10px;border:0;padding:15px;text-decoration:none">
-                  <h4 style="font-family:helvetica;margin:0;font-size:20px;text-align:center">${props.button}
+              <div style="display:flex;justify-content:center;margin:10px 0"><a href=${link}
+                  style="background-color:${button_color};color:white;border-radius:10px;border:0;padding:15px;text-decoration:none">
+                  <h4 style="font-family:helvetica;margin:0;font-size:20px;text-align:center">${button}
                   </h4>
                 </a></div>
               </td>
