@@ -1014,7 +1014,7 @@ ${order.shipping.email}`)}
 									</div>
 								</li>
 
-								{order.tip && (
+								{order.tip > 0 && (
 									<li>
 										<div>Tip</div>
 										<div>${order.tip ? order.tip.toFixed(2) : order.tip}</div>
