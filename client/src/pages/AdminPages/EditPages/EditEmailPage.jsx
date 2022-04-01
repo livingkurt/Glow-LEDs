@@ -418,7 +418,7 @@ const EditEmailPage = (props) => {
 												</div>
 											</li>
 											<li>
-												<label htmlFor="email_h1">H1</label>
+												<label htmlFor="email_h1">Heading</label>
 												<input
 													type="text"
 													name="email_h1"
@@ -440,6 +440,16 @@ const EditEmailPage = (props) => {
 													Add Image
 												</button>
 											</li> */}
+												<li>
+												<label htmlFor="email_h2">Summary</label>
+												<textarea
+													className="edit_product_textarea"
+													name="email_h2"
+													value={email_h2}
+													id="email_h2"
+													onChange={(e) => set_email_h2(e.target.value)}
+												/>
+											</li>
 											<ImageDisplay
 												images={images}
 												set_images={set_images}
@@ -450,7 +460,7 @@ const EditEmailPage = (props) => {
 												<div>Loading...</div>
 											) : (
 												<li>
-													<label htmlFor="email_show_image">Show Image</label>
+													<label htmlFor="email_show_image">One Image</label>
 													<input
 														type="checkbox"
 														name="email_show_image"
@@ -462,18 +472,9 @@ const EditEmailPage = (props) => {
 													/>
 												</li>
 											)}
+										
 											<li>
-												<label htmlFor="email_h2">H2</label>
-												<input
-													type="text"
-													name="email_h2"
-													value={email_h2}
-													id="email_h2"
-													onChange={(e) => set_email_h2(e.target.value)}
-												/>
-											</li>
-											<li>
-												<label htmlFor="email_p">P</label>
+												<label htmlFor="email_p">Body</label>
 												<textarea
 													className="edit_product_textarea"
 													name="email_p"
@@ -483,7 +484,7 @@ const EditEmailPage = (props) => {
 												/>
 											</li>
 											<li>
-												<label htmlFor="email_button">Button</label>
+												<label htmlFor="email_button">Button Text</label>
 												<input
 													type="text"
 													name="email_button"
