@@ -4,7 +4,7 @@ import { saveContent, detailsContent } from '../../../actions/contentActions';
 import { useHistory } from 'react-router-dom';
 import { ImageDisplay, Loading } from '../../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
-import { detailsEmail, listEmails } from '../../../actions/emailActions';
+import { detailsEmail, listEmails, saveEmail } from '../../../actions/emailActions';
 import { API_Emails } from '../../../utils';
 
 const EditContentPage = (props) => {
@@ -143,6 +143,21 @@ const EditContentPage = (props) => {
 				active
 			})
 		);
+		if (using_template || id){
+			dispatch(
+				saveEmail({
+					_id: using_template ? null : id,
+					email_type: 'Announcements',
+					h1: home_page.h1,
+					images,
+					h2: home_page.h2,
+					p: home_page.p,
+					button: home_page.button,
+					link: home_page.link,
+					active: home_page.active
+				})
+			);
+		}
 		e.target.reset();
 		unset_state();
 		history.push('/secure/glow/contents');
