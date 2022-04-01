@@ -456,23 +456,6 @@ const EditEmailPage = (props) => {
 												image={image}
 												set_image={set_image}
 											/>
-											{loading_checkboxes ? (
-												<div>Loading...</div>
-											) : (
-												<li>
-													<label htmlFor="email_show_image">One Image</label>
-													<input
-														type="checkbox"
-														name="email_show_image"
-														defaultChecked={email_show_image}
-														id="email_show_image"
-														onChange={(e) => {
-															set_email_show_image(e.target.checked);
-														}}
-													/>
-												</li>
-											)}
-										
 											<li>
 												<label htmlFor="email_p">Body</label>
 												<textarea

@@ -100,6 +100,67 @@ export default (props: any) => {
 
                       </tr>
                     </tbody>
+                  <table style="width:100%;border-spacing:0">
+                    <tbody>
+                      <tr>
+                        ${props.images[4]
+                          ? ` <td style="font-family:helvetica;width:50%">
+                          <table width="100%" style="max-width:800px">
+                            <tr>
+                              <td><img src=${props
+                                .images[4]} alt="Glow LEDs" title="Email Image"
+                                  style="text-align:center;width:100%;border-radius:20px" />
+                              </td>
+                            </tr>
+                          </table>
+                        </td>`
+                          : ""}
+                        ${props.images[5]
+                          ? ` <td style="font-family:helvetica;width:50%">
+                          <table width="100%" style="max-width:800px">
+                            <tr>
+                              <td><img src=${props
+                                .images[5]} alt="Glow LEDs" title="Email Image"
+                                  style="text-align:center;width:100%;border-radius:20px" />
+                              </td>
+                            </tr>
+                          </table>
+                        </td>`
+                          : ""}
+
+                      </tr>
+                    </tbody>
+                  </table>
+                  <table style="width:100%;border-spacing:0">
+                    <tbody>
+                      <tr>
+                        ${props.images[6]
+                          ? ` <td style="font-family:helvetica;width:50%">
+                          <table width="100%" style="max-width:800px">
+                            <tr>
+                              <td><img src=${props
+                                .images[6]} alt="Glow LEDs" title="Email Image"
+                                  style="text-align:center;width:100%;border-radius:20px" />
+                              </td>
+                            </tr>
+                          </table>
+                        </td>`
+                          : ""}
+                        ${props.images[7]
+                          ? ` <td style="font-family:helvetica;width:50%">
+                          <table width="100%" style="max-width:800px">
+                            <tr>
+                              <td><img src=${props
+                                .images[7]} alt="Glow LEDs" title="Email Image"
+                                  style="text-align:center;width:100%;border-radius:20px" />
+                              </td>
+                            </tr>
+                          </table>
+                        </td>`
+                          : ""}
+
+                      </tr>
+                    </tbody>
                   </table>
                 </td>
               </tr>
