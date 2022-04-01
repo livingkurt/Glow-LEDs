@@ -18,6 +18,19 @@ const determine_emoji = (status: string) => {
       break;
   }
 };
+const determine_color = (status: string) => {
+  switch (status) {
+    case "manufactured":
+      return "#4b7188";
+    case "packaged":
+      return "#6f5f7d";
+    case "shipped":
+      return "#636363";
+
+    default:
+      break;
+  }
+};
 const determine_message = (status: string) => {
   switch (status) {
     case "manufactured":
@@ -83,7 +96,9 @@ export default (props: any) => {
           </tbody>
         </table>
         <table
-          style="max-width:560px;width:100%;text-align:left;border-spacing:0;margin:0 auto;   background-color: #585858; border-radius: 20px; padding:15px;">
+          style="max-width:560px;width:100%;text-align:left;border-spacing:0;margin:0 auto;   background-color: ${determine_color(
+            status
+          )}; border-radius: 20px; padding:15px;">
           <tbody>
             <tr>
               <td style="font-family:helvetica">
@@ -157,7 +172,9 @@ export default (props: any) => {
           </tbody>
         </table>
         <table
-          style="max-width:560px;width:100%;text-align:left;border-spacing:0;padding:10px;margin:10px auto;  background-color: #585858; border-radius: 20px;">
+          style="max-width:560px;width:100%;text-align:left;border-spacing:0;padding:10px;margin:10px auto;  background-color: ${determine_color(
+            status
+          )}; border-radius: 20px;">
           <tbody>
             <tr>
               <td style="font-family:helvetica">
@@ -293,7 +310,9 @@ export default (props: any) => {
               <td style="font-family:helvetica;">
                 <center>
                   <table
-                    style="max-width:560px;width:100%;text-align:left;border-spacing:0;margin:0 auto; background-color: #585858; border-radius: 20px; padding:15px;">
+                    style="max-width:560px;width:100%;text-align:left;border-spacing:0;margin:0 auto; background-color: ${determine_color(
+                      status
+                    )}; border-radius: 20px; padding:15px;">
                     <tbody>
                       <tr>
                         <td style="font-family:helvetica">
