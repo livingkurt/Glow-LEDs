@@ -274,6 +274,13 @@ const PlaceOrderPage = (props) => {
 			set_show_promo_code_input_box(false);
 			activate_promo_code(promo_code_storage);
 		}
+		if (itemsPrice >= 40) {
+			set_promo_code("SHIP40");
+			set_show_promo_code(true);
+			// set_show_message(`"SHIP40" Free Shipping`);
+			set_show_promo_code_input_box(false);
+			activate_promo_code("SHIP40");
+		}
 	};
 
 	const placeOrderHandler = async (paymentMethod) => {
@@ -500,7 +507,9 @@ const PlaceOrderPage = (props) => {
 		const promo = promos.find((promo) => promo.promo_code === code.toLowerCase());
 		console.log({ isValid: promo, promo_code: code.toLowerCase() });
 		let promo_excluded = 0;
+		
 		let promo_included = 0;
+		// setPreviousShippingPrice(shippingPrice);
 		if (promo) {
 			if (promo.exclude) {
 				const category_cart_items = cartItems
@@ -542,17 +551,19 @@ const PlaceOrderPage = (props) => {
 					// setTaxPrice(tax_rate * (items_price - (items_price - promo_excluded) - promo.amount_off));
 				}
 				if (promo.free_shipping) {
-					setPreviousShippingPrice(shippingPrice);
+					
 					setShippingPrice(0);
 					set_free_shipping_message('Free');
+					set_show_message(`${promo.promo_code.toUpperCase()} Free Shipping`);
 				}
 				if (promo.percentage_off) {
 					set_show_message(`${promo.promo_code.toUpperCase()} ${promo.percentage_off}% Off`);
 				} else if (promo.amount_off) {
 					set_show_message(`${promo.promo_code.toUpperCase()} $${promo.amount_off} Off`);
-				} else if (promo.promo_code.toUpperCase() === 'SHIPPING') {
-					set_show_message(`${promo.promo_code.toUpperCase()} $${previousShippingPrice.toFixed(2)} Off`);
-				}
+				} 
+				// else  {
+				// 	set_show_message(`${promo.promo_code.toUpperCase()} $${previousShippingPrice.toFixed(2)} Off`);
+				// }
 				// set_show_message(
 				// 	`${promo.promo_code.toUpperCase()} ${promo.percentage_off > 0
 				// 		? `${promo.percentage_off}% Off`
