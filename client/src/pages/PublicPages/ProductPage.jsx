@@ -527,7 +527,7 @@ const ProductPage = props => {
     update_url(
       option.color,
       secondary_color,
-      size || option_product_name,
+      option_product_name,
       secondary_product_name
     );
   };
@@ -566,7 +566,7 @@ const ProductPage = props => {
     update_url(
       color,
       option.color,
-      size || option_product_name,
+      option_product_name,
       secondary_product_name
     );
   };
@@ -628,7 +628,7 @@ const ProductPage = props => {
 
   const update_secondary = e => {
     const secondary = JSON.parse(e.target.value);
-    if (secondary.subcategory !== "batteries") {
+    if (secondary.subcategory !== "coin") {
       if (secondary.images && secondary.images[0]) {
         set_images(secondary.images);
         set_image(secondary.images[0]);
@@ -653,7 +653,7 @@ const ProductPage = props => {
     update_url(
       color,
       secondary_color,
-      size || option_product_name,
+      option_product_name,
       secondary.name
     );
   };
