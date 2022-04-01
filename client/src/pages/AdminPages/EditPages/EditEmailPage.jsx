@@ -168,11 +168,10 @@ const EditEmailPage = (props) => {
 		dispatch(
 			saveEmail({
 				_id: id ? id : null,
-				email_type,
+				email_type: 'Announcements',
 				h1: email_h1,
 				image: email_image,
 				images,
-				show_image: email_show_image,
 				h2: email_h2,
 				p: email_p,
 				button: email_button,
@@ -185,144 +184,7 @@ const EditEmailPage = (props) => {
 		history.push('/secure/glow/emails');
 	};
 
-	const email_types = [
-		'Announcements',
-		'Reviews',
-		'Order',
-		'Reassured',
-		'Manufactured',
-		'Packaged',
-		'Shipped',
-		'Delivered',
-		'Refunded',
-		'Account Created',
-		'Reset Password',
-		'Password Changed',
-		'Feature',
-		'Affiliate'
-	];
 
-	// const add_image = (e) => {
-	// 	e.preventDefault();
-	// 	console.log(image);
-	// 	if (image.indexOf(' ') >= 0) {
-	// 		console.log('indexOf');
-	// 		image.split(' ').map((image) => {
-	// 			set_images((images) => [ ...images, image ]);
-	// 		});
-	// 	} else if (images) {
-	// 		console.log('images.length > 0');
-	// 		set_images((images) => [ ...images, image ]);
-	// 	} else {
-	// 		console.log('images.length === 0');
-	// 		set_images([ image ]);
-	// 	}
-
-	// 	set_image('');
-	// };
-	// const remove_image = (image_index, e) => {
-	// 	e.preventDefault();
-	// 	set_images((images) =>
-	// 		images.filter((image, index) => {
-	// 			return image_index !== index;
-	// 		})
-	// 	);
-	// };
-
-	// const move_image_up = (image_index, e) => {
-	// 	e.preventDefault();
-	// 	const new_array = move(images, image_index, image_index - 1);
-	// 	set_images(new_array);
-	// 	// set_new_array(new_array);
-	// 	image_display(new_array);
-	// };
-	// const move_image_down = (image_index, e) => {
-	// 	e.preventDefault();
-	// 	const new_array = move(images, image_index, image_index + 1);
-	// 	set_images(new_array);
-	// 	// set_new_array(new_array);
-	// 	image_display(new_array);
-	// };
-
-	// function move(arr, old_index, new_index) {
-	// 	console.log({ arr, old_index, new_index });
-	// 	while (old_index < 0) {
-	// 		old_index += arr.length;
-	// 	}
-	// 	while (new_index < 0) {
-	// 		new_index += arr.length;
-	// 	}
-	// 	if (new_index >= arr.length) {
-	// 		const k = new_index - arr.length;
-	// 		while (k-- + 1) {
-	// 			arr.push(undefined);
-	// 		}
-	// 	}
-	// 	arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
-	// 	console.log({ arr });
-	// 	return arr;
-	// }
-	// const image_display = (images) => {
-	// 	return (
-	// 		<div>
-	// 			<div className="wrap jc-b">
-	// 				{images &&
-	// 					images.map((picture, index) => {
-	// 						return (
-	// 							<div className="promo_code mv-1rem jc-b max-w-46rem w-100per">
-	// 								<div className="pos-rel">
-	// 									<img
-	// 										alt="Email"
-	// 										style={{
-	// 											width: '100%',
-	// 											package_height: 'auto',
-	// 											maxWidth: '100px',
-	// 											maxHeight: '100px',
-	// 											borderRadius: '15px'
-	// 										}}
-	// 										className="mv-10px ml-10px"
-	// 										src={picture}
-	// 									/>
-	// 									<div className="ml-10px">{picture}</div>
-
-	// 									<button
-	// 										className="btn icon pos-abs right-10px top-15px"
-	// 										onClick={(e) => remove_image(index, e)}
-	// 									>
-	// 										<i className="fas fa-times" />
-	// 									</button>
-	// 									<div className="pos-abs right-40px top-15px column">
-	// 										{index > 0 && (
-	// 											<button className="btn icon" onClick={(e) => move_image_up(index, e)}>
-	// 												<i className=" fas fa-sort-up" />
-	// 											</button>
-	// 										)}
-
-	// 										{index < images.length - 1 && (
-	// 											<button className="btn icon" onClick={(e) => move_image_down(index, e)}>
-	// 												<i
-	// 													style={{ WebkitTransform: 'rotate(-180deg)' }}
-	// 													className=" fas fa-sort-up"
-	// 												/>
-	// 											</button>
-	// 										)}
-	// 									</div>
-	// 								</div>
-	// 							</div>
-	// 						);
-	// 					})}
-	// 			</div>
-	// 			<div className="promo_code mv-1rem jc-b max-w-46rem w-100per fs-14px">
-	// 				<p>
-	// 					{images &&
-	// 						images.map((picture, index) => {
-	// 							return `${picture}\n`;
-	// 						})}
-	// 				</p>
-	// 			</div>
-	// 		</div>
-	// 	);
-	// };
 	return (
 		<div className="main_container p-20px">
 			<h1 style={{ textAlign: 'center' }}>{props.match.params.id ? 'Edit Email' : 'Create Email'}</h1>
@@ -339,12 +201,12 @@ const EditEmailPage = (props) => {
 									<title>Edit Email | Glow LEDs</title>
 								</Helmet>
 
-								<ul className="edit-form-container" style={{ maxWidth: '50rem', marginBottom: '20px' }}>
+								<ul className="edit-form-container" style={{ maxWidth: '100rem', width: '100%', marginBottom: '20px' }}>
 									<li>
 										<div className="ai-c h-25px mb-15px jc-c">
-											<div className="custom-select">
+											<div className="custom-select w-100per">
 												<select
-													className="qty_select_dropdown"
+													className="qty_select_dropdown w-100per"
 													onChange={(e) => use_template(e)}
 												>
 													<option key={1} defaultValue="">
@@ -363,9 +225,9 @@ const EditEmailPage = (props) => {
 									</li>
 									<li>
 										<div className="ai-c h-25px mb-15px jc-c">
-											<div className="custom-select">
+											<div className="custom-select w-100per">
 												<select
-													className="qty_select_dropdown"
+													className="qty_select_dropdown w-100per"
 													onChange={(e) => use_content_template(e)}
 												>
 													<option key={1} defaultValue="">
@@ -384,39 +246,6 @@ const EditEmailPage = (props) => {
 									</li>
 									<div className="row wrap jc-c">
 										<div className="w-100per m-10px">
-											{/* <li>
-												<label htmlFor="email_type">Email Type</label>
-												<input
-													type="text"
-													name="email_type"
-													value={email_type}
-													id="email_type"
-													onChange={(e) => set_email_type(e.target.value)}
-												/>
-											</li>
-											{console.log({ email_active })} */}
-
-											<li>
-												<div className="ai-c h-25px mb-15px jc-c">
-													<div className="custom-select">
-														<select
-															className="qty_select_dropdown"
-															onChange={(e) => set_email_type(e.target.value)}
-															value={email_type}
-														>
-															<option key={1} defaultValue="">
-																---Email Type---
-															</option>
-															{email_types.map((type, index) => (
-																<option key={index} value={type}>
-																	{type}
-																</option>
-															))}
-														</select>
-														<span className="custom-arrow" />
-													</div>
-												</div>
-											</li>
 											<li>
 												<label htmlFor="email_h1">Heading</label>
 												<input
@@ -427,23 +256,10 @@ const EditEmailPage = (props) => {
 													onChange={(e) => set_email_h1(e.target.value)}
 												/>
 											</li>
-											{/* <li>
-												<label htmlFor="image">Image</label>
-												<input
-													type="text"
-													name="image"
-													value={image}
-													id="image"
-													onChange={(e) => set_image(e.target.value)}
-												/>
-												<button className="btn primary" onClick={(e) => add_image(e)}>
-													Add Image
-												</button>
-											</li> */}
 												<li>
 												<label htmlFor="email_h2">Summary</label>
 												<textarea
-													className="edit_product_textarea"
+													className="edit_product_textarea h-10rem"
 													name="email_h2"
 													value={email_h2}
 													id="email_h2"
@@ -459,7 +275,7 @@ const EditEmailPage = (props) => {
 											<li>
 												<label htmlFor="email_p">Body</label>
 												<textarea
-													className="edit_product_textarea"
+													className="edit_product_textarea h-50rem"
 													name="email_p"
 													value={email_p}
 													id="email_p"
