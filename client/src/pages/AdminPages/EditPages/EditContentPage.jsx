@@ -15,6 +15,7 @@ const EditContentPage = (props) => {
 	const [ images, set_images ] = useState([]);
 	const [ slideshow, set_slideshow ] = useState([ {} ]);
 	const [ image, set_image ] = useState('');
+	const [ create_email, set_create_email ] = useState(true);
 	// const [ slideshow, set_slideshow ] = useState('');
 
 	const [ active, set_active ] = useState(true);
@@ -143,7 +144,7 @@ const EditContentPage = (props) => {
 				active
 			})
 		);
-		if (using_template || id){
+		if (create_email && (using_template || id) ){
 			dispatch(
 				saveEmail({
 					_id: using_template ? null : id,
@@ -664,6 +665,22 @@ const EditContentPage = (props) => {
 											</div>
 										</div>
 									</div>
+									{loading_checkboxes ? (
+												<div>Loading...</div>
+											) : (
+												<li>
+													<label htmlFor="show_video">Create Email</label>
+													<input
+														type="checkbox"
+														name="show_video"
+														defaultChecked={create_email}
+														id="show_video"
+														onChange={(e) => {
+															set_create_email(e.target.checked);
+														}}
+													/>
+												</li>
+											)}
 									<li>
 										<button type="submit" className="btn primary">
 											{id ? 'Update' : 'Create'}
