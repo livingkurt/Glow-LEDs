@@ -18,13 +18,13 @@ const ShippingChoice = ({
 					{shipping &&
 					shipping.international && (
 						<div>
-							{/* <ShippingSpeed
+							<ShippingSpeed
 								rates={rates}
 								service={'FirstClassPackageInternationalService'}
 								name={'Standard'}
 								time={'1-3+ Weeks'}
 								choose_shipping_rate={choose_shipping_rate}
-							/> */}
+							/>
 							<ShippingSpeed
 								rates={rates}
 								service={'PriorityMailInternational'}
