@@ -8,7 +8,7 @@ const Footer = () => {
 
   return (
     <footer
-      className="ta-c w-100per mt-5rem h-400px"
+      className="ta-c w-100per mt-5rem h-450px"
       style={{ backgroundColor: "#333333" }}
     >
       <div className="footer-image">
@@ -233,6 +233,11 @@ const Footer = () => {
               </h2>
               <ul className="lst-none">
                 <li className="ta-l mv-2rem">
+                  <Link to="/collections/all/teams/category/rave_mob">
+									Rave Mob
+                  </Link>
+                </li>
+                <li className="ta-l mv-2rem">
                   <Link to="/pages/menu/sponsored_artists">
                     Sponsored Artists
                   </Link>
@@ -268,6 +273,9 @@ const Footer = () => {
                 </li>
                 <li className="ta-l mv-2rem">
                   <Link to="/pages/about">About</Link>
+                </li>
+                <li className="ta-l mv-2rem">
+                  <Link to="/pages/events">About</Link>
                 </li>
                 <li className="ta-l mv-2rem">
                   <Link to="/pages/faq">FAQ</Link>
