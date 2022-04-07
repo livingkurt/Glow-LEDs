@@ -633,11 +633,11 @@ export default {
     const products = await Product.find({
       deleted: false,
       category: "glowskins",
-      subcategory: "novaskinz",
+      subcategory: "novaskins",
     });
 
     products.forEach(async (product: any) => {
-      const product_name = "CLOZD " + product.name.replace("skinz", "skinz");
+      const product_name = "CLOZD " + product.name.replace("skins", "skinz");
       product.included_items = product.included_items.replace(
         product.name,
         product_name
@@ -651,8 +651,8 @@ export default {
       product.category = "glowskinz";
       product.subcategory = "clozd";
       product.product_collection = "novaskinz";
-      product.facts = product.facts.replaceAll("skinz", "skinz");
-      product.description = product.description.replaceAll("skinz", "skinz");
+      product.facts = product.facts.replaceAll("skins", "skinz");
+      product.description = product.description.replaceAll("skins", "skinz");
       const result = await product.save();
       console.log({ result });
     });
@@ -663,11 +663,11 @@ export default {
     const products = await Product.find({
       deleted: false,
       category: "glowskins",
-      subcategory: "alt_novaskinz",
+      subcategory: "alt_novaskins",
     });
 
     products.forEach(async (product: any) => {
-      const product_name = "CLOZD " + product.name.replace("skinz", "skinz");
+      const product_name = "CLOZD " + product.name.replace("skins", "skinz");
       product.included_items = product.included_items.replace(
         product.name,
         product_name
@@ -681,8 +681,8 @@ export default {
       product.category = "glowskinz";
       product.subcategory = "clozd";
       product.product_collection = "novaskinz";
-      product.facts = product.facts.replaceAll("skinz", "skinz");
-      product.description = product.description.replaceAll("skinz", "skinz");
+      product.facts = product.facts.replaceAll("skins", "skinz");
+      product.description = product.description.replaceAll("skins", "skinz");
       const result = await product.save();
       console.log({ result });
     });
@@ -695,7 +695,7 @@ export default {
       category: "options",
       subcategory: "colors",
       name: {
-        $regex: "skinz",
+        $regex: "skins",
         $options: "i",
       },
     });
@@ -706,7 +706,7 @@ export default {
           product.name.split(" ")[0],
           product.name.split(" ")[0] + " CLOZD"
         )
-        .replace("skinz", "skinz");
+        .replace("skins", "skinz");
       product.included_items = product.included_items.replace(
         product.name,
         product_name
@@ -729,13 +729,13 @@ export default {
       category: "options",
       subcategory: "sizes",
       name: {
-        $regex: "skinz",
+        $regex: "skins",
         $options: "i",
       },
     });
 
     products.forEach(async (product: any) => {
-      const product_name = "CLOZD " + product.name.replace("skinz", "skinz");
+      const product_name = "CLOZD " + product.name.replace("skins", "skinz");
       product.included_items = product.included_items.replace(
         product.name,
         product_name
@@ -824,7 +824,7 @@ export default {
     });
 
     products.forEach(async (product: any) => {
-      const product_name = "CLOZD " + product.name.replace("skinz", "skinz");
+      const product_name = "CLOZD " + product.name.replace("skins", "skinz");
       product.included_items = product.included_items.replace(
         product.name,
         product_name
@@ -838,8 +838,8 @@ export default {
       product.category = "glowskinz";
       product.subcategory = "clozd";
       product.product_collection = "classics";
-      product.facts = product.facts.replaceAll("skinz", "skinz");
-      product.description = product.description.replaceAll("skinz", "skinz");
+      product.facts = product.facts.replaceAll("skins", "skinz");
+      product.description = product.description.replaceAll("skins", "skinz");
       const result = await product.save();
       console.log({ result });
     });

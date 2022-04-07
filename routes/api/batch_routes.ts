@@ -56,7 +56,7 @@ router
 router.route("/clozd_glowframez").put(batch_controller.clozd_glowframez);
 router.route("/opyn_glowskinz").put(batch_controller.opyn_glowskinz);
 router.route("/clozd_novaskinz").put(batch_controller.clozd_novaskinz);
-router.route("/clozd_alt_novaskins").put(batch_controller.clozd_alt_novaskinz);
+router.route("/clozd_alt_novaskinz").put(batch_controller.clozd_alt_novaskinz);
 router
   .route("/clozd_skin_color_options")
   .put(batch_controller.clozd_skin_color_options);
