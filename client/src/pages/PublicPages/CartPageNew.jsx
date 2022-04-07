@@ -92,7 +92,7 @@ const CartPage = (props) => {
 										<div className="cart-name">
 											<div className="mb-10px">
 												<Link to={'/collections/all/products/' + item.pathname}>
-													{(item.category === 'glowskins' ||
+													{(item.category === 'glowskinz' ||
 														item.category === 'diffuser_caps' ||
 														item.category === 'mega_diffuser_caps' ||
 														item.category === 'diffusers') &&

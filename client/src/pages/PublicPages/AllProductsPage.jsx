@@ -127,6 +127,7 @@ const AllProductsPage = props => {
     [
       props.match.params.category,
       props.match.params.subcategory,
+      props.match.params.collection,
       getUrlParameter(props.location).search,
     ]
   );
@@ -155,6 +156,7 @@ const AllProductsPage = props => {
     let collection = props.match.params.collection
       ? props.match.params.collection
       : "";
+      console.log({collection: props.match.params})
     determine_page_name(category, subcategory, collection);
     // prnt({ query });
     if (
@@ -188,7 +190,7 @@ const AllProductsPage = props => {
           limit = query.limit;
         }
       }
-
+      
       dispatch(
         listProducts({
           category,
@@ -196,7 +198,7 @@ const AllProductsPage = props => {
           chip: filter,
           search,
           sort,
-          collection,
+          product_collection: collection,
           page,
           limit,
           hidden,
@@ -254,7 +256,7 @@ const AllProductsPage = props => {
         subcategory,
         search,
         sort: e.target.value,
-        collection,
+        product_collection: collection,
         page,
         limit,
         hidden,
@@ -279,7 +281,7 @@ const AllProductsPage = props => {
         subcategory,
         chip: chip_selected._id,
         sort,
-        collection,
+        product_collection: collection,
         page,
         limit,
         hidden,
@@ -344,8 +346,8 @@ const AllProductsPage = props => {
             {category === "diffuser_caps" ||
             category === "diffuser_adapters" ||
             category === "exo_diffusers" ||
-            category === "glowskins" ||
-            category === "glow_strings" ? (
+            category === "glowskinz" ||
+            category === "glow_stringz" ? (
               "™"
             ) : (
               ""

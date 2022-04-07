@@ -254,9 +254,6 @@ const Sidebar = props => {
 
           <ul className="sidebar_dropdown_container" id="products_dropdown">
             <div className="sidebar_dropdown_nested">
-              {/* <Link to="/collections/all/products/category/glowskins">
-								<button className="sidebar-btn secondary">Glowskins</button>
-							</Link> */}
               <div className="sidebar-btn-container">
                 <button className="sidebar-btn secondary" onClick={closeMenu}>
                   <Link to="/pages/menu/gloving">Enhancers </Link>
@@ -274,29 +271,29 @@ const Sidebar = props => {
                 id="gloving_dropdown"
               >
                 {browser_check() !== "safari" ? (
-                  <Link to="/collections/all/products/glow_strings_v2_50_led_3_5m">
+                  <Link to="/collections/all/products/glow_stringz_v2_50_led_3_5m">
                     <button
                       className={`sidebar-btn nested  special_font gradient-btn`}
                       onClick={closeMenu}
                     >
-                      <span>GLOW STRINGS V2</span>
+                      <span>GLOW STRINGZ V2</span>
                     </button>
                   </Link>
                 ) : (
                   <Link
-                    to="/collections/all/products/glow_strings_v2_50_led_3_5m"
+                    to="/collections/all/products/glow_stringz_v2_50_led_3_5m"
                     onClick={closeMenu}
                   >
                     <button className={`sidebar-btn nested `}>
-                      <span>Glow Strings V2</span>
+                      <span>Glow Stringz V2</span>
                     </button>
                   </Link>
                 )}
                 <div className="sidebar_dropdown_nested">
                   <div className="sidebar-btn-container">
-                    <button className="sidebar-btn nested" onClick={closeMenu}>
-                      <Link to="/collections/all/products/category/glowskins">
-                        Glowskins{" "}
+                  <button className="sidebar-btn nested" onClick={closeMenu}>
+                      <Link to="/collections/all/products/category/glowskinz">
+                        Glowskinz
                       </Link>
                     </button>
                     <button
@@ -311,40 +308,63 @@ const Sidebar = props => {
                     className="sidebar_dropdown_nested_container"
                     id="glow_casings_dropdown_2"
                   >
-                    <Link to="/collections/all/products/category/glowskins/subcategory/classics">
+                    <div className="sidebar_dropdown_nested">
+                      {/* <button className="sidebar-btn secondary">Collections</button> */}
+                      <div className="sidebar-btn-container">
+                        <Link to="/collections/all/products/category/glowskinz/subcategory/clozd" className="w-100per">
+                          <button
+                            className="sidebar-btn nested-2"
+                            onClick={closeMenu}
+                          >
+                            CLOZD Glowskinz
+                          </button>
+                        </Link>
+                        <button
+                          className="sidebar-btn-dropdown"
+                          onClick={() => show_hide("glow_casings_dropdown_5")}
+                          aria-label="Show"
+                        >
+                          <i className="fas fa-sort-up" />
+                        </button>
+                      </div>
+                      <ul
+                        className="sidebar_dropdown_nested_2_container"
+                        id="glow_casings_dropdown_5"
+                      >
+                        <Link to="/collections/all/products/category/glowskinz/subcategory/clozd/collection/classics">
+                          <button
+                            className="sidebar-btn nested-3"
+                            onClick={closeMenu}
+                          >
+                            Classics
+                          </button>
+                        </Link>
+                        <Link to="/collections/all/products/category/glowskinz/subcategory/clozd/collection/novaskinz">
+                          <button
+                            className="sidebar-btn nested-3"
+                            onClick={closeMenu}
+                          >
+                            Novaskinz
+                          </button>
+                        </Link>
+                       
+                      </ul>
+                    </div>
+                    <Link to="/collections/all/products/category/glowskinz/subcategory/opyn">
                       <button
                         className="sidebar-btn nested-2"
                         onClick={closeMenu}
                       >
-                        Classics
-                      </button>
-                    </Link>
-                    <Link to="/collections/all/products/category/glowskins/subcategory/novaskins">
-                      <button
-                        className="sidebar-btn nested-2"
-                        onClick={closeMenu}
-                      >
-                        Novaskins
-                      </button>
-                    </Link>
-                    <Link to="/collections/all/products/category/glowskins/subcategory/alt_novaskins">
-                      <button
-                        className="sidebar-btn nested-2"
-                        onClick={closeMenu}
-                      >
-                        Alt Novaskins
-                      </button>
-                    </Link>
-                    <Link to="/collections/all/products/category/glowskins/subcategory/imperfect">
-                      <button
-                        className="sidebar-btn nested-2"
-                        onClick={closeMenu}
-                      >
-                        Imperfect
+                        OPYN Glowskinz
                       </button>
                     </Link>
                   </ul>
                 </div>
+                <Link to="/collections/all/products/category/glowframez">
+                  <button className="sidebar-btn nested" onClick={closeMenu}>
+                    Glowframez
+                  </button>
+                </Link>
                 <Link to="/collections/all/products/category/exo_diffusers">
                   <button className="sidebar-btn nested" onClick={closeMenu}>
                     EXO Diffusers
@@ -472,24 +492,6 @@ const Sidebar = props => {
                     <Link to="/collections/all/products/category/diffuser_caps/subcategory/imperfect">
                       <button
                         className="sidebar-btn nested-2"
-                        onClick={closeMenu}
-                      >
-                        Imperfect
-                      </button>
-                    </Link>
-                  </ul>
-                </div>
-                <div className="sidebar_dropdown_nested">
-                  <Link to="/collections/all/products/category/glow_casings">
-                    <button className="sidebar-btn nested">Glow Casings</button>
-                  </Link>
-                  <ul
-                    className="sidebar_dropdown_secondary_container"
-                    id="glow_casings_dropdown"
-                  >
-                    <Link to="/collections/all/products/category/glow_casings/subcategory/imperfect">
-                      <button
-                        className="sidebar-btn nested"
                         onClick={closeMenu}
                       >
                         Imperfect
@@ -693,24 +695,24 @@ const Sidebar = props => {
                 Customize Any Product!
               </button>
             </Link>
-            {/* <Link to="/collections/all/products/glow_strings_v2_50_led_3_5m">
+            {/* <Link to="/collections/all/products/glow_stringz_v2_50_led_3_5m">
 							<button className="sidebar-btn secondary special_font gradient-btn" onClick={closeMenu}>
-								Glow Strings V2
+								Glow Stringz V2
 							</button>
 						</Link> */}
             {/* {browser_check() !== 'safari' ? (
-							<Link to="/collections/all/products/glow_strings_v2_50_led_3_5m">
+							<Link to="/collections/all/products/glow_stringz_v2_50_led_3_5m">
 								<button
 									className={`sidebar-btn secondary  special_font gradient-btn`}
 									onClick={closeMenu}
 								>
-									<span>GLOW STRINGS V2</span>
+									<span>GLOW STRINGZ V2</span>
 								</button>
 							</Link>
 						) : (
-							<Link to="/collections/all/products/glow_strings_v2_50_led_3_5m" onClick={closeMenu}>
+							<Link to="/collections/all/products/glow_stringz_v2_50_led_3_5m" onClick={closeMenu}>
 								<button className={`sidebar-btn secondary `}>
-									<span>Glow Strings V2</span>
+									<span>Glow Stringz V2</span>
 								</button>
 							</Link>
 						)} */}
@@ -874,9 +876,9 @@ const Sidebar = props => {
                 className="sidebar_dropdown_secondary_container"
                 id="nested_faq_dropdown"
               >
-                <HashLink href="/pages/faq#glowskins">
+                <HashLink href="/pages/faq#glowskinz">
                   <button className="sidebar-btn nested" onClick={closeMenu}>
-                    Glowskins
+                    Glowskinz
                   </button>
                 </HashLink>
                 <HashLink href="/pages/faq#using_diffuser_caps_and_adapters">

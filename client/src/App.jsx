@@ -317,7 +317,7 @@ const App = props => {
           <title>Glow LEDs | Home of the LED Glove Diffuser Caps</title>
           <meta
             name="description"
-            content="Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Glowskins, and Glow Strings."
+            content="Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Glowskinz, and Glow Stringz."
           />
           <link rel="canonical" href="https://www.glow-leds.com" />
           <meta charset="utf-8" />
@@ -347,7 +347,7 @@ const App = props => {
           />
           <meta
             property="og:description"
-            content="Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Glowskins, and Glow Strings."
+            content="Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Glowskinz, and Glow Stringz."
           />
           <meta property="og:url" content="https://www.glow-leds.com" />
 
@@ -355,7 +355,7 @@ const App = props => {
           <meta name="twitter:card" content="summary" />
           <meta
             name="twitter:description"
-            content="Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Glowskins, and Glow Strings."
+            content="Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Glowskinz, and Glow Stringz."
           />
           <meta
             name="twitter:title"
@@ -792,14 +792,20 @@ const App = props => {
                 path="/collections/all/products/shop_by_chip"
                 component={AllProductsByChipPage}
               />
+             <Route
+                path="/collections/all/products/category/:category/subcategory/:subcategory/collection/:collection?"
+                component={AllProductsPage}
+              />
               <Route
                 path="/collections/all/products/category/:category/subcategory/:subcategory?"
                 component={AllProductsPage}
               />
-              <Route
+                
+              {/* <Route
                 path="/collections/all/products/category/:category/collection/:collection?"
                 component={AllProductsPage}
-              />
+              /> */}
+             
               <Route
                 path="/collections/all/products/category/:category"
                 component={AllProductsPage}

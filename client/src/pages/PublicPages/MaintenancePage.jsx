@@ -141,14 +141,14 @@ const MaintenancePage = (props) => {
 				</div> */}
 				<div className="container">
 					<div className="jc-c">
-						<h2>Glow Strings</h2>
+						<h2>Glow Stringz</h2>
 					</div>
 					<div className="jc-c" style={video_wrapper}>
 						<div className="iframe-container">
 							<iframe
 								width="996"
 								height="560"
-								title="Glow Strings"
+								title="Glow Stringz"
 								style={{ borderRadius: '20px' }}
 								src="https://www.youtube.com/embed/TCArM88Ll1s?mute=1&showinfo=0&rel=0&autoplay=1&loop=1"
 								frameborder="0"

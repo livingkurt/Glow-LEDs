@@ -685,9 +685,8 @@ export const categories = [
   "diffuser_caps",
   "diffusers",
   "exo_diffusers",
-  "glow_casings",
-  "glow_strings",
-  "glowskins",
+  "glow_stringz",
+  "glowskinz",
 ];
 export const subcategories = [
   "singles",
@@ -700,6 +699,8 @@ export const subcategories = [
   "universal",
   "batman",
   "outline",
+  "opyn",
+  "clozd",
   "patterns",
   "abstract",
   "shapes",
@@ -718,8 +719,8 @@ export const subcategories = [
   "gift_card",
   "nova",
   "classics",
-  "novaskins",
-  "alt_novaskins",
+  "novaskinz",
+  "alt_novaskinz",
   "symbols",
   "emoji",
   "custom",
@@ -738,28 +739,30 @@ export const homepage_videos = [
       "The next breakthrough in diffuser technology is here!! Wiffle Ball Diffusers! Wiffle Ball Diffusers or filter use a 2 material technology that allows for a perfect blend of the colors as well as incorporating a opaque layer to give a light filtering effect that will leave the viewer speechless! ",
   },
   {
-    name: "Glow Strings V2",
-    category: "glow_strings",
+    name: "Glow Stringz V2",
+    category: "glow_stringz",
     video: "mNBwaZKWi8c",
     color: "#b1832f",
     description:
-      "Make your space glow! Our Glow Strings come with many preprogrammed patterns that will turn your home into a festival. Strobes, fades, flashes, they have it all. Fill your universe with a swimming pool of light in every color of the rainbow. ",
+      "Make your space glow! Our Glow Stringz come with many preprogrammed patterns that will turn your home into a festival. Strobes, fades, flashes, they have it all. Fill your universe with a swimming pool of light in every color of the rainbow. ",
   },
   {
-    name: "Glow Casings",
-    category: "glow_casings",
+    name: "OPYN Glowskinz",
+    category: "glowskinz",
+    subcategory: "opyn glowskinz",
     video: "_aJDfd6vlYU",
     color: "#b1a72f",
     description:
-      "What makes Glowskins special? Glowskins are a Casing and Diffuser all in one! Place your entire chip inside and create a glow throughout the whole casing! This differs from our Frosted Diffusers which create a glow only around the bulb. There are 3 unique sizes, each designed for Coffin, Nano or Coin chip microlights. Glowskins are made with semi-flexible TPU plastic so your fingers will always feel comfortable! They do not inhibit access to your microlight button for mode switching. Our light and streamline design makes your fingers feel weightless. Smooth finish for easy removal from whites.",
+      "What makes Glowskinz special? Glowskinz are a Casing and Diffuser all in one! Place your entire chip inside and create a glow throughout the whole casing! This differs from our Frosted Diffusers which create a glow only around the bulb. There are 3 unique sizes, each designed for Coffin, Nano or Coin chip microlights. Glowskinz are made with semi-flexible TPU plastic so your fingers will always feel comfortable! They do not inhibit access to your microlight button for mode switching. Our light and streamline design makes your fingers feel weightless. Smooth finish for easy removal from whites.",
   },
   {
-    name: "Glowskins",
-    category: "glowskins",
+    name: "CLOZD Glowskinz",
+    category: "glowskinz",
+    subcategory: "clozd glowskinz",
     video: "3Yk0QOMBlAo",
     color: "#427942",
     description:
-      "What makes Glowskins special? Glowskins are a Casing and Diffuser all in one! Place your entire chip inside and create a glow throughout the whole casing! This differs from our Frosted Diffusers which create a glow only around the bulb. There are 3 unique sizes, each designed for Coffin, Nano or Coin chip microlights. Glowskins are made with semi-flexible TPU plastic so your fingers will always feel comfortable! They do not inhibit access to your microlight button for mode switching. Our light and streamline design makes your fingers feel weightless. Smooth finish for easy removal from whites.",
+      "What makes Glowskinz special? Glowskinz are a Casing and Diffuser all in one! Place your entire chip inside and create a glow throughout the whole casing! This differs from our Frosted Diffusers which create a glow only around the bulb. There are 3 unique sizes, each designed for Coffin, Nano or Coin chip microlights. Glowskinz are made with semi-flexible TPU plastic so your fingers will always feel comfortable! They do not inhibit access to your microlight button for mode switching. Our light and streamline design makes your fingers feel weightless. Smooth finish for easy removal from whites.",
   },
 
   {
@@ -781,8 +784,8 @@ export const homepage_videos = [
 ];
 
 export const manuals = {
-  glow_strings: {
-    name: "Glow Strings V2 Manual",
+  glow_stringz: {
+    name: "Glow Stringz V2 Manual",
     manual: "/Glow_Strings_V2_Manual.png",
     videos: [
       {
@@ -817,12 +820,12 @@ export const manuals = {
       },
     ],
   },
-  glowskins: {
-    name: "Glowskins Manual",
+  glowskinz: {
+    name: "Glowskinz Manual",
     manual: "",
     videos: [
       {
-        title: "Glowskins 101",
+        title: "Glowskinz 101",
         video: "s49fiZPC5G0",
       },
     ],
@@ -897,17 +900,17 @@ export const manuals = {
 
 export const descriptions = {
   all_products:
-    "Take your rave and festival experience to the next level with our LED Accessories at Glow LEDs. Shop Diffuser Caps, Glowskins, and Glow Strings. Click to Shop.",
+    "Take your rave and festival experience to the next level with our LED Accessories at Glow LEDs. Shop Diffuser Caps, Glowskinz, and Glow Stringz. Click to Shop.",
   diffusers:
     "Take your gloving light shows to the next level with our Frosted Dome Diffusers at Glow LEDs. Shop Dome Diffusers, Large Dome Diffusers, and Frosted Diffusers. Click to Shop.",
   diffuser_caps:
     "Take your gloving light shows to the next level with our Diffuser Caps at Glow LEDs. Shop Screw on LED Caps, Cap over Diffusers, and Diffuser filters. Click to Shop.",
   diffuser_adapters:
     "Take your gloving light shows to the next level with our Diffuser Adapters at Glow LEDs. Shop Screw On Diffusers, LED Adapters, and Diffuser Cap Adapters. Click to Shop.",
-  glow_strings:
+  glow_stringz:
     "Decorate your home and festival with these stunning glow strings at Glow LEDs. Shop String Lights, LED Strips, and Addressable LEDs. Click to Shop.",
-  glowskins:
-    "Take your gloving light shows to the next level with our Glowskins at Glow LEDs. Shop Diffuser Skins, LED Skins, and Diffuser Casing Combo. Click to Shop.",
+  glowskinz:
+    "Take your gloving light shows to the next level with our Glowskinz at Glow LEDs. Shop Diffuser Skins, LED Skins, and Diffuser Casing Combo. Click to Shop.",
 };
 
 export const description_determination = (category: any) => {
@@ -920,11 +923,11 @@ export const description_determination = (category: any) => {
   if (category.toLowerCase() === "diffuser_caps") {
     return descriptions.diffuser_caps;
   }
-  if (category === "glowskins") {
-    return descriptions.glowskins;
+  if (category === "glowskinz") {
+    return descriptions.glowskinz;
   }
-  if (category === "glow_strings") {
-    return descriptions.glow_strings;
+  if (category === "glow_stringz") {
+    return descriptions.glow_stringz;
   } else {
     return descriptions.all_products;
   }
@@ -1280,7 +1283,7 @@ export const create_color_products = async (
   e.preventDefault();
   // set_loading_options(true);
   let list: any = [];
-  if (product.category === "glowskins") {
+  if (product.subcategory === "clozd") {
     list = [
       {
         name: `Clear ${product.name}`,
@@ -1459,7 +1462,7 @@ export const create_color_products = async (
         ...no_state,
       },
     ];
-  } else if (product.category === "glow_casings") {
+  } else if (product.subcategory === "opyn") {
     list = [
       {
         name: `Clear ${product.name}`,
@@ -1991,8 +1994,8 @@ export const create_color_products = async (
       },
     ];
   } else if (
-    product.subcategory === "novaskins" ||
-    product.subcategory === "alt_novaskins"
+    product.subcategory === "novaskinz" ||
+    product.subcategory === "alt_novaskinz"
   ) {
     list = [
       {

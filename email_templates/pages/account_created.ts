@@ -41,7 +41,7 @@ export default (props: any) => {
                 <p
                   style="font-size:16px;line-height:30px;max-width:800px;width:100%;margin:0px;color:white; text-align: center;">
                   Some of our most popular inventions include EXO
-                  Diffusers, Glow Casings, Diffuser Caps and Glowskins! We've even put our own spin on
+                  Diffusers, Decals, Diffuser Caps and Glowskinz! We've even put our own spin on
                   whites and batteries! Plus we're one of the few places where you can order Custom gloving accessories.
                 </p>
                 <table

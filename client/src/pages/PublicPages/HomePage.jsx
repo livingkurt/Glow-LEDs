@@ -132,16 +132,16 @@ const HomePage = (props) => {
 				<meta property="og:url" content="https://www.glow-leds.com" />
 				<meta
 					name="description"
-					content="Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Glowskins, and Glow Strings."
+					content="Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Glowskinz, and Glow Stringz."
 				/>
 
 				<meta
 					property="og:description"
-					content="Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Glowskins, and Glow Strings."
+					content="Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Glowskinz, and Glow Stringz."
 				/>
 				<meta
 					name="twitter:description"
-					content="Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Glowskins, and Glow Strings."
+					content="Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Glowskinz, and Glow Stringz."
 				/>
 				<meta
 					property="og:image"
@@ -509,7 +509,7 @@ const HomePage = (props) => {
 			<div style={{ marginTop: slideshow.length === 0 ? 0 : '-25%' }} className="pv-2rem">
 				<ReadMore width={1000} className="p_descriptions paragraph_font ta-c" length={100}>
 					Here at Glow LEDs we offer a wide variety of Gloving and Flow Art accessories. Including EXO
-					Diffusers, Glow Casings and our most popular product Glowskins! We are based in Baytown, TX ran by a
+					Diffusers, Decals and our most popular product Glowskinz! We are based in Baytown, TX ran by a
 					small team of people that are dedicated to creating new and innovative technology for flow artists
 					everywhere. The majority of our products are made by hand to order, so you know you're getting a
 					quality product every time! If you have an idea you want us to try please do not hesitate to reach

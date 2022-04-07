@@ -131,11 +131,11 @@ function ProductPage(props) {
 
 	const colors = [
 		{ name: 'Not Category', color: '#333333' },
-		{ name: 'Glow Casings', color: '#557b68' },
-		{ name: 'Glow Strings', color: '#4b7188' },
-		{ name: 'Glowskins', color: '#736084' },
+		{ name: 'OPYN Glowskinz', color: '#557b68' },
+		{ name: 'Glow Stringz', color: '#4b7188' },
+		{ name: 'CLOZD Glowskinz', color: '#736084' },
 		{ name: 'Decals', color: '#6f5aa3' },
-		{ name: 'Frosted Diffusers', color: '#ca9160' },
+		{ name: 'Diffusers', color: '#ca9160' },
 		{ name: 'Diffuser Caps', color: '#6c7ea9' },
 		{ name: 'Accessories', color: '#925757' },
 		{ name: 'EXO Diffusers', color: '#4162ad' }
@@ -144,7 +144,7 @@ function ProductPage(props) {
 	const determine_color = (product, isSelected, isDragging) => {
 		let result = '#797979';
 
-		if (product.category === 'glow_casings') {
+		if (product.category === 'opyn') {
 			result = colors[1].color;
 			// if (isSelected) {
 			// 	result = '#6a7fad';
@@ -154,10 +154,10 @@ function ProductPage(props) {
 			// 	result = '#557b68';
 			// }
 		}
-		if (product.category === 'glow_strings') {
+		if (product.category === 'glow_stringz') {
 			result = colors[2].color;
 		}
-		if (product.category === 'glowskins') {
+		if (product.subcategory === 'clozd') {
 			result = colors[3].color;
 		}
 		if (product.category === 'decals') {

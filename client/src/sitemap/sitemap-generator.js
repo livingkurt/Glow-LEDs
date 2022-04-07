@@ -13,9 +13,8 @@ export const categories = [
 	'diffuser_caps',
 	'diffusers',
 	'exo_diffusers',
-	'glow_casings',
-	'glow_strings',
-	'glowskins'
+	'glow_stringz',
+	'glowskinz'
 ];
 export const subcategories = [
 	'whites',
@@ -23,6 +22,8 @@ export const subcategories = [
 	'battery_storage',
 	'batteries',
 	'stickers',
+	'opyn',
+	'clozd',
 	'clips',
 	'casings',
 	'universal',
@@ -46,8 +47,8 @@ export const subcategories = [
 	'gift_card',
 	'nova',
 	'classics',
-	'novaskins',
-	'alt_novaskins',
+	'novaskinz',
+	'alt_novaskinz',
 	'symbols',
 	'emoji',
 	'custom',
@@ -88,12 +89,12 @@ async function generateSitemap() {
 
 	const paramsConfig = {
 		'/collections/all/products/accessories/:subcategory?': subcategoryMap,
-		'/collections/all/products/glowskins/:subcategory?': subcategoryMap,
+		'/collections/all/products/glowskinz/:subcategory?': subcategoryMap,
 		'/collections/all/products/exo_diffusers/:subcategory?': subcategoryMap,
 		'/collections/all/products/glow_casings/:subcategory?': subcategoryMap,
 		'/collections/all/products/diffuser_caps/:subcategory?': subcategoryMap,
 		'/collections/all/products/diffusers/:subcategory?': subcategoryMap,
-		'/collections/all/products/glow_strings/:subcategory?': subcategoryMap,
+		'/collections/all/products/glow_stringz/:subcategory?': subcategoryMap,
 		'/collections/all/products/options/:subcategory?': subcategoryMap,
 		'/collections/all/products/:category': categoryMap,
 		'/collections/all/products/:pathname': productMap,

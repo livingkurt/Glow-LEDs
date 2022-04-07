@@ -94,7 +94,7 @@ const SitemapPage = () => {
 								<Link to="/collections/all/products/accessories">Accessories</Link>
 							</li>
 							<li>
-								<Link to="/collections/all/products/glow_strings">Glow Strings</Link>
+								<Link to="/collections/all/products/glow_strings">Glow Stringz</Link>
 							</li>
 							{/* <li>
 								<Link to="/collections/all/products/infinity_mirrors">Infinity Mirrors</Link>
@@ -129,27 +129,27 @@ const SitemapPage = () => {
 
 							<ul className="products_list">
 								<li style={{ textAlign: 'left' }}>
-									<Link to="/collections/all/products/glow_strings">Glow Strings</Link>
+									<Link to="/collections/all/products/glow_strings">Glow Stringz</Link>
 								</li>
 								<ul>
 									<li>
 										<Link to="/collections/all/products/50_led_3_5m_glow_strings">
-											50 LED 3.5m Glow Strings
+											50 LED 3.5m Glow Stringz
 										</Link>
 									</li>
 									<li>
 										<Link to="/collections/all/products/150_led_10_5m_glow_strings">
-											150 LED 10.5m Glow Strings
+											150 LED 10.5m Glow Stringz
 										</Link>
 									</li>
 									<li>
 										<Link to="/collections/all/products/200_led_14m_glow_strings">
-											200 LED 14m Glow Strings
+											200 LED 14m Glow Stringz
 										</Link>
 									</li>
 									<li>
 										<Link to="/collections/all/products/100_led_7m_glow_strings">
-											100 LED 7m Glow Strings
+											100 LED 7m Glow Stringz
 										</Link>
 									</li>
 									{/* <li>

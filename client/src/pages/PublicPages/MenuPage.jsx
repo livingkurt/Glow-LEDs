@@ -116,9 +116,9 @@ const MenuPage = (props) => {
 				content.home_page.slideshow
 					.filter(
 						(item) =>
-							item.label === 'Glow Strings V2' ||
+							item.label === 'Glow Stringz V2' ||
 							item.label === 'Diffuser Caps' ||
-							item.label === 'Glowskins'
+							item.label === 'Glowskinz'
 					)
 					.map((item) => {
 						return { ...item, link: `/pages/manual/${snake_case(item.label)}` };

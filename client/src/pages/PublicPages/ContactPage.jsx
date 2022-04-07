@@ -398,7 +398,7 @@ const ContactPage = (props) => {
 							<ul className="paragraph_font" style={{ paddingLeft: '20px' }}>
 								<li>Pictures or Video of your Lightshow with Glow LEDs Diffusers or Diffuser Caps. </li>
 								<li>Pictures or Video of art or music.</li>
-								<li>Pictures or Video of your Glow LEDs Glow Strings.</li>
+								<li>Pictures or Video of your Glow LEDs Glow Stringz.</li>
 							</ul>
 						</div>
 					)}

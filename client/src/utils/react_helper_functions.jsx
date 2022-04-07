@@ -347,8 +347,8 @@ export const determine_product_name = (item, show_qty, date) => {
   date_1 = date_1.toISOString();
   const date_2 = date;
   if (date_1 <= date_2 || !date) {
-    if (item.subcategory === "alt_novaskins") {
-      if (item.name === "Alt Novaskins w Nano Sleds") {
+    if (item.subcategory === "alt_novaskinz") {
+      if (item.name === "Alt Novaskinz w Nano Sleds") {
         return (
           <div>
             {show_qty && item.qty > 1 && item.qty + "x"} {item.name}
@@ -376,8 +376,8 @@ export const determine_product_name = (item, show_qty, date) => {
           </div>
         );
       }
-    } else if (item.subcategory === "novaskins") {
-      if (item.name === "Novaskins") {
+    } else if (item.subcategory === "novaskinz") {
+      if (item.name === "Novaskinz") {
         return (
           <div>
             {show_qty && item.qty > 1 && item.qty + "x"} {item.name}
@@ -405,7 +405,7 @@ export const determine_product_name = (item, show_qty, date) => {
       // 		</div>
       // 	);
       // }
-    } else if (item.name === "Nanoskins") {
+    } else if (item.name === "CLOZD Nanoskinz") {
       return (
         <div>
           {show_qty && item.qty > 1 && item.qty + "x"}{" "}
@@ -419,7 +419,7 @@ export const determine_product_name = (item, show_qty, date) => {
           {item.size !== 0 && " - " + item.size}
         </div>
       );
-    } else if (item.name === "Nano Glow Casings") {
+    } else if (item.name === "OPYN Nanoskinz") {
       return (
         <div>
           {show_qty && item.qty > 1 && item.qty + "x"}{" "}
@@ -434,8 +434,7 @@ export const determine_product_name = (item, show_qty, date) => {
         </div>
       );
     } else if (
-      item.category === "glowskins" ||
-      item.category === "glow_casings"
+      item.category === "glowskinz"
     ) {
       return (
         <div>
@@ -619,10 +618,9 @@ export const determine_secondary_product_name = (
     if (category === "diffuser_caps") {
       return name.slice(0, -17);
     }
-    if (name.split("-")[0].trim() === "Nanoskins") {
+    if (name.split("-")[0].trim() === "CLOZD Nanoskinz") {
       return name.split("-")[1].trim();
     }
-
     if (subcategory === "whites" && name.includes("Bulk")) {
       return name.split(" ")[1].trim();
     }
@@ -632,13 +630,13 @@ export const determine_secondary_product_name = (
     if (name.split("-")[0].trim() === "Supreme Gloves") {
       return name.split("-")[1].trim();
     }
-    if (name.split("-")[0].trim() === "Nano Glow Casings") {
+    if (name.split("-")[0].trim() === "OPYN Nanoskinz") {
       return name.split("-")[1].trim();
     }
-    if (name.split("-")[0].trim() === "Alt Novaskins w Nano Sleds") {
+    if (name.split("-")[0].trim() === "CLOZD Alt Novaskinz w Nano Sleds") {
       return name.split("-")[1].trim();
     }
-    if (name.split("-")[0].trim() === "Novaskins") {
+    if (name.split("-")[0].trim() === "CLOZD Novaskinz") {
       return name.split("-")[1].trim();
     }
     if (name.split("-")[0].trim() === "Supreme Sizing Sampler Pack") {
@@ -705,8 +703,7 @@ export const determine_product_name_display = product => {
     <div>
       {product.name}{" "}
       {(product.category === "accessories" ||
-        product.category === "glowskins" ||
-        product.category === "glow_casings") &&
+        product.category === "glowskinz") &&
         option &&
         option.size &&
         `- ${option.size}`}

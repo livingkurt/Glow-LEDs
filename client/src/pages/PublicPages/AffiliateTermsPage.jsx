@@ -110,7 +110,7 @@ const AffiliateTermsPage = () => {
 					<li>Instant Spot on Festival Glover Team</li>
 					<ul style={{ padding: '0 18px', listStyle: 'disc' }}>
 						<li>Free Glove Team Jersey</li>
-						<li>1 Set of Diffuser Caps, 1 Set of Glowskins, 1 Set of Frosted Diffusers</li>
+						<li>1 Set of Diffuser Caps, 1 Set of Glowskinz, 1 Set of Frosted Diffusers</li>
 						<li>Free Festival Ticket (Coming Soon)</li>
 						{/* <li>Glove Team T-Shirt</li> */}
 					</ul>
@@ -153,10 +153,10 @@ const AffiliateTermsPage = () => {
 					<li>Instant Spot on Festival Glover Team</li>
 					<ul style={{ padding: '0 18px', listStyle: 'disc' }}>
 						<li>Free Glove Team Jersey</li>
-						<li>1 Set of Diffuser Caps, 1 Set of Glowskins, 1 Set of Frosted Diffusers</li>
+						<li>1 Set of Diffuser Caps, 1 Set of Glowskinz, 1 Set of Frosted Diffusers</li>
 						<li>Free Festival Ticket (Coming Soon)</li>
 					</ul>
-					{/* <li>Top Earner and Greater than 10 uses in a month get a a set of Glow Strings V2</li> */}
+					{/* <li>Top Earner and Greater than 10 uses in a month get a a set of Glow Stringz V2</li> */}
 				</ul>
 				<h3 style={{ WebkitTextStroke: '0px' }}>Team Requirements</h3>
 				<ul style={{ padding: '0 18px', listStyle: 'disc' }}>

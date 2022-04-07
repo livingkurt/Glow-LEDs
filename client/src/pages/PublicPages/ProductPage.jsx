@@ -756,7 +756,7 @@ const ProductPage = props => {
                   product.meta_description ? (
                     product.meta_description
                   ) : (
-                    "Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Glowskins, and Glow Strings."
+                    "Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Glowskinz, and Glow Stringz."
                   )
                 }
               />
@@ -767,7 +767,7 @@ const ProductPage = props => {
                   product.meta_description ? (
                     product.meta_description
                   ) : (
-                    "Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Glowskins, and Glow Strings."
+                    "Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Glowskinz, and Glow Stringz."
                   )
                 }
               />
@@ -778,7 +778,7 @@ const ProductPage = props => {
                   product.meta_description ? (
                     product.meta_description
                   ) : (
-                    "Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Glowskins, and Glow Strings."
+                    "Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Glowskinz, and Glow Stringz."
                   )
                 }
               />
@@ -960,7 +960,7 @@ const ProductPage = props => {
         )}
       </Loading>
       {product &&
-      product.name !== "Glow Strings V2 50 LED / 3.5m" && (
+      product.name !== "Glow Stringz V2 50 LED / 3.5m" && (
         <div className=" w-100per m-auto">
           <RelatedProductsSlideshow
             product_category={product.category}
@@ -974,7 +974,7 @@ const ProductPage = props => {
         </div>
       )}
       {product &&
-      product.name !== "Glow Strings V2 50 LED / 3.5m" && (
+      product.name !== "Glow Stringz V2 50 LED / 3.5m" && (
         <div className=" w-100per m-auto">
           <RelatedProductsSlideshow
             product_category={product.category}
@@ -988,7 +988,7 @@ const ProductPage = props => {
       )}
       {product &&
       product.category !== "accessories" &&
-      product.name !== "Glow Strings V2 50 LED / 3.5m" && (
+      product.name !== "Glow Stringz V2 50 LED / 3.5m" && (
         <div className=" w-100per m-auto">
           <RelatedProductsSlideshow
             product_category={product.category}

@@ -77,10 +77,10 @@ const ProductOptions = ({
 		'Refresh Pack (6 Supreme Pairs + 120 Batteries)',
 		'Batman Decals',
 		'Outline + Slim Batman Decals',
-		'Nanoskins',
-		'Alt Novaskins w Nano Sleds',
-		'Nano Glow Casings',
-		'Novaskins',
+		'CLOZD Nanoskinz',
+		'CLOZD Alt Novaskinz w Nano Sleds',
+		'OPYN Nanoskinz',
+		'CLOZD Novaskinz',
 		'Supreme Sizing Sampler Pack'
 	];
 	const categories_hide_add_to_cart = [ 'exo_diffusers' ];
@@ -272,7 +272,7 @@ const ProductOptions = ({
 					</div>
 				</li>
 			)}
-			{(product.subcategory === 'novaskins' || product.subcategory === 'alt_novaskins') &&
+			{(product.subcategory === 'novaskinz' || product.subcategory === 'alt_novaskinz') &&
 			product.option_product_group &&
 			option_products &&
 			option_products.length > 0 && (
@@ -312,7 +312,7 @@ const ProductOptions = ({
 				<div className="">
 					<h4 className="mb-10px mt-10px">Shipping Calculated at Checkout</h4>
 					<h4 className="mb-0px mt-0px" style={{ webkitTextStroke: '0.5px white' }}>
-						{product.category === 'glow_strings' && '	This item ships in 6 - 10 business day.'}
+						{product.category === 'glow_stringz' && '	This item ships in 6 - 10 business day.'}
 					</h4>
 
 					<h4 className="mb-0px mt-0px" style={{ webkitTextStroke: '0.5px white' }}>
@@ -328,7 +328,7 @@ const ProductOptions = ({
 						{product.subcategory === 'whites' && '	This item ships in 2 - 3 business day.'}
 					</h4>
 					<h4 className="mb-0px mt-0px" style={{ webkitTextStroke: '0.5px white' }}>
-						{(product.category === 'glowskins' || product.category === 'glow_casings') &&
+						{(product.category === 'glowskinz') &&
 							'	This item ships in 3 - 7 business day.'}
 					</h4>
 				</div>

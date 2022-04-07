@@ -176,17 +176,17 @@ const AllProductsPage = (props) => {
 
 	const descriptions = {
 		all_products:
-			'Take your rave and festival experience to the next level with our LED Accessories at Glow LEDs. Shop Diffuser Caps, Glowskins, and Glow Strings. Click to Shop.',
+			'Take your rave and festival experience to the next level with our LED Accessories at Glow LEDs. Shop Diffuser Caps, Glowskinz, and Glow Stringz. Click to Shop.',
 		diffusers:
 			'Take your gloving light shows to the next level with our Frosted Dome Diffusers at Glow LEDs. Shop Dome Diffusers, Large Dome Diffusers, and Frosted Diffusers. Click to Shop.',
 		diffuser_caps:
 			'Take your gloving light shows to the next level with our Diffuser Caps at Glow LEDs. Shop Screw on LED Caps, Cap over Diffusers, and Diffuser filters. Click to Shop.',
 		diffuser_adapters:
 			'Take your gloving light shows to the next level with our Diffuser Adapters at Glow LEDs. Shop Screw On Diffusers, LED Adapters, and Diffuser Cap Adapters. Click to Shop.',
-		glow_strings:
+		glow_stringz:
 			'Decorate your home and festival with these stunning glow strings at Glow LEDs. Shop String Lights, LED Strips, and Addressable LEDs. Click to Shop.',
-		glowskins:
-			'Take your gloving light shows to the next level with our Glowskins at Glow LEDs. Shop Diffuser Skins, LED Skins, and Diffuser Casing Combo. Click to Shop.'
+		glowskinz:
+			'Take your gloving light shows to the next level with our Glowskinz at Glow LEDs. Shop Diffuser Skins, LED Skins, and Diffuser Casing Combo. Click to Shop.'
 	};
 
 	const description_determination = () => {
@@ -199,11 +199,11 @@ const AllProductsPage = (props) => {
 		if (category.toLowerCase() === 'diffuser_caps') {
 			return descriptions.diffuser_caps;
 		}
-		if (category === 'glowskins') {
-			return descriptions.glowskins;
+		if (category === 'glowskinz') {
+			return descriptions.glowskinz;
 		}
-		if (category === 'glow_strings') {
-			return descriptions.glow_strings;
+		if (category === 'glow_stringz') {
+			return descriptions.glow_stringz;
 		} else {
 			return descriptions.all_products;
 		}
@@ -236,8 +236,8 @@ const AllProductsPage = (props) => {
 						{category === 'diffuser_caps' ||
 						category === 'diffuser_adapters' ||
 						category === 'exo_diffusers' ||
-						category === 'glowskins' ||
-						category === 'glow_strings' ? (
+						category === 'glowskinz' ||
+						category === 'glow_stringz' ? (
 							'™'
 						) : (
 							''
@@ -249,7 +249,7 @@ const AllProductsPage = (props) => {
 			<div className="jc-c ai-c wrap m-auto pb-1rem" style={{ overflowX: 'scroll' }}>
 				<Search search={search} set_search={set_search} submitHandler={submitHandler} category={category} />
 				<Sort sortHandler={sortHandler} sort_options={sort_options} />
-				{/* {category === 'glowskins' && <Filter filterHandler={filterHandler} filter_options={chips_list} />} */}
+				{/* {category === 'glowskinz' && <Filter filterHandler={filterHandler} filter_options={chips_list} />} */}
 				<Filter filterHandler={filterHandler} filter_options={chips_list} />
 			</div>
 			<Loading loading={loading_products} />

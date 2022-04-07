@@ -34,11 +34,11 @@ const FAQPage = () => {
 					<div className="inner_content">
 						<div>
 							<div className="container" style={{ margin: '10px 0' }}>
-								<h2 className="ta-c title_font" id="glowskins">
-									Glowskins
+								<h2 className="ta-c title_font" id="glowskinz">
+									Glowskinz
 								</h2>
-								<h3 className="ta-c title_font" id="how_do_glowskins_work">
-									How do Glowskins Work?
+								<h3 className="ta-c title_font" id="how_do_glowskinz_work">
+									How do Glowskinz Work?
 								</h3>
 
 								<div className="jc-c pos-rel">
@@ -46,7 +46,7 @@ const FAQPage = () => {
 										<iframe
 											width="996"
 											height="560"
-											title="glowskins"
+											title="glowskinz"
 											style={{ borderRadius: '20px' }}
 											src="https://www.youtube.com/embed/s49fiZPC5G0?mute=1&showinfo=0&rel=0&autoplay=1&loop=1"
 											frameborder="0"
@@ -57,11 +57,11 @@ const FAQPage = () => {
 								</div>
 								<ul className="paragraph_font" style={{ padding: '18px', margin: 0 }}>
 									<li>
-										To use the Glowskins with your desired microlight, first you need to remove your
+										To use the Glowskinz with your desired microlight, first you need to remove your
 										chip from its casing.
 									</li>
 									<li>
-										Then squeeze the Glowskins near the point causing the opening in the bottom to
+										Then squeeze the Glowskinz near the point causing the opening in the bottom to
 										expand.
 									</li>
 									<li>
@@ -73,14 +73,14 @@ const FAQPage = () => {
 										let the bottom of the Glowskin close up.
 									</li>
 									<li>
-										For Nanoskins and Coinskins, To remove your microlight from your Glowskin,
+										For Nanoskinz and Coinskinz, To remove your microlight from your Glowskin,
 										squeeze the Glowskin in the same location as you did to put it in.
 									</li>
-									<li>This action so push the microlight out of the Glowskins.</li>
+									<li>This action so push the microlight out of the Glowskinz.</li>
 									<li>Then pinch the microlight with your other hand to remove it.</li>
 									<li>
-										For Coffinskins, to remove your microlight from your Glowskin you will need to
-										spread the bottom of the Glowskins and pinch the microlight, as the above method
+										For Coffinskinz, to remove your microlight from your Glowskin you will need to
+										spread the bottom of the Glowskinz and pinch the microlight, as the above method
 										of removing does not work for that style of chip.
 									</li>
 									<li>All Done! Now go throw some sicks shows!</li>
@@ -89,21 +89,21 @@ const FAQPage = () => {
 								<img
 									className="colored_caps_images"
 									src="https://images2.imgbox.com/d2/67/qjRp33SP_o.png"
-									alt="Glowskins Chip Compatibility"
-									title="Glowskins Chip Compatibility"
+									alt="Glowskinz Chip Compatibility"
+									title="Glowskinz Chip Compatibility"
 								/>
 								{/* </Zoom> */}
-								{/* <h2>Nanoskins V1</h2>
+								{/* <h2>Nanoskinz V1</h2>
 						<label>
-							Maximum Microlight Dimmensions including the bulb for Nanoskins: L24mm x W13mm x H10mm
+							Maximum Microlight Dimmensions including the bulb for Nanoskinz: L24mm x W13mm x H10mm
 						</label>
 						<ul className="paragraph_font" style={{ padding: '18px', margin: 0 }}>
 							<li >spectra EVOs </li>
 							<li >chroma EVOs</li>
 						</ul>
-						<h2>Nanoskins V2</h2>
+						<h2>Nanoskinz V2</h2>
 						<label>
-							Maximum Microlight Dimmensions including the bulb for Nanoskins: L24mm x W13mm x H10mm
+							Maximum Microlight Dimmensions including the bulb for Nanoskinz: L24mm x W13mm x H10mm
 						</label>
 						<ul className="paragraph_font" style={{ padding: '18px', margin: 0 }}>
 							<li >All LEDGloves Nano chips</li>
@@ -111,16 +111,16 @@ const FAQPage = () => {
 							<li >FL Atoms</li>
 							<li >FL Ions</li>
 						</ul>
-						<h2>Apolloskins</h2>
+						<h2>Apolloskinz</h2>
 						<label>
-							Maximum Microlight Dimmensions including the bulb for Nanoskins: L27mm x W15mm x H10mm
+							Maximum Microlight Dimmensions including the bulb for Nanoskinz: L27mm x W15mm x H10mm
 						</label>
 						<ul className="paragraph_font" style={{ padding: '18px', margin: 0 }}>
 							<li >TL Apollos</li>
 						</ul>
-						<h2>Coinskins</h2>
+						<h2>Coinskinz</h2>
 						<label>
-							Maximum Microlight Dimmensions including the bulb for Coinskins: L28mm x W19mm x H8mm
+							Maximum Microlight Dimmensions including the bulb for Coinskinz: L28mm x W19mm x H8mm
 						</label>
 						<ul className="paragraph_font" style={{ padding: '18px', margin: 0 }}>
 							<li >All elite chips except the Spectra and Chroma EVOs</li>
@@ -128,9 +128,9 @@ const FAQPage = () => {
 							<li >FL Aethers</li>
 							<li >OSM 2s</li>
 						</ul>
-						<h2>Coffinskins</h2>
+						<h2>Coffinskinz</h2>
 						<label>
-							Maximum Microlight Dimmensions including the bulb for Coffinskins: L32mm x W16mm x H8mm
+							Maximum Microlight Dimmensions including the bulb for Coffinskinz: L32mm x W16mm x H8mm
 						</label>
 						<ul className="paragraph_font" style={{ padding: '18px', margin: 0 }}>
 							<li >Micromax</li>
@@ -562,7 +562,7 @@ const FAQPage = () => {
 										</span>️.
 									</li>
 									<li>
-										For glove accessories (Glowskins, Glow Casings Diffuser Caps, Diffuser Adapters,
+										For glove accessories (CLOZD & OPYN Glowskinz, Diffuser Caps, Diffuser Adapters,
 										Frosted Diffusers) we will get your order in the mail{' '}
 										<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
 											✉️{' '}
@@ -573,7 +573,7 @@ const FAQPage = () => {
 										you.
 									</li>
 									<li>
-										For Glow Strings and Coin Battery Storage{' '}
+										For Glow Stringz and Coin Battery Storage{' '}
 										<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
 											💡
 										</span>️we will get your order in the mail{' '}

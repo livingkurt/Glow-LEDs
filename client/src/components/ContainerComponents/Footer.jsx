@@ -125,7 +125,7 @@ const Footer = () => {
 									<Link to="/collections/all/products/glow_casings">Glow Casings</Link>
 								</li>
 								<li className="ta-l mv-2rem">
-									<Link to="/collections/all/products/glowskins">Glowskins</Link>
+									<Link to="/collections/all/products/glowskinz">Glowskinz</Link>
 								</li>
 								<li className="ta-l mv-2rem">
 									<Link to="/collections/all/products/diffusers">Diffusers</Link>
@@ -145,8 +145,8 @@ const Footer = () => {
 							</h2>
 							<ul className="lst-none">
 								<li className="ta-l mv-2rem">
-									<Link to="/collections/all/products/glow_strings_v2_50_led_3_5m">
-										Glow Strings V2
+									<Link to="/collections/all/products/glow_stringz_v2_50_led_3_5m">
+										Glow Stringz V2
 									</Link>
 								</li>
 								<li className="ta-l mv-2rem">
@@ -222,7 +222,7 @@ const Footer = () => {
 							</h2>
 							<ul className="lst-none">
 								<li className="ta-l mv-2rem">
-									<Link to="/collections/all/products/glowskins">Glowskins</Link>
+									<Link to="/collections/all/products/glowskinz">Glowskinz</Link>
 								</li>
 								<li className="ta-l mv-2rem">
 									<Link to="/collections/all/products/diffusers">

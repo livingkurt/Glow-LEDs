@@ -158,7 +158,7 @@ const ProductDetails = ({ product, manuals, description, included_items, pathnam
 								{product.name === 'Coin Battery Storage' ? (
 									`${product.product_length} cm x ${product.product_width} cm x
 											${product.product_height} cm`
-								) : product.name === 'Glow Strings V2 50 LED / 3.5m' ? (
+								) : product.name === 'Glow Stringz V2 50 LED / 3.5m' ? (
 									`${product.product_length} m x ${product.product_width} m x
 											${product.product_height} m`
 								) : (
@@ -315,12 +315,12 @@ const ProductDetails = ({ product, manuals, description, included_items, pathnam
 						</div>
 					)}
 					<div className="p-1rem">
-						{product.category === 'glowskins' && (
+						{product.category === 'glowskinz' && (
 							<img
 								className="colored_caps_images"
 								src="https://images2.imgbox.com/d2/67/qjRp33SP_o.png"
-								alt="Glowskins Chip Compatibility"
-								title="Glowskins Chip Compatibility"
+								alt="Glowskinz Chip Compatibility"
+								title="Glowskinz Chip Compatibility"
 							/>
 						)}
 
