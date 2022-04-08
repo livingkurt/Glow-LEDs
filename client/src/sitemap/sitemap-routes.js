@@ -17,7 +17,29 @@ export default (
 		<Route path="/checkout/shipping" />
 
 		<Route path="/checkout/cart/:pathname?" />
-		<Route path="/collections/all/products/:category?/:subcategory?/:collection?/:pathname?" />
+		
+		
+		<Route path="/collections/all/products/category/whites/subcategory/:subcategory" />
+		<Route path="/collections/all/products/category/accessories/subcategory/:subcategory" />
+		<Route path="/collections/all/products/category/decals/subcategory/:subcategory" />
+		<Route path="/collections/all/products/category/diffuser_caps/subcategory/:subcategory" />
+		<Route path="/collections/all/products/category/diffusers/subcategory/:subcategory" />
+		<Route path="/collections/all/products/category/exo_diffusers/subcategory/:subcategory" />
+		<Route path="/collections/all/products/category/glow_stringz/subcategory/:subcategory" />
+		<Route path="/collections/all/products/category/glowskinz/subcategory/:subcategory" />
+
+
+		<Route path="/collections/all/products/category/glowskinz/subcategory/clozd/collection/:collection" />
+		<Route path="/collections/all/products/category/glowskinz/subcategory/opyn/collection/:collection" />
+
+		<Route path="/collections/all/products/category/diffuser_caps/subcategory/texture/collection/:collection" />
+		<Route path="/collections/all/products/category/diffuser_caps/subcategory/shapes/collection/:collection" />
+		<Route path="/collections/all/products/category/diffuser_caps/subcategory/geometric/collection/:collection" />
+
+		<Route path="/collections/all/products/category/:category" />
+		{/* <Route path="/collections/all/products/category/:category/subcategory/:subcategory?" />
+		<Route path="/collections/all/products/category/:category/subcategory/:subcategory/collection/:collection?" /> */}
+		<Route path="/collections/all/products/:pathname" />
 		<Route path="/checkout/order/receipt/:id/:status/:send?" />
 		<Route path="/pages/contact/:reason?" exact={true} />
 		<Route path="/pages/glowcontrol" />
@@ -27,8 +49,8 @@ export default (
 		<Route path="/pages/about" exact={true} />
 		<Route path="/pages/faq" exact={true} />
 		<Route path="/pages/sitemap" exact={true} />
-		<Route path="/collections/all/features/:category?" exact={true} />
-		<Route path="/collections/all/features/:category/:pathname?" exact={true} />
+		<Route path="/collections/all/features/category/:category?" exact={true} />
+		<Route path="/collections/all/features/category/:category/:pathname?" exact={true} />
 		<Route path="/collections/all/sponsors" exact={true} />
 		<Route path="/collections/all/sponsors/:promo_code?" exact={true} />
 		<Route path="/collections/all/teams/category/:category?" exact={true} />

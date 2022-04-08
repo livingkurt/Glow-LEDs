@@ -6,7 +6,7 @@ const router = require('./sitemap-routes').default;
 const Sitemap = require('react-router-sitemap').default;
 const fetch = require('node-fetch');
 const API = 'http://localhost:5000';
-export const categories = [
+const categories = [
 	'whites',
 	'accessories',
 	'decals',
@@ -16,7 +16,7 @@ export const categories = [
 	'glow_stringz',
 	'glowskinz'
 ];
-export const subcategories = [
+const subcategories = [
 	'whites',
 	'refresh',
 	'battery_storage',
@@ -57,9 +57,19 @@ export const subcategories = [
 	'secondary_colors'
 ];
 
+const collections = [
+	'novaskinz',
+	'classics',
+	'space_cadet',
+	'platonic_solids',
+	'festy_besty',
+	'fractal',
+	'texture',
+];
+
 async function generateSitemap() {
-	let products_res = await fetch(API + '/api/products/');
-	let products = await products_res.json();
+	let products_res = await fetch(API + '/api/products?deleted=false&hidden=false&option=false');
+	let {products} = await products_res.json();
 
 	let productMap = products.filter((product) => product.hidden === false).map((product) => {
 		return { pathname: product.pathname };
@@ -69,6 +79,9 @@ async function generateSitemap() {
 	});
 	let subcategoryMap = subcategories.map((subcategory) => {
 		return { subcategory };
+	});
+	let collectionsMap = collections.map((collection) => {
+		return { collection };
 	});
 
 	const contact_reason = [
@@ -88,15 +101,17 @@ async function generateSitemap() {
 	console.log({ subcategoryMap });
 
 	const paramsConfig = {
-		'/collections/all/products/accessories/:subcategory?': subcategoryMap,
-		'/collections/all/products/glowskinz/:subcategory?': subcategoryMap,
-		'/collections/all/products/exo_diffusers/:subcategory?': subcategoryMap,
-		'/collections/all/products/glow_casings/:subcategory?': subcategoryMap,
-		'/collections/all/products/diffuser_caps/:subcategory?': subcategoryMap,
-		'/collections/all/products/diffusers/:subcategory?': subcategoryMap,
-		'/collections/all/products/glow_stringz/:subcategory?': subcategoryMap,
-		'/collections/all/products/options/:subcategory?': subcategoryMap,
-		'/collections/all/products/:category': categoryMap,
+		'/collections/all/products/category/:category': categoryMap,
+		'/collections/all/products/category/glowskinz/subcategory/:subcategory': subcategoryMap,
+		'/collections/all/products/category/exo_diffusers/subcategory/:subcategory': subcategoryMap,
+		'/collections/all/products/category/diffuser_caps/subcategory/:subcategory': subcategoryMap,
+		'/collections/all/products/category/diffusers/subcategory/:subcategory': subcategoryMap,
+		'/collections/all/products/category/glow_stringz/subcategory/:subcategory': subcategoryMap,
+		'/collections/all/products/category/glowskinz/subcategory/clozd/collection/:collection': collectionsMap,
+		'/collections/all/products/category/glowskinz/subcategory/opyn/collection/:collection': collectionsMap,
+		'/collections/all/products/category/diffuser_caps/subcategory/texture/collection/:collection': collectionsMap,
+		'/collections/all/products/category/diffuser_caps/subcategory/shapes/collection/:collection': collectionsMap,
+		'/collections/all/products/category/diffuser_caps/subcategory/geometric/collection/:collection': collectionsMap,
 		'/collections/all/products/:pathname': productMap,
 		'/pages/contact/:reason': contact_reason,
 		'/pages/menu/:pathname': menu_types

@@ -159,7 +159,7 @@ const Footer = () => {
                   </Link>
                 </li>
 								<li className="ta-l mv-2rem">
-                  <Link to="/collections/all/products/glow_casings">
+                  <Link to="/collections/all/products/glowframez">
                     Glowframez
                   </Link>
                 </li>

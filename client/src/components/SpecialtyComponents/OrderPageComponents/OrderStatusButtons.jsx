@@ -1,8 +1,17 @@
 import React from 'react';
 
-const OrderStatusButtons = ({ order, update_order_payment_state, update_order_state }) => {
+const OrderStatusButtons = ({ order, update_order_payment_state, update_order_state, send_order_email }) => {
 	return (
 		<div>
+			{send_order_email && 
+			<div className="row ai-c">
+				<button
+					className="btn primary mv-5px w-100per"
+					onClick={() => send_order_email()}
+				>
+					Send Order Email
+				</button>
+			</div>}
 			<div className="row ai-c">
 				<button
 					className="btn primary mv-5px w-100per"

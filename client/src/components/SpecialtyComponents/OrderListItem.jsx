@@ -8,7 +8,7 @@ import { createOrder, deleteOrder, detailsOrder, listOrders } from '../../action
 import { LazyImage, Loading } from '../UtilityComponents';
 import { determine_product_name } from '../../utils/react_helper_functions';
 import { OrderStatusButtons } from './OrderPageComponents';
-import { API_Orders, API_Shipping } from '../../utils';
+import { API_Emails, API_Orders, API_Shipping } from '../../utils';
 
 const OrderListItem = ({ order, determine_color, admin, update_order_payment_state, update_order_state }) => {
 	const history = useHistory();
@@ -132,7 +132,7 @@ const OrderListItem = ({ order, determine_color, admin, update_order_payment_sta
 		}, 1500);
 		setTimeout(() => {
 			print_label(data.postage_label.label_url);
-		}, 1000);
+		}, 1500);
 
 		if (data) {
 			set_loading_label(false);
@@ -151,13 +151,25 @@ const OrderListItem = ({ order, determine_color, admin, update_order_payment_sta
 		}, 1500);
 		setTimeout(() => {
 			print_label(data.postage_label.label_url);
-		}, 1000);
+		}, 1500);
 		if (data) {
 			set_loading_label(false);
 		}
 		await API_Shipping.add_tracking_number(order, data.tracking_code, data);
 		set_hide_label_button(false);
 		dispatch(listOrders({}));
+	};
+
+	const send_order_email = async () => {
+		set_loading_label(true);
+			await API_Emails.send_order_email(order, 'Thank you for your Glow LEDs Order', order.shipping.email);
+			await API_Emails.send_order_email(
+				order,
+				'New Order Created by ' + order.shipping.first_name,
+				'info.glowleds@gmail.com'
+			);
+	
+		set_loading_label(false);
 	};
 
 	return (
@@ -581,6 +593,7 @@ const OrderListItem = ({ order, determine_color, admin, update_order_payment_sta
 							order={order}
 							update_order_payment_state={update_order_payment_state}
 							update_order_state={update_order_state}
+							send_order_email={send_order_email}
 						/>
 					</div>
 				</div>

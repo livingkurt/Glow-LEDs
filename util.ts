@@ -787,7 +787,7 @@ export const determine_product_name = (item: any, show_qty: any, date: any) => {
   const date_2 = date;
   if (date_1_s <= date_2 || !date) {
     if (item.product_collection === "alt_novaskinz") {
-      if (item.name === "CLOZD Alt Novaskins w Nano Sleds") {
+      if (item.name === "CLOZD Alt Novaskinz w Nano Sleds") {
         return `<div>
 						${show_qty && item.qty > 1 ? item.qty + "x" : ""}  ${item.name}
 						${item.size !== 0 ? " - " + item.size : ""} ${item.color

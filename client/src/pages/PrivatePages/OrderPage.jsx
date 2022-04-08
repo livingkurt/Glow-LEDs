@@ -617,6 +617,19 @@ const OrderPage = (props) => {
 		order.orderItems.map((item) => dispatch(addToCart(item)));
 	};
 
+
+	const send_order_email = async () => {
+		set_loading_label(true);
+			await API_Emails.send_order_email(order, 'Thank you for your Glow LEDs Order', order.shipping.email);
+			await API_Emails.send_order_email(
+				order,
+				'New Order Created by ' + order.shipping.first_name,
+				'info.glowleds@gmail.com'
+			);
+	
+		set_loading_label(false);
+	};
+
 	return (
 		<Loading loading={loading} error={error}>
 			{order && (
@@ -1124,6 +1137,7 @@ ${order.shipping.email}`)}
 												order={order}
 												update_order_payment_state={update_order_payment_state}
 												update_order_state={update_order_state}
+												send_order_email={send_order_email}
 											/>
 										</div>
 										<div className="column jc-b w-100per">

@@ -785,10 +785,6 @@ const App = props => {
                 component={AllProductsPage}
               />
               <Route
-                path="/collections/all/products/collection/:collection?"
-                component={AllProductsPage}
-              />
-              <Route
                 path="/collections/all/products/shop_by_chip"
                 component={AllProductsByChipPage}
               />

@@ -298,7 +298,7 @@ const Sidebar = props => {
                     </button>
                     <button
                       className="sidebar-btn-dropdown"
-                      onClick={() => show_hide("glow_casings_dropdown_2")}
+                      onClick={() => show_hide("glowskinz_dropdown_2")}
                       aria-label="Show"
                     >
                       <i className="fas fa-sort-up" />
@@ -306,7 +306,7 @@ const Sidebar = props => {
                   </div>
                   <ul
                     className="sidebar_dropdown_nested_container"
-                    id="glow_casings_dropdown_2"
+                    id="glowskinz_dropdown_2"
                   >
                     <div className="sidebar_dropdown_nested">
                       {/* <button className="sidebar-btn secondary">Collections</button> */}
@@ -321,7 +321,7 @@ const Sidebar = props => {
                         </Link>
                         <button
                           className="sidebar-btn-dropdown"
-                          onClick={() => show_hide("glow_casings_dropdown_5")}
+                          onClick={() => show_hide("glowskinz_dropdown_5")}
                           aria-label="Show"
                         >
                           <i className="fas fa-sort-up" />
@@ -329,7 +329,7 @@ const Sidebar = props => {
                       </div>
                       <ul
                         className="sidebar_dropdown_nested_2_container"
-                        id="glow_casings_dropdown_5"
+                        id="glowskinz_dropdown_5"
                       >
                         <Link to="/collections/all/products/category/glowskinz/subcategory/clozd/collection/classics">
                           <button
@@ -382,7 +382,7 @@ const Sidebar = props => {
                     </button>
                     <button
                       className="sidebar-btn-dropdown"
-                      onClick={() => show_hide("glow_casings_dropdown_4")}
+                      onClick={() => show_hide("glowskinz_dropdown_4")}
                       aria-label="Show"
                     >
                       <i className="fas fa-sort-up" />
@@ -390,7 +390,7 @@ const Sidebar = props => {
                   </div>
                   <ul
                     className="sidebar_dropdown_nested_container"
-                    id="glow_casings_dropdown_4"
+                    id="glowskinz_dropdown_4"
                   >
                     <div className="sidebar_dropdown_nested">
                       {/* <button className="sidebar-btn secondary">Collections</button> */}
@@ -405,7 +405,7 @@ const Sidebar = props => {
                         </Link>
                         <button
                           className="sidebar-btn-dropdown"
-                          onClick={() => show_hide("glow_casings_dropdown_5")}
+                          onClick={() => show_hide("glowskinz_dropdown_5")}
                           aria-label="Show"
                         >
                           <i className="fas fa-sort-up" />
@@ -413,7 +413,7 @@ const Sidebar = props => {
                       </div>
                       <ul
                         className="sidebar_dropdown_nested_2_container"
-                        id="glow_casings_dropdown_5"
+                        id="glowskinz_dropdown_5"
                       >
                         <Link to="/collections/all/products/category/diffuser_caps/collection/texture">
                           <button
@@ -509,7 +509,7 @@ const Sidebar = props => {
                     </button>
                     <button
                       className="sidebar-btn-dropdown"
-                      onClick={() => show_hide("glow_casings_dropdown_3")}
+                      onClick={() => show_hide("glowskinz_dropdown_3")}
                       aria-label="Show"
                     >
                       <i className="fas fa-sort-up" />
@@ -517,7 +517,7 @@ const Sidebar = props => {
                   </div>
                   <ul
                     className="sidebar_dropdown_nested_container"
-                    id="glow_casings_dropdown_3"
+                    id="glowskinz_dropdown_3"
                   >
                     <Link to="/collections/all/products/category/diffusers/subcategory/abstract">
                       <button
@@ -582,7 +582,7 @@ const Sidebar = props => {
               </button>
               <button
                 className="sidebar-btn-dropdown"
-                onClick={() => show_hide("glow_casings_dropdown_6")}
+                onClick={() => show_hide("glowskinz_dropdown_6")}
                 aria-label="Show"
               >
                 <i className="fas fa-sort-up" />
@@ -590,7 +590,7 @@ const Sidebar = props => {
             </div>
             <ul
               className="sidebar_dropdown_secondary_container"
-              id="glow_casings_dropdown_6"
+              id="glowskinz_dropdown_6"
             >
               <Link to="/collections/all/products/supremes">
                 <button className="sidebar-btn nested" onClick={closeMenu}>

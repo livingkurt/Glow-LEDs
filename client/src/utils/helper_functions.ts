@@ -695,7 +695,6 @@ export const subcategories = [
   "batteries",
   "stickers",
   "clips",
-  "casings",
   "universal",
   "batman",
   "outline",
@@ -830,28 +829,6 @@ export const manuals = {
       },
     ],
   },
-  // glow_casings: {
-  // 	name: 'Diffuser Caps Manual',
-  // 	manual: '/Diffuser_Caps_Manual.png',
-  // 	videos: [
-  // 		{
-  // 			title: 'One Button Functionality',
-  // 			video: 'oHNFMaUepLs'
-  // 		},
-  // 		{
-  // 			title: 'One Button Functionality',
-  // 			video: 'dCjgyMdiKhY'
-  // 		},
-  // 		{
-  // 			title: 'One Button Functionality',
-  // 			video: 'LxtZ1noaxlk'
-  // 		},
-  // 		{
-  // 			title: 'One Button Functionality',
-  // 			video: '6RCxB4waLAI'
-  // 		}
-  // 	]
-  // },
   // diffusers: {
   // 	name: 'Diffuser Caps Manual',
   // 	manual: '/Diffuser_Caps_Manual.png',
