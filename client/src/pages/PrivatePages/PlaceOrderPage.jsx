@@ -274,13 +274,13 @@ const PlaceOrderPage = (props) => {
 			set_show_promo_code_input_box(false);
 			activate_promo_code(promo_code_storage);
 		}
-		if (itemsPrice >= 39.99) {
-			set_promo_code("SHIP40");
-			set_show_promo_code(true);
-			// set_show_message(`"SHIP40" Free Shipping`);
-			set_show_promo_code_input_box(false);
-			activate_promo_code("SHIP40");
-		}
+		// if (itemsPrice >= 39.99) {
+		// 	set_promo_code("SHIP40");
+		// 	set_show_promo_code(true);
+		// 	// set_show_message(`"SHIP40" Free Shipping`);
+		// 	set_show_promo_code_input_box(false);
+		// 	activate_promo_code("SHIP40");
+		// }
 	};
 
 	const placeOrderHandler = async (paymentMethod) => {
