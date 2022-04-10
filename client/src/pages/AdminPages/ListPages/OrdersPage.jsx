@@ -8,6 +8,7 @@ import { OrderListItem, OrderSmallScreen, Search, Sort, Pagination } from '../..
 import { API_Emails, API_Orders } from '../../../utils';
 import { getUrlParameter, toCapitalize } from '../../../utils/helper_functions';
 import { check_authentication } from '../../../utils/react_helper_functions';
+import { orders_upload } from '../../../utils/google_sheets_upload';
 
 const OrdersPage = (props) => {
 	const [ search, set_search ] = useState('');
@@ -283,6 +284,14 @@ const OrdersPage = (props) => {
 		set_loading_email(false);
 	};
 
+	const upload_orders = async () => {
+		set_loading_email(true);
+		const {data} = await API_Orders.findAll_orders_a()
+		 console.log({data})
+		await orders_upload(data.orders)
+		set_loading_email(false);
+	}
+
 	return (
 		<div className="profile_container wrap column p-20px">
 			<Helmet>
@@ -299,6 +308,7 @@ const OrdersPage = (props) => {
 				<Link to="/secure/glow/combine_orders">
 					<button className="btn primary">Combine Orders</button>
 				</Link>
+					<button className="btn primary" onClick={upload_orders}>Upload Orders</button>
 				{not_shipped &&
 				not_shipped.length > 0 && (
 					<button className="btn primary" onClick={() => mark_as_shipped()}>
