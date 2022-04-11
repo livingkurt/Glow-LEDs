@@ -900,43 +900,49 @@ export const determine_product_name = (item: any, show_qty: any, date: any) => {
          )}
 			</div>`;
       }
-    } else if (item.category === "accessories") {
-      if (item.subcategory === "batteries") {
+    } else if (item.category === "glowframez") {
+      if (item.subcategory === "clip") {
         return `<div>
-						${show_qty && item.qty > 1 ? item.qty + "x" : ""} ${item.color
+        ${show_qty && item.qty > 1 ? item.qty + "x" : ""}  ${item.color
           ? item.color + " "
           : ""} ${item.name}${" "}
-						${item.size !== "0" ? " - " + item.size : ""}${" "}
-					</div>`;
+        ${item.secondary_product_name !== "0"
+          ? " - " + item.secondary_product_name.split("-")[1]
+          : ""}${" "}
+      </div>`;
+      } else if (item.subcategory === "clozd" || item.subcategory === "opyn") {
+        return `<div>
+        ${show_qty && item.qty > 1 ? item.qty + "x" : ""} ${item.color
+          ? item.color + " "
+          : ""} ${item.name}${" "}
+        ${item.size !== "0" ? " - " + item.size : ""}${" "}
+      </div>`;
       }
-
-      if (item.subcategory === "chips") {
+    } else if (item.category === "batteries") {
+      if (item.subcategory === "storage") {
         return `<div>
-						${show_qty && item.qty > 1 ? item.qty + "x" : ""}  ${item.color
+        ${show_qty && item.qty > 1 ? item.qty + "x" : ""} ${item.color
           ? item.color + " "
           : ""} ${item.name}${" "}
-						${item.size !== "0" ? " - " + item.size : ""}${" "}
-					</div>`;
-      } else if (item.subcategory === "clips") {
+      </div>`;
+      } else if (item.subcategory === "coin") {
         return `<div>
-						${show_qty && item.qty > 1 ? item.qty + "x" : ""}  ${item.color
+        ${show_qty && item.qty > 1 ? item.qty + "x" : ""} ${item.color
           ? item.color + " "
           : ""} ${item.name}${" "}
-						${item.secondary_product_name !== "0"
-              ? " - " + item.secondary_product_name.split("-")[1]
-              : ""}${" "}
-					</div>`;
+        ${item.size !== "0" ? " - " + item.size : ""}${" "}
+      </div>`;
       } else {
         return `<div>
-						${show_qty && item.qty > 1 ? item.qty + "x" : ""}  ${item.color &&
+        ${show_qty && item.qty > 1 ? item.qty + "x" : ""}  ${item.color &&
         !item.secondary_color
           ? item.color
           : ""}${" "}
-						${item.name} ${item.secondary_color ? " -" : ""}${" "}
-						${item.secondary_color ? "(" + item.color + " Cap/Slide" : ""}
-						${item.secondary_color ? " & " : ""}
-						${item.secondary_color ? item.secondary_color + " Body)" : ""}${" "}
-					</div>`;
+        ${item.name} ${item.secondary_color ? " -" : ""}${" "}
+        ${item.secondary_color ? "(" + item.color + " Cap/Slide" : ""}
+        ${item.secondary_color ? " & " : ""}
+        ${item.secondary_color ? item.secondary_color + " Body)" : ""}${" "}
+      </div>`;
       }
     } else if (item.category === "exo_diffusers") {
       return `<div>

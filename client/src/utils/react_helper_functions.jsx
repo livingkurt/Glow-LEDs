@@ -347,8 +347,8 @@ export const determine_product_name = (item, show_qty, date) => {
   date_1 = date_1.toISOString();
   const date_2 = date;
   if (date_1 <= date_2 || !date) {
-    if (item.subcategory === "alt_novaskinz") {
-      if (item.name === "Alt Novaskinz w Nano Sleds") {
+    if (item.subcategory === "alt_novaskins") {
+      if (item.name === "Alt Novaskins w Nano Sleds") {
         return (
           <div>
             {show_qty && item.qty > 1 && item.qty + "x"} {item.name}
@@ -473,26 +473,8 @@ export const determine_product_name = (item, show_qty, date) => {
           </div>
         );
       }
-    } else if (item.category === "accessories") {
-      if (item.subcategory === "batteries") {
-        return (
-          <div>
-            {show_qty && item.qty > 1 && item.qty + "x"}{" "}
-            {item.color && item.color + " "} {item.name}{" "}
-            {item.size !== "0" && " - " + item.size}{" "}
-          </div>
-        );
-      }
-
-      if (item.subcategory === "chips") {
-        return (
-          <div>
-            {show_qty && item.qty > 1 && item.qty + "x"}{" "}
-            {item.color && item.color + " "} {item.name}{" "}
-            {item.size !== "0" && " - " + item.size}{" "}
-          </div>
-        );
-      } else if (item.subcategory === "clips") {
+    } else if (item.category === "glowframez") {
+     if (item.subcategory === "clip") {
         return (
           <div>
             {/* {console.log({ item })} */}
@@ -502,7 +484,36 @@ export const determine_product_name = (item, show_qty, date) => {
               " - " + item.secondary_product_name.split("-")[1]}{" "}
           </div>
         );
-      } else {
+      } 
+     else if (item.subcategory === "clozd" || item.subcategory === "opyn") {
+        return (
+          <div>
+            {/* {console.log({ item })} */}
+            {show_qty && item.qty > 1 && item.qty + "x"}{" "}
+            {item.color && item.color + " "} {item.name}{" "}
+            {item.size !== "0" && " - " + item.size}{" "}
+          </div>
+        );
+      } 
+    } else if (item.category === "batteries") {
+      if(item.subcategory === "storage"){
+        return (
+          <div>
+            {show_qty && item.qty > 1 && item.qty + "x"}{" "}
+            {item.color && item.color + " "} {item.name}{" "}
+          </div>
+        );
+      }
+      else if(item.subcategory === "coin"){
+        return (
+          <div>
+            {show_qty && item.qty > 1 && item.qty + "x"}{" "}
+            {item.color && item.color + " "} {item.name}{" "}
+            {item.size !== "0" && " - " + item.size}{" "}
+          </div>
+        );
+      }
+      else {
         return (
           <div>
             {show_qty && item.qty > 1 && item.qty + "x"}{" "}
@@ -514,6 +525,7 @@ export const determine_product_name = (item, show_qty, date) => {
           </div>
         );
       }
+      
     } else if (item.category === "exo_diffusers") {
       return (
         <div>

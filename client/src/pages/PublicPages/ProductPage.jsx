@@ -960,7 +960,7 @@ const ProductPage = props => {
         )}
       </Loading>
       {product &&
-      product.name !== "Glow Stringz V2 50 LED / 3.5m" && (
+      product.name !== "Glow Stringz V2 50 LED / 3.5m" && product.name !== "Nova Clip" && (
         <div className=" w-100per m-auto">
           <RelatedProductsSlideshow
             product_category={product.category}
@@ -974,7 +974,7 @@ const ProductPage = props => {
         </div>
       )}
       {product &&
-      product.name !== "Glow Stringz V2 50 LED / 3.5m" && (
+      product.name !== "Glow Stringz V2 50 LED / 3.5m" && product.name !== "Nova Clip" && (
         <div className=" w-100per m-auto">
           <RelatedProductsSlideshow
             product_category={product.category}
@@ -987,8 +987,8 @@ const ProductPage = props => {
         </div>
       )}
       {product &&
-      product.category !== "accessories" &&
-      product.name !== "Glow Stringz V2 50 LED / 3.5m" && (
+      product.category !== "batteries" &&
+      product.name !== "Glow Stringz V2 50 LED / 3.5m" && product.name !== "Nova Clip" && (
         <div className=" w-100per m-auto">
           <RelatedProductsSlideshow
             product_category={product.category}
@@ -996,7 +996,7 @@ const ProductPage = props => {
             className=""
             product_pathname={props.match.params.pathname}
             title="Accessories You May Need"
-            category="accessories"
+            category="batteries"
           />
         </div>
       )}
