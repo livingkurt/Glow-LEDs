@@ -20,7 +20,6 @@ export default (
 		
 		
 		<Route path="/collections/all/products/category/whites/subcategory/:subcategory" />
-		<Route path="/collections/all/products/category/accessories/subcategory/:subcategory" />
 		<Route path="/collections/all/products/category/decals/subcategory/:subcategory" />
 		<Route path="/collections/all/products/category/diffuser_caps/subcategory/:subcategory" />
 		<Route path="/collections/all/products/category/diffusers/subcategory/:subcategory" />

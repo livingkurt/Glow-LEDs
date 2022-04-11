@@ -665,9 +665,6 @@ export const determine_secondary_product_name = (
         return name.split(" ")[0];
       }
     } else {
-      // if (category === 'accessories' && subcategory === 'clips') {
-      // 	return name.split(' ')[3] + ' ' + name.split(' ')[4];
-      // }
       return name;
     }
   }
@@ -679,9 +676,7 @@ export const determine_option_product_name = (name, category, subcategory) => {
       if (name.split("-")[0].trim() === "Supreme Gloves") {
         return name.split("-")[1].trim();
       } else {
-        // if (category === 'accessories' && subcategory === 'clips') {
-        // 	return name.split(' ')[3] + ' ' + name.split(' ')[4];
-        // }
+    
         return name;
       }
     }
@@ -714,7 +709,7 @@ export const determine_product_name_display = product => {
   return (
     <div>
       {product.name}{" "}
-      {(product.category === "accessories" ||
+      {(product.category === "batteries" ||
         product.category === "glowskinz") &&
         option &&
         option.size &&

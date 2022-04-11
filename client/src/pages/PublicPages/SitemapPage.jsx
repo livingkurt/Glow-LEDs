@@ -91,9 +91,6 @@ const SitemapPage = () => {
 								<Link to="/collections/all/products/diffuser_adapters">Diffuser Adapters</Link>
 							</li>
 							<li>
-								<Link to="/collections/all/products/accessories">Accessories</Link>
-							</li>
-							<li>
 								<Link to="/collections/all/products/glow_strings">Glow Stringz</Link>
 							</li>
 							{/* <li>

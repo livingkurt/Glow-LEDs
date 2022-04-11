@@ -134,7 +134,7 @@ const Footer = () => {
                   </Link>
                 </li>
                 <li className="ta-l mv-2rem">
-                  <Link to="/collections/all/products/accessories/custom_product_deposit">
+                  <Link to="/collections/all/products/custom_product_deposit">
                     Customize Any Product!
                   </Link>
                 </li>
@@ -293,52 +293,6 @@ const Footer = () => {
             </div>
           </div>
         </div>
-        {/* <div className="jc-b ai-c w-100per p-10px  none">
-					<div className="jc-a w-100per">
-						<div>
-							<h2 className="ta-l">
-								<Link to="/collections/all/products">Products</Link>
-							</h2>
-							<ul className="lst-none">
-								<li className="ta-l mv-2rem">
-									<Link to="/collections/all/products/glowskinz">Glowskinz</Link>
-								</li>
-								<li className="ta-l mv-2rem">
-									<Link to="/collections/all/products/diffusers">
-										Frosted Diffusers
-									</Link>
-								</li>
-								<li className="ta-l mv-2rem">
-									<Link to="/collections/all/products/diffuser_caps">Diffuser Caps</Link>
-								</li>
-								<li className="ta-l mv-2rem">
-									<Link to="/collections/all/products/mega_diffuser_caps">
-										Mega Diffusers Caps
-									</Link>
-								</li>
-								<li className="ta-l mv-2rem">
-									<Link to="/collections/all/products/accessories">Accessories</Link>
-								</li>
-							</ul>
-						</div>
-						<div>
-							<h2 className="ta-l">
-								<Link to="/pages/menu/community">Community</Link>
-							</h2>
-							<ul className="lst-none">
-								<li className="ta-l mv-2rem">
-									<Link to="/pages/announcments">Announcments</Link>
-								</li>
-								<li className="ta-l mv-2rem">
-									<Link to="/pages/menu/featured">Featured</Link>
-								</li>
-								<li className="ta-l mv-2rem">
-									<Link to="/pages/music">Music</Link>
-								</li>
-							</ul>
-						</div>
-					</div>
-				</div> */}
       </div>
     </footer>
   );

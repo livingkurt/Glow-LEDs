@@ -8,7 +8,7 @@ const fetch = require('node-fetch');
 const API = 'http://localhost:5000';
 const categories = [
 	'whites',
-	'accessories',
+	'batteries',
 	'decals',
 	'diffuser_caps',
 	'diffusers',

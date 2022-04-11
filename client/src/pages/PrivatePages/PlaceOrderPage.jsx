@@ -810,7 +810,7 @@ const PlaceOrderPage = (props) => {
 			</div>
 			<Carousel
 				product_pathname={props.match.params.pathname}
-				category={'accessories'}
+				category={'batteries'}
 				title="Accessories You May Need"
 				add_to_cart={true}
 			/>

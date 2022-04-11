@@ -467,24 +467,6 @@ const Header = props => {
                             </button>
                           </Link>
 
-                          {/* <div className="nav-btn-container">
-											<Link
-												to="/collections/all/products/category/accessories"
-												className="w-100per"
-											>
-												<button className="nav-btn-link">Accessories</button>
-											</Link>
-											<button
-												className="nav-btn-dropdown"
-												onClick={() => show_hide('accessories_dropdown')}
-												aria-label="Show"
-											>
-												<i className="fas fa-sort-up" />
-											</button>
-										</div> */}
-                          {/* <Link to="/collections/all/products/category/accessories">
-											<button className="btn nav w-100per ta-l">Accessories</button>
-										</Link> */}
                         </div>
 
                         {/* Glowskinz */}

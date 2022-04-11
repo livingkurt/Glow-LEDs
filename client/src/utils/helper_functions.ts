@@ -680,7 +680,7 @@ export const state_names = [
 
 export const categories = [
   "whites",
-  "accessories",
+  "batteries",
   "decals",
   "diffuser_caps",
   "diffusers",
@@ -1879,7 +1879,7 @@ export const create_color_products = async (
         ...no_state,
       },
     ];
-  } else if (product.category === "accessories") {
+  } else if (product.category === "batteries") {
     list = [
       {
         name: `White ${product.name}`,

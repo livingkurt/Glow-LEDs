@@ -14,7 +14,6 @@
 <url> <loc>https://glow-leds.com/checkout/shipping</loc> </url>
 <url> <loc>https://glow-leds.com/checkout/cart/:pathname?</loc> </url>
 <url> <loc>https://glow-leds.com/collections/all/products/category/whites/subcategory/:subcategory</loc> </url>
-<url> <loc>https://glow-leds.com/collections/all/products/category/accessories/subcategory/:subcategory</loc> </url>
 <url> <loc>https://glow-leds.com/collections/all/products/category/decals/subcategory/:subcategory</loc> </url>
 <url> <loc>https://glow-leds.com/collections/all/products/category/diffuser_caps/subcategory/whites</loc> </url>
 <url> <loc>https://glow-leds.com/collections/all/products/category/diffuser_caps/subcategory/refresh</loc> </url>
@@ -242,7 +241,6 @@
 <url> <loc>https://glow-leds.com/collections/all/products/category/diffuser_caps/subcategory/geometric/collection/fractal</loc> </url>
 <url> <loc>https://glow-leds.com/collections/all/products/category/diffuser_caps/subcategory/geometric/collection/texture</loc> </url>
 <url> <loc>https://glow-leds.com/collections/all/products/category/whites</loc> </url>
-<url> <loc>https://glow-leds.com/collections/all/products/category/accessories</loc> </url>
 <url> <loc>https://glow-leds.com/collections/all/products/category/decals</loc> </url>
 <url> <loc>https://glow-leds.com/collections/all/products/category/diffuser_caps</loc> </url>
 <url> <loc>https://glow-leds.com/collections/all/products/category/diffusers</loc> </url>

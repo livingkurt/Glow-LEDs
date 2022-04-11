@@ -51,8 +51,8 @@ const RelatedProductsSlideshow = ({
 		console.log({ chip: product && product.chips && product.chips[0]._id });
 		if (product && product.chips && product.chips[0]) {
 			query = { chip: product.chips[0]._id, hidden: false, option: false };
-		} else if (category === 'accessories') {
-			query = { category: 'accessories', hidden: false, option: false };
+		} else if (category === 'batteries') {
+			query = { category: 'batteries', hidden: false, option: false };
 		} else if (category === 'all') {
 			query = { hidden: false, option: false };
 		} else if (category === 'related') {

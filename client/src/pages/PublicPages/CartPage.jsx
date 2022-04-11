@@ -75,7 +75,7 @@ const CartPage = (props) => {
 				className=""
 				product_pathname={props.match.params.pathname}
 				title="Accessories You May Need"
-				category="accessories"
+				category="batteries"
 				add_to_cart={true}
 			/>
 			<RelatedProductsSlideshow
@@ -86,14 +86,6 @@ const CartPage = (props) => {
 				category="all"
 				add_to_cart={true}
 			/>
-
-			{/* <Carousel
-				product_pathname={props.match.params.pathname}
-				category={'accessories'}
-				title="Accessories You May Need"
-				add_to_cart={true}
-			/> */}
-			{/* <Carousel title="Suggested Products" add_to_cart={true} random={true} /> */}
 		</div>
 	);
 };

@@ -404,7 +404,7 @@ export const determine_sponsor_code_tier = (code_usage: number) => {
 
 export const categories = [
   "whites",
-  "accessories",
+  "batteries",
   "decals",
   "diffuser_caps",
   "diffusers",
@@ -773,9 +773,6 @@ const determine_secondary_product_name = (
         return name.split(" ")[0];
       }
     } else {
-      // if (category === 'accessories' && subcategory === 'clips') {
-      // 	return name.split(' ')[3] + ' ' + name.split(' ')[4];
-      // }
       return name;
     }
   }
