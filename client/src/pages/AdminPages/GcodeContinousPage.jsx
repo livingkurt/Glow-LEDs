@@ -3,7 +3,7 @@ import { Loading } from '../../components/UtilityComponents';
 import { API_Content } from '../../utils';
 
 function GcodeContinousPage() {
-	const [ number_of_copies, set_number_of_copies ] = useState(2);
+	const [ number_of_copies, set_number_of_copies ] = useState(12);
 	const [ gcode_name, set_gcode_name ] = useState([]);
 	const [ gcode_parts, set_gcode_parts ] = useState({});
 
@@ -160,6 +160,12 @@ function GcodeContinousPage() {
 		}
 	};
 
+	const reset = () => {
+		set_filename('')
+set_gcode_name('')
+set_gcode_parts({})
+	}
+
 	return (
 		<div className="m-auto">
 			<h2 className="ta-c fs-25px ">Gcode Continous Printing</h2>
@@ -208,6 +214,7 @@ function GcodeContinousPage() {
 						}}
 					/>
 				</div> */}
+			
 				<div className="form-item">
 					<button className="btn primary w-100per" onClick={(e) => create_new_gcode(e)}>
 						Make Continuous Gcode
@@ -216,6 +223,11 @@ function GcodeContinousPage() {
 				<div className="form-item">
 					<button className="btn primary w-100per" onClick={(e) => create_cascade_gcode(e)}>
 						Make Cascade Continuous Gcode
+					</button>
+				</div>
+				<div className="form-item">
+					<button className="btn primary w-100per" onClick={(e) => reset(e)}>
+						Reset
 					</button>
 				</div>
 				{status && <label className="form-item btn secondary">{status}</label>}
