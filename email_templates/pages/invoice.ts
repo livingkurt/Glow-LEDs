@@ -254,7 +254,7 @@ export default (props: any) => {
                                 <div style="padding:5px;vertical-align:top;text-align:right" valign="top" align="right">
                                 $${order.taxPrice
                                   ? order.taxPrice.toFixed(2)
-                                  : ""}</div>
+                                  : "0.00"}</div>
                               </td>
                             </tr>
                             <tr>
@@ -267,7 +267,7 @@ export default (props: any) => {
                                 <div style="padding:5px;vertical-align:top;text-align:right" valign="top" align="right">
                                 $${order.shippingPrice
                                   ? order.shippingPrice.toFixed(2)
-                                  : ""}</div>
+                                  : "0.00"}</div>
                               </td>
                             </tr>
                             ${order.tip > 0
@@ -279,7 +279,9 @@ export default (props: any) => {
                               </td>
                               <td style="text-align:right; margin-right:3px;" valign="top" align="right">
                                 <div style="padding:5px;vertical-align:top;text-align:right" valign="top" align="right">
-                                $${order.tip ? order.tip.toFixed(2) : ""}</div>
+                                $${order.tip
+                                  ? order.tip.toFixed(2)
+                                  : "0.00"}</div>
                               </td>
                             </tr>`
                               : ""}
@@ -324,7 +326,7 @@ export default (props: any) => {
                                   valign="top" align="right">
                                   $${order.totalPrice
                                     ? order.totalPrice.toFixed(2)
-                                    : ""}</div>
+                                    : "0.00"}</div>
                               </td>
                             </tr>
                           </table>
