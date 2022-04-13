@@ -394,7 +394,7 @@ const Header = props => {
                           ) : (
                             <Link to="/collections/all/products/glow_stringz_v2_50_led_3_5m">
                               <button className={`btn nav ta-l w-100per`}>
-                                <span>Glow Stringz V2</span>
+                                <span>Glowstringz V2</span>
                               </button>
                             </Link>
                           )}

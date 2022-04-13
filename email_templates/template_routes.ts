@@ -724,7 +724,7 @@ router.get(
             option_product_name: "",
             secondary_product: null,
             secondary_product_name: "",
-            name: "Glow Stringz V2 50 LED / 3.5m",
+            name: "Glowstringz V2 50 LED / 3.5m",
             size: "",
             color_code: "",
             secondary_color_code: "",

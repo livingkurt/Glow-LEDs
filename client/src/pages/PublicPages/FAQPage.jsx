@@ -573,7 +573,7 @@ const FAQPage = () => {
 										you.
 									</li>
 									<li>
-										For Glow Stringz and Coin Battery Storage{' '}
+										For Glowstringz and Coin Battery Storage{' '}
 										<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
 											💡
 										</span>️we will get your order in the mail{' '}

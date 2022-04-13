@@ -285,7 +285,7 @@ const Sidebar = props => {
                     onClick={closeMenu}
                   >
                     <button className={`sidebar-btn nested `}>
-                      <span>Glow Stringz V2</span>
+                      <span>Glowstringz V2</span>
                     </button>
                   </Link>
                 )}
@@ -697,7 +697,7 @@ const Sidebar = props => {
             </Link>
             {/* <Link to="/collections/all/products/glow_stringz_v2_50_led_3_5m">
 							<button className="sidebar-btn secondary special_font gradient-btn" onClick={closeMenu}>
-								Glow Stringz V2
+								Glowstringz V2
 							</button>
 						</Link> */}
             {/* {browser_check() !== 'safari' ? (
@@ -712,7 +712,7 @@ const Sidebar = props => {
 						) : (
 							<Link to="/collections/all/products/glow_stringz_v2_50_led_3_5m" onClick={closeMenu}>
 								<button className={`sidebar-btn secondary `}>
-									<span>Glow Stringz V2</span>
+									<span>Glowstringz V2</span>
 								</button>
 							</Link>
 						)} */}

@@ -132,7 +132,7 @@ function ProductPage(props) {
 	const colors = [
 		{ name: 'Not Category', color: '#333333' },
 		{ name: 'OPYN Glowskinz', color: '#557b68' },
-		{ name: 'Glow Stringz', color: '#4b7188' },
+		{ name: 'Glowstringz', color: '#4b7188' },
 		{ name: 'CLOZD Glowskinz', color: '#736084' },
 		{ name: 'Decals', color: '#6f5aa3' },
 		{ name: 'Diffusers', color: '#ca9160' },
@@ -169,7 +169,7 @@ function ProductPage(props) {
 		if (product.category === 'diffuser_caps') {
 			result = colors[6].color;
 		}
-		if (product.category === 'accessories') {
+		if (product.category === 'batteries') {
 			result = colors[7].color;
 		}
 		if (product.category === 'exo_diffusers') {

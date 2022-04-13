@@ -204,7 +204,7 @@ const AboutPage = () => {
 							be recognizable when gloving? The breakthrough was putting the cap on the outside of the
 							glove! That was our first really big idea and we haven't stopped there. We came out with
 							Glowskinz after that, which have become a staple in the gloving community, as well as our
-							upgraded Glow Stringz V2. Giving a whole new look to back lighting for lightshows as well as
+							upgraded Glowstringz V2. Giving a whole new look to back lighting for lightshows as well as
 							home and festival decoration. Glow LEDs is always ready for suggestions on product ideas and
 							product improvements. What's the point of selling a product that the community is not happy
 							with? We love the progress and direct line communication with the people that matter. Thank

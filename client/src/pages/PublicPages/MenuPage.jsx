@@ -116,7 +116,7 @@ const MenuPage = (props) => {
 				content.home_page.slideshow
 					.filter(
 						(item) =>
-							item.label === 'Glow Stringz V2' ||
+							item.label === 'Glowstringz V2' ||
 							item.label === 'Diffuser Caps' ||
 							item.label === 'Glowskinz'
 					)

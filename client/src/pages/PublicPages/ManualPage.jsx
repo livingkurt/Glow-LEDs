@@ -33,9 +33,9 @@ const ManualPage = (props) => {
 				</div>
 				<div className="mb-10px">
 					<Link
-						to={`/collections/all/products/${pathname === 'glow_strings_v2' ||
-						pathname === 'glow_strings_v2_manual'
-							? 'glow_strings'
+						to={`/collections/all/products/${pathname === 'glowstringz_v2' ||
+						pathname === 'glowstringz_v2_manual'
+							? 'glowstringz'
 							: 'pathname'}`}
 					>
 						<button className="btn secondary">View Available {toCapitalize(humanize(pathname))}</button>
@@ -51,20 +51,20 @@ const ManualPage = (props) => {
 			>
 				{
 					manuals[
-						pathname === 'glow_strings_v2_manual' || pathname === 'glow_strings_v2'
-							? 'glow_strings'
+						pathname === 'glowstringz_v2_manual' || pathname === 'glowstringz_v2'
+							? 'glowstringz'
 							: pathname
 					].name
 				}
 			</h2>
 			{manuals[
-				pathname === 'glow_strings_v2_manual' || pathname === 'glow_strings_v2' ? 'glow_strings' : pathname
+				pathname === 'glowstringz_v2_manual' || pathname === 'glowstringz_v2' ? 'glowstringz' : pathname
 			].manual && (
 				<img
 					src={
 						manuals[
-							pathname === 'glow_strings_v2_manual' || pathname === 'glow_strings_v2'
-								? 'glow_strings'
+							pathname === 'glowstringz_v2_manual' || pathname === 'glowstringz_v2'
+								? 'glowstringz'
 								: pathname
 						].manual
 					}
@@ -73,7 +73,7 @@ const ManualPage = (props) => {
 				/>
 			)}
 			{manuals[
-				pathname === 'glow_strings_v2_manual' || pathname === 'glow_strings_v2' ? 'glow_strings' : pathname
+				pathname === 'glowstringz_v2_manual' || pathname === 'glowstringz_v2' ? 'glowstringz' : pathname
 			].manual && (
 				<h2
 					style={{
@@ -87,7 +87,7 @@ const ManualPage = (props) => {
 			)}
 			<div className="jc-c column m-0px">
 				{manuals[
-					pathname === 'glow_strings_v2_manual' || pathname === 'glow_strings_v2' ? 'glow_strings' : pathname
+					pathname === 'glowstringz_v2_manual' || pathname === 'glowstringz_v2' ? 'glowstringz' : pathname
 				].videos.map((video) => (
 					<div>
 						<h2

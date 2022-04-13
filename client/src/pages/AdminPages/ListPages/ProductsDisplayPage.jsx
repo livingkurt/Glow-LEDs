@@ -176,7 +176,7 @@ const AllProductsPage = (props) => {
 
 	const descriptions = {
 		all_products:
-			'Take your rave and festival experience to the next level with our LED Accessories at Glow LEDs. Shop Diffuser Caps, Glowskinz, and Glow Stringz. Click to Shop.',
+			'Take your rave and festival experience to the next level with our LED Accessories at Glow LEDs. Shop Diffuser Caps, Glowskinz, and Glowstringz. Click to Shop.',
 		diffusers:
 			'Take your gloving light shows to the next level with our Frosted Dome Diffusers at Glow LEDs. Shop Dome Diffusers, Large Dome Diffusers, and Frosted Diffusers. Click to Shop.',
 		diffuser_caps:
@@ -184,7 +184,7 @@ const AllProductsPage = (props) => {
 		diffuser_adapters:
 			'Take your gloving light shows to the next level with our Diffuser Adapters at Glow LEDs. Shop Screw On Diffusers, LED Adapters, and Diffuser Cap Adapters. Click to Shop.',
 		glow_stringz:
-			'Decorate your home and festival with these stunning glow strings at Glow LEDs. Shop String Lights, LED Strips, and Addressable LEDs. Click to Shop.',
+			'Decorate your home and festival with these stunning Glowstringz at Glow LEDs. Shop String Lights, LED Strips, and Addressable LEDs. Click to Shop.',
 		glowskinz:
 			'Take your gloving light shows to the next level with our Glowskinz at Glow LEDs. Shop Diffuser Skins, LED Skins, and Diffuser Casing Combo. Click to Shop.'
 	};
