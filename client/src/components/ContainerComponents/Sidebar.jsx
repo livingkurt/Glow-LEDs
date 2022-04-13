@@ -321,7 +321,7 @@ const Sidebar = props => {
                         </Link>
                         <button
                           className="sidebar-btn-dropdown"
-                          onClick={() => show_hide("glowskinz_dropdown_5")}
+                          onClick={() => show_hide("clozd_glowskinz_dropdown")}
                           aria-label="Show"
                         >
                           <i className="fas fa-sort-up" />
@@ -329,7 +329,7 @@ const Sidebar = props => {
                       </div>
                       <ul
                         className="sidebar_dropdown_nested_2_container"
-                        id="glowskinz_dropdown_5"
+                        id="clozd_glowskinz_dropdown"
                       >
                         <Link to="/collections/all/products/category/glowskinz/subcategory/clozd/collection/classics">
                           <button
@@ -365,15 +365,85 @@ const Sidebar = props => {
                     Glowframez
                   </button>
                 </Link>
-                <Link to="/collections/all/products/category/exo_diffusers">
-                  <button className="sidebar-btn nested" onClick={closeMenu}>
-                    EXO Diffusers
-                  </button>
-                </Link>
                 <div className="sidebar_dropdown_nested">
-                  {/* <Link to="/collections/all/products/category/diffuser_caps">
-								<button className="sidebar-btn secondary">Diffuser Caps</button>
-							</Link> */}
+                  <div className="sidebar-btn-container">
+                    <button className="sidebar-btn nested" onClick={closeMenu}>
+                      <Link to="/collections/all/products/category/exo_diffusers">
+                        EXO Diffusers
+                      </Link>
+                    </button>
+                    <button
+                      className="sidebar-btn-dropdown"
+                      onClick={() => show_hide("exo_diffuseres_dropdown")}
+                      aria-label="Show"
+                    >
+                      <i className="fas fa-sort-up" />
+                    </button>
+                  </div>
+                  <ul
+                    className="sidebar_dropdown_nested_container"
+                    id="exo_diffuseres_dropdown"
+                  >
+                    <div className="sidebar_dropdown_nested">
+                      {/* <button className="sidebar-btn secondary">Collections</button> */}
+                      <div className="sidebar-btn-container">
+                        <Link to="/pages/menu/collections" className="w-100per">
+                          <button
+                            className="sidebar-btn nested-2"
+                            onClick={closeMenu}
+                          >
+                            Collections
+                          </button>
+                        </Link>
+                        <button
+                          className="sidebar-btn-dropdown"
+                          onClick={() => show_hide("exo_collection_dropdown")}
+                          aria-label="Show"
+                        >
+                          <i className="fas fa-sort-up" />
+                        </button>
+                      </div>
+                      <ul
+                        className="sidebar_dropdown_nested_2_container"
+                        id="exo_collection_dropdown"
+                      >
+                        <Link to="/collections/all/products/category/exo_diffusers/subcategory/polyhedrons/collection/platonic_solids">
+                          <button
+                            className="sidebar-btn nested-3"
+                            onClick={closeMenu}
+                          >
+                            Platonic Solids
+                          </button>
+                        </Link>
+                        <Link to="/collections/all/products/category/exo_diffusers/subcategory/domes/collection/spheroid">
+                          <button
+                            className="sidebar-btn nested-3"
+                            onClick={closeMenu}
+                          >
+                            Spheroid
+                          </button>
+                        </Link>
+                      </ul>
+                    </div>
+                    <Link to="/collections/all/products/category/exo_diffusers/subcategory/polyhedrons">
+                      <button
+                        className="sidebar-btn nested-2"
+                        onClick={closeMenu}
+                      >
+                        Polyhedrons
+                      </button>
+                    </Link>
+                    <Link to="/collections/all/products/category/exo_diffusers/subcategory/domes">
+                      <button
+                        className="sidebar-btn nested-2"
+                        onClick={closeMenu}
+                      >
+                        Domes
+                      </button>
+                    </Link>
+                  </ul>
+                </div>
+                <div className="sidebar_dropdown_nested">
                   <div className="sidebar-btn-container">
                     <button className="sidebar-btn nested" onClick={closeMenu}>
                       <Link to="/collections/all/products/category/diffuser_caps">
@@ -415,7 +485,7 @@ const Sidebar = props => {
                         className="sidebar_dropdown_nested_2_container"
                         id="glowskinz_dropdown_5"
                       >
-                        <Link to="/collections/all/products/category/diffuser_caps/collection/texture">
+                        <Link to="/collections/all/products/category/diffuser_caps/subcategory/geometric/collection/texture">
                           <button
                             className="sidebar-btn nested-3"
                             onClick={closeMenu}
@@ -423,7 +493,7 @@ const Sidebar = props => {
                             Texture
                           </button>
                         </Link>
-                        <Link to="/collections/all/products/category/diffuser_caps/collection/fractal">
+                        <Link to="/collections/all/products/category/diffuser_caps/subcategory/geometric/collection/fractal">
                           <button
                             className="sidebar-btn nested-3"
                             onClick={closeMenu}
@@ -431,7 +501,7 @@ const Sidebar = props => {
                             Fractal
                           </button>
                         </Link>
-                        <Link to="/collections/all/products/category/diffuser_caps/collection/space_cadet">
+                        <Link to="/collections/all/products/category/diffuser_caps/subcategory/shapes/collection/space_cadet">
                           <button
                             className="sidebar-btn nested-3"
                             onClick={closeMenu}
@@ -439,7 +509,7 @@ const Sidebar = props => {
                             Space Cadet
                           </button>
                         </Link>
-                        <Link to="/collections/all/products/category/diffuser_caps/collection/festy_besty">
+                        <Link to="/collections/all/products/category/diffuser_caps/subcategory/shapes/collection/festy_besty">
                           <button
                             className="sidebar-btn nested-3"
                             onClick={closeMenu}
@@ -447,7 +517,7 @@ const Sidebar = props => {
                             Festy Besty
                           </button>
                         </Link>
-                        <Link to="/collections/all/products/category/diffuser_caps/collection/platonic_solids">
+                        <Link to="/collections/all/products/category/diffuser_caps/subcategory/geometric/collection/platonic_solids">
                           <button
                             className="sidebar-btn nested-3"
                             onClick={closeMenu}
@@ -524,7 +594,7 @@ const Sidebar = props => {
                         className="sidebar-btn nested-2"
                         onClick={closeMenu}
                       >
-                        Abstract (New)
+                        Abstract
                       </button>
                     </Link>
                     <Link to="/collections/all/products/category/diffusers/subcategory/polygons">
@@ -532,7 +602,7 @@ const Sidebar = props => {
                         className="sidebar-btn nested-2"
                         onClick={closeMenu}
                       >
-                        Polygons (New)
+                        Polygons
                       </button>
                     </Link>
                     <Link to="/collections/all/products/category/diffusers/subcategory/cylinders">
@@ -540,7 +610,7 @@ const Sidebar = props => {
                         className="sidebar-btn nested-2"
                         onClick={closeMenu}
                       >
-                        Cylinders (New)
+                        Cylinders
                       </button>
                     </Link>
                     <Link to="/collections/all/products/category/diffusers/subcategory/domes">
@@ -548,7 +618,7 @@ const Sidebar = props => {
                         className="sidebar-btn nested-2"
                         onClick={closeMenu}
                       >
-                        Domes (New)
+                        Domes
                       </button>
                     </Link>
                     <Link to="/collections/all/products/category/diffusers/subcategory/open_hole">

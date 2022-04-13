@@ -420,11 +420,23 @@ const Header = props => {
                               Glowframez
                             </button>
                           </Link>
-                          <Link to="/collections/all/products/category/exo_diffusers">
-                            <button className="btn nav w-100per ta-l">
+                          <div className="nav-btn-container">
+                            <Link
+                              to="/collections/all/products/category/exo_diffusers"
+                              className="w-100per"
+                            >
+                              <button className="nav-btn-link">
                               EXO Diffusers
+                              </button>
+                            </Link>
+                            <button
+                              className="nav-btn-dropdown"
+                              onClick={() => show_hide("exo_diffusers_dropdown")}
+                              aria-label="Show"
+                            >
+                              <i className="fas fa-sort-up" />
                             </button>
-                          </Link>
+                          </div>
                           <div className="nav-btn-container">
                             <Link
                               to="/collections/all/products/category/diffuser_caps"
@@ -511,6 +523,75 @@ const Header = props => {
                         
 
                         </div>
+                         {/* EXO Diffusers */}
+                         {/* <div
+                          className="nav-dropdown-subcategory-content hover_fade_in "
+                          id="exo_diffusers_dropdown"
+                        >
+                          <Link to="/collections/all/products/category/exo_diffusers">
+                            <button className="btn nav w-100per ta-l fs-20px title_font">
+                              EXO Diffusers
+                            </button>
+                          </Link>
+                          <hr className="w-95per m-0px" />
+                          <Link to="/collections/all/products/category/exo_diffusers/subcategory/polyhedrons/collection/platonic_solids">
+                            <div className="row">
+                              <button className="btn nav w-100per ta-l">
+                                Platonic Solids
+                              </button>
+                            </div>
+                          </Link>
+                        </div> */}
+                        <div
+                          className="nav-dropdown-subcategory-content hover_fade_in "
+                          id="exo_diffusers_dropdown"
+                        >
+                            <Link to="/collections/all/products/category/exo_diffusers">
+                            <button className="btn nav w-100per ta-l fs-20px title_font">
+                              EXO Diffusers
+                            </button>
+                          </Link>
+                          <hr className="w-95per m-0px" />
+                          <div className="nav-btn-container">
+                            <Link
+                              to="/collections/all/products/category/exo_diffusers"
+                              className="w-100per"
+                            >
+                              <button className="nav-btn-link w-100per ">
+                                Collections
+                              </button>
+                            </Link>
+                            <button
+                              className="nav-btn-dropdown"
+                              onClick={() =>
+                                show_hide_nested("exo_diffusers_collections_dropdown")}
+                              aria-label="Show"
+                            >
+                              <i className="fas fa-sort-up" />
+                            </button>
+                          </div>
+                      
+                            <Link
+                              to="/collections/all/products/category/exo_diffusers/subcategory/polyhedrons"
+                              className="w-100per"
+                            ><div className="row">
+                              <button className="btn nav w-100per ta-l">
+                                Polyhedrons
+                              </button>
+                              </div>
+                            </Link>
+                            <Link
+                              to="/collections/all/products/category/exo_diffusers/subcategory/domes"
+                              className="w-100per"
+                            ><div className="row">
+                              <button className="btn nav w-100per ta-l">
+                                Domes
+                              </button>
+                              </div>
+                            </Link>
+                        
+
+                        </div>
                         {/* Frosted Diffusers */}
                         <div
                           className="nav-dropdown-subcategory-content hover_fade_in "
@@ -525,28 +606,28 @@ const Header = props => {
                           <Link to="/collections/all/products/category/diffusers/subcategory/abstract">
                             <div className="row">
                               <button className="btn nav w-100per ta-l">
-                                Abstract (New)
+                                Abstract
                               </button>
                             </div>
                           </Link>
                           <Link to="/collections/all/products/category/diffusers/subcategory/polygons">
                             <div className="row">
                               <button className="btn nav w-100per ta-l">
-                                Polygons (New)
+                                Polygons
                               </button>
                             </div>
                           </Link>
                           <Link to="/collections/all/products/category/diffusers/subcategory/cylinders">
                             <div className="row">
                               <button className="btn nav w-100per ta-l">
-                                Cylinders (New)
+                                Cylinders
                               </button>
                             </div>
                           </Link>
                           <Link to="/collections/all/products/category/diffusers/subcategory/domes">
                             <div className="row">
                               <button className="btn nav w-100per ta-l">
-                                Domes (New)
+                                Domes
                               </button>
                             </div>
                           </Link>
@@ -671,6 +752,27 @@ const Header = props => {
                           <Link to="/collections/all/products/category/diffuser_caps/subcategory/geometric/collection/platonic_solids">
                             <button className="btn nav w-100per ta-l">
                               Platonic Solids
+                            </button>
+                          </Link>
+                        </div>
+                        <div
+                          className="nav-dropdown-nested-content hover_fade_in"
+                          id="exo_diffusers_collections_dropdown"
+                        >
+                          <Link to="/pages/menu/collections">
+                            <button className="btn nav w-100per ta-l fs-20px title_font">
+                              Collections
+                            </button>
+                          </Link>
+                          <hr className="w-95per m-0px" />
+                          <Link to="/collections/all/products/category/exo_diffusers/subcategory/polyhedrons/collection/platonic_solids">
+                            <button className="btn nav w-100per ta-l">
+                              Platonic Solids
+                            </button>
+                          </Link>
+                          <Link to="/collections/all/products/category/exo_diffusers/subcategory/domes/collection/spheroid">
+                            <button className="btn nav w-100per ta-l">
+                              Spheroid
                             </button>
                           </Link>
                         </div>
