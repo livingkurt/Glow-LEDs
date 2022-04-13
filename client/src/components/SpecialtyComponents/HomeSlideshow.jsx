@@ -96,7 +96,7 @@ const HomeSlideshow = ({ slideshow }) => {
 			ssr={true} // means to render carousel on server-side.
 			infinite={true}
 			autoPlay={true}
-			autoPlaySpeed={5000}
+			autoPlaySpeed={8000}
 			// keyBoardControl={true}
 			// transitionDuration={5000}
 			containerClass="carousel-container"
