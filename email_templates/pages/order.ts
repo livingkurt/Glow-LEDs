@@ -215,6 +215,57 @@ export default (props: any) => {
 														<td style="font-family:helvetica">
 															<table style="width:100%;border-spacing:0;margin-top:20px">
 																<tbody>
+																<tr>
+																${!order.promo_code
+                                  ? `<td style="font-family:helvetica;padding:5px 0">
+																			<p style="color:white;line-height:1.2em;font-size:16px;margin:0"><span
+																					style="font-size:16px">Subtotal</span></p>
+																		</td>
+																		<td style="font-family:helvetica;padding:5px 0;text-align:right" align="righ=t">
+																			<strong style="font-size:16px;color:white">$${order.orderItems
+                                        .map((item: any) => {
+                                          return {
+                                            price: item.sale_price
+                                              ? item.sale_price
+                                              : item.price,
+                                            qty: item.qty,
+                                          };
+                                        })
+                                        .reduce(
+                                          (a: any, c: any) =>
+                                            a + c.price * c.qty,
+                                          0
+                                        )
+                                        .toFixed(2)}</strong>
+																		</td>
+																	</tr>`
+                                  : ""}
+																	${order.promo_code
+                                    ? `<td style="font-family:helvetica;padding:5px 0">
+																		<del style="color:red">
+																				<p style="color:white;line-height:1.2em;font-size:16px;margin:0"><span
+																						style="font-size:16px">Subtotal</span></p></del>
+																			</td>
+																			<td style="font-family:helvetica;padding:5px 0;text-align:right" align="righ=t">
+																			<del style="color:red">
+																				<strong style="font-size:16px;color:white">$${order.orderItems
+                                          .map((item: any) => {
+                                            return {
+                                              price: item.sale_price
+                                                ? item.sale_price
+                                                : item.price,
+                                              qty: item.qty,
+                                            };
+                                          })
+                                          .reduce(
+                                            (a: any, c: any) =>
+                                              a + c.price * c.qty,
+                                            0
+                                          )
+                                          .toFixed(2)}</strong></del>
+																			</td>
+																		</tr>`
+                                    : ""}
 																	${order.promo_code
                                     ? `<tr>
 																		<td style="font-family:helvetica;padding:5px 0;width:100%">
@@ -237,32 +288,19 @@ export default (props: any) => {
 																		</td>
 																	</tr>`
                                     : ""}
-																	<tr>
+																		${order.promo_code
+                                      ? `<tr>
 																		<td style="font-family:helvetica;padding:5px 0">
 																			<p style="color:white;line-height:1.2em;font-size:16px;margin:0"><span
-																					style="font-size:16px">Subtotal</span></p>
+																					style="font-size:16px">New Subtotal</span></p>
 																		</td>
 																		<td style="font-family:helvetica;padding:5px 0;text-align:right" align="righ=t">
-																			<strong style="font-size:16px;color:white">$${order.promo_code
-                                        ? order.itemsPrice.toFixed(2)
-                                        : (order.orderItems &&
-                                          order.orderItems.reduce(
-                                            (a: any, c: any) =>
-                                              a + c.sale_price * c.qty,
-                                            0
-                                          ) === 0
-                                            ? order.orderItems.reduce(
-                                                (a: any, c: any) =>
-                                                  a + c.price * c.qty,
-                                                0
-                                              )
-                                            : order.orderItems.reduce(
-                                                (a: any, c: any) =>
-                                                  a + c.sale_price * c.qty,
-                                                0
-                                              )).toFixed(2)}</strong>
+																			<strong style="font-size:16px;color:white">$${order.itemsPrice.toFixed(
+                                        2
+                                      )}</strong>
 																		</td>
-																	</tr>
+																	</tr>`
+                                      : ""}
 																	<tr>
 																		<td style="font-family:helvetica;padding:5px 0">
 																			<p style="color:white;line-height:1.2em;font-size:16px;margin:0"><span
@@ -366,13 +404,6 @@ export default (props: any) => {
 																	</tr>
 																</tbody>
 															</table>`
-                                : ""}
-															${order.promo_code
-                                ? `<p style="color:white;line-height:1.1;font-size:16px;margin:10px 0 0" align="right">You
-																saved <span style="font-size:16px;color:white">$${(order.orderItems.reduce(
-                                  (a: any, c: any) => a + c.price * c.qty,
-                                  0
-                                ) - order.itemsPrice).toFixed(2)}</span></p>`
                                 : ""}
 														</td>
 													</tr>

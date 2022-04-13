@@ -9,6 +9,7 @@ const email_routes = {
     return axios.post("/api/emails/order", { order, subject, email });
   },
   send_refund_email: (order: object, subject: string, email: string) => {
+    console.log({ order, subject, email });
     return axios.post("/api/emails/refund", { order, subject, email });
   },
   send_order_status_email: (

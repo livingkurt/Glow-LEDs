@@ -51,6 +51,36 @@ router.get(
   }
 );
 router.get(
+  "/refund",
+  async (req: { body: any }, res: { send: (arg0: string) => void }) => {
+    const data = await order_db.findById_orders_db("625646bf3b0e10057d288e9b");
+    // const data = await Order.findOne({ _id: "625644ee81243b01b485d360" })
+    //   .populate("user")
+    //   .populate("orderItems.product")
+    //   .populate("orderItems.secondary_product");
+    console.log({ data: data.orderItems[0].name });
+    const body = {
+      email: {
+        show_image: true,
+        active: true,
+        deleted: false,
+        email_type: "Order",
+        h1: "Partial Refund Successful!",
+        image: "",
+        h2: "Your Order has been refunded for Duplicate Order on 12/10/2021",
+        createdAt: "2020-11-19T16:24:12.273Z",
+        updatedAt: "2021-07-06T18:52:09.037Z",
+        images: [],
+        p: "",
+      },
+
+      title: "Thank you for your purchase!",
+      order: data,
+    };
+    res.send(App({ body: order(body), unsubscribe: false }));
+  }
+);
+router.get(
   "/order",
   async (req: { body: any }, res: { send: (arg0: string) => void }) => {
     // const order = await order_db.findById_orders_db('61e423d48fff204d7a14f174');
@@ -60,9 +90,10 @@ router.get(
         active: true,
         deleted: false,
         email_type: "Order",
-        h1: "Full Refund Successful!",
+        h1: "Thank you for your purchase!",
         image: "",
-        h2: "Your Order has been refunded for Duplicate Order on 12/10/2021",
+        h2:
+          "we are starting production on your order. We will notify your as your order progresses.",
         createdAt: "2020-11-19T16:24:12.273Z",
         updatedAt: "2021-07-06T18:52:09.037Z",
         images: [],

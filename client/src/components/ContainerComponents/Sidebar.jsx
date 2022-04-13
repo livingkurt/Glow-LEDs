@@ -276,7 +276,7 @@ const Sidebar = props => {
                       className={`sidebar-btn nested  special_font gradient-btn`}
                       onClick={closeMenu}
                     >
-                      <span>GLOW STRINGZ V2</span>
+                      <span>GLOWSTRINGZ V2</span>
                     </button>
                   </Link>
                 ) : (
@@ -706,7 +706,7 @@ const Sidebar = props => {
 									className={`sidebar-btn secondary  special_font gradient-btn`}
 									onClick={closeMenu}
 								>
-									<span>GLOW STRINGZ V2</span>
+									<span>GLOWSTRINGZ V2</span>
 								</button>
 							</Link>
 						) : (

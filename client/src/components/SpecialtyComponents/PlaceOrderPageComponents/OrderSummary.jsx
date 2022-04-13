@@ -54,14 +54,14 @@ export function OrderSummary({
 					</ul>
 				</li>
 
-				{(!show_message || free_shipping_message) &&  (
+				{!show_message &&  (
 					<li>
 						<div>Subtotal</div>
 						<div>${itemsPrice.toFixed(2)}</div>
 					</li>
 				)}
 
-				{show_message && !free_shipping_message && (
+				{show_message  && (
 					<li>
 						<del
 							style={{
@@ -93,13 +93,13 @@ export function OrderSummary({
 						</div>
 					</li>
 				)}
-				{show_message && !free_shipping_message && (
+				{show_message  && (
 					<li>
 						<div>Discount</div>
 						<div>-${(items_price - itemsPrice).toFixed(2)}</div>
 					</li>
 				)}
-				{show_message && !free_shipping_message &&(
+				{show_message  &&(
 					<li>
 						<div>New Subtotal</div>
 						<div>${itemsPrice.toFixed(2)}</div>

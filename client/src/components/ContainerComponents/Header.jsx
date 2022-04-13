@@ -388,7 +388,7 @@ const Header = props => {
                               <button
                                 className={`btn nav ta-l w-100per special_font gradient-btn`}
                               >
-                                <span>GLOW STRINGZ V2</span>
+                                <span>GLOWSTRINGZ V2</span>
                               </button>
                             </Link>
                           ) : (

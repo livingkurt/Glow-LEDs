@@ -185,30 +185,35 @@ export default {
     });
   },
   send_refund_emails_c: async (req: any, res: any) => {
-    const { order, subject, email } = req.body;
+    console.log({ send_refund_emails_c: req.body });
+    const { order: order_data, email } = req.body;
+    console.log({ order_data });
+    console.log({ payment: order_data.payment });
+    console.log({ refund: order_data.payment.refund });
     const body = {
       email: {
-        h1: `${order.payment.refund.reduce(
+        h1: `${order_data.payment.refund.reduce(
           (a: any, c: any) => a + c.amount,
           0
         ) /
           100 <
-        order.itemsPrice
+        order_data.itemsPrice
           ? "Partial"
           : "Full"} Refund Successful`,
         h2: `Your Order has been refunded for ${" "}
-          ${order.payment.refund_reason[
-            order.payment.refund_reason.length - 1
-          ]}${" "}
-          on ${format_date(order.refundedAt)}`,
+          ${order_data.payment.refund_reason[
+            order_data.payment.refund_reason.length - 1
+          ]} on ${format_date(
+          order_data.refundedAt
+        )}. You're payment will show up in your bank account between 5-10 business days. Please let us know if you have any questions about this process.`,
       },
       title: "Thank you for your purchase!",
-      order: order,
+      order: order_data,
     };
     const mailOptions = {
       from: process.env.DISPLAY_EMAIL,
       to: email,
-      subject: subject,
+      subject: "Your Glow LEDs Refund",
       html: App({ body: order(body), unsubscribe: false }),
     };
     transporter.sendMail(mailOptions, (err, data) => {
