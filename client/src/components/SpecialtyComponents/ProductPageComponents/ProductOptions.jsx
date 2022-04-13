@@ -312,24 +312,32 @@ const ProductOptions = ({
 				<div className="">
 					<h4 className="mb-10px mt-10px">Shipping Calculated at Checkout</h4>
 					<h4 className="mb-0px mt-0px" style={{ webkitTextStroke: '0.5px white' }}>
-						{product.category === 'glow_stringz' && '	This item ships in 6 - 10 business day.'}
+						{product.category === 'glowstringz' && ' This item ships in 6 - 10 business days.'}
 					</h4>
 
 					<h4 className="mb-0px mt-0px" style={{ webkitTextStroke: '0.5px white' }}>
 						{(product.category === 'exo_diffusers' ||
 							product.category === 'diffusers' ||
 							product.category === 'diffuser_caps') &&
-							'	This item ships in 2 - 5 business day.'}
+							'	This item ships in 2 - 5 business days.'}
 					</h4>
 					<h4 className="mb-0px mt-0px" style={{ webkitTextStroke: '0.5px white' }}>
-						{product.category === 'decals' && '	This item ships in 2 - 5 business day.'}
+						{product.category === 'decals' && '	This item ships in 2 - 5 business days.'}
 					</h4>
 					<h4 className="mb-0px mt-0px" style={{ webkitTextStroke: '0.5px white' }}>
-						{product.subcategory === 'whites' && '	This item ships in 2 - 3 business day.'}
+						{product.subcategory === 'whites' && '	This item ships in 2 - 3 business days.'}
 					</h4>
 					<h4 className="mb-0px mt-0px" style={{ webkitTextStroke: '0.5px white' }}>
 						{(product.category === 'glowskinz') &&
-							'	This item ships in 3 - 7 business day.'}
+							'	This item ships in 3 - 7 business days.'}
+					</h4>
+					<h4 className="mb-0px mt-0px" style={{ webkitTextStroke: '0.5px white' }}>
+						{(product.category === 'batteries' && product.subcategory === 'storage') &&
+							'	This item ships in 5 - 8 business days.'}
+					</h4>
+					<h4 className="mb-0px mt-0px" style={{ webkitTextStroke: '0.5px white' }}>
+						{((product.category === 'batteries' && product.subcategory === 'coin') || product.category === "whites") &&
+							'	This item ships in 1 - 2 business days.'}
 					</h4>
 				</div>
 				{determine_add_to_cart(product, secondary_product, count_in_stock, option_product_object)}

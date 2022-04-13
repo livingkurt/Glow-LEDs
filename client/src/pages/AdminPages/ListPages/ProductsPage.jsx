@@ -154,7 +154,7 @@ function ProductPage(props) {
 			// 	result = '#557b68';
 			// }
 		}
-		if (product.category === 'glow_stringz') {
+		if (product.category === 'glowstringz') {
 			result = colors[2].color;
 		}
 		if (product.subcategory === 'clozd') {

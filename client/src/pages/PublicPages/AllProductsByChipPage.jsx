@@ -321,7 +321,7 @@ const AllProductsByChipPage = props => {
             category === "diffuser_adapters" ||
             category === "exo_diffusers" ||
             category === "glowskinz" ||
-            category === "glow_stringz" ? (
+            category === "glowstringz" ? (
               "™"
             ) : (
               ""

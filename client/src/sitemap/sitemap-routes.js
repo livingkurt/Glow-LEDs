@@ -24,7 +24,7 @@ export default (
 		<Route path="/collections/all/products/category/diffuser_caps/subcategory/:subcategory" />
 		<Route path="/collections/all/products/category/diffusers/subcategory/:subcategory" />
 		<Route path="/collections/all/products/category/exo_diffusers/subcategory/:subcategory" />
-		<Route path="/collections/all/products/category/glow_stringz/subcategory/:subcategory" />
+		<Route path="/collections/all/products/category/glowstringz/subcategory/:subcategory" />
 		<Route path="/collections/all/products/category/glowskinz/subcategory/:subcategory" />
 
 

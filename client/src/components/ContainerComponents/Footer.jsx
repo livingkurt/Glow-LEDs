@@ -147,9 +147,9 @@ const Footer = () => {
               <ul className="lst-none">
                 <li className="ta-l mv-2rem">
 								{browser_check() !== "safari" ? (
-                              <Link className="gradient-btn special_font"to="/collections/all/products/glow_stringz_v2_50_led_3_5m"><span>GLOWSTRINGZ V2</span></Link>
+                              <Link className="gradient-btn special_font"to="/collections/all/products/glowstringz_v2_50_led_3_5m"><span>GLOWSTRINGZ V2</span></Link>
                           ) : (
-                            <Link className=""to="/collections/all/products/glow_stringz_v2_50_led_3_5m"><span>GLOWSTRINGZ V2</span></Link>
+                            <Link className=""to="/collections/all/products/glowstringz_v2_50_led_3_5m"><span>GLOWSTRINGZ V2</span></Link>
                           )}
                 
                 </li>

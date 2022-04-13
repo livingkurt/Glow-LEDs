@@ -685,7 +685,7 @@ export const categories = [
   "diffuser_caps",
   "diffusers",
   "exo_diffusers",
-  "glow_stringz",
+  "glowstringz",
   "glowskinz",
 ];
 export const subcategories = [
@@ -739,7 +739,7 @@ export const homepage_videos = [
   },
   {
     name: "Glowstringz V2",
-    category: "glow_stringz",
+    category: "glowstringz",
     video: "mNBwaZKWi8c",
     color: "#b1832f",
     description:
@@ -783,7 +783,7 @@ export const homepage_videos = [
 ];
 
 export const manuals = {
-  glow_stringz: {
+  glowstringz: {
     name: "Glowstringz V2 Manual",
     manual: "/Glow_Strings_V2_Manual.png",
     videos: [
@@ -884,7 +884,7 @@ export const descriptions = {
     "Take your gloving light shows to the next level with our Diffuser Caps at Glow LEDs. Shop Screw on LED Caps, Cap over Diffusers, and Diffuser filters. Click to Shop.",
   diffuser_adapters:
     "Take your gloving light shows to the next level with our Diffuser Adapters at Glow LEDs. Shop Screw On Diffusers, LED Adapters, and Diffuser Cap Adapters. Click to Shop.",
-  glow_stringz:
+  glowstringz:
     "Decorate your home and festival with these stunning Glowstringz at Glow LEDs. Shop String Lights, LED Strips, and Addressable LEDs. Click to Shop.",
   glowskinz:
     "Take your gloving light shows to the next level with our Glowskinz at Glow LEDs. Shop Diffuser Skins, LED Skins, and Diffuser Casing Combo. Click to Shop.",
@@ -903,8 +903,8 @@ export const description_determination = (category: any) => {
   if (category === "glowskinz") {
     return descriptions.glowskinz;
   }
-  if (category === "glow_stringz") {
-    return descriptions.glow_stringz;
+  if (category === "glowstringz") {
+    return descriptions.glowstringz;
   } else {
     return descriptions.all_products;
   }

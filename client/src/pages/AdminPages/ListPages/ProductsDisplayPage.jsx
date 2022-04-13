@@ -183,7 +183,7 @@ const AllProductsPage = (props) => {
 			'Take your gloving light shows to the next level with our Diffuser Caps at Glow LEDs. Shop Screw on LED Caps, Cap over Diffusers, and Diffuser filters. Click to Shop.',
 		diffuser_adapters:
 			'Take your gloving light shows to the next level with our Diffuser Adapters at Glow LEDs. Shop Screw On Diffusers, LED Adapters, and Diffuser Cap Adapters. Click to Shop.',
-		glow_stringz:
+		glowstringz:
 			'Decorate your home and festival with these stunning Glowstringz at Glow LEDs. Shop String Lights, LED Strips, and Addressable LEDs. Click to Shop.',
 		glowskinz:
 			'Take your gloving light shows to the next level with our Glowskinz at Glow LEDs. Shop Diffuser Skins, LED Skins, and Diffuser Casing Combo. Click to Shop.'
@@ -202,8 +202,8 @@ const AllProductsPage = (props) => {
 		if (category === 'glowskinz') {
 			return descriptions.glowskinz;
 		}
-		if (category === 'glow_stringz') {
-			return descriptions.glow_stringz;
+		if (category === 'glowstringz') {
+			return descriptions.glowstringz;
 		} else {
 			return descriptions.all_products;
 		}
@@ -237,7 +237,7 @@ const AllProductsPage = (props) => {
 						category === 'diffuser_adapters' ||
 						category === 'exo_diffusers' ||
 						category === 'glowskinz' ||
-						category === 'glow_stringz' ? (
+						category === 'glowstringz' ? (
 							'™'
 						) : (
 							''

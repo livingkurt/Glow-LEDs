@@ -13,7 +13,7 @@ const categories = [
 	'diffuser_caps',
 	'diffusers',
 	'exo_diffusers',
-	'glow_stringz',
+	'glowstringz',
 	'glowskinz'
 ];
 const subcategories = [
@@ -106,7 +106,7 @@ async function generateSitemap() {
 		'/collections/all/products/category/exo_diffusers/subcategory/:subcategory': subcategoryMap,
 		'/collections/all/products/category/diffuser_caps/subcategory/:subcategory': subcategoryMap,
 		'/collections/all/products/category/diffusers/subcategory/:subcategory': subcategoryMap,
-		'/collections/all/products/category/glow_stringz/subcategory/:subcategory': subcategoryMap,
+		'/collections/all/products/category/glowstringz/subcategory/:subcategory': subcategoryMap,
 		'/collections/all/products/category/glowskinz/subcategory/clozd/collection/:collection': collectionsMap,
 		'/collections/all/products/category/glowskinz/subcategory/opyn/collection/:collection': collectionsMap,
 		'/collections/all/products/category/diffuser_caps/subcategory/texture/collection/:collection': collectionsMap,

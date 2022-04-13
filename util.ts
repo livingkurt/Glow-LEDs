@@ -409,7 +409,7 @@ export const categories = [
   "diffuser_caps",
   "diffusers",
   "exo_diffusers",
-  "glow_stringz",
+  "glowstringz",
   "glowskinz",
 ];
 export const subcategories = [
