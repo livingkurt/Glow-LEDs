@@ -16,7 +16,7 @@ import {
 } from "../email_templates/pages/index";
 import email_subscription from "../email_templates/pages/email_subscription";
 import { affiliate_db, content_db, order_db, user_db } from "../db";
-import { toCapitalize } from "../util";
+import { format_date, toCapitalize } from "../util";
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -161,7 +161,7 @@ export default {
   send_order_emails_c: async (req: any, res: any) => {
     const body = {
       email: {
-        h1: "Thank you for your Order!",
+        h1: "YOUR ORDER HAS BEEN PLACED! 🎉",
         h2:
           "We are starting production on your order! We will notify your as your order progresses.",
       },
@@ -180,6 +180,43 @@ export default {
         res.status(500).send({ error: err, message: "Error Sending Email" });
       } else {
         console.log("Email Sent to " + req.body.email);
+        res.status(200).send({ message: "Email Successfully Sent" });
+      }
+    });
+  },
+  send_refund_emails_c: async (req: any, res: any) => {
+    const { order, subject, email } = req.body;
+    const body = {
+      email: {
+        h1: `${order.payment.refund.reduce(
+          (a: any, c: any) => a + c.amount,
+          0
+        ) /
+          100 <
+        order.itemsPrice
+          ? "Partial"
+          : "Full"} Refund Successful`,
+        h2: `Your Order has been refunded for ${" "}
+          ${order.payment.refund_reason[
+            order.payment.refund_reason.length - 1
+          ]}${" "}
+          on ${format_date(order.refundedAt)}`,
+      },
+      title: "Thank you for your purchase!",
+      order: order,
+    };
+    const mailOptions = {
+      from: process.env.DISPLAY_EMAIL,
+      to: email,
+      subject: subject,
+      html: App({ body: order(body), unsubscribe: false }),
+    };
+    transporter.sendMail(mailOptions, (err, data) => {
+      if (err) {
+        console.log("Error Occurs", err);
+        res.status(500).send({ error: err, message: "Error Sending Email" });
+      } else {
+        console.log("Email Sent to " + email);
         res.status(200).send({ message: "Email Successfully Sent" });
       }
     });

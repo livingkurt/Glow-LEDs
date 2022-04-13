@@ -171,6 +171,17 @@ const OrderListItem = ({ order, determine_color, admin, update_order_payment_sta
 	
 		set_loading_label(false);
 	};
+	const send_refund_email = async () => {
+		set_loading_label(true);
+			await API_Emails.send_refund_email(order, 'Refund Successful', order.shipping.email, true);
+			await API_Emails.send_refund_email(
+				order,
+				'New Refunded for ' + order.shipping.first_name,
+				'info.glowleds@gmail.com', true
+			);
+	
+		set_loading_label(false);
+	};
 
 	return (
 		<div className="container" style={{ backgroundColor: determine_color(order) }}>
@@ -594,6 +605,7 @@ const OrderListItem = ({ order, determine_color, admin, update_order_payment_sta
 							update_order_payment_state={update_order_payment_state}
 							update_order_state={update_order_state}
 							send_order_email={send_order_email}
+							send_refund_email={send_refund_email}
 						/>
 					</div>
 				</div>

@@ -20,7 +20,7 @@ export default (props: any) => {
 								${order.shipping.first_name.toUpperCase()}, </h1>
 							<h1
 								style="text-align:center;font-family:helvetica;width:100%;margin:0px;line-height:50px;color:#333333;font-size:30px; padding-bottom: 7px;">
-								YOUR ORDER HAS BEEN PLACED! 🎉</h1>
+								${email.h1}</h1>
 						</td>
 
 					</tr>
@@ -59,19 +59,10 @@ export default (props: any) => {
 						<tr>
 							<td style="font-family:helvetica">
 								<p style="color:white;line-height:150%;font-size:16px;margin:0">
-									${order.isRefunded
-                    ? `
-								<h4 style='fontFamily: helvetica;'>
-									Your Order has been refunded for ${" "}
-									${order.payment.refund_reason[
-                    order.payment.refund_reason.length - 1
-                  ]}${" "}
-									on ${format_date(order.refundedAt)}
-								</h4>`
-                    : `<p style='font-size: 16px; line-height: 30px;'>
+									<p style='font-size: 16px; line-height: 30px;'>
 									Hi ${order.shipping.first_name},${" "}
 									${email && email.h2 ? email.h2 : ""}
-								</p>`}
+								</p>
 
 								<table style="width:100%;border-spacing:0;margin-top:20px">
 									<tbody>

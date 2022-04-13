@@ -68,6 +68,15 @@ const OrderStatusButtons = ({ order, update_order_payment_state, update_order_st
 					{order.isRefunded ? 'Unset to Refunded' : 'Set to Refunded'}
 				</button>
 			</div>
+			{send_order_email && 
+			<div className="row ai-c">
+				<button
+					className="btn primary mv-5px w-100per"
+					onClick={() => send_order_email()}
+				>
+					Send Refund Email
+				</button>
+			</div>}
 		</div>
 	);
 };

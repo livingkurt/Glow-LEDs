@@ -15,7 +15,8 @@
     "editor.defaultFormatter": "vscode.html-language-features"
   },
   "workbench.iconTheme": "vscode-icons",
-  "liveServer.settings.AdvanceCustomBrowserCmdLine": "/Applications/Brave Browser.app",
+  "liveServer.settings.CustomBrowser": "brave",
+  // "liveServer.settings.AdvanceCustomBrowserCmdLine": "/Applications/Brave\ Browser.app",
   "[graphql]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
   "eslint.run": "onSave",
   "eslint.packageManager": "yarn",
@@ -25,7 +26,6 @@
   "stylelint.packageManager": "yarn",
   "ruby.lint": { "rubocop": { "useBundler": true }},
   "editor.codeActionsOnSave": { "source.fixAll": true },
-  "terminal.external.osxExec": "iTerm.app",
   "terminal.integrated.fontFamily": "Source Code Pro for Powerline",
   "terminal.integrated.lineHeight": 1.3,
   "terminal.integrated.cursorStyle": "line",

@@ -60,10 +60,9 @@ router.get(
         active: true,
         deleted: false,
         email_type: "Order",
-        h1: "Thank you for your purchase!",
+        h1: "Full Refund Successful!",
         image: "",
-        h2:
-          "we are starting production on your order. We will notify your as your order progresses.",
+        h2: "Your Order has been refunded for Duplicate Order on 12/10/2021",
         createdAt: "2020-11-19T16:24:12.273Z",
         updatedAt: "2021-07-06T18:52:09.037Z",
         images: [],
@@ -287,7 +286,7 @@ router.get(
         isPackaged: false,
         isShipped: false,
         isDelivered: false,
-        isRefunded: false,
+        isRefunded: true,
         deleted: true,
         orderItems: [
           {
@@ -1210,7 +1209,7 @@ router.get(
         isPackaged: false,
         isShipped: false,
         isDelivered: false,
-        // isRefunded: true,
+        isRefunded: true,
         deleted: true,
         tracking_number: "9400136109361125191918",
         orderItems: [
