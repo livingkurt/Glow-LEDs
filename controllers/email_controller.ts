@@ -242,7 +242,10 @@ export default {
     const mailOptions = {
       from: process.env.DISPLAY_EMAIL,
       to: req.body.email,
-      subject: req.body.subject,
+      subject:
+        req.body.status === "reassured"
+          ? "Thank you for your patience"
+          : req.body.subject,
       html: App({
         body: order_status(body),
         unsubscribe: false,

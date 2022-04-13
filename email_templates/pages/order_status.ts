@@ -26,7 +26,8 @@ const determine_color = (status: string) => {
       return "#6f5f7d";
     case "shipped":
       return "#636363";
-
+    case "reassured":
+      return "#585858";
     default:
       break;
   }
@@ -39,6 +40,8 @@ const determine_message = (status: string) => {
       return "your order has been packaged and is ready to ship! We will notify you when it has been sent.";
     case "shipped":
       return "your shipment is on the way! Track your shipment to see the delivery status.";
+    case "reassured":
+      return "due to high order volume, orders are taking a little longer than usual. Don't worry we didn't forget about you, we still have your order and we will send it out to you as soon as we can 😊 Each product at Glow LEDs is handmade to order with love 😍 which allows us to think up new products as they are requested. 👍 Thank you so much for the support and patience!  We really appreciate you 💙 💙 💙 ";
 
     default:
       break;
@@ -61,9 +64,11 @@ export default (props: any) => {
               " manufactured"
                 ? "30px"
                 : "30px"}; padding-bottom: 7px;">
-                YOUR ORDER HAS BEEN ${status === "manufactured"
-                  ? "CRAFTED"
-                  : status.toUpperCase()} ${determine_emoji(status)}</h1>
+                ${status === "reassured"
+                  ? "Apologies for the Longer Wait Time"
+                  : `YOUR ORDER HAS BEEN ${status === "manufactured"
+                      ? "CRAFTED"
+                      : status.toUpperCase()} ${determine_emoji(status)}`}</h1>
             </td>
           </tr>
         </table>

@@ -770,9 +770,9 @@ router.get(
             package_width: 7,
             package_height: 3,
             package_volume: 168,
-            pathname: "glowstringz_v2_50_led_3_5m",
+            pathname: "glow_stringz_v2_50_led_3_5m",
             subcategory: "leds",
-            category: "glowstringz",
+            category: "glow_stringz",
             qty: 1,
             createdAt: "2022-01-25T03:55:28.733Z",
             updatedAt: "2022-01-25T03:55:28.733Z",
@@ -1667,7 +1667,23 @@ router.get(
     );
   }
 );
+// router.get(
+//   "/announcement",
+//   async (req: { body: any }, res: { send: (arg0: string) => void }) => {
+//     const contents = await content_db.findAll_contents_db(
+//       { deleted: false },
+//       { _id: -1 },
+//       0
+//     );
 
+//     res.send(
+//       App({
+//         body: announcment(contents && contents[0]),
+//         title: "Glow LEDs Account Created",
+//       })
+//     );
+//   }
+// );
 router.get(
   "/account_created",
   async (req: { body: any }, res: { send: (arg0: string) => void }) => {
