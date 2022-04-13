@@ -16,6 +16,8 @@ import { detailsContent, listContents } from "../../../actions/contentActions";
 import { API_Emails } from "../../../utils";
 import { SketchPicker } from "react-color";
 import reactCSS from "reactcss";
+const ReactDOMServer = require('react-dom/server');
+const HtmlToReactParser = require('html-to-react').Parser;
 
 const EditEmailPage = props => {
   const [ id, set_id ] = useState("");
@@ -29,6 +31,7 @@ const EditEmailPage = props => {
   const [ text_color, set_text_color ] = useState("#FFFFFF");
   const [ title_color, set_title_color ] = useState("#333333");
   const [ header_footer_color, set_header_footer_color ] = useState("#333333");
+  const [ template, set_template ] = useState('');
 
   const [ email_h2, set_email_h2 ] = useState("");
   const [ email_p, set_email_p ] = useState("");
@@ -92,6 +95,7 @@ const EditEmailPage = props => {
     set_text_color(email.text_color);
     set_title_color(email.title_color);
     set_header_footer_color(email.header_footer_color);
+    view_announcement_email()
   };
   const unset_state = () => {
     set_id("");
@@ -152,6 +156,32 @@ const EditEmailPage = props => {
       ...data.home_page,
       link: new_link,
     });
+  }
+  const view_announcement_email = async () => {
+    // dispatch(detailsContent(e.target.value));
+    console.log({email})
+    const { data } = await API_Emails.view_announcement_email({
+      _id: id ? id : null,
+      email_type: "Announcements",
+      h1: email_h1,
+      image: email_image,
+      images,
+      h2: email_h2,
+      p: email_p,
+      button: email_button,
+      link: email_link,
+      header_footer_color,
+      background_color,
+      module_color,
+      button_color,
+      text_color,
+      title_color,
+      active: email_active,
+    });
+    console.log({data})
+    const htmlToReactParser = new HtmlToReactParser();
+    const reactElement = htmlToReactParser.parse(data);
+    set_template(reactElement)
   };
 
   useEffect(
@@ -161,6 +191,7 @@ const EditEmailPage = props => {
         if (email) {
           // console.log('Set');
           set_email_state();
+         
         } else {
           // console.log('UnSet');
           unset_state();
@@ -186,6 +217,7 @@ const EditEmailPage = props => {
     },
     [ content ]
   );
+
 
   setTimeout(() => {
     set_loading_checkboxes(false);
@@ -472,7 +504,8 @@ const EditEmailPage = props => {
                             name="background_color"
                             value={background_color}
                             id="background_color"
-                            onChange={e => set_background_color(e.target.value)}
+                            onChange={e => {set_background_color(e.target.value)   
+                              view_announcement_email()}}
                           />
                           <div>
                             <div
@@ -684,6 +717,9 @@ const EditEmailPage = props => {
                     >
                       Back to Template
                     </button>
+                  </li>
+                  <li>
+                   {template}
                   </li>
                 </ul>
               </div>

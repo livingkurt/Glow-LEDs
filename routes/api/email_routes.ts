@@ -16,6 +16,9 @@ router.route("/review").post(email_controller.send_review_emails_c);
 router.route("/affiliate").post(email_controller.send_affiliate_emails_c);
 router.route("/feature").post(email_controller.send_feature_emails_c);
 router.route("/announcement").post(email_controller.send_announcement_emails_c);
+router
+  .route("/view_announcement")
+  .post(email_controller.view_announcement_emails_c);
 
 router
   .route("/external_contact")

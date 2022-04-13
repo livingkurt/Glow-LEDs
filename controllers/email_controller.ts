@@ -465,6 +465,18 @@ export default {
       }
     });
   },
+  view_announcement_emails_c: async (req: any, res: any) => {
+    const { template } = req.body;
+    console.log({ template });
+    if (Object.keys(template).length > 2) {
+      res.status(200).send(
+        App({
+          body: announcement(template),
+          unsubscribe: true,
+        })
+      );
+    }
+  },
   send_email_subscription_emails_c: async (req: any, res: any) => {
     console.log({ send_email_subscription_emails_c: req.body });
     const contents = await content_db.findAll_contents_db(

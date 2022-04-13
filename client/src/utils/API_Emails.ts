@@ -54,6 +54,10 @@ const email_routes = {
   send_announcement_email: (template: any, subject: string, test: boolean) => {
     return axios.post("/api/emails/announcement", { template, subject, test });
   },
+  view_announcement_email: (template: any) => {
+    console.log({ template });
+    return axios.post("/api/emails/view_announcement", { template });
+  },
   send_email: (template: string, subject: string, email: string) => {
     return axios.post("/api/emails/send_email", { template, subject, email });
   },
