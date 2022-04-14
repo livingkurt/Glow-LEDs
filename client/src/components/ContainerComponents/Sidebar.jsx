@@ -387,7 +387,7 @@ const Sidebar = props => {
                     <div className="sidebar_dropdown_nested">
                       {/* <button className="sidebar-btn secondary">Collections</button> */}
                       <div className="sidebar-btn-container">
-                        <Link to="/pages/menu/collections" className="w-100per">
+                        <Link to="/collections/all/products/category/exo_diffuser" className="w-100per">
                           <button
                             className="sidebar-btn nested-2"
                             onClick={closeMenu}

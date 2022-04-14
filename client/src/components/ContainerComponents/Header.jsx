@@ -759,7 +759,7 @@ const Header = props => {
                           className="nav-dropdown-nested-content hover_fade_in"
                           id="exo_diffusers_collections_dropdown"
                         >
-                          <Link to="/pages/menu/collections">
+                          <Link to="/collections/all/products/category/exo_diffusers">
                             <button className="btn nav w-100per ta-l fs-20px title_font">
                               Collections
                             </button>
