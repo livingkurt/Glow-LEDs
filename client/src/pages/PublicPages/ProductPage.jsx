@@ -33,7 +33,7 @@ const ProductPage = props => {
   const [ qty, setQty ] = useState(1);
   const [ images, set_images ] = useState([]);
   const [ price, set_price ] = useState();
-  const [ previous_price, set_previous_price ] = useState();
+  const [ previous_price, set_previous_price ] = useState(0);
   const [ sale_price, set_sale_price ] = useState(0);
   const [ size, set_size ] = useState();
   const [ quantity, set_quantity ] = useState();
@@ -127,6 +127,7 @@ const ProductPage = props => {
   );
 
   const update_universal_state = item => {
+    set_previous_price(0);
     if (item) {
       set_image(item.images && item.images[0]);
       set_images(item.images);
