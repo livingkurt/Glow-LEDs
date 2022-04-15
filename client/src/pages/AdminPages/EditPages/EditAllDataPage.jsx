@@ -132,7 +132,7 @@ const EditAllDataPage = (props) => {
 					{/* {affiliate && ( */}
 					<div>
 						<Helmet>
-							<title>Edit Affiliate| Glow LEDs</title>
+							<title>Edit All Data | Glow LEDs</title>
 						</Helmet>
 						<ul className="edit-form-container" style={{ maxWidth: '30rem', marginBottom: '20px' }}>
 							{/* {loading_checkboxes ? (

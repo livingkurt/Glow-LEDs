@@ -78,7 +78,7 @@ const ProductOptions = ({
 		'Batman Decals',
 		'Outline + Slim Batman Decals',
 		'CLOZD Nanoskinz',
-		'CLOZD Alt Novaskinz w Nano Sleds',
+		'CLOZD Alt Novaskinz',
 		'OPYN Nanoskinz',
 		'CLOZD Novaskinz',
 		'Supreme Sizing Sampler Pack'
