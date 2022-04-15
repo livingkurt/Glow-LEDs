@@ -457,11 +457,11 @@ export default {
     };
     console.log({ time });
     const date = new Date(time);
-    console.log({
-      time: `${date.getSeconds()} ${date.getMinutes()} ${date.getHours()} ${date.getDate()} ${date.getMonth() +
-        1} *`,
-    });
-    if (time) {
+    if (time.length > 0) {
+      console.log({
+        time: `${date.getSeconds()} ${date.getMinutes()} ${date.getHours()} ${date.getDate()} ${date.getMonth() +
+          1} *`,
+      });
       cron.schedule(
         `${date.getSeconds()} ${date.getMinutes()} ${date.getHours()} ${date.getDate()} ${date.getMonth() +
           1} *`,

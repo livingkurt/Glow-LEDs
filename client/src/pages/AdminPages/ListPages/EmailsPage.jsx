@@ -15,6 +15,7 @@ const EmailsPage = (props) => {
 	const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
 	const [ test, set_test ] = useState(true);
 	const [ subject, set_subject ] = useState('');
+	const [ schedule, set_schedule ] = useState(false);
 	const [ email, set_email ] = useState({});
 	
 	const category = props.match.params.category ? props.match.params.category : '';
@@ -120,7 +121,7 @@ const EmailsPage = (props) => {
 	const [ link, set_link ] = useState('announcement');
 
 	const send_announcement_email = async () => {
-		const data = await API_Emails.send_announcement_email(email, subject ? subject : email.h1, test, unformat_date_and_time(date, time));
+		const data = await API_Emails.send_announcement_email(email, subject ? subject : email.h1, test, schedule ? unformat_date_and_time(date, time): '');
 		console.log('Announcement Email Sent Successfully');
 		console.log(data);
 	};
@@ -154,8 +155,25 @@ const EmailsPage = (props) => {
 					</a>
 				</div>
 				<input type="text" placeholder="Subject" onChange={(e) => set_subject(e.target.value)} />
-				<input type="text" value={date} onChange={(e) => set_date(e.target.value)} />
-				<input type="text" value={time} onChange={(e) => set_time(e.target.value)} />
+				{loading_checkboxes ? (
+					<div>Loading...</div>
+				) : (
+					<div>
+						<label htmlFor="schedule">Schedule</label>
+						<input
+							type="checkbox"
+							name="schedule"
+							defaultChecked={schedule}
+							id="schedule"
+							onChange={(e) => {
+								set_schedule(e.target.checked);
+							}}
+						/>
+					</div>
+				)}
+				{schedule && 
+			<>	<input type="text" value={date} onChange={(e) => set_date(e.target.value)} />
+				<input type="text" value={time} onChange={(e) => set_time(e.target.value)} /></>}
 				{loading_checkboxes ? (
 					<div>Loading...</div>
 				) : (
@@ -172,6 +190,7 @@ const EmailsPage = (props) => {
 						/>
 					</div>
 				)}
+			
 			<button className="btn primary mb-1rem" onClick={() => send_announcement_email()}>
 					Send Announcement Email
 				</button>
