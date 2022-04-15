@@ -36,7 +36,7 @@ const ProductSelection = ({
 					<Rating rating={product.rating} numReviews={product.numReviews} />
 				</a>
 			</div>
-			<div className="max-w-492px mr-15px">
+			{/* <div className="max-w-492px mr-15px">
 				{secondary_product && (
 					<div className="ai-c mv-20px jc-b w-100per">
 						<h3 className="mv-0px mr-5px">
@@ -97,7 +97,7 @@ const ProductSelection = ({
 						{size}
 					</div>
 				)}
-			</div>
+			</div> */}
 			<div className="row ai-c mv-20px">
 				<h3 className="mv-0px mr-5px">Price: </h3>
 				{product_page_sale_price_switch(
