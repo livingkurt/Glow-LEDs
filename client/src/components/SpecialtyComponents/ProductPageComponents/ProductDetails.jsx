@@ -68,7 +68,7 @@ const ProductDetails = ({
               >
                 Description
               </Tab>
-              {(product.name === "Supremes" ||
+							{(product.name === "Supremes" ||
                 product.name ===
                   "Refresh Pack (6 Supreme Pairs + 120 Batteries)") && (
                 <Tab
@@ -77,17 +77,7 @@ const ProductDetails = ({
                   Sizing
                 </Tab>
               )}
-              <Tab
-                style={{ padding: "10px", borderRadius: "10px 10px 0px 0px" }}
-              >
-                Included Items
-              </Tab>
-              <Tab
-                style={{ padding: "10px", borderRadius: "10px 10px 0px 0px" }}
-              >
-                Product Dimensions
-              </Tab>
-              {product.chips &&
+							{product.chips &&
               product.chips.length > 0 && (
                 <Tab
                   style={{ padding: "10px", borderRadius: "10px 10px 0px 0px" }}
@@ -95,12 +85,7 @@ const ProductDetails = ({
                   Compatible Chips
                 </Tab>
               )}
-              <Tab
-                style={{ padding: "10px", borderRadius: "10px 10px 0px 0px" }}
-              >
-                Reviews
-              </Tab>
-              {manuals &&
+							  {manuals &&
               manuals[product.category] && (
                 <Tab
                   style={{ padding: "10px", borderRadius: "10px 10px 0px 0px" }}
@@ -113,6 +98,16 @@ const ProductDetails = ({
               >
                 Media
               </Tab>
+							<Tab
+                style={{ padding: "10px", borderRadius: "10px 10px 0px 0px" }}
+              >
+                Reviews
+              </Tab>
+              <Tab
+                style={{ padding: "10px", borderRadius: "10px 10px 0px 0px" }}
+              >
+                Included Items
+              </Tab>
               {product.contributers &&
               product.contributers.length > 0 && (
                 <Tab
@@ -121,6 +116,11 @@ const ProductDetails = ({
                   Contributers
                 </Tab>
               )}
+							 <Tab
+                style={{ padding: "10px", borderRadius: "10px 10px 0px 0px" }}
+              >
+                Product Dimensions
+              </Tab>
             </TabList>
           </Overflow.Content>
           {canScroll && (
@@ -195,51 +195,7 @@ const ProductDetails = ({
             </div>
           </TabPanel>
         )}
-        <TabPanel>
-          <div className="mt-1rem">
-            <h2 className="m-0px mr-5px"> Included Items: </h2>
-            <div className="h-100per paragraph_font">
-              <ul className="pl-2rem">
-                {included_items ? (
-                  included_items.split("\n").map((line, index) => {
-                    return (
-                      <li
-                        key={index}
-                        className="paragraph_font"
-                        style={{ listStyleType: "disc" }}
-                      >
-                        {line}
-                      </li>
-                    );
-                  })
-                ) : (
-                  included_items
-                )}
-              </ul>
-            </div>
-          </div>
-        </TabPanel>
-        <TabPanel>
-          {product.product_length &&
-          product.product_length && (
-            <div className="mt-1rem">
-              <h2 className="m-0px mr-5px"> Product Dimensions: </h2>
-              <div className="h-100per paragraph_font">
-                {product.name === "Coin Battery Storage" ? (
-                  `${product.product_length} cm x ${product.product_width} cm x
-											${product.product_height} cm`
-                ) : product.name === "Glowstringz V2" ? (
-                  `${product.product_length} m x ${product.product_width} m x
-											${product.product_height} m`
-                ) : (
-                  `${product.product_length} mm x ${product.product_width} mm x
-											${product.product_height} mm`
-                )}
-              </div>
-            </div>
-          )}
-        </TabPanel>
-        {product.chips &&
+				 {product.chips &&
         product.chips.length > 0 && (
           <TabPanel>
             {product.chips &&
@@ -269,17 +225,7 @@ const ProductDetails = ({
             )}
           </TabPanel>
         )}
-        <TabPanel>
-          <div className="content-margined">
-            {!product.reviews.length && (
-              <div style={{ marginBottom: "10px" }}>
-                Be the First to Review this Product
-              </div>
-            )}
-            <Reviews product={product} pathname={pathname} />
-          </div>
-        </TabPanel>
-        {manuals &&
+				{manuals &&
         manuals[product.category] && (
           <TabPanel>
             <div className="jc-b">
@@ -364,7 +310,7 @@ const ProductDetails = ({
             </div>
           </TabPanel>
         )}
-        <TabPanel style={{ borderRadius: "10px 0px 10px 10px" }}>
+				<TabPanel style={{ borderRadius: "10px 0px 10px 10px" }}>
           {!product.video ? (
             <h2
               style={{
@@ -482,7 +428,42 @@ const ProductDetails = ({
             )}
           </div>
         </TabPanel>
-        {product.contributers &&
+				<TabPanel>
+          <div className="content-margined">
+            {!product.reviews.length && (
+              <div style={{ marginBottom: "10px" }}>
+                Be the First to Review this Product
+              </div>
+            )}
+            <Reviews product={product} pathname={pathname} />
+          </div>
+        </TabPanel>
+    
+        <TabPanel>
+          <div className="mt-1rem">
+            <h2 className="m-0px mr-5px"> Included Items: </h2>
+            <div className="h-100per paragraph_font">
+              <ul className="pl-2rem">
+                {included_items ? (
+                  included_items.split("\n").map((line, index) => {
+                    return (
+                      <li
+                        key={index}
+                        className="paragraph_font"
+                        style={{ listStyleType: "disc" }}
+                      >
+                        {line}
+                      </li>
+                    );
+                  })
+                ) : (
+                  included_items
+                )}
+              </ul>
+            </div>
+          </div>
+        </TabPanel>
+				{product.contributers &&
         product.contributers.length > 0 && (
           <TabPanel>
             {product.contributers &&
@@ -512,6 +493,29 @@ const ProductDetails = ({
             )}
           </TabPanel>
         )}
+        <TabPanel>
+          {product.product_length &&
+          product.product_length && (
+            <div className="mt-1rem">
+              <h2 className="m-0px mr-5px"> Product Dimensions: </h2>
+              <div className="h-100per paragraph_font">
+                {product.name === "Coin Battery Storage" ? (
+                  `${product.product_length} cm x ${product.product_width} cm x
+											${product.product_height} cm`
+                ) : product.name === "Glowstringz V2" ? (
+                  `${product.product_length} m x ${product.product_width} m x
+											${product.product_height} m`
+                ) : (
+                  `${product.product_length} mm x ${product.product_width} mm x
+											${product.product_height} mm`
+                )}
+              </div>
+            </div>
+          )}
+        </TabPanel>
+      
+        
+        
       </Tabs>
     </div>
   );
