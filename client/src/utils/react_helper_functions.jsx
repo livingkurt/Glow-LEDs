@@ -375,27 +375,27 @@ export const determine_product_name = (item, show_qty, date) => {
           {item.size !== 0 && " - " + item.size}
         </div>
       );
-    } else if (
-      item.category === "glowskinz"
-    ) {
-      if (item.name === "CLOZD Novaskinz" || item.name === "CLOZD Alt Novaskinz") {
+    } else if (item.category === "glowskinz") {
+      if (
+        item.name === "CLOZD Novaskinz" ||
+        item.name === "CLOZD Alt Novaskinz"
+      ) {
         return (
           <div>
             {show_qty && item.qty > 1 && item.qty + "x"} {item.name}{" "}
             {item.size !== 0 && " - " + item.size}{" "}
             {item.secondary_product_name &&
-                item.secondary_product_name.length > 0 &&
-                ` - ${determine_secondary_product_name(
-                  item.secondary_product_name,
-                  item.category
-                )}`}{" "}
+              item.secondary_product_name.length > 0 &&
+              ` - ${determine_secondary_product_name(
+                item.secondary_product_name,
+                item.category
+              )}`}{" "}
             {item.color && "(" + item.color + " Skin"}
             {item.color && " & "}
             {item.secondary_color && item.secondary_color + " Sled)"}{" "}
           </div>
         );
-      }
-      else {
+      } else {
         return (
           <div>
             {show_qty && item.qty > 1 && item.qty + "x"}{" "}
@@ -435,7 +435,7 @@ export const determine_product_name = (item, show_qty, date) => {
         );
       }
     } else if (item.category === "glowframez") {
-     if (item.subcategory === "clip") {
+      if (item.subcategory === "clip") {
         return (
           <div>
             {/* {console.log({ item })} */}
@@ -445,8 +445,7 @@ export const determine_product_name = (item, show_qty, date) => {
               " - " + item.secondary_product_name.split("-")[1]}{" "}
           </div>
         );
-      } 
-     else if (item.subcategory === "clozd" || item.subcategory === "opyn") {
+      } else if (item.subcategory === "clozd" || item.subcategory === "opyn") {
         return (
           <div>
             {/* {console.log({ item })} */}
@@ -455,17 +454,16 @@ export const determine_product_name = (item, show_qty, date) => {
             {item.size !== "0" && " - " + item.size}{" "}
           </div>
         );
-      } 
+      }
     } else if (item.category === "batteries") {
-      if(item.subcategory === "storage"){
+      if (item.subcategory === "storage") {
         return (
           <div>
             {show_qty && item.qty > 1 && item.qty + "x"}{" "}
             {item.color && item.color + " "} {item.name}{" "}
           </div>
         );
-      }
-      else if(item.subcategory === "coin"){
+      } else if (item.subcategory === "coin") {
         return (
           <div>
             {show_qty && item.qty > 1 && item.qty + "x"}{" "}
@@ -473,8 +471,7 @@ export const determine_product_name = (item, show_qty, date) => {
             {item.size !== "0" && " - " + item.size}{" "}
           </div>
         );
-      }
-      else {
+      } else {
         return (
           <div>
             {show_qty && item.qty > 1 && item.qty + "x"}{" "}
@@ -486,7 +483,6 @@ export const determine_product_name = (item, show_qty, date) => {
           </div>
         );
       }
-      
     } else if (item.category === "exo_diffusers") {
       return (
         <div>
@@ -643,7 +639,6 @@ export const determine_option_product_name = (name, category, subcategory) => {
       if (name.split("-")[0].trim() === "Supreme Gloves") {
         return name.split("-")[1].trim();
       } else {
-    
         return name;
       }
     }
@@ -673,16 +668,28 @@ export const determine_product_name_display = product => {
     option => option.default_option === true
   );
   // console.log({ option });
-  return (
-    <div>
-      {product.name}{" "}
-      {(product.category === "batteries" ||
-        product.category === "glowskinz") &&
-        option &&
-        option.size &&
-        `- ${option.size}`}
-    </div>
-  );
+if (product.category === "diffusers" || product.category === "exo_diffusers" || product.category === "diffuser_caps") {
+    return <div>{product.name} - 10</div>;
+  } 
+else if (product.category === "decals") {
+    return <div>{product.name} - 11</div>;
+  } 
+else if (product.name === "Nova Clip") {
+    return <div>{product.name} - 1</div>;
+  } 
+  else {
+    return (
+      <div>
+        {product.name}{" "}
+        {(product.category === "batteries" ||
+          product.category === "glowskinz" ||
+          product.category === "glowframez") &&
+          option &&
+          option.size &&
+          `- ${option.size}`}
+      </div>
+    );
+  }
 };
 
 export const list_display = (list_items, set_items) => {
