@@ -51,8 +51,18 @@ const email_routes = {
   send_verified: (email: string, promo_code: string) => {
     return axios.post("/api/emails/account_created", { email, promo_code });
   },
-  send_announcement_email: (template: any, subject: string, test: boolean) => {
-    return axios.post("/api/emails/announcement", { template, subject, test });
+  send_announcement_email: (
+    template: any,
+    subject: string,
+    test: boolean,
+    time: string
+  ) => {
+    return axios.post("/api/emails/announcement", {
+      template,
+      subject,
+      test,
+      time,
+    });
   },
   view_announcement_email: (template: any) => {
     console.log({ template });

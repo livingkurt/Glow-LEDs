@@ -5,7 +5,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { Loading, Notification } from '../../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import { Search, Sort } from '../../../components/SpecialtyComponents';
-import { humanize } from '../../../utils/helper_functions';
+import { accurate_date, format_date, format_time, humanize, unformat_date, unformat_date_and_time } from '../../../utils/helper_functions';
 import { API_Emails } from '../../../utils';
 
 const EmailsPage = (props) => {
@@ -16,6 +16,7 @@ const EmailsPage = (props) => {
 	const [ test, set_test ] = useState(true);
 	const [ subject, set_subject ] = useState('');
 	const [ email, set_email ] = useState({});
+	
 	const category = props.match.params.category ? props.match.params.category : '';
 	const emailList = useSelector((state) => state.emailList);
 	const { loading, emails, message, error } = emailList;
@@ -26,6 +27,12 @@ const EmailsPage = (props) => {
 	const emailDelete = useSelector((state) => state.emailDelete);
 	const { success: successDelete } = emailDelete;
 	const dispatch = useDispatch();
+
+	const today = new Date();
+
+
+	const [ date, set_date ] = useState(format_date(accurate_date(today)));
+	const [ time, set_time ] = useState(format_time(accurate_date(today)));
 
 	useEffect(
 		() => {
@@ -112,18 +119,8 @@ const EmailsPage = (props) => {
 
 	const [ link, set_link ] = useState('announcement');
 
-	// const go_to_template = (e) => {
-	// 	e.preventDefault();
-	// 	// history.push('/api/templates/' + e.target.value);
-	// 	window.history.pushState({}, '', '/api/templates/' + e.target.value);
-	// 	window.history.pushState(
-	// 		{ urlPath: '/api/templates/' + e.target.value },
-	// 		'',
-	// 		'/api/templates/' + e.target.value
-	// 	);
-	// };
 	const send_announcement_email = async () => {
-		const data = await API_Emails.send_announcement_email(email, subject ? subject : email.h1, test);
+		const data = await API_Emails.send_announcement_email(email, subject ? subject : email.h1, test, unformat_date_and_time(date, time));
 		console.log('Announcement Email Sent Successfully');
 		console.log(data);
 	};
@@ -137,37 +134,6 @@ const EmailsPage = (props) => {
 				<title>Admin Emails | Glow LEDs</title>
 			</Helmet>
 			<Notification message={message} />
-			{/* <Link to="/secure/glow/emails/announcement">
-				<button className="btn primary">Announcement</button>
-			</Link>
-			<Link to="/secure/glow/emails/order/60d4aae4726aa8002a5091a4/order/false">
-				<button className="btn primary">Order</button>
-			</Link>
-			<Link to="/secure/glow/emails/order_status/60d4aae4726aa8002a5091a4/reassured">
-				<button className="btn primary">Reassurance</button>
-			</Link>
-			<Link to="/secure/glow/emails/order_status/60d4aae4726aa8002a5091a4/Manufactured">
-				<button className="btn primary">Manufactured</button>
-			</Link>
-
-			<Link to="/secure/glow/emails/order_status/60d4aae4726aa8002a5091a4/Delivered">
-				<button className="btn primary">Delivered</button>
-			</Link>
-			<Link to="/secure/glow/emails/order/60d4aae4726aa8002a5091a4/refunded/false">
-				<button className="btn primary">Refunded</button>
-			</Link>
-			<Link to="/secure/glow/emails/invoice">
-				<button className="btn primary">Invoice</button>
-			</Link>
-			<Link to="/secure/glow/emails/feature/cosmo_gloving_502/feature/false">
-				<button className="btn primary">Feature</button>
-			</Link>
-			<Link to="/secure/glow/emails/affiliate/po/affiliate/false">
-				<button className="btn primary">Affiliate</button>
-			</Link>
-			<Link to="/secure/glow/editemail">
-				<button className="btn primary">Create Email</button>
-			</Link> */}
 			<div className="wrap jc-b ai-c">
 				<div className="ai-c h-25px mv-15px jc-c">
 					<div className="custom-select">
@@ -188,6 +154,8 @@ const EmailsPage = (props) => {
 					</a>
 				</div>
 				<input type="text" placeholder="Subject" onChange={(e) => set_subject(e.target.value)} />
+				<input type="text" value={date} onChange={(e) => set_date(e.target.value)} />
+				<input type="text" value={time} onChange={(e) => set_time(e.target.value)} />
 				{loading_checkboxes ? (
 					<div>Loading...</div>
 				) : (

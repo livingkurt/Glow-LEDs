@@ -17,6 +17,7 @@ import {
 import email_subscription from "../email_templates/pages/email_subscription";
 import { affiliate_db, content_db, order_db, user_db } from "../db";
 import { format_date, toCapitalize } from "../util";
+const cron = require("node-cron");
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -424,7 +425,7 @@ export default {
 
   send_announcement_emails_c: async (req: any, res: any) => {
     console.log({ send_announcement_emails_c: req.body });
-    const { template, subject, test } = req.body;
+    const { template, subject, test, time } = req.body;
     const users = await user_db.findAll_users_db(
       { deleted: false, email_subscription: true },
       {}
@@ -454,16 +455,45 @@ export default {
       }),
       bcc: emails,
     };
-
-    transporter.sendMail(mailOptions, (err, data) => {
-      if (err) {
-        console.log("Error Occurs", err);
-        res.status(500).send({ error: err, message: "Error Sending Email" });
-      } else {
-        console.log("Email " + subject + " to everyone");
-        res.status(200).send({ message: "Email Successfully Sent" });
-      }
+    console.log({ time });
+    const date = new Date(time);
+    console.log({
+      time: `${date.getSeconds()} ${date.getMinutes()} ${date.getHours()} ${date.getDate()} ${date.getMonth() +
+        1} *`,
     });
+    if (time) {
+      cron.schedule(
+        `${date.getSeconds()} ${date.getMinutes()} ${date.getHours()} ${date.getDate()} ${date.getMonth() +
+          1} *`,
+        () => {
+          transporter.sendMail(mailOptions, (err, data) => {
+            if (err) {
+              console.log("Error Occurs", err);
+              res
+                .status(500)
+                .send({ error: err, message: "Error Sending Email" });
+            } else {
+              console.log("Email " + subject + " to everyone");
+              res.status(200).send({ message: "Email Successfully Sent" });
+            }
+          });
+        },
+        {
+          scheduled: true,
+          timezone: "America/Rainy_River",
+        }
+      );
+    } else {
+      transporter.sendMail(mailOptions, (err, data) => {
+        if (err) {
+          console.log("Error Occurs", err);
+          res.status(500).send({ error: err, message: "Error Sending Email" });
+        } else {
+          console.log("Email " + subject + " to everyone");
+          res.status(200).send({ message: "Email Successfully Sent" });
+        }
+      });
+    }
   },
   view_announcement_emails_c: async (req: any, res: any) => {
     const { template } = req.body;
