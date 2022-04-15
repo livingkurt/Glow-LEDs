@@ -336,10 +336,10 @@ const AllProductsPage = props => {
       <div className="jc-c">
         <div className="row">
           <h1 className="fs-25px mb-5px ta-c">
-            {`${humanize(category) === "Exo Diffusers"
+            {` ${(collection && humanize(collection)) || (subcategory &&
+              humanize(subcategory))} ${humanize(category) === "Exo Diffusers"
               ? "EXO Diffusers"
-              : humanize(category)} ${subcategory &&
-              humanize(subcategory)} ${collection && humanize(collection)}` ||
+              : humanize(category)}` ||
               "Products"}
           </h1>
           <label style={{ color: "#d2cfcf", marginTop: "10px" }}>
