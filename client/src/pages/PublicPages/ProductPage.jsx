@@ -728,11 +728,11 @@ const ProductPage = props => {
               <meta name="twitter:title" content={product.meta_title} />
               <link
                 rel="canonical"
-                href={`https://www.glow-leds.com/collections/all/products/${product.category}/${product.subcategory}/${product.pathname}`}
+                href={`https://www.glow-leds.com/collections/all/products/${product.pathname}`}
               />
               <meta
                 property="og:url"
-                content={`https://www.glow-leds.com/collections/all/products/${product.category}/${product.subcategory}/${product.pathname}`}
+                content={`https://www.glow-leds.com/collections/all/products/${product.pathname}`}
               />
               {product.images && (
                 <div>
