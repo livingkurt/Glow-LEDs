@@ -1911,6 +1911,19 @@ const EditProductPage = (props) => {
 										</button>
 									</li>
 									<li>
+									<Link
+												to={{
+													pathname: '/collections/all/products/' + product.pathname,
+													previous_path: history.location.pathname
+												}}
+											>
+													<button className="btn secondary w-100per" >
+													Go to	{loading ? 'Product' : product.name}
+										</button>
+								
+											</Link>
+									</li>
+									<li>
 										<button className="btn secondary" onClick={() => history.goBack()}>
 											Back to Products
 										</button>
