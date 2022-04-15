@@ -384,7 +384,7 @@ const Header = props => {
                           </Link>
                           <hr className="w-95per m-0px" />
                           {browser_check() !== "safari" ? (
-                            <Link to="/collections/all/products/glowstringz_v2_50_led_3_5m">
+                            <Link to="/collections/all/products/glowstringz_v2">
                               <button
                                 className={`btn nav ta-l w-100per special_font gradient-btn`}
                               >
@@ -392,7 +392,7 @@ const Header = props => {
                               </button>
                             </Link>
                           ) : (
-                            <Link to="/collections/all/products/glowstringz_v2_50_led_3_5m">
+                            <Link to="/collections/all/products/glowstringz_v2">
                               <button className={`btn nav ta-l w-100per`}>
                                 <span>Glowstringz V2</span>
                               </button>

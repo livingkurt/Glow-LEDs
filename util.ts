@@ -216,13 +216,11 @@ export const determine_parcel = (orderItems: any, parcels: any) => {
   let fit_parcels = [];
 
   // const check_name = (item) =>  {
-  //   return item.name >= 'Glowstringz V2 50 LED / 3.5m';
+  //   return item.name >= 'Glowstringz V2';
   // }
-  // const check = orderItems.map((item: any) => item.name === 'Glowstringz V2 50 LED / 3.5m');
-  // console.log({ check: orderItems.some((item: any) => item.name === 'Glowstringz V2 50 LED / 3.5m') });
-  const check = orderItems.some(
-    (item: any) => item.name === "Glowstringz V2 50 LED / 3.5m"
-  );
+  // const check = orderItems.map((item: any) => item.name === 'Glowstringz V2');
+  // console.log({ check: orderItems.some((item: any) => item.name === 'Glowstringz V2') });
+  const check = orderItems.some((item: any) => item.name === "Glowstringz V2");
   if (parcels.length <= 3) {
     if (check) {
       fit_parcels = parcels.filter((parcel: any) => {

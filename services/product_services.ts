@@ -182,7 +182,7 @@ export default {
         "Bulk CR1616 Batteries",
         "Bulk CR1620 Batteries",
         "Universal Battery Dispenser",
-        "Glowstringz V2 50 LED / 3.5m",
+        "Glowstringz V2",
         "Platonic Solids EXO Diffusers",
         "Diffuser Caps + Adapters Starter Kit V4",
         "Kaleidoscope Diffuser Caps V4",

@@ -271,7 +271,7 @@ const Sidebar = props => {
                 id="gloving_dropdown"
               >
                 {browser_check() !== "safari" ? (
-                  <Link to="/collections/all/products/glowstringz_v2_50_led_3_5m">
+                  <Link to="/collections/all/products/glowstringz_v2">
                     <button
                       className={`sidebar-btn nested  special_font gradient-btn`}
                       onClick={closeMenu}
@@ -281,7 +281,7 @@ const Sidebar = props => {
                   </Link>
                 ) : (
                   <Link
-                    to="/collections/all/products/glowstringz_v2_50_led_3_5m"
+                    to="/collections/all/products/glowstringz_v2"
                     onClick={closeMenu}
                   >
                     <button className={`sidebar-btn nested `}>
@@ -765,13 +765,13 @@ const Sidebar = props => {
                 Customize Any Product!
               </button>
             </Link>
-            {/* <Link to="/collections/all/products/glowstringz_v2_50_led_3_5m">
+            {/* <Link to="/collections/all/products/glowstringz_v2">
 							<button className="sidebar-btn secondary special_font gradient-btn" onClick={closeMenu}>
 								Glowstringz V2
 							</button>
 						</Link> */}
             {/* {browser_check() !== 'safari' ? (
-							<Link to="/collections/all/products/glowstringz_v2_50_led_3_5m">
+							<Link to="/collections/all/products/glowstringz_v2">
 								<button
 									className={`sidebar-btn secondary  special_font gradient-btn`}
 									onClick={closeMenu}
@@ -780,7 +780,7 @@ const Sidebar = props => {
 								</button>
 							</Link>
 						) : (
-							<Link to="/collections/all/products/glowstringz_v2_50_led_3_5m" onClick={closeMenu}>
+							<Link to="/collections/all/products/glowstringz_v2" onClick={closeMenu}>
 								<button className={`sidebar-btn secondary `}>
 									<span>Glowstringz V2</span>
 								</button>

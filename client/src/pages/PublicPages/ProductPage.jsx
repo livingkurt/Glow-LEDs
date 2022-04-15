@@ -961,7 +961,7 @@ const ProductPage = props => {
         )}
       </Loading>
       {product &&
-      product.name !== "Glowstringz V2 50 LED / 3.5m" && product.name !== "Nova Clip" && (
+      product.name !== "Glowstringz V2" && product.name !== "Nova Clip" && (
         <div className=" w-100per m-auto">
           <RelatedProductsSlideshow
             product_category={product.category}
@@ -975,7 +975,7 @@ const ProductPage = props => {
         </div>
       )}
       {product &&
-      product.name !== "Glowstringz V2 50 LED / 3.5m" && product.name !== "Nova Clip" && (
+      product.name !== "Glowstringz V2" && product.name !== "Nova Clip" && (
         <div className=" w-100per m-auto">
           <RelatedProductsSlideshow
             product_category={product.category}
@@ -989,7 +989,7 @@ const ProductPage = props => {
       )}
       {product &&
       product.category !== "batteries" &&
-      product.name !== "Glowstringz V2 50 LED / 3.5m" && product.name !== "Nova Clip" && (
+      product.name !== "Glowstringz V2" && product.name !== "Nova Clip" && (
         <div className=" w-100per m-auto">
           <RelatedProductsSlideshow
             product_category={product.category}

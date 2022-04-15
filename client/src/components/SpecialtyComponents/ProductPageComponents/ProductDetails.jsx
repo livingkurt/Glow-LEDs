@@ -158,7 +158,7 @@ const ProductDetails = ({ product, manuals, description, included_items, pathnam
 								{product.name === 'Coin Battery Storage' ? (
 									`${product.product_length} cm x ${product.product_width} cm x
 											${product.product_height} cm`
-								) : product.name === 'Glowstringz V2 50 LED / 3.5m' ? (
+								) : product.name === 'Glowstringz V2' ? (
 									`${product.product_length} m x ${product.product_width} m x
 											${product.product_height} m`
 								) : (
