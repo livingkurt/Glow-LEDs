@@ -846,4 +846,59 @@ export default {
 
     res.send(products);
   },
+  update_frosted_domes_items: async (req: any, res: any) => {
+    // const order: any = await Order.find({
+    //   "orderItems.0.name": "Frosted Dome Diffusers",
+    // });
+    const order = await Order.updateMany(
+      {
+        "orderItems.0.name": "Frosted Dome Diffusers",
+      },
+      {
+        // 0rename: { shipping_price: 'volume' }
+        $set: {
+          "orderItems.0.name": "Dome Diffusers",
+          "orderItems.0.color_group_name": "Color",
+          "orderItems.0.pathname": "dome_diffusers",
+          "orderItems.0.color_code": "#abaeb5",
+          "orderItems.0.color": "Frosted",
+          "orderItems.0.color_product": "60ee85f5f26266002aee9c6e",
+          "orderItems.0.color_product_name": "Frosted Dome Diffusers",
+        },
+        // $unset: { shipping_price: 1 }
+      },
+      { multi: true }
+      // { upsert: true }
+    );
+    console.log({ order });
+    res.send(order);
+  },
+  update_translucent_white_domes_items: async (req: any, res: any) => {
+    // const order: any = await Order.find({
+    //   "orderItems.0.name": "Frosted Dome Diffusers",
+    // });
+    const order = await Order.updateMany(
+      {
+        "orderItems.0.name": "Dome Diffusers",
+        "orderItems.0.color": "Translucent White",
+      },
+      {
+        // 0rename: { shipping_price: 'volume' }
+        $set: {
+          "orderItems.0.name": "Dome Diffusers",
+          "orderItems.0.color_group_name": "Color",
+          "orderItems.0.pathname": "dome_diffusers",
+          "orderItems.0.color_code": "#abaeb5",
+          "orderItems.0.color": "Frosted",
+          "orderItems.0.color_product": "60ee85f5f26266002aee9c6e",
+          "orderItems.0.color_product_name": "Frosted Dome Diffusers",
+        },
+        // $unset: { shipping_price: 1 }
+      },
+      { multi: true }
+      // { upsert: true }
+    );
+    console.log({ order });
+    res.send(order);
+  },
 };

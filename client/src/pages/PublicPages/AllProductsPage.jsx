@@ -226,7 +226,7 @@ const AllProductsPage = props => {
     set_product_occurrences(occurrences);
     if (occurrences && category === "best_sellers") {
       const { data } = await API_Products.get_best_sellers(occurrences);
-      // console.log({ data });
+      console.log({ best_sellers: data });
       set_products(data);
     } else if (occurrences && category === "essentials") {
       const { data } = await API_Products.get_essentials();

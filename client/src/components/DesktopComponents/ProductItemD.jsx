@@ -102,7 +102,7 @@ const ProductItemD = (props) => {
 											</div>
 										</div>
 									)}
-									{[ ...Array(12).keys() ].map(
+									{[ ...Array(30).keys() ].map(
 										(x, index) =>
 											props.product_occurrences &&
 											props.product_occurrences[index] &&

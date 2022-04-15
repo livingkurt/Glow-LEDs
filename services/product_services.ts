@@ -126,42 +126,43 @@ export default {
   get_best_sellers_products_s: async (body: any) => {
     try {
       const occurences = body.occurences;
-
-      const names = [
-        occurences[0].name === "Frosted Dome Diffusers"
-          ? "Dome Diffusers"
-          : occurences[0].name,
-        occurences[1].name === "Frosted Dome Diffusers"
-          ? "Dome Diffusers"
-          : occurences[1].name,
-        occurences[2].name === "Frosted Dome Diffusers"
-          ? "Dome Diffusers"
-          : occurences[2].name,
-        occurences[3].name === "Frosted Dome Diffusers"
-          ? "Dome Diffusers"
-          : occurences[3].name,
-        occurences[4].name === "Frosted Dome Diffusers"
-          ? "Dome Diffusers"
-          : occurences[4].name,
-        occurences[5].name === "Frosted Dome Diffusers"
-          ? "Dome Diffusers"
-          : occurences[5].name,
-        occurences[6].name === "Frosted Dome Diffusers"
-          ? "Dome Diffusers"
-          : occurences[6].name,
-        occurences[7].name === "Frosted Dome Diffusers"
-          ? "Dome Diffusers"
-          : occurences[7].name,
-        occurences[8].name === "Frosted Dome Diffusers"
-          ? "Dome Diffusers"
-          : occurences[8].name,
-        occurences[9].name === "Frosted Dome Diffusers"
-          ? "Dome Diffusers"
-          : occurences[9].name,
-        occurences[10].name === "Frosted Dome Diffusers"
-          ? "Dome Diffusers"
-          : occurences[10].name,
-      ];
+      console.log({ occurences });
+      // const names = [
+      //   occurences[0].name === "Frosted Dome Diffusers"
+      //     ? "Dome Diffusers"
+      //     : occurences[0].name,
+      //   occurences[1].name === "Frosted Dome Diffusers"
+      //     ? "Dome Diffusers"
+      //     : occurences[1].name,
+      //   occurences[2].name === "Frosted Dome Diffusers"
+      //     ? "Dome Diffusers"
+      //     : occurences[2].name,
+      //   occurences[3].name === "Frosted Dome Diffusers"
+      //     ? "Dome Diffusers"
+      //     : occurences[3].name,
+      //   occurences[4].name === "Frosted Dome Diffusers"
+      //     ? "Dome Diffusers"
+      //     : occurences[4].name,
+      //   occurences[5].name === "Frosted Dome Diffusers"
+      //     ? "Dome Diffusers"
+      //     : occurences[5].name,
+      //   occurences[6].name === "Frosted Dome Diffusers"
+      //     ? "Dome Diffusers"
+      //     : occurences[6].name,
+      //   occurences[7].name === "Frosted Dome Diffusers"
+      //     ? "Dome Diffusers"
+      //     : occurences[7].name,
+      //   occurences[8].name === "Frosted Dome Diffusers"
+      //     ? "Dome Diffusers"
+      //     : occurences[8].name,
+      //   occurences[9].name === "Frosted Dome Diffusers"
+      //     ? "Dome Diffusers"
+      //     : occurences[9].name,
+      //   occurences[10].name === "Frosted Dome Diffusers"
+      //     ? "Dome Diffusers"
+      //     : occurences[10].name,
+      // ];
+      const names = occurences.map((item: any) => item.name);
       console.log({ names });
       const sort = {};
       const filter = { name: { $in: names } };

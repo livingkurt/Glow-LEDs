@@ -70,6 +70,12 @@ router
   .route("/clozd_casing_size_options")
   .put(batch_controller.clozd_casing_size_options);
 router.route("/clozd_glowskinz").put(batch_controller.clozd_glowskinz);
+router
+  .route("/update_frosted_domes_items")
+  .put(batch_controller.update_frosted_domes_items);
+router
+  .route("/update_translucent_white_domes_items")
+  .put(batch_controller.update_translucent_white_domes_items);
 
 // router.route('/create_categories').post();
 
