@@ -642,6 +642,9 @@ export const determine_secondary_product_name = (
     if (name.split("-")[0].trim() === "Supreme Gloves") {
       return name.split("-")[1].trim();
     }
+    if (name.split("-")[0].trim() === "Glowstringz V2") {
+      return name.split("-")[1].trim();
+    }
     if (name.split("-")[0].trim() === "OPYN Nanoskinz") {
       return name.split("-")[1].trim();
     }

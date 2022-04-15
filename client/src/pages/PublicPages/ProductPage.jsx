@@ -648,6 +648,10 @@ const ProductPage = props => {
     // set_secondary_color_products(secondary.secondary_color_products);
 
     // set_secondary_products(secondary.secondary_products);
+    if (product.category === "glowstringz"){
+      set_price(secondary.price)
+      set_sale_price(secondary.sale_price)
+    }
     set_secondary_product(secondary._id);
     set_secondary_product_name(secondary.name);
     set_secondary_product_object(secondary);
