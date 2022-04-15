@@ -654,6 +654,9 @@ export const determine_secondary_product_name = (
     if (name.split("-")[0].trim() === "CLOZD Novaskinz") {
       return name.split("-")[1].trim();
     }
+    if (name.split("-")[0].trim() === "CLOZD Alt Novaskinz") {
+      return name.split("-")[1].trim();
+    }
     if (name.split("-")[0].trim() === "Supreme Sizing Sampler Pack") {
       return name.split("-")[1].trim();
     }
