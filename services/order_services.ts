@@ -164,7 +164,7 @@ export default {
     try {
       const sort = {};
       const filter = { deleted: false, user: params._id };
-      const limit = 100;
+      const limit = 50;
       const page = 1;
       const orders = await order_db.findAll_orders_db(
         filter,
