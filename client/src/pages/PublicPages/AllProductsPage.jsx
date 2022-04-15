@@ -362,10 +362,9 @@ const AllProductsPage = props => {
     <div>
       <Helmet>
         <title> {` ${(collection && humanize(collection)) || (subcategory &&
-              humanize(subcategory))} ${humanize(category) === "Exo Diffusers"
+              humanize(subcategory))} ${category ? humanize(category) === "Exo Diffusers"
               ? "EXO Diffusers"
-              : humanize(category)}` ||
-              "Products"} | Glow LEDs</title>
+              : humanize(category): "Products"}`} | Glow LEDs</title>
         <meta
           property="og:title"
           content={category ? humanize(category) : "Products"}
