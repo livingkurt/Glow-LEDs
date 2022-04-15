@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { saveProduct, detailsProduct, listProducts } from '../../../actions/productActions';
 import { useHistory, Link } from 'react-router-dom';
-import { DropdownDisplay, ImageDisplay, Loading } from '../../../components/UtilityComponents';
+import { DropdownDisplay, ImageDisplay, Loading, Notification } from '../../../components/UtilityComponents';
 import { Helmet } from 'react-helmet';
 import {
 	accurate_date,
@@ -118,7 +118,7 @@ const EditProductPage = (props) => {
 	const { product, loading, error } = productDetails;
 
 	const productSave = useSelector((state) => state.productSave);
-	const { loading: loadingSave, success: successSave, error: errorSave } = productSave;
+	const { loading: loadingSave, success: successSave, error: errorSave, message } = productSave;
 
 	// const productList = useSelector((state) => state.productList);
 	// const { products: all_products } = productList;
@@ -211,23 +211,23 @@ const EditProductPage = (props) => {
 		set_item_group_id(data.tem_group_id);
 	};
 
-	useEffect(
-		() => {
-			let clean = true;
-			if (clean) {
-				if (successSave && filtered_products.length > 0) {
-					history.push('/secure/glow/products');
-				}
-				// if (successSave && filtered_products.length > 0) {
-				// 	if (filtered_products.map((item) => item.pathname).indexOf(product.pathname) !== -1) {
-				// 		history.push('/secure/glow/editproduct/' + filtered_products[new_index].pathname);
-				// 	}
-				// }
-			}
-			return () => (clean = false);
-		},
-		[ successSave ]
-	);
+	// useEffect(
+	// 	() => {
+	// 		let clean = true;
+	// 		if (clean) {
+	// 			if (successSave && filtered_products.length > 0) {
+	// 				history.push('/secure/glow/products');
+	// 			}
+	// 			// if (successSave && filtered_products.length > 0) {
+	// 			// 	if (filtered_products.map((item) => item.pathname).indexOf(product.pathname) !== -1) {
+	// 			// 		history.push('/secure/glow/editproduct/' + filtered_products[new_index].pathname);
+	// 			// 	}
+	// 			// }
+	// 		}
+	// 		return () => (clean = false);
+	// 	},
+	// 	[ successSave ]
+	// );
 
 	useEffect(
 		() => {
@@ -515,8 +515,8 @@ const EditProductPage = (props) => {
 		console.log({ product_options });
 		e.preventDefault();
 		save_product();
-		e.target.reset();
-		unset_state();
+		// e.target.reset();
+		// unset_state();
 		// history.push('/secure/glow/products');
 	};
 
@@ -684,6 +684,7 @@ const EditProductPage = (props) => {
 		<div className="main_container p-20px">
 			<h1 style={{ textAlign: 'center' }}>{props.match.params.pathname ? 'Edit Product' : 'Create Product'}</h1>
 			<Loading loading={loading_options} />
+			<Notification message={message} />
 			<div className="form">
 				<form onSubmit={submitHandler} className="w-100per">
 					<Loading loading={loadingSave} error={errorSave} />
