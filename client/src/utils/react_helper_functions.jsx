@@ -347,65 +347,7 @@ export const determine_product_name = (item, show_qty, date) => {
   date_1 = date_1.toISOString();
   const date_2 = date;
   if (date_1 <= date_2 || !date) {
-    if (item.subcategory === "alt_novaskins") {
-      if (item.name === "Alt Novaskins w Nano Sleds") {
-        return (
-          <div>
-            {show_qty && item.qty > 1 && item.qty + "x"} {item.name}
-            {item.size !== 0 && " - " + item.size}{" "}
-            {item.color && "(" + item.color + " Skin"}
-            {item.color && " & "}
-            {item.secondary_color && item.secondary_color + " Sled)"}{" "}
-            {item.secondary_product_name &&
-              item.secondary_product_name.length > 0 &&
-              ` - ${determine_secondary_product_name(
-                item.secondary_product_name,
-                item.category
-              )}`}{" "}
-            {/* {item.size !== 0 && ' - ' + item.size} */}
-          </div>
-        );
-      } else {
-        return (
-          <div>
-            {show_qty && item.qty > 1 && item.qty + "x"} {item.name}{" "}
-            {item.size !== 0 && " - " + item.size}{" "}
-            {item.color && "(" + item.color + " Skin"}
-            {item.color && " & "}
-            {item.secondary_color && item.secondary_color + " Sled)"}{" "}
-          </div>
-        );
-      }
-    } else if (item.subcategory === "novaskinz") {
-      if (item.name === "Novaskinz") {
-        return (
-          <div>
-            {show_qty && item.qty > 1 && item.qty + "x"} {item.name}
-            {item.size !== 0 && " - " + item.size}{" "}
-            {item.color && "(" + item.color + " Skin"}
-            {item.color && " & "}
-            {item.secondary_color && item.secondary_color + " Sled)"}{" "}
-            {item.secondary_product_name &&
-              item.secondary_product_name.length > 0 &&
-              ` - ${determine_secondary_product_name(
-                item.secondary_product_name,
-                item.category
-              )}`}{" "}
-            {/* {item.size !== 0 && ' - ' + item.size} */}
-          </div>
-        );
-      }
-      // else {
-      // 	return (
-      // 		<div>
-      // 			{show_qty && item.qty > 1 && item.qty + 'x'} {item.name} {item.size !== 0 && ' - ' + item.size}{' '}
-      // 			{item.color && '(' + item.color + ' Skin'}
-      // 			{item.color && ' & '}
-      // 			{item.secondary_color && item.secondary_color + ' Sled)'}{' '}
-      // 		</div>
-      // 	);
-      // }
-    } else if (item.name === "CLOZD Nanoskinz") {
+    if (item.name === "CLOZD Nanoskinz") {
       return (
         <div>
           {show_qty && item.qty > 1 && item.qty + "x"}{" "}
@@ -436,14 +378,33 @@ export const determine_product_name = (item, show_qty, date) => {
     } else if (
       item.category === "glowskinz"
     ) {
-      return (
-        <div>
-          {show_qty && item.qty > 1 && item.qty + "x"}{" "}
-          {item.color && item.color + " "} {item.name}{" "}
-          {item.size !== 0 && " - " + item.size}{" "}
-          {item.secondary_color && item.secondary_color + " Cape"}{" "}
-        </div>
-      );
+      if (item.name === "CLOZD Novaskinz" || item.name === "CLOZD Alt Novaskinz") {
+        return (
+          <div>
+            {show_qty && item.qty > 1 && item.qty + "x"} {item.name}{" "}
+            {item.size !== 0 && " - " + item.size}{" "}
+            {item.secondary_product_name &&
+                item.secondary_product_name.length > 0 &&
+                ` - ${determine_secondary_product_name(
+                  item.secondary_product_name,
+                  item.category
+                )}`}{" "}
+            {item.color && "(" + item.color + " Skin"}
+            {item.color && " & "}
+            {item.secondary_color && item.secondary_color + " Sled)"}{" "}
+          </div>
+        );
+      }
+      else {
+        return (
+          <div>
+            {show_qty && item.qty > 1 && item.qty + "x"}{" "}
+            {item.color && item.color + " "} {item.name}{" "}
+            {item.size !== 0 && " - " + item.size}{" "}
+            {item.secondary_color && item.secondary_color + " Cape"}{" "}
+          </div>
+        );
+      }
     } else if (item.category === "whites") {
       if (item.subcategory === "singles") {
         return (
