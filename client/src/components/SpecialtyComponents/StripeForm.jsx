@@ -8,24 +8,33 @@ const StripeForm = (props) => {
 	const stripe = useStripe();
 	const elements = useElements();
 	const [ remove_button, set_remove_button ] = useState(false);
+	const [ payment_validations, set_payment_validations ] = useState('');
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 		props.set_loading_payment(true);
-		set_remove_button(true);
+		
 		console.log({ CardElement: elements.getElement(CardElement) });
 		const { error, paymentMethod } = await stripe.createPaymentMethod({
 			type: 'card',
 			card: elements.getElement(CardElement)
 		});
+		console.log({error})
 
 		if (error) {
 			console.log({ error });
+			props.set_loading_payment(false);
+			set_payment_validations(error.message)
+			
 			return;
 		}
-		console.log({ paymentMethod });
+		else if (!error){
+			set_remove_button(true);
+			console.log({ paymentMethod });
 
-		props.pay_order(paymentMethod);
+			props.pay_order(paymentMethod);
+		}
+	
 	};
 
 	return (
@@ -51,6 +60,9 @@ const StripeForm = (props) => {
 					}
 				}}
 			/>
+			{payment_validations &&   <label className="validation_text" style={{ textAlign: "center" }}>
+            {payment_validations}
+          </label>}
 			{new Date() > new Date(props.date_1) &&
 			new Date() < new Date(props.date_2) && (
 				<li>
