@@ -116,7 +116,7 @@ export default {
   },
   remove_products_s: async (params: any) => {
     try {
-      return await product_db.remove_products_db(params.pathname);
+      return await product_db.remove_products_db(params.id);
     } catch (error) {
       console.log({ remove_surveys_s_error: error });
       throw new Error(error.message);

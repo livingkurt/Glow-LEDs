@@ -1,7 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { deleteProduct } from '../../actions/productActions';
 
 const DropdownDisplay = ({ item_list, list_items, set_items, list_name, placement, display_key }) => {
+
+	const dispatch = useDispatch();
 	const remove_list_item = (item_index, e) => {
 		e.preventDefault();
 		set_items((items) =>
@@ -9,6 +13,16 @@ const DropdownDisplay = ({ item_list, list_items, set_items, list_name, placemen
 				return item_index !== index;
 			})
 		);
+	};
+
+	const remove_list_item_and_delete = (item_index, e, product_id) => {
+		e.preventDefault();
+		set_items((items) =>
+			items.filter((item, index) => {
+				return item_index !== index;
+			})
+		);
+		dispatch(deleteProduct(product_id));
 	};
 
 	const add_item = (e) => {
@@ -58,10 +72,11 @@ const DropdownDisplay = ({ item_list, list_items, set_items, list_name, placemen
 									// console.log({ item });
 									return (
 										<div className="promo_code mv-1rem row jc-b max-w-55rem w-100per" key={index}>
-											<div>
+											<div className="ai-c w-100per jc-b">
+												<div>
 												<button
 													className="btn icon"
-													onClick={(e) => remove_list_item(index, e, set_items)}
+													onClick={(e) => remove_list_item(index, e)}
 													aria-label="Delete"
 												>
 													<i className="fas fa-times mr-5px" />
@@ -73,6 +88,14 @@ const DropdownDisplay = ({ item_list, list_items, set_items, list_name, placemen
 														item[display_key]
 													)}
 												</Link>
+												</div>
+												<button
+													className="btn secondary icon ml-1rem"
+													onClick={(e) => remove_list_item_and_delete(index, e, item._id)}
+													aria-label="Delete"
+												>
+													Delete
+												</button>
 											</div>
 										</div>
 									);

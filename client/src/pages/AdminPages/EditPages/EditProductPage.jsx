@@ -15,9 +15,6 @@ import {
 import { Helmet } from "react-helmet";
 import {
   accurate_date,
-  create_color_products,
-	create_secondary_color_products,
-	create_option_products,
   format_date,
   format_time,
   snake_case,
@@ -25,6 +22,12 @@ import {
   unformat_date_and_time,
   unformat_time,
 } from "../../../utils/helper_functions";
+import {
+  create_color_products,
+	create_secondary_color_products,
+	create_option_products,
+  create_secondary_products,
+} from "../../../utils/helpers/product_helpers";
 import { listChips } from "../../../actions/chipActions";
 import { API_Products } from "../../../utils";
 import { listCategorys } from "../../../actions/categoryActions";
@@ -35,8 +38,9 @@ import {
 import {
   determine_color_modifier,
   determine_secondary_color_modifier,
-  determine_option_modifier
-} from "../../../utils/helpers/product_page_helpers";
+  determine_option_modifier,
+  determine_secondary_modifier
+} from "../../../utils/helpers/product_helpers";
 import { listUsers } from "../../../actions/userActions";
 
 const EditProductPage = props => {
@@ -143,6 +147,7 @@ const EditProductPage = props => {
   const [ color_modifier, set_color_modifier ] = useState();
   const [ secondary_color_modifier, set_secondary_color_modifier ] = useState();
   const [ option_modifier, set_option_modifier ] = useState();
+  const [ secondary_modifier, set_secondary_modifier ] = useState();
 
   const history = useHistory();
 
@@ -208,18 +213,18 @@ const EditProductPage = props => {
     return () => (clean = false);
   }, []);
 
-  // useEffect(() => {
-  //   let clean = true;
-  //   if (clean) {
-  //     if(product.category) {
-  //       set_color_modifier(determine_color_modifier(product.category))
-  //       set_secondary_color_modifier(determine_secondary_color_modifier(product.category))
-  //       set_option_modifier(determine_option_modifier(product.category))
-  //     }
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if(product && product.category) {
+        set_color_modifier(determine_color_modifier(product.category))
+        set_secondary_color_modifier(determine_secondary_color_modifier(product.category))
+        set_option_modifier(determine_option_modifier(product.category))
+      }
 
-  //   }
-  //   return () => (clean = false);
-  // }, [product.category]);
+    }
+    return () => (clean = false);
+  }, [product]);
 
   const findAll_products_a = async () => {
     const { data } = await API_Products.findAll_products_a({
@@ -1729,7 +1734,8 @@ const EditProductPage = props => {
                                     product,
                                     set_color_products,
                                     color_products,
-																		color_modifier
+																		color_modifier,
+                                    set_loading_options
                                   )}
                               >
                                 Create Color Products
@@ -1819,10 +1825,11 @@ const EditProductPage = props => {
                                     product,
                                     set_secondary_color_products,
                                     secondary_color_products,
-																		secondary_color_modifier
+																		secondary_color_modifier,
+                                    set_loading_options
                                   )}
                               >
-                                Create Color Products
+                                Create Secondary Color Products
                               </button>
                              
 															</div>
@@ -1903,10 +1910,11 @@ const EditProductPage = props => {
                                     product,
                                     set_option_products,
                                     option_products,
-																		color_modifier
+																		option_modifier,
+                                    set_loading_options
                                   )}
                               >
-                                Create Color Products
+                                Create Option Products
                               </button>
                              
 															</div>
@@ -1965,6 +1973,32 @@ const EditProductPage = props => {
                                   set_secondary_group_name(e.target.value)}
                               />
                             </li>
+                            <div  className="row">
+														<input
+                                type="text"
+                                name="secondary_modifier"
+                                id="secondary_modifier"
+																defaultValue={determine_secondary_modifier(product.category)}
+                                className=""
+                                onChange={e =>
+                                  set_secondary_modifier(e.target.value)}
+                              />
+                              <button
+                                className="btn primary"
+                                onClick={e =>
+                                  create_secondary_products(
+                                    e,
+                                    product,
+                                    set_secondary_products,
+                                    secondary_products,
+																		secondary_modifier,
+                                    set_loading_options
+                                  )}
+                              >
+                                Create Secondary Products
+                              </button>
+                             
+															</div>
                             {/* {option_list(
 															option_products_list,
 															secondary_products,
