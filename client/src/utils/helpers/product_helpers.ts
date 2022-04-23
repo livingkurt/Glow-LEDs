@@ -8,6 +8,8 @@ export const determine_color_modifier = (category: string) => {
     return "Cap";
   } else if (category === "glowframez") {
     return "Frame";
+  } else {
+    return "";
   }
 };
 
@@ -18,6 +20,8 @@ export const determine_secondary_color_modifier = (category: string) => {
     return "Adapter";
   } else if (category === "glowframez") {
     return "Frame";
+  } else {
+    return "";
   }
 };
 
@@ -28,6 +32,8 @@ export const determine_option_modifier = (category: string) => {
     return "";
   } else if (category === "glowframez") {
     return "";
+  } else {
+    return "";
   }
 };
 
@@ -37,6 +43,8 @@ export const determine_secondary_modifier = (category: string) => {
   } else if (category === "diffuser_caps") {
     return "Cap Design";
   } else if (category === "glowframez") {
+    return "";
+  } else {
     return "";
   }
 };
@@ -88,103 +96,125 @@ export const create_color_products = async (
   color_modifier: string,
   color_images: any
 ) => {
+  console.log({ color_modifier });
   let list: any = [];
   if (product.category === "glowskinz" && product.subcategory === "clozd") {
     list = [
       {
-        name: `Clear ${product.name} - ${color_modifier}`,
-        pathname: snake_case(`Clear ${product.name} - ${color_modifier}`),
+        name: `Clear ${product.name}${color_modifier &&
+          " - " + color_modifier}`,
+        pathname: snake_case(
+          `Clear ${product.name}${color_modifier && " - " + color_modifier}`
+        ),
         color: "Clear",
         color_code: "#4b4b4b",
         subcategory: "options",
         product_collection: "colors",
         item_group_id: product._id,
         default_option: true,
-        images: [ color_images[0] ],
+        images: color_images[0] ? [ color_images[0] ] : [],
         ...no_state,
       },
       {
-        name: `Frosted ${product.name} - ${color_modifier}`,
-        pathname: snake_case(`Frosted ${product.name} - ${color_modifier}`),
+        name: `Frosted ${product.name}${color_modifier &&
+          " - " + color_modifier}`,
+        pathname: snake_case(
+          `Frosted ${product.name}${color_modifier && " - " + color_modifier}`
+        ),
         color: "Frosted",
         color_code: "white",
         subcategory: "options",
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: [ color_images[1] ],
+        images: color_images[1] ? [ color_images[1] ] : [],
         ...no_state,
       },
       {
-        name: `Red ${product.name} - ${color_modifier}`,
-        pathname: snake_case(`Red ${product.name} - ${color_modifier}`),
+        name: `Red ${product.name}${color_modifier && " - " + color_modifier}`,
+        pathname: snake_case(
+          `Red ${product.name}${color_modifier && " - " + color_modifier}`
+        ),
         color: "Red",
         color_code: "#c11c22",
         subcategory: "options",
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: [ color_images[2] ],
+        images: color_images[2] ? [ color_images[2] ] : [],
         ...no_state,
       },
       {
-        name: `Emerald ${product.name} - ${color_modifier}`,
-        pathname: snake_case(`Emerald ${product.name} - ${color_modifier}`),
+        name: `Emerald ${product.name}${color_modifier &&
+          " - " + color_modifier}`,
+        pathname: snake_case(
+          `Emerald ${product.name}${color_modifier && " - " + color_modifier}`
+        ),
         color: "Emerald",
         color_code: "#15715a",
         subcategory: "options",
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: [ color_images[3] ],
+        images: color_images[3] ? [ color_images[3] ] : [],
         ...no_state,
       },
       {
-        name: `Teal ${product.name} - ${color_modifier}`,
-        pathname: snake_case(`Teal ${product.name} - ${color_modifier}`),
+        name: `Teal ${product.name}${color_modifier && " - " + color_modifier}`,
+        pathname: snake_case(
+          `Teal ${product.name}${color_modifier && " - " + color_modifier}`
+        ),
         color: "Teal",
         color_code: "#1da5b3",
         subcategory: "options",
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: [ color_images[4] ],
+        images: color_images[4] ? [ color_images[4] ] : [],
         ...no_state,
       },
       {
-        name: `Blue ${product.name} - ${color_modifier}`,
-        pathname: snake_case(`Blue ${product.name} - ${color_modifier}`),
+        name: `Blue ${product.name}${color_modifier && " - " + color_modifier}`,
+        pathname: snake_case(
+          `Blue ${product.name}${color_modifier && " - " + color_modifier}`
+        ),
         color: "Blue",
         color_code: "#0014ff",
         subcategory: "options",
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: [ color_images[5] ],
+        images: color_images[5] ? [ color_images[5] ] : [],
         ...no_state,
       },
       {
-        name: `Violet ${product.name} - ${color_modifier}`,
-        pathname: snake_case(`Violet ${product.name} - ${color_modifier}`),
+        name: `Violet ${product.name}${color_modifier &&
+          " - " + color_modifier}`,
+        pathname: snake_case(
+          `Violet ${product.name}${color_modifier && " - " + color_modifier}`
+        ),
         color: "Violet",
         color_code: "#543abb",
         subcategory: "options",
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: [ color_images[6] ],
+        images: color_images[6] ? [ color_images[6] ] : [],
         ...no_state,
       },
       {
-        name: `Purple ${product.name} - ${color_modifier}`,
-        pathname: snake_case(`Purple ${product.name} - ${color_modifier}`),
+        name: `Purple ${product.name}${color_modifier &&
+          " - " + color_modifier}`,
+        pathname: snake_case(
+          `Purple ${product.name}${color_modifier && " - " + color_modifier}`
+        ),
         color: "Purple",
         color_code: "purple",
         subcategory: "options",
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: [ color_images[7] ],
+        images: color_images[7] ? [ color_images[7] ] : [],
         ...no_state,
       },
     ];
@@ -194,560 +224,681 @@ export const create_color_products = async (
   ) {
     list = [
       {
-        name: `Clear ${product.name} - ${color_modifier}`,
-        pathname: snake_case(`Clear ${product.name} - ${color_modifier}`),
+        name: `Clear ${product.name}${color_modifier &&
+          " - " + color_modifier}`,
+        pathname: snake_case(
+          `Clear ${product.name}${color_modifier && " - " + color_modifier}`
+        ),
         color: "Clear",
         color_code: "#4b4b4b",
         subcategory: "options",
         product_collection: "colors",
         item_group_id: product._id,
         default_option: true,
-        images: [ color_images[0] ],
+        images: color_images[0] ? [ color_images[0] ] : [],
         ...no_state,
       },
       {
-        name: `Frosted ${product.name} - ${color_modifier}`,
-        pathname: snake_case(`Frosted ${product.name} - ${color_modifier}`),
+        name: `Frosted ${product.name}${color_modifier &&
+          " - " + color_modifier}`,
+        pathname: snake_case(
+          `Frosted ${product.name}${color_modifier && " - " + color_modifier}`
+        ),
         color: "Frosted",
         color_code: "white",
         subcategory: "options",
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: [ color_images[1] ],
+        images: color_images[1] ? [ color_images[1] ] : [],
         secondary_products: [],
         ...no_state,
       },
       {
-        name: `Red ${product.name} - ${color_modifier}`,
-        pathname: snake_case(`Red ${product.name} - ${color_modifier}`),
+        name: `Red ${product.name}${color_modifier && " - " + color_modifier}`,
+        pathname: snake_case(
+          `Red ${product.name}${color_modifier && " - " + color_modifier}`
+        ),
         color: "Red",
         color_code: "#c11c22",
         subcategory: "options",
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: [ color_images[2] ],
+        images: color_images[2] ? [ color_images[2] ] : [],
         ...no_state,
       },
       {
-        name: `Emerald ${product.name} - ${color_modifier}`,
-        pathname: snake_case(`Emerald ${product.name} - ${color_modifier}`),
+        name: `Emerald ${product.name}${color_modifier &&
+          " - " + color_modifier}`,
+        pathname: snake_case(
+          `Emerald ${product.name}${color_modifier && " - " + color_modifier}`
+        ),
         color: "Emerald",
         color_code: "#15715a",
         subcategory: "options",
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: [ color_images[3] ],
+        images: color_images[3] ? [ color_images[3] ] : [],
         ...no_state,
       },
       {
-        name: `Teal ${product.name} - ${color_modifier}`,
-        pathname: snake_case(`Teal ${product.name} - ${color_modifier}`),
+        name: `Teal ${product.name}${color_modifier && " - " + color_modifier}`,
+        pathname: snake_case(
+          `Teal ${product.name}${color_modifier && " - " + color_modifier}`
+        ),
         color: "Teal",
         color_code: "#1da5b3",
         subcategory: "options",
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: [ color_images[4] ],
+        images: color_images[4] ? [ color_images[4] ] : [],
         ...no_state,
       },
       {
-        name: `Blue ${product.name} - ${color_modifier}`,
-        pathname: snake_case(`Blue ${product.name} - ${color_modifier}`),
+        name: `Blue ${product.name}${color_modifier && " - " + color_modifier}`,
+        pathname: snake_case(
+          `Blue ${product.name}${color_modifier && " - " + color_modifier}`
+        ),
         color: "Blue",
         color_code: "#0014ff",
         subcategory: "options",
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: [ color_images[5] ],
+        images: color_images[5] ? [ color_images[5] ] : [],
         ...no_state,
       },
       {
-        name: `Violet ${product.name} - ${color_modifier}`,
-        pathname: snake_case(`Violet ${product.name} - ${color_modifier}`),
+        name: `Violet ${product.name}${color_modifier &&
+          " - " + color_modifier}`,
+        pathname: snake_case(
+          `Violet ${product.name}${color_modifier && " - " + color_modifier}`
+        ),
         color: "Violet",
         color_code: "#543abb",
         subcategory: "options",
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: [ color_images[6] ],
+        images: color_images[6] ? [ color_images[6] ] : [],
         ...no_state,
       },
       {
-        name: `Purple ${product.name} - ${color_modifier}`,
-        pathname: snake_case(`Purple ${product.name} - ${color_modifier}`),
+        name: `Purple ${product.name}${color_modifier &&
+          " - " + color_modifier}`,
+        pathname: snake_case(
+          `Purple ${product.name}${color_modifier && " - " + color_modifier}`
+        ),
         color: "Purple",
         color_code: "purple",
         subcategory: "options",
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: [ color_images[7] ],
+        images: color_images[7] ? [ color_images[7] ] : [],
         ...no_state,
       },
       {
-        name: `White  ${product.name} - ${color_modifier}`,
-        pathname: snake_case(`White  ${product.name} - ${color_modifier}`),
+        name: `White  ${product.name}${color_modifier &&
+          " - " + color_modifier}`,
+        pathname: snake_case(
+          `White  ${product.name}${color_modifier && " - " + color_modifier}`
+        ),
         color: "White",
         color_code: "white",
         subcategory: "options",
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: [ color_images[8] ],
+        images: color_images[8] ? [ color_images[8] ] : [],
         ...no_state,
       },
       {
-        name: `Black  ${product.name} - ${color_modifier}`,
-        pathname: snake_case(`Black  ${product.name} - ${color_modifier}`),
+        name: `Black  ${product.name}${color_modifier &&
+          " - " + color_modifier}`,
+        pathname: snake_case(
+          `Black  ${product.name}${color_modifier && " - " + color_modifier}`
+        ),
         color: "Black",
         color_code: "black",
         subcategory: "options",
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: [ color_images[9] ],
+        images: color_images[9] ? [ color_images[9] ] : [],
         ...no_state,
       },
     ];
   } else if (product.category === "diffuser_caps") {
     list = [
       {
-        name: `Black ${product.name} - ${color_modifier}`,
-        pathname: snake_case(`Black ${product.name} - ${color_modifier}`),
+        name: `Black ${product.name}${color_modifier &&
+          " - " + color_modifier}`,
+        pathname: snake_case(
+          `Black ${product.name}${color_modifier && " - " + color_modifier}`
+        ),
         color: "Black",
         color_code: "black",
         subcategory: "options",
         product_collection: "colors",
         item_group_id: product._id,
         default_option: true,
-        images: [ color_images[0] ],
+        images: color_images[0] ? [ color_images[0] ] : [],
         ...no_state,
       },
       {
-        name: `White ${product.name} - ${color_modifier}`,
-        pathname: snake_case(`White ${product.name} - ${color_modifier}`),
+        name: `White ${product.name}${color_modifier &&
+          " - " + color_modifier}`,
+        pathname: snake_case(
+          `White ${product.name}${color_modifier && " - " + color_modifier}`
+        ),
         color: "White",
         color_code: "white",
         subcategory: "options",
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: [ color_images[1] ],
+        images: color_images[1] ? [ color_images[1] ] : [],
         ...no_state,
       },
       {
-        name: `Red ${product.name} - ${color_modifier}`,
-        pathname: snake_case(`Red ${product.name} - ${color_modifier}`),
+        name: `Red ${product.name}${color_modifier && " - " + color_modifier}`,
+        pathname: snake_case(
+          `Red ${product.name}${color_modifier && " - " + color_modifier}`
+        ),
         color: "Red",
         color_code: "#c11c22",
         subcategory: "options",
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: [ color_images[2] ],
+        images: color_images[2] ? [ color_images[2] ] : [],
         ...no_state,
       },
       {
-        name: `Green ${product.name} - ${color_modifier}`,
-        pathname: snake_case(`Green ${product.name} - ${color_modifier}`),
+        name: `Green ${product.name}${color_modifier &&
+          " - " + color_modifier}`,
+        pathname: snake_case(
+          `Green ${product.name}${color_modifier && " - " + color_modifier}`
+        ),
         color: "Green",
         color_code: "#00c700",
         subcategory: "options",
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: [ color_images[3] ],
+        images: color_images[3] ? [ color_images[3] ] : [],
         ...no_state,
       },
       {
-        name: `Blue ${product.name} - ${color_modifier}`,
-        pathname: snake_case(`Blue ${product.name} - ${color_modifier}`),
+        name: `Blue ${product.name}${color_modifier && " - " + color_modifier}`,
+        pathname: snake_case(
+          `Blue ${product.name}${color_modifier && " - " + color_modifier}`
+        ),
         color: "Blue",
         color_code: "#0014ff",
         subcategory: "options",
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: [ color_images[4] ],
+        images: color_images[4] ? [ color_images[4] ] : [],
         ...no_state,
       },
       {
-        name: `Violet ${product.name} - ${color_modifier}`,
-        pathname: snake_case(`Violet ${product.name} - ${color_modifier}`),
+        name: `Violet ${product.name}${color_modifier &&
+          " - " + color_modifier}`,
+        pathname: snake_case(
+          `Violet ${product.name}${color_modifier && " - " + color_modifier}`
+        ),
         color: "Violet",
         color_code: "#543abb",
         subcategory: "options",
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: [ color_images[5] ],
+        images: color_images[5] ? [ color_images[5] ] : [],
         ...no_state,
       },
       {
-        name: `Purple ${product.name} - ${color_modifier}`,
-        pathname: snake_case(`Purple ${product.name} - ${color_modifier}`),
+        name: `Purple ${product.name}${color_modifier &&
+          " - " + color_modifier}`,
+        pathname: snake_case(
+          `Purple ${product.name}${color_modifier && " - " + color_modifier}`
+        ),
         color: "Purple",
         color_code: "purple",
         subcategory: "options",
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: [ color_images[6] ],
+        images: color_images[6] ? [ color_images[6] ] : [],
         ...no_state,
       },
     ];
   } else if (product.category === "diffusers") {
     list = [
       {
-        name: `Frosted ${product.name} - ${color_modifier}`,
-        pathname: snake_case(`Frosted ${product.name} - ${color_modifier}`),
+        name: `Frosted ${product.name}${color_modifier &&
+          " - " + color_modifier}`,
+        pathname: snake_case(
+          `Frosted ${product.name}${color_modifier && " - " + color_modifier}`
+        ),
         color: "Frosted",
         color_code: "#abaeb5",
         subcategory: "options",
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: [ color_images[0] ],
+        images: color_images[0] ? [ color_images[0] ] : [],
         ...no_state,
       },
       {
-        name: `Red ${product.name} - ${color_modifier}`,
-        pathname: snake_case(`Red ${product.name} - ${color_modifier}`),
+        name: `Red ${product.name}${color_modifier && " - " + color_modifier}`,
+        pathname: snake_case(
+          `Red ${product.name}${color_modifier && " - " + color_modifier}`
+        ),
         color: "Red",
         color_code: "#c11c22",
         subcategory: "options",
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: [ color_images[1] ],
+        images: color_images[1] ? [ color_images[1] ] : [],
         ...no_state,
       },
       {
-        name: `Green ${product.name} - ${color_modifier}`,
-        pathname: snake_case(`Green ${product.name} - ${color_modifier}`),
+        name: `Green ${product.name}${color_modifier &&
+          " - " + color_modifier}`,
+        pathname: snake_case(
+          `Green ${product.name}${color_modifier && " - " + color_modifier}`
+        ),
         color: "Green",
         color_code: "#00c700",
         subcategory: "options",
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: [ color_images[2] ],
+        images: color_images[2] ? [ color_images[2] ] : [],
         ...no_state,
       },
       {
-        name: `Blue ${product.name} - ${color_modifier}`,
-        pathname: snake_case(`Blue ${product.name} - ${color_modifier}`),
+        name: `Blue ${product.name}${color_modifier && " - " + color_modifier}`,
+        pathname: snake_case(
+          `Blue ${product.name}${color_modifier && " - " + color_modifier}`
+        ),
         color: "Blue",
         color_code: "#0014ff",
         subcategory: "options",
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: [ color_images[3] ],
+        images: color_images[3] ? [ color_images[3] ] : [],
         ...no_state,
       },
       {
-        name: `Violet ${product.name} - ${color_modifier}`,
-        pathname: snake_case(`Violet ${product.name} - ${color_modifier}`),
+        name: `Violet ${product.name}${color_modifier &&
+          " - " + color_modifier}`,
+        pathname: snake_case(
+          `Violet ${product.name}${color_modifier && " - " + color_modifier}`
+        ),
         color: "Violet",
         color_code: "#543abb",
         subcategory: "options",
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: [ color_images[4] ],
+        images: color_images[4] ? [ color_images[4] ] : [],
         ...no_state,
       },
       {
-        name: `Purple ${product.name} - ${color_modifier}`,
-        pathname: snake_case(`Purple ${product.name} - ${color_modifier}`),
+        name: `Purple ${product.name}${color_modifier &&
+          " - " + color_modifier}`,
+        pathname: snake_case(
+          `Purple ${product.name}${color_modifier && " - " + color_modifier}`
+        ),
         color: "Purple",
         color_code: "purple",
         subcategory: "options",
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: [ color_images[5] ],
+        images: color_images[5] ? [ color_images[5] ] : [],
         ...no_state,
       },
     ];
   } else if (product.category === "exo_diffusers") {
     list = [
       {
-        name: `Black ${product.name} - ${color_modifier}`,
-        pathname: snake_case(`Black ${product.name} - ${color_modifier}`),
+        name: `Black ${product.name}${color_modifier &&
+          " - " + color_modifier}`,
+        pathname: snake_case(
+          `Black ${product.name}${color_modifier && " - " + color_modifier}`
+        ),
         color: "Black",
         color_code: "black",
         subcategory: "options",
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: [ color_images[0] ],
+        images: color_images[0] ? [ color_images[0] ] : [],
         ...no_state,
       },
       {
-        name: `White ${product.name} - ${color_modifier}`,
-        pathname: snake_case(`White ${product.name} - ${color_modifier}`),
+        name: `White ${product.name}${color_modifier &&
+          " - " + color_modifier}`,
+        pathname: snake_case(
+          `White ${product.name}${color_modifier && " - " + color_modifier}`
+        ),
         color: "White",
         color_code: "white",
         subcategory: "options",
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: [ color_images[1] ],
+        images: color_images[1] ? [ color_images[1] ] : [],
         ...no_state,
       },
       {
-        name: `Red ${product.name} - ${color_modifier}`,
-        pathname: snake_case(`Red ${product.name} - ${color_modifier}`),
+        name: `Red ${product.name}${color_modifier && " - " + color_modifier}`,
+        pathname: snake_case(
+          `Red ${product.name}${color_modifier && " - " + color_modifier}`
+        ),
         color: "Red",
         color_code: "#c11c22",
         subcategory: "options",
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: [ color_images[2] ],
+        images: color_images[2] ? [ color_images[2] ] : [],
         ...no_state,
       },
       {
-        name: `Green ${product.name} - ${color_modifier}`,
-        pathname: snake_case(`Green ${product.name} - ${color_modifier}`),
+        name: `Green ${product.name}${color_modifier &&
+          " - " + color_modifier}`,
+        pathname: snake_case(
+          `Green ${product.name}${color_modifier && " - " + color_modifier}`
+        ),
         color: "Green",
         color_code: "#00c700",
         subcategory: "options",
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: [ color_images[3] ],
+        images: color_images[3] ? [ color_images[3] ] : [],
         ...no_state,
       },
       {
-        name: `Blue ${product.name} - ${color_modifier}`,
-        pathname: snake_case(`Blue ${product.name} - ${color_modifier}`),
+        name: `Blue ${product.name}${color_modifier && " - " + color_modifier}`,
+        pathname: snake_case(
+          `Blue ${product.name}${color_modifier && " - " + color_modifier}`
+        ),
         color: "Blue",
         color_code: "#0014ff",
         subcategory: "options",
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: [ color_images[4] ],
+        images: color_images[4] ? [ color_images[4] ] : [],
         ...no_state,
       },
 
       {
-        name: `Violet ${product.name} - ${color_modifier}`,
-        pathname: snake_case(`Violet ${product.name} - ${color_modifier}`),
+        name: `Violet ${product.name}${color_modifier &&
+          " - " + color_modifier}`,
+        pathname: snake_case(
+          `Violet ${product.name}${color_modifier && " - " + color_modifier}`
+        ),
         color: "Violet",
         color_code: "#543abb",
         subcategory: "options",
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: [ color_images[5] ],
+        images: color_images[5] ? [ color_images[5] ] : [],
         ...no_state,
       },
       {
-        name: `Purple ${product.name} - ${color_modifier}`,
-        pathname: snake_case(`Purple ${product.name} - ${color_modifier}`),
+        name: `Purple ${product.name}${color_modifier &&
+          " - " + color_modifier}`,
+        pathname: snake_case(
+          `Purple ${product.name}${color_modifier && " - " + color_modifier}`
+        ),
         color: "Purple",
         color_code: "purple",
         subcategory: "options",
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: [ color_images[6] ],
+        images: color_images[6] ? [ color_images[6] ] : [],
         ...no_state,
       },
     ];
   } else if (product.category === "batteries") {
     list = [
       {
-        name: `White ${product.name} - ${color_modifier}`,
-        pathname: snake_case(`White ${product.name} - ${color_modifier}`),
+        name: `White ${product.name}${color_modifier &&
+          " - " + color_modifier}`,
+        pathname: snake_case(
+          `White ${product.name}${color_modifier && " - " + color_modifier}`
+        ),
         color: "White",
         color_code: "white",
         subcategory: "options",
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: [ color_images[0] ],
+        images: color_images[0] ? [ color_images[0] ] : [],
         ...no_state,
       },
       {
-        name: `Red ${product.name} - ${color_modifier}`,
-        pathname: snake_case(`Red ${product.name} - ${color_modifier}`),
+        name: `Red ${product.name}${color_modifier && " - " + color_modifier}`,
+        pathname: snake_case(
+          `Red ${product.name}${color_modifier && " - " + color_modifier}`
+        ),
         color: "Red",
         color_code: "#c11c22",
         subcategory: "options",
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: [ color_images[1] ],
+        images: color_images[1] ? [ color_images[1] ] : [],
         ...no_state,
       },
       {
-        name: `Green ${product.name} - ${color_modifier}`,
-        pathname: snake_case(`Green ${product.name} - ${color_modifier}`),
+        name: `Green ${product.name}${color_modifier &&
+          " - " + color_modifier}`,
+        pathname: snake_case(
+          `Green ${product.name}${color_modifier && " - " + color_modifier}`
+        ),
         color: "Green",
         color_code: "#00c700",
         subcategory: "options",
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: [ color_images[2] ],
+        images: color_images[2] ? [ color_images[2] ] : [],
         ...no_state,
       },
       {
-        name: `Blue ${product.name} - ${color_modifier}`,
-        pathname: snake_case(`Blue ${product.name} - ${color_modifier}`),
+        name: `Blue ${product.name}${color_modifier && " - " + color_modifier}`,
+        pathname: snake_case(
+          `Blue ${product.name}${color_modifier && " - " + color_modifier}`
+        ),
         color: "Blue",
         color_code: "#0014ff",
         subcategory: "options",
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: [ color_images[3] ],
+        images: color_images[3] ? [ color_images[3] ] : [],
         ...no_state,
       },
       {
-        name: `Purple ${product.name} - ${color_modifier}`,
-        pathname: snake_case(`Purple ${product.name} - ${color_modifier}`),
+        name: `Purple ${product.name}${color_modifier &&
+          " - " + color_modifier}`,
+        pathname: snake_case(
+          `Purple ${product.name}${color_modifier && " - " + color_modifier}`
+        ),
         color: "Purple",
         color_code: "purple",
         subcategory: "options",
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: [ color_images[4] ],
+        images: color_images[4] ? [ color_images[4] ] : [],
         ...no_state,
       },
       {
-        name: `Violet ${product.name} - ${color_modifier}`,
-        pathname: snake_case(`Violet ${product.name} - ${color_modifier}`),
+        name: `Violet ${product.name}${color_modifier &&
+          " - " + color_modifier}`,
+        pathname: snake_case(
+          `Violet ${product.name}${color_modifier && " - " + color_modifier}`
+        ),
         color: "Violet",
         color_code: "#543abb",
         subcategory: "options",
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: [ color_images[5] ],
+        images: color_images[5] ? [ color_images[5] ] : [],
         ...no_state,
       },
       {
-        name: `Black ${product.name} - ${color_modifier}`,
-        pathname: snake_case(`Black ${product.name} - ${color_modifier}`),
+        name: `Black ${product.name}${color_modifier &&
+          " - " + color_modifier}`,
+        pathname: snake_case(
+          `Black ${product.name}${color_modifier && " - " + color_modifier}`
+        ),
         color: "Black",
         color_code: "black",
         subcategory: "options",
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: [ color_images[6] ],
+        images: color_images[6] ? [ color_images[6] ] : [],
         ...no_state,
       },
       {
-        name: `Clear ${product.name} - ${color_modifier}`,
-        pathname: snake_case(`Clear ${product.name} - ${color_modifier}`),
+        name: `Clear ${product.name}${color_modifier &&
+          " - " + color_modifier}`,
+        pathname: snake_case(
+          `Clear ${product.name}${color_modifier && " - " + color_modifier}`
+        ),
         color: "Clear",
         color_code: "#4b4b4b",
         subcategory: "options",
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: [ color_images[7] ],
+        images: color_images[7] ? [ color_images[7] ] : [],
         ...no_state,
       },
     ];
   } else if (product.product_collection === "novaskinz") {
     list = [
       {
-        name: `Clear ${product.name} - ${color_modifier}`,
-        pathname: snake_case(`Clear ${product.name} - ${color_modifier}`),
+        name: `Clear ${product.name}${color_modifier &&
+          " - " + color_modifier}`,
+        pathname: snake_case(
+          `Clear ${product.name}${color_modifier && " - " + color_modifier}`
+        ),
         color: "Clear",
         color_code: "#4b4b4b",
         subcategory: "options",
         product_collection: "colors",
         item_group_id: product._id,
         default_option: true,
-        images: [ color_images[0] ],
+        images: color_images[0] ? [ color_images[0] ] : [],
         ...no_state,
       },
       {
-        name: `Red ${product.name} - ${color_modifier}`,
-        pathname: snake_case(`Red ${product.name} - ${color_modifier}`),
+        name: `Red ${product.name}${color_modifier && " - " + color_modifier}`,
+        pathname: snake_case(
+          `Red ${product.name}${color_modifier && " - " + color_modifier}`
+        ),
         color: "Red",
         color_code: "#c11c22",
         subcategory: "options",
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: [ color_images[1] ],
+        images: color_images[1] ? [ color_images[1] ] : [],
         ...no_state,
       },
       {
-        name: `Emerald ${product.name} - ${color_modifier}`,
-        pathname: snake_case(`Emerald ${product.name} - ${color_modifier}`),
+        name: `Emerald ${product.name}${color_modifier &&
+          " - " + color_modifier}`,
+        pathname: snake_case(
+          `Emerald ${product.name}${color_modifier && " - " + color_modifier}`
+        ),
         color: "Emerald",
         color_code: "#15715a",
         subcategory: "options",
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: [ color_images[2] ],
+        images: color_images[2] ? [ color_images[2] ] : [],
         ...no_state,
       },
       {
-        name: `Teal ${product.name} - ${color_modifier}`,
-        pathname: snake_case(`Teal ${product.name} - ${color_modifier}`),
+        name: `Teal ${product.name}${color_modifier && " - " + color_modifier}`,
+        pathname: snake_case(
+          `Teal ${product.name}${color_modifier && " - " + color_modifier}`
+        ),
         color: "Teal",
         color_code: "#1da5b3",
         subcategory: "options",
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: [ color_images[3] ],
+        images: color_images[3] ? [ color_images[3] ] : [],
         ...no_state,
       },
       {
-        name: `Blue ${product.name} - ${color_modifier}`,
-        pathname: snake_case(`Blue ${product.name} - ${color_modifier}`),
+        name: `Blue ${product.name}${color_modifier && " - " + color_modifier}`,
+        pathname: snake_case(
+          `Blue ${product.name}${color_modifier && " - " + color_modifier}`
+        ),
         color: "Blue",
         color_code: "#0014ff",
         subcategory: "options",
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: [ color_images[4] ],
+        images: color_images[4] ? [ color_images[4] ] : [],
         ...no_state,
       },
       {
-        name: `Violet ${product.name} - ${color_modifier}`,
-        pathname: snake_case(`Violet ${product.name} - ${color_modifier}`),
+        name: `Violet ${product.name}${color_modifier &&
+          " - " + color_modifier}`,
+        pathname: snake_case(
+          `Violet ${product.name}${color_modifier && " - " + color_modifier}`
+        ),
         color: "Violet",
         color_code: "#543abb",
         subcategory: "options",
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: [ color_images[5] ],
+        images: color_images[5] ? [ color_images[5] ] : [],
         ...no_state,
       },
       {
-        name: `Purple ${product.name} - ${color_modifier}`,
-        pathname: snake_case(`Purple ${product.name} - ${color_modifier}`),
+        name: `Purple ${product.name}${color_modifier &&
+          " - " + color_modifier}`,
+        pathname: snake_case(
+          `Purple ${product.name}${color_modifier && " - " + color_modifier}`
+        ),
         color: "Purple",
         color_code: "purple",
         subcategory: "options",
         product_collection: "colors",
         item_group_id: product._id,
         default_option: false,
-        images: [ color_images[6] ],
+        images: color_images[6] ? [ color_images[6] ] : [],
         ...no_state,
       },
     ];
@@ -766,9 +917,11 @@ export const create_secondary_color_products = async (
   if (product.category === "glowskinz" && product.subcategory === "clozd") {
     list = [
       {
-        name: `Clear ${product.name} - ${secondary_color_modifier}`,
+        name: `Clear ${product.name}${secondary_color_modifier &&
+          " - " + secondary_color_modifier}`,
         pathname: snake_case(
-          `Clear ${product.name} - ${secondary_color_modifier}`
+          `Clear ${product.name}${secondary_color_modifier &&
+            " - " + secondary_color_modifier}`
         ),
         color: "Clear",
         color_code: "#4b4b4b",
@@ -780,9 +933,11 @@ export const create_secondary_color_products = async (
         ...no_state,
       },
       {
-        name: `Frosted ${product.name} - ${secondary_color_modifier}`,
+        name: `Frosted ${product.name}${secondary_color_modifier &&
+          " - " + secondary_color_modifier}`,
         pathname: snake_case(
-          `Frosted ${product.name} - ${secondary_color_modifier}`
+          `Frosted ${product.name}${secondary_color_modifier &&
+            " - " + secondary_color_modifier}`
         ),
         color: "Frosted",
         color_code: "#abaeb5",
@@ -794,9 +949,11 @@ export const create_secondary_color_products = async (
         ...no_state,
       },
       {
-        name: `Red ${product.name} - ${secondary_color_modifier}`,
+        name: `Red ${product.name}${secondary_color_modifier &&
+          " - " + secondary_color_modifier}`,
         pathname: snake_case(
-          `Red ${product.name} - ${secondary_color_modifier}`
+          `Red ${product.name}${secondary_color_modifier &&
+            " - " + secondary_color_modifier}`
         ),
         color: "Red",
         color_code: "#c11c22",
@@ -808,9 +965,11 @@ export const create_secondary_color_products = async (
         ...no_state,
       },
       {
-        name: `Green ${product.name} - ${secondary_color_modifier}`,
+        name: `Green ${product.name}${secondary_color_modifier &&
+          " - " + secondary_color_modifier}`,
         pathname: snake_case(
-          `Green ${product.name} - ${secondary_color_modifier}`
+          `Green ${product.name}${secondary_color_modifier &&
+            " - " + secondary_color_modifier}`
         ),
         color: "Green",
         color_code: "#00c700",
@@ -822,9 +981,11 @@ export const create_secondary_color_products = async (
         ...no_state,
       },
       {
-        name: `Blue ${product.name} - ${secondary_color_modifier}`,
+        name: `Blue ${product.name}${secondary_color_modifier &&
+          " - " + secondary_color_modifier}`,
         pathname: snake_case(
-          `Blue ${product.name} - ${secondary_color_modifier}`
+          `Blue ${product.name}${secondary_color_modifier &&
+            " - " + secondary_color_modifier}`
         ),
         color: "Blue",
         color_code: "#0014ff",
@@ -837,9 +998,11 @@ export const create_secondary_color_products = async (
       },
 
       {
-        name: `Violet ${product.name} - ${secondary_color_modifier}`,
+        name: `Violet ${product.name}${secondary_color_modifier &&
+          " - " + secondary_color_modifier}`,
         pathname: snake_case(
-          `Violet ${product.name} - ${secondary_color_modifier}`
+          `Violet ${product.name}${secondary_color_modifier &&
+            " - " + secondary_color_modifier}`
         ),
         color: "Violet",
         color_code: "#543abb",
@@ -851,9 +1014,11 @@ export const create_secondary_color_products = async (
         ...no_state,
       },
       {
-        name: `Purple ${product.name} - ${secondary_color_modifier}`,
+        name: `Purple ${product.name}${secondary_color_modifier &&
+          " - " + secondary_color_modifier}`,
         pathname: snake_case(
-          `Purple ${product.name} - ${secondary_color_modifier}`
+          `Purple ${product.name}${secondary_color_modifier &&
+            " - " + secondary_color_modifier}`
         ),
         color: "Purple",
         color_code: "purple",
@@ -865,9 +1030,11 @@ export const create_secondary_color_products = async (
         ...no_state,
       },
       {
-        name: `Black ${product.name} - ${secondary_color_modifier}`,
+        name: `Black ${product.name}${secondary_color_modifier &&
+          " - " + secondary_color_modifier}`,
         pathname: snake_case(
-          `Black ${product.name} - ${secondary_color_modifier}`
+          `Black ${product.name}${secondary_color_modifier &&
+            " - " + secondary_color_modifier}`
         ),
         color: "Black",
         color_code: "black",
@@ -885,9 +1052,11 @@ export const create_secondary_color_products = async (
   ) {
     list = [
       {
-        name: `Clear ${product.name} - ${secondary_color_modifier}`,
+        name: `Clear ${product.name}${secondary_color_modifier &&
+          " - " + secondary_color_modifier}`,
         pathname: snake_case(
-          `Clear ${product.name} - ${secondary_color_modifier}`
+          `Clear ${product.name}${secondary_color_modifier &&
+            " - " + secondary_color_modifier}`
         ),
         color: "Clear",
         color_code: "#4b4b4b",
@@ -899,9 +1068,11 @@ export const create_secondary_color_products = async (
         ...no_state,
       },
       {
-        name: `Frosted ${product.name} - ${secondary_color_modifier}`,
+        name: `Frosted ${product.name}${secondary_color_modifier &&
+          " - " + secondary_color_modifier}`,
         pathname: snake_case(
-          `Frosted ${product.name} - ${secondary_color_modifier}`
+          `Frosted ${product.name}${secondary_color_modifier &&
+            " - " + secondary_color_modifier}`
         ),
         color: "Frosted",
         color_code: "#abaeb5",
@@ -913,9 +1084,11 @@ export const create_secondary_color_products = async (
         ...no_state,
       },
       {
-        name: `Red ${product.name} - ${secondary_color_modifier}`,
+        name: `Red ${product.name}${secondary_color_modifier &&
+          " - " + secondary_color_modifier}`,
         pathname: snake_case(
-          `Red ${product.name} - ${secondary_color_modifier}`
+          `Red ${product.name}${secondary_color_modifier &&
+            " - " + secondary_color_modifier}`
         ),
         color: "Red",
         color_code: "#c11c22",
@@ -927,9 +1100,11 @@ export const create_secondary_color_products = async (
         ...no_state,
       },
       {
-        name: `Green ${product.name} - ${secondary_color_modifier}`,
+        name: `Green ${product.name}${secondary_color_modifier &&
+          " - " + secondary_color_modifier}`,
         pathname: snake_case(
-          `Green ${product.name} - ${secondary_color_modifier}`
+          `Green ${product.name}${secondary_color_modifier &&
+            " - " + secondary_color_modifier}`
         ),
         color: "Green",
         color_code: "#00c700",
@@ -941,9 +1116,11 @@ export const create_secondary_color_products = async (
         ...no_state,
       },
       {
-        name: `Blue ${product.name} - ${secondary_color_modifier}`,
+        name: `Blue ${product.name}${secondary_color_modifier &&
+          " - " + secondary_color_modifier}`,
         pathname: snake_case(
-          `Blue ${product.name} - ${secondary_color_modifier}`
+          `Blue ${product.name}${secondary_color_modifier &&
+            " - " + secondary_color_modifier}`
         ),
         color: "Blue",
         color_code: "#0014ff",
@@ -956,9 +1133,11 @@ export const create_secondary_color_products = async (
       },
 
       {
-        name: `Violet ${product.name} - ${secondary_color_modifier}`,
+        name: `Violet ${product.name}${secondary_color_modifier &&
+          " - " + secondary_color_modifier}`,
         pathname: snake_case(
-          `Violet ${product.name} - ${secondary_color_modifier}`
+          `Violet ${product.name}${secondary_color_modifier &&
+            " - " + secondary_color_modifier}`
         ),
         color: "Violet",
         color_code: "#543abb",
@@ -970,9 +1149,11 @@ export const create_secondary_color_products = async (
         ...no_state,
       },
       {
-        name: `Purple ${product.name} - ${secondary_color_modifier}`,
+        name: `Purple ${product.name}${secondary_color_modifier &&
+          " - " + secondary_color_modifier}`,
         pathname: snake_case(
-          `Purple ${product.name} - ${secondary_color_modifier}`
+          `Purple ${product.name}${secondary_color_modifier &&
+            " - " + secondary_color_modifier}`
         ),
         color: "Purple",
         color_code: "purple",
@@ -984,9 +1165,11 @@ export const create_secondary_color_products = async (
         ...no_state,
       },
       {
-        name: `White ${product.name} - ${secondary_color_modifier}`,
+        name: `White ${product.name}${secondary_color_modifier &&
+          " - " + secondary_color_modifier}`,
         pathname: snake_case(
-          `White ${product.name} - ${secondary_color_modifier}`
+          `White ${product.name}${secondary_color_modifier &&
+            " - " + secondary_color_modifier}`
         ),
         color: "White",
         color_code: "white",
@@ -998,9 +1181,11 @@ export const create_secondary_color_products = async (
         ...no_state,
       },
       {
-        name: `Black ${product.name} - ${secondary_color_modifier}`,
+        name: `Black ${product.name}${secondary_color_modifier &&
+          " - " + secondary_color_modifier}`,
         pathname: snake_case(
-          `Black ${product.name} - ${secondary_color_modifier}`
+          `Black ${product.name}${secondary_color_modifier &&
+            " - " + secondary_color_modifier}`
         ),
         color: "Black",
         color_code: "black",
@@ -1015,9 +1200,11 @@ export const create_secondary_color_products = async (
   } else if (product.category === "diffuser_caps") {
     list = [
       {
-        name: `Frosted ${product.name} - ${secondary_color_modifier}`,
+        name: `Frosted ${product.name}${secondary_color_modifier &&
+          " - " + secondary_color_modifier}`,
         pathname: snake_case(
-          `Frosted ${product.name} - ${secondary_color_modifier}`
+          `Frosted ${product.name}${secondary_color_modifier &&
+            " - " + secondary_color_modifier}`
         ),
         color: "Frosted",
         color_code: "#abaeb5",
@@ -1029,9 +1216,11 @@ export const create_secondary_color_products = async (
         ...no_state,
       },
       {
-        name: `Red ${product.name} - ${secondary_color_modifier}`,
+        name: `Red ${product.name}${secondary_color_modifier &&
+          " - " + secondary_color_modifier}`,
         pathname: snake_case(
-          `Red ${product.name} - ${secondary_color_modifier}`
+          `Red ${product.name}${secondary_color_modifier &&
+            " - " + secondary_color_modifier}`
         ),
         color: "Red",
         color_code: "#c11c22",
@@ -1043,9 +1232,11 @@ export const create_secondary_color_products = async (
         ...no_state,
       },
       {
-        name: `Green ${product.name} - ${secondary_color_modifier}`,
+        name: `Green ${product.name}${secondary_color_modifier &&
+          " - " + secondary_color_modifier}`,
         pathname: snake_case(
-          `Green ${product.name} - ${secondary_color_modifier}`
+          `Green ${product.name}${secondary_color_modifier &&
+            " - " + secondary_color_modifier}`
         ),
         color: "Green",
         color_code: "#00c700",
@@ -1057,9 +1248,11 @@ export const create_secondary_color_products = async (
         ...no_state,
       },
       {
-        name: `Blue ${product.name} - ${secondary_color_modifier}`,
+        name: `Blue ${product.name}${secondary_color_modifier &&
+          " - " + secondary_color_modifier}`,
         pathname: snake_case(
-          `Blue ${product.name} - ${secondary_color_modifier}`
+          `Blue ${product.name}${secondary_color_modifier &&
+            " - " + secondary_color_modifier}`
         ),
         color: "Blue",
         color_code: "#0014ff",
@@ -1072,9 +1265,11 @@ export const create_secondary_color_products = async (
       },
 
       {
-        name: `Violet ${product.name} - ${secondary_color_modifier}`,
+        name: `Violet ${product.name}${secondary_color_modifier &&
+          " - " + secondary_color_modifier}`,
         pathname: snake_case(
-          `Violet ${product.name} - ${secondary_color_modifier}`
+          `Violet ${product.name}${secondary_color_modifier &&
+            " - " + secondary_color_modifier}`
         ),
         color: "Violet",
         color_code: "#543abb",
@@ -1086,9 +1281,11 @@ export const create_secondary_color_products = async (
         ...no_state,
       },
       {
-        name: `Purple ${product.name} - ${secondary_color_modifier}`,
+        name: `Purple ${product.name}${secondary_color_modifier &&
+          " - " + secondary_color_modifier}`,
         pathname: snake_case(
-          `Purple ${product.name} - ${secondary_color_modifier}`
+          `Purple ${product.name}${secondary_color_modifier &&
+            " - " + secondary_color_modifier}`
         ),
         color: "Purple",
         color_code: "purple",
@@ -1105,9 +1302,11 @@ export const create_secondary_color_products = async (
   } else if (product.category === "exo_diffusers") {
     list = [
       {
-        name: `Frosted ${product.name} - ${secondary_color_modifier}`,
+        name: `Frosted ${product.name}${secondary_color_modifier &&
+          " - " + secondary_color_modifier}`,
         pathname: snake_case(
-          `Frosted ${product.name} - ${secondary_color_modifier}`
+          `Frosted ${product.name}${secondary_color_modifier &&
+            " - " + secondary_color_modifier}`
         ),
         color: "Frosted",
         color_code: "#abaeb5",
@@ -1119,9 +1318,11 @@ export const create_secondary_color_products = async (
         ...no_state,
       },
       {
-        name: `Red ${product.name} - ${secondary_color_modifier}`,
+        name: `Red ${product.name}${secondary_color_modifier &&
+          " - " + secondary_color_modifier}`,
         pathname: snake_case(
-          `Red ${product.name} - ${secondary_color_modifier}`
+          `Red ${product.name}${secondary_color_modifier &&
+            " - " + secondary_color_modifier}`
         ),
         color: "Red",
         color_code: "#c11c22",
@@ -1133,9 +1334,11 @@ export const create_secondary_color_products = async (
         ...no_state,
       },
       {
-        name: `Green ${product.name} - ${secondary_color_modifier}`,
+        name: `Green ${product.name}${secondary_color_modifier &&
+          " - " + secondary_color_modifier}`,
         pathname: snake_case(
-          `Green ${product.name} - ${secondary_color_modifier}`
+          `Green ${product.name}${secondary_color_modifier &&
+            " - " + secondary_color_modifier}`
         ),
         color: "Green",
         color_code: "#00c700",
@@ -1147,9 +1350,11 @@ export const create_secondary_color_products = async (
         ...no_state,
       },
       {
-        name: `Blue ${product.name} - ${secondary_color_modifier}`,
+        name: `Blue ${product.name}${secondary_color_modifier &&
+          " - " + secondary_color_modifier}`,
         pathname: snake_case(
-          `Blue ${product.name} - ${secondary_color_modifier}`
+          `Blue ${product.name}${secondary_color_modifier &&
+            " - " + secondary_color_modifier}`
         ),
         color: "Blue",
         color_code: "#0014ff",
@@ -1161,9 +1366,11 @@ export const create_secondary_color_products = async (
         ...no_state,
       },
       {
-        name: `Violet ${product.name} - ${secondary_color_modifier}`,
+        name: `Violet ${product.name}${secondary_color_modifier &&
+          " - " + secondary_color_modifier}`,
         pathname: snake_case(
-          `Violet ${product.name} - ${secondary_color_modifier}`
+          `Violet ${product.name}${secondary_color_modifier &&
+            " - " + secondary_color_modifier}`
         ),
         color: "Violet",
         color_code: "#543abb",
@@ -1175,9 +1382,11 @@ export const create_secondary_color_products = async (
         ...no_state,
       },
       {
-        name: `Purple ${product.name} - ${secondary_color_modifier}`,
+        name: `Purple ${product.name}${secondary_color_modifier &&
+          " - " + secondary_color_modifier}`,
         pathname: snake_case(
-          `Purple ${product.name} - ${secondary_color_modifier}`
+          `Purple ${product.name}${secondary_color_modifier &&
+            " - " + secondary_color_modifier}`
         ),
         color: "Purple",
         color_code: "purple",
@@ -1194,9 +1403,11 @@ export const create_secondary_color_products = async (
   } else if (product.product_collection === "novaskinz") {
     list = [
       {
-        name: `Clear ${product.name} - ${secondary_color_modifier}`,
+        name: `Clear ${product.name}${secondary_color_modifier &&
+          " - " + secondary_color_modifier}`,
         pathname: snake_case(
-          `Clear ${product.name} - ${secondary_color_modifier}`
+          `Clear ${product.name}${secondary_color_modifier &&
+            " - " + secondary_color_modifier}`
         ),
         color: "Clear",
         color_code: "#4b4b4b",
@@ -1208,9 +1419,11 @@ export const create_secondary_color_products = async (
         ...no_state,
       },
       {
-        name: `Frosted ${product.name} - ${secondary_color_modifier}`,
+        name: `Frosted ${product.name}${secondary_color_modifier &&
+          " - " + secondary_color_modifier}`,
         pathname: snake_case(
-          `Frosted ${product.name} - ${secondary_color_modifier}`
+          `Frosted ${product.name}${secondary_color_modifier &&
+            " - " + secondary_color_modifier}`
         ),
         color: "Frosted",
         color_code: "#abaeb5",
@@ -1222,9 +1435,11 @@ export const create_secondary_color_products = async (
         ...no_state,
       },
       {
-        name: `Red ${product.name} - ${secondary_color_modifier}`,
+        name: `Red ${product.name}${secondary_color_modifier &&
+          " - " + secondary_color_modifier}`,
         pathname: snake_case(
-          `Red ${product.name} - ${secondary_color_modifier}`
+          `Red ${product.name}${secondary_color_modifier &&
+            " - " + secondary_color_modifier}`
         ),
         color: "Red",
         color_code: "#c11c22",
@@ -1236,9 +1451,11 @@ export const create_secondary_color_products = async (
         ...no_state,
       },
       {
-        name: `Green ${product.name} - ${secondary_color_modifier}`,
+        name: `Green ${product.name}${secondary_color_modifier &&
+          " - " + secondary_color_modifier}`,
         pathname: snake_case(
-          `Green ${product.name} - ${secondary_color_modifier}`
+          `Green ${product.name}${secondary_color_modifier &&
+            " - " + secondary_color_modifier}`
         ),
         color: "Green",
         color_code: "#00c700",
@@ -1250,9 +1467,11 @@ export const create_secondary_color_products = async (
         ...no_state,
       },
       {
-        name: `Blue ${product.name} - ${secondary_color_modifier}`,
+        name: `Blue ${product.name}${secondary_color_modifier &&
+          " - " + secondary_color_modifier}`,
         pathname: snake_case(
-          `Blue ${product.name} - ${secondary_color_modifier}`
+          `Blue ${product.name}${secondary_color_modifier &&
+            " - " + secondary_color_modifier}`
         ),
         color: "Blue",
         color_code: "#0014ff",
@@ -1264,9 +1483,11 @@ export const create_secondary_color_products = async (
         ...no_state,
       },
       {
-        name: `Violet ${product.name} - ${secondary_color_modifier}`,
+        name: `Violet ${product.name}${secondary_color_modifier &&
+          " - " + secondary_color_modifier}`,
         pathname: snake_case(
-          `Violet ${product.name} - ${secondary_color_modifier}`
+          `Violet ${product.name}${secondary_color_modifier &&
+            " - " + secondary_color_modifier}`
         ),
         color: "Violet",
         color_code: "#543abb",
@@ -1278,9 +1499,11 @@ export const create_secondary_color_products = async (
         ...no_state,
       },
       {
-        name: `Purple ${product.name} - ${secondary_color_modifier}`,
+        name: `Purple ${product.name}${secondary_color_modifier &&
+          " - " + secondary_color_modifier}`,
         pathname: snake_case(
-          `Purple ${product.name} - ${secondary_color_modifier}`
+          `Purple ${product.name}${secondary_color_modifier &&
+            " - " + secondary_color_modifier}`
         ),
         color: "Purple",
         color_code: "purple",
@@ -1292,9 +1515,11 @@ export const create_secondary_color_products = async (
         ...no_state,
       },
       {
-        name: `White ${product.name} - ${secondary_color_modifier}`,
+        name: `White ${product.name}${secondary_color_modifier &&
+          " - " + secondary_color_modifier}`,
         pathname: snake_case(
-          `White ${product.name} - ${secondary_color_modifier}`
+          `White ${product.name}${secondary_color_modifier &&
+            " - " + secondary_color_modifier}`
         ),
         color: "White",
         color_code: "white",
@@ -1306,9 +1531,11 @@ export const create_secondary_color_products = async (
         ...no_state,
       },
       {
-        name: `Black ${product.name} - ${secondary_color_modifier}`,
+        name: `Black ${product.name}${secondary_color_modifier &&
+          " - " + secondary_color_modifier}`,
         pathname: snake_case(
-          `Black ${product.name} - ${secondary_color_modifier}`
+          `Black ${product.name}${secondary_color_modifier &&
+            " - " + secondary_color_modifier}`
         ),
         color: "Black",
         color_code: "black",

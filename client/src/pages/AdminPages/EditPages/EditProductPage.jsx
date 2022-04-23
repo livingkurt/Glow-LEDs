@@ -144,10 +144,12 @@ const EditProductPage = props => {
   const [ extra_cost, set_extra_cost ] = useState();
   const [ item_group_id, set_item_group_id ] = useState("");
   const [ loading_options, set_loading_options ] = useState(false);
-  const [ color_modifier, set_color_modifier ] = useState();
-  const [ secondary_color_modifier, set_secondary_color_modifier ] = useState();
-  const [ option_modifier, set_option_modifier ] = useState();
-  const [ secondary_modifier, set_secondary_modifier ] = useState();
+  const [ color_modifier, set_color_modifier ] = useState("");
+  const [ secondary_color_modifier, set_secondary_color_modifier ] = useState(
+    ""
+  );
+  const [ option_modifier, set_option_modifier ] = useState("");
+  const [ secondary_modifier, set_secondary_modifier ] = useState("");
 
   const [ color_images, set_color_images ] = useState([]);
   const [ color_image, set_color_image ] = useState("");
