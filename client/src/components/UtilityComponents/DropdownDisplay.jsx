@@ -85,7 +85,7 @@ const DropdownDisplay = ({
                 list_items.map((item, index) => {
                   return (
                     <div
-                      className="promo_code mv-1rem row jc-b max-w-55rem w-100per"
+                      className="promo_code mv-1rem row jc-b  w-100per"
                       key={index}
                     >
                       <div className="ai-c w-100per jc-b">
@@ -98,11 +98,7 @@ const DropdownDisplay = ({
                             <i className="fas fa-times mr-5px" />
                           </button>
                           <Link
-                            to={
-                              "/secure/glow/editproduct/" +
-                              item.pathname +
-                              "/false"
-                            }
+                            to={`/secure/glow/editproduct/${item.pathname}/false`}
                           >
                             {display_key === "first_name" ? (
                               `${item[display_key]} ${item.last_name}`
@@ -138,8 +134,15 @@ const DropdownDisplay = ({
                               </button>
                             )}
                           </div>
+                          <Link
+                            to={`/secure/glow/editproduct/${item.pathname}/true`}
+                          >
+                            <button className="btn secondary ml-1rem">
+                              Use as Template
+                            </button>
+                          </Link>
                           <button
-                            className="btn secondary icon ml-1rem"
+                            className="btn primary icon ml-1rem"
                             onClick={e =>
                               remove_list_item_and_delete(index, e, item._id)}
                             aria-label="Delete"

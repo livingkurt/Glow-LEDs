@@ -342,21 +342,6 @@ export const create_color_products = async (
         ...no_state,
       },
       {
-        name: `White  ${product.name}${color_modifier &&
-          " - " + color_modifier}`,
-        pathname: snake_case(
-          `White  ${product.name}${color_modifier && " - " + color_modifier}`
-        ),
-        color: "White",
-        color_code: "white",
-        subcategory: "options",
-        product_collection: "colors",
-        item_group_id: product._id,
-        default_option: false,
-        images: color_images[8] ? [ color_images[8] ] : [],
-        ...no_state,
-      },
-      {
         name: `Black  ${product.name}${color_modifier &&
           " - " + color_modifier}`,
         pathname: snake_case(
