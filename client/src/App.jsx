@@ -471,7 +471,7 @@ const App = props => {
               />
               {/* Admin Routes */}
               <AdminRoute
-                path="/secure/glow/editproduct/:pathname?/:template?"
+                path="/secure/glow/editproduct/:pathname?/:template?/:product_option?/:item_group_id?"
                 component={EditProductPage}
               />
               <AdminRoute
@@ -788,7 +788,7 @@ const App = props => {
                 path="/collections/all/products/shop_by_chip"
                 component={AllProductsByChipPage}
               />
-             <Route
+              <Route
                 path="/collections/all/products/category/:category/subcategory/:subcategory/collection/:collection?"
                 component={AllProductsPage}
               />
@@ -796,12 +796,12 @@ const App = props => {
                 path="/collections/all/products/category/:category/subcategory/:subcategory?"
                 component={AllProductsPage}
               />
-                
+
               {/* <Route
                 path="/collections/all/products/category/:category/collection/:collection?"
                 component={AllProductsPage}
               /> */}
-             
+
               <Route
                 path="/collections/all/products/category/:category"
                 component={AllProductsPage}

@@ -24,8 +24,8 @@ import {
 } from "../../../utils/helper_functions";
 import {
   create_color_products,
-	create_secondary_color_products,
-	create_option_products,
+  create_secondary_color_products,
+  create_option_products,
   create_secondary_products,
 } from "../../../utils/helpers/product_helpers";
 import { listChips } from "../../../actions/chipActions";
@@ -39,7 +39,7 @@ import {
   determine_color_modifier,
   determine_secondary_color_modifier,
   determine_option_modifier,
-  determine_secondary_modifier
+  determine_secondary_modifier,
 } from "../../../utils/helpers/product_helpers";
 import { listUsers } from "../../../actions/userActions";
 
@@ -149,6 +149,15 @@ const EditProductPage = props => {
   const [ option_modifier, set_option_modifier ] = useState();
   const [ secondary_modifier, set_secondary_modifier ] = useState();
 
+  const [ color_images, set_color_images ] = useState([]);
+  const [ color_image, set_color_image ] = useState("");
+  const [ secondary_color_images, set_secondary_color_images ] = useState([]);
+  const [ secondary_color_image, set_secondary_color_image ] = useState("");
+  const [ option_images, set_option_images ] = useState([]);
+  const [ option_image, set_option_image ] = useState("");
+  const [ secondary_images, set_secondary_images ] = useState([]);
+  const [ secondary_image, set_secondary_image ] = useState("");
+
   const history = useHistory();
 
   const productDetails = useSelector(state => state.productDetails);
@@ -199,7 +208,13 @@ const EditProductPage = props => {
       }
       return () => (clean = false);
     },
-    [ dispatch, props.match.params.pathname ]
+    [
+      dispatch,
+      props.match.params.pathname,
+      props.match.params.template,
+      props.match.params.product_option,
+      props.match.params.item_group_id,
+    ]
   );
 
   useEffect(() => {
@@ -213,18 +228,22 @@ const EditProductPage = props => {
     return () => (clean = false);
   }, []);
 
-  useEffect(() => {
-    let clean = true;
-    if (clean) {
-      if(product && product.category) {
-        set_color_modifier(determine_color_modifier(product.category))
-        set_secondary_color_modifier(determine_secondary_color_modifier(product.category))
-        set_option_modifier(determine_option_modifier(product.category))
+  useEffect(
+    () => {
+      let clean = true;
+      if (clean) {
+        if (product && product.category) {
+          set_color_modifier(determine_color_modifier(product.category));
+          set_secondary_color_modifier(
+            determine_secondary_color_modifier(product.category)
+          );
+          set_option_modifier(determine_option_modifier(product.category));
+        }
       }
-
-    }
-    return () => (clean = false);
-  }, [product]);
+      return () => (clean = false);
+    },
+    [ product ]
+  );
 
   const findAll_products_a = async () => {
     const { data } = await API_Products.findAll_products_a({
@@ -365,6 +384,10 @@ const EditProductPage = props => {
     set_preorder(product.preorder);
     // setDisplayImage(product.display_image);
     set_images(product.images);
+    set_color_images(product.color_images);
+    set_secondary_color_images(product.secondary_color_images);
+    set_option_images(product.option_images);
+    set_secondary_images(product.secondary_images);
     // set_images(product.images);
     set_chips(product.chips);
     set_categorys(product.categorys);
@@ -432,6 +455,10 @@ const EditProductPage = props => {
     setIncludedItems("");
     // setDisplayImage([]);
     set_images([]);
+    set_color_images([]);
+    set_secondary_color_images([]);
+    set_option_images([]);
+    set_secondary_images([]);
     set_image("");
     setVideo("");
     setBrand("");
@@ -499,13 +526,91 @@ const EditProductPage = props => {
   // 	return 'Are you sure you want to leave?';
   // };
 
-  const save_product = () => {
+  const save_product = async () => {
     const start_date = new Date(
       unformat_date_and_time(sale_start_date, sale_start_time)
     );
     const end_date = new Date(
       unformat_date_and_time(sale_end_date, sale_end_time)
     );
+    console.log({
+      _id:
+        props.match.params.pathname && props.match.params.template === "false"
+          ? product._id
+          : null,
+      // _id: props.match.params.pathname && !props.match.params.template === 'true' ? id : null,
+      name,
+      price,
+      // display_image,
+      images,
+      color_images,
+      secondary_color_images,
+      option_images,
+      secondary_images,
+      chips: chips.map(chip => chip._id),
+      categorys: categorys.map(category => category._id),
+      subcategorys: subcategorys.map(subcategory => subcategory._id),
+      video,
+      brand,
+      category,
+      product_collection,
+      quantity,
+      count_in_stock,
+      facts,
+      included_items: included_items.length === 0 ? "" : included_items,
+      description,
+      hidden,
+      sale_price,
+      sale_start_date: accurate_date(start_date),
+      sale_end_date: accurate_date(end_date),
+      package_volume: package_length * package_width * package_height,
+      subcategory,
+      meta_title: `${name} | Glow LEDs`,
+      meta_description,
+      meta_keywords,
+      package_length,
+      package_width,
+      package_height,
+      product_length,
+      product_width,
+      product_height,
+      weight_pounds,
+      weight_ounces,
+      preorder,
+      contributers: contributers.length === 0 ? [] : contributers,
+      pathname: pathname ? pathname : snake_case(name),
+      order,
+      product_options,
+      finite_stock,
+      products: products.map(chip => chip._id),
+      group_product,
+      material_cost,
+      filament_used,
+      printing_time,
+      assembly_time,
+      group_name,
+      color_product_group,
+      color_group_name,
+      color_products,
+      secondary_color_product_group,
+      secondary_color_group_name,
+      secondary_color_products,
+      secondary_product_group,
+      secondary_group_name,
+      secondary_products,
+      option_product_group,
+      option_group_name,
+      option_products,
+      color,
+      color_code,
+      size,
+      default_option,
+      option,
+      macro_product,
+      extra_cost,
+      item_group_id: props.match.params.item_group_id || item_group_id,
+      previous_price,
+    });
     dispatch(
       saveProduct({
         _id:
@@ -517,6 +622,10 @@ const EditProductPage = props => {
         price,
         // display_image,
         images,
+        color_images,
+        secondary_color_images,
+        option_images,
+        secondary_images,
         chips: chips.map(chip => chip._id),
         categorys: categorys.map(category => category._id),
         subcategorys: subcategorys.map(subcategory => subcategory._id),
@@ -578,10 +687,52 @@ const EditProductPage = props => {
         option,
         macro_product,
         extra_cost,
-        item_group_id,
+        item_group_id: props.match.params.item_group_id || item_group_id,
         previous_price,
       })
     );
+    if (props.match.params.product_option && props.match.params.item_group_id) {
+      const { data } = await API_Products.findByPathname_products_a(
+        pathname ? pathname : snake_case(name)
+      );
+      let saved_data = {
+        _id: props.match.params.item_group_id,
+        pathname: props.match.params.pathname,
+      };
+      switch (props.match.params.product_option) {
+        case "color_product":
+          saved_data = {
+            ...saved_data,
+            color_products: [ ...color_products, data._id ],
+          };
+          break;
+        case "secondary_color_product":
+          saved_data = {
+            ...saved_data,
+            secondary_color_products: [ ...secondary_color_products, data._id ],
+          };
+          break;
+        case "option_product":
+          saved_data = {
+            ...saved_data,
+            option_products: [ ...option_products, data._id ],
+          };
+          break;
+        case "secondary_product":
+          saved_data = {
+            ...saved_data,
+            secondary_products: [ ...secondary_products, data._id ],
+          };
+          break;
+
+        default:
+          break;
+      }
+      dispatch(saveProduct(saved_data));
+      history.push(
+        `/secure/glow/editproduct/${props.match.params.pathname}/false`
+      );
+    }
   };
 
   const submitHandler = e => {
@@ -766,38 +917,58 @@ const EditProductPage = props => {
     }
   };
 
+  const create_product_options = (e, type) => {
+    e.preventDefault();
+    set_loading_options(true);
+    switch (type) {
+      case "color":
+        create_color_products(
+          product,
+          set_color_products,
+          color_products,
+          color_modifier,
+          color_images
+        );
+        set_loading_options(false);
+        break;
 
+      case "secondary_color":
+        create_secondary_color_products(
+          product,
+          set_secondary_color_products,
+          secondary_color_products,
+          secondary_color_modifier,
+          secondary_color_images
+        );
+        set_loading_options(false);
+        break;
 
-	// const determine_secondary_color_modifier = (category) => {
-	// 	switch (category) {
-	// 		case "glowskinz":
-	// 			return "Sled"
-		
-	// 		case "diffuser_caps":
-	// 			return "Adapter"
-		
-	// 		case "glowframez":
-	// 			return "Frame"
-		
-	// 		default:
-	// 			break;
-	// 	}
+      case "option":
+        create_option_products(
+          product,
+          set_option_products,
+          option_products,
+          option_modifier,
+          option_images
+        );
+        set_loading_options(false);
+        break;
 
-	// }
+      case "secondary":
+        create_secondary_products(
+          product,
+          set_secondary_products,
+          secondary_products,
+          secondary_modifier,
+          secondary_images
+        );
+        set_loading_options(false);
+        break;
 
-	// const determine_option_modifier = (category) => {
-	// 	switch (category) {
-	// 		case "glowskinz":
-	// 			return "Set of"
-	// 		case "diffuser_caps":
-	// 			return "Cap"
-	// 		case "glowframez":
-	// 			return "Frame"
-	// 		default:
-	// 			break;
-	// 	}
-
-	// }
+      default:
+        break;
+    }
+  };
 
   return (
     <div className="main_container p-20px">
@@ -1619,63 +1790,6 @@ const EditProductPage = props => {
                   )}
                   {macro_product && (
                     <div>
-                      <Link to={"/secure/glow/editproduct"}>
-                        <button className="btn primary w-100per">
-                          Create New Product Option
-                        </button>
-                      </Link>
-                      {/* <button
-												className="btn primary w-100per"
-												onClick={(e) => create_products_a(e)}
-											>
-												Create New Product Option
-											</button> */}
-                      <li />
-                      {loading_checkboxes ? (
-                        <div>Loading...</div>
-                      ) : (
-                        <li>
-                          <label htmlFor="group_product">Group Product</label>
-                          <input
-                            type="checkbox"
-                            name="group_product"
-                            defaultChecked={group_product}
-                            id="group_product"
-                            onChange={e => {
-                              set_group_product(e.target.checked);
-                            }}
-                          />
-                        </li>
-                      )}
-                      <div>
-                        {group_product && (
-                          <ul>
-                            <li>
-                              <label htmlFor="group_name">Group Name</label>
-                              <input
-                                type="text"
-                                name="group_name"
-                                value={group_name}
-                                id="group_name"
-                                onChange={e => set_group_name(e.target.value)}
-                              />
-                            </li>
-                            {/* {option_list(
-															products_list,
-															products,
-															set_products,
-															'Group Products'
-														)} */}
-                            <DropdownDisplay
-                              item_list={option_products_list}
-                              display_key={"name"}
-                              list_items={products}
-                              set_items={set_products}
-                              list_name={"Group Products"}
-                            />
-                          </ul>
-                        )}
-                      </div>
                       {color_product_group && (
                         <li>
                           <h2 className="ta-c">Color Product Group</h2>
@@ -1716,40 +1830,46 @@ const EditProductPage = props => {
                                   set_color_group_name(e.target.value)}
                               />
                             </li>
-														<div  className="row">
-														<input
-                                type="text"
-                                name="color_modifier"
-                                id="color_modifier"
-																defaultValue={determine_color_modifier(product.category)}
-                                className=""
-                                onChange={e =>
-                                  set_color_modifier(e.target.value)}
+                            <div>
+                              <ImageDisplay
+                                images={color_images}
+                                set_images={set_color_images}
+                                image={color_image}
+                                set_image={set_color_image}
                               />
-                              <button
-                                className="btn primary"
-                                onClick={e =>
-                                  create_color_products(
-                                    e,
-                                    product,
-                                    set_color_products,
-                                    color_products,
-																		color_modifier,
-                                    set_loading_options
-                                  )}
-                              >
-                                Create Color Products
-                              </button>
-                             
-															</div>
-                            
+                              <div className="jc-b">
+                                <div>
+                                  <input
+                                    type="text"
+                                    name="color_modifier"
+                                    id="color_modifier"
+                                    defaultValue={determine_color_modifier(
+                                      product.category
+                                    )}
+                                    className=""
+                                    onChange={e =>
+                                      set_color_modifier(e.target.value)}
+                                  />
 
-                            {/* {option_list(
-															option_products_list,
-															color_products,
-															set_color_products,
-															'Color Products'
-														)} */}
+                                  <button
+                                    className="btn primary"
+                                    onClick={e =>
+                                      create_product_options(e, "color")}
+                                  >
+                                    Create Color Products
+                                  </button>
+                                </div>
+                                <Link
+                                  to={`/secure/glow/editproduct/${props.match
+                                    .params
+                                    .pathname}/true/color_product/${product._id}`}
+                                >
+                                  <button className="btn primary">
+                                    Create Color Product
+                                  </button>
+                                </Link>
+                              </div>
+                            </div>
                             <DropdownDisplay
                               item_list={option_products_list}
                               display_key={"name"}
@@ -1806,41 +1926,50 @@ const EditProductPage = props => {
                                   )}
                               />
                             </li>
-                            
-														<div  className="row">
-														<input
-                                type="text"
-                                name="secondary_color_modifier"
-                                id="secondary_color_modifier"
-																defaultValue={determine_secondary_color_modifier(product.category)}
-                                className=""
-                                onChange={e =>
-                                  set_secondary_color_modifier(e.target.value)}
+                            <div>
+                              <ImageDisplay
+                                images={secondary_color_images}
+                                set_images={set_secondary_color_images}
+                                image={secondary_color_image}
+                                set_image={set_secondary_color_image}
                               />
-                              <button
-                                className="btn primary"
-                                onClick={e =>
-                                  create_secondary_color_products(
-                                    e,
-                                    product,
-                                    set_secondary_color_products,
-                                    secondary_color_products,
-																		secondary_color_modifier,
-                                    set_loading_options
-                                  )}
-                              >
-                                Create Secondary Color Products
-                              </button>
-                             
-															</div>
-                            
-
-                            {/* {option_list(
-															option_products_list,
-															secondary_color_products,
-															set_secondary_color_products,
-															'Secondary Color Products'
-														)} */}
+                              <div className="jc-b">
+                                <div>
+                                  <input
+                                    type="text"
+                                    name="secondary_color_modifier"
+                                    id="secondary_color_modifier"
+                                    defaultValue={determine_secondary_color_modifier(
+                                      product.category
+                                    )}
+                                    className=""
+                                    onChange={e =>
+                                      set_secondary_color_modifier(
+                                        e.target.value
+                                      )}
+                                  />
+                                  <button
+                                    className="btn primary"
+                                    onClick={e =>
+                                      create_product_options(
+                                        e,
+                                        "secondary_color"
+                                      )}
+                                  >
+                                    Create Secondary Color Products
+                                  </button>
+                                </div>
+                                <Link
+                                  to={`/secure/glow/editproduct/${props.match
+                                    .params
+                                    .pathname}/true/secondary_color_product/${product._id}`}
+                                >
+                                  <button className="btn primary">
+                                    Create Secondary Color Product
+                                  </button>
+                                </Link>
+                              </div>
+                            </div>
                             <DropdownDisplay
                               item_list={option_products_list}
                               display_key={"name"}
@@ -1892,38 +2021,45 @@ const EditProductPage = props => {
                                   set_option_group_name(e.target.value)}
                               />
                             </li>
-														<div  className="row">
-														<input
-                                type="text"
-                                name="option_modifier"
-                                id="option_modifier"
-																defaultValue={determine_option_modifier(product.category)}
-                                className=""
-                                onChange={e =>
-                                  set_option_modifier(e.target.value)}
+                            <div>
+                              <ImageDisplay
+                                images={option_images}
+                                set_images={set_option_images}
+                                image={option_image}
+                                set_image={set_option_image}
                               />
-                              <button
-                                className="btn primary"
-                                onClick={e =>
-                                  create_option_products(
-                                    e,
-                                    product,
-                                    set_option_products,
-                                    option_products,
-																		option_modifier,
-                                    set_loading_options
-                                  )}
-                              >
-                                Create Option Products
-                              </button>
-                             
-															</div>
-                            {/* {option_list(
-															option_products_list,
-															option_products,
-															set_option_products,
-															'Option Products'
-														)} */}
+                              <div className="jc-b">
+                                <div>
+                                  <input
+                                    type="text"
+                                    name="option_modifier"
+                                    id="option_modifier"
+                                    defaultValue={determine_option_modifier(
+                                      product.category
+                                    )}
+                                    className=""
+                                    onChange={e =>
+                                      set_option_modifier(e.target.value)}
+                                  />
+                                  <button
+                                    className="btn primary"
+                                    onClick={e =>
+                                      create_product_options(e, "option")}
+                                  >
+                                    Create Option Products
+                                  </button>
+                                </div>
+                                <Link
+                                  to={`/secure/glow/editproduct/${props.match
+                                    .params
+                                    .pathname}/true/option_product/${product._id}`}
+                                >
+                                  <button className="btn primary">
+                                    Create Option Product
+                                  </button>
+                                </Link>
+                              </div>
+                            </div>
                             <DropdownDisplay
                               item_list={option_products_list}
                               display_key={"name"}
@@ -1973,45 +2109,48 @@ const EditProductPage = props => {
                                   set_secondary_group_name(e.target.value)}
                               />
                             </li>
-                            <div  className="row">
-														<input
-                                type="text"
-                                name="secondary_modifier"
-                                id="secondary_modifier"
-																defaultValue={determine_secondary_modifier(product.category)}
-                                className=""
-                                onChange={e =>
-                                  set_secondary_modifier(e.target.value)}
+                            <div>
+                              <ImageDisplay
+                                images={secondary_images}
+                                set_images={set_secondary_images}
+                                image={secondary_image}
+                                set_image={set_secondary_image}
                               />
-                              <button
-                                className="btn primary"
-                                onClick={e =>
-                                  create_secondary_products(
-                                    e,
-                                    product,
-                                    set_secondary_products,
-                                    secondary_products,
-																		secondary_modifier,
-                                    set_loading_options
-                                  )}
-                              >
-                                Create Secondary Products
-                              </button>
-                             
-															</div>
-                            {/* {option_list(
-															option_products_list,
-															secondary_products,
-															set_secondary_products,
-															'Option Products'
-														)} */}
+                              <div className="jc-b">
+                                <div>
+                                  <input
+                                    type="text"
+                                    name="secondary_modifier"
+                                    id="secondary_modifier"
+                                    defaultValue={determine_secondary_modifier(
+                                      product.category
+                                    )}
+                                    className=""
+                                    onChange={e =>
+                                      set_secondary_modifier(e.target.value)}
+                                  />
+                                  <button
+                                    className="btn primary"
+                                    onClick={e =>
+                                      create_product_options(e, "secondary")}
+                                  >
+                                    Create Secondary Products
+                                  </button>
+                                </div>
+                                <Link
+                                  to={`/secure/glow/editproduct/${props.match
+                                    .params
+                                    .pathname}/true/secondary_product/${product._id}`}
+                                >
+                                  <button className="btn primary">
+                                    Create Secondary Product
+                                  </button>
+                                </Link>
+                              </div>
+                            </div>
                             <DropdownDisplay
                               item_list={macro_products_list}
                               display_key={"name"}
-                              // item_list={[
-                              // 	...macro_products_list,
-                              // 	...option_products_list
-                              // ]}
                               placement="top"
                               list_items={secondary_products}
                               set_items={set_secondary_products}

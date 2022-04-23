@@ -1,46 +1,46 @@
-{
-  "workbench.colorTheme": "One Dark Pro",
-  "editor.tabSize": 2,
-  "[javascriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[typescript]": {
-    "editor.defaultFormatter": "remimarsal.prettier-now"
-  },
-  "editor.formatOnSave": true,
-  "typescript.updateImportsOnFileMove.enabled": "always",
-  "explorer.confirmDelete": false,
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "[html]": {
-    "editor.defaultFormatter": "vscode.html-language-features"
-  },
-  "workbench.iconTheme": "vscode-icons",
-  "liveServer.settings.CustomBrowser": "brave",
-  // "liveServer.settings.AdvanceCustomBrowserCmdLine": "/Applications/Brave\ Browser.app",
-  "[graphql]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
-  "eslint.run": "onSave",
-  "eslint.packageManager": "yarn",
-  "css.validate": false, 
-  "less.validate": false, 
-  "scss.validate": false,
-  "stylelint.packageManager": "yarn",
-  "ruby.lint": { "rubocop": { "useBundler": true }},
-  "editor.codeActionsOnSave": { "source.fixAll": true },
-  "terminal.integrated.fontFamily": "Source Code Pro for Powerline",
-  "terminal.integrated.lineHeight": 1.3,
-  "terminal.integrated.cursorStyle": "line",
-  "prettier.arrowParens": false,
-  "prettier.arrayExpand": false,
-  "emmet.includeLanguages": {
-    "django-html": "html"
-  },
-  "files.associations": {
-    "*.ts": "typescript",
-    "*.js": "javascript"
-  },
-  "[python]": {
-    "editor.defaultFormatter": "geecode.geecode-python"
-  }
-  // "prettier.printWidth": false
+// {
+//   "workbench.colorTheme": "One Dark Pro",
+//   "editor.tabSize": 2,
+//   "[javascriptreact]": {
+//     "editor.defaultFormatter": "remimarsal.prettier-now"
+//   },
+//   "[typescript]": {
+//     "editor.defaultFormatter": "remimarsal.prettier-now"
+//   },
+//   "editor.formatOnSave": true,
+//   "typescript.updateImportsOnFileMove.enabled": "always",
+//   "explorer.confirmDelete": false,
+//   "editor.defaultFormatter": "esbenp.prettier-vscode",
+//   "[html]": {
+//     "editor.defaultFormatter": "vscode.html-language-features"
+//   },
+//   "workbench.iconTheme": "vscode-icons",
+//   "liveServer.settings.CustomBrowser": "brave",
+//   // "liveServer.settings.AdvanceCustomBrowserCmdLine": "/Applications/Brave\ Browser.app",
+//   "[graphql]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+//   "eslint.run": "onSave",
+//   "eslint.packageManager": "yarn",
+//   "css.validate": false, 
+//   "less.validate": false, 
+//   "scss.validate": false,
+//   "stylelint.packageManager": "yarn",
+//   "ruby.lint": { "rubocop": { "useBundler": true }},
+//   "editor.codeActionsOnSave": { "source.fixAll": true },
+//   "terminal.integrated.fontFamily": "Source Code Pro for Powerline",
+//   "terminal.integrated.lineHeight": 1.3,
+//   "terminal.integrated.cursorStyle": "line",
+//   "prettier.arrowParens": false,
+//   "prettier.arrayExpand": false,
+//   "emmet.includeLanguages": {
+//     "django-html": "html"
+//   },
+//   "files.associations": {
+//     "*.ts": "typescript",
+//     "*.js": "javascript"
+//   },
+//   "[python]": {
+//     "editor.defaultFormatter": "geecode.geecode-python"
+//   }
+//   // "prettier.printWidth": false
  
-}
+// }

@@ -122,6 +122,7 @@ export default {
   remove_products_db: async (id: string) => {
     try {
       const product: any = await Product.findOne({ _id: id });
+      console.log({ remove_products_db: product });
       if (product) {
         return await Product.updateOne({ _id: id }, { deleted: true });
       }
