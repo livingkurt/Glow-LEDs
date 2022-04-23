@@ -186,6 +186,7 @@ const ProductPage = props => {
   );
 
   const determine_options = product => {
+    console.log({ product });
     update_universal_state(product);
     const query = getUrlParameter(props.location);
     if (props.location.search.length === 0) {
@@ -648,19 +649,14 @@ const ProductPage = props => {
     // set_secondary_color_products(secondary.secondary_color_products);
 
     // set_secondary_products(secondary.secondary_products);
-    if (product.category === "glowstringz"){
-      set_price(secondary.price)
-      set_sale_price(secondary.sale_price)
+    if (product.category === "glowstringz") {
+      set_price(secondary.price);
+      set_sale_price(secondary.sale_price);
     }
     set_secondary_product(secondary._id);
     set_secondary_product_name(secondary.name);
     set_secondary_product_object(secondary);
-    update_url(
-      color,
-      secondary_color,
-      option_product_name,
-      secondary.name
-    );
+    update_url(color, secondary_color, option_product_name, secondary.name);
   };
 
   const [ out_of_stock, set_out_of_stock ] = useState();
@@ -965,7 +961,8 @@ const ProductPage = props => {
         )}
       </Loading>
       {product &&
-      product.name !== "Glowstringz V2" && product.name !== "Nova Clip" && (
+      product.name !== "Glowstringz V2" &&
+      product.name !== "Nova Clip" && (
         <div className=" w-100per m-auto">
           <RelatedProductsSlideshow
             product_category={product.category}
@@ -979,7 +976,8 @@ const ProductPage = props => {
         </div>
       )}
       {product &&
-      product.name !== "Glowstringz V2" && product.name !== "Nova Clip" && (
+      product.name !== "Glowstringz V2" &&
+      product.name !== "Nova Clip" && (
         <div className=" w-100per m-auto">
           <RelatedProductsSlideshow
             product_category={product.category}
@@ -993,7 +991,8 @@ const ProductPage = props => {
       )}
       {product &&
       product.category !== "batteries" &&
-      product.name !== "Glowstringz V2" && product.name !== "Nova Clip" && (
+      product.name !== "Glowstringz V2" &&
+      product.name !== "Nova Clip" && (
         <div className=" w-100per m-auto">
           <RelatedProductsSlideshow
             product_category={product.category}

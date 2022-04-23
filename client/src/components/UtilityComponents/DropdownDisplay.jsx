@@ -83,7 +83,6 @@ const DropdownDisplay = ({
             <div>
               {list_items &&
                 list_items.map((item, index) => {
-                  // console.log({ item });
                   return (
                     <div
                       className="promo_code mv-1rem row jc-b max-w-55rem w-100per"
@@ -93,7 +92,7 @@ const DropdownDisplay = ({
                         <div>
                           <button
                             className="btn icon"
-                            onClick={e => remove_list_item(index)}
+                            onClick={e => remove_list_item(index, e)}
                             aria-label="Delete"
                           >
                             <i className="fas fa-times mr-5px" />
