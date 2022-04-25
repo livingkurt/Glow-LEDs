@@ -49,6 +49,8 @@ import {
   state_names,
 } from "../../utils/helper_functions";
 import { check_authentication } from "../../utils/react_helper_functions";
+import useWindowDimensions from "../../components/Hooks/windowDimensions";
+import { userWindowDimensions } from "../../components/Hooks";
 // import { Shipping } from '../../components/SpecialtyComponents/PlaceOrderPageComponents';
 
 const PlaceOrderPage = props => {
@@ -763,6 +765,7 @@ const PlaceOrderPage = props => {
     }
   };
 
+  const { width } = useWindowDimensions();
   return (
     <div>
       <Helmet>
@@ -786,7 +789,10 @@ const PlaceOrderPage = props => {
       />
       <Loading loading={user_loading} />
       <div className="placeorder">
-        <div className="w-100per">
+        <div
+          className="w-100per"
+          style={{ flex: width > 400 ? "1 0 34rem" : "unset" }}
+        >
           <div className="placeorder-info">
             <Email
               email_completed={email_completed}

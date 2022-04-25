@@ -244,7 +244,7 @@ export function Shipping({
     }
   };
 
-  const { width } = useWindowDimensions;
+  const { width } = useWindowDimensions();
 
   return (
     <div>
