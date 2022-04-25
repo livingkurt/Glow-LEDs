@@ -125,6 +125,8 @@ import { check_authentication } from "./utils/react_helper_functions";
 import MarkAsShippedEmail from "./components/EmailComponents/MarkAsShippedEmail";
 import { EmailModal } from "./components/SpecialtyComponents";
 import { daysBetween } from "./utils/helper_functions";
+import { isBrowser, isMobile } from "react-device-detect";
+import Headroom from "react-headroom";
 
 const App = props => {
   const theme_colors = {
@@ -388,7 +390,13 @@ const App = props => {
 						</div>
 					</div>
 				</button> */}
-        <Header visible={visible} />
+        {isBrowser ? (
+          <Headroom>
+            <Header visible={visible} />
+          </Headroom>
+        ) : (
+          <Header visible={visible} />
+        )}
         <Sidebar
           visible={visible}
           height={height}

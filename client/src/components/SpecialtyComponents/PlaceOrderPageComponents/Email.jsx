@@ -42,7 +42,7 @@ export function Email({
     history.push("/checkout/placeorder");
   };
 
-  const { width } = useWindowDimensions;
+  const { width } = useWindowDimensions();
 
   return (
     <div>
@@ -68,10 +68,15 @@ export function Email({
                   : "p-0px"}`}
               >
                 <li>
-                  <pre className="phrase_font  mv-0px">
-                    Signed in with {userInfo.email} {"\n"}Not you?
+                  <pre
+                    className={`phrase_font fs-14px mv-0px mt-10px ${width < 400
+                      ? "ta-c"
+                      : ""}`}
+                  >
+                    Signed in with {userInfo.email} {"\n"}
+                    {"\n"}Not you?
                     <button
-                      className="btn nav title_font m-10px"
+                      className="btn primary title_font m-10px"
                       onClick={e => submit_logout(e)}
                     >
                       Logout
@@ -112,11 +117,15 @@ export function Email({
               >
                 {email_validations}
               </label>
-              <pre className="phrase_font mv-0px mt-10px">
-                You'll recieve receipts and notifications at this email address.{"\n"}Already
-                have an account?{" "}
+              <pre
+                className={`phrase_font fs-14px mv-0px mt-10px ${width < 400
+                  ? "ta-c"
+                  : ""}`}
+              >
+                You'll recieve receipts and notifications at this email address.{"\n"}
+                {"\n"}Already have an account?
                 <button
-                  className="btn nav title_font mb-15px"
+                  className="btn primary title_font m-10px"
                   onClick={() =>
                     set_is_guest(is_guest => (is_guest ? false : true))}
                 >
@@ -157,10 +166,14 @@ export function Email({
                   onChange={e => set_password(e.target.value)}
                 />
               </li>
-              <pre className="phrase_font mv-0px">
+              <pre
+                className={`phrase_font fs-14px mv-0px mt-10px ${width < 400
+                  ? "ta-c"
+                  : ""}`}
+              >
                 Don't have an account?{" "}
                 <button
-                  className="btn nav title_font mb-15px"
+                  className="btn primary title_font m-10px"
                   onClick={() =>
                     set_is_guest(is_guest => (is_guest ? false : true))}
                 >
@@ -169,11 +182,10 @@ export function Email({
               </pre>
               <li>
                 <button
-                  className="btn primary bob"
+                  className="btn primary bob m-10px"
                   onClick={e => submit_login(e)}
                 >
-                  {/* <button className="btn primary" onClick={() => next_step('shipping')}> */}
-                  Continue
+                  Login
                 </button>
               </li>
             </ul>
@@ -186,6 +198,7 @@ export function Email({
           </div>
         </div>
       )}
+      {width < 400 && <hr />}
     </div>
   );
 }

@@ -51,6 +51,7 @@ import {
 import { check_authentication } from "../../utils/react_helper_functions";
 import useWindowDimensions from "../../components/Hooks/windowDimensions";
 import { userWindowDimensions } from "../../components/Hooks";
+import { isMobile } from "react-device-detect";
 // import { Shipping } from '../../components/SpecialtyComponents/PlaceOrderPageComponents';
 
 const PlaceOrderPage = props => {
@@ -704,6 +705,7 @@ const PlaceOrderPage = props => {
       } else {
         setEmailValidations("Email Field Empty");
       }
+      isMobile && window.scrollTo({ top: 340, behavior: "smooth" });
     }
     if (step === "payment") {
       set_show_payment(true);
@@ -713,6 +715,7 @@ const PlaceOrderPage = props => {
       set_shipping_completed(true);
       set_show_shipping_complete(false);
       // re_choose_shipping_rate();
+      isMobile && window.scrollTo({ top: 560, behavior: "smooth" });
     }
     if (step === "review") {
       set_show_review(true);
@@ -829,7 +832,6 @@ const PlaceOrderPage = props => {
               next_step={next_step}
               shipping_rates={shipping_rates}
             />
-
             <Payment
               payment_completed={payment_completed}
               show_payment={show_payment}
@@ -868,6 +870,7 @@ const PlaceOrderPage = props => {
             />
           </div>
         </div>
+
         <OrderSummary
           show_message={show_message}
           loading={loading}

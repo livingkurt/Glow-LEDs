@@ -9,6 +9,7 @@ import { validate_shipping } from "../../../utils/validations";
 import { savePayment, saveShipping } from "../../../actions/cartActions";
 import { update } from "../../../actions/userActions";
 import useWindowDimensions from "../../Hooks/windowDimensions";
+import { isMobile } from "react-device-detect";
 
 export function Shipping({
   shipping_completed,
@@ -147,6 +148,7 @@ export function Shipping({
       save_shipping_to_user();
       set_show_shipping(false);
       set_shipping_completed(true);
+      isMobile && window.scrollTo({ top: 340, behavior: "smooth" });
     }
   };
   setTimeout(() => {
@@ -453,7 +455,8 @@ export function Shipping({
                 <li>
                   <label htmlFor="postalCode">Postal Code</label>
                   <input
-                    type="text"
+                    type="number"
+                    inputmode="decimal"
                     value={postalCode}
                     name="postalCode"
                     id="postalCode"
@@ -596,6 +599,7 @@ export function Shipping({
           )}
         </div>
       )}
+      {width < 400 && <hr />}
     </div>
   );
 }
