@@ -61,7 +61,7 @@ const AllProductsPage = (props) => {
 						// get_occurrences();
 					} else if (category === 'best_sellers') {
 						// get_occurrences();
-					} else if (category === 'essentials') {
+					} else if (category === 'our_picks') {
 						// get_occurrences();
 					} else {
 						set_products(main_products);
@@ -101,10 +101,10 @@ const AllProductsPage = (props) => {
 						get_occurrences();
 					} else if (category === 'best_sellers') {
 						get_occurrences();
-					} else if (category === 'essentials') {
+					} else if (category === 'our_picks') {
 						get_occurrences();
 					}
-					if (category !== 'essentials' || category === 'discounted' || category === 'best_sellers') {
+					if (category !== 'our_picks' || category === 'discounted' || category === 'best_sellers') {
 						console.log('All Products');
 						dispatch(listProducts({ category, subcategory, search, collection, option: false }));
 					}
@@ -127,10 +127,10 @@ const AllProductsPage = (props) => {
 			// set_best_sellers(data);
 			// set_alternative_products(data);
 			set_products(data);
-		} else if (occurrences && category === 'essentials') {
-			const { data } = await API_Products.get_essentials();
+		} else if (occurrences && category === 'our_picks') {
+			const { data } = await API_Products.get_our_picks();
 			// console.log({ data });
-			// set_essentials(data);
+			// set_our_picks(data);
 			// set_alternative_products(data);
 			set_products(data);
 		} else if (category === 'discounted') {

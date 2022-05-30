@@ -8,6 +8,9 @@ const product_routes = {
   findById_products_a: (id: any) => {
     return axios.get("/api/products/" + id);
   },
+  compress_images: (images: any) => {
+    return axios.post("/api/products/compress_images", { images });
+  },
   findByPathname_products_a: (pathname: any) => {
     return axios.get("/api/products/" + pathname);
   },
@@ -38,8 +41,8 @@ const product_routes = {
       item_group,
     });
   },
-  get_essentials: () => {
-    return axios.get("/api/products/essentials");
+  get_our_picks: () => {
+    return axios.get("/api/products/our_picks");
   },
   get_new_releases: () => {
     return axios.get("/api/products/new_releases");

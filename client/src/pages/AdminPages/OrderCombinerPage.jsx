@@ -196,7 +196,7 @@ const OrderCombinerPage = (props) => {
 		postalCode: '77520',
 		country: 'United States',
 		phone: '906-284-2208',
-		email: 'info.glowleds@gmail.com',
+		email: 'contact.glowleds@gmail.com',
 		company: 'Glow LEDs'
 	};
 

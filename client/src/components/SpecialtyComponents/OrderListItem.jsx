@@ -1,7 +1,7 @@
 // React
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
   determine_tracking_number,
@@ -14,6 +14,7 @@ import {
   deleteOrder,
   detailsOrder,
   listOrders,
+  saveOrder,
 } from "../../actions/orderActions";
 import { LazyImage, Loading } from "../UtilityComponents";
 import { determine_product_name } from "../../utils/react_helper_functions";
@@ -31,6 +32,13 @@ const OrderListItem = ({
   const dispatch = useDispatch();
   const [ loading_label, set_loading_label ] = useState(false);
   const [ hide_label_button, set_hide_label_button ] = useState(true);
+  const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
+  const [ order_items, set_order_items ] = useState(order.orderItems);
+  const userLogin = useSelector(state => state.userLogin);
+  const { userInfo } = userLogin;
+  setTimeout(() => {
+    set_loading_checkboxes(false);
+  }, 500);
 
   const show_hide = id => {
     const row = document.getElementById(id);
@@ -228,6 +236,24 @@ const OrderListItem = ({
     set_loading_label(false);
   };
 
+  const check_item_as_manufactured = async index => {
+    let new_order_items = [ ...order_items ];
+    new_order_items[index] = {
+      ...new_order_items[index],
+      is_manufactured: order_items[index].is_manufactured ? false : true,
+    };
+    console.log({
+      new_order_items: new_order_items.map(item => item.is_manufactured),
+    });
+    set_order_items(new_order_items);
+    dispatch(
+      saveOrder({
+        ...order,
+        orderItems: [ ...new_order_items ],
+      })
+    );
+  };
+
   return (
     <div
       className="container"
@@ -307,15 +333,16 @@ const OrderListItem = ({
               {order.shipping.first_name} {order.shipping.last_name}
             </Link>
           </div>
-          {order.shipping.shipping_rate && (
-            <div className="fs-16px">
-              <p className="title_font ai-c fs-30px">
-                {order.shipping.shipping_rate.service !== "First" &&
-                  order.shipping.shipping_rate.service}{" "}
-              </p>
-            </div>
+          {userInfo &&
+          userInfo.isAdmin &&
+          order.shipping.shipping_rate && (
+            <p className="title_font ai-c fs-30px">
+              {order.shipping.shipping_rate.service !== "First" &&
+                order.shipping.shipping_rate.service}{" "}
+            </p>
           )}
         </div>
+
         <div className="w-40per jc-fe">
           <div className="">
             <div className="fs-16px">
@@ -344,7 +371,18 @@ const OrderListItem = ({
                 </div>
               )}
             </div>
-            <div className="row fs-16px jc-b ai-c">
+            <div
+              className={`row fs-16px ${order.order_note
+                ? "jc-b"
+                : "jc-fe"}  ai-c`}
+            >
+              {userInfo &&
+              userInfo.isAdmin &&
+              order.order_note && (
+                <p className="title_font fs-18px">
+                  {order.order_note && "Check Order Note"}
+                </p>
+              )}
               <Link
                 to={{
                   pathname: "/secure/account/order/" + order._id,
@@ -354,19 +392,6 @@ const OrderListItem = ({
               >
                 <button className="btn primary">Order Details</button>
               </Link>
-              <div>|</div>
-              <button className="btn secondary">
-                {/* <Link to={'/secure/glow/emails/invoice/' + order._id}>View Invoice</Link> */}
-                <Link
-                  to={{
-                    pathname: "/secure/glow/emails/invoice/" + order._id,
-                    previous_path:
-                      history.location.pathname + history.location.search,
-                  }}
-                >
-                  View Invoice
-                </Link>
-              </button>
             </div>
           </div>
         </div>
@@ -433,6 +458,30 @@ const OrderListItem = ({
                         <div className="mt-3px ml-2px">{item.qty}</div>
                       </div>
                     )}
+                    {userInfo &&
+                    userInfo.isAdmin && (
+                      <div>
+                        {loading_checkboxes ? (
+                          <div>Loading...</div>
+                        ) : (
+                          <div className="mv-1rem jc-c mr-2rem">
+                            <input
+                              type="checkbox"
+                              name="is_manufactured"
+                              defaultChecked={item.is_manufactured}
+                              style={{
+                                transform: "scale(1.5)",
+                              }}
+                              className=""
+                              id="is_manufactured"
+                              onChange={e => {
+                                check_item_as_manufactured(index);
+                              }}
+                            />
+                          </div>
+                        )}
+                      </div>
+                    )}
                   </div>
                 </div>
               );
@@ -450,12 +499,14 @@ const OrderListItem = ({
             })}
           </div>
         </div>
-        <Link
-          to={"/collections/all/products/" + order.orderItems[0].category}
-          className="ai-c ml-1rem"
-        >
-          <button className="btn primary">Buy Again</button>
-        </Link>
+        {order.orderItems.length > 0 && (
+          <Link
+            to={"/collections/all/products/" + order.orderItems[0].category}
+            className="ai-c ml-1rem"
+          >
+            <button className="btn primary">Buy Again</button>
+          </Link>
+        )}
 
         {admin && (
           <div className="jc-fe column ml-auto ">

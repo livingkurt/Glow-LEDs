@@ -1,127 +1,153 @@
 // React
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
-import { determnine_link } from '../../utils/helper_functions';
-import { LazyImage } from '../UtilityComponents';
-import { cart_item_name, sale_price_switch } from '../../utils/react_helper_functions';
-import { addToCart, removeFromCart } from '../../actions/cartActions';
+import { determnine_link } from "../../utils/helper_functions";
+import { LazyImage } from "../UtilityComponents";
+import {
+  cart_item_name,
+  sale_price_switch,
+} from "../../utils/react_helper_functions";
+import { removeFromCart } from "../../actions/cartActions";
 
-const CartItem = (props) => {
-	const removeFromCartHandler = (product) => {
-		dispatch(removeFromCart(product));
-	};
-	const dispatch = useDispatch();
+const CartItem = ({index, item, check_item_as_manufactured}) => {
+  const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
+  const removeFromCartHandler = product => {
+    dispatch(removeFromCart(product));
+  };
+  const dispatch = useDispatch();
 
-	const userLogin = useSelector((state) => state.userLogin);
-	const { userInfo } = userLogin;
+  const userLogin = useSelector(state => state.userLogin);
+  const { userInfo } = userLogin;
 
-	// const [ show_hidden, set_show_hidden ] = useState(false);
+  setTimeout(() => {
+    set_loading_checkboxes(false);
+  }, 500);
 
-	const show_hidden_products = (item) => {
-		console.log({ item });
-		// if (show_hidden) {
-		// 	set_show_hidden(false);
-		// } else if (!show_hidden) {
-		// 	set_show_hidden(true);
-		// }
-	};
 
-	return (
-		<li key={props.index} className="">
-			<div className="cart-image m-auto ai-c">
-				{userInfo &&
-				userInfo.isAdmin &&
-				props.item.isPaid && (
-					<button className="btn primary mr-10px" onClick={() => show_hidden_products(props.item)}>
-						{props.item.isManufactured ? <i class="fas fa-check-square" /> : <i class="far fa-square" />}
-					</button>
-				)}
-				<Link to={determnine_link(props.item)}>
-					<div className="">
-						{!props.item.secondary_image && (
-							<LazyImage
-								className="order-image br-10px mr-15px w-100px h-100px"
-								alt={props.item.name}
-								title="Product Image"
-								effect="blur"
-								src={props.item.display_image && props.item.display_image}
-							/>
-						)}
-						{props.item.secondary_image && (
-							<div
-								className={` double-image-cart${props.item.name &&
-								props.item.name.split('-')[1] === '2 Tone'
-									? '-vertical'
-									: ' row'}`}
-							>
-								<LazyImage
-									id="expandedImg"
-									alt={props.item.name}
-									title={props.item.name}
-									className={`details-image-cart-page-${props.item.name &&
-									props.item.name.split('-')[1] === '2 Tone'
-										? 'top'
-										: 'left'} m-0px`}
-									src={props.item.display_image}
-								/>
-								<LazyImage
-									id="expandedSecondaryImg"
-									alt={props.item.name}
-									title={props.item.name}
-									className={`details-image-cart-page-${props.item.name &&
-									props.item.name.split('-')[1] === '2 Tone'
-										? 'bottom'
-										: 'right'} `}
-									src={props.item.secondary_image}
-								/>
-							</div>
-						)}
-					</div>
-				</Link>
-			</div>
-			<div className="cart-name">
-				<div className="jc-b ai-c mb-20px">
-					<Link to={'/collections/all/products/' + props.item.pathname} className="m-0px">
-						<label className="paragraph_font lh-0px mv-0px fs-18px">{props.item.name}</label>
-					</Link>
-					{userInfo &&
-					userInfo.isAdmin && (
-						<div className="ai-c">
-							<button
-								className="btn icon"
-								onClick={() => removeFromCartHandler(props.item)}
-								aria-label="Delete"
-							>
-								<i className="fas fa-trash-alt" />
-							</button>
-						</div>
-					)}
-				</div>
-				{cart_item_name(props.item)}
+  return (
+    <li key={index} className="">
+      <div className="cart-image m-auto ai-c">
+        {check_item_as_manufactured &&
+        userInfo &&
+        userInfo.isAdmin && (
+          <div>
+            {loading_checkboxes ? (
+              <div>Loading...</div>
+            ) : (
+              <div className="mv-1rem jc-c mr-2rem">
+                <input
+                  type="checkbox"
+                  name="is_manufactured"
+                  defaultChecked={item.is_manufactured}
+                  style={{
+                    transform: "scale(1.5)",
+                  }}
+                  className=""
+                  id="is_manufactured"
+                  onChange={e => {
+                    check_item_as_manufactured(index);
+                  }}
+                />
+              </div>
+            )}
+          </div>
+        )}
+        <Link to={determnine_link(item)}>
+          <div className="">
+            {!item.secondary_image && (
+              <LazyImage
+                className="order-image br-10px mr-15px w-100px h-100px"
+                alt={item.name}
+                title="Product Image"
+                effect="blur"
+                src={item.display_image && item.display_image}
+              />
+            )}
+            {item.secondary_image && (
+              <div
+                className={` double-image-cart${item.name &&
+                item.name.split("-")[1] === "2 Tone"
+                  ? "-vertical"
+                  : " row"}`}
+              >
+                <LazyImage
+                  id="expandedImg"
+                  alt={item.name}
+                  title={item.name}
+                  className={`details-image-cart-page-${item.name &&
+                  item.name.split("-")[1] === "2 Tone"
+                    ? "top"
+                    : "left"} m-0px`}
+                  src={item.display_image}
+                />
+                <LazyImage
+                  id="expandedSecondaryImg"
+                  alt={item.name}
+                  title={item.name}
+                  className={`details-image-cart-page-${item.name &&
+                  item.name.split("-")[1] === "2 Tone"
+                    ? "bottom"
+                    : "right"} `}
+                  src={item.secondary_image}
+                />
+              </div>
+            )}
+          </div>
+        </Link>
+      </div>
+      <div className="cart-name">
+        <div className="jc-b ai-c mb-20px">
+          <Link
+            to={"/collections/all/products/" + item.pathname}
+            className="m-0px"
+          >
+            <label className="paragraph_font lh-0px mv-0px fs-18px">
+              {item.name}
+            </label>
+          </Link>
+          {userInfo &&
+          userInfo.isAdmin && (
+            <div className="ai-c">
+              <button
+                className="btn icon"
+                onClick={() => removeFromCartHandler(item)}
+                aria-label="Delete"
+              >
+                <i className="fas fa-trash-alt" />
+              </button>
+            </div>
+          )}
+        </div>
+        {cart_item_name(item)}
 
-				<div className="ai-c h-25px  w-100per jc-b mb-10px">
-					<label aria-label="Sort" htmlFor="sort" className="select-label mr-1rem">
-						Qty:
-					</label>
-					{props.show_qty ? (
+        <div className="ai-c h-25px  w-100per jc-b mb-10px">
+          <label
+            aria-label="Sort"
+            htmlFor="sort"
+            className="select-label mr-1rem"
+          >
+            Qty:
+          </label>
+          <label>{item.qty}</label>
+          {/* {show_qty ? (
 						<div className="custom-select">
 							<select
-								defaultValue={parseInt(props.item.qty)}
-								value={parseInt(props.item.qty)}
+								defaultValue={parseInt(item.qty)}
+								value={parseInt(item.qty)}
 								className="qty_select_dropdown"
 								onChange={(e) => {
 									dispatch(
 										addToCart({
-											...props.item,
-											pathname: props.item.pathname,
+											...item,
+											pathname: item.pathname,
 											qty: parseInt(e.target.value)
 										})
 									);
 								}}
 							>
-								{[ ...Array(props.item.quantity).keys() ].map((x, index) => (
+								{[ ...Array(item.quantity).keys() ].map((x, index) => (
 									<option key={index} defaultValue={parseInt(x + 1)}>
 										{parseInt(x + 1)}
 									</option>
@@ -130,13 +156,15 @@ const CartItem = (props) => {
 							<span className="custom-arrow" />
 						</div>
 					) : (
-						<label>{props.item.qty}</label>
-					)}
-					<div className="cart-price fs-16px">{sale_price_switch(props.item)}</div>
-				</div>
-			</div>
-		</li>
-	);
+						<label>{item.qty}</label>
+					)} */}
+          <div className="cart-price fs-16px">
+            {sale_price_switch(item)}
+          </div>
+        </div>
+      </div>
+    </li>
+  );
 };
 
 export default CartItem;

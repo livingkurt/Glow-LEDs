@@ -31,6 +31,7 @@ import { API_Emails, API_Orders, API_Shipping } from "../../utils";
 import useClipboard from "react-hook-clipboard";
 import useWindowDimensions from "../../components/Hooks/windowDimensions";
 import { OrderStatusButtons } from "../../components/SpecialtyComponents/OrderPageComponents";
+import { determine_color } from "../../utils/helpers/order_helpers";
 
 require("dotenv").config();
 
@@ -72,6 +73,7 @@ const OrderPage = props => {
   const [ package_dimensions, set_package_dimensions ] = useState({});
   const [ hide_label_button, set_hide_label_button ] = useState(true);
   const [ rate, set_rate ] = useState("");
+  const [ order_items, set_order_items ] = useState([]);
 
   const [ message_to_user, set_message_to_user ] = useState("");
 
@@ -130,6 +132,7 @@ const OrderPage = props => {
       if (clean) {
         if (order) {
           set_order_state(order);
+          set_order_items(order.orderItems)
         }
       }
       return () => (clean = false);
@@ -194,53 +197,6 @@ const OrderPage = props => {
     },
     [ errorPay ]
   );
-
-  const colors = [
-    { name: "Not Paid", color: "#6d3e3e" },
-    { name: "Paid", color: "#3e4c6d" },
-    { name: "Manufactured", color: "#4b7188" },
-    { name: "Packaged", color: "#6f5f7d" },
-    { name: "Shipped", color: "#636363" },
-    { name: "Delivered", color: "#333333" },
-    { name: "Refunded", color: "#a9a9a9" },
-    { name: "Priority", color: "#874d72" },
-    { name: "Label Created", color: "#31887c" },
-  ];
-
-  const determine_color = order => {
-    let result = "";
-    if (!order.isPaid) {
-      result = colors[0].color;
-    }
-    if (order.isPaid) {
-      result = colors[1].color;
-    }
-    if (
-      order.shipping.shipping_rate &&
-      order.shipping.shipping_rate.service !== "First"
-    ) {
-      result = colors[7].color;
-    }
-    if (order.isManufactured) {
-      result = colors[2].color;
-    }
-    if (order.shipping.shipping_label) {
-      result = colors[7].color;
-    }
-    if (order.isPackaged) {
-      result = colors[3].color;
-    }
-    if (order.isShipped) {
-      result = colors[4].color;
-    }
-    if (order.isDelivered) {
-      result = colors[5].color;
-    }
-    if (order.isRefunded) {
-      result = colors[6].color;
-    }
-    return result;
-  };
 
   const history = useHistory();
 
@@ -449,60 +405,6 @@ const OrderPage = props => {
     // show_label(order.shipping.shipping_label.postage_label.label_url);
     print_label(order.shipping.return_shipping_label.postage_label.label_url);
   };
-  // 	const download_return_label = async () => {
-  // 		// show_label(order.shipping.shipping_label.postage_label.label_url);
-  // 		print_label(order.shipping.return_shipping_label.postage_label.label_url);
-  // 		var canvas = document.getElementById('canvas'),
-  //     context = canvas.getContext('2d');
-  // canvas.width = 500;
-  // canvas.height = 600;
-
-  // // Grab the iframe
-  // var inner = document.getElementById('inner');
-
-  // // Get the image
-  // iframe2image(inner, function (err, img) {
-  //   // If there is an error, log it
-  //   if (err) { return console.error(err); }
-
-  //   // Otherwise, add the image to the canvas
-  //   context.drawImage(img, 0, 0);
-  // });
-  // 	};
-
-  // const download_return_label = (content) => {
-  // 	// // const content = document.getElementById(id).innerHTML;
-  // 	// const frame1 = document.createElement('iframe');
-  // 	// frame1.name = 'frame1';
-  // 	// frame1.style.position = 'absolute';
-  // 	// frame1.style.top = '-1000000px';
-  // 	// document.body.appendChild(frame1);
-  // 	// const frameDoc = frame1.contentWindow
-  // 	// 	? frame1.contentWindow
-  // 	// 	: frame1.contentDocument.document ? frame1.contentDocument.document : frame1.contentDocument;
-  // 	// frameDoc.document.open();
-  // 	// frameDoc.document.write('</head><body>');
-  // 	// frameDoc.document.write(`<div style="width: 100%;
-  // 	// display: flex;
-  // 	// height: 100%;
-  // 	// align-items: center;;">
-  // 	//     <img style="margin: auto; text-align: center;" src="${content}" alt="label" />
-  // 	// </div>`);
-  // 	// frameDoc.document.write('</body></html>');
-  // 	// frameDoc.document.close();
-  // 	// iframe2image(inner, function (err, img) {
-  // 	// 	// If there is an error, log it
-  // 	// 	if (err) { return console.error(err); }
-  // 	// 	// Otherwise, add the image to the canvas
-  // 	// 	context.drawImage(img, 0, 0);
-  // 	// });
-  // 	// // setTimeout(function() {
-  // 	// // 	window.frames['frame1'].focus();
-  // 	// // 	window.frames['frame1'].print();
-  // 	// // 	document.body.removeChild(frame1);
-  // 	// // }, 500);
-  // 	// return false;
-  // };
 
   const [ fetching, setFetching ] = useState(false);
   const [ error_img, set_error_img ] = useState(false);
@@ -732,6 +634,25 @@ const OrderPage = props => {
 
     set_loading_label(false);
   };
+  
+
+  const check_item_as_manufactured = async (index) => {
+    let new_order_items = [ ...order_items ];
+		new_order_items[index] = {
+			...new_order_items[index],
+      is_manufactured: order_items[index].is_manufactured ? false : true
+		};
+    set_order_items(new_order_items)
+    dispatch(
+			saveOrder({
+				...order, 
+        orderItems: [...new_order_items]
+			})
+		);
+    
+  };
+
+
 
   return (
     <Loading loading={loading} error={error}>
@@ -1150,12 +1071,11 @@ ${order.shipping.email}`)}
                     <li>
                       <div>Price</div>
                     </li>
-                    {console.log({ orderItems: order.orderItems })}
                     {order.orderItems.length === 0 ? (
                       <div>Cart is empty</div>
                     ) : (
                       order.orderItems.map((item, index) => (
-                        <CartItem item={item} index={index} show_qty={false} />
+                        <CartItem check_item_as_manufactured={check_item_as_manufactured} item={item} index={index} show_qty={false} />
                       ))
                     )}
                   </ul>

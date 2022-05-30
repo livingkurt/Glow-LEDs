@@ -310,7 +310,7 @@ const RelatedProductsSlideshow = ({
 																	</h3>
 																	<div className="ai-c wrap">
 																		{product.option_products
-																			.filter((option) => option.price !== 2.99)
+																			.filter((option) => option.price !== 2.98)
 																			.map((option, index) => (
 																				<div>
 																					{option_buttons(

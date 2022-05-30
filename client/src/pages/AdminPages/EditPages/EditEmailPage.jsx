@@ -16,8 +16,14 @@ import { detailsContent, listContents } from "../../../actions/contentActions";
 import { API_Emails } from "../../../utils";
 import { SketchPicker } from "react-color";
 import reactCSS from "reactcss";
-const ReactDOMServer = require('react-dom/server');
-const HtmlToReactParser = require('html-to-react').Parser;
+import {
+  accurate_date,
+  format_date,
+  format_time,
+  unformat_date_and_time,
+} from "../../../utils/helper_functions";
+const ReactDOMServer = require("react-dom/server");
+const HtmlToReactParser = require("html-to-react").Parser;
 
 const EditEmailPage = props => {
   const [ id, set_id ] = useState("");
@@ -31,7 +37,8 @@ const EditEmailPage = props => {
   const [ text_color, set_text_color ] = useState("#FFFFFF");
   const [ title_color, set_title_color ] = useState("#333333");
   const [ header_footer_color, set_header_footer_color ] = useState("#333333");
-  const [ template, set_template ] = useState('');
+  const [ template, set_template ] = useState("");
+  const [ status, set_status ] = useState("");
 
   const [ email_h2, set_email_h2 ] = useState("");
   const [ email_p, set_email_p ] = useState("");
@@ -40,8 +47,12 @@ const EditEmailPage = props => {
   const [ email_active, set_email_active ] = useState(true);
   const [ images, set_images ] = useState([]);
   const [ image, set_image ] = useState("");
+  const [ scheduled_at, set_scheduled_at ] = useState("");
   const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
   const [ content, set_content ] = useState({});
+  const [ date, set_date ] = useState();
+  const [ time, set_time ] = useState();
+  const [ subject, set_subject ] = useState("");
 
   const history = useHistory();
 
@@ -89,13 +100,21 @@ const EditEmailPage = props => {
     set_email_button(email.button);
     set_email_link(email.link);
     set_email_active(email.active);
-    set_background_color(email.background_color);
-    set_module_color(email.module_color);
-    set_button_color(email.button_color);
-    set_text_color(email.text_color);
-    set_title_color(email.title_color);
-    set_header_footer_color(email.header_footer_color);
-    view_announcement_email()
+    set_background_color(email.background_color || "#7d7c7c");
+    set_module_color(email.module_color || "#585858");
+    set_button_color(email.button_color || "#4c4f60");
+    set_text_color(email.text_color || "#FFFFFF");
+    set_title_color(email.title_color || "#333333");
+    set_header_footer_color(email.header_footer_color || "#333333");
+    view_announcement_email(email);
+    set_scheduled_at(email.scheduled_at);
+    if (email.scheduled_at) {
+      const scheduled = new Date(email.scheduled_at);
+      set_date(format_date(accurate_date(scheduled)));
+      set_time(format_time(accurate_date(scheduled)));
+    }
+    set_status(email.status);
+    set_subject(email.subject);
   };
   const unset_state = () => {
     set_id("");
@@ -110,12 +129,15 @@ const EditEmailPage = props => {
     set_email_active("");
     set_images([]);
     set_image("");
-    set_background_color("");
-    set_module_color("");
-    set_button_color("");
-    set_text_color("");
-    set_title_color("");
-    set_header_footer_color("");
+    set_background_color("#7d7c7c");
+    set_module_color("#585858");
+    set_button_color("#4c4f60");
+    set_text_color("#FFFFFF");
+    set_title_color("#333333");
+    set_header_footer_color("#333333");
+    set_status("");
+    set_scheduled_at("");
+    set_subject("");
     // dispatch(detailsEmail(''));
     // dispatch(detailsContent(''));
   };
@@ -156,13 +178,14 @@ const EditEmailPage = props => {
       ...data.home_page,
       link: new_link,
     });
-  }
+  };
   const view_announcement_email = async () => {
     // dispatch(detailsContent(e.target.value));
-    console.log({email})
+    console.log({ email });
     const { data } = await API_Emails.view_announcement_email({
       _id: id ? id : null,
       email_type: "Announcements",
+      subject,
       h1: email_h1,
       image: email_image,
       images,
@@ -178,10 +201,10 @@ const EditEmailPage = props => {
       title_color,
       active: email_active,
     });
-    console.log({data})
+    console.log({ data });
     const htmlToReactParser = new HtmlToReactParser();
     const reactElement = htmlToReactParser.parse(data);
-    set_template(reactElement)
+    set_template(reactElement);
   };
 
   useEffect(
@@ -191,7 +214,6 @@ const EditEmailPage = props => {
         if (email) {
           // console.log('Set');
           set_email_state();
-         
         } else {
           // console.log('UnSet');
           unset_state();
@@ -218,7 +240,6 @@ const EditEmailPage = props => {
     [ content ]
   );
 
-
   setTimeout(() => {
     set_loading_checkboxes(false);
   }, 500);
@@ -236,12 +257,14 @@ const EditEmailPage = props => {
         p: email_p,
         button: email_button,
         link: email_link,
+        status,
         header_footer_color,
         background_color,
         module_color,
         button_color,
         text_color,
         title_color,
+        scheduled_at: date && time ? unformat_date_and_time(date, time) : null,
         active: email_active,
       })
     );
@@ -349,6 +372,7 @@ const EditEmailPage = props => {
                         <select
                           className="qty_select_dropdown w-100per"
                           onChange={e => use_content_template(e)}
+                          vd
                         >
                           <option key={1} defaultValue="">
                             ---Content Template---
@@ -359,6 +383,24 @@ const EditEmailPage = props => {
                                 {content.home_page.h1}
                               </option>
                             ))}
+                        </select>
+                        <span className="custom-arrow" />
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div className="ai-c h-25px mb-15px jc-c">
+                      <div className="custom-select w-100per">
+                        <select
+                          className="qty_select_dropdown w-100per"
+                          onChange={e => set_status(e.target.value)}
+                          value={status}
+                        >
+                          <option defaultValue="">---Status---</option>
+
+                          <option value={"draft"}>Draft</option>
+                          <option value={"scheduled"}>Scheduled</option>
+                          <option value={"sent"}>Sent</option>
                         </select>
                         <span className="custom-arrow" />
                       </div>
@@ -504,8 +546,10 @@ const EditEmailPage = props => {
                             name="background_color"
                             value={background_color}
                             id="background_color"
-                            onChange={e => {set_background_color(e.target.value)   
-                              view_announcement_email()}}
+                            onChange={e => {
+                              set_background_color(e.target.value);
+                              view_announcement_email();
+                            }}
                           />
                           <div>
                             <div
@@ -623,6 +667,16 @@ const EditEmailPage = props => {
                         </li>
                       </ul>
                       <li>
+                        <label htmlFor="subject">Subject</label>
+                        <input
+                          type="text"
+                          name="subject"
+                          value={subject}
+                          id="subject"
+                          onChange={e => set_subject(e.target.value)}
+                        />
+                      </li>
+                      <li>
                         <label htmlFor="email_h1">Heading</label>
                         <input
                           type="text"
@@ -669,7 +723,6 @@ const EditEmailPage = props => {
                         />
                       </li>
                       <li>
-                        <label htmlFor="email_link">Link</label>
                         <input
                           type="text"
                           name="email_link"
@@ -678,6 +731,28 @@ const EditEmailPage = props => {
                           onChange={e => set_email_link(e.target.value)}
                         />
                       </li>
+
+                      <div className="jc-b g-10px">
+                        <div className="column w-100per">
+                          <label htmlFor="email_link">Scheduled Date</label>
+                          <input
+                            type="text"
+                            value={date}
+                            className="w-100per"
+                            onChange={e => set_date(e.target.value)}
+                          />
+                        </div>
+                        <div className="column w-100per">
+                          <label htmlFor="email_link">Scheduled Time</label>
+                          <input
+                            type="text"
+                            value={time}
+                            className="w-100per"
+                            onChange={e => set_time(e.target.value)}
+                          />
+                        </div>
+                      </div>
+
                       {loading_checkboxes ? (
                         <div>Loading...</div>
                       ) : (
@@ -704,23 +779,23 @@ const EditEmailPage = props => {
                     </button>
                   </li>
                   <li>
+                    <Link to={"/secure/glow/emails/announcement/" + email._id}>
+                      <button
+                        className="btn secondary w-100per"
+                        aria-label="view"
+                      >
+                        Go to Email Sender
+                      </button>
+                    </Link>
+                  </li>
+                  <li>
                     <Link to="/secure/glow/emails/">
                       <button className="btn secondary w-100per">
                         Back to Emails
                       </button>
                     </Link>
                   </li>
-                  <li>
-                    <button
-                      className="btn secondary"
-                      onClick={() => history.goBack()}
-                    >
-                      Back to Template
-                    </button>
-                  </li>
-                  <li>
-                   {template}
-                  </li>
+                  <li>{template}</li>
                 </ul>
               </div>
             )}

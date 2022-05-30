@@ -159,6 +159,7 @@ const EditProductPage = props => {
   const [ option_image, set_option_image ] = useState("");
   const [ secondary_images, set_secondary_images ] = useState([]);
   const [ secondary_image, set_secondary_image ] = useState("");
+  const [ has_add_on, set_has_add_on ] = useState(false);
 
   const history = useHistory();
 
@@ -249,19 +250,23 @@ const EditProductPage = props => {
 
   const findAll_products_a = async () => {
     const { data } = await API_Products.findAll_products_a({
-      option: false,
-      limit: 300,
+      // option: false,
+      limit: 0,
     });
     console.log({ data });
-    set_macro_products_list(data.products);
+    set_macro_products_list(
+      data.products.sort((a, b) => (a.name > b.name ? 1 : -1))
+    );
   };
   const get_all_options = async () => {
     const { data } = await API_Products.findAll_products_a({
       option: true,
-      limit: 300,
+      limit: 0,
     });
     console.log({ data });
-    set_option_products_list(data.products);
+    set_option_products_list(
+      data.products.sort((a, b) => (a.name > b.name ? 1 : -1))
+    );
   };
 
   const use_template = e => {
@@ -403,6 +408,7 @@ const EditProductPage = props => {
     set_quantity(product.quantity);
     set_count_in_stock(product.count_in_stock);
     set_finite_stock(product.finite_stock);
+    set_has_add_on(product.finite_stock);
     if (props.match.params.pathname) {
       if (props.match.params.template === "false") {
         setPathname(product.pathname);
@@ -523,6 +529,7 @@ const EditProductPage = props => {
     set_macro_product();
     set_extra_cost();
     set_item_group_id();
+    set_has_add_on(false);
   };
   // window.onbeforeunload = function() {
   // 	return 'Are you sure you want to leave?';
@@ -535,84 +542,6 @@ const EditProductPage = props => {
     const end_date = new Date(
       unformat_date_and_time(sale_end_date, sale_end_time)
     );
-    console.log({
-      _id:
-        props.match.params.pathname && props.match.params.template === "false"
-          ? product._id
-          : null,
-      // _id: props.match.params.pathname && !props.match.params.template === 'true' ? id : null,
-      name,
-      price,
-      // display_image,
-      images,
-      color_images,
-      secondary_color_images,
-      option_images,
-      secondary_images,
-      chips: chips.map(chip => chip._id),
-      categorys: categorys.map(category => category._id),
-      subcategorys: subcategorys.map(subcategory => subcategory._id),
-      video,
-      brand,
-      category,
-      product_collection,
-      quantity,
-      count_in_stock,
-      facts,
-      included_items: included_items.length === 0 ? "" : included_items,
-      description,
-      hidden,
-      sale_price,
-      sale_start_date: accurate_date(start_date),
-      sale_end_date: accurate_date(end_date),
-      package_volume: package_length * package_width * package_height,
-      subcategory,
-      meta_title: `${name} | Glow LEDs`,
-      meta_description,
-      meta_keywords,
-      package_length,
-      package_width,
-      package_height,
-      product_length,
-      product_width,
-      product_height,
-      weight_pounds,
-      weight_ounces,
-      preorder,
-      contributers: contributers.length === 0 ? [] : contributers,
-      pathname: pathname ? pathname : snake_case(name),
-      order,
-      product_options,
-      finite_stock,
-      products: products.map(chip => chip._id),
-      group_product,
-      material_cost,
-      filament_used,
-      printing_time,
-      assembly_time,
-      group_name,
-      color_product_group,
-      color_group_name,
-      color_products,
-      secondary_color_product_group,
-      secondary_color_group_name,
-      secondary_color_products,
-      secondary_product_group,
-      secondary_group_name,
-      secondary_products,
-      option_product_group,
-      option_group_name,
-      option_products,
-      color,
-      color_code,
-      size,
-      default_option,
-      option,
-      macro_product,
-      extra_cost,
-      item_group_id: props.match.params.item_group_id || item_group_id,
-      previous_price,
-    });
     dispatch(
       saveProduct({
         _id:
@@ -691,39 +620,141 @@ const EditProductPage = props => {
         extra_cost,
         item_group_id: props.match.params.item_group_id || item_group_id,
         previous_price,
+        has_add_on,
       })
     );
+    // if (props.match.params.product_option && props.match.params.item_group_id) {
+    //   const {
+    //     data: option_product,
+    //   } = await API_Products.findByPathname_products_a(
+    //     pathname ? pathname : snake_case(name)
+    //   );
+    //   const { data: macro_product } = await API_Products.findById_products_a(
+    //     props.match.params.item_group_id
+    //   );
+    //   let saved_data = {
+    //     _id: macro_product.item_group_id,
+    //   };
+    //   switch (props.match.params.product_option) {
+    //     case "color_product":
+    //       saved_data = {
+    //         ...saved_data,
+    //         color_products: [
+    //           ...macro_product.color_products,
+    //           option_product._id,
+    //         ],
+    //       };
+    //       break;
+    //     case "secondary_color_product":
+    //       saved_data = {
+    //         ...saved_data,
+    //         secondary_color_products: [
+    //           ...macro_product.secondary_color_products,
+    //           option_product._id,
+    //         ],
+    //       };
+    //       break;
+    //     case "option_product":
+    //       saved_data = {
+    //         ...saved_data,
+    //         option_products: [
+    //           ...macro_product.option_products,
+    //           option_product._id,
+    //         ],
+    //       };
+    //       break;
+    //     case "secondary_product":
+    //       saved_data = {
+    //         ...saved_data,
+    //         secondary_products: [
+    //           ...macro_product.secondary_products,
+    //           option_product._id,
+    //         ],
+    //       };
+    //       break;
+
+    //     default:
+    //       break;
+    //   }
+    //   dispatch(saveProduct(saved_data));
+    //   // if (successSave){
+
+    //   // }
+    //   // history.push(
+    //   //   `/secure/glow/editproduct/${macro_product.pathname}/false`
+    //   // );
+    // }
+  };
+
+  let num = 0;
+  useEffect(
+    () => {
+      let clean = true;
+      if (clean) {
+        if (
+          props.match.params.product_option &&
+          props.match.params.item_group_id
+        ) {
+          // if (successSave && num === 0) {
+          //   save_second_product();
+          //   num++;
+          // } else if (successSave && num === 1)
+          //   history.push(
+          //     `/secure/glow/editproduct/${macro_product.pathname}/false`
+          //   );
+        }
+      }
+      return () => (clean = false);
+    },
+    [ successSave ]
+  );
+
+  const save_second_product = async () => {
     if (props.match.params.product_option && props.match.params.item_group_id) {
-      const { data } = await API_Products.findByPathname_products_a(
-        pathname ? pathname : snake_case(name)
+      const {
+        data: option_product,
+      } = await API_Products.findByPathname_products_a(pathname);
+      const { data: macro_product } = await API_Products.findById_products_a(
+        props.match.params.item_group_id
       );
       let saved_data = {
-        _id: props.match.params.item_group_id,
-        pathname: props.match.params.pathname,
+        _id: macro_product.item_group_id,
       };
       switch (props.match.params.product_option) {
         case "color_product":
           saved_data = {
-            ...saved_data,
-            color_products: [ ...color_products, data._id ],
+            ...macro_product,
+            color_products: [
+              ...macro_product.color_products,
+              option_product._id,
+            ],
           };
           break;
         case "secondary_color_product":
           saved_data = {
-            ...saved_data,
-            secondary_color_products: [ ...secondary_color_products, data._id ],
+            ...macro_product,
+            secondary_color_products: [
+              ...macro_product.secondary_color_products,
+              option_product._id,
+            ],
           };
           break;
         case "option_product":
           saved_data = {
-            ...saved_data,
-            option_products: [ ...option_products, data._id ],
+            ...macro_product,
+            option_products: [
+              ...macro_product.option_products,
+              option_product._id,
+            ],
           };
           break;
         case "secondary_product":
           saved_data = {
-            ...saved_data,
-            secondary_products: [ ...secondary_products, data._id ],
+            ...macro_product,
+            secondary_products: [
+              ...macro_product.secondary_products,
+              option_product._id,
+            ],
           };
           break;
 
@@ -731,9 +762,12 @@ const EditProductPage = props => {
           break;
       }
       dispatch(saveProduct(saved_data));
-      history.push(
-        `/secure/glow/editproduct/${props.match.params.pathname}/false`
-      );
+      // if (successSave){
+
+      // }
+      // history.push(
+      //   `/secure/glow/editproduct/${macro_product.pathname}/false`
+      // );
     }
   };
 
@@ -819,6 +853,7 @@ const EditProductPage = props => {
         break;
 
       case "secondary_color":
+        console.log({ create_product_options: "secondary_color" });
         create_secondary_color_products(
           product,
           set_secondary_color_products,
@@ -1254,6 +1289,22 @@ const EditProductPage = props => {
                         <div>Loading...</div>
                       ) : (
                         <li>
+                          <label htmlFor="has_add_on">Has Add On</label>
+                          <input
+                            type="checkbox"
+                            name="has_add_on"
+                            defaultChecked={has_add_on}
+                            id="has_add_on"
+                            onChange={e => {
+                              set_has_add_on(e.target.checked);
+                            }}
+                          />
+                        </li>
+                      )}
+                      {loading_checkboxes ? (
+                        <div>Loading...</div>
+                      ) : (
+                        <li>
                           <label htmlFor="finite_stock">Finite Stock</label>
                           <input
                             type="checkbox"
@@ -1551,6 +1602,7 @@ const EditProductPage = props => {
 
 									{image_display(images)} */}
                   <DropdownDisplay
+                    item_group_id={product._id}
                     item_list={categorys_list}
                     display_key={"name"}
                     list_items={categorys}
@@ -1558,6 +1610,7 @@ const EditProductPage = props => {
                     list_name={"Categorys"}
                   />
                   <DropdownDisplay
+                    item_group_id={product._id}
                     item_list={categorys_list}
                     display_key={"name"}
                     list_items={subcategorys}
@@ -1568,6 +1621,7 @@ const EditProductPage = props => {
 									{option_list(categorys_list, subcategorys, set_subcategorys, 'Subcategorys')} */}
                   {users && (
                     <DropdownDisplay
+                      item_group_id={product._id}
                       item_list={users}
                       display_key={"first_name"}
                       list_items={contributers}
@@ -1757,6 +1811,7 @@ const EditProductPage = props => {
                               </div>
                             </div>
                             <DropdownDisplay
+                              item_group_id={product._id}
                               item_list={option_products_list}
                               display_key={"name"}
                               list_items={color_products}
@@ -1857,6 +1912,7 @@ const EditProductPage = props => {
                               </div>
                             </div>
                             <DropdownDisplay
+                              item_group_id={product._id}
                               item_list={option_products_list}
                               display_key={"name"}
                               list_items={secondary_color_products}
@@ -1947,6 +2003,7 @@ const EditProductPage = props => {
                               </div>
                             </div>
                             <DropdownDisplay
+                              item_group_id={product._id}
                               item_list={option_products_list}
                               display_key={"name"}
                               list_items={option_products}
@@ -2035,6 +2092,7 @@ const EditProductPage = props => {
                               </div>
                             </div>
                             <DropdownDisplay
+                              item_group_id={product._id}
                               item_list={macro_products_list}
                               display_key={"name"}
                               placement="top"
@@ -2049,6 +2107,7 @@ const EditProductPage = props => {
                   )}
                   {/* {option_list(chips_list, chips, set_chips, 'Chips')} */}
                   <DropdownDisplay
+                    item_group_id={product._id}
                     item_list={chips_list}
                     display_key={"name"}
                     list_items={chips}
@@ -2070,6 +2129,7 @@ const EditProductPage = props => {
 												</li>
 											
 												<DropdownDisplay
+                          item_group_id={product._id}
 													item_list={macro_products_list}
 													list_items={color_products}
 													set_items={set_color_products}

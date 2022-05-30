@@ -564,6 +564,33 @@ export default {
 
     res.send(products);
   },
+  add_vortex_option_to_diffusers: async (req: any, res: any) => {
+    // const products = await Product.find({
+    //   deleted: false,
+    //   category: "diffusers",
+    // });
+    const products = await Product.updateMany(
+      {
+        deleted: false,
+        category: "diffusers",
+      },
+      {
+        // $rename: { shipping_price: 'volume' }
+        $set: {
+          option_product_group: true,
+          option_products: [
+            "62732d2853e344002be8037f",
+            "6261b1fd2fc16b002b58c2f7",
+          ],
+        },
+        // $unset: { product_options: 1 },
+      },
+      { multi: true }
+      // { upsert: true }
+    );
+
+    res.send(products);
+  },
 
   clozd_glowframez: async (req: any, res: any) => {
     const products = await Product.find({
@@ -900,5 +927,38 @@ export default {
     );
     console.log({ order });
     res.send(order);
+  },
+  updated_capez_price: async (req: any, res: any) => {
+    // const products = await Product.find({
+    //   deleted: false,
+    //   category: "glowskinz",
+    //   subcategory: "options",
+    //   name: {
+    //     $regex: "Capez",
+    //     $options: "i",
+    //   },
+    // });
+    const products = await Product.updateMany(
+      {
+        deleted: false,
+        category: "glowskinz",
+        subcategory: "options",
+        name: {
+          $regex: "Capez",
+          $options: "i",
+        },
+      },
+      {
+        // $rename: { shipping_price: 'volume' }
+        $set: {
+          price: 4,
+        },
+        // $unset: { product_options: 1 },
+      },
+      { multi: true }
+      // { upsert: true }
+    );
+
+    res.send(products);
   },
 };

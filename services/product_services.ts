@@ -6,6 +6,8 @@ import {
   subcategories,
 } from "../util";
 
+const sharp = require("sharp");
+
 export default {
   findAll_products_s: async (query: any) => {
     try {
@@ -174,7 +176,7 @@ export default {
       throw new Error(error.message);
     }
   },
-  get_essentials_products_s: async (params: any, body: any) => {
+  get_our_picks_products_s: async (params: any, body: any) => {
     try {
       const names = [
         "Refresh Pack (6 Supreme Pairs + 120 Batteries)",
@@ -345,6 +347,23 @@ export default {
       } else {
         throw new Error("Product Not Found");
       }
+    } catch (error) {
+      console.log({ remove_surveys_s_error: error });
+      throw new Error(error.message);
+    }
+  },
+  compress_images_products_s: async (body: any) => {
+    try {
+      // console.log({ body: body.images });
+      const { images } = body;
+
+      sharp(images[0].data_url)
+        .jpeg({ progressive: true, force: false })
+        .toFile(
+          __dirname + "/Desktop/" + images[0].file.name + "-optimized.jpg"
+        );
+
+      return "Success";
     } catch (error) {
       console.log({ remove_surveys_s_error: error });
       throw new Error(error.message);

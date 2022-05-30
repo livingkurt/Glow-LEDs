@@ -118,7 +118,7 @@ const Footer = () => {
                   </Link>
                 </li>
                 <li className="ta-l mv-2rem">
-                  <Link to="/collections/all/products/essentials">
+                  <Link to="/collections/all/products/our_picks">
                     {" "}
                     Our Picks ⭐
                   </Link>
@@ -187,7 +187,7 @@ const Footer = () => {
             </div>
             <div style={{ display: width < 750 ? "none" : "block" }}>
               <h2 className="ta-l">
-                <Link to="/collections/all/products/category/essentials">Essentials</Link>
+                <Link to="/collections/all/products/category/our_picks">Essentials</Link>
               </h2>
               <ul className="lst-none">
                 <li className="ta-l mv-2rem">

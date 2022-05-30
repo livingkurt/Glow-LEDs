@@ -68,8 +68,12 @@ export { default as CategorysPage } from "./AdminPages/ListPages/CategorysPage";
 export { default as SettingsPage } from "./AdminPages/ListPages/SettingsPage";
 export { default as PalettesPage } from "./AdminPages/ListPages/PalettesPage";
 
+export { default as AnnouncementEmail } from "./AdminPages/AnnouncementEmail";
 export { default as ControlPanelPage } from "./AdminPages/ControlPanelPage";
 export { default as GcodeContinousPage } from "./AdminPages/GcodeContinousPage";
+export {
+  default as ImageCompressorPage,
+} from "./AdminPages/ImageCompressorPage";
 export { default as UserProfilePage } from "./AdminPages/UserProfilePage";
 export { default as LabelCreatorPage } from "./AdminPages/LabelCreatorPage";
 export {
@@ -119,7 +123,6 @@ export { default as Four04Page } from "./PublicPages/Four04Page";
 export { default as ResetPasswordPage } from "./PublicPages/ResetPasswordPage";
 export { default as VerifiedPage } from "./PublicPages/VerifiedPage";
 export { default as CheckEmailPage } from "./PublicPages/CheckEmailPage";
-export { default as EmailSentPage } from "./PublicPages/EmailSentPage";
 export { default as MaintenancePage } from "./PublicPages/MaintenancePage";
 export { default as TermsPage } from "./PublicPages/TermsPage";
 export {
@@ -133,7 +136,6 @@ export { default as FAQPage } from "./PublicPages/FAQPage";
 export { default as SitemapPage } from "./PublicPages/SitemapPage";
 export { default as FeaturedPage } from "./PublicPages/FeaturedPage";
 export { default as MusicPage } from "./PublicPages/MusicPage";
-export { default as GuestDecisionPage } from "./PublicPages/GuestDecisionPage";
 export { default as MenuPage } from "./PublicPages/MenuPage";
 export { default as TrackOrderPage } from "./PublicPages/TrackOrderPage";
 export { default as AnnouncementsPage } from "./PublicPages/AnnouncementsPage";

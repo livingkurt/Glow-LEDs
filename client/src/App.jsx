@@ -35,7 +35,6 @@ import {
   EditExpensePage,
   EditFeaturePage,
   FeaturesPage,
-  EmailSentPage,
   EditPromoPage,
   EditAffiliatePage,
   PromosPage,
@@ -48,7 +47,6 @@ import {
   MusicPage,
   EditEmailPage,
   EmailsPage,
-  GuestDecisionPage,
   MenuPage,
   ResetPasswordPage,
   ProductsDisplayPage,
@@ -93,6 +91,8 @@ import {
   CompletePage,
   GcodeContinousPage,
   AllProductsByChipPage,
+  ImageCompressorPage,
+  AnnouncementEmail,
 } from "./pages/index";
 import {
   Header,
@@ -105,24 +105,11 @@ import {
 import { AdminRoute, PrivateRoute } from "./components/RouteComponents";
 import { Notification, ScrollToTop } from "./components/UtilityComponents";
 import MessengerCustomerChat from "react-messenger-customer-chat";
-import {
-  AccountCreatedEmail,
-  AffiliateEmail,
-  AnnouncementEmail,
-  FeatureEmail,
-  InvoiceEmail,
-  OrderEmail,
-  OrderStatusEmail,
-  PasswordChangedEmail,
-  ResetPasswordEmail,
-  ReviewEmail,
-} from "./components/EmailComponents";
 import { Helmet } from "react-helmet";
 import useWindowDimensions from "./components/Hooks/windowDimensions";
 import Particles from "react-particles-js";
 import particlesjs_config from "./particlesjs_config.json";
 import { check_authentication } from "./utils/react_helper_functions";
-import MarkAsShippedEmail from "./components/EmailComponents/MarkAsShippedEmail";
 import { EmailModal } from "./components/SpecialtyComponents";
 import { daysBetween } from "./utils/helper_functions";
 import { isBrowser, isMobile } from "react-device-detect";
@@ -237,66 +224,8 @@ const App = props => {
   const open_sidebar = () => {
     const sidebar = document.querySelector(".sidebar");
     console.log({ classList: sidebar.classList });
-    // if (active) {
-    // 	console.log('Close', active);
-    // 	set_active(false);
-    // 	document.querySelector('.sidebar').classList.remove('open');
-    // } else {
-    // 	set_active(true);
-    // 	console.log('Open', active);
-
-    // 	document.querySelector('.sidebar').classList.add('open');
-    // }
-    // if (sidebar.classList.value === 'sidebar') {
-    // 	console.log('Close');
-    // document.querySelector('.sidebar').classList.add('open');
-    // 	// document.querySelector('.side-btn').classList.remove('active');
-    // 	// document.querySelector('.side-btn').classList.add('not-active');
-    // 	document.querySelector('.head-btn').classList.remove('active');
-    // 	document.querySelector('.head-btn').classList.add('not-active');
-    // } else if (sidebar.classList.value === 'sidebar open') {
-    // 	console.log('Open');
-    // document.querySelector('.sidebar').classList.remove('open');
-    // 	// document.querySelector('.side-btn').classList.remove('not-active');
-    // 	// document.querySelector('.side-btn').classList.add('active');
-    // 	document.querySelector('.head-btn').classList.remove('not-active');
-    // 	document.querySelector('.head-btn').classList.add('active');
-    // }
   };
 
-  // function useOutsideAlerter(ref) {
-  // 	useEffect(
-  // 		() => {
-  // 			/** Alert if clicked on outside of element */
-  // 			function handleClickOutside(event) {
-  // 				if (ref.current && !ref.current.contains(event.target)) {
-  // 					// alert('You clicked outside of me!');
-  // 					// if (!active) {
-  // 					console.log('Outside Click', active);
-  // 					// set_active(false);
-  // 					document.querySelector('.sidebar').classList.remove('open');
-  // 					// document.querySelector('.side-btn').classList.remove('active');
-  // 					// document.querySelector('.side-btn').classList.add('not-active');
-  // 					// document.querySelector('.head-btn').classList.remove('active');
-  // 					// document.querySelector('.head-btn').classList.add('not-active');
-  // 					// setTimeout(() => {
-  // 					// 	set_active(false);
-  // 					// }, 3000);
-
-  // 					// }
-  // 				}
-  // 				// set_active(false);
-  // 			}
-  // 			// Bind the event listener
-  // 			document.addEventListener('mousedown', handleClickOutside);
-  // 			return () => {
-  // 				// Unbind the event listener on clean up
-  // 				document.removeEventListener('mousedown', handleClickOutside);
-  // 			};
-  // 		},
-  // 		[ ref ]
-  // 	);
-  // }
   const wrapperRef = useRef(null);
   // useOutsideAlerter(wrapperRef);
 
@@ -376,20 +305,6 @@ const App = props => {
           className="zi-n5"
           style={{ zIndex: -5, position: "fixed" }}
         />
-        {/* <button
-					className={`side-bar-open  p-10px ${active ? 'z-pos-10' : 'z-pos-2'}`}
-					onClick={open_close}
-					aria-label="Sidebar"
-					style={{ fontSize: '30px !important' }}
-				>
-					<div className="box">
-						<div className={`head-btn ${active ? 'active' : 'not-active'}`}>
-							<span />
-							<span />
-							<span />
-						</div>
-					</div>
-				</button> */}
         {isBrowser ? (
           <Headroom>
             <Header visible={visible} />
@@ -473,10 +388,6 @@ const App = props => {
                 path="/secure/account/submission_complete"
                 component={SubmissionComplete}
               />
-              <PrivateRoute
-                path="/secure/checkout/order/receipt/:id/:status/:send?"
-                component={OrderEmail}
-              />
               {/* Admin Routes */}
               <AdminRoute
                 path="/secure/glow/editproduct/:pathname?/:template?/:product_option?/:item_group_id?"
@@ -485,6 +396,10 @@ const App = props => {
               <AdminRoute
                 path="/secure/glow/gcode_continous"
                 component={GcodeContinousPage}
+              />
+              <AdminRoute
+                path="/secure/glow/image_compressor"
+                component={ImageCompressorPage}
               />
               <AdminRoute
                 path="/secure/glow/edit_all_data"
@@ -611,65 +526,9 @@ const App = props => {
                 component={OrderCombinerPage}
               />
               <AdminRoute
-                path="/secure/glow/emails/announcement"
+                path="/secure/glow/emails/announcement/:id"
                 exact={true}
                 component={AnnouncementEmail}
-              />
-              <AdminRoute
-                path="/secure/glow/emails/review"
-                exact={true}
-                component={ReviewEmail}
-              />
-              <AdminRoute
-                path="/secure/glow/emails/account_created"
-                exact={true}
-                component={AccountCreatedEmail}
-              />
-              <AdminRoute
-                path="/secure/glow/emails/order/:id?/:status?/:send?"
-                exact={true}
-                component={OrderEmail}
-              />
-              <AdminRoute
-                path="/secure/glow/emails/order_status/:id?/:status?/:send?/:batch?/:message_to_user?"
-                exact={true}
-                component={OrderStatusEmail}
-              />
-              <AdminRoute
-                path="/secure/glow/mark_as_shipped/:status?/:send?/:batch?/:message_to_user?"
-                exact={true}
-                component={MarkAsShippedEmail}
-              />
-              <AdminRoute
-                path="/secure/glow/emails/invoice"
-                exact={true}
-                component={InvoiceEmail}
-              />
-              <AdminRoute
-                path="/secure/glow/emails/reset_password"
-                exact={true}
-                component={ResetPasswordEmail}
-              />
-              <AdminRoute
-                path="/secure/glow/emails/password_changed"
-                exact={true}
-                component={PasswordChangedEmail}
-              />
-              <AdminRoute
-                path="/secure/glow/emails/feature/:pathname?/:status?/:send?"
-                exact={true}
-                component={FeatureEmail}
-              />
-              <AdminRoute
-                path="/secure/glow/emails/affiliate/:pathname?/:status?/:send?"
-                exact={true}
-                component={AffiliateEmail}
-              />
-
-              <AdminRoute
-                path="/secure/glow/emails/invoice/:id?"
-                exact={true}
-                component={InvoiceEmail}
               />
               <AdminRoute path="/secure/glow/emails" component={EmailsPage} />
               <AdminRoute
@@ -718,7 +577,6 @@ const App = props => {
               <Route path="/account/login" component={LoginPage} />
               <Route path="/account/verified/:id" component={VerifiedPage} />
               <Route path="/account/checkemail" component={CheckEmailPage} />
-              <Route path="/account/emailsent" component={EmailSentPage} />
               <Route
                 path="/account/changepassword"
                 component={ChangePasswordPage}
@@ -736,52 +594,18 @@ const App = props => {
                 path="/account/submit_feature"
                 component={SubmitFeaturePage}
               />
-              <Route
-                path="/account/feature/receipt/:pathname/:status/:send?"
-                component={FeatureEmail}
-              />
-              <Route
-                path="/account/affiliate/receipt/:pathname/:status/:send?"
-                component={AffiliateEmail}
-              />
               {/* Checkout */}
-              <Route path="/checkout/decision" component={GuestDecisionPage} />
               <Route path="/checkout/placeorder" component={PlaceOrderPage} />
-              {/* <Route
-								path="/checkout/placeorder"
-								component={(props) => (
-									<PlaceOrderPage
-										{...props}
-										date_1={out_of_office_date_1}
-										date_2={out_of_office_date_2}
-									/>
-								)}
-							/> */}
               <Route path="/checkout/shipping" component={ShippingPage} />
               <Route path="/checkout/cart/:pathname?" component={CartPage} />
-              {/* <Route
-								path="/checkout/cart/:pathname?"
-								component={(props) => (
-									<CartPage {...props} date_1={out_of_office_date_1} date_2={out_of_office_date_2} />
-								)}
-							/> */}
               <Route
                 path="/checkout/order/:id"
                 exact={true}
                 component={OrderPage}
               />
-              <Route
-                path="/checkout/order/receipt/:id/:status/:send?"
-                component={OrderEmail}
-              />
 
               {/* Collections */}
               {/* Product Collections */}
-              {/* <Route
-								path="/collections/all/products/code/:promo_code"
-								exact={true}
-								component={(props) => <AllProductsPage {...props} set_message={set_message} />}
-							/> */}
               <Route
                 path="/collections/all/products/code/:promo_code"
                 exact={true}
@@ -804,12 +628,6 @@ const App = props => {
                 path="/collections/all/products/category/:category/subcategory/:subcategory?"
                 component={AllProductsPage}
               />
-
-              {/* <Route
-                path="/collections/all/products/category/:category/collection/:collection?"
-                component={AllProductsPage}
-              /> */}
-
               <Route
                 path="/collections/all/products/category/:category"
                 component={AllProductsPage}
@@ -915,7 +733,7 @@ const App = props => {
                 component={TrackOrderPage}
               />
               <Route
-                path="/pages/complete/:type/:id"
+                path="/pages/complete/:type/:id?"
                 exact={true}
                 component={CompletePage}
               />

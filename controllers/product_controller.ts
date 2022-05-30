@@ -88,10 +88,10 @@ export default {
       res.status(500).send({ error, message: "Error Creating Product" });
     }
   },
-  get_essentials_products_c: async (req: any, res: any) => {
+  get_our_picks_products_c: async (req: any, res: any) => {
     const { params, body } = req;
     try {
-      const product = await product_services.get_essentials_products_s(
+      const product = await product_services.get_our_picks_products_s(
         params,
         body
       );
@@ -132,7 +132,7 @@ export default {
       }
       return res.status(500).send({ message: "Error Deleting Product" });
     } catch (error) {
-      console.log({ remove_products_c_error: error });
+      console.log({ update_stockproducts_c_error: error });
       res.status(500).send({ error, message: "Error Deleting Product" });
     }
   },
@@ -148,7 +148,7 @@ export default {
       }
       return res.status(404).send({ message: "Products Not Found" });
     } catch (error) {
-      console.log({ findAll_products_c_error: error });
+      console.log({ update_product_order_products_c_error: error });
       res.status(500).send({ error, message: "Error Finding Products" });
     }
   },
@@ -177,7 +177,20 @@ export default {
       }
       return res.status(500).send({ message: "Error Deleting Product" });
     } catch (error) {
-      console.log({ remove_products_c_error: error });
+      console.log({ reviews_products_c_error: error });
+      res.status(500).send({ error, message: "Error Deleting Product" });
+    }
+  },
+  compress_images_products_c: async (req: any, res: any) => {
+    const { body } = req;
+    try {
+      const product = await product_services.compress_images_products_s(body);
+      if (product) {
+        return res.status(204).send({ message: "Product Deleted" });
+      }
+      return res.status(500).send({ message: "Error Deleting Product" });
+    } catch (error) {
+      console.log({ compress_images_products_c_error: error });
       res.status(500).send({ error, message: "Error Deleting Product" });
     }
   },

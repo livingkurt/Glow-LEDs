@@ -11,7 +11,7 @@ export default (props: any) => {
     text_color,
     title_color,
   } = props;
-  return `<table style="border-spacing:0;width:100%; padding: 20px; max-width: 800px; width: 100%; margin: auto;">
+  return `<table style="border-spacing:0;width:100%; padding: 10px; max-width: 800px; width: 100%; margin: auto;">
   <tbody>
     <tr style="font-size:16px">
       <td>
@@ -184,7 +184,7 @@ export default (props: any) => {
                       ${p
                         ? `
                       <pre
-                        style="max-width: 800px; font-family:helvetica;overflow-x:auto;white-space: pre-wrap;word-wrap:break-word;max-width:800px;width:100%;margin:0px;color:${text_color};font-size:16px;line-height:20px">${p}</pre>
+                        style="max-width: 800px; text-align:center; font-family:helvetica;overflow-x:auto;white-space: pre-wrap;word-wrap:break-word;max-width:800px;width:100%;margin:0px;color:${text_color};font-size:16px;line-height:20px">${p}</pre>
                       `
                         : ""}
 

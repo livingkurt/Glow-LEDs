@@ -31,7 +31,7 @@ export default (props: any) => {
           <td colspan="2" valign="top">
             <table style="width:100%;line-height:inherit;text-align:left;font-size:25px" width="100%" align="left">
               <tr>
-                <td valign="top">Glow LEDs<br />230 Hackberry St<br />Baytown, TX 77520<br />info.glowleds@gmail.com
+                <td valign="top">Glow LEDs<br />230 Hackberry St<br />Baytown, TX 77520<br />contact.glowleds@gmail.com
                 </td>
                 <td valign="top" align="right" style="text-align: right;">${order
                   .shipping.first_name} ${order.shipping.last_name}<br>${order
@@ -89,7 +89,7 @@ export default (props: any) => {
           .map(
             (item: any) => `<tr>
 				<td valign="top" style="padding: 5px; vertical-align: top; border-bottom: 1px solid black;">
-					<div> ${determine_product_name(item, true, order.createdAt)} </div>
+					<div> ${determine_product_name(item, true)} </div>
 				</td>
 				<td valign="top" align="right"
 					style="padding: 5px; vertical-align: top; text-align: right; border-bottom: 1px solid black;"><label>
@@ -366,7 +366,7 @@ export default (props: any) => {
       <div style="text-align:center">We want to feature you!</div>
       <div style="text-align:center">We are figuring this out as we go so any feedback is welcome.</div>
       <div style="text-align:center">We appreciate you more than you know.</div>
-      <div style="text-align:center"><strong>Questions or concerns?:</strong> info.glowleds@gmail.com</div>
+      <div style="text-align:center"><strong>Questions or concerns?:</strong> contact.glowleds@gmail.com</div>
     </div>
   </div>
 </body>`;

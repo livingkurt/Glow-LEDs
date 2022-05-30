@@ -291,7 +291,7 @@ const Sidebar = props => {
                 )}
                 <div className="sidebar_dropdown_nested">
                   <div className="sidebar-btn-container">
-                  <button className="sidebar-btn nested" onClick={closeMenu}>
+                    <button className="sidebar-btn nested" onClick={closeMenu}>
                       <Link to="/collections/all/products/category/glowskinz">
                         Glowskinz
                       </Link>
@@ -311,7 +311,10 @@ const Sidebar = props => {
                     <div className="sidebar_dropdown_nested">
                       {/* <button className="sidebar-btn secondary">Collections</button> */}
                       <div className="sidebar-btn-container">
-                        <Link to="/collections/all/products/category/glowskinz/subcategory/clozd" className="w-100per">
+                        <Link
+                          to="/collections/all/products/category/glowskinz/subcategory/clozd"
+                          className="w-100per"
+                        >
                           <button
                             className="sidebar-btn nested-2"
                             onClick={closeMenu}
@@ -347,7 +350,6 @@ const Sidebar = props => {
                             Novaskinz
                           </button>
                         </Link>
-                       
                       </ul>
                     </div>
                     <Link to="/collections/all/products/category/glowskinz/subcategory/opyn">
@@ -387,7 +389,10 @@ const Sidebar = props => {
                     <div className="sidebar_dropdown_nested">
                       {/* <button className="sidebar-btn secondary">Collections</button> */}
                       <div className="sidebar-btn-container">
-                        <Link to="/collections/all/products/category/exo_diffuser" className="w-100per">
+                        <Link
+                          to="/collections/all/products/category/exo_diffuser"
+                          className="w-100per"
+                        >
                           <button
                             className="sidebar-btn nested-2"
                             onClick={closeMenu}
@@ -509,12 +514,12 @@ const Sidebar = props => {
                             Space Cadet
                           </button>
                         </Link>
-                        <Link to="/collections/all/products/category/diffuser_caps/subcategory/shapes/collection/festy_besty">
+                        <Link to="/collections/all/products/category/diffuser_caps/subcategory/shapes/collection/festie_bestie">
                           <button
                             className="sidebar-btn nested-3"
                             onClick={closeMenu}
                           >
-                            Festy Besty
+                            Festie Bestie
                           </button>
                         </Link>
                         <Link to="/collections/all/products/category/diffuser_caps/subcategory/geometric/collection/platonic_solids">
@@ -737,7 +742,7 @@ const Sidebar = props => {
                 Best Sellers ✅
               </button>
             </Link>
-            <Link to="/collections/all/products/category/essentials">
+            <Link to="/collections/all/products/category/our_picks">
               <button
                 className="sidebar-btn secondary"
                 style={{ padding: "7px 10px 7px 20px" }}
@@ -1133,6 +1138,11 @@ const Sidebar = props => {
               <Link to="/secure/glow/gcode_continous">
                 <button className="sidebar-btn secondary" onClick={closeMenu}>
                   Gcode
+                </button>
+              </Link>
+              <Link to="/secure/glow/iamge_compressor">
+                <button className="sidebar-btn secondary" onClick={closeMenu}>
+                  Compressor
                 </button>
               </Link>
             </ul>

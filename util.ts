@@ -649,6 +649,15 @@ export const format_date = (unformatted_date: any) => {
   return formatted_date;
 };
 
+export const unformat_date = (formatted_date: string) => {
+  // console.log({ formatted_date });
+  const date = formatted_date.split("/");
+  const day = date[1];
+  const month = date[0];
+  const year = date[2];
+  const unformat_date = `${year}-${month}-${day}`;
+  return unformat_date;
+};
 export const determin_card_logo = (card_type: string) => {
   switch (card_type) {
     case "American Express":
@@ -725,303 +734,182 @@ export const email_sale_price_switch = (item: any, color: any) => {
 			</label>`;
   }
 };
+const included_for_option_name = [ "diffusers" ];
+const determine_option_show_modifier = (item: any) => {
+  return included_for_option_name.includes(item.category);
+};
 
-const determine_secondary_product_name = (
-  name: any,
-  category: any,
-  subcategory: any
-) => {
-  // console.log({ name: name.split('-')[0], category, subcategory });
-  if (name) {
-    if (category === "diffuser_caps") {
-      return name.slice(0, -17);
-    }
-    if (name.split("-")[0].trim() === "CLOZD Nanoskinz") {
-      return name.split("-")[1].trim();
-    }
+const qty = (item: any, show_qty: any) => {
+  return show_qty && item.qty > 1 ? item.qty + "x" : "";
+};
+const color = (item: any) => {
+  return item.color ? item.color + " " : "";
+};
 
-    if (subcategory === "whites" && name.includes("Bulk")) {
-      return name.split(" ")[1].trim();
+const size = (item: any) => {
+  const option_name = item.option_group_name
+    ? item.option_group_name.split(" ")[0]
+    : "";
+  return `${item.size && item.size !== 0
+    ? ` ${first_dash(item)} ${item.size}`
+    : ""} 
+    ${determine_option_show_modifier(item) && option_name ? option_name : ""}`;
+};
+
+const secondary_color = (item: any) => {
+  console.log({ item });
+  return `${item.secondary_color && item.secondary_color_product
+    ? `${second_dash(item)} ${item.secondary_color}`
+    : ""}`;
+};
+const secondary_color_name = (item: any) => {
+  const secondary_color_name = item.secondary_color_group_name
+    ? item.secondary_color_group_name.split(" ")[0] + "s"
+    : "";
+  if (item.category === "whites") {
+    return secondary_color_name;
+  }
+  if (item.category === "glowskinz") {
+    if (!item.name.includes("Omniskinz")) {
+      return secondary_color_name;
     }
-    if (subcategory === "refresh" && name.includes("Bulk")) {
-      return name.split(" ")[1].trim();
-    }
-    if (name.split("-")[0].trim() === "Supreme Gloves") {
-      return name.split("-")[1].trim();
-    }
-    if (name.split("-")[0].trim() === "OPYN Nanoskinz") {
-      return name.split("-")[1].trim();
-    }
-    if (name.split("-")[0].trim() === "CLOZD Alt Novaskinz w Nano Sleds") {
-      return name.split("-")[1].trim();
-    }
-    if (name.split("-")[0].trim() === "CLOZD Novaskinz") {
-      return name.split("-")[1].trim();
-    }
-    if (name.split("-")[0].trim() === "Supreme Sizing Sampler Pack") {
-      return name.split("-")[1].trim();
-    }
-    if (name.split("-")[0].trim().includes("EXO Diffusers")) {
-      return name.split("-")[1].trim();
-    }
-    if (category === "decals") {
-      if (name.split(" ")[1] === "V2") {
-        return name.split(" ")[0] + " V2";
-      } else {
-        return name.split(" ")[0];
-      }
-    } else {
-      return name;
-    }
+  }
+  if (item.category === "exo_diffusers") {
+    return secondary_color_name;
+  }
+  if (item.category === "diffuser_caps") {
+    return secondary_color_name;
+  }
+};
+const secondary_product_name = (item: any) => {
+  const secondary_color_name = item.secondary_group_name
+    ? item.secondary_group_name
+    : "";
+  if (item.name === "Diffuser Caps + Adapters Starter Kit V4") {
+    return secondary_color_name;
   }
 };
 
-export const determine_product_name = (item: any, show_qty: any, date: any) => {
-  const date_1 = new Date("2021-07-16");
-  const date_1_s = date_1.toISOString();
-  const date_2 = date;
-  if (date_1_s <= date_2 || !date) {
-    if (item.product_collection === "alt_novaskinz") {
-      if (item.name === "CLOZD Alt Novaskinz w Nano Sleds") {
-        return `<div>
-						${show_qty && item.qty > 1 ? item.qty + "x" : ""}  ${item.name}
-						${item.size !== 0 ? " - " + item.size : ""} ${item.color
-          ? "(" + item.color + " Skin"
-          : ""}
-						${item.color ? " & " : ""}
-						${item.secondary_color ? item.secondary_color + " Sled)" : ""}${" "}
-						${item.secondary_product_name && item.secondary_product_name.length > 0
-              ? ` - $${determine_secondary_product_name(
-                  item.secondary_product_name,
-                  item.category,
-                  ""
-                )}`
-              : ""}${" "}
-					</div>`;
-      } else {
-        return `<div>
-						${show_qty && item.qty > 1
-              ? item.qty + "x"
-              : ""}  ${item.name} ${item.size !== 0
-          ? " - " + item.size
-          : ""}{' '}
-						${item.color ? "(" + item.color + " Skin" : ""}
-						${item.color ? " & " : ""}
-						${item.secondary_color ? item.secondary_color + " Sled)" : ""}{' '}
-					</div>`;
-      }
-    } else if (item.subcategory === "novaskinz") {
-      if (item.name === "CLOZD Novaskinz") {
-        return `<div>
-						${show_qty && item.qty > 1 ? item.qty + "x" : ""}  ${item.name}
-						${item.size !== 0 ? " - " + item.size : ""} ${item.color
-          ? "(" + item.color + " Skin"
-          : ""}
-						${item.color ? " & " : ""}
-						${item.secondary_color ? item.secondary_color + " Sled)" : ""}${" "}
-						${item.secondary_product_name && item.secondary_product_name.length > 0
-              ? ` - $${determine_secondary_product_name(
-                  item.secondary_product_name,
-                  item.category,
-                  ""
-                )}`
-              : ""}{' '}
-					</div>`;
-      }
-    } else if (item.name === "CLOZD Nanoskinz") {
-      return `<div>
-					${show_qty && item.qty > 1 ? item.qty + "x" : ""}  ${item.color
-        ? item.color + " "
-        : ""} ${item.name}
-					${item.secondary_product_name && item.secondary_product_name.length > 0
-            ? ` - $${determine_secondary_product_name(
-                item.secondary_product_name,
-                item.category,
-                ""
-              )}`
-            : ""}${" "}
-					${item.size !== 0 ? " - " + item.size : ""}
-				</div>`;
-    } else if (item.name === "OPYN Nanoskinz") {
-      return `<div>
-					${show_qty && item.qty > 1 ? item.qty + "x" : ""}  ${item.color
-        ? item.color + " "
-        : ""} ${item.name}
-					${item.secondary_product_name && item.secondary_product_name.length > 0
-            ? ` - ${determine_secondary_product_name(
-                item.secondary_product_name,
-                item.category,
-                ""
-              )}`
-            : ""}${" "}
-					${item.size !== 0 ? " - " + item.size : ""}
-				</div>`;
-    } else if (item.category === "glowskinz") {
-      return `<div>
-					${show_qty && item.qty > 1 ? item.qty + "x" : ""}  ${item.color
-        ? item.color + " "
-        : ""} ${item.name}${" "}
-					${item.size !== 0 ? " - " + item.size : ""} ${item.secondary_color
-        ? item.secondary_color + " Cape"
-        : ""}${" "}
-				</div>`;
-    } else if (item.category === "whites") {
-      if (item.subcategory === "singles") {
-        return `<div>
-						${show_qty && item.qty > 1 ? item.qty + "x" : ""} ${item.color
-          ? item.color + " "
-          : ""} ${item.name}${" "}
-						${item.size !== "0" ? " - " + item.size : ""}${" "}
-					</div>`;
-      }
-      if (item.subcategory === "refresh") {
-        return `<div>
-						${show_qty && item.qty > 1 ? item.qty + "x" : ""} ${item.color
-          ? item.color + " "
-          : ""} ${item.name}${" "}
-						${item.size !== "0"
-              ? " - " + item.size
-              : ""} - ${item.secondary_product_name.split(" ")[1].trim()}
-					</div>`;
-      }
-      if (item.subcategory === "sampler") {
-        console.log({ secondary_product_name: item.secondary_product_name });
-        return `<div>
-				${show_qty && item.qty > 1 ? item.qty + "x" : ""} ${item.name} -${" "}
-				 ${determine_secondary_product_name(
-           item.secondary_product_name,
-           item.category,
-           ""
-         )}
-			</div>`;
-      }
-    } else if (item.category === "glowframez") {
-      if (item.subcategory === "clip") {
-        return `<div>
-        ${show_qty && item.qty > 1 ? item.qty + "x" : ""}  ${item.color
-          ? item.color + " "
-          : ""} ${item.name}${" "}
-        ${item.secondary_product_name !== "0"
-          ? " - " + item.secondary_product_name.split("-")[1]
-          : ""}${" "}
-      </div>`;
-      } else if (item.subcategory === "clozd" || item.subcategory === "opyn") {
-        return `<div>
-        ${show_qty && item.qty > 1 ? item.qty + "x" : ""} ${item.color
-          ? item.color + " "
-          : ""} ${item.name}${" "}
-        ${item.size !== "0" ? " - " + item.size : ""}${" "}
-      </div>`;
-      }
-    } else if (item.category === "batteries") {
-      if (item.subcategory === "storage") {
-        return `<div>
-        ${show_qty && item.qty > 1 ? item.qty + "x" : ""} ${item.color
-          ? item.color + " "
-          : ""} ${item.name}${" "}
-      </div>`;
-      } else if (item.subcategory === "coin") {
-        return `<div>
-        ${show_qty && item.qty > 1 ? item.qty + "x" : ""} ${item.color
-          ? item.color + " "
-          : ""} ${item.name}${" "}
-        ${item.size !== "0" ? " - " + item.size : ""}${" "}
-      </div>`;
-      } else {
-        return `<div>
-        ${show_qty && item.qty > 1 ? item.qty + "x" : ""}  ${item.color &&
-        !item.secondary_color
-          ? item.color
-          : ""}${" "}
-        ${item.name} ${item.secondary_color ? " -" : ""}${" "}
-        ${item.secondary_color ? "(" + item.color + " Cap/Slide" : ""}
-        ${item.secondary_color ? " & " : ""}
-        ${item.secondary_color ? item.secondary_color + " Body)" : ""}${" "}
-      </div>`;
-      }
-    } else if (item.category === "exo_diffusers") {
-      return `<div>
-					${show_qty && item.qty > 1
-            ? item.qty + "x"
-            : ""}  ${item.name} (${item.color
-        ? item.color + " Skeleton Color"
-        : ""}
-					${item.color ? " & " : ""}
-					${item.secondary_color
-            ? item.secondary_color + " Plug Color) "
-            : ""} ${item.secondary_product_name &&
-      item.secondary_product_name.length > 0
-        ? ` - ${determine_secondary_product_name(
-            item.secondary_product_name,
-            item.category,
-            ""
-          )}`
-        : ""}${" "}
-				</div>`;
-    } else if (item.name === "Diffuser Caps + Adapters Starter Kit V4") {
-      return `<div>
-					${show_qty && item.qty > 1 ? item.qty + "x" : ""}  {item.name}
-					${item.secondary_product_name && item.secondary_product_name.length > 0
-            ? ` w ${item.color} ${item.secondary_product_name.split(
-                " "
-              )[0]} Caps & ${item.secondary_color} Adapters`
-            : ""}
-				</div>`;
-    } else if (
-      item.category === "diffusers" ||
-      item.category === "frosted_diffusers"
-    ) {
-      return `<div>
-					${show_qty && item.qty > 1 ? item.qty + "x" : ""}  ${item.color
-        ? item.color + " "
-        : ""} ${item.name}
-				</div>`;
-    } else if (item.category === "diffuser_caps") {
-      return `<div>
-					${show_qty && item.qty > 1 ? item.qty + "x" : ""}  ${item.color
-        ? item.color + " "
-        : ""} ${item.name}${" "}
-					${item.size !== 0 ? " - " + item.size : ""}${" "}
-				</div>`;
-    } else if (
-      item.name === "Outline + Batman Decals" ||
-      item.name === "Batman Decals"
-    ) {
-      return `<div>
-					${show_qty && item.qty > 1 ? item.qty + "x" : ""}  ${item.name}
-					${item.secondary_product_name && item.secondary_product_name.length > 0
-            ? ` - ${determine_secondary_product_name(
-                item.secondary_product_name,
-                item.category,
-                ""
-              )}`
-            : ""}
-				</div>`;
-    } else if (item.category === "decals") {
-      return `<div>
-				${show_qty && item.qty > 1 ? item.qty + "x" : ""}  ${item.name}
-				</div>`;
-    } else {
-      return `<div>
-					${show_qty && item.qty > 1 ? item.qty + "x" : ""}  ${item.name}
-				</div>`;
+const secondary_product = (item: any) => {
+  return item.secondary_product &&
+  item.secondary_product_name &&
+  item.secondary_product_name.length > 0
+    ? ` ${third_dash(item)} ${determine_secondary_product_name(
+        item.secondary_product_name,
+        item
+      )}`
+    : "";
+};
+
+const first_dash = (item: any) => {
+  if (item.category === "whites") {
+    return "-";
+  }
+  if (item.category === "glowskinz") {
+    return "-";
+  }
+  if (item.category === "diffusers") {
+    return "-";
+  }
+  if (item.category === "exo_diffusers") {
+    return "-";
+  }
+  if (item.category === "diffuser_caps") {
+    return "-";
+  }
+  if (item.category === "glowframez") {
+    return "-";
+  }
+  if (item.category === "batteries") {
+    return "-";
+  }
+  return "";
+};
+
+const second_dash = (item: any) => {
+  if (item.name === "Refresh Pack (6 Supreme Pairs + 120 Batteries)") {
+    return "-";
+  }
+  if (item.category === "glowskinz") {
+    return "-";
+  }
+  if (item.category === "exo_diffusers") {
+    return "-";
+  }
+  if (item.name === "Diffuser Caps + Adapters Starter Kit V4") {
+    return "-";
+  }
+
+  return "";
+};
+
+const third_dash = (item: any) => {
+  if (item.name.includes("Refresh")) {
+    return "-";
+  }
+  if (item.name.includes("Sampler")) {
+    return "-";
+  }
+  if (item.name.includes("Nanoskinz")) {
+    return "-";
+  }
+  if (item.name.includes("Clip")) {
+    return "-";
+  }
+  if (item.category === "exo_diffusers") {
+    return "-";
+  }
+
+  if (item.category === "decals") {
+    return "-";
+  }
+  if (item.name === "Diffuser Caps + Adapters Starter Kit V4") {
+    return "-";
+  }
+  if (item.category === "glowskinz") {
+    if (!item.name.includes("Omniskinz")) {
+      return "-";
     }
-  } else if (date_1 > date_2) {
-    return `<div>
-				${show_qty && item.qty > 1 ? item.qty + "x" : ""} ${" "}
-				${item.name !== "Diffuser Caps + Adapters Starter Kit" &&
-          item.category !== "diffusers" &&
-          item.color &&
-          item.color}${" "}
-				${item.name}
-				${item.product_option &&
-          item.product_option.name &&
-          ` - ${item.product_option.name}`}
-				${(item.secondary_product || item.diffuser_cap) &&
-          ` w (${item.name === "Diffuser Caps + Adapters Starter Kit" &&
-            item.color} ${(item.secondary_product && item.product.name) ||
-            (item.diffuser_cap && item.diffuser_cap.name)})`}{' '}
-			</div>`;
+  }
+
+  return "";
+};
+
+export const determine_product_name = (item: any, show_qty: any) => {
+  return `<div>
+      ${qty(item, show_qty) ? qty(item, show_qty) : ""} ${color(item)
+    ? color(item)
+    : ""} ${item.name} ${size(item) ? size(item) : ""}
+      ${secondary_color(item)
+        ? secondary_color(item)
+        : ""} ${secondary_color_name(item)
+    ? secondary_color_name(item)
+    : ""}${secondary_product(item)
+    ? secondary_product(item)
+    : ""} ${secondary_product_name(item) ? secondary_product_name(item) : ""}
+    </div>`;
+};
+
+export const determine_secondary_product_name = (name: any, item: any) => {
+  const { category, subcategory } = item;
+  if (category === "diffuser_caps") {
+    return name.split(" ")[0];
+  } else if (
+    category === "decals" &&
+    name.split(" ")[name.split(" ").length - 4] === "Outline"
+  ) {
+    return name.replace(" Outline + Batman Decals", "");
+  } else if (
+    category === "decals" &&
+    name.split(" ")[name.split(" ").length - 2] === "Batman"
+  ) {
+    return name.replace(" Batman Decals", "");
+  } else if (subcategory === "refresh" && name.includes("Bulk")) {
+    return name.split(" ")[1].trim();
+  } else if (name.includes("Capez")) {
+    return name.replace(" Capez", "");
+  } else {
+    return name.includes("-") ? name.split("-")[1].trim() : name;
   }
 };
 
@@ -1092,5 +980,294 @@ export const determine_tracking_number = (tracking_number: string) => {
         "~FX"
       );
     }
+  }
+};
+
+export const determine_category = (place_of_purchase: string) => {
+  if (
+    place_of_purchase.includes("AMAZON") ||
+    place_of_purchase.includes("Amazon") ||
+    place_of_purchase.includes("AMZN")
+  ) {
+    return "Supplies";
+  } else if (place_of_purchase.includes("PIRATE SHIP")) {
+    return "Shipping";
+  } else if (place_of_purchase.includes("DOLLARTREE")) {
+    return "Supplies";
+  } else if (place_of_purchase.includes("THE HOME DEPOT")) {
+    return "Supplies";
+  } else if (place_of_purchase.includes("GLOW-LEDS")) {
+    return "Business";
+  } else if (
+    place_of_purchase.includes("THROWLIGHTS") ||
+    place_of_purchase.includes("Throwlights")
+  ) {
+    return "Equipment";
+  } else if (
+    place_of_purchase.includes("GOOGLE") ||
+    place_of_purchase.includes("Google")
+  ) {
+    return "Website";
+  } else if (
+    place_of_purchase.includes("PRUSA") ||
+    place_of_purchase.includes("Prusa")
+  ) {
+    return "Equipment";
+  } else if (place_of_purchase.includes("EMAZINGLIGHTS")) {
+    return "Equipment";
+  } else if (
+    place_of_purchase.includes("HOBBY") ||
+    place_of_purchase.includes("Hobby")
+  ) {
+    return "Equipment";
+  } else if (
+    place_of_purchase.includes("DIGI KEY") ||
+    place_of_purchase.includes("Digi key")
+  ) {
+    return "Supplies";
+  } else if (
+    place_of_purchase.includes("EASYPOST") ||
+    place_of_purchase.includes("Easypost")
+  ) {
+    return "Shipping";
+  } else if (
+    place_of_purchase.includes("PAYPAL") ||
+    place_of_purchase.includes("PayPal")
+  ) {
+    return "Supplies";
+  } else if (
+    place_of_purchase.includes("HEROKU") ||
+    place_of_purchase.includes("Heroku")
+  ) {
+    return "Website";
+  } else if (
+    place_of_purchase.includes("ALIBABA") ||
+    place_of_purchase.includes("Alibaba")
+  ) {
+    return "Supplies";
+  } else if (
+    place_of_purchase.includes("PAK") ||
+    place_of_purchase.includes("Pak")
+  ) {
+    return "Shipping";
+  } else if (
+    place_of_purchase.includes("KANDEKREATIONS") ||
+    place_of_purchase.includes("Kandekreations")
+  ) {
+    return "Supplies";
+  } else if (
+    place_of_purchase.includes("FUTURISTIC") ||
+    place_of_purchase.includes("Futuristic")
+  ) {
+    return "Supplies";
+  } else if (
+    place_of_purchase.includes("LEDGLOVES") ||
+    place_of_purchase.includes("LEDGloves")
+  ) {
+    return "Supplies";
+  } else if (
+    place_of_purchase.includes("EMAZING") ||
+    place_of_purchase.includes("Emazing")
+  ) {
+    return "Supplies";
+  } else if (
+    place_of_purchase.includes("SPEC") ||
+    place_of_purchase.includes("Spec")
+  ) {
+    return "Entertainment";
+  } else {
+    return "Not Categorized";
+  }
+};
+export const determine_place = (place_of_purchase: string) => {
+  if (
+    place_of_purchase.includes("AMAZON") ||
+    place_of_purchase.includes("Amazon") ||
+    place_of_purchase.includes("AMZN")
+  ) {
+    return "Amazon";
+  } else if (place_of_purchase.includes("PIRATE SHIP")) {
+    return "Pirate Ship";
+  } else if (place_of_purchase.includes("DOLLARTREE")) {
+    return "DollarTree";
+  } else if (place_of_purchase.includes("THE HOME DEPOT")) {
+    return "The Home Depot";
+  } else if (place_of_purchase.includes("GLOW-LEDS")) {
+    return "Glow LEDs";
+  } else if (
+    place_of_purchase.includes("THROWLIGHTS") ||
+    place_of_purchase.includes("Throwlights")
+  ) {
+    return "Throwlights";
+  } else if (
+    place_of_purchase.includes("PRUSA") ||
+    place_of_purchase.includes("Prusa")
+  ) {
+    return "Prusa";
+  } else if (place_of_purchase.includes("EMAZINGLIGHTS")) {
+    return "Emazinglights";
+  } else if (
+    place_of_purchase.includes("GOOGLE") ||
+    place_of_purchase.includes("Google")
+  ) {
+    return "Google";
+  } else if (
+    place_of_purchase.includes("HOBBY") ||
+    place_of_purchase.includes("Hobby")
+  ) {
+    return "Hobby Lobby";
+  } else if (
+    place_of_purchase.includes("DIGI KEY") ||
+    place_of_purchase.includes("Digi key")
+  ) {
+    return "Digi Key";
+  } else if (
+    place_of_purchase.includes("EASYPOST") ||
+    place_of_purchase.includes("Easypost")
+  ) {
+    return "EasyPost";
+  } else if (
+    place_of_purchase.includes("PAYPAL") ||
+    place_of_purchase.includes("PayPal")
+  ) {
+    return "PayPal";
+  } else if (
+    place_of_purchase.includes("HEROKU") ||
+    place_of_purchase.includes("Heroku")
+  ) {
+    return "Heroku";
+  } else if (
+    place_of_purchase.includes("ALIBABA") ||
+    place_of_purchase.includes("Alibaba")
+  ) {
+    return "Alibaba";
+  } else if (
+    place_of_purchase.includes("PAK") ||
+    place_of_purchase.includes("Pak")
+  ) {
+    return "PAK Mail";
+  } else if (
+    place_of_purchase.includes("KANDEKREATIONS") ||
+    place_of_purchase.includes("Kandekreations")
+  ) {
+    return "Kandekreations";
+  } else if (
+    place_of_purchase.includes("FUTURISTIC") ||
+    place_of_purchase.includes("Futuristic")
+  ) {
+    return "Futuristic";
+  } else if (
+    place_of_purchase.includes("LEDGLOVES") ||
+    place_of_purchase.includes("LEDGloves")
+  ) {
+    return "LEDGloves";
+  } else if (
+    place_of_purchase.includes("EMAZING") ||
+    place_of_purchase.includes("Emazing")
+  ) {
+    return "EmazingLights";
+  } else if (
+    place_of_purchase.includes("SPEC") ||
+    place_of_purchase.includes("Spec")
+  ) {
+    return "Spec's";
+  } else {
+    return "Unknown";
+  }
+};
+export const determine_application = (place_of_purchase: string) => {
+  if (place_of_purchase.includes("PIRATE SHIP")) {
+    return "Shipping";
+  } else if (
+    place_of_purchase.includes("AMAZON") ||
+    place_of_purchase.includes("Amazon") ||
+    place_of_purchase.includes("AMZN")
+  ) {
+    return "Products";
+  } else if (place_of_purchase.includes("THE HOME DEPOT")) {
+    return "Tools";
+  } else if (place_of_purchase.includes("GLOW-LEDS")) {
+    return "Test Purchases";
+  } else if (
+    place_of_purchase.includes("PRUSA") ||
+    place_of_purchase.includes("Prusa")
+  ) {
+    return "Tools";
+  } else if (place_of_purchase.includes("DOLLARTREE")) {
+    return "Shipping";
+  } else if (place_of_purchase.includes("EMAZINGLIGHTS")) {
+    return "Tools";
+  } else if (
+    place_of_purchase.includes("THROWLIGHTS") ||
+    place_of_purchase.includes("Throwlights")
+  ) {
+    return "Accessories";
+  } else if (
+    place_of_purchase.includes("GOOGLE") ||
+    place_of_purchase.includes("Google")
+  ) {
+    return "Website";
+  } else if (
+    place_of_purchase.includes("HOBBY") ||
+    place_of_purchase.includes("Hobby")
+  ) {
+    return "Tools";
+  } else if (
+    place_of_purchase.includes("DIGI KEY") ||
+    place_of_purchase.includes("Digi key")
+  ) {
+    return "Products";
+  } else if (
+    place_of_purchase.includes("EASYPOST") ||
+    place_of_purchase.includes("Easypost")
+  ) {
+    return "Shipping";
+  } else if (
+    place_of_purchase.includes("PAYPAL") ||
+    place_of_purchase.includes("PayPal")
+  ) {
+    return "Products";
+  } else if (
+    place_of_purchase.includes("HEROKU") ||
+    place_of_purchase.includes("Heroku")
+  ) {
+    return "Website";
+  } else if (
+    place_of_purchase.includes("ALIBABA") ||
+    place_of_purchase.includes("Alibaba")
+  ) {
+    return "Products";
+  } else if (
+    place_of_purchase.includes("PAK") ||
+    place_of_purchase.includes("Pak")
+  ) {
+    return "Shipping";
+  } else if (
+    place_of_purchase.includes("KANDEKREATIONS") ||
+    place_of_purchase.includes("Kandekreations")
+  ) {
+    return "Tools";
+  } else if (
+    place_of_purchase.includes("FUTURISTIC") ||
+    place_of_purchase.includes("Futuristic")
+  ) {
+    return "Tools";
+  } else if (
+    place_of_purchase.includes("LEDGLOVES") ||
+    place_of_purchase.includes("LEDGloves")
+  ) {
+    return "Tools";
+  } else if (
+    place_of_purchase.includes("EMAZING") ||
+    place_of_purchase.includes("Emazing")
+  ) {
+    return "Tools";
+  } else if (
+    place_of_purchase.includes("SPEC") ||
+    place_of_purchase.includes("Spec")
+  ) {
+    return "Entertainment";
+  } else {
+    return "Unknown";
   }
 };

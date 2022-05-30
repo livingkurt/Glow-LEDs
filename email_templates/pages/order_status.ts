@@ -268,11 +268,7 @@ export default (props: any) => {
                                       </td>
                                       <td style='font-family:helvetica;width:100%;'>
                                         <span style='font-size:16px;font-weight:600;line-height:1.4;color:white;'>
-                                          ${determine_product_name(
-                                            item,
-                                            true,
-                                            order.createdAt
-                                          )}
+                                          ${determine_product_name(item, true)}
                                         </span>
                                         <br />
                                       </td>

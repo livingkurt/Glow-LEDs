@@ -23,7 +23,11 @@ import {
   savePayment,
 } from "../../actions/cartActions";
 import { listPromos } from "../../actions/promoActions";
-import { Loading, LoadingPayments } from "../../components/UtilityComponents";
+import {
+  Loading,
+  LoadingPayments,
+  LoadingShipping,
+} from "../../components/UtilityComponents";
 import {
   validate_login,
   validate_passwords,
@@ -123,6 +127,7 @@ const PlaceOrderPage = props => {
   );
   const [ tip, set_tip ] = useState(0);
   const [ error, set_error ] = useState();
+  const [ error_shipping, set_error_shipping ] = useState();
 
   const [ no_user, set_no_user ] = useState(false);
   const [ paid, set_paid ] = useState(false);
@@ -236,7 +241,7 @@ const PlaceOrderPage = props => {
   const [ loading_shipping, set_loading_shipping ] = useState();
 
   const get_shipping_rates = async () => {
-    const { data } = await API_Shipping.get_shipping_rates({
+    const request = await API_Shipping.get_shipping_rates({
       orderItems: cartItems,
       shipping,
       payment,
@@ -249,15 +254,15 @@ const PlaceOrderPage = props => {
       order_note,
       promo_code: show_message && promo_code,
     });
-    console.log({ get_shipping_rates: data });
-    if (data.message) {
-      set_error(data);
+    console.log({ get_shipping_rates: request });
+    if (request.data.message) {
+      set_error_shipping(request.data);
       set_loading_shipping(false);
     } else {
       console.log("Shipment Ran");
-      set_shipping_rates(data.shipment);
-      set_shipment_id(data.shipment.id);
-      set_parcel(data.parcel._id);
+      set_shipping_rates(request.data.shipment);
+      set_shipment_id(request.data.shipment.id);
+      set_parcel(request.data.parcel._id);
       set_loading_shipping(false);
     }
   };
@@ -790,6 +795,8 @@ const PlaceOrderPage = props => {
         error={error}
         set_error={set_error}
       />
+      <LoadingShipping error={error_shipping} set_error={set_error_shipping} />
+      {/* <Loading error={error} /> */}
       <Loading loading={user_loading} />
       <div className="placeorder">
         <div

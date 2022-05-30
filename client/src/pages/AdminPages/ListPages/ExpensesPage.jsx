@@ -102,26 +102,11 @@ const ExpensesPage = (props) => {
 	const sort_options = [ 'Date', 'Category', 'Application', 'Newest', 'Lowest', 'Highest' ];
 
 	const handle_csv_expenses = async (data, fileInfo, properties, card) => {
-		const expenses = [];
-		for (let line = 1; line < data.length; line++) {
-			const object = {};
-			for (let i = 0; i < data[line].length; i++) {
-				object[properties[i]] = data[line][i];
-			}
-			expenses.push(object);
-		}
-		console.log({ expenses });
-		expenses.forEach(async (expense) => {
-			if (expense.place !== 'AUTOPAY PAYMENT - THANK YOU') {
-				if (expense.place !== 'CUSTOMER SERVICE PAYMENT - THANK YOU') {
-					if (expense.place !== 'RETURNED AUTOPAY (DEORY)') {
-						console.log({ place: expense.place });
-						expense = { ...expense, date: unformat_date(expense.date) };
-						const post_expense = await API_Revenue.post_expense(expense, userInfo, card);
-					}
-				}
-			}
-		});
+		console.log({data})
+		console.log({properties})
+		console.log({card})
+		const create_all_expenses_s = await API_Revenue.create_all_expenses_s(data, userInfo, card, properties);
+		console.log({create_all_expenses_s})
 		dispatch(listExpenses({ category, search, sort }));
 	};
 
@@ -134,7 +119,7 @@ const ExpensesPage = (props) => {
 				properties = [ 'date', 'transaction', 'place', 'memo', 'amount' ];
 				return handle_csv_expenses(data, fileInfo, properties, 'FID');
 			case 'GL AMEX':
-				properties = [ 'date', 'receipt', 'place', 'amount' ];
+				properties = [ 'date', 'receipt', 'description', 'card_member', 'account', 'amount' ];
 				return handle_csv_expenses(data, fileInfo, properties, 'GL AMEX');
 			case 'AMZNK':
 				properties = [ 'date', 'post_date', 'place', 'category', 'type', 'amount' ];

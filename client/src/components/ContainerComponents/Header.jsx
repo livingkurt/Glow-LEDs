@@ -347,7 +347,7 @@ const Header = props => {
                             </span>
                           </button>
                         </Link>
-                        <Link to="/collections/all/products/category/essentials">
+                        <Link to="/collections/all/products/category/our_picks">
                           <button
                             className="btn nav w-100per ta-l jc-b"
                             style={{ padding: "7px 10px 7px 10px" }}
@@ -737,9 +737,9 @@ const Header = props => {
                             Space Cadet
                           </button>
                         </Link>
-                        <Link to="/collections/all/products/category/diffuser_caps/subcategory/shapes/collection/festy_besty">
+                        <Link to="/collections/all/products/category/diffuser_caps/subcategory/shapes/collection/festie_bestie">
                           <button className="btn nav w-100per ta-l">
-                            Festy Besty
+                            Festie Bestie
                           </button>
                         </Link>
                         <Link to="/collections/all/products/category/diffuser_caps/subcategory/geometric/collection/platonic_solids">
@@ -925,6 +925,11 @@ const Header = props => {
                         </Link>
                         <Link to="/collections/all/features/category/vfx">
                           <button className="btn nav w-100per ta-l">VFX</button>
+                        </Link>
+                        <Link to="/collections/all/features/category/submit_feature">
+                          <button className="btn nav w-100per ta-l">
+                            Submit Feature
+                          </button>
                         </Link>
                       </div>
 
@@ -1257,6 +1262,11 @@ const Header = props => {
                     </Link>
                     <Link to="/secure/glow/gcode_continous">
                       <button className="btn nav w-100per ta-l">Gcode</button>
+                    </Link>
+                    <Link to="/secure/glow/image_compressor">
+                      <button className="btn nav w-100per ta-l">
+                        Compressor
+                      </button>
                     </Link>
                   </ul>
                 </div>

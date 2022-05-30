@@ -41,6 +41,7 @@
 		"react-helmet": "^6.1.0",
 		"react-hook-clipboard": "^1.0.0",
 		"react-icons": "^4.2.0",
+		"react-images-uploading": "^3.1.6",
 		"react-js-pagination": "^3.0.3",
 		"react-json-to-csv": "^1.0.4",
 		"react-loading-skeleton": "^3.0.0",

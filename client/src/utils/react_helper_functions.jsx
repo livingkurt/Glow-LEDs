@@ -284,8 +284,7 @@ export const cart_item_name = item => {
           <label className=" mv-0px">
             {determine_secondary_product_name(
               item.secondary_product_name,
-              item.category,
-              ""
+              item
             )}
           </label>
         </div>
@@ -339,304 +338,190 @@ export const cart_item_name = item => {
     </div>
   );
 };
+const included_for_option_name = [ "diffusers" ];
+const determine_option_show_modifier = item => {
+  return included_for_option_name.includes(item.category);
+};
+
+const qty = (item, show_qty) => {
+  return show_qty && item.qty > 1 ? item.qty + "x" : "";
+};
+const color = item => {
+  return item.color ? item.color + " " : "";
+};
+
+const size = (item, modifier) => {
+  const option_name = item.option_group_name
+    ? item.option_group_name.split(" ")[0]
+    : "";
+  return `${item.size && item.size !== 0
+    ? ` ${first_dash(item)} ${item.size}`
+    : ""} 
+    ${determine_option_show_modifier(item) && option_name ? option_name : ""}`;
+};
+
+const secondary_color = item => {
+  console.log({ item });
+  return `${item.secondary_color && item.secondary_color_product
+    ? `${second_dash(item)} ${item.secondary_color}`
+    : ""}`;
+};
+const secondary_color_name = item => {
+  const secondary_color_name = item.secondary_color_group_name
+    ? item.secondary_color_group_name.split(" ")[0] + "s"
+    : "";
+  if (item.category === "whites") {
+    return secondary_color_name;
+  }
+  if (item.category === "glowskinz") {
+    if (!item.name.includes("Omniskinz")) {
+      return secondary_color_name;
+    }
+  }
+  if (item.category === "exo_diffusers") {
+    return secondary_color_name;
+  }
+  if (item.category === "diffuser_caps") {
+    return secondary_color_name;
+  }
+};
+const secondary_product_name = item => {
+  const secondary_color_name = item.secondary_group_name
+    ? item.secondary_group_name
+    : "";
+  if (item.name === "Diffuser Caps + Adapters Starter Kit V4") {
+    return secondary_color_name;
+  }
+};
+
+const secondary_product = item => {
+  return item.secondary_product &&
+  item.secondary_product_name &&
+  item.secondary_product_name.length > 0
+    ? ` ${third_dash(item)} ${determine_secondary_product_name(
+        item.secondary_product_name,
+        item
+      )}`
+    : "";
+};
+
+const first_dash = item => {
+  if (item.category === "whites") {
+    return "-";
+  }
+  if (item.category === "glowskinz") {
+    return "-";
+  }
+  if (item.category === "diffusers") {
+    return "-";
+  }
+  if (item.category === "exo_diffusers") {
+    return "-";
+  }
+  if (item.category === "diffuser_caps") {
+    return "-";
+  }
+  if (item.category === "glowframez") {
+    return "-";
+  }
+  if (item.category === "batteries") {
+    return "-";
+  }
+  return "";
+};
+
+const second_dash = item => {
+  if (item.name === "Refresh Pack (6 Supreme Pairs + 120 Batteries)") {
+    return "-";
+  }
+  if (item.category === "glowskinz") {
+    return "-";
+  }
+  if (item.category === "exo_diffusers") {
+    return "-";
+  }
+  if (item.name === "Diffuser Caps + Adapters Starter Kit V4") {
+    return "-";
+  }
+
+  return "";
+};
+
+const third_dash = item => {
+  if (item.name.includes("Refresh")) {
+    return "-";
+  }
+  if (item.name.includes("Sampler")) {
+    return "-";
+  }
+  if (item.name.includes("Nanoskinz")) {
+    return "-";
+  }
+  if (item.name.includes("Clip")) {
+    return "-";
+  }
+  if (item.category === "exo_diffusers") {
+    return "-";
+  }
+
+  if (item.category === "decals") {
+    return "-";
+  }
+  if (item.name === "Diffuser Caps + Adapters Starter Kit V4") {
+    return "-";
+  }
+  if (item.category === "glowskinz") {
+    if (!item.name.includes("Omniskinz")) {
+      return "-";
+    }
+  }
+
+  return "";
+};
 
 const today = new Date();
 
-export const determine_product_name = (item, show_qty, date) => {
-  let date_1 = new Date("2021-07-16");
-  date_1 = date_1.toISOString();
-  const date_2 = date;
-  if (date_1 <= date_2 || !date) {
-    if (item.name === "CLOZD Nanoskinz") {
-      return (
-        <div>
-          {show_qty && item.qty > 1 && item.qty + "x"}{" "}
-          {item.color && item.color + " "} {item.name}
-          {item.secondary_product_name &&
-            item.secondary_product_name.length > 0 &&
-            ` - ${determine_secondary_product_name(
-              item.secondary_product_name,
-              item.category
-            )}`}{" "}
-          {item.size !== 0 && " - " + item.size}
-        </div>
-      );
-    } else if (item.name === "OPYN Nanoskinz") {
-      return (
-        <div>
-          {show_qty && item.qty > 1 && item.qty + "x"}{" "}
-          {item.color && item.color + " "} {item.name}
-          {item.secondary_product_name &&
-            item.secondary_product_name.length > 0 &&
-            ` - ${determine_secondary_product_name(
-              item.secondary_product_name,
-              item.category
-            )}`}{" "}
-          {item.size !== 0 && " - " + item.size}
-        </div>
-      );
-    } else if (item.category === "glowskinz") {
-      if (
-        item.name === "CLOZD Novaskinz" ||
-        item.name === "CLOZD Alt Novaskinz"
-      ) {
-        return (
-          <div>
-            {show_qty && item.qty > 1 && item.qty + "x"} {item.name}{" "}
-            {item.size !== 0 && " - " + item.size}{" "}
-            {item.secondary_product_name &&
-              item.secondary_product_name.length > 0 &&
-              ` - ${determine_secondary_product_name(
-                item.secondary_product_name,
-                item.category
-              )}`}{" "}
-            {item.color && "(" + item.color + " Skin"}
-            {item.color && " & "}
-            {item.secondary_color && item.secondary_color + " Sled)"}{" "}
-          </div>
-        );
-      } else {
-        return (
-          <div>
-            {show_qty && item.qty > 1 && item.qty + "x"}{" "}
-            {item.color && item.color + " "} {item.name}{" "}
-            {item.size !== 0 && " - " + item.size}{" "}
-            {item.secondary_color && item.secondary_color + " Cape"}{" "}
-          </div>
-        );
-      }
-    } else if (item.category === "whites") {
-      if (item.subcategory === "singles") {
-        return (
-          <div>
-            {show_qty && item.qty > 1 && item.qty + "x"}{" "}
-            {item.color && item.color + " "} {item.name}{" "}
-            {item.size !== "0" && " - " + item.size}{" "}
-          </div>
-        );
-      }
-      if (item.subcategory === "refresh") {
-        return (
-          <div>
-            {show_qty && item.qty > 1 && item.qty + "x"}{" "}
-            {item.color && item.color + " "} {item.name}{" "}
-            {item.size !== "0" && " - " + item.size} -{" "}
-            {item.secondary_product_name.split(" ")[1].trim()}
-          </div>
-        );
-      }
-      if (item.subcategory === "sampler") {
-        return (
-          <div>
-            {show_qty && item.qty > 1 && item.qty + "x"}{" "}
-            {item.color && item.color + " "} {item.name} -{" "}
-            {item.secondary_product_name.split("-")[1].trim()}
-          </div>
-        );
-      }
-    } else if (item.category === "glowframez") {
-      if (item.subcategory === "clip") {
-        return (
-          <div>
-            {/* {console.log({ item })} */}
-            {show_qty && item.qty > 1 && item.qty + "x"}{" "}
-            {item.color && item.color + " "} {item.name}{" "}
-            {item.secondary_product_name !== "0" &&
-              " - " + item.secondary_product_name.split("-")[1]}{" "}
-          </div>
-        );
-      } else if (item.subcategory === "clozd" || item.subcategory === "opyn") {
-        return (
-          <div>
-            {/* {console.log({ item })} */}
-            {show_qty && item.qty > 1 && item.qty + "x"}{" "}
-            {item.color && item.color + " "} {item.name}{" "}
-            {item.size !== "0" && " - " + item.size}{" "}
-          </div>
-        );
-      }
-    } else if (item.category === "batteries") {
-      if (item.subcategory === "storage") {
-        return (
-          <div>
-            {show_qty && item.qty > 1 && item.qty + "x"}{" "}
-            {item.color && item.color + " "} {item.name}{" "}
-          </div>
-        );
-      } else if (item.subcategory === "coin") {
-        return (
-          <div>
-            {show_qty && item.qty > 1 && item.qty + "x"}{" "}
-            {item.color && item.color + " "} {item.name}{" "}
-            {item.size !== "0" && " - " + item.size}{" "}
-          </div>
-        );
-      } else {
-        return (
-          <div>
-            {show_qty && item.qty > 1 && item.qty + "x"}{" "}
-            {item.color && !item.secondary_color && item.color} {item.name}{" "}
-            {item.secondary_color && " -"}{" "}
-            {item.secondary_color && "(" + item.color + " Cap/Slide"}
-            {item.secondary_color && " & "}
-            {item.secondary_color && item.secondary_color + " Body)"}{" "}
-          </div>
-        );
-      }
-    } else if (item.category === "exo_diffusers") {
-      return (
-        <div>
-          {show_qty && item.qty > 1 && item.qty + "x"} {item.name} ({item.color && item.color + " Skeleton"}
-          {item.color && " & "}
-          {item.secondary_color && item.secondary_color + " Plug)"}{" "}
-          {item.secondary_product_name &&
-          item.secondary_product_name.length > 0 ? (
-            ` - ${determine_secondary_product_name(
-              item.secondary_product_name,
-              item.category,
-              ""
-            )}`
-          ) : (
-            ""
-          )}{" "}
-        </div>
-      );
-    } else if (item.name === "Diffuser Caps + Adapters Starter Kit V4") {
-      console.log({ item });
-      return (
-        <div>
-          {show_qty && item.qty > 1 && item.qty + "x"} {item.name}
-          {item.secondary_product_name &&
-            item.secondary_product_name.length > 0 &&
-            ` w ${item.color} ${item.secondary_product_name.split(
-              " "
-            )[0]} Caps & ${item.secondary_color} Adapters`}
-        </div>
-      );
-    } else if (
-      item.category === "diffusers" ||
-      item.category === "frosted_diffusers"
-    ) {
-      return (
-        <div>
-          {show_qty && item.qty > 1 && item.qty + "x"}{" "}
-          {item.color && item.color + " "} {item.name}
-        </div>
-      );
-    } else if (item.category === "diffuser_caps") {
-      return (
-        <div>
-          {show_qty && item.qty > 1 && item.qty + "x"}{" "}
-          {item.color && item.color + " "} {item.name}{" "}
-          {item.size !== 0 && " - " + item.size}{" "}
-        </div>
-      );
-    } else if (item.name === "Outline + Batman Decals" || "Batman Decals") {
-      return (
-        <div>
-          {show_qty && item.qty > 1 && item.qty + "x"} {item.name}
-          {item.secondary_product_name &&
-            item.secondary_product_name.length > 0 &&
-            ` - ${determine_secondary_product_name(
-              item.secondary_product_name,
-              item.category
-            )}`}
-        </div>
-      );
-    } else if (item.category === "decals") {
-      return (
-        <div>
-          {show_qty && item.qty > 1 && item.qty + "x"} {item.name}
-        </div>
-      );
-    } else {
-      return (
-        <div>
-          {show_qty && item.qty > 1 && item.qty + "x"} {item.name}
-        </div>
-      );
-    }
-  } else if (date_1 > date_2) {
-    return (
-      <div>
-        {show_qty && item.qty > 1 && item.qty + "x"}{" "}
-        {item.name !== "Diffuser Caps + Adapters Starter Kit" &&
-          item.category !== "diffusers" &&
-          item.color &&
-          item.color}{" "}
-        {item.name}
-        {item.product_option &&
-          item.product_option.name &&
-          ` - ${item.product_option.name}`}
-        {(item.secondary_product || item.diffuser_cap) &&
-          ` w (${item.name === "Diffuser Caps + Adapters Starter Kit" &&
-            item.color} ${(item.secondary_product && item.product.name) ||
-            (item.diffuser_cap && item.diffuser_cap.name)})`}{" "}
-      </div>
-    );
+export const determine_product_name = (item, show_qty) => {
+  return (
+    <div>
+      {qty(item, show_qty)} {color(item)} {item.name}
+      {size(item)}
+      {secondary_color(item)} {secondary_color_name(item)}
+      {secondary_product(item)} {secondary_product_name(item)}
+    </div>
+  );
+};
+
+export const determine_secondary_product_name = (name, item) => {
+  const { category, subcategory } = item;
+  if (category === "diffuser_caps") {
+    return name.split(" ")[0];
+  } else if (
+    category === "decals" &&
+    name.split(" ")[name.split(" ").length - 4] === "Outline"
+  ) {
+    return name.replace(" Outline + Batman Decals", "");
+  } else if (
+    category === "decals" &&
+    name.split(" ")[name.split(" ").length - 2] === "Batman"
+  ) {
+    return name.replace(" Batman Decals", "");
+  } else if (subcategory === "refresh" && name.includes("Bulk")) {
+    return name.split(" ")[1].trim();
+  } else if (name.includes("Capez")) {
+    return name.replace(" Capez", "");
+  } else {
+    return name.includes("-") ? name.split("-")[1].trim() : name;
   }
 };
 
-export const determine_secondary_product_name = (
-  name,
-  category,
-  subcategory
-) => {
-  // console.log({ name: name.split('-')[0], category, subcategory });
-  if (name) {
-    if (category === "diffuser_caps") {
-      return name.slice(0, -17);
-    }
-    if (name.split("-")[0].trim() === "CLOZD Nanoskinz") {
-      return name.split("-")[1].trim();
-    }
-    if (subcategory === "whites" && name.includes("Bulk")) {
-      return name.split(" ")[1].trim();
-    }
-    if (subcategory === "refresh" && name.includes("Bulk")) {
-      return name.split(" ")[1].trim();
-    }
-    if (name.split("-")[0].trim() === "Supreme Gloves") {
-      return name.split("-")[1].trim();
-    }
-    if (name.split("-")[0].trim() === "Glowstringz V2") {
-      return name.split("-")[1].trim();
-    }
-    if (name.split("-")[0].trim() === "OPYN Nanoskinz") {
-      return name.split("-")[1].trim();
-    }
-    if (name.split("-")[0].trim() === "CLOZD Alt Novaskinz w Nano Sleds") {
-      return name.split("-")[1].trim();
-    }
-    if (name.split("-")[0].trim() === "CLOZD Novaskinz") {
-      return name.split("-")[1].trim();
-    }
-    if (name.split("-")[0].trim() === "CLOZD Alt Novaskinz") {
-      return name.split("-")[1].trim();
-    }
-    if (name.split("-")[0].trim() === "Supreme Sizing Sampler Pack") {
-      return name.split("-")[1].trim();
-    }
-    if (name.split("-")[0].trim().includes("EXO Diffusers")) {
-      return name.split("-")[1].trim();
-    }
-
-    if (category === "decals") {
-      if (name.split(" ")[1] === "V2") {
-        return name.split(" ")[0] + " V2";
-      } else {
-        return name.split(" ")[0];
-      }
-    } else {
-      return name;
-    }
-  }
-};
 export const determine_option_product_name = (name, category, subcategory) => {
   // console.log({ name: name.split('-')[0], category, subcategory });
   try {
     if (name) {
       if (name.split("-")[0].trim() === "Supreme Gloves") {
+        return name.split("-")[1].trim();
+      } else if (name.split("-")[0].trim() === "Diffuser") {
         return name.split("-")[1].trim();
       } else {
         return name;
@@ -653,7 +538,7 @@ export const determine_product_name_title = (item, show_qty) => {
   return (
     <div>
       {!item.secondary_product_name && item.color && item.color + " "}{" "}
-      {item.name} {item.size !== 0 && " - " + item.size}
+      {item.name} {size(item)}
       {item.secondary_product_name &&
         " - " + item.color + " " + item.secondary_product_name.slice(0, -14)}
       {show_qty && item.qty > 1 && item.qty + "x"}
@@ -668,16 +553,17 @@ export const determine_product_name_display = product => {
     option => option.default_option === true
   );
   // console.log({ option });
-if (product.category === "diffusers" || product.category === "exo_diffusers" || product.category === "diffuser_caps") {
+  if (
+    product.category === "diffusers" ||
+    product.category === "exo_diffusers" ||
+    product.category === "diffuser_caps"
+  ) {
     return <div>{product.name} - 10</div>;
-  } 
-else if (product.category === "decals") {
+  } else if (product.category === "decals") {
     return <div>{product.name} - 11</div>;
-  } 
-else if (product.name === "Nova Clip") {
+  } else if (product.name === "Nova Clip") {
     return <div>{product.name} - 1</div>;
-  } 
-  else {
+  } else {
     return (
       <div>
         {product.name}{" "}

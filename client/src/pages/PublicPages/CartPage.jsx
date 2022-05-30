@@ -51,7 +51,7 @@ const CartPage = (props) => {
 						) : (
 							<div>
 								{/* <h4>{no_adapters_warning()}</h4> */}
-								{cartItems.map((item, index) => <CartItem item={item} index={index} show_qty={true} />)}
+								{cartItems.map((item, index) => <CartItem orderItems={cartItems} item={item} index={index} show_qty={true} />)}
 							</div>
 						)}
 					</ul>

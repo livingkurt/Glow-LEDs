@@ -30,7 +30,7 @@ const AllProductsByChipPage = props => {
   const [ product_occurrences, set_product_occurrences ] = useState([]);
   const [ query, set_query ] = useState({});
   const [ best_sellers, set_best_sellers ] = useState([]);
-  const [ essentials, set_essentials ] = useState([]);
+  const [ our_picks, set_our_picks ] = useState([]);
   const [ imperfect, set_imperfect ] = useState([]);
   const [ loading_products, set_loading_products ] = useState(false);
   const [ alternative_products, set_alternative_products ] = useState([]);
@@ -98,7 +98,7 @@ const AllProductsByChipPage = props => {
       let clean = true;
       if (clean) {
         if (main_products) {
-          if (category !== "essentials" || category !== "best_sellers") {
+          if (category !== "our_picks" || category !== "best_sellers") {
             set_products(main_products);
             if (currentPage) {
               set_page(currentPage);
@@ -158,7 +158,7 @@ const AllProductsByChipPage = props => {
     determine_page_name(category, subcategory, collection);
     // prnt({ query });
     if (
-      category !== "essentials" ||
+      category !== "our_picks" ||
       category !== "best_sellers" ||
       category !== "new_releases"
     ) {
@@ -206,7 +206,7 @@ const AllProductsByChipPage = props => {
       if (category) {
         if (category === "best_sellers") {
           get_occurrences(category);
-        } else if (category === "essentials") {
+        } else if (category === "our_picks") {
           get_occurrences(category);
         } else if (category === "new_releases") {
           get_occurrences(category);
@@ -224,8 +224,8 @@ const AllProductsByChipPage = props => {
       const { data } = await API_Products.get_best_sellers(occurrences);
       // console.log({ data });
       set_products(data);
-    } else if (occurrences && category === "essentials") {
-      const { data } = await API_Products.get_essentials();
+    } else if (occurrences && category === "our_picks") {
+      const { data } = await API_Products.get_our_picks();
       // console.log({ data });
       set_products(data);
     } else if (occurrences && category === "new_releases") {

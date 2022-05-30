@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { deleteProduct } from "../../actions/productActions";
+import { snake_case } from "../../utils/helper_functions";
 
 const DropdownDisplay = ({
   item_list,
@@ -10,6 +11,7 @@ const DropdownDisplay = ({
   list_name,
   placement,
   display_key,
+  item_group_id
 }) => {
   const dispatch = useDispatch();
   const remove_list_item = (item_index, e) => {
@@ -134,8 +136,11 @@ const DropdownDisplay = ({
                               </button>
                             )}
                           </div>
-                          <Link
+                          {/* <Link
                             to={`/secure/glow/editproduct/${item.pathname}/true`}
+                          > */}
+                          <Link
+                            to={`/secure/glow/editproduct/${item.pathname}/true/${snake_case(list_name.slice(0, -1))}/${item_group_id}`}
                           >
                             <button className="btn secondary ml-1rem">
                               Use as Template

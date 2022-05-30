@@ -76,6 +76,10 @@ router
 router
   .route("/update_translucent_white_domes_items")
   .put(batch_controller.update_translucent_white_domes_items);
+router
+  .route("/add_vortex_option_to_diffusers")
+  .put(batch_controller.add_vortex_option_to_diffusers);
+router.route("/updated_capez_price").put(batch_controller.updated_capez_price);
 
 // router.route('/create_categories').post();
 

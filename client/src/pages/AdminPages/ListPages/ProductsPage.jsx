@@ -81,7 +81,7 @@ function ProductPage(props) {
 
     // prnt({ query });
     if (
-      category !== "essentials" ||
+      category !== "our_picks" ||
       category !== "discounted" ||
       category !== "best_sellers"
     ) {
@@ -224,6 +224,8 @@ function ProductPage(props) {
     }
     return result;
   };
+
+
 
   const update_product_catelog = async () => {
     set_loading_upload(true);
@@ -371,9 +373,6 @@ function ProductPage(props) {
     if (!selected) {
       unselectAll();
     }
-    // console.log("Updating State from onDragStart");
-    // set_draggingProductId(start.draggableId);
-    // setState(state => {return ...state,draggingProductId: start.draggableId});
     setState(state => {
       return { ...state, draggingProductId: start.draggableId };
     });
@@ -384,10 +383,6 @@ function ProductPage(props) {
     const { destination, source, draggableId } = result;
 
     if (!destination) {
-      // set_draggingProductId(null);
-      // setState({
-      // 	draggingProductId: null
-      // });
       setState(state => {
         return { ...state, draggingProductId: null };
       });
@@ -400,33 +395,12 @@ function ProductPage(props) {
       source,
       destination,
     });
-
-    console.log("Updating State from onDragEnd");
-    // ...processed,
-    console.log({ processed });
-    // set_entities(processed.entities);
-    // set_selectedProductIds(processed.selectedProductIds);
-    // set_draggingProductId(null);
-    // setState({
-    // 	...processed,
-    // 	draggingProductId: null
-    // });
     setState(state => {
       return { ...processed, draggingProductId: null };
     });
     updateProducts(processed.entities.products);
     // updateProducts(state.entities);
   };
-
-  // function handleOnDragEnd(result) {
-  // 	if (!result.destination) return;
-
-  // 	const product_items = Array.from(products);
-  // 	const [ reorderedItem ] = product_items.splice(result.source.index, 1);
-  // 	product_items.splice(result.destination.index, 0, reorderedItem);
-
-  // 	updateProducts(product_items);
-  // }
 
   const onWindowKeyDown = event => {
     if (event.defaultPrevented) {
@@ -475,11 +449,6 @@ function ProductPage(props) {
       // we will now clear the selection
       return [];
     })();
-    // console.log("Updating state from toggleSelection");
-    // set_selectedProductIds(newProductIds);
-    // setState({
-    // 	selectedProductIds: newProductIds
-    // });
     setState(state => {
       return { ...state, selectedProductIds: newProductIds };
     });
@@ -491,13 +460,6 @@ function ProductPage(props) {
 
     // if not selected - add it to the selected items
     if (index === -1) {
-      // console.log(
-      //   "Updating State from toggleSelectioninGroup for index === -1"
-      // );
-      // set_selectedProductIds([ ...selectedProductIds, productId ]);
-      // setState({
-      // 	selectedProductIds: [ ...selectedProductIds, productId ]
-      // });
       setState(state => {
         return {
           ...state,
@@ -510,11 +472,6 @@ function ProductPage(props) {
     // it was previously selected and now needs to be removed from the group
     const shallow = [ ...selectedProductIds ];
     shallow.splice(index, 1);
-    // console.log("Updating State from toggleSelectioninGroup shallow");
-    // set_selectedProductIds(shallow);
-    // setState({
-    // 	selectedProductIds: shallow
-    // });
 
     setState(state => {
       return { ...state, selectedProductIds: shallow };
@@ -535,12 +492,6 @@ function ProductPage(props) {
       return;
     }
 
-    // console.log("Updating State from multiSelectTo");
-    // set_selectedProductIds(updated);
-    // setState({
-    // 	selectedProductIds: updated
-    // });
-
     setState(state => {
       return { ...state, selectedProductIds: updated };
     });
@@ -551,11 +502,6 @@ function ProductPage(props) {
   };
 
   const unselectAll = () => {
-    // console.log("Updating State from unselectAll");
-    // set_selectedProductIds([]);
-    // setState({
-    // 	selectedProductIds: []
-    // });
     setState(state => {
       return { ...state, selectedProductIds: [] };
     });
@@ -565,8 +511,6 @@ function ProductPage(props) {
   const getSelectedMap = memoizeOne(selectedProductIds =>
     selectedProductIds.reduce((previous, current) => {
       previous[current] = true;
-      // console.log({ previous });
-      // console.log({ selectedProductIds });
       return previous;
     }, {})
   );
@@ -580,7 +524,6 @@ function ProductPage(props) {
         ...item_group.secondary_color_products,
         ...item_group.option_products,
       ];
-      // console.log({ options });
       options.forEach(async option => {
         console.log({
           [option.name]: option._id,
@@ -590,30 +533,11 @@ function ProductPage(props) {
           option._id,
           item_group._id
         );
-        // console.log({ data });
       });
     });
     set_loading_upload(false);
   };
 
-  // const update_prices_for_colors = (e) => {
-  // 	set_loading_upload(true);
-  // 	e.preventDefault();
-  // 	items.forEach((item_group) => {
-  // 		const options = [
-  // 			// ...item_group.color_products,
-  // 			// ...item_group.secondary_color_products,
-  // 			...item_group.option_products
-  // 		];
-  // 		// console.log({ options });
-  // 		options.forEach(async (option) => {
-  // 			console.log({ [option.name]: option._id, item_group_id: item_group._id });
-  // 			const { data } = await API_Products.save_item_group_id(option._id, item_group._id);
-  // 			// console.log({ data });
-  // 		});
-  // 	});
-  // 	set_loading_upload(false);
-  // };
 
   return (
     <div className="main_container p-20px">
@@ -639,7 +563,7 @@ function ProductPage(props) {
 						);
 					})}
 				</div> */}
-        <div className="jc-b w-80per">
+        <div className="jc-b w-100per">
           <Link to="/secure/glow/product_display">
             <button className="btn primary h-35px ">Display Products</button>
           </Link>

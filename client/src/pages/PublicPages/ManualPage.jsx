@@ -40,19 +40,6 @@ const ManualPage = props => {
             <button className="btn secondary">Back to Manuals</button>
           </Link>
         </div>
-        <div className="mb-10px">
-          <Link
-            to={`/collections/all/products/${pathname === "glow_strings_v2" ||
-            pathname === "glowstringz_v2" ||
-            pathname === "glow_strings_v2_manual"
-              ? "glowstringz_v2"
-              : pathname}`}
-          >
-            <button className="btn secondary">
-              View Available {toCapitalize(humanize(pathname))}
-            </button>
-          </Link>
-        </div>
         {(pathname === "glow_strings_v2_manual" ||
           pathname === "glowstringz_v2" ||
           pathname === "glow_strings_v2") && (
@@ -69,10 +56,23 @@ const ManualPage = props => {
               }
               download="Glowstringz V2 Manual"
             >
-              <button className="btn secondary">Download Manual</button>
+              <button className="btn primary">Download Manual</button>
             </a>
           </div>
         )}
+        <div className="mb-10px">
+          <Link
+            to={`/collections/all/products/${pathname === "glow_strings_v2" ||
+            pathname === "glowstringz_v2" ||
+            pathname === "glow_strings_v2_manual"
+              ? "glowstringz_v2"
+              : pathname}`}
+          >
+            <button className="btn secondary">
+              View Available {toCapitalize(humanize(pathname))}
+            </button>
+          </Link>
+        </div>
       </div>
       <h2
         style={{

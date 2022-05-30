@@ -15,9 +15,10 @@ import {
   announcement,
 } from "../email_templates/pages/index";
 import email_subscription from "../email_templates/pages/email_subscription";
-import { affiliate_db, content_db, order_db, user_db } from "../db";
+import { affiliate_db, content_db, email_db, order_db, user_db } from "../db";
 import { format_date, toCapitalize } from "../util";
 const cron = require("node-cron");
+const schedule = require("node-schedule");
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -329,7 +330,7 @@ export default {
   },
   send_user_contact_emails_c: async (req: any, res: any) => {
     const mailOptions = {
-      to: process.env.DISPLAY_EMAIL,
+      to: process.env.DISPLAY_CONTACT_EMAIL,
       from: req.body.email,
       subject: `New message from ${req.body.first_name} - ${req.body
         .reason_for_contact}`,
@@ -348,7 +349,7 @@ export default {
   },
   send_admin_contact_emails_c: async (req: any, res: any) => {
     const mailOptions = {
-      from: process.env.DISPLAY_EMAIL,
+      from: process.env.DISPLAY_CONTACT_EMAIL,
       to: req.body.email,
       subject: `Thank you for Contacting Glow LEDs Support`,
       html: contact_confirmation(req.body),
@@ -430,6 +431,7 @@ export default {
       { deleted: false, email_subscription: true },
       {}
     );
+    const email = await email_db.findById_emails_db(template._id);
     const all_emails = users
       .filter((user: any) => user.deleted === false)
       .filter((user: any) => user.email_subscription === true)
@@ -438,9 +440,7 @@ export default {
     const test_emails = [
       "lavacquek@icloud.com",
       "lavacquek@gmail.com",
-      "livingkurt222@gmail.com",
       "destanyesalinas@gmail.com",
-      "zestanye@gmail.com",
     ];
     const emails: any = test ? test_emails : all_emails;
     console.log({ emails });
@@ -452,20 +452,22 @@ export default {
       html: App({
         body: announcement(template),
         unsubscribe: true,
+        background_color: template.background_color,
       }),
       bcc: emails,
     };
     console.log({ time });
     const date = new Date(time);
+    email.subject = subject;
     if (time.length > 0) {
-      console.log({
-        time: `${date.getSeconds()} ${date.getMinutes()} ${date.getHours()} ${date.getDate()} ${date.getMonth() +
-          1} *`,
-      });
+      email.status = "scheduled";
+      email.scheduled_at = time;
+      email.save();
       cron.schedule(
         `${date.getSeconds()} ${date.getMinutes()} ${date.getHours()} ${date.getDate()} ${date.getMonth() +
           1} *`,
         () => {
+          console.log("Email Scheduled for " + time);
           transporter.sendMail(mailOptions, (err, data) => {
             if (err) {
               console.log("Error Occurs", err);
@@ -473,6 +475,8 @@ export default {
                 .status(500)
                 .send({ error: err, message: "Error Sending Email" });
             } else {
+              email.status = "sent";
+              email.save();
               console.log("Email " + subject + " to everyone");
               res.status(200).send({ message: "Email Successfully Sent" });
             }
@@ -484,6 +488,7 @@ export default {
         }
       );
     } else {
+      console.log("Email not scheduled");
       transporter.sendMail(mailOptions, (err, data) => {
         if (err) {
           console.log("Error Occurs", err);
@@ -495,6 +500,70 @@ export default {
       });
     }
   },
+  // send_announcement_emails_c: async (req: any, res: any) => {
+  //   console.log({ send_announcement_emails_c: req.body });
+  //   const { template, subject, test, time } = req.body;
+  //   const users = await user_db.findAll_users_db(
+  //     { deleted: false, email_subscription: true },
+  //     {}
+  //   );
+  //   const all_emails = users
+  //     .filter((user: any) => user.deleted === false)
+  //     .filter((user: any) => user.email_subscription === true)
+  //     .map((user: any) => user.email);
+  //   console.log({ all_emails });
+  //   const test_emails = [
+  //     "lavacquek@icloud.com",
+  //     "lavacquek@gmail.com",
+  //     "livingkurt222@gmail.com",
+  //     "destanyesalinas@gmail.com",
+  //     "zestanye@gmail.com",
+  //   ];
+  //   const emails: any = test ? test_emails : all_emails;
+  //   console.log({ emails });
+
+  //   const mailOptions = {
+  //     to: process.env.EMAIL,
+  //     from: process.env.DISPLAY_EMAIL,
+  //     subject: subject,
+  //     html: App({
+  //       body: announcement(template),
+  //       unsubscribe: true,
+  //     }),
+  //     bcc: emails,
+  //   };
+  //   console.log({ time });
+  //   const send_email = () => {
+  //     transporter.sendMail(mailOptions, (err, data) => {
+  //       if (err) {
+  //         console.log("Error Occurs", err);
+  //         res.status(500).send({ error: err, message: "Error Sending Email" });
+  //       } else {
+  //         console.log("Email " + subject + " to everyone");
+  //         res.status(200).send({ message: "Email Successfully Sent" });
+  //       }
+  //     });
+  //   };
+  //   const date = new Date(time);
+  //   let job: any = {};
+
+  //   try {
+  //     if (time.length > 0) {
+  //       console.log("Email Scheduled for " + time);
+  //       job = schedule.scheduleJob(date, function() {
+  //         send_email();
+  //       });
+  //     } else {
+  //       send_email();
+  //     }
+  //     console.log({ send_announcement_emails_c: job });
+  //     if (Object.keys(job).length > 0) {
+  //       res.status(200).send({ cancel_email: job.cancel });
+  //     }
+  //   } catch (error) {
+  //     res.status(500).send({ error, message: "Error Sending Email" });
+  //   }
+  // },
   view_announcement_emails_c: async (req: any, res: any) => {
     const { template } = req.body;
     console.log({ template });
@@ -503,6 +572,7 @@ export default {
         App({
           body: announcement(template),
           unsubscribe: true,
+          background_color: template.background_color,
         })
       );
     }

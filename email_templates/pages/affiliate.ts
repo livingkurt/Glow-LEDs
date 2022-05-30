@@ -1,7 +1,7 @@
 export default (props: any) => {
   const { affiliate } = props;
   return `<table
-	style="border-spacing:0;width:100%; padding: 20px; max-width: 600px; width: 100%; margin: auto; padding-bottom: 10px;">
+	style="border-spacing:0;width:100%; padding: 10px; max-width: 600px; width: 100%; margin: auto; padding-bottom: 10px;">
 	<tbody>
 		<tr style="font-size:16px">
 			<td>

@@ -232,6 +232,7 @@ const EditOrderPage = (props) => {
 				return order_item_index !== index;
 			})
 		);
+		if (update_total_prices) {
 		console.log({ orderItems: [ ...new_order_items ] });
 		const price_items = [ ...new_order_items ].reduce((a, c) => a + c.price * c.qty, 0);
 		// [ ...new_order_items ].forEach((item) => console.log(item.price));
@@ -245,6 +246,7 @@ const EditOrderPage = (props) => {
 		console.log({ shippingPrice });
 		set_taxPrice(tax);
 		set_totalPrice(price_items + shippingPrice + tax);
+		}
 	};
 
 	setTimeout(() => {

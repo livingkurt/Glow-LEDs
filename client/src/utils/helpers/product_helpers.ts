@@ -98,7 +98,151 @@ export const create_color_products = async (
 ) => {
   console.log({ color_modifier });
   let list: any = [];
-  if (product.category === "glowskinz" && product.subcategory === "clozd") {
+  if (
+    product.category === "glowskinz" &&
+    product.subcategory === "clozd" &&
+    product.collection === "capez"
+  ) {
+    list = [
+      {
+        name: `Clear ${product.name}${color_modifier &&
+          " - " + color_modifier}`,
+        pathname: snake_case(
+          `Clear ${product.name}${color_modifier && " - " + color_modifier}`
+        ),
+        color: "Clear",
+        color_code: "#4b4b4b",
+        subcategory: "clozd",
+        product_collection: "capez",
+        item_group_id: product._id,
+        default_option: true,
+        images: color_images[0] ? [ color_images[0] ] : [],
+        ...no_state,
+      },
+
+      {
+        name: `Red ${product.name}${color_modifier && " - " + color_modifier}`,
+        pathname: snake_case(
+          `Red ${product.name}${color_modifier && " - " + color_modifier}`
+        ),
+        color: "Red",
+        color_code: "#c11c22",
+        subcategory: "clozd",
+        product_collection: "capez",
+        item_group_id: product._id,
+        default_option: false,
+        images: color_images[2] ? [ color_images[2] ] : [],
+        ...no_state,
+      },
+      {
+        name: `Green ${product.name}${color_modifier &&
+          " - " + color_modifier}`,
+        pathname: snake_case(
+          `Green ${product.name}${color_modifier && " - " + color_modifier}`
+        ),
+        color: "Green",
+        color_code: "#15715a",
+        subcategory: "clozd",
+        product_collection: "capez",
+        item_group_id: product._id,
+        default_option: false,
+        images: color_images[3] ? [ color_images[3] ] : [],
+        ...no_state,
+      },
+      {
+        name: `Blue ${product.name}${color_modifier && " - " + color_modifier}`,
+        pathname: snake_case(
+          `Blue ${product.name}${color_modifier && " - " + color_modifier}`
+        ),
+        color: "Blue",
+        color_code: "#0014ff",
+        subcategory: "clozd",
+        product_collection: "capez",
+        item_group_id: product._id,
+        default_option: false,
+        images: color_images[5] ? [ color_images[5] ] : [],
+        ...no_state,
+      },
+      {
+        name: `Violet ${product.name}${color_modifier &&
+          " - " + color_modifier}`,
+        pathname: snake_case(
+          `Violet ${product.name}${color_modifier && " - " + color_modifier}`
+        ),
+        color: "Violet",
+        color_code: "#543abb",
+        subcategory: "clozd",
+        product_collection: "capez",
+        item_group_id: product._id,
+        default_option: false,
+        images: color_images[6] ? [ color_images[6] ] : [],
+        ...no_state,
+      },
+      {
+        name: `Purple ${product.name}${color_modifier &&
+          " - " + color_modifier}`,
+        pathname: snake_case(
+          `Purple ${product.name}${color_modifier && " - " + color_modifier}`
+        ),
+        color: "Purple",
+        color_code: "purple",
+        subcategory: "clozd",
+        product_collection: "capez",
+        item_group_id: product._id,
+        default_option: false,
+        images: color_images[7] ? [ color_images[7] ] : [],
+        ...no_state,
+      },
+      {
+        name: `Frosted ${product.name}${color_modifier &&
+          " - " + color_modifier}`,
+        pathname: snake_case(
+          `Frosted ${product.name}${color_modifier && " - " + color_modifier}`
+        ),
+        color: "Frosted",
+        color_code: "white",
+        subcategory: "clozd",
+        product_collection: "capez",
+        item_group_id: product._id,
+        default_option: false,
+        images: color_images[1] ? [ color_images[1] ] : [],
+        ...no_state,
+      },
+      {
+        name: `Black ${product.name}${color_modifier &&
+          " - " + color_modifier}`,
+        pathname: snake_case(
+          `Black ${product.name}${color_modifier && " - " + color_modifier}`
+        ),
+        color: "Black",
+        color_code: "black",
+        subcategory: "clozd",
+        product_collection: "capez",
+        item_group_id: product._id,
+        default_option: false,
+        images: color_images[1] ? [ color_images[1] ] : [],
+        ...no_state,
+      },
+      {
+        name: `White ${product.name}${color_modifier &&
+          " - " + color_modifier}`,
+        pathname: snake_case(
+          `White ${product.name}${color_modifier && " - " + color_modifier}`
+        ),
+        color: "White",
+        color_code: "white",
+        subcategory: "clozd",
+        product_collection: "capez",
+        item_group_id: product._id,
+        default_option: false,
+        images: color_images[1] ? [ color_images[1] ] : [],
+        ...no_state,
+      },
+    ];
+  } else if (
+    product.category === "glowskinz" &&
+    product.subcategory === "clozd"
+  ) {
     list = [
       {
         name: `Clear ${product.name}${color_modifier &&
@@ -898,8 +1042,10 @@ export const create_secondary_color_products = async (
   secondary_color_modifier: string,
   secondary_color_images: any
 ) => {
+  console.log({ product });
   let list: any = [];
-  if (product.category === "glowskinz" && product.subcategory === "clozd") {
+  if (product.category === "glowskinz") {
+    console.log({ create_secondary_color_products: "secondary_color" });
     list = [
       {
         name: `Clear ${product.name}${secondary_color_modifier &&
@@ -918,22 +1064,6 @@ export const create_secondary_color_products = async (
         ...no_state,
       },
       {
-        name: `Frosted ${product.name}${secondary_color_modifier &&
-          " - " + secondary_color_modifier}`,
-        pathname: snake_case(
-          `Frosted ${product.name}${secondary_color_modifier &&
-            " - " + secondary_color_modifier}`
-        ),
-        color: "Frosted",
-        color_code: "#abaeb5",
-        subcategory: "options",
-        product_collection: "secondary_colors",
-        item_group_id: product._id,
-        default_option: false,
-        images: [ secondary_color_images[1] ],
-        ...no_state,
-      },
-      {
         name: `Red ${product.name}${secondary_color_modifier &&
           " - " + secondary_color_modifier}`,
         pathname: snake_case(
@@ -1012,6 +1142,22 @@ export const create_secondary_color_products = async (
         item_group_id: product._id,
         default_option: false,
         images: [ secondary_color_images[6] ],
+        ...no_state,
+      },
+      {
+        name: `Frosted ${product.name}${secondary_color_modifier &&
+          " - " + secondary_color_modifier}`,
+        pathname: snake_case(
+          `Frosted ${product.name}${secondary_color_modifier &&
+            " - " + secondary_color_modifier}`
+        ),
+        color: "Frosted",
+        color_code: "#abaeb5",
+        subcategory: "options",
+        product_collection: "secondary_colors",
+        item_group_id: product._id,
+        default_option: false,
+        images: [ secondary_color_images[1] ],
         ...no_state,
       },
       {
@@ -1028,125 +1174,6 @@ export const create_secondary_color_products = async (
         item_group_id: product._id,
         default_option: false,
         images: [ secondary_color_images[7] ],
-        ...no_state,
-      },
-    ];
-  } else if (
-    product.category === "glowskinz" &&
-    product.subcategory === "opyn"
-  ) {
-    list = [
-      {
-        name: `Clear ${product.name}${secondary_color_modifier &&
-          " - " + secondary_color_modifier}`,
-        pathname: snake_case(
-          `Clear ${product.name}${secondary_color_modifier &&
-            " - " + secondary_color_modifier}`
-        ),
-        color: "Clear",
-        color_code: "#4b4b4b",
-        subcategory: "options",
-        product_collection: "colors",
-        item_group_id: product._id,
-        default_option: true,
-        images: [ secondary_color_images[0] ],
-        ...no_state,
-      },
-      {
-        name: `Frosted ${product.name}${secondary_color_modifier &&
-          " - " + secondary_color_modifier}`,
-        pathname: snake_case(
-          `Frosted ${product.name}${secondary_color_modifier &&
-            " - " + secondary_color_modifier}`
-        ),
-        color: "Frosted",
-        color_code: "#abaeb5",
-        subcategory: "options",
-        product_collection: "secondary_colors",
-        item_group_id: product._id,
-        default_option: false,
-        images: [ secondary_color_images[1] ],
-        ...no_state,
-      },
-      {
-        name: `Red ${product.name}${secondary_color_modifier &&
-          " - " + secondary_color_modifier}`,
-        pathname: snake_case(
-          `Red ${product.name}${secondary_color_modifier &&
-            " - " + secondary_color_modifier}`
-        ),
-        color: "Red",
-        color_code: "#c11c22",
-        subcategory: "options",
-        product_collection: "secondary_colors",
-        item_group_id: product._id,
-        default_option: false,
-        images: [ secondary_color_images[2] ],
-        ...no_state,
-      },
-      {
-        name: `Green ${product.name}${secondary_color_modifier &&
-          " - " + secondary_color_modifier}`,
-        pathname: snake_case(
-          `Green ${product.name}${secondary_color_modifier &&
-            " - " + secondary_color_modifier}`
-        ),
-        color: "Green",
-        color_code: "#00c700",
-        subcategory: "options",
-        product_collection: "secondary_colors",
-        item_group_id: product._id,
-        default_option: false,
-        images: [ secondary_color_images[3] ],
-        ...no_state,
-      },
-      {
-        name: `Blue ${product.name}${secondary_color_modifier &&
-          " - " + secondary_color_modifier}`,
-        pathname: snake_case(
-          `Blue ${product.name}${secondary_color_modifier &&
-            " - " + secondary_color_modifier}`
-        ),
-        color: "Blue",
-        color_code: "#0014ff",
-        subcategory: "options",
-        product_collection: "secondary_colors",
-        item_group_id: product._id,
-        default_option: false,
-        images: [ secondary_color_images[4] ],
-        ...no_state,
-      },
-
-      {
-        name: `Violet ${product.name}${secondary_color_modifier &&
-          " - " + secondary_color_modifier}`,
-        pathname: snake_case(
-          `Violet ${product.name}${secondary_color_modifier &&
-            " - " + secondary_color_modifier}`
-        ),
-        color: "Violet",
-        color_code: "#543abb",
-        subcategory: "options",
-        product_collection: "secondary_colors",
-        item_group_id: product._id,
-        default_option: false,
-        images: [ secondary_color_images[5] ],
-        ...no_state,
-      },
-      {
-        name: `Purple ${product.name}${secondary_color_modifier &&
-          " - " + secondary_color_modifier}`,
-        pathname: snake_case(
-          `Purple ${product.name}${secondary_color_modifier &&
-            " - " + secondary_color_modifier}`
-        ),
-        color: "Purple",
-        color_code: "purple",
-        subcategory: "options",
-        product_collection: "secondary_colors",
-        item_group_id: product._id,
-        default_option: false,
-        images: [ secondary_color_images[6] ],
         ...no_state,
       },
       {
@@ -1163,376 +1190,362 @@ export const create_secondary_color_products = async (
         item_group_id: product._id,
         default_option: false,
         images: [ secondary_color_images[7] ],
-        ...no_state,
-      },
-      {
-        name: `Black ${product.name}${secondary_color_modifier &&
-          " - " + secondary_color_modifier}`,
-        pathname: snake_case(
-          `Black ${product.name}${secondary_color_modifier &&
-            " - " + secondary_color_modifier}`
-        ),
-        color: "Black",
-        color_code: "black",
-        subcategory: "options",
-        product_collection: "secondary_colors",
-        item_group_id: product._id,
-        default_option: false,
-        images: [ secondary_color_images[8] ],
-        ...no_state,
-      },
-    ];
-  } else if (product.category === "diffuser_caps") {
-    list = [
-      {
-        name: `Frosted ${product.name}${secondary_color_modifier &&
-          " - " + secondary_color_modifier}`,
-        pathname: snake_case(
-          `Frosted ${product.name}${secondary_color_modifier &&
-            " - " + secondary_color_modifier}`
-        ),
-        color: "Frosted",
-        color_code: "#abaeb5",
-        subcategory: "options",
-        product_collection: "colors",
-        item_group_id: product._id,
-        default_option: false,
-        images: [ secondary_color_images[0] ],
-        ...no_state,
-      },
-      {
-        name: `Red ${product.name}${secondary_color_modifier &&
-          " - " + secondary_color_modifier}`,
-        pathname: snake_case(
-          `Red ${product.name}${secondary_color_modifier &&
-            " - " + secondary_color_modifier}`
-        ),
-        color: "Red",
-        color_code: "#c11c22",
-        subcategory: "options",
-        product_collection: "colors",
-        item_group_id: product._id,
-        default_option: false,
-        images: [ secondary_color_images[1] ],
-        ...no_state,
-      },
-      {
-        name: `Green ${product.name}${secondary_color_modifier &&
-          " - " + secondary_color_modifier}`,
-        pathname: snake_case(
-          `Green ${product.name}${secondary_color_modifier &&
-            " - " + secondary_color_modifier}`
-        ),
-        color: "Green",
-        color_code: "#00c700",
-        subcategory: "options",
-        product_collection: "colors",
-        item_group_id: product._id,
-        default_option: false,
-        images: [ secondary_color_images[2] ],
-        ...no_state,
-      },
-      {
-        name: `Blue ${product.name}${secondary_color_modifier &&
-          " - " + secondary_color_modifier}`,
-        pathname: snake_case(
-          `Blue ${product.name}${secondary_color_modifier &&
-            " - " + secondary_color_modifier}`
-        ),
-        color: "Blue",
-        color_code: "#0014ff",
-        subcategory: "options",
-        product_collection: "colors",
-        item_group_id: product._id,
-        default_option: false,
-        images: [ secondary_color_images[3] ],
-        ...no_state,
-      },
-
-      {
-        name: `Violet ${product.name}${secondary_color_modifier &&
-          " - " + secondary_color_modifier}`,
-        pathname: snake_case(
-          `Violet ${product.name}${secondary_color_modifier &&
-            " - " + secondary_color_modifier}`
-        ),
-        color: "Violet",
-        color_code: "#543abb",
-        subcategory: "options",
-        product_collection: "colors",
-        item_group_id: product._id,
-        default_option: false,
-        images: [ secondary_color_images[4] ],
-        ...no_state,
-      },
-      {
-        name: `Purple ${product.name}${secondary_color_modifier &&
-          " - " + secondary_color_modifier}`,
-        pathname: snake_case(
-          `Purple ${product.name}${secondary_color_modifier &&
-            " - " + secondary_color_modifier}`
-        ),
-        color: "Purple",
-        color_code: "purple",
-        subcategory: "options",
-        product_collection: "colors",
-        item_group_id: product._id,
-        default_option: false,
-        images: [ secondary_color_images[5] ],
-        ...no_state,
-      },
-    ];
-  } else if (product.category === "diffusers") {
-    list = [];
-  } else if (product.category === "exo_diffusers") {
-    list = [
-      {
-        name: `Frosted ${product.name}${secondary_color_modifier &&
-          " - " + secondary_color_modifier}`,
-        pathname: snake_case(
-          `Frosted ${product.name}${secondary_color_modifier &&
-            " - " + secondary_color_modifier}`
-        ),
-        color: "Frosted",
-        color_code: "#abaeb5",
-        subcategory: "options",
-        product_collection: "secondary_colors",
-        item_group_id: product._id,
-        default_option: false,
-        images: [ secondary_color_images[0] ],
-        ...no_state,
-      },
-      {
-        name: `Red ${product.name}${secondary_color_modifier &&
-          " - " + secondary_color_modifier}`,
-        pathname: snake_case(
-          `Red ${product.name}${secondary_color_modifier &&
-            " - " + secondary_color_modifier}`
-        ),
-        color: "Red",
-        color_code: "#c11c22",
-        subcategory: "options",
-        product_collection: "secondary_colors",
-        item_group_id: product._id,
-        default_option: false,
-        images: [ secondary_color_images[1] ],
-        ...no_state,
-      },
-      {
-        name: `Green ${product.name}${secondary_color_modifier &&
-          " - " + secondary_color_modifier}`,
-        pathname: snake_case(
-          `Green ${product.name}${secondary_color_modifier &&
-            " - " + secondary_color_modifier}`
-        ),
-        color: "Green",
-        color_code: "#00c700",
-        subcategory: "options",
-        product_collection: "secondary_colors",
-        item_group_id: product._id,
-        default_option: false,
-        images: [ secondary_color_images[2] ],
-        ...no_state,
-      },
-      {
-        name: `Blue ${product.name}${secondary_color_modifier &&
-          " - " + secondary_color_modifier}`,
-        pathname: snake_case(
-          `Blue ${product.name}${secondary_color_modifier &&
-            " - " + secondary_color_modifier}`
-        ),
-        color: "Blue",
-        color_code: "#0014ff",
-        subcategory: "options",
-        product_collection: "secondary_colors",
-        item_group_id: product._id,
-        default_option: false,
-        images: [ secondary_color_images[3] ],
-        ...no_state,
-      },
-      {
-        name: `Violet ${product.name}${secondary_color_modifier &&
-          " - " + secondary_color_modifier}`,
-        pathname: snake_case(
-          `Violet ${product.name}${secondary_color_modifier &&
-            " - " + secondary_color_modifier}`
-        ),
-        color: "Violet",
-        color_code: "#543abb",
-        subcategory: "options",
-        product_collection: "secondary_colors",
-        item_group_id: product._id,
-        default_option: false,
-        images: [ secondary_color_images[4] ],
-        ...no_state,
-      },
-      {
-        name: `Purple ${product.name}${secondary_color_modifier &&
-          " - " + secondary_color_modifier}`,
-        pathname: snake_case(
-          `Purple ${product.name}${secondary_color_modifier &&
-            " - " + secondary_color_modifier}`
-        ),
-        color: "Purple",
-        color_code: "purple",
-        subcategory: "options",
-        product_collection: "secondary_colors",
-        item_group_id: product._id,
-        default_option: false,
-        images: [ secondary_color_images[5] ],
-        ...no_state,
-      },
-    ];
-  } else if (product.category === "batteries") {
-    list = [];
-  } else if (product.product_collection === "novaskinz") {
-    list = [
-      {
-        name: `Clear ${product.name}${secondary_color_modifier &&
-          " - " + secondary_color_modifier}`,
-        pathname: snake_case(
-          `Clear ${product.name}${secondary_color_modifier &&
-            " - " + secondary_color_modifier}`
-        ),
-        color: "Clear",
-        color_code: "#4b4b4b",
-        subcategory: "options",
-        product_collection: "secondary_colors",
-        item_group_id: product._id,
-        default_option: false,
-        images: [ secondary_color_images[0] ],
-        ...no_state,
-      },
-      {
-        name: `Frosted ${product.name}${secondary_color_modifier &&
-          " - " + secondary_color_modifier}`,
-        pathname: snake_case(
-          `Frosted ${product.name}${secondary_color_modifier &&
-            " - " + secondary_color_modifier}`
-        ),
-        color: "Frosted",
-        color_code: "#abaeb5",
-        subcategory: "options",
-        product_collection: "secondary_colors",
-        item_group_id: product._id,
-        default_option: false,
-        images: [ secondary_color_images[1] ],
-        ...no_state,
-      },
-      {
-        name: `Red ${product.name}${secondary_color_modifier &&
-          " - " + secondary_color_modifier}`,
-        pathname: snake_case(
-          `Red ${product.name}${secondary_color_modifier &&
-            " - " + secondary_color_modifier}`
-        ),
-        color: "Red",
-        color_code: "#c11c22",
-        subcategory: "options",
-        product_collection: "secondary_colors",
-        item_group_id: product._id,
-        default_option: false,
-        images: [ secondary_color_images[2] ],
-        ...no_state,
-      },
-      {
-        name: `Green ${product.name}${secondary_color_modifier &&
-          " - " + secondary_color_modifier}`,
-        pathname: snake_case(
-          `Green ${product.name}${secondary_color_modifier &&
-            " - " + secondary_color_modifier}`
-        ),
-        color: "Green",
-        color_code: "#00c700",
-        subcategory: "options",
-        product_collection: "secondary_colors",
-        item_group_id: product._id,
-        default_option: false,
-        images: [ secondary_color_images[3] ],
-        ...no_state,
-      },
-      {
-        name: `Blue ${product.name}${secondary_color_modifier &&
-          " - " + secondary_color_modifier}`,
-        pathname: snake_case(
-          `Blue ${product.name}${secondary_color_modifier &&
-            " - " + secondary_color_modifier}`
-        ),
-        color: "Blue",
-        color_code: "#0014ff",
-        subcategory: "options",
-        product_collection: "secondary_colors",
-        item_group_id: product._id,
-        default_option: false,
-        images: [ secondary_color_images[4] ],
-        ...no_state,
-      },
-      {
-        name: `Violet ${product.name}${secondary_color_modifier &&
-          " - " + secondary_color_modifier}`,
-        pathname: snake_case(
-          `Violet ${product.name}${secondary_color_modifier &&
-            " - " + secondary_color_modifier}`
-        ),
-        color: "Violet",
-        color_code: "#543abb",
-        subcategory: "options",
-        product_collection: "secondary_colors",
-        item_group_id: product._id,
-        default_option: false,
-        images: [ secondary_color_images[5] ],
-        ...no_state,
-      },
-      {
-        name: `Purple ${product.name}${secondary_color_modifier &&
-          " - " + secondary_color_modifier}`,
-        pathname: snake_case(
-          `Purple ${product.name}${secondary_color_modifier &&
-            " - " + secondary_color_modifier}`
-        ),
-        color: "Purple",
-        color_code: "purple",
-        subcategory: "options",
-        product_collection: "secondary_colors",
-        item_group_id: product._id,
-        default_option: false,
-        images: [ secondary_color_images[6] ],
-        ...no_state,
-      },
-      {
-        name: `White ${product.name}${secondary_color_modifier &&
-          " - " + secondary_color_modifier}`,
-        pathname: snake_case(
-          `White ${product.name}${secondary_color_modifier &&
-            " - " + secondary_color_modifier}`
-        ),
-        color: "White",
-        color_code: "white",
-        subcategory: "options",
-        product_collection: "secondary_colors",
-        item_group_id: product._id,
-        default_option: false,
-        images: [ secondary_color_images[7] ],
-        ...no_state,
-      },
-      {
-        name: `Black ${product.name}${secondary_color_modifier &&
-          " - " + secondary_color_modifier}`,
-        pathname: snake_case(
-          `Black ${product.name}${secondary_color_modifier &&
-            " - " + secondary_color_modifier}`
-        ),
-        color: "Black",
-        color_code: "black",
-        subcategory: "options",
-        product_collection: "secondary_colors",
-        item_group_id: product._id,
-        default_option: false,
-        images: [ secondary_color_images[8] ],
         ...no_state,
       },
     ];
   }
+  // else if (product.category === "diffuser_caps") {
+  //   list = [
+  //     {
+  //       name: `Frosted ${product.name}${secondary_color_modifier &&
+  //         " - " + secondary_color_modifier}`,
+  //       pathname: snake_case(
+  //         `Frosted ${product.name}${secondary_color_modifier &&
+  //           " - " + secondary_color_modifier}`
+  //       ),
+  //       color: "Frosted",
+  //       color_code: "#abaeb5",
+  //       subcategory: "options",
+  //       product_collection: "colors",
+  //       item_group_id: product._id,
+  //       default_option: false,
+  //       images: [ secondary_color_images[0] ],
+  //       ...no_state,
+  //     },
+  //     {
+  //       name: `Red ${product.name}${secondary_color_modifier &&
+  //         " - " + secondary_color_modifier}`,
+  //       pathname: snake_case(
+  //         `Red ${product.name}${secondary_color_modifier &&
+  //           " - " + secondary_color_modifier}`
+  //       ),
+  //       color: "Red",
+  //       color_code: "#c11c22",
+  //       subcategory: "options",
+  //       product_collection: "colors",
+  //       item_group_id: product._id,
+  //       default_option: false,
+  //       images: [ secondary_color_images[1] ],
+  //       ...no_state,
+  //     },
+  //     {
+  //       name: `Green ${product.name}${secondary_color_modifier &&
+  //         " - " + secondary_color_modifier}`,
+  //       pathname: snake_case(
+  //         `Green ${product.name}${secondary_color_modifier &&
+  //           " - " + secondary_color_modifier}`
+  //       ),
+  //       color: "Green",
+  //       color_code: "#00c700",
+  //       subcategory: "options",
+  //       product_collection: "colors",
+  //       item_group_id: product._id,
+  //       default_option: false,
+  //       images: [ secondary_color_images[2] ],
+  //       ...no_state,
+  //     },
+  //     {
+  //       name: `Blue ${product.name}${secondary_color_modifier &&
+  //         " - " + secondary_color_modifier}`,
+  //       pathname: snake_case(
+  //         `Blue ${product.name}${secondary_color_modifier &&
+  //           " - " + secondary_color_modifier}`
+  //       ),
+  //       color: "Blue",
+  //       color_code: "#0014ff",
+  //       subcategory: "options",
+  //       product_collection: "colors",
+  //       item_group_id: product._id,
+  //       default_option: false,
+  //       images: [ secondary_color_images[3] ],
+  //       ...no_state,
+  //     },
+
+  //     {
+  //       name: `Violet ${product.name}${secondary_color_modifier &&
+  //         " - " + secondary_color_modifier}`,
+  //       pathname: snake_case(
+  //         `Violet ${product.name}${secondary_color_modifier &&
+  //           " - " + secondary_color_modifier}`
+  //       ),
+  //       color: "Violet",
+  //       color_code: "#543abb",
+  //       subcategory: "options",
+  //       product_collection: "colors",
+  //       item_group_id: product._id,
+  //       default_option: false,
+  //       images: [ secondary_color_images[4] ],
+  //       ...no_state,
+  //     },
+  //     {
+  //       name: `Purple ${product.name}${secondary_color_modifier &&
+  //         " - " + secondary_color_modifier}`,
+  //       pathname: snake_case(
+  //         `Purple ${product.name}${secondary_color_modifier &&
+  //           " - " + secondary_color_modifier}`
+  //       ),
+  //       color: "Purple",
+  //       color_code: "purple",
+  //       subcategory: "options",
+  //       product_collection: "colors",
+  //       item_group_id: product._id,
+  //       default_option: false,
+  //       images: [ secondary_color_images[5] ],
+  //       ...no_state,
+  //     },
+  //   ];
+  // } else if (product.category === "diffusers") {
+  //   list = [];
+  // } else if (product.category === "exo_diffusers") {
+  //   list = [
+  //     {
+  //       name: `Frosted ${product.name}${secondary_color_modifier &&
+  //         " - " + secondary_color_modifier}`,
+  //       pathname: snake_case(
+  //         `Frosted ${product.name}${secondary_color_modifier &&
+  //           " - " + secondary_color_modifier}`
+  //       ),
+  //       color: "Frosted",
+  //       color_code: "#abaeb5",
+  //       subcategory: "options",
+  //       product_collection: "secondary_colors",
+  //       item_group_id: product._id,
+  //       default_option: false,
+  //       images: [ secondary_color_images[0] ],
+  //       ...no_state,
+  //     },
+  //     {
+  //       name: `Red ${product.name}${secondary_color_modifier &&
+  //         " - " + secondary_color_modifier}`,
+  //       pathname: snake_case(
+  //         `Red ${product.name}${secondary_color_modifier &&
+  //           " - " + secondary_color_modifier}`
+  //       ),
+  //       color: "Red",
+  //       color_code: "#c11c22",
+  //       subcategory: "options",
+  //       product_collection: "secondary_colors",
+  //       item_group_id: product._id,
+  //       default_option: false,
+  //       images: [ secondary_color_images[1] ],
+  //       ...no_state,
+  //     },
+  //     {
+  //       name: `Green ${product.name}${secondary_color_modifier &&
+  //         " - " + secondary_color_modifier}`,
+  //       pathname: snake_case(
+  //         `Green ${product.name}${secondary_color_modifier &&
+  //           " - " + secondary_color_modifier}`
+  //       ),
+  //       color: "Green",
+  //       color_code: "#00c700",
+  //       subcategory: "options",
+  //       product_collection: "secondary_colors",
+  //       item_group_id: product._id,
+  //       default_option: false,
+  //       images: [ secondary_color_images[2] ],
+  //       ...no_state,
+  //     },
+  //     {
+  //       name: `Blue ${product.name}${secondary_color_modifier &&
+  //         " - " + secondary_color_modifier}`,
+  //       pathname: snake_case(
+  //         `Blue ${product.name}${secondary_color_modifier &&
+  //           " - " + secondary_color_modifier}`
+  //       ),
+  //       color: "Blue",
+  //       color_code: "#0014ff",
+  //       subcategory: "options",
+  //       product_collection: "secondary_colors",
+  //       item_group_id: product._id,
+  //       default_option: false,
+  //       images: [ secondary_color_images[3] ],
+  //       ...no_state,
+  //     },
+  //     {
+  //       name: `Violet ${product.name}${secondary_color_modifier &&
+  //         " - " + secondary_color_modifier}`,
+  //       pathname: snake_case(
+  //         `Violet ${product.name}${secondary_color_modifier &&
+  //           " - " + secondary_color_modifier}`
+  //       ),
+  //       color: "Violet",
+  //       color_code: "#543abb",
+  //       subcategory: "options",
+  //       product_collection: "secondary_colors",
+  //       item_group_id: product._id,
+  //       default_option: false,
+  //       images: [ secondary_color_images[4] ],
+  //       ...no_state,
+  //     },
+  //     {
+  //       name: `Purple ${product.name}${secondary_color_modifier &&
+  //         " - " + secondary_color_modifier}`,
+  //       pathname: snake_case(
+  //         `Purple ${product.name}${secondary_color_modifier &&
+  //           " - " + secondary_color_modifier}`
+  //       ),
+  //       color: "Purple",
+  //       color_code: "purple",
+  //       subcategory: "options",
+  //       product_collection: "secondary_colors",
+  //       item_group_id: product._id,
+  //       default_option: false,
+  //       images: [ secondary_color_images[5] ],
+  //       ...no_state,
+  //     },
+  //   ];
+  // } else if (product.category === "batteries") {
+  //   list = [];
+  // }
+  // else if (product.product_collection === "novaskinz") {
+  //   list = [
+  //     {
+  //       name: `Clear ${product.name}${secondary_color_modifier &&
+  //         " - " + secondary_color_modifier}`,
+  //       pathname: snake_case(
+  //         `Clear ${product.name}${secondary_color_modifier &&
+  //           " - " + secondary_color_modifier}`
+  //       ),
+  //       color: "Clear",
+  //       color_code: "#4b4b4b",
+  //       subcategory: "options",
+  //       product_collection: "secondary_colors",
+  //       item_group_id: product._id,
+  //       default_option: false,
+  //       images: [ secondary_color_images[0] ],
+  //       ...no_state,
+  //     },
+  //     {
+  //       name: `Red ${product.name}${secondary_color_modifier &&
+  //         " - " + secondary_color_modifier}`,
+  //       pathname: snake_case(
+  //         `Red ${product.name}${secondary_color_modifier &&
+  //           " - " + secondary_color_modifier}`
+  //       ),
+  //       color: "Red",
+  //       color_code: "#c11c22",
+  //       subcategory: "options",
+  //       product_collection: "secondary_colors",
+  //       item_group_id: product._id,
+  //       default_option: false,
+  //       images: [ secondary_color_images[2] ],
+  //       ...no_state,
+  //     },
+  //     {
+  //       name: `Green ${product.name}${secondary_color_modifier &&
+  //         " - " + secondary_color_modifier}`,
+  //       pathname: snake_case(
+  //         `Green ${product.name}${secondary_color_modifier &&
+  //           " - " + secondary_color_modifier}`
+  //       ),
+  //       color: "Green",
+  //       color_code: "#00c700",
+  //       subcategory: "options",
+  //       product_collection: "secondary_colors",
+  //       item_group_id: product._id,
+  //       default_option: false,
+  //       images: [ secondary_color_images[3] ],
+  //       ...no_state,
+  //     },
+  //     {
+  //       name: `Blue ${product.name}${secondary_color_modifier &&
+  //         " - " + secondary_color_modifier}`,
+  //       pathname: snake_case(
+  //         `Blue ${product.name}${secondary_color_modifier &&
+  //           " - " + secondary_color_modifier}`
+  //       ),
+  //       color: "Blue",
+  //       color_code: "#0014ff",
+  //       subcategory: "options",
+  //       product_collection: "secondary_colors",
+  //       item_group_id: product._id,
+  //       default_option: false,
+  //       images: [ secondary_color_images[4] ],
+  //       ...no_state,
+  //     },
+  //     {
+  //       name: `Violet ${product.name}${secondary_color_modifier &&
+  //         " - " + secondary_color_modifier}`,
+  //       pathname: snake_case(
+  //         `Violet ${product.name}${secondary_color_modifier &&
+  //           " - " + secondary_color_modifier}`
+  //       ),
+  //       color: "Violet",
+  //       color_code: "#543abb",
+  //       subcategory: "options",
+  //       product_collection: "secondary_colors",
+  //       item_group_id: product._id,
+  //       default_option: false,
+  //       images: [ secondary_color_images[5] ],
+  //       ...no_state,
+  //     },
+  //     {
+  //       name: `Purple ${product.name}${secondary_color_modifier &&
+  //         " - " + secondary_color_modifier}`,
+  //       pathname: snake_case(
+  //         `Purple ${product.name}${secondary_color_modifier &&
+  //           " - " + secondary_color_modifier}`
+  //       ),
+  //       color: "Purple",
+  //       color_code: "purple",
+  //       subcategory: "options",
+  //       product_collection: "secondary_colors",
+  //       item_group_id: product._id,
+  //       default_option: false,
+  //       images: [ secondary_color_images[6] ],
+  //       ...no_state,
+  //     },
+  //     {
+  //       name: `Frosted ${product.name}${secondary_color_modifier &&
+  //         " - " + secondary_color_modifier}`,
+  //       pathname: snake_case(
+  //         `Frosted ${product.name}${secondary_color_modifier &&
+  //           " - " + secondary_color_modifier}`
+  //       ),
+  //       color: "Frosted",
+  //       color_code: "#abaeb5",
+  //       subcategory: "options",
+  //       product_collection: "secondary_colors",
+  //       item_group_id: product._id,
+  //       default_option: false,
+  //       images: [ secondary_color_images[1] ],
+  //       ...no_state,
+  //     },
+  //     {
+  //       name: `Black ${product.name}${secondary_color_modifier &&
+  //         " - " + secondary_color_modifier}`,
+  //       pathname: snake_case(
+  //         `Black ${product.name}${secondary_color_modifier &&
+  //           " - " + secondary_color_modifier}`
+  //       ),
+  //       color: "Black",
+  //       color_code: "black",
+  //       subcategory: "options",
+  //       product_collection: "secondary_colors",
+  //       item_group_id: product._id,
+  //       default_option: false,
+  //       images: [ secondary_color_images[8] ],
+  //       ...no_state,
+  //     },
+  //     {
+  //       name: `White ${product.name}${secondary_color_modifier &&
+  //         " - " + secondary_color_modifier}`,
+  //       pathname: snake_case(
+  //         `White ${product.name}${secondary_color_modifier &&
+  //           " - " + secondary_color_modifier}`
+  //       ),
+  //       color: "White",
+  //       color_code: "white",
+  //       subcategory: "options",
+  //       product_collection: "secondary_colors",
+  //       item_group_id: product._id,
+  //       default_option: false,
+  //       images: [ secondary_color_images[7] ],
+  //       ...no_state,
+  //     },
+  //   ];
+  // }
   save_products(
     list,
     product,
@@ -1787,6 +1800,7 @@ export const create_option_products = async (
   }
   save_products(list, product, option_products, set_option_products);
 };
+
 export const create_secondary_products = async (
   product: any,
   set_secondary_products: Function,
@@ -1795,10 +1809,7 @@ export const create_secondary_products = async (
   secondary_images: any
 ) => {
   let list: any = [];
-  if (
-    product.category === "glowskinz" &&
-    product.product_collection !== "novaskinz"
-  ) {
+  if (product.name.includes("Nanoskinz")) {
     list = [
       {
         name: `${product.name} - No Bubble Button (spectra EVOs)`,
@@ -1810,9 +1821,6 @@ export const create_secondary_products = async (
         product_collection: "sizes",
         price: 0,
         item_group_id: product._id,
-        default_option: false,
-        images: [ secondary_images[0] ],
-        ...no_state,
       },
       {
         name: `${product.name} - Bubble Button (Atoms)`,
@@ -1822,9 +1830,79 @@ export const create_secondary_products = async (
         product_collection: "sizes",
         price: 0,
         item_group_id: product._id,
-        default_option: false,
-        images: [ secondary_images[1] ],
-        ...no_state,
+      },
+    ];
+  } else if (product.name.includes("Omniskinz")) {
+    list = [
+      {
+        name: `${product.name} - Apollo Sleds`,
+        pathname: snake_case(`${product.name} - Apollo Sleds`),
+        size: 1,
+        category: "glowskinz",
+        subcategory: "clozd",
+        product_collection: "sleds",
+        price: 9.99,
+        item_group_id: product._id,
+      },
+      {
+        name: `${product.name} - Coffin Sleds`,
+        pathname: snake_case(`${product.name} - Coffin Sleds`),
+        size: 8,
+        category: "glowskinz",
+        subcategory: "clozd",
+        product_collection: "sleds",
+        price: 9.99,
+        item_group_id: product._id,
+      },
+      {
+        name: `${product.name} - Coin Sleds`,
+        pathname: snake_case(`${product.name} - Coin Sleds`),
+        size: 8,
+        category: "glowskinz",
+        subcategory: "clozd",
+        product_collection: "sleds",
+        price: 9.99,
+        item_group_id: product._id,
+      },
+      {
+        name: `${product.name} - Nano Sleds (spectra EVO)`,
+        pathname: snake_case(`${product.name} - Nano Sleds (spectra EVO)`),
+        size: 8,
+        category: "glowskinz",
+        subcategory: "clozd",
+        product_collection: "sleds",
+        price: 9.99,
+        item_group_id: product._id,
+      },
+      {
+        name: `${product.name} - Nano Sleds (Atoms)`,
+        pathname: snake_case(`${product.name} - Nano Sleds (Atoms)`),
+        size: 8,
+        category: "glowskinz",
+        subcategory: "clozd",
+        product_collection: "sleds",
+        price: 9.99,
+        item_group_id: product._id,
+      },
+      {
+        name: `${product.name} - OSM Sleds`,
+        pathname: snake_case(`${product.name} - OSM Sleds`),
+        size: 8,
+        category: "glowskinz",
+        subcategory: "clozd",
+        product_collection: "sleds",
+        price: 9.99,
+        item_group_id: product._id,
+      },
+      {
+        name: `${product.name} - Vortex Sleds`,
+        pathname: snake_case(`${product.name} - Vortex Sleds`),
+        size: 8,
+        category: "glowskinz",
+        subcategory: "clozd",
+        product_collection: "sleds",
+        price: 9.99,
+        item_group_id: product._id,
       },
     ];
   } else if (product.category === "diffuser_caps") {
@@ -1845,9 +1923,6 @@ export const create_secondary_products = async (
         product_collection: "sizes",
         price: 0,
         item_group_id: product._id,
-        default_option: false,
-        images: [ secondary_images[2] ],
-        ...no_state,
       },
       {
         name: `${product.name} - Bubble Mod (Atoms)`,
@@ -1857,9 +1932,6 @@ export const create_secondary_products = async (
         product_collection: "sizes",
         price: 0,
         item_group_id: product._id,
-        default_option: false,
-        images: [ secondary_images[3] ],
-        ...no_state,
       },
     ];
   }

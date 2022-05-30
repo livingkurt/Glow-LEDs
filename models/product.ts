@@ -114,7 +114,7 @@ const productSchema = new mongoose.Schema(
     group_product: { type: Boolean, default: false },
     group_name: { type: String },
     products: [ { type: mongoose.Schema.Types.ObjectId, ref: "Product" } ],
-
+    has_add_on: { type: Boolean, default: false },
     color_product_group: { type: Boolean, default: false },
     color_group_name: { type: String },
     color_products: [

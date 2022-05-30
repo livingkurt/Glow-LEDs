@@ -259,7 +259,7 @@ const Cart = (props) => {
 									</Link>
 									<Link to="/" aria-label="Home Page">
 										<div className="row">
-											<label className="ml-5px fs-25px mv-0px ff-h title_font">
+											<label className="ml-5px fs-25px mv-0px title_font">
 												Shopping Cart
 											</label>
 										</div>
@@ -352,7 +352,7 @@ const Cart = (props) => {
 											</div>
 
 											<div className="jc-b mb-10px">
-												<div className="custom-select">
+												{/* <div className="custom-select">
 													<select
 														defaultValue={parseInt(item.qty)}
 														value={parseInt(item.qty)}
@@ -374,7 +374,11 @@ const Cart = (props) => {
 														))}
 													</select>
 													<span className="custom-arrow" />
-												</div>
+												</div> */}
+													<label aria-label="Sort" htmlFor="sort" className="select-label mr-1rem">
+														Qty:
+														</label>
+														<label>{item.qty}</label>
 												<div className="cart_sidebar-price fs-16px">
 													{sale_price_switch(item, true, 'light')}
 												</div>

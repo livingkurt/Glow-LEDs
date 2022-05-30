@@ -59,7 +59,7 @@ export default (props: any) => {
 						<tr>
 							<td style="font-family:helvetica">
 								<p style="color:white;line-height:150%;font-size:16px;margin:0">
-									<p style='font-size: 16px; line-height: 30px;'>
+								<p style='font-size: 16px; line-height: 30px;'>
 									Hi ${order.shipping.first_name},${" "}
 									${email && email.h2 ? email.h2 : ""}
 								</p>
@@ -95,349 +95,363 @@ export default (props: any) => {
 							</td>
 						</tr>
 					</tbody>
-				</table>
-			</center>
-		</td>
-	</tr>
-</table>
-<table style="width:100%;border-spacing:0; ">
-	<tr>
-		<td style="font-family:helvetica;">
-			<center>
-				<table
-					style="max-width:560px;width:100%;text-align:left;border-spacing:0;padding:10px;margin:10px auto;  background-color: #585858; border-radius: 20px;">
-					<tbody>
+
+					<table style="width:100%;border-spacing:0; ">
 						<tr>
-							<td style="font-family:helvetica">
-								<table style="max-width:560px;width:100%;text-align:left;border-spacing:0;padding:10px;margin:0 auto; ">
-									<tbody>
-										<tr>
-											<td style="font-family:helvetica">
-												<h3 style="font-weight:normal;font-size:25px; margin: 0;"><strong>Your Order:</strong></h3>
-											</td>
-										</tr>
-									</tbody>
-								</table>
-								<table style="max-width:560px;padding:10px;text-align:left;border-spacing:0;margin:0 auto;width:100%; ">
-									<tr>
-										<td style="font-family:helvetica">
-											<table style="width:100%;border-spacing:0;">
-												<tbody>
-													${order.orderItems
-                            .map(
-                              (item: any, index: any) =>
-                                `<tr>
-														<td style='font-family: helvetica;'>
-															<table style='
+							<td style="font-family:helvetica;">
+								<center>
+									<table
+										style="max-width:560px;width:100%;text-align:left;border-spacing:0;padding:10px;margin:10px auto;  background-color: #585858; border-radius: 20px;">
+										<tbody>
+											<tr>
+												<td style="font-family:helvetica">
+													<table
+														style="max-width:560px;width:100%;text-align:left;border-spacing:0;padding:10px;margin:0 auto; ">
+														<tbody>
+															<tr>
+																<td style="font-family:helvetica">
+																	<h3 style="font-weight:normal;font-size:25px; margin: 0;"><strong>Your Order:</strong>
+																	</h3>
+																</td>
+															</tr>
+														</tbody>
+													</table>
+													<table
+														style="max-width:560px;padding:10px;text-align:left;border-spacing:0;margin:0 auto;width:100%; ">
+														<tr>
+															<td style="font-family:helvetica">
+																<table style="width:100%;border-spacing:0;">
+																	<tbody>
+																		${order.orderItems
+                                      .map(
+                                        (item: any, index: any) =>
+                                          `<tr>
+																			<td style='font-family: helvetica;'>
+																				<table style='
 																				width: 100%;
 																				border-spacing: 0;
 																				border-bottom: 1px white solid;'>
-																<tbody>
-																	<tr style='width: 100%'>
-																		<td style='font-family: helvetica'>
-																			<table style='border-spacing: 0px; width: 100%; margin: 10px auto;'>
-																				<tbody>
-																					<tr>
-																						<td style='font-family: helvetica;'>
-																							<div style='margin-bottom: 10px; margin-right: 10px;'>
-																								${!item.secondary_image
-                                                  ? `<img src=${item.display_image} alt=${item.name} width="60"
-																									height="60" style='border-radius:8px;' title="Product Image" />`
-                                                  : `
-																								<div />`}
-																								${item.secondary_image
-                                                  ? `<div style='${"width:100%; display:flex;"} ${item.name
-                                                      ? item.name.split("-")[1]
-                                                        ? "flex-direction: column;"
-                                                        : "flex-direction: row;"
-                                                      : ""}'>
-																									<img id="expandedImg" alt=${item.name} title=${item.name} style='${"object-fit:cover; object-position:50% 50%; max-width:70px; max-height:70px; margin:0px;"} ${item.name
-                                                      ? item.name.split("-")[1]
-                                                        ? "border-radius: 0rem 1rem 1rem 0rem;"
-                                                        : "border-radius: 1rem 0rem 0rem 1rem;"
-                                                      : ""} ${item.name
-                                                      ? item.name.split("-")[1]
-                                                        ? "width: 70px;"
-                                                        : "width: 35px;"
-                                                      : ""} ${item.name
-                                                      ? item.name.split("-")[1]
-                                                        ? "height: 35px;"
-                                                        : "height: 70px;"
-                                                      : ""}' src=${item.display_image} />
-																									<img id="expandedSecondaryImg" alt=${item.name} title=${item.name}
-																										style='${"object-fit:cover; object-position:50% 50%; max-width:70px; max-height:70px; margin:0px;"} ${item.name
-                                                      ? item.name.split("-")[1]
-                                                        ? "border-radius: 0rem 1rem 1rem 0rem;"
-                                                        : "border-radius: 1rem 0rem 0rem 1rem;"
-                                                      : ""} ${item.name
-                                                      ? item.name.split("-")[1]
-                                                        ? "width: 70px;"
-                                                        : "width: 35px;"
-                                                      : ""} ${item.name
-                                                      ? item.name.split("-")[1]
-                                                        ? "height: 35px;"
-                                                        : "height: 70px;"
-                                                      : ""}' src=${item.secondary_image} />
-																								</div>`
-                                                  : `
-																								<div />`}
-																							</div>
+																					<tbody>
+																						<tr style='width: 100%'>
+																							<td style='font-family: helvetica'>
+																								<table style='border-spacing: 0px; width: 100%; margin: 10px auto;'>
+																									<tbody>
+																										<tr>
+																											<td style='font-family: helvetica;'>
+																												<div style='margin-bottom: 10px; margin-right: 10px;'>
+																													${!item.secondary_image
+                                                            ? `<img src=${item.display_image} alt=${item.name} width="60"
+																														height="60" style='border-radius:8px;'
+																														title="Product Image" />`
+                                                            : `
+																													<div />`}
+																													${item.secondary_image
+                                                            ? `<div style='${"width:100%; display:flex;"} ${item.name
+                                                                ? item.name.split(
+                                                                    "-"
+                                                                  )[1]
+                                                                  ? "flex-direction: column;"
+                                                                  : "flex-direction: row;"
+                                                                : ""}'>
+																														<img id="expandedImg" alt=${item.name} title=${item.name}
+																															style='${"object-fit:cover; object-position:50% 50%; max-width:70px; max-height:70px; margin:0px;"} ${item.name
+                                                                ? item.name.split(
+                                                                    "-"
+                                                                  )[1]
+                                                                  ? "border-radius: 0rem 1rem 1rem 0rem;"
+                                                                  : "border-radius: 1rem 0rem 0rem 1rem;"
+                                                                : ""} ${item.name
+                                                                ? item.name.split(
+                                                                    "-"
+                                                                  )[1]
+                                                                  ? "width: 70px;"
+                                                                  : "width: 35px;"
+                                                                : ""} ${item.name
+                                                                ? item.name.split(
+                                                                    "-"
+                                                                  )[1]
+                                                                  ? "height: 35px;"
+                                                                  : "height: 70px;"
+                                                                : ""}' src=${item.display_image} />
+																														<img id="expandedSecondaryImg" alt=${item.name}
+																															title=${item.name} style='${"object-fit:cover; object-position:50% 50%; max-width:70px; max-height:70px; margin:0px;"} ${item.name
+                                                                ? item.name.split(
+                                                                    "-"
+                                                                  )[1]
+                                                                  ? "border-radius: 0rem 1rem 1rem 0rem;"
+                                                                  : "border-radius: 1rem 0rem 0rem 1rem;"
+                                                                : ""} ${item.name
+                                                                ? item.name.split(
+                                                                    "-"
+                                                                  )[1]
+                                                                  ? "width: 70px;"
+                                                                  : "width: 35px;"
+                                                                : ""} ${item.name
+                                                                ? item.name.split(
+                                                                    "-"
+                                                                  )[1]
+                                                                  ? "height: 35px;"
+                                                                  : "height: 70px;"
+                                                                : ""}' src=${item.secondary_image} />
+																													</div>`
+                                                            : `
+																													<div />`}
+																												</div>
+																											</td>
+																											<td style='font-family:helvetica;width:100%;'>
+																												<span
+																													style='font-size:16px;font-weight:600;line-height:1.4;color:white;'>
+																													${determine_product_name(item, true)}
+																												</span>
+																												<br />
+																											</td>
+																											<td style='font-family:helvetica;width:100%;white-space:nowrap;'>
+																												<p style='color:white;line-height:150%;font-size:16px;font-weight:600;margin:0 0 0 15px;'
+																													align="right">
+																													${email_sale_price_switch(item, "white")}
+																												</p>
+																											</td>
+																										</tr>
+																									</tbody>
+																								</table>
+																							</td>
+																						</tr>
+																					</tbody>
+																				</table>
+																			</td>
+																		</tr>`
+                                      )
+                                      .join("")}
+																	</tbody>
+																</table>
+																<table style="width:100%;border-spacing:0">
+																	<tbody>
+																		<tr>
+																			<td style="font-family:helvetica;width:30%"></td>
+																			<td style="font-family:helvetica">
+																				<table style="width:100%;border-spacing:0;margin-top:20px">
+																					<tbody>
+																						<tr>
+																							${!order.promo_code
+                                                ? `<td style="font-family:helvetica;padding:5px 0">
+																								<p style="color:white;line-height:1.2em;font-size:16px;margin:0"><span
+																										style="font-size:16px">Subtotal</span></p>
+																							</td>
+																							<td style="font-family:helvetica;padding:5px 0;text-align:right"
+																								align="righ=t">
+																								<strong style="font-size:16px;color:white">$${order.orderItems
+                                                  .map((item: any) => {
+                                                    return {
+                                                      price: item.sale_price
+                                                        ? item.sale_price
+                                                        : item.price,
+                                                      qty: item.qty,
+                                                    };
+                                                  })
+                                                  .reduce(
+                                                    (a: any, c: any) =>
+                                                      a + c.price * c.qty,
+                                                    0
+                                                  )
+                                                  .toFixed(2)}</strong>
+																							</td>
+																						</tr>`
+                                                : ""}
+																						${order.promo_code
+                                              ? `<td style="font-family:helvetica;padding:5px 0">
+																							<del style="color:red">
+																								<p style="color:white;line-height:1.2em;font-size:16px;margin:0"><span
+																										style="font-size:16px">Subtotal</span></p>
+																							</del>
 																						</td>
-																						<td style='font-family:helvetica;width:100%;'>
-																							<span style='font-size:16px;font-weight:600;line-height:1.4;color:white;'>
-																								${determine_product_name(item, true, order.createdAt)}
-																							</span>
-																							<br />
+																						<td style="font-family:helvetica;padding:5px 0;text-align:right"
+																							align="righ=t">
+																							<del style="color:red">
+																								<strong style="font-size:16px;color:white">$${order.orderItems
+                                                  .map((item: any) => {
+                                                    return {
+                                                      price: item.sale_price
+                                                        ? item.sale_price
+                                                        : item.price,
+                                                      qty: item.qty,
+                                                    };
+                                                  })
+                                                  .reduce(
+                                                    (a: any, c: any) =>
+                                                      a + c.price * c.qty,
+                                                    0
+                                                  )
+                                                  .toFixed(2)}</strong></del>
 																						</td>
-																						<td style='font-family:helvetica;width:100%;white-space:nowrap;'>
-																							<p style='color:white;line-height:150%;font-size:16px;font-weight:600;margin:0 0 0 15px;'
-																								align="right">
-																								${email_sale_price_switch(item, "white")}
-																							</p>
-																						</td>
-																					</tr>
-																				</tbody>
-																			</table>
-																		</td>
-																	</tr>
-																</tbody>
-															</table>
-														</td>
-													</tr>`
-                            )
-                            .join("")}
-												</tbody>
-											</table>
-											<table style="width:100%;border-spacing:0">
-												<tbody>
-													<tr>
-														<td style="font-family:helvetica;width:30%"></td>
-														<td style="font-family:helvetica">
-															<table style="width:100%;border-spacing:0;margin-top:20px">
-																<tbody>
-																<tr>
-																${!order.promo_code
-                                  ? `<td style="font-family:helvetica;padding:5px 0">
-																			<p style="color:white;line-height:1.2em;font-size:16px;margin:0"><span
-																					style="font-size:16px">Subtotal</span></p>
-																		</td>
-																		<td style="font-family:helvetica;padding:5px 0;text-align:right" align="righ=t">
-																			<strong style="font-size:16px;color:white">$${order.orderItems
-                                        .map((item: any) => {
-                                          return {
-                                            price: item.sale_price
-                                              ? item.sale_price
-                                              : item.price,
-                                            qty: item.qty,
-                                          };
-                                        })
-                                        .reduce(
+																		</tr>`
+                                              : ""}
+																		${order.promo_code
+                                      ? `<tr>
+																			<td style="font-family:helvetica;padding:5px 0;width:100%">
+																				<p style="color:white;line-height:1.2em;font-size:16px;margin:0"><span
+																						style="font-size:16px">Discount</span><span
+																						style="font-size:16px;margin-left:5px"><img
+																							src="https://images2.imgbox.com/a1/63/ptqm33q2_o.png"
+																							style="height:16px;margin-right:10px" alt="tag_logo" /><span
+																							style="font-size:14px;line-height:1.1;margin-left:-4px">${order &&
+                                              order.promo_code
+                                                ? order.promo_code.toUpperCase()
+                                                : ""}</span></span>
+																				</p>
+																			</td>
+																			<td style="font-family:helvetica;padding:5px 0;text-align:right" align="righ=t">
+																				<strong style="font-size:16px;color:white">-$${(order.orderItems.reduce(
                                           (a: any, c: any) =>
                                             a + c.price * c.qty,
                                           0
-                                        )
-                                        .toFixed(2)}</strong>
-																		</td>
-																	</tr>`
-                                  : ""}
-																	${order.promo_code
-                                    ? `<td style="font-family:helvetica;padding:5px 0">
-																		<del style="color:red">
-																				<p style="color:white;line-height:1.2em;font-size:16px;margin:0"><span
-																						style="font-size:16px">Subtotal</span></p></del>
-																			</td>
-																			<td style="font-family:helvetica;padding:5px 0;text-align:right" align="righ=t">
-																			<del style="color:red">
-																				<strong style="font-size:16px;color:white">$${order.orderItems
-                                          .map((item: any) => {
-                                            return {
-                                              price: item.sale_price
-                                                ? item.sale_price
-                                                : item.price,
-                                              qty: item.qty,
-                                            };
-                                          })
-                                          .reduce(
-                                            (a: any, c: any) =>
-                                              a + c.price * c.qty,
-                                            0
-                                          )
-                                          .toFixed(2)}</strong></del>
+                                        ) - order.itemsPrice).toFixed(
+                                          2
+                                        )}</strong>
 																			</td>
 																		</tr>`
-                                    : ""}
-																	${order.promo_code
-                                    ? `<tr>
-																		<td style="font-family:helvetica;padding:5px 0;width:100%">
-																			<p style="color:white;line-height:1.2em;font-size:16px;margin:0"><span
-																					style="font-size:16px">Discount</span><span
-																					style="font-size:16px;margin-left:5px"><img
-																						src="https://images2.imgbox.com/a1/63/ptqm33q2_o.png"
-																						style="height:16px;margin-right:10px" alt="tag_logo" /><span
-																						style="font-size:14px;line-height:1.1;margin-left:-4px">${order &&
-                                            order.promo_code
-                                              ? order.promo_code.toUpperCase()
-                                              : ""}</span></span>
-																			</p>
-																		</td>
-																		<td style="font-family:helvetica;padding:5px 0;text-align:right" align="righ=t">
-																			<strong style="font-size:16px;color:white">-$${(order.orderItems.reduce(
-                                        (a: any, c: any) => a + c.price * c.qty,
-                                        0
-                                      ) - order.itemsPrice).toFixed(2)}</strong>
-																		</td>
-																	</tr>`
-                                    : ""}
+                                      : ""}
 																		${order.promo_code
                                       ? `<tr>
-																		<td style="font-family:helvetica;padding:5px 0">
-																			<p style="color:white;line-height:1.2em;font-size:16px;margin:0"><span
-																					style="font-size:16px">New Subtotal</span></p>
-																		</td>
-																		<td style="font-family:helvetica;padding:5px 0;text-align:right" align="righ=t">
-																			<strong style="font-size:16px;color:white">$${order.itemsPrice.toFixed(
-                                        2
-                                      )}</strong>
-																		</td>
-																	</tr>`
+																			<td style="font-family:helvetica;padding:5px 0">
+																				<p style="color:white;line-height:1.2em;font-size:16px;margin:0"><span
+																						style="font-size:16px">New Subtotal</span></p>
+																			</td>
+																			<td style="font-family:helvetica;padding:5px 0;text-align:right" align="righ=t">
+																				<strong style="font-size:16px;color:white">$${order.itemsPrice.toFixed(
+                                          2
+                                        )}</strong>
+																			</td>
+																		</tr>`
                                       : ""}
-																	<tr>
-																		<td style="font-family:helvetica;padding:5px 0">
-																			<p style="color:white;line-height:1.2em;font-size:16px;margin:0"><span
-																					style="font-size:16px">Taxes</span></p>
-																		</td>
-																		<td style="font-family:helvetica;padding:5px 0;text-align:right" align="righ=t">
-																			<strong style="font-size:16px;color:white">$${order.taxPrice
-                                        ? order.taxPrice.toFixed(2)
-                                        : ""}</strong>
-																		</td>
-																	</tr>
-																	<tr>
-																		<td style="font-family:helvetica;padding:5px 0">
-																			<p style="color:white;line-height:1.2em;font-size:16px;margin:0"><span
-																					style="font-size:16px">Shipping</span></p>
-																		</td>
-																		<td style="font-family:helvetica;padding:5px 0;text-align:right" align="righ=t">
-																			<strong style="font-size:16px;color:white">$${order.shippingPrice
-                                        ? order.shippingPrice.toFixed(2)
-                                        : ""}</strong>
-																		</td>
-																	</tr>
-																	${order.tip > 0
-                                    ? `
-																	<tr>
-																		<td style="font-family:helvetica;padding:5px 0">
-																			<p style="color:white;line-height:1.2em;font-size:16px;margin:0"><span
-																					style="font-size:16px">Shipping</span></p>
-																		</td>
-																		<td style="font-family:helvetica;padding:5px 0;text-align:right" align="right">
-																			<strong style="font-size:16px;color:white">$${order.tip
-                                        ? order.tip.toFixed(2)
-                                        : ""}</strong>
-																		</td>
-																	</tr>`
-                                    : ""}
-																</tbody>
-															</table>
-															${!order.isRefunded
-                                ? `<table
-																style="width:100%;border-spacing:0;margin-top:20px;border-top-width:2px;border-top-color:white;border-top-style:solid">
-																<tbody>
-																	<tr>
-																		<td style="font-family:helvetica;padding:20px 0 0">
-																			<p style="color:white;line-height:1.2em;font-size:16px;margin:0"><span
-																					style="font-size:16px">Total</span></p>
-																		</td>
-																		<td style="font-family:helvetica;padding:20px 0 0" align="right"><strong
-																				style="font-size:24px;color:white">$ ${order.totalPrice
-                                          ? order.totalPrice.toFixed(2)
-                                          : ""}</strong></td>
-																	</tr>
-																</tbody>
-															</table>`
-                                : ""}
-															${order.isRefunded
-                                ? `<table
-																style="width:100%;border-spacing:0;margin-top:20px;border-top-width:2px;border-top-color:white;border-top-style:solid">
-																<tbody>
-																	<tr>
-																		<td style="font-family:helvetica;padding:20px 0 0">
-																			<p style="color:white;line-height:1.2em;font-size:16px;margin:0"><span
-																					style="font-size:16px">Total</span></p>
-																		</td>
-																		<td style="font-family:helvetica;padding:20px 0 0" align="right"><strong
-																				style="font-size:16px;color:white">$${order.totalPrice
-                                          ? order.totalPrice.toFixed(2)
-                                          : ""}</strong></td>
-																	</tr>
-																</tbody>
-															</table>`
-                                : ""}
-															${order.isRefunded
-                                ? `<table style="width:100%;border-spacing:0;margin-top:20px;">
-																<tbody>
-																	<tr>
-																		<td style="font-family:helvetica;padding:5px 0;">
-																			<p style="color:white;line-height:1.2em;font-size:16px;margin:0"><span
-																					style="font-size:16px">Refund Amount</span></p>
-																		</td>
-																		<td style="font-family:helvetica;padding:5px 0;" align="right"><strong
-																				style="font-size:16px;color:white">-$${(order.payment.refund.reduce(
-                                          (a: any, c: any) => a + c.amount,
-                                          0
-                                        ) / 100).toFixed(2)}</strong></td>
-																	</tr>
-																	<tr>
-																		<td style="font-family:helvetica;padding:5px 0;">
-																			<p style="color:white;line-height:1.2em;font-size:16px;margin:0"><span
-																					style="font-size:16px">New Order Total</span></p>
-																		</td>
-																		<td style="font-family:helvetica;padding:5px 0;" align="right"><strong
-																				style="font-size:24px;color:white">$${Math.abs(
-                                          order.totalPrice -
-                                            order.payment.refund.reduce(
-                                              (a: any, c: any) => a + c.amount,
-                                              0
-                                            ) /
-                                              100
-                                        ).toFixed(2)}</strong></td>
-																	</tr>
-																</tbody>
-															</table>`
-                                : ""}
-														</td>
-													</tr>
-												</tbody>
-											</table>
-										</td>
-									</tr>
-								</table>
+																		<tr>
+																			<td style="font-family:helvetica;padding:5px 0">
+																				<p style="color:white;line-height:1.2em;font-size:16px;margin:0"><span
+																						style="font-size:16px">Taxes</span></p>
+																			</td>
+																			<td style="font-family:helvetica;padding:5px 0;text-align:right" align="righ=t">
+																				<strong style="font-size:16px;color:white">$${order.taxPrice
+                                          ? order.taxPrice.toFixed(2)
+                                          : ""}</strong>
+																			</td>
+																		</tr>
+																		<tr>
+																			<td style="font-family:helvetica;padding:5px 0">
+																				<p style="color:white;line-height:1.2em;font-size:16px;margin:0"><span
+																						style="font-size:16px">Shipping</span></p>
+																			</td>
+																			<td style="font-family:helvetica;padding:5px 0;text-align:right" align="righ=t">
+																				<strong style="font-size:16px;color:white">$${order.shippingPrice
+                                          ? order.shippingPrice.toFixed(2)
+                                          : ""}</strong>
+																			</td>
+																		</tr>
+																		${order.tip > 0
+                                      ? `
+																		<tr>
+																			<td style="font-family:helvetica;padding:5px 0">
+																				<p style="color:white;line-height:1.2em;font-size:16px;margin:0"><span
+																						style="font-size:16px">Shipping</span></p>
+																			</td>
+																			<td style="font-family:helvetica;padding:5px 0;text-align:right" align="right">
+																				<strong style="font-size:16px;color:white">$${order.tip
+                                          ? order.tip.toFixed(2)
+                                          : ""}</strong>
+																			</td>
+																		</tr>`
+                                      : ""}
+																	</tbody>
+																</table>
+																${!order.isRefunded
+                                  ? `<table
+																	style="width:100%;border-spacing:0;margin-top:20px;border-top-width:2px;border-top-color:white;border-top-style:solid">
+																	<tbody>
+																		<tr>
+																			<td style="font-family:helvetica;padding:20px 0 0">
+																				<p style="color:white;line-height:1.2em;font-size:16px;margin:0"><span
+																						style="font-size:16px">Total</span></p>
+																			</td>
+																			<td style="font-family:helvetica;padding:20px 0 0" align="right"><strong
+																					style="font-size:24px;color:white">$ ${order.totalPrice
+                                            ? order.totalPrice.toFixed(2)
+                                            : ""}</strong></td>
+																		</tr>
+																	</tbody>
+																</table>`
+                                  : ""}
+																${order.isRefunded
+                                  ? `<table
+																	style="width:100%;border-spacing:0;margin-top:20px;border-top-width:2px;border-top-color:white;border-top-style:solid">
+																	<tbody>
+																		<tr>
+																			<td style="font-family:helvetica;padding:20px 0 0">
+																				<p style="color:white;line-height:1.2em;font-size:16px;margin:0"><span
+																						style="font-size:16px">Total</span></p>
+																			</td>
+																			<td style="font-family:helvetica;padding:20px 0 0" align="right"><strong
+																					style="font-size:16px;color:white">$${order.totalPrice
+                                            ? order.totalPrice.toFixed(2)
+                                            : ""}</strong></td>
+																		</tr>
+																	</tbody>
+																</table>`
+                                  : ""}
+																${order.isRefunded
+                                  ? `<table style="width:100%;border-spacing:0;margin-top:20px;">
+																	<tbody>
+																		<tr>
+																			<td style="font-family:helvetica;padding:5px 0;">
+																				<p style="color:white;line-height:1.2em;font-size:16px;margin:0"><span
+																						style="font-size:16px">Refund Amount</span></p>
+																			</td>
+																			<td style="font-family:helvetica;padding:5px 0;" align="right"><strong
+																					style="font-size:16px;color:white">-$${(order.payment.refund.reduce(
+                                            (a: any, c: any) => a + c.amount,
+                                            0
+                                          ) / 100).toFixed(2)}</strong></td>
+																		</tr>
+																		<tr>
+																			<td style="font-family:helvetica;padding:5px 0;">
+																				<p style="color:white;line-height:1.2em;font-size:16px;margin:0"><span
+																						style="font-size:16px">New Order Total</span></p>
+																			</td>
+																			<td style="font-family:helvetica;padding:5px 0;" align="right"><strong
+																					style="font-size:24px;color:white">$${Math.abs(
+                                            order.totalPrice -
+                                              order.payment.refund.reduce(
+                                                (a: any, c: any) =>
+                                                  a + c.amount,
+                                                0
+                                              ) /
+                                                100
+                                          ).toFixed(2)}</strong></td>
+																		</tr>
+																	</tbody>
+																</table>`
+                                  : ""}
+															</td>
+														</tr>
+										</tbody>
+									</table>
 							</td>
 						</tr>
-						<tr>
-							<td>
-								${order.order_note
-                  ? `<table
-									style='max-width: 560px;text-align: left;border-spacing: 0;margin: 0 auto;padding-bottom: 10px;width: 100%; '>
-									<tbody>
-										<tr>
-											<td style='font-family: helvetica;'>
-												<p style='color: white;line-height: 30px;font-size: 16px;margin: 0;'>
-													<strong>Order Note:</strong> ${order.order_note}
-												</p>
-											</td>
-										</tr>
-									</tbody>
-								</table>`
-                  : ""}
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</center>
-		</td>
-	</tr>
-</table>
+					</table>
+
+			${order.order_note
+        ? `<table
+				style='max-width: 560px;text-align: left;border-spacing: 0;margin: 0 auto;padding-bottom: 10px;width: 100%; '>
+				<tbody>
+					<tr>
+						<td style='font-family: helvetica;'>
+							<p style='color: white;line-height: 30px;font-size: 16px;margin: 0;'>
+								<strong>Order Note:</strong> ${order.order_note}
+							</p>
+						</td>
+					</tr>
+				</tbody>
+			</table>`
+        : ""}
+
+
 
 <table style="width:100%;border-spacing:0; margin-bottom: 10px; ">
 	<tbody>
@@ -511,5 +525,13 @@ export default (props: any) => {
 			</td>
 		</tr>
 	</tbody>
+</table>
+</table>
+</center>
+</td>
+</tr>
+</table>
+</td>
+</tr>
 </table>`;
 };

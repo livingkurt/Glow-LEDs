@@ -479,7 +479,7 @@ export function Shipping({
                       <div>
                         <input
                           type="checkbox"
-                          name="international" // defaultChecked={international ? 'checked' : 'unchecked'}
+                          name="international"
                           defaultValue={international}
                           defaultChecked={international}
                           value={international}
@@ -520,7 +520,7 @@ export function Shipping({
                 <li>
                   <button
                     type="submit"
-                    className="btn primary bob" // onClick={() => next_step('payment')}
+                    className="btn primary bob" 
                   >
                     Continue
                   </button>

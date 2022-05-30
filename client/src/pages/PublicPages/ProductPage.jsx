@@ -33,6 +33,7 @@ const ProductPage = props => {
   const [ qty, setQty ] = useState(1);
   const [ images, set_images ] = useState([]);
   const [ price, set_price ] = useState();
+
   const [ previous_price, set_previous_price ] = useState(0);
   const [ sale_price, set_sale_price ] = useState(0);
   const [ size, set_size ] = useState();
@@ -76,6 +77,10 @@ const ProductPage = props => {
   const [ secondary_product_object, set_secondary_product_object ] = useState(
     {}
   );
+
+  const [ show_add_on, set_show_add_on ] = useState(false);
+  const [ add_on_price, set_add_on_price ] = useState(0);
+  const [ has_add_on, set_has_add_on ] = useState(false);
   // const [ color_group_name, set_color_group_name ] = useState('');
   // const [ secondary_color_group_name, set_secondary_color_group_name ] = useState('');
   // const [ option_group_name, set_option_group_name ] = useState('');
@@ -159,7 +164,7 @@ const ProductPage = props => {
       console.log({ option_products: item.option_products });
       set_secondary_products(item.secondary_products);
       set_included_items(item.included_items);
-
+      set_has_add_on(item.has_add_on);
       set_dimensions({
         weight_pounds: item.weight_pounds,
         weight_ounces: item.weight_ounces,
@@ -178,6 +183,9 @@ const ProductPage = props => {
       if (clean) {
         if (product) {
           determine_options(product);
+        } else {
+          console.log("UnSet");
+          unset_state();
         }
       }
       return () => (clean = false);
@@ -211,6 +219,16 @@ const ProductPage = props => {
         // console.log({ secondary_color });
         if (secondary_color) {
           update_secondary_color_product_state(secondary_color);
+          if (product.has_add_on) {
+            set_show_add_on(false);
+          }
+          //   if (product.name !== "CLOZD Omniskinz Sleds") {
+          //     set_add_on_price(secondary_color.price);
+          //     set_price(secondary_color.price + product.price);
+          //   }
+          // } else {
+          //   set_show_add_on(true);
+          // }
         }
       }
       if (product.option_products) {
@@ -295,10 +313,18 @@ const ProductPage = props => {
   };
 
   const update_secondary_color_product_state = secondary_color => {
+    // if (product.name === "CLOZD Omniskinz Sleds") {
+    //   set_color_product(secondary_color._id);
+    //   set_color(secondary_color.color);
+    //   set_color_code(secondary_color.color_code);
+    //   set_color_product_object(secondary_color);
+    // } else {
     set_secondary_color_product(secondary_color._id);
     set_secondary_color(secondary_color.color);
     set_secondary_color_code(secondary_color.color_code);
     set_secondary_color_product_object(secondary_color);
+    // }
+
     // if (secondary_color.quantity) {
     // 	set_quantity(secondary_color.quantity);
     // }
@@ -361,7 +387,6 @@ const ProductPage = props => {
     if (secondary.count_in_stock) {
       set_count_in_stock(secondary.count_in_stock);
     }
-    console.log({ subcategory: secondary.subcategory });
     if (secondary.subcategory !== "batteries") {
       if (secondary.images.length > 0) {
         set_images(secondary.images);
@@ -369,6 +394,48 @@ const ProductPage = props => {
       }
     }
   };
+
+  const unset_state = () => {
+    set_name("");
+    set_description("");
+    set_facts("");
+    set_included_items("");
+    setQty(1);
+    set_images([]);
+    set_price();
+    set_previous_price(0);
+    set_sale_price(0);
+    set_size();
+    set_quantity();
+    set_count_in_stock();
+    set_image("");
+    set_secondary_image("");
+    set_secondary_images([]);
+    set_dimensions({});
+    set_color("");
+    set_secondary_color("");
+    set_color_code("");
+    set_secondary_color_code("");
+    set_color_product(null);
+    set_color_products([]);
+    set_secondary_color_product(null);
+    set_secondary_color_products([]);
+    set_option_product(null);
+    set_option_products([]);
+    set_secondary_product(null);
+    set_secondary_products([]);
+    set_preorder(false);
+    set_secondary_product_name("");
+    set_option_product_name("");
+    set_color_product_object({});
+    set_secondary_color_product_object({});
+    set_option_product_object({});
+    set_secondary_product_object({});
+    set_show_add_on(true);
+    set_add_on_price(0);
+    set_has_add_on(false);
+  };
+
   const update_url = (
     color = "",
     secondary_color = "",
@@ -376,7 +443,7 @@ const ProductPage = props => {
     secondary_product = ""
   ) => {
     history.push({
-      search: `${color ? "?color=" + color : ""}${secondary_color
+      search: `${color ? "?color=" + color : ""}${show_add_on && secondary_color
         ? "?secondary_color=" + secondary_color
         : ""}${option ? "?option=" + option : ""}${secondary_product
         ? "?secondary=" + secondary_product
@@ -400,37 +467,53 @@ const ProductPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      const recently_viewed = sessionStorage.getItem("recently_viewed");
-      const products = JSON.parse(recently_viewed);
-      // console.log({ product });
-      if (recently_viewed) {
-        if (product && product.hasOwnProperty("name")) {
-          sessionStorage.setItem(
-            "recently_viewed",
-            JSON.stringify([ product, ...products ])
-          );
-        }
-      } else {
-        if (product && product.hasOwnProperty("name")) {
-          sessionStorage.setItem(
-            "recently_viewed",
-            JSON.stringify([ product ])
-          );
+      if (process.env.NODE_ENV === "production") {
+        const recently_viewed = sessionStorage.getItem("recently_viewed");
+        const products = JSON.parse(recently_viewed);
+        // console.log({ product });
+        if (recently_viewed) {
+          if (product && product.hasOwnProperty("name")) {
+            sessionStorage.setItem(
+              "recently_viewed",
+              JSON.stringify([ product, ...products ])
+            );
+          }
+        } else {
+          if (product && product.hasOwnProperty("name")) {
+            sessionStorage.setItem(
+              "recently_viewed",
+              JSON.stringify([ product ])
+            );
+          }
         }
       }
     }
     return () => (clean = false);
   }, []);
 
+  const determine_addon_color = () => {
+    if (has_add_on && show_add_on && secondary_color) {
+      return true;
+    } else if (!has_add_on && secondary_color) {
+      return true;
+    }
+    return false;
+  };
+
   const handleAddToCart = () => {
     const cart_item = {
       product: product._id,
       color_product,
       color_code,
-      secondary_color_code,
-      secondary_color_product,
+      secondary_color_code: determine_addon_color() && secondary_color_code,
+      secondary_color_product:
+        determine_addon_color() && secondary_color_product,
+      secondary_color_group_name:
+        determine_addon_color() && product.secondary_color_group_name,
+      secondary_color: determine_addon_color() && secondary_color,
+      secondary_color_product_name:
+        determine_addon_color() && product.secondary_color_product_name,
       color_group_name: product.color_group_name,
-      secondary_color_group_name: product.secondary_color_group_name,
       option_group_name: product.option_group_name,
       secondary_group_name: product.secondary_group_name,
       option_product,
@@ -440,7 +523,6 @@ const ProductPage = props => {
       name,
       size,
       color: size !== "1 Skin" && color,
-      secondary_color: size !== "1 Sled" && secondary_color,
       display_image: image ? image : images[0],
       secondary_image: secondary_image ? secondary_image : "",
       price,
@@ -461,6 +543,9 @@ const ProductPage = props => {
       qty: parseInt(qty),
       finite_stock: product.finite_stock,
       count_in_stock: product.count_in_stock,
+      add_on_price,
+      show_add_on,
+      has_add_on: product.has_add_on,
     };
     if (preorder) {
       const confirm = window.confirm(
@@ -537,13 +622,16 @@ const ProductPage = props => {
   const update_secondary_color = e => {
     const option = JSON.parse(e.target.value);
     // console.log({ option });
-    if (
-      option.price !== 0 ||
-      option.price === null ||
-      option.price === undefined
-    ) {
-      set_price(option.price);
-    }
+
+    // if (
+    //   option.price !== 0 ||
+    //   option.price === null ||
+    //   option.price === undefined
+    // ) {
+    //   if (product.name === "Capez") {
+    //     set_price(option.price);
+    //   }
+    // }
     if (
       option.sale_price !== 0 ||
       option.sale_price === null ||
@@ -554,8 +642,13 @@ const ProductPage = props => {
     set_secondary_color(option.color);
     set_secondary_color_code(option.color_code);
     if (option.images && option.images[0]) {
-      set_secondary_image(option.images[0]);
-      set_secondary_images(option.images);
+      if (product.name === "CLOZD Omniskinz Sleds") {
+        set_image(option.images[0]);
+        set_images(option.images);
+      } else {
+        set_secondary_image(option.images[0]);
+        set_secondary_images(option.images);
+      }
     }
     set_secondary_color_product(option._id);
     set_secondary_color_product_object(option);
@@ -564,6 +657,12 @@ const ProductPage = props => {
     }
     if (option.count_in_stock) {
       set_count_in_stock(option.count_in_stock);
+    }
+    if (show_add_on) {
+      if (product.name === "Capez") {
+        set_add_on_price(option.price);
+        set_price(option.price + product.price);
+      }
     }
     update_url(
       color,
@@ -587,7 +686,17 @@ const ProductPage = props => {
     // 	set_size(option.name);
     // }
     if (option.price > 0) {
-      set_price(option.price);
+      console.log({ has_add_on, price: option.price + add_on_price });
+      if (has_add_on) {
+        set_price(option.price + add_on_price);
+        // if (product.name === "CLOZD Omniskinz Sleds") {
+        //   set_price(option.price);
+        // } else {
+        //   set_price(option.price + add_on_price);
+        // }
+      } else {
+        set_price(option.price);
+      }
     }
     if (option.sale_price > 0) {
       set_sale_price(option.sale_price);
@@ -635,7 +744,12 @@ const ProductPage = props => {
         set_images(secondary.images);
         set_image(secondary.images[0]);
       }
-      set_option_products(secondary.option_products);
+      if (
+        product.name !== "Diffuser Caps + Adapters Starter Kit V4" &&
+        product.name !== "CLOZD Omniskinz Sleds"
+      ) {
+        set_option_products(secondary.option_products);
+      }
     }
     if (secondary.quantity) {
       set_quantity(secondary.quantity);
@@ -645,8 +759,23 @@ const ProductPage = props => {
     }
 
     console.log({ secondary });
-    // set_color_products(secondary.color_products);
-    // set_secondary_color_products(secondary.secondary_color_products);
+    console.log({ name: product.name });
+    console.log({ color_products: secondary.color_products });
+    if (
+      product.name === "CLOZD Nanoskinz V2" ||
+      product.name === "OPYN Nanoskinz V2" ||
+      product.name === "Capez" ||
+      product.name === "CLOZD Omniskinz" ||
+      product.name === "CLOZD Omniskinz Sleds"
+    ) {
+      if (product.name !== "CLOZD Omniskinz Sleds") {
+        set_color_products(secondary.color_products);
+      }
+      set_secondary_color_products(secondary.secondary_color_products);
+      // set_secondary_color_code(
+      //   secondary.secondary_color_products[0].color_code
+      // );
+    }
 
     // set_secondary_products(secondary.secondary_products);
     if (product.category === "glowstringz") {
@@ -819,7 +948,7 @@ const ProductPage = props => {
                 {(secondary_image || width > 819) && (
                   <div>
                     <label
-                      className="product_title_top fs-25px ff-h mb-2rem ta-c lh-50px"
+                      className="product_title_top fs-25px title_font mb-2rem ta-c lh-50px"
                       style={{ display: width < 819 ? "block" : "none" }}
                     >
                       {name}
@@ -852,14 +981,7 @@ const ProductPage = props => {
               >
                 <ProductSelection
                   product={product}
-                  secondary_product={secondary_product}
                   name={name}
-                  secondary_product_name={secondary_product_name}
-                  size={size}
-                  color={color}
-                  color_code={color_code}
-                  secondary_color={secondary_color}
-                  secondary_color_code={secondary_color_code}
                   price={price}
                   sale_price={sale_price}
                   previous_price={previous_price}
@@ -901,6 +1023,19 @@ const ProductPage = props => {
                   set_out_of_stock={set_out_of_stock}
                   preorder={preorder}
                   set_preorder={set_preorder}
+                  show_add_on={show_add_on}
+                  set_show_add_on={set_show_add_on}
+                  set_price={set_price}
+                  set_add_on_price={set_add_on_price}
+                  set_secondary_color_product_object={
+                    set_secondary_color_product_object
+                  }
+                  set_secondary_color_product={set_secondary_color_product}
+                  set_secondary_color_products={set_secondary_color_products}
+                  set_secondary_color={set_secondary_color}
+                  set_secondary_color_code={set_secondary_color_code}
+                  set_secondary_image={set_secondary_image}
+                  has_add_on={has_add_on}
                 />
               </div>
 
@@ -939,6 +1074,19 @@ const ProductPage = props => {
                     handleAddToCart={handleAddToCart}
                     out_of_stock={out_of_stock}
                     set_out_of_stock={set_out_of_stock}
+                    show_add_on={show_add_on}
+                    set_show_add_on={set_show_add_on}
+                    set_price={set_price}
+                    set_add_on_price={set_add_on_price}
+                    set_secondary_color_product_object={
+                      set_secondary_color_product_object
+                    }
+                    set_secondary_color_product={set_secondary_color_product}
+                    set_secondary_color_products={set_secondary_color_products}
+                    set_secondary_color={set_secondary_color}
+                    set_secondary_color_code={set_secondary_color_code}
+                    set_secondary_image={set_secondary_image}
+                    has_add_on={has_add_on}
                   />
                 </div>
                 <div

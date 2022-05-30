@@ -124,7 +124,8 @@ export default {
       const product: any = await Product.findOne({ _id: id });
       console.log({ remove_products_db: product });
       if (product) {
-        return await Product.updateOne({ _id: id }, { deleted: true });
+        // return await Product.updateOne({ _id: id }, { deleted: true });
+        return await Product.deleteOne({ _id: id });
       }
     } catch (error) {
       console.log({ remove_products_db_error: error });

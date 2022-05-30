@@ -23,12 +23,14 @@ export default {
     }
   },
   get_shipping_rates_shipping_s: async (body: any) => {
+    let error_message = "";
     try {
       const EasyPost = new easy_post_api(process.env.EASY_POST);
       const order = body.order;
       console.log({ order });
 
       const toAddress = new EasyPost.Address({
+        verify_strict: [ "delivery" ],
         name: order.shipping.first_name + " " + order.shipping.last_name,
         street1: order.shipping.address_1,
         street2: order.shipping.address_2,
@@ -37,6 +39,7 @@ export default {
         zip: order.shipping.postalCode,
         country: order.shipping.country,
       });
+      console.log({ toAddress });
       const fromAddress = new EasyPost.Address({
         street1: "230 Hackberry St",
         city: "Baytown",
@@ -122,7 +125,14 @@ export default {
         parcel: parcel,
         customsInfo: order.shipping.international ? customsInfo : {},
       });
-      const saved_shipment = await shipment.save();
+
+      const saved_shipment = await shipment.save().catch((error: any) => {
+        console.log({ saved_shipment: error.error.error.errors });
+        error_message = error.error.error.errors
+          .map((error: any) => error.message)
+          .join(" - ");
+        // throw new Error(error[0].message);
+      });
       if (saved_shipment.rates.length > 0) {
         return { shipment: saved_shipment, parcel: parcel_size };
       } else {
@@ -134,7 +144,7 @@ export default {
       }
     } catch (error) {
       console.log({ get_shipping_rates_shipping_s_error: error });
-      throw new Error(error.message);
+      throw new Error(error_message || error.message);
     }
   },
   get_different_shipping_rates_shipping_s: async (body: any) => {
@@ -143,6 +153,7 @@ export default {
     try {
       const EasyPost = new easy_post_api(process.env.EASY_POST);
       const created_shipment = await EasyPost.Shipment.retrieve(shipment_id);
+
       console.log({ created_shipment });
       return created_shipment;
     } catch (error) {
@@ -154,9 +165,11 @@ export default {
     try {
       const EasyPost = new easy_post_api(process.env.EASY_POST);
       const order = await order_db.findById_orders_db(body.order._id);
+
       if (order) {
         // console.log({ tracker: body.label.tracker.id });
         const tracker = await EasyPost.Tracker.retrieve(body.label.tracker.id);
+
         // const tracker = new EasyPost.Tracker.retrieve(body.label.tracker.id);
         console.log({ tracker });
         console.log({ tracker: tracker.tracking_details });
@@ -191,6 +204,7 @@ export default {
         zip: order.shipping.postalCode,
         country: order.shipping.country,
       });
+
       const fromAddress = new EasyPost.Address({
         street1: "230 Hackberry St",
         city: "Baytown",
@@ -221,6 +235,7 @@ export default {
         height: parcel_size.height,
         weight,
       });
+
       let customsInfo = {};
       if (order.shipping.international) {
         const customs_items = order.orderItems.map((item: any) => {
@@ -252,10 +267,12 @@ export default {
         parcel: parcel,
         customsInfo: order.shipping.international ? customsInfo : {},
       });
+
       const saved_shipment = await shipment.save();
       const created_shipment = await EasyPost.Shipment.retrieve(
         saved_shipment.id
       );
+
       if (speed === "first") {
         return await created_shipment.buy(created_shipment.lowestRate(), 0);
       } else if (speed === "priority") {
@@ -280,6 +297,7 @@ export default {
       console.log({ shipping_rate, shipment_id });
       const EasyPost = new easy_post_api(process.env.EASY_POST);
       const created_shipment = await EasyPost.Shipment.retrieve(shipment_id);
+
       const label = await created_shipment.buy(shipping_rate, 0);
       return label;
     } catch (error) {
@@ -308,6 +326,7 @@ export default {
         phone: to_shipping.phone,
         email: to_shipping.email,
       });
+
       const fromAddress = new EasyPost.Address({
         name: from_shipping.company
           ? ""
@@ -344,6 +363,7 @@ export default {
         from_address: fromAddress,
         parcel: parcel,
       });
+
       const saved_shipment = await shipment.save();
       return { shipment: saved_shipment, parcel: package_dimensions };
     } catch (error) {
@@ -396,6 +416,7 @@ export default {
         height: parcel_size.height,
         weight,
       });
+
       let customsInfo = {};
       if (order.shipping.international) {
         const customs_items = order.orderItems.map((item: any) => {
@@ -427,14 +448,17 @@ export default {
         parcel: parcel,
         customsInfo: order.shipping.international ? customsInfo : {},
       });
+
       const saved_shipment = await shipment.save();
       const created_shipment = await EasyPost.Shipment.retrieve(
         saved_shipment.id
       );
+
       const label = await created_shipment.buy(
         created_shipment.lowestRate(),
         0
       );
+
       return label;
     } catch (error) {
       console.log({ remove_shipping_s_error: error });
@@ -448,6 +472,7 @@ export default {
       const order = await order_db.findById_orders_db(body.order._id);
       if (order) {
         const tracker = await EasyPost.Tracker.retrieve(body.label.tracker.id);
+
         // const tracker = new EasyPost.Tracker.retrieve(body.label.tracker.id);
         console.log({ tracker });
         console.log({ tracker: tracker.tracking_details });
@@ -477,7 +502,6 @@ export default {
 // import { determine_parcel } from '../util';
 
 // const easy_post_api = require('@easypost/api');
-
 // require('dotenv').config();
 
 // export default {
@@ -485,8 +509,7 @@ export default {
 // const orders = await Order.find({ deleted: false });
 // let all_shipping: any = [];
 // orders.forEach((order: any) => {
-// 	all_shipping = [ order.shipping, ...all_shipping ];
-// });
+// 	all_shipping = [ order.shipping, ...all_shipping ];// });
 // 		res.send(all_shipping);
 // 	},
 // 	create_label: async (req: any, res: any) => {
@@ -494,8 +517,7 @@ export default {
 // const EasyPost = new easy_post_api(process.env.EASY_POST);
 // const order = req.body.order;
 
-// const toAddress = new EasyPost.Address({
-// 	name: order.shipping.first_name + ' ' + order.shipping.last_name,
+// const toAddress = new EasyPost.Address({// 	name: order.shipping.first_name + ' ' + order.shipping.last_name,
 // 	street1: order.shipping.address_1,
 // 	street2: order.shipping.address_2,
 // 	city: order.shipping.city,
@@ -513,7 +535,6 @@ export default {
 // 	phone: '906-284-2208',
 // 	email: 'info.glowleds@gmail.com'
 // });
-
 // let weight = 0;
 // order.orderItems.forEach((item: any, index: number) => {
 // 	if (item.weight_pounds) {

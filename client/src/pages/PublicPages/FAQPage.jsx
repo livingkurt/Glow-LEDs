@@ -1,754 +1,548 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
-import { QuickButtons } from '../../components/SpecialtyComponents';
+import React, { useState, useEffect } from "react";
+import { Link, useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Helmet } from "react-helmet";
+import { Filter, QuickButtons } from "../../components/SpecialtyComponents";
+import { listChips } from "../../actions/chipActions";
+import { update_products_url } from "../../utils/helper_functions";
+import { listProducts } from "../../actions/productActions";
 
 const FAQPage = () => {
-	return (
-		<div className="main_container p-20px">
-			<Helmet>
-				<title>Frequently Asked Questions | Glow LEDs</title>
-				<meta property="og:title" content="Frequently Asked Questions" />
-				<meta name="twitter:title" content="Frequently Asked Questions" />
-				<link rel="canonical" href="https://www.glow-leds.com/pages/faq" />
-				<meta property="og:url" content="https://www.glow-leds.com/pages/faq" />
-				<meta
-					name="description"
-					content="Learn how the Glow LEDs process works, and how to get your products to you and working as fast as possible."
-				/>
-				<meta
-					property="og:description"
-					content="Learn how the Glow LEDs process works, and how to get your products to you and working as fast as possible."
-				/>
-				<meta
-					name="twitter:description"
-					content="Learn how the Glow LEDs process works, and how to get your products to you and working as fast as possible."
-				/>
-			</Helmet>
-			<h1 style={{ clear: 'both', textAlign: 'center' }} id="frequentlt_asked_questions" className="title_font">
-				Frequently Asked Questions
-			</h1>
-			<div className="faq-container">
-				<QuickButtons />
-				<div className="faq-main">
-					<div className="inner_content">
-						<div>
-							<div className="container" style={{ margin: '10px 0' }}>
-								<h2 className="ta-c title_font" id="glowskinz">
-									Glowskinz
-								</h2>
-								<h3 className="ta-c title_font" id="how_do_glowskinz_work">
-									How do Glowskinz Work?
-								</h3>
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const [ chip_name, set_chip_name ] = useState();
 
-								<div className="jc-c pos-rel">
-									<div className="iframe-container">
-										<iframe
-											width="996"
-											height="560"
-											title="glowskinz"
-											style={{ borderRadius: '20px' }}
-											src="https://www.youtube.com/embed/s49fiZPC5G0?mute=1&showinfo=0&rel=0&autoplay=1&loop=1"
-											frameborder="0"
-											allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-											allowfullscreen="1"
-										/>
-									</div>
-								</div>
-								<ul className="paragraph_font" style={{ padding: '18px', margin: 0 }}>
-									<li>
-										To use the Glowskinz with your desired microlight, first you need to remove your
-										chip from its casing.
-									</li>
-									<li>
-										Then squeeze the Glowskinz near the point causing the opening in the bottom to
-										expand.
-									</li>
-									<li>
-										Next, grip your microlight from the sides where the battery is and place it into
-										the opening at the bottom of the Glowskin.
-									</li>
-									<li>
-										Push the microlight all the way in and let your squeezing hand release pressure
-										let the bottom of the Glowskin close up.
-									</li>
-									<li>
-										For Nanoskinz and Coinskinz, To remove your microlight from your Glowskin,
-										squeeze the Glowskin in the same location as you did to put it in.
-									</li>
-									<li>This action so push the microlight out of the Glowskinz.</li>
-									<li>Then pinch the microlight with your other hand to remove it.</li>
-									<li>
-										For Coffinskinz, to remove your microlight from your Glowskin you will need to
-										spread the bottom of the Glowskinz and pinch the microlight, as the above method
-										of removing does not work for that style of chip.
-									</li>
-									<li>All Done! Now go throw some sicks shows!</li>
-								</ul>
-								{/* <Zoom> */}
-								<img
-									className="colored_caps_images"
-									src="https://images2.imgbox.com/d2/67/qjRp33SP_o.png"
-									alt="Glowskinz Chip Compatibility"
-									title="Glowskinz Chip Compatibility"
-								/>
-								{/* </Zoom> */}
-								{/* <h2>Nanoskinz V1</h2>
-						<label>
-							Maximum Microlight Dimmensions including the bulb for Nanoskinz: L24mm x W13mm x H10mm
-						</label>
-						<ul className="paragraph_font" style={{ padding: '18px', margin: 0 }}>
-							<li >spectra EVOs </li>
-							<li >chroma EVOs</li>
-						</ul>
-						<h2>Nanoskinz V2</h2>
-						<label>
-							Maximum Microlight Dimmensions including the bulb for Nanoskinz: L24mm x W13mm x H10mm
-						</label>
-						<ul className="paragraph_font" style={{ padding: '18px', margin: 0 }}>
-							<li >All LEDGloves Nano chips</li>
-							<li >QtLite 6 Mode</li>
-							<li >FL Atoms</li>
-							<li >FL Ions</li>
-						</ul>
-						<h2>Apolloskinz</h2>
-						<label>
-							Maximum Microlight Dimmensions including the bulb for Nanoskinz: L27mm x W15mm x H10mm
-						</label>
-						<ul className="paragraph_font" style={{ padding: '18px', margin: 0 }}>
-							<li >TL Apollos</li>
-						</ul>
-						<h2>Coinskinz</h2>
-						<label>
-							Maximum Microlight Dimmensions including the bulb for Coinskinz: L28mm x W19mm x H8mm
-						</label>
-						<ul className="paragraph_font" style={{ padding: '18px', margin: 0 }}>
-							<li >All elite chips except the Spectra and Chroma EVOs</li>
-							<li >All LEDGloves non-nano chips</li>
-							<li >FL Aethers</li>
-							<li >OSM 2s</li>
-						</ul>
-						<h2>Coffinskinz</h2>
-						<label>
-							Maximum Microlight Dimmensions including the bulb for Coffinskinz: L32mm x W16mm x H8mm
-						</label>
-						<ul className="paragraph_font" style={{ padding: '18px', margin: 0 }}>
-							<li >Micromax</li>
-							<li >Coffin Style Chips</li>
-						</ul> */}
-							</div>
-							<div className="container" style={{ margin: '10px 0' }}>
-								<h2
-									style={{ clear: 'both', textAlign: 'center' }}
-									className="title_font"
-									id="using_diffuser_caps_and_adapters"
-								>
-									Using Diffuser Caps and Adapters
-								</h2>
-								<div className="jc-c pos-rel">
-									<div className="iframe-container">
-										<iframe
-											width="996"
-											height="560"
-											title="Using Diffuser Caps and Adapters"
-											style={{ borderRadius: '20px' }}
-											src="https://www.youtube.com/embed/FJbKd0ClkFM?mute=1&showinfo=0&rel=0&autoplay=1&loop=1"
-											frameborder="0"
-											allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-											allowfullscreen="1"
-										/>
-									</div>
-								</div>
+  const chipList = useSelector(state => state.chipList);
+  const { chips: chips_list } = chipList;
 
-								<ul className="paragraph_font" style={{ padding: '18px' }}>
-									<li>
-										With your microlights outside of your gloves, place the Diffuser Adapters onto
-										your microlight bulbs{' '}
-										<span aria-label="emoji" role="img">
-											💡
-										</span>️.
-									</li>
-									<li>
-										Then place them inside of the glove 🧤, pushing it as far you can so the glove
-										is tight over the diffuser adapter
-									</li>
-									<li>Now it should look like you have flat top domes inside your gloves.</li>
-									<li>
-										Grip{' '}
-										<span aria-label="emoji" role="img" style={{ marginRight: '9px' }}>
-											🤏
-										</span>️the diffuser adapter from outside the glove, do not only hold by
-										microlight or the diffuser adapter might spin on the bulb and wont screw in
-										properly or you risk causing extra stress to the bulb.
-									</li>
-									<li>
-										Take your cap{' '}
-										<span aria-label="emoji" role="img" style={{ marginRight: '9px' }}>
-											👑
-										</span>️, and place it over top of your glove and adapter and screw{' '}
-										<span aria-label="emoji" role="img" style={{ marginRight: '9px' }}>
-											🔩
-										</span>️ in the cap like you would a jar{' '}
-										<span aria-label="emoji" role="img">
-											🍯
-										</span>️.
-									</li>
-									<li>
-										The threads should catch and only needs a single turn{' '}
-										<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
-											🌀
-										</span>️to become snug. Do not over tighten or push the cap on. Let the threads
-										do the work{' '}
-										<span aria-label="emoji" role="img" style={{ marginRight: '2px' }}>
-											💫
-										</span>️ .
-									</li>
-								</ul>
-							</div>
-							<div className="container" style={{ margin: '10px 0' }}>
-								<h2
-									style={{ clear: 'both', textAlign: 'center' }}
-									className="title_font"
-									id="orienting_your_diffuser_caps"
-								>
-									Orienting Your Diffuser Caps
-								</h2>
-								<div className="jc-c pos-rel">
-									<div className="iframe-container">
-										<iframe
-											width="996"
-											height="560"
-											title="	Orienting Your Diffuser Caps"
-											style={{ borderRadius: '20px' }}
-											src="https://www.youtube.com/embed/vG4qgtrotkw?mute=1&showinfo=0&rel=0&autoplay=1&loop=1"
-											frameborder="0"
-											allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-											allowfullscreen="1"
-										/>
-									</div>
-								</div>
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      dispatch(listChips({}));
+    }
+    return () => (clean = false);
+  }, []);
 
-								<ul className="paragraph_font" style={{ padding: '18px' }}>
-									<li>
-										To place your Diffuser Caps right-side-up, put the Diffuser Adapters onto your
-										microlight bulbs with the notch facing the back of the microlight. Then place
-										the light and Adapter inside the glove.{' '}
-										<span aria-label="emoji" role="img">
-											💡
-										</span>️.
-									</li>
-									<li>
-										Take your cap{' '}
-										<span aria-label="emoji" role="img" style={{ marginRight: '9px' }}>
-											👑
-										</span>️, and place it over top of your glove and adapter with the design
-										upside-down to your desired orientation and screw{' '}
-										<span aria-label="emoji" role="img" style={{ marginRight: '9px' }}>
-											🔩
-										</span>️ in the cap like you would a jar{' '}
-										<span aria-label="emoji" role="img">
-											🍯
-										</span>️.
-									</li>
-									<li>
-										The threads should catch and only needs a half turn{' '}
-										<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
-											🌀
-										</span>️to become snug.
-										<span aria-label="emoji" role="img" style={{ marginRight: '2px' }}>
-											💫
-										</span>️ .
-									</li>
-									<li>
-										To put Diffuser Caps in a different orientation, follow the same steps but
-										change the placement of the notch.
-									</li>
-								</ul>
-							</div>
-							<div className="container" style={{ margin: '10px 0' }}>
-								<h2
-									className="title_font"
-									style={{ textAlign: 'center', marginBottom: '30px' }}
-									id="ordering_custom_products"
-								>
-									Ordering Custom Products
-								</h2>
-								<h3
-									className="title_font"
-									style={{ textAlign: 'center', marginBottom: 0 }}
-									id="custom_diffuser_caps"
-								>
-									Custom Diffuser Caps
-								</h3>
-								<ul className="paragraph_font" style={{ padding: '0 18px' }}>
-									<li>
-										A single 100% refundable deposit of $9.99{' '}
-										<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
-											💸
-										</span>️ is required to hold your place in line and to be seen for a
-										consultation{' '}
-										<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
-											👨‍⚕️
-										</span>️. The deposit will be deducted from the total price.
-									</li>
-									<li>
-										The total price{' '}
-										<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
-											💸
-										</span>️ for a single design starts at $40. The price may vary based on the
-										intricacy of the design and materials used{' '}
-										<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
-											🧐
-										</span>️. If multiple designs are desired, you will have to pay a similar price
-										per design{' '}
-										<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
-											✨
-										</span>️.
-									</li>
-									<li>
-										This includes 10 custom diffuser caps{' '}
-										<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
-											🧢
-										</span>️ and 10 diffuser adapters.
-									</li>
-									<li>
-										As soon as you pay your deposit{' '}
-										<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
-											💸
-										</span>️, please use the contact button{' '}
-										<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
-											📞
-										</span>️ or the facebook chat and send us your ideas and inspirational pictures{' '}
-										<span aria-label="emoji" role="img" style={{ marginRight: '11px' }}>
-											🌈
-										</span>️. Also include your preferred method of contact (an e-mail address{' '}
-										<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
-											📧{' '}
-										</span>️, phone number{' '}
-										<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
-											📞
-										</span>️ or social media username <i className="fab fa-facebook" />{' '}
-										<i className="fab fa-instagram" />.
-									</li>
-									<li>
-										A design will be drafted by us{' '}
-										<span aria-label="emoji" role="img">
-											📝
-										</span>️., price will be determined, prototypes will be made{' '}
-										<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
-											🏗️
-										</span>️ and we will show you our results{' '}
-										<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
-											🔥
-										</span>️.
-									</li>
-									<li>
-										If we determine we are unable to produce what you are desiring, or you are
-										unsatisfied with the results, we will refund your $10 deposit{' '}
-										<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
-											💸
-										</span>️. If you wish to proceed, the final payment will be required and we will
-										ship them out to you{' '}
-										<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
-											🚚
-										</span>️.
-									</li>
+  const filterHandler = e => {
+    const chip_selected = JSON.parse(e.target.value);
+    update_products_url(
+      history,
+      "",
+      "",
+      chip_selected.name,
+      "",
+      "0",
+      "/collections/all/products"
+    );
+    dispatch(
+      listProducts({
+        chip: chip_selected._id,
+        hidden: false,
+      })
+    );
+    set_chip_name({});
+  };
 
-									<li>
-										Processing{' '}
-										<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
-											📦
-										</span>️ and shipping times{' '}
-										<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
-											🚚
-										</span>️ depend on how many orders are ahead of you{' '}
-										<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
-											⏩
-										</span>️. If you would like an estimate{' '}
-										<span aria-label="emoji" role="img">
-											📝
-										</span>️ please reach out to us{' '}
-										<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
-											📞
-										</span>.
-									</li>
-									<li>
-										We respect others intellectual property{' '}
-										<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
-											🏘️
-										</span>. Any designs that are trademarked or Copyrighted{' '}
-										<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
-											
-										</span>
-										will not be redistributed without permission{' '}
-										<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
-											🚫
-										</span>.
-									</li>
-									<li>
-										Sometimes your custom requests are already in our make list{' '}
-										<span aria-label="emoji" role="img">
-											📝
-										</span>️. When this happens, you may see your design idea come up for sale on
-										the website later on{' '}
-										<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
-											🛍
-										</span>️. While we can't guarantee you'll be the only glover to receive this
-										set, we're excited to make you the first{' '}
-										<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
-											😄
-										</span>️! If you have an idea for a common shape or pattern feel free to send it{' '}
-										<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
-											📦
-										</span>️ as a suggestion and we may have it on the website in the near future{' '}
-										<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
-											🔮
-										</span>️!
-									</li>
-								</ul>
-								{/* <h2 className="title_font"style={{ textAlign: 'center', margin: '0 auto' }} id="custom_infinity_mirrors">
-							Custom Infinity Mirrors
-						</h2>
-						<ul className="paragraph_font" style={{ padding: '0 18px' }}>
-							<li >
-								Before ordering a custom  mirror a consultation must be had{' '}
-								<span aria-label="emoji" role="img">
-									📝
-								</span>️.
-							</li>
-							<li >
-								Use the contact button{' '}
-								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
-									📞
-								</span>️ or Facebook Chat to send us a message with inspirational pictures{' '}
-								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
-									⛰️
-								</span>️, appoximate dimmensions{' '}
-								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
-									📐
-								</span>️ and any other details to explain your vision{' '}
-								<span aria-label="emoji" role="img" style={{ marginRight: '11px' }}>
-									🌈
-								</span>️and we will create a detailed invoice and design{' '}
-								<span aria-label="emoji" role="img">
-									📝
-								</span>️ . Also include your preferred method of contact{' '}
-								<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
-									📞
-								</span>️å (an e-mail address_1, phone number or social media username).
-							</li>
-							<li >
-								Pricing begins at $549. The price may vary depending on the size and hardware used ⚙️ .
-							</li> */}
-								{/* </ul> */}
-								<Link to="/pages/contact/custom_orders">
-									<div className="jc-c">
-										<button className="btn primary " style={{ margin: 'auto' }}>
-											Contact
-										</button>
-									</div>
-								</Link>
-							</div>
-							<div className="container" style={{ margin: '10px 0' }}>
-								<h2 className="ta-c title_font" id="featured_content">
-									Featured Content
-								</h2>
-								<p className="paragraph_font">
-									Please tag us on Facebook <i className="fab fa-facebook" /> and Instagram{' '}
-									<i className="fab fa-instagram" /> when you recieve your products! We love{' '}
-									<span aria-label="emoji" role="img" style={{ marginRight: '3px' }}>
-										❤
-									</span>️ to see how you put our products to use. To be featured{' '}
-									<span aria-label="emoji" role="img" style={{ marginRight: '0px' }}>
-										📸
-									</span>️ on our social media or website send{' '}
-									<span aria-label="emoji" role="img" style={{ marginRight: '9px' }}>
-										✉️
-									</span>️us your videos{' '}
-									<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
-										📹{' '}
-									</span>️direcly using the Contact button{' '}
-									<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
-										📞
-									</span>️ here on the website. You will be given a wetransfer link where you can send
-									us your content to be featured{' '}
-									<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
-										🌟
-									</span>️.
-								</p>
-								<Link to="/pages/contact/submit_content_to_be_featured">
-									<div className="jc-c">
-										<button className="btn primary " style={{ margin: 'auto' }}>
-											Contact
-										</button>
-									</div>
-								</Link>
-							</div>
-							<div className="container" style={{ margin: '10px 0' }}>
-								<h2 className="ta-c title_font" id="diffuser_too_tight_too_loose">
-									Diffuser too tight or too loose?
-								</h2>
-								<ul className="paragraph_font" style={{ padding: '18px', margin: 0 }}>
-									<li>
-										Due to the handmade nature of our diffusers, some variations may occur between
-										individual diffusers. This often tends to manifest in some diffusers being too
-										toight or too loose on the bulb.
-									</li>
-									<li>
-										we test each diffuser on a 5mm rgb 4 prong led before packaging as 5mm is
-										considered Standard bulb size. (Note 2 prong bulbs are more varied in size)
-									</li>
-									<li>
-										Be aware that bulb sizes may vary by an inperceivable amount within sets of
-										microlights due to the manufacturing process. Different brands may also have
-										different size bulbs, although the vast majority are 5mm.
-									</li>
-									<li>
-										If one or more of your frosted diffusers or diffuser adapters fit too tight or
-										too loose, please try the diffuser on several different microlights in the set
-										to determine if it is a variant with the diffuser, or the bulb itself. If
-										problem persists please reach out to us and we will discuss replacement options.
-									</li>
-								</ul>
-								<Link to="/pages/contact/submit_content_to_be_featured">
-									<div className="jc-c">
-										<button className="btn primary " style={{ margin: 'auto' }}>
-											Contact
-										</button>
-									</div>
-								</Link>
-							</div>
+  return (
+    <div className="main_container p-20px">
+      <Helmet>
+        <title>Frequently Asked Questions | Glow LEDs</title>
+        <meta property="og:title" content="Frequently Asked Questions" />
+        <meta name="twitter:title" content="Frequently Asked Questions" />
+        <link rel="canonical" href="https://www.glow-leds.com/pages/faq" />
+        <meta property="og:url" content="https://www.glow-leds.com/pages/faq" />
+        <meta
+          name="description"
+          content="Learn how the Glow LEDs process works, and how to get your products to you and working as fast as possible."
+        />
+        <meta
+          property="og:description"
+          content="Learn how the Glow LEDs process works, and how to get your products to you and working as fast as possible."
+        />
+        <meta
+          name="twitter:description"
+          content="Learn how the Glow LEDs process works, and how to get your products to you and working as fast as possible."
+        />
+      </Helmet>
+      <h1
+        style={{ clear: "both", textAlign: "center" }}
+        id="frequentlt_asked_questions"
+        className="title_font"
+      >
+        Frequently Asked Questions
+      </h1>
+      <div className="faq-container">
+        <QuickButtons />
+        <div className="faq-main">
+          <div className="inner_content">
+            <div>
+              <div className="container" style={{ margin: "10px 0" }}>
+                <h2 className="ta-c title_font" id="glowskinz">
+                  Glowskinz
+                </h2>
+                <div className="jc-c pos-rel">
+                  <div className="iframe-container">
+                    <iframe
+                      width="996"
+                      height="560"
+                      title="glowskinz"
+                      style={{ borderRadius: "20px" }}
+                      src="https://www.youtube.com/embed/s49fiZPC5G0?mute=1&showinfo=0&rel=0&autoplay=1&loop=1"
+                      frameborder="0"
+                      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                      allowfullscreen="1"
+                    />
+                  </div>
+                </div>
+                <h3
+                  className="ta-c title_font"
+                  id="inserting_chips_into_glowskinz"
+                >
+                  Inserting chips into Glowskinz
+                </h3>
+                {/* prettier-ignore */}
+                <pre className="paragraph_font">
+							
+									To use the Glowskinz with your desired microlight, first you need to remove your chip from
+                  its current plastic casing if it is in one. 
+									Then squeeze the
+                  Glowskinz near the end of the side slits causing the opening
+                  in the bottom to expand. Next, gently grip your microlight
+                  from the sides and gently place it into the opening at the
+                  bottom of the Glowskinz. 
+									Gently push the microlight all the
+                  way in and let your squeezing hand release pressure let the
+                  bottom of the Glowskinz close up.
+                </pre>
+                {/* prettier-ignore */}
+                <h3
+                  className="ta-c title_font"
+                  id="removing_chips_from_glowskinz"
+                >
+                  Removing chips from Glowskinz
+                </h3>
+                <pre className="paragraph_font">
+                  For Nanoskinz and Coinskinz squeeze the Glowskinz in the same
+                  location as you did to put it in. Then pinch and pull the
+                  microlight with your other hand to remove it. For Coffinskinz
+                  spread the bottom of the Glowskinz, then gently pinch and pull
+                  the microlight out.
+                </pre>
+                <h3 className="ta-c title_font" id="chip_compatiblity">
+                  Chip Compatibility
+                </h3>
+                <pre className="paragraph_font">
+                  Select your chip from the dropdown below to see what products
+                  are compatible!
+                </pre>
+                <div style={{ marginLeft: -"5px" }} className="">
+                  <Filter
+                    title="Shop By Chip"
+                    width="100per"
+                    state={chip_name}
+                    filterHandler={filterHandler}
+                    filter_options={chips_list}
+                  />
+                </div>
+              </div>
+              <div className="container" style={{ margin: "10px 0" }}>
+                <h2
+                  style={{ clear: "both", textAlign: "center" }}
+                  className="title_font"
+                  id="diffuser_caps"
+                >
+                  Diffuser Caps
+                </h2>
+                <div className="jc-c pos-rel">
+                  <div className="iframe-container">
+                    <iframe
+                      width="996"
+                      height="560"
+                      title="Using Diffuser Caps and Adapters"
+                      style={{ borderRadius: "20px" }}
+                      src="https://www.youtube.com/embed/FJbKd0ClkFM?mute=1&showinfo=0&rel=0&autoplay=1&loop=1"
+                      frameborder="0"
+                      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                      allowfullscreen="1"
+                    />
+                  </div>
+                </div>
+                <h3
+                  className="ta-c title_font"
+                  id="using_diffuser_caps_and_adapters"
+                >
+                  Using Diffuser Caps and Adapters
+                </h3>
 
-							<div className="container" style={{ margin: '10px 0' }}>
-								<h2 className="ta-c title_font" id="processing_shipping">
-									Processing/Shipping
-								</h2>
+                <pre className="paragraph_font">
+                  To begin using Diffuser Caps first take your microlights out
+                  of your gloves, then place the Diffuser Adapters gently onto
+                  your microlight bulbs. Now take your your chips, with the
+                  Diffuser Adapters attached, and place them inside of your
+                  glove, pushing it as far you can so the glove is tight over
+                  the diffuser adapter. Now it should look like you have flat
+                  top domes inside your gloves. Grip the Diffuser Adapter from
+                  outside the glove. Do not hold by microlight or you risk
+                  causing extra stress to the bulb. Take your cap, and place it
+                  over top of your glove and Diffuser Adapter and screw in the
+                  cap like you would a jar. You should only need a single turn
+                  to become snug. Do not over tighten or push the cap on. Let
+                  the threads do the work.
+                </pre>
+                <h3 className="ta-c title_font" id="diffuser_caps_warning">
+                  WARNING
+                </h3>
+                <pre className="paragraph_font">
+                  WARNING: NEVER force a bulb into the Diffuser Adapter as this
+                  could damage your microlight. If your chip is not fitting into
+                  the Diffuser Adapter please contact us. Be extra cautious of
+                  your bulbs during insertion and removal and this part of the
+                  microlight tends to be very delicate.
+                </pre>
 
-								<ul className="paragraph_font" style={{ padding: '18px', marginBottom: 0 }}>
-									<li>
-										Glow-LEDs.com is headquartered in Baytown, Texas{' '}
-										<span aria-label="emoji" role="img" style={{ marginRight: '3px' }}>
-											🇨🇱
-										</span>️ and orders are processed as they are received{' '}
-										<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
-											📨
-										</span>️. Products are not stocked waiting to be shipped at this time. Each
-										order will be filled as it is received. Some orders may take longer than others
-										to be shipped.
-									</li>
-									<li>
-										Small packages will be sent via USPS <i className="fab fa-usps" /> First Class
-										and large packages{' '}
-										<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
-											📦
-										</span>️will be sent via Priority Mail.
-									</li>
-									<li>
-										Shipping time is 1-3 business days, but may be delayed due to pandemic.{' '}
-										<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
-											🚚
-										</span>️.
-									</li>
-									<li>
-										All shipments come with tracking numbers{' '}
-										<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
-											🔢
-										</span>️.
-									</li>
-									<li>
-										Not responsible for delays due to post office{' '}
-										<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
-											🏤
-										</span>️.
-									</li>
-									<li>
-										For glove accessories (CLOZD & OPYN Glowskinz, Diffuser Caps, Diffuser Adapters,
-										Frosted Diffusers) we will get your order in the mail{' '}
-										<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
-											✉️{' '}
-										</span>️ within approximately 3-10 days{' '}
-										<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
-											🗓{' '}
-										</span>️after the order is placed, depending on how many orders are in front of
-										you.
-									</li>
-									<li>
-										For Glowstringz and Coin Battery Storage{' '}
-										<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
-											💡
-										</span>️we will get your order in the mail{' '}
-										<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
-											✉️{' '}
-										</span>️within approximately 1 week after the order is placed.
-									</li>
-									{/* <li >
-								For infinity mirrors, expect a longer processing time. Assembly of infinity mirrors is
-								much more intensive than other products.
-							</li> */}
-									<li>
-										If a custom order is placed, processing times will be discussed during
-										consultation.
-									</li>
-									<li>
-										If the address on your order is incorrect, please contact us<span
-											aria-label="emoji"
-											role="img"
-											style={{ marginRight: '5px' }}
-										>
-											📞
-										</span>️ immediately at info.glowleds@gmail.com or Facebook Chat at the Bottom
-										Right of Your Screen.
-									</li>
-								</ul>
-								<Link to="/pages/contact/order_issues">
-									<div className="jc-c">
-										<button
-											className="btn primary "
-											style={{ margin: 'auto', marginBottom: '10px' }}
-										>
-											Contact
-										</button>
-									</div>
-								</Link>
-								<h2 className="ta-c title_font" id="international_shipping">
-									International Shipping
-								</h2>
-								<ul className="paragraph_font" style={{ padding: '18px', margin: 0 }}>
-									<li>
-										We ship internationally!{' '}
-										<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
-											🌎
-										</span>️
-									</li>
-									<li>
-										IMPORTANT: If you live outside of the United States{' '}
-										<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
-											🇺🇸
-										</span>️ please check the international checkbox when filling out shipping{' '}
-										<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
-											🚚
-										</span>️ information. A country field will show for you to input your country.
-									</li>
-									{/* <li >
-								Shipping will not be calculated correctly if you do not input your country correctly.
-							</li> */}
-									<li>Shipping times will vary, and will depend on the country.</li>
-									{/* <li >
-								Shipping times will vary, and will depend on the country.
-							</li> */}
-									<li>
-										All shipments come with tracking numbers{' '}
-										<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
-											🔢
-										</span>️.
-									</li>
-									<li>
-										Please contact us{' '}
-										<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
-											📞
-										</span>️ if you have questions{' '}
-										<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
-											❓
-										</span>️
-									</li>
-								</ul>
-								<Link to="/pages/contact/order_issues">
-									<div className="jc-c">
-										<button
-											className="btn primary "
-											style={{ margin: 'auto', marginBottom: '10px' }}
-										>
-											Contact
-										</button>
-									</div>
-								</Link>
-							</div>
-							<div className="container" style={{ margin: '10px 0' }}>
-								<h2 className="ta-c title_font" id="returns_cancellations">
-									Returns/Cancellations
-								</h2>
-								<ul className="paragraph_font" style={{ padding: '18px' }}>
-									<li>
-										100% satisfaction guarantee{' '}
-										<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
-											💯
-										</span>️. We accept returns within 14 days of delivery .
-									</li>
-									<li>
-										To initiate a return please contact{' '}
-										<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
-											📞
-										</span>️ info.glowleds@gmail.com or Facebook Chat at the Bottom Right of your
-										Screen and You will be supplied with a prepaid shipping span{' '}
-										<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
-											🏷️
-										</span>️to send back your product.
-									</li>
-									<li>
-										Please include your full name and order number{' '}
-										<span aria-label="emoji" role="img" style={{ marginRight: '9px' }}>
-											🔢
-										</span>️in the return shipment and you will be refunded the full amount minus
-										original shipping costs.
-									</li>
-									{/* <li >
-							You will be refunded your full amount and you'll only be resonsible for return shipping.
-						</li> */}
-									<li>Custom items are non-refundable .</li>
-									<li>
-										Refunds are returned to the original form of payment{' '}
-										<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
-											💳
-										</span>️
-									</li>
-									<li>
-										We do not refund damaged{' '}
-										<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
-											🤕
-										</span>️items unless they arrived damaged at our own fault.
-									</li>
-									<li>
-										If item arrives damamged in any way please contact us{' '}
-										<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
-											📞
-										</span>️ immediately at info.glowleds@gmail.com or through Facebook Chat at the
-										Bottom right of your screeen.
-									</li>
-									<li>
-										Our online orders process immediately{' '}
-										<span aria-label="emoji" role="img" style={{ marginRight: '10px' }}>
-											💨
-										</span>️to ensure our clients receive their products as soon as possible. If you
-										would like to cancel{' '}
-										<span aria-label="emoji" role="img" style={{ marginRight: '10px' }}>
-											🚫
-										</span>️your order you must contact{' '}
-										<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
-											📞
-										</span>️ us via email or Facebook Chat within one hour of payment{' '}
-										<span aria-label="emoji" role="img" style={{ marginRight: '5px' }}>
-											💳
-										</span>️.
-									</li>
-									<li>
-										We are not able to modify orders. If you would like to add an item you will need
-										to do so in another order.
-									</li>
-									<Link to="/pages/contact/returns">
-										<div className="jc-c">
-											<button className="btn primary " style={{ margin: 'auto' }}>
-												Contact
-											</button>
-										</div>
-									</Link>
-								</ul>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	);
+                <h3
+                  style={{ clear: "both", textAlign: "center" }}
+                  className="title_font"
+                  id="orienting_your_diffuser_caps"
+                >
+                  Orienting Your Diffuser Caps
+                </h3>
+                <div className="jc-c pos-rel">
+                  <div className="iframe-container">
+                    <iframe
+                      width="996"
+                      height="560"
+                      title="	Orienting Your Diffuser Caps"
+                      style={{ borderRadius: "20px" }}
+                      src="https://www.youtube.com/embed/vG4qgtrotkw?mute=1&showinfo=0&rel=0&autoplay=1&loop=1"
+                      frameborder="0"
+                      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                      allowfullscreen="1"
+                    />
+                  </div>
+                </div>
+
+                <pre className="paragraph_font">
+                  To easily display all of your Diffuser Caps in the same
+                  orientation follow the steps above for using Diffuser Caps and
+                  Adapters with the following 2 specifications: Put the Diffuser
+                  Adapters onto your microlight bulbs with the notch facing the
+                  bottom of the microlight. Place the cap on upside down and
+                  give one half turn to screw in. To put Diffuser Caps in a
+                  different orientation, follow the same steps but change the
+                  placement of the notch.
+                </pre>
+                <h3
+                  className="ta-c title_font"
+                  id="diffuser_too_tight_too_loose"
+                >
+                  Diffuser too tight or too loose?
+                </h3>
+                <pre className="paragraph_font">
+                  Due to the handmade nature of our products, some variations
+                  may occur between individual diffusers. We test each diffuser
+                  on a 5mm RGB 4 prong LED before packaging as 5mm is considered
+                  Standard bulb size and 2 prong bulbs are more varied in size.
+                  Be aware that bulb sizes may vary by an imperceivable amount
+                  within sets of microlights due to the manufacturing process.
+                  Different brands may also have slightly different sized bulbs,
+                  although the vast majority are 5mm. If one or more of your
+                  diffusers or fit too tight or too loose, please try the
+                  diffuser on several different microlights in the set to
+                  determine if it is a variant with the diffuser, or the bulb
+                  itself. If the problem persists please reach out to us and we
+                  can discuss replacement options.
+                </pre>
+                <h3 className="ta-c title_font" id="glowskinz_warning">
+                  WARNING
+                </h3>
+                <pre className="paragraph_font">
+                  NEVER force a chip into Glowskinz as this could damage your
+                  microlight. If your chip is not fitting into the Glowskinz
+                  please contact us. Be extra cautious of your bulbs during
+                  insertion and removal and this part of the microlight tends to
+                  be very delicate.
+                </pre>
+                <Link to="/pages/contact">
+                  <div className="jc-c">
+                    <button className="btn primary " style={{ margin: "auto" }}>
+                      Contact
+                    </button>
+                  </div>
+                </Link>
+              </div>
+              <div className="container" style={{ margin: "10px 0" }}>
+                <h2
+                  className="title_font"
+                  style={{ textAlign: "center", marginBottom: "30px" }}
+                  id="ordering_custom_products"
+                >
+                  Ordering Custom Products
+                </h2>
+                <pre className="paragraph_font">
+                  At Glow LEDs you have the ability to customize any product we
+                  already sell, or create something completely unique! We
+                  welcome any requests here. Our custom process is 5 steps:
+                  Deposit, Consultation, Drafting, Payment and Processing.
+                </pre>
+
+                <h3 className="ta-c title_font" id="deposit">
+                  Deposit
+                </h3>
+                <pre className="paragraph_font">
+                  A single 100% refundable deposit of $9.99 is required to hold
+                  your place in line and to be seen for a consultation. The
+                  deposit will be deducted from the total price.
+                </pre>
+                <h3 className="ta-c title_font" id="consultation">
+                  Consultation
+                </h3>
+                <pre className="paragraph_font">
+                  After the deposit is paid we will reach out to you via email
+                  within a few days to discuss your ideas. Note: This step is
+                  imperative. Please check your email frequently and remember to
+                  check your junk folder as well. We cannot move forward without
+                  the consultation.
+                </pre>
+                <h3 className="ta-c title_font" id="drafting">
+                  Drafting
+                </h3>
+                <pre className="paragraph_font">
+                  After we get a good visualization of your idea, a design will
+                  be drafted by us, price will be determined and we will show
+                  you our results. If we determine we are unable to produce what
+                  you are desiring, or you are unsatisfied with the results, we
+                  will refund your $9.99 deposit.
+                </pre>
+                <h3 className="ta-c title_font" id="payment">
+                  Payment
+                </h3>
+                <pre className="paragraph_font">
+                  If you wish to proceed, the final payment will be required and
+                  we will begin production. The total price for a single design
+                  starts at $50 and varies based on the intricacy of the design
+                  and materials used. If multiple designs are desired, you will
+                  have to pay a similar price per design.
+                </pre>
+                <h3 className="ta-c title_font" id="processing">
+                  Processing
+                </h3>
+                <pre className="paragraph_font">
+                  We will then process and ship your design! Processing and
+                  shipping times are longer than normal products. We will give
+                  you an estimated timeline of processing time at this step and
+                  then ship out your order when it's complete!
+                </pre>
+                <h3 className="ta-c title_font" id="notes">
+                  Terms
+                </h3>
+                <pre className="paragraph_font">
+                  We respect others art. Any designs that are trademarked or
+                  Copyrighted will not be redistributed without permission.
+                  Sometimes your custom requests are already on our to-do list.
+                  If your request is for a common shape or pattern, you may see
+                  your design idea come up for sale on the website later on. If
+                  you have an idea but don't want to pay custom pricing feel
+                  free to send it as a suggestion and we may have it on the
+                  website in the near future!
+                </pre>
+                {/* <div
+                  style={{ borderBottom: "1px white solid" }}
+                  className="w-100per mv-10px"
+                /> */}
+                <Link to="/pages/contact/custom_orders">
+                  <div className="jc-c">
+                    <button className="btn primary " style={{ margin: "auto" }}>
+                      Contact
+                    </button>
+                  </div>
+                </Link>
+              </div>
+              <div className="container" style={{ margin: "10px 0" }}>
+                <h2 className="ta-c title_font" id="featured_content">
+                  Featured Content
+                </h2>
+                <pre className="paragraph_font">
+                  Please tag us on Facebook and Instagram when you receive your
+                  products! We love to see how you put our products to use. To
+                  be featured on our social media or website send us your videos
+                  directly using the Contact button here on the website. You
+                  will be given a Wetransfer link where you can send us your
+                  content to be featured.
+                </pre>
+                <Link to="/pages/contact/submit_content_to_be_featured">
+                  <div className="jc-c">
+                    <button className="btn primary " style={{ margin: "auto" }}>
+                      Contact
+                    </button>
+                  </div>
+                </Link>
+              </div>
+
+              <div className="container" style={{ margin: "10px 0" }}>
+                <h2 className="ta-c title_font" id="processing_shipping">
+                  Processing/Shipping
+                </h2>
+                <h3 className="ta-c title_font" id="procesing">
+                  Processing
+                </h3>
+                <pre className="paragraph_font">
+                  Order processing is the time it takes from when you place your
+                  order on our site to when it gets packed up and shipped out.
+                  We always recommend purchasing your product at least 2 WEEKS
+                  before your event to ensure your products will arrive on time.
+                  If you have passed this window, there is no guarantee you will
+                  have your products in time for your event. All of our products
+                  are handmade to order and are processed in the order in which
+                  they are received. We will get your order in the mail within
+                  approximately 3-10 business days after the order is placed,
+                  depending on how many orders are in front of you. If a custom
+                  order is placed, processing times will be discussed during the
+                  custom process.
+                </pre>
+                <h3 className="ta-c title_font" id="shipping">
+                  Shipping
+                </h3>
+
+                <pre className="paragraph_font">
+                  Please note shipping times do not include order processing
+                  times. Small packages will be sent via USPS First Class and
+                  large packages will be sent via USPS Priority Mail unless
+                  otherwise specified. Shipping time is 1-3 business days, but
+                  may be delayed due to pandemic. Glow LEDs is not responsible
+                  for delays due to the post office.
+                </pre>
+
+                <h3 className="ta-c title_font" id="tracking">
+                  Tracking
+                </h3>
+                <pre className="paragraph_font">
+                  All shipments come with tracking numbers that will be sent to
+                  your email when the package is ready for shipment. If the
+                  address on your order is incorrect, please contact us
+                  immediately at contact.glowleds@gmail.com. If your shipping
+                  information was incorrectly input and your package is returned
+                  to us, you will be responsible for paying the secondary
+                  shipping fees.
+                </pre>
+                <h3 className="ta-c title_font" id="international_shipping">
+                  International Shipping
+                </h3>
+                <pre className="paragraph_font">
+                  We ship internationally! To anywhere US packages are allowed!
+                  If you live outside of the United States please check the
+                  international checkbox when filling out shipping information.
+                  Shipping times will vary and depend on the destination
+                  country. All shipments come with tracking numbers. Please
+                  contact us if you have questions.
+                </pre>
+                <h3 className="ta-c title_font" id="rush_delievery">
+                  Rush Delivery
+                </h3>
+                <pre className="paragraph_font">
+                  We currently do not offer rush delivery options. We always
+                  recommend purchasing your product at least 2 WEEKS before your
+                  event to ensure your products will arrive on time. If you have
+                  passed this window, there is no guarantee you will have your
+                  products in time for your event.
+                </pre>
+                <Link to="/pages/contact">
+                  <div className="jc-c">
+                    <button
+                      className="btn primary "
+                      style={{ margin: "auto", marginBottom: "10px" }}
+                    >
+                      Contact
+                    </button>
+                  </div>
+                </Link>
+              </div>
+              <div className="container" style={{ margin: "10px 0" }}>
+                <h2 className="ta-c title_font" id="order_issues">
+                  Order Issues
+                </h2>
+                <h3 className="ta-c title_font" id="delayed_orders">
+                  Delayed Orders
+                </h3>
+                <pre className="paragraph_font" style={{ padding: "18px" }}>
+                  We know you're excited to get your package, but unfortunately
+                  delays in transit times may occur with the carrier. In the
+                  current pandemic delays are quite common. Please keep this in
+                  mind when ordering and avoid ordering last minute if possible.
+                  Shipping delays are something we have no control over, please
+                  reach out to USPS with any questions.
+                </pre>
+                <h3 className="ta-c title_font" id="missing_orders">
+                  Missing Orders
+                </h3>
+                <pre className="paragraph_font" style={{ padding: "18px" }}>
+                  If your package has been marked delivered yet you can't locate
+                  it, the USPS requires we allow 7 days from the delivered date
+                  to open an investigation. Please see the artice below for more
+                  information.
+                </pre>
+                <div className="jc-c">
+                  <a
+                    href="https://www.usps.com/help/missing-mail.htm"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <button className="btn primary " style={{ margin: "auto" }}>
+                      Find Missing Mail
+                    </button>
+                  </a>
+                </div>
+                <h3 className="ta-c title_font" id="damaged_items">
+                  Damaged Items
+                </h3>
+                <pre className="paragraph_font" style={{ padding: "18px" }}>
+                  We take full responsibility for damaged products due to
+                  manufacturing defects. Please send us a photo at
+                  contact.glowleds@gmail.com., and we'll be happy to figure out
+                  a solution.
+                </pre>
+                <h3 className="ta-c title_font" id="cancelations">
+                  Cancellations and Modifications
+                </h3>
+                <pre className="paragraph_font" style={{ padding: "18px" }}>
+                  Once your order is placed, we have a very limited window to
+                  make any changes or cancellations. If you require an order
+                  change or cancellation, please let us know as soon as possible
+                  by sending us an email to contact.glowleds@gmail.com. We can't
+                  guarantee that we'll be able to catch your order before it
+                  gets produced, but we'll try our absolute best!
+                </pre>
+
+                <h3 className="ta-c title_font" id="returns">
+                  Returns
+                </h3>
+                <pre className="paragraph_font" style={{ padding: "18px" }}>
+                  We offer a 100% satisfaction guarantee. Returns are accepted
+                  within 30 days of delivery. To initiate a return please
+                  contact contact.glowleds@gmail.com. and you will be supplied
+                  with a prepaid shipping label to send back your product.
+                  Please include your full name and order number in the return
+                  shipment and you will be refunded the full amount minus
+                  original shipping costs. Certian items are non-refundable.
+                  Refunds are returned to the original form of payment.
+                  <Link to="/pages/contact/returns">
+                    <div className="jc-c">
+                      <button
+                        className="btn primary "
+                        style={{ margin: "auto" }}
+                      >
+                        Contact
+                      </button>
+                    </div>
+                  </Link>
+                </pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default FAQPage;

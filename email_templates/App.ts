@@ -1,15 +1,24 @@
 import { UnsubscribeFooter, Footer, Header } from "./components";
 
-export default (props: any) => {
+// interface Announcment {
+//   body: object;
+//   background_color: string;
+//   unsubscribe: boolean;
+// }
+
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export default ({ body, background_color, unsubscribe }: any) => {
   return `
 <body style="background:unset;color:white;padding:0;margin:0;font-size:16px">
-  <table style="width:100%;border-spacing:0;color:white;margin:auto;font-size:16px;background-color:#7d7c7c">
+  <table style="width:100%;border-spacing:0;color:white;margin:auto;font-size:16px;background-color:${background_color
+    ? background_color
+    : `#7d7c7c`}">
     <tr>
       <td style="font-family:helvetica;color:white">
        ${Header()}
-       ${props.body}
+       ${body}
        <table
-						style="text-align:left;border-spacing:0;margin:0 auto; margin-bottom: 10px;max-width:560px;width:100%; ">
+						style="text-align:left;border-spacing:0;margin:0 auto; margin-bottom: 10px;max-width:560px;width:100%; padding:10px;">
 						<tbody>
 							<tr>
 								<td style="font-family:helvetica">
@@ -18,14 +27,14 @@ export default (props: any) => {
 										href="">
 										Please DO NOT reply to this email.
 										<br>
-										For any questions email <a href="mailto:info.glowleds@gmail.com"
-											style="font-size:16px;text-decoration:none;color:#009eff;">info.glowleds@gmail.com
+										For any questions email <a href="mailto:contact.glowleds@gmail.com"
+											style="font-size:16px;text-decoration:none;color:#009eff;">contact.glowleds@gmail.com
 									</p>
 								</td>
 							</tr>
 						</tbody>
 					</table>
-       ${props.unsubscribe ? UnsubscribeFooter() : Footer()}
+       ${unsubscribe ? UnsubscribeFooter() : Footer()}
       </td>
     </tr>
   </table>
