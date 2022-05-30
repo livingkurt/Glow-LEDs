@@ -37,8 +37,14 @@ const CompletePage = props => {
         id: "Order ID: " + props.match.params.id,
         h1: "Thank you for your order!",
         h2: "",
-        p: `You will be receiving a confirmation email with your order details shortly`,
-        // p: `You will be receiving a confirmation email with your order details shortly.-All of our products are made to order, so expect processing time to be between 3-10 business days.-Standard shipping time is 1-3 business days after processing is complete. A tracking number will be provided upon shipment.-We are not able to modify orders. If you would like to add an item please do so in another order.-Please reach out immediately with any questions or concerns to contact.glowleds@gmail.com`,
+        p: `You will be receiving a confirmation email with your order details shortly.\n
+
+        All of our products are handmade and made to order! 💙  \n
+        
+        Processing time is usually 3-10 business days.\n
+        
+        Standard shipping time is 1-5 business days after processing is complete. \n
+        `,
         button_label: "",
         button_link: "",
         link: "https://www.glow-leds.com/pages/complete/order",
@@ -84,16 +90,21 @@ const CompletePage = props => {
       const { data: order } = await API_Orders.findById_orders_a(
         props.match.params.id
       );
-      await API_Emails.send_order_email(
-        order,
-        "Thank you for your Glow LEDs Order",
-        order.shipping.email
-      );
-      await API_Emails.send_order_email(
-        order,
-        "New Order Created by " + order.shipping.first_name,
-        "contact.glowleds@gmail.com"
-      );
+      // await API_Emails.send_order_email(
+      //   order,
+      //   "Thank you for your Glow LEDs Order",
+      //   order.shipping.email
+      // );
+      // await API_Emails.send_order_email(
+      //   order,
+      //   "New Order Created by " + order.shipping.first_name,
+      //   "contact.glowleds@gmail.com"
+      // );
+
+      if (order.orderItems.some(item => item.category === "custom")) {
+        console.log({ Custom: "Custom" });
+        await API_Emails.send_custom_contact_email(order, order.shipping.email);
+      }
       setTimeout(() => {
         set_show_modal(true);
       }, 2000);
@@ -175,9 +186,11 @@ const CompletePage = props => {
           <div className="column jc-c">
             {data.h1 && <h1 className="ta-c">{data.h1}</h1>}
             {data.h2 && <h2 className="ta-c">{data.h2}</h2>}
-            {data.p && (
-              <p className="ta-c max-w-800px lh-30px m-auto">{data.p}</p>
-            )}
+            {data.p
+              .split("\n")
+              .map(line => (
+                <p className="ta-c max-w-800px lh-30px m-auto">{line}</p>
+              ))}
             <div className="max-w-800px w-100per m-auto column g-20px">
               <p className="ta-c max-w-800px lh-30px m-auto">
                 In the meantime, check out these pages for answers to frequently
@@ -214,16 +227,6 @@ const CompletePage = props => {
             </div>
             {data.id && <p className="ta-c title_font fs-20px">{data.id}</p>}
 
-            {/* {props.match.params.type !== 'order' && data.p && <p className="ta-c max-w-800px lh-30px m-auto">{data.p}</p>} */}
-            {/* {props.match.params.type === 'order' && <p className="ta-c max-w-800px lh-30px m-auto">{data.p.split('-')[0]}</p>}
-						<div style={{ borderBottom: "1px white solid" }} className="m-auto max-w-800px" />
-						{props.match.params.type === 'order' && <p className="ta-c max-w-800px lh-30px m-auto">{data.p.split('-')[1]}</p>}
-						<div style={{ borderBottom: "1px white solid" }} className="m-auto max-w-800px" />
-						{props.match.params.type === 'order' && <p className="ta-c max-w-800px lh-30px m-auto">{data.p.split('-')[2]}</p>}
-						<div style={{ borderBottom: "1px white solid" }} className="m-auto max-w-800px" />
-						{props.match.params.type === 'order' && <p className="ta-c max-w-800px lh-30px m-auto">{data.p.split('-')[3]}</p>}
-						<div style={{ borderBottom: "1px white solid" }} className="m-auto max-w-800px" />
-						{props.match.params.type === 'order' && <p className="ta-c max-w-800px lh-30px m-auto">{data.p.split('-')[4]}</p>} */}
             {data.button_label && (
               <Link to={data.button_link} className="jc-c ">
                 <button className="btn primary w-100per max-w-200px">
@@ -265,11 +268,11 @@ const CompletePage = props => {
               />
             </div>
             <div className="jc-c">
-              <p className="max-w-800px mv-2rem lh-30px">
+              <p className="max-w-800px mv-2rem lh-30px ta-c">
                 {" "}
                 If you have not recieved a confirmation email make sure to check
-                your spam folder for the confirmation email. If you do not
-                recieve a confirmation email please contact support.
+                your spam folder for the confirmation email. Please reach out
+                with any questions or concerns to contact.glowleds@gmail.com.
               </p>
             </div>
             <div className="jc-c ai-c m-auto wrap">

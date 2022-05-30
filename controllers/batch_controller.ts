@@ -372,7 +372,7 @@ export default {
     const sale_start_date = req.body.sale_start_date;
     const sale_end_date = req.body.sale_end_date;
     products
-      .filter((product: any) => !product.hidden)
+      // .filter((product: any) => !product.hidden)
       .forEach(async (product: any) => {
         const main_discount = product.price * req.body.discount_percentage;
         await Product.updateOne(
@@ -392,7 +392,7 @@ export default {
     const sale_start_date = req.body.sale_start_date;
     const sale_end_date = req.body.sale_end_date;
     products
-      .filter((product: any) => !product.hidden)
+      // .filter((product: any) => !product.hidden)
       .forEach(async (product: any) => {
         await Product.updateOne(
           { _id: product._id },
@@ -958,6 +958,22 @@ export default {
       { multi: true }
       // { upsert: true }
     );
+
+    res.send(products);
+  },
+  vortex_language: async (req: any, res: any) => {
+    const products = await Product.find({
+      deleted: false,
+      category: "diffuser_caps",
+    });
+
+    products.forEach(async (product: any) => {
+      product.facts =
+        product.facts +
+        "\nClassic diffusers are for Standard 5 mm bulbs\nVortex diffuseres are for the new Vortex gloveset";
+      const result = await product.save();
+      console.log({ result });
+    });
 
     res.send(products);
   },

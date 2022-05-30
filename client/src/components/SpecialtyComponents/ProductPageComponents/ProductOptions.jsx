@@ -11,6 +11,7 @@ const ProductOptions = ({
   product,
   price,
   sale_price,
+
   previous_price,
   update_secondary,
   secondary_product_object,
@@ -47,6 +48,7 @@ const ProductOptions = ({
   set_secondary_color_code,
   set_secondary_image,
   has_add_on,
+  set_sale_price,
 }) => {
   const { width } = useWindowDimensions();
   console.log({ ProductOptions: option_products });
@@ -216,11 +218,22 @@ const ProductOptions = ({
                       set_secondary_color_code("");
                       set_secondary_image("");
                       set_price(product.price);
+                      set_sale_price(product.sale_price);
                     } else {
                       set_price(
                         secondary_color_product_object.price + product.price
                       );
-                      set_add_on_price(secondary_color_product_object.price);
+                      set_sale_price(
+                        secondary_color_product_object.sale_price +
+                          product.sale_price
+                      );
+                      if (secondary_color_product_object.sale_price > 0) {
+                        set_add_on_price(
+                          secondary_color_product_object.sale_price
+                        );
+                      } else {
+                        set_add_on_price(secondary_color_product_object.price);
+                      }
                     }
 
                     // set_secondary_color_product_object({});

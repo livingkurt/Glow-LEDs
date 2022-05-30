@@ -7,10 +7,7 @@ const Footer = () => {
   const { height, width } = useWindowDimensions();
 
   return (
-    <footer
-      className="ta-c w-100per mt-5rem h-450px"
-      style={{ backgroundColor: "#333333" }}
-    >
+    <footer className="ta-c w-100per mt-5rem h-450px">
       <div className="footer-image">
         <Link to="/" aria-label="Home Page">
           <div className="">
@@ -146,19 +143,28 @@ const Footer = () => {
               </h2>
               <ul className="lst-none">
                 <li className="ta-l mv-2rem">
-								{browser_check() !== "safari" ? (
-                              <Link className="gradient-btn special_font"to="/collections/all/products/glowstringz_v2"><span>GLOWSTRINGZ V2</span></Link>
-                          ) : (
-                            <Link className=""to="/collections/all/products/glowstringz_v2"><span>GLOWSTRINGZ V2</span></Link>
-                          )}
-                
+                  {browser_check() !== "safari" ? (
+                    <Link
+                      className="gradient-btn special_font"
+                      to="/collections/all/products/glowstringz_v2"
+                    >
+                      <span>GLOWSTRINGZ V2</span>
+                    </Link>
+                  ) : (
+                    <Link
+                      className=""
+                      to="/collections/all/products/glowstringz_v2"
+                    >
+                      <span>GLOWSTRINGZ V2</span>
+                    </Link>
+                  )}
                 </li>
                 <li className="ta-l mv-2rem">
                   <Link to="/collections/all/products/glowskinz">
-									Glowskinz
+                    Glowskinz
                   </Link>
                 </li>
-								<li className="ta-l mv-2rem">
+                <li className="ta-l mv-2rem">
                   <Link to="/collections/all/products/glowframez">
                     Glowframez
                   </Link>
@@ -168,7 +174,7 @@ const Footer = () => {
                     EXO Diffusers
                   </Link>
                 </li>
-								<li className="ta-l mv-2rem">
+                <li className="ta-l mv-2rem">
                   <Link to="/collections/all/products/diffuser_caps">
                     Diffuser Caps
                   </Link>
@@ -178,22 +184,20 @@ const Footer = () => {
                     Diffusers
                   </Link>
                 </li>
-								<li className="ta-l mv-2rem">
-                  <Link to="/collections/all/products/diffusers">
-                    Decals
-                  </Link>
+                <li className="ta-l mv-2rem">
+                  <Link to="/collections/all/products/diffusers">Decals</Link>
                 </li>
               </ul>
             </div>
             <div style={{ display: width < 750 ? "none" : "block" }}>
               <h2 className="ta-l">
-                <Link to="/collections/all/products/category/our_picks">Essentials</Link>
+                <Link to="/collections/all/products/category/our_picks">
+                  Essentials
+                </Link>
               </h2>
               <ul className="lst-none">
                 <li className="ta-l mv-2rem">
-                  <Link to="/collections/all/products/supremes">
-									Supremes
-                  </Link>
+                  <Link to="/collections/all/products/supremes">Supremes</Link>
                 </li>
                 <li className="ta-l mv-2rem">
                   <Link to="/collections/all/products/refresh_pack">
@@ -234,7 +238,7 @@ const Footer = () => {
               <ul className="lst-none">
                 <li className="ta-l mv-2rem">
                   <Link to="/collections/all/teams/category/rave_mob">
-									Rave Mob
+                    Rave Mob
                   </Link>
                 </li>
                 <li className="ta-l mv-2rem">

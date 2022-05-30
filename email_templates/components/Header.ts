@@ -1,5 +1,7 @@
-export default () => {
-  return `<table style="width:100%;border-spacing:0;color:white;background:#333333;padding:20px;height:100%">
+export default (header_footer_color: string) => {
+  return `<table style="width:100%;border-spacing:0;color:white;background:${header_footer_color
+    ? header_footer_color
+    : `#333333`};padding:20px;height:100%">
   <tr>
     <td style="font-family:helvetica;color:white">
       <center>

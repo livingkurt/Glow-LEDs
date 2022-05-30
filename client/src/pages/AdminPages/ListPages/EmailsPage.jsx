@@ -114,6 +114,7 @@ const EmailsPage = props => {
     "feature",
     "contact",
     "contact_confirmation",
+    "custom_contact",
     "account_created",
   ];
 
@@ -211,10 +212,10 @@ const EmailsPage = props => {
               <thead>
                 <tr>
                   <th>Status</th>
+                  <th>Subjects</th>
                   <th>Title</th>
-                  <th>Small Body</th>
                   <th>Scheduled At</th>
-                  <th>Active</th>
+                  {/* <th>Active</th> */}
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -237,18 +238,21 @@ const EmailsPage = props => {
                       )}
                     </td>
                     <td className="p-10px min-w-300px paragraph_font">
+                      {email.subject}
+                    </td>
+                    <td className="p-10px min-w-300px paragraph_font">
                       {email.h1}
                     </td>
                     <td className="p-10px  min-w-350px paragraph_font">
                       {email.h2 && email.h2.slice(0, 30)}...
                     </td>
-                    <td className="p-10px  min-w-200px paragraph_font">
+                    {/* <td className="p-10px  min-w-200px paragraph_font">
                       {email.scheduled_at &&
                         `${format_date(email.scheduled_at)} ${format_time(
                           email.scheduled_at
                         )}`}
-                    </td>
-                    <td className="p-10px paragraph_font min-w-10px">
+                    </td> */}
+                    {/* <td className="p-10px paragraph_font min-w-10px">
                       <button
                         className="btn icon"
                         onClick={() => change_email_status(email)}
@@ -259,7 +263,7 @@ const EmailsPage = props => {
                           <i className="fas fa-times-circle" />
                         )}
                       </button>
-                    </td>
+                    </td> */}
                     <td className="p-10px">
                       <div className="jc-b">
                         <Link to={"/secure/glow/editemail/" + email._id}>

@@ -1193,359 +1193,357 @@ export const create_secondary_color_products = async (
         ...no_state,
       },
     ];
-  }
-  // else if (product.category === "diffuser_caps") {
-  //   list = [
-  //     {
-  //       name: `Frosted ${product.name}${secondary_color_modifier &&
-  //         " - " + secondary_color_modifier}`,
-  //       pathname: snake_case(
-  //         `Frosted ${product.name}${secondary_color_modifier &&
-  //           " - " + secondary_color_modifier}`
-  //       ),
-  //       color: "Frosted",
-  //       color_code: "#abaeb5",
-  //       subcategory: "options",
-  //       product_collection: "colors",
-  //       item_group_id: product._id,
-  //       default_option: false,
-  //       images: [ secondary_color_images[0] ],
-  //       ...no_state,
-  //     },
-  //     {
-  //       name: `Red ${product.name}${secondary_color_modifier &&
-  //         " - " + secondary_color_modifier}`,
-  //       pathname: snake_case(
-  //         `Red ${product.name}${secondary_color_modifier &&
-  //           " - " + secondary_color_modifier}`
-  //       ),
-  //       color: "Red",
-  //       color_code: "#c11c22",
-  //       subcategory: "options",
-  //       product_collection: "colors",
-  //       item_group_id: product._id,
-  //       default_option: false,
-  //       images: [ secondary_color_images[1] ],
-  //       ...no_state,
-  //     },
-  //     {
-  //       name: `Green ${product.name}${secondary_color_modifier &&
-  //         " - " + secondary_color_modifier}`,
-  //       pathname: snake_case(
-  //         `Green ${product.name}${secondary_color_modifier &&
-  //           " - " + secondary_color_modifier}`
-  //       ),
-  //       color: "Green",
-  //       color_code: "#00c700",
-  //       subcategory: "options",
-  //       product_collection: "colors",
-  //       item_group_id: product._id,
-  //       default_option: false,
-  //       images: [ secondary_color_images[2] ],
-  //       ...no_state,
-  //     },
-  //     {
-  //       name: `Blue ${product.name}${secondary_color_modifier &&
-  //         " - " + secondary_color_modifier}`,
-  //       pathname: snake_case(
-  //         `Blue ${product.name}${secondary_color_modifier &&
-  //           " - " + secondary_color_modifier}`
-  //       ),
-  //       color: "Blue",
-  //       color_code: "#0014ff",
-  //       subcategory: "options",
-  //       product_collection: "colors",
-  //       item_group_id: product._id,
-  //       default_option: false,
-  //       images: [ secondary_color_images[3] ],
-  //       ...no_state,
-  //     },
+  } else if (product.category === "diffuser_caps") {
+    list = [
+      {
+        name: `Frosted ${product.name}${secondary_color_modifier &&
+          " - " + secondary_color_modifier}`,
+        pathname: snake_case(
+          `Frosted ${product.name}${secondary_color_modifier &&
+            " - " + secondary_color_modifier}`
+        ),
+        color: "Frosted",
+        color_code: "#abaeb5",
+        subcategory: "options",
+        product_collection: "colors",
+        item_group_id: product._id,
+        default_option: false,
+        images: [ secondary_color_images[0] ],
+        ...no_state,
+      },
+      {
+        name: `Red ${product.name}${secondary_color_modifier &&
+          " - " + secondary_color_modifier}`,
+        pathname: snake_case(
+          `Red ${product.name}${secondary_color_modifier &&
+            " - " + secondary_color_modifier}`
+        ),
+        color: "Red",
+        color_code: "#c11c22",
+        subcategory: "options",
+        product_collection: "colors",
+        item_group_id: product._id,
+        default_option: false,
+        images: [ secondary_color_images[1] ],
+        ...no_state,
+      },
+      {
+        name: `Green ${product.name}${secondary_color_modifier &&
+          " - " + secondary_color_modifier}`,
+        pathname: snake_case(
+          `Green ${product.name}${secondary_color_modifier &&
+            " - " + secondary_color_modifier}`
+        ),
+        color: "Green",
+        color_code: "#00c700",
+        subcategory: "options",
+        product_collection: "colors",
+        item_group_id: product._id,
+        default_option: false,
+        images: [ secondary_color_images[2] ],
+        ...no_state,
+      },
+      {
+        name: `Blue ${product.name}${secondary_color_modifier &&
+          " - " + secondary_color_modifier}`,
+        pathname: snake_case(
+          `Blue ${product.name}${secondary_color_modifier &&
+            " - " + secondary_color_modifier}`
+        ),
+        color: "Blue",
+        color_code: "#0014ff",
+        subcategory: "options",
+        product_collection: "colors",
+        item_group_id: product._id,
+        default_option: false,
+        images: [ secondary_color_images[3] ],
+        ...no_state,
+      },
 
-  //     {
-  //       name: `Violet ${product.name}${secondary_color_modifier &&
-  //         " - " + secondary_color_modifier}`,
-  //       pathname: snake_case(
-  //         `Violet ${product.name}${secondary_color_modifier &&
-  //           " - " + secondary_color_modifier}`
-  //       ),
-  //       color: "Violet",
-  //       color_code: "#543abb",
-  //       subcategory: "options",
-  //       product_collection: "colors",
-  //       item_group_id: product._id,
-  //       default_option: false,
-  //       images: [ secondary_color_images[4] ],
-  //       ...no_state,
-  //     },
-  //     {
-  //       name: `Purple ${product.name}${secondary_color_modifier &&
-  //         " - " + secondary_color_modifier}`,
-  //       pathname: snake_case(
-  //         `Purple ${product.name}${secondary_color_modifier &&
-  //           " - " + secondary_color_modifier}`
-  //       ),
-  //       color: "Purple",
-  //       color_code: "purple",
-  //       subcategory: "options",
-  //       product_collection: "colors",
-  //       item_group_id: product._id,
-  //       default_option: false,
-  //       images: [ secondary_color_images[5] ],
-  //       ...no_state,
-  //     },
-  //   ];
-  // } else if (product.category === "diffusers") {
-  //   list = [];
-  // } else if (product.category === "exo_diffusers") {
-  //   list = [
-  //     {
-  //       name: `Frosted ${product.name}${secondary_color_modifier &&
-  //         " - " + secondary_color_modifier}`,
-  //       pathname: snake_case(
-  //         `Frosted ${product.name}${secondary_color_modifier &&
-  //           " - " + secondary_color_modifier}`
-  //       ),
-  //       color: "Frosted",
-  //       color_code: "#abaeb5",
-  //       subcategory: "options",
-  //       product_collection: "secondary_colors",
-  //       item_group_id: product._id,
-  //       default_option: false,
-  //       images: [ secondary_color_images[0] ],
-  //       ...no_state,
-  //     },
-  //     {
-  //       name: `Red ${product.name}${secondary_color_modifier &&
-  //         " - " + secondary_color_modifier}`,
-  //       pathname: snake_case(
-  //         `Red ${product.name}${secondary_color_modifier &&
-  //           " - " + secondary_color_modifier}`
-  //       ),
-  //       color: "Red",
-  //       color_code: "#c11c22",
-  //       subcategory: "options",
-  //       product_collection: "secondary_colors",
-  //       item_group_id: product._id,
-  //       default_option: false,
-  //       images: [ secondary_color_images[1] ],
-  //       ...no_state,
-  //     },
-  //     {
-  //       name: `Green ${product.name}${secondary_color_modifier &&
-  //         " - " + secondary_color_modifier}`,
-  //       pathname: snake_case(
-  //         `Green ${product.name}${secondary_color_modifier &&
-  //           " - " + secondary_color_modifier}`
-  //       ),
-  //       color: "Green",
-  //       color_code: "#00c700",
-  //       subcategory: "options",
-  //       product_collection: "secondary_colors",
-  //       item_group_id: product._id,
-  //       default_option: false,
-  //       images: [ secondary_color_images[2] ],
-  //       ...no_state,
-  //     },
-  //     {
-  //       name: `Blue ${product.name}${secondary_color_modifier &&
-  //         " - " + secondary_color_modifier}`,
-  //       pathname: snake_case(
-  //         `Blue ${product.name}${secondary_color_modifier &&
-  //           " - " + secondary_color_modifier}`
-  //       ),
-  //       color: "Blue",
-  //       color_code: "#0014ff",
-  //       subcategory: "options",
-  //       product_collection: "secondary_colors",
-  //       item_group_id: product._id,
-  //       default_option: false,
-  //       images: [ secondary_color_images[3] ],
-  //       ...no_state,
-  //     },
-  //     {
-  //       name: `Violet ${product.name}${secondary_color_modifier &&
-  //         " - " + secondary_color_modifier}`,
-  //       pathname: snake_case(
-  //         `Violet ${product.name}${secondary_color_modifier &&
-  //           " - " + secondary_color_modifier}`
-  //       ),
-  //       color: "Violet",
-  //       color_code: "#543abb",
-  //       subcategory: "options",
-  //       product_collection: "secondary_colors",
-  //       item_group_id: product._id,
-  //       default_option: false,
-  //       images: [ secondary_color_images[4] ],
-  //       ...no_state,
-  //     },
-  //     {
-  //       name: `Purple ${product.name}${secondary_color_modifier &&
-  //         " - " + secondary_color_modifier}`,
-  //       pathname: snake_case(
-  //         `Purple ${product.name}${secondary_color_modifier &&
-  //           " - " + secondary_color_modifier}`
-  //       ),
-  //       color: "Purple",
-  //       color_code: "purple",
-  //       subcategory: "options",
-  //       product_collection: "secondary_colors",
-  //       item_group_id: product._id,
-  //       default_option: false,
-  //       images: [ secondary_color_images[5] ],
-  //       ...no_state,
-  //     },
-  //   ];
-  // } else if (product.category === "batteries") {
-  //   list = [];
-  // }
-  // else if (product.product_collection === "novaskinz") {
-  //   list = [
-  //     {
-  //       name: `Clear ${product.name}${secondary_color_modifier &&
-  //         " - " + secondary_color_modifier}`,
-  //       pathname: snake_case(
-  //         `Clear ${product.name}${secondary_color_modifier &&
-  //           " - " + secondary_color_modifier}`
-  //       ),
-  //       color: "Clear",
-  //       color_code: "#4b4b4b",
-  //       subcategory: "options",
-  //       product_collection: "secondary_colors",
-  //       item_group_id: product._id,
-  //       default_option: false,
-  //       images: [ secondary_color_images[0] ],
-  //       ...no_state,
-  //     },
-  //     {
-  //       name: `Red ${product.name}${secondary_color_modifier &&
-  //         " - " + secondary_color_modifier}`,
-  //       pathname: snake_case(
-  //         `Red ${product.name}${secondary_color_modifier &&
-  //           " - " + secondary_color_modifier}`
-  //       ),
-  //       color: "Red",
-  //       color_code: "#c11c22",
-  //       subcategory: "options",
-  //       product_collection: "secondary_colors",
-  //       item_group_id: product._id,
-  //       default_option: false,
-  //       images: [ secondary_color_images[2] ],
-  //       ...no_state,
-  //     },
-  //     {
-  //       name: `Green ${product.name}${secondary_color_modifier &&
-  //         " - " + secondary_color_modifier}`,
-  //       pathname: snake_case(
-  //         `Green ${product.name}${secondary_color_modifier &&
-  //           " - " + secondary_color_modifier}`
-  //       ),
-  //       color: "Green",
-  //       color_code: "#00c700",
-  //       subcategory: "options",
-  //       product_collection: "secondary_colors",
-  //       item_group_id: product._id,
-  //       default_option: false,
-  //       images: [ secondary_color_images[3] ],
-  //       ...no_state,
-  //     },
-  //     {
-  //       name: `Blue ${product.name}${secondary_color_modifier &&
-  //         " - " + secondary_color_modifier}`,
-  //       pathname: snake_case(
-  //         `Blue ${product.name}${secondary_color_modifier &&
-  //           " - " + secondary_color_modifier}`
-  //       ),
-  //       color: "Blue",
-  //       color_code: "#0014ff",
-  //       subcategory: "options",
-  //       product_collection: "secondary_colors",
-  //       item_group_id: product._id,
-  //       default_option: false,
-  //       images: [ secondary_color_images[4] ],
-  //       ...no_state,
-  //     },
-  //     {
-  //       name: `Violet ${product.name}${secondary_color_modifier &&
-  //         " - " + secondary_color_modifier}`,
-  //       pathname: snake_case(
-  //         `Violet ${product.name}${secondary_color_modifier &&
-  //           " - " + secondary_color_modifier}`
-  //       ),
-  //       color: "Violet",
-  //       color_code: "#543abb",
-  //       subcategory: "options",
-  //       product_collection: "secondary_colors",
-  //       item_group_id: product._id,
-  //       default_option: false,
-  //       images: [ secondary_color_images[5] ],
-  //       ...no_state,
-  //     },
-  //     {
-  //       name: `Purple ${product.name}${secondary_color_modifier &&
-  //         " - " + secondary_color_modifier}`,
-  //       pathname: snake_case(
-  //         `Purple ${product.name}${secondary_color_modifier &&
-  //           " - " + secondary_color_modifier}`
-  //       ),
-  //       color: "Purple",
-  //       color_code: "purple",
-  //       subcategory: "options",
-  //       product_collection: "secondary_colors",
-  //       item_group_id: product._id,
-  //       default_option: false,
-  //       images: [ secondary_color_images[6] ],
-  //       ...no_state,
-  //     },
-  //     {
-  //       name: `Frosted ${product.name}${secondary_color_modifier &&
-  //         " - " + secondary_color_modifier}`,
-  //       pathname: snake_case(
-  //         `Frosted ${product.name}${secondary_color_modifier &&
-  //           " - " + secondary_color_modifier}`
-  //       ),
-  //       color: "Frosted",
-  //       color_code: "#abaeb5",
-  //       subcategory: "options",
-  //       product_collection: "secondary_colors",
-  //       item_group_id: product._id,
-  //       default_option: false,
-  //       images: [ secondary_color_images[1] ],
-  //       ...no_state,
-  //     },
-  //     {
-  //       name: `Black ${product.name}${secondary_color_modifier &&
-  //         " - " + secondary_color_modifier}`,
-  //       pathname: snake_case(
-  //         `Black ${product.name}${secondary_color_modifier &&
-  //           " - " + secondary_color_modifier}`
-  //       ),
-  //       color: "Black",
-  //       color_code: "black",
-  //       subcategory: "options",
-  //       product_collection: "secondary_colors",
-  //       item_group_id: product._id,
-  //       default_option: false,
-  //       images: [ secondary_color_images[8] ],
-  //       ...no_state,
-  //     },
-  //     {
-  //       name: `White ${product.name}${secondary_color_modifier &&
-  //         " - " + secondary_color_modifier}`,
-  //       pathname: snake_case(
-  //         `White ${product.name}${secondary_color_modifier &&
-  //           " - " + secondary_color_modifier}`
-  //       ),
-  //       color: "White",
-  //       color_code: "white",
-  //       subcategory: "options",
-  //       product_collection: "secondary_colors",
-  //       item_group_id: product._id,
-  //       default_option: false,
-  //       images: [ secondary_color_images[7] ],
-  //       ...no_state,
-  //     },
-  //   ];
-  // }
+      {
+        name: `Violet ${product.name}${secondary_color_modifier &&
+          " - " + secondary_color_modifier}`,
+        pathname: snake_case(
+          `Violet ${product.name}${secondary_color_modifier &&
+            " - " + secondary_color_modifier}`
+        ),
+        color: "Violet",
+        color_code: "#543abb",
+        subcategory: "options",
+        product_collection: "colors",
+        item_group_id: product._id,
+        default_option: false,
+        images: [ secondary_color_images[4] ],
+        ...no_state,
+      },
+      {
+        name: `Purple ${product.name}${secondary_color_modifier &&
+          " - " + secondary_color_modifier}`,
+        pathname: snake_case(
+          `Purple ${product.name}${secondary_color_modifier &&
+            " - " + secondary_color_modifier}`
+        ),
+        color: "Purple",
+        color_code: "purple",
+        subcategory: "options",
+        product_collection: "colors",
+        item_group_id: product._id,
+        default_option: false,
+        images: [ secondary_color_images[5] ],
+        ...no_state,
+      },
+    ];
+  } else if (product.category === "diffusers") {
+    list = [];
+  } else if (product.category === "exo_diffusers") {
+    list = [
+      {
+        name: `Frosted ${product.name}${secondary_color_modifier &&
+          " - " + secondary_color_modifier}`,
+        pathname: snake_case(
+          `Frosted ${product.name}${secondary_color_modifier &&
+            " - " + secondary_color_modifier}`
+        ),
+        color: "Frosted",
+        color_code: "#abaeb5",
+        subcategory: "options",
+        product_collection: "secondary_colors",
+        item_group_id: product._id,
+        default_option: false,
+        images: [ secondary_color_images[0] ],
+        ...no_state,
+      },
+      {
+        name: `Red ${product.name}${secondary_color_modifier &&
+          " - " + secondary_color_modifier}`,
+        pathname: snake_case(
+          `Red ${product.name}${secondary_color_modifier &&
+            " - " + secondary_color_modifier}`
+        ),
+        color: "Red",
+        color_code: "#c11c22",
+        subcategory: "options",
+        product_collection: "secondary_colors",
+        item_group_id: product._id,
+        default_option: false,
+        images: [ secondary_color_images[1] ],
+        ...no_state,
+      },
+      {
+        name: `Green ${product.name}${secondary_color_modifier &&
+          " - " + secondary_color_modifier}`,
+        pathname: snake_case(
+          `Green ${product.name}${secondary_color_modifier &&
+            " - " + secondary_color_modifier}`
+        ),
+        color: "Green",
+        color_code: "#00c700",
+        subcategory: "options",
+        product_collection: "secondary_colors",
+        item_group_id: product._id,
+        default_option: false,
+        images: [ secondary_color_images[2] ],
+        ...no_state,
+      },
+      {
+        name: `Blue ${product.name}${secondary_color_modifier &&
+          " - " + secondary_color_modifier}`,
+        pathname: snake_case(
+          `Blue ${product.name}${secondary_color_modifier &&
+            " - " + secondary_color_modifier}`
+        ),
+        color: "Blue",
+        color_code: "#0014ff",
+        subcategory: "options",
+        product_collection: "secondary_colors",
+        item_group_id: product._id,
+        default_option: false,
+        images: [ secondary_color_images[3] ],
+        ...no_state,
+      },
+      {
+        name: `Violet ${product.name}${secondary_color_modifier &&
+          " - " + secondary_color_modifier}`,
+        pathname: snake_case(
+          `Violet ${product.name}${secondary_color_modifier &&
+            " - " + secondary_color_modifier}`
+        ),
+        color: "Violet",
+        color_code: "#543abb",
+        subcategory: "options",
+        product_collection: "secondary_colors",
+        item_group_id: product._id,
+        default_option: false,
+        images: [ secondary_color_images[4] ],
+        ...no_state,
+      },
+      {
+        name: `Purple ${product.name}${secondary_color_modifier &&
+          " - " + secondary_color_modifier}`,
+        pathname: snake_case(
+          `Purple ${product.name}${secondary_color_modifier &&
+            " - " + secondary_color_modifier}`
+        ),
+        color: "Purple",
+        color_code: "purple",
+        subcategory: "options",
+        product_collection: "secondary_colors",
+        item_group_id: product._id,
+        default_option: false,
+        images: [ secondary_color_images[5] ],
+        ...no_state,
+      },
+    ];
+  } else if (product.category === "batteries") {
+    list = [];
+  } else if (product.product_collection === "novaskinz") {
+    list = [
+      {
+        name: `Clear ${product.name}${secondary_color_modifier &&
+          " - " + secondary_color_modifier}`,
+        pathname: snake_case(
+          `Clear ${product.name}${secondary_color_modifier &&
+            " - " + secondary_color_modifier}`
+        ),
+        color: "Clear",
+        color_code: "#4b4b4b",
+        subcategory: "options",
+        product_collection: "secondary_colors",
+        item_group_id: product._id,
+        default_option: false,
+        images: [ secondary_color_images[0] ],
+        ...no_state,
+      },
+      {
+        name: `Red ${product.name}${secondary_color_modifier &&
+          " - " + secondary_color_modifier}`,
+        pathname: snake_case(
+          `Red ${product.name}${secondary_color_modifier &&
+            " - " + secondary_color_modifier}`
+        ),
+        color: "Red",
+        color_code: "#c11c22",
+        subcategory: "options",
+        product_collection: "secondary_colors",
+        item_group_id: product._id,
+        default_option: false,
+        images: [ secondary_color_images[2] ],
+        ...no_state,
+      },
+      {
+        name: `Green ${product.name}${secondary_color_modifier &&
+          " - " + secondary_color_modifier}`,
+        pathname: snake_case(
+          `Green ${product.name}${secondary_color_modifier &&
+            " - " + secondary_color_modifier}`
+        ),
+        color: "Green",
+        color_code: "#00c700",
+        subcategory: "options",
+        product_collection: "secondary_colors",
+        item_group_id: product._id,
+        default_option: false,
+        images: [ secondary_color_images[3] ],
+        ...no_state,
+      },
+      {
+        name: `Blue ${product.name}${secondary_color_modifier &&
+          " - " + secondary_color_modifier}`,
+        pathname: snake_case(
+          `Blue ${product.name}${secondary_color_modifier &&
+            " - " + secondary_color_modifier}`
+        ),
+        color: "Blue",
+        color_code: "#0014ff",
+        subcategory: "options",
+        product_collection: "secondary_colors",
+        item_group_id: product._id,
+        default_option: false,
+        images: [ secondary_color_images[4] ],
+        ...no_state,
+      },
+      {
+        name: `Violet ${product.name}${secondary_color_modifier &&
+          " - " + secondary_color_modifier}`,
+        pathname: snake_case(
+          `Violet ${product.name}${secondary_color_modifier &&
+            " - " + secondary_color_modifier}`
+        ),
+        color: "Violet",
+        color_code: "#543abb",
+        subcategory: "options",
+        product_collection: "secondary_colors",
+        item_group_id: product._id,
+        default_option: false,
+        images: [ secondary_color_images[5] ],
+        ...no_state,
+      },
+      {
+        name: `Purple ${product.name}${secondary_color_modifier &&
+          " - " + secondary_color_modifier}`,
+        pathname: snake_case(
+          `Purple ${product.name}${secondary_color_modifier &&
+            " - " + secondary_color_modifier}`
+        ),
+        color: "Purple",
+        color_code: "purple",
+        subcategory: "options",
+        product_collection: "secondary_colors",
+        item_group_id: product._id,
+        default_option: false,
+        images: [ secondary_color_images[6] ],
+        ...no_state,
+      },
+      {
+        name: `Frosted ${product.name}${secondary_color_modifier &&
+          " - " + secondary_color_modifier}`,
+        pathname: snake_case(
+          `Frosted ${product.name}${secondary_color_modifier &&
+            " - " + secondary_color_modifier}`
+        ),
+        color: "Frosted",
+        color_code: "#abaeb5",
+        subcategory: "options",
+        product_collection: "secondary_colors",
+        item_group_id: product._id,
+        default_option: false,
+        images: [ secondary_color_images[1] ],
+        ...no_state,
+      },
+      {
+        name: `Black ${product.name}${secondary_color_modifier &&
+          " - " + secondary_color_modifier}`,
+        pathname: snake_case(
+          `Black ${product.name}${secondary_color_modifier &&
+            " - " + secondary_color_modifier}`
+        ),
+        color: "Black",
+        color_code: "black",
+        subcategory: "options",
+        product_collection: "secondary_colors",
+        item_group_id: product._id,
+        default_option: false,
+        images: [ secondary_color_images[8] ],
+        ...no_state,
+      },
+      {
+        name: `White ${product.name}${secondary_color_modifier &&
+          " - " + secondary_color_modifier}`,
+        pathname: snake_case(
+          `White ${product.name}${secondary_color_modifier &&
+            " - " + secondary_color_modifier}`
+        ),
+        color: "White",
+        color_code: "white",
+        subcategory: "options",
+        product_collection: "secondary_colors",
+        item_group_id: product._id,
+        default_option: false,
+        images: [ secondary_color_images[7] ],
+        ...no_state,
+      },
+    ];
+  }
   save_products(
     list,
     product,
@@ -1670,7 +1668,7 @@ export const create_option_products = async (
           `${product.name} - 15 mm (Classic${option_modifier &&
             " - " + option_modifier})`
         ),
-        size: 1,
+        size: "20 mm (Mega)",
         subcategory: "options",
         product_collection: "sizes",
         price: 0,
@@ -1908,7 +1906,76 @@ export const create_secondary_products = async (
   } else if (product.category === "diffuser_caps") {
     list = [];
   } else if (product.category === "diffusers") {
-    list = [];
+    list = [
+      {
+        name: `${product.name} - Micro${secondary_modifier &&
+          " - " + secondary_modifier}`,
+        pathname: snake_case(
+          `${product.name} - Micro${secondary_modifier &&
+            " - " + secondary_modifier}`
+        ),
+        size: "Micro",
+        subcategory: "options",
+        product_collection: "sizes",
+        price: (product.price * 0.1495747874).toFixed(2),
+        item_group_id: product._id,
+        hidden: true,
+        default_option: false,
+        images: [ secondary_images[0] ],
+        ...no_state,
+      },
+      {
+        name: `${product.name} - Mini${secondary_modifier &&
+          " - " + secondary_modifier}`,
+        pathname: snake_case(
+          `${product.name} - Mini${secondary_modifier &&
+            " - " + secondary_modifier}`
+        ),
+        size: "Mini",
+        subcategory: "options",
+        product_collection: "sizes",
+        price: (product.price * 0.899949975).toFixed(2),
+        item_group_id: product._id,
+        default_option: false,
+        hidden: true,
+        images: [ secondary_images[1] ],
+        ...no_state,
+      },
+      {
+        name: `${product.name} - Classic${secondary_modifier &&
+          " - " + secondary_modifier}`,
+        pathname: snake_case(
+          `${product.name} - Classic${secondary_modifier &&
+            " - " + secondary_modifier}`
+        ),
+        size: "Classic",
+        subcategory: "options",
+        product_collection: "sizes",
+        price: product.price,
+        item_group_id: product._id,
+        default_option: true,
+        hidden: true,
+        images: [ secondary_images[2] ],
+        ...no_state,
+      },
+      {
+        name: `${product.name} - Mega${secondary_modifier &&
+          " - " + secondary_modifier}`,
+        pathname: snake_case(
+          `${product.name} - 10${secondary_modifier &&
+            " - " + secondary_modifier}`
+        ),
+        size: "Mega",
+        subcategory: "options",
+        product_collection: "sizes",
+        price: product.price,
+        item_group_id: product._id,
+        default_option: false,
+        hidden: true,
+        images: [ secondary_images[3] ],
+        ...no_state,
+      },
+    ];
   } else if (product.category === "exo_diffusers") {
     list = [];
   } else if (product.category === "batteries") {

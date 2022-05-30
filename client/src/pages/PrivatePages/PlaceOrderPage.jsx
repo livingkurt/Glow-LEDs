@@ -391,11 +391,11 @@ const PlaceOrderPage = props => {
         )
       );
     }
-    // dimminish_stock();
+    set_loading_payment(false);
+    empty_cart();
     promo_code_used();
     sessionStorage.removeItem("shippingAddress");
   };
-
   const dimminish_stock = async () => {
     const request = await API_Products.update_stock(cartItems);
     console.log({ dimminish_stock: request });
@@ -437,7 +437,7 @@ const PlaceOrderPage = props => {
 
     set_loading_payment(false);
     empty_cart();
-    dimminish_stock();
+    // dimminish_stock();
     promo_code_used();
     props.history.push("/secure/glow/orders?page=1?limit=10");
     sessionStorage.removeItem("shippingAddress");
@@ -466,10 +466,11 @@ const PlaceOrderPage = props => {
       })
     );
 
-    props.history.push("/secure/glow/orders?page=1?limit=10");
+    set_loading_payment(false);
     empty_cart();
-    dimminish_stock();
+    // dimminish_stock();
     promo_code_used();
+    props.history.push("/secure/glow/orders?page=1?limit=10");
     sessionStorage.removeItem("shippingAddress");
   };
 

@@ -28,6 +28,9 @@ router
   .route("/contact_confirmation")
   .post(email_controller.send_admin_contact_emails_c);
 router
+  .route("/custom_contact")
+  .post(email_controller.send_custom_contact_emails_c);
+router
   .route("/password_reset")
   .post(email_controller.send_password_reset_emails_c);
 router

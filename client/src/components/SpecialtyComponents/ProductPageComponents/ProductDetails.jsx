@@ -7,6 +7,7 @@ import "react-tabs/style/react-tabs.css";
 import { ReadMore, Reviews } from "..";
 import { humanize, toCapitalize } from "../../../utils/helper_functions";
 import useWindowDimensions from "../../Hooks/windowDimensions";
+import RelatedProductsSlideshow from "../RelatedProductsSlideshow";
 
 const ProductDetails = ({
   product,
@@ -59,6 +60,24 @@ const ProductDetails = ({
 
   return (
     <div>
+      {width > 500 &&
+      product &&
+      (product.category === "diffusers" ||
+        product.category === "diffuser_caps" ||
+        product.category === "exo_diffusers") && (
+        <div className=" w-100per m-auto">
+          <RelatedProductsSlideshow
+            product_category={"glowskinz"}
+            product_subcategory={"opyn"}
+            product={product}
+            random={false}
+            className=""
+            product_pathname={product.pathname}
+            title="Pairs great with OPYN Glowskinz"
+            category="opyn"
+          />
+        </div>
+      )}
       <Tabs>
         <Overflow onStateChange={state => setCanScroll(state.canScroll.right)}>
           <Overflow.Content>

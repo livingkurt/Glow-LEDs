@@ -1,6 +1,8 @@
-export default () => {
+export default (header_footer_color: string) => {
   return `
-  <table style="width:100%;border-spacing:0;background-color:#333333">
+  <table style="width:100%;border-spacing:0;background-color:${header_footer_color
+    ? header_footer_color
+    : `#333333`}">
   <tbody>
     <tr>
       <td style="font-family:helvetica;padding-bottom:35px 0">

@@ -253,6 +253,15 @@ const EditContentPage = props => {
     );
   };
 
+  const move = (from, to, arr, e, set_state) => {
+    e.preventDefault();
+    const newArr = [ ...arr ];
+
+    const item = newArr.splice(from, 1)[0];
+    newArr.splice(to, 0, item);
+    set_state(newArr);
+  };
+
   return (
     <div className="main_container p-20px">
       <h1 style={{ textAlign: "center" }}>
@@ -461,7 +470,7 @@ const EditContentPage = props => {
                       <h2>Images</h2>
                       <div className="scroll-y h-100per max-h-900px ">
                         {slideshow &&
-                          slideshow.map((slideshow, index) => (
+                          slideshow.map((items, index) => (
                             <div>
                               <div className="jc-b ai-c">
                                 <label>Button {index + 1}</label>
@@ -473,7 +482,46 @@ const EditContentPage = props => {
                                   <i className="fas fa-times mr-5px" />
                                 </button>
                               </div>
+                              <div className="ai-c">
+                                {index > 0 && (
+                                  <button
+                                    className="btn secondary icon ph-10px pb-20px ml-5px"
+                                    onClick={e =>
+                                      move(
+                                        index,
+                                        index - 1,
+                                        slideshow,
+                                        e,
+                                        set_slideshow
+                                      )}
+                                    aria-label="Move Up"
+                                  >
+                                    <i className=" fas fa-sort-up" />
+                                  </button>
+                                )}
 
+                                {index < slideshow.length - 1 && (
+                                  <button
+                                    className="btn secondary icon ph-10px pb-20px ml-5px "
+                                    onClick={e =>
+                                      move(
+                                        index,
+                                        index + 1,
+                                        slideshow,
+                                        e,
+                                        set_slideshow
+                                      )}
+                                    aria-label="Move Down"
+                                  >
+                                    <i
+                                      style={{
+                                        WebkitTransform: "rotate(-180deg)",
+                                      }}
+                                      className=" fas fa-sort-up"
+                                    />
+                                  </button>
+                                )}
+                              </div>
                               <li>
                                 <button
                                   className="btn primary"
@@ -488,7 +536,7 @@ const EditContentPage = props => {
                                 <input
                                   type="text"
                                   name="label"
-                                  value={slideshow.label}
+                                  value={items.label}
                                   id="label"
                                   onChange={e =>
                                     update_slideshow_item_property(
@@ -518,7 +566,7 @@ const EditContentPage = props => {
                                 <input
                                   type="text"
                                   name="link"
-                                  value={slideshow.link}
+                                  value={items.link}
                                   id="link"
                                   onChange={e =>
                                     update_slideshow_item_property(
@@ -627,7 +675,46 @@ const EditContentPage = props => {
                                   <i className="fas fa-times mr-5px" />
                                 </button>
                               </div>
+                              <div className="ai-c">
+                                {index > 0 && (
+                                  <button
+                                    className="btn secondary icon ph-10px pb-20px ml-5px"
+                                    onClick={e =>
+                                      move(
+                                        index,
+                                        index - 1,
+                                        links,
+                                        e,
+                                        set_links
+                                      )}
+                                    aria-label="Move Up"
+                                  >
+                                    <i className=" fas fa-sort-up" />
+                                  </button>
+                                )}
 
+                                {index < links.length - 1 && (
+                                  <button
+                                    className="btn secondary icon ph-10px pb-20px ml-5px "
+                                    onClick={e =>
+                                      move(
+                                        index,
+                                        index + 1,
+                                        links,
+                                        e,
+                                        set_links
+                                      )}
+                                    aria-label="Move Down"
+                                  >
+                                    <i
+                                      style={{
+                                        WebkitTransform: "rotate(-180deg)",
+                                      }}
+                                      className=" fas fa-sort-up"
+                                    />
+                                  </button>
+                                )}
+                              </div>
                               <li>
                                 <button
                                   className="btn primary"

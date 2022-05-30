@@ -7,7 +7,12 @@ import { UnsubscribeFooter, Footer, Header } from "./components";
 // }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export default ({ body, background_color, unsubscribe }: any) => {
+export default ({
+  body,
+  background_color,
+  unsubscribe,
+  header_footer_color,
+}: any) => {
   return `
 <body style="background:unset;color:white;padding:0;margin:0;font-size:16px">
   <table style="width:100%;border-spacing:0;color:white;margin:auto;font-size:16px;background-color:${background_color
@@ -15,7 +20,7 @@ export default ({ body, background_color, unsubscribe }: any) => {
     : `#7d7c7c`}">
     <tr>
       <td style="font-family:helvetica;color:white">
-       ${Header()}
+       ${Header(header_footer_color)}
        ${body}
        <table
 						style="text-align:left;border-spacing:0;margin:0 auto; margin-bottom: 10px;max-width:560px;width:100%; padding:10px;">
@@ -34,7 +39,9 @@ export default ({ body, background_color, unsubscribe }: any) => {
 							</tr>
 						</tbody>
 					</table>
-       ${unsubscribe ? UnsubscribeFooter() : Footer()}
+       ${unsubscribe
+         ? UnsubscribeFooter(header_footer_color)
+         : Footer(header_footer_color)}
       </td>
     </tr>
   </table>

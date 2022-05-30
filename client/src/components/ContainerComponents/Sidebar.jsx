@@ -932,9 +932,6 @@ const Sidebar = props => {
               </button>
             </Link>
             <div className="sidebar_dropdown_secondary">
-              {/* <button className="sidebar-btn secondary">
-								<Link to="/pages/faq">FAQ</Link>
-							</button> */}
               <div className="sidebar-btn-container">
                 <button className="sidebar-btn secondary" onClick={closeMenu}>
                   <Link to="/pages/faq">FAQ</Link>
@@ -958,12 +955,7 @@ const Sidebar = props => {
                 </HashLink>
                 <HashLink href="/pages/faq#using_diffuser_caps_and_adapters">
                   <button className="sidebar-btn nested" onClick={closeMenu}>
-                    Diffuser Caps Guide
-                  </button>
-                </HashLink>
-                <HashLink href="/pages/faq#diffuser_too_tight_too_loose">
-                  <button className="sidebar-btn nested" onClick={closeMenu}>
-                    Diffusers Too Tight/Loose?
+                    Diffuser Caps
                   </button>
                 </HashLink>
                 <HashLink href="/pages/faq#ordering_custom_products">
@@ -981,9 +973,9 @@ const Sidebar = props => {
                     Processing/Shipping
                   </button>
                 </HashLink>
-                <HashLink href="/pages/faq#returns_cancellations">
+                <HashLink href="/pages/faq#order_issues">
                   <button className="sidebar-btn nested" onClick={closeMenu}>
-                    Returns/Cancellations
+                    Order Issues
                   </button>
                 </HashLink>
               </ul>

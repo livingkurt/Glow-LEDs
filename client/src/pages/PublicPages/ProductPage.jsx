@@ -505,14 +505,19 @@ const ProductPage = props => {
       product: product._id,
       color_product,
       color_code,
-      secondary_color_code: determine_addon_color() && secondary_color_code,
-      secondary_color_product:
-        determine_addon_color() && secondary_color_product,
-      secondary_color_group_name:
-        determine_addon_color() && product.secondary_color_group_name,
-      secondary_color: determine_addon_color() && secondary_color,
-      secondary_color_product_name:
-        determine_addon_color() && product.secondary_color_product_name,
+      secondary_color_code: determine_addon_color()
+        ? secondary_color_code
+        : null,
+      secondary_color_product: determine_addon_color()
+        ? secondary_color_product
+        : null,
+      secondary_color_group_name: determine_addon_color()
+        ? product.secondary_color_group_name
+        : null,
+      secondary_color: determine_addon_color() ? secondary_color : null,
+      secondary_color_product_name: determine_addon_color()
+        ? product.secondary_color_product_name
+        : null,
       color_group_name: product.color_group_name,
       option_group_name: product.option_group_name,
       secondary_group_name: product.secondary_group_name,
@@ -682,25 +687,17 @@ const ProductPage = props => {
     } else {
       set_preorder(false);
     }
-    // else {
-    // 	set_size(option.name);
-    // }
     if (option.price > 0) {
       console.log({ has_add_on, price: option.price + add_on_price });
-      if (has_add_on) {
+      if (has_add_on && show_add_on) {
         set_price(option.price + add_on_price);
-        // if (product.name === "CLOZD Omniskinz Sleds") {
-        //   set_price(option.price);
-        // } else {
-        //   set_price(option.price + add_on_price);
-        // }
+        set_sale_price(option.sale_price + add_on_price);
       } else {
         set_price(option.price);
+        set_sale_price(option.sale_price);
       }
     }
-    if (option.sale_price > 0) {
-      set_sale_price(option.sale_price);
-    }
+
     if (option.quantity) {
       set_quantity(option.quantity);
     }
@@ -975,6 +972,24 @@ const ProductPage = props => {
                   </div>
                 )}
               </div>
+              {width < 500 &&
+              product &&
+              (product.category === "diffusers" ||
+                product.category === "diffuser_caps" ||
+                product.category === "exo_diffusers") && (
+                <div className=" w-100per m-auto">
+                  <RelatedProductsSlideshow
+                    product_category={"glowskinz"}
+                    product_subcategory={"opyn"}
+                    product={product}
+                    random={false}
+                    className=""
+                    product_pathname={product.pathname}
+                    title="Pairs great with OPYN Glowskinz"
+                    category="opyn"
+                  />
+                </div>
+              )}
               <div
                 className="details-info desktop_product_view"
                 style={{ display: width > 819 ? "block" : "none" }}
@@ -1036,6 +1051,7 @@ const ProductPage = props => {
                   set_secondary_color_code={set_secondary_color_code}
                   set_secondary_image={set_secondary_image}
                   has_add_on={has_add_on}
+                  set_sale_price={set_sale_price}
                 />
               </div>
 
@@ -1087,6 +1103,7 @@ const ProductPage = props => {
                     set_secondary_color_code={set_secondary_color_code}
                     set_secondary_image={set_secondary_image}
                     has_add_on={has_add_on}
+                    set_sale_price={set_sale_price}
                   />
                 </div>
                 <div
@@ -1119,7 +1136,7 @@ const ProductPage = props => {
             className=""
             product_pathname={props.match.params.pathname}
             title="Fits the Same Microlight"
-            category="related"
+            category="chips"
           />
         </div>
       )}

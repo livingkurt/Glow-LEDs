@@ -144,6 +144,42 @@ const FAQPage = () => {
                     filter_options={chips_list}
                   />
                 </div>
+                <h3 className="ta-c title_font" id="chip_categories">
+                  Chip Cateories
+                </h3>
+                <div className="row ">
+                  <h4 className="title_font mr-1rem mt-26px">Coin:</h4>
+                  <pre className="paragraph_font">
+                    Aethers, Chroma 24, Chroma Ctrls, Ezlite, Element V25,
+                    Kebit, Keluce, Mini Kevo, OG Chromas, OG Spectra, OSM2,
+                    Oracles, Supernova, Trinity,
+                  </pre>
+                </div>
+                <div className="ai-c">
+                  <h4 className="title_font mr-1rem">Apollo: </h4>
+                  <pre className="paragraph_font">Apollos</pre>
+                </div>
+                <div className="ai-c">
+                  <h4 className="title_font mr-1rem"> Nano: </h4>
+                  <pre className="paragraph_font">
+                    Atoms, Aurora Nanos, Ions, QT 6 Mode, Ubers, Chroma Evos,
+                    Spectra Evos
+                  </pre>
+                </div>
+                <div className="ai-c">
+                  <h4 className="title_font mr-1rem">Inova: </h4>
+                  <pre className="paragraph_font">Azotecs, Emissives</pre>
+                </div>
+                <div className="ai-c">
+                  <h4 className="title_font mr-1rem">Coffin: </h4>
+                  <pre className="paragraph_font">
+                    EVO X, KEK 5, KAT 5, IMAX
+                  </pre>
+                </div>
+                <div className="ai-c">
+                  <h4 className="title_font mr-1rem">Vortex: </h4>
+                  <pre className="paragraph_font">Vortex</pre>
+                </div>
               </div>
               <div className="container" style={{ margin: "10px 0" }}>
                 <h2

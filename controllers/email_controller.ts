@@ -13,6 +13,7 @@ import {
   affiliate,
   feature,
   announcement,
+  custom_contact,
 } from "../email_templates/pages/index";
 import email_subscription from "../email_templates/pages/email_subscription";
 import { affiliate_db, content_db, email_db, order_db, user_db } from "../db";
@@ -20,6 +21,14 @@ import { format_date, toCapitalize } from "../util";
 const cron = require("node-cron");
 const schedule = require("node-schedule");
 
+// const transporter_contact = nodemailer.createTransport({
+//   service: "gmail",
+//   pool: true,
+//   auth: {
+//     user: process.env.CONTACT_EMAIL,
+//     pass: process.env.CONTACT_PASSWORD,
+//   },
+// });
 const transporter = nodemailer.createTransport({
   service: "gmail",
   pool: true,
@@ -336,8 +345,15 @@ export default {
         .reason_for_contact}`,
       html: contact(req.body),
     };
-
-    transporter.sendMail(mailOptions, (err, data) => {
+    const transporter_contact = nodemailer.createTransport({
+      service: "gmail",
+      pool: true,
+      auth: {
+        user: process.env.CONTACT_EMAIL,
+        pass: process.env.CONTACT_PASSWORD,
+      },
+    });
+    transporter_contact.sendMail(mailOptions, (err, data) => {
       if (err) {
         console.log("Error Occurs", err);
         res.status(500).send({ error: err, message: "Error Sending Email" });
@@ -354,12 +370,49 @@ export default {
       subject: `Thank you for Contacting Glow LEDs Support`,
       html: contact_confirmation(req.body),
     };
-    transporter.sendMail(mailOptions, (err, data) => {
+    const transporter_contact = nodemailer.createTransport({
+      service: "gmail",
+      pool: true,
+      auth: {
+        user: process.env.CONTACT_EMAIL,
+        pass: process.env.CONTACT_PASSWORD,
+      },
+    });
+    transporter_contact.sendMail(mailOptions, (err, data) => {
       if (err) {
         console.log("Error Occurs", err);
         res.status(500).send({ error: err, message: "Error Sending Email" });
       } else {
         console.log("Contact Email Sent to " + req.body.first_name);
+        res.status(200).send({ message: "Email Successfully Sent" });
+      }
+    });
+  },
+  send_custom_contact_emails_c: async (req: any, res: any) => {
+    console.log({ send_custom_contact_emails_c: req.body });
+    const { order, email } = req.body;
+    const mailOptions = {
+      from: process.env.DISPLAY_CONTACT_EMAIL,
+      to: email,
+      subject: `Thank you for ordering a custom Glow LEDs Product!`,
+      html: custom_contact({ order }),
+    };
+    const transporter_contact = nodemailer.createTransport({
+      service: "gmail",
+      pool: true,
+      auth: {
+        user: process.env.CONTACT_EMAIL,
+        pass: process.env.CONTACT_PASSWORD,
+      },
+    });
+    transporter_contact.sendMail(mailOptions, (err, data) => {
+      if (err) {
+        console.log("Error Occurs", err);
+        res.status(500).send({ error: err, message: "Error Sending Email" });
+      } else {
+        console.log(
+          "Custom Contact Email Sent to " + order.shipping.first_name
+        );
         res.status(200).send({ message: "Email Successfully Sent" });
       }
     });
@@ -452,7 +505,7 @@ export default {
       html: App({
         body: announcement(template),
         unsubscribe: true,
-        background_color: template.background_color,
+        header_footer_color: template.header_footer_color,
       }),
       bcc: emails,
     };
@@ -500,70 +553,6 @@ export default {
       });
     }
   },
-  // send_announcement_emails_c: async (req: any, res: any) => {
-  //   console.log({ send_announcement_emails_c: req.body });
-  //   const { template, subject, test, time } = req.body;
-  //   const users = await user_db.findAll_users_db(
-  //     { deleted: false, email_subscription: true },
-  //     {}
-  //   );
-  //   const all_emails = users
-  //     .filter((user: any) => user.deleted === false)
-  //     .filter((user: any) => user.email_subscription === true)
-  //     .map((user: any) => user.email);
-  //   console.log({ all_emails });
-  //   const test_emails = [
-  //     "lavacquek@icloud.com",
-  //     "lavacquek@gmail.com",
-  //     "livingkurt222@gmail.com",
-  //     "destanyesalinas@gmail.com",
-  //     "zestanye@gmail.com",
-  //   ];
-  //   const emails: any = test ? test_emails : all_emails;
-  //   console.log({ emails });
-
-  //   const mailOptions = {
-  //     to: process.env.EMAIL,
-  //     from: process.env.DISPLAY_EMAIL,
-  //     subject: subject,
-  //     html: App({
-  //       body: announcement(template),
-  //       unsubscribe: true,
-  //     }),
-  //     bcc: emails,
-  //   };
-  //   console.log({ time });
-  //   const send_email = () => {
-  //     transporter.sendMail(mailOptions, (err, data) => {
-  //       if (err) {
-  //         console.log("Error Occurs", err);
-  //         res.status(500).send({ error: err, message: "Error Sending Email" });
-  //       } else {
-  //         console.log("Email " + subject + " to everyone");
-  //         res.status(200).send({ message: "Email Successfully Sent" });
-  //       }
-  //     });
-  //   };
-  //   const date = new Date(time);
-  //   let job: any = {};
-
-  //   try {
-  //     if (time.length > 0) {
-  //       console.log("Email Scheduled for " + time);
-  //       job = schedule.scheduleJob(date, function() {
-  //         send_email();
-  //       });
-  //     } else {
-  //       send_email();
-  //     }
-  //     console.log({ send_announcement_emails_c: job });
-  //     if (Object.keys(job).length > 0) {
-  //       res.status(200).send({ cancel_email: job.cancel });
-  //     }
-  //   } catch (error) {
-  //     res.status(500).send({ error, message: "Error Sending Email" });
-  //   }
-  // },
   view_announcement_emails_c: async (req: any, res: any) => {
     const { template } = req.body;
     console.log({ template });

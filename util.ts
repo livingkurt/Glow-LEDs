@@ -877,16 +877,10 @@ const third_dash = (item: any) => {
 
 export const determine_product_name = (item: any, show_qty: any) => {
   return `<div>
-      ${qty(item, show_qty) ? qty(item, show_qty) : ""} ${color(item)
-    ? color(item)
-    : ""} ${item.name} ${size(item) ? size(item) : ""}
-      ${secondary_color(item)
-        ? secondary_color(item)
-        : ""} ${secondary_color_name(item)
-    ? secondary_color_name(item)
-    : ""}${secondary_product(item)
-    ? secondary_product(item)
-    : ""} ${secondary_product_name(item) ? secondary_product_name(item) : ""}
+      ${qty(item, show_qty)} ${color(item)} ${item.name} ${size(item)}
+      ${secondary_color(item)} ${secondary_color_name(item)}${secondary_product(
+    item
+  )} ${secondary_product_name(item)}
     </div>`;
 };
 

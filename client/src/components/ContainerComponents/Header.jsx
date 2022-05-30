@@ -1048,17 +1048,10 @@ const Header = props => {
                             </button>
                           </div>
                         </HashLink>
-                        <HashLink to="/pages/faq#using_diffuser_caps_and_adapters">
+                        <HashLink to="/pages/faq#diffuser_caps">
                           <div className="row">
                             <button className="btn nav w-100per ta-l">
-                              Diffuser Caps Guide
-                            </button>
-                          </div>
-                        </HashLink>
-                        <HashLink to="/pages/faq#diffuser_too_tight_too_loose">
-                          <div className="row">
-                            <button className="btn nav w-100per ta-l">
-                              Diffusers Too Tight/Loose?
+                              Diffuser Caps
                             </button>
                           </div>
                         </HashLink>
@@ -1084,10 +1077,10 @@ const Header = props => {
                             </button>
                           </div>
                         </HashLink>
-                        <HashLink to="/pages/faq#returns_cancellations">
+                        <HashLink to="/pages/faq#order_issues">
                           <div className="row">
                             <button className="btn nav w-100per ta-l">
-                              Returns/Cancellations
+                              Order Issues
                             </button>
                           </div>
                         </HashLink>

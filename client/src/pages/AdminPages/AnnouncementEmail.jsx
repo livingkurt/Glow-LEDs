@@ -92,7 +92,7 @@ const AnnouncementEmail = props => {
       console.log({ send_announcement_email: "test" });
       const data = await API_Emails.send_announcement_email(
         email,
-        subject ? subject : email.h1,
+        `${test ? "Test" : ""} ${subject ? subject : email.h1}`,
         test,
         schedule ? unformat_date_and_time(date, time) : ""
       );

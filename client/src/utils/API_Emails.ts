@@ -36,6 +36,9 @@ const email_routes = {
   send_contact: (email: string, promo_code: string) => {
     return axios.post("/api/emails/contact", { email, promo_code });
   },
+  send_custom_contact_email: (order: any, email: string) => {
+    return axios.post("/api/emails/custom_contact", { order, email });
+  },
   send_contact_confirmation: (email: string, promo_code: string) => {
     return axios.post("/api/emails/contact_confirmation", {
       email,

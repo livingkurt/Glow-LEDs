@@ -55,6 +55,7 @@ export default {
   },
   findById_products_db: async (id: string) => {
     let query = {};
+    console.log({ id });
     try {
       if (id && id.match(/^[0-9a-fA-F]{24}$/)) {
         query = { _id: id };

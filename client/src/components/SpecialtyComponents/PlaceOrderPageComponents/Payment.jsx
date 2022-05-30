@@ -236,6 +236,9 @@ export function Payment({
                               "cash",
                               "zelle",
                               "facebook",
+                              "promo",
+                              "sponsor",
+                              "replacement",
                               "no payment",
                             ].map((method, index) => (
                               <option key={index} value={method}>
