@@ -637,13 +637,13 @@ const ProductPage = props => {
     //     set_price(option.price);
     //   }
     // }
-    if (
-      option.sale_price !== 0 ||
-      option.sale_price === null ||
-      option.sale_price === undefined
-    ) {
-      set_sale_price(option.sale_price);
-    }
+    // if (
+    //   option.sale_price !== 0 ||
+    //   option.sale_price === null ||
+    //   option.sale_price === undefined
+    // ) {
+    //   set_sale_price(option.sale_price);
+    // }
     set_secondary_color(option.color);
     set_secondary_color_code(option.color_code);
     if (option.images && option.images[0]) {
@@ -663,10 +663,11 @@ const ProductPage = props => {
     if (option.count_in_stock) {
       set_count_in_stock(option.count_in_stock);
     }
-    if (show_add_on) {
+    if (has_add_on && show_add_on) {
       if (product.name === "Capez") {
         set_add_on_price(option.price);
         set_price(option.price + product.price);
+        set_sale_price(option.sale_price + product.price);
       }
     }
     update_url(
