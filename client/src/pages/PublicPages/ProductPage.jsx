@@ -588,20 +588,20 @@ const ProductPage = props => {
   const update_color = e => {
     const option = JSON.parse(e.target.value);
     // console.log({ option });
-    if (
-      option.price !== 0 ||
-      option.price === null ||
-      option.price === undefined
-    ) {
-      set_price(option.price);
-    }
-    if (
-      option.sale_price !== 0 ||
-      option.sale_price === null ||
-      option.sale_price === undefined
-    ) {
-      set_sale_price(option.sale_price);
-    }
+    // if (
+    //   option.price !== 0 ||
+    //   option.price === null ||
+    //   option.price === undefined
+    // ) {
+    //   set_price(option.price);
+    // }
+    // if (
+    //   option.sale_price !== 0 ||
+    //   option.sale_price === null ||
+    //   option.sale_price === undefined
+    // ) {
+    //   set_sale_price(option.sale_price);
+    // }
     set_color(option.color);
     set_color_code(option.color_code);
     if (option.images && option.images[0]) {
