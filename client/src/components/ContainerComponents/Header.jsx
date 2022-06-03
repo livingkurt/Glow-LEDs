@@ -1248,6 +1248,11 @@ const Header = props => {
                         Palettes
                       </button>
                     </Link>
+                    <Link to="/secure/glow/filaments">
+                      <button className="btn nav w-100per ta-l">
+                        Filaments
+                      </button>
+                    </Link>
                     <Link to="/secure/glow/edit_all_data">
                       <button className="btn nav w-100per ta-l">
                         Edit All Data

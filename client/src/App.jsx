@@ -114,6 +114,8 @@ import { EmailModal } from "./components/SpecialtyComponents";
 import { daysBetween } from "./utils/helper_functions";
 import { isBrowser, isMobile } from "react-device-detect";
 import Headroom from "react-headroom";
+import FilamentsPage from "./pages/AdminPages/ListPages/FilamentsPage";
+import EditFilamentPage from "./pages/AdminPages/EditPages/EditFilamentPage";
 
 const App = props => {
   const theme_colors = {
@@ -434,6 +436,10 @@ const App = props => {
                 component={PalettesPage}
               />
               <AdminRoute
+                path="/secure/glow/filaments"
+                component={FilamentsPage}
+              />
+              <AdminRoute
                 path="/secure/glow/userprofile/:id"
                 component={UserProfilePage}
               />
@@ -472,6 +478,10 @@ const App = props => {
               <AdminRoute
                 path="/secure/glow/editpalette/:id?"
                 component={EditPalettePage}
+              />
+              <AdminRoute
+                path="/secure/glow/editfilament/:id?"
+                component={EditFilamentPage}
               />
 
               <AdminRoute

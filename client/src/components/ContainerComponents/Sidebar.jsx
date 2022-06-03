@@ -1122,6 +1122,11 @@ const Sidebar = props => {
                   Palettes
                 </button>
               </Link>
+              <Link to="/secure/glow/filaments">
+                <button className="sidebar-btn secondary" onClick={closeMenu}>
+                  Filaments
+                </button>
+              </Link>
               <Link to="/secure/glow/edit_all_data">
                 <button className="sidebar-btn secondary" onClick={closeMenu}>
                   Edit All Data
