@@ -964,13 +964,14 @@ export default {
   vortex_language: async (req: any, res: any) => {
     const products = await Product.find({
       deleted: false,
-      category: "diffuser_caps",
+      category: "diffusers",
     });
 
     products.forEach(async (product: any) => {
+      product.facts = product.facts.split("\n").pop().pop();
       product.facts =
         product.facts +
-        "\nClassic diffusers are for Standard 5 mm bulbs\nVortex diffuseres are for the new Vortex gloveset";
+        "\nClassic diffusers are for Standard 5 mm bulbs\nVortex diffusers are for the Vortex gloveset from StoneOrbits";
       const result = await product.save();
       console.log({ result });
     });
