@@ -132,7 +132,7 @@ export default {
       const names = occurences.map((item: any) => item.name);
       console.log({ names });
       const sort = {};
-      const filter = { name: { $in: names } };
+      const filter = { name: { $in: names }, hidden: false };
       const limit = 0;
       const page = 1;
       return await product_db.findAll_products_db(filter, sort, limit, page);
@@ -150,7 +150,7 @@ export default {
         "Bulk CR1616 Batteries",
         "Bulk CR1620 Batteries",
         "Universal Battery Dispenser",
-        // "Glowstringz V2",
+        "Glowstringz V2",
         "Platonic Solids EXO Diffusers",
         "Diffuser Caps + Adapters Starter Kit V4",
         "Kaleidoscope Diffuser Caps V4",
@@ -169,7 +169,7 @@ export default {
       ];
       console.log({ names });
       const sort = { _id: -1 };
-      const filter = { name: { $in: names } };
+      const filter = { name: { $in: names }, hidden: false };
       const limit = 0;
       const page = 1;
       return await product_db.findAll_products_db(filter, sort, limit, page);
