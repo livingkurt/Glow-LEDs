@@ -270,7 +270,7 @@ const Sidebar = props => {
                 className="sidebar_dropdown_secondary_container"
                 id="gloving_dropdown"
               >
-                {browser_check() !== "safari" ? (
+                {/* {browser_check() !== "safari" ? (
                   <Link to="/collections/all/products/glowstringz_v2">
                     <button
                       className={`sidebar-btn nested  special_font gradient-btn`}
@@ -288,7 +288,7 @@ const Sidebar = props => {
                       <span>Glowstringz V2</span>
                     </button>
                   </Link>
-                )}
+                )} */}
                 <div className="sidebar_dropdown_nested">
                   <div className="sidebar-btn-container">
                     <button className="sidebar-btn nested" onClick={closeMenu}>
@@ -765,11 +765,11 @@ const Sidebar = props => {
                 Stickers
               </button>
             </Link>
-            <Link to="/collections/all/products/custom_product_deposit">
+            {/* <Link to="/collections/all/products/custom_product_deposit">
               <button className="sidebar-btn secondary" onClick={closeMenu}>
                 Customize Any Product!
               </button>
-            </Link>
+            </Link> */}
             {/* <Link to="/collections/all/products/glowstringz_v2">
 							<button className="sidebar-btn secondary special_font gradient-btn" onClick={closeMenu}>
 								Glowstringz V2

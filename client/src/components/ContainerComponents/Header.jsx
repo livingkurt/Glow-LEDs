@@ -369,11 +369,11 @@ const Header = props => {
                             Stickers
                           </button>
                         </Link>
-                        <Link to="/collections/all/products/custom_product_deposit">
+                        {/* <Link to="/collections/all/products/custom_product_deposit">
                           <button className="btn nav w-100per ta-l">
                             Customize Any Product!
                           </button>
-                        </Link>
+                        </Link> */}
                       </div>
                       <div className="nav-column">
                         <Link to="/pages/menu/gloving">
@@ -382,7 +382,7 @@ const Header = props => {
                           </button>
                         </Link>
                         <hr className="w-95per m-0px" />
-                        {browser_check() !== "safari" ? (
+                        {/* {browser_check() !== "safari" ? (
                           <Link to="/collections/all/products/glowstringz_v2">
                             <button
                               className={`btn nav ta-l w-100per special_font gradient-btn`}
@@ -396,7 +396,7 @@ const Header = props => {
                               <span>Glowstringz V2</span>
                             </button>
                           </Link>
-                        )}
+                        )} */}
                         <div className="nav-btn-container">
                           <Link
                             to="/collections/all/products/category/glowskinz"
