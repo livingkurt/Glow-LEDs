@@ -107,7 +107,7 @@ import { Notification, ScrollToTop } from "./components/UtilityComponents";
 import MessengerCustomerChat from "react-messenger-customer-chat";
 import { Helmet } from "react-helmet";
 import useWindowDimensions from "./components/Hooks/windowDimensions";
-import Particles from "react-particles-js";
+// import Particles from "react-particles-js";
 import particlesjs_config from "./particlesjs_config.json";
 import { check_authentication } from "./utils/react_helper_functions";
 import { EmailModal } from "./components/SpecialtyComponents";
@@ -302,11 +302,11 @@ const App = props => {
         </Helmet>
         <Notification message={message} />
         <EmailModal set_show_modal={set_show_modal} show_modal={show_modal} />
-        <Particles
+        {/* <Particles
           params={particlesjs_config}
           className="zi-n5"
           style={{ zIndex: -5, position: "fixed" }}
-        />
+        /> */}
         {isBrowser ? (
           <Headroom>
             <Header visible={visible} />
