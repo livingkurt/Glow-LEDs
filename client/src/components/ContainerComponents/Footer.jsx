@@ -130,11 +130,11 @@ const Footer = () => {
                     Stickers
                   </Link>
                 </li>
-                <li className="ta-l mv-2rem">
+                {/* <li className="ta-l mv-2rem">
                   <Link to="/collections/all/products/custom_product_deposit">
                     Customize Any Product!
                   </Link>
-                </li>
+                </li> */}
               </ul>
             </div>
             <div>
@@ -142,7 +142,7 @@ const Footer = () => {
                 <Link to="/pages/menu/gloving">Enhancers</Link>
               </h2>
               <ul className="lst-none">
-                <li className="ta-l mv-2rem">
+                {/* <li className="ta-l mv-2rem">
                   {browser_check() !== "safari" ? (
                     <Link
                       className="gradient-btn special_font"
@@ -158,7 +158,7 @@ const Footer = () => {
                       <span>GLOWSTRINGZ V2</span>
                     </Link>
                   )}
-                </li>
+                </li> */}
                 <li className="ta-l mv-2rem">
                   <Link to="/collections/all/products/glowskinz">
                     Glowskinz
