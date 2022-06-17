@@ -21,6 +21,7 @@
     "express-attack": "^0.4.1",
     "express-http-to-https": "^1.1.4",
     "google-spreadsheet": "^3.0.14",
+    "googleapis": "^103.0.0",
     "heroku-ssl-redirect": "^0.1.1",
     "if-env": "^1.0.4",
     "is-empty": "^1.2.0",

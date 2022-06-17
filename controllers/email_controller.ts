@@ -1,5 +1,5 @@
 import { email_services } from "../services";
-import nodemailer from "nodemailer";
+const nodemailer = require("nodemailer");
 import App from "../email_templates/App";
 import {
   account_created,
@@ -20,6 +20,101 @@ import { affiliate_db, content_db, email_db, order_db, user_db } from "../db";
 import { format_date, toCapitalize } from "../util";
 const cron = require("node-cron");
 const schedule = require("node-schedule");
+const { google } = require("googleapis");
+const OAuth2 = google.auth.OAuth2;
+
+// const verify_token = async () => {
+//   const oauth2Client = new OAuth2(
+//     process.env.GOOGLE_OAUTH_PUBLIC, // ClientID
+//     process.env.GOOGLE_OAUTH_SECRET, // Client Secret
+//     "https://developers.google.com/oauthplayground" // Redirect URL
+//   );
+
+//   oauth2Client.setCredentials({
+//     refresh_token: process.env.GOOGLE_OAUTH_REFRESH_TOKEN,
+//   });
+//   // const accessToken = oauth2Client.getAccessToken();
+
+//   const accessToken = await new Promise((resolve: any, reject: any) => {
+//     oauth2Client.getAccessToken((err: any, token: any) => {
+//       if (err) {
+//         reject("Failed to create access token :(");
+//       }
+//       resolve(token);
+//     });
+//   });
+//   // const transporter = nodemailer.createTransport({
+//   //   service: "gmail",
+//   //   auth: {
+//   //     type: "OAuth2",
+//   //     user: process.env.EMAIL,
+//   //     clientId: process.env.GOOGLE_OAUTH_PUBLIC,
+//   //     clientSecret: process.env.GOOGLE_OAUTH_SECRET,
+//   //     refreshToken: process.env.GOOGLE_OAUTH_REFRESH_TOKEN,
+//   //     accessToken: accessToken,
+//   //   },
+//   //   tls: {
+//   //     rejectUnauthorized: false,
+//   //   },
+//   // });
+// };
+
+const createTransporter = async (type: string) => {
+  const oauth2Client = new OAuth2(
+    process.env.GOOGLE_OAUTH_PUBLIC,
+    process.env.GOOGLE_OAUTH_SECRET,
+    "https://developers.google.com/oauthplayground"
+  );
+  console.log({ oauth2Client });
+  oauth2Client.setCredentials({
+    refresh_token: process.env.GOOGLE_OAUTH_REFRESH_TOKEN,
+  });
+
+  const accessToken = await new Promise((resolve, reject) => {
+    oauth2Client.getAccessToken((err: any, token: any) => {
+      if (err) {
+        reject();
+      }
+      resolve(token);
+    });
+  });
+  console.log({ accessToken });
+
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    pool: true,
+    auth: {
+      type: "OAuth2",
+      user: type === "contact" ? process.env.CONTACT_EMAIL : process.env.EMAIL,
+      accessToken,
+      clientId: process.env.GOOGLE_OAUTH_PUBLIC,
+      clientSecret: process.env.GOOGLE_OAUTH_SECRET,
+      refreshToken: process.env.GOOGLE_OAUTH_REFRESH_TOKEN,
+    },
+  });
+  console.log({ transporter });
+
+  return transporter;
+};
+
+const sendEmail = async (
+  emailOptions: any,
+  res: any,
+  type: string,
+  name: string
+) => {
+  const emailTransporter = await createTransporter(type);
+  console.log({ emailTransporter });
+  await emailTransporter.sendMail(emailOptions, (err: any, data: any) => {
+    if (err) {
+      console.log("Error Occurs", err);
+      res.status(500).send({ error: err, message: "Error Sending Email" });
+    } else {
+      console.log("Email Sent to " + name);
+      res.status(200).send({ message: "Email Successfully Sent" });
+    }
+  });
+};
 
 // const transporter_contact = nodemailer.createTransport({
 //   service: "gmail",
@@ -96,7 +191,7 @@ export default {
     const { body } = req;
     try {
       const email = await email_services.send_emails_s(body);
-      transporter.sendMail(email, (error, data) => {
+      transporter.sendMail(email, (error: any, data: any) => {
         if (error) {
           return res
             .status(500)
@@ -115,7 +210,7 @@ export default {
     try {
       console.log({ body });
       const email = await email_services.send_all_emails_s(body);
-      transporter.sendMail(email, (error, data) => {
+      transporter.sendMail(email, (error: any, data: any) => {
         if (error) {
           return res
             .status(500)
@@ -159,7 +254,7 @@ export default {
       subject: req.body.subject,
       html: App({ body: order(body), unsubscribe: false }),
     };
-    transporter.sendMail(mailOptions, (err, data) => {
+    transporter.sendMail(mailOptions, (err: any, data: any) => {
       if (err) {
         console.log("Error Occurs", err);
         res.status(500).send({ error: err, message: "Error Sending Email" });
@@ -185,7 +280,7 @@ export default {
       subject: req.body.subject,
       html: App({ body: order(body), unsubscribe: false }),
     };
-    transporter.sendMail(mailOptions, (err, data) => {
+    transporter.sendMail(mailOptions, (err: any, data: any) => {
       if (err) {
         console.log("Error Occurs", err);
         res.status(500).send({ error: err, message: "Error Sending Email" });
@@ -194,6 +289,16 @@ export default {
         res.status(200).send({ message: "Email Successfully Sent" });
       }
     });
+
+    // transporter.sendMail(mailOptions, (err: any, data: any) => {
+    //   if (err) {
+    //     console.log("Error Occurs", err);
+    //     res.status(500).send({ error: err, message: "Error Sending Email" });
+    //   } else {
+    //     console.log("Email Sent to " + req.body.email);
+    //     res.status(200).send({ message: "Email Successfully Sent" });
+    //   }
+    // });
   },
   send_refund_emails_c: async (req: any, res: any) => {
     console.log({ send_refund_emails_c: req.body });
@@ -227,7 +332,7 @@ export default {
       subject: "Your Glow LEDs Refund",
       html: App({ body: order(body), unsubscribe: false }),
     };
-    transporter.sendMail(mailOptions, (err, data) => {
+    transporter.sendMail(mailOptions, (err: any, data: any) => {
       if (err) {
         console.log("Error Occurs", err);
         res.status(500).send({ error: err, message: "Error Sending Email" });
@@ -263,7 +368,7 @@ export default {
       }),
     };
 
-    transporter.sendMail(mailOptions, (err, data) => {
+    transporter.sendMail(mailOptions, (err: any, data: any) => {
       if (err) {
         console.log("Error Occurs", err);
         res.status(500).send({ error: err, message: "Error Sending Email" });
@@ -285,7 +390,7 @@ export default {
       html: App({ body: affiliate(body), unsubscribe: false }),
     };
 
-    transporter.sendMail(mailOptions, (err, data) => {
+    transporter.sendMail(mailOptions, (err: any, data: any) => {
       if (err) {
         console.log("Error Occurs", err);
         res.status(500).send({ error: err, message: "Error Sending Email" });
@@ -310,7 +415,7 @@ export default {
       }),
     };
 
-    transporter.sendMail(mailOptions, (err, data) => {
+    transporter.sendMail(mailOptions, (err: any, data: any) => {
       if (err) {
         console.log("Error Occurs", err);
         res.status(500).send({ error: err, message: "Error Sending Email" });
@@ -327,7 +432,7 @@ export default {
       subject: `${req.body.subject} - ${req.body.name}`,
       html: req.body.message,
     };
-    transporter.sendMail(mailOptions, (err, data) => {
+    transporter.sendMail(mailOptions, (err: any, data: any) => {
       if (err) {
         console.log("Error Occurs", err);
         res.status(500).send({ error: err, message: "Error Sending Email" });
@@ -345,23 +450,12 @@ export default {
         .reason_for_contact}`,
       html: contact(req.body),
     };
-    const transporter_contact = nodemailer.createTransport({
-      service: "gmail",
-      pool: true,
-      auth: {
-        user: process.env.CONTACT_EMAIL,
-        pass: process.env.CONTACT_PASSWORD,
-      },
-    });
-    transporter_contact.sendMail(mailOptions, (err, data) => {
-      if (err) {
-        console.log("Error Occurs", err);
-        res.status(500).send({ error: err, message: "Error Sending Email" });
-      } else {
-        console.log("Contact Email Sent to " + req.body.first_name);
-        res.status(200).send({ message: "Email Successfully Sent" });
-      }
-    });
+    sendEmail(
+      mailOptions,
+      res,
+      "contact",
+      "User Contact Email Sent to " + req.body.first_name
+    );
   },
   send_admin_contact_emails_c: async (req: any, res: any) => {
     const mailOptions = {
@@ -370,23 +464,12 @@ export default {
       subject: `Thank you for Contacting Glow LEDs Support`,
       html: contact_confirmation(req.body),
     };
-    const transporter_contact = nodemailer.createTransport({
-      service: "gmail",
-      pool: true,
-      auth: {
-        user: process.env.CONTACT_EMAIL,
-        pass: process.env.CONTACT_PASSWORD,
-      },
-    });
-    transporter_contact.sendMail(mailOptions, (err, data) => {
-      if (err) {
-        console.log("Error Occurs", err);
-        res.status(500).send({ error: err, message: "Error Sending Email" });
-      } else {
-        console.log("Contact Email Sent to " + req.body.first_name);
-        res.status(200).send({ message: "Email Successfully Sent" });
-      }
-    });
+    sendEmail(
+      mailOptions,
+      res,
+      "contact",
+      "Admin Contact Email Sent to " + req.body.first_name
+    );
   },
   send_custom_contact_emails_c: async (req: any, res: any) => {
     console.log({ send_custom_contact_emails_c: req.body });
@@ -397,25 +480,12 @@ export default {
       subject: `Thank you for ordering a custom Glow LEDs Product!`,
       html: custom_contact({ order }),
     };
-    const transporter_contact = nodemailer.createTransport({
-      service: "gmail",
-      pool: true,
-      auth: {
-        user: process.env.CONTACT_EMAIL,
-        pass: process.env.CONTACT_PASSWORD,
-      },
-    });
-    transporter_contact.sendMail(mailOptions, (err, data) => {
-      if (err) {
-        console.log("Error Occurs", err);
-        res.status(500).send({ error: err, message: "Error Sending Email" });
-      } else {
-        console.log(
-          "Custom Contact Email Sent to " + order.shipping.first_name
-        );
-        res.status(200).send({ message: "Email Successfully Sent" });
-      }
-    });
+    sendEmail(
+      mailOptions,
+      res,
+      "contact",
+      "Custom Contact Email Sent to " + order.shipping.first_name
+    );
   },
   send_password_reset_emails_c: async (req: any, res: any) => {
     console.log({ passwordreset: req.body });
@@ -433,7 +503,7 @@ export default {
       }),
     };
 
-    transporter.sendMail(mailOptions, (err, data) => {
+    transporter.sendMail(mailOptions, (err: any, data: any) => {
       if (err) {
         console.log("Error Occurs", err);
         res.status(500).send({ error: err, message: "Error Sending Email" });
@@ -466,7 +536,7 @@ export default {
       }),
     };
 
-    transporter.sendMail(mailOptions, (err, data) => {
+    transporter.sendMail(mailOptions, (err: any, data: any) => {
       if (err) {
         console.log("Error Occurs", err);
         res.status(500).send({ error: err, message: "Error Sending Email" });
@@ -521,7 +591,7 @@ export default {
           1} *`,
         () => {
           console.log("Email Scheduled for " + time);
-          transporter.sendMail(mailOptions, (err, data) => {
+          transporter.sendMail(mailOptions, (err: any, data: any) => {
             if (err) {
               console.log("Error Occurs", err);
               res
@@ -542,7 +612,7 @@ export default {
       );
     } else {
       console.log("Email not scheduled");
-      transporter.sendMail(mailOptions, (err, data) => {
+      transporter.sendMail(mailOptions, (err: any, data: any) => {
         if (err) {
           console.log("Error Occurs", err);
           res.status(500).send({ error: err, message: "Error Sending Email" });
@@ -588,7 +658,7 @@ export default {
       }),
     };
 
-    transporter.sendMail(mailOptions, (err, data) => {
+    transporter.sendMail(mailOptions, (err: any, data: any) => {
       if (err) {
         console.log("Error Occurs", err);
         res.status(500).send({ error: err, message: "Error Sending Email" });
@@ -614,7 +684,7 @@ export default {
       }),
     };
 
-    transporter.sendMail(mailOptions, (err, data) => {
+    transporter.sendMail(mailOptions, (err: any, data: any) => {
       if (err) {
         console.log("Error Occurs", err);
         res.status(500).send({ error: err, message: "Error Sending Email" });
@@ -647,7 +717,7 @@ export default {
       }),
     };
 
-    transporter.sendMail(mailOptions, (err, data) => {
+    transporter.sendMail(mailOptions, (err: any, data: any) => {
       if (err) {
         console.log("Error Occurs", err);
         res.status(500).send({ error: err, message: "Error Sending Email" });
@@ -674,7 +744,7 @@ export default {
       }),
     };
 
-    transporter.sendMail(mailOptions, (err, data) => {
+    transporter.sendMail(mailOptions, (err: any, data: any) => {
       if (err) {
         console.log("Error Occurs", err);
         res.status(500).send({ error: err, message: "Error Sending Email" });
