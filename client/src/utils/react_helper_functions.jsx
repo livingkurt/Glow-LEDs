@@ -109,10 +109,7 @@ export const product_page_sale_price_switch = (
   const color = cartItem ? { color: "#7e7e7e" } : { color: "#c5c5c5" };
   // const color = cartItem
   // 	? { color: '#7e7e7e' }
-  console.log({
-    price,
-    sale_price,
-  });
+
   // 	: background === 'light' ? { color: '#283166' } : { color: '#757b99' };
   if (previous_price) {
     return (
@@ -361,7 +358,6 @@ const size = (item, modifier) => {
 };
 
 const secondary_color = item => {
-  console.log({ item });
   return `${item.secondary_color && item.secondary_color_product
     ? `${second_dash(item)} ${item.secondary_color}`
     : ""}`;

@@ -23,6 +23,8 @@ import { API_Emails, API_Orders, API_Shipping } from "../../utils";
 
 const OrderListItem = ({
   order,
+  order_state,
+  set_order_state,
   determine_color,
   admin,
   update_order_payment_state,
@@ -246,6 +248,10 @@ const OrderListItem = ({
       new_order_items: new_order_items.map(item => item.is_manufactured),
     });
     set_order_items(new_order_items);
+    set_order_state({
+      ...order,
+      orderItems: [ ...new_order_items ],
+    });
     dispatch(
       saveOrder({
         ...order,
