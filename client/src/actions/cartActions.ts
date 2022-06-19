@@ -78,6 +78,7 @@ export const addToCart = (cart_item_1: any) => async (
       package_width: cart_data.package_width,
       package_height: cart_data.package_height,
       package_volume: cart_data.package_volume,
+      processing_time: cart_data.processing_time,
       pathname: cart_data.pathname,
       collection: cart_data.product_collection,
       subcategory: cart_data.subcategory,

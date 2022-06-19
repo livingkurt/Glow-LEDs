@@ -966,14 +966,147 @@ export default {
       deleted: false,
       category: "diffusers",
     });
+    console.log({ products });
 
     products.forEach(async (product: any) => {
-      product.facts = product.facts.split("\n").pop().pop();
-      product.facts =
-        product.facts +
-        "\nClassic diffusers are for Standard 5 mm bulbs\nVortex diffusers are for the Vortex gloveset from StoneOrbits";
+      const facts_array = product.facts.split("\n");
+      facts_array.splice(facts_array.length - 2, 2);
+      // product.facts = product.facts.split("\n").pop();
+      console.log({ facts_array: facts_array.join("\n") });
+      product.facts = `${facts_array.join(
+        "\n"
+      )}\nClassic diffusers are for Standard 5 mm bulbs\nVortex diffusers are for the Vortex gloveset from StoneOrbits`;
+      console.log({ facts: product.facts });
       const result = await product.save();
       console.log({ result });
+    });
+
+    res.send(products);
+  },
+  processing_time_diffusers: async (req: any, res: any) => {
+    const products = await Product.find({
+      deleted: false,
+      category: "diffusers",
+    });
+    console.log({ products });
+
+    products.forEach(async (product: any) => {
+      product.processing_time = [ 2, 5 ];
+      const result = await product.save();
+    });
+
+    res.send(products);
+  },
+  processing_time_exo_diffusers: async (req: any, res: any) => {
+    const products = await Product.find({
+      deleted: false,
+      category: "exo_diffusers",
+    });
+    console.log({ products });
+
+    products.forEach(async (product: any) => {
+      product.processing_time = [ 3, 6 ];
+      const result = await product.save();
+    });
+
+    res.send(products);
+  },
+  processing_time_diffuser_caps: async (req: any, res: any) => {
+    const products = await Product.find({
+      deleted: false,
+      category: "diffuser_caps",
+    });
+    console.log({ products });
+
+    products.forEach(async (product: any) => {
+      product.processing_time = [ 3, 6 ];
+      const result = await product.save();
+    });
+
+    res.send(products);
+  },
+  processing_time_decals: async (req: any, res: any) => {
+    const products = await Product.find({
+      deleted: false,
+      category: "decals",
+    });
+    console.log({ products });
+
+    products.forEach(async (product: any) => {
+      product.processing_time = [ 3, 6 ];
+      const result = await product.save();
+    });
+
+    res.send(products);
+  },
+  processing_time_whites: async (req: any, res: any) => {
+    const products = await Product.find({
+      deleted: false,
+      category: { $in: [ "whites" ] },
+    });
+    console.log({ products });
+
+    products.forEach(async (product: any) => {
+      product.processing_time = [ 1, 3 ];
+      const result = await product.save();
+    });
+
+    res.send(products);
+  },
+  processing_time_glowskinz: async (req: any, res: any) => {
+    const products = await Product.find({
+      deleted: false,
+      category: { $in: [ "glowskinz" ] },
+    });
+    console.log({ products });
+
+    products.forEach(async (product: any) => {
+      product.processing_time = [ 3, 7 ];
+      const result = await product.save();
+    });
+
+    res.send(products);
+  },
+  processing_time_glowstringz: async (req: any, res: any) => {
+    const products = await Product.find({
+      deleted: false,
+      category: { $in: [ "glowstringz" ] },
+    });
+    console.log({ products });
+
+    products.forEach(async (product: any) => {
+      product.processing_time = [ 6, 10 ];
+      const result = await product.save();
+    });
+
+    res.send(products);
+  },
+  processing_time_battery_coin: async (req: any, res: any) => {
+    const products = await Product.find({
+      deleted: false,
+      category: "batteries",
+      subcategory: "coin",
+    });
+    console.log({ products });
+
+    products.forEach(async (product: any) => {
+      product.processing_time = [ 1, 3 ];
+      const result = await product.save();
+    });
+
+    res.send(products);
+  },
+  processing_time_battery_storage: async (req: any, res: any) => {
+    const products = await Product.find({
+      deleted: false,
+      category: "batteries",
+      subcategory: "storage",
+    });
+    console.log({ products });
+
+    products.forEach(async (product: any) => {
+      product.processing_time = [ 5, 8 ];
+      const result = await product.save();
     });
 
     res.send(products);

@@ -30,6 +30,7 @@ export function Shipping({
   show_shipping_complete,
   next_step,
   shipping_rates,
+  cartItems,
 }) {
   const [ first_name, set_first_name ] = useState("");
   const [ last_name, set_last_name ] = useState("");
@@ -518,10 +519,7 @@ export function Shipping({
                   {country_validations}
                 </label>
                 <li>
-                  <button
-                    type="submit"
-                    className="btn primary bob" 
-                  >
+                  <button type="submit" className="btn primary bob">
                     Continue
                   </button>
                 </li>
@@ -573,7 +571,22 @@ export function Shipping({
                   <div>{shipping.international && "International"}</div>
                 </div>
               )}
-
+              {cartItems.some(item => item.processing_time) && (
+                <h4
+                  className="mb-0px mt-0px"
+                  style={{ webkitTextStroke: "0.5px white" }}
+                >
+                  Estimated Time to Ship{" "}
+                  {Math.max(
+                    ...cartItems.map(item => item.processing_time[0])
+                  )}{" "}
+                  -{" "}
+                  {Math.max(
+                    ...cartItems.map(item => item.processing_time[1])
+                  )}{" "}
+                  business days
+                </h4>
+              )}
               {/* <div className="pos-abs "> */}
               <Loading loading={loading_shipping} />
               {/* </div> */}

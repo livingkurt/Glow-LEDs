@@ -103,6 +103,7 @@ const productSchema = new mongoose.Schema(
     product_height: { type: Number },
     weight_pounds: { type: Number },
     weight_ounces: { type: Number },
+    processing_time: { type: Array },
     material_cost: { type: Number },
     filament_used: { type: Number },
     printing_time: { type: Number },

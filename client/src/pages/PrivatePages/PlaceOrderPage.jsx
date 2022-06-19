@@ -839,6 +839,7 @@ const PlaceOrderPage = props => {
               show_shipping_complete={show_shipping_complete}
               next_step={next_step}
               shipping_rates={shipping_rates}
+              cartItems={cartItems}
             />
             <Payment
               payment_completed={payment_completed}

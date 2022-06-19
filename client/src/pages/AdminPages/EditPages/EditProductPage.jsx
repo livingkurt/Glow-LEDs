@@ -87,7 +87,8 @@ const EditProductPage = props => {
   const [ material_cost, set_material_cost ] = useState();
   const [ filament_used, set_filament_used ] = useState();
   const [ printing_time, set_printing_time ] = useState();
-  const [ assembly_time, set_assembly_time ] = useState();
+  const [ assembly_time, set_assembly_time ] = useState([]);
+  const [ processing_time, set_processing_time ] = useState([]);
   const [ preorder, set_preorder ] = useState();
 
   const [ default_option, set_default_option ] = useState(false);
@@ -430,6 +431,7 @@ const EditProductPage = props => {
     set_filament_used(product.filament_used);
     set_printing_time(product.printing_time);
     set_assembly_time(product.assembly_time);
+    set_processing_time(product.processing_time);
     set_group_name(product.group_name);
     set_color_product_group(product.color_product_group);
     set_color_group_name(product.color_group_name);
@@ -507,7 +509,8 @@ const EditProductPage = props => {
     set_material_cost();
     set_filament_used();
     set_printing_time();
-    set_assembly_time();
+    set_assembly_time([]);
+    set_processing_time();
     set_group_name("");
     set_color_product_group();
     set_color_group_name();
@@ -598,6 +601,7 @@ const EditProductPage = props => {
         filament_used,
         printing_time,
         assembly_time,
+        processing_time,
         group_name,
         color_product_group,
         color_group_name,
@@ -1378,7 +1382,7 @@ const EditProductPage = props => {
                     </div>
                     <div
                       className=""
-                      styles={{ width: "228px", margin: "10px" }}
+                      style={{ width: "228px", margin: "10px" }}
                     >
                       <li>
                         <label htmlFor="pathname">Pathname</label>
@@ -1473,6 +1477,48 @@ const EditProductPage = props => {
                           id="assembly_time"
                           onChange={e => set_assembly_time(e.target.value)}
                         />
+                      </li>
+                      <li>
+                        <div className="jc-b">
+                          <div className="mr-5px">
+                            <label htmlFor="processing_time">
+                              Processing Time Min
+                            </label>
+                            <input
+                              type="text"
+                              className="w-100per"
+                              name="processing_time"
+                              defaultValue={
+                                processing_time && processing_time[0]
+                              }
+                              id="processing_time"
+                              onChange={e =>
+                                set_processing_time(time => [
+                                  e.target.value,
+                                  time[1],
+                                ])}
+                            />
+                          </div>
+                          <div>
+                            <label htmlFor="processing_time">
+                              Processing Time Max
+                            </label>
+                            <input
+                              type="text"
+                              className="w-100per"
+                              name="processing_time"
+                              defaultValue={
+                                processing_time && processing_time[1]
+                              }
+                              id="processing_time"
+                              onChange={e =>
+                                set_processing_time(time => [
+                                  time[0],
+                                  e.target.value,
+                                ])}
+                            />
+                          </div>
+                        </div>
                       </li>
                     </div>
                     <div className="w-228px m-10px">

@@ -542,6 +542,7 @@ const ProductPage = props => {
       package_width: dimensions.package_width,
       package_height: dimensions.package_height,
       package_volume: dimensions.package_volume,
+      processing_time: product.processing_time,
       pathname: props.match.params.pathname,
       category: product.category,
       subcategory: product.subcategory,

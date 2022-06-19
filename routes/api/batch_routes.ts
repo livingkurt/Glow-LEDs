@@ -81,6 +81,33 @@ router
   .put(batch_controller.add_vortex_option_to_diffusers);
 router.route("/updated_capez_price").put(batch_controller.updated_capez_price);
 router.route("/vortex_language").put(batch_controller.vortex_language);
+router
+  .route("/processing_time_diffusers")
+  .put(batch_controller.processing_time_diffusers);
+router
+  .route("/processing_time_exo_diffusers")
+  .put(batch_controller.processing_time_exo_diffusers);
+router
+  .route("/processing_time_diffuser_caps")
+  .put(batch_controller.processing_time_diffuser_caps);
+router
+  .route("/processing_time_decals")
+  .put(batch_controller.processing_time_decals);
+router
+  .route("/processing_time_whites")
+  .put(batch_controller.processing_time_whites);
+router
+  .route("/processing_time_glowskinz")
+  .put(batch_controller.processing_time_glowskinz);
+router
+  .route("/processing_time_glowstringz")
+  .put(batch_controller.processing_time_glowstringz);
+router
+  .route("/processing_time_battery_coin")
+  .put(batch_controller.processing_time_battery_coin);
+router
+  .route("/processing_time_battery_storage")
+  .put(batch_controller.processing_time_battery_storage);
 
 // router.route('/create_categories').post();
 
