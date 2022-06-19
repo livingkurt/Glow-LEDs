@@ -307,7 +307,7 @@ const App = props => {
           className="zi-n5"
           style={{ zIndex: -5, position: "fixed" }}
         /> */}
-        {isBrowser ? (
+        {isBrowser && width > 1158 && height > 900 ? (
           <Headroom>
             <Header visible={visible} />
           </Headroom>

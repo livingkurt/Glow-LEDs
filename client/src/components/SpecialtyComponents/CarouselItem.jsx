@@ -101,7 +101,7 @@ const CarouselItem = (props) => {
 		<div>
 			{product &&
 			!loading && (
-				<li key={props.product && product.pathname} style={props.styles}>
+				<li key={props.product && product.pathname} style={props.style}>
 					<div className="tooltip">
 						<span className="tooltiptext">
 							<li>

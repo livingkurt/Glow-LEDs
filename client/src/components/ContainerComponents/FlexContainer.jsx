@@ -53,7 +53,7 @@ const FlexContainer = props => {
       : props.t_left ? "left" : props.t_right ? "right" : "",
   };
   return (
-    <div style={{ ...styles, ...props.styles }} className={props.class}>
+    <div style={{ ...styles, ...props.style }} className={props.class}>
       {props.children}
     </div>
   );
