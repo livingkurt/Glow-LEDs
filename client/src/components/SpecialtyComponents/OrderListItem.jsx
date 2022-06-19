@@ -8,6 +8,7 @@ import {
   determnine_link,
   format_date,
   getUrlParameter,
+  toCapitalize,
 } from "../../utils/helper_functions";
 import {
   createOrder,
@@ -15,6 +16,8 @@ import {
   detailsOrder,
   listOrders,
   saveOrder,
+  update_order,
+  update_payment,
 } from "../../actions/orderActions";
 import { LazyImage, Loading } from "../UtilityComponents";
 import { determine_product_name } from "../../utils/react_helper_functions";
@@ -23,19 +26,21 @@ import { API_Emails, API_Orders, API_Shipping } from "../../utils";
 
 const OrderListItem = ({
   order,
-  order_state,
-  set_order_state,
   determine_color,
   admin,
-  update_order_payment_state,
-  update_order_state,
+  send_email,
+  send_paid_email,
+  listOrdersFilters,
 }) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const [ loading_label, set_loading_label ] = useState(false);
+  const [ loading_email, set_loading_email ] = useState("");
   const [ hide_label_button, set_hide_label_button ] = useState(true);
   const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
   const [ order_items, set_order_items ] = useState(order.orderItems);
+
+  const [ order_state, set_order_state ] = useState(order);
   const userLogin = useSelector(state => state.userLogin);
   const { userInfo } = userLogin;
   setTimeout(() => {
@@ -258,6 +263,40 @@ const OrderListItem = ({
         orderItems: [ ...new_order_items ],
       })
     );
+  };
+
+  const update_order_state = (order, state, is_action, action_at) => {
+    console.log({ order_state });
+    console.log({ order });
+    set_loading_email(true);
+    if (state) {
+      set_order_state({ ...order_state, [is_action]: false });
+      dispatch(update_order(order_state, false, is_action, action_at));
+    } else {
+      set_order_state({ ...order_state, [is_action]: true });
+      dispatch(update_order(order_state, true, is_action, action_at));
+      send_email(order_state, action_at.slice(0, -2));
+    }
+    setTimeout(() => {
+      dispatch(listOrders(listOrdersFilters));
+    }, 300);
+    set_loading_email(false);
+  };
+
+  const update_order_payment_state = (order, state, is_action, action_at) => {
+    set_loading_email(true);
+    if (state) {
+      set_order_state({ ...order_state, [is_action]: false });
+      dispatch(update_payment(order, false, is_action, "venmo"));
+    } else {
+      set_order_state({ ...order_state, [is_action]: true });
+      dispatch(update_payment(order, true, is_action, "venmo"));
+      send_paid_email(order._id);
+    }
+    setTimeout(() => {
+      dispatch(listOrders(listOrdersFilters));
+    }, 1000);
+    set_loading_email(false);
   };
 
   return (

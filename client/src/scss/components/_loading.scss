@@ -3,84 +3,84 @@
 // Loading Gif
 
 .loading_gif {
-	height: 100px;
-	position: absolute;
-	// top: 50%;
-	// left: 50%;
-	// margin: -50px 0px 0px -50px;
-	position: absolute;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	z-index: 5;
+  height: 100px;
+  position: fixed;
+  // top: 50%;
+  // left: 50%;
+  // margin: -50px 0px 0px -50px;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 5;
 
-	margin: auto;
+  margin: auto;
 }
 
 .loading_png {
-	height: 100px;
-	z-index: 10;
-	// position: absolute;
-	// top: 50%;
-	// left: 49%;
-	// margin: -50px 0px 0px -50px;
-	position: absolute;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
+  height: 100px;
+  z-index: 10;
+  // position: fixed;
+  // top: 50%;
+  // left: 49%;
+  // margin: -50px 0px 0px -50px;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 
-	margin: auto;
+  margin: auto;
 }
 .error_message_payment {
-	z-index: 2;
-	background: #9a4949;
-	padding: 15px;
-	border-radius: 20px;
-	// font-size: 20px;
-	position: fixed;
-	width: 332px;
-	top: 25%;
-	left: 50%;
-	margin-top: -50px;
-	margin-left: -165px;
+  z-index: 2;
+  background: #9a4949;
+  padding: 15px;
+  border-radius: 20px;
+  // font-size: 20px;
+  position: fixed;
+  width: 332px;
+  top: 25%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -165px;
 }
 .notification {
-	z-index: 5;
-	background: linear-gradient(90deg, #03a9f4, #f441a5, #ffeb3b, #03a9f4);
-	padding: 20px;
-	border-radius: 15px;
-	// font-size: 20px;
-	position: fixed;
-	// width: 200px;
-	top: 25px;
-	right: 20px;
-	// margin-top: -50px;
-	// margin-left: -165px;
-	background-size: 200%;
-	// -webkit-text-stroke: 1px white !important;
-	font-size: 18px;
-	text-align: center;
-	// letter-spacing: 6px;
-	font-family: $special_font;
-	animation: fadeinout 4s linear 1 forwards, animate 4s linear infinite;
-	// animation: animate 4s linear infinite;
+  z-index: 5;
+  background: linear-gradient(90deg, #03a9f4, #f441a5, #ffeb3b, #03a9f4);
+  padding: 20px;
+  border-radius: 15px;
+  // font-size: 20px;
+  position: fixed;
+  // width: 200px;
+  top: 25px;
+  right: 20px;
+  // margin-top: -50px;
+  // margin-left: -165px;
+  background-size: 200%;
+  // -webkit-text-stroke: 1px white !important;
+  font-size: 18px;
+  text-align: center;
+  // letter-spacing: 6px;
+  font-family: $special_font;
+  animation: fadeinout 4s linear 1 forwards, animate 4s linear infinite;
+  // animation: animate 4s linear infinite;
 }
 
 @keyframes fadeinout {
-	0% {
-		opacity: 0;
-	}
-	20% {
-		opacity: 1;
-	}
-	80% {
-		opacity: 1;
-	}
-	100% {
-		opacity: 0;
-	}
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 // .notification:hover {
 // 	// background: linear-gradient(90deg, #03a9f4, #f441a5, #ffeb3b, #03a9f4);
@@ -89,48 +89,48 @@
 // }
 
 .error_message {
-	// z-index: 2;
-	background: #9a4949;
-	// padding: 15px;
-	border-radius: 10px;
-	// font-size: 20px;
-	// position: fixed;
-	// width: 332px;
-	// top: 25%;
-	// left: 50%;
-	// margin-top: -50px;
-	// margin-left: -165px;
+  // z-index: 2;
+  background: #9a4949;
+  // padding: 15px;
+  border-radius: 10px;
+  // font-size: 20px;
+  // position: fixed;
+  // width: 332px;
+  // top: 25%;
+  // left: 50%;
+  // margin-top: -50px;
+  // margin-left: -165px;
 }
 
 .payment_message {
-	z-index: 2;
-	background: $theme_color_header;
-	padding: 15px;
-	border-radius: 20px;
-	// font-size: 20px;
-	width: 332px;
-	position: fixed;
-	top: 25%;
-	left: 50%;
-	margin-top: -50px;
-	margin-left: -165px;
+  z-index: 2;
+  background: $theme_color_header;
+  padding: 15px;
+  border-radius: 20px;
+  // font-size: 20px;
+  width: 332px;
+  position: fixed;
+  top: 25%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -165px;
 }
 .added_to_cart_message {
-	z-index: 2;
-	background: $theme_color_primary;
-	padding: 15px;
-	border-radius: 20px;
-	// font-size: 20px;
-	width: 500px;
-	position: fixed;
-	top: 25%;
-	left: 50%;
-	margin-top: -50px;
-	margin-left: -250px;
+  z-index: 2;
+  background: $theme_color_primary;
+  padding: 15px;
+  border-radius: 20px;
+  // font-size: 20px;
+  width: 500px;
+  position: fixed;
+  top: 25%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -250px;
 }
 
 // .payment_message {
-// 	position: absolute;
+// 	position: fixed;
 // 	top: 60%;
 // 	left: 0;
 // 	background: white;
@@ -142,11 +142,11 @@
 // 	margin-left: 10px;
 // }
 .payment_error_message {
-	position: absolute;
-	top: 70%;
-	left: 0;
-	margin: -50px 0px 0px -50px;
-	text-align: center;
-	width: 100%;
-	margin-left: 10px;
+  position: fixed;
+  top: 70%;
+  left: 0;
+  margin: -50px 0px 0px -50px;
+  text-align: center;
+  width: 100%;
+  margin-left: 10px;
 }
