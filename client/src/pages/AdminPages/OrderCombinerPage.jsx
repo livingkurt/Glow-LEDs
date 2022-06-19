@@ -190,11 +190,11 @@ const OrderCombinerPage = (props) => {
 	const address = {
 		first_name: 'Kurt',
 		last_name: 'LaVacque',
-		address_1: '230 Hackberry St',
-		city: 'Baytown',
-		state: 'Texas',
-		postalCode: '77520',
-		country: 'United States',
+    address_1: process.env.REACT_APP_RETURN_ADDRESS,
+    city: process.env.REACT_APP_RETURN_CITY,
+    state: process.env.REACT_APP_RETURN_STATE,
+    postalCode: process.env.REACT_APP_RETURN_POSTAL_CODE,
+    country: process.env.REACT_APP_RETURN_COUNTRY,
 		phone: '906-284-2208',
 		email: 'contact.glowleds@gmail.com',
 		company: 'Glow LEDs'

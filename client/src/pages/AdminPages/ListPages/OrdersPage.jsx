@@ -109,28 +109,6 @@ const OrdersPage = props => {
     "Highest",
   ];
 
-  // const update_order_state = (order, state, is_action, action_at) => {
-  //   console.log({ order_state });
-  //   console.log({ order });
-  //   set_loading_email(true);
-  //   if (state) {
-  //     set_order_state({ ...order_state, [is_action]: false });
-  //     dispatch(
-  //       update_order({ ...order, ...order_state }, false, is_action, action_at)
-  //     );
-  //   } else {
-  //     set_order_state({ ...order_state, [is_action]: true });
-  //     dispatch(
-  //       update_order({ ...order, ...order_state }, true, is_action, action_at)
-  //     );
-  //     send_email(order_state, action_at.slice(0, -2));
-  //   }
-  //   setTimeout(() => {
-  //     dispatch(listOrders({ category, search, sort, page, limit }));
-  //   }, 300);
-  //   set_loading_email(false);
-  // };
-
   const send_paid_email = async order_id => {
     const { data: order } = await API_Orders.findById_orders_a(order_id);
     await API_Emails.send_order_email(
@@ -144,20 +122,6 @@ const OrdersPage = props => {
       "info.glowleds@gmail.com"
     );
   };
-  // const update_order_payment_state = (order, state, is_action) => {
-  //   if (state) {
-  //     set_order_state({ ...order_state, [is_action]: false });
-  //     dispatch(update_payment(order, false, payment_method));
-  //   } else {
-  //     set_order_state({ ...order_state, [is_action]: true });
-  //     dispatch(update_payment(order, true, payment_method));
-  //     send_paid_email(order._id);
-  //   }
-  //   setTimeout(() => {
-  //     dispatch(listOrders({ category, search, sort, page, limit }));
-  //   }, 1000);
-  // };
-
   useEffect(
     () => {
       let clean = true;

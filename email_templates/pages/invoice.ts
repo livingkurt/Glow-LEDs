@@ -31,7 +31,10 @@ export default (props: any) => {
           <td colspan="2" valign="top">
             <table style="width:100%;line-height:inherit;text-align:left;font-size:25px" width="100%" align="left">
               <tr>
-                <td valign="top">Glow LEDs<br />230 Hackberry St<br />Baytown, TX 77520<br />contact.glowleds@gmail.com
+                <td valign="top">Glow LEDs<br />${process.env
+                  .RETURN_ADDRESS}<br />${process.env.RETURN_CITY}, ${process
+    .env.RETURN_STATE} ${process.env
+    .RETURN_POSTAL_CODE} <br />contact.glowleds@gmail.com
                 </td>
                 <td valign="top" align="right" style="text-align: right;">${order
                   .shipping.first_name} ${order.shipping.last_name}<br>${order

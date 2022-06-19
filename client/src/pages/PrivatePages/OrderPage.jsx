@@ -132,7 +132,7 @@ const OrderPage = props => {
       if (clean) {
         if (order) {
           set_order_state(order);
-          set_order_items(order.orderItems)
+          set_order_items(order.orderItems);
         }
       }
       return () => (clean = false);
@@ -557,11 +557,11 @@ const OrderPage = props => {
   const address = {
     first_name: "Kurt",
     last_name: "LaVacque",
-    address_1: "230 Hackberry St",
-    city: "Baytown",
-    state: "Texas",
-    postalCode: "77520",
-    country: "United States",
+    address_1: process.env.REACT_APP_RETURN_ADDRESS,
+    city: process.env.REACT_APP_RETURN_CITY,
+    state: process.env.REACT_APP_RETURN_STATE,
+    postalCode: process.env.REACT_APP_RETURN_POSTAL_CODE,
+    country: process.env.REACT_APP_RETURN_COUNTRY,
     phone: "906-284-2208",
     email: "info.glowleds@gmail.com",
     company: "Glow LEDs",
@@ -634,25 +634,21 @@ const OrderPage = props => {
 
     set_loading_label(false);
   };
-  
 
-  const check_item_as_manufactured = async (index) => {
+  const check_item_as_manufactured = async index => {
     let new_order_items = [ ...order_items ];
-		new_order_items[index] = {
-			...new_order_items[index],
-      is_manufactured: order_items[index].is_manufactured ? false : true
-		};
-    set_order_items(new_order_items)
+    new_order_items[index] = {
+      ...new_order_items[index],
+      is_manufactured: order_items[index].is_manufactured ? false : true,
+    };
+    set_order_items(new_order_items);
     dispatch(
-			saveOrder({
-				...order, 
-        orderItems: [...new_order_items]
-			})
-		);
-    
+      saveOrder({
+        ...order,
+        orderItems: [ ...new_order_items ],
+      })
+    );
   };
-
-
 
   return (
     <Loading loading={loading} error={error}>
@@ -1075,7 +1071,14 @@ ${order.shipping.email}`)}
                       <div>Cart is empty</div>
                     ) : (
                       order.orderItems.map((item, index) => (
-                        <CartItem check_item_as_manufactured={check_item_as_manufactured} item={item} index={index} show_qty={false} />
+                        <CartItem
+                          check_item_as_manufactured={
+                            check_item_as_manufactured
+                          }
+                          item={item}
+                          index={index}
+                          show_qty={false}
+                        />
                       ))
                     )}
                   </ul>
