@@ -341,7 +341,7 @@ export default {
 
       const tableData = await scraper.get(updatedSalesTaxes);
 
-      const tempData = tableData[0];
+      const tempData = tableData[1];
       tempData.map((state: any) => {
         const percentage = state["State Rate"];
         result[state["State"]] = percentage.slice(
@@ -349,6 +349,7 @@ export default {
           percentage.indexOf("%") + 1
         );
       });
+      console.log({ result });
       return result;
     } catch (error) {
       console.log({ tax_rates_orders_s_error: error });
