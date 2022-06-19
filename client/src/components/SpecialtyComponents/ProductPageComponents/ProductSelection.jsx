@@ -34,7 +34,13 @@ const ProductSelection = ({
           "light"
         )}
       </div>
-      <ProductFacts facts={facts} />
+      <ProductFacts
+        facts={facts}
+        category={product.category}
+        subcategory={product.subcategory}
+        pathname={product.pathname}
+        name={product.name}
+      />
     </div>
   );
 };

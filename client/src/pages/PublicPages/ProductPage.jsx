@@ -974,6 +974,7 @@ const ProductPage = props => {
                   </div>
                 )}
               </div>
+
               {width < 500 &&
               product &&
               (product.category === "diffusers" ||
@@ -1112,7 +1113,13 @@ const ProductPage = props => {
                   className="details-info mobile_product_view"
                   style={{ display: width <= 819 ? "block" : "none" }}
                 >
-                  <ProductFacts facts={facts} />
+                  <ProductFacts
+                    facts={facts}
+                    category={product.category}
+                    subcategory={product.subcategory}
+                    pathname={product.pathname}
+                    name={product.name}
+                  />
                 </div>
               </div>
             </div>
