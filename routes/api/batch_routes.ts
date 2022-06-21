@@ -108,6 +108,25 @@ router
 router
   .route("/processing_time_battery_storage")
   .put(batch_controller.processing_time_battery_storage);
+router.route("/adding_clear_tpu").put(batch_controller.adding_clear_tpu);
+router.route("/adding_clear_petg").put(batch_controller.adding_clear_petg);
+router.route("/adding_frosted_tpu").put(batch_controller.adding_frosted_tpu);
+router.route("/adding_frosted_petg").put(batch_controller.adding_frosted_petg);
+router.route("/adding_red_tpu").put(batch_controller.adding_red_tpu);
+router.route("/adding_red_petg").put(batch_controller.adding_red_petg);
+router.route("/adding_emerald_tpu").put(batch_controller.adding_emerald_tpu);
+router.route("/adding_green_petg").put(batch_controller.adding_green_petg);
+router.route("/adding_teal_tpu").put(batch_controller.adding_teal_tpu);
+router.route("/adding_blue_tpu").put(batch_controller.adding_blue_tpu);
+router.route("/adding_blue_petg").put(batch_controller.adding_blue_petg);
+router.route("/adding_violet_tpu").put(batch_controller.adding_violet_tpu);
+router.route("/adding_violet_petg").put(batch_controller.adding_violet_petg);
+router.route("/adding_purple_tpu").put(batch_controller.adding_purple_tpu);
+router.route("/adding_purple_petg").put(batch_controller.adding_purple_petg);
+router.route("/adding_black_tpu").put(batch_controller.adding_black_tpu);
+router.route("/adding_black_petg").put(batch_controller.adding_black_petg);
+router.route("/adding_white_petg").put(batch_controller.adding_white_petg);
+router.route("/options_no_filament").put(batch_controller.options_no_filament);
 
 // router.route('/create_categories').post();
 

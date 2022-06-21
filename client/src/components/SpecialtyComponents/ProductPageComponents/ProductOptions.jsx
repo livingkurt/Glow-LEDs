@@ -187,11 +187,13 @@ const ProductOptions = ({
                     value={JSON.stringify(color_product_object)}
                     defaultValue={JSON.stringify(color_product_object)}
                   >
-                    {color_products.map((color, index) => (
-                      <option key={index} value={JSON.stringify(color)}>
-                        {color.name.split(" ")[0]}
-                      </option>
-                    ))}
+                    {color_products
+                      .filter(item => item.filament && item.filament.active)
+                      .map((color, index) => (
+                        <option key={index} value={JSON.stringify(color)}>
+                          {color.name.split(" ")[0]}
+                        </option>
+                      ))}
                   </select>
                   <span className="custom-arrow" />
                 </div>
@@ -282,14 +284,16 @@ const ProductOptions = ({
                       secondary_color_product_object
                     )}
                   >
-                    {secondary_color_products.map((secondary_color, index) => (
-                      <option
-                        key={index}
-                        value={JSON.stringify(secondary_color)}
-                      >
-                        {secondary_color.name.split(" ")[0]}
-                      </option>
-                    ))}
+                    {secondary_color_products
+                      .filter(item => item.filament && item.filament.active)
+                      .map((secondary_color, index) => (
+                        <option
+                          key={index}
+                          value={JSON.stringify(secondary_color)}
+                        >
+                          {secondary_color.name.split(" ")[0]}
+                        </option>
+                      ))}
                   </select>
                   <span className="custom-arrow" />
                 </div>

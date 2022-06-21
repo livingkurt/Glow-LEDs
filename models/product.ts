@@ -121,13 +121,13 @@ const productSchema = new mongoose.Schema(
     color_products: [
       { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
     ],
+    filament: { type: mongoose.Schema.Types.ObjectId, ref: "Filament" },
 
     secondary_color_product_group: { type: Boolean, default: false },
     secondary_color_group_name: { type: String },
     secondary_color_products: [
       { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
     ],
-
     secondary_product_group: { type: Boolean, default: false },
     secondary_group_name: { type: String },
     secondary_products: [

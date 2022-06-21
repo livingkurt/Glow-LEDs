@@ -3,7 +3,7 @@ import Filament from "../models/filament";
 export default {
   findAll_filaments_db: async (filter: any, sort: any) => {
     try {
-      return await Filament.find(filter).sort(sort).populate("user");
+      return await Filament.find(filter).sort(sort);
     } catch (error) {
       console.log({ findAll_filaments_db_error: error });
       throw new Error(error.message);
@@ -19,9 +19,9 @@ export default {
   },
   findMy_filaments_db: async (user_id: string) => {
     try {
-      return await Filament.find({ deleted: false, user: user_id })
-        .sort({ _id: -1 })
-        .populate("user");
+      return await Filament.find({ deleted: false, user: user_id }).sort({
+        _id: -1,
+      });
     } catch (error) {
       console.log({ findById_filaments_db_error: error });
       throw new Error(error.message);

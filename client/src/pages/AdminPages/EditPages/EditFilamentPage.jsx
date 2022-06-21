@@ -31,22 +31,9 @@ import { listChips } from "../../../actions/chipActions";
 const EditFilamentPage = props => {
   const [ id, set_id ] = useState("");
   const [ type, set_type ] = useState("");
-  const [ name, set_name ] = useState();
-  const [ chip, set_chip ] = useState({});
-  const [ colors_per_mode, set_colors_per_mode ] = useState();
-  const [ colors, set_colors ] = useState(0);
-  const [ quantity_state, set_quantity_state ] = useState(1);
-  const [ color, set_color ] = useState("#333333");
-  const [ chips, set_chips ] = useState([]);
-  const [ preset_colors, set_preset_colors ] = useState([
-    "red",
-    "green",
-    "blue",
-  ]);
-  // const [ chip_object, set_chip_object ] = useState({});
-
-  const chipList = useSelector(state => state.chipList);
-  const { chips: chips_list } = chipList;
+  const [ color, set_color ] = useState();
+  const [ color_code, set_color_code ] = useState();
+  const [ active, set_active ] = useState();
 
   const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
 
@@ -58,18 +45,16 @@ const EditFilamentPage = props => {
   const set_state = () => {
     set_id(filament._id);
     set_type(filament.type);
-    set_name(filament.name);
-    set_chip(filament.chip);
-    set_colors(filament.colors);
-    set_quantity_state(filament.quantity_state);
+    set_color(filament.color);
+    set_color_code(filament.color_code);
+    set_active(filament.active);
   };
   const unset_state = () => {
     set_id("");
     set_type("");
-    set_name();
-    set_chip();
-    set_colors();
-    set_quantity_state();
+    set_color();
+    set_color_code();
+    set_active();
   };
 
   const dispatch = useDispatch();
@@ -90,23 +75,6 @@ const EditFilamentPage = props => {
       return () => (clean = false);
     },
     [ dispatch, props.match.params.id ]
-  );
-
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (chip && chip.colors) {
-          // console.log({ chip });
-          const chip_colors = chip.colors.map(color => color.color);
-          // console.log({ chip_colors });
-          set_preset_colors(chip_colors);
-          set_colors_per_mode(chip.colors_per_mode);
-        }
-      }
-      return () => (clean = false);
-    },
-    [ chip ]
   );
 
   useEffect(
@@ -136,11 +104,9 @@ const EditFilamentPage = props => {
       saveFilament({
         _id: id,
         type,
-        name,
-        chip,
-        colors_per_mode,
-        colors: name * chip * colors_per_mode,
-        quantity_state,
+        color,
+        color_code,
+        active,
       })
     );
     e.target.reset();
@@ -148,207 +114,105 @@ const EditFilamentPage = props => {
     history.push("/secure/glow/filaments");
   };
 
-  const handleChangeComplete = color => {
-    set_color(color.hex);
-  };
   return (
     <div className="main_container p-20px">
       <ul>
         <h1 style={{ textAlign: "center" }}>
           {props.match.params.id ? "Edit Filament" : "Create Filament"}
         </h1>
-        {/* <Circle color={color} onChangeComplete={handleChangeComplete} /> */}
-        {/* <AlphaPicker color={color} onChangeComplete={handleChangeComplete} /> */}
-        {/* <BlockPicker color={color} onChangeComplete={handleChangeComplete} /> */}
-        {/* <ChromePicker color={color} onChangeComplete={handleChangeComplete} /> */}
-        {/* <CirclePicker color={color} onChangeComplete={handleChangeComplete} /> */}
-        {/* <CompactPicker color={color} onChangeComplete={handleChangeComplete} /> */}
-        {/* <GithubPicker color={color} onChangeComplete={handleChangeComplete} /> */}
-        {/* <HuePicker color={color} onChangeComplete={handleChangeComplete} /> */}
-        {/* <MaterialPicker color={color} onChangeComplete={handleChangeComplete} /> */}
-        {/* <PhotoshopPicker color={color} onChangeComplete={handleChangeComplete} /> */}
-        <li className="mb-20px">
-          <label
-            aria-label="Sort"
-            htmlFor="sort"
-            className="select-label mb-20px"
-          >
-            Chips
-          </label>
-        </li>
-        <li>
-          <div className="ai-c h-25px mb-15px">
-            <div className="custom-select">
-              <select
-                defaultValue={JSON.stringify(chip)}
-                // value={JSON.stringify(chip)}
-                className="qty_select_dropdown"
-                name="chips"
-                onChange={e => set_chip(JSON.parse(e.target.value))}
-              >
-                <option key={1} defaultValue="">
-                  ---Choose Chip---
-                </option>
-                {chips_list &&
-                  chips_list.map((chip, index) => (
-                    <option key={index} value={JSON.stringify(chip)}>
-                      {chip.name}
-                    </option>
-                  ))}
-              </select>
-              <span className="custom-arrow" />
-            </div>
-          </div>
-        </li>
-        {console.log({ colors: chip && chip.colors })}
-        {chip && (
-          <SketchPicker
-            color={color}
-            presetColors={preset_colors}
-            onChangeComplete={handleChangeComplete}
-          />
-        )}
-        <div className="jc-b h-100per mt-10px">
-          {chip &&
-            chip.colors &&
-            chip.colors.map((color, index) => (
+
+        <div className="form">
+          <form onSubmit={submitHandler} style={{ chip: "100%" }}>
+            <Loading loading={loading} error={error}>
               <div>
-                <label>{color.name}</label>
-                <canvas
-                  className={
-                    "ml-5px h-100per br-7px w-" +
-                    (100 / chip.colors.length - 2).toFixed(0) +
-                    "per"
-                  }
-                  style={{ backgroundColor: color.color }}
-                />
+                <Helmet>
+                  <title>Edit Filament | Glow LEDs</title>
+                </Helmet>
+
+                <ul
+                  className="edit-form-container"
+                  style={{ maxWidth: "30rem", marginBottom: "20px" }}
+                >
+                  <div className="row wrap">
+                    <div className="w-228px m-10px">
+                      <li>
+                        <div className="h-25px mv-10px mb-30px column">
+                          <label>Filament Type</label>
+                          <div className="custom-select w-100per">
+                            <select
+                              className="qty_select_dropdown w-100per"
+                              onChange={e => set_type(e.target.value)}
+                              value={type}
+                            >
+                              <option key={1} defaultValue="">
+                                ---Choose Filament Type---
+                              </option>
+                              {[ "PETG", "TPU" ].map((type, index) => (
+                                <option key={index} value={type}>
+                                  {type}
+                                </option>
+                              ))}
+                            </select>
+                            <span className="custom-arrow" />
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <label htmlFor="color">Color</label>
+                        <input
+                          type="text"
+                          name="color"
+                          defaultValue={color}
+                          id="color"
+                          onChange={e => set_color(e.target.value)}
+                        />
+                      </li>
+                      <li>
+                        <label htmlFor="color_code">Color Code</label>
+                        <input
+                          type="text"
+                          name="color_code"
+                          defaultValue={color_code}
+                          id="color_code"
+                          onChange={e => set_color_code(e.target.value)}
+                        />
+                      </li>
+                      {loading_checkboxes ? (
+                        <div>Loading...</div>
+                      ) : (
+                        <li className="w-100per row">
+                          <label htmlFor="active">Active</label>
+                          <input
+                            type="checkbox"
+                            name="active"
+                            defaultChecked={active}
+                            id="active"
+                            onChange={e => {
+                              set_active(e.target.checked);
+                            }}
+                          />
+                        </li>
+                      )}
+                    </div>
+                  </div>
+                  <li>
+                    <button type="submit" className="btn primary">
+                      {id ? "Update" : "Create"}
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      className="btn secondary"
+                      onClick={e => e.preventDefault()}
+                    >
+                      <Link to="/secure/glow/filaments">Back to Filaments</Link>
+                    </button>
+                  </li>
+                </ul>
               </div>
-            ))}
+            </Loading>
+          </form>
         </div>
-        <div className="jc-b h-100per mt-10px">
-          {[ ...Array(colors_per_mode) ].map((tile, index) => (
-            <canvas
-              className={
-                "ml-5px h-100per br-7px w-" +
-                (100 / colors_per_mode - 2).toFixed(0) +
-                "per"
-              }
-              style={{ backgroundColor: colors ? colors[index] : "#333333" }}
-            />
-          ))}
-        </div>
-        {/* <SliderPicker color={color} onChangeComplete={handleChangeComplete} /> */}
-        {/* <SwatchesPicker color={color} onChangeComplete={handleChangeComplete} /> */}
-        {/* <TwitterPicker color={color} onChangeComplete={handleChangeComplete} /> */}
-
-        {/* <div className="form">
-				<form onSubmit={submitHandler} style={{ chip: '100%' }}>
-					<Loading loading={loading} error={error}>
-						<div>
-							<Helmet>
-								<title>Edit Filament | Glow LEDs</title>
-							</Helmet>
-
-							<ul className="edit-form-container" style={{ maxWidth: '30rem', marginBottom: '20px' }}>
-								<div className="row wrap">
-									<div className="w-228px m-10px">
-										<div className="ai-c h-25px mv-10px mb-30px jc-c">
-											<div className="custom-select w-100per">
-												<select
-													className="qty_select_dropdown w-100per"
-													onChange={(e) => set_type(e.target.value)}
-												>
-													<option key={1} defaultValue="">
-														---Choose Filament Type---
-													</option>
-													{[ 'bubble_mailer', 'box', 'envelope' ].map((type, index) => (
-														<option key={index} value={type}>
-															{humanize(type)}
-														</option>
-													))}
-												</select>
-												<span className="custom-arrow" />
-											</div>
-										</div>
-
-										<li>
-											<label htmlFor="type">Type</label>
-											<input
-												type="text"
-												name="type"
-												defaultValue={type}
-												id="type"
-												onChange={(e) => set_type(e.target.value)}
-											/>
-										</li>
-										<li>
-											<label htmlFor="name">Length</label>
-											<input
-												type="text"
-												name="name"
-												defaultValue={name}
-												id="name"
-												onChange={(e) => set_name(e.target.value)}
-											/>
-										</li>
-										<li>
-											<label htmlFor="chip">Width</label>
-											<input
-												type="text"
-												name="chip"
-												defaultValue={chip}
-												id="chip"
-												onChange={(e) => set_chip(e.target.value)}
-											/>
-										</li>
-										<li>
-											<label htmlFor="colors_per_mode">Height</label>
-											<input
-												type="text"
-												name="colors_per_mode"
-												defaultValue={colors_per_mode}
-												id="colors_per_mode"
-												onChange={(e) => set_colors_per_mode(e.target.value)}
-											/>
-										</li>
-
-										<li>
-											<label htmlFor="colors">Volume</label>
-											<input
-												type="text"
-												name="colors"
-												value={name && chip && colors_per_mode && name * chip * colors_per_mode}
-												id="colors"
-												onChange={(e) => set_colors(e.target.value)}
-											/>
-										</li>
-										<li>
-											<label htmlFor="quantity_state">Count In Stock</label>
-											<input
-												type="text"
-												name="quantity_state"
-												defaultValue={quantity_state}
-												id="quantity_state"
-												onChange={(e) => set_quantity_state(e.target.value)}
-											/>
-										</li>
-									</div>
-								</div>
-								<li>
-									<button type="submit" className="btn primary">
-										{id ? 'Update' : 'Create'}
-									</button>
-								</li>
-								<li>
-									<button className="btn secondary" onClick={(e) => e.preventDefault()}>
-										<Link to="/secure/glow/filaments">Back to Filaments</Link>
-									</button>
-								</li>
-							</ul>
-						</div>
-					</Loading>
-				</form>
-			</div> */}
       </ul>
     </div>
   );

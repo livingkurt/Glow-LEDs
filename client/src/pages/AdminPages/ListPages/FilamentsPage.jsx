@@ -35,18 +35,14 @@ const FilamentsPage = props => {
   const filamentList = useSelector(state => state.filamentList);
   const { loading, filaments, message, error } = filamentList;
 
+  console.log({ filaments });
+
   const filamentSave = useSelector(state => state.filamentSave);
   const { success: successSave } = filamentSave;
 
   const filamentDelete = useSelector(state => state.filamentDelete);
   const { success: successDelete } = filamentDelete;
   const dispatch = useDispatch();
-
-  const affiliateList = useSelector(state => state.affiliateList);
-  const { affiliates } = affiliateList;
-
-  const teamList = useSelector(state => state.teamList);
-  const { teams } = teamList;
 
   setTimeout(() => {
     set_loading_checkboxes(false);
@@ -57,36 +53,21 @@ const FilamentsPage = props => {
       let clean = true;
       if (clean) {
         dispatch(listFilaments({}));
-        dispatch(listAffiliates({}));
-        dispatch(listTeams({}));
-        dispatch(listOrders({}));
-        get_last_months_orders();
-        get_total_orders();
       }
       return () => (clean = false);
     },
     [ successSave, successDelete, dispatch ]
   );
 
-  const get_last_months_orders = async () => {
-    const { data } = await API_Orders.last_months_orders();
-    console.log({ data });
-    set_last_months_orders(data);
-  };
-  const get_total_orders = async () => {
-    const { data } = await API_Orders.findAll_orders_a();
-    console.log({ data });
-    set_total_orders(data);
-  };
-  const submitHandler = e => {
-    e.preventDefault();
-    dispatch(listFilaments({ category, search, sort }));
-  };
+  // const submitHandler = e => {
+  //   e.preventDefault();
+  //   dispatch(listFilaments({ category, search, sort }));
+  // };
 
-  const sortHandler = e => {
-    setSortOrder(e.target.value);
-    dispatch(listFilaments({ category, search, sort: e.target.value }));
-  };
+  // const sortHandler = e => {
+  //   setSortOrder(e.target.value);
+  //   dispatch(listFilaments({ category, search, sort: e.target.value }));
+  // };
 
   useEffect(
     () => {
@@ -98,6 +79,7 @@ const FilamentsPage = props => {
     },
     [ dispatch, category, search, sort ]
   );
+
   const deleteHandler = filament => {
     dispatch(deleteFilament(filament._id));
   };
@@ -106,40 +88,51 @@ const FilamentsPage = props => {
 
   const today = date.toISOString();
 
-  const mark_paid = filament => {
-    dispatch(
-      saveFilament({
-        ...filament,
-        paid: true,
-        paid_at: format_date(today),
-      })
-    );
-    dispatch(listFilaments({}));
-  };
+  // const mark_paid = filament => {
+  //   dispatch(
+  //     saveFilament({
+  //       ...filament,
+  //       paid: true,
+  //       paid_at: format_date(today),
+  //     })
+  //   );
+  //   dispatch(listFilaments({}));
+  // };
 
-  const sort_options = [
-    "Newest",
-    "Artist Name",
-    "Facebook Name",
-    "Instagram Handle",
-    "Sponsor",
-    "Promoter",
-  ];
+  // const sort_options = [
+  //   "Newest",
+  //   "Artist Name",
+  //   "Facebook Name",
+  //   "Instagram Handle",
+  //   "Sponsor",
+  //   "Promoter",
+  // ];
 
   const colors = [
-    { name: "Box", color: "#44648c" },
-    { name: "Bubble Mailer", color: "#448c89" },
+    { name: "PETG", color: "#44648c" },
+    { name: "TPU", color: "#448c89" },
   ];
 
   const determine_color = filament => {
     let result = "";
-    if (filament.type === "bubble_mailer") {
+    if (filament.type === "PETG") {
       result = colors[0].color;
     }
-    if (filament.type === "box") {
+    if (filament.type === "TPU") {
       result = colors[1].color;
     }
     return result;
+  };
+
+  const change_filament_status = filament => {
+    dispatch(
+      saveFilament({
+        ...filament,
+        active: filament.active ? false : true,
+      })
+    );
+    dispatch(listFilaments({}));
+    dispatch(listFilaments({}));
   };
 
   return (
@@ -178,13 +171,13 @@ const FilamentsPage = props => {
         className="search_and_sort row jc-c ai-c"
         style={{ overflowX: "scroll" }}
       >
-        <Search
+        {/* <Search
           search={search}
           set_search={set_search}
           submitHandler={submitHandler}
           category={category}
-        />
-        <Sort sortHandler={sortHandler} sort_options={sort_options} />
+        /> */}
+        {/* <Sort sortHandler={sortHandler} sort_options={sort_options} /> */}
       </div>
       <Loading loading={loading} error={error}>
         {filaments && (
@@ -192,13 +185,10 @@ const FilamentsPage = props => {
             <table className="table">
               <thead>
                 <tr>
-                  <th>Name</th>
+                  <th>Active</th>
                   <th>Type</th>
-                  <th>Length</th>
-                  <th>Width</th>
-                  <th>Height</th>
-                  <th>Volume</th>
-                  <th>Count In Stock</th>
+                  <th>Color</th>
+                  <th>Color Code</th>
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -211,21 +201,24 @@ const FilamentsPage = props => {
                       fontSize: "16px",
                     }}
                   >
-                    <td className="p-10px" style={{ minWidth: "15rem" }}>
-                      {filament.type === "bubble_mailer" ? (
-                        `${filament.length} X ${filament.width}`
-                      ) : (
-                        `${filament.length} X ${filament.width} X ${filament.height}`
-                      )}
+                    <td className="p-10px">
+                      <button
+                        className="btn icon"
+                        onClick={() => change_filament_status(filament)}
+                        aria-label={filament.active ? "deactive" : "activate"}
+                      >
+                        {filament.active ? (
+                          <i className="fas fa-check-circle" />
+                        ) : (
+                          <i className="fas fa-times-circle" />
+                        )}
+                      </button>
                     </td>
                     <td className="p-10px" style={{ minWidth: "15rem" }}>
                       {filament.type}
                     </td>
-                    <td className="p-10px">{filament.length}</td>
-                    <td className="p-10px">{filament.width}</td>
-                    <td className="p-10px">{filament.height}</td>
-                    <td className="p-10px">{filament.volume}</td>
-                    <td className="p-10px">{filament.quantity_state}</td>
+                    <td className="p-10px">{filament.color}</td>
+                    <td className="p-10px">{filament.color_code}</td>
                     <td className="p-10px">
                       <div className="jc-b">
                         <Link to={"/secure/glow/editfilament/" + filament._id}>

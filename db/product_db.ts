@@ -17,13 +17,34 @@ export default {
     try {
       return await Product.find(filter)
         .sort(sort)
-        .populate("color_products")
-        .populate("secondary_color_products")
-        .populate("secondary_products")
-        .populate("option_products")
         .populate("categorys")
         .populate("subcategorys")
         .populate("contributers")
+        .populate("filament")
+        .populate({
+          path: "color_products",
+          populate: {
+            path: "filament",
+          },
+        })
+        .populate({
+          path: "secondary_products",
+          populate: {
+            path: "filament",
+          },
+        })
+        .populate({
+          path: "secondary_products",
+          populate: {
+            path: "filament",
+          },
+        })
+        .populate({
+          path: "option_products",
+          populate: {
+            path: "filament",
+          },
+        })
         .limit(limit * 1)
         .skip((page - 1) * limit)
         .exec();
@@ -65,26 +86,60 @@ export default {
       return await Product.findOne(query)
         .populate("chips")
         .populate("products")
-        .populate("color_products")
-        .populate("secondary_color_products")
+        .populate({
+          path: "color_products",
+          populate: {
+            path: "filament",
+          },
+        })
+        .populate({
+          path: "secondary_products",
+          populate: {
+            path: "filament",
+          },
+        })
+        .populate({
+          path: "secondary_products",
+          populate: {
+            path: "filament",
+          },
+        })
+        .populate({
+          path: "option_products",
+          populate: {
+            path: "filament",
+          },
+        })
+        .populate("filament")
         .populate({
           path: "secondary_products",
           populate: [
             {
               path: "color_products",
+              populate: {
+                path: "filament",
+              },
             },
             {
               path: "secondary_color_products",
+              populate: {
+                path: "filament",
+              },
             },
             {
               path: "option_products",
+              populate: {
+                path: "filament",
+              },
             },
             {
               path: "secondary_color_products",
+              populate: {
+                path: "filament",
+              },
             },
           ],
         })
-        .populate("option_products")
         .populate("categorys")
         .populate("subcategorys")
         .populate("contributers");

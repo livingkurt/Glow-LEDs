@@ -42,6 +42,7 @@ import {
   determine_secondary_modifier,
 } from "../../../utils/helpers/product_helpers";
 import { listUsers } from "../../../actions/userActions";
+import { listFilaments } from "../../../actions/filamentActions";
 
 const EditProductPage = props => {
   // const [modalVisible, setModalVisible] = useState(false);
@@ -162,6 +163,8 @@ const EditProductPage = props => {
   const [ secondary_image, set_secondary_image ] = useState("");
   const [ has_add_on, set_has_add_on ] = useState(false);
 
+  const [ filament, set_filament ] = useState({});
+
   const history = useHistory();
 
   const productDetails = useSelector(state => state.productDetails);
@@ -180,6 +183,9 @@ const EditProductPage = props => {
 
   const chipList = useSelector(state => state.chipList);
   const { chips: chips_list } = chipList;
+
+  const filamentList = useSelector(state => state.filamentList);
+  const { filaments: filaments_list } = filamentList;
 
   const userList = useSelector(state => state.userList);
   const { users } = userList;
@@ -228,6 +234,7 @@ const EditProductPage = props => {
       dispatch(listUsers({}));
       // dispatch(listProducts({ limit: 300 }));
       dispatch(listChips({}));
+      dispatch(listFilaments({}));
     }
     return () => (clean = false);
   }, []);
@@ -453,6 +460,7 @@ const EditProductPage = props => {
     set_macro_product(product.macro_product);
     set_extra_cost(product.extra_cost);
     set_item_group_id(product.item_group_id);
+    set_filament(product.filament);
   };
   const unset_state = () => {
     set_product_id("");
@@ -533,6 +541,7 @@ const EditProductPage = props => {
     set_extra_cost();
     set_item_group_id();
     set_has_add_on(false);
+    set_filament({});
   };
   // window.onbeforeunload = function() {
   // 	return 'Are you sure you want to leave?';
@@ -625,6 +634,7 @@ const EditProductPage = props => {
         item_group_id: props.match.params.item_group_id || item_group_id,
         previous_price,
         has_add_on,
+        filament: filament ? filament.id : null,
       })
     );
     // if (props.match.params.product_option && props.match.params.item_group_id) {
@@ -688,6 +698,14 @@ const EditProductPage = props => {
     //   //   `/secure/glow/editproduct/${macro_product.pathname}/false`
     //   // );
     // }
+  };
+
+  const sort_filament = filaments_list => {
+    return filaments_list.sort(function(a, b) {
+      var textA = a.color.toUpperCase();
+      var textB = b.color.toUpperCase();
+      return textA < textB ? -1 : textA > textB ? 1 : 0;
+    });
   };
 
   let num = 0;
@@ -1774,6 +1792,64 @@ const EditProductPage = props => {
                       )}
                     </div>
                   )}
+                  {option && (
+                    <div>
+                      {loading_checkboxes ? (
+                        <div>Loading...</div>
+                      ) : (
+                        <div>
+                          <li>
+                            <label
+                              aria-label="Sort"
+                              htmlFor="sort"
+                              className="select-label mb-15px"
+                            >
+                              Choose Filament
+                            </label>
+                            <div className="ai-c h-25px mb-15px">
+                              <div className="custom-select">
+                                <select
+                                  className="qty_select_dropdown"
+                                  value={JSON.stringify(filament)}
+                                  onChange={e =>
+                                    set_filament(JSON.parse(e.target.value))}
+                                >
+                                  <option key={1} defaultValue="">
+                                    ---Choose Filament---
+                                  </option>
+                                  {filaments_list &&
+                                    filaments_list.length > 0 &&
+                                    sort_filament(
+                                      filaments_list
+                                    ).map((filament, index) => (
+                                      <option
+                                        key={index}
+                                        value={JSON.stringify(filament)}
+                                      >
+                                        {filament.color} {filament.type}
+                                      </option>
+                                    ))}
+                                </select>
+                                <span className="custom-arrow" />
+                              </div>
+                            </div>
+                          </li>
+                          <li>
+                            <label htmlFor="filament">Filament</label>
+                            <input
+                              type="text"
+                              name="filament"
+                              // defaultValue={filament._id}
+                              value={filament && filament._id}
+                              id="filament"
+                              onChange={e => set_filament(e.target.value)}
+                            />
+                          </li>
+                        </div>
+                      )}
+                    </div>
+                  )}
+
                   {macro_product && (
                     <div>
                       {color_product_group && (
@@ -2152,6 +2228,7 @@ const EditProductPage = props => {
                     </div>
                   )}
                   {/* {option_list(chips_list, chips, set_chips, 'Chips')} */}
+
                   <DropdownDisplay
                     item_group_id={product._id}
                     item_list={chips_list}

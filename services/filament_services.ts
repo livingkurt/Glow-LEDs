@@ -14,14 +14,7 @@ export default {
         : {};
       const filter = determine_filter(query, search);
       const sort_query = query.sort && query.sort.toLowerCase();
-      let sort: any = { _id: -1 };
-      if (sort_query === "glover name") {
-        sort = { artist_name: 1 };
-      } else if (sort_query === "facebook name") {
-        sort = { facebook_name: 1 };
-      } else if (sort_query === "newest") {
-        sort = { name: 1 };
-      }
+      const sort: any = { name: 1 };
 
       return await filament_db.findAll_filaments_db(filter, sort);
     } catch (error) {
