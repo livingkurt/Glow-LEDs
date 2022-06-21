@@ -1111,4 +1111,335 @@ export default {
 
     res.send(products);
   },
+
+  adding_clear_tpu: async (req: any, res: any) => {
+    const products = await Product.find({
+      deleted: false,
+      option: true,
+      color_code: "#4b4b4b",
+      name: {
+        $regex: "Skin",
+        $options: "i",
+      },
+    });
+    console.log({ products });
+
+    products.forEach(async (product: any) => {
+      product.filament = "62b12ad5e9a1c4705bd04412";
+      const result = await product.save();
+    });
+
+    res.send(products);
+  },
+  adding_clear_petg: async (req: any, res: any) => {
+    const products = await Product.find({
+      deleted: false,
+      option: true,
+      color_code: "#4b4b4b",
+      name: {
+        $regex: "Sled",
+        $options: "i",
+      },
+    });
+    console.log({ products });
+
+    products.forEach(async (product: any) => {
+      product.filament = "62afae4e01f26dbb73774e19";
+      const result = await product.save();
+    });
+
+    res.send(products);
+  },
+
+  adding_frosted_tpu: async (req: any, res: any) => {
+    const products = await Product.find({
+      deleted: false,
+      option: true,
+      color_code: "white",
+      name: {
+        $regex: "Skin",
+        $options: "i",
+      },
+    });
+    console.log({ products });
+
+    products.forEach(async (product: any) => {
+      product.filament = "62afaee901f26dbb73774e3d";
+      const result = await product.save();
+    });
+
+    res.send(products);
+  },
+  adding_frosted_petg: async (req: any, res: any) => {
+    const products = await Product.find({
+      deleted: false,
+      option: true,
+      color_code: "#abaeb5",
+    });
+    console.log({ products });
+
+    products.forEach(async (product: any) => {
+      product.filament = "62afae6901f26dbb73774e1f";
+      const result = await product.save();
+    });
+
+    res.send(products);
+  },
+  adding_red_tpu: async (req: any, res: any) => {
+    const products = await Product.find({
+      deleted: false,
+      option: true,
+      color_code: "#c11c22",
+      product_collection: "colors",
+      pathname: {
+        $regex: "_skin",
+        $options: "i",
+      },
+    });
+    console.log({ products });
+
+    products.forEach(async (product: any) => {
+      product.filament = "62afad6101f26dbb73774df0";
+      const result = await product.save();
+    });
+
+    res.send(products);
+  },
+  adding_red_petg: async (req: any, res: any) => {
+    const products = await Product.find({
+      deleted: false,
+      option: true,
+      product_collection: "secondary_colors",
+      color_code: "#c11c22",
+    });
+    console.log({ products });
+
+    products.forEach(async (product: any) => {
+      product.filament = "62afad4701f26dbb73774de4";
+      const result = await product.save();
+    });
+
+    res.send(products);
+  },
+  adding_emerald_tpu: async (req: any, res: any) => {
+    const products = await Product.find({
+      deleted: false,
+      option: true,
+      color_code: "#15715a",
+    });
+    console.log({ products });
+
+    products.forEach(async (product: any) => {
+      product.filament = "62afadb301f26dbb73774e01";
+      const result = await product.save();
+    });
+
+    res.send(products);
+  },
+  adding_green_petg: async (req: any, res: any) => {
+    const products = await Product.find({
+      deleted: false,
+      option: true,
+      color_code: "#00c700",
+    });
+    console.log({ products });
+
+    products.forEach(async (product: any) => {
+      product.filament = "62afad7701f26dbb73774df6";
+      const result = await product.save();
+    });
+
+    res.send(products);
+  },
+  adding_teal_tpu: async (req: any, res: any) => {
+    const products = await Product.find({
+      deleted: false,
+      option: true,
+      color_code: "#1da5b3",
+    });
+    console.log({ products });
+
+    products.forEach(async (product: any) => {
+      product.filament = "62afadee01f26dbb73774e07";
+      const result = await product.save();
+    });
+
+    res.send(products);
+  },
+  adding_blue_tpu: async (req: any, res: any) => {
+    const products = await Product.find({
+      deleted: false,
+      option: true,
+      color_code: "#0014ff",
+      product_collection: "colors",
+      pathname: {
+        $regex: "_skin",
+        $options: "i",
+      },
+    });
+    console.log({ products });
+
+    products.forEach(async (product: any) => {
+      product.filament = "62afae1901f26dbb73774e0d";
+      const result = await product.save();
+    });
+
+    res.send(products);
+  },
+  adding_blue_petg: async (req: any, res: any) => {
+    const products = await Product.find({
+      deleted: false,
+      option: true,
+      color_code: "#0014ff",
+    });
+    console.log({ products });
+
+    products.forEach(async (product: any) => {
+      product.filament = "62afae8301f26dbb73774e25";
+      const result = await product.save();
+    });
+
+    res.send(products);
+  },
+  adding_violet_tpu: async (req: any, res: any) => {
+    const products = await Product.find({
+      deleted: false,
+      option: true,
+      color_code: "#543abb",
+      product_collection: "colors",
+      pathname: {
+        $regex: "_skin",
+        $options: "i",
+      },
+    });
+    console.log({ products });
+
+    products.forEach(async (product: any) => {
+      product.filament = "62afad1901f26dbb73774ddd";
+      const result = await product.save();
+    });
+
+    res.send(products);
+  },
+  adding_violet_petg: async (req: any, res: any) => {
+    const products = await Product.find({
+      deleted: false,
+      option: true,
+      color_code: "#543abb",
+    });
+    console.log({ products });
+
+    products.forEach(async (product: any) => {
+      product.filament = "62afad0c01f26dbb73774dd7";
+      const result = await product.save();
+    });
+
+    res.send(products);
+  },
+  adding_purple_tpu: async (req: any, res: any) => {
+    const products = await Product.find({
+      deleted: false,
+      option: true,
+      color: "Purple",
+      product_collection: "colors",
+      pathname: {
+        $regex: "_skin",
+        $options: "i",
+      },
+    });
+    console.log({ products });
+
+    products.forEach(async (product: any) => {
+      product.filament = "62afae3001f26dbb73774e13";
+      const result = await product.save();
+    });
+
+    res.send(products);
+  },
+  adding_purple_petg: async (req: any, res: any) => {
+    const products = await Product.find({
+      deleted: false,
+      option: true,
+      color: "Purple",
+      // color_code: "purple",
+    });
+    console.log({ products });
+
+    products.forEach(async (product: any) => {
+      product.filament = "62afae9d01f26dbb73774e2b";
+      const result = await product.save();
+    });
+
+    res.send(products);
+  },
+  adding_black_tpu: async (req: any, res: any) => {
+    const products = await Product.find({
+      deleted: false,
+      option: true,
+      color: "Black",
+      product_collection: "colors",
+      pathname: {
+        $regex: "_skin",
+        $options: "i",
+      },
+    });
+    console.log({ products });
+
+    products.forEach(async (product: any) => {
+      product.filament = "62afaeb801f26dbb73774e37";
+      const result = await product.save();
+    });
+
+    res.send(products);
+  },
+  adding_black_petg: async (req: any, res: any) => {
+    const products = await Product.find({
+      deleted: false,
+      option: true,
+      color: "Black",
+      // color_code: "purple",
+    });
+    console.log({ products });
+
+    products.forEach(async (product: any) => {
+      product.filament = "62afaeb101f26dbb73774e31";
+      const result = await product.save();
+    });
+
+    res.send(products);
+  },
+  adding_white_petg: async (req: any, res: any) => {
+    const products = await Product.find({
+      deleted: false,
+      option: true,
+      // color: "White",
+      color_code: "white",
+    });
+    console.log({ products });
+
+    products.forEach(async (product: any) => {
+      product.filament = "62afaef401f26dbb73774e43";
+      const result = await product.save();
+    });
+
+    res.send(products);
+  },
+  options_no_filament: async (req: any, res: any) => {
+    const products = await Product.find({
+      deleted: false,
+      option: true,
+      filament: null,
+      color: "",
+      // filament: { $exists: false },
+      // filament: { $type: 10 },
+    });
+    console.log({ products, num: products.length });
+
+    // products.forEach(async (product: any) => {
+    //   product.filament = "62afaef401f26dbb73774e43";
+    //   const result = await product.save();
+    // });
+
+    res.send(products);
+  },
 };
