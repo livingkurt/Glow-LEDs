@@ -456,8 +456,7 @@ export function Shipping({
                 <li>
                   <label htmlFor="postalCode">Postal Code</label>
                   <input
-                    type="number"
-                    inputmode="decimal"
+                    type="text"
                     value={postalCode}
                     name="postalCode"
                     id="postalCode"
