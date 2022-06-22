@@ -93,13 +93,7 @@ export default {
           },
         })
         .populate({
-          path: "secondary_products",
-          populate: {
-            path: "filament",
-          },
-        })
-        .populate({
-          path: "secondary_products",
+          path: "secondary_color_products",
           populate: {
             path: "filament",
           },
@@ -114,6 +108,9 @@ export default {
         .populate({
           path: "secondary_products",
           populate: [
+            {
+              path: "filament",
+            },
             {
               path: "color_products",
               populate: {
