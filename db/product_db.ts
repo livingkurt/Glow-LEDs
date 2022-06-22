@@ -17,10 +17,8 @@ export default {
     try {
       return await Product.find(filter)
         .sort(sort)
-        .populate("categorys")
-        .populate("subcategorys")
-        .populate("contributers")
-        .populate("filament")
+        .populate("chips")
+        .populate("products")
         .populate({
           path: "color_products",
           populate: {
@@ -28,13 +26,7 @@ export default {
           },
         })
         .populate({
-          path: "secondary_products",
-          populate: {
-            path: "filament",
-          },
-        })
-        .populate({
-          path: "secondary_products",
+          path: "secondary_color_products",
           populate: {
             path: "filament",
           },
@@ -45,6 +37,42 @@ export default {
             path: "filament",
           },
         })
+        .populate("filament")
+        .populate({
+          path: "secondary_products",
+          populate: [
+            {
+              path: "filament",
+            },
+            {
+              path: "color_products",
+              populate: {
+                path: "filament",
+              },
+            },
+            {
+              path: "secondary_color_products",
+              populate: {
+                path: "filament",
+              },
+            },
+            {
+              path: "option_products",
+              populate: {
+                path: "filament",
+              },
+            },
+            {
+              path: "secondary_color_products",
+              populate: {
+                path: "filament",
+              },
+            },
+          ],
+        })
+        .populate("categorys")
+        .populate("subcategorys")
+        .populate("contributers")
         .limit(limit * 1)
         .skip((page - 1) * limit)
         .exec();
