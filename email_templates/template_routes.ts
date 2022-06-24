@@ -507,6 +507,8 @@ router.get(
         totalPrice: 58.4955175,
         order_note:
           "PLEASE MAKE MY SLEDS THE DUAL CHIP ONES WE DISCUSSED FOR THE EMAZING EVOS. :)     HIT ME UP WITH FURSTHER QUESTIONS, COMMENTS, CONCERNS. THANK YOU MUCH!",
+        production_note:
+          "PLEASE MAKE MY SLEDS THE DUAL CHIP ONES WE DISCUSSED FOR THE EMAZING EVOS. :)     HIT ME UP WITH FURSTHER QUESTIONS, COMMENTS, CONCERNS. THANK YOU MUCH!",
         promo_code: "SNAPS",
         parcel: "60c25b1575b455002a999820",
         paidAt: "2021-12-10T05:26:55.084Z",
@@ -1034,6 +1036,7 @@ router.get(
         taxPrice: 6.97265625,
         totalPrice: 128.43515625,
         order_note: "",
+        production_note: "",
         tip: 0,
         promo_code: "VAHQZY",
         parcel: "60c034955ebfd1fcfdaa16ec",
@@ -1431,6 +1434,7 @@ router.get(
         totalPrice: 58.4955175,
         order_note:
           "PLEASE MAKE MY SLEDS THE DUAL CHIP ONES WE DISCUSSED FOR THE EMAZING EVOS. :)     HIT ME UP WITH FURSTHER QUESTIONS, COMMENTS, CONCERNS. THANK YOU MUCH!",
+        production_note: "",
         promo_code: "SNAPS",
         parcel: "60c25b1575b455002a999820",
         paidAt: "2021-12-10T05:26:55.084Z",
@@ -1994,6 +1998,7 @@ router.get(
         totalPrice: 58.4955175,
         order_note:
           "PLEASE MAKE MY SLEDS THE DUAL CHIP ONES WE DISCUSSED FOR THE EMAZING EVOS. :)     HIT ME UP WITH FURSTHER QUESTIONS, COMMENTS, CONCERNS. THANK YOU MUCH!",
+        production_note: "",
         promo_code: "SNAPS",
         parcel: "60c25b1575b455002a999820",
         paidAt: "2021-12-10T05:26:55.084Z",

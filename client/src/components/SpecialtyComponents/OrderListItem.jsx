@@ -88,6 +88,7 @@ const OrderListItem = ({
         user: order.user._id,
         order_note: `Replacement Order for ${order.shipping.first_name} ${order
           .shipping.last_name} - Original Order Number is ${order._id}`,
+        production_note: order.production_note,
       })
     );
     dispatch(listOrders({}));
@@ -305,140 +306,148 @@ const OrderListItem = ({
       style={{ backgroundColor: determine_color(order) }}
     >
       <Loading loading={loading_label} />
-      <div
-        className="pb-15px mb-10px jc-b"
-        style={{ borderBottom: "1px solid white" }}
-      >
-        <div className="w-60per jc-b ">
-          <div className="fs-16px">
-            <h3>Order Placed</h3>
-            <div>{order.createdAt && format_date(order.createdAt)}</div>
-          </div>
-          <div className="fs-16px">
-            <h3>Total</h3>
-            {!order.isRefunded && (
-              <div>
-                <div>
-                  ${order.totalPrice ? (
-                    order.totalPrice.toFixed(2)
-                  ) : (
-                    order.totalPrice
-                  )}
-                </div>
-              </div>
-            )}
-            {order.isRefunded && (
-              <div>
-                <del style={{ color: "red" }}>
-                  <label style={{ color: "white" }}>
-                    <div>
-                      ${order.totalPrice ? (
-                        order.totalPrice.toFixed(2)
-                      ) : (
-                        order.totalPrice
-                      )}
-                    </div>
-                  </label>
-                </del>
-              </div>
-            )}
-            {order.isRefunded && (
-              <div>
-                <div>
-                  -${(order.payment.refund.reduce((a, c) => a + c.amount, 0) /
-                    100).toFixed(2)}
-                </div>
-              </div>
-            )}
-            {order.isRefunded && (
-              <div>
-                <div>
-                  ${(order.totalPrice -
-                    order.payment.refund.reduce((a, c) => a + c.amount, 0) /
-                      100).toFixed(2)}
-                </div>
-              </div>
-            )}
-          </div>
-          {admin && (
+      <div style={{ borderBottom: "1px solid white" }}>
+        <div className="pb-15px mb-10px jc-b">
+          <div className="w-60per jc-b ">
             <div className="fs-16px">
-              <h3>Since Order</h3>
-              {daysBetween(today, order.createdAt) > 1 ? (
-                `${daysBetween(today, order.createdAt)} Days`
-              ) : (
-                `${daysBetween(today, order.createdAt)} Day`
-              )}
+              <h3>Order Placed</h3>
+              <div>{order.createdAt && format_date(order.createdAt)}</div>
             </div>
-          )}
-          <div className="fs-16px">
-            <h3>Ship To</h3>
-            <Link
-              to={`/secure/glow/userprofile/${order.user && order.user._id}`}
-            >
-              {order.shipping.first_name} {order.shipping.last_name}
-            </Link>
-          </div>
-          {userInfo &&
-          userInfo.isAdmin &&
-          order.shipping.shipping_rate && (
-            <p className="title_font ai-c fs-30px">
-              {order.shipping.shipping_rate.service !== "First" &&
-                order.shipping.shipping_rate.service}{" "}
-            </p>
-          )}
-        </div>
-
-        <div className="w-40per jc-fe">
-          <div className="">
             <div className="fs-16px">
-              <div className="row ai-c">
-                <h3 className="mr-10px">Order Number: </h3>
-                <div>{order._id}</div>
-              </div>
-              {order.tracking_number && (
-                <div className="row ai-c mb-2rem">
-                  <h3 className="mr-10px  mv-0px">Tracking Number: </h3>
-                  <div className="mt-0px">
-                    {" "}
-                    <a
-                      href={determine_tracking_number(order.tracking_number)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mv-2rem"
-                      style={{
-                        textDecoration: "underline",
-                        color: "white",
-                      }}
-                    >
-                      {order.tracking_number}
-                    </a>
+              <h3>Total</h3>
+              {!order.isRefunded && (
+                <div>
+                  <div>
+                    ${order.totalPrice ? (
+                      order.totalPrice.toFixed(2)
+                    ) : (
+                      order.totalPrice
+                    )}
+                  </div>
+                </div>
+              )}
+              {order.isRefunded && (
+                <div>
+                  <del style={{ color: "red" }}>
+                    <label style={{ color: "white" }}>
+                      <div>
+                        ${order.totalPrice ? (
+                          order.totalPrice.toFixed(2)
+                        ) : (
+                          order.totalPrice
+                        )}
+                      </div>
+                    </label>
+                  </del>
+                </div>
+              )}
+              {order.isRefunded && (
+                <div>
+                  <div>
+                    -${(order.payment.refund.reduce((a, c) => a + c.amount, 0) /
+                      100).toFixed(2)}
+                  </div>
+                </div>
+              )}
+              {order.isRefunded && (
+                <div>
+                  <div>
+                    ${(order.totalPrice -
+                      order.payment.refund.reduce((a, c) => a + c.amount, 0) /
+                        100).toFixed(2)}
                   </div>
                 </div>
               )}
             </div>
-            <div
-              className={`row fs-16px ${order.order_note
-                ? "jc-b"
-                : "jc-fe"}  ai-c`}
-            >
-              {userInfo &&
-              userInfo.isAdmin &&
-              order.order_note && (
-                <p className="title_font fs-18px">
-                  {order.order_note && "Check Order Note"}
-                </p>
-              )}
+            {admin && (
+              <div className="fs-16px">
+                <h3>Since Order</h3>
+                {daysBetween(today, order.createdAt) > 1 ? (
+                  `${daysBetween(today, order.createdAt)} Days`
+                ) : (
+                  `${daysBetween(today, order.createdAt)} Day`
+                )}
+              </div>
+            )}
+            <div className="fs-16px">
+              <h3>Ship To</h3>
               <Link
-                to={{
-                  pathname: "/secure/account/order/" + order._id,
-                  previous_path:
-                    history.location.pathname + history.location.search,
-                }}
+                to={`/secure/glow/userprofile/${order.user && order.user._id}`}
               >
-                <button className="btn primary">Order Details</button>
+                {order.shipping.first_name} {order.shipping.last_name}
               </Link>
             </div>
+            {userInfo &&
+            userInfo.isAdmin &&
+            order.shipping.shipping_rate && (
+              <p className="title_font ai-c fs-30px">
+                {order.shipping.shipping_rate.service !== "First" &&
+                  order.shipping.shipping_rate.service}{" "}
+              </p>
+            )}
           </div>
+
+          <div className="w-40per jc-fe">
+            <div className="">
+              <div className="fs-16px">
+                <div className="row ai-c">
+                  <h3 className="mr-10px">Order Number: </h3>
+                  <div>{order._id}</div>
+                </div>
+                {order.tracking_number && (
+                  <div className="row ai-c mb-2rem">
+                    <h3 className="mr-10px  mv-0px">Tracking Number: </h3>
+                    <div className="mt-0px">
+                      {" "}
+                      <a
+                        href={determine_tracking_number(order.tracking_number)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mv-2rem"
+                        style={{
+                          textDecoration: "underline",
+                          color: "white",
+                        }}
+                      >
+                        {order.tracking_number}
+                      </a>
+                    </div>
+                  </div>
+                )}
+              </div>
+              <div
+                className={`row fs-16px ${order.order_note
+                  ? "jc-b"
+                  : "jc-fe"}  ai-c`}
+              >
+                <Link
+                  to={{
+                    pathname: "/secure/account/order/" + order._id,
+                    previous_path:
+                      history.location.pathname + history.location.search,
+                  }}
+                >
+                  <button className="btn primary">Order Details</button>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="jc-a w-100per mb-15px">
+          {userInfo &&
+          userInfo.isAdmin &&
+          order.order_note && (
+            <label className="title_font fs-18px">
+              {order.order_note && "Check Order Note"}
+            </label>
+          )}
+          {userInfo &&
+          userInfo.isAdmin &&
+          order.production_note && (
+            <label className="title_font fs-18px">
+              {order.production_note && "Check Production Note"}
+            </label>
+          )}
         </div>
       </div>
 
@@ -686,6 +695,14 @@ const OrderListItem = ({
                 <label className="phrase_font">Order Note: </label>
                 <label className="ml-1rem">{order.order_note}</label>
               </li>
+              {userInfo &&
+              userInfo.isAdmin &&
+              order.production_note && (
+                <li className="row mv-2rem">
+                  <label className="phrase_font">Production Note: </label>
+                  <label className="ml-1rem">{order.production_note}</label>
+                </li>
+              )}
               <li className="row mv-2rem">
                 <label className="phrase_font">Promo Code: </label>
                 <label className="ml-1rem">{order.promo_code}</label>

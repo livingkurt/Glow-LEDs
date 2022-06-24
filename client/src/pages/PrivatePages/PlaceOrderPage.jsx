@@ -136,6 +136,7 @@ const PlaceOrderPage = props => {
   const dispatch = useDispatch();
 
   const [ order_note, set_order_note ] = useState("");
+  const [ production_note, set_production_note ] = useState("");
   setTimeout(() => {
     set_loading_checkboxes(false);
   }, 500);
@@ -252,6 +253,7 @@ const PlaceOrderPage = props => {
       userInfo,
       tip,
       order_note,
+      production_note,
       promo_code: show_message && promo_code,
     });
     console.log({ get_shipping_rates: request });
@@ -355,6 +357,7 @@ const PlaceOrderPage = props => {
             totalPrice,
             userInfo,
             order_note,
+            production_note,
             tip,
             promo_code: show_message && promo_code,
             parcel: parcel || null,
@@ -380,6 +383,7 @@ const PlaceOrderPage = props => {
             taxPrice,
             totalPrice,
             order_note,
+            production_note,
             tip,
             promo_code: show_message && promo_code,
             parcel: parcel || null,
@@ -427,6 +431,7 @@ const PlaceOrderPage = props => {
         totalPrice,
         user: user._id,
         order_note,
+        production_note,
         tip,
         promo_code,
         parcel: parcel ? parcel : null,
@@ -460,6 +465,7 @@ const PlaceOrderPage = props => {
         taxPrice,
         totalPrice,
         order_note,
+        production_note,
         tip,
         promo_code,
         parcel,
@@ -846,6 +852,7 @@ const PlaceOrderPage = props => {
               show_payment={show_payment}
               show_hide_steps={show_hide_steps}
               set_order_note={set_order_note}
+              set_production_note={set_production_note}
               show_promo_code={show_promo_code}
               show_promo_code_input_box={show_promo_code_input_box}
               check_code={check_code}

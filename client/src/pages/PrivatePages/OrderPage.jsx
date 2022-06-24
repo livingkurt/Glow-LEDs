@@ -479,6 +479,7 @@ const OrderPage = props => {
         user: order.user._id,
         order_note: `Replacement Order for ${order.shipping.first_name} ${order
           .shipping.last_name} - Original Order Number is ${order._id}`,
+        production_note: order.production_note,
       })
     );
     dispatch(listOrders({}));
@@ -1043,7 +1044,7 @@ ${order.shipping.email}`)}
                 {userInfo &&
                 userInfo.isAdmin && (
                   <div className="">
-                    <div className="pt-1rem" htmlFor="order_note">
+                    <div className="pt-1rem" htmlFor="payment">
                       Payment Method: {order.payment.paymentMethod}
                     </div>
                   </div>
@@ -1228,6 +1229,17 @@ ${order.shipping.email}`)}
                       htmlFor="order_note"
                     >
                       Order Note: {order.order_note}
+                    </div>
+                  </div>
+                )}
+                {order.production_note && (
+                  <div className="">
+                    <div
+                      style={{ borderTop: ".1rem white solid" }}
+                      className="pt-1rem"
+                      htmlFor="production_note"
+                    >
+                      Production Note: {order.production_note}
                     </div>
                   </div>
                 )}

@@ -53,6 +53,7 @@ export const createPayOrder = (
     totalPrice: number;
     user: object;
     order_note: string;
+    production_note: string;
     promo_code: string;
   },
   paymentMethod: any
@@ -99,6 +100,7 @@ export const createPayOrderGuest = (
     taxPrice: number;
     totalPrice: number;
     order_note: string;
+    production_note: string;
     promo_code: string;
   },
   create_account: boolean,
@@ -177,6 +179,7 @@ export const createOrderGuest = (order: {
   taxPrice: number;
   totalPrice: number;
   order_note: string;
+  production_note: string;
   promo_code: string;
 }) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
   try {
@@ -207,6 +210,7 @@ export const createOrder = (order: {
   totalPrice: number;
   user: object;
   order_note: string;
+  production_note: string;
   promo_code: string;
 }) => async (
   dispatch: (arg0: { type: string; payload: any }) => void,

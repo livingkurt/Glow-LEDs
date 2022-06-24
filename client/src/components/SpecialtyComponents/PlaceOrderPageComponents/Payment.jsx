@@ -6,6 +6,7 @@ export function Payment({
   show_payment,
   show_hide_steps,
   set_order_note,
+  set_production_note,
   show_promo_code,
   show_promo_code_input_box,
   check_code,
@@ -65,6 +66,19 @@ export function Payment({
                 onChange={e => set_order_note(e.target.value)}
               />
             </div>
+            {userInfo &&
+            userInfo.isAdmin && (
+              <div className="w-100per mt-10px">
+                <div htmlFor="production_note">Add a production note</div>
+                <input
+                  type="text"
+                  name="production_note"
+                  id="production_note"
+                  className="w-100per"
+                  onChange={e => set_production_note(e.target.value)}
+                />
+              </div>
+            )}
             {show_promo_code && (
               <div>
                 {show_promo_code_input_box && (
