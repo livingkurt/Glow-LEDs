@@ -415,11 +415,7 @@ const OrderListItem = ({
                   </div>
                 )}
               </div>
-              <div
-                className={`row fs-16px ${order.order_note
-                  ? "jc-b"
-                  : "jc-fe"}  ai-c`}
-              >
+              <div className={`fs-16px jc-fe ai-c`}>
                 <Link
                   to={{
                     pathname: "/secure/account/order/" + order._id,
@@ -433,22 +429,43 @@ const OrderListItem = ({
             </div>
           </div>
         </div>
-        <div className="jc-a w-100per mb-15px">
+        {userInfo &&
+        userInfo.isAdmin &&
+        order.production_note && (
+          <div>
+            <li className="row mv-2rem">
+              <label className="title_font">Order Note: </label>
+              <label className="ml-1rem">{order.order_note}</label>
+            </li>
+
+            <li className="row mv-2rem">
+              <label className="title_font">Production Note: </label>
+              <label className="ml-1rem">{order.production_note}</label>
+            </li>
+          </div>
+        )}
+        {/* <div className="jc-a w-100per mb-15px">
           {userInfo &&
           userInfo.isAdmin &&
           order.order_note && (
-            <label className="title_font fs-18px">
+            <label
+              className="title_font fs-18px br-10px p-10px "
+              style={{ border: "1px solid white" }}
+            >
               {order.order_note && "Check Order Note"}
             </label>
           )}
           {userInfo &&
           userInfo.isAdmin &&
           order.production_note && (
-            <label className="title_font fs-18px">
+            <label
+              className="title_font fs-18px br-10px p-10px "
+              style={{ border: "1px solid white" }}
+            >
               {order.production_note && "Check Production Note"}
             </label>
           )}
-        </div>
+        </div> */}
       </div>
 
       <div className="row">
