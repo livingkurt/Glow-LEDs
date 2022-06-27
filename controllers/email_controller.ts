@@ -92,15 +92,19 @@ const sendEmail = async (
   const emailTransporter = await createTransporter(type);
 
   console.log({ emailTransporter });
-  await emailTransporter.sendMail(emailOptions, (err: any, data: any) => {
-    if (err) {
-      console.log("Error Occurs", err);
-      res.status(500).send({ error: err, message: "Error Sending Email" });
-    } else {
-      console.log("Email Sent to " + name);
-      res.status(200).send({ message: "Email Successfully Sent" });
-    }
-  });
+  if (emailTransporter) {
+    await emailTransporter.sendMail(emailOptions, (err: any, data: any) => {
+      if (err) {
+        console.log("Error Occurs", err);
+        res.status(500).send({ error: err, message: "Error Sending Email" });
+      } else {
+        console.log("Email Sent to " + name);
+        res.status(200).send({ message: "Email Successfully Sent" });
+      }
+    });
+  } else {
+    res.status(500).send({ message: "Error Sending Email" });
+  }
 };
 
 // const transporter_contact = nodemailer.createTransport({
