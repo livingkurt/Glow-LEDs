@@ -435,18 +435,20 @@ const OrderListItem = ({
           </div>
         </div>
         {userInfo &&
-        userInfo.isAdmin &&
-        order.production_note && (
+        userInfo.isAdmin && (
           <div>
-            <li className="row mv-2rem">
-              <label className="title_font">Order Note: </label>
-              <label className="ml-1rem">{order.order_note}</label>
-            </li>
-
-            <li className="row mv-2rem">
-              <label className="title_font">Production Note: </label>
-              <label className="ml-1rem">{order.production_note}</label>
-            </li>
+            {order.order_note && (
+              <li className="row mv-2rem">
+                <label className="title_font">Order Note: </label>
+                <label className="ml-1rem">{order.order_note}</label>
+              </li>
+            )}
+            {order.production_note && (
+              <li className="row mv-2rem">
+                <label className="title_font">Production Note: </label>
+                <label className="ml-1rem">{order.production_note}</label>
+              </li>
+            )}
           </div>
         )}
         {/* <div className="jc-a w-100per mb-15px">
