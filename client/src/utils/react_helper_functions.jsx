@@ -488,6 +488,13 @@ export const determine_product_name = (item, show_qty) => {
   );
 };
 
+export const determine_product_name_string = (item, show_qty) => {
+  return `${qty(item, show_qty) || ""} ${color(item) || ""} ${item.name}
+      ${size(item) || ""}
+      ${secondary_color(item) || ""} ${secondary_color_name(item) || ""}
+      ${secondary_product(item) || ""} ${secondary_product_name(item) || ""}`;
+};
+
 export const determine_secondary_product_name = (name, item) => {
   const { category, subcategory } = item;
   if (category === "diffuser_caps") {

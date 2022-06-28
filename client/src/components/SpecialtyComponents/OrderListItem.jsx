@@ -20,9 +20,13 @@ import {
   update_payment,
 } from "../../actions/orderActions";
 import { LazyImage, Loading } from "../UtilityComponents";
-import { determine_product_name } from "../../utils/react_helper_functions";
+import {
+  determine_product_name,
+  determine_product_name_string,
+} from "../../utils/react_helper_functions";
 import { OrderStatusButtons } from "./OrderPageComponents";
 import { API_Emails, API_Orders, API_Shipping } from "../../utils";
+import ReactTooltip from "react-tooltip";
 
 const OrderListItem = ({
   order,
@@ -306,6 +310,7 @@ const OrderListItem = ({
       style={{ backgroundColor: determine_color(order) }}
     >
       <Loading loading={loading_label} />
+      <ReactTooltip className="br-10px" />
       <div style={{ borderBottom: "1px solid white" }}>
         <div className="pb-15px mb-10px jc-b">
           <div className="w-60per jc-b ">
@@ -474,7 +479,14 @@ const OrderListItem = ({
             {order.orderItems.map((item, index) => {
               return (
                 <div className="row mt-15px" key={index}>
-                  <div className="column ai-c pos-rel">
+                  <div
+                    className="column ai-c pos-rel"
+                    data-tip={determine_product_name_string(
+                      item,
+                      true,
+                      order.createdAt
+                    )}
+                  >
                     <Link to={determnine_link(item)}>
                       <div className="">
                         {!item.secondary_image && (
