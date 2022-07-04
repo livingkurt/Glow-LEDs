@@ -90,16 +90,16 @@ const CompletePage = props => {
       const { data: order } = await API_Orders.findById_orders_a(
         props.match.params.id
       );
-      // await API_Emails.send_order_email(
-      //   order,
-      //   "Thank you for your Glow LEDs Order",
-      //   order.shipping.email
-      // );
-      // await API_Emails.send_order_email(
-      //   order,
-      //   "New Order Created by " + order.shipping.first_name,
-      //   "contact.glowleds@gmail.com"
-      // );
+      await API_Emails.send_order_email(
+        order,
+        "Thank you for your Glow LEDs Order",
+        order.shipping.email
+      );
+      await API_Emails.send_order_email(
+        order,
+        "New Order Created by " + order.shipping.first_name,
+        "contact.glowleds@gmail.com"
+      );
 
       if (order.orderItems.some(item => item.category === "custom")) {
         console.log({ Custom: "Custom" });
