@@ -88,7 +88,6 @@ const sendEmail = async (
 ) => {
   const emailTransporter = await createTransporter(type);
 
-  console.log({ emailTransporter });
   if (emailTransporter) {
     await emailTransporter.sendMail(emailOptions, (err: any, data: any) => {
       if (err) {
@@ -103,23 +102,6 @@ const sendEmail = async (
     res.status(500).send({ message: "Error Sending Email" });
   }
 };
-
-// const transporter_contact = nodemailer.createTransport({
-//   service: "gmail",
-//   pool: true,
-//   auth: {
-//     user: process.env.CONTACT_EMAIL,
-//     pass: process.env.CONTACT_PASSWORD,
-//   },
-// });
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  pool: true,
-  auth: {
-    user: process.env.INFO_EMAIL,
-    pass: process.env.INFO_PASSWORD,
-  },
-});
 
 export default {
   findAll_emails_c: async (req: any, res: any) => {
