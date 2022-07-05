@@ -249,15 +249,6 @@ export default {
       subject: "Your Glow LEDs Refund",
       html: App({ body: order(body), unsubscribe: false }),
     };
-    transporter.sendMail(mailOptions, (err: any, data: any) => {
-      if (err) {
-        console.log("Error Occurs", err);
-        res.status(500).send({ error: err, message: "Error Sending Email" });
-      } else {
-        console.log("Email Sent to " + email);
-        res.status(200).send({ message: "Email Successfully Sent" });
-      }
-    });
     sendEmail(
       mailOptions,
       res,
@@ -490,19 +481,6 @@ export default {
           1} *`,
         () => {
           console.log("Email Scheduled for " + time);
-          // transporter.sendMail(mailOptions, (err: any, data: any) => {
-          //   if (err) {
-          //     console.log("Error Occurs", err);
-          //     res
-          //       .status(500)
-          //       .send({ error: err, message: "Error Sending Email" });
-          //   } else {
-          //     email.status = "sent";
-          //     email.save();
-          //     console.log("Email " + subject + " to everyone");
-          //     res.status(200).send({ message: "Email Successfully Sent" });
-          //   }
-          // });
 
           sendEmail(
             mailOptions,
@@ -520,15 +498,7 @@ export default {
       );
     } else {
       console.log("Email not scheduled");
-      transporter.sendMail(mailOptions, (err: any, data: any) => {
-        if (err) {
-          console.log("Error Occurs", err);
-          res.status(500).send({ error: err, message: "Error Sending Email" });
-        } else {
-          console.log("Email " + subject + " to everyone");
-          res.status(200).send({ message: "Email Successfully Sent" });
-        }
-      });
+      sendEmail(mailOptions, res, "info", "Email " + subject + " to everyone");
     }
   },
   view_announcement_emails_c: async (req: any, res: any) => {
