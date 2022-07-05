@@ -200,7 +200,7 @@ export default {
       order: req.body.order,
     };
     const mailOptions = {
-      from: process.env.DISPLAY_EMAIL,
+      from: process.env.DISPLAY_INFO_EMAIL,
       to: req.body.email,
       subject: req.body.subject,
       html: App({ body: order(body), unsubscribe: false }),
@@ -223,7 +223,7 @@ export default {
       order: req.body.order,
     };
     const mailOptions = {
-      from: process.env.DISPLAY_EMAIL,
+      from: process.env.DISPLAY_INFO_EMAIL,
       to: req.body.email,
       subject: req.body.subject,
       html: App({ body: order(body), unsubscribe: false }),
@@ -262,7 +262,7 @@ export default {
       order: order_data,
     };
     const mailOptions = {
-      from: process.env.DISPLAY_EMAIL,
+      from: process.env.DISPLAY_INFO_EMAIL,
       to: email,
       subject: "Your Glow LEDs Refund",
       html: App({ body: order(body), unsubscribe: false }),
@@ -297,7 +297,7 @@ export default {
     };
     console.log({ body });
     const mailOptions = {
-      from: process.env.DISPLAY_EMAIL,
+      from: process.env.DISPLAY_INFO_EMAIL,
       to: req.body.email,
       subject:
         req.body.status === "reassured"
@@ -322,7 +322,7 @@ export default {
       title: "Thank you for signing up!",
     };
     const mailOptions = {
-      from: process.env.DISPLAY_EMAIL,
+      from: process.env.DISPLAY_INFO_EMAIL,
       to: req.body.email,
       subject: req.body.subject,
       html: App({ body: affiliate(body), unsubscribe: false }),
@@ -341,7 +341,7 @@ export default {
       title: "Thank you for sending us your art!",
     };
     const mailOptions = {
-      from: process.env.DISPLAY_EMAIL,
+      from: process.env.DISPLAY_INFO_EMAIL,
       to: req.body.email,
       subject: req.body.subject,
       html: App({
@@ -420,7 +420,7 @@ export default {
     console.log({ passwordreset: req.body });
 
     const mailOptions = {
-      from: process.env.DISPLAY_EMAIL,
+      from: process.env.DISPLAY_INFO_EMAIL,
       to: req.body.data.email,
       subject: "Glow LEDs Password Reset",
       html: App({
@@ -447,7 +447,7 @@ export default {
     );
 
     const mailOptions = {
-      from: process.env.DISPLAY_EMAIL,
+      from: process.env.DISPLAY_INFO_EMAIL,
       to: req.body.email,
       subject: "Enjoy 10% off your next purchase!",
       html: App({
@@ -487,7 +487,7 @@ export default {
 
     const mailOptions = {
       to: process.env.INFO_EMAIL,
-      from: process.env.DISPLAY_EMAIL,
+      from: process.env.DISPLAY_INFO_EMAIL,
       subject: subject,
       html: App({
         body: announcement(template),
@@ -571,7 +571,7 @@ export default {
     );
 
     const mailOptions = {
-      from: process.env.DISPLAY_EMAIL,
+      from: process.env.DISPLAY_INFO_EMAIL,
       to: req.body.email,
       subject: "Enjoy 10% off your next purchase!",
       html: App({
@@ -590,7 +590,7 @@ export default {
     console.log({ reset_password: req.body });
 
     const mailOptions = {
-      from: process.env.DISPLAY_EMAIL,
+      from: process.env.DISPLAY_INFO_EMAIL,
       to: req.body.email,
       subject: "Glow LEDs Reset Password",
       html: App({
@@ -618,7 +618,7 @@ export default {
     );
 
     const mailOptions = {
-      from: process.env.DISPLAY_EMAIL,
+      from: process.env.DISPLAY_INFO_EMAIL,
       to: req.body.email,
       subject: "Glow LEDs Account Created",
       html: App({
@@ -643,7 +643,7 @@ export default {
     console.log({ register: req.body });
 
     const mailOptions = {
-      from: process.env.DISPLAY_EMAIL,
+      from: process.env.DISPLAY_INFO_EMAIL,
       to: req.body.email,
       subject: "Glow LEDs Account Created",
       html: App({

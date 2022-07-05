@@ -67,7 +67,7 @@ export default {
       : body.email ? body.email : process.env.INFO_EMAIL;
     const mailOptions = {
       to: email,
-      from: process.env.DISPLAY_EMAIL,
+      from: process.env.DISPLAY_INFO_EMAIL,
       subject: body.subject,
       html: body.template,
     };
@@ -95,7 +95,7 @@ export default {
     console.log({ emails });
     const mailOptions = {
       to: body.email ? body.email : process.env.INFO_EMAIL,
-      from: process.env.DISPLAY_EMAIL,
+      from: process.env.DISPLAY_INFO_EMAIL,
       subject: body.subject,
       html: body.template,
       bcc: emails,
