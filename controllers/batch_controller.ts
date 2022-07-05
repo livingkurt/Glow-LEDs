@@ -1442,4 +1442,26 @@ export default {
 
     res.send(products);
   },
+  all_no_reference: async (req: any, res: any) => {
+    const all_products = await Product.find({ hidden: false, options: true })
+      .exec()
+      .then((products: any) => {
+        const productsIds = products.map(o => o._id);
+        return Product.find({ id: { $nin: productsIds } }).exec();
+      })
+      .then((companiesWithoutRefs: any) => {
+        return companiesWithoutRefs;
+      })
+      .catch((err: any) => {
+        throw new err();
+      });
+    console.log({ products: all_products });
+
+    // products.forEach(async (product: any) => {
+    //   product.filament = "62afaef401f26dbb73774e43";
+    //   const result = await product.save();
+    // });
+
+    res.send(all_products);
+  },
 };

@@ -634,7 +634,7 @@ const EditProductPage = props => {
         item_group_id: props.match.params.item_group_id || item_group_id,
         previous_price,
         has_add_on,
-        filament: filament ? filament.id : null,
+        filament: filament ? filament._id : null,
       })
     );
     // if (props.match.params.product_option && props.match.params.item_group_id) {

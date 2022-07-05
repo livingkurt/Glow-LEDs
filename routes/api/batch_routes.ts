@@ -127,6 +127,7 @@ router.route("/adding_black_tpu").put(batch_controller.adding_black_tpu);
 router.route("/adding_black_petg").put(batch_controller.adding_black_petg);
 router.route("/adding_white_petg").put(batch_controller.adding_white_petg);
 router.route("/options_no_filament").put(batch_controller.options_no_filament);
+router.route("/all_no_reference").put(batch_controller.all_no_reference);
 
 // router.route('/create_categories').post();
 
