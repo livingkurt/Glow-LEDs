@@ -733,14 +733,14 @@ export const homepage_videos = [
     description:
       "The next breakthrough in diffuser technology is here!! Wiffle Ball Diffusers! Wiffle Ball Diffusers or filter use a 2 material technology that allows for a perfect blend of the colors as well as incorporating a opaque layer to give a light filtering effect that will leave the viewer speechless! ",
   },
-  {
-    name: "Glowstringz V2",
-    category: "glowstringz",
-    video: "mNBwaZKWi8c",
-    color: "#b1832f",
-    description:
-      "Make your space glow! Our Glowstringz come with many preprogrammed patterns that will turn your home into a festival. Strobes, fades, flashes, they have it all. Fill your universe with a swimming pool of light in every color of the rainbow. ",
-  },
+  // {
+  //   name: "Glowstringz V2",
+  //   category: "glowstringz",
+  //   video: "mNBwaZKWi8c",
+  //   color: "#b1832f",
+  //   description:
+  //     "Make your space glow! Our Glowstringz come with many preprogrammed patterns that will turn your home into a festival. Strobes, fades, flashes, they have it all. Fill your universe with a swimming pool of light in every color of the rainbow. ",
+  // },
   {
     name: "OPYN Glowskinz",
     category: "glowskinz",
@@ -769,7 +769,7 @@ export const homepage_videos = [
       "Take your light shows to a new dimension with Diffuser Caps! This new gloving tech puts patterns and designs on the outside of your glove to add a mesmerizing and unique effect to your lightshows. These Diffuser Adapters are the secret to the technology. Simply place the Diffuser Adapters (sold separately) on your microlight inside of the glove and then twist on the cap to the Diffuser Adapter from the outside of the glove! Diffuser caps are about the size of a classic dome diffuser. 15mm in Diameter. People will be speechless at your tracers and effects! 100% facemelt guarantee. Lights not included. Patent pending. The Diffuser Caps are compatible with the Mini Diffuser Caps purchased before 12/3/20. View the graphic below for visual representation of what we",
   },
   {
-    name: "Frosted Diffusers",
+    name: "Diffusers",
     category: "diffusers",
     video: "uY2xjrGrZd0",
     color: "#6d416d",
