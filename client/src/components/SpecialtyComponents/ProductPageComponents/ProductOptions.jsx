@@ -542,12 +542,13 @@ const ProductOptions = ({
             </h4>
           )}
         </div>
-        {determine_add_to_cart(
-          product,
-          secondary_product,
-          count_in_stock,
-          option_product_object
-        )}
+        {!product.name === "Glowstringz V2" &&
+          determine_add_to_cart(
+            product,
+            secondary_product,
+            count_in_stock,
+            option_product_object
+          )}
       </li>
     </ul>
   );
