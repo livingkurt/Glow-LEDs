@@ -1446,7 +1446,7 @@ export default {
     const all_products = await Product.find({ hidden: false, options: true })
       .exec()
       .then((products: any) => {
-        const productsIds = products.map(o => o._id);
+        const productsIds = products.map((o: any) => o._id);
         return Product.find({ id: { $nin: productsIds } }).exec();
       })
       .then((companiesWithoutRefs: any) => {
