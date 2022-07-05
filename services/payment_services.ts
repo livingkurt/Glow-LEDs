@@ -1,6 +1,6 @@
 import { order_db } from "../db";
 require("dotenv").config();
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+const stripe = require("stripe")(process.env.STRIPE_KEY);
 
 export default {
   secure_pay_payments_s: async (params: any, body: any) => {
@@ -89,7 +89,7 @@ export default {
 
 // import { Order } from '../models';
 // require('dotenv').config();
-// const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+// const stripe = require('stripe')(process.env.STRIPE_KEY);
 
 // export default {
 // 	secure_pay: async (req: any, res: any) => {
