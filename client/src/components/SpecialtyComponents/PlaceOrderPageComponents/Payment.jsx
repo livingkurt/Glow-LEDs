@@ -197,13 +197,6 @@ export function Payment({
                   set_loading_payment={set_loading_payment}
                 />
               )}
-              {/* {!hide_pay_button &&
-            shipping &&
-            shipping.hasOwnProperty('first_name') &&
-            create_account &&
-            passwords_check && (
-            <Stripe pay_order={placeOrderHandler} loading_payment={loading_payment} />
-            )} */}
             </li>
             {userInfo &&
             userInfo.isAdmin && (
