@@ -225,7 +225,7 @@ const OrderListItem = ({
     await API_Emails.send_order_email(
       order,
       "New Order Created by " + order.shipping.first_name,
-      "info.glowleds@gmail.com"
+      process.env.REACT_APP_INFO_EMAIL
     );
 
     set_loading_label(false);
@@ -241,7 +241,7 @@ const OrderListItem = ({
     await API_Emails.send_refund_email(
       order,
       "New Refunded for " + order.shipping.first_name,
-      "info.glowleds@gmail.com",
+      process.env.REACT_APP_INFO_EMAIL,
       true
     );
 

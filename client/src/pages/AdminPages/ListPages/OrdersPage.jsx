@@ -119,7 +119,7 @@ const OrdersPage = props => {
     await API_Emails.send_order_email(
       order,
       "New Order Created by " + order.shipping.first_name,
-      "info.glowleds@gmail.com"
+      process.env.REACT_APP_INFO_EMAIL
     );
   };
   useEffect(
@@ -224,7 +224,7 @@ const OrdersPage = props => {
           "'s Order has been " +
           toCapitalize(status) +
           "!",
-      "info.glowleds@gmail.com",
+      process.env.REACT_APP_INFO_EMAIL,
       status,
       message_to_user
     );

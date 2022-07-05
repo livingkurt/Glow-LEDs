@@ -456,10 +456,10 @@ const FAQPage = () => {
                   All shipments come with tracking numbers that will be sent to
                   your email when the package is ready for shipment. If the
                   address on your order is incorrect, please contact us
-                  immediately at contact.glowleds@gmail.com. If your shipping
-                  information was incorrectly input and your package is returned
-                  to us, you will be responsible for paying the secondary
-                  shipping fees.
+                  immediately at {process.env.REACT_APP_CONTACT_EMAIL}. If your
+                  shipping information was incorrectly input and your package is
+                  returned to us, you will be responsible for paying the
+                  secondary shipping fees.
                 </pre>
                 <h3 className="ta-c title_font" id="international_shipping">
                   International Shipping
@@ -534,8 +534,8 @@ const FAQPage = () => {
                 <pre className="paragraph_font" style={{ padding: "18px" }}>
                   We take full responsibility for damaged products due to
                   manufacturing defects. Please send us a photo at
-                  contact.glowleds@gmail.com., and we'll be happy to figure out
-                  a solution.
+                  {process.env.REACT_APP_CONTACT_EMAIL}., and we'll be happy to
+                  figure out a solution.
                 </pre>
                 <h3 className="ta-c title_font" id="cancelations">
                   Cancellations and Modifications
@@ -544,9 +544,10 @@ const FAQPage = () => {
                   Once your order is placed, we have a very limited window to
                   make any changes or cancellations. If you require an order
                   change or cancellation, please let us know as soon as possible
-                  by sending us an email to contact.glowleds@gmail.com. We can't
-                  guarantee that we'll be able to catch your order before it
-                  gets produced, but we'll try our absolute best!
+                  by sending us an email to{" "}
+                  {process.env.REACT_APP_CONTACT_EMAIL}. We can't guarantee that
+                  we'll be able to catch your order before it gets produced, but
+                  we'll try our absolute best!
                 </pre>
 
                 <h3 className="ta-c title_font" id="returns">
@@ -555,10 +556,10 @@ const FAQPage = () => {
                 <pre className="paragraph_font" style={{ padding: "18px" }}>
                   We offer a 100% satisfaction guarantee. Returns are accepted
                   within 30 days of delivery. To initiate a return please
-                  contact contact.glowleds@gmail.com. and you will be supplied
-                  with a prepaid shipping label to send back your product.
-                  Please include your full name and order number in the return
-                  shipment and you will be refunded the full amount minus
+                  contact {process.env.REACT_APP_CONTACT_EMAIL} and you will be
+                  supplied with a prepaid shipping label to send back your
+                  product. Please include your full name and order number in the
+                  return shipment and you will be refunded the full amount minus
                   original shipping costs. Certian items are non-refundable.
                   Refunds are returned to the original form of payment.
                   <Link to="/pages/contact/returns">

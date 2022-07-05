@@ -75,10 +75,6 @@ const email_routes = {
     return axios.post("/api/emails/send_email", { template, subject, email });
   },
 
-  // send_admin_email: (template: string, subject: string) => {
-  // 	return axios.post('/api/emails/send_emails_c', { template, subject });
-  // },
-
   save_html: (template: string, email: any, access_token: any) => {
     console.log({ template, email, access_token });
     email = { ...email, html: template };

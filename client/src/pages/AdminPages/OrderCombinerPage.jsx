@@ -196,7 +196,7 @@ const OrderCombinerPage = (props) => {
     postalCode: process.env.REACT_APP_RETURN_POSTAL_CODE,
     country: process.env.REACT_APP_RETURN_COUNTRY,
 		phone: '906-284-2208',
-		email: 'contact.glowleds@gmail.com',
+		email: process.env.REACT_APP_CONTACT_EMAIL,
 		company: 'Glow LEDs'
 	};
 

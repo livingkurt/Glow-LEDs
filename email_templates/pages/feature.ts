@@ -122,7 +122,8 @@ export default (props: any) => {
               </table>
             </li>
             <li>
-              <div>Type or paste contact.glowleds@gmail.com into the &quot;Email To&quot; field</div>
+              <div>Type or paste ${process.env
+                .CONTACT_EMAIL} into the &quot;Email To&quot; field</div>
               <table width="100%" style="max-width:400px;width:100%;margin:auto">
                 <tr>
                   <td><img src="https://thumbs2.imgbox.com/b9/4f/IW8ZTgwp_t.png" alt="Glow LEDs" title="Email Image"

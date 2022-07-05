@@ -35,7 +35,7 @@ router.get(
       0
     );
     const body = {
-      email: "contact.glowleds@gmail.com",
+      email: process.env.CONTACT_EMAIL,
       promo_code: "xoteag",
       categories: contents && contents[0].home_page.slideshow,
     };
@@ -1456,7 +1456,7 @@ router.get(
       0
     );
     const body = {
-      email: "contact.glowleds@gmail.com",
+      email: process.env.CONTACT_EMAIL,
       promo_code: "xoteag",
       categories: contents && contents[0].home_page.slideshow,
     };

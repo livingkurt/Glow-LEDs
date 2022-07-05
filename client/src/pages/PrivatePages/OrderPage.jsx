@@ -245,7 +245,7 @@ const OrderPage = props => {
           "'s Order has been " +
           toCapitalize(status) +
           "!",
-      "info.glowleds@gmail.com",
+      process.env.REACT_APP_INFO_EMAIL,
       status,
       message_to_user
     );
@@ -263,7 +263,7 @@ const OrderPage = props => {
     await API_Emails.send_order_email(
       order,
       "New Order Created by " + order.shipping.first_name,
-      "info.glowleds@gmail.com"
+      process.env.REACT_APP_INFO_EMAIL
     );
   };
   const update_order_payment_state = (order, state, is_action) => {
@@ -564,7 +564,7 @@ const OrderPage = props => {
     postalCode: process.env.REACT_APP_RETURN_POSTAL_CODE,
     country: process.env.REACT_APP_RETURN_COUNTRY,
     phone: "906-284-2208",
-    email: "info.glowleds@gmail.com",
+    email: process.env.REACT_APP_INFO_EMAIL,
     company: "Glow LEDs",
   };
 
@@ -612,7 +612,7 @@ const OrderPage = props => {
     await API_Emails.send_order_email(
       order,
       "New Order Created by " + order.shipping.first_name,
-      "info.glowleds@gmail.com"
+      process.env.REACT_APP_INFO_EMAIL
     );
 
     set_loading_label(false);
@@ -629,7 +629,7 @@ const OrderPage = props => {
     await API_Emails.send_refund_email(
       order,
       "New Refunded for " + order.shipping.first_name,
-      "info.glowleds@gmail.com",
+      process.env.REACT_APP_INFO_EMAIL,
       true
     );
 

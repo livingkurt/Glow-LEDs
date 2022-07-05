@@ -224,7 +224,7 @@ const LabelCreatorPage = props => {
     postalCode: process.env.REACT_APP_RETURN_POSTAL_CODE,
     country: process.env.REACT_APP_RETURN_COUNTRY,
     phone: "906-284-2208",
-    email: "info.glowleds@gmail.com",
+    email: process.env.REACT_APP_INFO_EMAIL,
     company: "Glow LEDs",
   };
   const destanye_address = {

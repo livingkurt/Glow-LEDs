@@ -137,7 +137,7 @@ export default (props: {
       Thank you,
     </h3>
       <div>Kurt @ Glow LEDs</div>
-      <div>contact.glowleds@gmail.com</div>
+      <div>${process.env.CONTACT_EMAIL}</div>
       <div>www.glow-leds.com</div>
 	`;
 };

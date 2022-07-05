@@ -98,7 +98,7 @@ const CompletePage = props => {
       await API_Emails.send_order_email(
         order,
         "New Order Created by " + order.shipping.first_name,
-        "contact.glowleds@gmail.com"
+        process.env.REACT_APP_INFO_EMAIL
       );
 
       if (order.orderItems.some(item => item.category === "custom")) {
@@ -120,7 +120,7 @@ const CompletePage = props => {
       await API_Emails.send_affiliate_email(
         affiliate,
         "New Affiliate Created by " + affiliate.artist_name,
-        "contact.glowleds@gmail.com"
+        process.env.REACT_APP_INFO_EMAIL
       );
     } else if (props.match.params.type === "feature") {
       const { data: feature } = await API_Features.findById_features_a(
@@ -134,7 +134,7 @@ const CompletePage = props => {
       await API_Emails.send_feature_email(
         feature,
         "New Feature Created by " + feature.artist_name,
-        "contact.glowleds@gmail.com"
+        process.env.REACT_APP_INFO_EMAIL
       );
     }
     set_loading(false);
@@ -272,7 +272,8 @@ const CompletePage = props => {
                 {" "}
                 If you have not recieved a confirmation email make sure to check
                 your spam folder for the confirmation email. Please reach out
-                with any questions or concerns to contact.glowleds@gmail.com.
+                with any questions or concerns to{" "}
+                {process.env.REACT_APP_CONTACT_EMAIL}.
               </p>
             </div>
             <div className="jc-c ai-c m-auto wrap">

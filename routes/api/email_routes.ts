@@ -42,14 +42,10 @@ router
 
 // router.route('/verified').post(email_controller.send_verified_emails_c);
 
-router.route("/send_announcement").post(email_controller.send_all_emails_c);
-
 router
   .route("/")
   .get(email_controller.findAll_emails_c)
   .post(isAuth, isAdmin, email_controller.create_emails_c);
-
-router.route("/send_email").post(email_controller.send_emails_c);
 
 router
   .route("/:id")

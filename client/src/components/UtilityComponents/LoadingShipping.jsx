@@ -63,7 +63,7 @@ const LoadingPayment = ({
               Double check you entered your shipping address correctly
             </p>
             <p className="ta-c mt-20px mb-1px">
-              Contact contact.glowleds@gmail.com for assistence
+              Contact {process.env.REACT_APP_CONTACT_EMAIL} for assistence
             </p>
           </div>
           <button

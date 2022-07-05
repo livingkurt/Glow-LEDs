@@ -35,7 +35,7 @@ const createTransporter = async (type: string) => {
       };
     } else {
       credentials = {
-        user: process.env.EMAIL,
+        user: process.env.INFO_EMAIL,
         client_id: process.env.GOOGLE_INFO_OAUTH_ID,
         client_secret: process.env.GOOGLE_INFO_OAUTH_SECRET,
         refresh_token: process.env.GOOGLE_INFO_OAUTH_REFRESH_TOKEN,
@@ -47,7 +47,6 @@ const createTransporter = async (type: string) => {
       credentials.client_secret,
       "https://developers.google.com/oauthplayground"
     );
-    console.log({ oauth2Client });
     oauth2Client.setCredentials({
       refresh_token: credentials.refresh_token,
     });
@@ -61,7 +60,6 @@ const createTransporter = async (type: string) => {
         resolve(token);
       });
     });
-    console.log({ accessToken });
 
     const transporter = nodemailer.createTransport({
       service: "gmail",
@@ -75,7 +73,6 @@ const createTransporter = async (type: string) => {
         refreshToken: credentials.refresh_token,
       },
     });
-    console.log({ transporter });
 
     return transporter;
   } catch (error) {
@@ -119,8 +116,8 @@ const transporter = nodemailer.createTransport({
   service: "gmail",
   pool: true,
   auth: {
-    user: process.env.EMAIL,
-    pass: process.env.PASSWORD,
+    user: process.env.INFO_EMAIL,
+    pass: process.env.INFO_PASSWORD,
   },
 });
 
@@ -173,43 +170,6 @@ export default {
         return res.status(200).send(email);
       }
       return res.status(500).send({ message: "Error Updating Email" });
-    } catch (error) {
-      console.log({ update_emails_c_error: error });
-      res.status(500).send({ error, message: "Error Updating Email" });
-    }
-  },
-  send_emails_c: async (req: any, res: any) => {
-    const { body } = req;
-    try {
-      const email = await email_services.send_emails_s(body);
-      transporter.sendMail(email, (error: any, data: any) => {
-        if (error) {
-          return res
-            .status(500)
-            .send({ error, message: "Error Updating Email" });
-        } else {
-          return res.status(200).send(data);
-        }
-      });
-    } catch (error) {
-      console.log({ update_emails_c_error: error });
-      res.status(500).send({ error, message: "Error Updating Email" });
-    }
-  },
-  send_all_emails_c: async (req: any, res: any) => {
-    const { body } = req;
-    try {
-      console.log({ body });
-      const email = await email_services.send_all_emails_s(body);
-      transporter.sendMail(email, (error: any, data: any) => {
-        if (error) {
-          return res
-            .status(500)
-            .send({ error, message: "Error Updating Email" });
-        } else {
-          return res.status(200).send(data);
-        }
-      });
     } catch (error) {
       console.log({ update_emails_c_error: error });
       res.status(500).send({ error, message: "Error Updating Email" });
@@ -399,7 +359,7 @@ export default {
   },
   send_external_contact_emails_c: async (req: any, res: any) => {
     const mailOptions = {
-      to: process.env.PERSONAL_EMAIL,
+      to: process.env.LOGIN_EMAIL,
       from: req.body.email,
       subject: `${req.body.subject} - ${req.body.name}`,
       html: req.body.message,
@@ -526,7 +486,7 @@ export default {
     console.log({ emails });
 
     const mailOptions = {
-      to: process.env.EMAIL,
+      to: process.env.INFO_EMAIL,
       from: process.env.DISPLAY_EMAIL,
       subject: subject,
       html: App({

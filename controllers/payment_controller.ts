@@ -1,6 +1,6 @@
 import { Order } from "../models";
 require("dotenv").config();
-const stripe = require("stripe")(process.env.REACT_APP_STRIPE_SECRET_KEY);
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 export default {
   secure_pay_payments_c: async (req: any, res: any) => {

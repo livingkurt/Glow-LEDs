@@ -32,8 +32,9 @@ export default ({
 										href="">
 										Please DO NOT reply to this email.
 										<br>
-										For any questions email <a href="mailto:contact.glowleds@gmail.com"
-											style="font-size:16px;text-decoration:none;color:#009eff;">contact.glowleds@gmail.com
+										For any questions email <a href="mailto:${process.env.CONTACT_EMAIL}"
+											style="font-size:16px;text-decoration:none;color:#009eff;">${process
+                        .env.CONTACT_EMAIL}ontact.glowleds@gmail.com
 									</p>
 								</td>
 							</tr>

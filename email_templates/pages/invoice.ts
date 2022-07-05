@@ -33,8 +33,8 @@ export default (props: any) => {
               <tr>
                 <td valign="top">Glow LEDs<br />${process.env
                   .RETURN_ADDRESS}<br />${process.env.RETURN_CITY}, ${process
-    .env.RETURN_STATE} ${process.env
-    .RETURN_POSTAL_CODE} <br />contact.glowleds@gmail.com
+    .env.RETURN_STATE} ${process.env.RETURN_POSTAL_CODE} <br />${process.env
+    .CONTACT_EMAIL}
                 </td>
                 <td valign="top" align="right" style="text-align: right;">${order
                   .shipping.first_name} ${order.shipping.last_name}<br>${order
@@ -369,7 +369,8 @@ export default (props: any) => {
       <div style="text-align:center">We want to feature you!</div>
       <div style="text-align:center">We are figuring this out as we go so any feedback is welcome.</div>
       <div style="text-align:center">We appreciate you more than you know.</div>
-      <div style="text-align:center"><strong>Questions or concerns?:</strong> contact.glowleds@gmail.com</div>
+      <div style="text-align:center"><strong>Questions or concerns?:</strong> ${process
+        .env.CONTACT_EMAIL}</div>
     </div>
   </div>
 </body>`;

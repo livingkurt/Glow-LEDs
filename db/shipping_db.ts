@@ -36,7 +36,7 @@ export default {
         country: process.env.RETURN_COUNTRY,
         company: "Glow LEDs",
         phone: "906-284-2208",
-        email: "info.glowleds@gmail.com",
+        email: process.env.INFO_EMAIL,
       });
 
       let weight = 0;
@@ -202,7 +202,7 @@ export default {
         country: process.env.RETURN_COUNTRY,
         company: "Glow LEDs",
         phone: "906-284-2208",
-        email: "info.glowleds@gmail.com",
+        email: process.env.INFO_EMAIL,
       });
 
       const fromAddress = new EasyPost.Address({
@@ -297,7 +297,7 @@ export default {
         country: process.env.RETURN_COUNTRY,
         company: "Glow LEDs",
         phone: "906-284-2208",
-        email: "info.glowleds@gmail.com",
+        email: process.env.INFO_EMAIL,
       });
       const package_length = order.orderItems.reduce(
         (a: any, c: { package_length: any }) => a + c.package_length,
