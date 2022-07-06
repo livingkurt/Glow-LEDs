@@ -96,7 +96,7 @@ app.post("/api/gcode", async (req: any, res: any) => {
     const filename = req.body.filename;
     const data = req.body.gcode;
     fs.writeFile(
-      `/Volumes/Mobile Projects/Projects/3D Printing/Projects/Glow LEDs/${filename}`,
+      `/Users/kurtlavacque/Desktop/${filename}`,
       data,
       (err: any) => {
         if (err) throw err;

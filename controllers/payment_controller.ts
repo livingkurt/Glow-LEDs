@@ -226,6 +226,21 @@ export default {
       res.status(500).send({ error, message: "Error Refunding Order" });
     }
   },
+  // payout_account_creation: async (req: any, res: any) => {
+  //   try {
+  //     const account = await stripe.accounts.create({type: 'express'});
+
+  //     const accountLink = await stripe.accountLinks.create({
+  //       account: 'acct_1032D82eZvKYlo2C',
+  //       refresh_url: 'https://example.com/reauth',
+  //       return_url: 'https://example.com/return',
+  //       type: 'account_onboarding',
+  //     });
+  //   } catch (error) {
+  //     console.log({ error });
+  //     res.status(500).send({ error, message: "Error Refunding Order" });
+  //   }
+  // },
 };
 
 // import { payment_services } from '../services';
