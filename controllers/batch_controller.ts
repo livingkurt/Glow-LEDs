@@ -483,7 +483,6 @@ export default {
     diffuser_caps.forEach(async (product: any) => {
       product.name = product.name + " V4";
       const result = await product.save();
-      console.log({ result });
     });
     // console.log({ products });
     res.send(products);
@@ -521,7 +520,6 @@ export default {
     products.forEach(async (product: any) => {
       product.sizing = product.size ? `${product.size}` : "";
       const result = await product.save();
-      console.log({ result });
     });
 
     res.send(products);
@@ -621,7 +619,6 @@ export default {
         "framez"
       );
       const result = await product.save();
-      console.log({ result });
     });
 
     res.send(products);
@@ -651,7 +648,6 @@ export default {
       product.facts = product.facts.replaceAll(" Casings", "skinz");
       product.description = product.description.replaceAll(" Casings", "skinz");
       const result = await product.save();
-      console.log({ result });
     });
 
     res.send(products);
@@ -681,7 +677,6 @@ export default {
       product.facts = product.facts.replaceAll("skins", "skinz");
       product.description = product.description.replaceAll("skins", "skinz");
       const result = await product.save();
-      console.log({ result });
     });
 
     res.send(products);
@@ -711,7 +706,6 @@ export default {
       product.facts = product.facts.replaceAll("skins", "skinz");
       product.description = product.description.replaceAll("skins", "skinz");
       const result = await product.save();
-      console.log({ result });
     });
 
     res.send(products);
@@ -745,7 +739,6 @@ export default {
       product.name = product_name;
       product.pathname = snake_case(product_name);
       const result = await product.save();
-      console.log({ result });
     });
 
     res.send(products);
@@ -774,7 +767,6 @@ export default {
       product.name = product_name;
       product.pathname = snake_case(product_name);
       const result = await product.save();
-      console.log({ result });
     });
 
     res.send(products);
@@ -808,7 +800,6 @@ export default {
       product.name = product_name;
       product.pathname = snake_case(product_name);
       const result = await product.save();
-      console.log({ result });
     });
 
     res.send(products);
@@ -838,7 +829,6 @@ export default {
       product.name = product_name;
       product.pathname = snake_case(product_name);
       const result = await product.save();
-      console.log({ result });
     });
 
     res.send(products);
@@ -868,7 +858,6 @@ export default {
       product.facts = product.facts.replaceAll("skins", "skinz");
       product.description = product.description.replaceAll("skins", "skinz");
       const result = await product.save();
-      console.log({ result });
     });
 
     res.send(products);
@@ -978,7 +967,6 @@ export default {
       )}\nClassic diffusers are for Standard 5 mm bulbs\nVortex diffusers are for the Vortex gloveset from StoneOrbits`;
       console.log({ facts: product.facts });
       const result = await product.save();
-      console.log({ result });
     });
 
     res.send(products);

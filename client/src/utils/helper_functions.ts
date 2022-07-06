@@ -1069,7 +1069,6 @@ const reorderMultiDrag = ({
 
     const result = destination.index - destinationIndexOffset;
 
-    console.log({ result });
     return result;
   })();
 

@@ -349,7 +349,6 @@ export default {
           percentage.indexOf("%") + 1
         );
       });
-      console.log({ result });
       return result;
     } catch (error) {
       console.log({ tax_rates_orders_s_error: error });

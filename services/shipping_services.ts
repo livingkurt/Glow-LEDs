@@ -27,19 +27,47 @@ export default {
     try {
       const EasyPost = new easy_post_api(process.env.EASY_POST);
       const order = body.order;
+      const verify_shipping = body.verify_shipping;
       console.log({ order });
+      let toAddress: any = {};
+      if (verify_shipping) {
+        toAddress = new EasyPost.Address({
+          verify: [ "delivery" ],
+          name: order.shipping.first_name + " " + order.shipping.last_name,
+          street1: order.shipping.address_1,
+          street2: order.shipping.address_2,
+          city: order.shipping.city,
+          state: order.shipping.state,
+          zip: order.shipping.postalCode,
+          country: order.shipping.country,
+        });
+        toAddress.save().then((addr: any) => {
+          error_message = addr.verifications.delivery.errors
+            .map((error: any) => error.message)
+            .join(" - ");
+          // throw new Error(error_message);
+        });
+      } else {
+        toAddress = new EasyPost.Address({
+          name: order.shipping.first_name + " " + order.shipping.last_name,
+          street1: order.shipping.address_1,
+          street2: order.shipping.address_2,
+          city: order.shipping.city,
+          state: order.shipping.state,
+          zip: order.shipping.postalCode,
+          country: order.shipping.country,
+        });
+      }
 
-      const toAddress = new EasyPost.Address({
-        verify_strict: [ "delivery" ],
-        name: order.shipping.first_name + " " + order.shipping.last_name,
-        street1: order.shipping.address_1,
-        street2: order.shipping.address_2,
-        city: order.shipping.city,
-        state: order.shipping.state,
-        zip: order.shipping.postalCode,
-        country: order.shipping.country,
-      });
       console.log({ toAddress });
+
+      // .catch((error: any) => {
+      //   console.log({ saved_shipment: error.error.error.errors });
+      //   error_message = error.error.error.errors
+      //     .map((error: any) => error.message)
+      //     .join(" - ");
+      //   // throw new Error(error[0].message);
+      // });
       const fromAddress = new EasyPost.Address({
         street1: process.env.RETURN_ADDRESS,
         city: process.env.RETURN_CITY,
@@ -126,22 +154,35 @@ export default {
         customsInfo: order.shipping.international ? customsInfo : {},
       });
 
-      const saved_shipment = await shipment.save().catch((error: any) => {
-        console.log({ saved_shipment: error.error.error.errors });
-        error_message = error.error.error.errors
-          .map((error: any) => error.message)
-          .join(" - ");
-        // throw new Error(error[0].message);
-      });
-      if (saved_shipment.rates.length > 0) {
+      const saved_shipment = await shipment.save();
+      // return { shipment: saved_shipment, parcel: parcel_size };
+
+      // const saved_shipment = await shipment.save().catch((error: any) => {
+      //   console.log({ saved_shipment: error.error.error.errors });
+      //   error_message = error.error.error.errors
+      //     .map((error: any) => error.message)
+      //     .join(" - ");
+      //   // throw new Error(error[0].message);
+      // });
+      if (!error_message) {
         return { shipment: saved_shipment, parcel: parcel_size };
       } else {
         return {
           message: "Shipping Failed",
           solution:
             "Please double check your shipping address for incorrect formatting",
+          error: error_message,
         };
       }
+      // if (saved_shipment.rates.length > 0) {
+      //   return { shipment: saved_shipment, parcel: parcel_size };
+      // } else {
+      //   return {
+      //     message: "Shipping Failed",
+      //     solution:
+      //       "Please double check your shipping address for incorrect formatting",
+      //   };
+      // }
     } catch (error) {
       console.log({ get_shipping_rates_shipping_s_error: error });
       throw new Error(error_message || error.message);

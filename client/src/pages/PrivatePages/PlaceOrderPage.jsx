@@ -126,6 +126,7 @@ const PlaceOrderPage = props => {
     true
   );
   const [ tip, set_tip ] = useState(0);
+  const [ verify_shipping, set_verify_shipping ] = useState(true);
   const [ error, set_error ] = useState();
   const [ error_shipping, set_error_shipping ] = useState();
 
@@ -220,7 +221,12 @@ const PlaceOrderPage = props => {
             set_loading_shipping(false);
             set_show_shipping_complete(true);
           } else {
-            if (shipping.hasOwnProperty("first_name")) {
+            console.log({ shipping });
+            if (
+              shipping.hasOwnProperty("address_1") &&
+              shipping.address_1.length > 0 &&
+              shipping_completed
+            ) {
               get_shipping_rates();
             }
           }
@@ -241,21 +247,28 @@ const PlaceOrderPage = props => {
 
   const [ loading_shipping, set_loading_shipping ] = useState();
 
+  //   39 Red Admiral Ct Apartment 39
+  // Little Paxton, England PE19 6BU
+  // United Kingdom
   const get_shipping_rates = async () => {
-    const request = await API_Shipping.get_shipping_rates({
-      orderItems: cartItems,
-      shipping,
-      payment,
-      itemsPrice,
-      shippingPrice,
-      taxPrice,
-      totalPrice,
-      userInfo,
-      tip,
-      order_note,
-      production_note,
-      promo_code: show_message && promo_code,
-    });
+    const verify = shipping.international ? false : verify_shipping;
+    const request = await API_Shipping.get_shipping_rates(
+      {
+        orderItems: cartItems,
+        shipping,
+        payment,
+        itemsPrice,
+        shippingPrice,
+        taxPrice,
+        totalPrice,
+        userInfo,
+        tip,
+        order_note,
+        production_note,
+        promo_code: show_message && promo_code,
+      },
+      verify
+    );
     console.log({ get_shipping_rates: request });
     if (request.data.message) {
       set_error_shipping(request.data);
@@ -846,6 +859,7 @@ const PlaceOrderPage = props => {
               next_step={next_step}
               shipping_rates={shipping_rates}
               cartItems={cartItems}
+              set_verify_shipping={set_verify_shipping}
             />
             <Payment
               payment_completed={payment_completed}

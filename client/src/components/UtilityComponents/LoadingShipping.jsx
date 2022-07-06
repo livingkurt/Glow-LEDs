@@ -3,7 +3,7 @@ import React from "react";
 require("dotenv").config();
 // Components
 
-const LoadingPayment = ({
+const LoadingShipment = ({
   loading,
   error,
   children,
@@ -19,7 +19,7 @@ const LoadingPayment = ({
       );
     }, 3000);
   };
-  // console.log({ LoadingPayment: error });
+  console.log({ LoadingShipment: error });
 
   const close_error = () => {
     // set_loading_payment(false);
@@ -55,7 +55,7 @@ const LoadingPayment = ({
         <div className="error_message_payment jc-c column">
           <div>
             <h2 className="ta-c mv-5px">Error:</h2>
-            {error.message
+            {error.error
               .split("-")
               .map(error => <p className="ta-c mv-5px">{error}</p>)}
             <h2 className="ta-c mt-20px">Solution:</h2>
@@ -81,4 +81,4 @@ const LoadingPayment = ({
   );
 };
 
-export default LoadingPayment;
+export default LoadingShipment;

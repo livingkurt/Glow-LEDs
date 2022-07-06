@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { state_names } from "../../../utils/helper_functions";
 import { Loading } from "../../UtilityComponents";
 import { ShippingChoice } from "../ShippingComponents";
-import Autocomplete from "react-google-autocomplete";
+// import { usePlacesWidget } from "react-google-autocomplete";
+// import Autocomplete from "react-google-autocomplete";
 import { useDispatch, useSelector } from "react-redux";
 import { API_Shipping } from "../../../utils";
 import { validate_shipping } from "../../../utils/validations";
@@ -10,6 +11,7 @@ import { savePayment, saveShipping } from "../../../actions/cartActions";
 import { update } from "../../../actions/userActions";
 import useWindowDimensions from "../../Hooks/windowDimensions";
 import { isMobile } from "react-device-detect";
+import Autocomplete from "./Autocomplete";
 
 export function Shipping({
   shipping_completed,
@@ -31,6 +33,7 @@ export function Shipping({
   next_step,
   shipping_rates,
   cartItems,
+  set_verify_shipping,
 }) {
   const [ first_name, set_first_name ] = useState("");
   const [ last_name, set_last_name ] = useState("");
@@ -65,6 +68,9 @@ export function Shipping({
           setPostalCode(shipping.postalCode);
           setCountry(shipping.country);
           setInternational(shipping.international);
+          if (shipping.international) {
+            set_verify_shipping(false);
+          }
         }
       }
       return () => (clean = false);
@@ -207,20 +213,30 @@ export function Shipping({
   };
 
   const update_google_shipping = shipping => {
+    const street_num = document.querySelector("#autocomplete").value;
+    console.log({ street_num });
+
     console.log({ shipping });
 
     const street_number = shipping.address_components.filter(comp =>
       comp.types.includes("street_number")
     )[0];
     console.log({ street_number });
+    if (!street_number) {
+      set_verify_shipping(false);
+    }
     const address = shipping.address_components.filter(comp =>
       comp.types.includes("route")
     )[0];
     console.log({ address });
-    const address_1 = `${street_number.long_name} ${address.short_name}`;
+    console.log({ address_1 });
+    const street_1 = `${(street_number && street_number.long_name) ||
+      street_num.split(" ")[0]} ${address.short_name}`;
+
     const city = shipping.address_components.filter(comp =>
       comp.types.includes("locality")
     )[0];
+    console.log({ street_1 });
     console.log({ city });
     const state = shipping.address_components.filter(comp =>
       comp.types.includes("administrative_area_level_1")
@@ -234,20 +250,33 @@ export function Shipping({
       comp.types.includes("postal_code")
     )[0];
     console.log({ postal_code });
-    set_address_1(address_1);
-    setCity(city.long_name);
+    set_address_1(street_1);
+    setCity(city.long_name || city.short_name);
     setState(state.short_name);
     setPostalCode(postal_code.long_name);
     console.log({ country: country.short_name });
     setCountry(country.short_name);
     if (country.short_name !== "US") {
       setInternational(true);
+      set_verify_shipping(false);
       setState(state.short_name);
       setCountry(country.long_name);
     }
   };
 
   const { width } = useWindowDimensions();
+
+  // const { ref } = usePlacesWidget({
+  //   apiKey: process.env.REACT_APP_GOOGLE_PLACES_KEY,
+  //   onPlaceSelected: place => {
+  //     console.log({ place });
+  //     update_google_shipping(place);
+  //   },
+  //   options: {
+  //     types: [ "address" ],
+  //   },
+  // });
+  // console.log({ ref });
 
   return (
     <div>
@@ -363,16 +392,24 @@ export function Shipping({
                   <label htmlFor="address_autocomplete">Address</label>
                   <Autocomplete
                     apiKey={process.env.REACT_APP_GOOGLE_PLACES_KEY}
-                    className="fs-16px" // placeholder="Start typing Address"
+                    className="fs-16px"
                     value={address_1}
-                    onChange={e => set_address_1(e.target.value)}
                     options={{
                       types: [ "address" ],
                     }}
                     onPlaceSelected={place => {
                       update_google_shipping(place);
                     }}
+                    onChange={e => set_address_1(e.target.value)}
                   />
+                  {/* <input
+                    ref={ref}
+                    type="text"
+                    value={autocompleteRef}
+                    name="address_1"
+                    id="address_1"
+                    onChange={e => set_address_1(e.target.value)}
+                  /> */}
                 </li>
                 <label
                   className="validation_text"

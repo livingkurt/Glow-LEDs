@@ -4,8 +4,11 @@ const shipping_routes = {
   get_all_shipping: () => {
     return axios.get("/api/shipping/all_shipping");
   },
-  get_shipping_rates: (order: any) => {
-    return axios.put("/api/shipping/get_shipping_rates", { order });
+  get_shipping_rates: (order: any, verify_shipping: boolean) => {
+    return axios.put("/api/shipping/get_shipping_rates", {
+      order,
+      verify_shipping,
+    });
   },
   create_label: (order: any, shipping_rate: number, speed: string) => {
     return axios.put("/api/shipping/create_label", {

@@ -112,9 +112,7 @@ export default {
       }
       return res.status(200).send({ message: "Error Updating Shipping" });
     } catch (error) {
-      console.log({ message: error.message });
-      console.log({ update_shipping_c_error: error.RequestError });
-      // console.log({ update_shipping_c_error: error });
+      console.log({ update_shipping_c_error: error });
       res.status(200).json({ error, message: error.message });
     }
   },
