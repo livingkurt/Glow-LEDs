@@ -11,7 +11,8 @@ import {
   Parcel,
   Chip,
 } from "../models";
-import { snake_case } from "../util";
+import { onlyUnique, snake_case } from "../util";
+const _ = require("lodash");
 
 export default {
   find_all_users: async (req: any, res: any) => {
@@ -1430,26 +1431,331 @@ export default {
 
     res.send(products);
   },
-  all_no_reference: async (req: any, res: any) => {
-    const all_products = await Product.find({ hidden: false, options: true })
-      .exec()
-      .then((products: any) => {
-        const productsIds = products.map((o: any) => o._id);
-        return Product.find({ id: { $nin: productsIds } }).exec();
-      })
-      .then((companiesWithoutRefs: any) => {
-        return companiesWithoutRefs;
-      })
-      .catch((err: any) => {
-        throw new err();
-      });
-    console.log({ products: all_products });
-
-    // products.forEach(async (product: any) => {
-    //   product.filament = "62afaef401f26dbb73774e43";
-    //   const result = await product.save();
-    // });
-
-    res.send(all_products);
+  delete_multiple_products: async (req: any, res: any) => {
+    const product = await Product.deleteMany({
+      _id: {
+        $in: [
+          "619c1459e381f55d13cf8ad1",
+          "62646aacb60a749fcf750eb3",
+          "625f3d26fe5298002b924b68",
+          "625f3d25fe5298002b924b5f",
+          "60ee86b7701941002a3766a6",
+          "61088a1ac5d88c002aa23d95",
+          "60ee8657f26266002aee9c91",
+          "6155f7833e0a16002b77e627",
+          "60ee86a2701941002a37669c",
+        ],
+      },
+    });
+    console.log({ product });
+    res.send(product);
   },
+  get_all_referenced_options_not_hidden: async (req: any, res: any) => {
+    const products = await Product.find({ deleted: false, hidden: false });
+
+    console.log({ products });
+    const ids = products.map((product: any) => product._id);
+    const color_product_ids = _.flatten(
+      products.map((product: any) => product.color_products)
+    );
+
+    const secondary_color_product_ids = _.flatten(
+      products.map((product: any) => product.secondary_color_products)
+    );
+
+    const option_product_ids = _.flatten(
+      products.map((product: any) => product.option_products)
+    );
+    // const not_associated_products = await Product.find({
+    //   option: true,
+    //   color_products: { $nin: ids },
+    // });
+    // console.log({ not_associated_products });
+    res.send([
+      ...color_product_ids,
+      ...secondary_color_product_ids,
+      ...option_product_ids,
+    ]);
+  },
+  get_all_referenced_options: async (req: any, res: any) => {
+    const products = await Product.find({ deleted: false });
+
+    console.log({ products });
+    const ids = products.map((product: any) => product._id);
+    const color_product_ids = _.flatten(
+      products.map((product: any) => product.color_products)
+    );
+
+    const secondary_color_product_ids = _.flatten(
+      products.map((product: any) => product.secondary_color_products)
+    );
+
+    const option_product_ids = _.flatten(
+      products.map((product: any) => product.option_products)
+    );
+    // const not_associated_products = await Product.find({
+    //   option: true,
+    //   color_products: { $nin: ids },
+    // });
+    // console.log({ not_associated_products });
+    res.send([
+      ...color_product_ids,
+      ...secondary_color_product_ids,
+      ...option_product_ids,
+    ]);
+  },
+
+  all_options: async (req: any, res: any) => {
+    const products = await Product.find({ deleted: false, option: true });
+    // console.log({ products });
+    const ids = products.map((product: any) => {
+      return {
+        id: product._id,
+        name: product.name,
+        pathname: product.pathname,
+      };
+    });
+    // .flat()
+    // .filter(onlyUnique);
+    console.log({ ids });
+    // const not_associated_products = await Product.find({
+    //   option: true,
+    //   color_products: { $nin: ids },
+    // });
+    // console.log({ not_associated_products });
+    res.send(ids);
+  },
+  all_products: async (req: any, res: any) => {
+    const products = await Product.find({ deleted: false });
+    // console.log({ products });
+    const ids = products.map((product: any) => {
+      return {
+        id: product._id,
+        name: product.name,
+        pathname: product.pathname,
+      };
+    });
+    // .flat()
+    // .filter(onlyUnique);
+    console.log({ ids });
+    // const not_associated_products = await Product.find({
+    //   option: true,
+    //   color_products: { $nin: ids },
+    // });
+    // console.log({ not_associated_products });
+    res.send(ids);
+  },
+  get_all_referenced_color_options: async (req: any, res: any) => {
+    const products = await Product.find({ deleted: false });
+
+    console.log({ products });
+    const ids = products.map((product: any) => product._id);
+    const color_product_ids = _.flatten(
+      products.map((product: any) => product.color_products)
+    );
+
+    res.send(color_product_ids);
+  },
+  get_all_referenced_secondary_color_options: async (req: any, res: any) => {
+    const products = await Product.find({ deleted: false });
+
+    console.log({ products });
+    const ids = products.map((product: any) => product._id);
+    const color_product_ids = _.flatten(
+      products.map((product: any) => product.secondary_color_products)
+    );
+
+    res.send(color_product_ids);
+  },
+  get_all_referenced_option_options: async (req: any, res: any) => {
+    const products = await Product.find({ deleted: false });
+
+    console.log({ products });
+    const ids = products.map((product: any) => product._id);
+    const color_product_ids = _.flatten(
+      products.map((product: any) => product.option_products)
+    );
+
+    res.send(color_product_ids);
+  },
+  // all_no_reference: async (req: any, res: any) => {
+  //   const products = await Product.find({ deleted: false, option: true });
+  //   // console.log({ products });
+  //   const ids = products.map((product: any) => {
+  //     return {
+  //       id: product._id,
+  //       name: product.name,
+  //       pathname: product.pathname,
+  //     };
+  //   });
+  //   // .flat()
+  //   // .filter(onlyUnique);
+  //   console.log({ ids });
+  //   // const not_associated_products = await Product.find({
+  //   //   option: true,
+  //   //   color_products: { $nin: ids },
+  //   // });
+  //   // console.log({ not_associated_products });
+  //   res.send(ids);
+  // },
+
+  // all_no_reference: async (req: any, res: any) => {
+  //   const products = await Product.find({ deleted: false, hidden: false });
+  //   const option_products = await Product.find({
+  //     deleted: false,
+  //     option: true,
+  //   });
+
+  //   // console.log({ products });
+  //   // const ids = products.map((product: any) => product._id);
+  //   // const color_product_ids_no = products.map(
+  //   //   (product: any) => product.color_products
+  //   // );
+  //   // const color_product_ids_no = _.flatten(
+  //   //   products.map((product: any) => product.color_products)
+  //   // );
+
+  //   // const secondary_color_product_ids_no = _.flatten(
+  //   //   products.map((product: any) => product.secondary_color_products)
+  //   // );
+  //   const color_product_ids = _.flatten(
+  //     products.map((product: any) => product.color_products)
+  //   );
+
+  //   const secondary_color_product_ids = _.flatten(
+  //     products.map((product: any) => product.secondary_color_products)
+  //   );
+  //   // console.log({
+  //   //   color_product_ids_no_length: color_product_ids_no.length,
+  //   //   secondary_color_product_ids_no_length:
+  //   //     secondary_color_product_ids_no.length,
+  //   //   color_product_ids_length: color_product_ids.length,
+  //   //   secondary_color_product_ids_length: secondary_color_product_ids.length,
+  //   // });
+
+  //   const option_product_ids = option_products.map(
+  //     (product: any) => product._id
+  //   );
+
+  //   const colors = [
+  //     ...color_product_ids,
+  //     ...secondary_color_product_ids,
+  //   ].sort();
+
+  //   let new_array: any[] = [];
+  //   for (let i = 0; i < colors.length; i++) {
+  //     const color = colors[i];
+  //     const next_color = colors[i + 1];
+  //     if (color !== next_color) {
+  //       console.log({ color, next_color, result: color === next_color });
+  //       new_array = [];
+  //       // new_array = [ ...new_array, color ];
+  //     }
+  //   }
+
+  //   // const colors = [
+  //   //   ...new Set([ ...color_product_ids, ...secondary_color_product_ids ]),
+  //   // ];
+  //   const associated_options_ids = _.uniq([
+  //     ...color_product_ids,
+  //     ...secondary_color_product_ids,
+  //   ]);
+  //   // .flat()
+  //   // .filter(onlyUnique);
+  //   // console.log({ associated_options_ids });
+  //   // console.log({ option_product_ids });
+
+  //   // const not_associated_ids = option_product_ids.filter((item: any) => {
+  //   //   return !associated_options_ids.includes(item);
+  //   // });
+  //   const not_associated_ids = _.difference(
+  //     option_product_ids,
+  //     associated_options_ids
+  //   );
+
+  //   //   const not_associated_products = await Product.find({
+  //   //   option: true,
+  //   //   color_products: { $nin: ids },
+  //   // });
+  //   // console.log({ secondary_color_product_ids });
+  //   // const not_associated_products = await Product.find({
+  //   //   option: true,
+  //   //   color_products: { $nin: ids },
+  //   // });
+  //   // console.log({ not_associated_products });
+  //   res.send({
+  //     new_array,
+  //   });
+  //   // res.send({
+  //   //   option_num: option_product_ids.length ? option_product_ids.length : 0,
+  //   //   associated_options_num: associated_options_ids.length
+  //   //     ? associated_options_ids.length
+  //   //     : 0,
+  //   //   not_associated_num: not_associated_ids.length
+  //   //     ? not_associated_ids.length
+  //   //     : 0,
+  //   //   option_product_ids,
+  //   //   associated_options_ids,
+  //   //   not_associated_ids,
+  //   // });
+  // },
+  // all_no_reference: async (req: any, res: any) => {
+  //   const products = await Product.find({ option: true });
+  //   // console.log({ products });
+  //   const ids = products.map((product: any) => product._id);
+  //   // .flat()
+  //   // .filter(onlyUnique);
+  //   console.log({ ids });
+  //   // const not_associated_products = await Product.find({
+  //   //   option: true,
+  //   //   color_products: { $nin: ids },
+  //   // });
+  //   // console.log({ not_associated_products });
+  //   res.send(ids);
+  // },
+
+  // all_no_reference: async (req: any, res: any) => {
+  //   const products = await Product.find({
+  //     hidden: false,
+  //     options: true,
+  //   }).aggregate([
+  //     {
+  //       $lookup: {
+  //         from: "product", // <-- secondary collection name containing references to _id of 'a'
+  //         localField: "_id", //  <-- the _id field of the 'a' collection
+  //         foreignField: "secondary_product", // <-- the referencing field of the 'b' collection
+  //         as: "references",
+  //       },
+  //     },
+
+  //     {
+  //       $match: {
+  //         references: [],
+  //       },
+  //     },
+  //   ]);
+  //   res.send(products);
+  // },
+  // all_no_reference: async (req: any, res: any) => {
+  //   const all_products = await Product.find({ hidden: false, options: true })
+  //     .exec()
+  //     .then((products: any) => {
+  //       const productsIds = products.map((o: any) => o._id);
+  //       return Product.find({ id: { $nin: productsIds } }).exec();
+  //     })
+  //     .then((companiesWithoutRefs: any) => {
+  //       return companiesWithoutRefs;
+  //     })
+  //     .catch((err: any) => {
+  //       throw new err();
+  //     });
+  //   console.log({ products: all_products });
+
+  //   // products.forEach(async (product: any) => {
+  //   //   product.filament = "62afaef401f26dbb73774e43";
+  //   //   const result = await product.save();
+  //   // });
+
+  //   res.send(all_products);
+  // },
 };
