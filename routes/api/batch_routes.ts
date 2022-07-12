@@ -127,7 +127,18 @@ router.route("/adding_black_tpu").put(batch_controller.adding_black_tpu);
 router.route("/adding_black_petg").put(batch_controller.adding_black_petg);
 router.route("/adding_white_petg").put(batch_controller.adding_white_petg);
 router.route("/options_no_filament").put(batch_controller.options_no_filament);
-router.route("/all_no_reference").put(batch_controller.all_no_reference);
+// router.route("/all_no_reference").put(batch_controller.all_no_reference);
+router
+  .route("/delete_multiple_products")
+  .put(batch_controller.delete_multiple_products);
+router
+  .route("/get_all_referenced_options_not_hidden")
+  .put(batch_controller.get_all_referenced_options_not_hidden);
+router
+  .route("/get_all_referenced_options")
+  .put(batch_controller.get_all_referenced_options);
+router.route("/all_options").put(batch_controller.all_options);
+router.route("/all_products").put(batch_controller.all_products);
 
 // router.route('/create_categories').post();
 

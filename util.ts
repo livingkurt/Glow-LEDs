@@ -62,6 +62,10 @@ export const getRefreshToken = (user: any) => {
   }
 };
 
+export const onlyUnique = (value: any, index: any, self: any) => {
+  return self.indexOf(value) === index;
+};
+
 // //middleware function to check if the incoming request in authenticated:
 // export const checkAuth = (req: any, res: any, next: any) => {
 // 	// get the token stored in the custom header called 'x-auth-token'
