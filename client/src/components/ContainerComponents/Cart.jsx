@@ -16,6 +16,7 @@ import {
   shuffle,
 } from "../../utils/helper_functions";
 import useWindowDimensions from "../Hooks/windowDimensions";
+import GLButton from "../GlowLEDsComponents/GLButton/GLButton";
 
 const Cart = props => {
   const history = useHistory();
@@ -453,12 +454,13 @@ const Cart = props => {
           </button>
         </Link>
 
-        <button
+        <GLButton
           onClick={() => checkoutHandler()}
-          className="btn primary w-100per mb-1rem bob"
+          variant="primary"
+          className="w-100per mb-1rem bob"
         >
           Proceed to Checkout
-        </button>
+        </GLButton>
       </div>
     </aside>
   );

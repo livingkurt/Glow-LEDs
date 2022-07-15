@@ -1,7 +1,7 @@
 import React from "react";
 
 const GLButton = ({
-  text,
+  children,
   icon,
   onClick,
   onKeyUp,
@@ -21,7 +21,7 @@ const GLButton = ({
         onKeyUp={onKeyUp}
         {...otherProps}
       >
-        {text && <span>{text}</span>}
+        {children && <span>{children}</span>}
         {icon && <i className={icon} />}
       </button>
     </div>

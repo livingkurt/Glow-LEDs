@@ -915,13 +915,13 @@ const PlaceOrderPage = props => {
           totalPrice={totalPrice}
         />
       </div>
-      <Carousel
+      {/* <Carousel
         product_pathname={props.match.params.pathname}
         category={"batteries"}
         title="Accessories You May Need"
         add_to_cart={true}
       />
-      <Carousel title="Suggested Products" random={true} add_to_cart={true} />
+      <Carousel title="Suggested Products" random={true} add_to_cart={true} /> */}
     </div>
   );
 };

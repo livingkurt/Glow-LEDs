@@ -26,6 +26,7 @@ import {
 import { hide_search_bar, show_search_bar } from "../../actions/settingActions";
 import { Filter } from "../SpecialtyComponents";
 import { listChips } from "../../actions/chipActions";
+import GLButton from "../GlowLEDsComponents/GLButton/GLButton";
 
 const Header = props => {
   const history = useHistory();
@@ -1323,12 +1324,14 @@ const Header = props => {
                     </div>
                   )}
                 </div>
-                <button
+
+                <GLButton
                   type="submit"
-                  className="btn primary w-50px fs-16px mb-0px"
+                  variant="primary"
+                  className="w-50px fs-16px mb-0px"
                 >
                   <i className="fas fa-search" />
-                </button>
+                </GLButton>
               </div>
             </form>
           )}
