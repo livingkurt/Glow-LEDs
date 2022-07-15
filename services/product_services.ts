@@ -6,7 +6,7 @@ import {
   subcategories,
 } from "../util";
 
-const sharp = require("sharp");
+// const sharp = require("sharp");
 
 export default {
   findAll_products_s: async (query: any) => {
@@ -318,21 +318,21 @@ export default {
       throw new Error(error.message);
     }
   },
-  compress_images_products_s: async (body: any) => {
-    try {
-      // console.log({ body: body.images });
-      const { images } = body;
+  // compress_images_products_s: async (body: any) => {
+  //   try {
+  //     // console.log({ body: body.images });
+  //     const { images } = body;
 
-      sharp(images[0].data_url)
-        .jpeg({ progressive: true, force: false })
-        .toFile(
-          __dirname + "/Desktop/" + images[0].file.name + "-optimized.jpg"
-        );
+  //     sharp(images[0].data_url)
+  //       .jpeg({ progressive: true, force: false })
+  //       .toFile(
+  //         __dirname + "/Desktop/" + images[0].file.name + "-optimized.jpg"
+  //       );
 
-      return "Success";
-    } catch (error) {
-      console.log({ remove_surveys_s_error: error });
-      throw new Error(error.message);
-    }
-  },
+  //     return "Success";
+  //   } catch (error) {
+  //     console.log({ remove_surveys_s_error: error });
+  //     throw new Error(error.message);
+  //   }
+  // },
 };

@@ -88,7 +88,7 @@ app.get("*", (request: any, response: any) => {
 });
 
 app.listen(config.PORT, () => {
-  console.log("Server started at http://localhost:5000");
+  console.log("Server started at http://localhost:8080");
 });
 
 app.post("/api/gcode", async (req: any, res: any) => {

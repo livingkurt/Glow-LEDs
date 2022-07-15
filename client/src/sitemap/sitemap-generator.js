@@ -5,7 +5,7 @@ require("babel-register")({
 const router = require("./sitemap-routes").default;
 const Sitemap = require("react-router-sitemap").default;
 const fetch = require("node-fetch");
-const API = "http://localhost:5000";
+const API = "http://localhost:8080";
 const categories = [
   "whites",
   "batteries",
