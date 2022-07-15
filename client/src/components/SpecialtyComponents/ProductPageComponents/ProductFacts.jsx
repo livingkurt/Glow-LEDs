@@ -33,7 +33,7 @@ const ProductFacts = ({ facts, category, subcategory, pathname, name }) => {
                 <li
                   key={index}
                   style={{ listStyleType: "disc" }}
-                  className="lh-2rem"
+                  classpName="lh-2rem"
                 >
                   {line}
                 </li>

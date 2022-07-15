@@ -6,6 +6,7 @@ import {
   determine_filter,
   determine_promoter_code_tier,
   determine_sponsor_code_tier,
+  isEmail,
   month_dates,
   removeDuplicates,
   subcategories,
@@ -20,9 +21,29 @@ export default {
     try {
       const page: any = query.page ? query.page : 1;
       const limit: any = query.limit ? query.limit : 10;
-      let search = {};
+      let search: any;
       if (query.search && query.search.match(/^[0-9a-fA-F]{24}$/)) {
         search = query.search ? { _id: query.search } : {};
+      } else if (query.search && isEmail(query.search)) {
+        search = query.search
+          ? {
+              $expr: {
+                $regexMatch: {
+                  input: "$shipping.email",
+                  regex: query.search,
+                  options: "i",
+                },
+              },
+            }
+          : {};
+      } else if (query.search && query.search.substring(0, 1) === "#") {
+        search = query.search
+          ? {
+              promo_code: query.search
+                .slice(1, query.search.length)
+                .toLowerCase(),
+            }
+          : {};
       } else {
         search = query.search
           ? {
@@ -118,10 +139,6 @@ export default {
   findMy_orders_s: async (params: any) => {
     try {
       const sort = { _id: -1 };
-      const filter = { deleted: false, user: params.id };
-      const limit = 0;
-      const page = 1;
-      return await order_db.findAll_orders_db(filter, sort, limit, page);
     } catch (error) {
       console.log({ findById_orders_s_error: error });
       throw new Error(error.message);

@@ -21,9 +21,9 @@ router
 router
   .route("/save_item_group_id")
   .put(product_controller.save_item_group_id_products_c);
-router
-  .route("/compress_images")
-  .post(product_controller.compress_images_products_c);
+// router
+//   .route("/compress_images")
+//   .post(product_controller.compress_images_products_c);
 
 // CRUD Actions
 

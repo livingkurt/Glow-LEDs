@@ -181,17 +181,17 @@ export default {
       res.status(500).send({ error, message: "Error Deleting Product" });
     }
   },
-  compress_images_products_c: async (req: any, res: any) => {
-    const { body } = req;
-    try {
-      const product = await product_services.compress_images_products_s(body);
-      if (product) {
-        return res.status(204).send({ message: "Product Deleted" });
-      }
-      return res.status(500).send({ message: "Error Deleting Product" });
-    } catch (error) {
-      console.log({ compress_images_products_c_error: error });
-      res.status(500).send({ error, message: "Error Deleting Product" });
-    }
-  },
+  // compress_images_products_c: async (req: any, res: any) => {
+  //   const { body } = req;
+  //   try {
+  //     const product = await product_services.compress_images_products_s(body);
+  //     if (product) {
+  //       return res.status(204).send({ message: "Product Deleted" });
+  //     }
+  //     return res.status(500).send({ message: "Error Deleting Product" });
+  //   } catch (error) {
+  //     console.log({ compress_images_products_c_error: error });
+  //     res.status(500).send({ error, message: "Error Deleting Product" });
+  //   }
+  // },
 };

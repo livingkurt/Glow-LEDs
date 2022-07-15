@@ -66,6 +66,12 @@ export const onlyUnique = (value: any, index: any, self: any) => {
   return self.indexOf(value) === index;
 };
 
+export const isEmail = (email: string) => {
+  const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  console.log({ re: re.test(String(email).toLowerCase()) });
+  return re.test(String(email).toLowerCase());
+};
+
 // //middleware function to check if the incoming request in authenticated:
 // export const checkAuth = (req: any, res: any, next: any) => {
 // 	// get the token stored in the custom header called 'x-auth-token'
