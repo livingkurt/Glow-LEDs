@@ -65,6 +65,16 @@ const ProductFacts = ({ facts, category, subcategory, pathname, name }) => {
             </Link>
           </div>
         )}
+        {category === "whites" && (
+          <div className="w-100per">
+            <h3>Know your size before you buy with our:</h3>
+            <Link to={`/collections/all/products/supremes_sizing_sampler_pack`}>
+              <button className="btn primary">
+                Supremes Sizing Sampler Pack
+              </button>
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );

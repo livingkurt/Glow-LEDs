@@ -72,6 +72,88 @@ export const shuffle = (array: any) => {
   return array;
 };
 
+export const sizes = (width: number) => {
+  return [
+    {
+      size: width > 500 ? "Small" : "S",
+      hand_length: "4 - 5",
+      hand_width: "2.8 - 3.1",
+    },
+    {
+      size: width > 500 ? "Medium" : "M",
+      hand_length: "4.5 - 5.5",
+      hand_width: "2.9 - 3.2",
+    },
+    {
+      size: width > 500 ? "Large" : "L",
+      hand_length: "5.5 - 6",
+      hand_width: "3.2 - 3.5",
+    },
+    {
+      size: width > 500 ? "X-Large" : "XL",
+      hand_length: "6 - 6.5",
+      hand_width: "3.5 - 3.7",
+    },
+    {
+      size: width > 500 ? "XX-Large (Coming Soon)" : "XXL",
+      hand_length: "7.5 - 8",
+      hand_width: "3.7 - 4",
+    },
+  ];
+};
+
+export const sizes_short = (width: number) => {
+  return {
+    S: {
+      size: width > 500 ? "Small" : "S",
+      hand_length: "4 - 5",
+      hand_width: "2.8 - 3.1",
+    },
+    M: {
+      size: width > 500 ? "Medium" : "M",
+      hand_length: "4.5 - 5.5",
+      hand_width: "2.9 - 3.2",
+    },
+    L: {
+      size: width > 500 ? "Large" : "L",
+      hand_length: "5.5 - 6",
+      hand_width: "3.2 - 3.5",
+    },
+    XL: {
+      size: width > 500 ? "X-Large" : "XL",
+      hand_length: "6 - 6.5",
+      hand_width: "3.5 - 3.7",
+    },
+    XXL: {
+      size: width > 500 ? "XX-Large (Coming Soon)" : "XXL",
+      hand_length: "7.5 - 8",
+      hand_width: "3.7 - 4",
+    },
+  };
+};
+
+export const sizes_conversion = (size: string) => {
+  switch (size) {
+    case "S":
+      return "Small";
+
+    case "M":
+      return "Medium";
+
+    case "L":
+      return "Large";
+
+    case "XL":
+      return "X-Large";
+
+    case "XXL":
+      return "XX-Large";
+
+    default:
+      break;
+  }
+};
+
 // export const determnine_link = (item: any) => {
 // 	return `/collections/all/products/${item.pathname}${item.color ? '?color=' + item.color : ''}${item.secondary_color
 // 		? '?secondary_color=' + item.secondary_color

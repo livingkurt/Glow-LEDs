@@ -5,7 +5,7 @@ import Overflow from "react-overflow-indicator";
 import { Link, useHistory } from "react-router-dom";
 import "react-tabs/style/react-tabs.css";
 import { ReadMore, Reviews } from "..";
-import { humanize, toCapitalize } from "../../../utils/helper_functions";
+import { humanize, sizes, toCapitalize } from "../../../utils/helper_functions";
 import useWindowDimensions from "../../Hooks/windowDimensions";
 import RelatedProductsSlideshow from "../RelatedProductsSlideshow";
 
@@ -18,45 +18,6 @@ const ProductDetails = ({
 }) => {
   const [ canScroll, setCanScroll ] = useState(false);
   const { width } = useWindowDimensions();
-  const [ sizing, set_sizing ] = useState([]);
-
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        const sizes = [
-          {
-            size: width > 500 ? "Small" : "S",
-            hand_length: "5 - 6",
-            hand_width: "2.8 - 3.1",
-          },
-          {
-            size: width > 500 ? "Medium" : "M",
-            hand_length: "5.5 - 6.5",
-            hand_width: "2.9 - 3.2",
-          },
-          {
-            size: width > 500 ? "Large" : "L",
-            hand_length: "6.5 - 7",
-            hand_width: "3.2 - 3.5",
-          },
-          {
-            size: width > 500 ? "X-Large" : "XL",
-            hand_length: "7 - 7.5",
-            hand_width: "3.5 - 3.7",
-          },
-          {
-            size: width > 500 ? "2X-Large (Coming Soon)" : "2XL",
-            hand_length: "7.5 - 8",
-            hand_width: "3.7 - 4",
-          },
-        ];
-        set_sizing(sizes);
-      }
-      return () => (clean = false);
-    },
-    [ width ]
-  );
 
   return (
     <div>
@@ -194,7 +155,7 @@ const ProductDetails = ({
                   </tr>
                 </thead>
                 <tbody>
-                  {sizing.map(size => (
+                  {sizes(width).map(size => (
                     <tr
                       style={{
                         backgroundColor: "#d1d1d1",

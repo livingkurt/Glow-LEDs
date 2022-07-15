@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Rating } from "..";
+import { sizes_conversion, sizes_short } from "../../../utils/helper_functions";
+import { Link } from "react-router-dom";
 import {
   determine_option_product_name,
   determine_secondary_product_name,
@@ -344,6 +346,47 @@ const ProductOptions = ({
               </div>
             </div>
           </li>
+        )}
+        {(product.name === "Supremes" ||
+          product.name ===
+            "Refresh Pack (6 Supreme Pairs + 120 Batteries)") && (
+          <ul className="mb-10px">
+            <hr />
+            <h3 className="title_font jc-c fs-20px">
+              {" "}
+              {sizes_conversion(size)}
+            </h3>{" "}
+            <li className="jc-c ta-c w-100oer lh-30px">
+              We recommend to get a size up from your usual sizing
+            </li>
+            <li className="mb-10px jc-b w-100per">
+              <div className="title_font"> Hand Length:</div>{" "}
+              <div className="title_font">
+                {size && sizes_short(width)[size].hand_length} inches
+              </div>
+            </li>
+            <li className="jc-b w-100per mb-10px">
+              <div className="title_font"> Hand Width:</div>{" "}
+              <div className="title_font">
+                {size && sizes_short(width)[size].hand_width} inches
+              </div>
+            </li>
+            {/* <hr className="w-50per jc-c " /> */}
+            <li className="jc-c ta-c w-100oer mt-20px lh-30px">
+              Worried about the fit? We've got your back with our:
+            </li>
+            <li>
+              <Link
+                to={`/collections/all/products/supremes_sizing_sampler_pack`}
+                className="jc-c"
+              >
+                <button className="btn primary">
+                  Supremes Sizing Sampler Pack
+                </button>
+              </Link>
+            </li>
+            <hr />
+          </ul>
         )}
         <li>
           <div className={`ai-c h-25px mv-10px ${width < 1150 ? "jc-b" : ""}`}>

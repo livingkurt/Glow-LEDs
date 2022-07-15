@@ -134,6 +134,8 @@ const App = props => {
 
   check_authentication();
 
+  // const frame = document.getElementsByTagName("iframe").classList.add("none");
+
   setInterval(() => {
     check_authentication();
   }, 800000);
