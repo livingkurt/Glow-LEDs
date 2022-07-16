@@ -341,13 +341,13 @@ const Cart = props => {
                           </Link>
                         </div>
                         <div className="mb-10px">
-                          <button
-                            className="btn icon"
+                          <GLButton
+                            variant="icon"
                             onClick={() => removeFromCartHandler(item)}
                             aria-label="Delete"
                           >
                             <i className="fas fa-trash-alt" />
-                          </button>
+                          </GLButton>
                         </div>
                       </div>
 
@@ -388,41 +388,6 @@ const Cart = props => {
                         </div>
                       </div>
                     </div>
-                    {/* <div className="cart_sidebar-name">
-											<div className="mb-10px">
-												<Link
-													to={`/collections/all/products/${item.pathname}`}
-												>
-													{determine_product_name(item, true)}
-												</Link>
-											</div>
-											<div>
-												<div className="ai-c h-25px">
-													<label
-														aria-label="Sort"
-														htmlFor="sort"
-														className="select-label mr-1rem"
-													>
-														Qty: {item.qty}
-													</label>
-												</div>
-											</div>
-										</div>
-
-										<div className="">
-											<div className="cart_sidebar-price fs-16px">
-												{sale_price_switch(item, true)}
-											</div>
-											<div style={{ textAlign: 'right', width: '100%' }}>
-												<button
-													className="btn icon"
-													onClick={() => removeFromCartHandler(item)}
-													 aria-label="Delete"
-												>
-													<i className="fas fa-trash-alt" />
-												</button>
-											</div>
-										</div> */}
                   </li>
                 ))}
               {recently_viewed_grid()}
@@ -446,12 +411,14 @@ const Cart = props => {
           items ) : $ {determine_total(cartItems).toFixed(2)}
         </label>
         <Link to="/checkout/cart" className="w-100per">
-          <button
-            className="btn secondary w-100per mb-2rem"
+          <GLButton
+            variant="secondary"
+            className=" w-100per mb-2rem"
             onClick={closeMenu}
+            aria-label="Delete"
           >
             View Cart
-          </button>
+          </GLButton>
         </Link>
 
         <GLButton

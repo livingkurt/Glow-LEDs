@@ -9,6 +9,7 @@ import {
 import { PromosPage } from "../../pages";
 import { decide_warning } from "../../utils/helper_functions";
 import { isMobile } from "react-device-detect";
+import GLButton from "../GlowLEDsComponents/GLButton/GLButton";
 
 const StripeForm = props => {
   const stripe = useStripe();
@@ -79,13 +80,14 @@ const StripeForm = props => {
         </li>
       )}
       {!remove_button && (
-        <button
+        <GLButton
           type="submit"
-          className="btn primary w-100per mt-1rem bob"
+          variant="primary"
+          className="w-100per mt-1rem bob"
           disabled={!stripe}
         >
           Complete Order
-        </button>
+        </GLButton>
       )}
     </form>
   );

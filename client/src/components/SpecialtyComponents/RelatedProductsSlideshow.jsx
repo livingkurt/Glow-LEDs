@@ -15,6 +15,7 @@ import {
 } from "../../utils/react_helper_functions";
 import useWindowDimensions from "../Hooks/windowDimensions";
 import { LazyImage } from "../UtilityComponents";
+import GLButton from "../GlowLEDsComponents/GLButton/GLButton";
 
 const RelatedProductsSlideshow = ({
   product_category,
@@ -270,21 +271,21 @@ const RelatedProductsSlideshow = ({
                     {product.quantity > 0 && add_to_cart ? (
                       <div>
                         {product.subcategory !== "batteries" ? (
-                          <button
+                          <GLButton
                             onClick={e => handleAddToCart(e, product)}
-                            className="btn primary"
+                            variant="primary"
                           >
                             Quick Add to Cart
-                          </button>
+                          </GLButton>
                         ) : (
                           <li>
                             {!show_options && (
-                              <button
+                              <GLButton
                                 onClick={() => set_show_options(true)}
-                                className="btn primary"
+                                variant="primary"
                               >
                                 Quick Add to Cart
-                              </button>
+                              </GLButton>
                             )}
                             {show_options && (
                               <div
@@ -381,12 +382,13 @@ const RelatedProductsSlideshow = ({
                                     <span className="custom-arrow" />
                                   </div>
                                 </div>
-                                <button
+                                <GLButton
                                   onClick={e => handleAddToCart(e, product)}
-                                  className="btn primary w-100per"
+                                  variant="primary"
+                                  className="w-100per"
                                 >
                                   Add to Cart
-                                </button>
+                                </GLButton>
                               </div>
                             )}
                           </li>
@@ -426,13 +428,13 @@ const RelatedProductsSlideshow = ({
                             <div className="jc-b w-100per pos-rel ">
                               {/* {product.images.length > 1 && (
 																<div className="ai-c pos-abs left-0px top-125px image-btn">
-																	<button
+																	<GLButton
 																		style={{ backgroundColor: 'transparent' }}
-																		className="btn icon "
+																		variant="icon"
 																		onClick={(e) => move_left(e)}
 																	>
 																		<i className="fas fa-chevron-left fs-40px" />
-																	</button>
+																	</GLButton>
 																</div>
 															)} */}
                               {[ ...Array(1).keys() ].map(x => (
@@ -450,13 +452,13 @@ const RelatedProductsSlideshow = ({
 
                               {/* {product.images.length > 1 && (
 																<div className="ai-c pos-abs right-0px top-125px image-btn">
-																	<button
+																	<GLButton
 																		style={{ backgroundColor: 'transparent' }}
-																		className="btn icon "
+																		variant="icon"
 																		onClick={(e) => move_right(e)}
 																	>
 																		<i className="fas fa-chevron-right fs-40px" />
-																	</button>
+																	</GLButton>
 																</div>
 															)} */}
                               {/* </div> */}

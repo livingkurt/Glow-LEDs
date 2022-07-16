@@ -7,6 +7,7 @@ import { format_date } from "../../utils/helper_functions";
 import useClipboard from "react-hook-clipboard";
 import { refundOrder } from "../../actions/orderActions";
 import { LazyImage } from "../UtilityComponents";
+import GLButton from "../GlowLEDsComponents/GLButton/GLButton";
 
 const Order = props => {
   const dispatch = useDispatch();
@@ -156,14 +157,14 @@ const Order = props => {
                     history.location.pathname + history.location.search,
                 }}
               >
-                <button className="btn primary">Order Details</button>
+                <GLButton variant="primary">Order Details</GLButton>
               </Link>
               <div>|</div>
-              <button className="btn secondary">
+              <GLButton variant="secondary">
                 <Link to={"/secure/glow/emails/invoice/" + props.order._id}>
                   View Invoice
                 </Link>
-              </button>
+              </GLButton>
             </div>
           </div>
         </div>
@@ -211,7 +212,7 @@ const Order = props => {
                     </h2>
                     <div className="mv-10px">${item.price}</div>
                     <Link to={"/collections/all/products/" + item.category}>
-                      <button className="btn primary">Buy Again</button>
+                      <GLButton variant="primary">Buy Again</GLButton>
                     </Link>
                   </div>
                 </div>
@@ -319,15 +320,16 @@ const Order = props => {
         </div>
         {props.admin && (
           <div className="jc-fe column ">
-            <button
-              className="btn icon h-3rem "
+            <GLButton
+              variant="icon"
+              className="h-3rem"
               onClick={() => show_hide(props.order._id)}
             >
               <i
                 style={{ WebkitTransform: "rotate(-180deg)" }}
                 className="top-8px fas fa-sort-up"
               />
-            </button>
+            </GLButton>
           </div>
         )}
       </div>
@@ -376,18 +378,18 @@ const Order = props => {
                     </div>
                   </div>
                   <div className="">
-                    <button
-                      className="btn primary mv-5px"
+                    <GLButton
+                      variant="primary"
                       onClick={update_refund_state}
+                      className="mv-5px"
                     >
                       Refund Customer
-                    </button>
-
-                    <button className="btn primary mv-5px">
+                    </GLButton>
+                    <GLButton variant="primary" className="mv-5px">
                       <Link to={"/secure/glow/emails/order/" + props.order._id}>
                         View Email
                       </Link>
-                    </button>
+                    </GLButton>
                   </div>
                 </div>
               </div>
@@ -414,8 +416,9 @@ const Order = props => {
                   </div>
                   <div>{props.order.shipping.email}</div>
                 </div>
-                <button
-                  className="btn secondary w-200px mv-10px"
+                <GLButton
+                  variant="secondary"
+                  className="w-200px mv-10px"
                   onClick={() =>
                     copyToClipboard(`
 ${props.order.shipping.first_name} ${props.order.shipping.last_name}
@@ -425,7 +428,7 @@ ${props.order.shipping.postalCode} ${props.order.shipping.country}
 ${props.order.shipping.email}`)}
                 >
                   Copy to clipboard
-                </button>
+                </GLButton>
               </li>
               <li className="row">
                 <h3 className="">Order Note: </h3>
@@ -451,19 +454,20 @@ ${props.order.shipping.email}`)}
 
             <div className="jc-b">
               <div className="column jc-b w-25rem">
-                <button className="btn primary">
+                <GLButton variant="primary">
                   <Link to={"/secure/glow/editorder/" + props.order._id}>
                     Edit Order
                   </Link>
-                </button>
-                <button className="btn primary mv-5px">
+                </GLButton>
+                <GLButton variant="primary" className="mv-5px">
                   <Link to={"/secure/glow/emails/invoice/" + props.order._id}>
                     View Invoice
                   </Link>
-                </button>
+                </GLButton>
 
-                <button
-                  className="btn primary mv-5px"
+                <GLButton
+                  variant="primary"
+                  className="mv-5px"
                   onClick={() =>
                     props.update_order_payment_state(
                       props.order,
@@ -473,9 +477,10 @@ ${props.order.shipping.email}`)}
                     )}
                 >
                   {props.order.isPaid ? "Unset to Paid" : "Set to Paid"}
-                </button>
-                <button
-                  className="btn primary mv-5px"
+                </GLButton>
+                <GLButton
+                  variant="primary"
+                  className="mv-5px"
                   onClick={() =>
                     props.update_order_state(
                       props.order,
@@ -489,9 +494,10 @@ ${props.order.shipping.email}`)}
                   ) : (
                     "Set to Manufactured"
                   )}
-                </button>
-                <button
-                  className="btn primary mv-5px"
+                </GLButton>
+                <GLButton
+                  variant="primary"
+                  className="mv-5px"
                   onClick={() =>
                     props.update_order_state(
                       props.order,
@@ -505,9 +511,10 @@ ${props.order.shipping.email}`)}
                   ) : (
                     "Set to Packaged"
                   )}
-                </button>
-                <button
-                  className="btn primary mv-5px"
+                </GLButton>
+                <GLButton
+                  variant="primary"
+                  className="mv-5px"
                   onClick={() =>
                     props.update_order_state(
                       props.order,
@@ -521,9 +528,10 @@ ${props.order.shipping.email}`)}
                   ) : (
                     "Set to Shipped"
                   )}
-                </button>
-                <button
-                  className="btn primary mv-5px"
+                </GLButton>
+                <GLButton
+                  variant="primary"
+                  className="mv-5px"
                   onClick={() =>
                     props.update_order_state(
                       props.order,
@@ -537,7 +545,7 @@ ${props.order.shipping.email}`)}
                   ) : (
                     "Set to Delivered"
                   )}
-                </button>
+                </GLButton>
               </div>
             </div>
           </div>

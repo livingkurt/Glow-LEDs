@@ -16,13 +16,12 @@ const GLButton = ({
     >
       <button
         type="button"
-        className={`btn ${variant} ${className}`}
+        className={`${variant ? "btn" : ""} ${variant} ${className}`}
         onClick={onClick}
         onKeyUp={onKeyUp}
         {...otherProps}
       >
-        {children && <span>{children}</span>}
-        {icon && <i className={icon} />}
+        {children}
       </button>
     </div>
   );

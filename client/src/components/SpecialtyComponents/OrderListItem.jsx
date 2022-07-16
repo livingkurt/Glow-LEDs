@@ -27,6 +27,7 @@ import {
 import { OrderStatusButtons } from "./OrderPageComponents";
 import { API_Emails, API_Orders, API_Shipping } from "../../utils";
 import ReactTooltip from "react-tooltip";
+import GLButton from "../GlowLEDsComponents/GLButton/GLButton";
 
 const OrderListItem = ({
   order,
@@ -428,7 +429,7 @@ const OrderListItem = ({
                       history.location.pathname + history.location.search,
                   }}
                 >
-                  <button className="btn primary">Order Details</button>
+                  <GLButton variant="primary">Order Details</GLButton>
                 </Link>
               </div>
             </div>
@@ -589,21 +590,22 @@ const OrderListItem = ({
             to={"/collections/all/products/" + order.orderItems[0].category}
             className="ai-c ml-1rem"
           >
-            <button className="btn primary">Buy Again</button>
+            <GLButton variant="primary">Buy Again</GLButton>
           </Link>
         )}
 
         {admin && (
           <div className="jc-fe column ml-auto ">
-            <button
-              className="btn icon h-3rem "
+            <GLButton
+              variant="icon"
+              className="h-3rem "
               onClick={() => show_hide(order._id)}
             >
               <i
                 style={{ WebkitTransform: "rotate(-180deg)" }}
                 className="top-8px fas fa-sort-up"
               />
-            </button>
+            </GLButton>
           </div>
         )}
       </div>
@@ -788,102 +790,100 @@ const OrderListItem = ({
 
             <div className="jc-b">
               <div className="column w-25rem">
-                {/* {order.shipping.shipping_label && (
-									<button className="btn secondary mv-5px" onClick={() => view_label()}>
-										View Label
-									</button>
-								)}
-								{order.shipping.return_shipping_label && (
-									<button className="btn secondary mv-5px" onClick={() => view_return_label()}>
-										View Return Label
-									</button>
-								)} */}
-                <button
-                  className="btn secondary w-100per mv-10px"
+                <GLButton
+                  variant="secondary"
+                  className="w-100per mv-10px"
                   onClick={() => sendEmail("Hello")}
                 >
                   Send User a Message
-                </button>
-                <button
-                  className="btn secondary mv-5px"
+                </GLButton>
+                <GLButton
+                  variant="secondary"
+                  className="mv-5px"
                   onClick={() => create_duplicate_order(order._id)}
                 >
                   Create Duplicate Order
-                </button>
-                <button className="btn secondary mv-5px">
+                </GLButton>
+                <GLButton variant="secondary" className="mv-5px">
                   <Link to={"/secure/glow/editorder/" + order._id}>
                     Edit Order
                   </Link>
-                </button>
-
-                <button
-                  className="btn secondary mv-5px"
-                  onClick={() => delete_order()}
+                </GLButton>
+                <GLButton
+                  variant="secondary"
+                  onClick={delete_order}
+                  className="w-100per mv-5px"
                 >
-                  Delete Order
-                </button>
+                  Buy Label
+                </GLButton>
                 {hide_label_button &&
                 !order.shipping.shipping_label && (
-                  <button
-                    className="btn primary mv-5px"
-                    onClick={() => buy_label()}
+                  <GLButton
+                    variant="primary"
+                    onClick={buy_label}
+                    className="w-100per mv-5px"
                   >
                     Buy Label
-                  </button>
+                  </GLButton>
                 )}
                 {hide_label_button &&
                 !order.shipping.shipping_label && (
-                  <button
-                    className="btn primary mv-5px"
+                  <GLButton
+                    variant="primary"
                     onClick={() => create_label("first")}
+                    className="w-100per mv-5px"
                   >
                     {!order.shipping.shipping_label ? (
                       "Create First Class Label"
                     ) : (
                       "Create New First Class  Label"
                     )}
-                  </button>
+                  </GLButton>
                 )}
                 {hide_label_button &&
                 !order.shipping.shipping_label && (
-                  <button
-                    className="btn primary mv-5px"
+                  <GLButton
+                    variant="primary"
                     onClick={() => create_label("priority")}
+                    className="w-100per mv-5px"
                   >
                     {!order.shipping.shipping_label ? (
                       "Create Priority Label"
                     ) : (
                       "Create New Prioirty Label"
                     )}
-                  </button>
+                  </GLButton>
                 )}
                 {hide_label_button &&
                 !order.shipping.shipping_label && (
-                  <button
-                    className="btn primary mv-5px"
+                  <GLButton
+                    variant="primary"
                     onClick={() => create_label("express")}
+                    className="w-100per mv-5px"
                   >
                     {!order.shipping.shipping_label ? (
                       "Create Express Label"
                     ) : (
                       "Create New Express Label"
                     )}
-                  </button>
+                  </GLButton>
                 )}
                 {order.shipping.shipping_label && (
-                  <button
-                    className="btn secondary mv-5px"
-                    onClick={() => view_label()}
+                  <GLButton
+                    variant="primary"
+                    onClick={view_label}
+                    className="w-100per mv-5px"
                   >
                     Print Label
-                  </button>
+                  </GLButton>
                 )}
-                <button
-                  className="btn secondary w-100per mv-5px "
+                <GLButton
+                  variant="primary"
                   onClick={get_invoice}
+                  className="w-100per mv-5px"
                 >
-                  Print Invoice
-                </button>
+                  Print Label
+                </GLButton>
               </div>
             </div>
             <OrderStatusButtons

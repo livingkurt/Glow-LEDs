@@ -251,7 +251,7 @@ const Header = props => {
                 </div>
               </Link>
               {width < 1106 && (
-                <button
+                <GLButton
                   className="side-bar-open p-10px"
                   onClick={open_sidebar}
                   aria-label="Sidebar"
@@ -265,7 +265,7 @@ const Header = props => {
                       <span className="span" />
                     </div>
                   </div>
-                </button>
+                </GLButton>
               )}
             </div>
 
@@ -302,19 +302,26 @@ const Header = props => {
 
               <nav className="jc-b nav_bar">
                 <Link to="/" aria-label="Home Page">
-                  <button className="btn nav title_font">Home</button>
+                  <GLButton variant="nav" className="title_font">
+                    Home
+                  </GLButton>
                 </Link>
                 <div className="dropdown-nav">
                   <Link to="/collections/all/products?page=1?limit=21">
-                    <button className="btn nav title_font">Products</button>
+                    <GLButton variant="nav" className="title_font">
+                      Products
+                    </GLButton>
                   </Link>
                   <div className="hover_fade_in nav-dropdown">
                     <div className="jc-c">
                       <div className="nav-column">
                         <Link to="/collections/all/products?page=1?limit=21">
-                          <button className="btn nav  ta-l fs-18px title_font">
+                          <GLButton
+                            variant="nav"
+                            className="ta-l fs-18px title_font"
+                          >
                             Products
-                          </button>
+                          </GLButton>
                         </Link>
                         <hr className="w-95per m-0px" />
                         <div style={{ marginLeft: -"5px" }} className="">
@@ -327,75 +334,82 @@ const Header = props => {
                           />
                         </div>
                         <Link to="/collections/all/products/category/new_releases">
-                          <button
-                            className="btn nav w-100per ta-l"
+                          <GLButton
+                            variant="nav"
+                            className="w-100per ta-l"
                             style={{ padding: "7px 10px 7px 10px" }}
                           >
                             New Releases!{" "}
                             <span aria-label="emoji" role="img">
                               🆕
                             </span>️
-                          </button>
+                          </GLButton>
                         </Link>
                         <Link to="/collections/all/products/category/best_sellers">
-                          <button
-                            className="btn nav w-100per ta-l"
+                          <GLButton
+                            variant="nav"
+                            className="w-100per ta-l"
                             style={{ padding: "7px 10px 7px 10px" }}
                           >
                             Best Sellers<span aria-label="emoji" role="img">
                               {" "}
                               ✅
                             </span>
-                          </button>
+                          </GLButton>
                         </Link>
                         <Link to="/collections/all/products/category/our_picks">
-                          <button
-                            className="btn nav w-100per ta-l jc-b"
+                          <GLButton
+                            variant="nav"
+                            className="w-100per ta-l jc-b"
                             style={{ padding: "7px 10px 7px 10px" }}
                           >
                             Our Picks ⭐
-                          </button>
+                          </GLButton>
                         </Link>
                         <Link to="/collections/all/products/category/discounted">
-                          <button
-                            className="btn nav w-100per ta-l"
+                          <GLButton
+                            variant="nav"
+                            className="w-100per ta-l"
                             style={{ padding: "7px 10px 7px 10px" }}
                           >
                             On Sale! 💰
-                          </button>
+                          </GLButton>
                         </Link>
 
                         <Link to="/collections/all/products/category/merch/subcategory/stickers">
-                          <button className="btn nav w-100per ta-l">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Stickers
-                          </button>
+                          </GLButton>
                         </Link>
                         {/* <Link to="/collections/all/products/custom_product_deposit">
-                          <button className="btn nav w-100per ta-l">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Customize Any Product!
-                          </button>
+                          </GLButton>
                         </Link> */}
                       </div>
                       <div className="nav-column">
                         <Link to="/pages/menu/gloving">
-                          <button className="btn nav w-100per ta-l fs-18px title_font">
+                          <GLButton
+                            variant="nav"
+                            className="w-100per ta-l fs-18px title_font"
+                          >
                             Enhancers
-                          </button>
+                          </GLButton>
                         </Link>
                         <hr className="w-95per m-0px" />
                         {/* {browser_check() !== "safari" ? (
                           <Link to="/collections/all/products/glowstringz_v2">
-                            <button
+                            <GLButton
                               className={`btn nav ta-l w-100per special_font gradient-btn`}
                             >
                               <span>GLOWSTRINGZ V2</span>
-                            </button>
+                            </GLButton>
                           </Link>
                         ) : (
                           <Link to="/collections/all/products/glowstringz_v2">
-                            <button className={`btn nav ta-l w-100per`}>
+                            <GLButton className={`btn nav ta-l w-100per`}>
                               <span>Glowstringz V2</span>
-                            </button>
+                            </GLButton>
                           </Link>
                         )} */}
                         <div className="nav-btn-container">
@@ -403,54 +417,56 @@ const Header = props => {
                             to="/collections/all/products/category/glowskinz"
                             className="w-100per"
                           >
-                            <button className="nav-btn-link">Glowskinz</button>
+                            <GLButton className="nav-btn-link">
+                              Glowskinz
+                            </GLButton>
                           </Link>
-                          <button
+                          <GLButton
                             className="nav-btn-dropdown"
                             onClick={() => show_hide("glowskinz_dropdown")}
                             aria-label="Show"
                           >
                             <i className="fas fa-sort-up" />
-                          </button>
+                          </GLButton>
                         </div>
                         <Link to="/collections/all/products/category/glowframez">
-                          <button className="btn nav w-100per ta-l">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Glowframez
-                          </button>
+                          </GLButton>
                         </Link>
                         <div className="nav-btn-container">
                           <Link
                             to="/collections/all/products/category/exo_diffusers"
                             className="w-100per"
                           >
-                            <button className="nav-btn-link">
+                            <GLButton className="nav-btn-link">
                               EXO Diffusers
-                            </button>
+                            </GLButton>
                           </Link>
-                          <button
+                          <GLButton
                             className="nav-btn-dropdown"
                             onClick={() => show_hide("exo_diffusers_dropdown")}
                             aria-label="Show"
                           >
                             <i className="fas fa-sort-up" />
-                          </button>
+                          </GLButton>
                         </div>
                         <div className="nav-btn-container">
                           <Link
                             to="/collections/all/products/category/diffuser_caps"
                             className="w-100per"
                           >
-                            <button className="nav-btn-link">
+                            <GLButton className="nav-btn-link">
                               Diffuser Caps
-                            </button>
+                            </GLButton>
                           </Link>
-                          <button
+                          <GLButton
                             className="nav-btn-dropdown"
                             onClick={() => show_hide("diffuser_caps_dropdown")}
                             aria-label="Show"
                           >
                             <i className="fas fa-sort-up" />
-                          </button>
+                          </GLButton>
                         </div>
 
                         <div className="nav-btn-container">
@@ -458,20 +474,22 @@ const Header = props => {
                             to="/collections/all/products/category/diffusers"
                             className="w-100per"
                           >
-                            <button className="nav-btn-link">Diffusers</button>
+                            <GLButton className="nav-btn-link">
+                              Diffusers
+                            </GLButton>
                           </Link>
-                          <button
+                          <GLButton
                             className="nav-btn-dropdown"
                             onClick={() => show_hide("diffusers_dropdown")}
                             aria-label="Show"
                           >
                             <i className="fas fa-sort-up" />
-                          </button>
+                          </GLButton>
                         </div>
                         <Link to="/collections/all/products/category/decals">
-                          <button className="btn nav w-100per ta-l">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Decals
-                          </button>
+                          </GLButton>
                         </Link>
                       </div>
 
@@ -481,9 +499,12 @@ const Header = props => {
                         id="glowskinz_dropdown"
                       >
                         <Link to="/collections/all/products/category/glowskinz">
-                          <button className="btn nav w-100per ta-l fs-18px title_font">
+                          <GLButton
+                            variant="nav"
+                            className="w-100per ta-l fs-18px title_font"
+                          >
                             Glowskinz
-                          </button>
+                          </GLButton>
                         </Link>
                         <hr className="w-95per m-0px" />
                         <div className="nav-btn-container">
@@ -491,28 +512,26 @@ const Header = props => {
                             to="/collections/all/products/category/glowskinz/subcategory/clozd"
                             className="w-100per"
                           >
-                            <button className="nav-btn-link w-100per ">
+                            <GLButton className="nav-btn-link w-100per ">
                               CLOZD Glowskinz
-                            </button>
+                            </GLButton>
                           </Link>
-                          <button
+                          <GLButton
                             className="nav-btn-dropdown"
                             onClick={() => show_hide_nested("clozd_dropdown")}
                             aria-label="Show"
                           >
                             <i className="fas fa-sort-up" />
-                          </button>
+                          </GLButton>
                         </div>
 
                         <Link
                           to="/collections/all/products/category/glowskinz/subcategory/opyn"
                           className="w-100per"
                         >
-                          <div className="row">
-                            <button className="btn nav w-100per ta-l">
-                              OPYN Glowskinz
-                            </button>
-                          </div>
+                          <GLButton variant="nav" className="w-100per ta-l">
+                            OPYN Glowskinz
+                          </GLButton>
                         </Link>
                       </div>
                       {/* EXO Diffusers */}
@@ -521,17 +540,15 @@ const Header = props => {
                           id="exo_diffusers_dropdown"
                         >
                           <Link to="/collections/all/products/category/exo_diffusers">
-                            <button className="btn nav w-100per ta-l fs-20px title_font">
+                            <GLButton variant="nav" className="w-100per ta-l fs-20px title_font">
                               EXO Diffusers
-                            </button>
+                            </GLButton>
                           </Link>
                           <hr className="w-95per m-0px" />
                           <Link to="/collections/all/products/category/exo_diffusers/subcategory/polyhedrons/collection/platonic_solids">
-                            <div className="row">
-                              <button className="btn nav w-100per ta-l">
+                              <GLButton variant="nav" className="w-100per ta-l">
                                 Platonic Solids
-                              </button>
-                            </div>
+                              </GLButton>
                           </Link>
                         </div> */}
                       <div
@@ -539,9 +556,12 @@ const Header = props => {
                         id="exo_diffusers_dropdown"
                       >
                         <Link to="/collections/all/products/category/exo_diffusers">
-                          <button className="btn nav w-100per ta-l fs-20px title_font">
+                          <GLButton
+                            variant="nav"
+                            className="w-100per ta-l fs-20px title_font"
+                          >
                             EXO Diffusers
-                          </button>
+                          </GLButton>
                         </Link>
                         <hr className="w-95per m-0px" />
                         <div className="nav-btn-container">
@@ -549,11 +569,11 @@ const Header = props => {
                             to="/collections/all/products/category/exo_diffusers"
                             className="w-100per"
                           >
-                            <button className="nav-btn-link w-100per ">
+                            <GLButton className="nav-btn-link w-100per ">
                               Collections
-                            </button>
+                            </GLButton>
                           </Link>
-                          <button
+                          <GLButton
                             className="nav-btn-dropdown"
                             onClick={() =>
                               show_hide_nested(
@@ -562,28 +582,24 @@ const Header = props => {
                             aria-label="Show"
                           >
                             <i className="fas fa-sort-up" />
-                          </button>
+                          </GLButton>
                         </div>
 
                         <Link
                           to="/collections/all/products/category/exo_diffusers/subcategory/polyhedrons"
                           className="w-100per"
                         >
-                          <div className="row">
-                            <button className="btn nav w-100per ta-l">
-                              Polyhedrons
-                            </button>
-                          </div>
+                          <GLButton variant="nav" className="w-100per ta-l">
+                            Polyhedrons
+                          </GLButton>
                         </Link>
                         <Link
                           to="/collections/all/products/category/exo_diffusers/subcategory/domes"
                           className="w-100per"
                         >
-                          <div className="row">
-                            <button className="btn nav w-100per ta-l">
-                              Domes
-                            </button>
-                          </div>
+                          <GLButton variant="nav" className="w-100per ta-l">
+                            Domes
+                          </GLButton>
                         </Link>
                       </div>
                       {/* Frosted Diffusers */}
@@ -592,52 +608,43 @@ const Header = props => {
                         id="diffusers_dropdown"
                       >
                         <Link to="/collections/all/products/category/diffusers">
-                          <button className="btn nav w-100per ta-l fs-20px title_font">
+                          <GLButton
+                            variant="nav"
+                            className="w-100per ta-l fs-20px title_font"
+                          >
                             Diffusers
-                          </button>
+                          </GLButton>
                         </Link>
                         <hr className="w-95per m-0px" />
                         <Link to="/collections/all/products/category/diffusers/subcategory/abstract">
-                          <div className="row">
-                            <button className="btn nav w-100per ta-l">
-                              Abstract
-                            </button>
-                          </div>
+                          <GLButton variant="nav" className="w-100per ta-l">
+                            Abstract
+                          </GLButton>
                         </Link>
                         <Link to="/collections/all/products/category/diffusers/subcategory/polygons">
-                          <div className="row">
-                            <button className="btn nav w-100per ta-l">
-                              Polygons
-                            </button>
-                          </div>
+                          <GLButton variant="nav" className="w-100per ta-l">
+                            Polygons
+                          </GLButton>
                         </Link>
                         <Link to="/collections/all/products/category/diffusers/subcategory/cylinders">
-                          <div className="row">
-                            <button className="btn nav w-100per ta-l">
-                              Cylinders
-                            </button>
-                          </div>
+                          <GLButton variant="nav" className="w-100per ta-l">
+                            Cylinders
+                          </GLButton>
                         </Link>
                         <Link to="/collections/all/products/category/diffusers/subcategory/domes">
-                          <div className="row">
-                            <button className="btn nav w-100per ta-l">
-                              Domes
-                            </button>
-                          </div>
+                          <GLButton variant="nav" className="w-100per ta-l">
+                            Domes
+                          </GLButton>
                         </Link>
                         <Link to="/collections/all/products/category/diffusers/subcategory/open_hole">
-                          <div className="row">
-                            <button className="btn nav w-100per ta-l">
-                              Open Hole
-                            </button>
-                          </div>
+                          <GLButton variant="nav" className="w-100per ta-l">
+                            Open Hole
+                          </GLButton>
                         </Link>
                         <Link to="/collections/all/products/category/diffusers/subcategory/closed_hole">
-                          <div className="row">
-                            <button className="btn nav w-100per ta-l">
-                              Closed Hole
-                            </button>
-                          </div>
+                          <GLButton variant="nav" className="w-100per ta-l">
+                            Closed Hole
+                          </GLButton>
                         </Link>
                       </div>
                       {/* Diffuser Caps */}
@@ -646,70 +653,61 @@ const Header = props => {
                         id="diffuser_caps_dropdown"
                       >
                         <Link to="/collections/all/products/category/diffuser_caps">
-                          <button className="btn nav w-100per ta-l fs-20px title_font">
+                          <GLButton
+                            variant="nav"
+                            className="w-100per ta-l fs-20px title_font"
+                          >
                             Diffuser Caps
-                          </button>
+                          </GLButton>
                         </Link>
                         <hr className="w-95per m-0px" />
                         <Link to="/collections/all/products/diffuser_caps_adapters_starter_kit">
-                          <div className="row">
-                            <button className="btn nav w-100per ta-l">
-                              Diffuser Caps Starter Kit
-                            </button>
-                          </div>
+                          <GLButton variant="nav" className="w-100per ta-l">
+                            Diffuser Caps Starter Kit
+                          </GLButton>
                         </Link>
                         <div className="nav-btn-container">
                           <Link
                             to="/pages/menu/collections"
                             className="w-100per"
                           >
-                            <button className="nav-btn-link w-100per ">
+                            <GLButton className="nav-btn-link w-100per ">
                               Collections
-                            </button>
+                            </GLButton>
                           </Link>
-                          <button
+                          <GLButton
                             className="nav-btn-dropdown"
                             onClick={() =>
                               show_hide_nested("collections_dropdown")}
                             aria-label="Show"
                           >
                             <i className="fas fa-sort-up" />
-                          </button>
+                          </GLButton>
                         </div>
                         <Link to="/collections/all/products/category/diffuser_caps/subcategory/geometric">
-                          <div className="row">
-                            <button className="btn nav w-100per ta-l">
-                              Geometric
-                            </button>
-                          </div>
+                          <GLButton variant="nav" className="w-100per ta-l">
+                            Geometric
+                          </GLButton>
                         </Link>
                         <Link to="/collections/all/products/category/diffuser_caps/subcategory/shapes">
-                          <div className="row">
-                            <button className="btn nav w-100per ta-l">
-                              Shapes
-                            </button>
-                          </div>
+                          <GLButton variant="nav" className="w-100per ta-l">
+                            Shapes
+                          </GLButton>
                         </Link>
                         <Link to="/collections/all/products/category/diffuser_caps/subcategory/abstract">
-                          <div className="row">
-                            <button className="btn nav w-100per ta-l">
-                              Abstract
-                            </button>
-                          </div>
+                          <GLButton variant="nav" className="w-100per ta-l">
+                            Abstract
+                          </GLButton>
                         </Link>
                         <Link to="/collections/all/products/category/diffuser_caps/subcategory/patterns">
-                          <div className="row">
-                            <button className="btn nav w-100per ta-l">
-                              Patterns
-                            </button>
-                          </div>
+                          <GLButton variant="nav" className="w-100per ta-l">
+                            Patterns
+                          </GLButton>
                         </Link>
                         {/* <Link to="/collections/all/products/category/diffuser_caps/subcategory/imperfect">
-                            <div className="row">
-                              <button className="btn nav w-100per ta-l">
+                              <GLButton variant="nav" className="w-100per ta-l">
                                 Imperfect
-                              </button>
-                            </div>
+                              </GLButton>
                           </Link> */}
                       </div>
                       {/* Collections */}
@@ -718,35 +716,38 @@ const Header = props => {
                         id="collections_dropdown"
                       >
                         <Link to="/pages/menu/collections">
-                          <button className="btn nav w-100per ta-l fs-20px title_font">
+                          <GLButton
+                            variant="nav"
+                            className="w-100per ta-l fs-20px title_font"
+                          >
                             Collections
-                          </button>
+                          </GLButton>
                         </Link>
                         <hr className="w-95per m-0px" />
                         <Link to="/collections/all/products/category/diffuser_caps/subcategory/geometric/collection/texture">
-                          <button className="btn nav w-100per ta-l">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Texture
-                          </button>
+                          </GLButton>
                         </Link>
                         <Link to="/collections/all/products/category/diffuser_caps/subcategory/geometric/collection/fractal">
-                          <button className="btn nav w-100per ta-l">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Fractal
-                          </button>
+                          </GLButton>
                         </Link>
                         <Link to="/collections/all/products/category/diffuser_caps/subcategory/shapes/collection/space_cadet">
-                          <button className="btn nav w-100per ta-l">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Space Cadet
-                          </button>
+                          </GLButton>
                         </Link>
                         <Link to="/collections/all/products/category/diffuser_caps/subcategory/shapes/collection/festie_bestie">
-                          <button className="btn nav w-100per ta-l">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Festie Bestie
-                          </button>
+                          </GLButton>
                         </Link>
                         <Link to="/collections/all/products/category/diffuser_caps/subcategory/geometric/collection/platonic_solids">
-                          <button className="btn nav w-100per ta-l">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Platonic Solids
-                          </button>
+                          </GLButton>
                         </Link>
                       </div>
                       <div
@@ -754,20 +755,23 @@ const Header = props => {
                         id="exo_diffusers_collections_dropdown"
                       >
                         <Link to="/collections/all/products/category/exo_diffusers">
-                          <button className="btn nav w-100per ta-l fs-20px title_font">
+                          <GLButton
+                            variant="nav"
+                            className="w-100per ta-l fs-20px title_font"
+                          >
                             Collections
-                          </button>
+                          </GLButton>
                         </Link>
                         <hr className="w-95per m-0px" />
                         <Link to="/collections/all/products/category/exo_diffusers/subcategory/polyhedrons/collection/platonic_solids">
-                          <button className="btn nav w-100per ta-l">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Platonic Solids
-                          </button>
+                          </GLButton>
                         </Link>
                         <Link to="/collections/all/products/category/exo_diffusers/subcategory/domes/collection/spheroid">
-                          <button className="btn nav w-100per ta-l">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Spheroid
-                          </button>
+                          </GLButton>
                         </Link>
                       </div>
                       <div
@@ -775,25 +779,28 @@ const Header = props => {
                         id="clozd_dropdown"
                       >
                         <Link to="/collections/all/products/category/glowskinz/subcategory/clozd">
-                          <button className="btn nav w-100per ta-l fs-20px title_font">
+                          <GLButton
+                            variant="nav"
+                            className="w-100per ta-l fs-20px title_font"
+                          >
                             CLOZD
-                          </button>
+                          </GLButton>
                         </Link>
                         <hr className="w-95per m-0px" />
                         <Link to="/collections/all/products/category/glowskinz/subcategory/clozd/collection/classics">
-                          <button className="btn nav w-100per ta-l">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Classics
-                          </button>
+                          </GLButton>
                         </Link>
                         <Link to="/collections/all/products/category/glowskinz/subcategory/clozd/collection/novaskinz">
-                          <button className="btn nav w-100per ta-l">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Novaskinz
-                          </button>
+                          </GLButton>
                         </Link>
                         {/* <Link to="/collections/all/products/category/glowskinz/subcategory/clozd/collection/imperfect">
-                            <button className="btn nav w-100per ta-l">
+                            <GLButton variant="nav" className="w-100per ta-l">
                             Imperfect
-                            </button>
+                            </GLButton>
                           </Link> */}
                       </div>
                       {/* <div
@@ -801,73 +808,62 @@ const Header = props => {
                           id="opyn_dropdown"
                         >
                           <Link to="/collections/all/products/category/glowskinz/subcategory/opyn">
-                            <button className="btn nav w-100per ta-l fs-20px title_font">
+                            <GLButton variant="nav" className="w-100per ta-l fs-20px title_font">
                               OPYN
-                            </button>
+                            </GLButton>
                           </Link>
                           <hr className="w-95per m-0px" />
                           <Link to="/collections/all/products/category/glowskinz/subcategory/opyn/collection/classics">
-                            <button className="btn nav w-100per ta-l">
+                            <GLButton variant="nav" className="w-100per ta-l">
                             Classics
-                            </button>
+                            </GLButton>
                           </Link>
                         </div> */}
                       <div className="nav-column">
                         <Link to="/collections/all/products/category/essentials">
-                          <button className="btn nav w-100per ta-l fs-18px title_font max-w-244px">
+                          <GLButton
+                            variant="nav"
+                            className="w-100per ta-l fs-18px title_font max-w-244px"
+                          >
                             Essentials
-                          </button>
+                          </GLButton>
                         </Link>
                         <hr className="w-95per m-0px" />
                         <Link to="/collections/all/products/supremes">
-                          <div className="row">
-                            <button className="btn nav w-100per ta-l">
-                              Supremes
-                            </button>
-                          </div>
+                          <GLButton variant="nav" className="w-100per ta-l">
+                            Supremes
+                          </GLButton>
                         </Link>
                         <Link to="/collections/all/products/refresh_pack">
-                          <div className="row">
-                            <button className="btn nav w-100per ta-l">
-                              Refresh Packs
-                            </button>
-                          </div>
+                          <GLButton variant="nav" className="w-100per ta-l">
+                            Refresh Packs
+                          </GLButton>
                         </Link>
                         <Link to="/collections/all/products/supremes_sizing_sampler_pack">
-                          <div className="row">
-                            <button className="btn nav w-100per ta-l">
-                              Sizing Sampler
-                            </button>
-                          </div>
+                          <GLButton variant="nav" className="w-100per ta-l">
+                            Sizing Sampler
+                          </GLButton>
                         </Link>
 
                         <Link to="/collections/all/products/1225_batteries">
-                          <div className="row">
-                            <button className="btn nav w-100per ta-l">
-                              1225 Batteries
-                            </button>
-                          </div>
+                          <GLButton variant="nav" className="w-100per ta-l">
+                            1225 Batteries
+                          </GLButton>
                         </Link>
                         <Link to="/collections/all/products/1616_batteries">
-                          <div className="row">
-                            <button className="btn nav w-100per ta-l">
-                              1616 Batteries
-                            </button>
-                          </div>
+                          <GLButton variant="nav" className="w-100per ta-l">
+                            1616 Batteries
+                          </GLButton>
                         </Link>
                         <Link to="/collections/all/products/1620_batteries">
-                          <div className="row">
-                            <button className="btn nav w-100per ta-l">
-                              1620 Batteries
-                            </button>
-                          </div>
+                          <GLButton variant="nav" className="w-100per ta-l">
+                            1620 Batteries
+                          </GLButton>
                         </Link>
                         <Link to="/collections/all/products/category/batteries/subcategory/storage">
-                          <div className="row">
-                            <button className="btn nav w-100per ta-l">
-                              Battery Storage
-                            </button>
-                          </div>
+                          <GLButton variant="nav" className="w-100per ta-l">
+                            Battery Storage
+                          </GLButton>
                         </Link>
                       </div>
                     </div>
@@ -875,62 +871,72 @@ const Header = props => {
                 </div>
                 <div className="dropdown-nav">
                   <Link to="/pages/menu/featured">
-                    <button className="btn nav title_font">Features</button>
+                    <GLButton variant="nav" className="title_font">
+                      Features
+                    </GLButton>
                   </Link>
                   <div className="hover_fade_in nav-dropdown">
                     <div className="jc-c">
                       <div className="w-100per max-w-300px">
                         <Link to="/pages/menu/featured">
-                          <button className="btn nav w-100per ta-l fs-18px title_font">
+                          <GLButton
+                            variant="nav"
+                            className="w-100per ta-l fs-18px title_font"
+                          >
                             Featured
-                          </button>
+                          </GLButton>
                         </Link>
                         <hr className="w-95per m-0px" />
                         <Link to="/collections/all/teams/category/rave_mob">
-                          <button className="btn nav w-100per ta-l">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Rave Mob
-                          </button>
+                          </GLButton>
                         </Link>
                         <div className="nav-btn-container">
                           <Link
                             to="/pages/menu/sponsored_artists"
                             className="w-100per"
                           >
-                            <button className="nav-btn-link w-100per ">
+                            <GLButton className="nav-btn-link w-100per ">
                               Sponsored Artists
-                            </button>
+                            </GLButton>
                           </Link>
-                          <button
+                          <GLButton
                             className="nav-btn-dropdown"
                             onClick={() =>
                               show_hide("sponsored_artists_dropdown")}
                             aria-label="Show"
                           >
                             <i className="fas fa-sort-up" />
-                          </button>
+                          </GLButton>
                         </div>
                         <Link to="/collections/all/features/category/artists">
-                          <button className="btn nav w-100per ta-l">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Artists
-                          </button>
+                          </GLButton>
                         </Link>
                         <Link to="/collections/all/features/category/glovers">
-                          <button className="btn nav w-100per ta-l jc-b">
+                          <GLButton
+                            variant="nav"
+                            className="w-100per ta-l jc-b"
+                          >
                             Glovers
-                          </button>
+                          </GLButton>
                         </Link>
                         <Link to="/collections/all/features/category/producers">
-                          <button className="btn nav w-100per ta-l">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Producers
-                          </button>
+                          </GLButton>
                         </Link>
                         <Link to="/collections/all/features/category/vfx">
-                          <button className="btn nav w-100per ta-l">VFX</button>
+                          <GLButton variant="nav" className="w-100per ta-l">
+                            VFX
+                          </GLButton>
                         </Link>
                         <Link to="/collections/all/features/category/submit_feature">
-                          <button className="btn nav w-100per ta-l">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Submit Feature
-                          </button>
+                          </GLButton>
                         </Link>
                       </div>
 
@@ -939,24 +945,23 @@ const Header = props => {
                         id="sponsored_artists_dropdown"
                       >
                         <Link to="/pages/menu/sponsored_artists">
-                          <button className="btn nav w-100per ta-l fs-20px title_font">
+                          <GLButton
+                            variant="nav"
+                            className="w-100per ta-l fs-20px title_font"
+                          >
                             Sponsored Artists
-                          </button>
+                          </GLButton>
                         </Link>
                         <hr className="w-95per m-0px" />
                         <Link to="/collections/all/sponsors">
-                          <div className="row">
-                            <button className="btn nav w-100per ta-l">
-                              Sponsored Glovers
-                            </button>
-                          </div>
+                          <GLButton variant="nav" className="w-100per ta-l">
+                            Sponsored Glovers
+                          </GLButton>
                         </Link>
                         <Link to="/collections/all/teams">
-                          <div className="row">
-                            <button className="btn nav w-100per ta-l">
-                              Sponsored Teams
-                            </button>
-                          </div>
+                          <GLButton variant="nav" className="w-100per ta-l">
+                            Sponsored Teams
+                          </GLButton>
                         </Link>
                       </div>
                     </div>
@@ -964,71 +969,85 @@ const Header = props => {
                 </div>
                 <div className="dropdown-nav">
                   <Link to="/pages/menu/support">
-                    <button className="btn nav title_font">Support</button>
+                    <GLButton variant="nav" className="title_font">
+                      Support
+                    </GLButton>
                   </Link>
 
                   <div className="hover_fade_in nav-dropdown">
                     <div className="jc-c">
                       <div className="w-100per max-w-300px">
                         <Link to="/pages/menu/support">
-                          <button className="btn nav w-100per ta-l fs-18px title_font">
+                          <GLButton
+                            variant="nav"
+                            className="w-100per ta-l fs-18px title_font"
+                          >
                             Support
-                          </button>
+                          </GLButton>
                         </Link>
                         <hr className="w-95per m-0px" />
                         <Link to="/pages/track_your_order">
-                          <button className="btn nav w-100per ta-l">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Track Your Order
-                          </button>
+                          </GLButton>
                         </Link>
                         {/* <Link to="/pages/color_palettes">
-													<button className="btn nav w-100per ta-l jc-b">
+													<GLButton variant="nav" className="w-100per ta-l jc-b">
 														Color Palettes
-													</button>
+													</GLButton>
 												</Link> */}
                         <Link to="/pages/about">
-                          <button className="btn nav w-100per ta-l jc-b">
+                          <GLButton
+                            variant="nav"
+                            className="w-100per ta-l jc-b"
+                          >
                             About
-                          </button>
+                          </GLButton>
                         </Link>
                         <Link to="/pages/events">
-                          <button className="btn nav w-100per ta-l jc-b">
+                          <GLButton
+                            variant="nav"
+                            className="w-100per ta-l jc-b"
+                          >
                             Events
-                          </button>
+                          </GLButton>
                         </Link>
                         <Link to="/pages/menu/manuals">
-                          <button className="btn nav w-100per ta-l jc-b">
+                          <GLButton
+                            variant="nav"
+                            className="w-100per ta-l jc-b"
+                          >
                             Manuals
-                          </button>
+                          </GLButton>
                         </Link>
                         <Link to="/pages/announcements">
-                          <button className="btn nav w-100per ta-l">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Announcements
-                          </button>
+                          </GLButton>
                         </Link>
                         <div className="nav-btn-container">
                           <Link to="/pages/faq" className="w-80per">
-                            <button className="nav-btn-link w-100per ta-l">
+                            <GLButton className="nav-btn-link w-100per ta-l">
                               FAQ
-                            </button>
+                            </GLButton>
                           </Link>
-                          <button
+                          <GLButton
                             className="nav-btn-dropdown"
                             onClick={() => show_hide("faq_dropdown")}
                             aria-label="Show"
                           >
                             <i className="fas fa-sort-up" />
-                          </button>
+                          </GLButton>
                         </div>
                         <Link to="/pages/contact">
-                          <button className="btn nav w-100per ta-l">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Contact
-                          </button>
+                          </GLButton>
                         </Link>
                         <Link to="/pages/terms">
-                          <button className="btn nav w-100per ta-l">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Term and Conditions
-                          </button>
+                          </GLButton>
                         </Link>
                       </div>
 
@@ -1037,53 +1056,44 @@ const Header = props => {
                         id="faq_dropdown"
                       >
                         <Link to="/pages/faq">
-                          <button className="btn nav w-100per ta-l fs-20px title_font">
+                          <GLButton
+                            variant="nav"
+                            className="w-100per ta-l fs-20px title_font"
+                          >
                             FAQ
-                          </button>
+                          </GLButton>
                         </Link>
                         <hr className="w-95per m-0px" />
                         <HashLink to="/pages/faq#glowskinz">
-                          <div className="row">
-                            <button className="btn nav w-100per ta-l">
-                              Glowskinz
-                            </button>
-                          </div>
+                          <GLButton variant="nav" className="w-100per ta-l">
+                            Glowskinz
+                          </GLButton>
                         </HashLink>
                         <HashLink to="/pages/faq#diffuser_caps">
-                          <div className="row">
-                            <button className="btn nav w-100per ta-l">
-                              Diffuser Caps
-                            </button>
-                          </div>
+                          <GLButton variant="nav" className="w-100per ta-l">
+                            Diffuser Caps
+                          </GLButton>
                         </HashLink>
                         <HashLink to="/pages/faq#ordering_custom_products">
-                          <div className="row">
-                            <button className="btn nav w-100per ta-l">
-                              Ordering Custom Products
-                            </button>
-                          </div>
+                          <GLButton variant="nav" className="w-100per ta-l">
+                            Ordering Custom Products
+                          </GLButton>
                         </HashLink>
                         <HashLink to="/pages/faq#featured_content">
-                          <div className="row">
-                            <button className="btn nav w-100per ta-l">
-                              Featured Content
-                            </button>
-                          </div>
+                          <GLButton variant="nav" className="w-100per ta-l">
+                            Featured Content
+                          </GLButton>
                         </HashLink>
 
                         <HashLink to="/pages/faq#processing_shipping">
-                          <div className="row">
-                            <button className="btn nav w-100per ta-l">
-                              Processing/Shipping
-                            </button>
-                          </div>
+                          <GLButton variant="nav" className="w-100per ta-l">
+                            Processing/Shipping
+                          </GLButton>
                         </HashLink>
                         <HashLink to="/pages/faq#order_issues">
-                          <div className="row">
-                            <button className="btn nav w-100per ta-l">
-                              Order Issues
-                            </button>
-                          </div>
+                          <GLButton variant="nav" className="w-100per ta-l">
+                            Order Issues
+                          </GLButton>
                         </HashLink>
                       </div>
                     </div>
@@ -1092,8 +1102,9 @@ const Header = props => {
               </nav>
             </div>
             {/* <Link to="/checkout/cart"> */}
-            <button
-              className="btn mobile nav cart_icon none"
+            <GLButton
+              variant="mobile nav"
+              className="cart_icon none"
               onClick={open_cart}
             >
               <i className="fas fa-shopping-cart" />{" "}
@@ -1101,12 +1112,13 @@ const Header = props => {
                 (a, c) => parseInt(a) + parseInt(c.qty),
                 0
               )}{" "}
-            </button>
+            </GLButton>
             {/* </Link> */}
             <div className="nav_bar w-233px jc-fe ai-c">
               {/* <Link to="/checkout/cart"> */}
-              <button
-                className={`btn nav cart_text w-110px title_font ai-c ${cartItems.length >
+              <GLButton
+                variant="nav"
+                className={`cart_text w-110px title_font ai-c ${cartItems.length >
                 0
                   ? "bob box-s-d bg-primary"
                   : ""}`}
@@ -1119,12 +1131,12 @@ const Header = props => {
                     0
                   )}{" "}
                 </div>
-              </button>
+              </GLButton>
               {/* </Link> */}
               {/* <Link to="/checkout/cart"> */}
-              <button
-                className={`btn mobile nav cart_icon title_font none ${cartItems.length >
-                0
+              <GLButton
+                variant="mobile nav"
+                className={`cart_icon title_font none ${cartItems.length > 0
                   ? "bob box-s-d bg-primary"
                   : ""}`}
                 onClick={open_cart}
@@ -1134,138 +1146,174 @@ const Header = props => {
                   (a, c) => parseInt(a) + parseInt(c.qty),
                   0
                 )}{" "}
-              </button>
+              </GLButton>
               {/* </Link> */}
               {userInfo && userInfo.hasOwnProperty("first_name") ? (
                 <div className="dropdown">
-                  <button className="btn nav title_font">{first_name}</button>
+                  <GLButton variant="nav" className="title_font">
+                    {first_name}
+                  </GLButton>
                   <ul className="dropdown-content hover_fade_in w-110px">
                     <Link to="/secure/account/profile">
-                      <button className="btn nav ">Profile</button>
+                      <GLButton variant="nav" className="">
+                        Profile
+                      </GLButton>
                     </Link>
                     <Link to="/secure/account/orders">
-                      <button className="btn nav">Orders</button>
+                      <GLButton variant="nav">Orders</GLButton>
                     </Link>
-                    <button className="btn nav mr-auto" onClick={handleLogout}>
+                    <GLButton
+                      variant="nav"
+                      className="mr-auto"
+                      onClick={handleLogout}
+                    >
                       {" "}
                       Logout
-                    </button>
+                    </GLButton>
                   </ul>
                 </div>
               ) : (
                 <div>
                   <Link to="/account/login">
-                    <button className="btn nav title_font">Login</button>
+                    <GLButton variant="nav" className="title_font">
+                      Login
+                    </GLButton>
                   </Link>
                 </div>
               )}
               {userInfo &&
               userInfo.isAdmin && (
                 <div className="dropdown ">
-                  <button className="btn nav title_font">Admin</button>
+                  <GLButton variant="nav" className="title_font">
+                    Admin
+                  </GLButton>
                   <ul className="dropdown-content hover_fade_in w-175px">
                     <Link to="/secure/glow/controlpanel">
-                      <button className="btn nav w-100per ta-l">
+                      <GLButton variant="nav" className="w-100per ta-l">
                         Control Panel
-                      </button>
+                      </GLButton>
                     </Link>
                     <Link to="/secure/glow/orders?page=1?limit=10">
-                      <button className="btn nav w-100per ta-l">Orders</button>
+                      <GLButton variant="nav" className="w-100per ta-l">
+                        Orders
+                      </GLButton>
                     </Link>
                     <Link to="/secure/glow/products">
-                      <button className="btn nav w-100per ta-l">
+                      <GLButton variant="nav" className="w-100per ta-l">
                         {" "}
                         Products
-                      </button>
+                      </GLButton>
                     </Link>
                     <Link to="/secure/glow/users">
-                      <button className="btn nav w-100per ta-l"> Users</button>
+                      <GLButton variant="nav" className="w-100per ta-l">
+                        {" "}
+                        Users
+                      </GLButton>
                     </Link>
                     <Link to="/secure/glow/expenses">
-                      <button className="btn nav w-100per ta-l">
+                      <GLButton variant="nav" className="w-100per ta-l">
                         {" "}
                         Expenses
-                      </button>
+                      </GLButton>
                     </Link>
                     <Link to="/secure/glow/features">
-                      <button className="btn nav w-100per ta-l">
+                      <GLButton variant="nav" className="w-100per ta-l">
                         {" "}
                         Features
-                      </button>
+                      </GLButton>
                     </Link>
                     <Link to="/secure/glow/paychecks">
-                      <button className="btn nav w-100per ta-l">
+                      <GLButton variant="nav" className="w-100per ta-l">
                         {" "}
                         Paychecks
-                      </button>
+                      </GLButton>
                     </Link>
                     <Link to="/secure/glow/affiliates">
-                      <button className="btn nav w-100per ta-l">
+                      <GLButton variant="nav" className="w-100per ta-l">
                         {" "}
                         Affiliates
-                      </button>
+                      </GLButton>
                     </Link>
                     <Link to="/secure/glow/teams">
-                      <button className="btn nav w-100per ta-l"> Teams</button>
+                      <GLButton variant="nav" className="w-100per ta-l">
+                        {" "}
+                        Teams
+                      </GLButton>
                     </Link>
                     <Link to="/secure/glow/promos">
-                      <button className="btn nav w-100per ta-l">Promos</button>
+                      <GLButton variant="nav" className="w-100per ta-l">
+                        Promos
+                      </GLButton>
                     </Link>
                     <Link to="/secure/glow/carts">
-                      <button className="btn nav w-100per ta-l">Carts</button>
+                      <GLButton variant="nav" className="w-100per ta-l">
+                        Carts
+                      </GLButton>
                     </Link>
                     <Link to="/secure/glow/contents">
-                      <button className="btn nav w-100per ta-l">
+                      <GLButton variant="nav" className="w-100per ta-l">
                         Contents
-                      </button>
+                      </GLButton>
                     </Link>
                     <Link to="/secure/glow/emails">
-                      <button className="btn nav w-100per ta-l">Emails</button>
+                      <GLButton variant="nav" className="w-100per ta-l">
+                        Emails
+                      </GLButton>
                     </Link>
                     <Link to="/secure/glow/logs">
-                      <button className="btn nav w-100per ta-l">Logs</button>
+                      <GLButton variant="nav" className="w-100per ta-l">
+                        Logs
+                      </GLButton>
                     </Link>
                     <Link to="/secure/glow/chips">
-                      <button className="btn nav w-100per ta-l">Chips</button>
+                      <GLButton variant="nav" className="w-100per ta-l">
+                        Chips
+                      </GLButton>
                     </Link>
                     <Link to="/secure/glow/surveys">
-                      <button className="btn nav w-100per ta-l">Surveys</button>
+                      <GLButton variant="nav" className="w-100per ta-l">
+                        Surveys
+                      </GLButton>
                     </Link>
                     <Link to="/secure/glow/parcels">
-                      <button className="btn nav w-100per ta-l">Parcels</button>
+                      <GLButton variant="nav" className="w-100per ta-l">
+                        Parcels
+                      </GLButton>
                     </Link>
                     <Link to="/secure/glow/categorys">
-                      <button className="btn nav w-100per ta-l">
+                      <GLButton variant="nav" className="w-100per ta-l">
                         Categorys
-                      </button>
+                      </GLButton>
                     </Link>
                     <Link to="/secure/glow/settings">
-                      <button className="btn nav w-100per ta-l">
+                      <GLButton variant="nav" className="w-100per ta-l">
                         Settings
-                      </button>
+                      </GLButton>
                     </Link>
                     <Link to="/secure/glow/palettes">
-                      <button className="btn nav w-100per ta-l">
+                      <GLButton variant="nav" className="w-100per ta-l">
                         Palettes
-                      </button>
+                      </GLButton>
                     </Link>
                     <Link to="/secure/glow/filaments">
-                      <button className="btn nav w-100per ta-l">
+                      <GLButton variant="nav" className="w-100per ta-l">
                         Filaments
-                      </button>
+                      </GLButton>
                     </Link>
                     <Link to="/secure/glow/edit_all_data">
-                      <button className="btn nav w-100per ta-l">
+                      <GLButton variant="nav" className="w-100per ta-l">
                         Edit All Data
-                      </button>
+                      </GLButton>
                     </Link>
                     <Link to="/secure/glow/gcode_continous">
-                      <button className="btn nav w-100per ta-l">Gcode</button>
+                      <GLButton variant="nav" className="w-100per ta-l">
+                        Gcode
+                      </GLButton>
                     </Link>
                     <Link to="/secure/glow/image_compressor">
-                      <button className="btn nav w-100per ta-l">
+                      <GLButton variant="nav" className="w-100per ta-l">
                         Compressor
-                      </button>
+                      </GLButton>
                     </Link>
                   </ul>
                 </div>

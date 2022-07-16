@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import ProductThumbCarouselItem from "./CarouselItem";
 import { Loading } from "../UtilityComponents";
 import useWindowDimensions from "../Hooks/windowDimensions";
+import GLButton from "../GlowLEDsComponents/GLButton/GLButton";
 
 const ProductThumbCarousel = props => {
   const dispatch = useDispatch();
@@ -68,14 +69,15 @@ const ProductThumbCarousel = props => {
             <div className="row jc-b w-100per">
               {/* {product_number != 0 && ( */}
               <div className="ai-c">
-                <button
+                <GLButton
                   style={{ borderRadius: "50%" }}
-                  className="btn icon h-59px"
+                  variant="icon"
+                  className="h-59px"
                   onClick={() => move_left()}
                   aria-label="Previous"
                 >
                   <i className="fas fa-arrow-circle-left fs-40px" />
-                </button>
+                </GLButton>
               </div>
               {/* )} */}
               {[ ...Array(1).keys() ].map(x => (
@@ -96,14 +98,15 @@ const ProductThumbCarousel = props => {
               ))}
               {/* {product_number < products.filter((product) => product.hidden === false).length - 5 && ( */}
               <div className="ai-c">
-                <button
+                <GLButton
                   style={{ borderRadius: "50%" }}
-                  className="btn icon h-59px"
+                  variant="icon"
+                  className="h-59px"
                   onClick={() => move_right()}
                   aria-label="Next"
                 >
                   <i className="fas fa-arrow-circle-right fs-40px" />
-                </button>
+                </GLButton>
               </div>
               {/* )} */}
             </div>

@@ -5,6 +5,7 @@ import {
   determine_product_name_display,
   sale_price_switch,
 } from "../../utils/react_helper_functions";
+import GLButton from "../GlowLEDsComponents/GLButton/GLButton";
 import { Rating } from "../SpecialtyComponents";
 import { LazyImage } from "../UtilityComponents";
 
@@ -72,14 +73,14 @@ const ProductItemD = props => {
                       <div className="jc-b w-100per pos-rel ">
                         {images.length > 1 && (
                           <div className="ai-c pos-abs left-0px top-125px image-btn">
-                            <button
+                            <GLButton
                               style={{ backgroundColor: "transparent" }}
-                              className="btn icon "
+                              variant="icon"
                               onClick={e => move_left(e)}
                               aria-label="Previous"
                             >
                               <i className="fas fa-chevron-left fs-40px" />
-                            </button>
+                            </GLButton>
                           </div>
                         )}
                         {[ ...Array(1).keys() ].map(x => (
@@ -95,14 +96,14 @@ const ProductItemD = props => {
                         ))}
                         {images.length > 1 && (
                           <div className="ai-c pos-abs right-0px top-125px image-btn">
-                            <button
+                            <GLButton
                               style={{ backgroundColor: "transparent" }}
-                              className="btn icon "
+                              variant="icon"
                               onClick={e => move_right(e)}
                               aria-label="Next"
                             >
-                              <i className="fas fa-chevron-right fs-40px" />
-                            </button>
+                              <i className="fas fa-chevron-left fs-40px" />
+                            </GLButton>
                           </div>
                         )}
                         {/* </div> */}

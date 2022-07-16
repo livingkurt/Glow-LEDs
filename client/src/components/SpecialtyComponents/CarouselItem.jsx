@@ -193,12 +193,15 @@ const CarouselItem = props => {
                                 <span className="custom-arrow" />
                               </div>
                             </div>
-                            <button
+
+                            <GLButton
+                              variant="primary"
+                              className="w-100per"
                               onClick={handleAddToCart}
-                              className="btn primary w-100per"
                             >
+                              {" "}
                               Add to Cart
-                            </button>
+                            </GLButton>
                           </div>
                         )}
                       </li>

@@ -10,8 +10,9 @@ import {
   sale_price_switch,
 } from "../../utils/react_helper_functions";
 import { removeFromCart } from "../../actions/cartActions";
+import GLButton from "../GlowLEDsComponents/GLButton/GLButton";
 
-const CartItem = ({index, item, check_item_as_manufactured}) => {
+const CartItem = ({ index, item, check_item_as_manufactured }) => {
   const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
   const removeFromCartHandler = product => {
     dispatch(removeFromCart(product));
@@ -24,7 +25,6 @@ const CartItem = ({index, item, check_item_as_manufactured}) => {
   setTimeout(() => {
     set_loading_checkboxes(false);
   }, 500);
-
 
   return (
     <li key={index} className="">
@@ -110,13 +110,13 @@ const CartItem = ({index, item, check_item_as_manufactured}) => {
           {userInfo &&
           userInfo.isAdmin && (
             <div className="ai-c">
-              <button
-                className="btn icon"
+              <GLButton
+                variant="icon"
                 onClick={() => removeFromCartHandler(item)}
                 aria-label="Delete"
               >
                 <i className="fas fa-trash-alt" />
-              </button>
+              </GLButton>
             </div>
           )}
         </div>
@@ -158,9 +158,7 @@ const CartItem = ({index, item, check_item_as_manufactured}) => {
 					) : (
 						<label>{item.qty}</label>
 					)} */}
-          <div className="cart-price fs-16px">
-            {sale_price_switch(item)}
-          </div>
+          <div className="cart-price fs-16px">{sale_price_switch(item)}</div>
         </div>
       </div>
     </li>

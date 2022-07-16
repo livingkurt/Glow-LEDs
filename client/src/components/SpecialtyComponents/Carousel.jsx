@@ -11,6 +11,7 @@ import {
   mobile_check,
 } from "../../utils/react_helper_functions";
 import Overflow from "react-overflow-indicator";
+import GLButton from "../GlowLEDsComponents/GLButton/GLButton";
 
 const Carousel = props => {
   const { height, width } = useWindowDimensions();
@@ -116,14 +117,15 @@ const Carousel = props => {
                 <div className="row p-10px" style={{ overflowX: "scroll" }}>
                   <div className="row jc-b w-100per">
                     <div className="ai-c">
-                      <button
+                      <GLButton
                         style={{ borderRadius: "50%" }}
-                        className="btn icon h-59px"
+                        variant="icon"
+                        className="h-59px"
                         onClick={() => move_left()}
                         aria-label="Previous"
                       >
                         <i className="fas fa-arrow-circle-left fs-40px" />
-                      </button>
+                      </GLButton>
                     </div>
                     {[ ...Array(number_of_items).keys() ].map(x => (
                       <div className="w-259px" key={product_number + x}>
@@ -144,14 +146,15 @@ const Carousel = props => {
                       </div>
                     ))}
                     <div className="ai-c">
-                      <button
+                      <GLButton
                         style={{ borderRadius: "50%" }}
-                        className="btn icon h-59px"
+                        variant="icon"
+                        className="h-59px"
                         onClick={() => move_right()}
                         aria-label="Next"
                       >
                         <i className="fas fa-arrow-circle-right fs-40px" />
-                      </button>
+                      </GLButton>
                     </div>
                   </div>
                 </div>
