@@ -20,6 +20,7 @@ import {
 } from "../../../utils/google_sheets_upload";
 import { listTeams } from "../../../actions/teamActions";
 import { listOrders } from "../../../actions/orderActions";
+import { GLButton } from "../../../components/GlowLEDsComponents";
 
 const FilamentsPage = props => {
   const [ search, set_search ] = useState("");
@@ -161,7 +162,7 @@ const FilamentsPage = props => {
           })}
         </div>
         <Link to="/secure/glow/editfilament">
-          <button className="btn primary">Create Filament</button>
+          <GLButton variant="primary">Create Filament</GLButton>
         </Link>
       </div>
       <div className="jc-c">
@@ -202,8 +203,8 @@ const FilamentsPage = props => {
                     }}
                   >
                     <td className="p-10px">
-                      <button
-                        className="btn icon"
+                      <GLButton
+                        variant="icon"
                         onClick={() => change_filament_status(filament)}
                         aria-label={filament.active ? "deactive" : "activate"}
                       >
@@ -212,7 +213,7 @@ const FilamentsPage = props => {
                         ) : (
                           <i className="fas fa-times-circle" />
                         )}
-                      </button>
+                      </GLButton>
                     </td>
                     <td className="p-10px" style={{ minWidth: "15rem" }}>
                       {filament.type}
@@ -222,17 +223,17 @@ const FilamentsPage = props => {
                     <td className="p-10px">
                       <div className="jc-b">
                         <Link to={"/secure/glow/editfilament/" + filament._id}>
-                          <button className="btn icon" aria-label="Edit">
+                          <GLButton variant="icon" aria-label="Edit">
                             <i className="fas fa-edit" />
-                          </button>
+                          </GLButton>
                         </Link>
-                        <button
-                          className="btn icon"
+                        <GLButton
+                          variant="icon"
                           onClick={() => deleteHandler(filament)}
                           aria-label="Delete"
                         >
                           <i className="fas fa-trash-alt" />
-                        </button>
+                        </GLButton>
                       </div>
                     </td>
                   </tr>

@@ -26,6 +26,7 @@ import {
 } from "../../../utils/google_sheets_upload";
 import { listTeams } from "../../../actions/teamActions";
 import { listOrders } from "../../../actions/orderActions";
+import { GLButton } from "../../../components/GlowLEDsComponents";
 
 const PaychecksPage = props => {
   const [ search, set_search ] = useState("");
@@ -268,7 +269,7 @@ const PaychecksPage = props => {
           })}
         </div>
         <Link to="/secure/glow/editpaycheck">
-          <button className="btn primary">Create Paycheck</button>
+          <GLButton variant="primary">Create Paycheck</GLButton>
         </Link>
       </div>
       <p className="fs-20px title_font">Choose Paycheck Month</p>
@@ -328,12 +329,13 @@ const PaychecksPage = props => {
             </div>
           </div>
         </div>
-        <button
-          className="btn primary h-40px"
+        <GLButton
+          variant="primary"
+          className="h-40px"
           onClick={create_affiliate_paychecks}
         >
           Create Affiliate Paychecks
-        </button>
+        </GLButton>
       </div>
 
       <div className="jc-c">
@@ -402,31 +404,31 @@ const PaychecksPage = props => {
                     <td className="p-10px">
                       <div className="jc-b">
                         <Link to={"/secure/glow/editpaycheck/" + paycheck._id}>
-                          <button className="btn icon" aria-label="Edit">
+                          <GLButton variant="icon" aria-label="Edit">
                             <i className="fas fa-edit" />
-                          </button>
+                          </GLButton>
                         </Link>
-                        <button
-                          className="btn icon"
+                        <GLButton
+                          variant="icon"
                           onClick={() => duplicate_paycheck(paycheck)}
                           aria-label="duplicate"
                         >
                           <i class="fas fa-clone" />
-                        </button>
-                        <button
-                          className="btn icon"
+                        </GLButton>
+                        <GLButton
+                          variant="icon"
                           onClick={() => mark_paid(paycheck)}
                           aria-label="mark paid"
                         >
                           <i className="fas fa-check-circle" />
-                        </button>
-                        <button
-                          className="btn icon"
+                        </GLButton>
+                        <GLButton
+                          variant="icon"
                           onClick={() => deleteHandler(paycheck)}
                           aria-label="Delete"
                         >
                           <i className="fas fa-trash-alt" />
-                        </button>
+                        </GLButton>
                       </div>
                     </td>
                   </tr>

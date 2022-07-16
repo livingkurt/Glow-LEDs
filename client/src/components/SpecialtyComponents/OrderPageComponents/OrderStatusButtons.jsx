@@ -1,5 +1,5 @@
 import React from "react";
-import GLButton from "../../GlowLEDsComponents/GLButton/GLButton";
+import { GLButton } from "../../GlowLEDsComponents";
 
 const OrderStatusButtons = ({
   order,

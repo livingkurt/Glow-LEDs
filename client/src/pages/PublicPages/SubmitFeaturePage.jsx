@@ -10,6 +10,7 @@ import { listProducts } from "../../actions/productActions";
 import { listUsers } from "../../actions/userActions";
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
+import { GLButton } from "../../components/GlowLEDsComponents";
 
 const SubmitFeaturePage = props => {
   const [ id, set_id ] = useState("");
@@ -216,9 +217,9 @@ const SubmitFeaturePage = props => {
                     {!userInfo.hasOwnProperty("first_name") && (
                       <li>
                         <Link to="/account/login?redirect=/account/submit_feature">
-                          <button className="btn secondary w-100per">
+                          <GLButton variant="secondary" className="w-100per">
                             Sign in to Link Account
-                          </button>
+                          </GLButton>
                         </Link>
                       </li>
                     )}
@@ -386,15 +387,15 @@ const SubmitFeaturePage = props => {
                   </div>
 
                   <li>
-                    <button type="submit" className="btn primary">
+                    <GLButton type="submit" variant="primary">
                       {id ? "Update" : "Submit"}
-                    </button>
+                    </GLButton>
                   </li>
                   <li>
                     <Link to="/pages/menu/featured">
-                      <button className="btn secondary w-100per">
+                      <GLButton variant="secondary" className="w-100per">
                         Back to Features
-                      </button>
+                      </GLButton>
                     </Link>
                   </li>
                 </ul>

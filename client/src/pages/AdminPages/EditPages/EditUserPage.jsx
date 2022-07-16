@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import { Loading } from "../../../components/UtilityComponents";
 import { Helmet } from "react-helmet";
 import { listAffiliates } from "../../../actions/affiliateActions";
+import { GLButton } from "../../../components/GlowLEDsComponents";
 
 const EditUserPage = props => {
   const [ id, set_id ] = useState("");
@@ -439,17 +440,17 @@ const EditUserPage = props => {
                     </div>
                   </div>
                   <li>
-                    <button type="submit" className="btn primary">
+                    <GLButton type="submit" variant="primary">
                       {id ? "Update" : "Create"}
-                    </button>
+                    </GLButton>
                   </li>
                   <li>
-                    <button
-                      className="btn secondary"
+                    <GLButton
+                      variant="secondary"
                       onClick={() => history.goBack()}
                     >
                       Back to Users
-                    </button>
+                    </GLButton>
                   </li>
                 </ul>
               </div>

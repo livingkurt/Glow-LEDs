@@ -11,7 +11,7 @@ import {
   mobile_check,
 } from "../../utils/react_helper_functions";
 import Overflow from "react-overflow-indicator";
-import GLButton from "../GlowLEDsComponents/GLButton/GLButton";
+import { GLButton } from "../GlowLEDsComponents";
 
 const Carousel = props => {
   const { height, width } = useWindowDimensions();

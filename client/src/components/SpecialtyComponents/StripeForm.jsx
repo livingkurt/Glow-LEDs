@@ -9,7 +9,7 @@ import {
 import { PromosPage } from "../../pages";
 import { decide_warning } from "../../utils/helper_functions";
 import { isMobile } from "react-device-detect";
-import GLButton from "../GlowLEDsComponents/GLButton/GLButton";
+import { GLButton } from "../GlowLEDsComponents";
 
 const StripeForm = props => {
   const stripe = useStripe();

@@ -22,6 +22,7 @@ import {
   getUrlParameter,
 } from "../../../utils/helper_functions";
 import memoizeOne from "memoize-one";
+import { GLButton } from "../../../components/GlowLEDsComponents";
 
 function ProductPage(props) {
   const history = useHistory();
@@ -224,8 +225,6 @@ function ProductPage(props) {
     }
     return result;
   };
-
-
 
   const update_product_catelog = async () => {
     set_loading_upload(true);
@@ -538,7 +537,6 @@ function ProductPage(props) {
     set_loading_upload(false);
   };
 
-
   return (
     <div className="main_container p-20px">
       <Helmet>
@@ -565,17 +563,21 @@ function ProductPage(props) {
 				</div> */}
         <div className="jc-b w-100per">
           <Link to="/secure/glow/product_display">
-            <button className="btn primary h-35px ">Display Products</button>
+            <GLButton variant="primary" className="h-35px ">
+              Display Products
+            </GLButton>
           </Link>
-          <button
-            className="btn primary h-35px"
+          <GLButton
+            variant="primary"
+            className="h-35px"
             onClick={() => update_product_catelog()}
           >
             Update Product Catalog
-          </button>
+          </GLButton>
           <Link to="/secure/glow/products?page=1?limit=500">
-            <button
-              className="btn primary h-35px "
+            <GLButton
+              variant="primary"
+              className="h-35px "
               onClick={() => {
                 set_show_hidden(true);
                 set_limit(500);
@@ -593,19 +595,26 @@ function ProductPage(props) {
               }}
             >
               Show All Products
-            </button>
+            </GLButton>
           </Link>
 
           {show_hidden && (
-            <button className="btn primary h-35px" onClick={update_order}>
+            <GLButton
+              variant="primary"
+              className="h-35px"
+              onClick={update_order}
+            >
               Update Order
-            </button>
+            </GLButton>
           )}
           <Link to="/secure/glow/editproduct">
-            <button className="btn primary h-35px">Create Product</button>
+            <GLButton variant="primary" className="h-35px">
+              Create Product
+            </GLButton>
           </Link>
-          <button
-            className="btn primary h-35px"
+          <GLButton
+            variant="primary"
+            className="h-35px"
             onClick={() =>
               dispatch(
                 listProducts({
@@ -621,14 +630,14 @@ function ProductPage(props) {
               )}
           >
             Show Option Products
-          </button>
+          </GLButton>
 
-          {/* <button className="btn primary" onClick={add_item_group_id}>
+          {/* <GLButton variant="primary" onClick={add_item_group_id}>
 						Add Item Group ID
-					</button> */}
-          {/* <button className="btn primary" onClick={generate_sitemap}>
+					</GLButton> */}
+          {/* <GLButton variant="primary" onClick={generate_sitemap}>
 					Add Item Group ID
-				</button> */}
+				</GLButton> */}
         </div>
       </div>
       <div className="jc-c">
@@ -637,13 +646,13 @@ function ProductPage(props) {
       <Loading loading={loading_upload} error={error} />
       <Loading loading={loading} error={error} />
       <div className="search_and_sort jc-c ai-c">
-        <button
-          className="btn primary"
+        <GLButton
+          variant="primary"
           style={{ whiteSpace: "nowrap" }}
           onClick={show_hidden_products}
         >
           {!show_hidden ? "Show" : "Hide"} Hidden Products
-        </button>
+        </GLButton>
         <Search
           search={search}
           set_search={set_search}

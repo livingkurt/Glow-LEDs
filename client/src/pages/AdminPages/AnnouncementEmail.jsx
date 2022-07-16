@@ -13,6 +13,7 @@ import {
 } from "../../utils/helper_functions";
 import { Notification } from "../../components/UtilityComponents";
 import { Helmet } from "react-helmet";
+import { GLButton } from "../../components/GlowLEDsComponents";
 const HtmlToReactParser = require("html-to-react").Parser;
 
 const AnnouncementEmail = props => {
@@ -106,12 +107,12 @@ const AnnouncementEmail = props => {
       </Helmet>
       <Notification message={email_sent_message} />
       <div className="jc-b mb-1rem ai-c">
-        <button className="btn primary" onClick={() => history.goBack()}>
+        <GLButton variant="primary" onClick={() => history.goBack()}>
           Back to Emails
-        </button>
+        </GLButton>
         {email && (
           <Link to={"/secure/glow/editemail/" + email._id}>
-            <button className="btn primary">Edit Email</button>
+            <GLButton variant="primary">Edit Email</GLButton>
           </Link>
         )}
       </div>
@@ -174,12 +175,13 @@ const AnnouncementEmail = props => {
             />
           </div>
         )}
-        <button
-          className="btn primary mb-1rem"
+        <GLButton
+          variant="primary"
+          className="mb-1rem"
           onClick={() => send_announcement_email()}
         >
           Send {schedule && "Scheduled"} {test && "Test"} Email
-        </button>
+        </GLButton>
       </div>
       <div className="jc-c">
         <h2 style={{ textAlign: "center" }}>Email Template</h2>

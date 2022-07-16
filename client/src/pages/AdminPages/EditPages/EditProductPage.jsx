@@ -43,6 +43,7 @@ import {
 } from "../../../utils/helpers/product_helpers";
 import { listUsers } from "../../../actions/userActions";
 import { listFilaments } from "../../../actions/filamentActions";
+import { GLButton } from "../../../components/GlowLEDsComponents";
 
 const EditProductPage = props => {
   // const [modalVisible, setModalVisible] = useState(false);
@@ -957,14 +958,15 @@ const EditProductPage = props => {
 
                   <div className="row">
                     <div className="ai-c">
-                      <button
+                      <GLButton
                         style={{ borderRadius: "50%" }}
-                        className="btn icon h-59px"
+                        variant="icon"
+                        className="h-59px"
                         onClick={e => move_left(e)}
                         aria-label="Previous"
                       >
                         <i className="fas fa-arrow-circle-left fs-40px" />
-                      </button>
+                      </GLButton>
                     </div>
                     <h2
                       style={{
@@ -987,14 +989,15 @@ const EditProductPage = props => {
                     </h2>
 
                     <div className="ai-c">
-                      <button
+                      <GLButton
                         style={{ borderRadius: "50%" }}
-                        className="btn icon h-59px"
+                        variant="icon"
+                        className="h-59px"
                         onClick={e => move_right(e)}
                         aria-label="Next"
                       >
                         <i className="fas fa-arrow-circle-right fs-40px" />
-                      </button>
+                      </GLButton>
                     </div>
                   </div>
                   <li>
@@ -1659,7 +1662,7 @@ const EditProductPage = props => {
 											id="image"
 											onChange={(e) => set_image(e.target.value)}
 										/>
-										<button className="btn primary" onClick={(e) => add_image(e)}>
+										<GLButton variant="primary" onClick={(e) => add_image(e)}>
 											Add Image
 										</button>
 									</li>
@@ -1913,22 +1916,22 @@ const EditProductPage = props => {
                                       set_color_modifier(e.target.value)}
                                   />
 
-                                  <button
-                                    className="btn primary"
+                                  <GLButton
+                                    variant="primary"
                                     onClick={e =>
                                       create_product_options(e, "color")}
                                   >
                                     Create Color Products
-                                  </button>
+                                  </GLButton>
                                 </div>
                                 <Link
                                   to={`/secure/glow/editproduct/${props.match
                                     .params
                                     .pathname}/true/color_product/${product._id}`}
                                 >
-                                  <button className="btn primary">
+                                  <GLButton variant="primary">
                                     Create Color Product
-                                  </button>
+                                  </GLButton>
                                 </Link>
                               </div>
                             </div>
@@ -2011,8 +2014,8 @@ const EditProductPage = props => {
                                         e.target.value
                                       )}
                                   />
-                                  <button
-                                    className="btn primary"
+                                  <GLButton
+                                    variant="primary"
                                     onClick={e =>
                                       create_product_options(
                                         e,
@@ -2020,16 +2023,16 @@ const EditProductPage = props => {
                                       )}
                                   >
                                     Create Secondary Color Products
-                                  </button>
+                                  </GLButton>
                                 </div>
                                 <Link
                                   to={`/secure/glow/editproduct/${props.match
                                     .params
                                     .pathname}/true/secondary_color_product/${product._id}`}
                                 >
-                                  <button className="btn primary">
+                                  <GLButton variant="primary">
                                     Create Secondary Color Product
-                                  </button>
+                                  </GLButton>
                                 </Link>
                               </div>
                             </div>
@@ -2105,22 +2108,22 @@ const EditProductPage = props => {
                                     onChange={e =>
                                       set_option_modifier(e.target.value)}
                                   />
-                                  <button
-                                    className="btn primary"
+                                  <GLButton
+                                    variant="primary"
                                     onClick={e =>
                                       create_product_options(e, "option")}
                                   >
                                     Create Option Products
-                                  </button>
+                                  </GLButton>
                                 </div>
                                 <Link
                                   to={`/secure/glow/editproduct/${props.match
                                     .params
                                     .pathname}/true/option_product/${product._id}`}
                                 >
-                                  <button className="btn primary">
+                                  <GLButton variant="primary">
                                     Create Option Product
-                                  </button>
+                                  </GLButton>
                                 </Link>
                               </div>
                             </div>
@@ -2194,22 +2197,22 @@ const EditProductPage = props => {
                                     onChange={e =>
                                       set_secondary_modifier(e.target.value)}
                                   />
-                                  <button
-                                    className="btn primary"
+                                  <GLButton
+                                    variant="primary"
                                     onClick={e =>
                                       create_product_options(e, "secondary")}
                                   >
                                     Create Secondary Products
-                                  </button>
+                                  </GLButton>
                                 </div>
                                 <Link
                                   to={`/secure/glow/editproduct/${props.match
                                     .params
                                     .pathname}/true/secondary_product/${product._id}`}
                                 >
-                                  <button className="btn primary">
+                                  <GLButton variant="primary">
                                     Create Secondary Product
-                                  </button>
+                                  </GLButton>
                                 </Link>
                               </div>
                             </div>
@@ -2283,14 +2286,15 @@ const EditProductPage = props => {
                   </li>
                   <div className="row">
                     <div className="ai-c">
-                      <button
+                      <GLButton
                         style={{ borderRadius: "50%" }}
-                        className="btn icon h-59px"
+                        variant="icon"
+                        className="h-59px"
                         onClick={e => move_left(e)}
                         aria-label="Previous"
                       >
                         <i className="fas fa-arrow-circle-left fs-40px" />
-                      </button>
+                      </GLButton>
                     </div>
                     <div
                       style={{
@@ -2303,27 +2307,28 @@ const EditProductPage = props => {
                     />
 
                     <div className="ai-c">
-                      <button
+                      <GLButton
                         style={{ borderRadius: "50%" }}
-                        className="btn icon h-59px"
+                        variant="icon"
+                        className="h-59px"
                         onClick={e => move_right(e)}
                         aria-label="Next"
                       >
                         <i className="fas fa-arrow-circle-right fs-40px" />
-                      </button>
+                      </GLButton>
                     </div>
                   </div>
 
                   {/* <li>
-										<button className="btn primary" onClick={(e) => add_product_option(e)}>
+										<GLButton variant="primary" onClick={(e) => add_product_option(e)}>
 											Create Product Option
 										</button>
 									</li> */}
 
                   <li>
-                    <button type="submit" className="btn primary">
+                    <GLButton type="submit" variant="primary">
                       {product_id ? "Update" : "Create"}
-                    </button>
+                    </GLButton>
                   </li>
                   <li>
                     <Link
@@ -2333,18 +2338,18 @@ const EditProductPage = props => {
                         previous_path: history.location.pathname,
                       }}
                     >
-                      <button className="btn secondary w-100per">
+                      <GLButton variant="secondary" className="w-100per">
                         Go to {loading ? "Product" : product.name}
-                      </button>
+                      </GLButton>
                     </Link>
                   </li>
                   <li>
-                    <button
-                      className="btn secondary"
+                    <GLButton
+                      variant="secondary"
                       onClick={() => history.goBack()}
                     >
                       Back to Products
-                    </button>
+                    </GLButton>
                   </li>
                 </ul>
               </div>

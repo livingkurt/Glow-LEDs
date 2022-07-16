@@ -3,7 +3,7 @@ import React from "react";
 import { Link, useHistory } from "react-router-dom";
 
 import { format_date } from "../../utils/helper_functions";
-import GLButton from "../GlowLEDsComponents/GLButton/GLButton";
+import { GLButton } from "../GlowLEDsComponents";
 import { LazyImage } from "../UtilityComponents";
 
 const OrderSmallScreen = props => {

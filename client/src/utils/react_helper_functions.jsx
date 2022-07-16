@@ -9,6 +9,7 @@ import jwt_decode from "jwt-decode";
 import setAuthToken from "../utils/setAuthToken";
 import { API_Users } from ".";
 import store from "../store";
+import { GLButton } from "../components/GlowLEDsComponents";
 
 const delay = 2000; // anti-rebound for 500ms
 let lastExecution = 0;
@@ -594,13 +595,13 @@ export const list_display = (list_items, set_items) => {
                   key={index}
                 >
                   <div>
-                    <button
-                      className="btn icon"
+                    <GLButton
+                      variant="icon"
                       onClick={e => remove_list_item(index, e, set_items)}
                       aria-label="Delete"
                     >
                       <i className="fas fa-times mr-5px" />
-                    </button>
+                    </GLButton>
                     {item.name}
                   </div>
                 </div>

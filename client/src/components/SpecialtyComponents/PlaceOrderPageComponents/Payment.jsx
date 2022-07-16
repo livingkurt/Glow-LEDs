@@ -1,4 +1,5 @@
 import React from "react";
+import { GLButton } from "../../GlowLEDsComponents";
 import useWindowDimensions from "../../Hooks/windowDimensions";
 import Stripe from "../Stripe";
 export function Payment({
@@ -46,12 +47,13 @@ export function Payment({
           <h2>3. Payment & Review</h2>
           {payment_completed &&
           !show_payment && (
-            <button
-              className="btn secondary mv-10px"
+            <GLButton
+              variant="secondary"
+              className="mv-10px"
               onClick={() => show_hide_steps("payment")}
             >
               Edit
-            </button>
+            </GLButton>
           )}
         </div>
         {show_payment && (
@@ -97,14 +99,14 @@ export function Payment({
                           set_promo_code(e.target.value.toUpperCase());
                         }}
                       />
-                      <button
-                        className="btn primary"
+                      <GLButton
+                        variant="primary"
                         style={{
                           curser: "pointer",
                         }}
                       >
                         Apply
-                      </button>
+                      </GLButton>
                     </form>
                   </div>
                 )}
@@ -118,13 +120,13 @@ export function Payment({
                 </label>
                 {show_message && (
                   <div className="promo_code mv-1rem">
-                    <button
-                      className="btn icon"
+                    <GLButton
+                      variant="icon"
                       onClick={() => remove_promo()}
                       aria-label="Detete"
                     >
                       <i className="fas fa-times mr-5px" />
-                    </button>
+                    </GLButton>
                     {show_message}
                   </div>
                 )}
@@ -276,32 +278,29 @@ export function Payment({
                         <span className="custom-arrow" />
                       </div>
                     </div>
-                    <button
+                    <GLButton
                       onClick={create_order_without_paying}
-                      className="btn secondary w-100per mb-12px"
+                      variant="secondary"
+                      className="w-100per mb-12px"
                     >
                       Create Order For User
-                    </button>
+                    </GLButton>
                   </div>
                 )}
                 {userInfo &&
                 userInfo.isAdmin &&
                 users &&
                 no_user && (
-                  <button
+                  <GLButton
                     onClick={create_order_without_user}
-                    className="btn secondary w-100per mb-12px"
+                    variant="secondary"
+                    className="w-100per mb-12px"
                   >
                     Create Order Without User
-                  </button>
+                  </GLButton>
                 )}
               </div>
             )}
-            {/* <li>
-          <button className="btn primary w-100per" onClick={() => next_step('review')}>
-          	Continue
-          </button>
-          </li> */}
           </div>
         )}
       </ul>

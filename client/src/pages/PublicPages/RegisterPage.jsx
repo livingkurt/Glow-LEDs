@@ -5,6 +5,7 @@ import { register } from "../../actions/userActions";
 import { validate_registration } from "../../utils/validations";
 import { Helmet } from "react-helmet";
 import { Loading } from "../../components/UtilityComponents";
+import { GLButton } from "../../components/GlowLEDsComponents";
 
 const RegisterPage = props => {
   const [ first_name, set_first_name ] = useState("");
@@ -193,15 +194,16 @@ const RegisterPage = props => {
             {re_password_validations}
           </label>
           <li>
-            <button type="submit" className="btn primary">
+            <GLButton type="submit" variant="primary">
               Register
-            </button>
+            </GLButton>
           </li>
           <li>
             Already have an account?
             <Link
               to={redirect === "/" ? "login" : "login?redirect=" + redirect}
-              className="btn secondary ta-c"
+              variant="secondary"
+              className="ta-c"
             >
               Login
             </Link>

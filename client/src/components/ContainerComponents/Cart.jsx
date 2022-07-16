@@ -16,7 +16,7 @@ import {
   shuffle,
 } from "../../utils/helper_functions";
 import useWindowDimensions from "../Hooks/windowDimensions";
-import GLButton from "../GlowLEDsComponents/GLButton/GLButton";
+import { GLButton } from "../GlowLEDsComponents";
 
 const Cart = props => {
   const history = useHistory();
@@ -236,13 +236,13 @@ const Cart = props => {
         <div>
           <li className="w-100per pb-5px">
             <div className="p-1rem w-100per">
-              <button
+              <GLButton
                 className="cart_sidebar_close_button"
                 aria-label="Close"
                 onClick={closeMenu}
               >
                 <i className="fas fa-times" />
-              </button>
+              </GLButton>
               <div className="jc-b">
                 <div className="logo_text ai-c">
                   <Link to="/" aria-label="Home Page">

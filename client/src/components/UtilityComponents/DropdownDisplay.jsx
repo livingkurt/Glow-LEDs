@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { deleteProduct } from "../../actions/productActions";
 import { snake_case } from "../../utils/helper_functions";
+import { GLButton } from "../GlowLEDsComponents";
 
 const DropdownDisplay = ({
   item_list,
@@ -11,7 +12,7 @@ const DropdownDisplay = ({
   list_name,
   placement,
   display_key,
-  item_group_id
+  item_group_id,
 }) => {
   const dispatch = useDispatch();
   const remove_list_item = (item_index, e) => {
@@ -92,13 +93,13 @@ const DropdownDisplay = ({
                     >
                       <div className="ai-c w-100per jc-b">
                         <div>
-                          <button
-                            className="btn icon"
+                          <GLButton
+                            variant="icon"
                             onClick={e => remove_list_item(index, e)}
                             aria-label="Delete"
                           >
                             <i className="fas fa-times mr-5px" />
-                          </button>
+                          </GLButton>
                           <Link
                             to={`/secure/glow/editproduct/${item.pathname}/false`}
                           >
@@ -112,19 +113,21 @@ const DropdownDisplay = ({
                         <div className="row">
                           <div className="ai-c">
                             {index > 0 && (
-                              <button
-                                className="btn icon ml-5px mt-5px"
+                              <GLButton
+                                variant="icon"
+                                className="ml-5px mt-5px"
                                 onClick={e =>
                                   move(index, index - 1, list_items)}
                                 aria-label="Move Up"
                               >
                                 <i className=" fas fa-sort-up" />
-                              </button>
+                              </GLButton>
                             )}
 
                             {index < list_items.length - 1 && (
-                              <button
-                                className="btn icon ml-5px mb-5px"
+                              <GLButton
+                                variant="icon"
+                                className="ml-5px mb-5px"
                                 onClick={e =>
                                   move(index, index + 1, list_items)}
                                 aria-label="Move Down"
@@ -133,27 +136,30 @@ const DropdownDisplay = ({
                                   style={{ WebkitTransform: "rotate(-180deg)" }}
                                   className=" fas fa-sort-up"
                                 />
-                              </button>
+                              </GLButton>
                             )}
                           </div>
                           {/* <Link
                             to={`/secure/glow/editproduct/${item.pathname}/true`}
                           > */}
                           <Link
-                            to={`/secure/glow/editproduct/${item.pathname}/true/${snake_case(list_name.slice(0, -1))}/${item_group_id}`}
+                            to={`/secure/glow/editproduct/${item.pathname}/true/${snake_case(
+                              list_name.slice(0, -1)
+                            )}/${item_group_id}`}
                           >
-                            <button className="btn secondary ml-1rem">
+                            <GLButton variant="secondary" className="ml-1rem">
                               Use as Template
-                            </button>
+                            </GLButton>
                           </Link>
-                          <button
-                            className="btn primary icon ml-1rem"
+                          <GLButton
+                            variant="primary icon"
+                            className="ml-1rem"
                             onClick={e =>
                               remove_list_item_and_delete(index, e, item._id)}
                             aria-label="Delete"
                           >
                             Delete
-                          </button>
+                          </GLButton>
                         </div>
                       </div>
                     </div>

@@ -12,6 +12,7 @@ import { update } from "../../../actions/userActions";
 import useWindowDimensions from "../../Hooks/windowDimensions";
 import { isMobile } from "react-device-detect";
 import Autocomplete from "./Autocomplete";
+import { GLButton } from "../../GlowLEDsComponents";
 
 export function Shipping({
   shipping_completed,
@@ -284,12 +285,13 @@ export function Shipping({
         <h2>2. Shipping</h2>
         {shipping_completed &&
         !show_shipping && (
-          <button
-            className="btn secondary mv-10px"
+          <GLButton
+            variant="secondary"
+            className="mv-10px"
             onClick={() => show_hide_steps("shipping")}
           >
             Edit
-          </button>
+          </GLButton>
         )}
       </div>
       {shipping_completed && (
@@ -305,13 +307,13 @@ export function Shipping({
                 userInfo.shipping &&
                 userInfo.shipping.hasOwnProperty("first_name") && (
                   <li>
-                    <button
+                    <GLButton
                       onClick={e =>
                         use_saved_shipping(e, userInfo.shipping, userInfo)}
-                      className="btn primary"
+                      variant="primary"
                     >
                       Use Saved Shipping
-                    </button>
+                    </GLButton>
                   </li>
                 )}
                 {userInfo &&
@@ -555,9 +557,9 @@ export function Shipping({
                   {country_validations}
                 </label>
                 <li>
-                  <button type="submit" className="btn primary bob">
+                  <GLButton type="submit" variant="primary" className="bob">
                     Continue
-                  </button>
+                  </GLButton>
                 </li>
 
                 {userInfo &&
@@ -636,13 +638,14 @@ export function Shipping({
                 re_choose_shipping_rate={re_choose_shipping_rate}
               />
               {show_shipping_complete && (
-                <button
+                <GLButton
                   type="submit"
-                  className="btn primary w-100per bob mt-1rem"
+                  variant="primary"
+                  className="w-100per bob mt-1rem"
                   onClick={() => next_step("payment")}
                 >
                   Continue
-                </button>
+                </GLButton>
               )}
             </div>
           )}

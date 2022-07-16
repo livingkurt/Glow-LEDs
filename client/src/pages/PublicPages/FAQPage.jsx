@@ -6,6 +6,7 @@ import { Filter, QuickButtons } from "../../components/SpecialtyComponents";
 import { listChips } from "../../actions/chipActions";
 import { update_products_url } from "../../utils/helper_functions";
 import { listProducts } from "../../actions/productActions";
+import { GLButton } from "../../components/GlowLEDsComponents";
 
 const FAQPage = () => {
   const history = useHistory();
@@ -301,9 +302,13 @@ const FAQPage = () => {
                 </pre>
                 <Link to="/pages/contact">
                   <div className="jc-c">
-                    <button className="btn primary " style={{ margin: "auto" }}>
+                    <GLButton
+                      variant="primary"
+                      className=""
+                      style={{ margin: "auto" }}
+                    >
                       Contact
-                    </button>
+                    </GLButton>
                   </div>
                 </Link>
               </div>
@@ -388,9 +393,13 @@ const FAQPage = () => {
                 /> */}
                 <Link to="/pages/contact/custom_orders">
                   <div className="jc-c">
-                    <button className="btn primary " style={{ margin: "auto" }}>
+                    <GLButton
+                      variant="primary"
+                      className=""
+                      style={{ margin: "auto" }}
+                    >
                       Contact
-                    </button>
+                    </GLButton>
                   </div>
                 </Link>
               </div>
@@ -402,15 +411,19 @@ const FAQPage = () => {
                   Please tag us on Facebook and Instagram when you receive your
                   products! We love to see how you put our products to use. To
                   be featured on our social media or website send us your videos
-                  directly using the Contact button here on the website. You
+                  directly using the Contact GLButton here on the website. You
                   will be given a Wetransfer link where you can send us your
                   content to be featured.
                 </pre>
                 <Link to="/pages/contact/submit_content_to_be_featured">
                   <div className="jc-c">
-                    <button className="btn primary " style={{ margin: "auto" }}>
+                    <GLButton
+                      variant="primary"
+                      className=""
+                      style={{ margin: "auto" }}
+                    >
                       Contact
-                    </button>
+                    </GLButton>
                   </div>
                 </Link>
               </div>
@@ -484,12 +497,13 @@ const FAQPage = () => {
                 </pre>
                 <Link to="/pages/contact">
                   <div className="jc-c">
-                    <button
-                      className="btn primary "
+                    <GLButton
+                      variant="primary"
+                      className=""
                       style={{ margin: "auto", marginBottom: "10px" }}
                     >
                       Contact
-                    </button>
+                    </GLButton>
                   </div>
                 </Link>
               </div>
@@ -523,9 +537,13 @@ const FAQPage = () => {
                     target="_blank"
                     rel="noreferrer"
                   >
-                    <button className="btn primary " style={{ margin: "auto" }}>
+                    <GLButton
+                      variant="primary"
+                      className=""
+                      style={{ margin: "auto" }}
+                    >
                       Find Missing Mail
-                    </button>
+                    </GLButton>
                   </a>
                 </div>
                 <h3 className="ta-c title_font" id="damaged_items">
@@ -564,12 +582,13 @@ const FAQPage = () => {
                   Refunds are returned to the original form of payment.
                   <Link to="/pages/contact/returns">
                     <div className="jc-c">
-                      <button
-                        className="btn primary "
+                      <GLButton
+                        variant="primary"
+                        className=""
                         style={{ margin: "auto" }}
                       >
                         Contact
-                      </button>
+                      </GLButton>
                     </div>
                   </Link>
                 </pre>

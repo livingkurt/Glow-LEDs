@@ -1,13 +1,14 @@
-import React from 'react';
-import csvDownload from 'json-to-csv-export';
+import React from "react";
+import csvDownload from "json-to-csv-export";
+import { GLButton } from "../GlowLEDsComponents";
 
-const JSONToCSV = (props) => {
-	const { data, filename, ...others } = props;
+const JSONToCSV = props => {
+  const { data, filename, ...others } = props;
 
-	return (
-		<button onClick={() => csvDownload(data, filename)} {...others}>
-			{props.children || 'Download Data'}
-		</button>
-	);
+  return (
+    <GLButton onClick={() => csvDownload(data, filename)} {...others}>
+      {props.children || "Download Data"}
+    </GLButton>
+  );
 };
 export default JSONToCSV;

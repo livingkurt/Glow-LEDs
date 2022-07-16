@@ -10,6 +10,7 @@ import {
   saveEmail,
 } from "../../../actions/emailActions";
 import { API_Emails } from "../../../utils";
+import { GLButton } from "../../../components/GlowLEDsComponents";
 
 const EditContentPage = props => {
   const [ id, set_id ] = useState("");
@@ -474,18 +475,20 @@ const EditContentPage = props => {
                             <div>
                               <div className="jc-b ai-c">
                                 <label>Button {index + 1}</label>
-                                <button
-                                  className="btn primary w-4rem h-4rem p-14px mr-1rem mb-1rem"
+                                <GLButton
+                                  variant="primary"
+                                  className="w-4rem h-4rem p-14px mr-1rem mb-1rem"
                                   onClick={e => remove_slideshow(index, e)}
                                   aria-label="Delete"
                                 >
                                   <i className="fas fa-times mr-5px" />
-                                </button>
+                                </GLButton>
                               </div>
                               <div className="ai-c">
                                 {index > 0 && (
-                                  <button
-                                    className="btn secondary icon ph-10px pb-20px ml-5px"
+                                  <GLButton
+                                    variant="secondary icon"
+                                    className="ph-10px pb-20px ml-5px"
                                     onClick={e =>
                                       move(
                                         index,
@@ -497,12 +500,13 @@ const EditContentPage = props => {
                                     aria-label="Move Up"
                                   >
                                     <i className=" fas fa-sort-up" />
-                                  </button>
+                                  </GLButton>
                                 )}
 
                                 {index < slideshow.length - 1 && (
-                                  <button
-                                    className="btn secondary icon ph-10px pb-20px ml-5px "
+                                  <GLButton
+                                    variant="secondary icon"
+                                    className="ph-10px pb-20px ml-5px "
                                     onClick={e =>
                                       move(
                                         index,
@@ -519,17 +523,17 @@ const EditContentPage = props => {
                                       }}
                                       className=" fas fa-sort-up"
                                     />
-                                  </button>
+                                  </GLButton>
                                 )}
                               </div>
                               <li>
-                                <button
-                                  className="btn primary"
+                                <GLButton
+                                  variant="primary"
                                   onClick={e =>
                                     add_slideshow(e, index, "above")}
                                 >
                                   Add Image Above
-                                </button>
+                                </GLButton>
                               </li>
                               <li>
                                 <label htmlFor="label">Label</label>
@@ -578,25 +582,25 @@ const EditContentPage = props => {
                               </li>
                               {index !== slideshow.length - 1 && (
                                 <li>
-                                  <button
-                                    className="btn primary"
+                                  <GLButton
+                                    variant="primary"
                                     onClick={e =>
                                       add_slideshow(e, index, "below")}
                                   >
                                     Add Image Below
-                                  </button>
+                                  </GLButton>
                                 </li>
                               )}
                             </div>
                           ))}
 
                         <li>
-                          <button
-                            className="btn primary"
+                          <GLButton
+                            variant="primary"
                             onClick={e => add_slideshow(e)}
                           >
                             Add Image
-                          </button>
+                          </GLButton>
                         </li>
                       </div>
                       {/* </div> */}
@@ -667,18 +671,20 @@ const EditContentPage = props => {
                             <div>
                               <div className="jc-b ai-c">
                                 <label>Button {index + 1}</label>
-                                <button
-                                  className="btn primary w-4rem h-4rem p-14px mr-1rem mb-1rem"
+                                <GLButton
+                                  variant="primary"
+                                  className="w-4rem h-4rem p-14px mr-1rem mb-1rem"
                                   onClick={e => remove_link(index, e)}
                                   aria-label="Delete"
                                 >
                                   <i className="fas fa-times mr-5px" />
-                                </button>
+                                </GLButton>
                               </div>
                               <div className="ai-c">
                                 {index > 0 && (
-                                  <button
-                                    className="btn secondary icon ph-10px pb-20px ml-5px"
+                                  <GLButton
+                                    variant="secondary icon"
+                                    className="ph-10px pb-20px ml-5px"
                                     onClick={e =>
                                       move(
                                         index,
@@ -690,12 +696,13 @@ const EditContentPage = props => {
                                     aria-label="Move Up"
                                   >
                                     <i className=" fas fa-sort-up" />
-                                  </button>
+                                  </GLButton>
                                 )}
 
                                 {index < links.length - 1 && (
-                                  <button
-                                    className="btn secondary icon ph-10px pb-20px ml-5px "
+                                  <GLButton
+                                    variant="secondary icon"
+                                    className="ph-10px pb-20px ml-5px "
                                     onClick={e =>
                                       move(
                                         index,
@@ -712,16 +719,16 @@ const EditContentPage = props => {
                                       }}
                                       className=" fas fa-sort-up"
                                     />
-                                  </button>
+                                  </GLButton>
                                 )}
                               </div>
                               <li>
-                                <button
-                                  className="btn primary"
+                                <GLButton
+                                  variant="primary"
                                   onClick={e => add_link(e, index, "above")}
                                 >
                                   Add Link Above
-                                </button>
+                                </GLButton>
                               </li>
                               <li>
                                 <label htmlFor="label">Label</label>
@@ -770,24 +777,24 @@ const EditContentPage = props => {
                               </li>
                               {index !== links.length - 1 && (
                                 <li>
-                                  <button
-                                    className="btn primary"
+                                  <GLButton
+                                    variant="primary"
                                     onClick={e => add_link(e, index, "below")}
                                   >
                                     Add Link Below
-                                  </button>
+                                  </GLButton>
                                 </li>
                               )}
                             </div>
                           ))}
 
                         <li>
-                          <button
-                            className="btn primary"
+                          <GLButton
+                            variant="primary"
                             onClick={e => add_link(e)}
                           >
                             Add Link
-                          </button>
+                          </GLButton>
                         </li>
                       </div>
                     </div>
@@ -809,17 +816,17 @@ const EditContentPage = props => {
                     </li>
                   )}
                   <li>
-                    <button type="submit" className="btn primary">
+                    <GLButton type="submit" variant="primary">
                       {id ? "Update" : "Create"}
-                    </button>
+                    </GLButton>
                   </li>
                   <li>
-                    <button
-                      className="btn secondary"
+                    <GLButton
+                      variant="secondary"
                       onClick={() => history.goBack()}
                     >
                       Back to Contents
-                    </button>
+                    </GLButton>
                   </li>
                 </ul>
               </div>

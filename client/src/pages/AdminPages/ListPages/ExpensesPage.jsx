@@ -8,6 +8,7 @@ import { Search, Sort } from "../../../components/SpecialtyComponents/index";
 import { Helmet } from "react-helmet";
 import { format_date, unformat_date } from "../../../utils/helper_functions";
 import { API_Revenue } from "../../../utils";
+import { GLButton } from "../../../components/GlowLEDsComponents";
 // import CSVReader from 'react-csv-reader';
 
 const ExpensesPage = props => {
@@ -228,9 +229,9 @@ const ExpensesPage = props => {
           })}
         </div>
         <Link to="/secure/glow/editexpense">
-          <button className="btn primary" style={{ width: "160px" }}>
+          <GLButton variant="primary" style={{ width: "160px" }}>
             Create Expense
-          </button>
+          </GLButton>
         </Link>
       </div>
       <div className="ai-c w-325px jc-b">
@@ -253,7 +254,7 @@ const ExpensesPage = props => {
             <span className="custom-arrow" />
           </div>
         </div>
-        {/* <label className="btn primary">
+        {/* <label variant="primary">
 					Upload CSV
 					<CSVReader onFileLoaded={(data, fileInfo) => determine_card_type(data, fileInfo)} />
 				</label> */}
@@ -387,17 +388,17 @@ const ExpensesPage = props => {
                     <td className="p-10px">
                       <div className="jc-b">
                         <Link to={"/secure/glow/editexpense/" + expense._id}>
-                          <button className="btn icon" aria-label="Edit">
+                          <GLButton variant="icon" aria-label="Edit">
                             <i className="fas fa-edit" />
-                          </button>
+                          </GLButton>
                         </Link>
-                        <button
-                          className="btn icon"
+                        <GLButton
+                          variant="icon"
                           onClick={() => deleteHandler(expense)}
                           aria-label="Delete"
                         >
                           <i className="fas fa-trash-alt" />
-                        </button>
+                        </GLButton>
                       </div>
                     </td>
                   </tr>

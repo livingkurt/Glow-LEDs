@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import ProductThumbCarouselItem from "./CarouselItem";
 import { Loading } from "../UtilityComponents";
 import useWindowDimensions from "../Hooks/windowDimensions";
-import GLButton from "../GlowLEDsComponents/GLButton/GLButton";
+import { GLButton } from "../GlowLEDsComponents";
 
 const ProductThumbCarousel = props => {
   const dispatch = useDispatch();

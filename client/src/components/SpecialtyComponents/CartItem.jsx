@@ -10,7 +10,7 @@ import {
   sale_price_switch,
 } from "../../utils/react_helper_functions";
 import { removeFromCart } from "../../actions/cartActions";
-import GLButton from "../GlowLEDsComponents/GLButton/GLButton";
+import { GLButton } from "../GlowLEDsComponents";
 
 const CartItem = ({ index, item, check_item_as_manufactured }) => {
   const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);

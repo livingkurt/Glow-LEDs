@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { validate_password_change } from "../../utils/validations";
 import { Loading } from "../../components/UtilityComponents";
 import { Helmet } from "react-helmet";
+import { GLButton } from "../../components/GlowLEDsComponents";
 
 const AdminChangePasswordPage = props => {
   const history = useHistory();
@@ -56,9 +57,9 @@ const AdminChangePasswordPage = props => {
         />
       </Helmet>
       <div className="mb-10px">
-        <button className="btn secondary" onClick={() => history.goBack()}>
+        <GLButton variant="secondary" onClick={() => history.goBack()}>
           Back to Profile
-        </button>
+        </GLButton>
       </div>
       <div className="profile-info">
         <div className="form">
@@ -100,15 +101,19 @@ const AdminChangePasswordPage = props => {
                 {re_password_validations}
               </label>
               <li>
-                <button type="submit" className="btn primary">
+                <GLButton type="submit" variant="primary">
                   Update
-                </button>
+                </GLButton>
               </li>
               <li>
                 <Link to="/secure/account/profile">
-                  <button type="button" className="btn secondary w-100per">
+                  <GLButton
+                    type="button"
+                    variant="secondary"
+                    className="w-100per"
+                  >
                     Cancel
-                  </button>
+                  </GLButton>
                 </Link>
               </li>
             </ul>

@@ -24,6 +24,7 @@ import { listChips } from "../../actions/chipActions";
 import { ProductItemM } from "../../components/MobileComponents";
 import { ProductItemD } from "../../components/DesktopComponents";
 import { userWindowDimensions } from "../../components/Hooks";
+import { GLButton } from "../../components/GlowLEDsComponents";
 
 const AllProductsPage = props => {
   const history = useHistory();
@@ -156,7 +157,7 @@ const AllProductsPage = props => {
     let collection = props.match.params.collection
       ? props.match.params.collection
       : "";
-      console.log({collection: props.match.params})
+    console.log({ collection: props.match.params });
     determine_page_name(category, subcategory, collection);
     // prnt({ query });
     if (
@@ -190,7 +191,7 @@ const AllProductsPage = props => {
           limit = query.limit;
         }
       }
-      
+
       dispatch(
         listProducts({
           category,
@@ -336,11 +337,11 @@ const AllProductsPage = props => {
       <div className="jc-c">
         <div className="row">
           <h1 className="fs-25px mb-5px ta-c">
-            {` ${(collection && humanize(collection)) || (subcategory &&
-              humanize(subcategory))} ${humanize(category) === "Exo Diffusers"
+            {` ${(collection && humanize(collection)) ||
+              (subcategory && humanize(subcategory))} ${humanize(category) ===
+            "Exo Diffusers"
               ? "EXO Diffusers"
-              : humanize(category)}` ||
-              "Products"}
+              : humanize(category)}` || "Products"}
           </h1>
           <label style={{ color: "#d2cfcf", marginTop: "10px" }}>
             {category === "diffuser_caps" ||
@@ -361,10 +362,16 @@ const AllProductsPage = props => {
   return (
     <div>
       <Helmet>
-        <title> {` ${(collection && humanize(collection)) || (subcategory &&
-              humanize(subcategory))} ${category ? humanize(category) === "Exo Diffusers"
+        <title>
+          {" "}
+          {` ${(collection && humanize(collection)) ||
+            (subcategory && humanize(subcategory))} ${category
+            ? humanize(category) === "Exo Diffusers"
               ? "EXO Diffusers"
-              : humanize(category): "Products"}`} | Glow LEDs</title>
+              : humanize(category)
+            : "Products"}`}{" "}
+          | Glow LEDs
+        </title>
         <meta
           property="og:title"
           content={category ? humanize(category) : "Products"}
@@ -405,13 +412,14 @@ const AllProductsPage = props => {
           filter_options={chips_list}
         />
         {filter_on && (
-          <button
+          <GLButton
             type="submit"
-            className="btn primary w-50px h-40px fs-20px mb-0px "
+            variant="primary"
+            className="w-50px h-40px fs-20px mb-0px "
             onClick={() => reset_filter()}
           >
             &#10008;
-          </button>
+          </GLButton>
         )}
       </div>
       <Loading loading={loading_products} />

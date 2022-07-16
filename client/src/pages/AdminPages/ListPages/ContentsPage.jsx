@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import { Loading, Notification } from "../../../components/UtilityComponents";
 import { Helmet } from "react-helmet";
 import { Search } from "../../../components/SpecialtyComponents";
+import { GLButton } from "../../../components/GlowLEDsComponents";
 
 const ContentsPage = props => {
   const [ search, set_search ] = useState("");
@@ -71,14 +72,14 @@ const ContentsPage = props => {
             )
           }
         >
-          <button className="btn primary" style={{ width: "160px" }}>
+          <GLButton variant="primary" style={{ width: "160px" }}>
             Visit Links Page
-          </button>
+          </GLButton>
         </a>
         <Link to="/secure/glow/editcontent">
-          <button className="btn primary" style={{ width: "160px" }}>
+          <GLButton variant="primary" style={{ width: "160px" }}>
             Create Content
-          </button>
+          </GLButton>
         </Link>
       </div>
 
@@ -118,8 +119,8 @@ const ContentsPage = props => {
                     }}
                   >
                     <td className="p-10px">
-                      <button
-                        className="btn icon"
+                      <GLButton
+                        variant="icon"
                         onClick={() => change_content_status(content)}
                         aria-label={content.active ? "deactive" : "activate"}
                       >
@@ -128,7 +129,7 @@ const ContentsPage = props => {
                         ) : (
                           <i className="fas fa-times-circle" />
                         )}
-                      </button>
+                      </GLButton>
                     </td>
                     <td
                       className="p-10px paragraph_font"
@@ -146,17 +147,17 @@ const ContentsPage = props => {
                     <td className="p-10px paragraph_font">
                       <div className="jc-c">
                         <Link to={"/secure/glow/editcontent/" + content._id}>
-                          <button className="btn icon" aria-label="Edit">
+                          <GLButton variant="icon" aria-label="Edit">
                             <i className="fas fa-edit" />
-                          </button>
+                          </GLButton>
                         </Link>
-                        <button
-                          className="btn icon"
+                        <GLButton
+                          variant="icon"
                           onClick={() => deleteHandler(content)}
                           aria-label="Delete"
                         >
                           <i className="fas fa-trash-alt" />
-                        </button>
+                        </GLButton>
                       </div>
                     </td>
                   </tr>

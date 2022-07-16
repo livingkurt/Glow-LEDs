@@ -22,6 +22,7 @@ import {
   format_time,
   unformat_date_and_time,
 } from "../../../utils/helper_functions";
+import { GLButton } from "../../../components/GlowLEDsComponents";
 const ReactDOMServer = require("react-dom/server");
 const HtmlToReactParser = require("html-to-react").Parser;
 
@@ -774,25 +775,26 @@ const EditEmailPage = props => {
                   {/* {image_display(images)} */}
 
                   <li>
-                    <button type="submit" className="btn primary">
+                    <GLButton type="submit" variant="primary">
                       {id ? "Update" : "Create"}
-                    </button>
+                    </GLButton>
                   </li>
                   <li>
                     <Link to={"/secure/glow/emails/announcement/" + email._id}>
-                      <button
-                        className="btn secondary w-100per"
+                      <GLButton
+                        variant="secondary"
+                        className="w-100per"
                         aria-label="view"
                       >
                         Go to Email Sender
-                      </button>
+                      </GLButton>
                     </Link>
                   </li>
                   <li>
                     <Link to="/secure/glow/emails/">
-                      <button className="btn secondary w-100per">
+                      <GLButton variant="secondary" className="w-100per">
                         Back to Emails
-                      </button>
+                      </GLButton>
                     </Link>
                   </li>
                   <li>{template}</li>

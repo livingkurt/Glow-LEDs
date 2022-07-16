@@ -32,6 +32,7 @@ import useClipboard from "react-hook-clipboard";
 import useWindowDimensions from "../../components/Hooks/windowDimensions";
 import { OrderStatusButtons } from "../../components/SpecialtyComponents/OrderPageComponents";
 import { determine_color } from "../../utils/helpers/order_helpers";
+import { GLButton } from "../../components/GlowLEDsComponents";
 
 require("dotenv").config();
 
@@ -690,26 +691,21 @@ const OrderPage = props => {
                     "/secure/glow/orders?page=1?limit=10"
                   }
                 >
-                  <button className="btn secondary">
-                    Back to Admin Orders
-                  </button>
+                  <GLButton variant="secondary">Back to Admin Orders</GLButton>
                 </Link>
               )}
               {userInfo &&
               userInfo.first_name && (
                 <Link to={"/secure/account/orders"}>
-                  <button className="btn secondary">Back to Orders</button>
+                  <GLButton variant="secondary">Back to Orders</GLButton>
                 </Link>
               )}
             </div>
             {userInfo &&
             userInfo.isAdmin && (
-              <button
-                className="btn secondary"
-                onClick={() => add_items_to_cart()}
-              >
+              <GLButton variant="secondary" onClick={() => add_items_to_cart()}>
                 Add Items to Cart
-              </button>
+              </GLButton>
             )}
           </div>
 
@@ -717,14 +713,15 @@ const OrderPage = props => {
           userInfo.isAdmin && (
             <div className="row">
               <div className="ai-c">
-                <button
+                <GLButton
                   style={{ borderRadius: "50%" }}
-                  className="btn icon h-59px"
+                  variant="icon"
+                  className="h-59px"
                   onClick={e => move_left(e)}
                   aria-label="Previous"
                 >
                   <i className="fas fa-arrow-circle-left fs-40px" />
-                </button>
+                </GLButton>
               </div>
               <h2
                 style={{
@@ -745,14 +742,15 @@ const OrderPage = props => {
                 </Link>
               </h2>
               <div className="ai-c">
-                <button
+                <GLButton
                   style={{ borderRadius: "50%" }}
-                  className="btn icon h-59px"
+                  variant="icon"
+                  className="h-59px"
                   onClick={e => move_right(e)}
                   aria-label="Next"
                 >
                   <i className="fas fa-arrow-circle-right fs-40px" />
-                </button>
+                </GLButton>
               </div>
             </div>
           )}
@@ -1000,8 +998,9 @@ const OrderPage = props => {
                   <div>
                     {userInfo &&
                     userInfo.isAdmin && (
-                      <button
-                        className="btn secondary w-200px mv-10px mr-1rem"
+                      <GLButton
+                        variant="secondary"
+                        className="w-200px mv-10px mr-1rem"
                         onClick={() =>
                           copyToClipboard(`
 ${order.shipping.first_name} ${order.shipping.last_name}
@@ -1011,7 +1010,7 @@ ${order.shipping.postalCode} ${order.shipping.country}
 ${order.shipping.email}`)}
                       >
                         Copy to clipboard
-                      </button>
+                      </GLButton>
                     )}
                     {userInfo &&
                     userInfo.isAdmin && (
@@ -1019,7 +1018,7 @@ ${order.shipping.email}`)}
                         to={`/secure/glow/userprofile/${order.user &&
                           order.user._id}`}
                       >
-                        <button className="btn secondary">View User</button>
+                        <GLButton variant="secondary">View User</GLButton>
                       </Link>
                     )}
                   </div>
@@ -1262,7 +1261,7 @@ ${order.shipping.email}`)}
 
               {/* {userInfo &&
 							userInfo.isAdmin && (
-								<button className="btn secondary w-100per mv-5px ">
+								<GLButton variant="secondary" className="w-100per mv-5px ">
 									<Link
 										to={{
 											pathname: '/secure/glow/emails/invoice/' + order._id,
@@ -1271,7 +1270,7 @@ ${order.shipping.email}`)}
 									>
 										View Invoice
 									</Link>
-								</button>
+								</GLButton>
 							)} */}
               {userInfo &&
               userInfo.isAdmin && (
@@ -1288,49 +1287,54 @@ ${order.shipping.email}`)}
                     </div>
                     <div className="column jc-b w-100per">
                       {order.shipping.shipping_label && (
-                        <button
-                          className="btn secondary mv-5px"
+                        <GLButton
+                          variant="secondary"
+                          className="mv-5px"
                           onClick={() => view_label()}
                         >
                           Print Label
-                        </button>
+                        </GLButton>
                       )}
                       {userInfo &&
                       userInfo.isAdmin && (
-                        <button
-                          className="btn secondary w-100per mv-5px "
+                        <GLButton
+                          variant="secondary"
+                          className="w-100per mv-5px "
                           onClick={get_invoice}
                         >
                           Print Invoice
-                        </button>
+                        </GLButton>
                       )}
                       {hide_label_button &&
                       !order.shipping.shipping_label && (
-                        <button
-                          className="btn primary mv-5px"
+                        <GLButton
+                          variant="primary"
+                          className="mv-5px"
                           onClick={() => buy_label()}
                         >
                           Buy Label
-                        </button>
+                        </GLButton>
                       )}
-                      <button className="btn secondary mv-5px">
+                      <GLButton variant="secondary" className="mv-5px">
                         <Link to={"/secure/glow/editorder/" + order._id}>
                           Edit Order
                         </Link>
-                      </button>
-                      <button
-                        className="btn secondary mv-5px"
+                      </GLButton>
+                      <GLButton
+                        variant="secondary"
+                        className="mv-5px"
                         onClick={() => dispatch(deleteOrder(order._id))}
                       >
                         Delete Order
-                      </button>
+                      </GLButton>
                       {hide_label_button && (
-                        <button
-                          className="btn secondary mv-5px"
+                        <GLButton
+                          variant="secondary"
+                          className="mv-5px"
                           onClick={e => get_shipping_rates(e)}
                         >
                           Change Shipping Speed
-                        </button>
+                        </GLButton>
                       )}
                       {hide_label_button &&
                         shipping_rates &&
@@ -1347,13 +1351,13 @@ ${order.shipping.email}`)}
                                   {rate.delivery_days === 1 ? "Day" : "Days"}
                                 </div>
                               </div>
-                              <button
-                                className="custom-select-shipping_rates"
+                              <GLButton
+                                className="rates"
                                 onClick={e =>
                                   choose_shipping_rate(e, rate, rate.service)}
                               >
                                 Select
-                              </button>
+                              </GLButton>
                             </div>
                           );
                         })}
@@ -1367,25 +1371,27 @@ ${order.shipping.email}`)}
                               {rate.rate.delivery_days === 1 ? "Day" : "Days"}
                             </div>
                           </div>
-                          <button
-                            className="custom-select-shipping_rates w-10rem"
+                          <GLButton
+                            className="rates w-10rem"
                             onClick={e => re_choose_shipping_rate(e)}
                           >
                             Change
-                          </button>
+                          </GLButton>
                         </div>
                       )}
                       {!hide_label_button && (
-                        <button
-                          className="btn primary mv-5px"
+                        <GLButton
+                          variant="primary"
+                          className="mv-5px"
                           onClick={() => buy_new_speed_label()}
                         >
                           Buy New Speed Label
-                        </button>
+                        </GLButton>
                       )}
 
-                      <button
-                        className="btn secondary mv-5px"
+                      <GLButton
+                        variant="secondary"
+                        className="mv-5px"
                         onClick={() => create_label("first")}
                       >
                         {!order.shipping.shipping_label ? (
@@ -1393,9 +1399,10 @@ ${order.shipping.email}`)}
                         ) : (
                           "Create First Class New Label"
                         )}
-                      </button>
-                      <button
-                        className="btn secondary mv-5px"
+                      </GLButton>
+                      <GLButton
+                        variant="secondary"
+                        className="mv-5px"
                         onClick={() => create_label("priority")}
                       >
                         {!order.shipping.shipping_label ? (
@@ -1403,9 +1410,10 @@ ${order.shipping.email}`)}
                         ) : (
                           "Create New Prioirty Label"
                         )}
-                      </button>
-                      <button
-                        className="btn secondary mv-5px"
+                      </GLButton>
+                      <GLButton
+                        variant="secondary"
+                        className="mv-5px"
                         onClick={() => create_label("express")}
                       >
                         {!order.shipping.shipping_label ? (
@@ -1413,27 +1421,29 @@ ${order.shipping.email}`)}
                         ) : (
                           "Create New Express Label"
                         )}
-                      </button>
+                      </GLButton>
 
                       {!order.shipping.return_shipping_label && (
-                        <button
-                          className="btn secondary mv-5px"
+                        <GLButton
+                          variant="secondary"
+                          className="mv-5px"
                           onClick={() => create_return_label()}
                         >
                           Create Return Label
-                        </button>
+                        </GLButton>
                       )}
                       {order.shipping.return_shipping_label && (
-                        <button
-                          className="btn secondary mv-5px"
+                        <GLButton
+                          variant="secondary"
+                          className="mv-5px"
                           onClick={() => view_return_label()}
                         >
                           View Return Label
-                        </button>
+                        </GLButton>
                       )}
                       {/* {order.shipping.return_shipping_label && (
-												<button
-													className="btn secondary mv-5px w-100per"
+												<GLButton
+													variant="secondary" className="mv-5px w-100per"
 													onClick={(e) =>
 														download_return_label(
 															order.shipping.return_shipping_label.postage_label
@@ -1443,7 +1453,7 @@ ${order.shipping.email}`)}
 														)}
 												>
 													Download Return Label
-												</button>
+												</GLButton>
 											)} */}
                       {order.shipping.return_shipping_label && (
                         <a
@@ -1459,20 +1469,24 @@ ${order.shipping.email}`)}
                               .label_url
                           }
                         >
-                          <button className="btn secondary mv-5px w-100per">
+                          <GLButton
+                            variant="secondary"
+                            className="mv-5px w-100per"
+                          >
                             Download Return Label
-                          </button>
+                          </GLButton>
                         </a>
                       )}
-                      <button
-                        className="btn secondary mv-5px"
+                      <GLButton
+                        variant="secondary"
+                        className="mv-5px"
                         onClick={() => create_duplicate_order(order._id)}
                       >
                         Create Duplicate Order
-                      </button>
+                      </GLButton>
 
-                      {/* <button
-										className="btn primary mv-5px "
+                      {/* <GLButton
+										variant="primary" className="mv-5px "
 										onClick={() =>
 											update_order_state(
 												order,
@@ -1482,31 +1496,31 @@ ${order.shipping.email}`)}
 											)}
 									>
 										{order.isManufactured ? 'Unset to Manufactured' : 'Set to Manufactured'}
-									</button>
-									<button
-										className="btn primary mv-5px "
+									</GLButton>
+									<GLButton
+										variant="primary" className="mv-5px "
 										onClick={() =>
 											update_order_state(order, order.isPackaged, 'isPackaged', 'packagedAt')}
 									>
 										{order.isPackaged ? 'Unset to Packaged' : 'Set to Packaged'}
-									</button>
-									<button
-										className="btn primary mv-5px "
+									</GLButton>
+									<GLButton
+										variant="primary" className="mv-5px "
 										onClick={() =>
 											update_order_state(order, order.isShipped, 'isShipped', 'shippedAt')}
 									>
 										{order.isShipped ? 'Unset to Shipped' : 'Set to Shipped'}
-									</button>
-									<button
-										className="btn primary mv-5px "
+									</GLButton>
+									<GLButton
+										variant="primary" className="mv-5px "
 										onClick={() =>
 											update_order_state(order, order.isDelivered, 'isDelivered', 'deliveredAt')}
 									>
 										{order.isDelivered ? 'Unset to Delivered' : 'Set to Delivered'}
-									</button>
-									<button className="btn primary">
+									</GLButton>
+									<GLButton variant="primary">
 										<Link to={'/secure/glow/editorder/' + order._id}>Edit Order</Link>
-									</button> */}
+									</GLButton> */}
                     </div>
                   </div>
                   <div className="mv-10px">
@@ -1535,20 +1549,22 @@ ${order.shipping.email}`)}
                       </div>
                     </div>
                     <div className="">
-                      <button
-                        className="btn primary mv-5px w-100per"
+                      <GLButton
+                        variant="primary"
+                        className="mv-5px w-100per"
                         onClick={() => update_refund_state(refund_amount)}
                       >
                         Refund Partial Amount
-                      </button>
-                      <button
-                        className="btn primary mv-5px w-100per"
+                      </GLButton>
+                      <GLButton
+                        variant="primary"
+                        className="mv-5px w-100per"
                         onClick={() => update_refund_state(order.totalPrice)}
                       >
                         Refund Full Amount
-                      </button>
+                      </GLButton>
 
-                      <button className="btn secondary mv-5px w-100per">
+                      <GLButton variant="secondary" className="mv-5px w-100per">
                         <Link
                           to={
                             "/secure/glow/emails/order/" +
@@ -1558,7 +1574,7 @@ ${order.shipping.email}`)}
                         >
                           View Email
                         </Link>
-                      </button>
+                      </GLButton>
                     </div>
                   </div>
                 </div>

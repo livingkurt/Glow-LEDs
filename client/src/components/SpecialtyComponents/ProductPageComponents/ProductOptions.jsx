@@ -8,6 +8,7 @@ import {
   product_page_sale_price_switch,
 } from "../../../utils/react_helper_functions";
 import useWindowDimensions from "../../Hooks/windowDimensions";
+import { GLButton } from "../../GlowLEDsComponents";
 
 const ProductOptions = ({
   product,
@@ -74,7 +75,7 @@ const ProductOptions = ({
     console.log({ option_buttons: option });
     return (
       <div>
-        <button
+        <GLButton
           key={index}
           selected={option.default_option}
           id={option.size}
@@ -83,7 +84,7 @@ const ProductOptions = ({
           className={determine_option_styles(option, option_product_object)}
         >
           {determine_option_product_name(option.size)}
-        </button>
+        </GLButton>
       </div>
     );
   };
@@ -121,13 +122,17 @@ const ProductOptions = ({
       return <div />;
     }
     return (
-      <button className="btn primary bob mt-10px" onClick={handleAddToCart}>
+      <GLButton
+        variant="primary"
+        className="bob mt-10px w-100per"
+        onClick={handleAddToCart}
+      >
         {determine_preorder(
           option_product_object,
           count_in_stock,
           "Add To Cart"
         )}
-      </button>
+      </GLButton>
     );
   };
 
@@ -380,9 +385,9 @@ const ProductOptions = ({
                 to={`/collections/all/products/supremes_sizing_sampler_pack`}
                 className="jc-c"
               >
-                <button className="btn primary">
+                <GLButton variant="primary">
                   Supremes Sizing Sampler Pack
-                </button>
+                </GLButton>
               </Link>
             </li>
             <hr />

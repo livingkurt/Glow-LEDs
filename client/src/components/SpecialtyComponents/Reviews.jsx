@@ -9,7 +9,7 @@ import {
   detailsProduct,
 } from "../../actions/productActions";
 import { PRODUCT_REVIEW_SAVE_RESET } from "../../constants/productConstants";
-import GLButton from "../GlowLEDsComponents/GLButton/GLButton";
+import { GLButton } from "../GlowLEDsComponents";
 // Components
 
 const Review = props => {

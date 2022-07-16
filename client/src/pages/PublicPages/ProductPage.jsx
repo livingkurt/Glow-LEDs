@@ -19,6 +19,7 @@ import {
   ProductOptions,
   ProductSelection,
 } from "../../components/SpecialtyComponents/ProductPageComponents";
+import { GLButton } from "../../components/GlowLEDsComponents";
 
 const ProductPage = props => {
   const userLogin = useSelector(state => state.userLogin);
@@ -799,19 +800,20 @@ const ProductPage = props => {
               to={props.location.previous_path || "/collections/all/products"}
               className="m-auto"
             >
-              <button className="btn secondary">Back to Products</button>
+              <GLButton variant="secondary">Back to Products</GLButton>
             </Link>
           </div>
           {userInfo &&
           userInfo.isAdmin && (
             <div className=" pos-rel z-pos-1 br-10px">
-              <button
-                className="btn secondary  w-300px"
+              <GLButton
+                variant="secondary"
+                className=" w-300px"
                 onClick={e =>
                   set_show_product_options(show => (show ? false : true))}
               >
                 Edit Product
-              </button>
+              </GLButton>
               {show_product_options && (
                 <div className="pos-abs bg-secondary br-10px">
                   <div className="column bg-secondary br-10px">

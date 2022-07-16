@@ -10,7 +10,7 @@ import {
   saveProduct,
 } from "../../actions/productActions";
 import styled from "styled-components";
-import GLButton from "../GlowLEDsComponents/GLButton/GLButton";
+import { GLButton } from "../GlowLEDsComponents";
 
 const grid = 8;
 const size = 30;

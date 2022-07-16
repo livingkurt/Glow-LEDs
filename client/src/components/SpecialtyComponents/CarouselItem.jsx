@@ -8,7 +8,7 @@ import { sale_price_switch } from "../../utils/react_helper_functions";
 import { LazyImage } from "../UtilityComponents";
 import { detailsProduct } from "../../actions/productActions";
 import { addToCart } from "../../actions/cartActions";
-import GLButton from "../GlowLEDsComponents/GLButton/GLButton";
+import { GLButton } from "../GlowLEDsComponents";
 
 const CarouselItem = props => {
   const [ product, set_product ] = useState(props.product);
@@ -151,7 +151,7 @@ const CarouselItem = props => {
                             <div className="ai-c wrap jc-c">
                               {product.option_products &&
                                 product.option_products.map((option, index) => (
-                                  <button
+                                  <GLButton
                                     key={index}
                                     id={option.size}
                                     value={JSON.stringify(option)}
@@ -161,7 +161,7 @@ const CarouselItem = props => {
                                       : "primary"}`}
                                   >
                                     {option.size}
-                                  </button>
+                                  </GLButton>
                                 ))}
                             </div>
 
@@ -208,7 +208,7 @@ const CarouselItem = props => {
                     )}
                   </div>
                 ) : (
-                  <button className="button inactive">Out of Stock</button>
+                  <GLButton variant="inactive">Out of Stock</GLButton>
                 )}
               </li>
             </span>

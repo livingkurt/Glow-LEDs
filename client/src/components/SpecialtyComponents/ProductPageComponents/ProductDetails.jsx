@@ -8,6 +8,7 @@ import { ReadMore, Reviews } from "..";
 import { humanize, sizes, toCapitalize } from "../../../utils/helper_functions";
 import useWindowDimensions from "../../Hooks/windowDimensions";
 import RelatedProductsSlideshow from "../RelatedProductsSlideshow";
+import { GLButton } from "../../GlowLEDsComponents";
 
 const ProductDetails = ({
   product,
@@ -211,16 +212,16 @@ const ProductDetails = ({
             <div className="jc-b">
               <div className="mb-10px">
                 <Link to={`/pages/menu/manuals`}>
-                  <button className="btn secondary">View All Manuals</button>
+                  <GLButton variant="secondary">View All Manuals</GLButton>
                 </Link>
               </div>
               <div className="mb-10px">
                 <Link
                   to={`https://www.glow-leds.com/collections/all/products/category${product.category}`}
                 >
-                  <button className="btn secondary">
+                  <GLButton variant="secondary">
                     View Available {toCapitalize(humanize(product.category))}
-                  </button>
+                  </GLButton>
                 </Link>
               </div>
               {product.category === "glowstringz" && (
@@ -229,7 +230,7 @@ const ProductDetails = ({
                     href={manuals[product.category].manual}
                     download="Glowstringz V2 Manual"
                   >
-                    <button className="btn secondary">Download Manual</button>
+                    <GLButton variant="secondary">>Download Manual</GLButton>
                   </a>
                 </div>
               )}

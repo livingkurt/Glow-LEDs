@@ -8,7 +8,7 @@ import "react-multi-carousel/lib/styles.css";
 
 import { Link } from "react-router-dom";
 import { mobile_check } from "../../utils/react_helper_functions";
-import GLButton from "../GlowLEDsComponents/GLButton/GLButton";
+import { GLButton } from "../GlowLEDsComponents";
 
 const HomeSlideshow = ({ slideshow }) => {
   // left: 37, up: 38, right: 39, down: 40,

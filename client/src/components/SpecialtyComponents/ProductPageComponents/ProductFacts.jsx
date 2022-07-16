@@ -1,6 +1,7 @@
 // React
 import React from "react";
 import { Link } from "react-router-dom";
+import { GLButton } from "../../GlowLEDsComponents";
 
 const ProductFacts = ({ facts, category, subcategory, pathname, name }) => {
   const determine_alt_skin_pathname = (subcategory, pathname) => {
@@ -59,9 +60,9 @@ const ProductFacts = ({ facts, category, subcategory, pathname, name }) => {
                 pathname
               )}`}
             >
-              <button className="btn primary">
+              <GLButton variant="primary">
                 View {determine_alt_skin_name(subcategory, name)}
-              </button>
+              </GLButton>
             </Link>
           </div>
         )}
@@ -69,9 +70,9 @@ const ProductFacts = ({ facts, category, subcategory, pathname, name }) => {
           <div className="w-100per">
             <h3>Know your size before you buy with our:</h3>
             <Link to={`/collections/all/products/supremes_sizing_sampler_pack`}>
-              <button className="btn primary">
+              <GLButton variant="primary">
                 Supremes Sizing Sampler Pack
-              </button>
+              </GLButton>
             </Link>
           </div>
         )}

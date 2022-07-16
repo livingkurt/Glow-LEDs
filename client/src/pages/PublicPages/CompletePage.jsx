@@ -10,6 +10,7 @@ import {
   API_Features,
   API_Orders,
 } from "../../utils";
+import { GLButton } from "../../components/GlowLEDsComponents";
 
 const CompletePage = props => {
   const [ data, set_data ] = useState();
@@ -157,7 +158,9 @@ const CompletePage = props => {
           userInfo.isAdmin && (
             <div className="jc-b mb-1rem">
               <Link to="/secure/glow/emails">
-                <button className="btn primary mh-10px">Back to Emails</button>
+                <GLButton variant="primary" className="mh-10px">
+                  Back to Emails
+                </GLButton>
               </Link>
               <Link
                 to={
@@ -165,22 +168,26 @@ const CompletePage = props => {
                   "/secure/glow/orders?page=1?limit=10"
                 }
               >
-                <button className="btn primary mh-10px">Back to Orders</button>
+                <GLButton variant="primary" className="mh-10px">
+                  Back to Orders
+                </GLButton>
               </Link>
 
-              <button
-                className="btn primary mb-1rem"
+              <GLButton
+                variant="primary"
+                className="mb-1rem"
                 onClick={() => send_email()}
               >
                 Send Email
-              </button>
-              <button
-                className="btn primary mh-10px"
+              </GLButton>
+              <GLButton
+                variant="primary"
+                className="mh-10px"
                 id="myBtn"
                 onClick={() => set_show_modal(true)}
               >
                 Open Modal
-              </button>
+              </GLButton>
             </div>
           )}
           <div className="column jc-c">
@@ -197,41 +204,43 @@ const CompletePage = props => {
                 asked questions.
               </p>
               <Link to="/pages/faq#glowskinz">
-                <button className="btn primary w-100per">Glowskinz FAQ</button>
+                <GLButton variant="primary" className="w-100per">
+                  Glowskinz FAQ
+                </GLButton>
               </Link>
               <Link to="/pages/faq#diffuser_caps">
-                <button className="btn primary w-100per">
+                <GLButton variant="primary" className="w-100per">
                   Diffuser Caps FAQ
-                </button>
+                </GLButton>
               </Link>
               <Link to="/pages/faq#custom_products">
-                <button className="btn primary w-100per">
+                <GLButton variant="primary" className="w-100per">
                   Custom Products FAQ
-                </button>
+                </GLButton>
               </Link>
               <Link to="/pages/faq#featured_content">
-                <button className="btn primary w-100per">
+                <GLButton variant="primary" className="w-100per">
                   Featured Content FAQ
-                </button>
+                </GLButton>
               </Link>
               <Link to="/pages/faq#processing_shipping">
-                <button className="btn primary w-100per">
+                <GLButton variant="primary" className="w-100per">
                   Processing/Shipping FAQ
-                </button>
+                </GLButton>
               </Link>
               <Link to="/pages/faq#order_issues">
-                <button className="btn primary w-100per">
+                <GLButton variant="primary" className="w-100per">
                   Order Issues FAQ
-                </button>
+                </GLButton>
               </Link>
             </div>
             {data.id && <p className="ta-c title_font fs-20px">{data.id}</p>}
 
             {data.button_label && (
               <Link to={data.button_link} className="jc-c ">
-                <button className="btn primary w-100per max-w-200px">
+                <GLButton variant="primary" className="w-100per max-w-200px">
                   {data.button_label}
-                </button>
+                </GLButton>
               </Link>
             )}
             {type === "order" && (
@@ -247,14 +256,16 @@ const CompletePage = props => {
                       )
                     }
                   >
-                    <button className="btn primary mh-10px">View Order</button>
+                    <GLButton variant="primary" className="mh-10px">
+                      View Order
+                    </GLButton>
                   </Link>
                   {userInfo &&
                   userInfo.hasOwnProperty("first_name") && (
                     <Link to="/secure/account/orders">
-                      <button className="btn primary mh-10px">
+                      <GLButton variant="primary" className="mh-10px">
                         Your Orders
-                      </button>
+                      </GLButton>
                     </Link>
                   )}
                 </div>
@@ -281,26 +292,30 @@ const CompletePage = props => {
                 <h3 className="ta-c">Discover More of Your Glow</h3>
                 <div className="jc-c m-auto wrap">
                   <Link to="/collections/all/products">
-                    <button className="btn primary mh-10px">Products</button>
+                    <GLButton variant="primary" className="mh-10px">
+                      Products
+                    </GLButton>
                   </Link>
 
                   <Link to="collections/all/features/category/glovers">
-                    <button className="btn primary mh-10px">
+                    <GLButton variant="primary" className="mh-10px">
                       Featured Videos
-                    </button>
+                    </GLButton>
                   </Link>
                   <Link to="/collections/all/sponsors">
-                    <button className="btn primary mh-10px">
+                    <GLButton variant="primary" className="mh-10px">
                       Sponsored Glovers
-                    </button>
+                    </GLButton>
                   </Link>
                   <Link to="/collections/all/teams">
-                    <button className="btn primary mh-10px">
+                    <GLButton variant="primary" className="mh-10px">
                       Sponsored Teams
-                    </button>
+                    </GLButton>
                   </Link>
                   <Link to="/pages/music">
-                    <button className="btn primary mh-10px">NTRE Music</button>
+                    <GLButton variant="primary" className="mh-10px">
+                      NTRE Music
+                    </GLButton>
                   </Link>
                 </div>
               </div>

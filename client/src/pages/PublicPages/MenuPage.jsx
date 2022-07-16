@@ -7,6 +7,7 @@ import { API_Content, API_Features } from "../../utils";
 import { Loading } from "../../components/UtilityComponents";
 import { MenuItemD } from "../../components/DesktopComponents";
 import { MenuItemM } from "../../components/MobileComponents";
+import { GLButton } from "../../components/GlowLEDsComponents";
 
 const MenuPage = props => {
   const pathname = props.match.params.pathname;
@@ -281,7 +282,9 @@ const MenuPage = props => {
       {pathname === "featured" && (
         <div className="jc-fe">
           <Link to="/account/login?redirect=/account/submit_feature">
-            <button className="btn secondary ">Submit Feature</button>
+            <GLButton variant="secondary" className="">
+              Submit Feature
+            </GLButton>
           </Link>
         </div>
       )}

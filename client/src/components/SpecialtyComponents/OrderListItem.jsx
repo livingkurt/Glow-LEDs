@@ -27,7 +27,7 @@ import {
 import { OrderStatusButtons } from "./OrderPageComponents";
 import { API_Emails, API_Orders, API_Shipping } from "../../utils";
 import ReactTooltip from "react-tooltip";
-import GLButton from "../GlowLEDsComponents/GLButton/GLButton";
+import { GLButton } from "../GlowLEDsComponents";
 
 const OrderListItem = ({
   order,

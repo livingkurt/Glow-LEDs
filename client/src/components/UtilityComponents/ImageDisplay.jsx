@@ -1,4 +1,5 @@
 import React from "react";
+import { GLButton } from "../GlowLEDsComponents";
 
 const ImageDisplay = ({ images, set_images, image, set_image, name }) => {
   const remove_image = (image_index, e) => {
@@ -81,9 +82,9 @@ const ImageDisplay = ({ images, set_images, image, set_image, name }) => {
           id="image"
           onChange={e => set_image(e.target.value)}
         />
-        <button className="btn primary" onClick={e => add_image(e)}>
+        <GLButton variant="primary" onClick={e => add_image(e)}>
           Add Image
-        </button>
+        </GLButton>
       </li>
       <div className="wrap jc-b">
         {images &&
@@ -111,25 +112,25 @@ const ImageDisplay = ({ images, set_images, image, set_image, name }) => {
                     {picture}
                   </div> */}
                     <div className="jc-fe column">
-                      <button
-                        className="btn icon "
+                      <GLButton
+                        variant="icon"
                         onClick={e => remove_image(index, e)}
                       >
                         <i className="fas fa-times" aria-label="Delete" />
-                      </button>
+                      </GLButton>
                       {index > 0 && (
-                        <button
-                          className="btn icon"
+                        <GLButton
+                          variant="icon"
                           onClick={() => move(index, index - 1, images)}
                           aria-label="Move Up"
                         >
                           <i className=" fas fa-sort-up" />
-                        </button>
+                        </GLButton>
                       )}
 
                       {index < images.length - 1 && (
-                        <button
-                          className="btn icon"
+                        <GLButton
+                          variant="icon"
                           onClick={() => move(index, index + 1, images)}
                           aria-label="Move Down"
                         >
@@ -137,7 +138,7 @@ const ImageDisplay = ({ images, set_images, image, set_image, name }) => {
                             style={{ WebkitTransform: "rotate(-180deg)" }}
                             className=" fas fa-sort-up"
                           />
-                        </button>
+                        </GLButton>
                       )}
                     </div>
                   </div>

@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { reset_password } from "../../actions/userActions";
 import { Loading } from "../../components/UtilityComponents";
 import { Helmet } from "react-helmet";
+import { GLButton } from "../../components/GlowLEDsComponents";
 
 const PasswordResetPublicPage = props => {
   const [ email, setEmail ] = useState("");
@@ -55,9 +56,9 @@ const PasswordResetPublicPage = props => {
           </li>
 
           <li>
-            <button type="submit" className="btn primary">
+            <GLButton type="submit" variant="primary">
               Verify Email
-            </button>
+            </GLButton>
           </li>
         </ul>
       </form>

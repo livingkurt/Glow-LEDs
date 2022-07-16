@@ -14,6 +14,7 @@ import { Helmet } from "react-helmet";
 import { Loading } from "../../components/UtilityComponents";
 import Overflow from "react-overflow-indicator";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import { GLButton } from "../../components/GlowLEDsComponents";
 
 const ControlPanelPage = props => {
   const this_year = props.match.params.year;
@@ -112,7 +113,7 @@ const ControlPanelPage = props => {
       </Helmet>
       <div className="">
         <Link to="/secure/glow/controlpanel">
-          <button className="btn primary">Back to Control Panel</button>
+          <GLButton variant="primary">Back to Control Panel</GLButton>
         </Link>
       </div>
       <div className="row">

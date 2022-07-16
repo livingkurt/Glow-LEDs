@@ -1,5 +1,6 @@
 // React
 import React from "react";
+import { GLButton } from "../GlowLEDsComponents";
 require("dotenv").config();
 // Components
 
@@ -66,13 +67,13 @@ const LoadingShipment = ({
               Contact {process.env.REACT_APP_CONTACT_EMAIL} for assistence
             </p>
           </div>
-          <button
+          <GLButton
             className="sidebar_close_button"
             aria-label="Close"
             onClick={() => close_error()}
           >
             <i className="fas fa-times" aria-label="Close" />
-          </button>
+          </GLButton>
         </div>
       ) : (
         children

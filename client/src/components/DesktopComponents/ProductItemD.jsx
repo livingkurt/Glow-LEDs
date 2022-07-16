@@ -5,7 +5,7 @@ import {
   determine_product_name_display,
   sale_price_switch,
 } from "../../utils/react_helper_functions";
-import GLButton from "../GlowLEDsComponents/GLButton/GLButton";
+import { GLButton } from "../GlowLEDsComponents";
 import { Rating } from "../SpecialtyComponents";
 import { LazyImage } from "../UtilityComponents";
 

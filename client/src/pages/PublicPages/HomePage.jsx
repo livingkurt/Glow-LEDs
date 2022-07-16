@@ -15,6 +15,7 @@ import useWindowDimensions from "../../components/Hooks/windowDimensions";
 import { Loading } from "../../components/UtilityComponents";
 import { show_search_bar } from "../../actions/settingActions";
 import { listFeatures } from "../../actions/featureActions";
+import { GLButton } from "../../components/GlowLEDsComponents";
 
 const HomePage = props => {
   const history = useHistory();
@@ -262,13 +263,14 @@ const HomePage = props => {
                             </div>
                           )}
                         </div>
-                        <button
+                        <GLButton
                           type="submit"
-                          className="btn primary w-50px fs-20px mb-0px"
+                          variant="primary"
+                          className="w-50px fs-20px mb-0px"
                           aria-label="Search"
                         >
                           <i className="fas fa-search" />
-                        </button>
+                        </GLButton>
                       </div>
                     </form>
                   </div>
@@ -354,13 +356,14 @@ const HomePage = props => {
                             </div>
                           )}
                         </div>
-                        <button
+                        <GLButton
                           type="submit"
-                          className="btn primary w-50px fs-20px mb-0px"
+                          variant="primary"
+                          className="w-50px fs-20px mb-0px"
                           aria-label="Search"
                         >
                           <i className="fas fa-search" />
-                        </button>
+                        </GLButton>
                       </div>
                     </form>
                   </div>
@@ -447,13 +450,14 @@ const HomePage = props => {
                             </div>
                           )}
                         </div>
-                        <button
+                        <GLButton
                           type="submit"
-                          className="btn primary w-50px fs-20px mb-0px"
+                          variant="primary"
+                          className="w-50px fs-20px mb-0px"
                           aria-label="Search"
                         >
                           <i className="fas fa-search" />
-                        </button>
+                        </GLButton>
                       </div>
                     </form>
                   </div>
@@ -536,13 +540,14 @@ const HomePage = props => {
                           </div>
                         )}
                       </div>
-                      <button
+                      <GLButton
                         type="submit"
-                        className="btn primary w-50px fs-20px mb-0px"
+                        variant="primary"
+                        className="w-50px fs-20px mb-0px"
                         aria-label="Search"
                       >
                         <i className="fas fa-search" />
-                      </button>
+                      </GLButton>
                     </div>
                   </form>
                 </div>
@@ -707,9 +712,9 @@ const HomePage = props => {
                   </div>
                   <div className="jc-c">
                     <Link to={home_page.link}>
-                      <button className="btn primary bob">
+                      <GLButton variant="primary" className="bob">
                         {home_page.button}
-                      </button>
+                      </GLButton>
                     </Link>
                   </div>
                 </div>
@@ -793,9 +798,9 @@ const HomePage = props => {
                     <Link
                       to={`/collections/all/features/category/glovers/${feature.pathname}`}
                     >
-                      <button className="btn primary bob mv-1rem">
+                      <GLButton variant="primary" className="bob mv-1rem">
                         Learn More About {feature.artist_name}
-                      </button>
+                      </GLButton>
                     </Link>
                   </div>
                 </div>
@@ -850,9 +855,9 @@ const HomePage = props => {
                   className="w-100per"
                   to={`/collections/all/products/category/${card.category}`}
                 >
-                  <button className="btn primary w-100per">
+                  <GLButton variant="primary" className="w-100per">
                     Shop {card.name}
-                  </button>
+                  </GLButton>
                 </Link>
               </div>
             </div>

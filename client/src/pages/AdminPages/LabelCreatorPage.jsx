@@ -7,6 +7,7 @@ import { useHistory } from "react-router-dom";
 import { listParcels } from "../../actions/parcelActions";
 import { Loading } from "../../components/UtilityComponents";
 import Autocomplete from "react-google-autocomplete";
+import { GLButton } from "../../components/GlowLEDsComponents";
 
 const LabelCreatorPage = props => {
   const userLogin = useSelector(state => state.userLogin);
@@ -356,13 +357,13 @@ const LabelCreatorPage = props => {
                   </h1>
                 </li>
                 <li>
-                  <button
-                    className="btn primary"
+                  <GLButton
+                    variant="primary"
                     onClick={e =>
                       update_to_shipping(e, JSON.stringify(address))}
                   >
                     To Glow LEDs
-                  </button>
+                  </GLButton>
                 </li>
                 {userInfo &&
                 userInfo.isAdmin && (
@@ -645,22 +646,22 @@ const LabelCreatorPage = props => {
                   </h1>
                 </li>
                 <li>
-                  <button
-                    className="btn primary"
+                  <GLButton
+                    variant="primary"
                     onClick={e =>
                       update_from_shipping(e, JSON.stringify(address))}
                   >
                     From Glow LEDs
-                  </button>
+                  </GLButton>
                 </li>
                 <li>
-                  <button
-                    className="btn primary"
+                  <GLButton
+                    variant="primary"
                     onClick={e =>
                       update_from_shipping(e, JSON.stringify(destanye_address))}
                   >
                     From Destanye
-                  </button>
+                  </GLButton>
                 </li>
                 {userInfo &&
                 userInfo.isAdmin && (
@@ -1057,12 +1058,12 @@ const LabelCreatorPage = props => {
                         {rate.delivery_days === 1 ? "Day" : "Days"}
                       </div>
                     </div>
-                    <button
-                      className="custom-select-shipping_rates"
+                    <GLButton
+                      className="rates"
                       onClick={e => choose_shipping_rate(e, rate, rate.service)}
                     >
                       Select
-                    </button>
+                    </GLButton>
                   </div>
                 );
               })}
@@ -1077,55 +1078,49 @@ const LabelCreatorPage = props => {
                       {rate.rate.delivery_days === 1 ? "Day" : "Days"}
                     </div>
                   </div>
-                  <button
-                    className="custom-select-shipping_rates w-10rem"
+                  <GLButton
+                    className="rates w-10rem"
                     onClick={e => re_choose_shipping_rate(e)}
                   >
                     Change
-                  </button>
+                  </GLButton>
                 </div>
               )}
             </li>
 
             <li>
-              <button className="btn primary" onClick={e => reset_rates(e)}>
+              <GLButton variant="primary" onClick={e => reset_rates(e)}>
                 Reset Rates
-              </button>
+              </GLButton>
             </li>
             {hide_label_button && (
               <li>
-                <button
-                  className="btn primary"
+                <GLButton
+                  variant="primary"
                   onClick={e => get_shipping_rates(e)}
                 >
                   Get Shipping Rates
-                </button>
+                </GLButton>
               </li>
             )}
             {!hide_label_button && (
               <li>
-                <button type="submit" className="btn primary">
+                <GLButton type="submit" variant="primary">
                   Create Label
-                </button>
+                </GLButton>
               </li>
             )}
             {label && (
               <li>
-                <button
-                  onClick={e => show_label(label, e)}
-                  className="btn primary"
-                >
+                <GLButton onClick={e => show_label(label, e)} variant="primary">
                   View Label
-                </button>
+                </GLButton>
               </li>
             )}
             <li>
-              <button
-                className="btn secondary"
-                onClick={() => history.goBack()}
-              >
+              <GLButton variant="secondary" onClick={() => history.goBack()}>
                 Back to Orders
-              </button>
+              </GLButton>
             </li>
           </ul>
         </form>

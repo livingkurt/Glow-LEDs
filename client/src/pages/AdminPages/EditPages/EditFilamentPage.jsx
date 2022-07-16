@@ -27,6 +27,7 @@ import {
   TwitterPicker,
 } from "react-color";
 import { listChips } from "../../../actions/chipActions";
+import { GLButton } from "../../../components/GlowLEDsComponents";
 
 const EditFilamentPage = props => {
   const [ id, set_id ] = useState("");
@@ -196,17 +197,17 @@ const EditFilamentPage = props => {
                     </div>
                   </div>
                   <li>
-                    <button type="submit" className="btn primary">
+                    <GLButton type="submit" variant="primary">
                       {id ? "Update" : "Create"}
-                    </button>
+                    </GLButton>
                   </li>
                   <li>
-                    <button
-                      className="btn secondary"
+                    <GLButton
+                      variant="secondary"
                       onClick={e => e.preventDefault()}
                     >
                       <Link to="/secure/glow/filaments">Back to Filaments</Link>
-                    </button>
+                    </GLButton>
                   </li>
                 </ul>
               </div>

@@ -5,6 +5,7 @@ import { login } from "../../actions/userActions";
 import { validate_login } from "../../utils/validations";
 import { Helmet } from "react-helmet";
 import { Loading } from "../../components/UtilityComponents";
+import { GLButton } from "../../components/GlowLEDsComponents";
 
 const LoginPage = props => {
   const [ email, setEmail ] = useState("");
@@ -118,15 +119,15 @@ const LoginPage = props => {
           </label>
 
           <li>
-            <button type="submit" className="btn primary">
+            <GLButton type="submit" variant="primary">
               Login
-            </button>
+            </GLButton>
           </li>
           <li>
             <Link to="/account/passwordreset">
-              <button className="btn secondary w-100per">
+              <GLButton variant="secondary" className="w-100per">
                 Forgot Password?
-              </button>
+              </GLButton>
             </Link>
           </li>
           <li>New to Glow LEDs?</li>
@@ -135,7 +136,8 @@ const LoginPage = props => {
               to={
                 redirect === "/" ? "register" : "register?redirect=" + redirect
               }
-              className="btn primary ta-c"
+              variant="primary"
+              className="ta-c"
             >
               Create Account
             </Link>
@@ -143,7 +145,7 @@ const LoginPage = props => {
           {/* <li style={{ marginBottom: '-20px' }}>
 							<Link
 								to={redirect === '/' ? 'register' : 'register?redirect=' + redirect}
-								className="btn secondary ta-c"
+								variant="secondary" className="ta-c"
 							>
 								New User
 							</Link>

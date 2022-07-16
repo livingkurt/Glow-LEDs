@@ -15,7 +15,7 @@ import {
 } from "../../utils/react_helper_functions";
 import useWindowDimensions from "../Hooks/windowDimensions";
 import { LazyImage } from "../UtilityComponents";
-import GLButton from "../GlowLEDsComponents/GLButton/GLButton";
+import { GLButton } from "../GlowLEDsComponents";
 
 const RelatedProductsSlideshow = ({
   product_category,
@@ -207,7 +207,7 @@ const RelatedProductsSlideshow = ({
   const option_buttons = (option, index, option_product_object) => {
     return (
       <div>
-        <button
+        <GLButton
           key={index}
           selected={option.default_option}
           id={option.size}
@@ -216,7 +216,7 @@ const RelatedProductsSlideshow = ({
           className={determine_option_styles(option, option_product_object)}
         >
           {determine_option_product_name(option.size)}
-        </button>
+        </GLButton>
       </div>
     );
   };
@@ -305,7 +305,7 @@ const RelatedProductsSlideshow = ({
 																<div className="ai-c wrap jc-c">
 																	{product.option_products &&
 																		product.option_products.map((option, index) => (
-																			<button
+																			<GLButton
 																				key={index}
 																				id={option.size}
 																				value={JSON.stringify(option)}
@@ -315,7 +315,7 @@ const RelatedProductsSlideshow = ({
 																					: 'on ft-white'}`}
 																			>
 																				{option.size}
-																			</button>
+																			</GLButton>
 																		))}
 																</div> */}
                                 <div
@@ -395,7 +395,7 @@ const RelatedProductsSlideshow = ({
                         )}
                       </div>
                     ) : (
-                      <button className="button inactive">Out of Stock</button>
+                      <GLButton variant="inactive">Out of Stock</GLButton>
                     )}
                   </li>
                 </span>

@@ -20,6 +20,7 @@ import { getUrlParameter, toCapitalize } from "../../../utils/helper_functions";
 import { check_authentication } from "../../../utils/react_helper_functions";
 import { orders_upload } from "../../../utils/google_sheets_upload";
 import { colors, determine_color } from "../../../utils/helpers/order_helpers";
+import { GLButton } from "../../../components/GlowLEDsComponents";
 
 const OrdersPage = props => {
   const [ search, set_search ] = useState("");
@@ -247,22 +248,22 @@ const OrdersPage = props => {
       <Notification message={message} />
       <div className="wrap jc-b">
         <Link to="/secure/glow/controlpanel">
-          <button className="btn primary">Back to Control Panel</button>
+          <GLButton variant="primary">Back to Control Panel</GLButton>
         </Link>
         <Link to="/secure/glow/create_label">
-          <button className="btn primary">Create Label</button>
+          <GLButton variant="primary">Create Label</GLButton>
         </Link>
         <Link to="/secure/glow/combine_orders">
-          <button className="btn primary">Combine Orders</button>
+          <GLButton variant="primary">Combine Orders</GLButton>
         </Link>
-        <button className="btn primary" onClick={upload_orders}>
+        <GLButton variant="primary" onClick={upload_orders}>
           Upload Orders
-        </button>
+        </GLButton>
         {not_shipped &&
         not_shipped.length > 0 && (
-          <button className="btn primary" onClick={() => mark_as_shipped()}>
+          <GLButton variant="primary" onClick={() => mark_as_shipped()}>
             Mark as Shipped
-          </button>
+          </GLButton>
         )}
       </div>
       <Loading loading={loading_email} />

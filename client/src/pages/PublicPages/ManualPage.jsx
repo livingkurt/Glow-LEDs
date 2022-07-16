@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { humanize, manuals, toCapitalize } from "../../utils/helper_functions";
+import { GLButton } from "../../components/GlowLEDsComponents";
 
 const ManualPage = props => {
   const pathname = props.match.params.pathname;
@@ -37,7 +38,7 @@ const ManualPage = props => {
       <div className="jc-b">
         <div className="mb-10px">
           <Link to={`/pages/menu/manuals`}>
-            <button className="btn secondary">Back to Manuals</button>
+            <GLButton variant="secondary">Back to Manuals</GLButton>
           </Link>
         </div>
         {(pathname === "glow_strings_v2_manual" ||
@@ -56,7 +57,7 @@ const ManualPage = props => {
               }
               download="Glowstringz V2 Manual"
             >
-              <button className="btn primary">Download Manual</button>
+              <GLButton variant="primary">Download Manual</GLButton>
             </a>
           </div>
         )}
@@ -68,9 +69,9 @@ const ManualPage = props => {
               ? "glowstringz_v2"
               : pathname}`}
           >
-            <button className="btn secondary">
+            <GLButton variant="secondary">
               View Available {toCapitalize(humanize(pathname))}
-            </button>
+            </GLButton>
           </Link>
         </div>
       </div>

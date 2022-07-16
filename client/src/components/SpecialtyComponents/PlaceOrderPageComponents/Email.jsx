@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { login, logout } from "../../../actions/userActions";
 import { validate_login } from "../../../utils/validations";
 import useWindowDimensions from "../../Hooks/windowDimensions";
+import { GLButton } from "../../GlowLEDsComponents";
 export function Email({
   email_completed,
   show_email,
@@ -50,12 +51,13 @@ export function Email({
         <h2>1. Email</h2>
         {email_completed &&
         !show_email && (
-          <button
-            className="btn secondary mv-10px"
+          <GLButton
+            variant="secondary"
+            className="mv-10px"
             onClick={() => show_hide_steps("email")}
           >
             Edit
-          </button>
+          </GLButton>
         )}
       </div>
       {show_email ? (
@@ -75,21 +77,23 @@ export function Email({
                   >
                     Signed in with {userInfo.email} {"\n"}
                     {"\n"}Not you?
-                    <button
-                      className="btn primary title_font m-10px"
+                    <GLButton
+                      variant="primary"
+                      className="title_font m-10px"
                       onClick={e => submit_logout(e)}
                     >
                       Logout
-                    </button>
+                    </GLButton>
                   </pre>
                 </li>
                 <li className="mv-0px">
-                  <button
-                    className="btn primary w-100per bob"
+                  <GLButton
+                    variant="primary"
+                    className="w-100per bob"
                     onClick={() => next_step("shipping")}
                   >
                     Continue
-                  </button>
+                  </GLButton>
                 </li>
               </ul>
             </div>
@@ -124,21 +128,23 @@ export function Email({
               >
                 You'll recieve receipts and notifications at this email address.{"\n"}
                 {"\n"}Already have an account?
-                <button
-                  className="btn primary title_font m-10px"
+                <GLButton
+                  variant="primary"
+                  className="title_font m-10px"
                   onClick={() =>
                     set_is_guest(is_guest => (is_guest ? false : true))}
                 >
                   Login
-                </button>
+                </GLButton>
               </pre>
 
-              <button
-                className="btn primary bob"
+              <GLButton
+                variant="primary"
+                className="bob"
                 onClick={() => next_step("shipping")}
               >
                 Continue
-              </button>
+              </GLButton>
             </ul>
           ) : (
             <ul
@@ -172,21 +178,23 @@ export function Email({
                   : ""}`}
               >
                 Don't have an account?{" "}
-                <button
-                  className="btn primary title_font m-10px"
+                <GLButton
+                  variant="primary"
+                  className="title_font m-10px"
                   onClick={() =>
                     set_is_guest(is_guest => (is_guest ? false : true))}
                 >
                   Continue as Guest
-                </button>
+                </GLButton>
               </pre>
               <li>
-                <button
-                  className="btn primary bob m-10px"
+                <GLButton
+                  variant="primary"
+                  className="bob m-10px"
                   onClick={e => submit_login(e)}
                 >
                   Login
-                </button>
+                </GLButton>
               </li>
             </ul>
           )}

@@ -6,6 +6,7 @@ import { Loading, Notification } from "../../../components/UtilityComponents";
 import { listUsers, deleteUser } from "../../../actions/userActions";
 import { Search, Sort } from "../../../components/SpecialtyComponents";
 import { Helmet } from "react-helmet";
+import { GLButton } from "../../../components/GlowLEDsComponents";
 
 const UsersPage = props => {
   const [ search, set_search ] = useState("");
@@ -114,9 +115,9 @@ const UsersPage = props => {
           );
         })}
         <Link to="/secure/glow/edituser">
-          <button className="btn primary" style={{ width: "160px" }}>
+          <GLButton variant="primary" style={{ width: "160px" }}>
             Create User
-          </button>
+          </GLButton>
         </Link>
       </div>
       <div className="order-header">
@@ -199,22 +200,22 @@ const UsersPage = props => {
                     <td className="p-10px">
                       <div className="jc-b">
                         <Link to={"/secure/glow/edituser/" + user._id}>
-                          <button className="btn icon" aria-label="Edit">
+                          <GLButton variant="icon" aria-label="Edit">
                             <i className="fas fa-info-circle" />
-                          </button>
+                          </GLButton>
                         </Link>
                         <Link to={"/secure/glow/userprofile/" + user._id}>
-                          <button className="btn icon" aria-label="view">
+                          <GLButton variant="icon" aria-label="view">
                             <i className="fas fa-mountain" />
-                          </button>
+                          </GLButton>
                         </Link>
-                        <button
-                          className="btn icon"
+                        <GLButton
+                          variant="icon"
                           onClick={() => deleteHandler(user)}
                           aria-label="Delete"
                         >
                           <i className="fas fa-trash-alt" />
-                        </button>
+                        </GLButton>
                       </div>
                     </td>
                   </tr>

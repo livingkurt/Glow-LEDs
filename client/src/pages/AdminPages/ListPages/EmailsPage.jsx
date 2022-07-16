@@ -16,6 +16,7 @@ import {
   humanize,
   toCapitalize,
 } from "../../../utils/helper_functions";
+import { GLButton } from "../../../components/GlowLEDsComponents";
 
 const EmailsPage = props => {
   const [ search, set_search ] = useState("");
@@ -164,12 +165,12 @@ const EmailsPage = props => {
             target="_blank"
             className="ml-10px"
           >
-            <button className="btn primary">Preview</button>
+            <GLButton variant="primary">Preview</GLButton>
           </a>
         </div>
 
         <Link to="/secure/glow/editemail">
-          <button className="btn primary">Create Email</button>
+          <GLButton variant="primary">Create Email</GLButton>
         </Link>
       </div>
 
@@ -253,8 +254,8 @@ const EmailsPage = props => {
                         )}`}
                     </td> */}
                     {/* <td className="p-10px paragraph_font min-w-10px">
-                      <button
-                        className="btn icon"
+                      <GLButton
+                        variant="icon"
                         onClick={() => change_email_status(email)}
                       >
                         {email.active ? (
@@ -262,29 +263,29 @@ const EmailsPage = props => {
                         ) : (
                           <i className="fas fa-times-circle" />
                         )}
-                      </button>
+                      </GLButton>
                     </td> */}
                     <td className="p-10px">
                       <div className="jc-b">
                         <Link to={"/secure/glow/editemail/" + email._id}>
-                          <button className="btn icon" aria-label="Edit">
+                          <GLButton variant="icon" aria-label="Edit">
                             <i className="fas fa-edit" />
-                          </button>
+                          </GLButton>
                         </Link>
                         <Link
                           to={"/secure/glow/emails/announcement/" + email._id}
                         >
-                          <button className="btn icon" aria-label="view">
+                          <GLButton variant="icon" aria-label="view">
                             <i className="fas fa-mountain" />
-                          </button>
+                          </GLButton>
                         </Link>
-                        <button
-                          className="btn icon"
+                        <GLButton
+                          variant="icon"
                           onClick={() => deleteHandler(email)}
                           aria-label="Delete"
                         >
                           <i className="fas fa-trash-alt" />
-                        </button>
+                        </GLButton>
                       </div>
                     </td>
                   </tr>

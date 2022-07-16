@@ -2,7 +2,7 @@ import React from "react";
 import classnames from "classnames";
 import { usePagination, DOTS } from "../Hooks/usePagination";
 import { userWindowDimensions } from "../Hooks";
-import GLButton from "../GlowLEDsComponents/GLButton/GLButton";
+import { GLButton } from "../GlowLEDsComponents";
 const Pagination = props => {
   const {
     onPageChange,

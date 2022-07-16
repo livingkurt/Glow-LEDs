@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { validate_profile } from "../../utils/validations";
 import { Loading } from "../../components/UtilityComponents";
 import { Helmet } from "react-helmet";
+import { GLButton } from "../../components/GlowLEDsComponents";
 
 const EditProfilePage = props => {
   const userLogin = useSelector(state => state.userLogin);
@@ -91,9 +92,9 @@ const EditProfilePage = props => {
         />
       </Helmet>
       <div className="mb-10px">
-        <button className="btn primary" onClick={() => history.goBack()}>
+        <GLButton variant="primary" onClick={() => history.goBack()}>
           Back to Profile
-        </button>
+        </GLButton>
       </div>
       <div className="profile-info">
         <div className="form">
@@ -318,15 +319,19 @@ const EditProfilePage = props => {
 							{country_validations}
 						</label> */}
               <li>
-                <button type="submit" className="btn primary">
+                <GLButton type="submit" variant="primary">
                   Update
-                </button>
+                </GLButton>
               </li>
               <li>
                 <Link to="/secure/account/profile">
-                  <button type="button" className="btn secondary w-100per">
+                  <GLButton
+                    type="button"
+                    variant="secondary"
+                    className="w-100per"
+                  >
                     Cancel
-                  </button>
+                  </GLButton>
                 </Link>
               </li>
             </ul>

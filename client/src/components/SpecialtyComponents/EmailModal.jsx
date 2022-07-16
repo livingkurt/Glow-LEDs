@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { saveUser } from "../../actions/userActions";
 import { API_Emails, API_Promos } from "../../utils";
 import { validate_email } from "../../utils/validations";
-import GLButton from "../GlowLEDsComponents/GLButton/GLButton";
+import { GLButton } from "../GlowLEDsComponents";
 import useWindowDimensions from "../Hooks/windowDimensions";
 
 const EmailModal = props => {

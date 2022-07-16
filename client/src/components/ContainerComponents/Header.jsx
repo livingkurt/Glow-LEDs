@@ -26,7 +26,7 @@ import {
 import { hide_search_bar, show_search_bar } from "../../actions/settingActions";
 import { Filter } from "../SpecialtyComponents";
 import { listChips } from "../../actions/chipActions";
-import GLButton from "../GlowLEDsComponents/GLButton/GLButton";
+import { GLButton } from "../GlowLEDsComponents";
 
 const Header = props => {
   const history = useHistory();

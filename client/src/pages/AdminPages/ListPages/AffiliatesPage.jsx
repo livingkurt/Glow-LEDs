@@ -22,6 +22,7 @@ import {
   API_Promos,
   API_Revenue,
 } from "../../../utils";
+import { GLButton } from "../../../components/GlowLEDsComponents";
 // import CSVReader from 'react-csv-reader';
 
 const AffiliatesPage = props => {
@@ -219,63 +220,13 @@ const AffiliatesPage = props => {
             );
           })}
         </div>
-        {/* {total_orders && (
-					<button className="btn primary h-40px" onClick={(e) => update_discount(e)}>
-						Update Percentage Off
-					</button>
-				)} */}
         <Link to="/pages/affiliate_terms">
-          <button className="btn primary">Affiliate Terms</button>
+          <GLButton variant="primary">Affiliate Terms</GLButton>
         </Link>
-
-        {/* <label className="btn primary h-40px">
-					Upload CSV
-					<CSVReader onFileLoaded={(data, fileInfo) => upload_rave_mob_csv(data, fileInfo)} />
-				</label> */}
         <Link to="/secure/glow/editaffiliate">
-          <button className="btn primary">Create Affiliate</button>
+          <GLButton variant="primary">Create Affiliate</GLButton>
         </Link>
       </div>
-      {/* <div className="ai-c jc-b w-100per max-w-600px">
-				<div className="mv-2rem mr-2rem">
-					<div className="row">
-						<div className="custom-select ">
-							<select
-								defaultValue={year}
-								className="qty_select_dropdown"
-								onChange={(e) => {
-									set_year(e.target.value);
-								}}
-							>
-								{[ 2022, 2021, 2020 ].map((year) => <option value={year}>{year}</option>)}
-							</select>
-							<span className="custom-arrow" />
-						</div>
-					</div>
-				</div>
-
-				<div className="mv-2rem">
-					<div className="row">
-						<div className="custom-select ">
-							<select
-								defaultValue={month && month.toLowerCase()}
-								className="qty_select_dropdown"
-								onChange={(e) => {
-									set_month(e.target.value);
-								}}
-							>
-								{dates_in_year(year).map((month) => (
-									<option value={month.month}>{toCapitalize(month.month)}</option>
-								))}
-							</select>
-							<span className="custom-arrow" />
-						</div>
-					</div>
-				</div>
-				<button className="btn primary h-40px" onClick={update_discount}>
-					Update Percentage Off
-				</button>
-			</div> */}
 
       <div className="jc-c">
         <h1 style={{ textAlign: "center" }}>Affiliates</h1>
@@ -367,8 +318,8 @@ const AffiliatesPage = props => {
                       )}
                     </td>
                     <td className="p-10px">
-                      <button
-                        className="btn icon"
+                      <GLButton
+                        variant="icon"
                         onClick={() => change_affiliate_status(affiliate)}
                         aria-label={
                           affiliate.active ? "deactivate" : "activate"
@@ -379,7 +330,7 @@ const AffiliatesPage = props => {
                         ) : (
                           <i className="fas fa-times-circle" />
                         )}
-                      </button>
+                      </GLButton>
                     </td>
 
                     <td className="p-10px">
@@ -389,17 +340,17 @@ const AffiliatesPage = props => {
                             "/secure/glow/editaffiliate/" + affiliate.pathname
                           }
                         >
-                          <button className="btn icon" aria-label="Edit">
+                          <GLButton variant="icon" aria-label="Edit">
                             <i className="fas fa-edit" />
-                          </button>
+                          </GLButton>
                         </Link>
-                        <button
-                          className="btn icon"
+                        <GLButton
+                          variant="icon"
                           onClick={() => deleteHandler(affiliate.pathname)}
                           aria-label="Delete"
                         >
                           <i className="fas fa-trash-alt" />
-                        </button>
+                        </GLButton>
                       </div>
                     </td>
                   </tr>

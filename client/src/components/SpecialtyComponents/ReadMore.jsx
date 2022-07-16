@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import GLButton from "../GlowLEDsComponents/GLButton/GLButton";
+import { GLButton } from "../GlowLEDsComponents";
 import useWindowDimensions from "../Hooks/windowDimensions";
 
 const ReadMore = props => {

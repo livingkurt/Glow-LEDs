@@ -1,8 +1,9 @@
-import React, {useState} from 'react';
-import ImageUploading from 'react-images-uploading';
+import React, { useState } from "react";
+import ImageUploading from "react-images-uploading";
+import { GLButton } from "../GlowLEDsComponents";
 
 const ImageUploader = () => {
-  const [images, setImages] = useState([]);
+  const [ images, setImages ] = useState([]);
   const maxNumber = 69;
 
   const onChange = (imageList, addUpdateIndex) => {
@@ -31,21 +32,25 @@ const ImageUploader = () => {
         }) => (
           // write your building UI
           <div className="upload__image-wrapper">
-            <button
-              style={isDragging ? { color: 'red' } : undefined}
+            <GLButton
+              style={isDragging ? { color: "red" } : undefined}
               onClick={onImageUpload}
               {...dragProps}
             >
               Click or Drop here
-            </button>
+            </GLButton>
             &nbsp;
-            <button onClick={onImageRemoveAll}>Remove all images</button>
+            <GLButton onClick={onImageRemoveAll}>Remove all images</GLButton>
             {imageList.map((image, index) => (
               <div key={index} className="image-item">
-                <img src={image['data_url']} alt="" width="100" />
+                <img src={image["data_url"]} alt="" width="100" />
                 <div className="image-item__btn-wrapper">
-                  <button onClick={() => onImageUpdate(index)}>Update</button>
-                  <button onClick={() => onImageRemove(index)}>Remove</button>
+                  <GLButton onClick={() => onImageUpdate(index)}>
+                    Update
+                  </GLButton>
+                  <GLButton onClick={() => onImageRemove(index)}>
+                    Remove
+                  </GLButton>
                 </div>
               </div>
             ))}
@@ -54,6 +59,6 @@ const ImageUploader = () => {
       </ImageUploading>
     </div>
   );
-}
+};
 
 export default ImageUploader;

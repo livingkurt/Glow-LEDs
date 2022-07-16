@@ -7,6 +7,7 @@ import { Helmet } from "react-helmet";
 import { humanize } from "../../utils/helper_functions";
 import { saveFeature } from "../../actions/featureActions";
 import { Link } from "react-router-dom";
+import { GLButton } from "../../components/GlowLEDsComponents";
 require("dotenv").config();
 
 const ContactPage = props => {
@@ -309,12 +310,12 @@ const ContactPage = props => {
               </ul>
             </div>
             <Link to="/collections/all/features/category/submit_feature">
-              <button
+              <GLButton
                 className="zoom_b btn primary mt-10px w-100per"
                 id="button"
               >
                 Submit Feature
-              </button>
+              </GLButton>
             </Link>
           </div>
         )}
@@ -340,13 +341,14 @@ const ContactPage = props => {
                 to your orders.
               </p>
             )}
-            <button
-              className="zoom_b btn primary mt-10px w-100per"
+            <GLButton
+              variant="primary"
+              className="zoom_b mt-10px w-100per"
               id="button"
               onClick={e => sendEmail(e)}
             >
               Send
-            </button>
+            </GLButton>
           </div>
         )}
       </form>

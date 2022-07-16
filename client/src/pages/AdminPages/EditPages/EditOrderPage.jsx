@@ -10,6 +10,7 @@ import { listUsers } from "../../../actions/userActions";
 import { API_External, API_Products } from "../../../utils";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import Overflow from "react-overflow-indicator";
+import { GLButton } from "../../../components/GlowLEDsComponents";
 
 const EditOrderPage = props => {
   const [ id, set_id ] = useState("");
@@ -924,12 +925,12 @@ const EditOrderPage = props => {
                     </div>
                   </div>
                   <li>
-                    <button
-                      className="btn primary"
+                    <GLButton
+                      variant="primary"
                       onClick={e => add_order_item(e)}
                     >
                       Add Another Order Item
-                    </button>
+                    </GLButton>
                   </li>
                   {loading_checkboxes ? (
                     <div>Loading...</div>
@@ -982,13 +983,14 @@ const EditOrderPage = props => {
                             <TabPanel>
                               <div key={index} className="m-20px ">
                                 <h2>Order Item {index + 1}</h2>
-                                <button
-                                  className="btn primary w-4rem h-4rem p-14px mr-1rem mb-1rem"
+                                <GLButton
+                                  variant="primary"
+                                  className="w-4rem h-4rem p-14px mr-1rem mb-1rem"
                                   onClick={e => remove_order_item(index, e)}
                                   aria-label="Delete"
                                 >
                                   <i className="fas fa-times mr-5px" />
-                                </button>
+                                </GLButton>
                                 <li>
                                   <label htmlFor="product">Product</label>
                                   {console.log({ product: item.product })}
@@ -1796,146 +1798,6 @@ const EditOrderPage = props => {
                                     </div>
                                   </div>
                                 </li>
-                                {/* {item.product_option && (
-															<div key={index} className="">
-																<div className="jc-b">
-																	<h2>Product Option {index + 1}</h2>
-																	<button className="btn primary w-4rem h-4rem p-14px mr-1rem mb-1rem">
-																		<i className="fas fa-times mr-5px" />
-																	</button>
-																</div>
-																<li>
-																	<div className="ai-c h-25px mb-15px">
-																		<div className="custom-select">
-																			<select
-																				className="qty_select_dropdown"
-																				onChange={(e) =>
-																					update_product_option(e, index)}
-																			>
-																				<option key={1} defaultValue="">
-																					---Choose Option---
-																				</option>
-																				{item.product &&
-																					item.product.product_options &&
-																					item.product.product_options.map(
-																						(option, index) => (
-																							<option
-																								key={index}
-																								value={JSON.stringify(
-																									option
-																								)}
-																							>
-																								{option.name}
-																							</option>
-																						)
-																					)}
-																			</select>
-																			<span className="custom-arrow" />
-																		</div>
-																	</div>
-																</li>
-																<li>
-																	<label htmlFor="name">Name</label>
-																	<input
-																		type="text"
-																		name="name"
-																		defaultValue={item.product_option.name}
-																		value={item.product_option.name}
-																		id="name"
-																		onChange={(e) =>
-																			update_product_option_property(
-																				e.target.value,
-																				e.target.name,
-																				index
-																			)}
-																	/>
-																</li>
-																<li>
-																	<label htmlFor="size">Size</label>
-																	<input
-																		type="text"
-																		name="size"
-																		defaultValue={item.product_option.size}
-																		value={item.product_option.size}
-																		id="size"
-																		onChange={(e) =>
-																			update_product_option_property(
-																				e.target.value,
-																				e.target.name,
-																				index
-																			)}
-																	/>
-																</li>
-																<li>
-																	<label htmlFor="price">Price</label>
-																	<input
-																		type="text"
-																		name="price"
-																		defaultValue={item.product_option.price}
-																		value={item.product_option.price}
-																		id="price"
-																		onChange={(e) =>
-																			update_product_option_property(
-																				e.target.value,
-																				e.target.name,
-																				index
-																			)}
-																	/>
-																</li>
-																<li>
-																	<label htmlFor="sale_price">Sale Price</label>
-																	<input
-																		type="text"
-																		name="sale_price"
-																		defaultValue={item.product_option.sale_price}
-																		value={item.product_option.sale_price}
-																		id="sale_price"
-																		onChange={(e) =>
-																			update_product_option_property(
-																				e.target.value,
-																				e.target.name,
-																				index
-																			)}
-																	/>
-																</li>
-																<li>
-																	<label htmlFor="color">Color</label>
-																	<input
-																		type="text"
-																		name="color"
-																		defaultValue={item.product_option.color}
-																		value={item.product_option.color}
-																		id="color"
-																		onChange={(e) =>
-																			update_product_option_property(
-																				e.target.value,
-																				e.target.name,
-																				index
-																			)}
-																	/>
-																</li>
-																<li>
-																	<label htmlFor="quantity_state">
-																		Count In Stock
-																	</label>
-																	<input
-																		type="text"
-																		name="quantity_state"
-																		defaultValue={
-																			item.product_option.quantity_state
-																		}
-																		value={item.product_option.quantity_state}
-																		id="quantity_state"
-																		onChange={(e) =>
-																			update_product_option_property(
-																				e.target.value,
-																				e.target.name,
-																				index
-																			)}
-																	/>
-																</li>
-															</div>
-														)} */}
                               </div>
                             </TabPanel>
                           );
@@ -1943,17 +1805,17 @@ const EditOrderPage = props => {
                     </div>
                   </Tabs>
                   <li>
-                    <button type="submit" className="btn primary">
+                    <GLButton type="submit" variant="primary">
                       {id ? "Update" : "Create"}
-                    </button>
+                    </GLButton>
                   </li>
                   <li>
-                    <button
-                      className="btn secondary"
+                    <GLButton
+                      variant="secondary"
                       onClick={() => history.goBack()}
                     >
                       Back to Orders
-                    </button>
+                    </GLButton>
                   </li>
                 </ul>
               </div>

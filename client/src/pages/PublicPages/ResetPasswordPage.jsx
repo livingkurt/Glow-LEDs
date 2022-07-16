@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { password_reset } from "../../actions/userActions";
 import { Helmet } from "react-helmet";
+import { GLButton } from "../../components/GlowLEDsComponents";
 
 const ResetPasswordPage = props => {
   const [ password, setPassword ] = useState("");
@@ -60,9 +61,9 @@ const ResetPasswordPage = props => {
             />
           </li>
           <li>
-            <button type="submit" className="btn primary">
+            <GLButton type="submit" variant="primary">
               Reset Password
-            </button>
+            </GLButton>
           </li>
         </ul>
       </form>

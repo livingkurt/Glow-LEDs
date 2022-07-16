@@ -7,7 +7,7 @@ import { format_date } from "../../utils/helper_functions";
 import useClipboard from "react-hook-clipboard";
 import { refundOrder } from "../../actions/orderActions";
 import { LazyImage } from "../UtilityComponents";
-import GLButton from "../GlowLEDsComponents/GLButton/GLButton";
+import { GLButton } from "../GlowLEDsComponents";
 
 const Order = props => {
   const dispatch = useDispatch();
