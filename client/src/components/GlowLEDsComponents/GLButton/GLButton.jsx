@@ -8,22 +8,21 @@ const GLButton = ({
   className,
   disabled,
   variant,
+  fullWidth,
   ...otherProps
 }) => {
   return (
-    <div
-      className={disabled ? "disabled-button-container" : "button-container"}
+    <button
+      type="button"
+      className={`${variant ? "btn" : ""} ${variant} ${className} ${fullWidth
+        ? "w-100per"
+        : ""}`}
+      onClick={onClick}
+      onKeyUp={onKeyUp}
+      {...otherProps}
     >
-      <button
-        type="button"
-        className={`${variant ? "btn" : ""} ${variant} ${className}`}
-        onClick={onClick}
-        onKeyUp={onKeyUp}
-        {...otherProps}
-      >
-        {children}
-      </button>
-    </div>
+      {children}
+    </button>
   );
 };
 
