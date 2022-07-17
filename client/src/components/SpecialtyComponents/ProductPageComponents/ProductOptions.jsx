@@ -362,7 +362,8 @@ const ProductOptions = ({
               {sizes_conversion(size)}
             </h3>{" "}
             <li className="jc-c ta-c w-100oer lh-30px">
-              We recommend to get a size up from your usual sizing
+              We recommend getting a size up from compared to other compaonies
+              whites
             </li>
             <li className="mb-10px jc-b w-100per">
               <div className="title_font"> Hand Length:</div>{" "}
