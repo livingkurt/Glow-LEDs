@@ -17,7 +17,6 @@ export default {
   },
   findMy_orders_c: async (req: any, res: any) => {
     const { params } = req;
-    console.log({ params });
     try {
       const orders = await order_services.findMy_orders_s(params);
       if (orders) {
