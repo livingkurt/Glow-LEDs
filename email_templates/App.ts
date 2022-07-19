@@ -34,7 +34,7 @@ export default ({
 										<br>
 										For any questions email <a href="mailto:${process.env.CONTACT_EMAIL}"
 											style="font-size:16px;text-decoration:none;color:#009eff;">${process
-                        .env.CONTACT_EMAIL}ontact.glowleds@gmail.com
+                        .env.CONTACT_EMAIL}
 									</p>
 								</td>
 							</tr>

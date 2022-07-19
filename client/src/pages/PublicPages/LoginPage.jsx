@@ -136,10 +136,11 @@ const LoginPage = props => {
               to={
                 redirect === "/" ? "register" : "register?redirect=" + redirect
               }
-              variant="primary"
-              className="ta-c"
             >
-              Create Account
+                     <GLButton variant="primary" className="ta-c">
+                     Create Account
+              </GLButton>
+              
             </Link>
           </li>
           {/* <li style={{ marginBottom: '-20px' }}>
