@@ -613,7 +613,7 @@ const OrderListItem = ({
       {admin && (
         <div id={order._id} className="expanded-row-content hide-row">
           <div
-            className="jc-b pt-10px mt-10px"
+            className="w-100per jc-b pt-10px mt-10px"
             style={{ borderTop: "1px solid white" }}
           >
             <div className=" ">
@@ -724,7 +724,7 @@ const OrderListItem = ({
                 <label className="phrase_font">Payment Method </label>
                 <label className="ml-1rem">{order.payment.paymentMethod}</label>
               </li>
-              <li className="row mv-2rem">
+              {/* <li className="row mv-2rem">
                 <label className="phrase_font">Order Note: </label>
                 <label className="ml-1rem">{order.order_note}</label>
               </li>
@@ -735,7 +735,7 @@ const OrderListItem = ({
                   <label className="phrase_font">Production Note: </label>
                   <label className="ml-1rem">{order.production_note}</label>
                 </li>
-              )}
+              )} */}
               <li className="row mv-2rem">
                 <label className="phrase_font">Promo Code: </label>
                 <label className="ml-1rem">{order.promo_code}</label>
@@ -883,7 +883,7 @@ const OrderListItem = ({
                   onClick={get_invoice}
                   className="w-100per mv-5px"
                 >
-                  Print Label
+                  Print Invoice
                 </GLButton>
               </div>
             </div>
