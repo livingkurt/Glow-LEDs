@@ -788,8 +788,9 @@ const OrderListItem = ({
               )}
             </ul>
 
-            <div className="jc-b">
-              <div className="column w-25rem">
+            <div className="jc-b ai-c m-auto max-w-50rem">
+              <div className="">
+              <div className="">
                 <GLButton
                   variant="secondary"
                   className="w-100per mv-10px"
@@ -799,12 +800,12 @@ const OrderListItem = ({
                 </GLButton>
                 <GLButton
                   variant="secondary"
-                  className="mv-5px"
+                  className="w-100per mv-5px"
                   onClick={() => create_duplicate_order(order._id)}
                 >
                   Create Duplicate Order
                 </GLButton>
-                <GLButton variant="secondary" className="mv-5px">
+                <GLButton variant="secondary" className="w-100per mv-5px">
                   <Link to={"/secure/glow/editorder/" + order._id}>
                     Edit Order
                   </Link>
@@ -814,7 +815,7 @@ const OrderListItem = ({
                   onClick={delete_order}
                   className="w-100per mv-5px"
                 >
-                  Buy Label
+                  Delete Order
                 </GLButton>
                 {hide_label_button &&
                 !order.shipping.shipping_label && (
@@ -886,13 +887,16 @@ const OrderListItem = ({
                 </GLButton>
               </div>
             </div>
-            <OrderStatusButtons
-              order={order}
-              update_order_payment_state={update_order_payment_state}
-              update_order_state={update_order_state}
-              send_order_email={send_order_email}
-              send_refund_email={send_refund_email}
-            />
+            <div className="ml-20px">
+              <OrderStatusButtons
+                order={order}
+                update_order_payment_state={update_order_payment_state}
+                update_order_state={update_order_state}
+                send_order_email={send_order_email}
+                send_refund_email={send_refund_email}
+              />
+             </div>
+             </div>
           </div>
         </div>
       )}
