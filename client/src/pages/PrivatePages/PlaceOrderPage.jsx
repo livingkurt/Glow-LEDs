@@ -859,6 +859,7 @@ const PlaceOrderPage = props => {
               next_step={next_step}
               shipping_rates={shipping_rates}
               cartItems={cartItems}
+              verify_shipping={verify_shipping}
               set_verify_shipping={set_verify_shipping}
             />
             <Payment
