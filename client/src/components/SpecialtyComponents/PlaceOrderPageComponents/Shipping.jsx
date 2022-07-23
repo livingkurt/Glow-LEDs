@@ -316,31 +316,33 @@ export function Shipping({
                                         </div>
                                     </li>
                                 )}
-                                {userInfo && userInfo.isAdmin && loading_checkboxes ? (
-                                    <div>Loading...</div>
-                                ) : (
-                                    <div>
-                                        <li>
-                                            <div>
-                                                <input
-                                                    type="checkbox"
-                                                    name="verify_shipping"
-                                                    defaultValue={verify_shipping}
-                                                    defaultChecked={verify_shipping}
-                                                    id="verify_shipping"
-                                                    style={{
-                                                        transform: "scale(1.5)"
-                                                    }}
-                                                    className="mr-1rem"
-                                                    onChange={e => {
-                                                        set_verify_shipping(e.target.checked);
-                                                    }}
-                                                />
-                                                <label htmlFor="international">Verify Shipping</label>
-                                            </div>
-                                        </li>
-                                    </div>
-                                )}
+                                {userInfo &&
+                                    userInfo.isAdmin &&
+                                    (loading_checkboxes ? (
+                                        <div>Loading...</div>
+                                    ) : (
+                                        <div>
+                                            <li>
+                                                <div>
+                                                    <input
+                                                        type="checkbox"
+                                                        name="verify_shipping"
+                                                        defaultValue={verify_shipping}
+                                                        defaultChecked={verify_shipping}
+                                                        id="verify_shipping"
+                                                        style={{
+                                                            transform: "scale(1.5)"
+                                                        }}
+                                                        className="mr-1rem"
+                                                        onChange={e => {
+                                                            set_verify_shipping(e.target.checked);
+                                                        }}
+                                                    />
+                                                    <label htmlFor="international">Verify Shipping</label>
+                                                </div>
+                                            </li>
+                                        </div>
+                                    ))}
                                 <li>
                                     <div className="jc-b">
                                         <div className="mr-5px w-50per">

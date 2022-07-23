@@ -1,8 +1,6 @@
 export default (header_footer_color: string) => {
-  return `
-  <table style="width:100%;border-spacing:0;background-color:${header_footer_color
-    ? header_footer_color
-    : `#333333`}">
+    return `
+  <table style="width:100%;border-spacing:0;background-color:${header_footer_color ? header_footer_color : `#333333`}">
   <tbody>
     <tr>
       <td style="font-family:helvetica;padding-bottom:35px 0">
@@ -43,8 +41,9 @@ export default (header_footer_color: string) => {
             style="max-width:800px;width:100%;text-align:left;border-spacing:0;margin:0 auto;color:white;margin-bottom:10px">
             <tr>
               <td style="font-family:helvetica;color:white">
-                <p style="text-align:center;font-size:16px;color:white"><strong>Glow LEDs</strong> <br /><br />230
-                  Hackberry St, <br />Baytown, TX 77520 </p>
+                <p style="text-align:center;font-size:16px;color:white"><strong>Glow LEDs</strong> <br /><br />${
+                    process.env.RETURN_ADDRESS
+                } <br />${process.env.RETURN_CITY}, ${process.env.RETURN_STATE} ${process.env.RETURN_POSTAL_CODE} </p>
                 <p style="text-align:center;font-size:16px;color:white">Copyright © 2022</p>
               </td>
             </tr>
