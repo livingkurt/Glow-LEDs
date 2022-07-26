@@ -6,6 +6,7 @@ import { validate_login } from "../../utils/validations";
 import { Helmet } from "react-helmet";
 import { Loading } from "../../components/UtilityComponents";
 import { GLButton } from "../../components/GlowLEDsComponents";
+import GLInput from "../../components/GlowLEDsComponents/GLInput/GLInput";
 
 const LoginPage = props => {
   const [email, setEmail] = useState("");
@@ -82,28 +83,32 @@ const LoginPage = props => {
           <li style={{ display: "flex", flexDirection: "column" }}>
             <h1>Login </h1>
           </li>
-          <Loading loading={loading} error={error} />
+          <div className="mb-10px">
+            <Loading loading={loading} error={error} />
+          </div>
           <li>
-            <label htmlFor="email">Email</label>
-            <input
-              style={{ textTransform: "lowercase" }}
-              type="text"
+            <GLInput
+              label="Email"
               name="email"
               id="email"
+              type="text"
               onChange={e => setEmail(e.target.value.toLowerCase())}
+              error={email_validations}
+              helperText={email_validations}
+              inputProps={{ style: { textTransform: "lowercase" } }}
             />
           </li>
-          <label className="validation_text" style={{ textAlign: "center" }}>
-            {email_validations}
-          </label>
           <li>
-            <label htmlFor="password">Password</label>
-            <input type="password" C id="password" name="password" onChange={e => setPassword(e.target.value)} />
+            <GLInput
+              label="Password"
+              name="password"
+              id="password"
+              type="password"
+              onChange={e => setPassword(e.target.value)}
+              error={password_validations}
+              helperText={password_validations}
+            />
           </li>
-          <label className="validation_text" style={{ textAlign: "center" }}>
-            {password_validations}
-          </label>
-
           <li>
             <GLButton type="submit" variant="primary">
               Login

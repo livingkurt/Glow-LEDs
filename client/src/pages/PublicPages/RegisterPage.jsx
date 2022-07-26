@@ -6,6 +6,7 @@ import { validate_registration } from "../../utils/validations";
 import { Helmet } from "react-helmet";
 import { Loading } from "../../components/UtilityComponents";
 import { GLButton } from "../../components/GlowLEDsComponents";
+import GLInput from "../../components/GlowLEDsComponents/GLInput/GLInput";
 
 const RegisterPage = props => {
   const [first_name, set_first_name] = useState("");
@@ -88,65 +89,65 @@ const RegisterPage = props => {
       <form onSubmit={submitHandler}>
         <ul className="form-container">
           <li>
-            <h1 className="ta-c">Create Account</h1>
-            {/* <h1 className="row">
-							<label style={{ width: '100%', marginRight: '-40px' }}>Create</label>{' '}
-							<label style={{ width: '100%' }}>Account</label>
-						</h1> */}
+            <h1 className="ta-c fs-24px">Create Account</h1>
           </li>
           <Loading loading={loading} error={error} />
-          {/* <li>
-						<div className="jc-c">
-							{error && (
-								<label style={{ textAlign: 'center' }}>
-									{error ? 'Already a Member' : 'Registration Complete'}
-								</label>
-							)}
-						</div>
-					</li> */}
-
           <li>
-            <label htmlFor="first_name">First Name</label>
-            <input type="text" name="first_name" id="first_name" onChange={e => set_first_name(e.target.value)} />
-          </li>
-          <label className="validation_text" style={{ fontSize: 16, justifyContent: "center" }}>
-            {first_name_validations}
-          </label>
-          <li>
-            <label htmlFor="last_name">Last Name</label>
-            <input type="text" name="last_name" id="last_name" onChange={e => set_last_name(e.target.value)} />
-          </li>
-          <label className="validation_text" style={{ fontSize: 16, justifyContent: "center" }}>
-            {last_name_validations}
-          </label>
-          <li>
-            <label htmlFor="email">Email</label>
-            <input
+            <GLInput
+              label="First Name"
+              name="first_name"
+              id="first_name"
               type="text"
-              name="email"
-              id="email"
-              style={{ textTransform: "lowercase" }}
-              onChange={e => setEmail(e.target.value.toLowerCase())}
+              onChange={e => set_first_name(e.target.value)}
+              error={first_name_validations}
+              helperText={first_name_validations}
             />
           </li>
-          <label className="validation_text" style={{ fontSize: 16, justifyContent: "center" }}>
-            {/* {console.log(email_validations)} */}
-            {email_validations}
-          </label>
           <li>
-            <label htmlFor="password">Password</label>
-            <input type="password" id="password" name="password" onChange={e => setPassword(e.target.value)} />
+            <GLInput
+              label="Last Name"
+              name="last_name"
+              id="last_name"
+              type="text"
+              onChange={e => set_last_name(e.target.value)}
+              error={last_name_validations}
+              helperText={last_name_validations}
+            />
           </li>
-          <label className="validation_text" style={{ fontSize: 16, justifyContent: "center" }}>
-            {password_validations}
-          </label>
           <li>
-            <label htmlFor="rePassword">Re-Enter Password</label>
-            <input type="password" id="rePassword" name="rePassword" onChange={e => setRePassword(e.target.value)} />
+            <GLInput
+              label="Email"
+              name="email"
+              id="email"
+              type="text"
+              onChange={e => setEmail(e.target.value.toLowerCase())}
+              error={email_validations}
+              helperText={email_validations}
+              inputProps={{ style: { textTransform: "lowercase" } }}
+            />
           </li>
-          <label className="validation_text" style={{ fontSize: 16, justifyContent: "center" }}>
-            {re_password_validations}
-          </label>
+          <li>
+            <GLInput
+              label="Password"
+              name="password"
+              id="password"
+              type="password"
+              onChange={e => setPassword(e.target.value)}
+              error={password_validations}
+              helperText={password_validations}
+            />
+          </li>
+          <li>
+            <GLInput
+              label="Re-Enter Password"
+              name="re_password"
+              id="re_password"
+              type="password"
+              onChange={e => setRePassword(e.target.value)}
+              error={re_password_validations}
+              helperText={re_password_validations}
+            />
+          </li>
           <li>
             <GLButton type="submit" variant="primary">
               Register

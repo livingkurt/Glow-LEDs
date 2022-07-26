@@ -1,12 +1,13 @@
 import React from "react";
-import Icon from "@material-ui/core/Icon";
 import styles from "./GLInput.module.scss";
+import "./GLInput.scss";
 
 const GLInput = ({
   style,
   value,
   helperText,
   error,
+  id,
   className,
   required,
   fullWidth,
@@ -21,38 +22,41 @@ const GLInput = ({
   placeholder,
   name,
   variant,
-  classes,
   dataTest,
   autoFocus,
   restrictCharacters,
+  inputClasses,
+  inputProps,
+  containerProps
 }) => {
   const shouldRenderIcon = icon && iconPosition;
 
   return (
-    <div>
-      <input
-        className={className}
-        value={value}
-        placeholder={placeholder}
-        type={type}
-        onChange={onChange}
-        variant={variant}
-        onKeyDown={restrictCharacters}
-      />
-      {displayHelperText &&
-      helperText && (
-        <div className={style.helperTextContainer}>
-          {/* <FormHelperText error={error}>
-            <Typography component="span" align="center" variant="body2">
-              {helperText}
-            </Typography>
-          </FormHelperText> */}
-          <label className="validation_text" style={{ textAlign: "center" }}>
-            {helperText}
-          </label>
-        </div>
+    <>
+      <div className="w-100per column pos-rel place_div" {...containerProps}>
+        <input
+          onChange={onChange}
+          value={value}
+          className={`zoom_f form_input place_input ${error ? "validation" : ""} ${inputClasses}`}
+          type={type}
+          name={name}
+          style={{ ...style }}
+          id={id}
+          required
+          autoFocus={autoFocus}
+          spellcheck="false"
+          {...inputProps}
+        />
+        <span htmlFor="name" className="fs-16px pos-abs place_holder">
+          {label}
+        </span>
+      </div>
+      {helperText && (
+        <label className={`helper_text ${error ? "validation" : ""}`}>
+          {helperText} {required && "Required"}
+        </label>
       )}
-    </div>
+    </>
   );
 };
 

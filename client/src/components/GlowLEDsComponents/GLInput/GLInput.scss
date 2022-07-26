@@ -1,0 +1,44 @@
+@use "../../../../src/scss/abstracts/index" as *;
+
+.place_div {
+  position: relative;
+}
+
+.place_holder {
+  transition: all 0.2s;
+  transform-origin: 0% 0%;
+  color: gray;
+  top: 21px;
+  left: 10px;
+}
+
+.place_input:valid + .place_holder,
+.place_input:focus + .place_holder {
+  transform: scale(0.8) translateY(-38px);
+  color: white;
+}
+
+.place_input.validation {
+  border: 2px #ff4a4a solid;
+}
+
+.helper_text {
+  margin-top: 1rem;
+  font-size: 14px;
+  color: white;
+}
+
+.helper_text.validation {
+  color: #ff4a4a;
+}
+
+.form_input {
+  font-size: $font_size;
+  border-radius: 7px;
+  box-shadow: inset 0px 0px 9px 0px #686868;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0rem;
+  margin-top: 1rem;
+  width: 100%;
+}
