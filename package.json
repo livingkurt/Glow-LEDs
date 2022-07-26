@@ -71,6 +71,29 @@
     "sitemap": "cd client && npm run sitemap",
     "install": "cd client && npm install",
     "build": "tsc && cd client && npm run build",
-    "heroku-postbuild": "tsc && npm run build"
+    "heroku-postbuild": "tsc && npm run build",
+
+    "lint": "npm lint:scss && npm lint:js",
+    "lint-staged": "$(npm bin)/lint-staged",
+    "lint:fix": "npm lint:js:fix && npm lint:scss:fix",
+    "lint:js": "eslint app/javascript/components --ext jsx,js --cache ",
+    "lint:js:fix": "npm lint:js --fix",
+    "lint:scss": "stylelint './app/javascript/**/*.scss' --cache",
+    "lint:scss:fix": "npm lint:scss --fix",
+    "stylelint-check": "stylelint-config-prettier-check"
+  },
+  "pre-commit": [
+    "lint-staged"
+  ],
+  "lint-staged": {
+    "app/javascript/components/**/*.jsx": [
+      "eslint --fix --cache"
+    ],
+    "app/javascript/components/**/*.scss": [
+      "stylelint --fix --cache"
+    ],
+    "*.rb": [
+      "bundle exec rubocop -a --format s"
+    ]
   }
 }
