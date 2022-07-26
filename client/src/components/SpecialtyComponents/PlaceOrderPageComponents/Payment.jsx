@@ -37,7 +37,7 @@ export function Payment({
   set_user,
   user,
   create_order_without_paying,
-  create_order_without_user,
+  create_order_without_user
 }) {
   const { width } = useWindowDimensions();
   return (
@@ -45,13 +45,8 @@ export function Payment({
       <ul className="mv-0px">
         <div className="jc-b">
           <h2>3. Payment & Review</h2>
-          {payment_completed &&
-          !show_payment && (
-            <GLButton
-              variant="secondary"
-              className="mv-10px"
-              onClick={() => show_hide_steps("payment")}
-            >
+          {payment_completed && !show_payment && (
+            <GLButton variant="secondary" className="mv-10px" onClick={() => show_hide_steps("payment")}>
               Edit
             </GLButton>
           )}
@@ -60,16 +55,9 @@ export function Payment({
           <div>
             <div className="w-100per ">
               <div htmlFor="order_note">Add a note</div>
-              <input
-                type="text"
-                name="order_note"
-                id="order_note"
-                className="w-100per"
-                onChange={e => set_order_note(e.target.value)}
-              />
+              <input type="text" name="order_note" id="order_note" className="w-100per" onChange={e => set_order_note(e.target.value)} />
             </div>
-            {userInfo &&
-            userInfo.isAdmin && (
+            {userInfo && userInfo.isAdmin && (
               <div className="w-100per mt-10px">
                 <div htmlFor="production_note">Add a production note</div>
                 <input
@@ -93,16 +81,17 @@ export function Payment({
                         id="promo_code"
                         className="w-100per"
                         style={{
-                          textTransform: "uppercase",
+                          textTransform: "uppercase"
                         }}
                         onChange={e => {
                           set_promo_code(e.target.value.toUpperCase());
                         }}
                       />
                       <GLButton
+                        type="submit"
                         variant="primary"
                         style={{
-                          curser: "pointer",
+                          curser: "pointer"
                         }}
                       >
                         Apply
@@ -113,18 +102,14 @@ export function Payment({
                 <label
                   className="validation_text"
                   style={{
-                    textAlign: "center",
+                    textAlign: "center"
                   }}
                 >
                   {promo_code_validations}
                 </label>
                 {show_message && (
                   <div className="promo_code mv-1rem">
-                    <GLButton
-                      variant="icon"
-                      onClick={() => remove_promo()}
-                      aria-label="Detete"
-                    >
+                    <GLButton variant="icon" onClick={() => remove_promo()} aria-label="Detete">
                       <i className="fas fa-times mr-5px" />
                     </GLButton>
                     {show_message}
@@ -160,7 +145,7 @@ export function Payment({
                     name="create_account"
                     defaultChecked={create_account}
                     style={{
-                      transform: "scale(1.5)",
+                      transform: "scale(1.5)"
                     }}
                     className="mr-1rem"
                     id="create_account"
@@ -168,15 +153,11 @@ export function Payment({
                       set_create_account(e.target.checked);
                     }}
                   />
-                  <label htmlFor="create_account mb-20px">
-                    Create an account for faster checkout
-                  </label>
+                  <label htmlFor="create_account mb-20px">Create an account for faster checkout</label>
                 </div>
               )}
             </li>
-            {userInfo &&
-            !userInfo.first_name &&
-            create_account && (
+            {userInfo && !userInfo.first_name && create_account && (
               <li className="column mb-2rem">
                 <label htmlFor="password">Password</label>
                 <input // className="form_input"
@@ -185,28 +166,17 @@ export function Payment({
                   name="password"
                   onChange={e => set_new_password(e.target.value)}
                 />
-                <label className="validation_text fs-16px jc-c ">
-                  {password_validations}
-                </label>
+                <label className="validation_text fs-16px jc-c ">{password_validations}</label>
               </li>
             )}
             <li>
-              {!loading &&
-              !hide_pay_button && (
-                <Stripe
-                  pay_order={placeOrderHandler}
-                  loading_payment={loading_payment}
-                  set_loading_payment={set_loading_payment}
-                />
+              {!loading && !hide_pay_button && (
+                <Stripe pay_order={placeOrderHandler} loading_payment={loading_payment} set_loading_payment={set_loading_payment} />
               )}
             </li>
-            {userInfo &&
-            userInfo.isAdmin && (
+            {userInfo && userInfo.isAdmin && (
               <div className="mt-2rem">
-                {userInfo &&
-                userInfo.isAdmin &&
-                users &&
-                !no_user && (
+                {userInfo && userInfo.isAdmin && users && !no_user && (
                   <div>
                     {loading_checkboxes ? (
                       <div>Loading...</div>
@@ -217,7 +187,7 @@ export function Payment({
                           name="paid"
                           id="paid"
                           style={{
-                            transform: "scale(1.5)",
+                            transform: "scale(1.5)"
                           }}
                           className="mr-1rem"
                           onChange={e => {
@@ -230,10 +200,7 @@ export function Payment({
                     {paid && (
                       <div className="ai-c h-25px mv-10px mt-2rem mb-30px jc-c">
                         <div className="custom-select w-100per">
-                          <select
-                            className="qty_select_dropdown w-100per"
-                            onChange={e => set_paymentMethod(e.target.value)}
-                          >
+                          <select className="qty_select_dropdown w-100per" onChange={e => set_paymentMethod(e.target.value)}>
                             <option key={1} defaultValue="">
                               Payment Method
                             </option>
@@ -248,7 +215,7 @@ export function Payment({
                               "promo",
                               "sponsor",
                               "replacement",
-                              "no payment",
+                              "no payment"
                             ].map((method, index) => (
                               <option key={index} value={method}>
                                 {method}
@@ -278,24 +245,13 @@ export function Payment({
                         <span className="custom-arrow" />
                       </div>
                     </div>
-                    <GLButton
-                      onClick={create_order_without_paying}
-                      variant="secondary"
-                      className="w-100per mb-12px"
-                    >
+                    <GLButton onClick={create_order_without_paying} variant="secondary" className="w-100per mb-12px">
                       Create Order For User
                     </GLButton>
                   </div>
                 )}
-                {userInfo &&
-                userInfo.isAdmin &&
-                users &&
-                no_user && (
-                  <GLButton
-                    onClick={create_order_without_user}
-                    variant="secondary"
-                    className="w-100per mb-12px"
-                  >
+                {userInfo && userInfo.isAdmin && users && no_user && (
+                  <GLButton onClick={create_order_without_user} variant="secondary" className="w-100per mb-12px">
                     Create Order Without User
                   </GLButton>
                 )}

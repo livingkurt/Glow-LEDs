@@ -9,15 +9,7 @@
     "plugin:react-hooks/recommended",
     "plugin:prettier/recommended"
   ],
-  "plugins": [
-    "@babel",
-    "import",
-    "jest",
-    "jsx-a11y",
-    "react",
-    "react-hooks",
-    "prettier"
-  ],
+  "plugins": ["@babel", "import", "jest", "jsx-a11y", "react", "react-hooks", "prettier"],
   "env": {
     "browser": true,
     "es2021": true,
@@ -35,10 +27,7 @@
       "jsx": true
     },
     "babelOptions": {
-      "babelrcRoots": [
-        ".",
-        "covalent-ojt"
-      ]
+      "babelrcRoots": [".", "covalent-ojt"]
     }
   },
   "rules": {
@@ -131,7 +120,7 @@
     "no-alert": "error",
     "react/require-default-props": "error",
     "react/forbid-prop-types": "off",
-    "react/function-component-definition": [1, {"namedComponents": "arrow-function", "unnamedComponents": "arrow-function"}],
+    "react/function-component-definition": [1, { "namedComponents": "arrow-function", "unnamedComponents": "arrow-function" }],
     "react/jsx-one-expression-per-line": "warn",
     "react/jsx-fragments": [2, "syntax"],
     "jest/no-mocks-import": "off",
