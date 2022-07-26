@@ -98,6 +98,7 @@ const RegisterPage = props => {
               name="first_name"
               id="first_name"
               type="text"
+              value={first_name}
               onChange={e => set_first_name(e.target.value)}
               error={first_name_validations}
               helperText={first_name_validations}
@@ -109,6 +110,7 @@ const RegisterPage = props => {
               name="last_name"
               id="last_name"
               type="text"
+              value={last_name}
               onChange={e => set_last_name(e.target.value)}
               error={last_name_validations}
               helperText={last_name_validations}
@@ -120,6 +122,7 @@ const RegisterPage = props => {
               name="email"
               id="email"
               type="text"
+              value={email}
               onChange={e => setEmail(e.target.value.toLowerCase())}
               error={email_validations}
               helperText={email_validations}
@@ -132,6 +135,7 @@ const RegisterPage = props => {
               name="password"
               id="password"
               type="password"
+              value={password}
               onChange={e => setPassword(e.target.value)}
               error={password_validations}
               helperText={password_validations}
@@ -143,6 +147,7 @@ const RegisterPage = props => {
               name="re_password"
               id="re_password"
               type="password"
+              value={rePassword}
               onChange={e => setRePassword(e.target.value)}
               error={re_password_validations}
               helperText={re_password_validations}

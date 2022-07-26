@@ -12,7 +12,7 @@
   left: 10px;
 }
 
-.place_input:valid + .place_holder,
+.filled.place_input + .place_holder,
 .place_input:focus + .place_holder {
   transform: scale(0.8) translateY(-38px);
   color: white;

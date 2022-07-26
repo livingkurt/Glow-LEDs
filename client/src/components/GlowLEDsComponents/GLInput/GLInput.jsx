@@ -37,12 +37,12 @@ const GLInput = ({
         <input
           onChange={onChange}
           value={value}
-          className={`zoom_f form_input place_input ${error ? "validation" : ""} ${inputClasses}`}
+          className={`zoom_f form_input ${value ? "filled" : ""} place_input ${error ? "validation" : ""}  ${inputClasses}`}
           type={type}
           name={name}
           style={{ ...style }}
           id={id}
-          required
+          required={required}
           autoFocus={autoFocus}
           spellcheck="false"
           {...inputProps}
