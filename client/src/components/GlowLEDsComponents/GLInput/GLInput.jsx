@@ -29,15 +29,13 @@ const GLInput = ({
   inputProps,
   containerProps
 }) => {
-  const shouldRenderIcon = icon && iconPosition;
-
   return (
     <>
       <div className="w-100per column pos-rel place_div" {...containerProps}>
         <input
           onChange={onChange}
           value={value}
-          className={`zoom_f form_input ${value ? "filled" : ""} place_input ${error ? "validation" : ""}  ${inputClasses}`}
+          className={`zoom_f gl_input ${value ? "filled" : ""} place_input ${error ? "validation" : ""}  ${inputClasses}`}
           type={type}
           name={name}
           style={{ ...style }}
