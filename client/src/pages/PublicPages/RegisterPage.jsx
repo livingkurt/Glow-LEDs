@@ -8,26 +8,24 @@ import { Loading } from "../../components/UtilityComponents";
 import { GLButton } from "../../components/GlowLEDsComponents";
 
 const RegisterPage = props => {
-  const [ first_name, set_first_name ] = useState("");
-  const [ last_name, set_last_name ] = useState("");
-  const [ email, setEmail ] = useState("");
-  const [ password, setPassword ] = useState("");
-  const [ rePassword, setRePassword ] = useState("");
+  const [first_name, set_first_name] = useState("");
+  const [last_name, set_last_name] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [rePassword, setRePassword] = useState("");
 
-  const [ first_name_validations, setFirstNameValidations ] = useState("");
-  const [ last_name_validations, setLastNameValidations ] = useState("");
-  const [ email_validations, setEmailValidations ] = useState("");
-  const [ password_validations, setPasswordValidations ] = useState("");
-  const [ re_password_validations, setRePasswordValidations ] = useState("");
+  const [first_name_validations, setFirstNameValidations] = useState("");
+  const [last_name_validations, setLastNameValidations] = useState("");
+  const [email_validations, setEmailValidations] = useState("");
+  const [password_validations, setPasswordValidations] = useState("");
+  const [re_password_validations, setRePasswordValidations] = useState("");
 
   const userRegister = useSelector(state => state.userRegister);
   const { loading, userInfo, error } = userRegister;
   console.log({ error });
   const dispatch = useDispatch();
 
-  const redirect = props.location.search
-    ? props.location.search.split("=")[1]
-    : "/";
+  const redirect = props.location.search ? props.location.search.split("=")[1] : "/";
 
   const submitHandler = e => {
     e.preventDefault();
@@ -48,7 +46,7 @@ const RegisterPage = props => {
           last_name,
           email: email.toLowerCase(),
           password,
-          rePassword,
+          rePassword
         })
       );
       // dispatch(registerUser(first_name, last_name, email, password, rePassword));
@@ -56,18 +54,15 @@ const RegisterPage = props => {
     }
   };
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (userInfo && userInfo.hasOwnProperty("first_name")) {
-          props.history.push("/account/login");
-        }
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (userInfo && userInfo.hasOwnProperty("first_name")) {
+        props.history.push("/account/login");
       }
-      return () => (clean = false);
-    },
-    [ userInfo ]
-  );
+    }
+    return () => (clean = false);
+  }, [userInfo]);
 
   return (
     <div className="form">
@@ -75,14 +70,8 @@ const RegisterPage = props => {
         <title>Register | Glow LEDs</title>
         <meta property="og:title" content="Register" />
         <meta name="twitter:title" content="Register" />
-        <link
-          rel="canonical"
-          href="https://www.glow-leds.com/account/register"
-        />
-        <meta
-          property="og:url"
-          content="https://www.glow-leds.com/account/register"
-        />
+        <link rel="canonical" href="https://www.glow-leds.com/account/register" />
+        <meta property="og:url" content="https://www.glow-leds.com/account/register" />
         <meta
           name="description"
           content="In order to reap all of the benefits of the Diffuser Caps and other LED accessories at Glow-LEDs.com you must first create a uesr account."
@@ -118,32 +107,16 @@ const RegisterPage = props => {
 
           <li>
             <label htmlFor="first_name">First Name</label>
-            <input
-              type="text"
-              name="first_name"
-              id="first_name"
-              onChange={e => set_first_name(e.target.value)}
-            />
+            <input type="text" name="first_name" id="first_name" onChange={e => set_first_name(e.target.value)} />
           </li>
-          <label
-            className="validation_text"
-            style={{ fontSize: 16, justifyContent: "center" }}
-          >
+          <label className="validation_text" style={{ fontSize: 16, justifyContent: "center" }}>
             {first_name_validations}
           </label>
           <li>
             <label htmlFor="last_name">Last Name</label>
-            <input
-              type="text"
-              name="last_name"
-              id="last_name"
-              onChange={e => set_last_name(e.target.value)}
-            />
+            <input type="text" name="last_name" id="last_name" onChange={e => set_last_name(e.target.value)} />
           </li>
-          <label
-            className="validation_text"
-            style={{ fontSize: 16, justifyContent: "center" }}
-          >
+          <label className="validation_text" style={{ fontSize: 16, justifyContent: "center" }}>
             {last_name_validations}
           </label>
           <li>
@@ -156,41 +129,22 @@ const RegisterPage = props => {
               onChange={e => setEmail(e.target.value.toLowerCase())}
             />
           </li>
-          <label
-            className="validation_text"
-            style={{ fontSize: 16, justifyContent: "center" }}
-          >
+          <label className="validation_text" style={{ fontSize: 16, justifyContent: "center" }}>
             {/* {console.log(email_validations)} */}
             {email_validations}
           </label>
           <li>
             <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              onChange={e => setPassword(e.target.value)}
-            />
+            <input type="password" id="password" name="password" onChange={e => setPassword(e.target.value)} />
           </li>
-          <label
-            className="validation_text"
-            style={{ fontSize: 16, justifyContent: "center" }}
-          >
+          <label className="validation_text" style={{ fontSize: 16, justifyContent: "center" }}>
             {password_validations}
           </label>
           <li>
             <label htmlFor="rePassword">Re-Enter Password</label>
-            <input
-              type="password"
-              id="rePassword"
-              name="rePassword"
-              onChange={e => setRePassword(e.target.value)}
-            />
+            <input type="password" id="rePassword" name="rePassword" onChange={e => setRePassword(e.target.value)} />
           </li>
-          <label
-            className="validation_text"
-            style={{ fontSize: 16, justifyContent: "center" }}
-          >
+          <label className="validation_text" style={{ fontSize: 16, justifyContent: "center" }}>
             {re_password_validations}
           </label>
           <li>
@@ -199,13 +153,11 @@ const RegisterPage = props => {
             </GLButton>
           </li>
           <li>
-            Already have an account?
-            <Link
-              to={redirect === "/" ? "login" : "login?redirect=" + redirect}
-              variant="secondary"
-              className="ta-c"
-            >
-              Login
+            <div className="ta-c">Already have an account?</div>
+            <Link to={redirect === "/" ? "login" : "login?redirect=" + redirect}>
+              <GLButton type="submit" variant="secondary" className="mt-10px ta-c w-100per">
+                Login
+              </GLButton>
             </Link>
           </li>
         </ul>
