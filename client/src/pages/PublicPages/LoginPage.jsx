@@ -8,12 +8,12 @@ import { Loading } from "../../components/UtilityComponents";
 import { GLButton } from "../../components/GlowLEDsComponents";
 
 const LoginPage = props => {
-  const [ email, setEmail ] = useState("");
-  const [ password, setPassword ] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const [ email_validations, setEmailValidations ] = useState("");
-  const [ password_validations, setPasswordValidations ] = useState("");
-  const [ loading, set_loading ] = useState(false);
+  const [email_validations, setEmailValidations] = useState("");
+  const [password_validations, setPasswordValidations] = useState("");
+  const [loading, set_loading] = useState(false);
 
   const userLogin = useSelector(state => state.userLogin);
   const { loading: user_loading, userInfo, error } = userLogin;
@@ -23,22 +23,17 @@ const LoginPage = props => {
   // const { loading, userInfo, error } = errors;
   // console.log({ userInfo });
   const dispatch = useDispatch();
-  const redirect = props.location.search
-    ? props.location.search.split("=")[1]
-    : "/";
+  const redirect = props.location.search ? props.location.search.split("=")[1] : "/";
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (userInfo && userInfo.hasOwnProperty("first_name")) {
-          props.history.push(redirect);
-        }
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (userInfo && userInfo.hasOwnProperty("first_name")) {
+        props.history.push(redirect);
       }
-      return () => (clean = false);
-    },
-    [ userInfo, props.history, redirect ]
-  );
+    }
+    return () => (clean = false);
+  }, [userInfo, props.history, redirect]);
 
   setTimeout(() => {
     set_loading(false);
@@ -67,10 +62,7 @@ const LoginPage = props => {
         <meta property="og:title" content="Login" />
         <meta name="twitter:title" content="Login" />
         <link rel="canonical" href="https://www.glow-leds.com/account/login" />
-        <meta
-          property="og:url"
-          content="https://www.glow-leds.com/account/login"
-        />
+        <meta property="og:url" content="https://www.glow-leds.com/account/login" />
         <meta
           name="description"
           content="Come in the LEDs are fine. Come into our Glowing realm of wonderfulness. Where you just might find what you have been missing."
@@ -106,13 +98,7 @@ const LoginPage = props => {
           </label>
           <li>
             <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              C
-              id="password"
-              name="password"
-              onChange={e => setPassword(e.target.value)}
-            />
+            <input type="password" C id="password" name="password" onChange={e => setPassword(e.target.value)} />
           </li>
           <label className="validation_text" style={{ textAlign: "center" }}>
             {password_validations}
@@ -132,15 +118,10 @@ const LoginPage = props => {
           </li>
           <li>New to Glow LEDs?</li>
           <li>
-            <Link
-              to={
-                redirect === "/" ? "register" : "register?redirect=" + redirect
-              }
-            >
-                     <GLButton variant="primary" className="ta-c">
-                     Create Account
+            <Link to={redirect === "/" ? "register" : "register?redirect=" + redirect}>
+              <GLButton variant="primary" className="ta-c w-100per">
+                Create Account
               </GLButton>
-              
             </Link>
           </li>
           {/* <li style={{ marginBottom: '-20px' }}>
