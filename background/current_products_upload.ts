@@ -1,63 +1,12 @@
-import axios from "axios";
-
 import dotenv from "dotenv";
 dotenv.config();
-const google_sheets_json = require("./glow-leds-0e697a43198d.json");
+
+const Airtable = require("airtable");
+
+import axios from "axios";
 
 const current_products_upload = async () => {
-  google_sheets_json.private_key = process.env.REACT_APP_GOOGLE_SHEETS_PRIVATE;
-
   try {
-    const { GoogleSpreadsheet } = require("google-spreadsheet");
-
-    // spreadsheet key is the long id in the sheets URL
-    // const doc = new GoogleSpreadsheet('1qf9xryR0EPOCD0YkFQXqYioAxJRfWg6QFpdFwFTpErg');
-    const doc = new GoogleSpreadsheet("1JSbfXm0SZjza_gppN61OhZee1PyfSrziqnW7PP9sD0U");
-    // const doc = new GoogleSpreadsheet('1IS8GkQmPTsBcPM8qv0ifGIjTpeDSjkx4FuYA0ZmEq2o');
-
-    // use service account creds
-    // await doc.useServiceAccountAuth({
-    //   client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
-    //   private_key: process.env.GOOGLE_PRIVATE_KEY,
-    // });
-    // OR load directly from json file if not in secure environment
-    await doc.useServiceAccountAuth(google_sheets_json);
-    // OR use service account to impersonate a user (see https://developers.google.com/identity/protocols/oauth2/service-account#delegatingauthority)
-    // await doc.useServiceAccountAuth(require('./creds-from-google.json'), 'some-user@my-domain.com');
-    // OR use API key -- only for read-only access to public sheets
-    // doc.useApiKey('YOUR-API-KEY');
-
-    await doc.loadInfo(); // loads document properties and worksheets
-    // console.log(doc.title);
-    // await doc.updateProperties({ title: 'KYEO FB Product Sheet' });
-
-    const sheet = doc.sheetsByIndex[0]; // or use doc.sheetsById[id] or doc.sheetsByTitle[title]
-
-    await sheet.clear();
-    await sheet.setHeaderRow([
-      "title",
-      "description",
-      "availability",
-      "condition",
-      "price",
-      "link",
-      "image_link",
-      "additional_image_link",
-      "brand",
-      "inventory",
-      "fb_product_category",
-      "google_product_category",
-      "sale_price",
-      "sale_price_effective_date",
-      "product_type",
-      "color",
-      "size",
-      "id",
-      "airtable_id"
-      // 'shipping_weight',
-      // 'item_group_id'
-    ]);
-
     const { data } = await axios.get("https://www.glow-leds.com/api/products?limit=0&hidden=false&option=false");
 
     const new_rows = data.products
@@ -84,10 +33,6 @@ const current_products_upload = async () => {
         const product_type = product.category;
         const color = product.color;
         const size = product.size;
-        // const shipping_weight = `${product.weight_pounds
-        // 	? product.weight_pounds * 16 + product.weight_ounces
-        // 	: product.weight_ounces} oz`;
-        // const item_group_id = product.item_group_id ? product.item_group_id : '';
 
         return {
           title,
@@ -107,15 +52,24 @@ const current_products_upload = async () => {
           product_type,
           color,
           size,
-          id,
-          airtable_id: ""
-          // shipping_weight,
-          // item_group_id
+          id
         };
       });
 
-    await sheet.addRows(new_rows);
-    await sheet.saveUpdatedCells();
+    const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY }).base("app9vDOYXFhhQr529");
+
+    base("Current Products").update(new_rows, function (err: any, records: any) {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      records.forEach(function (record: any) {
+        console.log(record.getId());
+      });
+    });
+
+    // await sheet.addRows(new_rows);
+    // await sheet.saveUpdatedCells();
     // adding / removing sheets
     // const newSheet = await doc.addSheet({ title: 'hot new sheet!' });
     // await newSheet.delete();
