@@ -1,6 +1,6 @@
 import Product from "../models/product";
 import Airtable from "airtable";
-const base = new Airtable({ apiKey: "keyHiewICx5qlVEVG" }).base("app9vDOYXFhhQr529");
+const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY }).base("app9vDOYXFhhQr529");
 const CurrentProducts = base("Current Products");
 
 export default {
