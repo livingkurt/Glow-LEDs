@@ -2,56 +2,34 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { listProducts } from "../../../actions/productActions";
-import {
-  Pagination,
-  ProductListItem,
-} from "../../../components/SpecialtyComponents";
+import { Pagination, ProductListItem } from "../../../components/SpecialtyComponents";
 import { API_Products } from "../../../utils";
 import { Link, useHistory } from "react-router-dom";
 import { Loading, Notification } from "../../../components/UtilityComponents";
 import { Helmet } from "react-helmet";
 import { Search, Sort } from "../../../components/SpecialtyComponents";
-import {
-  facebook_catalog_upload,
-  google_catalog_upload,
-} from "../../../utils/google_sheets_upload";
-import {
-  mutliDragAwareReorder,
-  multiSelectTo as multiSelect,
-  update_products_url,
-  getUrlParameter,
-} from "../../../utils/helper_functions";
+import { facebook_catalog_upload, google_catalog_upload, current_products_upload } from "../../../utils/google_sheets_upload";
+import { mutliDragAwareReorder, multiSelectTo as multiSelect, update_products_url, getUrlParameter } from "../../../utils/helper_functions";
 import memoizeOne from "memoize-one";
 import { GLButton } from "../../../components/GlowLEDsComponents";
 
 function ProductPage(props) {
   const history = useHistory();
-  const [ search, set_search ] = useState("");
-  const [ sort, setSortOrder ] = useState("");
-  const [ loading_upload, set_loading_upload ] = useState(false);
-  const [ show_hidden, set_show_hidden ] = useState(false);
-  const [ page, set_page ] = useState(1);
-  const [ limit, set_limit ] = useState(30);
+  const [search, set_search] = useState("");
+  const [sort, setSortOrder] = useState("");
+  const [loading_upload, set_loading_upload] = useState(false);
+  const [show_hidden, set_show_hidden] = useState(false);
+  const [page, set_page] = useState(1);
+  const [limit, set_limit] = useState(30);
 
-  const category = props.match.params.category
-    ? props.match.params.category
-    : "";
-  const subcategory = props.match.params.subcategory
-    ? props.match.params.subcategory
-    : "";
+  const category = props.match.params.category ? props.match.params.category : "";
+  const subcategory = props.match.params.subcategory ? props.match.params.subcategory : "";
 
   const dispatch = useDispatch();
-  const [ products_list, updateProducts ] = useState([]);
+  const [products_list, updateProducts] = useState([]);
 
   const productList = useSelector(state => state.productList);
-  const {
-    loading,
-    products: items,
-    totalPages,
-    message,
-    currentPage,
-    error,
-  } = productList;
+  const { loading, products: items, totalPages, message, currentPage, error } = productList;
 
   useEffect(() => {
     let clean = true;
@@ -63,29 +41,19 @@ function ProductPage(props) {
 
   const determine_products = () => {
     const query = getUrlParameter(props.location);
-    let category = props.match.params.category
-      ? props.match.params.category
-      : "";
-    let subcategory = props.match.params.subcategory
-      ? props.match.params.subcategory
-      : "";
+    let category = props.match.params.category ? props.match.params.category : "";
+    let subcategory = props.match.params.subcategory ? props.match.params.subcategory : "";
     let search = "";
     let sort = "";
     let filter = "";
-    let collection = props.match.params.collection
-      ? props.match.params.collection
-      : "";
+    let collection = props.match.params.collection ? props.match.params.collection : "";
     let limit = 30;
     let page = "";
     let hidden = "";
     let option = false;
 
     // prnt({ query });
-    if (
-      category !== "our_picks" ||
-      category !== "discounted" ||
-      category !== "best_sellers"
-    ) {
+    if (category !== "our_picks" || category !== "discounted" || category !== "best_sellers") {
       if (Object.keys(query).length > 0) {
         if (query.search) {
           set_search(query.search.split("%20").join(" "));
@@ -120,7 +88,7 @@ function ProductPage(props) {
           page,
           limit,
           hidden,
-          option,
+          option
         })
       );
     }
@@ -135,7 +103,7 @@ function ProductPage(props) {
         search,
         sort,
         option: false,
-        limit,
+        limit
       })
     );
   };
@@ -148,11 +116,11 @@ function ProductPage(props) {
         subcategory,
         search,
         sort: e.target.value,
-        option: false,
+        option: false
       })
     );
   };
-  const sort_options = [ "Category", "Newest", "Lowest", "Highest", "Hidden" ];
+  const sort_options = ["Category", "Newest", "Lowest", "Highest", "Hidden"];
 
   const update_order = async () => {
     set_loading_upload(true);
@@ -167,7 +135,7 @@ function ProductPage(props) {
           sort,
           page,
           limit,
-          option: false,
+          option: false
         })
       );
       set_loading_upload(false);
@@ -183,7 +151,7 @@ function ProductPage(props) {
     { name: "Diffusers", color: "#ca9160" },
     { name: "Diffuser Caps", color: "#6c7ea9" },
     { name: "Accessories", color: "#925757" },
-    { name: "EXO Diffusers", color: "#4162ad" },
+    { name: "EXO Diffusers", color: "#4162ad" }
   ];
 
   const determine_color = (product, isSelected, isDragging) => {
@@ -232,10 +200,11 @@ function ProductPage(props) {
       limit: 0,
       hidden: false,
       deleted: false,
-      option: false,
+      option: false
     });
     console.log({ data });
     await facebook_catalog_upload(data.products);
+    await current_products_upload(data.products);
     await google_catalog_upload(data.products);
     set_loading_upload(false);
   };
@@ -248,20 +217,20 @@ function ProductPage(props) {
     }
   };
 
-  const [ state, setState ] = useState({
+  const [state, setState] = useState({
     entities: {
       products: [],
       columns: {
         "column-1": {
           id: "column-1",
           title: "Products",
-          product_ids: [],
-        },
+          product_ids: []
+        }
       },
-      columnOrder: [ "column-1" ],
+      columnOrder: ["column-1"]
     },
     selectedProductIds: [],
-    draggingProductId: null,
+    draggingProductId: null
   });
 
   useEffect(() => {
@@ -276,18 +245,15 @@ function ProductPage(props) {
     };
   }, []);
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (items) {
-          set_state();
-        }
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (items) {
+        set_state();
       }
-      return () => (clean = false);
-    },
-    [ items ]
-  );
+    }
+    return () => (clean = false);
+  }, [items]);
 
   const set_state = () => {
     if (items) {
@@ -296,7 +262,7 @@ function ProductPage(props) {
         setState({
           entities: items,
           selectedProductIds: [],
-          draggingProductId: null,
+          draggingProductId: null
         });
         if (currentPage) {
           set_page(currentPage);
@@ -309,31 +275,25 @@ function ProductPage(props) {
               "column-1": {
                 id: "column-1",
                 title: "Products",
-                product_ids: items.map(product => product._id),
-              },
+                product_ids: items.map(product => product._id)
+              }
             },
-            columnOrder: [ "column-1" ],
+            columnOrder: ["column-1"]
           },
           selectedProductIds: [],
-          draggingProductId: null,
+          draggingProductId: null
         });
       }
     }
     updateProducts(items);
   };
   const update_page = (e, new_page) => {
-    let category = props.match.params.category
-      ? props.match.params.category
-      : "";
-    let subcategory = props.match.params.subcategory
-      ? props.match.params.subcategory
-      : "";
+    let category = props.match.params.category ? props.match.params.category : "";
+    let subcategory = props.match.params.subcategory ? props.match.params.subcategory : "";
     let search = "";
     let sort = "";
     let filter = "";
-    let collection = props.match.params.collection
-      ? props.match.params.collection
-      : "";
+    let collection = props.match.params.collection ? props.match.params.collection : "";
 
     let hidden = "";
     let limit = 30;
@@ -356,7 +316,7 @@ function ProductPage(props) {
         limit,
         hidden,
         option,
-        sort,
+        sort
       })
     );
   };
@@ -364,9 +324,7 @@ function ProductPage(props) {
   const onDragStart = start => {
     // console.log("OnDragStart event started");
     const id = start.draggableId;
-    const selected = state.selectedProductIds.find(
-      productId => productId === id
-    );
+    const selected = state.selectedProductIds.find(productId => productId === id);
 
     // if dragging an item that is not selected - unselect all items
     if (!selected) {
@@ -392,7 +350,7 @@ function ProductPage(props) {
       entities: state.entities,
       selectedProductIds: state.selectedProductIds,
       source,
-      destination,
+      destination
     });
     setState(state => {
       return { ...processed, draggingProductId: null };
@@ -435,13 +393,13 @@ function ProductPage(props) {
       // Product was not previously selected
       // now will be the only selected item
       if (!wasSelected) {
-        return [ productId ];
+        return [productId];
       }
 
       // Product was part of a selected group
       // will now become the only selected item
       if (selectedProductIds.length > 1) {
-        return [ productId ];
+        return [productId];
       }
 
       // product was previously selected but not in a group
@@ -462,14 +420,14 @@ function ProductPage(props) {
       setState(state => {
         return {
           ...state,
-          selectedProductIds: [ ...selectedProductIds, productId ],
+          selectedProductIds: [...selectedProductIds, productId]
         };
       });
       return;
     }
 
     // it was previously selected and now needs to be removed from the group
-    const shallow = [ ...selectedProductIds ];
+    const shallow = [...selectedProductIds];
     shallow.splice(index, 1);
 
     setState(state => {
@@ -479,11 +437,7 @@ function ProductPage(props) {
 
   // This behaviour matches the MacOSX finder selection
   const multiSelectTo = newProductId => {
-    const updated = multiSelect(
-      state.entities,
-      state.selectedProductIds,
-      newProductId
-    );
+    const updated = multiSelect(state.entities, state.selectedProductIds, newProductId);
 
     console.log({ updated });
 
@@ -518,20 +472,13 @@ function ProductPage(props) {
     set_loading_upload(true);
     e.preventDefault();
     items.forEach(item_group => {
-      const options = [
-        ...item_group.color_products,
-        ...item_group.secondary_color_products,
-        ...item_group.option_products,
-      ];
+      const options = [...item_group.color_products, ...item_group.secondary_color_products, ...item_group.option_products];
       options.forEach(async option => {
         console.log({
           [option.name]: option._id,
-          item_group_id: item_group._id,
+          item_group_id: item_group._id
         });
-        const { data } = await API_Products.save_item_group_id(
-          option._id,
-          item_group._id
-        );
+        const { data } = await API_Products.save_item_group_id(option._id, item_group._id);
       });
     });
     set_loading_upload(false);
@@ -567,11 +514,7 @@ function ProductPage(props) {
               Display Products
             </GLButton>
           </Link>
-          <GLButton
-            variant="primary"
-            className="h-35px"
-            onClick={() => update_product_catelog()}
-          >
+          <GLButton variant="primary" className="h-35px" onClick={() => update_product_catelog()}>
             Update Product Catalog
           </GLButton>
           <Link to="/secure/glow/products?page=1?limit=500">
@@ -589,7 +532,7 @@ function ProductPage(props) {
                     sort,
                     page,
                     limit: 500,
-                    option: false,
+                    option: false
                   })
                 );
               }}
@@ -599,11 +542,7 @@ function ProductPage(props) {
           </Link>
 
           {show_hidden && (
-            <GLButton
-              variant="primary"
-              className="h-35px"
-              onClick={update_order}
-            >
+            <GLButton variant="primary" className="h-35px" onClick={update_order}>
               Update Order
             </GLButton>
           )}
@@ -625,9 +564,10 @@ function ProductPage(props) {
                   limit: 0,
                   hidden: false,
                   option: true,
-                  sort,
+                  sort
                 })
-              )}
+              )
+            }
           >
             Show Option Products
           </GLButton>
@@ -646,19 +586,10 @@ function ProductPage(props) {
       <Loading loading={loading_upload} error={error} />
       <Loading loading={loading} error={error} />
       <div className="search_and_sort jc-c ai-c">
-        <GLButton
-          variant="primary"
-          style={{ whiteSpace: "nowrap" }}
-          onClick={show_hidden_products}
-        >
+        <GLButton variant="primary" style={{ whiteSpace: "nowrap" }} onClick={show_hidden_products}>
           {!show_hidden ? "Show" : "Hide"} Hidden Products
         </GLButton>
-        <Search
-          search={search}
-          set_search={set_search}
-          submitHandler={submitHandler}
-          category={category}
-        />
+        <Search search={search} set_search={set_search} submitHandler={submitHandler} category={category} />
         <Sort sortHandler={sortHandler} sort_options={sort_options} />
       </div>
       <div className="jc-c">
@@ -690,12 +621,10 @@ function ProductPage(props) {
             let products = [];
             state.entities.products
               // .filter(product => !product.option)
-              .forEach(function(a) {
+              .forEach(function (a) {
                 products[column.product_ids.indexOf(a._id)] = a;
               });
-            const products_2 = column.product_ids.map(
-              (product_id, index) => state.entities.products[index + 1]
-            );
+            const products_2 = column.product_ids.map((product_id, index) => state.entities.products[index + 1]);
             console.log({ products_2 });
 
             return (
@@ -707,17 +636,9 @@ function ProductPage(props) {
                       .filter(product => !product.hidden)
                       .map((product, index) => {
                         return (
-                          <Draggable
-                            key={product._id}
-                            draggableId={product._id}
-                            index={index}
-                          >
+                          <Draggable key={product._id} draggableId={product._id} index={index}>
                             {(provided, snapshot) => {
-                              const isSelected = Boolean(
-                                getSelectedMap(state.selectedProductIds)[
-                                  product._id
-                                ]
-                              );
+                              const isSelected = Boolean(getSelectedMap(state.selectedProductIds)[product._id]);
                               let disAppearProduct = false;
                               if (
                                 snapshot.isDraggingOver &&
@@ -730,24 +651,16 @@ function ProductPage(props) {
                                 disAppearProduct = true;
                               }
                               return (
-                                <li
-                                  ref={provided.innerRef}
-                                  {...provided.draggableProps}
-                                  {...provided.dragHandleProps}
-                                >
+                                <li ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
                                   <ProductListItem
                                     size="50px"
                                     product={product}
                                     admin={true}
                                     determine_color={determine_color}
                                     isSelected={isSelected}
-                                    selectionCount={
-                                      state.selectedProductIds.length
-                                    }
+                                    selectionCount={state.selectedProductIds.length}
                                     toggleSelection={toggleSelection}
-                                    toggleSelectionInGroup={
-                                      toggleSelectionInGroup
-                                    }
+                                    toggleSelectionInGroup={toggleSelectionInGroup}
                                     multiSelectTo={multiSelectTo}
                                     disAppearProduct={disAppearProduct}
                                     snapshot={snapshot}
@@ -775,13 +688,11 @@ function ProductPage(props) {
             let products = [];
             state.entities.products
               .filter(product => !product.option)
-              .forEach(function(a) {
+              .forEach(function (a) {
                 products[column.product_ids.indexOf(a._id)] = a;
               });
             console.log({ product_ids: column.product_ids });
-            const products_2 = column.product_ids.map(
-              (product_id, index) => state.entities.products[index + 1]
-            );
+            const products_2 = column.product_ids.map((product_id, index) => state.entities.products[index + 1]);
             console.log({ products_2 });
 
             return (
@@ -791,17 +702,9 @@ function ProductPage(props) {
                     {/* {console.log({ state.entities })} */}
                     {products.map((product, index) => {
                       return (
-                        <Draggable
-                          key={product._id}
-                          draggableId={product._id}
-                          index={index}
-                        >
+                        <Draggable key={product._id} draggableId={product._id} index={index}>
                           {(provided, snapshot) => {
-                            const isSelected = Boolean(
-                              getSelectedMap(state.selectedProductIds)[
-                                product._id
-                              ]
-                            );
+                            const isSelected = Boolean(getSelectedMap(state.selectedProductIds)[product._id]);
                             let disAppearProduct = false;
                             if (
                               snapshot.isDraggingOver &&
@@ -814,24 +717,16 @@ function ProductPage(props) {
                               disAppearProduct = true;
                             }
                             return (
-                              <li
-                                ref={provided.innerRef}
-                                {...provided.draggableProps}
-                                {...provided.dragHandleProps}
-                              >
+                              <li ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
                                 <ProductListItem
                                   size="50px"
                                   product={product}
                                   admin={true}
                                   determine_color={determine_color}
                                   isSelected={isSelected}
-                                  selectionCount={
-                                    state.selectedProductIds.length
-                                  }
+                                  selectionCount={state.selectedProductIds.length}
                                   toggleSelection={toggleSelection}
-                                  toggleSelectionInGroup={
-                                    toggleSelectionInGroup
-                                  }
+                                  toggleSelectionInGroup={toggleSelectionInGroup}
                                   multiSelectTo={multiSelectTo}
                                   disAppearProduct={disAppearProduct}
                                   snapshot={snapshot}
