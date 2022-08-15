@@ -219,6 +219,29 @@ export default {
       CurrentProducts.select({ filterByFormula: `id = "${product._id}"` }).firstPage((err: any, records: any) => {
         if (err) {
           console.log(err);
+          const fields = [
+            {
+              fields: {
+                title: body.name,
+                description: body.description,
+                price: `${body.price} USD`,
+                link: `https://www.glow-leds.com/collections/all/products/${body.pathname}`,
+                image_link: body.images[0],
+                additional_image_link: body.images[1],
+                category: body.category,
+                id: body._id
+              }
+            }
+          ];
+          CurrentProducts.create(fields, async (err: any, updated_records: any) => {
+            if (err) {
+              console.log({ update_error: err });
+              return;
+            }
+            updated_records.forEach(function (record: any) {
+              console.log(record.get("title"));
+            });
+          });
           return;
         }
         const fields = [

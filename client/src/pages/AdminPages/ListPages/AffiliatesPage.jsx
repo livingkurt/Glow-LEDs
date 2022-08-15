@@ -1,40 +1,24 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  listAffiliates,
-  deleteAffiliate,
-  saveAffiliate,
-} from "../../../actions/affiliateActions";
+import { listAffiliates, deleteAffiliate, saveAffiliate } from "../../../actions/affiliateActions";
 import { Link } from "react-router-dom";
 import { Loading, Notification } from "../../../components/UtilityComponents";
 import { Helmet } from "react-helmet";
 import { Search, Sort } from "../../../components/SpecialtyComponents";
 import { listOrders } from "../../../actions/orderActions";
-import {
-  dates_in_year,
-  determine_promoter_code_tier,
-  determine_sponsor_code_tier,
-  toCapitalize,
-} from "../../../utils/helper_functions";
-import {
-  API_Affiliates,
-  API_Orders,
-  API_Promos,
-  API_Revenue,
-} from "../../../utils";
+import { dates_in_year, determine_promoter_code_tier, determine_sponsor_code_tier, toCapitalize } from "../../../utils/helper_functions";
+import { API_Affiliates, API_Orders, API_Promos, API_Revenue } from "../../../utils";
 import { GLButton } from "../../../components/GlowLEDsComponents";
-// import CSVReader from 'react-csv-reader';
+import CSVReader from "react-csv-reader";
 
 const AffiliatesPage = props => {
-  const [ search, set_search ] = useState("");
-  const [ sort, setSortOrder ] = useState("");
-  const category = props.match.params.category
-    ? props.match.params.category
-    : "";
+  const [search, set_search] = useState("");
+  const [sort, setSortOrder] = useState("");
+  const category = props.match.params.category ? props.match.params.category : "";
   const affiliateList = useSelector(state => state.affiliateList);
-  const [ last_months_orders, set_last_months_orders ] = useState([]);
-  const [ loading_promo_update, set_loading_promo_update ] = useState(false);
-  const [ total_orders, set_total_orders ] = useState([]);
+  const [last_months_orders, set_last_months_orders] = useState([]);
+  const [loading_promo_update, set_loading_promo_update] = useState(false);
+  const [total_orders, set_total_orders] = useState([]);
   const { loading, affiliates, message, error } = affiliateList;
 
   const affiliateSave = useSelector(state => state.affiliateSave);
@@ -45,38 +29,22 @@ const AffiliatesPage = props => {
 
   const dispatch = useDispatch();
 
-  const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
+  const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
   const date = new Date();
-  const [ month, set_month ] = useState(months[date.getMonth()]);
-  const [ year, set_year ] = useState(date.getFullYear());
+  const [month, set_month] = useState(months[date.getMonth()]);
+  const [year, set_year] = useState(date.getFullYear());
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        dispatch(listAffiliates({}));
-        dispatch(listOrders({}));
-        get_last_months_orders();
-        get_total_orders();
-      }
-      return () => (clean = false);
-    },
-    [ successDelete ]
-  );
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      dispatch(listAffiliates({}));
+      dispatch(listOrders({}));
+      get_last_months_orders();
+      get_total_orders();
+    }
+    return () => (clean = false);
+  }, [successDelete]);
   const submitHandler = e => {
     e.preventDefault();
     dispatch(listAffiliates({ category, search, sort }));
@@ -103,21 +71,14 @@ const AffiliatesPage = props => {
     dispatch(deleteAffiliate(pathname));
   };
 
-  const sort_options = [
-    "Newest",
-    "Artist Name",
-    "Facebook Name",
-    "Instagram Handle",
-    "Sponsor",
-    "Promoter",
-  ];
+  const sort_options = ["Newest", "Artist Name", "Facebook Name", "Instagram Handle", "Sponsor", "Promoter"];
 
   const colors = [
     { name: "Sponsor", color: "#3e4c6d" },
     { name: "Promoter", color: "#7d5555" },
     { name: "Team", color: "#557d6c" },
     { name: "Not Active", color: "#757575" },
-    { name: "Rave Mob", color: "#55797d" },
+    { name: "Rave Mob", color: "#55797d" }
   ];
 
   const determine_color = affiliate => {
@@ -170,7 +131,7 @@ const AffiliatesPage = props => {
   const get_code_usage = async affiliate => {
     // console.log({ pathname: affiliate.pathname });
     const {
-      data: { number_of_uses, revenue },
+      data: { number_of_uses, revenue }
     } = await API_Promos.get_code_usage(affiliate.public_code.promo_code);
     console.log({ number_of_uses, revenue });
     return { number_of_uses, revenue };
@@ -182,7 +143,7 @@ const AffiliatesPage = props => {
     dispatch(
       saveAffiliate({
         ...affiliate,
-        active: affiliate.active ? false : true,
+        active: affiliate.active ? false : true
       })
     );
     dispatch(listAffiliates({}));
@@ -213,13 +174,21 @@ const AffiliatesPage = props => {
                     backgroundColor: color.color,
                     height: "20px",
                     width: "60px",
-                    borderRadius: "5px",
+                    borderRadius: "5px"
                   }}
                 />
               </div>
             );
           })}
         </div>
+        {/* <GLButton variant="primary" className="h-40px">
+          Upload CSV */}
+        {/* <CSVReader onFileLoaded={(data, fileInfo) => upload_rave_mob_csv(data, fileInfo)} /> */}
+        <CSVReader
+          onFileLoaded={(data, fileInfo, originalFile) => upload_rave_mob_csv(data, fileInfo, originalFile)}
+          label="Upload Rave Mob CSV"
+        />
+        {/* </GLButton> */}
         <Link to="/pages/affiliate_terms">
           <GLButton variant="primary">Affiliate Terms</GLButton>
         </Link>
@@ -231,16 +200,8 @@ const AffiliatesPage = props => {
       <div className="jc-c">
         <h1 style={{ textAlign: "center" }}>Affiliates</h1>
       </div>
-      <div
-        className="search_and_sort row jc-c ai-c"
-        style={{ overflowX: "scroll" }}
-      >
-        <Search
-          search={search}
-          set_search={set_search}
-          submitHandler={submitHandler}
-          category={category}
-        />
+      <div className="search_and_sort row jc-c ai-c" style={{ overflowX: "scroll" }}>
+        <Search search={search} set_search={set_search} submitHandler={submitHandler} category={category} />
         <Sort sortHandler={sortHandler} sort_options={sort_options} />
       </div>
       <Notification message={message} />
@@ -274,81 +235,46 @@ const AffiliatesPage = props => {
                     key={index}
                     style={{
                       backgroundColor: determine_color(affiliate),
-                      fontSize: "16px",
+                      fontSize: "16px"
                     }}
                   >
                     {/* <td className="p-10px">{affiliate._id}</td> */}
                     <td className="p-10px">{affiliate.artist_name}</td>
                     <td className="p-10px">{affiliate.instagram_handle}</td>
                     {/* <td className="p-10px">{affiliate.facebook_name}</td> */}
-                    <td className="p-10px">
-                      {affiliate.private_code &&
-                        affiliate.private_code.percentage_off}%
-                    </td>
+                    <td className="p-10px">{affiliate.private_code && affiliate.private_code.percentage_off}%</td>
                     <td className="p-10px">{affiliate.venmo}</td>
                     {/* <td className="p-10px">{get_code_usage(affiliate).revenue}</td>
 										<td className="p-10px">{get_code_usage(affiliate).number_of_uses}</td> */}
+                    <td className="p-10px">{affiliate.public_code && affiliate.public_code.promo_code}</td>
+                    <td className="p-10px">{affiliate.private_code && affiliate.private_code.promo_code}</td>
                     <td className="p-10px">
-                      {affiliate.public_code &&
-                        affiliate.public_code.promo_code}
+                      {affiliate.sponsor ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
                     </td>
                     <td className="p-10px">
-                      {affiliate.private_code &&
-                        affiliate.private_code.promo_code}
+                      {affiliate.promoter ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
                     </td>
                     <td className="p-10px">
-                      {affiliate.sponsor ? (
-                        <i className="fas fa-check-circle" />
-                      ) : (
-                        <i className="fas fa-times-circle" />
-                      )}
-                    </td>
-                    <td className="p-10px">
-                      {affiliate.promoter ? (
-                        <i className="fas fa-check-circle" />
-                      ) : (
-                        <i className="fas fa-times-circle" />
-                      )}
-                    </td>
-                    <td className="p-10px">
-                      {affiliate.rave_mob ? (
-                        <i className="fas fa-check-circle" />
-                      ) : (
-                        <i className="fas fa-times-circle" />
-                      )}
+                      {affiliate.rave_mob ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
                     </td>
                     <td className="p-10px">
                       <GLButton
                         variant="icon"
                         onClick={() => change_affiliate_status(affiliate)}
-                        aria-label={
-                          affiliate.active ? "deactivate" : "activate"
-                        }
+                        aria-label={affiliate.active ? "deactivate" : "activate"}
                       >
-                        {affiliate.active ? (
-                          <i className="fas fa-check-circle" />
-                        ) : (
-                          <i className="fas fa-times-circle" />
-                        )}
+                        {affiliate.active ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
                       </GLButton>
                     </td>
 
                     <td className="p-10px">
                       <div className="jc-b">
-                        <Link
-                          to={
-                            "/secure/glow/editaffiliate/" + affiliate.pathname
-                          }
-                        >
+                        <Link to={"/secure/glow/editaffiliate/" + affiliate.pathname}>
                           <GLButton variant="icon" aria-label="Edit">
                             <i className="fas fa-edit" />
                           </GLButton>
                         </Link>
-                        <GLButton
-                          variant="icon"
-                          onClick={() => deleteHandler(affiliate.pathname)}
-                          aria-label="Delete"
-                        >
+                        <GLButton variant="icon" onClick={() => deleteHandler(affiliate.pathname)} aria-label="Delete">
                           <i className="fas fa-trash-alt" />
                         </GLButton>
                       </div>
