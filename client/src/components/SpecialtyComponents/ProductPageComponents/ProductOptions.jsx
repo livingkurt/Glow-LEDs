@@ -9,6 +9,7 @@ import {
 } from "../../../utils/react_helper_functions";
 import useWindowDimensions from "../../Hooks/windowDimensions";
 import { GLButton } from "../../GlowLEDsComponents";
+import ReactTooltip from "react-tooltip";
 
 const ProductOptions = ({
   product,
@@ -108,14 +109,20 @@ const ProductOptions = ({
   const categories_hide_add_to_cart = ["exo_diffusers"];
 
   const determine_add_to_cart = (product, secondary_product, count_in_stock, option_product_object) => {
+    let variant = "primary";
     if (names_hide_add_to_cart.includes(product.name) && !secondary_product) {
-      return <div />;
+      variant = "disabled";
     }
     if (categories_hide_add_to_cart.includes(product.category) && !secondary_product) {
-      return <div />;
+      variant = "disabled";
     }
     return (
-      <GLButton variant="primary" className="bob mt-10px w-100per" onClick={handleAddToCart}>
+      <GLButton
+        variant={variant}
+        className={`${variant !== "disabled" && "bob"} mt-10px w-100per`}
+        tooltip={variant === "disabled" && "You must choose an option before adding to you cart"}
+        onClick={handleAddToCart}
+      >
         {determine_preorder(option_product_object, count_in_stock, "Add To Cart")}
       </GLButton>
     );

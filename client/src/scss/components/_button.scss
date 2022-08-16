@@ -1,47 +1,54 @@
-@use '../abstracts' as *;
+@use "../abstracts" as *;
 
 // Button
 
 button {
-	font-size: $font_size;
+  font-size: $font_size;
 }
 
 .btn {
-	box-shadow: $bs_shallow;
-	background-color: transparent;
-	color: $theme_color_phrase_font;
-	border: 0px;
-	font-family: $phrase_font;
-	border-radius: $br_small_containers;
-	transition: all .5s ease;
-	padding: 10px;
+  box-shadow: $bs_shallow;
+  background-color: transparent;
+  color: $theme_color_phrase_font;
+  border: 0px;
+  font-family: $phrase_font;
+  border-radius: $br_small_containers;
+  transition: all 0.5s ease;
+  padding: 10px;
+  cursor: pointer;
 }
 .btn-no-s {
-	background: none;
-	color: inherit;
-	border: none;
-	padding: 0;
-	font: inherit;
-	cursor: pointer;
-	outline: inherit;
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
 }
 
 .btn:hover {
-	box-shadow: $bs_deep;
-	background-color: #bebcbc;
+  box-shadow: $bs_deep;
+  background-color: #bebcbc;
 }
 
 // .btn.primary {
 // 	background-color: #586086;
 // }
 .btn.primary {
-	// background-color: $theme_color_primary;
-	background: linear-gradient(180deg, $theme_color_primary 50%, $theme_color_secondary 100%);
+  // background-color: $theme_color_primary;
+  background: linear-gradient(180deg, $theme_color_primary 50%, $theme_color_secondary 100%);
 }
 
 .btn.primary:hover {
-	box-shadow: $bs_deep;
-	background-color: $theme_color_primary_hover;
+  box-shadow: $bs_deep;
+  background-color: $theme_color_primary_hover;
+}
+
+.btn.disabled {
+  background: #3f3f3f;
+  color: #727171;
+  box-shadow: inset 0 2px 4px 0 rgb(0 0 0 / 20%), 0 3px 10px 0 rgb(0 0 0 / 19%);
 }
 // .btn.primary {
 // 	background-color: #865858;
@@ -53,23 +60,23 @@ button {
 // }
 
 .btn.secondary {
-	background-color: $theme_color_secondary;
+  background-color: $theme_color_secondary;
 }
 
 .btn.secondary:hover {
-	box-shadow: $bs_deep;
-	background-color: $theme_color_secondary_hover;
+  box-shadow: $bs_deep;
+  background-color: $theme_color_secondary_hover;
 }
 
 .off {
-	box-shadow: $bs_shallow;
-	color: $theme_color_phrase_font;
-	border: 0px;
-	font-family: $phrase_font;
-	border-radius: $br_small_containers;
-	transition: all .5s ease;
-	padding: 10px;
-	background-color: $theme_color_off;
+  box-shadow: $bs_shallow;
+  color: $theme_color_phrase_font;
+  border: 0px;
+  font-family: $phrase_font;
+  border-radius: $br_small_containers;
+  transition: all 0.5s ease;
+  padding: 10px;
+  background-color: $theme_color_off;
 }
 
 // .off:hover {
@@ -78,51 +85,51 @@ button {
 // 	color: $theme_color_primary !important;
 // }
 .on {
-	box-shadow: $bs_shallow;
-	color: $theme_color_phrase_font;
-	border: 0px;
-	font-family: $phrase_font;
-	border-radius: $br_small_containers;
-	transition: all .5s ease;
-	padding: 10px;
-	background-color: $theme_color_on;
+  box-shadow: $bs_shallow;
+  color: $theme_color_phrase_font;
+  border: 0px;
+  font-family: $phrase_font;
+  border-radius: $br_small_containers;
+  transition: all 0.5s ease;
+  padding: 10px;
+  background-color: $theme_color_on;
 }
 
 .on:hover {
-	box-shadow: $bs_deep;
-	background-color: $theme_color_on_hover;
-	color: $theme_color_on !important;
+  box-shadow: $bs_deep;
+  background-color: $theme_color_on_hover;
+  color: $theme_color_on !important;
 }
 
 .inactive {
-	box-shadow: $bs_shallow;
-	background-color: transparent;
-	color: $theme_color_phrase_font;
-	border: 0px;
-	font-family: $phrase_font;
-	border-radius: $br_small_containers;
-	transition: all .5s ease;
-	padding: 10px;
-	background-color: $theme_color_inactive;
+  box-shadow: $bs_shallow;
+  background-color: transparent;
+  color: $theme_color_phrase_font;
+  border: 0px;
+  font-family: $phrase_font;
+  border-radius: $br_small_containers;
+  transition: all 0.5s ease;
+  padding: 10px;
+  background-color: $theme_color_inactive;
 }
 
 .btn.nav {
-	background-color: transparent;
-	box-shadow: unset;
+  background-color: transparent;
+  box-shadow: unset;
 }
 
 .btn.icon {
-	box-shadow: unset;
-	padding: 6px 10px;
+  box-shadow: unset;
+  padding: 6px 10px;
 }
 
 .btn.icon:hover {
-	box-shadow: $bs_deep;
-	background-color: $theme_color_primary_hover;
+  box-shadow: $bs_deep;
+  background-color: $theme_color_primary_hover;
 }
 .btn.icon.primary:hover {
-	box-shadow: $bs_deep;
-	background-color: $theme_color_primary_hover;
+  box-shadow: $bs_deep;
+  background-color: $theme_color_primary_hover;
 }
 
 // .btn.icon:hover {
@@ -131,27 +138,27 @@ button {
 // }
 
 .btn.mobile.nav {
-	background-color: transparent;
-	box-shadow: unset;
+  background-color: transparent;
+  box-shadow: unset;
 }
 
 .btn.nav:hover,
 .btn.mobile.nav:hover {
-	box-shadow: $bs_deep;
-	background-color: gray;
+  box-shadow: $bs_deep;
+  background-color: gray;
 }
 .side-bar-open {
-	font-size: 30px !important;
-	// position: relative;
-	// top: -27px;
-	// left: 0;
-	background-color: transparent;
-	color: $theme_color_phrase_font;
-	border: 0px;
-	font-family: $phrase_font;
-	border-radius: $br_small_containers;
-	transition: all .5s ease;
-	padding: 10px;
+  font-size: 30px !important;
+  // position: relative;
+  // top: -27px;
+  // left: 0;
+  background-color: transparent;
+  color: $theme_color_phrase_font;
+  border: 0px;
+  font-family: $phrase_font;
+  border-radius: $br_small_containers;
+  transition: all 0.5s ease;
+  padding: 10px;
 }
 
 // .side-bar-open:hover {
@@ -165,31 +172,31 @@ button {
 // }
 
 .cart_sidebar_close_button {
-	border-radius: 50%;
-	font-size: 2rem;
-	padding-top: 0;
-	cursor: pointer;
-	position: absolute;
-	right: .5rem;
-	top: 1rem;
-	background-color: transparent;
-	border: 0;
-	color: $theme_color_phrase_font;
+  border-radius: 50%;
+  font-size: 2rem;
+  padding-top: 0;
+  cursor: pointer;
+  position: absolute;
+  right: 0.5rem;
+  top: 1rem;
+  background-color: transparent;
+  border: 0;
+  color: $theme_color_phrase_font;
 }
 
 .sidebar_close_button {
-	margin-left: -5px;
-	border-radius: 10px;
-	font-size: 2rem;
-	height: 56px;
-	padding: 0;
-	cursor: pointer;
-	// position: absolute;
-	// right: .5rem;
-	// top: 1.5rem;
-	background-color: transparent;
-	border: 0;
-	color: $theme_color_phrase_font;
+  margin-left: -5px;
+  border-radius: 10px;
+  font-size: 2rem;
+  height: 56px;
+  padding: 0;
+  cursor: pointer;
+  // position: absolute;
+  // right: .5rem;
+  // top: 1.5rem;
+  background-color: transparent;
+  border: 0;
+  color: $theme_color_phrase_font;
 }
 // .sidebar_close_button:hover {
 // 	box-shadow: $bs_deep;
@@ -197,74 +204,74 @@ button {
 // }
 
 .sidebar-btn {
-	box-shadow: $bs_shallow;
-	background-color: transparent;
-	color: $theme_color_phrase_font;
-	border: 0px;
-	font-family: $phrase_font;
-	border-radius: $br_small_containers;
-	transition: all .5s ease;
-	padding: 10px;
+  box-shadow: $bs_shallow;
+  background-color: transparent;
+  color: $theme_color_phrase_font;
+  border: 0px;
+  font-family: $phrase_font;
+  border-radius: $br_small_containers;
+  transition: all 0.5s ease;
+  padding: 10px;
 }
 
 .sidebar-btn.primary {
-	border-bottom: 1px white solid;
-	width: 100%;
-	border-radius: 0px;
-	text-align: start;
+  border-bottom: 1px white solid;
+  width: 100%;
+  border-radius: 0px;
+  text-align: start;
 }
 
 .sidebar-btn.secondary {
-	border-bottom: 1px white solid;
-	width: 100%;
-	border-radius: 0px;
-	text-align: start;
-	padding-left: 20px;
+  border-bottom: 1px white solid;
+  width: 100%;
+  border-radius: 0px;
+  text-align: start;
+  padding-left: 20px;
 }
 .sidebar-btn.nested {
-	border-bottom: 1px white solid;
-	width: 100%;
-	border-radius: 0px;
-	text-align: start;
-	padding-left: 40px;
+  border-bottom: 1px white solid;
+  width: 100%;
+  border-radius: 0px;
+  text-align: start;
+  padding-left: 40px;
 }
 .sidebar-btn.nested-2 {
-	border-bottom: 1px white solid;
-	width: 100%;
-	border-radius: 0px;
-	text-align: start;
-	padding-left: 60px;
+  border-bottom: 1px white solid;
+  width: 100%;
+  border-radius: 0px;
+  text-align: start;
+  padding-left: 60px;
 }
 .sidebar-btn.nested-3 {
-	border-bottom: 1px white solid;
-	width: 100%;
-	border-radius: 0px;
-	text-align: start;
-	padding-left: 80px;
+  border-bottom: 1px white solid;
+  width: 100%;
+  border-radius: 0px;
+  text-align: start;
+  padding-left: 80px;
 }
 
 .sidebar-btn.icon {
-	// box-shadow: $bs_shallow;
-	background-color: transparent;
-	color: $theme_color_phrase_font;
-	border: 0px;
-	font-family: $phrase_font;
-	// border-radius: $br_small_containers;
-	transition: all .5s ease;
-	// padding: 10px;
-	box-shadow: unset;
-	padding: 2px 0px;
-	width: 20%;
-	text-align: left;
-	// margin-left: 124px;
+  // box-shadow: $bs_shallow;
+  background-color: transparent;
+  color: $theme_color_phrase_font;
+  border: 0px;
+  font-family: $phrase_font;
+  // border-radius: $br_small_containers;
+  transition: all 0.5s ease;
+  // padding: 10px;
+  box-shadow: unset;
+  padding: 2px 0px;
+  width: 20%;
+  text-align: left;
+  // margin-left: 124px;
 }
 
 .banner-button {
-	background-color: transparent;
-	color: white;
-	font-size: 14px;
-	border-radius: 5px;
-	border: 1px white solid;
-	font-family: 'phrase_font';
-	padding-top: 3px;
+  background-color: transparent;
+  color: white;
+  font-size: 14px;
+  border-radius: 5px;
+  border: 1px white solid;
+  font-family: "phrase_font";
+  padding-top: 3px;
 }

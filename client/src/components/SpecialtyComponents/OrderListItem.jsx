@@ -3,49 +3,25 @@ import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import {
-  determine_tracking_number,
-  determnine_link,
-  format_date,
-  getUrlParameter,
-  toCapitalize,
-} from "../../utils/helper_functions";
-import {
-  createOrder,
-  deleteOrder,
-  detailsOrder,
-  listOrders,
-  saveOrder,
-  update_order,
-  update_payment,
-} from "../../actions/orderActions";
+import { determine_tracking_number, determnine_link, format_date, getUrlParameter, toCapitalize } from "../../utils/helper_functions";
+import { createOrder, deleteOrder, detailsOrder, listOrders, saveOrder, update_order, update_payment } from "../../actions/orderActions";
 import { LazyImage, Loading } from "../UtilityComponents";
-import {
-  determine_product_name,
-  determine_product_name_string,
-} from "../../utils/react_helper_functions";
+import { determine_product_name, determine_product_name_string } from "../../utils/react_helper_functions";
 import { OrderStatusButtons } from "./OrderPageComponents";
 import { API_Emails, API_Orders, API_Shipping } from "../../utils";
 import ReactTooltip from "react-tooltip";
 import { GLButton } from "../GlowLEDsComponents";
 
-const OrderListItem = ({
-  order,
-  determine_color,
-  admin,
-  send_email,
-  send_paid_email,
-  listOrdersFilters,
-}) => {
+const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_email, listOrdersFilters }) => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const [ loading_label, set_loading_label ] = useState(false);
-  const [ loading_email, set_loading_email ] = useState("");
-  const [ hide_label_button, set_hide_label_button ] = useState(true);
-  const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
-  const [ order_items, set_order_items ] = useState(order.orderItems);
+  const [loading_label, set_loading_label] = useState(false);
+  const [loading_email, set_loading_email] = useState("");
+  const [hide_label_button, set_hide_label_button] = useState(true);
+  const [loading_checkboxes, set_loading_checkboxes] = useState(true);
+  const [order_items, set_order_items] = useState(order.orderItems);
 
-  const [ order_state, set_order_state ] = useState(order);
+  const [order_state, set_order_state] = useState(order);
   const userLogin = useSelector(state => state.userLogin);
   const { userInfo } = userLogin;
   setTimeout(() => {
@@ -69,8 +45,7 @@ const OrderListItem = ({
     const email = order.shipping.email;
     const subject = "About Your Glow LEDs Order";
     const emailBody = "Hi " + order.user.first_name + ",";
-    document.location =
-      "mailto:" + email + "?subject=" + subject + "&body=" + emailBody;
+    document.location = "mailto:" + email + "?subject=" + subject + "&body=" + emailBody;
   };
 
   const create_duplicate_order = () => {
@@ -84,16 +59,15 @@ const OrderListItem = ({
           ...order.shipping,
           shipment_id: null,
           shipping_rate: null,
-          shipping_label: null,
+          shipping_label: null
         },
         itemsPrice: order.itemsPrice,
         shippingPrice: 0,
         taxPrice: 0,
         totalPrice: 0,
         user: order.user._id,
-        order_note: `Replacement Order for ${order.shipping.first_name} ${order
-          .shipping.last_name} - Original Order Number is ${order._id}`,
-        production_note: order.production_note,
+        order_note: `Replacement Order for ${order.shipping.first_name} ${order.shipping.last_name} - Original Order Number is ${order._id}`,
+        production_note: order.production_note
       })
     );
     dispatch(listOrders({}));
@@ -119,8 +93,8 @@ const OrderListItem = ({
     const frameDoc = frame1.contentWindow
       ? frame1.contentWindow
       : frame1.contentDocument.document
-        ? frame1.contentDocument.document
-        : frame1.contentDocument;
+      ? frame1.contentDocument.document
+      : frame1.contentDocument;
     frameDoc.document.open();
     frameDoc.document.write("</head><body>");
     frameDoc.document.write(`<div style="width: 100%;
@@ -131,7 +105,7 @@ const OrderListItem = ({
     </div>`);
     frameDoc.document.write("</body></html>");
     frameDoc.document.close();
-    setTimeout(function() {
+    setTimeout(function () {
       window.frames["frame1"].focus();
       window.frames["frame1"].print();
       document.body.removeChild(frame1);
@@ -155,14 +129,14 @@ const OrderListItem = ({
     const frameDoc = frame1.contentWindow
       ? frame1.contentWindow
       : frame1.contentDocument.document
-        ? frame1.contentDocument.document
-        : frame1.contentDocument;
+      ? frame1.contentDocument.document
+      : frame1.contentDocument;
     frameDoc.document.open();
     frameDoc.document.write("</head><body>");
     frameDoc.document.write(contents);
     frameDoc.document.write("</body></html>");
     frameDoc.document.close();
-    setTimeout(function() {
+    setTimeout(function () {
       window.frames["frame1"].focus();
       window.frames["frame1"].print();
       document.body.removeChild(frame1);
@@ -173,10 +147,7 @@ const OrderListItem = ({
   const buy_label = async () => {
     set_loading_label(true);
     const { data: invoice } = await API_Orders.get_invoice(order);
-    const { data } = await API_Shipping.buy_label(
-      order.shipping.shipment_id,
-      order.shipping.shipping_rate
-    );
+    const { data } = await API_Shipping.buy_label(order.shipping.shipment_id, order.shipping.shipping_rate);
     setTimeout(() => {
       print_invoice(invoice);
     }, 1500);
@@ -196,11 +167,7 @@ const OrderListItem = ({
   const create_label = async speed => {
     set_loading_label(true);
     const { data: invoice } = await API_Orders.get_invoice(order);
-    const { data } = await API_Shipping.create_label(
-      order,
-      order.shipping.shipping_rate,
-      speed
-    );
+    const { data } = await API_Shipping.create_label(order, order.shipping.shipping_rate, speed);
     setTimeout(() => {
       print_invoice(invoice);
     }, 1500);
@@ -218,55 +185,37 @@ const OrderListItem = ({
 
   const send_order_email = async () => {
     set_loading_label(true);
-    await API_Emails.send_order_email(
-      order,
-      "Thank you for your Glow LEDs Order",
-      order.shipping.email
-    );
-    await API_Emails.send_order_email(
-      order,
-      "New Order Created by " + order.shipping.first_name,
-      process.env.REACT_APP_INFO_EMAIL
-    );
+    await API_Emails.send_order_email(order, "Thank you for your Glow LEDs Order", order.shipping.email);
+    await API_Emails.send_order_email(order, "New Order Created by " + order.shipping.first_name, process.env.REACT_APP_INFO_EMAIL);
 
     set_loading_label(false);
   };
   const send_refund_email = async () => {
     set_loading_label(true);
-    await API_Emails.send_refund_email(
-      order,
-      "Refund Successful",
-      order.shipping.email,
-      true
-    );
-    await API_Emails.send_refund_email(
-      order,
-      "New Refunded for " + order.shipping.first_name,
-      process.env.REACT_APP_INFO_EMAIL,
-      true
-    );
+    await API_Emails.send_refund_email(order, "Refund Successful", order.shipping.email, true);
+    await API_Emails.send_refund_email(order, "New Refunded for " + order.shipping.first_name, process.env.REACT_APP_INFO_EMAIL, true);
 
     set_loading_label(false);
   };
 
   const check_item_as_manufactured = async index => {
-    let new_order_items = [ ...order_items ];
+    let new_order_items = [...order_items];
     new_order_items[index] = {
       ...new_order_items[index],
-      is_manufactured: order_items[index].is_manufactured ? false : true,
+      is_manufactured: order_items[index].is_manufactured ? false : true
     };
     console.log({
-      new_order_items: new_order_items.map(item => item.is_manufactured),
+      new_order_items: new_order_items.map(item => item.is_manufactured)
     });
     set_order_items(new_order_items);
     set_order_state({
       ...order,
-      orderItems: [ ...new_order_items ],
+      orderItems: [...new_order_items]
     });
     dispatch(
       saveOrder({
         ...order,
-        orderItems: [ ...new_order_items ],
+        orderItems: [...new_order_items]
       })
     );
   };
@@ -306,10 +255,7 @@ const OrderListItem = ({
   };
 
   return (
-    <div
-      className="container"
-      style={{ backgroundColor: determine_color(order) }}
-    >
+    <div className="container" style={{ backgroundColor: determine_color(order) }}>
       <Loading loading={loading_label} />
       <ReactTooltip className="br-10px" />
       <div style={{ borderBottom: "1px solid white" }}>
@@ -323,72 +269,46 @@ const OrderListItem = ({
               <h3>Total</h3>
               {!order.isRefunded && (
                 <div>
-                  <div>
-                    ${order.totalPrice ? (
-                      order.totalPrice.toFixed(2)
-                    ) : (
-                      order.totalPrice
-                    )}
-                  </div>
+                  <div>${order.totalPrice ? order.totalPrice.toFixed(2) : order.totalPrice}</div>
                 </div>
               )}
               {order.isRefunded && (
                 <div>
                   <del style={{ color: "red" }}>
                     <label style={{ color: "white" }}>
-                      <div>
-                        ${order.totalPrice ? (
-                          order.totalPrice.toFixed(2)
-                        ) : (
-                          order.totalPrice
-                        )}
-                      </div>
+                      <div>${order.totalPrice ? order.totalPrice.toFixed(2) : order.totalPrice}</div>
                     </label>
                   </del>
                 </div>
               )}
               {order.isRefunded && (
                 <div>
-                  <div>
-                    -${(order.payment.refund.reduce((a, c) => a + c.amount, 0) /
-                      100).toFixed(2)}
-                  </div>
+                  <div>-${(order.payment.refund.reduce((a, c) => a + c.amount, 0) / 100).toFixed(2)}</div>
                 </div>
               )}
               {order.isRefunded && (
                 <div>
-                  <div>
-                    ${(order.totalPrice -
-                      order.payment.refund.reduce((a, c) => a + c.amount, 0) /
-                        100).toFixed(2)}
-                  </div>
+                  <div>${(order.totalPrice - order.payment.refund.reduce((a, c) => a + c.amount, 0) / 100).toFixed(2)}</div>
                 </div>
               )}
             </div>
             {admin && (
               <div className="fs-16px">
                 <h3>Since Order</h3>
-                {daysBetween(today, order.createdAt) > 1 ? (
-                  `${daysBetween(today, order.createdAt)} Days`
-                ) : (
-                  `${daysBetween(today, order.createdAt)} Day`
-                )}
+                {daysBetween(today, order.createdAt) > 1
+                  ? `${daysBetween(today, order.createdAt)} Days`
+                  : `${daysBetween(today, order.createdAt)} Day`}
               </div>
             )}
             <div className="fs-16px">
               <h3>Ship To</h3>
-              <Link
-                to={`/secure/glow/userprofile/${order.user && order.user._id}`}
-              >
+              <Link to={`/secure/glow/userprofile/${order.user && order.user._id}`}>
                 {order.shipping.first_name} {order.shipping.last_name}
               </Link>
             </div>
-            {userInfo &&
-            userInfo.isAdmin &&
-            order.shipping.shipping_rate && (
+            {userInfo && userInfo.isAdmin && order.shipping.shipping_rate && (
               <p className="title_font ai-c fs-30px">
-                {order.shipping.shipping_rate.service !== "First" &&
-                  order.shipping.shipping_rate.service}{" "}
+                {order.shipping.shipping_rate.service !== "First" && order.shipping.shipping_rate.service}{" "}
               </p>
             )}
           </div>
@@ -412,7 +332,7 @@ const OrderListItem = ({
                         className="mv-2rem"
                         style={{
                           textDecoration: "underline",
-                          color: "white",
+                          color: "white"
                         }}
                       >
                         {order.tracking_number}
@@ -425,8 +345,7 @@ const OrderListItem = ({
                 <Link
                   to={{
                     pathname: "/secure/account/order/" + order._id,
-                    previous_path:
-                      history.location.pathname + history.location.search,
+                    previous_path: history.location.pathname + history.location.search
                   }}
                 >
                   <GLButton variant="primary">Order Details</GLButton>
@@ -435,8 +354,7 @@ const OrderListItem = ({
             </div>
           </div>
         </div>
-        {userInfo &&
-        userInfo.isAdmin && (
+        {userInfo && userInfo.isAdmin && (
           <div>
             {order.order_note && (
               <li className="row mv-2rem">
@@ -482,14 +400,7 @@ const OrderListItem = ({
             {order.orderItems.map((item, index) => {
               return (
                 <div className="row mt-15px" key={index}>
-                  <div
-                    className="column ai-c pos-rel"
-                    data-tip={determine_product_name_string(
-                      item,
-                      true,
-                      order.createdAt
-                    )}
-                  >
+                  <div className="column ai-c pos-rel" data-tip={determine_product_name_string(item, true, order.createdAt)}>
                     <Link to={determnine_link(item)}>
                       <div className="">
                         {!item.secondary_image && (
@@ -502,30 +413,21 @@ const OrderListItem = ({
                           />
                         )}
                         {item.secondary_image && (
-                          <div
-                            className={` double-image-cart${item.name &&
-                            item.name.split("-")[1] === "2 Tone"
-                              ? "-vertical"
-                              : " row"}`}
-                          >
+                          <div className={` double-image-cart${item.name && item.name.split("-")[1] === "2 Tone" ? "-vertical" : " row"}`}>
                             <LazyImage
                               id="expandedImg"
                               alt={item.name}
                               title={item.name}
-                              className={`details-image-cart-${item.name &&
-                              item.name.split("-")[1] === "2 Tone"
-                                ? "top"
-                                : "left"} m-0px`}
+                              className={`details-image-cart-${item.name && item.name.split("-")[1] === "2 Tone" ? "top" : "left"} m-0px`}
                               src={item.display_image}
                             />
                             <LazyImage
                               id="expandedSecondaryImg"
                               alt={item.name}
                               title={item.name}
-                              className={`details-image-cart-${item.name &&
-                              item.name.split("-")[1] === "2 Tone"
-                                ? "bottom"
-                                : "right"} mr-15px`}
+                              className={`details-image-cart-${
+                                item.name && item.name.split("-")[1] === "2 Tone" ? "bottom" : "right"
+                              } mr-15px`}
                               src={item.secondary_image}
                             />
                           </div>
@@ -538,14 +440,13 @@ const OrderListItem = ({
                         style={{
                           backgroundColor: "white",
                           color: "black",
-                          border: "1px solid #ccc",
+                          border: "1px solid #ccc"
                         }}
                       >
                         <div className="mt-3px ml-2px">{item.qty}</div>
                       </div>
                     )}
-                    {userInfo &&
-                    userInfo.isAdmin && (
+                    {userInfo && userInfo.isAdmin && (
                       <div>
                         {loading_checkboxes ? (
                           <div>Loading...</div>
@@ -556,7 +457,7 @@ const OrderListItem = ({
                               name="is_manufactured"
                               defaultChecked={item.is_manufactured}
                               style={{
-                                transform: "scale(1.5)",
+                                transform: "scale(1.5)"
                               }}
                               className=""
                               id="is_manufactured"
@@ -577,34 +478,20 @@ const OrderListItem = ({
         <div className="small_screen_order jc-b">
           <div className="mv-auto">
             {order.orderItems.map((item, index) => {
-              return (
-                <div key={index}>
-                  {determine_product_name(item, true, order.createdAt)}
-                </div>
-              );
+              return <div key={index}>{determine_product_name(item, true, order.createdAt)}</div>;
             })}
           </div>
         </div>
         {order.orderItems.length > 0 && (
-          <Link
-            to={"/collections/all/products/" + order.orderItems[0].category}
-            className="ai-c ml-1rem"
-          >
+          <Link to={"/collections/all/products/" + order.orderItems[0].category} className="ai-c ml-1rem">
             <GLButton variant="primary">Buy Again</GLButton>
           </Link>
         )}
 
         {admin && (
           <div className="jc-fe column ml-auto ">
-            <GLButton
-              variant="icon"
-              className="h-3rem "
-              onClick={() => show_hide(order._id)}
-            >
-              <i
-                style={{ WebkitTransform: "rotate(-180deg)" }}
-                className="top-8px fas fa-sort-up"
-              />
+            <GLButton variant="icon" className="h-3rem " onClick={() => show_hide(order._id)}>
+              <i style={{ WebkitTransform: "rotate(-180deg)" }} className="top-8px fas fa-sort-up" />
             </GLButton>
           </div>
         )}
@@ -612,10 +499,7 @@ const OrderListItem = ({
 
       {admin && (
         <div id={order._id} className="expanded-row-content hide-row">
-          <div
-            className="w-100per jc-b pt-10px mt-10px"
-            style={{ borderTop: "1px solid white" }}
-          >
+          <div className="w-100per jc-b pt-10px mt-10px" style={{ borderTop: "1px solid white" }}>
             <div className=" ">
               <h2>Shipping</h2>
               <div className="paragraph_font lh-25px">
@@ -626,8 +510,7 @@ const OrderListItem = ({
                   {order.shipping.address_1} {order.shipping.address_2}
                 </div>
                 <div>
-                  {order.shipping.city}, {order.shipping.state}{" "}
-                  {order.shipping.postalCode}
+                  {order.shipping.city}, {order.shipping.state} {order.shipping.postalCode}
                 </div>
                 <div>{order.shipping.country}</div>
                 <div>{order.shipping.international && "International"}</div>
@@ -639,11 +522,7 @@ const OrderListItem = ({
               <div>
                 <div className="row ai-c">
                   <div className="mv-5px">
-                    {order.isPaid ? (
-                      <i className="fas fa-check-circle" />
-                    ) : (
-                      <i className="fas fa-times-circle" />
-                    )}
+                    {order.isPaid ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
                   </div>
                   <div className="mh-10px">Paid</div>
                   <div>{!order.paidAt ? "" : format_date(order.paidAt)}</div>
@@ -652,69 +531,41 @@ const OrderListItem = ({
               <div>
                 <div className="row ai-c">
                   <div className="mv-5px">
-                    {order.isManufactured ? (
-                      <i className="fas fa-check-circle" />
-                    ) : (
-                      <i className="fas fa-times-circle" />
-                    )}
+                    {order.isManufactured ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
                   </div>
                   <div className="mh-10px">Manufactured</div>
 
-                  <div>
-                    {!order.manufacturedAt ? (
-                      ""
-                    ) : (
-                      format_date(order.manufacturedAt)
-                    )}
-                  </div>
+                  <div>{!order.manufacturedAt ? "" : format_date(order.manufacturedAt)}</div>
                 </div>
               </div>
               <div>
                 <div className="row ai-c">
                   <div className="mv-5px">
-                    {order.isPackaged ? (
-                      <i className="fas fa-check-circle" />
-                    ) : (
-                      <i className="fas fa-times-circle" />
-                    )}
+                    {order.isPackaged ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
                   </div>
                   <div className="mh-10px">Packaged</div>
 
-                  <div>
-                    {!order.packagedAt ? "" : format_date(order.packagedAt)}
-                  </div>
+                  <div>{!order.packagedAt ? "" : format_date(order.packagedAt)}</div>
                 </div>
               </div>
               <div>
                 <div className="row ai-c">
                   <div className="mv-5px">
-                    {order.isShipped ? (
-                      <i className="fas fa-check-circle" />
-                    ) : (
-                      <i className="fas fa-times-circle" />
-                    )}
+                    {order.isShipped ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
                   </div>
                   <div className="mh-10px">Shipped</div>
 
-                  <div>
-                    {!order.shippedAt ? "" : format_date(order.shippedAt)}
-                  </div>
+                  <div>{!order.shippedAt ? "" : format_date(order.shippedAt)}</div>
                 </div>
               </div>
               <div>
                 <div className="row ai-c">
                   <div className="mv-5px row">
-                    {order.isDelivered ? (
-                      <i className="fas fa-check-circle" />
-                    ) : (
-                      <i className="fas fa-times-circle" />
-                    )}
+                    {order.isDelivered ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
                   </div>
                   <div className="mh-10px">Delivered</div>
 
-                  <div>
-                    {!order.deliveredAt ? "" : format_date(order.deliveredAt)}
-                  </div>
+                  <div>{!order.deliveredAt ? "" : format_date(order.deliveredAt)}</div>
                 </div>
               </div>
             </div>
@@ -750,7 +601,7 @@ const OrderListItem = ({
                   className="mv-2rem ml-1rem"
                   style={{
                     textDecoration: "underline",
-                    color: "white",
+                    color: "white"
                   }}
                 >
                   {order.tracking_number}
@@ -758,20 +609,16 @@ const OrderListItem = ({
               </li>
               {order.return_tracking_number && (
                 <li className="row">
-                  <label className="phrase_font">
-                    Return Tracking Number:{" "}
-                  </label>
+                  <label className="phrase_font">Return Tracking Number: </label>
 
                   <a
-                    href={determine_tracking_number(
-                      order.return_tracking_number
-                    )}
+                    href={determine_tracking_number(order.return_tracking_number)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="mv-2rem ml-1rem"
                     style={{
                       textDecoration: "underline",
-                      color: "white",
+                      color: "white"
                     }}
                   >
                     {order.return_tracking_number}
@@ -781,122 +628,66 @@ const OrderListItem = ({
 
               {order.guest && (
                 <li className="row">
-                  <label className="phrase_font">
-                    Guest Order: {order.guest ? "True" : "False"}{" "}
-                  </label>
+                  <label className="phrase_font">Guest Order: {order.guest ? "True" : "False"} </label>
                 </li>
               )}
             </ul>
 
             <div className="jc-b ai-c m-auto max-w-50rem">
               <div className="">
-              <div className="">
-                <GLButton
-                  variant="secondary"
-                  className="w-100per mv-10px"
-                  onClick={() => sendEmail("Hello")}
-                >
-                  Send User a Message
-                </GLButton>
-                <GLButton
-                  variant="secondary"
-                  className="w-100per mv-5px"
-                  onClick={() => create_duplicate_order(order._id)}
-                >
-                  Create Duplicate Order
-                </GLButton>
-                <GLButton variant="secondary" className="w-100per mv-5px">
-                  <Link to={"/secure/glow/editorder/" + order._id}>
-                    Edit Order
-                  </Link>
-                </GLButton>
-                <GLButton
-                  variant="secondary"
-                  onClick={delete_order}
-                  className="w-100per mv-5px"
-                >
-                  Delete Order
-                </GLButton>
-                {hide_label_button &&
-                !order.shipping.shipping_label && (
-                  <GLButton
-                    variant="primary"
-                    onClick={buy_label}
-                    className="w-100per mv-5px"
-                  >
-                    Buy Label
+                <div className="">
+                  <GLButton variant="secondary" className="w-100per mv-10px" onClick={() => sendEmail("Hello")}>
+                    Send User a Message
                   </GLButton>
-                )}
-                {hide_label_button &&
-                !order.shipping.shipping_label && (
-                  <GLButton
-                    variant="primary"
-                    onClick={() => create_label("first")}
-                    className="w-100per mv-5px"
-                  >
-                    {!order.shipping.shipping_label ? (
-                      "Create First Class Label"
-                    ) : (
-                      "Create New First Class  Label"
-                    )}
+                  <GLButton variant="secondary" className="w-100per mv-5px" onClick={() => create_duplicate_order(order._id)}>
+                    Create Duplicate Order
                   </GLButton>
-                )}
-                {hide_label_button &&
-                !order.shipping.shipping_label && (
-                  <GLButton
-                    variant="primary"
-                    onClick={() => create_label("priority")}
-                    className="w-100per mv-5px"
-                  >
-                    {!order.shipping.shipping_label ? (
-                      "Create Priority Label"
-                    ) : (
-                      "Create New Prioirty Label"
-                    )}
+                  <GLButton variant="secondary" className="w-100per mv-5px">
+                    <Link to={"/secure/glow/editorder/" + order._id}>Edit Order</Link>
                   </GLButton>
-                )}
-                {hide_label_button &&
-                !order.shipping.shipping_label && (
-                  <GLButton
-                    variant="primary"
-                    onClick={() => create_label("express")}
-                    className="w-100per mv-5px"
-                  >
-                    {!order.shipping.shipping_label ? (
-                      "Create Express Label"
-                    ) : (
-                      "Create New Express Label"
-                    )}
+                  <GLButton variant="secondary" onClick={delete_order} className="w-100per mv-5px">
+                    Delete Order
                   </GLButton>
-                )}
-                {order.shipping.shipping_label && (
-                  <GLButton
-                    variant="primary"
-                    onClick={view_label}
-                    className="w-100per mv-5px"
-                  >
-                    Print Label
+                  {hide_label_button && !order.shipping.shipping_label && (
+                    <GLButton variant="primary" onClick={buy_label} className="w-100per mv-5px">
+                      Buy Label
+                    </GLButton>
+                  )}
+                  {hide_label_button && !order.shipping.shipping_label && (
+                    <GLButton variant="primary" onClick={() => create_label("first")} className="w-100per mv-5px">
+                      {!order.shipping.shipping_label ? "Create First Class Label" : "Create New First Class  Label"}
+                    </GLButton>
+                  )}
+                  {hide_label_button && !order.shipping.shipping_label && (
+                    <GLButton variant="primary" onClick={() => create_label("priority")} className="w-100per mv-5px">
+                      {!order.shipping.shipping_label ? "Create Priority Label" : "Create New Prioirty Label"}
+                    </GLButton>
+                  )}
+                  {hide_label_button && !order.shipping.shipping_label && (
+                    <GLButton variant="primary" onClick={() => create_label("express")} className="w-100per mv-5px">
+                      {!order.shipping.shipping_label ? "Create Express Label" : "Create New Express Label"}
+                    </GLButton>
+                  )}
+                  {order.shipping.shipping_label && (
+                    <GLButton variant="primary" onClick={view_label} className="w-100per mv-5px">
+                      Print Label
+                    </GLButton>
+                  )}
+                  <GLButton variant="primary" onClick={get_invoice} className="w-100per mv-5px">
+                    Print Invoice
                   </GLButton>
-                )}
-                <GLButton
-                  variant="primary"
-                  onClick={get_invoice}
-                  className="w-100per mv-5px"
-                >
-                  Print Invoice
-                </GLButton>
+                </div>
+              </div>
+              <div className="ml-20px">
+                <OrderStatusButtons
+                  order={order}
+                  update_order_payment_state={update_order_payment_state}
+                  update_order_state={update_order_state}
+                  send_order_email={send_order_email}
+                  send_refund_email={send_refund_email}
+                />
               </div>
             </div>
-            <div className="ml-20px">
-              <OrderStatusButtons
-                order={order}
-                update_order_payment_state={update_order_payment_state}
-                update_order_state={update_order_state}
-                send_order_email={send_order_email}
-                send_refund_email={send_refund_email}
-              />
-             </div>
-             </div>
           </div>
         </div>
       )}
