@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import {
   determine_option_product_name,
   determine_secondary_product_name,
-  product_page_sale_price_switch,
+  product_page_sale_price_switch
 } from "../../../utils/react_helper_functions";
 import useWindowDimensions from "../../Hooks/windowDimensions";
 import { GLButton } from "../../GlowLEDsComponents";
@@ -51,7 +51,7 @@ const ProductOptions = ({
   set_secondary_color_code,
   set_secondary_image,
   has_add_on,
-  set_sale_price,
+  set_sale_price
 }) => {
   const { width } = useWindowDimensions();
   console.log({ ProductOptions: option_products });
@@ -103,35 +103,20 @@ const ProductOptions = ({
     "Capez",
     "CLOZD Omniskinz",
     "CLOZD Omniskinz Sleds",
+    "Nova Clip"
   ];
-  const categories_hide_add_to_cart = [ "exo_diffusers" ];
+  const categories_hide_add_to_cart = ["exo_diffusers"];
 
-  const determine_add_to_cart = (
-    product,
-    secondary_product,
-    count_in_stock,
-    option_product_object
-  ) => {
+  const determine_add_to_cart = (product, secondary_product, count_in_stock, option_product_object) => {
     if (names_hide_add_to_cart.includes(product.name) && !secondary_product) {
       return <div />;
     }
-    if (
-      categories_hide_add_to_cart.includes(product.category) &&
-      !secondary_product
-    ) {
+    if (categories_hide_add_to_cart.includes(product.category) && !secondary_product) {
       return <div />;
     }
     return (
-      <GLButton
-        variant="primary"
-        className="bob mt-10px w-100per"
-        onClick={handleAddToCart}
-      >
-        {determine_preorder(
-          option_product_object,
-          count_in_stock,
-          "Add To Cart"
-        )}
+      <GLButton variant="primary" className="bob mt-10px w-100per" onClick={handleAddToCart}>
+        {determine_preorder(option_product_object, count_in_stock, "Add To Cart")}
       </GLButton>
     );
   };
@@ -151,42 +136,22 @@ const ProductOptions = ({
   //   return () => {};
   // }, []);
 
-  const determine_show_options = (
-    product,
-    secondary_product,
-    count_in_stock,
-    option_product_object
-  ) => {
+  const determine_show_options = (product, secondary_product, count_in_stock, option_product_object) => {
     if (names_hide_add_to_cart.includes(product.name) && !secondary_product) {
       return <div />;
     }
-    if (
-      categories_hide_add_to_cart.includes(product.category) &&
-      !secondary_product
-    ) {
+    if (categories_hide_add_to_cart.includes(product.category) && !secondary_product) {
       return <div />;
     }
     return (
       <div>
         {" "}
-        {size !== "1 Sled" &&
-        product.color_product_group &&
-        color_products &&
-        color_products.length > 0 && (
+        {size !== "1 Sled" && product.color_product_group && color_products && color_products.length > 0 && (
           <li>
-            <div
-              className={`ai-c h-25px mb-25px ${width < 1150 ? "jc-b" : ""}`}
-            >
-              <label className="mv-0px mr-10px title_font">
-                {product.color_group_name ? product.color_group_name : "Color"}:{" "}
-              </label>
+            <div className={`ai-c h-25px mb-25px ${width < 1150 ? "jc-b" : ""}`}>
+              <label className="mv-0px mr-10px title_font">{product.color_group_name ? product.color_group_name : "Color"}: </label>
               <div className="ai-c">
-                {color_code && (
-                  <canvas
-                    className=" mh-1rem w-60px h-20px br-7px"
-                    style={{ backgroundColor: color_code }}
-                  />
-                )}
+                {color_code && <canvas className=" mh-1rem w-60px h-20px br-7px" style={{ backgroundColor: color_code }} />}
                 <div className="custom-select">
                   <select
                     className="qty_select_dropdown w-100per"
@@ -216,7 +181,7 @@ const ProductOptions = ({
                 name="show_add_on"
                 defaultChecked={show_add_on}
                 style={{
-                  transform: "scale(1.5)",
+                  transform: "scale(1.5)"
                 }}
                 className="mr-1rem"
                 id="show_add_on"
@@ -229,17 +194,10 @@ const ProductOptions = ({
                       set_price(product.price);
                       set_sale_price(product.sale_price);
                     } else {
-                      set_price(
-                        secondary_color_product_object.price + product.price
-                      );
-                      set_sale_price(
-                        secondary_color_product_object.sale_price +
-                          product.sale_price
-                      );
+                      set_price(secondary_color_product_object.price + product.price);
+                      set_sale_price(secondary_color_product_object.sale_price + product.sale_price);
                       if (secondary_color_product_object.sale_price > 0) {
-                        set_add_on_price(
-                          secondary_color_product_object.sale_price
-                        );
+                        set_add_on_price(secondary_color_product_object.sale_price);
                       } else {
                         set_add_on_price(secondary_color_product_object.price);
                       }
@@ -253,76 +211,50 @@ const ProductOptions = ({
                   });
                 }}
               />
-              <label htmlFor="show_add_on mb-20px">
-                + Add Capes (For Centering)
-              </label>
+              <label htmlFor="show_add_on mb-20px">+ Add Capes (For Centering)</label>
             </div>
           </li>
         )}
         {show_add_on &&
-        size !== "1 Skin" &&
-        product.secondary_color_product_group &&
-        secondary_color_products &&
-        secondary_color_products.length > 0 && (
-          <li>
-            <div
-              className={`ai-c h-25px mb-25px ${width < 1150 ? "jc-b" : ""}`}
-            >
-              <label className="mv-0px mr-10px title_font">
-                {product.secondary_color_group_name ? (
-                  product.secondary_color_group_name
-                ) : (
-                  "Secondary Color"
-                )}:{" "}
-              </label>
-              <div className="ai-c">
-                {secondary_color_code && (
-                  <canvas
-                    className=" mh-1rem w-60px h-20px br-7px"
-                    style={{ backgroundColor: secondary_color_code }}
-                  />
-                )}
-                <div className="custom-select">
-                  <select
-                    className="qty_select_dropdown w-100per"
-                    onChange={e => update_secondary_color(e)}
-                    value={JSON.stringify(secondary_color_product_object)}
-                    defaultValue={JSON.stringify(
-                      secondary_color_product_object
-                    )}
-                  >
-                    {secondary_color_products
-                      .filter(item => item.filament && item.filament.active)
-                      .map((secondary_color, index) => (
-                        <option
-                          key={index}
-                          value={JSON.stringify(secondary_color)}
-                        >
-                          {secondary_color.name.split(" ")[0]}
-                        </option>
-                      ))}
-                  </select>
-                  <span className="custom-arrow" />
+          size !== "1 Skin" &&
+          product.secondary_color_product_group &&
+          secondary_color_products &&
+          secondary_color_products.length > 0 && (
+            <li>
+              <div className={`ai-c h-25px mb-25px ${width < 1150 ? "jc-b" : ""}`}>
+                <label className="mv-0px mr-10px title_font">
+                  {product.secondary_color_group_name ? product.secondary_color_group_name : "Secondary Color"}:{" "}
+                </label>
+                <div className="ai-c">
+                  {secondary_color_code && (
+                    <canvas className=" mh-1rem w-60px h-20px br-7px" style={{ backgroundColor: secondary_color_code }} />
+                  )}
+                  <div className="custom-select">
+                    <select
+                      className="qty_select_dropdown w-100per"
+                      onChange={e => update_secondary_color(e)}
+                      value={JSON.stringify(secondary_color_product_object)}
+                      defaultValue={JSON.stringify(secondary_color_product_object)}
+                    >
+                      {secondary_color_products
+                        .filter(item => item.filament && item.filament.active)
+                        .map((secondary_color, index) => (
+                          <option key={index} value={JSON.stringify(secondary_color)}>
+                            {secondary_color.name.split(" ")[0]}
+                          </option>
+                        ))}
+                    </select>
+                    <span className="custom-arrow" />
+                  </div>
                 </div>
               </div>
-            </div>
-          </li>
-        )}
-        {product.option_product_group &&
-        option_products &&
-        option_products.length > 0 && (
+            </li>
+          )}
+        {product.option_product_group && option_products && option_products.length > 0 && (
           <li>
             <div className={`ai-c  mv-10px ${width < 1150 ? "jc-b" : ""}`}>
-              <h3
-                aria-label="Sort"
-                htmlFor="sort"
-                className="select-label mr-1rem mt-1rem"
-              >
-                {product.option_group_name ? (
-                  product.option_group_name
-                ) : (
-                  "Size"
-                )}:
+              <h3 aria-label="Sort" htmlFor="sort" className="select-label mr-1rem mt-1rem">
+                {product.option_group_name ? product.option_group_name : "Size"}:
               </h3>
               <div className="ai-c wrap">
                 {option_products
@@ -334,60 +266,41 @@ const ProductOptions = ({
             </div>
           </li>
         )}
-        {(product.subcategory === "novaskinz" ||
-          product.subcategory === "alt_novaskinz") &&
-        product.option_product_group &&
-        option_products &&
-        option_products.length > 0 && (
-          <li>
-            <div className={`ai-c  mv-10px ${width < 1150 ? "jc-b" : ""}`}>
-              <h3 className="mr-5px w-7rem">Parts: </h3>
-              <div className="ai-c wrap">
-                {option_products
-                  .filter(option => option.price === 2.98)
-                  .map((option, index) => (
-                    <div>{option_buttons(option, index)}</div>
-                  ))}
+        {(product.subcategory === "novaskinz" || product.subcategory === "alt_novaskinz") &&
+          product.option_product_group &&
+          option_products &&
+          option_products.length > 0 && (
+            <li>
+              <div className={`ai-c  mv-10px ${width < 1150 ? "jc-b" : ""}`}>
+                <h3 className="mr-5px w-7rem">Parts: </h3>
+                <div className="ai-c wrap">
+                  {option_products
+                    .filter(option => option.price === 2.98)
+                    .map((option, index) => (
+                      <div>{option_buttons(option, index)}</div>
+                    ))}
+                </div>
               </div>
-            </div>
-          </li>
-        )}
-        {(product.name === "Supremes" ||
-          product.name ===
-            "Refresh Pack (6 Supreme Pairs + 120 Batteries)") && (
+            </li>
+          )}
+        {(product.name === "Supremes" || product.name === "Refresh Pack (6 Supreme Pairs + 120 Batteries)") && (
           <ul className="mb-10px">
             <hr />
-            <h3 className="title_font jc-c fs-20px">
-              {" "}
-              {sizes_conversion(size)}
-            </h3>{" "}
-            <li className="jc-c ta-c w-100oer lh-30px">
-              We recommend getting a size up compared to other compaonies whites
-            </li>
+            <h3 className="title_font jc-c fs-20px"> {sizes_conversion(size)}</h3>{" "}
+            <li className="jc-c ta-c w-100oer lh-30px">We recommend getting a size up compared to other compaonies whites</li>
             <li className="mb-10px jc-b w-100per">
               <div className="title_font"> Hand Length:</div>{" "}
-              <div className="title_font">
-                {size && sizes_short(width)[size].hand_length} inches
-              </div>
+              <div className="title_font">{size && sizes_short(width)[size].hand_length} inches</div>
             </li>
             <li className="jc-b w-100per mb-10px">
               <div className="title_font"> Hand Width:</div>{" "}
-              <div className="title_font">
-                {size && sizes_short(width)[size].hand_width} inches
-              </div>
+              <div className="title_font">{size && sizes_short(width)[size].hand_width} inches</div>
             </li>
             {/* <hr className="w-50per jc-c " /> */}
-            <li className="jc-c ta-c w-100oer mt-20px lh-30px">
-              Worried about the fit? We've got your back with our:
-            </li>
+            <li className="jc-c ta-c w-100oer mt-20px lh-30px">Worried about the fit? We've got your back with our:</li>
             <li>
-              <Link
-                to={`/collections/all/products/supremes_sizing_sampler_pack`}
-                className="jc-c"
-              >
-                <GLButton variant="primary">
-                  Supremes Sizing Sampler Pack
-                </GLButton>
+              <Link to={`/collections/all/products/supremes_sizing_sampler_pack`} className="jc-c">
+                <GLButton variant="primary">Supremes Sizing Sampler Pack</GLButton>
               </Link>
             </li>
             <hr />
@@ -404,7 +317,7 @@ const ProductOptions = ({
                   setQty(e.target.value);
                 }}
               >
-                {[ ...Array(quantity).keys() ].map((x, index) => (
+                {[...Array(quantity).keys()].map((x, index) => (
                   <option key={index} defaultValue={x + 1}>
                     {x + 1}
                   </option>
@@ -420,10 +333,7 @@ const ProductOptions = ({
 
   const determine_preorder = (option_product_object, count_in_stock, text) => {
     const choice = num => {
-      if (
-        option_product_object &&
-        option_product_object.hasOwnProperty("count_in_stock")
-      ) {
+      if (option_product_object && option_product_object.hasOwnProperty("count_in_stock")) {
         if (option_product_object.count_in_stock > num) {
           return text;
         } else {
@@ -447,18 +357,9 @@ const ProductOptions = ({
       <li className="jc-b ai-c">
         <div className="ai-c mb-1rem">
           <h3 className="mv-0px mr-5px">Price: </h3>
-          {product_page_sale_price_switch(
-            price,
-            sale_price,
-            previous_price,
-            product.sale_start_date,
-            product.sale_end_date,
-            false,
-            "dark"
-          )}
+          {product_page_sale_price_switch(price, sale_price, previous_price, product.sale_start_date, product.sale_end_date, false, "dark")}
         </div>
-        {width < 1150 &&
-        width > 482 && (
+        {width < 1150 && width > 482 && (
           <div className="mb-20px">
             <a href="#reviews">
               <Rating rating={product.rating} numReviews={product.numReviews} />
@@ -468,27 +369,13 @@ const ProductOptions = ({
       </li>
       <li className="mv-1rem ai-c">
         <label className="mv-0px mr-10px title_font">Status:</label>{" "}
-        <label>
-          {determine_preorder(
-            option_product_object,
-            count_in_stock,
-            "In Stock"
-          )}
-        </label>
+        <label>{determine_preorder(option_product_object, count_in_stock, "In Stock")}</label>
         {/* <label>{count_in_stock > 0 ? 'In Stock' : 'Out of Stock'}</label> */}
       </li>
-      {product.secondary_product_group &&
-      product.secondary_products &&
-      product.secondary_products.length > 0 && (
+      {product.secondary_product_group && product.secondary_products && product.secondary_products.length > 0 && (
         <li>
           <div className={`ai-c h-25px mv-20px ${width < 1150 ? "jc-b" : ""}`}>
-            <label className="mv-0px mr-10px title_font">
-              {product.secondary_group_name ? (
-                product.secondary_group_name
-              ) : (
-                "Design"
-              )}: {" "}
-            </label>
+            <label className="mv-0px mr-10px title_font">{product.secondary_group_name ? product.secondary_group_name : "Design"}: </label>
             <div className="custom-select">
               <select
                 className="qty_select_dropdown w-100per"
@@ -497,8 +384,7 @@ const ProductOptions = ({
                 defaultValue={JSON.stringify(secondary_product_object)}
               >
                 <option key={1} defaultValue="">
-                  Choose{" "}
-                  {product.secondary_group_name && product.secondary_group_name}
+                  Choose {product.secondary_group_name && product.secondary_group_name}
                 </option>
                 {product.secondary_products.map((secondary, index) => (
                   <option key={index} value={JSON.stringify(secondary)}>
@@ -571,32 +457,17 @@ const ProductOptions = ({
           </div>
         </li>
       )} */}
-      {determine_show_options(
-        product,
-        secondary_product,
-        count_in_stock,
-        option_product_object
-      )}
+      {determine_show_options(product, secondary_product, count_in_stock, option_product_object)}
       <li className="mb-0px">
         <div className="">
           <h4 className="mb-10px mt-10px">Shipping Calculated at Checkout</h4>
           {product.processing_time && (
-            <h4
-              className="mb-0px mt-0px"
-              style={{ webkitTextStroke: "0.5px white" }}
-            >
-              This item ships in {product.processing_time[0]} -{" "}
-              {product.processing_time[1]} business days
+            <h4 className="mb-0px mt-0px" style={{ webkitTextStroke: "0.5px white" }}>
+              This item ships in {product.processing_time[0]} - {product.processing_time[1]} business days
             </h4>
           )}
         </div>
-        {product.name !== "Glowstringz V2" &&
-          determine_add_to_cart(
-            product,
-            secondary_product,
-            count_in_stock,
-            option_product_object
-          )}
+        {product.name !== "Glowstringz V2" && determine_add_to_cart(product, secondary_product, count_in_stock, option_product_object)}
       </li>
     </ul>
   );

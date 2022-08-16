@@ -1,15 +1,8 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  saveAffiliate,
-  detailsAffiliate,
-} from "../../../actions/affiliateActions";
+import { saveAffiliate, detailsAffiliate } from "../../../actions/affiliateActions";
 import { useHistory } from "react-router-dom";
-import {
-  DropdownDisplay,
-  Loading,
-  Notification,
-} from "../../../components/UtilityComponents";
+import { DropdownDisplay, Loading, Notification } from "../../../components/UtilityComponents";
 import { Helmet } from "react-helmet";
 import { Prompt } from "react-router";
 import { listUsers } from "../../../actions/userActions";
@@ -21,37 +14,37 @@ import { option_list } from "../../../utils/react_helper_functions";
 import { GLButton } from "../../../components/GlowLEDsComponents";
 
 const EditAffiliatePage = props => {
-  const [ id, set_id ] = useState("");
-  const [ user, set_user ] = useState("");
-  const [ artist_name, set_artist_name ] = useState("");
-  const [ instagram_handle, set_instagram_handle ] = useState("");
-  const [ facebook_name, set_facebook_name ] = useState("");
-  const [ percentage_off, set_percentage_off ] = useState("");
+  const [id, set_id] = useState("");
+  const [user, set_user] = useState("");
+  const [artist_name, set_artist_name] = useState("");
+  const [instagram_handle, set_instagram_handle] = useState("");
+  const [facebook_name, set_facebook_name] = useState("");
+  const [percentage_off, set_percentage_off] = useState("");
 
-  const [ funds_generated, set_funds_generated ] = useState("");
-  const [ sponsor, set_sponsor ] = useState("");
-  const [ promoter, set_promoter ] = useState("");
-  const [ rave_mob, set_rave_mob ] = useState("");
-  const [ active, set_active ] = useState("");
-  const [ style, set_style ] = useState("");
-  const [ inspiration, set_inspiration ] = useState("");
-  const [ bio, set_bio ] = useState("");
-  const [ link, set_link ] = useState("");
-  const [ picture, set_picture ] = useState("");
-  const [ location, set_location ] = useState("");
-  const [ years, set_years ] = useState("");
-  const [ team, set_team ] = useState("");
-  const [ video, set_video ] = useState("");
-  const [ venmo, set_venmo ] = useState("");
-  const [ product, set_product ] = useState("");
-  const [ products, set_products ] = useState([]);
-  const [ chips, set_chips ] = useState([]);
-  const [ pathname, set_pathname ] = useState("");
-  const [ public_code, set_public_code ] = useState("");
-  const [ private_code, set_private_code ] = useState("");
-  const [ chip, set_chip ] = useState("");
+  const [funds_generated, set_funds_generated] = useState("");
+  const [sponsor, set_sponsor] = useState("");
+  const [promoter, set_promoter] = useState("");
+  const [rave_mob, set_rave_mob] = useState("");
+  const [active, set_active] = useState("");
+  const [style, set_style] = useState("");
+  const [inspiration, set_inspiration] = useState("");
+  const [bio, set_bio] = useState("");
+  const [link, set_link] = useState("");
+  const [picture, set_picture] = useState("");
+  const [location, set_location] = useState("");
+  const [years, set_years] = useState("");
+  const [team, set_team] = useState("");
+  const [video, set_video] = useState("");
+  const [venmo, set_venmo] = useState("");
+  const [product, set_product] = useState("");
+  const [products, set_products] = useState([]);
+  const [chips, set_chips] = useState([]);
+  const [pathname, set_pathname] = useState("");
+  const [public_code, set_public_code] = useState("");
+  const [private_code, set_private_code] = useState("");
+  const [chip, set_chip] = useState("");
 
-  const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
+  const [loading_checkboxes, set_loading_checkboxes] = useState(true);
 
   const userList = useSelector(state => state.userList);
   const { users } = userList;
@@ -136,45 +129,39 @@ const EditAffiliatePage = props => {
 
   const dispatch = useDispatch();
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (props.match.params.pathname) {
-          // console.log('Is ID');
-          // console.log(props.match.params.pathname);
-          dispatch(detailsAffiliate(props.match.params.pathname));
-          dispatch(detailsAffiliate(props.match.params.pathname));
-        } else {
-          dispatch(detailsAffiliate(""));
-        }
-        dispatch(listUsers({}));
-        dispatch(listProducts({ option: false, hidden: false }));
-        dispatch(listPromos({}));
-        dispatch(listPromos({}));
-        dispatch(listChips({}));
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (props.match.params.pathname) {
+        // console.log('Is ID');
+        // console.log(props.match.params.pathname);
+        dispatch(detailsAffiliate(props.match.params.pathname));
+        dispatch(detailsAffiliate(props.match.params.pathname));
+      } else {
+        dispatch(detailsAffiliate(""));
+      }
+      dispatch(listUsers({}));
+      dispatch(listProducts({ option: false, hidden: false }));
+      dispatch(listPromos({}));
+      dispatch(listPromos({}));
+      dispatch(listChips({}));
+      set_state();
+    }
+    return () => (clean = false);
+  }, [dispatch, props.match.params.pathname]);
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (affiliate) {
+        console.log("Set");
         set_state();
+      } else {
+        console.log("UnSet");
+        unset_state();
       }
-      return () => (clean = false);
-    },
-    [ dispatch, props.match.params.pathname ]
-  );
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (affiliate) {
-          console.log("Set");
-          set_state();
-        } else {
-          console.log("UnSet");
-          unset_state();
-        }
-      }
-      return () => (clean = false);
-    },
-    [ affiliate ]
-  );
+    }
+    return () => (clean = false);
+  }, [affiliate]);
   setTimeout(() => {
     set_loading_checkboxes(false);
   }, 500);
@@ -207,7 +194,7 @@ const EditAffiliatePage = props => {
         private_code: private_code && private_code._id,
         pathname: pathname ? pathname : snake_case(artist_name),
         products,
-        chips: chips && chips.map(chip => chip._id),
+        chips: chips && chips.map(chip => chip._id)
       })
     );
     e.target.reset();
@@ -220,10 +207,10 @@ const EditAffiliatePage = props => {
     const product_object = JSON.parse(e.target.value);
     if (products) {
       console.log("products.length > 0");
-      set_products(products => [ ...products, product_object ]);
+      set_products(products => [...products, product_object]);
     } else {
       console.log("products.length === 0");
-      set_products([ product_object ]);
+      set_products([product_object]);
     }
 
     set_product("");
@@ -246,16 +233,9 @@ const EditAffiliatePage = props => {
             {products &&
               products.map((product, index) => {
                 return (
-                  <div
-                    className="promo_code mv-1rem row jc-b max-w-55rem w-100per"
-                    key={index}
-                  >
+                  <div className="promo_code mv-1rem row jc-b max-w-55rem w-100per" key={index}>
                     <div>
-                      <GLButton
-                        variant="icon"
-                        onClick={e => remove_product(index, e)}
-                        aria-label="Delete"
-                      >
+                      <GLButton variant="icon" onClick={e => remove_product(index, e)} aria-label="Delete">
                         <i className="fas fa-times mr-5px" />
                       </GLButton>
                       {product.name}
@@ -281,10 +261,10 @@ const EditAffiliatePage = props => {
     // } else
     if (chips) {
       console.log("chips.length > 0");
-      set_chips(chips => [ ...chips, chip_object ]);
+      set_chips(chips => [...chips, chip_object]);
     } else {
       console.log("chips.length === 0");
-      set_chips([ chip_object ]);
+      set_chips([chip_object]);
     }
 
     set_chip("");
@@ -306,16 +286,9 @@ const EditAffiliatePage = props => {
             {chips &&
               chips.map((chip, index) => {
                 return (
-                  <div
-                    className="promo_code mv-1rem row jc-b max-w-55rem w-100per"
-                    key={index}
-                  >
+                  <div className="promo_code mv-1rem row jc-b max-w-55rem w-100per" key={index}>
                     <div>
-                      <GLButton
-                        variant="icon"
-                        onClick={e => remove_chip(index, e)}
-                        aria-label="Delete"
-                      >
+                      <GLButton variant="icon" onClick={e => remove_chip(index, e)} aria-label="Delete">
                         <i className="fas fa-times mr-5px" />
                       </GLButton>
                       {chip.name}
@@ -366,11 +339,7 @@ const EditAffiliatePage = props => {
             <div>
               <div className="promo_code mv-1rem row jc-b max-w-55rem w-100per">
                 <div>
-                  <GLButton
-                    variant="icon"
-                    onClick={e => remove_promo(e, code_type)}
-                    aria-label="Delete"
-                  >
+                  <GLButton variant="icon" onClick={e => remove_promo(e, code_type)} aria-label="Delete">
                     <i className="fas fa-times mr-5px" />
                   </GLButton>
                   {promo && promo.promo_code}
@@ -385,9 +354,7 @@ const EditAffiliatePage = props => {
 
   return (
     <div className="main_container p-20px">
-      <h1 style={{ textAlign: "center" }}>
-        {props.match.params.id ? "Edit Affiliate" : "Create Affiliate"}
-      </h1>
+      <h1 style={{ textAlign: "center" }}>{props.match.params.id ? "Edit Affiliate" : "Create Affiliate"}</h1>
 
       <div className="form">
         <form onSubmit={submitHandler} style={{ width: "100%" }}>
@@ -403,23 +370,14 @@ const EditAffiliatePage = props => {
             {affiliate && (
               <div>
                 <Helmet>
-                  <title>Edit Affiliate| Glow LEDs</title>
+                  <title>Edit Affiliate | Glow LEDs</title>
                 </Helmet>
-                <ul
-                  className="edit-form-container"
-                  style={{ maxWidth: "30rem", marginBottom: "20px" }}
-                >
+                <ul className="edit-form-container" style={{ maxWidth: "30rem", marginBottom: "20px" }}>
                   <div className="row wrap">
                     <div className="w-228px m-10px">
                       <li>
                         <label htmlFor="user">User</label>
-                        <input
-                          type="text"
-                          name="user"
-                          value={user}
-                          id="user"
-                          onChange={e => set_user(e.target.value)}
-                        />
+                        <input type="text" name="user" value={user} id="user" onChange={e => set_user(e.target.value)} />
                       </li>
                       {users && (
                         <div className="ai-c h-25px mv-10px mb-30px jc-c">
@@ -458,9 +416,7 @@ const EditAffiliatePage = props => {
                       </li>
 
                       <li>
-                        <label htmlFor="facebook_name">
-                          Facebook Glover Page
-                        </label>
+                        <label htmlFor="facebook_name">Facebook Glover Page</label>
                         <input
                           type="text"
                           name="facebook_name"
@@ -470,9 +426,7 @@ const EditAffiliatePage = props => {
                         />
                       </li>
                       <li>
-                        <label htmlFor="instagram_handle">
-                          Instagram Handle
-                        </label>
+                        <label htmlFor="instagram_handle">Instagram Handle</label>
                         <input
                           type="text"
                           name="instagram_handle"
@@ -483,43 +437,19 @@ const EditAffiliatePage = props => {
                       </li>
                       <li>
                         <label htmlFor="location">Location</label>
-                        <input
-                          type="text"
-                          name="location"
-                          value={location}
-                          id="location"
-                          onChange={e => set_location(e.target.value)}
-                        />
+                        <input type="text" name="location" value={location} id="location" onChange={e => set_location(e.target.value)} />
                       </li>
                       <li>
                         <label htmlFor="years">Years Gloving</label>
-                        <input
-                          type="text"
-                          name="years"
-                          value={years}
-                          id="years"
-                          onChange={e => set_years(e.target.value)}
-                        />
+                        <input type="text" name="years" value={years} id="years" onChange={e => set_years(e.target.value)} />
                       </li>
                       <li>
                         <label htmlFor="picture">Picture</label>
-                        <input
-                          type="text"
-                          name="picture"
-                          value={picture}
-                          id="picture"
-                          onChange={e => set_picture(e.target.value)}
-                        />
+                        <input type="text" name="picture" value={picture} id="picture" onChange={e => set_picture(e.target.value)} />
                       </li>
                       <li>
                         <label htmlFor="video">Video</label>
-                        <input
-                          type="text"
-                          name="video"
-                          value={video}
-                          id="video"
-                          onChange={e => set_video(e.target.value)}
-                        />
+                        <input type="text" name="video" value={video} id="video" onChange={e => set_video(e.target.value)} />
                       </li>
 
                       <li>
@@ -593,20 +523,14 @@ const EditAffiliatePage = props => {
                         <label htmlFor="promo">Public Code</label>
                         <div className="ai-c h-25px mv-15px jc-c">
                           <div className="custom-select">
-                            <select
-                              className="qty_select_dropdown"
-                              onChange={e => add_promo(e, "public")}
-                            >
+                            <select className="qty_select_dropdown" onChange={e => add_promo(e, "public")}>
                               <option key={1} defaultValue="">
                                 ---Choose Public Code---
                               </option>
                               {promos_list
                                 .filter(promo => !promo.hidden)
                                 .map((promo, index) => (
-                                  <option
-                                    key={index}
-                                    value={JSON.stringify(promo)}
-                                  >
+                                  <option key={index} value={JSON.stringify(promo)}>
                                     {promo.promo_code}
                                   </option>
                                 ))}
@@ -631,20 +555,14 @@ const EditAffiliatePage = props => {
                         <label htmlFor="promo">Private Code</label>
                         <div className="ai-c h-25px mv-15px jc-c">
                           <div className="custom-select">
-                            <select
-                              className="qty_select_dropdown"
-                              onChange={e => add_promo(e, "private")}
-                            >
+                            <select className="qty_select_dropdown" onChange={e => add_promo(e, "private")}>
                               <option key={1} defaultValue="">
                                 ---Choose Private Code---
                               </option>
                               {promos_list
                                 .filter(promo => !promo.hidden)
                                 .map((promo, index) => (
-                                  <option
-                                    key={index}
-                                    value={JSON.stringify(promo)}
-                                  >
+                                  <option key={index} value={JSON.stringify(promo)}>
                                     {promo.promo_code}
                                   </option>
                                 ))}
@@ -669,26 +587,14 @@ const EditAffiliatePage = props => {
                         <input
                           type="text"
                           name="pathname"
-                          value={
-                            pathname ? (
-                              pathname
-                            ) : (
-                              artist_name && snake_case(artist_name)
-                            )
-                          }
+                          value={pathname ? pathname : artist_name && snake_case(artist_name)}
                           id="pathname"
                           onChange={e => set_pathname(e.target.value)}
                         />
                       </li>
                       <li>
                         <label htmlFor="venmo">Venmo</label>
-                        <input
-                          type="text"
-                          name="venmo"
-                          value={venmo}
-                          id="venmo"
-                          onChange={e => set_venmo(e.target.value)}
-                        />
+                        <input type="text" name="venmo" value={venmo} id="venmo" onChange={e => set_venmo(e.target.value)} />
                       </li>
                       {/* {option_list(products_list, products, set_products, 'Glow Gear')} */}
                       <DropdownDisplay
@@ -810,10 +716,7 @@ const EditAffiliatePage = props => {
                     </GLButton>
                   </li>
                   <li>
-                    <GLButton
-                      variant="secondary"
-                      onClick={() => history.goBack()}
-                    >
+                    <GLButton variant="secondary" onClick={() => history.goBack()}>
                       Back to Affiliates
                     </GLButton>
                   </li>
