@@ -23,6 +23,9 @@ const product_routes = {
   update_product_order: (state: any) => {
     return axios.put("/api/products/update_product_order", { state });
   },
+  add_product_options: (id: string, ids: any, type: string) => {
+    return axios.put("/api/products/add_product_options", { id, ids, type });
+  },
   update_stock: (cartItems: any) => {
     return axios.put("/api/products/update_stock", { cartItems });
   },
@@ -38,7 +41,7 @@ const product_routes = {
   save_item_group_id: (option: any, item_group: any) => {
     return axios.put("/api/products/save_item_group_id", {
       option,
-      item_group,
+      item_group
     });
   },
   get_our_picks: () => {
@@ -47,15 +50,11 @@ const product_routes = {
   get_new_releases: () => {
     return axios.get("/api/products/new_releases");
   },
-  set_sale_price: (
-    discount_percentage: any,
-    sale_start_date: any,
-    sale_end_date: any
-  ) => {
+  set_sale_price: (discount_percentage: any, sale_start_date: any, sale_end_date: any) => {
     return axios.put("/api/all/product_sale_price", {
       discount_percentage,
       sale_start_date,
-      sale_end_date,
+      sale_end_date
     });
   },
   clear_sale: (sale_start_date: any, sale_end_date: any) => {
@@ -80,15 +79,15 @@ const product_routes = {
         search_parameter,
         action,
         property,
-        value,
+        value
       },
       {
         headers: {
-          Authorization: "Bearer " + user.access_token,
-        },
+          Authorization: "Bearer " + user.access_token
+        }
       }
     );
-  },
+  }
 };
 
 export default product_routes;

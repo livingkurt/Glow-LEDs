@@ -23,6 +23,7 @@ import { listChips } from "../../../actions/chipActions";
 import { API_Products } from "../../../utils";
 import { listCategorys } from "../../../actions/categoryActions";
 import { list_display, option_list } from "../../../utils/react_helper_functions";
+import useClipboard from "react-hook-clipboard";
 import {
   determine_color_modifier,
   determine_secondary_color_modifier,
@@ -139,8 +140,10 @@ const EditProductPage = props => {
   const [secondary_images, set_secondary_images] = useState([]);
   const [secondary_image, set_secondary_image] = useState("");
   const [has_add_on, set_has_add_on] = useState(false);
+  const [secondary_color_ids, set_secondary_color_ids] = useState({});
 
   const [filament, set_filament] = useState({});
+  const [clipboard, copyToClipboard] = useClipboard();
 
   const history = useHistory();
 
@@ -366,7 +369,7 @@ const EditProductPage = props => {
     set_quantity(product.quantity);
     set_count_in_stock(product.count_in_stock);
     set_finite_stock(product.finite_stock);
-    set_has_add_on(product.finite_stock);
+    set_has_add_on(product.has_add_on);
     if (props.match.params.pathname) {
       if (props.match.params.template === "false") {
         setPathname(product.pathname);
@@ -802,6 +805,12 @@ const EditProductPage = props => {
       default:
         break;
     }
+  };
+
+  const add_product_options = async (option_ids, type) => {
+    const { data } = await API_Products.add_product_options(product._id, option_ids, type);
+    set_secondary_color_products(data);
+    console.log({ data });
   };
 
   return (
@@ -1763,6 +1772,30 @@ const EditProductPage = props => {
                                 </Link>
                               </div>
                             </div>
+                            <GLButton
+                              variant="secondary"
+                              className="mv-10px mr-1rem"
+                              onClick={() => copyToClipboard(secondary_color_products.map(product => product._id))}
+                            >
+                              Copy Secondary Products to Clipboard
+                            </GLButton>
+                            <div>
+                              <label htmlFor="secondary_color_group_name">Paste Copied Secondary Color Product IDs Here</label>
+                              <input
+                                type="text"
+                                name="secondary_color_ids"
+                                id="secondary_color_ids"
+                                className="w-100per"
+                                onChange={e => set_secondary_color_ids(e.target.value)}
+                              />
+                            </div>
+                            <GLButton
+                              variant="primary"
+                              className="mv-10px mr-1rem"
+                              onClick={() => add_product_options(secondary_color_ids, "secondary_color_products")}
+                            >
+                              Add Secondary Products
+                            </GLButton>
                             <DropdownDisplay
                               item_group_id={product._id}
                               item_list={option_products_list}

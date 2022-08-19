@@ -1,10 +1,5 @@
 import { product_db } from "../db";
-import {
-  categories,
-  determine_filter,
-  snake_case,
-  subcategories,
-} from "../util";
+import { categories, determine_filter, snake_case, subcategories } from "../util";
 
 // const sharp = require("sharp");
 
@@ -20,8 +15,8 @@ export default {
           ? {
               category: {
                 $regex: snake_case(query.search),
-                $options: "i",
-              },
+                $options: "i"
+              }
             }
           : {};
       } else if (subcategories.includes(snake_case(query.search))) {
@@ -29,8 +24,8 @@ export default {
           ? {
               subcategory: {
                 $regex: snake_case(query.search),
-                $options: "i",
-              },
+                $options: "i"
+              }
             }
           : {};
       } else {
@@ -38,19 +33,19 @@ export default {
           ? {
               name: {
                 $regex: query.search.toLowerCase(),
-                $options: "i",
-              },
+                $options: "i"
+              }
             }
           : {};
       }
       console.log({
-        query,
+        query
       });
 
       const filter = determine_filter(query, search);
       console.log({
         page,
-        limit,
+        limit
       });
       const sort_query = query.sort && query.sort.toLowerCase();
       let sort: any = { order: 1, _id: -1 };
@@ -65,17 +60,12 @@ export default {
       } else if (sort_query === "newest") {
         sort = { _id: -1 };
       }
-      const products = await product_db.findAll_products_db(
-        filter,
-        sort,
-        limit,
-        page
-      );
+      const products = await product_db.findAll_products_db(filter, sort, limit, page);
       const count = await product_db.count_products_db(filter);
       return {
         products,
         totalPages: Math.ceil(count / limit),
-        currentPage: parseInt(page),
+        currentPage: parseInt(page)
       };
     } catch (error) {
       console.log({ findAll_products_s_error: error });
@@ -165,7 +155,7 @@ export default {
         "Alt Novaskinz w Nano Sleds",
         "Batman Decals",
         "X Decals",
-        "CLOZD Omniskinz",
+        "CLOZD Omniskinz"
       ];
       console.log({ names });
       const sort = { _id: -1 };
@@ -193,7 +183,7 @@ export default {
     const save_product = async (id: string, qty: number) => {
       console.log({
         id,
-        qty,
+        qty
       });
       const product: any = await product_db.findById_products_db(id);
       const new_count = product.count_in_stock - qty;
@@ -243,16 +233,36 @@ export default {
       return state.entities.columnOrder.map((columnId: any) => {
         const column = state.entities.columns[columnId];
         const products: any = [];
-        state.entities.products.forEach(function(product: any) {
+        state.entities.products.forEach(function (product: any) {
           products[column.product_ids.indexOf(product._id)] = product;
         });
         products.forEach(async (item: any, index: any) => {
           return await product_db.update_products_db(item._id, {
             ...item,
-            order: index + 1,
+            order: index + 1
           });
         });
       });
+    } catch (error) {
+      console.log({ remove_surveys_s_error: error });
+      throw new Error(error.message);
+    }
+  },
+  add_product_options_products_s: async (params: any, body: any) => {
+    const { id, ids, type } = body;
+    try {
+      // const product = await product_db.findById_products_db(id);
+      const Kaleidoscope = await product_db.findById_products_db("6198087eac9130002b155ab0");
+      // console.log({
+      //   ...product,
+      //   [type]: ids.split(",")
+      // });
+      console.log({ Kaleidoscope: Kaleidoscope[type] });
+      // return await product_db.update_products_db(id, {
+      //   ...product,
+      //   [type]: Kaleidoscope[type]
+      // });
+      return Kaleidoscope[type];
     } catch (error) {
       console.log({ remove_surveys_s_error: error });
       throw new Error(error.message);
@@ -268,7 +278,7 @@ export default {
       if (product && option._id && item_group.price) {
         return await product_db.update_products_db(option._id, {
           ...body,
-          price: item_group.price,
+          price: item_group.price
         });
       } else {
         console.log("Error in Updating Product.");
@@ -295,16 +305,12 @@ export default {
             first_name: body.userInfo.first_name,
             last_name: body.userInfo.last_name,
             rating: Number(body.review.rating),
-            comment: body.review.comment,
-          },
+            comment: body.review.comment
+          }
         ];
         console.log({ reviews: product.reviews });
         product.numReviews = product.reviews.length;
-        product.rating =
-          product.reviews.reduce(
-            (a: any, c: { rating: any }) => c.rating + a,
-            0
-          ) / product.reviews.length;
+        product.rating = product.reviews.reduce((a: any, c: { rating: any }) => c.rating + a, 0) / product.reviews.length;
         console.log({ product });
         const updatedProduct = await product.save();
         if (updatedProduct) {
@@ -317,7 +323,7 @@ export default {
       console.log({ remove_surveys_s_error: error });
       throw new Error(error.message);
     }
-  },
+  }
   // compress_images_products_s: async (body: any) => {
   //   try {
   //     // console.log({ body: body.images });

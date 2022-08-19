@@ -226,6 +226,7 @@ const ProductOptions = ({
                   {secondary_color_code && (
                     <canvas className=" mh-1rem w-60px h-20px br-7px" style={{ backgroundColor: secondary_color_code }} />
                   )}
+                  {/* {console.log({ Inside: secondary_color_products })} */}
                   <div className="custom-select">
                     <select
                       className="qty_select_dropdown w-100per"
@@ -238,6 +239,8 @@ const ProductOptions = ({
                         .map((secondary_color, index) => (
                           <option key={index} value={JSON.stringify(secondary_color)}>
                             {secondary_color.name.split(" ")[0]}
+                            {console.log({ secondary_color: secondary_color.name })}
+                            {console.log({ Inside: secondary_color })}
                           </option>
                         ))}
                     </select>
