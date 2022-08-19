@@ -167,39 +167,39 @@ export default {
 
   create_products_db: async (body: any) => {
     try {
-      const fields = [
-        {
-          fields: {
-            title: body.name,
-            description: body.description,
-            availability: "In Stock",
-            condition: "New",
-            price: `${body.price} USD`,
-            link: `https://www.glow-leds.com/collections/all/products/${body.pathname}`,
-            image_link: body.images[0],
-            additional_image_link: body.images[1],
-            brand: "Glow LEDs",
-            inventory: body.count_in_stock,
-            fb_product_category: "toys & games > electronic toys",
-            google_product_category: "Toys & Games > Toys > Visual Toys",
-            sale_price: `${body.sale_price && body.sale_price.toFixed(2)} USD`,
-            sale_price_effective_date: "",
-            product_type: body.category,
-            color: body.color,
-            size: body.size,
-            id: body._id
-          }
-        }
-      ];
-      CurrentProducts.create(fields, async (err: any, updated_records: any) => {
-        if (err) {
-          console.log({ update_error: err });
-          return;
-        }
-        updated_records.forEach(function (record: any) {
-          console.log(record.get("title"));
-        });
-      });
+      // const fields = [
+      //   {
+      //     fields: {
+      //       title: body.name,
+      //       description: body.description,
+      //       availability: "In Stock",
+      //       condition: "New",
+      //       price: `${body.price} USD`,
+      //       link: `https://www.glow-leds.com/collections/all/products/${body.pathname}`,
+      //       image_link: body.images[0],
+      //       additional_image_link: body.images[1],
+      //       brand: "Glow LEDs",
+      //       inventory: body.count_in_stock,
+      //       fb_product_category: "toys & games > electronic toys",
+      //       google_product_category: "Toys & Games > Toys > Visual Toys",
+      //       sale_price: `${body.sale_price && body.sale_price.toFixed(2)} USD`,
+      //       sale_price_effective_date: "",
+      //       product_type: body.category,
+      //       color: body.color,
+      //       size: body.size,
+      //       id: body._id
+      //     }
+      //   }
+      // ];
+      // CurrentProducts.create(fields, async (err: any, updated_records: any) => {
+      //   if (err) {
+      //     console.log({ update_error: err });
+      //     return;
+      //   }
+      //   updated_records.forEach(function (record: any) {
+      //     console.log(record.get("title"));
+      //   });
+      // });
       return await Product.create(body);
     } catch (error) {
       console.log({ create_products_db_error: error });
@@ -216,63 +216,63 @@ export default {
     }
     try {
       const product: any = await Product.findOne(query);
-      CurrentProducts.select({ filterByFormula: `id = "${product._id}"` }).firstPage((err: any, records: any) => {
-        if (err) {
-          console.log(err);
-          const fields = [
-            {
-              fields: {
-                title: body.name,
-                description: body.description,
-                price: `${body.price} USD`,
-                link: `https://www.glow-leds.com/collections/all/products/${body.pathname}`,
-                image_link: body.images[0],
-                additional_image_link: body.images[1],
-                category: body.category,
-                id: body._id
-              }
-            }
-          ];
-          CurrentProducts.create(fields, async (err: any, updated_records: any) => {
-            if (err) {
-              console.log({ update_error: err });
-              return;
-            }
-            updated_records.forEach(function (record: any) {
-              console.log(record.get("title"));
-            });
-          });
-          return;
-        }
-        const fields = [
-          {
-            id: records[0].id,
-            fields: {
-              title: body.name,
-              description: body.description,
-              price: `${body.price} USD`,
-              link: `https://www.glow-leds.com/collections/all/products/${body.pathname}`,
-              image_link: body.images[0],
-              additional_image_link: body.images[1],
-              category: body.category,
-              id: body._id
-            }
-          }
-        ];
-        try {
-          CurrentProducts.update(fields, async (err: any, updated_records: any) => {
-            if (err) {
-              console.log({ update_error: err });
-              return;
-            }
-            updated_records.forEach(function (record: any) {
-              console.log(record.get("title"));
-            });
-          });
-        } catch (error) {
-          console.log({ error });
-        }
-      });
+      // CurrentProducts.select({ filterByFormula: `id = "${product._id}"` }).firstPage((err: any, records: any) => {
+      //   if (err) {
+      //     console.log(err);
+      //     const fields = [
+      //       {
+      //         fields: {
+      //           title: body.name,
+      //           description: body.description,
+      //           price: `${body.price} USD`,
+      //           link: `https://www.glow-leds.com/collections/all/products/${body.pathname}`,
+      //           image_link: body.images[0],
+      //           additional_image_link: body.images[1],
+      //           category: body.category,
+      //           id: body._id
+      //         }
+      //       }
+      //     ];
+      //     CurrentProducts.create(fields, async (err: any, updated_records: any) => {
+      //       if (err) {
+      //         console.log({ update_error: err });
+      //         return;
+      //       }
+      //       updated_records.forEach(function (record: any) {
+      //         console.log(record.get("title"));
+      //       });
+      //     });
+      //     return;
+      //   }
+      //   const fields = [
+      //     {
+      //       id: records[0].id,
+      //       fields: {
+      //         title: body.name,
+      //         description: body.description,
+      //         price: `${body.price} USD`,
+      //         link: `https://www.glow-leds.com/collections/all/products/${body.pathname}`,
+      //         image_link: body.images[0],
+      //         additional_image_link: body.images[1],
+      //         category: body.category,
+      //         id: body._id
+      //       }
+      //     }
+      //   ];
+      //   try {
+      //     CurrentProducts.update(fields, async (err: any, updated_records: any) => {
+      //       if (err) {
+      //         console.log({ update_error: err });
+      //         return;
+      //       }
+      //       updated_records.forEach(function (record: any) {
+      //         console.log(record.get("title"));
+      //       });
+      //     });
+      //   } catch (error) {
+      //     console.log({ error });
+      //   }
+      // });
       if (product) {
         return await Product.updateOne({ _id: id }, body);
       }
@@ -286,24 +286,24 @@ export default {
       const product: any = await Product.findOne({ _id: id });
       console.log({ remove_products_db: product });
       if (product) {
-        CurrentProducts.select({ filterByFormula: `id = "${product._id}"` }).firstPage((err: any, records: any) => {
-          if (err) {
-            console.log(err);
-            return;
-          }
-          if (records.length > 0) {
-            try {
-              CurrentProducts.destroy([records[0].id], (err, deletedRecords) => {
-                if (err) {
-                  console.error(err);
-                  return;
-                }
-              });
-            } catch (error) {
-              console.log({ error });
-            }
-          }
-        });
+        // CurrentProducts.select({ filterByFormula: `id = "${product._id}"` }).firstPage((err: any, records: any) => {
+        //   if (err) {
+        //     console.log(err);
+        //     return;
+        //   }
+        //   if (records.length > 0) {
+        //     try {
+        //       CurrentProducts.destroy([records[0].id], (err, deletedRecords) => {
+        //         if (err) {
+        //           console.error(err);
+        //           return;
+        //         }
+        //       });
+        //     } catch (error) {
+        //       console.log({ error });
+        //     }
+        //   }
+        // });
         return await Product.updateOne({ _id: id }, { deleted: true });
         // return await Product.deleteOne({ _id: id });
       }
