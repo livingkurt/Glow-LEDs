@@ -1,17 +1,8 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  saveProduct,
-  detailsProduct,
-  listProducts,
-} from "../../../actions/productActions";
+import { saveProduct, detailsProduct, listProducts } from "../../../actions/productActions";
 import { useHistory, Link } from "react-router-dom";
-import {
-  DropdownDisplay,
-  ImageDisplay,
-  Loading,
-  Notification,
-} from "../../../components/UtilityComponents";
+import { DropdownDisplay, ImageDisplay, Loading, Notification } from "../../../components/UtilityComponents";
 import { Helmet } from "react-helmet";
 import {
   accurate_date,
@@ -20,26 +11,23 @@ import {
   snake_case,
   unformat_date,
   unformat_date_and_time,
-  unformat_time,
+  unformat_time
 } from "../../../utils/helper_functions";
 import {
   create_color_products,
   create_secondary_color_products,
   create_option_products,
-  create_secondary_products,
+  create_secondary_products
 } from "../../../utils/helpers/product_helpers";
 import { listChips } from "../../../actions/chipActions";
 import { API_Products } from "../../../utils";
 import { listCategorys } from "../../../actions/categoryActions";
-import {
-  list_display,
-  option_list,
-} from "../../../utils/react_helper_functions";
+import { list_display, option_list } from "../../../utils/react_helper_functions";
 import {
   determine_color_modifier,
   determine_secondary_color_modifier,
   determine_option_modifier,
-  determine_secondary_modifier,
+  determine_secondary_modifier
 } from "../../../utils/helpers/product_helpers";
 import { listUsers } from "../../../actions/userActions";
 import { listFilaments } from "../../../actions/filamentActions";
@@ -47,124 +35,112 @@ import { GLButton } from "../../../components/GlowLEDsComponents";
 
 const EditProductPage = props => {
   // const [modalVisible, setModalVisible] = useState(false);
-  const [ product_id, set_product_id ] = useState("");
-  const [ name, setName ] = useState("");
-  const [ price, setPrice ] = useState();
-  const [ previous_price, set_previous_price ] = useState();
+  const [product_id, set_product_id] = useState("");
+  const [name, setName] = useState("");
+  const [price, setPrice] = useState();
+  const [previous_price, set_previous_price] = useState();
   // const [ display_image, setDisplayImage ] = useState('');
-  const [ images, set_images ] = useState([]);
+  const [images, set_images] = useState([]);
   // const [ product_options_images, set_product_options_images ] = useState([]);
-  const [ image, set_image ] = useState("");
-  const [ video, setVideo ] = useState("");
-  const [ brand, setBrand ] = useState("");
-  const [ category, setCategory ] = useState("");
-  const [ product_collection, set_product_collection ] = useState("");
-  const [ quantity, set_quantity ] = useState();
-  const [ count_in_stock, set_count_in_stock ] = useState();
-  const [ description, setDescription ] = useState("");
-  const [ facts, setFacts ] = useState("");
-  const [ included_items, setIncludedItems ] = useState();
-  const [ contributers, set_contributers ] = useState();
-  const [ hidden, setHidden ] = useState(false);
-  const [ sale_price, setSalePrice ] = useState(0);
-  const [ sale_start_date, set_sale_start_date ] = useState("");
-  const [ sale_end_date, set_sale_end_date ] = useState("");
-  const [ sale_start_time, set_sale_start_time ] = useState("");
-  const [ sale_end_time, set_sale_end_time ] = useState("");
+  const [image, set_image] = useState("");
+  const [video, setVideo] = useState("");
+  const [brand, setBrand] = useState("");
+  const [category, setCategory] = useState("");
+  const [product_collection, set_product_collection] = useState("");
+  const [quantity, set_quantity] = useState();
+  const [count_in_stock, set_count_in_stock] = useState();
+  const [description, setDescription] = useState("");
+  const [facts, setFacts] = useState("");
+  const [included_items, setIncludedItems] = useState();
+  const [contributers, set_contributers] = useState();
+  const [hidden, setHidden] = useState(false);
+  const [sale_price, setSalePrice] = useState(0);
+  const [sale_start_date, set_sale_start_date] = useState("");
+  const [sale_end_date, set_sale_end_date] = useState("");
+  const [sale_start_time, set_sale_start_time] = useState("");
+  const [sale_end_time, set_sale_end_time] = useState("");
 
-  const [ package_volume, set_package_volume ] = useState(0);
+  const [package_volume, set_package_volume] = useState(0);
   // const [ subcategories, set_subcategories ] = useState('');
-  const [ subcategory, set_subcategory ] = useState("");
-  const [ meta_title, set_meta_title ] = useState();
-  const [ meta_description, set_meta_description ] = useState();
-  const [ meta_keywords, set_meta_keywords ] = useState();
-  const [ package_length, set_package_length ] = useState(0);
-  const [ package_width, set_package_width ] = useState(0);
-  const [ package_height, set_package_height ] = useState(0);
-  const [ product_length, set_product_length ] = useState(0);
-  const [ product_width, set_product_width ] = useState(0);
-  const [ product_height, set_product_height ] = useState(0);
-  const [ weight_pounds, set_weight_pounds ] = useState(0);
-  const [ weight_ounces, set_weight_ounces ] = useState(0);
-  const [ material_cost, set_material_cost ] = useState();
-  const [ filament_used, set_filament_used ] = useState();
-  const [ printing_time, set_printing_time ] = useState();
-  const [ assembly_time, set_assembly_time ] = useState([]);
-  const [ processing_time, set_processing_time ] = useState([]);
-  const [ preorder, set_preorder ] = useState();
+  const [subcategory, set_subcategory] = useState("");
+  const [meta_title, set_meta_title] = useState();
+  const [meta_description, set_meta_description] = useState();
+  const [meta_keywords, set_meta_keywords] = useState();
+  const [package_length, set_package_length] = useState(0);
+  const [package_width, set_package_width] = useState(0);
+  const [package_height, set_package_height] = useState(0);
+  const [product_length, set_product_length] = useState(0);
+  const [product_width, set_product_width] = useState(0);
+  const [product_height, set_product_height] = useState(0);
+  const [weight_pounds, set_weight_pounds] = useState(0);
+  const [weight_ounces, set_weight_ounces] = useState(0);
+  const [material_cost, set_material_cost] = useState();
+  const [filament_used, set_filament_used] = useState();
+  const [printing_time, set_printing_time] = useState();
+  const [assembly_time, set_assembly_time] = useState([]);
+  const [processing_time, set_processing_time] = useState([]);
+  const [preorder, set_preorder] = useState();
 
-  const [ default_option, set_default_option ] = useState(false);
-  const [ option, set_option ] = useState();
-  const [ macro_product, set_macro_product ] = useState();
-  const [ group_name, set_group_name ] = useState("");
-  const [ color_product_group, set_color_product_group ] = useState(false);
-  const [ color_group_name, set_color_group_name ] = useState("");
-  const [ color_products, set_color_products ] = useState(false);
-  const [
-    secondary_color_product_group,
-    set_secondary_color_product_group,
-  ] = useState(false);
-  const [
-    secondary_color_group_name,
-    set_secondary_color_group_name,
-  ] = useState("");
-  const [ secondary_color_products, set_secondary_color_products ] = useState(
-    false
-  );
-  const [ secondary_product_group, set_secondary_product_group ] = useState([]);
-  const [ secondary_group_name, set_secondary_group_name ] = useState("");
-  const [ secondary_products, set_secondary_products ] = useState([]);
-  const [ option_product_group, set_option_product_group ] = useState(false);
-  const [ option_group_name, set_option_group_name ] = useState("");
-  const [ option_products, set_option_products ] = useState([]);
-  const [ color, set_color ] = useState("");
-  const [ color_code, set_color_code ] = useState("");
-  const [ pathname, setPathname ] = useState();
-  const [ group_product, set_group_product ] = useState([]);
-  const [ chips, set_chips ] = useState([]);
+  const [default_option, set_default_option] = useState(false);
+  const [option, set_option] = useState();
+  const [macro_product, set_macro_product] = useState();
+  const [group_name, set_group_name] = useState("");
+  const [color_product_group, set_color_product_group] = useState(false);
+  const [color_group_name, set_color_group_name] = useState("");
+  const [color_products, set_color_products] = useState(false);
+  const [secondary_color_product_group, set_secondary_color_product_group] = useState(false);
+  const [secondary_color_group_name, set_secondary_color_group_name] = useState("");
+  const [secondary_color_products, set_secondary_color_products] = useState(false);
+  const [secondary_product_group, set_secondary_product_group] = useState([]);
+  const [secondary_group_name, set_secondary_group_name] = useState("");
+  const [secondary_products, set_secondary_products] = useState([]);
+  const [option_product_group, set_option_product_group] = useState(false);
+  const [option_group_name, set_option_group_name] = useState("");
+  const [option_products, set_option_products] = useState([]);
+  const [color, set_color] = useState("");
+  const [color_code, set_color_code] = useState("");
+  const [pathname, setPathname] = useState();
+  const [group_product, set_group_product] = useState([]);
+  const [chips, set_chips] = useState([]);
   // const [ chip, set_chip ] = useState('');
-  const [ categorys, set_categorys ] = useState([]);
+  const [categorys, set_categorys] = useState([]);
   // const [ category, set_categorys ] = useState('');
-  const [ subcategorys, set_subcategorys ] = useState([]);
+  const [subcategorys, set_subcategorys] = useState([]);
   // const [ subcategory, set_subcategory ] = useState('');
-  const [ finite_stock, set_finite_stock ] = useState(false);
+  const [finite_stock, set_finite_stock] = useState(false);
   // const [ product, set_product ] = useState('');
-  const [ products, set_products ] = useState([]);
-  const [ size, set_size ] = useState(0);
-  const [ order, setOrder ] = useState();
-  const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
+  const [products, set_products] = useState([]);
+  const [size, set_size] = useState(0);
+  const [order, setOrder] = useState();
+  const [loading_checkboxes, set_loading_checkboxes] = useState(true);
   // const [ shouldBlockNavigation, set_shouldBlockNavigation ] = useState(false);
-  const [ product_options, set_product_options ] = useState([ {} ]);
-  const [ product_options_images, set_product_options_images ] = useState([
-    [],
-  ]);
-  const [ option_products_list, set_option_products_list ] = useState([]);
-  const [ macro_products_list, set_macro_products_list ] = useState([]);
-  const [ secondary_products_list, set_secondary_products_list ] = useState([]);
-  const [ new_index, set_new_index ] = useState();
-  const [ save, set_save ] = useState(true);
-  const [ filtered_products, set_filtered_products ] = useState([]);
-  const [ extra_cost, set_extra_cost ] = useState();
-  const [ item_group_id, set_item_group_id ] = useState("");
-  const [ loading_options, set_loading_options ] = useState(false);
-  const [ color_modifier, set_color_modifier ] = useState("");
-  const [ secondary_color_modifier, set_secondary_color_modifier ] = useState(
-    ""
-  );
-  const [ option_modifier, set_option_modifier ] = useState("");
-  const [ secondary_modifier, set_secondary_modifier ] = useState("");
+  const [product_options, set_product_options] = useState([{}]);
+  const [product_options_images, set_product_options_images] = useState([[]]);
+  const [option_products_list, set_option_products_list] = useState([]);
+  const [macro_products_list, set_macro_products_list] = useState([]);
+  const [secondary_products_list, set_secondary_products_list] = useState([]);
+  const [new_index, set_new_index] = useState();
+  const [save, set_save] = useState(true);
+  const [filtered_products, set_filtered_products] = useState([]);
+  const [extra_cost, set_extra_cost] = useState();
+  const [item_group_id, set_item_group_id] = useState("");
+  const [loading_options, set_loading_options] = useState(false);
+  const [color_modifier, set_color_modifier] = useState("");
+  const [secondary_color_modifier, set_secondary_color_modifier] = useState("");
+  const [option_modifier, set_option_modifier] = useState("");
+  const [secondary_modifier, set_secondary_modifier] = useState("");
 
-  const [ color_images, set_color_images ] = useState([]);
-  const [ color_image, set_color_image ] = useState("");
-  const [ secondary_color_images, set_secondary_color_images ] = useState([]);
-  const [ secondary_color_image, set_secondary_color_image ] = useState("");
-  const [ option_images, set_option_images ] = useState([]);
-  const [ option_image, set_option_image ] = useState("");
-  const [ secondary_images, set_secondary_images ] = useState([]);
-  const [ secondary_image, set_secondary_image ] = useState("");
-  const [ has_add_on, set_has_add_on ] = useState(false);
+  const [color_images, set_color_images] = useState([]);
+  const [color_image, set_color_image] = useState("");
+  const [secondary_color_images, set_secondary_color_images] = useState([]);
+  const [secondary_color_image, set_secondary_color_image] = useState("");
+  const [option_images, set_option_images] = useState([]);
+  const [option_image, set_option_image] = useState("");
+  const [secondary_images, set_secondary_images] = useState([]);
+  const [secondary_image, set_secondary_image] = useState("");
+  const [has_add_on, set_has_add_on] = useState(false);
 
-  const [ filament, set_filament ] = useState({});
+  const [filament, set_filament] = useState({});
 
   const history = useHistory();
 
@@ -172,12 +148,7 @@ const EditProductPage = props => {
   const { product, loading, error } = productDetails;
 
   const productSave = useSelector(state => state.productSave);
-  const {
-    loading: loadingSave,
-    success: successSave,
-    error: errorSave,
-    message,
-  } = productSave;
+  const { loading: loadingSave, success: successSave, error: errorSave, message } = productSave;
 
   // const productList = useSelector((state) => state.productList);
   // const { products: all_products } = productList;
@@ -199,34 +170,31 @@ const EditProductPage = props => {
 
   const dispatch = useDispatch();
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (props.match.params.pathname) {
-          console.log("Is ID");
-          // if (props.match.params.template) {
-          console.log({ template: props.match.params.template });
-          dispatch(detailsProduct(props.match.params.pathname));
-          dispatch(detailsProduct(props.match.params.pathname));
-          // }
-        } else {
-          dispatch(detailsProduct(""));
-        }
-        get_all_options();
-        findAll_products_a();
-        set_state();
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (props.match.params.pathname) {
+        console.log("Is ID");
+        // if (props.match.params.template) {
+        console.log({ template: props.match.params.template });
+        dispatch(detailsProduct(props.match.params.pathname));
+        dispatch(detailsProduct(props.match.params.pathname));
+        // }
+      } else {
+        dispatch(detailsProduct(""));
       }
-      return () => (clean = false);
-    },
-    [
-      dispatch,
-      props.match.params.pathname,
-      props.match.params.template,
-      props.match.params.product_option,
-      props.match.params.item_group_id,
-    ]
-  );
+      get_all_options();
+      findAll_products_a();
+      set_state();
+    }
+    return () => (clean = false);
+  }, [
+    dispatch,
+    props.match.params.pathname,
+    props.match.params.template,
+    props.match.params.product_option,
+    props.match.params.item_group_id
+  ]);
 
   useEffect(() => {
     let clean = true;
@@ -240,42 +208,33 @@ const EditProductPage = props => {
     return () => (clean = false);
   }, []);
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (product && product.category) {
-          set_color_modifier(determine_color_modifier(product.category));
-          set_secondary_color_modifier(
-            determine_secondary_color_modifier(product.category)
-          );
-          set_option_modifier(determine_option_modifier(product.category));
-        }
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (product && product.category) {
+        set_color_modifier(determine_color_modifier(product.category));
+        set_secondary_color_modifier(determine_secondary_color_modifier(product.category));
+        set_option_modifier(determine_option_modifier(product.category));
       }
-      return () => (clean = false);
-    },
-    [ product ]
-  );
+    }
+    return () => (clean = false);
+  }, [product]);
 
   const findAll_products_a = async () => {
     const { data } = await API_Products.findAll_products_a({
       // option: false,
-      limit: 0,
+      limit: 0
     });
     console.log({ data });
-    set_macro_products_list(
-      data.products.sort((a, b) => (a.name > b.name ? 1 : -1))
-    );
+    set_macro_products_list(data.products.sort((a, b) => (a.name > b.name ? 1 : -1)));
   };
   const get_all_options = async () => {
     const { data } = await API_Products.findAll_products_a({
       option: true,
-      limit: 0,
+      limit: 0
     });
     console.log({ data });
-    set_option_products_list(
-      data.products.sort((a, b) => (a.name > b.name ? 1 : -1))
-    );
+    set_option_products_list(data.products.sort((a, b) => (a.name > b.name ? 1 : -1)));
   };
 
   const use_template = e => {
@@ -325,39 +284,29 @@ const EditProductPage = props => {
   // 	[ successSave ]
   // );
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (macro_products_list) {
-          set_filtered_products(
-            macro_products_list
-              .filter(item => !item.option)
-              .filter(item => !item.hidden)
-          );
-        }
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (macro_products_list) {
+        set_filtered_products(macro_products_list.filter(item => !item.option).filter(item => !item.hidden));
       }
-      return () => (clean = false);
-    },
-    [ macro_products_list ]
-  );
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (product) {
-          console.log("Set");
-          set_state();
-        } else {
-          console.log("UnSet");
-          unset_state();
-          set_product_options([ {} ]);
-        }
+    }
+    return () => (clean = false);
+  }, [macro_products_list]);
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (product) {
+        console.log("Set");
+        set_state();
+      } else {
+        console.log("UnSet");
+        unset_state();
+        set_product_options([{}]);
       }
-      return () => (clean = false);
-    },
-    [ product, productDeleteSuccess ]
-  );
+    }
+    return () => (clean = false);
+  }, [product, productDeleteSuccess]);
 
   setTimeout(() => {
     set_loading_checkboxes(false);
@@ -429,10 +378,7 @@ const EditProductPage = props => {
     // props.match.params.pathname && setPathname(product.pathname);
     setOrder(product.order);
     set_product_options(product.product_options);
-    set_product_options_images(
-      product.product_options &&
-        product.product_options.map(option => option.images)
-    );
+    set_product_options_images(product.product_options && product.product_options.map(option => option.images));
     set_group_product(product.group_product);
     set_products(product.products);
     set_material_cost(product.material_cost);
@@ -512,8 +458,8 @@ const EditProductPage = props => {
     set_weight_ounces(0);
     setPathname("");
     setOrder();
-    set_product_options([ {} ]);
-    set_product_options_images([ [] ]);
+    set_product_options([{}]);
+    set_product_options_images([[]]);
     set_group_product([]);
     set_material_cost();
     set_filament_used();
@@ -549,18 +495,11 @@ const EditProductPage = props => {
   // };
 
   const save_product = async () => {
-    const start_date = new Date(
-      unformat_date_and_time(sale_start_date, sale_start_time)
-    );
-    const end_date = new Date(
-      unformat_date_and_time(sale_end_date, sale_end_time)
-    );
+    const start_date = new Date(unformat_date_and_time(sale_start_date, sale_start_time));
+    const end_date = new Date(unformat_date_and_time(sale_end_date, sale_end_time));
     dispatch(
       saveProduct({
-        _id:
-          props.match.params.pathname && props.match.params.template === "false"
-            ? product._id
-            : null,
+        _id: props.match.params.pathname && props.match.params.template === "false" ? product._id : null,
         // _id: props.match.params.pathname && !props.match.params.template === 'true' ? id : null,
         name,
         price,
@@ -635,7 +574,7 @@ const EditProductPage = props => {
         item_group_id: props.match.params.item_group_id || item_group_id,
         previous_price,
         has_add_on,
-        filament: filament ? filament._id : null,
+        filament: filament ? filament._id : null
       })
     );
     // if (props.match.params.product_option && props.match.params.item_group_id) {
@@ -702,7 +641,7 @@ const EditProductPage = props => {
   };
 
   const sort_filament = filaments_list => {
-    return filaments_list.sort(function(a, b) {
+    return filaments_list.sort(function (a, b) {
       var textA = a.color.toUpperCase();
       var textB = b.color.toUpperCase();
       return textA < textB ? -1 : textA > textB ? 1 : 0;
@@ -710,74 +649,52 @@ const EditProductPage = props => {
   };
 
   let num = 0;
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (
-          props.match.params.product_option &&
-          props.match.params.item_group_id
-        ) {
-          // if (successSave && num === 0) {
-          //   save_second_product();
-          //   num++;
-          // } else if (successSave && num === 1)
-          //   history.push(
-          //     `/secure/glow/editproduct/${macro_product.pathname}/false`
-          //   );
-        }
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (props.match.params.product_option && props.match.params.item_group_id) {
+        // if (successSave && num === 0) {
+        //   save_second_product();
+        //   num++;
+        // } else if (successSave && num === 1)
+        //   history.push(
+        //     `/secure/glow/editproduct/${macro_product.pathname}/false`
+        //   );
       }
-      return () => (clean = false);
-    },
-    [ successSave ]
-  );
+    }
+    return () => (clean = false);
+  }, [successSave]);
 
   const save_second_product = async () => {
     if (props.match.params.product_option && props.match.params.item_group_id) {
-      const {
-        data: option_product,
-      } = await API_Products.findByPathname_products_a(pathname);
-      const { data: macro_product } = await API_Products.findById_products_a(
-        props.match.params.item_group_id
-      );
+      const { data: option_product } = await API_Products.findByPathname_products_a(pathname);
+      const { data: macro_product } = await API_Products.findById_products_a(props.match.params.item_group_id);
       let saved_data = {
-        _id: macro_product.item_group_id,
+        _id: macro_product.item_group_id
       };
       switch (props.match.params.product_option) {
         case "color_product":
           saved_data = {
             ...macro_product,
-            color_products: [
-              ...macro_product.color_products,
-              option_product._id,
-            ],
+            color_products: [...macro_product.color_products, option_product._id]
           };
           break;
         case "secondary_color_product":
           saved_data = {
             ...macro_product,
-            secondary_color_products: [
-              ...macro_product.secondary_color_products,
-              option_product._id,
-            ],
+            secondary_color_products: [...macro_product.secondary_color_products, option_product._id]
           };
           break;
         case "option_product":
           saved_data = {
             ...macro_product,
-            option_products: [
-              ...macro_product.option_products,
-              option_product._id,
-            ],
+            option_products: [...macro_product.option_products, option_product._id]
           };
           break;
         case "secondary_product":
           saved_data = {
             ...macro_product,
-            secondary_products: [
-              ...macro_product.secondary_products,
-              option_product._id,
-            ],
+            secondary_products: [...macro_product.secondary_products, option_product._id]
           };
           break;
 
@@ -808,9 +725,7 @@ const EditProductPage = props => {
     // const current_product = all_products.find(item => item._id ===  product._id)
     // const filtered_products = all_products.filter((item) => !item.option).filter((item) => !item.hidden);
     console.log(product._id);
-    const current_product_index = filtered_products
-      .map(item => item.pathname)
-      .indexOf(product.pathname);
+    const current_product_index = filtered_products.map(item => item.pathname).indexOf(product.pathname);
     console.log({ current_product_index });
 
     let left_product_index = current_product_index - 1;
@@ -820,25 +735,20 @@ const EditProductPage = props => {
     console.log({
       current_product_index,
       left_product_index,
-      new_product: filtered_products[left_product_index],
+      new_product: filtered_products[left_product_index]
     });
     set_new_index(left_product_index);
     if (save) {
       save_product();
     } else {
-      history.push(
-        "/secure/glow/editproduct/" +
-          filtered_products[left_product_index].pathname
-      );
+      history.push("/secure/glow/editproduct/" + filtered_products[left_product_index].pathname);
     }
   };
   const move_right = e => {
     e.preventDefault();
     // const filtered_products = all_products.filter((item) => !item.option).filter((item) => !item.hidden);
     console.log(product.pathname);
-    const current_product_index = filtered_products
-      .map(item => item.pathname)
-      .indexOf(product.pathname);
+    const current_product_index = filtered_products.map(item => item.pathname).indexOf(product.pathname);
     console.log({ current_product_index });
     let right_product_index = current_product_index + 1;
     if (right_product_index >= filtered_products.length) {
@@ -847,31 +757,23 @@ const EditProductPage = props => {
     console.log({
       current_product_index,
       right_product_index,
-      new_product: filtered_products[right_product_index],
+      new_product: filtered_products[right_product_index]
     });
     set_new_index(right_product_index);
     if (save) {
       save_product();
     } else {
-      history.push(
-        "/secure/glow/editproduct/" +
-          filtered_products[right_product_index].pathname
-      );
+      history.push("/secure/glow/editproduct/" + filtered_products[right_product_index].pathname);
     }
   };
 
   const create_product_options = (e, type) => {
     e.preventDefault();
     set_loading_options(true);
+    console.log({ type });
     switch (type) {
       case "color":
-        create_color_products(
-          product,
-          set_color_products,
-          color_products,
-          color_modifier,
-          color_images
-        );
+        create_color_products(product, set_color_products, color_products, color_modifier, color_images);
         set_loading_options(false);
         break;
 
@@ -888,24 +790,12 @@ const EditProductPage = props => {
         break;
 
       case "option":
-        create_option_products(
-          product,
-          set_option_products,
-          option_products,
-          option_modifier,
-          option_images
-        );
+        create_option_products(product, set_option_products, option_products, option_modifier, option_images);
         set_loading_options(false);
         break;
 
       case "secondary":
-        create_secondary_products(
-          product,
-          set_secondary_products,
-          secondary_products,
-          secondary_modifier,
-          secondary_images
-        );
+        create_secondary_products(product, set_secondary_products, secondary_products, secondary_modifier, secondary_images);
         set_loading_options(false);
         break;
 
@@ -916,9 +806,7 @@ const EditProductPage = props => {
 
   return (
     <div className="main_container p-20px">
-      <h1 style={{ textAlign: "center" }}>
-        {props.match.params.pathname ? "Edit Product" : "Create Product"}
-      </h1>
+      <h1 style={{ textAlign: "center" }}>{props.match.params.pathname ? "Edit Product" : "Create Product"}</h1>
       <Loading loading={loading_options} />
       <Notification message={message} />
       <div className="form">
@@ -935,10 +823,7 @@ const EditProductPage = props => {
 									when={shouldBlockNavigation}
 									message="You have unsaved changes, are you sure you want to leave?"
 								/> */}
-                <ul
-                  className="edit-form-container"
-                  style={{ maxWidth: "105rem", marginBottom: "20px" }}
-                >
+                <ul className="edit-form-container" style={{ maxWidth: "105rem", marginBottom: "20px" }}>
                   {loading_checkboxes ? (
                     <div>Loading...</div>
                   ) : (
@@ -973,15 +858,14 @@ const EditProductPage = props => {
                         textAlign: "center",
                         width: "100%",
                         marginRight: "auto",
-                        justifyContent: "center",
+                        justifyContent: "center"
                       }}
                       className="ta-c "
                     >
                       <Link
                         to={{
-                          pathname:
-                            "/collections/all/products/" + product.pathname,
-                          previous_path: history.location.pathname,
+                          pathname: "/collections/all/products/" + product.pathname,
+                          previous_path: history.location.pathname
                         }}
                       >
                         {loading ? "Product" : product.name}
@@ -1003,10 +887,7 @@ const EditProductPage = props => {
                   <li>
                     <div className="ai-c h-25px mb-15px jc-c">
                       <div className="custom-select">
-                        <select
-                          className="qty_select_dropdown"
-                          onChange={e => use_template(e)}
-                        >
+                        <select className="qty_select_dropdown" onChange={e => use_template(e)}>
                           <option key={1} defaultValue="">
                             ---Choose Product as a Template---
                           </option>
@@ -1035,23 +916,11 @@ const EditProductPage = props => {
 
                       <li>
                         <label htmlFor="name">Name</label>
-                        <input
-                          type="text"
-                          name="name"
-                          value={name}
-                          id="name"
-                          onChange={e => setName(e.target.value)}
-                        />
+                        <input type="text" name="name" value={name} id="name" onChange={e => setName(e.target.value)} />
                       </li>
                       <li>
                         <label htmlFor="color">Color</label>
-                        <input
-                          type="text"
-                          name="color"
-                          value={color}
-                          id="color"
-                          onChange={e => set_color(e.target.value)}
-                        />
+                        <input type="text" name="color" value={color} id="color" onChange={e => set_color(e.target.value)} />
                       </li>
                       <li>
                         <label htmlFor="color_code">Color Code</label>
@@ -1065,23 +934,11 @@ const EditProductPage = props => {
                       </li>
                       <li>
                         <label htmlFor="size">Size</label>
-                        <input
-                          type="text"
-                          name="size"
-                          value={size}
-                          id="size"
-                          onChange={e => set_size(e.target.value)}
-                        />
+                        <input type="text" name="size" value={size} id="size" onChange={e => set_size(e.target.value)} />
                       </li>
                       <li>
                         <label htmlFor="price">Price</label>
-                        <input
-                          type="text"
-                          name="price"
-                          value={price}
-                          id="price"
-                          onChange={e => setPrice(e.target.value)}
-                        />
+                        <input type="text" name="price" value={price} id="price" onChange={e => setPrice(e.target.value)} />
                       </li>
 
                       <li>
@@ -1153,8 +1010,7 @@ const EditProductPage = props => {
                               name="sale_start_date"
                               value={sale_start_date}
                               id="sale_start_date"
-                              onChange={e =>
-                                set_sale_start_date(e.target.value)}
+                              onChange={e => set_sale_start_date(e.target.value)}
                             />
                           </div>
                           <div>
@@ -1165,8 +1021,7 @@ const EditProductPage = props => {
                               name="sale_start_time"
                               value={sale_start_time}
                               id="sale_start_time"
-                              onChange={e =>
-                                set_sale_start_time(e.target.value)}
+                              onChange={e => set_sale_start_time(e.target.value)}
                             />
                           </div>
                         </div>
@@ -1203,13 +1058,7 @@ const EditProductPage = props => {
                       </li>
                       <li>
                         <label htmlFor="category">Category</label>
-                        <input
-                          type="text"
-                          name="category"
-                          value={category}
-                          id="category"
-                          onChange={e => setCategory(e.target.value)}
-                        />
+                        <input type="text" name="category" value={category} id="category" onChange={e => setCategory(e.target.value)} />
                       </li>
                       <li>
                         <label htmlFor="subcategory">Subcategories</label>
@@ -1233,13 +1082,7 @@ const EditProductPage = props => {
                       </li>
                       <li>
                         <label htmlFor="brand">Brand</label>
-                        <input
-                          type="text"
-                          name="brand"
-                          value={brand}
-                          id="brand"
-                          onChange={e => setBrand(e.target.value)}
-                        />
+                        <input type="text" name="brand" value={brand} id="brand" onChange={e => setBrand(e.target.value)} />
                       </li>
                       {/* <li>
 												<label htmlFor="display_image">Display Image</label>
@@ -1263,13 +1106,7 @@ const EditProductPage = props => {
 											</li> */}
                       <li>
                         <label htmlFor="video">Video</label>
-                        <input
-                          type="text"
-                          name="video"
-                          defaultValue={video}
-                          id="video"
-                          onChange={e => setVideo(e.target.value)}
-                        />
+                        <input type="text" name="video" defaultValue={video} id="video" onChange={e => setVideo(e.target.value)} />
                       </li>
                       {loading_checkboxes ? (
                         <div>Loading...</div>
@@ -1292,13 +1129,7 @@ const EditProductPage = props => {
                     <div className="w-228px m-10px">
                       <li>
                         <label htmlFor="quantity">Quantity</label>
-                        <input
-                          type="text"
-                          name="quantity"
-                          value={quantity}
-                          id="quantity"
-                          onChange={e => set_quantity(e.target.value)}
-                        />
+                        <input type="text" name="quantity" value={quantity} id="quantity" onChange={e => set_quantity(e.target.value)} />
                       </li>
                       <li>
                         <label htmlFor="count_in_stock">Count In Stock</label>
@@ -1401,31 +1232,20 @@ const EditProductPage = props => {
                         />
                       </li>
                     </div>
-                    <div
-                      className=""
-                      style={{ width: "228px", margin: "10px" }}
-                    >
+                    <div className="" style={{ width: "228px", margin: "10px" }}>
                       <li>
                         <label htmlFor="pathname">Pathname</label>
                         <input
                           type="text"
                           name="pathname"
-                          defaultValue={
-                            pathname ? pathname : name && snake_case(name)
-                          }
+                          defaultValue={pathname ? pathname : name && snake_case(name)}
                           id="pathname"
                           onChange={e => setPathname(e.target.value)}
                         />
                       </li>
                       <li>
                         <label htmlFor="order">Order</label>
-                        <input
-                          type="text"
-                          name="order"
-                          defaultValue={order}
-                          id="order"
-                          onChange={e => setOrder(e.target.value)}
-                        />
+                        <input type="text" name="order" defaultValue={order} id="order" onChange={e => setOrder(e.target.value)} />
                       </li>
                       <li>
                         <label htmlFor="meta_title">Meta Title</label>
@@ -1438,9 +1258,7 @@ const EditProductPage = props => {
                         />
                       </li>
                       <li>
-                        <label htmlFor="meta_description">
-                          Meta Description
-                        </label>
+                        <label htmlFor="meta_description">Meta Description</label>
                         <textarea
                           className="edit_product_textarea"
                           name="meta_description"
@@ -1502,41 +1320,25 @@ const EditProductPage = props => {
                       <li>
                         <div className="jc-b">
                           <div className="mr-5px">
-                            <label htmlFor="processing_time">
-                              Processing Time Min
-                            </label>
+                            <label htmlFor="processing_time">Processing Time Min</label>
                             <input
                               type="text"
                               className="w-100per"
                               name="processing_time"
-                              defaultValue={
-                                processing_time && processing_time[0]
-                              }
+                              defaultValue={processing_time && processing_time[0]}
                               id="processing_time"
-                              onChange={e =>
-                                set_processing_time(time => [
-                                  e.target.value,
-                                  time[1],
-                                ])}
+                              onChange={e => set_processing_time(time => [e.target.value, time[1]])}
                             />
                           </div>
                           <div>
-                            <label htmlFor="processing_time">
-                              Processing Time Max
-                            </label>
+                            <label htmlFor="processing_time">Processing Time Max</label>
                             <input
                               type="text"
                               className="w-100per"
                               name="processing_time"
-                              defaultValue={
-                                processing_time && processing_time[1]
-                              }
+                              defaultValue={processing_time && processing_time[1]}
                               id="processing_time"
-                              onChange={e =>
-                                set_processing_time(time => [
-                                  time[0],
-                                  e.target.value,
-                                ])}
+                              onChange={e => set_processing_time(time => [time[0], e.target.value])}
                             />
                           </div>
                         </div>
@@ -1610,12 +1412,7 @@ const EditProductPage = props => {
                         <input
                           type="text"
                           name="package_volume"
-                          value={
-                            package_length &&
-                            package_width &&
-                            package_height &&
-                            package_length * package_width * package_height
-                          }
+                          value={package_length && package_width && package_height && package_length * package_width * package_height}
                           id="package_volume"
                           onChange={e => set_package_volume(e.target.value)}
                         />
@@ -1647,12 +1444,7 @@ const EditProductPage = props => {
                       </li>
                     </div>
                   </div>
-                  <ImageDisplay
-                    images={images}
-                    set_images={set_images}
-                    image={image}
-                    set_image={set_image}
-                  />
+                  <ImageDisplay images={images} set_images={set_images} image={image} set_image={set_image} />
                   {/* <li>
 										<label htmlFor="image">Image</label>
 										<input
@@ -1735,9 +1527,7 @@ const EditProductPage = props => {
                       ) : (
                         <div>
                           <li>
-                            <label htmlFor="default_option">
-                              Default Option
-                            </label>
+                            <label htmlFor="default_option">Default Option</label>
                             <input
                               type="checkbox"
                               name="default_option"
@@ -1750,20 +1540,12 @@ const EditProductPage = props => {
                           </li>
 
                           <li>
-                            <label
-                              aria-label="Sort"
-                              htmlFor="sort"
-                              className="select-label mb-15px"
-                            >
+                            <label aria-label="Sort" htmlFor="sort" className="select-label mb-15px">
                               Choose Macro Product
                             </label>
                             <div className="ai-c h-25px mb-15px">
                               <div className="custom-select">
-                                <select
-                                  className="qty_select_dropdown"
-                                  onChange={e =>
-                                    set_item_group_id(e.target.value)}
-                                >
+                                <select className="qty_select_dropdown" onChange={e => set_item_group_id(e.target.value)}>
                                   <option key={1} defaultValue="">
                                     ---Choose Product---
                                   </option>
@@ -1802,11 +1584,7 @@ const EditProductPage = props => {
                       ) : (
                         <div>
                           <li>
-                            <label
-                              aria-label="Sort"
-                              htmlFor="sort"
-                              className="select-label mb-15px"
-                            >
+                            <label aria-label="Sort" htmlFor="sort" className="select-label mb-15px">
                               Choose Filament
                             </label>
                             <div className="ai-c h-25px mb-15px">
@@ -1814,21 +1592,15 @@ const EditProductPage = props => {
                                 <select
                                   className="qty_select_dropdown"
                                   value={JSON.stringify(filament)}
-                                  onChange={e =>
-                                    set_filament(JSON.parse(e.target.value))}
+                                  onChange={e => set_filament(JSON.parse(e.target.value))}
                                 >
                                   <option key={1} defaultValue="">
                                     ---Choose Filament---
                                   </option>
                                   {filaments_list &&
                                     filaments_list.length > 0 &&
-                                    sort_filament(
-                                      filaments_list
-                                    ).map((filament, index) => (
-                                      <option
-                                        key={index}
-                                        value={JSON.stringify(filament)}
-                                      >
+                                    sort_filament(filaments_list).map((filament, index) => (
+                                      <option key={index} value={JSON.stringify(filament)}>
                                         {filament.color} {filament.type}
                                       </option>
                                     ))}
@@ -1864,9 +1636,7 @@ const EditProductPage = props => {
                         <div>Loading...</div>
                       ) : (
                         <li>
-                          <label htmlFor="color_product_group">
-                            Color Product Group
-                          </label>
+                          <label htmlFor="color_product_group">Color Product Group</label>
                           <input
                             type="checkbox"
                             name="color_product_group"
@@ -1883,16 +1653,13 @@ const EditProductPage = props => {
                         {color_product_group && (
                           <ul>
                             <li>
-                              <label htmlFor="color_group_name">
-                                Color Product Group Name
-                              </label>
+                              <label htmlFor="color_group_name">Color Product Group Name</label>
                               <input
                                 type="text"
                                 name="color_group_name"
                                 value={color_group_name}
                                 id="color_group_name"
-                                onChange={e =>
-                                  set_color_group_name(e.target.value)}
+                                onChange={e => set_color_group_name(e.target.value)}
                               />
                             </li>
                             <div>
@@ -1908,30 +1675,17 @@ const EditProductPage = props => {
                                     type="text"
                                     name="color_modifier"
                                     id="color_modifier"
-                                    defaultValue={determine_color_modifier(
-                                      product.category
-                                    )}
+                                    defaultValue={determine_color_modifier(product.category)}
                                     className=""
-                                    onChange={e =>
-                                      set_color_modifier(e.target.value)}
+                                    onChange={e => set_color_modifier(e.target.value)}
                                   />
 
-                                  <GLButton
-                                    variant="primary"
-                                    onClick={e =>
-                                      create_product_options(e, "color")}
-                                  >
+                                  <GLButton variant="primary" onClick={e => create_product_options(e, "color")}>
                                     Create Color Products
                                   </GLButton>
                                 </div>
-                                <Link
-                                  to={`/secure/glow/editproduct/${props.match
-                                    .params
-                                    .pathname}/true/color_product/${product._id}`}
-                                >
-                                  <GLButton variant="primary">
-                                    Create Color Product
-                                  </GLButton>
+                                <Link to={`/secure/glow/editproduct/${props.match.params.pathname}/true/color_product/${product._id}`}>
+                                  <GLButton variant="primary">Create Color Product</GLButton>
                                 </Link>
                               </div>
                             </div>
@@ -1948,27 +1702,21 @@ const EditProductPage = props => {
                       </div>
                       {secondary_color_product_group && (
                         <li>
-                          <h2 className="ta-c">
-                            Secondary Color Product Group
-                          </h2>
+                          <h2 className="ta-c">Secondary Color Product Group</h2>
                         </li>
                       )}
                       {loading_checkboxes ? (
                         <div>Loading...</div>
                       ) : (
                         <li>
-                          <label htmlFor="secondary_color_product_group">
-                            Secondary Color Product Group
-                          </label>
+                          <label htmlFor="secondary_color_product_group">Secondary Color Product Group</label>
                           <input
                             type="checkbox"
                             name="secondary_color_product_group"
                             defaultChecked={secondary_color_product_group}
                             id="secondary_color_product_group"
                             onChange={e => {
-                              set_secondary_color_product_group(
-                                e.target.checked
-                              );
+                              set_secondary_color_product_group(e.target.checked);
                             }}
                           />
                         </li>
@@ -1978,18 +1726,13 @@ const EditProductPage = props => {
                         {secondary_color_product_group && (
                           <ul>
                             <li>
-                              <label htmlFor="secondary_color_group_name">
-                                Secondary Color Product Group Name
-                              </label>
+                              <label htmlFor="secondary_color_group_name">Secondary Color Product Group Name</label>
                               <input
                                 type="text"
                                 name="secondary_color_group_name"
                                 value={secondary_color_group_name}
                                 id="secondary_color_group_name"
-                                onChange={e =>
-                                  set_secondary_color_group_name(
-                                    e.target.value
-                                  )}
+                                onChange={e => set_secondary_color_group_name(e.target.value)}
                               />
                             </li>
                             <div>
@@ -2005,34 +1748,18 @@ const EditProductPage = props => {
                                     type="text"
                                     name="secondary_color_modifier"
                                     id="secondary_color_modifier"
-                                    defaultValue={determine_secondary_color_modifier(
-                                      product.category
-                                    )}
+                                    defaultValue={determine_secondary_color_modifier(product.category)}
                                     className=""
-                                    onChange={e =>
-                                      set_secondary_color_modifier(
-                                        e.target.value
-                                      )}
+                                    onChange={e => set_secondary_color_modifier(e.target.value)}
                                   />
-                                  <GLButton
-                                    variant="primary"
-                                    onClick={e =>
-                                      create_product_options(
-                                        e,
-                                        "secondary_color"
-                                      )}
-                                  >
+                                  <GLButton variant="primary" onClick={e => create_product_options(e, "secondary_color")}>
                                     Create Secondary Color Products
                                   </GLButton>
                                 </div>
                                 <Link
-                                  to={`/secure/glow/editproduct/${props.match
-                                    .params
-                                    .pathname}/true/secondary_color_product/${product._id}`}
+                                  to={`/secure/glow/editproduct/${props.match.params.pathname}/true/secondary_color_product/${product._id}`}
                                 >
-                                  <GLButton variant="primary">
-                                    Create Secondary Color Product
-                                  </GLButton>
+                                  <GLButton variant="primary">Create Secondary Color Product</GLButton>
                                 </Link>
                               </div>
                             </div>
@@ -2057,9 +1784,7 @@ const EditProductPage = props => {
                         <div>Loading...</div>
                       ) : (
                         <li>
-                          <label htmlFor="option_product_group">
-                            Option Product Group
-                          </label>
+                          <label htmlFor="option_product_group">Option Product Group</label>
                           <input
                             type="checkbox"
                             name="option_product_group"
@@ -2076,16 +1801,13 @@ const EditProductPage = props => {
                         {option_product_group && (
                           <ul>
                             <li>
-                              <label htmlFor="option_group_name">
-                                Option Product Group Name
-                              </label>
+                              <label htmlFor="option_group_name">Option Product Group Name</label>
                               <input
                                 type="text"
                                 name="option_group_name"
                                 value={option_group_name}
                                 id="option_group_name"
-                                onChange={e =>
-                                  set_option_group_name(e.target.value)}
+                                onChange={e => set_option_group_name(e.target.value)}
                               />
                             </li>
                             <div>
@@ -2101,29 +1823,16 @@ const EditProductPage = props => {
                                     type="text"
                                     name="option_modifier"
                                     id="option_modifier"
-                                    defaultValue={determine_option_modifier(
-                                      product.category
-                                    )}
+                                    defaultValue={determine_option_modifier(product.category)}
                                     className=""
-                                    onChange={e =>
-                                      set_option_modifier(e.target.value)}
+                                    onChange={e => set_option_modifier(e.target.value)}
                                   />
-                                  <GLButton
-                                    variant="primary"
-                                    onClick={e =>
-                                      create_product_options(e, "option")}
-                                  >
+                                  <GLButton variant="primary" onClick={e => create_product_options(e, "option")}>
                                     Create Option Products
                                   </GLButton>
                                 </div>
-                                <Link
-                                  to={`/secure/glow/editproduct/${props.match
-                                    .params
-                                    .pathname}/true/option_product/${product._id}`}
-                                >
-                                  <GLButton variant="primary">
-                                    Create Option Product
-                                  </GLButton>
+                                <Link to={`/secure/glow/editproduct/${props.match.params.pathname}/true/option_product/${product._id}`}>
+                                  <GLButton variant="primary">Create Option Product</GLButton>
                                 </Link>
                               </div>
                             </div>
@@ -2147,9 +1856,7 @@ const EditProductPage = props => {
                         <div>Loading...</div>
                       ) : (
                         <li>
-                          <label htmlFor="secondary_product_group">
-                            Secondary Product Group
-                          </label>
+                          <label htmlFor="secondary_product_group">Secondary Product Group</label>
                           <input
                             type="checkbox"
                             name="secondary_product_group"
@@ -2165,16 +1872,13 @@ const EditProductPage = props => {
                         {secondary_product_group && (
                           <ul>
                             <li>
-                              <label htmlFor="secondary_group_name">
-                                Secondary Product Group Name
-                              </label>
+                              <label htmlFor="secondary_group_name">Secondary Product Group Name</label>
                               <input
                                 type="text"
                                 name="secondary_group_name"
                                 value={secondary_group_name}
                                 id="secondary_group_name"
-                                onChange={e =>
-                                  set_secondary_group_name(e.target.value)}
+                                onChange={e => set_secondary_group_name(e.target.value)}
                               />
                             </li>
                             <div>
@@ -2190,29 +1894,16 @@ const EditProductPage = props => {
                                     type="text"
                                     name="secondary_modifier"
                                     id="secondary_modifier"
-                                    defaultValue={determine_secondary_modifier(
-                                      product.category
-                                    )}
+                                    defaultValue={determine_secondary_modifier(product.category)}
                                     className=""
-                                    onChange={e =>
-                                      set_secondary_modifier(e.target.value)}
+                                    onChange={e => set_secondary_modifier(e.target.value)}
                                   />
-                                  <GLButton
-                                    variant="primary"
-                                    onClick={e =>
-                                      create_product_options(e, "secondary")}
-                                  >
+                                  <GLButton variant="primary" onClick={e => create_product_options(e, "secondary")}>
                                     Create Secondary Products
                                   </GLButton>
                                 </div>
-                                <Link
-                                  to={`/secure/glow/editproduct/${props.match
-                                    .params
-                                    .pathname}/true/secondary_product/${product._id}`}
-                                >
-                                  <GLButton variant="primary">
-                                    Create Secondary Product
-                                  </GLButton>
+                                <Link to={`/secure/glow/editproduct/${props.match.params.pathname}/true/secondary_product/${product._id}`}>
+                                  <GLButton variant="primary">Create Secondary Product</GLButton>
                                 </Link>
                               </div>
                             </div>
@@ -2267,10 +1958,7 @@ const EditProductPage = props => {
                   <li>
                     <div className="ai-c h-25px mb-15px jc-c">
                       <div className="custom-select">
-                        <select
-                          className="qty_select_dropdown"
-                          onChange={e => use_product_options_template(e)}
-                        >
+                        <select className="qty_select_dropdown" onChange={e => use_product_options_template(e)}>
                           <option key={1} defaultValue="">
                             ---Choose Product Option Template---
                           </option>
@@ -2301,7 +1989,7 @@ const EditProductPage = props => {
                         textAlign: "center",
                         width: "100%",
                         marginRight: "auto",
-                        justifyContent: "center",
+                        justifyContent: "center"
                       }}
                       className="ta-c "
                     />
@@ -2333,9 +2021,8 @@ const EditProductPage = props => {
                   <li>
                     <Link
                       to={{
-                        pathname:
-                          "/collections/all/products/" + product.pathname,
-                        previous_path: history.location.pathname,
+                        pathname: "/collections/all/products/" + product.pathname,
+                        previous_path: history.location.pathname
                       }}
                     >
                       <GLButton variant="secondary" className="w-100per">
@@ -2344,10 +2031,7 @@ const EditProductPage = props => {
                     </Link>
                   </li>
                   <li>
-                    <GLButton
-                      variant="secondary"
-                      onClick={() => history.goBack()}
-                    >
+                    <GLButton variant="secondary" onClick={() => history.goBack()}>
                       Back to Products
                     </GLButton>
                   </li>

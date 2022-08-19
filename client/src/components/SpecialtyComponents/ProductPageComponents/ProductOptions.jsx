@@ -10,6 +10,7 @@ import {
 import useWindowDimensions from "../../Hooks/windowDimensions";
 import { GLButton } from "../../GlowLEDsComponents";
 import ReactTooltip from "react-tooltip";
+import GLTooltip from "../../GlowLEDsComponents/GLTooltip/GLTooltip";
 
 const ProductOptions = ({
   product,
@@ -117,31 +118,18 @@ const ProductOptions = ({
       variant = "disabled";
     }
     return (
-      <GLButton
-        variant={variant}
-        className={`${variant !== "disabled" && "bob"} mt-10px w-100per`}
-        tooltip={variant === "disabled" && "You must choose an option before adding to you cart"}
-        onClick={handleAddToCart}
-      >
-        {determine_preorder(option_product_object, count_in_stock, "Add To Cart")}
-      </GLButton>
+      <GLTooltip tooltip={variant === "disabled" && "You must choose an option before adding to you cart"}>
+        <GLButton
+          variant={variant}
+          className={`${variant !== "disabled" && "bob"} mt-10px w-100per`}
+          // tooltip={variant === "disabled" && "You must choose an option before adding to you cart"}
+          onClick={handleAddToCart}
+        >
+          {determine_preorder(option_product_object, count_in_stock, "Add To Cart")}
+        </GLButton>
+      </GLTooltip>
     );
   };
-
-  // useEffect(() => {
-  //   if (
-  //     product.name === "CLOZD Nanoskinz V2" ||
-  //     product.name === "CLOZD Coinskinz V2" ||
-  //     product.name === "CLOZD Coffinskinz V2" ||
-  //     product.name === "CLOZD Apolloskinz V2"
-  //   ) {
-  //     set_show_add_on(false);
-  //     set_add_on_price(0);
-  //   } else {
-  //     set_show_add_on(true);
-  //   }
-  //   return () => {};
-  // }, []);
 
   const determine_show_options = (product, secondary_product, count_in_stock, option_product_object) => {
     if (names_hide_add_to_cart.includes(product.name) && !secondary_product) {
@@ -218,7 +206,9 @@ const ProductOptions = ({
                   });
                 }}
               />
-              <label htmlFor="show_add_on mb-20px">+ Add Capes (For Centering)</label>
+              <label htmlFor="show_add_on mb-20px">
+                + {product.category === "glowskinz" ? "Add Capes (For Centering)" : "Add Adapters"}
+              </label>
             </div>
           </li>
         )}
