@@ -230,7 +230,9 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
     } else {
       set_order_state({ ...order_state, [is_action]: true });
       dispatch(update_order(order_state, true, is_action, action_at));
-      send_email(order_state, action_at.slice(0, -2));
+      if (is_action !== "isPaused") {
+        send_email(order_state, action_at.slice(0, -2));
+      }
     }
     setTimeout(() => {
       dispatch(listOrders(listOrdersFilters));
@@ -306,10 +308,14 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
                 {order.shipping.first_name} {order.shipping.last_name}
               </Link>
             </div>
-            {userInfo && userInfo.isAdmin && order.shipping.shipping_rate && (
-              <p className="title_font ai-c fs-30px">
-                {order.shipping.shipping_rate.service !== "First" && order.shipping.shipping_rate.service}{" "}
-              </p>
+            {userInfo && userInfo.isAdmin && order.isPaused ? (
+              <p className="title_font ai-c fs-30px">{order.isPaused && "PAUSED"}</p>
+            ) : (
+              order.shipping.shipping_rate && (
+                <p className="title_font ai-c fs-30px">
+                  {order.shipping.shipping_rate.service !== "First" && order.shipping.shipping_rate.service}{" "}
+                </p>
+              )
             )}
           </div>
 
@@ -575,25 +581,12 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
                 <label className="phrase_font">Payment Method </label>
                 <label className="ml-1rem">{order.payment.paymentMethod}</label>
               </li>
-              {/* <li className="row mv-2rem">
-                <label className="phrase_font">Order Note: </label>
-                <label className="ml-1rem">{order.order_note}</label>
-              </li>
-              {userInfo &&
-              userInfo.isAdmin &&
-              order.production_note && (
-                <li className="row mv-2rem">
-                  <label className="phrase_font">Production Note: </label>
-                  <label className="ml-1rem">{order.production_note}</label>
-                </li>
-              )} */}
               <li className="row mv-2rem">
                 <label className="phrase_font">Promo Code: </label>
                 <label className="ml-1rem">{order.promo_code}</label>
               </li>
               <li className="row">
                 <label className="phrase_font">Tracking Number: </label>
-
                 <a
                   href={determine_tracking_number(order.tracking_number)}
                   target="_blank"

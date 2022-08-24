@@ -21,7 +21,7 @@ const shippingSchema = {
   state: { type: String, required: true },
   postalCode: { type: String, required: true },
   international: { type: Boolean },
-  country: { type: String, required: true },
+  country: { type: String, required: true }
 };
 
 const paymentSchema = {
@@ -29,14 +29,14 @@ const paymentSchema = {
   payment: { type: Object },
   charge: { type: Object },
   refund: { type: Array },
-  refund_reason: { type: Array },
+  refund_reason: { type: Array }
 };
 
 const messageSchema = {
   message: { type: String },
   user: { type: Boolean },
   admin: { type: Boolean },
-  deleted: { type: Boolean, default: false },
+  deleted: { type: Boolean, default: false }
 };
 
 const productOptionsSchema = new mongoose.Schema({
@@ -44,7 +44,7 @@ const productOptionsSchema = new mongoose.Schema({
   price: { type: Number },
   sale_price: { type: Number, default: 0 },
   size: { type: Number },
-  color: { type: String },
+  color: { type: String }
 });
 
 const orderItemSchema = new mongoose.Schema(
@@ -88,39 +88,39 @@ const orderItemSchema = new mongoose.Schema(
     product: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Product",
-      required: true,
+      required: true
     },
     color_product: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Product",
+      ref: "Product"
     },
     color_product_name: { type: String },
     secondary_color_product: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Product",
+      ref: "Product"
     },
     secondary_color_product_name: { type: String },
     option_product_name: { type: String },
     option_product: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Product",
+      ref: "Product"
     },
     secondary_product_name: { type: String },
     secondary_product: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Product",
-    },
+      ref: "Product"
+    }
   },
   {
-    timestamps: true,
+    timestamps: true
   }
 );
 
 const orderSchema = new mongoose.Schema(
   {
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-    orderItems: [ orderItemSchema ],
-    messages: [ messageSchema ],
+    orderItems: [orderItemSchema],
+    messages: [messageSchema],
     shipping: shippingSchema,
     payment: paymentSchema,
     itemsPrice: { type: Number },
@@ -141,9 +141,11 @@ const orderSchema = new mongoose.Schema(
     isDelivered: { type: Boolean, default: false },
     deliveredAt: { type: Date },
     isRefunded: { type: Boolean, default: false },
+    isPaused: { type: Boolean, default: false },
+    pausedAt: { type: Date },
     parcel: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Parcel",
+      ref: "Parcel"
     },
     refundedAt: { type: Date },
     order_note: { type: String },
@@ -155,10 +157,10 @@ const orderSchema = new mongoose.Schema(
     is_error: { type: Boolean, default: false },
     error_at: { type: Date },
     error: { type: Object },
-    deleted: { type: Boolean, default: false },
+    deleted: { type: Boolean, default: false }
   },
   {
-    timestamps: true,
+    timestamps: true
   }
 );
 
