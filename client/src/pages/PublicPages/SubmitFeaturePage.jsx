@@ -13,26 +13,26 @@ import "react-medium-image-zoom/dist/styles.css";
 import { GLButton } from "../../components/GlowLEDsComponents";
 
 const SubmitFeaturePage = props => {
-  const [ id, set_id ] = useState("");
-  const [ user, set_user ] = useState("");
-  const [ email, set_email ] = useState("");
-  const [ first_name, set_first_name ] = useState("");
-  const [ last_name, set_last_name ] = useState("");
-  const [ artist_name, set_artist_name ] = useState("");
-  const [ instagram_handle, set_instagram_handle ] = useState("");
-  const [ facebook_name, set_facebook_name ] = useState("");
-  const [ product, set_product ] = useState("");
-  const [ song_id, set_song_id ] = useState("");
-  const [ video, set_video ] = useState("");
-  const [ category, set_category ] = useState("");
-  const [ pathname, set_pathname ] = useState("");
-  const [ images, set_images ] = useState([]);
-  const [ image, set_image ] = useState("");
-  const [ link, set_link ] = useState("");
-  const [ logo, set_logo ] = useState("");
-  const [ description, set_description ] = useState("");
-  const [ release_date, set_release_date ] = useState("");
-  const [ loading_submit, set_loading_submit ] = useState(false);
+  const [id, set_id] = useState("");
+  const [user, set_user] = useState("");
+  const [email, set_email] = useState("");
+  const [first_name, set_first_name] = useState("");
+  const [last_name, set_last_name] = useState("");
+  const [artist_name, set_artist_name] = useState("");
+  const [instagram_handle, set_instagram_handle] = useState("");
+  const [facebook_name, set_facebook_name] = useState("");
+  const [product, set_product] = useState("");
+  const [song_id, set_song_id] = useState("");
+  const [video, set_video] = useState("");
+  const [category, set_category] = useState("");
+  const [pathname, set_pathname] = useState("");
+  const [images, set_images] = useState([]);
+  const [image, set_image] = useState("");
+  const [link, set_link] = useState("");
+  const [logo, set_logo] = useState("");
+  const [description, set_description] = useState("");
+  const [release_date, set_release_date] = useState("");
+  const [loading_submit, set_loading_submit] = useState(false);
 
   const userList = useSelector(state => state.userList);
   const { users } = userList;
@@ -49,11 +49,7 @@ const SubmitFeaturePage = props => {
   const featureDetails = useSelector(state => state.featureDetails);
   const { feature, loading, error } = featureDetails;
   const featureSave = useSelector(state => state.featureSave);
-  const {
-    feature: feature_saved,
-    loading: loading_saved,
-    success,
-  } = featureSave;
+  const { feature: feature_saved, loading: loading_saved, success } = featureSave;
 
   const productList = useSelector(state => state.productList);
   const { products } = productList;
@@ -80,22 +76,19 @@ const SubmitFeaturePage = props => {
     return () => (clean = false);
   }, []);
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (feature) {
-          console.log("Set");
-          set_state();
-        } else {
-          console.log("UnSet");
-          unset_state();
-        }
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (feature) {
+        console.log("Set");
+        set_state();
+      } else {
+        console.log("UnSet");
+        unset_state();
       }
-      return () => (clean = false);
-    },
-    [ feature ]
-  );
+    }
+    return () => (clean = false);
+  }, [feature]);
 
   const set_state = () => {
     set_id(feature._id);
@@ -159,10 +152,8 @@ const SubmitFeaturePage = props => {
         video,
         // images,
         description,
-        pathname: `${artist_name.toLowerCase()}_${category.toLowerCase()}_${Math.floor(
-          Math.random() * 1000
-        )}`,
-        category: category.toLowerCase(),
+        pathname: `${artist_name.toLowerCase()}_${category.toLowerCase()}_${Math.floor(Math.random() * 1000)}`,
+        category: category.toLowerCase()
         // release_date: unformat_date('01/01/2021')
       })
     );
@@ -173,30 +164,23 @@ const SubmitFeaturePage = props => {
     // history.push('/secure/account/submission_complete');
   };
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (success && feature_saved) {
-          console.log({ feature_saved });
-          props.history.push(
-            "/pages/complete/feature/" + feature_saved.pathname
-          );
-          // history.push('/account/feature/receipt/' + feature_saved.pathname + '/feature/true');
-        }
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (success && feature_saved) {
+        console.log({ feature_saved });
+        props.history.push("/pages/complete/feature/" + feature_saved.pathname);
+        // history.push('/account/feature/receipt/' + feature_saved.pathname + '/feature/true');
       }
-      return () => (clean = false);
-    },
-    [ success ]
-  );
+    }
+    return () => (clean = false);
+  }, [success]);
 
-  const categories = [ "Glovers", "Artists", "Producers", "VFX" ];
+  const categories = ["Glovers", "Artists", "Producers", "VFX"];
 
   return (
     <div className="main_container p-20px">
-      <h1 style={{ textAlign: "center" }}>
-        {props.match.params.pathname ? "Edit Feature" : "Submit Feature"}
-      </h1>
+      <h1 style={{ textAlign: "center" }}>{props.match.params.pathname ? "Edit Feature" : "Submit Feature"}</h1>
 
       <div className="form">
         <form onSubmit={submitHandler} style={{ width: "100%" }}>
@@ -205,13 +189,10 @@ const SubmitFeaturePage = props => {
             {feature && (
               <div>
                 <Helmet>
-                  <title>Edit Feature| Glow LEDs</title>
+                  <title>Edit Feature | Glow LEDs</title>
                 </Helmet>
 
-                <ul
-                  className="edit-form-container"
-                  style={{ maxWidth: "30rem" }}
-                >
+                <ul className="edit-form-container" style={{ maxWidth: "30rem" }}>
                   {/* <div className="wrap jc-b  submit_form"> */}
                   <div>
                     {!userInfo.hasOwnProperty("first_name") && (
@@ -225,9 +206,7 @@ const SubmitFeaturePage = props => {
                     )}
                     {userInfo.hasOwnProperty("first_name") && (
                       <li>
-                        <h4 className="w-100per mv-0px">
-                          Logged in as {userInfo.first_name}
-                        </h4>
+                        <h4 className="w-100per mv-0px">Logged in as {userInfo.first_name}</h4>
                       </li>
                     )}
 
@@ -375,13 +354,7 @@ const SubmitFeaturePage = props => {
                     {category === "Glovers" && (
                       <li>
                         <label htmlFor="song_id">Song ID</label>
-                        <input
-                          type="text"
-                          name="song_id"
-                          value={song_id}
-                          id="song_id"
-                          onChange={e => set_song_id(e.target.value)}
-                        />
+                        <input type="text" name="song_id" value={song_id} id="song_id" onChange={e => set_song_id(e.target.value)} />
                       </li>
                     )}
                   </div>

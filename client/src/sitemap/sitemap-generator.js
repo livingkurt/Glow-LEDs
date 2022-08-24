@@ -1,21 +1,12 @@
 require("babel-register")({
-  presets: [ "es2015", "react" ],
+  presets: ["es2015", "react"]
 });
 
 const router = require("./sitemap-routes").default;
 const Sitemap = require("react-router-sitemap").default;
 const fetch = require("node-fetch");
 const API = "http://localhost:8080";
-const categories = [
-  "whites",
-  "batteries",
-  "decals",
-  "diffuser_caps",
-  "diffusers",
-  "exo_diffusers",
-  "glowstringz",
-  "glowskinz",
-];
+const categories = ["whites", "batteries", "decals", "diffuser_caps", "diffusers", "exo_diffusers", "glowstringz", "glowskinz"];
 const subcategories = [
   "whites",
   "refresh",
@@ -54,23 +45,13 @@ const subcategories = [
   "custom",
   "colors",
   "sizes",
-  "secondary_colors",
+  "secondary_colors"
 ];
 
-const collections = [
-  "novaskinz",
-  "classics",
-  "space_cadet",
-  "platonic_solids",
-  "festie_bestie",
-  "fractal",
-  "texture",
-];
+const collections = ["novaskinz", "classics", "space_cadet", "platonic_solids", "festie_bestie", "fractal", "texture"];
 
 async function generateSitemap() {
-  let products_res = await fetch(
-    API + "/api/products?deleted=false&hidden=false&option=false"
-  );
+  let products_res = await fetch(API + "/api/products?deleted=false&hidden=false&option=false");
   let { products } = await products_res.json();
 
   let productMap = products
@@ -95,14 +76,10 @@ async function generateSitemap() {
     { reason: "technical_support" },
     { reason: "website_bugs" },
     { reason: "custom_orders" },
-    { reason: "product_suggestions" },
-    { reason: "submit_content_to_be_featured" },
+    { reason: "product_suggestions" }
+    // { reason: "submit_content_to_be_featured" },
   ];
-  const menu_types = [
-    { pathname: "gloving" },
-    { pathname: "featured" },
-    { pathname: "support" },
-  ];
+  const menu_types = [{ pathname: "gloving" }, { pathname: "featured" }, { pathname: "support" }];
 
   console.log({ productMap });
   console.log({ categoryMap });
@@ -122,13 +99,9 @@ async function generateSitemap() {
     "/collections/all/products/category/diffuser_caps/subcategory/geometric/collection/:collection": collectionsMap,
     "/collections/all/products/:pathname": productMap,
     "/pages/contact/:reason": contact_reason,
-    "/pages/menu/:pathname": menu_types,
+    "/pages/menu/:pathname": menu_types
   };
-  return new Sitemap(router)
-    .applyParams(paramsConfig)
-    .build("https://glow-leds.com")
-    .save("../sitemap.xml")
-    .save("public/sitemap.xml");
+  return new Sitemap(router).applyParams(paramsConfig).build("https://glow-leds.com").save("../sitemap.xml").save("public/sitemap.xml");
 }
 
 generateSitemap();

@@ -15,74 +15,51 @@ const ContactPage = props => {
   const userLogin = useSelector(state => state.userLogin);
   const { userInfo } = userLogin;
 
-  const [ first_name, set_first_name ] = useState(
-    userInfo ? userInfo.first_name : ""
-  );
-  const [ last_name, set_last_name ] = useState(
-    userInfo ? userInfo.last_name : ""
-  );
-  const [ email, set_email ] = useState(userInfo ? userInfo.email : "");
-  const [ order_number, set_order_number ] = useState(
-    userInfo ? userInfo.order_number : ""
-  );
-  const [ reason_for_contact, set_reason_for_contact ] = useState(
-    props.match.params.reason ? props.match.params.reason : ""
-  );
-  const [ message, set_message ] = useState("");
-  const [ song_id, set_song_id ] = useState("");
-  const [ instagram_handle, set_instagram_handle ] = useState("");
-  const [ facebook_name, set_facebook_name ] = useState("");
-  const [ artist_name, set_artist_name ] = useState("");
-  const [ inspirational_pictures, set_inspirational_pictures ] = useState([]);
+  const [first_name, set_first_name] = useState(userInfo ? userInfo.first_name : "");
+  const [last_name, set_last_name] = useState(userInfo ? userInfo.last_name : "");
+  const [email, set_email] = useState(userInfo ? userInfo.email : "");
+  const [order_number, set_order_number] = useState(userInfo ? userInfo.order_number : "");
+  const [reason_for_contact, set_reason_for_contact] = useState(props.match.params.reason ? props.match.params.reason : "");
+  const [message, set_message] = useState("");
+  const [song_id, set_song_id] = useState("");
+  const [instagram_handle, set_instagram_handle] = useState("");
+  const [facebook_name, set_facebook_name] = useState("");
+  const [artist_name, set_artist_name] = useState("");
+  const [inspirational_pictures, set_inspirational_pictures] = useState([]);
 
-  const [ first_name_validations, set_first_name_Validations ] = useState("");
-  const [ last_name_validations, set_last_name_Validations ] = useState("");
-  const [ email_validations, set_email_validations ] = useState("");
-  const [ order_number_validations, set_order_number_validations ] = useState(
-    ""
-  );
-  const [
-    reason_for_contact_validations,
-    set_reason_for_contact_validations,
-  ] = useState("");
-  const [ message_validations, set_message_validations ] = useState("");
+  const [first_name_validations, set_first_name_Validations] = useState("");
+  const [last_name_validations, set_last_name_Validations] = useState("");
+  const [email_validations, set_email_validations] = useState("");
+  const [order_number_validations, set_order_number_validations] = useState("");
+  const [reason_for_contact_validations, set_reason_for_contact_validations] = useState("");
+  const [message_validations, set_message_validations] = useState("");
 
   const userContact = useSelector(state => state.userContact);
   const { loading, completed, message: completed_message, error } = userContact;
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        set_reason_for_contact(props.match.params.reason);
-      }
-      return () => (clean = false);
-    },
-    [ props.match.params.reason ]
-  );
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      set_reason_for_contact(props.match.params.reason);
+    }
+    return () => (clean = false);
+  }, [props.match.params.reason]);
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (completed) {
-          props.history.push("/pages/complete/email");
-        }
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (completed) {
+        props.history.push("/pages/complete/email");
       }
-      return () => (clean = false);
-    },
-    [ completed ]
-  );
+    }
+    return () => (clean = false);
+  }, [completed]);
 
   let request;
   const sendEmail = e => {
     e.preventDefault();
 
-    if (
-      [ "order_issues", "returns", "technical_support" ].includes(
-        reason_for_contact
-      )
-    ) {
+    if (["order_issues", "returns", "technical_support"].includes(reason_for_contact)) {
       set_order_number_validations("55555555");
     }
     const data = {
@@ -90,7 +67,7 @@ const ContactPage = props => {
       last_name,
       email,
       reason_for_contact,
-      message,
+      message
     };
     request = validate_contact(data);
 
@@ -118,19 +95,19 @@ const ContactPage = props => {
           song_id
         )
       );
-      if (reason_for_contact === "submit_content_to_be_featured") {
-        dispatch(
-          saveFeature({
-            user: userInfo,
-            artist_name,
-            instagram_handle,
-            facebook_name,
-            product: "",
-            song_id,
-            release_date: "2020-12-29",
-          })
-        );
-      }
+      // if (reason_for_contact === "submit_content_to_be_featured") {
+      //   dispatch(
+      //     saveFeature({
+      //       user: userInfo,
+      //       artist_name,
+      //       instagram_handle,
+      //       facebook_name,
+      //       product: "",
+      //       song_id,
+      //       release_date: "2020-12-29"
+      //     })
+      //   );
+      // }
     }
   };
 
@@ -141,22 +118,10 @@ const ContactPage = props => {
         <meta property="og:title" content="Contact" />
         <meta name="twitter:title" content="Contact" />
         <link rel="canonical" href="https://www.glow-leds.com/pages/contact" />
-        <meta
-          property="og:url"
-          content="https://www.glow-leds.com/pages/contact"
-        />
-        <meta
-          name="description"
-          content="If you have any questions, do not hesitate to use our contact page for support."
-        />
-        <meta
-          property="og:description"
-          content="If you have any questions, do not hesitate to use our contact page for support."
-        />
-        <meta
-          name="twitter:description"
-          content="If you have any questions, do not hesitate to use our contact page for support."
-        />
+        <meta property="og:url" content="https://www.glow-leds.com/pages/contact" />
+        <meta name="description" content="If you have any questions, do not hesitate to use our contact page for support." />
+        <meta property="og:description" content="If you have any questions, do not hesitate to use our contact page for support." />
+        <meta name="twitter:description" content="If you have any questions, do not hesitate to use our contact page for support." />
       </Helmet>
       <div className="jc-c">
         <h1>Contact</h1>
@@ -181,10 +146,7 @@ const ContactPage = props => {
 					)} */}
         </Loading>
       </div>
-      <form
-        style={{ display: "flex", flexDirection: "column" }}
-        className="contact-form"
-      >
+      <form style={{ display: "flex", flexDirection: "column" }} className="contact-form">
         <label>First Name</label>
         <input
           onChange={e => set_first_name(e.target.value)}
@@ -231,12 +193,7 @@ const ContactPage = props => {
             name="reason_for_contact"
             placeholder="----Click Here to Choose Reason----"
           >
-            <option
-              className="contact_grey_option"
-              disabled="disabled"
-              selected="selected"
-              value=""
-            >
+            <option className="contact_grey_option" disabled="disabled" selected="selected" value="">
               ----Click Here to Choose Reason----
             </option>
 
@@ -261,25 +218,18 @@ const ContactPage = props => {
             <option className="contact_options" value="product_suggestions">
               Product Suggestions
             </option>
-            <option
-              className="contact_options"
-              value="submit_content_to_be_featured"
-            >
+            {/* <option className="contact_options" value="submit_content_to_be_featured">
               Submit Content to be Featured
-            </option>
+            </option> */}
             <option className="contact_options" value="other">
               Other
             </option>
           </select>
           <span className="custom-arrow" />
         </div>
-        <label className="validation_text">
-          {reason_for_contact_validations}
-        </label>
+        <label className="validation_text">{reason_for_contact_validations}</label>
         {/* {console.log({ reason_for_contact })} */}
-        {[ "order_issues", "returns", "technical_support" ].includes(
-          reason_for_contact
-        ) && (
+        {["order_issues", "returns", "technical_support"].includes(reason_for_contact) && (
           <div className="100per">
             <label>Order Number</label>
             <input
@@ -290,13 +240,11 @@ const ContactPage = props => {
               name="order_number"
               placeholder="Order Number"
             />
-            <label className="validation_text">
-              {order_number_validations}
-            </label>
+            <label className="validation_text">{order_number_validations}</label>
           </div>
         )}
 
-        {[ "submit_content_to_be_featured" ].includes(reason_for_contact) && (
+        {/* {[ "submit_content_to_be_featured" ].includes(reason_for_contact) && (
           <div>
             <div>
               <h2>Content includes: </h2>
@@ -318,8 +266,8 @@ const ContactPage = props => {
               </GLButton>
             </Link>
           </div>
-        )}
-        {![ "submit_content_to_be_featured" ].includes(reason_for_contact) && (
+        )} */}
+        {/* {!["submit_content_to_be_featured"].includes(reason_for_contact) && (
           <div>
             <label>Message</label>
             <textarea
@@ -332,25 +280,17 @@ const ContactPage = props => {
             />
             <label className="validation_text">{message_validations}</label>
 
-            {[ "order_issues", "returns", "technical_support" ].includes(
-              reason_for_contact
-            ) && (
+            {["order_issues", "returns", "technical_support"].includes(reason_for_contact) && (
               <p className="paragraph_font">
-                Your Order Number is located on your Order confirmation email,
-                You can also find your order number by logging in and navigating
-                to your orders.
+                Your Order Number is located on your Order confirmation email, You can also find your order number by logging in and
+                navigating to your orders.
               </p>
             )}
-            <GLButton
-              variant="primary"
-              className="zoom_b mt-10px w-100per"
-              id="button"
-              onClick={e => sendEmail(e)}
-            >
+            <GLButton variant="primary" className="zoom_b mt-10px w-100per" id="button" onClick={e => sendEmail(e)}>
               Send
             </GLButton>
           </div>
-        )}
+        )} */}
       </form>
     </div>
   );

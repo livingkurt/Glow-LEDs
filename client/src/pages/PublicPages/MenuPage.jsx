@@ -12,31 +12,23 @@ import { GLButton } from "../../components/GlowLEDsComponents";
 const MenuPage = props => {
   const pathname = props.match.params.pathname;
 
-  const [ items, set_items ] = useState([]);
-  const [ loading_pictures, set_loading_pictures ] = useState(false);
+  const [items, set_items] = useState([]);
+  const [loading_pictures, set_loading_pictures] = useState(false);
 
   const dispatch = useDispatch();
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (pathname === "featured") {
-          get_features();
-        }
-        if (
-          pathname === "gloving" ||
-          pathname === "manuals" ||
-          pathname === "support" ||
-          pathname === "sponsored_artists"
-        ) {
-          get_display_content();
-        }
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (pathname === "featured") {
+        get_features();
       }
-      return () => (clean = false);
-    },
-    [ pathname ]
-  );
+      if (pathname === "gloving" || pathname === "manuals" || pathname === "support" || pathname === "sponsored_artists") {
+        get_display_content();
+      }
+    }
+    return () => (clean = false);
+  }, [pathname]);
 
   const get_display_content = async () => {
     set_loading_pictures(true);
@@ -52,27 +44,16 @@ const MenuPage = props => {
   };
 
   const get_features = async () => {
-    const { data: glovers } = await API_Features.get_features_by_category(
-      "glovers"
-    );
-    const { data: artists } = await API_Features.get_features_by_category(
-      "artists"
-    );
-    const { data: producers } = await API_Features.get_features_by_category(
-      "producers"
-    );
+    const { data: glovers } = await API_Features.get_features_by_category("glovers");
+    const { data: artists } = await API_Features.get_features_by_category("artists");
+    const { data: producers } = await API_Features.get_features_by_category("producers");
     const { data: vfx } = await API_Features.get_features_by_category("vfx");
     // console.log({ glovers: glovers[0] });
     // console.log({ artists: artists[0] });
     // console.log({ producers: producers[0] });
     // console.log({ vfx: vfx[0] });
     if (glovers && artists && producers && vfx) {
-      const menu_items = await featured_menu_items(
-        glovers,
-        artists,
-        producers,
-        vfx
-      );
+      const menu_items = await featured_menu_items(glovers, artists, producers, vfx);
       set_items(menu_items);
     }
   };
@@ -89,33 +70,27 @@ const MenuPage = props => {
         {
           label: "Artists",
           image: artists[0] && artists[0].logo,
-          link: "/collections/all/features/category/artists",
+          link: "/collections/all/features/category/artists"
         },
         {
           label: "Glovers",
-          image: `http://img.youtube.com/vi/${glovers.filter(
-            glover =>
-              glover.release_date <= today && glover.category === "glovers"
-          ) &&
-            glovers.filter(
-              glover =>
-                glover.release_date <= today && glover.category === "glovers"
-            )[0].video}/hqdefault.jpg`,
-          link: "/collections/all/features/category/glovers",
+          image: `http://img.youtube.com/vi/${
+            glovers.filter(glover => glover.release_date <= today && glover.category === "glovers") &&
+            glovers.filter(glover => glover.release_date <= today && glover.category === "glovers")[0].video
+          }/hqdefault.jpg`,
+          link: "/collections/all/features/category/glovers"
         },
 
         {
           label: "Producers",
           image: producers[0] && producers[0].logo,
-          link: "/collections/all/features/category/producers",
+          link: "/collections/all/features/category/producers"
         },
         {
           label: "VFX",
-          image:
-            (vfx[0] && vfx[0].logo) ||
-            `http://img.youtube.com/vi/${vfx && vfx.video}/hqdefault.jpg`,
-          link: "/collections/all/features/category/vfx",
-        },
+          image: (vfx[0] && vfx[0].logo) || `http://img.youtube.com/vi/${vfx && vfx.video}/hqdefault.jpg`,
+          link: "/collections/all/features/category/vfx"
+        }
       ];
     }
   };
@@ -131,12 +106,7 @@ const MenuPage = props => {
         content &&
         content.home_page &&
         content.home_page.slideshow
-          .filter(
-            item =>
-              item.label === "Glowstringz V2" ||
-              item.label === "Diffuser Caps" ||
-              item.label === "Glowskinz"
-          )
+          .filter(item => item.label === "Glowstringz V2" || item.label === "Diffuser Caps" || item.label === "Glowskinz")
           .map(item => {
             return { ...item, link: `/pages/manual/${snake_case(item.label)}` };
           })
@@ -146,78 +116,74 @@ const MenuPage = props => {
         {
           label: "Track Your Order",
           link: "/pages/track_your_order",
-          image: "https://images2.imgbox.com/6d/ca/gy6td2iV_o.png",
+          image: "https://images2.imgbox.com/6d/ca/gy6td2iV_o.png"
         },
         {
           label: "About",
           link: "/pages/about",
-          image: "https://thumbs2.imgbox.com/74/18/uf9lTIoK_t.jpeg",
+          image: "https://thumbs2.imgbox.com/74/18/uf9lTIoK_t.jpeg"
         },
         {
           label: "FAQ",
           link: "/pages/faq",
-          image: "https://images2.imgbox.com/a2/eb/D3aEUSW4_o.png",
+          image: "https://images2.imgbox.com/a2/eb/D3aEUSW4_o.png"
         },
         {
           label: "Manuals",
           link: "/pages/manuals",
-          image: "https://images2.imgbox.com/7b/3a/5XKKkHiJ_o.png",
+          image: "https://images2.imgbox.com/7b/3a/5XKKkHiJ_o.png"
         },
         {
           label: "Announcements",
           link: "/pages/announcements",
-          image: "https://images2.imgbox.com/8b/52/SfnnCLNz_o.png",
+          image: "https://images2.imgbox.com/8b/52/SfnnCLNz_o.png"
         },
         {
           label: "Contact",
           link: "/pages/contact",
-          image: "https://images2.imgbox.com/30/76/xP16FSiH_o.png",
+          image: "https://images2.imgbox.com/30/76/xP16FSiH_o.png"
         },
         {
           label: "Terms",
           link: "/pages/terms",
-          image: "https://images2.imgbox.com/0b/55/LAI7uhOb_o.png",
-        },
+          image: "https://images2.imgbox.com/0b/55/LAI7uhOb_o.png"
+        }
       ];
     } else if (pathname === "sponsored_artists") {
       return [
         {
           label: "Sponsors",
           image: "https://thumbs2.imgbox.com/f7/ca/Su3FEQr9_t.jpg",
-          link: "/collections/all/sponsors",
+          link: "/collections/all/sponsors"
         },
         {
           label: "Teams",
           image: "https://thumbs2.imgbox.com/8c/7e/kjzjFzne_t.jpg",
-          link: "/collections/all/teams",
-        },
+          link: "/collections/all/teams"
+        }
       ];
     } else if (pathname === "collections") {
       return [
         {
           label: "Texture",
-          link:
-            "/collections/all/products/category/diffuser_caps/collection/texture",
-          image: "https://thumbs2.imgbox.com/bb/94/ZlPGCXf2_t.jpeg",
+          link: "/collections/all/products/category/diffuser_caps/collection/texture",
+          image: "https://thumbs2.imgbox.com/bb/94/ZlPGCXf2_t.jpeg"
         },
         {
           label: "Space Cadet",
-          link:
-            "/collections/all/products/category/diffuser_caps/collection/space_cadet",
-          image: "https://thumbs2.imgbox.com/80/b2/fENNMhl9_t.jpeg",
+          link: "/collections/all/products/category/diffuser_caps/collection/space_cadet",
+          image: "https://thumbs2.imgbox.com/80/b2/fENNMhl9_t.jpeg"
         },
         {
           label: "Festie Bestie",
-          link:
-            "/collections/all/products/category/diffuser_caps/collection/festie_bestie",
-          image: "https://thumbs2.imgbox.com/90/25/ZwpZrRGy_t.jpeg",
+          link: "/collections/all/products/category/diffuser_caps/collection/festie_bestie",
+          image: "https://thumbs2.imgbox.com/90/25/ZwpZrRGy_t.jpeg"
         },
         {
           label: "Platonic Solids",
-          link:
-            "/collections/all/products/category/diffuser_caps/collection/platonic_solids",
-          image: "https://thumbs2.imgbox.com/73/37/ie8226mS_t.jpg",
-        },
+          link: "/collections/all/products/category/diffuser_caps/collection/platonic_solids",
+          image: "https://thumbs2.imgbox.com/73/37/ie8226mS_t.jpg"
+        }
       ];
     }
   };
@@ -252,19 +218,10 @@ const MenuPage = props => {
     <div className="main_container p-20px">
       <Helmet>
         <title>{humanize(pathname)} | Glow LEDs</title>
-        <meta
-          property="og:title"
-          content={`${humanize(pathname)}| Glow LEDs`}
-        />
-        <meta
-          name="twitter:title"
-          content={`${humanize(pathname)}| Glow LEDs`}
-        />
+        <meta property="og:title" content={`${humanize(pathname)}| Glow LEDs`} />
+        <meta name="twitter:title" content={`${humanize(pathname)}| Glow LEDs`} />
         <link rel="canonical" href="https://www.glow-leds.com/pages/featured" />
-        <meta
-          property="og:url"
-          content="https://www.glow-leds.com/pages/featured"
-        />
+        <meta property="og:url" content="https://www.glow-leds.com/pages/featured" />
         <meta
           name="description"
           content="Here at Glow LEDs we want all you glovers, ravers, festival goers, and even home decor peeps to be apart of our community."
@@ -279,7 +236,7 @@ const MenuPage = props => {
         />
       </Helmet>
       <Loading loading={loading_pictures} />
-      {pathname === "featured" && (
+      {/* {pathname === "featured" && (
         <div className="jc-fe">
           <Link to="/account/login?redirect=/account/submit_feature">
             <GLButton variant="secondary" className="">
@@ -287,7 +244,7 @@ const MenuPage = props => {
             </GLButton>
           </Link>
         </div>
-      )}
+      )} */}
       <div className="jc-c">
         <h1> {humanize(pathname)}</h1>
       </div>
@@ -297,13 +254,7 @@ const MenuPage = props => {
             {!loading_pictures &&
               items &&
               items.map((item, index) => {
-                return (
-                  <MenuItemD
-                    item={item}
-                    index={index}
-                    decide_url={decide_url}
-                  />
-                );
+                return <MenuItemD item={item} index={index} decide_url={decide_url} />;
               })}
           </div>
         </div>
@@ -314,13 +265,7 @@ const MenuPage = props => {
             {!loading_pictures &&
               items &&
               items.map((item, index) => {
-                return (
-                  <MenuItemM
-                    item={item}
-                    index={index}
-                    decide_url={decide_url}
-                  />
-                );
+                return <MenuItemM item={item} index={index} decide_url={decide_url} />;
               })}
           </ul>
         </div>
