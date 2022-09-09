@@ -339,19 +339,19 @@ export const snake_case = (str: any) => {
 
 export const determine_promoter_code_tier = (code_usage: number) => {
   if (code_usage === 0 || code_usage === 1) {
-    return 20;
+    return 10;
   } else if (code_usage >= 2 && code_usage <= 5) {
-    return 25;
+    return 20;
   } else if (code_usage >= 6 && code_usage <= 9) {
-    return 30;
+    return 25;
   } else if (code_usage >= 10 && code_usage <= 13) {
-    return 35;
+    return 30;
   } else if (code_usage >= 14 && code_usage <= 17) {
-    return 40;
+    return 35;
   } else if (code_usage >= 18 && code_usage <= 21) {
-    return 45;
+    return 40;
   } else if (code_usage >= 22) {
-    return 60;
+    return 50;
   }
 };
 export const determine_sponsor_code_tier = (code_usage: number) => {
