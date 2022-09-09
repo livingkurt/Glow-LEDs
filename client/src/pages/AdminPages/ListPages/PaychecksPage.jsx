@@ -227,6 +227,7 @@ const PaychecksPage = props => {
           />
         </div>
       )}
+
       {loading_checkboxes ? (
         <div>Loading...</div>
       ) : (
