@@ -155,49 +155,22 @@ const PaychecksPage = props => {
   const create_affiliate_paychecks = async () => {
     set_loading_paychecks(true);
     console.log({ year, month });
-    // if (create_paychecks) {
-    //   await API_Paychecks.create_affiliate_paychecks_a(
-    //     "promoter",
-    //     year,
-    //     month.toLowerCase()
-    //   );
-    //   await API_Paychecks.create_affiliate_paychecks_a(
-    //     "sponsor",
-    //     year,
-    //     month.toLowerCase()
-    //   );
-    //   await API_Paychecks.create_affiliate_paychecks_a(
-    //     "team",
-    //     year,
-    //     month.toLowerCase()
-    //   );
-    // }
-    // set_message_note("paychecks");
-    // await affiliate_revenue_upload(
-    //   "promoter",
-    //   year,
-    //   month.toLowerCase(),
-    //   "1vy1OKH0P96cDkjuq-_yBT56CA1yQRMY3XZ2kgN95Spg"
-    // );
-    // set_message_note("promoter");
-    // await affiliate_revenue_upload(
-    //   "sponsor",
-    //   year,
-    //   month.toLowerCase(),
-    //   "1nxYhdgGqme0tSvOrYeb6oU9RIOLeA2aik3-K4H1dRpA"
-    // );
-    // set_message_note("sponsor");
-    // await affiliate_revenue_upload(
-    //   "team",
-    //   year,
-    //   month.toLowerCase(),
-    //   "1OmtRqSVEBCZCamz1qPceXW8CPfuwvWwGxIiu1YzMtMI"
-    // );
-    // set_message_note("team");
-    // await top_earner_upload(year, month.toLowerCase());
-    // set_message_note("top_earner_upload");
-    // await top_code_usage_upload(year, month.toLowerCase());
-    // set_message_note("top_code_usage_upload");
+    if (create_paychecks) {
+      await API_Paychecks.create_affiliate_paychecks_a("promoter", year, month.toLowerCase());
+      await API_Paychecks.create_affiliate_paychecks_a("sponsor", year, month.toLowerCase());
+      await API_Paychecks.create_affiliate_paychecks_a("team", year, month.toLowerCase());
+    }
+    set_message_note("paychecks");
+    await affiliate_revenue_upload("promoter", year, month.toLowerCase(), "1vy1OKH0P96cDkjuq-_yBT56CA1yQRMY3XZ2kgN95Spg");
+    set_message_note("promoter");
+    await affiliate_revenue_upload("sponsor", year, month.toLowerCase(), "1nxYhdgGqme0tSvOrYeb6oU9RIOLeA2aik3-K4H1dRpA");
+    set_message_note("sponsor");
+    await affiliate_revenue_upload("team", year, month.toLowerCase(), "1OmtRqSVEBCZCamz1qPceXW8CPfuwvWwGxIiu1YzMtMI");
+    set_message_note("team");
+    await top_earner_upload(year, month.toLowerCase());
+    set_message_note("top_earner_upload");
+    await top_code_usage_upload(year, month.toLowerCase());
+    set_message_note("top_code_usage_upload");
     await API_Promos.update_discount(year, month.toLowerCase());
     set_message_note("update_discount");
     dispatch(listPaychecks({}));
