@@ -119,6 +119,12 @@ export default (props: any) => {
                         style="margin-right:3px">&#x274F; </strong>  </div>`
                             : ""
                         }
+                        ${
+                          order.production_note
+                            ? `<div style="padding:5px;vertical-align:top;text-align:left" valign="top" align="right"><strong
+                        style="margin-right:3px">&#x274F; </strong>  </div>`
+                            : ""
+                        }
                 </td>
                 <td style="text-align:right; width:50%" valign="top" align="right">
                   <table cellpadding="0" cellspacing="0"
