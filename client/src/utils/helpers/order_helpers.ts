@@ -34,11 +34,11 @@ export const determine_color = (order: any) => {
     if (order.shipping.shipping_rate && order.shipping.shipping_rate.service !== "First") {
       result = colors[6].color;
     }
-    if (order.isManufactured) {
-      result = colors[2].color;
-    }
     if (order.shipping.shipping_label) {
       result = colors[7].color;
+    }
+    if (order.isManufactured) {
+      result = colors[2].color;
     }
     if (order.isPackaged) {
       result = colors[3].color;
