@@ -287,67 +287,65 @@ const PlaceOrderPage = props => {
 
   const placeOrderHandler = async paymentMethod => {
     check_authentication();
-    if (userInfo && userInfo.first_name) {
-      dispatch(
-        createPayOrder(
-          {
-            orderItems: cartItems,
-            shipping: shipment_id
-              ? {
-                  ...shipping,
-                  shipment_id,
-                  shipping_rate
-                }
-              : shipping,
-            payment,
-            itemsPrice,
-            shippingPrice,
-            taxPrice,
-            totalPrice,
-            userInfo,
-            order_note,
-            production_note,
-            tip,
-            promo_code: show_message && promo_code,
-            parcel: parcel || null
-          },
-          paymentMethod
-        )
-      );
-    } else {
-      dispatch(
-        createPayOrderGuest(
-          {
-            orderItems: cartItems,
-            shipping: shipment_id
-              ? {
-                  ...shipping,
-                  shipment_id,
-                  shipping_rate
-                }
-              : shipping,
-            payment,
-            itemsPrice,
-            shippingPrice,
-            taxPrice,
-            totalPrice,
-            order_note,
-            production_note,
-            tip,
-            promo_code: show_message && promo_code,
-            parcel: parcel || null,
-            guest: true
-          },
-          create_account,
-          new_password,
-          paymentMethod
-        )
-      );
+    if (cartItems.length > 0) {
+      if (userInfo && userInfo.first_name) {
+        dispatch(
+          createPayOrder(
+            {
+              orderItems: cartItems,
+              shipping: shipment_id
+                ? {
+                    ...shipping,
+                    shipment_id,
+                    shipping_rate
+                  }
+                : shipping,
+              payment,
+              itemsPrice,
+              shippingPrice,
+              taxPrice,
+              totalPrice,
+              userInfo,
+              order_note,
+              production_note,
+              tip,
+              promo_code: show_message && promo_code,
+              parcel: parcel || null
+            },
+            paymentMethod
+          )
+        );
+      } else {
+        dispatch(
+          createPayOrderGuest(
+            {
+              orderItems: cartItems,
+              shipping: shipment_id
+                ? {
+                    ...shipping,
+                    shipment_id,
+                    shipping_rate
+                  }
+                : shipping,
+              payment,
+              itemsPrice,
+              shippingPrice,
+              taxPrice,
+              totalPrice,
+              order_note,
+              production_note,
+              tip,
+              promo_code: show_message && promo_code,
+              parcel: parcel || null,
+              guest: true
+            },
+            create_account,
+            new_password,
+            paymentMethod
+          )
+        );
+      }
     }
-    set_loading_payment(false);
-    empty_cart();
-    promo_code_used();
-    sessionStorage.removeItem("shippingAddress");
   };
   const dimminish_stock = async () => {
     const request = await API_Products.update_stock(cartItems);
@@ -443,6 +441,9 @@ const PlaceOrderPage = props => {
         props.history.push("/pages/complete/order/" + order._id);
         set_loading_payment(false);
         empty_cart();
+        promo_code_used();
+        // dimminish_stock();
+        sessionStorage.removeItem("shippingAddress");
       } else if (error_pay) {
       }
     }

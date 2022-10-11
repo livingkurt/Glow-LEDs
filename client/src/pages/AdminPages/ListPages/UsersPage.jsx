@@ -9,36 +9,27 @@ import { Helmet } from "react-helmet";
 import { GLButton } from "../../../components/GlowLEDsComponents";
 
 const UsersPage = props => {
-  const [ search, set_search ] = useState("");
-  const [ sort, setSortOrder ] = useState("");
-  const category = props.match.params.category
-    ? props.match.params.category
-    : "";
+  const [search, set_search] = useState("");
+  const [sort, setSortOrder] = useState("");
+  const category = props.match.params.category ? props.match.params.category : "";
   const userList = useSelector(state => state.userList);
   const { loading, users, message, error } = userList;
 
   const userDelete = useSelector(state => state.userDelete);
-  const {
-    loading: loadingDelete,
-    success: successDelete,
-    error: errorDelete,
-  } = userDelete;
+  const { loading: loadingDelete, success: successDelete, error: errorDelete } = userDelete;
 
   const userLogin = useSelector(state => state.userLogin);
   const { userInfo } = userLogin;
 
   const dispatch = useDispatch();
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        dispatch(listUsers({}));
-      }
-      return () => (clean = false);
-    },
-    [ successDelete ]
-  );
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      dispatch(listUsers({}));
+    }
+    return () => (clean = false);
+  }, [successDelete]);
 
   const deleteHandler = user => {
     dispatch(deleteUser(user._id));
@@ -54,22 +45,20 @@ const UsersPage = props => {
     dispatch(listUsers({ category, search, sort: e.target.value }));
   };
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        dispatch(listUsers({ category, search, sort }));
-      }
-      return () => (clean = false);
-    },
-    [ sort ]
-  );
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      dispatch(listUsers({ category, search, sort }));
+    }
+    return () => (clean = false);
+  }, [sort]);
 
   const colors = [
     { name: "Not Verified", color: "#333333" },
     { name: "Verified", color: "#3e4c6d" },
     { name: "Admin", color: "#525252" },
     { name: "Affiliated", color: "#7d5555" },
+    { name: "Guest", color: "#3e6d6b" }
   ];
 
   const determine_color = order => {
@@ -86,11 +75,14 @@ const UsersPage = props => {
     if (order.is_affiliated) {
       result = colors[3].color;
     }
+    if (order.guest) {
+      result = colors[4].color;
+    }
     // console.log(result);
     return result;
   };
 
-  const sort_options = [ "Date", "First Name", "Last Name" ];
+  const sort_options = ["Date", "First Name", "Last Name"];
 
   return (
     <div className="main_container p-20px">
@@ -108,7 +100,7 @@ const UsersPage = props => {
                   backgroundColor: color.color,
                   height: "20px",
                   width: "60px",
-                  borderRadius: "5px",
+                  borderRadius: "5px"
                 }}
               />
             </div>
@@ -126,23 +118,15 @@ const UsersPage = props => {
             textAlign: "center",
             width: "100%",
             margin: "20px auto",
-            justifyContent: "center",
+            justifyContent: "center"
           }}
         >
           Users
         </h1>
       </div>
 
-      <div
-        className="search_and_sort row jc-c ai-c"
-        style={{ overflowX: "scroll" }}
-      >
-        <Search
-          search={search}
-          set_search={set_search}
-          submitHandler={submitHandler}
-          category={category}
-        />
+      <div className="search_and_sort row jc-c ai-c" style={{ overflowX: "scroll" }}>
+        <Search search={search} set_search={set_search} submitHandler={submitHandler} category={category} />
         <Sort sortHandler={sortHandler} sort_options={sort_options} />
       </div>
       <Loading loading={loading} error={error}>
@@ -156,6 +140,7 @@ const UsersPage = props => {
                   <th>FIRST</th>
                   <th>LAST</th>
                   <th>EMAIL</th>
+                  <th>Guest</th>
                   <th>Affiliated</th>
                   <th>VERIFIED</th>
                   <th>ADMIN</th>
@@ -167,7 +152,7 @@ const UsersPage = props => {
                   <tr
                     key={index}
                     style={{
-                      backgroundColor: determine_color(user),
+                      backgroundColor: determine_color(user)
                     }}
                   >
                     <td className="p-10px">{user._id}</td>
@@ -176,26 +161,18 @@ const UsersPage = props => {
                     <td className="p-10px">{user.last_name}</td>
                     <td className="p-10px">{user.email}</td>
                     {/* <td className="p-10px">{user.affiliate}</td> */}
+                    <td className="p-10px">{user.guest ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}</td>
                     <td className="p-10px">
-                      {user.is_affiliated ? (
-                        <i className="fas fa-check-circle" />
-                      ) : (
-                        <i className="fas fa-times-circle" />
-                      )}
+                      {user.is_affiliated ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
                     </td>
                     <td className="p-10px">
-                      {user.isVerified ? (
-                        <i className="fas fa-check-circle" />
-                      ) : (
-                        <i className="fas fa-times-circle" />
-                      )}
+                      {user.is_affiliated ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
                     </td>
                     <td className="p-10px">
-                      {user.isAdmin ? (
-                        <i className="fas fa-check-circle" />
-                      ) : (
-                        <i className="fas fa-times-circle" />
-                      )}
+                      {user.isVerified ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
+                    </td>
+                    <td className="p-10px">
+                      {user.isAdmin ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
                     </td>
                     <td className="p-10px">
                       <div className="jc-b">
@@ -209,11 +186,7 @@ const UsersPage = props => {
                             <i className="fas fa-mountain" />
                           </GLButton>
                         </Link>
-                        <GLButton
-                          variant="icon"
-                          onClick={() => deleteHandler(user)}
-                          aria-label="Delete"
-                        >
+                        <GLButton variant="icon" onClick={() => deleteHandler(user)} aria-label="Delete">
                           <i className="fas fa-trash-alt" />
                         </GLButton>
                       </div>
