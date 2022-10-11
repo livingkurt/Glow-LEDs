@@ -36,6 +36,7 @@ export function Payment({
   set_paymentMethod,
   set_user,
   user,
+  cartItems,
   create_order_without_paying,
   create_order_without_user
 }) {
@@ -170,7 +171,7 @@ export function Payment({
               </li>
             )}
             <li>
-              {!loading && !hide_pay_button && (
+              {!loading && !hide_pay_button && cartItems.length > 0 && (
                 <Stripe pay_order={placeOrderHandler} loading_payment={loading_payment} set_loading_payment={set_loading_payment} />
               )}
             </li>

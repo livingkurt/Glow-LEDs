@@ -771,6 +771,7 @@ const PlaceOrderPage = props => {
             <Payment
               payment_completed={payment_completed}
               show_payment={show_payment}
+              cartItems={cartItems}
               show_hide_steps={show_hide_steps}
               set_order_note={set_order_note}
               set_production_note={set_production_note}
