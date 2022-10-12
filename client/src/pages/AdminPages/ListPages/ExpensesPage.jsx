@@ -9,17 +9,16 @@ import { Helmet } from "react-helmet";
 import { format_date, unformat_date } from "../../../utils/helper_functions";
 import { API_Revenue } from "../../../utils";
 import { GLButton } from "../../../components/GlowLEDsComponents";
+import CSVReader from "react-csv-reader";
 // import CSVReader from 'react-csv-reader';
 
 const ExpensesPage = props => {
-  const [ search, set_search ] = useState("");
-  const [ sort, setSortOrder ] = useState("");
-  const [ card_type, set_card_type ] = useState("GL AMEX");
+  const [search, set_search] = useState("");
+  const [sort, setSortOrder] = useState("");
+  const [card_type, set_card_type] = useState("GL AMEX");
   const history = useHistory();
 
-  const category = props.match.params.category
-    ? props.match.params.category
-    : "";
+  const category = props.match.params.category ? props.match.params.category : "";
 
   const userLogin = useSelector(state => state.userLogin);
   const { userInfo } = userLogin;
@@ -34,16 +33,13 @@ const ExpensesPage = props => {
   const { success: successDelete } = expenseDelete;
   const dispatch = useDispatch();
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        dispatch(listExpenses({ category, search, sort }));
-      }
-      return () => (clean = false);
-    },
-    [ sort ]
-  );
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      dispatch(listExpenses({ category, search, sort }));
+    }
+    return () => (clean = false);
+  }, [sort]);
 
   const submitHandler = e => {
     e.preventDefault();
@@ -55,16 +51,13 @@ const ExpensesPage = props => {
     dispatch(listExpenses({ category, search, sort: e.target.value }));
   };
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        dispatch(listExpenses({}));
-      }
-      return () => (clean = false);
-    },
-    [ successSave, successDelete ]
-  );
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      dispatch(listExpenses({}));
+    }
+    return () => (clean = false);
+  }, [successSave, successDelete]);
   const deleteHandler = expense => {
     dispatch(deleteExpense(expense._id));
   };
@@ -75,7 +68,7 @@ const ExpensesPage = props => {
     { name: "Shipping", color: "#3e4c6d" },
     { name: "Business", color: "#6d5a3e" },
     { name: "Equipment", color: "#3f6561" },
-    { name: "Refunds", color: "#4a4a4a" },
+    { name: "Refunds", color: "#4a4a4a" }
   ];
 
   const determine_color = expense => {
@@ -102,56 +95,30 @@ const ExpensesPage = props => {
     return result;
   };
 
-  const sort_options = [
-    "Date",
-    "Category",
-    "Application",
-    "Newest",
-    "Lowest",
-    "Highest",
-  ];
+  const sort_options = ["Date", "Category", "Application", "Newest", "Lowest", "Highest"];
 
   const handle_csv_expenses = async (data, fileInfo, properties, card) => {
     console.log({ data });
     console.log({ properties });
     console.log({ card });
-    const create_all_expenses_s = await API_Revenue.create_all_expenses_s(
-      data,
-      userInfo,
-      card,
-      properties
-    );
+    const create_all_expenses_s = await API_Revenue.create_all_expenses_s(data, userInfo, card, properties);
     console.log({ create_all_expenses_s });
     dispatch(listExpenses({ category, search, sort }));
   };
 
-  const card_types = [ "FID", "GL AMEX", "AMZNK" ];
+  const card_types = ["FID", "GL AMEX", "AMZNK"];
 
   const determine_card_type = (data, fileInfo) => {
     let properties = [];
     switch (card_type) {
       case "FID":
-        properties = [ "date", "transaction", "place", "memo", "amount" ];
+        properties = ["date", "transaction", "place", "memo", "amount"];
         return handle_csv_expenses(data, fileInfo, properties, "FID");
       case "GL AMEX":
-        properties = [
-          "date",
-          "receipt",
-          "description",
-          "card_member",
-          "account",
-          "amount",
-        ];
+        properties = ["date", "receipt", "description", "card_member", "account", "amount"];
         return handle_csv_expenses(data, fileInfo, properties, "GL AMEX");
       case "AMZNK":
-        properties = [
-          "date",
-          "post_date",
-          "place",
-          "category",
-          "type",
-          "amount",
-        ];
+        properties = ["date", "post_date", "place", "category", "type", "amount"];
         return handle_csv_expenses(data, fileInfo, properties, "AMZNK");
       default:
         return;
@@ -221,7 +188,7 @@ const ExpensesPage = props => {
                     backgroundColor: color.color,
                     height: "20px",
                     width: "60px",
-                    borderRadius: "5px",
+                    borderRadius: "5px"
                   }}
                 />
               </div>
@@ -237,11 +204,7 @@ const ExpensesPage = props => {
       <div className="ai-c w-325px jc-b">
         <div className="">
           <div className="custom-select">
-            <select
-              className="qty_select_dropdown"
-              onChange={e => set_card_type(e.target.value)}
-              value={card_type}
-            >
+            <select className="qty_select_dropdown" onChange={e => set_card_type(e.target.value)} value={card_type}>
               <option key={1} defaultValue="">
                 ---Card Type---
               </option>
@@ -254,25 +217,17 @@ const ExpensesPage = props => {
             <span className="custom-arrow" />
           </div>
         </div>
-        {/* <label variant="primary">
-					Upload CSV
-					<CSVReader onFileLoaded={(data, fileInfo) => determine_card_type(data, fileInfo)} />
-				</label> */}
+        <label variant="primary">
+          Upload CSV
+          <CSVReader onFileLoaded={(data, fileInfo) => determine_card_type(data, fileInfo)} />
+        </label>
       </div>
 
       <div className="jc-c">
         <h1 style={{ textAlign: "center" }}>Expenses</h1>
       </div>
-      <div
-        className="search_and_sort row jc-c ai-c"
-        style={{ overflowX: "scroll" }}
-      >
-        <Search
-          search={search}
-          set_search={set_search}
-          submitHandler={submitHandler}
-          category={category}
-        />
+      <div className="search_and_sort row jc-c ai-c" style={{ overflowX: "scroll" }}>
+        <Search search={search} set_search={set_search} submitHandler={submitHandler} category={category} />
         <Sort sortHandler={sortHandler} sort_options={sort_options} />
       </div>
       <Loading loading={loading} error={error}>
@@ -293,19 +248,16 @@ const ExpensesPage = props => {
                   // key={expense._id}
                   style={{
                     backgroundColor: "#626262",
-                    fontSize: "16px",
+                    fontSize: "16px"
                   }}
                 >
                   <td className="p-10px">
-                    <label>
-                      ${expenses
-                        .reduce((a, expense) => a + expense.amount, 0)
-                        .toFixed(2)}
-                    </label>
+                    <label>${expenses.reduce((a, expense) => a + expense.amount, 0).toFixed(2)}</label>
                   </td>
                   <td className="p-10px">
                     <label>
-                      ${expenses
+                      $
+                      {expenses
                         .filter(expense => expense.category === "Supplies")
                         .reduce((a, expense) => a + expense.amount, 0)
                         .toFixed(2)}
@@ -313,7 +265,8 @@ const ExpensesPage = props => {
                   </td>
                   <td className="p-10px">
                     <label>
-                      ${expenses
+                      $
+                      {expenses
                         .filter(expense => expense.category === "Website")
                         .reduce((a, expense) => a + expense.amount, 0)
                         .toFixed(2)}
@@ -321,7 +274,8 @@ const ExpensesPage = props => {
                   </td>
                   <td className="p-10px">
                     <label>
-                      ${expenses
+                      $
+                      {expenses
                         .filter(expense => expense.category === "Shipping")
                         .reduce((a, expense) => a + expense.amount, 0)
                         .toFixed(2)}
@@ -329,7 +283,8 @@ const ExpensesPage = props => {
                   </td>
                   <td className="p-10px">
                     <label>
-                      ${expenses
+                      $
+                      {expenses
                         .filter(expense => expense.category === "Business")
                         .reduce((a, expense) => a + expense.amount, 0)
                         .toFixed(2)}
@@ -359,31 +314,17 @@ const ExpensesPage = props => {
                     key={index}
                     style={{
                       backgroundColor: determine_color(expense),
-                      fontSize: "16px",
+                      fontSize: "16px"
                     }}
                   >
                     <td className="p-10px">{expense._id}</td>
-                    <td className="p-10px min-w-300px">
-                      {expense.expense_name}
-                    </td>
-                    <td className="p-10px">
-                      {format_date(expense.date_of_purchase)}
-                    </td>
+                    <td className="p-10px min-w-300px">{expense.expense_name}</td>
+                    <td className="p-10px">{format_date(expense.date_of_purchase)}</td>
                     <td className="p-10px">{expense.category}</td>
-                    <td className="p-10px">
-                      ${expense.amount ? (
-                        expense.amount.toFixed(2)
-                      ) : (
-                        expense.amount
-                      )}
-                    </td>
+                    <td className="p-10px">${expense.amount ? expense.amount.toFixed(2) : expense.amount}</td>
                     <td className="p-10px min-w-100px">{expense.card}</td>
-                    <td className="p-10px min-w-150px">
-                      {expense.place_of_purchase}
-                    </td>
-                    <td className="p-10px min-w-200px">
-                      {expense.application}
-                    </td>
+                    <td className="p-10px min-w-150px">{expense.place_of_purchase}</td>
+                    <td className="p-10px min-w-200px">{expense.application}</td>
                     {/* <td className="p-10px min-w-800px">{expense.url}</td> */}
                     <td className="p-10px">
                       <div className="jc-b">
@@ -392,11 +333,7 @@ const ExpensesPage = props => {
                             <i className="fas fa-edit" />
                           </GLButton>
                         </Link>
-                        <GLButton
-                          variant="icon"
-                          onClick={() => deleteHandler(expense)}
-                          aria-label="Delete"
-                        >
+                        <GLButton variant="icon" onClick={() => deleteHandler(expense)} aria-label="Delete">
                           <i className="fas fa-trash-alt" />
                         </GLButton>
                       </div>
