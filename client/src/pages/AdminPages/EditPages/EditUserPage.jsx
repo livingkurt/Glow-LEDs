@@ -8,18 +8,19 @@ import { listAffiliates } from "../../../actions/affiliateActions";
 import { GLButton } from "../../../components/GlowLEDsComponents";
 
 const EditUserPage = props => {
-  const [ id, set_id ] = useState("");
-  const [ first_name, set_first_name ] = useState("");
-  const [ affiliate, set_affiliate ] = useState("");
-  const [ last_name, set_last_name ] = useState("");
-  const [ email, set_email ] = useState("");
-  const [ is_affiliated, set_is_affiliated ] = useState(false);
-  const [ isVerified, set_isVerified ] = useState(false);
-  const [ isAdmin, set_isAdmin ] = useState(false);
-  const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
-  const [ shipping, set_shipping ] = useState({});
-  const [ email_subscription, set_email_subscription ] = useState("");
-  const [ international, setInternational ] = useState(false);
+  const [id, set_id] = useState("");
+  const [first_name, set_first_name] = useState("");
+  const [affiliate, set_affiliate] = useState("");
+  const [last_name, set_last_name] = useState("");
+  const [email, set_email] = useState("");
+  const [is_affiliated, set_is_affiliated] = useState(false);
+  const [is_employee, set_is_employee] = useState(false);
+  const [isVerified, set_isVerified] = useState(false);
+  const [isAdmin, set_isAdmin] = useState(false);
+  const [loading_checkboxes, set_loading_checkboxes] = useState(true);
+  const [shipping, set_shipping] = useState({});
+  const [email_subscription, set_email_subscription] = useState("");
+  const [international, setInternational] = useState(false);
 
   const history = useHistory();
 
@@ -39,6 +40,7 @@ const EditUserPage = props => {
     set_last_name(user.last_name);
     set_email(user.email);
     set_is_affiliated(user.is_affiliated);
+    set_is_employee(user.is_employee);
     set_affiliate(user.affiliate && user.affiliate._id);
     set_isVerified(user.isVerified);
     set_isAdmin(user.isAdmin);
@@ -52,6 +54,7 @@ const EditUserPage = props => {
     set_last_name("");
     set_email("");
     set_is_affiliated("");
+    set_is_employee("");
     set_affiliate("");
     set_isVerified("");
     set_isAdmin("");
@@ -60,41 +63,35 @@ const EditUserPage = props => {
     setInternational("");
   };
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (props.match.params.id) {
-          console.log("Is ID");
-          dispatch(detailsUser(props.match.params.id));
-          dispatch(detailsUser(props.match.params.id));
-        } else {
-          dispatch(detailsUser(""));
-        }
-        dispatch(listAffiliates({}));
-        set_state();
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (props.match.params.id) {
+        console.log("Is ID");
+        dispatch(detailsUser(props.match.params.id));
+        dispatch(detailsUser(props.match.params.id));
+      } else {
+        dispatch(detailsUser(""));
       }
-      return () => (clean = false);
-    },
-    [ dispatch, props.match.params.id ]
-  );
+      dispatch(listAffiliates({}));
+      set_state();
+    }
+    return () => (clean = false);
+  }, [dispatch, props.match.params.id]);
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (user) {
-          console.log("Set");
-          set_state();
-        } else {
-          console.log("UnSet");
-          unset_state();
-        }
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (user) {
+        console.log("Set");
+        set_state();
+      } else {
+        console.log("UnSet");
+        unset_state();
       }
-      return () => (clean = false);
-    },
-    [ user ]
-  );
+    }
+    return () => (clean = false);
+  }, [user]);
 
   setTimeout(() => {
     set_loading_checkboxes(false);
@@ -112,10 +109,11 @@ const EditUserPage = props => {
         email,
         affiliate,
         is_affiliated,
+        is_employee,
         isVerified,
         isAdmin,
         email_subscription,
-        shipping,
+        shipping
       })
     );
     e.target.reset();
@@ -125,9 +123,7 @@ const EditUserPage = props => {
 
   return (
     <div className="main_container p-20px">
-      <h1 style={{ textAlign: "center" }}>
-        {props.match.params.id ? "Edit User" : "Create User"}
-      </h1>
+      <h1 style={{ textAlign: "center" }}>{props.match.params.id ? "Edit User" : "Create User"}</h1>
 
       <div className="form">
         <form onSubmit={submitHandler} style={{ width: "100%" }}>
@@ -138,10 +134,7 @@ const EditUserPage = props => {
                   <title>Edit User | Glow LEDs</title>
                 </Helmet>
 
-                <ul
-                  className="edit-form-container"
-                  style={{ maxWidth: "30rem", marginBottom: "20px" }}
-                >
+                <ul className="edit-form-container" style={{ maxWidth: "30rem", marginBottom: "20px" }}>
                   <div className="row wrap">
                     <div className="w-228px m-10px">
                       <li>
@@ -166,13 +159,7 @@ const EditUserPage = props => {
                       </li>
                       <li>
                         <label htmlFor="email">Email</label>
-                        <input
-                          type="text"
-                          name="email"
-                          value={email}
-                          id="email"
-                          onChange={e => set_email(e.target.value)}
-                        />
+                        <input type="text" name="email" value={email} id="email" onChange={e => set_email(e.target.value)} />
                       </li>
 
                       <li>
@@ -224,8 +211,9 @@ const EditUserPage = props => {
                               onChange={e =>
                                 set_shipping({
                                   ...shipping,
-                                  first_name: e.target.value,
-                                })}
+                                  first_name: e.target.value
+                                })
+                              }
                             />
                           </li>
                           {/* <label className="validation_text" style={{ fontSize: 16, justifyContent: 'center' }}>
@@ -241,8 +229,9 @@ const EditUserPage = props => {
                               onChange={e =>
                                 set_shipping({
                                   ...shipping,
-                                  last_name: e.target.value,
-                                })}
+                                  last_name: e.target.value
+                                })
+                              }
                             />
                           </li>
                           {/* <label className="validation_text" style={{ fontSize: 16, justifyContent: 'center' }}>
@@ -258,8 +247,9 @@ const EditUserPage = props => {
                               onChange={e =>
                                 set_shipping({
                                   ...shipping,
-                                  address_1: e.target.value,
-                                })}
+                                  address_1: e.target.value
+                                })
+                              }
                             />
                           </li>
                           <li>
@@ -272,8 +262,9 @@ const EditUserPage = props => {
                               onChange={e =>
                                 set_shipping({
                                   ...shipping,
-                                  address_2: e.target.value,
-                                })}
+                                  address_2: e.target.value
+                                })
+                              }
                             />
                           </li>
                           {/* <label className="validation_text" style={{ justifyContent: 'center' }}>
@@ -289,8 +280,9 @@ const EditUserPage = props => {
                               onChange={e =>
                                 set_shipping({
                                   ...shipping,
-                                  city: e.target.value,
-                                })}
+                                  city: e.target.value
+                                })
+                              }
                             />
                           </li>
                           {/* <label className="validation_text" style={{ justifyContent: 'center' }}>
@@ -306,8 +298,9 @@ const EditUserPage = props => {
                               onChange={e =>
                                 set_shipping({
                                   ...shipping,
-                                  state: e.target.value,
-                                })}
+                                  state: e.target.value
+                                })
+                              }
                             />
                           </li>
                           {/* <label className="validation_text" style={{ justifyContent: 'center' }}>
@@ -323,8 +316,9 @@ const EditUserPage = props => {
                               onChange={e =>
                                 set_shipping({
                                   ...shipping,
-                                  postalCode: e.target.value,
-                                })}
+                                  postalCode: e.target.value
+                                })
+                              }
                             />
                           </li>
                           {/* <label className="validation_text" style={{ justifyContent: 'center' }}>
@@ -335,9 +329,7 @@ const EditUserPage = props => {
                           ) : (
                             <div>
                               <li>
-                                <label htmlFor="international">
-                                  International
-                                </label>
+                                <label htmlFor="international">International</label>
                                 <input
                                   type="checkbox"
                                   name="international"
@@ -362,8 +354,9 @@ const EditUserPage = props => {
                                     onChange={e =>
                                       set_shipping({
                                         ...shipping,
-                                        country: e.target.value,
-                                      })}
+                                        country: e.target.value
+                                      })
+                                    }
                                   />
                                 </li>
                               )}
@@ -375,9 +368,7 @@ const EditUserPage = props => {
                         <div>Loading...</div>
                       ) : (
                         <li>
-                          <label htmlFor="email_subscription">
-                            Promotional Emails
-                          </label>
+                          <label htmlFor="email_subscription">Promotional Emails</label>
                           <input
                             type="checkbox"
                             name="email_subscription"
@@ -401,6 +392,22 @@ const EditUserPage = props => {
                             id="is_affiliated"
                             onChange={e => {
                               set_is_affiliated(e.target.checked);
+                            }}
+                          />
+                        </li>
+                      )}
+                      {loading_checkboxes ? (
+                        <div>Loading...</div>
+                      ) : (
+                        <li>
+                          <label htmlFor="is_employee">Employee</label>
+                          <input
+                            type="checkbox"
+                            name="is_employee"
+                            defaultChecked={is_employee}
+                            id="is_employee"
+                            onChange={e => {
+                              set_is_employee(e.target.checked);
                             }}
                           />
                         </li>
@@ -445,10 +452,7 @@ const EditUserPage = props => {
                     </GLButton>
                   </li>
                   <li>
-                    <GLButton
-                      variant="secondary"
-                      onClick={() => history.goBack()}
-                    >
+                    <GLButton variant="secondary" onClick={() => history.goBack()}>
                       Back to Users
                     </GLButton>
                   </li>

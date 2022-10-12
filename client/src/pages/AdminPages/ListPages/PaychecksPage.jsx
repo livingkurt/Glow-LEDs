@@ -181,6 +181,10 @@ const PaychecksPage = props => {
     set_loading_paychecks(false);
   };
 
+  // const pay_employee = async () => {
+  //   await API_Paychecks.pay_employee("promoter", year, month.toLowerCase());
+  // }
+
   return (
     <div className="main_container p-20px">
       <Helmet>
