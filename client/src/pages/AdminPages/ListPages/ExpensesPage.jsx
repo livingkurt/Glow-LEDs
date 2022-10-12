@@ -217,10 +217,10 @@ const ExpensesPage = props => {
             <span className="custom-arrow" />
           </div>
         </div>
-        <label variant="primary">
+        <GLButton variant="primary">
           Upload CSV
           <CSVReader onFileLoaded={(data, fileInfo) => determine_card_type(data, fileInfo)} />
-        </label>
+        </GLButton>
       </div>
 
       <div className="jc-c">
