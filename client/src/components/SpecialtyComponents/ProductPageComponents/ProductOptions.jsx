@@ -287,7 +287,7 @@ const ProductOptions = ({
           <ul className="mb-10px">
             <hr />
             <h3 className="title_font jc-c fs-20px"> {sizes_conversion(size)}</h3>{" "}
-            <li className="jc-c ta-c w-100oer lh-30px">We recommend getting a size up compared to other compaonies whites</li>
+            <li className="jc-c ta-c w-100oer lh-30px">We recommend getting a size up compared to other companies whites</li>
             <li className="mb-10px jc-b w-100per">
               <div className="title_font"> Hand Length:</div>{" "}
               <div className="title_font">{size && sizes_short(width)[size].hand_length} inches</div>
