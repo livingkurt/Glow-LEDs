@@ -181,9 +181,9 @@ const PaychecksPage = props => {
     set_loading_paychecks(false);
   };
 
-  // const pay_employee = async () => {
-  //   await API_Paychecks.pay_employee("promoter", year, month.toLowerCase());
-  // }
+  // const pay_employee = async ({ employee_id, amount }) => {
+  //   await API_Paychecks.pay_employee({ employee_id, amount });
+  // };
 
   return (
     <div className="main_container p-20px">
