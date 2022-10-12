@@ -58,25 +58,29 @@ const UsersPage = props => {
     { name: "Verified", color: "#3e4c6d" },
     { name: "Admin", color: "#525252" },
     { name: "Affiliated", color: "#7d5555" },
-    { name: "Guest", color: "#3e6d6b" }
+    { name: "Guest", color: "#3e6d6b" },
+    { name: "Employee", color: "#557d68" }
   ];
 
-  const determine_color = order => {
+  const determine_color = user => {
     let result = "";
-    if (!order.isVerified) {
+    if (!user.isVerified) {
       result = colors[0].color;
     }
-    if (order.isVerified) {
+    if (user.isVerified) {
       result = colors[1].color;
     }
-    if (order.isAdmin) {
-      result = colors[2].color;
-    }
-    if (order.is_affiliated) {
+    if (user.is_affiliated) {
       result = colors[3].color;
     }
-    if (order.guest) {
+    if (user.guest) {
       result = colors[4].color;
+    }
+    if (user.is_employee) {
+      result = colors[5].color;
+    }
+    if (user.isAdmin) {
+      result = colors[2].color;
     }
     // console.log(result);
     return result;
