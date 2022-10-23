@@ -109,23 +109,77 @@ const ProductOptions = ({
   ];
   const categories_hide_add_to_cart = ["exo_diffusers"];
 
+  // const determine_add_to_cart = (product, secondary_product, count_in_stock, option_product_object) => {
+  //   let variant = "primary";
+  //   if (names_hide_add_to_cart.includes(product.name) && !secondary_product) {
+  //     variant = "disabled";
+  //   }
+  //   if (categories_hide_add_to_cart.includes(product.category) && !secondary_product) {
+  //     variant = "disabled";
+  //   }
+  //   return (
+  //     <GLTooltip tooltip={variant === "disabled" && "You must choose an option before adding to you cart"}>
+  //       <GLButton
+  //         variant={variant}
+  //         className={`${variant !== "disabled" && "bob"} mt-10px w-100per`}
+  //         // tooltip={variant === "disabled" && "You must choose an option before adding to you cart"}
+  //         onClick={handleAddToCart}
+  //       >
+  //         {determine_preorder(option_product_object, count_in_stock, "Add To Cart")}
+  //       </GLButton>
+  //     </GLTooltip>
+  //   );
+  // };
+
   const determine_add_to_cart = (product, secondary_product, count_in_stock, option_product_object) => {
     let variant = "primary";
+    let text = "Add To Cart";
     if (names_hide_add_to_cart.includes(product.name) && !secondary_product) {
       variant = "disabled";
     }
     if (categories_hide_add_to_cart.includes(product.category) && !secondary_product) {
       variant = "disabled";
     }
+    if (product.name === "Refresh Pack (6 Supreme Pairs + 120 Batteries)") {
+      if (option_product_object && option_product_object.hasOwnProperty("count_in_stock")) {
+        if (option_product_object.count_in_stock > 6) {
+          text = "Add To Cart";
+        } else {
+          variant = "disabled";
+          text = "Out of Stock";
+        }
+      } else if (count_in_stock > 0) {
+        text = "Add To Cart";
+      } else {
+        variant = "disabled";
+        text = "Out of Stock";
+      }
+    } else {
+      if (option_product_object && option_product_object.hasOwnProperty("count_in_stock")) {
+        if (option_product_object.count_in_stock > 0) {
+          text = "Add To Cart";
+        } else {
+          variant = "disabled";
+          text = "Out of Stock";
+        }
+      } else if (count_in_stock > 0) {
+        text = "Add To Cart";
+      } else {
+        variant = "disabled";
+        text = "Out of Stock";
+      }
+    }
+
     return (
       <GLTooltip tooltip={variant === "disabled" && "You must choose an option before adding to you cart"}>
         <GLButton
           variant={variant}
           className={`${variant !== "disabled" && "bob"} mt-10px w-100per`}
-          // tooltip={variant === "disabled" && "You must choose an option before adding to you cart"}
+          tooltip={variant === "disabled" && "You must choose an option before adding to you cart"}
           onClick={handleAddToCart}
         >
-          {determine_preorder(option_product_object, count_in_stock, "Add To Cart")}
+          {text}
+          {/* {determine_preorder(option_product_object, count_in_stock, "Add To Cart")} */}
         </GLButton>
       </GLTooltip>
     );
@@ -337,16 +391,16 @@ const ProductOptions = ({
         if (option_product_object.count_in_stock > num) {
           return text;
         } else {
-          return "Preorder";
+          return "Out of Stock";
         }
       } else if (count_in_stock > 0) {
         return text;
       } else {
-        return "Preorder";
+        return "Out of Stock";
       }
     };
     if (product.name === "Refresh Pack (6 Supreme Pairs + 120 Batteries)") {
-      return choice(5);
+      return choice(6);
     } else {
       return choice(0);
     }

@@ -1,4 +1,5 @@
 import { product_db } from "../db";
+import { dimminish_batteries_stock, dimminish_refresh_stock, dimminish_supremes_stock } from "../helpers/product_helpers";
 import { categories, determine_filter, snake_case, subcategories } from "../util";
 
 // const sharp = require("sharp");
@@ -180,93 +181,18 @@ export default {
   },
   update_stock_products_s: async (params: any, body: any) => {
     const { cartItems } = body;
-    // const save_product = async (id: string, qty: number) => {
-    //   console.log({
-    //     id,
-    //     qty
-    //   });
-    //   const product: any = await product_db.findById_products_db(id);
-    //   const new_count = product.count_in_stock - qty;
-    //   console.log({ id, new_count });
-    //   if (product.finite_stock) {
-    // if (new_count <= 0) {
-    //   // product.quantity = 30;
-    //   product.count_in_stock = 0;
-    // } else if (product.count_in_stock <= product.quantity) {
-    //   product.quantity = new_count;
-    //   product.count_in_stock = new_count;
-    // } else {
-    //   product.count_in_stock = new_count;
-    // }
-    //     console.log({ product });
-    //     return await product_db.update_products_db(product._id, product);
-    //     // const request = await product.save();
-    //   }
-    // };
     try {
       cartItems.forEach(async (item: any) => {
         const product: any = await product_db.findById_products_db(item.product);
-        console.log({ product });
-        // console.log({ subcategory: product.subcategory });
         if (product.finite_stock) {
           if (product.subcategory === "singles") {
-            const new_product_count = product.count_in_stock - item.qty;
-            product.count_in_stock = new_product_count;
-            await product_db.update_products_db(product._id, product);
-            const option_product: any = await product_db.findById_products_db(item.option_product);
-            const new_option_product_count = option_product.count_in_stock - item.qty;
-            option_product.count_in_stock = new_option_product_count;
-            await product_db.update_products_db(option_product._id, option_product);
+            dimminish_supremes_stock(product, item);
           } else if (product.subcategory === "refresh") {
-            console.log({ subcategory: product.subcategory });
-            const new_product_count = product.count_in_stock - item.qty;
-            product.count_in_stock = new_product_count;
-            await product_db.update_products_db(product._id, product);
-            const option_product: any = await product_db.findById_products_db(item.option_product);
-            const new_option_product_count = option_product.count_in_stock - item.qty * 6;
-            option_product.count_in_stock = new_option_product_count;
-            await product_db.update_products_db(option_product._id, option_product);
-
-            await Promise.all(
-              product.secondary_products.map(async (secondary: any) => {
-                const new_secondary_count = secondary.count_in_stock - item.qty * 120;
-                secondary.count_in_stock = new_secondary_count;
-                await product_db.update_products_db(secondary._id, secondary);
-                secondary.option_products.map(async (option: any) => {
-                  const new_option_product_count = Math.floor(new_secondary_count / option.size);
-                  option.count_in_stock = new_option_product_count;
-                  await product_db.update_products_db(option._id, option);
-                });
-              })
-            );
+            dimminish_refresh_stock(product, item);
           } else if (product.subcategory === "coin") {
-            const new_product_count = product.count_in_stock - item.qty * item.size;
-            product.count_in_stock = new_product_count;
-            await product_db.update_products_db(product._id, product);
-            await Promise.all(
-              product.option_products.map(async (option: any) => {
-                const new_option_product_count = Math.floor(new_product_count / option.size);
-                option.count_in_stock = new_option_product_count;
-                await product_db.update_products_db(option._id, option);
-              })
-            );
-            // const refresh_pack: any = await product_db.findById_products_db("61a9501f914391295a266c8b");
+            dimminish_batteries_stock(product, item);
           }
-          // return save_product(item.product, item.qty);
         }
-        // else if (item.option_product) {
-        //   if (item.name === "Refresh Pack (6 Supreme Pairs + 120 Batteries)") {
-        //     return save_product(item.option_product, 6 * item.qty);
-        //   } else {
-        //     return save_product(item.option_product, item.qty);
-        //   }
-        // } else if (item.secondary_product) {
-        //   return save_product(item.secondary_product, item.qty);
-        // } else if (item.color_product) {
-        //   return save_product(item.color_product, item.qty);
-        // } else if (item.secondary_color_product) {
-        //   return save_product(item.secondary_color_product, item.qty);
-        // }
       });
       return "Success";
     } catch (error) {
