@@ -134,7 +134,6 @@ export const validate_email = async (data: { email: any; password: any }) => {
     isValid: isEmpty(errors)
   };
 };
-
 export const validate_login = (data: { email: any; password: any }) => {
   let errors: any = {};
   interface errors {
