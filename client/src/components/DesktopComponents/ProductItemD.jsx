@@ -1,10 +1,7 @@
 // React
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import {
-  determine_product_name_display,
-  sale_price_switch,
-} from "../../utils/react_helper_functions";
+import { determine_product_name_display, sale_price_switch } from "../../utils/react_helper_functions";
 import { GLButton } from "../GlowLEDsComponents";
 import { Rating } from "../SpecialtyComponents";
 import { LazyImage } from "../UtilityComponents";
@@ -13,10 +10,10 @@ import { LazyImage } from "../UtilityComponents";
 
 const ProductItemD = props => {
   const history = useHistory();
-  const [ image_number, set_image_number ] = useState(0);
-  const [ number_of_items, set_number_of_items ] = useState(5);
-  const [ image, set_image ] = useState(props.product.name);
-  const [ images, set_images ] = useState(props.product.images);
+  const [image_number, set_image_number] = useState(0);
+  const [number_of_items, set_number_of_items] = useState(5);
+  const [image, set_image] = useState(props.product.name);
+  const [images, set_images] = useState(props.product.images);
 
   const move_left = e => {
     e.preventDefault();
@@ -39,18 +36,14 @@ const ProductItemD = props => {
     }
   };
   return (
-    <li
-      key={props.product.pathname}
-      className="product-thumb"
-      style={props.style}
-    >
+    <li key={props.product.pathname} className="product-thumb" style={props.style}>
       <div className="tooltip">
         <div className="tooltipoverlay">
           <div className="product">
             <Link
               to={{
                 pathname: "/collections/all/products/" + props.product.pathname,
-                previous_path: history.location.pathname,
+                previous_path: history.location.pathname
               }}
               className="m-auto"
             >
@@ -83,7 +76,7 @@ const ProductItemD = props => {
                             </GLButton>
                           </div>
                         )}
-                        {[ ...Array(1).keys() ].map(x => (
+                        {[...Array(1).keys()].map(x => (
                           <LazyImage
                             key={image_number + x}
                             className="product-image"
@@ -102,7 +95,7 @@ const ProductItemD = props => {
                               onClick={e => move_right(e)}
                               aria-label="Next"
                             >
-                              <i className="fas fa-chevron-left fs-40px" />
+                              <i className="fas fa-chevron-right fs-40px" />
                             </GLButton>
                           </div>
                         )}
@@ -110,12 +103,11 @@ const ProductItemD = props => {
                       </div>
                     </div>
                   )}
-                  {[ ...Array(30).keys() ].map(
+                  {[...Array(30).keys()].map(
                     (x, index) =>
                       props.product_occurrences &&
                       props.product_occurrences[index] &&
-                      props.product_occurrences[index].name ===
-                        props.product.name && (
+                      props.product_occurrences[index].name === props.product.name && (
                         <div className="pos-abs br-10px w-2rem h-2rem  ai-c ta-c jc-c top-0px left-5px">
                           <img
                             className=" mt-3px ml-2px h-100px w-100px"
@@ -136,24 +128,17 @@ const ProductItemD = props => {
             <Link
               to={{
                 pathname: "/collections/all/products/" + props.product.pathname,
-                previous_path: history.location.pathname,
+                previous_path: history.location.pathname
               }}
               className="mt-13px"
             >
-              <label style={{ fontSize: "1.6rem" }}>
-                {determine_product_name_display(props.product, false)}
-              </label>
+              <label style={{ fontSize: "1.6rem" }}>{determine_product_name_display(props.product, false)}</label>
             </Link>
 
-            <label className="product-price mv-3px">
-              {sale_price_switch(props.product, false)}
-            </label>
+            <label className="product-price mv-3px">{sale_price_switch(props.product, false)}</label>
 
             {props.product.rating ? (
-              <Rating
-                rating={props.product.rating}
-                numReviews={props.product.numReviews}
-              />
+              <Rating rating={props.product.rating} numReviews={props.product.numReviews} />
             ) : (
               <span className="rating vis-hid ta-c">No Reviews</span>
             )}
