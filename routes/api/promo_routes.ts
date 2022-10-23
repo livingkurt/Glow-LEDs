@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.route("/code/:promo_code").get(promo_controller.findByCode_promos_c).put(promo_controller.update_code_used_promos_c);
 
-router.route("/update_discount/:year?/:month?").put(isAuth, isAdmin, promo_controller.update_affiliate_codes_promos_c);
+router.route("/update_discount/:year?/:month?").put(promo_controller.update_affiliate_codes_promos_c);
 router.route("/create_one_time_use_code").put(promo_controller.create_one_time_use_code_promos_c);
 router.route("/create_sponsor_codes").put(promo_controller.create_sponsor_codes_promos_c);
 
