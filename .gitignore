@@ -125,6 +125,7 @@ routes/*.js
 models/*.js
 background/*.js
 controllers/*.js
+helpers/*.js
 routes/api/*.js
 services/*.js
 db/*.js
