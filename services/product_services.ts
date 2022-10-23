@@ -189,15 +189,15 @@ export default {
     //   const new_count = product.count_in_stock - qty;
     //   console.log({ id, new_count });
     //   if (product.finite_stock) {
-    //     if (new_count <= 0) {
-    //       // product.quantity = 30;
-    //       product.count_in_stock = 0;
-    //     } else if (product.count_in_stock <= product.quantity) {
-    //       product.quantity = new_count;
-    //       product.count_in_stock = new_count;
-    //     } else {
-    //       product.count_in_stock = new_count;
-    //     }
+    // if (new_count <= 0) {
+    //   // product.quantity = 30;
+    //   product.count_in_stock = 0;
+    // } else if (product.count_in_stock <= product.quantity) {
+    //   product.quantity = new_count;
+    //   product.count_in_stock = new_count;
+    // } else {
+    //   product.count_in_stock = new_count;
+    // }
     //     console.log({ product });
     //     return await product_db.update_products_db(product._id, product);
     //     // const request = await product.save();
@@ -205,21 +205,30 @@ export default {
     // };
     try {
       cartItems.forEach(async (item: any) => {
-        const product: any = await product_db.findById_products_db(item._id);
-        console.log({ product });
+        const product: any = await product_db.findById_products_db(item.product);
+
         if (product.finite_stock) {
           if (product.subcategory === "singles") {
-            const new_count = product.count_in_stock - item.qty;
-            // product.options.forEach(async (item: any) => {
-            // await product_db.update_products_db(product._id, product);
-            product.option_products.forEach((option: any) => {
-              console.log({ option });
-            });
-            // })}
+            const new_product_count = product.count_in_stock - item.qty;
+            product.count_in_stock = new_product_count;
+            await product_db.update_products_db(product._id, product);
+            const option_product: any = await product_db.findById_products_db(item.option_product);
+            const new_option_product_count = option_product.count_in_stock - item.qty;
+            option_product.count_in_stock = new_option_product_count;
+            await product_db.update_products_db(option_product._id, option_product);
           } else if (product.subcategory === "refresh") {
             console.log({ product });
           } else if (product.subcategory === "coin") {
-            console.log({ product });
+            const new_product_count = product.count_in_stock - item.qty * item.size;
+            product.count_in_stock = new_product_count;
+            await product_db.update_products_db(product._id, product);
+            await Promise.all(
+              product.option_products.map(async (option: any) => {
+                const new_option_product_count = Math.floor(new_product_count / option.size);
+                option.count_in_stock = new_option_product_count;
+                await product_db.update_products_db(option._id, option);
+              })
+            );
           }
           // return save_product(item.product, item.qty);
         }

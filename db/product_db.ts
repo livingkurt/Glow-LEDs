@@ -2,6 +2,7 @@ import Product from "../models/product";
 import Airtable from "airtable";
 const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY }).base("app9vDOYXFhhQr529");
 const CurrentProducts = base("Current Products");
+import mongoose from "mongoose";
 
 export default {
   findAll_products_db: async (filter: any, sort: any, limit: any, page: any) => {
@@ -209,12 +210,17 @@ export default {
 
   update_products_db: async (id: string, body: any) => {
     let query = {};
-    if (id && id.match(/^[0-9a-fA-F]{24}$/)) {
-      query = { _id: id };
-    } else {
-      query = { pathname: id };
-    }
     try {
+      if (mongoose.isValidObjectId(id)) {
+        query = { _id: id };
+      } else {
+        query = { pathname: id };
+      }
+      // if (id && id.match(/^[0-9a-fA-F]{24}$/)) {
+      //   query = { _id: id };
+      // } else {
+      //   query = { pathname: id };
+      // }
       const product: any = await Product.findOne(query);
       // CurrentProducts.select({ filterByFormula: `id = "${product._id}"` }).firstPage((err: any, records: any) => {
       //   if (err) {
