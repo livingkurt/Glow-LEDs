@@ -74,9 +74,11 @@ const CartPage = props => {
             <GLButton onClick={() => checkoutHandler()} variant="primary" className="w-100per bob">
               Proceed to Checkout
             </GLButton>
-            <GLButton onClick={() => dimminish_stock()} variant="primary" className="w-100per bob">
-              Dimmish Stock
-            </GLButton>
+            {userInfo && userInfo.isAdmin && (
+              <GLButton onClick={() => dimminish_stock()} variant="primary" className="w-100per bob">
+                Dimmish Stock
+              </GLButton>
+            )}
           </div>
         </div>
       </div>

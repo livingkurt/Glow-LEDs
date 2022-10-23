@@ -206,11 +206,12 @@ export default {
     try {
       cartItems.forEach(async (item: any) => {
         const product: any = await product_db.findById_products_db(item._id);
+        console.log({ product });
         if (product.finite_stock) {
           if (product.subcategory === "singles") {
             const new_count = product.count_in_stock - item.qty;
             // product.options.forEach(async (item: any) => {
-            await product_db.update_products_db(product._id, product);
+            // await product_db.update_products_db(product._id, product);
             product.option_products.forEach((option: any) => {
               console.log({ option });
             });
