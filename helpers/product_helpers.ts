@@ -14,12 +14,12 @@ export const dimminish_supremes_stock = async (product: any, item: any) => {
 };
 
 export const dimminish_refresh_stock = async (product: any, item: any) => {
-  const new_product_count = product.count_in_stock - item.qty;
-  product.count_in_stock = new_product_count;
-  if (new_product_count <= product.quantity) {
-    product.quantity = new_product_count;
-  }
-  await product_db.update_products_db(product._id, product);
+  // const new_product_count = product.count_in_stock - item.qty;
+  // product.count_in_stock = new_product_count;
+  // if (new_product_count <= product.quantity) {
+  //   product.quantity = new_product_count;
+  // }
+  // await product_db.update_products_db(product._id, product);
   const option_product: any = await product_db.findById_products_db(item.option_product);
   const new_option_product_count = option_product.count_in_stock - item.qty * 6;
   option_product.count_in_stock = new_option_product_count;
