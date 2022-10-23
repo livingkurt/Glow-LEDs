@@ -1,7 +1,7 @@
 @use "../../../scss/abstracts/" as *;
 
 /* The Modal (background) */
-.modal {
+.gl-modal {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
@@ -15,35 +15,35 @@
 }
 
 /* The Close Button */
-.close {
+.gl-close {
   color: #aaa;
   float: right;
   font-size: 28px;
   font-weight: bold;
 }
 
-.close:hover,
-.close:focus {
+.gl-close:hover,
+.gl-close:focus {
   color: black;
   text-decoration: none;
   cursor: pointer;
 }
 
 /* Modal Header */
-.modal-header {
+.gl-modal-header {
   padding: 2px 16px;
   // background-color: #5cb85c;
   color: black;
 }
 
 /* Modal Body */
-.modal-body {
+.gl-modal-body {
   padding: 2px 16px;
   color: black;
 }
 
 /* Modal Footer */
-.modal-footer {
+.gl-modal-footer {
   padding: 10px 16px;
   // background-color: #5cb85c;
   display: flex;
@@ -52,7 +52,7 @@
 }
 
 /* Modal Content */
-.modal-content {
+.gl-modal-content {
   position: relative;
   background-color: #fefefe;
   margin: auto;

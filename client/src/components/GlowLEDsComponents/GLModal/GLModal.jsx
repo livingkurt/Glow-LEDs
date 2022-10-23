@@ -50,13 +50,13 @@ const GLModal = ({
   const { width, height } = useWindowDimensions();
 
   // Get the modal
-  var modal = document.getElementById("myModal");
+  var modal = document.getElementById("gl-modal");
 
   // // Get the button that opens the modal
   // var btn = document.getElementById("open-modal");
 
   // Get the <span> element that closes the modal
-  var span = document.getElementsByClassName("close")[0];
+  var span = document.getElementsByClassName("gl-close")[0];
 
   // // When the user clicks on the button, open the modal
   // btn.onclick = function () {
@@ -76,24 +76,24 @@ const GLModal = ({
   };
   return (
     <div
-      id="myModal"
+      id="gl-modal"
       className="modal"
       style={{
         display: show_modal ? "block" : "none"
       }}
     >
-      <div className="modal-content">
-        <div className="modal-header">
+      <div className="gl-modal-content">
+        <div className="gl-modal-header">
           {showClose && (
-            <span className="close" onClick={onClose}>
+            <span className="gl-close" onClick={onClose}>
               &times;
             </span>
           )}
           <h2 id={title}> {title}</h2>
           <hr></hr>
         </div>
-        <div className="modal-body">{children}</div>
-        <div className="modal-footer">
+        <div className="gl-modal-body">{children}</div>
+        <div className="gl-modal-footer">
           {actionLabel ? (
             <div className={styles.actionButton}>
               <GLButton
