@@ -1,10 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  listPromos,
-  deletePromo,
-  savePromo,
-} from "../../../actions/promoActions";
+import { listPromos, deletePromo, savePromo } from "../../../actions/promoActions";
 import { Link } from "react-router-dom";
 import { Loading, Notification } from "../../../components/UtilityComponents";
 import { Helmet } from "react-helmet";
@@ -13,11 +9,9 @@ import { format_date } from "../../../utils/helper_functions";
 import { GLButton } from "../../../components/GlowLEDsComponents";
 
 const PromosPage = props => {
-  const [ search, set_search ] = useState("");
-  const [ sort, setSortOrder ] = useState("");
-  const category = props.match.params.category
-    ? props.match.params.category
-    : "";
+  const [search, set_search] = useState("");
+  const [sort, setSortOrder] = useState("");
+  const category = props.match.params.category ? props.match.params.category : "";
   const promoList = useSelector(state => state.promoList);
   const { loading, promos, message, error } = promoList;
 
@@ -28,16 +22,13 @@ const PromosPage = props => {
   const { success: successDelete } = promoDelete;
   const dispatch = useDispatch();
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        dispatch(listPromos({}));
-      }
-      return () => (clean = false);
-    },
-    [ successSave, successDelete, dispatch ]
-  );
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      dispatch(listPromos({}));
+    }
+    return () => (clean = false);
+  }, [successSave, successDelete, dispatch]);
   const submitHandler = e => {
     e.preventDefault();
     dispatch(listPromos({ category, search, sort }));
@@ -48,16 +39,13 @@ const PromosPage = props => {
     dispatch(listPromos({ category, search, sort: e.target.value }));
   };
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        dispatch(listPromos({ category, search, sort }));
-      }
-      return () => (clean = false);
-    },
-    [ dispatch, category, search, sort ]
-  );
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      dispatch(listPromos({ category, search, sort }));
+    }
+    return () => (clean = false);
+  }, [dispatch, category, search, sort]);
   const deleteHandler = promo => {
     dispatch(deletePromo(promo._id));
   };
@@ -70,7 +58,7 @@ const PromosPage = props => {
     { name: "Affiliate Only", color: "#7d5555" },
     { name: "No Restrictions", color: "#3e4c6d" },
     { name: "Single Use", color: "#5f557d" },
-    { name: "Used", color: "#303030" },
+    { name: "Used", color: "#303030" }
     // { name: 'Specific User', color: '#3d7f79' }
     // { name: 'Active', color: '#3f6561' }
   ];
@@ -137,13 +125,13 @@ const PromosPage = props => {
     // }
     return result;
   };
-  const sort_options = [ "Newest", "Admin Only", "Affiliate Only", "Active" ];
+  const sort_options = ["Newest", "Admin Only", "Affiliate Only", "Active"];
 
   const change_promo_status = promo => {
     dispatch(
       savePromo({
         ...promo,
-        active: promo.active ? false : true,
+        active: promo.active ? false : true
       })
     );
     dispatch(listPromos({}));
@@ -167,7 +155,7 @@ const PromosPage = props => {
                     backgroundColor: color.color,
                     height: "20px",
                     width: "60px",
-                    borderRadius: "5px",
+                    borderRadius: "5px"
                   }}
                 />
               </div>
@@ -184,16 +172,8 @@ const PromosPage = props => {
       <div className="jc-c">
         <h1 style={{ textAlign: "center" }}>Promos</h1>
       </div>
-      <div
-        className="search_and_sort row jc-c ai-c"
-        style={{ overflowX: "scroll" }}
-      >
-        <Search
-          search={search}
-          set_search={set_search}
-          submitHandler={submitHandler}
-          category={category}
-        />
+      <div className="search_and_sort row jc-c ai-c" style={{ overflowX: "scroll" }}>
+        <Search search={search} set_search={set_search} submitHandler={submitHandler} category={category} />
         <Sort sortHandler={sortHandler} sort_options={sort_options} />
       </div>
       <Loading loading={loading} error={error}>
@@ -227,7 +207,7 @@ const PromosPage = props => {
                     key={index}
                     style={{
                       backgroundColor: determine_color(promo),
-                      fontSize: "16px",
+                      fontSize: "16px"
                     }}
                   >
                     <td className="p-10px">
@@ -236,79 +216,41 @@ const PromosPage = props => {
                         onClick={() => change_promo_status(promo)}
                         aria-label={promo.active ? "deactive" : "activate"}
                       >
-                        {promo.active ? (
-                          <i className="fas fa-check-circle" />
-                        ) : (
-                          <i className="fas fa-times-circle" />
-                        )}
+                        {promo.active ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
                       </GLButton>
                     </td>
                     {/* <td className="p-10px">{promo.user}</td> */}
                     {/* <td className="p-10px">{promo.affiliate}</td> */}
                     <td className="p-10px">{promo.promo_code}</td>
 
+                    <td className="p-10px">{promo.percentage_off && promo.percentage_off + "%"}</td>
+                    <td className="p-10px">{promo.amount_off && "$" + promo.amount_off}</td>
                     <td className="p-10px">
-                      {promo.percentage_off && promo.percentage_off + "%"}
+                      {promo.free_shipping ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
                     </td>
                     <td className="p-10px">
-                      {promo.amount_off && "$" + promo.amount_off}
+                      {promo.affiliate_only ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
                     </td>
                     <td className="p-10px">
-                      {promo.free_shipping ? (
-                        <i className="fas fa-check-circle" />
-                      ) : (
-                        <i className="fas fa-times-circle" />
-                      )}
+                      {promo.sponsor_only ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
                     </td>
                     <td className="p-10px">
-                      {promo.affiliate_only ? (
-                        <i className="fas fa-check-circle" />
-                      ) : (
-                        <i className="fas fa-times-circle" />
-                      )}
+                      {promo.admin_only ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
                     </td>
                     <td className="p-10px">
-                      {promo.sponsor_only ? (
-                        <i className="fas fa-check-circle" />
-                      ) : (
-                        <i className="fas fa-times-circle" />
-                      )}
+                      {promo.single_use ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
                     </td>
                     <td className="p-10px">
-                      {promo.admin_only ? (
-                        <i className="fas fa-check-circle" />
-                      ) : (
-                        <i className="fas fa-times-circle" />
-                      )}
+                      {promo.used_once ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
                     </td>
                     <td className="p-10px">
-                      {promo.single_use ? (
-                        <i className="fas fa-check-circle" />
-                      ) : (
-                        <i className="fas fa-times-circle" />
-                      )}
-                    </td>
-                    <td className="p-10px">
-                      {promo.used_once ? (
-                        <i className="fas fa-check-circle" />
-                      ) : (
-                        <i className="fas fa-times-circle" />
-                      )}
-                    </td>
-                    <td className="p-10px">
-                      {promo.time_limit ? (
-                        <i className="fas fa-check-circle" />
-                      ) : (
-                        <i className="fas fa-times-circle" />
-                      )}
+                      {promo.time_limit ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
                     </td>
                     <td className="p-10px">
                       {promo.time_limit &&
                         promo.start_date &&
                         promo.end_date &&
-                        format_date(promo.start_date) +
-                          " - " +
-                          format_date(promo.start_date)}
+                        format_date(promo.start_date) + " - " + format_date(promo.end_date)}
                     </td>
                     {/* <td className="p-10px">
 											{promo.excluded_categories.map((item) => <div>{item}</div>)}
@@ -324,11 +266,7 @@ const PromosPage = props => {
                             <i className="fas fa-edit" />
                           </GLButton>
                         </Link>
-                        <GLButton
-                          variant="icon"
-                          onClick={() => deleteHandler(promo)}
-                          aria-label="Delete"
-                        >
+                        <GLButton variant="icon" onClick={() => deleteHandler(promo)} aria-label="Delete">
                           <i className="fas fa-trash-alt" />
                         </GLButton>
                       </div>

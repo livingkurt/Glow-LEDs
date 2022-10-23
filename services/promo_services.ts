@@ -65,15 +65,71 @@ export default {
       excluded_categories: [],
       excluded_products: [],
       percentage_off: 10,
-      free_shipping: false,
+      free_shipping: true,
       time_limit: false,
       start_date: "2021-01-01",
       end_date: "2021-01-01",
       active: true
     };
+
     console.log({ private_code });
     try {
       return await promo_db.create_promos_db(private_code);
+    } catch (error) {
+      console.log({ create_promos_s_error: error });
+      throw new Error(error.message);
+    }
+  },
+  create_sponsor_codes_promos_s: async (body: any) => {
+    const a_filter: any = { deleted: false, active: true, sponsor: true };
+    const affiliates = await affiliate_db.findAll_affiliates_db(a_filter, {});
+    const start_date = new Date();
+    const next_date = new Date();
+    const end_date = new Date(next_date.setMonth(next_date.getMonth() + 1));
+
+    try {
+      const sponsor_codes = await Promise.all(
+        affiliates.map(async (affiliate: any) => {
+          const private_code = {
+            promo_code: `${affiliate.artist_name[0].toLowerCase()}${make_private_code(5)}`,
+            admin_only: false,
+            sponsor_only: false,
+            single_use: true,
+            used_once: false,
+            excluded_categories: [],
+            excluded_products: [],
+            percentage_off: 0,
+            amount_off: 25,
+            free_shipping: true,
+            time_limit: true,
+            start_date: start_date,
+            end_date: end_date,
+            active: true
+          };
+          const refresh_private_code = {
+            affiliate: affiliate._id,
+            promo_code: `r${make_private_code(5)}`,
+            admin_only: false,
+            sponsor_only: true,
+            single_use: true,
+            used_once: false,
+            excluded_categories: [],
+            included_products: ["61a9501f914391295a266c8b"],
+            percentage_off: 0,
+            amount_off: 35,
+            free_shipping: true,
+            time_limit: true,
+            start_date: start_date,
+            end_date: end_date,
+            active: true
+          };
+          console.log({ private_code });
+          const refresh_pack_code: any = await promo_db.create_promos_db(refresh_private_code);
+          const allowance_code: any = await promo_db.create_promos_db(private_code);
+          return [...refresh_pack_code, ...allowance_code];
+        })
+      );
+      return sponsor_codes;
     } catch (error) {
       console.log({ create_promos_s_error: error });
       throw new Error(error.message);

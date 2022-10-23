@@ -9,6 +9,7 @@ import { Loading } from "../../components/UtilityComponents";
 import { format_date } from "../../utils/helper_functions";
 import { check_authentication } from "../../utils/react_helper_functions";
 import { GLButton } from "../../components/GlowLEDsComponents";
+import { listPromos } from "../../actions/promoActions";
 
 const ProfilePage = props => {
   const userLogin = useSelector(state => state.userLogin);
@@ -19,16 +20,16 @@ const ProfilePage = props => {
   const { affiliate, loading, error } = affiliateDetails;
 
   const myPaycheckList = useSelector(state => state.myPaycheckList);
-  const {
-    loading: loading_paychecks,
-    paychecks,
-    error: error_paychecks,
-  } = myPaycheckList;
+  const { loading: loading_paychecks, paychecks, error: error_paychecks } = myPaycheckList;
+
+  const promoList = useSelector(state => state.promoList);
+  const { loading: loading_promoes, promos, error: error_promos } = promoList;
+  console.log({ promos });
 
   // console.log({ paychecks });
 
-  const [ number_of_uses, set_number_of_uses ] = useState(0);
-  const [ revenue, set_revenue ] = useState(0);
+  const [number_of_uses, set_number_of_uses] = useState(0);
+  const [revenue, set_revenue] = useState(0);
   // const [ affiliate, set_affiliate ] = useState(0);
 
   const dispatch = useDispatch();
@@ -40,30 +41,28 @@ const ProfilePage = props => {
         console.log({ affiliate: userInfo.affiliate.pathname });
         dispatch(detailsAffiliate(userInfo.affiliate.pathname));
         dispatch(listMyPaychecks(userInfo.affiliate._id));
+        dispatch(listPromos());
       }
     }
     return () => (clean = false);
   }, []);
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (affiliate && affiliate.public_code) {
-          get_code_usage(affiliate.public_code);
-        }
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (affiliate && affiliate.public_code) {
+        get_code_usage(affiliate.public_code);
       }
-      return () => (clean = false);
-    },
-    [ affiliate ]
-  );
+    }
+    return () => (clean = false);
+  }, [affiliate]);
 
   // console.log({ affiliate });
 
   const get_code_usage = async public_code => {
     // console.log({ pathname: affiliate.pathname });
     const {
-      data: { number_of_uses, revenue },
+      data: { number_of_uses, revenue }
     } = await API_Promos.get_code_usage(public_code.promo_code);
     console.log({ number_of_uses, revenue });
     set_number_of_uses(number_of_uses);
@@ -72,7 +71,7 @@ const ProfilePage = props => {
 
   const colors = [
     { name: "Paid", color: "#3e4c6d" },
-    { name: "Not Paid", color: "#6f3c3c" },
+    { name: "Not Paid", color: "#6f3c3c" }
   ];
 
   const determine_color = paycheck => {
@@ -92,14 +91,8 @@ const ProfilePage = props => {
         <title>Profile | Glow LEDs</title>
         <meta property="og:title" content="Profile" />
         <meta name="twitter:title" content="Profile" />
-        <link
-          rel="canonical"
-          href="https://www.glow-leds.com/secure/account/profile"
-        />
-        <meta
-          property="og:url"
-          content="https://www.glow-leds.com/secure/account/profile"
-        />
+        <link rel="canonical" href="https://www.glow-leds.com/secure/account/profile" />
+        <meta property="og:url" content="https://www.glow-leds.com/secure/account/profile" />
       </Helmet>
       <div>
         <h1 style={{ textAlign: "center", width: "100%" }}>User Profile</h1>
@@ -121,22 +114,14 @@ const ProfilePage = props => {
               <GLButton variant="primary">View Orders</GLButton>
             </Link>
           </div>
-          {userInfo.is_affiliated &&
-          userInfo.affiliate &&
-          userInfo.affiliate.pathname && (
+          {userInfo.is_affiliated && userInfo.affiliate && userInfo.affiliate.pathname && (
             <div>
-              <Link
-                to={
-                  "/secure/account/edit_affiliate/" +
-                  userInfo.affiliate.pathname
-                }
-              >
+              <Link to={"/secure/account/edit_affiliate/" + userInfo.affiliate.pathname}>
                 <GLButton variant="primary">Edit Affiliate Profile</GLButton>
               </Link>
             </div>
           )}{" "}
-          {userInfo.is_affiliated &&
-          !userInfo.affiliate && (
+          {userInfo.is_affiliated && !userInfo.affiliate && (
             <div>
               <Link to={"/secure/account/edit_affiliate"}>
                 <GLButton variant="primary">Affiliate Sign Up</GLButton>
@@ -174,26 +159,19 @@ const ProfilePage = props => {
               {userInfo.shipping.address_1} {userInfo.shipping.address_2}
             </div>
             <div>
-              {userInfo.shipping.city}, {userInfo.shipping.state}{" "}
-              {userInfo.shipping.postalCode} {userInfo.shipping.country}
+              {userInfo.shipping.city}, {userInfo.shipping.state} {userInfo.shipping.postalCode} {userInfo.shipping.country}
             </div>
             <div>{userInfo.shipping.international && "International"}</div>
             <div>{userInfo.shipping.email}</div>
           </div>
           <div className="mb-20px">
             <h3>Promotional Emails</h3>
-            <label>
-              {userInfo.email_subscription ? "Subscribed" : "Not Subscribed"}
-            </label>
+            <label>{userInfo.email_subscription ? "Subscribed" : "Not Subscribed"}</label>
           </div>
           {/* </div> */}
         </div>
         <div className="group_item">
-          {userInfo.is_affiliated &&
-          userInfo.affiliate &&
-          affiliate &&
-          affiliate.public_code &&
-          revenue && (
+          {userInfo.is_affiliated && userInfo.affiliate && affiliate && affiliate.public_code && revenue && promos && (
             <div className="mb-20px max-w-700px w-500px">
               <h2 className="group_images">Affiliate Metrics</h2>
               <div className="mb-20px">
@@ -205,10 +183,25 @@ const ProfilePage = props => {
                 <label>{affiliate.private_code.promo_code.toUpperCase()}</label>
               </div>
               <div className="mb-20px">
+                <h3>Monthly Sponsor Code ($25 off)</h3>
+                <label>
+                  {promos &&
+                    promos.filter(promo => promo.affiliate === affiliate._id) &&
+                    promos.filter(promo => promo.affiliate === affiliate._id)[1].promo_code.toUpperCase()}
+                </label>
+              </div>
+              <div className="mb-20px">
+                <h3>Refresh Pack Sponsor Code</h3>
+                <label>
+                  {promos &&
+                    promos.filter(promo => promo.affiliate === affiliate._id) &&
+                    promos.filter(promo => promo.affiliate === affiliate._id)[0].promo_code.toUpperCase()}
+                </label>
+              </div>
+              <div className="mb-20px">
                 <h3>Code Usage</h3>
                 <label>
-                  {affiliate.public_code.promo_code.toUpperCase()} used{" "}
-                  {number_of_uses} times
+                  {affiliate.public_code.promo_code.toUpperCase()} used {number_of_uses} times
                 </label>
               </div>
               <div className="mb-20px">
@@ -217,77 +210,57 @@ const ProfilePage = props => {
               </div>
               <div className="mb-20px">
                 <h3>Total Earrned</h3>
-                <label>
-                  ${parseFloat(
-                    affiliate.promoter ? 0.1 * revenue : 0.15 * revenue
-                  ).toFixed(2)}
-                </label>
+                <label>${parseFloat(affiliate.promoter ? 0.1 * revenue : 0.15 * revenue).toFixed(2)}</label>
               </div>
               {/* <h3>Affilate Terms</h3> */}
               <div className="mt-1rem">
                 {affiliate.promoter && (
                   <div>
                     <a
-                      href={
-                        "https://docs.google.com/document/d/1j3Bcv2__QGiTlVf--R-BNVpvGRN_RzWvuvMFCPodqS4/edit?usp=sharing"
-                      }
+                      href={"https://docs.google.com/document/d/1j3Bcv2__QGiTlVf--R-BNVpvGRN_RzWvuvMFCPodqS4/edit?usp=sharing"}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
                       <GLButton variant="primary">View Promoter Terms</GLButton>
                     </a>
                     <a
-                      href={
-                        "https://docs.google.com/spreadsheets/d/1vy1OKH0P96cDkjuq-_yBT56CA1yQRMY3XZ2kgN95Spg/edit?usp=sharing"
-                      }
+                      href={"https://docs.google.com/spreadsheets/d/1vy1OKH0P96cDkjuq-_yBT56CA1yQRMY3XZ2kgN95Spg/edit?usp=sharing"}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      <GLButton variant="primary">
-                        View Promoter Revenue
-                      </GLButton>
+                      <GLButton variant="primary">View Promoter Revenue</GLButton>
                     </a>
                   </div>
                 )}
                 {affiliate.sponsor && (
                   <div>
                     <a
-                      href={
-                        "https://docs.google.com/document/d/1t1HwnnPbsgE5THHLWS_-5gYyXwIRcSv8yunXK2oRxOE/edit?usp=sharing"
-                      }
+                      href={"https://docs.google.com/document/d/1t1HwnnPbsgE5THHLWS_-5gYyXwIRcSv8yunXK2oRxOE/edit?usp=sharing"}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
                       <GLButton variant="primary">View Sponsor Terms</GLButton>
                     </a>
                     <a
-                      href={
-                        "https://docs.google.com/spreadsheets/d/1nxYhdgGqme0tSvOrYeb6oU9RIOLeA2aik3-K4H1dRpA/edit?usp=sharing"
-                      }
+                      href={"https://docs.google.com/spreadsheets/d/1nxYhdgGqme0tSvOrYeb6oU9RIOLeA2aik3-K4H1dRpA/edit?usp=sharing"}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      <GLButton variant="primary">
-                        View Sponsor Revenue
-                      </GLButton>
+                      <GLButton variant="primary">View Sponsor Revenue</GLButton>
                     </a>
                   </div>
                 )}
                 {affiliate.team && (
                   <div>
                     <a
-                      href={
-                        "https://docs.google.com/document/d/1WRCW4psn0U2iRHDk9ZVJuaOYU8vj9nRbj8O2SdfUo90/edit?usp=sharing"
-                      }
+                      href={"https://docs.google.com/document/d/1WRCW4psn0U2iRHDk9ZVJuaOYU8vj9nRbj8O2SdfUo90/edit?usp=sharing"}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
                       <GLButton variant="primary">View Team Terms</GLButton>
                     </a>
                     <a
-                      href={
-                        "https://docs.google.com/document/d/1WRCW4psn0U2iRHDk9ZVJuaOYU8vj9nRbj8O2SdfUo90/edit?usp=sharing"
-                      }
+                      href={"https://docs.google.com/document/d/1WRCW4psn0U2iRHDk9ZVJuaOYU8vj9nRbj8O2SdfUo90/edit?usp=sharing"}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
@@ -298,23 +271,18 @@ const ProfilePage = props => {
               </div>
               <div className="mt-1rem">
                 <a
-                  href={
-                    "https://docs.google.com/document/d/1hiquje1Bw-SWlYEO2Lp8NMfVZhvMRNNrwNog4Ltr5Ac/edit"
-                  }
+                  href={"https://docs.google.com/document/d/1hiquje1Bw-SWlYEO2Lp8NMfVZhvMRNNrwNog4Ltr5Ac/edit"}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <GLButton variant="primary">
-                    View Affiliate Learnings
-                  </GLButton>
+                  <GLButton variant="primary">View Affiliate Learnings</GLButton>
                 </a>
               </div>
             </div>
           )}
         </div>
       </div>
-      {affiliate &&
-      (affiliate.promoter || affiliate.sponsor) && (
+      {affiliate && (affiliate.promoter || affiliate.sponsor) && (
         <div>
           <div className="jc-c">
             <h1 style={{ textAlign: "center" }}>Paychecks</h1>
@@ -329,19 +297,14 @@ const ProfilePage = props => {
                       backgroundColor: color.color,
                       height: "20px",
                       width: "60px",
-                      borderRadius: "5px",
+                      borderRadius: "5px"
                     }}
                   />
                 </div>
               );
             })}
           </div>
-          <div className="mb-1rem">
-            Total Payout ${paychecks &&
-              paychecks
-                .reduce((a, paycheck) => a + paycheck.amount, 0)
-                .toFixed(2)}
-          </div>
+          <div className="mb-1rem">Total Payout ${paychecks && paychecks.reduce((a, paycheck) => a + paycheck.amount, 0).toFixed(2)}</div>
           <Loading loading={loading_paychecks} error={error_paychecks}>
             {paychecks && (
               <div className="paycheck-list responsive_table">
@@ -362,25 +325,17 @@ const ProfilePage = props => {
                         key={index}
                         style={{
                           backgroundColor: determine_color(paycheck),
-                          fontSize: "1.4rem",
+                          fontSize: "1.4rem"
                         }}
                       >
                         <td className="p-10px">
-                          {paycheck.paid ? (
-                            <i className="fas fa-check-circle" />
-                          ) : (
-                            <i className="fas fa-times-circle" />
-                          )}
+                          {paycheck.paid ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
                         </td>
                         <td className="p-10px" style={{ minWidth: "15rem" }}>
                           {paycheck.paid_at && format_date(paycheck.paid_at)}
                         </td>
                         <td className="p-10px">
-                          {paycheck.affiliate ? (
-                            paycheck.affiliate.artist_name
-                          ) : (
-                            paycheck.team && paycheck.team.team_name
-                          )}
+                          {paycheck.affiliate ? paycheck.affiliate.artist_name : paycheck.team && paycheck.team.team_name}
                         </td>
                         <td className="p-10px">${paycheck.amount}</td>
                         <td className="p-10px">{paycheck.venmo}</td>
