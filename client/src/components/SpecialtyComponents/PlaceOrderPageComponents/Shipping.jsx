@@ -13,6 +13,8 @@ import useWindowDimensions from "../../Hooks/windowDimensions";
 import { isMobile } from "react-device-detect";
 import Autocomplete from "./Autocomplete";
 import { GLButton } from "../../GlowLEDsComponents";
+import GLModal from "../../GlowLEDsComponents/GLModal/GLModal";
+import GLCheckbox from "../../GlowLEDsComponents/GLCheckbox/GLCheckbox";
 
 export function Shipping({
   shipping_completed,
@@ -50,6 +52,7 @@ export function Shipping({
   const [all_shipping, set_all_shipping] = useState([]);
   const [save_shipping, set_save_shipping] = useState(false);
   const [loading_checkboxes, set_loading_checkboxes] = useState(true);
+  const [show_modal, set_show_modal] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -108,6 +111,7 @@ export function Shipping({
   const [postal_code_validations, set_postal_code_validations] = useState("");
   const [country_validations, set_country_validations] = useState("");
   const [international_validations, set_international_validations] = useState("");
+  const [agree, set_agree] = useState(false);
   // const dispatch = useDispatch();
 
   const submitHandler = e => {
@@ -567,12 +571,7 @@ export function Shipping({
                   <div>{shipping.international && "International"}</div>
                 </div>
               )}
-              {cartItems.some(item => item.processing_time) && (
-                <h4 className="mb-0px mt-0px" style={{ webkitTextStroke: "0.5px white" }}>
-                  Estimated Time to Ship {Math.max(...cartItems.map(item => item.processing_time[0]))} -{" "}
-                  {Math.max(...cartItems.map(item => item.processing_time[1]))} business days
-                </h4>
-              )}
+
               {/* <div className="pos-abs "> */}
               <Loading loading={loading_shipping} />
               {/* </div> */}
@@ -585,8 +584,53 @@ export function Shipping({
                 current_shipping_speed={current_shipping_speed}
                 re_choose_shipping_rate={re_choose_shipping_rate}
               />
+              {cartItems.some(item => item.processing_time) && (
+                <h4 className="mb-0px mt-0px" style={{ webkitTextStroke: "0.5px white" }}>
+                  Estimated Time to Ship {Math.max(...cartItems.map(item => item.processing_time[0]))} -{" "}
+                  {Math.max(...cartItems.map(item => item.processing_time[1]))} business days
+                </h4>
+              )}
+              {console.log({ agree })}
+              <GLModal
+                show_modal={show_modal}
+                set_show_modal={set_show_modal}
+                title={"Processing Time Explained"}
+                onClose={() => set_show_modal(false)}
+                showClose={false}
+                confirmLabel="I Agree"
+                confirmVariant={agree ? "primary" : "disabled"}
+                confirmDisabled={!agree}
+                onConfirm={() => {
+                  set_show_modal(false);
+                  next_step("payment");
+                }}
+              >
+                <p> Processing time is independent of the selected shipping speed. </p>
+                <p style={{ webkitTextStroke: "1px black !important" }}>
+                  Add this processing time to your shipping speed to get the most accurate delivery date.
+                </p>
+                <p> Many of our products are hand-made and made to order which means they are not made until your order is placed. </p>
+                <p> There may be many orders in front of you that need just as much love and care as yours. </p>
+                <p>
+                  We are a small company, not an Amazon, and always appriciate your understanding and support as we continue to grow!
+                </p>{" "}
+                <GLCheckbox onChecked={set_agree} value={agree}>
+                  <h3 style={{ color: "red", fontSize: "20px", margin: "5px 0px" }}>
+                    Estimated Time to Ship {Math.max(...cartItems.map(item => item.processing_time[0]))} -{" "}
+                    {Math.max(...cartItems.map(item => item.processing_time[1]))} business days
+                  </h3>
+                </GLCheckbox>
+              </GLModal>
               {show_shipping_complete && (
-                <GLButton type="submit" variant="primary" className="w-100per bob mt-1rem" onClick={() => next_step("payment")}>
+                <GLButton
+                  type="submit"
+                  variant="primary"
+                  id="open-modal"
+                  className="w-100per bob mt-1rem"
+                  onClick={() => {
+                    set_show_modal(true);
+                  }}
+                >
                   Continue
                 </GLButton>
               )}
