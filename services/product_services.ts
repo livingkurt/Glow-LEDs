@@ -206,7 +206,8 @@ export default {
     try {
       cartItems.forEach(async (item: any) => {
         const product: any = await product_db.findById_products_db(item.product);
-
+        console.log({ product });
+        // console.log({ subcategory: product.subcategory });
         if (product.finite_stock) {
           if (product.subcategory === "singles") {
             const new_product_count = product.count_in_stock - item.qty;
@@ -217,7 +218,27 @@ export default {
             option_product.count_in_stock = new_option_product_count;
             await product_db.update_products_db(option_product._id, option_product);
           } else if (product.subcategory === "refresh") {
-            console.log({ product });
+            console.log({ subcategory: product.subcategory });
+            const new_product_count = product.count_in_stock - item.qty;
+            product.count_in_stock = new_product_count;
+            await product_db.update_products_db(product._id, product);
+            const option_product: any = await product_db.findById_products_db(item.option_product);
+            const new_option_product_count = option_product.count_in_stock - item.qty * 6;
+            option_product.count_in_stock = new_option_product_count;
+            await product_db.update_products_db(option_product._id, option_product);
+
+            await Promise.all(
+              product.secondary_products.map(async (secondary: any) => {
+                const new_secondary_count = secondary.count_in_stock - item.qty * 120;
+                secondary.count_in_stock = new_secondary_count;
+                await product_db.update_products_db(secondary._id, secondary);
+                secondary.option_products.map(async (option: any) => {
+                  const new_option_product_count = Math.floor(new_secondary_count / option.size);
+                  option.count_in_stock = new_option_product_count;
+                  await product_db.update_products_db(option._id, option);
+                });
+              })
+            );
           } else if (product.subcategory === "coin") {
             const new_product_count = product.count_in_stock - item.qty * item.size;
             product.count_in_stock = new_product_count;
@@ -229,6 +250,7 @@ export default {
                 await product_db.update_products_db(option._id, option);
               })
             );
+            // const refresh_pack: any = await product_db.findById_products_db("61a9501f914391295a266c8b");
           }
           // return save_product(item.product, item.qty);
         }
