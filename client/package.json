@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "engines": {
-    "node": "14.17.0",
-    "npm": "6.14.13"
+    "npm": "6.14.0",
+    "node": ">=16.0.0"
   },
   "dependencies": {
     "@bugsnag/js": "^7.10.5",
@@ -23,7 +23,6 @@
     "axios": "^0.21.1",
     "chart.js": "^3.3.2",
     "dotenv": "^8.2.0",
-    "eslint": "^8.26.0",
     "html-to-react": "^1.4.8",
     "http-proxy-middleware": "^0.19.1",
     "is-empty": "^1.2.0",
@@ -60,7 +59,7 @@
     "react-router-dom": "^5.2.0",
     "react-router-hash-link": "^2.4.3",
     "react-router-sitemap": "^1.2.0",
-    "react-scripts": "^5.0.1",
+    "react-scripts": "4.0.3",
     "react-scroll": "^1.8.4",
     "react-search-autocomplete": "^5.4.2",
     "react-tabs": "^3.2.2",
