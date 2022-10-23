@@ -3,10 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
-  "engines": {
-    "npm": "6.14.0",
-    "node": ">=16.0.0"
-  },
   "dependencies": {
     "@bugsnag/js": "^7.10.5",
     "@bugsnag/plugin-express": "^7.10.0",
