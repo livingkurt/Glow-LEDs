@@ -101,6 +101,7 @@ export default {
             percentage_off: 0,
             amount_off: 25,
             free_shipping: true,
+
             time_limit: true,
             start_date: start_date,
             end_date: end_date,
@@ -116,8 +117,9 @@ export default {
             excluded_categories: [],
             included_products: ["61a9501f914391295a266c8b"],
             percentage_off: 0,
-            amount_off: 35,
+            amount_off: 34.99,
             free_shipping: true,
+            include: true,
             time_limit: true,
             start_date: start_date,
             end_date: end_date,
