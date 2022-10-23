@@ -1,6 +1,7 @@
 import React from "react";
 import useWindowDimensions from "../../Hooks/windowDimensions";
 import GLButton from "../GLButton/GLButton";
+import GLCheckbox from "../GLCheckbox/GLCheckbox";
 import styles from "./GLModal.module.scss";
 import "./GLModal.scss";
 
@@ -149,69 +150,3 @@ const GLModal = ({
 };
 
 export default GLModal;
-
-// return (
-//   <div
-//     id="gl-modal"
-// style={{
-//   display: show_modal ? "block" : "none"
-// }}
-//     className={`${styles.glModal} max-w-500px fade_in ${width < 535 && "mh-auto-20px"}`}
-//   >
-//     {title && (
-//       <h3 classes={titleClasses} id={title}>
-//         {title}
-//       </h3>
-//     )}
-//     <div className="modal-content">{children}</div>
-//   <div className="modal-actions">
-//     {actionLabel && (
-//       <div className={styles.actionButton}>
-//         <GLButton
-//           dataTest="modal-action-button"
-//           customClassNames="actionButton"
-//           onClick={onAction}
-//           variant={actionVariant}
-//           color={actionColor}
-//           disabled={actionDisabled}
-//           aria-label={actionLabel}
-//         >
-//           {actionLabel}
-//         </GLButton>
-//       </div>
-//     )}
-//     <div className={styles.dialogButtons}>
-//       {cancelLabel && (
-//         <GLButton
-//           id="modalCancelButton"
-//           dataTest="modal-cancel-button"
-//           customClassNames="cancelButton"
-//           onClick={onCancel}
-//           variant={cancelVariant}
-//           color={cancelColor}
-//           disabled={cancelDisabled}
-//           aria-label={cancelLabel}
-//         >
-//           {cancelLabel}
-//         </GLButton>
-//       )}
-//       {confirmLabel && (
-//         <GLButton
-//           id="modalSubmitButton"
-//           dataTest="submit"
-//           customClassNames="submitButton"
-//           onClick={onConfirm}
-//           variant={confirmVariant}
-//           color={confirmColor}
-//           disabled={confirmDisabled}
-//           aria-label={confirmLabel}
-//           loadingOnly={confirmLoading}
-//           loading={confirmLoading}
-//         >
-//           {confirmLabel}
-//         </GLButton>
-//       )}
-//     </div>
-//   </div>
-// </div>
-// );

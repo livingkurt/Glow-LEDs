@@ -389,7 +389,7 @@ const PlaceOrderPage = props => {
 
     set_loading_payment(false);
     empty_cart();
-    // dimminish_stock();
+    dimminish_stock();
     promo_code_used();
     props.history.push("/secure/glow/orders?page=1?limit=10");
     sessionStorage.removeItem("shippingAddress");
@@ -421,7 +421,7 @@ const PlaceOrderPage = props => {
 
     set_loading_payment(false);
     empty_cart();
-    // dimminish_stock();
+    dimminish_stock();
     promo_code_used();
     props.history.push("/secure/glow/orders?page=1?limit=10");
     sessionStorage.removeItem("shippingAddress");
@@ -442,7 +442,7 @@ const PlaceOrderPage = props => {
         set_loading_payment(false);
         empty_cart();
         promo_code_used();
-        // dimminish_stock();
+        dimminish_stock();
         sessionStorage.removeItem("shippingAddress");
       } else if (error_pay) {
       }
