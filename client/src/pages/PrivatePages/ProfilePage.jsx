@@ -187,6 +187,7 @@ const ProfilePage = props => {
                 <label>
                   {promos &&
                     promos.filter(promo => promo.affiliate === affiliate._id) &&
+                    promos.filter(promo => promo.affiliate === affiliate._id)[1] &&
                     promos.filter(promo => promo.affiliate === affiliate._id)[1].promo_code.toUpperCase()}
                 </label>
               </div>
@@ -195,6 +196,7 @@ const ProfilePage = props => {
                 <label>
                   {promos &&
                     promos.filter(promo => promo.affiliate === affiliate._id) &&
+                    promos.filter(promo => promo.affiliate === affiliate._id)[0] &&
                     promos.filter(promo => promo.affiliate === affiliate._id)[0].promo_code.toUpperCase()}
                 </label>
               </div>
