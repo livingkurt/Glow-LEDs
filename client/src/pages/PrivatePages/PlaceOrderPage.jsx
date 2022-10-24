@@ -533,6 +533,12 @@ const PlaceOrderPage = props => {
         const product_cart_items = cartItems.filter(item => promo.included_products.includes(item.product));
         console.log({ product_cart_items });
         promo_included = category_cart_items.length > 0 || product_cart_items.length > 0;
+        if (promo_included) {
+          update_promo();
+        } else {
+          set_promo_code_validations("Promo Code Not Valid");
+          set_show_promo_code_input_box(true);
+        }
       }
 
       console.log({ promo_excluded });
@@ -540,51 +546,97 @@ const PlaceOrderPage = props => {
       if (show_message) {
         set_promo_code_validations("Can only use one promo code at a time");
       } else {
-        if (promo_included) {
-          if (promo.percentage_off) {
-            if (items_price === promo_excluded) {
-              set_promo_code_validations("All Items Excluded from Promo");
-              return;
-            }
-            setItemsPrice(items_price - (items_price - promo_excluded) * (promo.percentage_off / 100));
-            setTaxPrice(tax_rate * (items_price - (items_price - promo_excluded) * (promo.percentage_off / 100)));
-          } else if (promo.amount_off) {
-            if (promo.amount_off > items_price) {
-              setItemsPrice(0);
-              setTaxPrice(0);
-            } else {
-              setItemsPrice(items_price - promo.amount_off);
-              setTaxPrice(tax_rate * (items_price - promo.amount_off));
-            }
-            // setItemsPrice(items_price - (items_price - promo_excluded) - promo.amount_off);
-            // setTaxPrice(tax_rate * (items_price - (items_price - promo_excluded) - promo.amount_off));
-          }
-          if (promo.free_shipping) {
-            setShippingPrice(0);
-            set_free_shipping_message("Free");
-            set_show_message(`${promo.promo_code.toUpperCase()} Free Shipping`);
-          }
-          if (promo.percentage_off) {
-            set_show_message(`${promo.promo_code.toUpperCase()} ${promo.percentage_off}% Off`);
-          } else if (promo.amount_off) {
-            set_show_message(`${promo.promo_code.toUpperCase()} $${promo.amount_off} Off`);
-          }
-          // else  {
-          // 	set_show_message(`${promo.promo_code.toUpperCase()} $${previousShippingPrice.toFixed(2)} Off`);
-          // }
-          // set_show_message(
-          // 	`${promo.promo_code.toUpperCase()} ${promo.percentage_off > 0
-          // 		? `${promo.percentage_off}% Off`
-          // 		: `$${promo.amount_off} Off`}`
-          // );
-          set_show_promo_code_input_box(false);
-        } else {
-          set_promo_code_validations("Promo Code Not Valid");
-          set_show_promo_code_input_box(true);
+        if (!promo.include) {
+          update_promo(promo, promo_excluded);
         }
+        // // if (promo_included) {
+        //   if (promo.percentage_off) {
+        //     if (items_price === promo_excluded) {
+        //       set_promo_code_validations("All Items Excluded from Promo");
+        //       return;
+        //     }
+        //     setItemsPrice(items_price - (items_price - promo_excluded) * (promo.percentage_off / 100));
+        //     setTaxPrice(tax_rate * (items_price - (items_price - promo_excluded) * (promo.percentage_off / 100)));
+        //   } else if (promo.amount_off) {
+        //     if (promo.amount_off > items_price) {
+        //       setItemsPrice(0);
+        //       setTaxPrice(0);
+        //     } else {
+        //       setItemsPrice(items_price - promo.amount_off);
+        //       setTaxPrice(tax_rate * (items_price - promo.amount_off));
+        //     }
+        //     // setItemsPrice(items_price - (items_price - promo_excluded) - promo.amount_off);
+        //     // setTaxPrice(tax_rate * (items_price - (items_price - promo_excluded) - promo.amount_off));
+        //   }
+        //   if (promo.free_shipping) {
+        //     setShippingPrice(0);
+        //     set_free_shipping_message("Free");
+        //     set_show_message(`${promo.promo_code.toUpperCase()} Free Shipping`);
+        //   }
+        //   if (promo.percentage_off) {
+        //     set_show_message(`${promo.promo_code.toUpperCase()} ${promo.percentage_off}% Off`);
+        //   } else if (promo.amount_off) {
+        //     set_show_message(`${promo.promo_code.toUpperCase()} $${promo.amount_off} Off`);
+        //   }
+        //   // else  {
+        //   // 	set_show_message(`${promo.promo_code.toUpperCase()} $${previousShippingPrice.toFixed(2)} Off`);
+        //   // }
+        //   // set_show_message(
+        //   // 	`${promo.promo_code.toUpperCase()} ${promo.percentage_off > 0
+        //   // 		? `${promo.percentage_off}% Off`
+        //   // 		: `$${promo.amount_off} Off`}`
+        //   // );
+        //   set_show_promo_code_input_box(false);
+        // }
+        //  else {
+        //   set_promo_code_validations("Promo Code Not Valid");
+        //   set_show_promo_code_input_box(true);
       }
     }
   };
+
+  const update_promo = (promo, promo_excluded) => {
+    if (promo.percentage_off) {
+      if (items_price === promo_excluded) {
+        set_promo_code_validations("All Items Excluded from Promo");
+        return;
+      }
+      setItemsPrice(items_price - (items_price - promo_excluded) * (promo.percentage_off / 100));
+      setTaxPrice(tax_rate * (items_price - (items_price - promo_excluded) * (promo.percentage_off / 100)));
+    } else if (promo.amount_off) {
+      if (promo.amount_off > items_price) {
+        setItemsPrice(0);
+        setTaxPrice(0);
+      } else {
+        setItemsPrice(items_price - promo.amount_off);
+        setTaxPrice(tax_rate * (items_price - promo.amount_off));
+      }
+      // setItemsPrice(items_price - (items_price - promo_excluded) - promo.amount_off);
+      // setTaxPrice(tax_rate * (items_price - (items_price - promo_excluded) - promo.amount_off));
+    }
+    if (promo.free_shipping) {
+      setShippingPrice(0);
+      set_free_shipping_message("Free");
+      set_show_message(`${promo.promo_code.toUpperCase()} Free Shipping`);
+    }
+    if (promo.percentage_off) {
+      set_show_message(`${promo.promo_code.toUpperCase()} ${promo.percentage_off}% Off`);
+    } else if (promo.amount_off) {
+      set_show_message(`${promo.promo_code.toUpperCase()} $${promo.amount_off} Off`);
+    }
+    // else  {
+    // 	set_show_message(`${promo.promo_code.toUpperCase()} $${previousShippingPrice.toFixed(2)} Off`);
+    // }
+    // set_show_message(
+    // 	`${promo.promo_code.toUpperCase()} ${promo.percentage_off > 0
+    // 		? `${promo.percentage_off}% Off`
+    // 		: `$${promo.amount_off} Off`}`
+    // );
+    set_show_promo_code_input_box(false);
+  };
+  //  else {
+  //   set_promo_code_validations("Promo Code Not Valid");
+  //   set_show_promo_code_input_box(true);
 
   const remove_promo = () => {
     setItemsPrice(items_price);
