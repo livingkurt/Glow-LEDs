@@ -15,6 +15,7 @@ const GLCheckbox = ({ children, onChecked, value, ...otherProps }) => {
       ) : (
         <div className="row">
           <input
+            {...otherProps}
             type="checkbox"
             name="paid"
             id="paid"
