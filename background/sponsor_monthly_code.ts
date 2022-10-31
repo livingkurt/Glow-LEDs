@@ -286,18 +286,18 @@ const sponsor_monthly_code = async () => {
     const last_month = last_date.getMonth();
     if (day === "01") {
       console.log("Run");
-      await axios.get(`${domain()}/api/paychecks/pay/promoter/${year}/${months[last_month].toLowerCase()}`);
-      await axios.get(`${domain()}/api/paychecks/pay/sponsor/${year}/${months[last_month].toLowerCase()}`);
-      await axios.get(`${domain()}/api/paychecks/pay/team/${year}/${months[last_month].toLowerCase()}`);
-      await affiliate_revenue_upload("promoter", year, months[last_month].toLowerCase(), determine_promoter_sheet());
-      await affiliate_revenue_upload("sponsor", year, months[last_month].toLowerCase(), determine_sponsors_sheet());
-      await affiliate_revenue_upload("team", year, months[last_month].toLowerCase(), determine_teams_sheet());
-      await top_earner_upload(year, months[last_month].toLowerCase(), determine_top_earners_sheet());
-      await top_code_usage_upload(year, months[last_month].toLowerCase(), determine_top_uses_sheet());
+      // await axios.get(`${domain()}/api/paychecks/pay/promoter/${year}/${months[last_month].toLowerCase()}`);
+      // await axios.get(`${domain()}/api/paychecks/pay/sponsor/${year}/${months[last_month].toLowerCase()}`);
+      // await axios.get(`${domain()}/api/paychecks/pay/team/${year}/${months[last_month].toLowerCase()}`);
+      // await affiliate_revenue_upload("promoter", year, months[last_month].toLowerCase(), determine_promoter_sheet());
+      // await affiliate_revenue_upload("sponsor", year, months[last_month].toLowerCase(), determine_sponsors_sheet());
+      // await affiliate_revenue_upload("team", year, months[last_month].toLowerCase(), determine_teams_sheet());
+      // await top_earner_upload(year, months[last_month].toLowerCase(), determine_top_earners_sheet());
+      // await top_code_usage_upload(year, months[last_month].toLowerCase(), determine_top_uses_sheet());
+      // await axios.put(
+      //   `${domain()}/api/promos/update_discount/${year}${months[last_month].toLowerCase() ? "/" + months[last_month].toLowerCase() : ""}`
+      // );
       await axios.put(`${domain()}/api/promos/create_sponsor_codes`);
-      await axios.put(
-        `${domain()}/api/promos/update_discount/${year}${months[last_month].toLowerCase() ? "/" + months[last_month].toLowerCase() : ""}`
-      );
     } else {
       console.log("Don't Run");
     }
