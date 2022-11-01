@@ -33,7 +33,7 @@ const PlaceOrderPage = props => {
   const cart = useSelector(state => state.cart);
   const { cartItems, shipping, payment } = cart;
   const orderCreate = useSelector(state => state.orderCreate);
-  const { order, error: error_order } = orderCreate;
+  const { order, error: error_order, success: success_order } = orderCreate;
 
   const orderPay = useSelector(state => state.orderPay);
   const { success: successPay, error: error_pay } = orderPay;
@@ -359,8 +359,10 @@ const PlaceOrderPage = props => {
   };
   // const data = new Date()
   const today = new Date();
-  const create_order_without_paying = async () => {
+  const create_order_without_paying = async ({ isPaid }) => {
     // create an order
+
+    const order_paid = isPaid ? isPaid : paid ? paid : false;
     console.log({ user });
     dispatch(
       createOrder({
@@ -382,8 +384,8 @@ const PlaceOrderPage = props => {
         tip,
         promo_code,
         parcel: parcel ? parcel : null,
-        isPaid: paid ? paid : false,
-        paidAt: paid ? today : null
+        isPaid: order_paid,
+        paidAt: order_paid ? today : null
       })
     );
 
@@ -393,6 +395,34 @@ const PlaceOrderPage = props => {
     promo_code_used();
     props.history.push("/secure/glow/orders?page=1?limit=10");
     sessionStorage.removeItem("shippingAddress");
+  };
+
+  const create_no_payment_order = async ({ isPaid }) => {
+    set_loading_payment(true);
+    dispatch(
+      createOrder({
+        orderItems: cartItems,
+        shipping: {
+          ...shipping,
+          email: user.email,
+          shipment_id: shipment_id && shipment_id,
+          shipping_rate: shipping_rate && shipping_rate
+        },
+        payment,
+        itemsPrice,
+        shippingPrice,
+        taxPrice,
+        totalPrice,
+        user: user._id,
+        order_note,
+        production_note,
+        tip,
+        promo_code,
+        parcel: parcel ? parcel : null,
+        isPaid: isPaid ? isPaid : false,
+        paidAt: isPaid ? today : null
+      })
+    );
   };
 
   const create_order_without_user = async () => {
@@ -426,6 +456,24 @@ const PlaceOrderPage = props => {
     props.history.push("/secure/glow/orders?page=1?limit=10");
     sessionStorage.removeItem("shippingAddress");
   };
+
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (success_order && order) {
+        setTimeout(() => {
+          props.history.push("/pages/complete/order/" + order._id);
+          set_loading_payment(false);
+          empty_cart();
+          promo_code_used();
+          dimminish_stock();
+          sessionStorage.removeItem("shippingAddress");
+        }, 2000);
+      } else if (error_order) {
+      }
+    }
+    return () => (clean = false);
+  }, [success_order]);
 
   const empty_cart = () => {
     console.log(cartItems);
@@ -600,6 +648,9 @@ const PlaceOrderPage = props => {
     setItemsPrice(items_price);
     setTaxPrice(tax_rate * items_price);
     setShippingPrice(shippingPrice);
+    setTotalPrice(
+      tip === 0 || tip === "" || isNaN(tip) ? itemsPrice + shippingPrice + taxPrice : itemsPrice + shippingPrice + taxPrice + parseInt(tip)
+    );
     set_free_shipping_message("");
     set_show_message("");
     if (shipping) {
@@ -824,7 +875,9 @@ const PlaceOrderPage = props => {
               set_user={set_user}
               user={user}
               create_order_without_paying={create_order_without_paying}
+              create_no_payment_order={create_no_payment_order}
               create_order_without_user={create_order_without_user}
+              totalPrice={totalPrice}
             />
           </div>
         </div>

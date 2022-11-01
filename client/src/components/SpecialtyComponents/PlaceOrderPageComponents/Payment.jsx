@@ -38,7 +38,9 @@ export function Payment({
   user,
   cartItems,
   create_order_without_paying,
-  create_order_without_user
+  create_no_payment_order,
+  create_order_without_user,
+  totalPrice
 }) {
   const { width } = useWindowDimensions();
   return (
@@ -171,8 +173,24 @@ export function Payment({
               </li>
             )}
             <li>
-              {!loading && !hide_pay_button && cartItems.length > 0 && (
+              {!loading && !hide_pay_button && cartItems.length > 0 && totalPrice ? (
                 <Stripe pay_order={placeOrderHandler} loading_payment={loading_payment} set_loading_payment={set_loading_payment} />
+              ) : (
+                <div></div>
+              )}
+              {(!totalPrice || totalPrice === 0) && (
+                <>
+                  <p htmlFor="password">Payment is not necessary at this time</p>
+                  <GLButton
+                    onClick={() => {
+                      create_no_payment_order({ isPaid: true });
+                    }}
+                    variant="primary"
+                    className="w-100per bob mb-12px"
+                  >
+                    Complete Order
+                  </GLButton>
+                </>
               )}
             </li>
             {userInfo && userInfo.isAdmin && (
