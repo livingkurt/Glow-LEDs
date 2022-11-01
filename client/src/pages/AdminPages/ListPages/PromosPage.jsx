@@ -7,6 +7,7 @@ import { Helmet } from "react-helmet";
 import { Search, Sort } from "../../../components/SpecialtyComponents";
 import { format_date } from "../../../utils/helper_functions";
 import { GLButton } from "../../../components/GlowLEDsComponents";
+import { API_Promos } from "../../../utils";
 
 const PromosPage = props => {
   const [search, set_search] = useState("");
@@ -138,6 +139,11 @@ const PromosPage = props => {
     dispatch(listPromos({}));
   };
 
+  const create_sponsor_codes = async () => {
+    await API_Promos.create_sponsor_codes();
+    dispatch(listPromos({}));
+  };
+
   return (
     <div className="main_container p-20px">
       <Helmet>
@@ -167,6 +173,9 @@ const PromosPage = props => {
             Create Promo
           </GLButton>
         </Link>
+        <GLButton variant="primary" className="h-40px" onClick={create_sponsor_codes}>
+          Create Sponsor Codes
+        </GLButton>
       </div>
 
       <div className="jc-c">

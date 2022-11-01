@@ -181,9 +181,12 @@ const PaychecksPage = props => {
     set_loading_paychecks(false);
   };
 
-  // const pay_employee = async ({ employee_id, amount }) => {
+  // const pay_employee = async () => {
   //   await API_Paychecks.pay_employee({ employee_id, amount });
   // };
+  const create_sponsor_codes = async () => {
+    await API_Promos.create_sponsor_codes();
+  };
 
   return (
     <div className="main_container p-20px">
@@ -288,6 +291,9 @@ const PaychecksPage = props => {
         </div>
         <GLButton variant="primary" className="h-40px" onClick={create_affiliate_paychecks}>
           Create Affiliate Paychecks
+        </GLButton>
+        <GLButton variant="primary" className="h-40px" onClick={create_sponsor_codes}>
+          Create Sponsor Codes
         </GLButton>
       </div>
 
