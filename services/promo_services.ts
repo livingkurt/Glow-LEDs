@@ -14,7 +14,7 @@ export default {
         : {};
       const filter = determine_filter(query, search);
       const sort_query = query.sort && query.sort.toLowerCase();
-      console.log({ sort_query });
+      console.log({ filter });
       let sort: any = { _id: -1 };
       if (sort_query === "admin only") {
         sort = { admin_only: -1 };

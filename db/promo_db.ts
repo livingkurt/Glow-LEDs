@@ -3,7 +3,14 @@ import Promo from "../models/promo";
 export default {
   findAll_promos_db: async (filter: any, sort: any) => {
     try {
-      return await Promo.find(filter).sort(sort).populate("sponsor").populate("user");
+      return await Promo.find(filter)
+        .sort(sort)
+        .populate("affiliate")
+        .populate("user")
+        .populate("excluded_categories")
+        .populate("included_categories")
+        .populate("excluded_products")
+        .populate("included_products");
     } catch (error) {
       console.log({ findAll_promos_db_error: error });
       throw new Error(error.message);
@@ -11,7 +18,13 @@ export default {
   },
   findById_promos_db: async (id: string) => {
     try {
-      return await Promo.findOne({ _id: id }).populate("sponsor").populate("user");
+      return await Promo.findOne({ _id: id })
+        .populate("affiliate")
+        .populate("user")
+        .populate("excluded_categories")
+        .populate("included_categories")
+        .populate("excluded_products")
+        .populate("included_products");
     } catch (error) {
       console.log({ findById_promos_db_error: error });
       throw new Error(error.message);
@@ -20,7 +33,13 @@ export default {
   findByCode_promos_db: async (promo_code: string) => {
     console.log({ promo_code });
     try {
-      return await Promo.findOne({ promo_code: promo_code }).populate("sponsor").populate("user");
+      return await Promo.findOne({ promo_code: promo_code })
+        .populate("affiliate")
+        .populate("user")
+        .populate("excluded_categories")
+        .populate("included_categories")
+        .populate("excluded_products")
+        .populate("included_products");
     } catch (error) {
       console.log({ findById_promos_db_error: error });
       throw new Error(error.message);

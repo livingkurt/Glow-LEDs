@@ -41,7 +41,7 @@ const ProfilePage = props => {
         console.log({ affiliate: userInfo.affiliate.pathname });
         dispatch(detailsAffiliate(userInfo.affiliate.pathname));
         dispatch(listMyPaychecks(userInfo.affiliate._id));
-        dispatch(listPromos());
+        dispatch(listPromos({ affiliate: userInfo.affiliate._id }));
       }
     }
     return () => (clean = false);
@@ -184,21 +184,11 @@ const ProfilePage = props => {
               </div>
               <div className="mb-20px">
                 <h3>Monthly Sponsor Code ($25 off)</h3>
-                <label>
-                  {promos &&
-                    promos.filter(promo => promo.affiliate === affiliate._id) &&
-                    promos.filter(promo => promo.affiliate === affiliate._id)[1] &&
-                    promos.filter(promo => promo.affiliate === affiliate._id)[1].promo_code.toUpperCase()}
-                </label>
+                <label>{promos && promos[0] && promos[0].promo_code.toUpperCase()}</label>
               </div>
               <div className="mb-20px">
                 <h3>Refresh Pack Sponsor Code</h3>
-                <label>
-                  {promos &&
-                    promos.filter(promo => promo.affiliate === affiliate._id) &&
-                    promos.filter(promo => promo.affiliate === affiliate._id)[0] &&
-                    promos.filter(promo => promo.affiliate === affiliate._id)[0].promo_code.toUpperCase()}
-                </label>
+                <label>{promos && promos[1] && promos[1].promo_code.toUpperCase()}</label>
               </div>
               <div className="mb-20px">
                 <h3>Code Usage</h3>

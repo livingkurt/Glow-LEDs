@@ -61,11 +61,12 @@ const DropdownDisplay = ({ item_list, list_items, set_items, list_name, placemen
               <option key={1} defaultValue="">
                 ---Choose {list_name}---
               </option>
-              {item_list.map((item, index) => (
-                <option key={index} value={JSON.stringify(item)}>
-                  {display_key === "first_name" ? `${item[display_key]} ${item.last_name}` : item[display_key]}
-                </option>
-              ))}
+              {item_list &&
+                item_list.map((item, index) => (
+                  <option key={index} value={JSON.stringify(item)}>
+                    {display_key === "first_name" ? `${item[display_key]} ${item.last_name}` : item[display_key]}
+                  </option>
+                ))}
             </select>
             <span className="custom-arrow" />
           </div>

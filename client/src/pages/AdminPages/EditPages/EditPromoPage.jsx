@@ -2,10 +2,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { savePromo, detailsPromo } from "../../../actions/promoActions";
 import { useHistory } from "react-router-dom";
-import {
-  DropdownDisplay,
-  Loading,
-} from "../../../components/UtilityComponents";
+import { DropdownDisplay, Loading } from "../../../components/UtilityComponents";
 import { Helmet } from "react-helmet";
 import { listUsers } from "../../../actions/userActions";
 import { listAffiliates } from "../../../actions/affiliateActions";
@@ -15,31 +12,31 @@ import { format_date, unformat_date } from "../../../utils/helper_functions";
 import { GLButton } from "../../../components/GlowLEDsComponents";
 
 const EditPromoPage = props => {
-  const [ id, set_id ] = useState("");
-  const [ affiliate, set_affiliate ] = useState("");
-  const [ user, set_user ] = useState("");
-  const [ promo_code, set_promo_code ] = useState("");
-  const [ admin_only, set_admin_only ] = useState("");
-  const [ affiliate_only, set_affiliate_only ] = useState("");
-  const [ sponsor_only, set_sponsor_only ] = useState("");
-  const [ single_use, set_single_use ] = useState("");
-  const [ used_once, set_used_once ] = useState("");
-  const [ excluded_categories, set_excluded_categories ] = useState([]);
-  const [ excluded_products, set_excluded_products ] = useState([]);
-  const [ included_categories, set_included_categories ] = useState([]);
-  const [ included_products, set_included_products ] = useState([]);
-  const [ exclude, set_exclude ] = useState(false);
-  const [ include, set_include ] = useState(false);
-  const [ percentage_off, set_percentage_off ] = useState(0);
-  const [ amount_off, set_amount_off ] = useState(0);
-  const [ minimum_total, set_minimum_total ] = useState(0);
-  const [ free_shipping, set_free_shipping ] = useState(false);
-  const [ time_limit, set_time_limit ] = useState(false);
-  const [ active, set_active ] = useState("");
-  const [ start_date, set_start_date ] = useState("");
-  const [ end_date, set_end_date ] = useState("");
-  const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
-  const [ categories, set_categories ] = useState([]);
+  const [id, set_id] = useState("");
+  const [affiliate, set_affiliate] = useState("");
+  const [user, set_user] = useState("");
+  const [promo_code, set_promo_code] = useState("");
+  const [admin_only, set_admin_only] = useState("");
+  const [affiliate_only, set_affiliate_only] = useState("");
+  const [sponsor_only, set_sponsor_only] = useState("");
+  const [single_use, set_single_use] = useState("");
+  const [used_once, set_used_once] = useState("");
+  const [excluded_categories, set_excluded_categories] = useState([]);
+  const [excluded_products, set_excluded_products] = useState([]);
+  const [included_categories, set_included_categories] = useState([]);
+  const [included_products, set_included_products] = useState([]);
+  const [exclude, set_exclude] = useState(false);
+  const [include, set_include] = useState(false);
+  const [percentage_off, set_percentage_off] = useState(0);
+  const [amount_off, set_amount_off] = useState(0);
+  const [minimum_total, set_minimum_total] = useState(0);
+  const [free_shipping, set_free_shipping] = useState(false);
+  const [time_limit, set_time_limit] = useState(false);
+  const [active, set_active] = useState("");
+  const [start_date, set_start_date] = useState("");
+  const [end_date, set_end_date] = useState("");
+  const [loading_checkboxes, set_loading_checkboxes] = useState(true);
+  const [categories, set_categories] = useState([]);
 
   const history = useHistory();
 
@@ -57,53 +54,47 @@ const EditPromoPage = props => {
 
   const dispatch = useDispatch();
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (props.match.params.id) {
-          console.log("Is ID");
-          dispatch(detailsPromo(props.match.params.id));
-          dispatch(detailsPromo(props.match.params.id));
-        } else {
-          dispatch(detailsPromo(""));
-        }
-        dispatch(listProducts({ option: false, hidden: false }));
-        get_categories();
-        dispatch(listUsers({}));
-        dispatch(listAffiliates({}));
-        set_state();
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (props.match.params.id) {
+        console.log("Is ID");
+        dispatch(detailsPromo(props.match.params.id));
+        dispatch(detailsPromo(props.match.params.id));
+      } else {
+        dispatch(detailsPromo(""));
       }
-      return () => (clean = false);
-    },
-    [ dispatch, props.match.params.id ]
-  );
+      dispatch(listProducts({ option: false, hidden: false }));
+      get_categories();
+      dispatch(listUsers({}));
+      dispatch(listAffiliates({}));
+      set_state();
+    }
+    return () => (clean = false);
+  }, [dispatch, props.match.params.id]);
 
   const get_categories = async () => {
     const { data } = await API_Products.findAll_products_a({
       limit: 0,
-      page: 1,
+      page: 1
     });
     console.log(data);
     set_categories(data);
   };
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (promo) {
-          console.log("Set");
-          set_state();
-        } else {
-          console.log("UnSet");
-          unset_state();
-        }
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (promo) {
+        console.log("Set");
+        set_state();
+      } else {
+        console.log("UnSet");
+        unset_state();
       }
-      return () => (clean = false);
-    },
-    [ promo ]
-  );
+    }
+    return () => (clean = false);
+  }, [promo]);
 
   setTimeout(() => {
     set_loading_checkboxes(false);
@@ -191,7 +182,7 @@ const EditPromoPage = props => {
         time_limit,
         start_date: unformat_date(start_date),
         end_date: unformat_date(end_date),
-        active,
+        active
       })
     );
     e.target.reset();
@@ -201,9 +192,7 @@ const EditPromoPage = props => {
 
   return (
     <div className="main_container p-20px">
-      <h1 style={{ textAlign: "center" }}>
-        {props.match.params.id ? "Edit Promo" : "Create Promo"}
-      </h1>
+      <h1 style={{ textAlign: "center" }}>{props.match.params.id ? "Edit Promo" : "Create Promo"}</h1>
 
       <div className="form">
         <form onSubmit={submitHandler} style={{ width: "100%" }}>
@@ -214,10 +203,7 @@ const EditPromoPage = props => {
                   <title>Edit Promo | Glow LEDs</title>
                 </Helmet>
 
-                <ul
-                  className="edit-form-container"
-                  style={{ maxWidth: "48rem", marginBottom: "20px" }}
-                >
+                <ul className="edit-form-container" style={{ maxWidth: "48rem", marginBottom: "20px" }}>
                   <div className="row wrap">
                     <div className=" m-10px">
                       <li>
@@ -233,16 +219,13 @@ const EditPromoPage = props => {
                       {affiliates && (
                         <div className="ai-c h-25px mv-10px mb-30px jc-c">
                           <div className="custom-select w-100per">
-                            <select
-                              className="qty_select_dropdown w-100per"
-                              onChange={e => set_affiliate(e.target.value)}
-                            >
+                            <select className="qty_select_dropdown w-100per" onChange={e => set_affiliate(e.target.value)}>
                               <option key={1} defaultValue={""}>
                                 ---Choose Affiliate---
                               </option>
                               {affiliates.map((affiliate, index) => (
                                 <option key={index} value={affiliate._id}>
-                                  {affiliate.facebook_name}
+                                  {affiliate.artist_name}
                                 </option>
                               ))}
                             </select>
@@ -252,22 +235,13 @@ const EditPromoPage = props => {
                       )}
                       <li>
                         <label htmlFor="user">For User</label>
-                        <input
-                          type="text"
-                          name="user"
-                          value={user}
-                          id="user"
-                          onChange={e => set_user(e.target.value)}
-                        />
+                        <input type="text" name="user" value={user} id="user" onChange={e => set_user(e.target.value)} />
                       </li>
 
                       {users && (
                         <div className="ai-c h-25px mv-10px mb-30px jc-c">
                           <div className="custom-select w-100per">
-                            <select
-                              className="qty_select_dropdown w-100per"
-                              onChange={e => set_user(e.target.value)}
-                            >
+                            <select className="qty_select_dropdown w-100per" onChange={e => set_user(e.target.value)}>
                               <option key={1} defaultValue={""}>
                                 ---Choose User---
                               </option>
@@ -442,8 +416,10 @@ const EditPromoPage = props => {
                             display_key={"name"}
                             item_list={
                               categories &&
-                              categories.map(category => ({
-                                name: category,
+                              categories &&
+                              categories.length > 0 &&
+                              categories?.map(category => ({
+                                name: category
                               }))
                             }
                             list_items={excluded_categories}
@@ -486,8 +462,9 @@ const EditPromoPage = props => {
                             display_key={"name"}
                             item_list={
                               categories &&
+                              categories.length > 0 &&
                               categories.map(category => ({
-                                name: category,
+                                name: category
                               }))
                             }
                             list_items={included_categories}
@@ -529,9 +506,7 @@ const EditPromoPage = props => {
                         />
                       </li>
                       <li>
-                        <label htmlFor="minimum_total">
-                          Order Total Minimum
-                        </label>
+                        <label htmlFor="minimum_total">Order Total Minimum</label>
                         <input
                           type="text"
                           name="minimum_total"
@@ -580,10 +555,7 @@ const EditPromoPage = props => {
                     </GLButton>
                   </li>
                   <li>
-                    <GLButton
-                      variant="secondary"
-                      onClick={() => history.goBack()}
-                    >
+                    <GLButton variant="secondary" onClick={() => history.goBack()}>
                       Back to Promos
                     </GLButton>
                   </li>
