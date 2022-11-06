@@ -14,7 +14,7 @@ import { listPromos } from "../../actions/promoActions";
 const ProfilePage = props => {
   const userLogin = useSelector(state => state.userLogin);
   const { userInfo } = userLogin;
-  // console.log({ userInfo });
+  //
 
   const affiliateDetails = useSelector(state => state.affiliateDetails);
   const { affiliate, loading, error } = affiliateDetails;
@@ -24,9 +24,8 @@ const ProfilePage = props => {
 
   const promoList = useSelector(state => state.promoList);
   const { loading: loading_promoes, promos, error: error_promos } = promoList;
-  console.log({ promos });
 
-  // console.log({ paychecks });
+  //
 
   const [number_of_uses, set_number_of_uses] = useState(0);
   const [revenue, set_revenue] = useState(0);
@@ -38,7 +37,6 @@ const ProfilePage = props => {
     let clean = true;
     if (clean) {
       if (userInfo && userInfo.is_affiliated && userInfo.affiliate) {
-        console.log({ affiliate: userInfo.affiliate.pathname });
         dispatch(detailsAffiliate(userInfo.affiliate.pathname));
         dispatch(listMyPaychecks(userInfo.affiliate._id));
         dispatch(listPromos({ affiliate: userInfo.affiliate._id }));
@@ -57,14 +55,14 @@ const ProfilePage = props => {
     return () => (clean = false);
   }, [affiliate]);
 
-  // console.log({ affiliate });
+  //
 
   const get_code_usage = async public_code => {
-    // console.log({ pathname: affiliate.pathname });
+    //
     const {
       data: { number_of_uses, revenue }
     } = await API_Promos.get_code_usage(public_code.promo_code);
-    console.log({ number_of_uses, revenue });
+
     set_number_of_uses(number_of_uses);
     set_revenue(revenue);
   };

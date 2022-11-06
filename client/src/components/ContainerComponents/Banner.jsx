@@ -6,7 +6,7 @@ import { GLButton } from "../GlowLEDsComponents";
 
 const Banner = props => {
   const { height, width } = useWindowDimensions();
-  const [ content, set_content ] = useState([]);
+  const [content, set_content] = useState([]);
 
   useEffect(() => {
     let clean = true;
@@ -18,7 +18,7 @@ const Banner = props => {
 
   const get_display_content = async () => {
     const { data } = await API_Content.get_display_content();
-    console.log({ data });
+
     if (data) {
       set_content(data[0]);
     }
@@ -27,15 +27,11 @@ const Banner = props => {
   return (
     <div className="banner">
       <div className="max-w-1500px m-auto jc-b">
-        {content &&
-        content.banner && (
+        {content && content.banner && (
           <div className={`row ${width < 600 ? "m-auto" : "ml-10px"}`}>
-            {content.banner.button &&
-            content.banner.link && (
+            {content.banner.button && content.banner.link && (
               <Link to={content.banner.link && content.banner.link}>
-                <GLButton className="banner-button">
-                  {content.banner.label}
-                </GLButton>
+                <GLButton className="banner-button">{content.banner.label}</GLButton>
               </Link>
             )}
           </div>
@@ -54,22 +50,12 @@ const Banner = props => {
               </a>
             </div>
             <div className="ml-10px">
-              <a
-                href="https://www.instagram.com/glow_leds/"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Instagram"
-              >
+              <a href="https://www.instagram.com/glow_leds/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
                 <i className="fab fa-instagram zoom" />
               </a>
             </div>
             <div className="ml-10px">
-              <a
-                href="https://www.tiktok.com/@glow_leds?lang=en"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="TikTok"
-              >
+              <a href="https://www.tiktok.com/@glow_leds?lang=en" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
                 <i className="fab fa-tiktok zoom" />
               </a>
             </div>
@@ -84,22 +70,12 @@ const Banner = props => {
               </a>
             </div>
             <div className="">
-              <a
-                href="https://soundcloud.com/ntre/tracks"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Twitter"
-              >
+              <a href="https://soundcloud.com/ntre/tracks" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
                 <i className="fab fa-soundcloud" />
               </a>
             </div>
             <div className="mh-10px mr-10px">
-              <a
-                href="https://twitter.com/glow_leds"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Soundcloud"
-              >
+              <a href="https://twitter.com/glow_leds" target="_blank" rel="noopener noreferrer" aria-label="Soundcloud">
                 <i className="fab fa-twitter zoom" />
               </a>
             </div>

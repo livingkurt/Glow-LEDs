@@ -228,7 +228,7 @@ const ContactPage = props => {
           <span className="custom-arrow" />
         </div>
         <label className="validation_text">{reason_for_contact_validations}</label>
-        {/* {console.log({ reason_for_contact })} */}
+        {/* {
         {["order_issues", "returns", "technical_support"].includes(reason_for_contact) && (
           <div className="100per">
             <label>Order Number</label>

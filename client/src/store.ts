@@ -7,28 +7,12 @@ import {
   productDeleteReducer,
   productImagesReducer,
   productReviewSaveReducer,
-  productReviewDeleteReducer,
+  productReviewDeleteReducer
 } from "./reducers/productReducers";
-import {
-  expenseListReducer,
-  expenseDetailsReducer,
-  expenseSaveReducer,
-  expenseDeleteReducer,
-} from "./reducers/expenseReducers";
-import {
-  featureListReducer,
-  featureDetailsReducer,
-  featureSaveReducer,
-  featureDeleteReducer,
-} from "./reducers/featureReducers";
+import { expenseListReducer, expenseDetailsReducer, expenseSaveReducer, expenseDeleteReducer } from "./reducers/expenseReducers";
+import { featureListReducer, featureDetailsReducer, featureSaveReducer, featureDeleteReducer } from "./reducers/featureReducers";
 
-import {
-  cartDeleteReducer,
-  cartDetailsReducer,
-  cartListReducer,
-  cartReducer,
-  cartSaveReducer,
-} from "./reducers/cartReducers";
+import { cartDeleteReducer, cartDetailsReducer, cartListReducer, cartReducer, cartSaveReducer } from "./reducers/cartReducers";
 import {
   userLoginReducer,
   userRegisterReducer,
@@ -40,7 +24,7 @@ import {
   userDeleteReducer,
   userListReducer,
   userDetailsReducer,
-  userUpdateUserReducer,
+  userUpdateUserReducer
   // errorReducer
 } from "./reducers/userReducers";
 import {
@@ -51,93 +35,38 @@ import {
   orderListReducer,
   orderDeleteReducer,
   orderRefundReducer,
-  orderUpdateReducer,
+  orderUpdateReducer
 } from "./reducers/orderReducers";
-import {
-  promoDeleteReducer,
-  promoDetailsReducer,
-  promoListReducer,
-  promoSaveReducer,
-} from "./reducers/promoReducers";
-import {
-  affiliateDeleteReducer,
-  affiliateDetailsReducer,
-  affiliateListReducer,
-  affiliateSaveReducer,
-} from "./reducers/affiliateReducers";
-import {
-  teamDeleteReducer,
-  teamDetailsReducer,
-  teamListReducer,
-  teamSaveReducer,
-} from "./reducers/teamReducers";
-import {
-  chipDeleteReducer,
-  chipDetailsReducer,
-  chipListReducer,
-  chipSaveReducer,
-} from "./reducers/chipReducers";
-import {
-  contentDeleteReducer,
-  contentDetailsReducer,
-  contentListReducer,
-  contentSaveReducer,
-} from "./reducers/contentReducers";
-import {
-  emailDeleteReducer,
-  emailDetailsReducer,
-  emailListReducer,
-  emailSaveReducer,
-} from "./reducers/emailReducers";
+import { promoDeleteReducer, promoDetailsReducer, promoListReducer, promoSaveReducer } from "./reducers/promoReducers";
+import { affiliateDeleteReducer, affiliateDetailsReducer, affiliateListReducer, affiliateSaveReducer } from "./reducers/affiliateReducers";
+import { teamDeleteReducer, teamDetailsReducer, teamListReducer, teamSaveReducer } from "./reducers/teamReducers";
+import { chipDeleteReducer, chipDetailsReducer, chipListReducer, chipSaveReducer } from "./reducers/chipReducers";
+import { contentDeleteReducer, contentDetailsReducer, contentListReducer, contentSaveReducer } from "./reducers/contentReducers";
+import { emailDeleteReducer, emailDetailsReducer, emailListReducer, emailSaveReducer } from "./reducers/emailReducers";
 
 import {
   paycheckDeleteReducer,
   paycheckDetailsReducer,
   paycheckListReducer,
   paycheckSaveReducer,
-  myPaycheckListReducer,
+  myPaycheckListReducer
 } from "./reducers/paycheckReducers";
 import {
   settingDeleteReducer,
   settingDetailsReducer,
   settingListReducer,
   settingSaveReducer,
-  showHideSearchBarReducer,
+  showHideSearchBarReducer
 } from "./reducers/settingReducers";
-import {
-  categoryDeleteReducer,
-  categoryDetailsReducer,
-  categoryListReducer,
-  categorySaveReducer,
-} from "./reducers/categoryReducers";
-import {
-  parcelDeleteReducer,
-  parcelDetailsReducer,
-  parcelListReducer,
-  parcelSaveReducer,
-} from "./reducers/parcelReducers";
-import {
-  paletteDeleteReducer,
-  paletteDetailsReducer,
-  paletteListReducer,
-  paletteSaveReducer,
-} from "./reducers/paletteReducers";
-import {
-  filamentDeleteReducer,
-  filamentDetailsReducer,
-  filamentListReducer,
-  filamentSaveReducer,
-} from "./reducers/filamentReducers";
-import {
-  surveyDeleteReducer,
-  surveyDetailsReducer,
-  surveyListReducer,
-  surveySaveReducer,
-} from "./reducers/surveyReducers";
+import { categoryDeleteReducer, categoryDetailsReducer, categoryListReducer, categorySaveReducer } from "./reducers/categoryReducers";
+import { parcelDeleteReducer, parcelDetailsReducer, parcelListReducer, parcelSaveReducer } from "./reducers/parcelReducers";
+import { paletteDeleteReducer, paletteDetailsReducer, paletteListReducer, paletteSaveReducer } from "./reducers/paletteReducers";
+import { filamentDeleteReducer, filamentDetailsReducer, filamentListReducer, filamentSaveReducer } from "./reducers/filamentReducers";
+import { surveyDeleteReducer, surveyDetailsReducer, surveyListReducer, surveySaveReducer } from "./reducers/surveyReducers";
 
 let cartItems: any;
 const cart_string: any = localStorage.getItem("cartItems");
-// console.log({ cart_string });
+//
 if (cart_string) {
   cartItems = JSON.parse(cart_string);
 } else {
@@ -146,7 +75,7 @@ if (cart_string) {
 
 let shippingAddress: any;
 const shipping_string: any = sessionStorage.getItem("shippingAddress");
-// console.log({ shipping_string });
+//
 if (shipping_string) {
   shippingAddress = JSON.parse(shipping_string);
 } else {
@@ -178,7 +107,7 @@ if (shipping_string) {
 const initialState: object = {
   cart: { cartItems, shipping: shippingAddress, payment: {} },
   userLogin: { userInfo: {} },
-  showHideSearchBar: { show: true },
+  showHideSearchBar: { show: true }
 };
 const reducer = combineReducers({
   productList: productListReducer,
@@ -274,7 +203,7 @@ const reducer = combineReducers({
   filamentList: filamentListReducer,
   filamentDetails: filamentDetailsReducer,
   filamentSave: filamentSaveReducer,
-  filamentDelete: filamentDeleteReducer,
+  filamentDelete: filamentDeleteReducer
 });
 
 declare global {
@@ -284,9 +213,5 @@ declare global {
 }
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = createStore(
-  reducer,
-  initialState,
-  composeEnhancer(applyMiddleware(thunk))
-);
+const store = createStore(reducer, initialState, composeEnhancer(applyMiddleware(thunk)));
 export default store;

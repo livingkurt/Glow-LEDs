@@ -1,20 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  listOrders,
-  update_order,
-  update_payment,
-} from "../../../actions/orderActions";
+import { listOrders, update_order, update_payment } from "../../../actions/orderActions";
 import { Loading, Notification } from "../../../components/UtilityComponents";
 import { Helmet } from "react-helmet";
-import {
-  OrderListItem,
-  OrderSmallScreen,
-  Search,
-  Sort,
-  Pagination,
-} from "../../../components/SpecialtyComponents";
+import { OrderListItem, OrderSmallScreen, Search, Sort, Pagination } from "../../../components/SpecialtyComponents";
 import { API_Emails, API_Orders } from "../../../utils";
 import { getUrlParameter, toCapitalize } from "../../../utils/helper_functions";
 import { check_authentication } from "../../../utils/react_helper_functions";
@@ -23,68 +13,52 @@ import { colors, determine_color } from "../../../utils/helpers/order_helpers";
 import { GLButton } from "../../../components/GlowLEDsComponents";
 
 const OrdersPage = props => {
-  const [ search, set_search ] = useState("");
-  const [ sort, setSortOrder ] = useState("");
-  const [ payment_method, set_payment_method ] = useState("");
-  const [ page, set_page ] = useState(1);
-  const [ limit, set_limit ] = useState(10);
-  const [ loading_email, set_loading_email ] = useState("");
+  const [search, set_search] = useState("");
+  const [sort, setSortOrder] = useState("");
+  const [payment_method, set_payment_method] = useState("");
+  const [page, set_page] = useState(1);
+  const [limit, set_limit] = useState(10);
+  const [loading_email, set_loading_email] = useState("");
 
-  const category = props.match.params.category
-    ? props.match.params.category
-    : "";
+  const category = props.match.params.category ? props.match.params.category : "";
   const orderList = useSelector(state => state.orderList);
-  const {
-    loading,
-    orders,
-    totalPages,
-    message,
-    currentPage,
-    error,
-  } = orderList;
+  const { loading, orders, totalPages, message, currentPage, error } = orderList;
 
   const dispatch = useDispatch();
 
-  const [ order_state, set_order_state ] = useState({});
+  const [order_state, set_order_state] = useState({});
 
   const query = getUrlParameter(props.location);
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (query.page) {
-          console.log({ page: query.page });
-          set_page(query.page);
-          set_limit(query.limit);
-          dispatch(
-            listOrders({
-              category,
-              search,
-              sort,
-              page: query.page,
-              limit: query.limit,
-            })
-          );
-        }
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (query.page) {
+        set_page(query.page);
+        set_limit(query.limit);
+        dispatch(
+          listOrders({
+            category,
+            search,
+            sort,
+            page: query.page,
+            limit: query.limit
+          })
+        );
       }
-      return () => (clean = false);
-    },
-    [ query.page ]
-  );
+    }
+    return () => (clean = false);
+  }, [query.page]);
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (currentPage) {
-          set_page(currentPage);
-        }
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (currentPage) {
+        set_page(currentPage);
       }
-      return () => (clean = false);
-    },
-    [ currentPage ]
-  );
+    }
+    return () => (clean = false);
+  }, [currentPage]);
 
   const submitHandler = e => {
     e.preventDefault();
@@ -93,80 +67,52 @@ const OrdersPage = props => {
 
   const sortHandler = e => {
     setSortOrder(e.target.value);
-    dispatch(
-      listOrders({ category, search, sort: e.target.value, page, limit })
-    );
+    dispatch(listOrders({ category, search, sort: e.target.value, page, limit }));
   };
 
-  const sort_options = [
-    "Date",
-    "Paid",
-    "Manufactured",
-    "Packaged",
-    "Shipped",
-    "Delivered",
-    "Newest",
-    "Lowest",
-    "Highest",
-  ];
+  const sort_options = ["Date", "Paid", "Manufactured", "Packaged", "Shipped", "Delivered", "Newest", "Lowest", "Highest"];
 
   const send_paid_email = async order_id => {
     const { data: order } = await API_Orders.findById_orders_a(order_id);
-    await API_Emails.send_order_email(
-      order,
-      "Thank you for your Glow LEDs Order!",
-      order.shipping.email
-    );
-    await API_Emails.send_order_email(
-      order,
-      "New Order Created by " + order.shipping.first_name,
-      process.env.REACT_APP_INFO_EMAIL
-    );
+    await API_Emails.send_order_email(order, "Thank you for your Glow LEDs Order!", order.shipping.email);
+    await API_Emails.send_order_email(order, "New Order Created by " + order.shipping.first_name, process.env.REACT_APP_INFO_EMAIL);
   };
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (error) {
-          check_authentication();
-          dispatch(listOrders({ category, search, sort, page, limit }));
-        }
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (error) {
+        check_authentication();
+        dispatch(listOrders({ category, search, sort, page, limit }));
       }
-      return () => (clean = false);
-    },
-    [ error ]
-  );
+    }
+    return () => (clean = false);
+  }, [error]);
 
   const history = useHistory();
 
   const update_page = (e, new_page) => {
-    console.log({ e, new_page });
     e.preventDefault();
     const page = parseInt(new_page);
     history.push({
-      search: "?page=" + page + "?limit=" + limit,
+      search: "?page=" + page + "?limit=" + limit
     });
 
-    console.log(new_page);
     dispatch(listOrders({ category, search, sort, page: new_page, limit }));
   };
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        is_shipped();
-      }
-      return () => (clean = false);
-    },
-    [ orders ]
-  );
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      is_shipped();
+    }
+    return () => (clean = false);
+  }, [orders]);
 
-  const [ not_shipped, set_not_shipped ] = useState([]);
+  const [not_shipped, set_not_shipped] = useState([]);
 
   const is_shipped = async () => {
     const { data: orders } = await API_Orders.mark_as_shipped();
-    console.log({ orders });
+
     set_not_shipped(orders);
   };
 
@@ -199,20 +145,10 @@ const OrdersPage = props => {
 
   const send_email = async (order, status, message_to_user) => {
     set_loading_email(true);
-    console.log(
-      order,
-      status === "manufactured"
-        ? "Your Order has been Crafted!"
-        : "Your Order has been " + toCapitalize(status) + "!",
-      order.shipping.email,
-      status,
-      message_to_user
-    );
+
     await API_Emails.send_order_status_email(
       order,
-      status === "manufactured"
-        ? "Your Order has been Crafted!"
-        : "Your Order has been " + toCapitalize(status) + "!",
+      status === "manufactured" ? "Your Order has been Crafted!" : "Your Order has been " + toCapitalize(status) + "!",
       order.shipping.email,
       status,
       message_to_user
@@ -221,10 +157,7 @@ const OrdersPage = props => {
       order,
       status === "manufactured"
         ? order.shipping.first_name + "'s Order has been Crafted!"
-        : order.shipping.first_name +
-          "'s Order has been " +
-          toCapitalize(status) +
-          "!",
+        : order.shipping.first_name + "'s Order has been " + toCapitalize(status) + "!",
       process.env.REACT_APP_INFO_EMAIL,
       status,
       message_to_user
@@ -235,7 +168,7 @@ const OrdersPage = props => {
   const upload_orders = async () => {
     set_loading_email(true);
     const { data } = await API_Orders.findAll_orders_a();
-    console.log({ data });
+
     await orders_upload(data.orders);
     set_loading_email(false);
   };
@@ -259,22 +192,15 @@ const OrdersPage = props => {
         <GLButton variant="primary" onClick={upload_orders}>
           Upload Orders
         </GLButton>
-        {not_shipped &&
-        not_shipped.length > 0 && (
+        {not_shipped && not_shipped.length > 0 && (
           <GLButton variant="primary" onClick={() => mark_as_shipped()}>
             Mark as Shipped
           </GLButton>
         )}
       </div>
       <Loading loading={loading_email} />
-      <div
-        className="profile-orders profile_orders_container"
-        style={{ width: "100%" }}
-      >
-        <div
-          className="search_and_sort jc-b ai-c mt-2rem"
-          style={{ overflowX: "scroll" }}
-        >
+      <div className="profile-orders profile_orders_container" style={{ width: "100%" }}>
+        <div className="search_and_sort jc-b ai-c mt-2rem" style={{ overflowX: "scroll" }}>
           <div className="w-40rem">
             {orders &&
               colors.map((color, index) => {
@@ -282,64 +208,27 @@ const OrdersPage = props => {
                   <div className="wrap jc-b m-1rem " key={index}>
                     <label className="w-10rem mr-1rem">{color.name}</label>
 
-                    {color.name === "Not Paid" &&
-                      orders.filter(order => !order.isPaid).length}
+                    {color.name === "Not Paid" && orders.filter(order => !order.isPaid).length}
                     {color.name === "Paid" &&
-                      orders.filter(
-                        order =>
-                          order.isPaid &&
-                          !order.isManufactured &&
-                          !order.isPackaged &&
-                          !order.isShipped
-                      ).length}
+                      orders.filter(order => order.isPaid && !order.isManufactured && !order.isPackaged && !order.isShipped).length}
                     {color.name === "Manufactured" &&
-                      orders.filter(
-                        order =>
-                          order.isManufactured &&
-                          !order.isPackaged &&
-                          !order.isShipped &&
-                          !order.isDelievered
-                      ).length}
+                      orders.filter(order => order.isManufactured && !order.isPackaged && !order.isShipped && !order.isDelievered).length}
                     {color.name === "Packaged" &&
-                      orders.filter(
-                        order =>
-                          order.isManufactured &&
-                          order.isPackaged &&
-                          !order.isShipped &&
-                          !order.isDelievered
-                      ).length}
+                      orders.filter(order => order.isManufactured && order.isPackaged && !order.isShipped && !order.isDelievered).length}
                     {color.name === "Shipped" &&
-                      orders.filter(
-                        order =>
-                          order.isManufactured &&
-                          order.isPackaged &&
-                          order.isShipped &&
-                          !order.isDelievered
-                      ).length}
+                      orders.filter(order => order.isManufactured && order.isPackaged && order.isShipped && !order.isDelievered).length}
 
                     {color.name === "Delivered" &&
-                      orders.filter(
-                        order =>
-                          order.isManufactured &&
-                          order.isPackaged &&
-                          order.isShipped &&
-                          order.isDelievered
-                      ).length}
+                      orders.filter(order => order.isManufactured && order.isPackaged && order.isShipped && order.isDelievered).length}
                     {color.name === "Priority" &&
-                      orders.filter(
-                        order =>
-                          order.shipping.shipping_rate &&
-                          order.shipping.shipping_rate.service !== "First"
-                      ).length}
-                    {color.name === "Label Created" &&
-                      orders.filter(order => order.shipping.shipping_label)
-                        .length}
+                      orders.filter(order => order.shipping.shipping_rate && order.shipping.shipping_rate.service !== "First").length}
+                    {color.name === "Label Created" && orders.filter(order => order.shipping.shipping_label).length}
                     <div
                       style={{
                         backgroundColor: color.color,
                         height: "20px",
                         width: "60px",
-                        borderRadius: "5px",
+                        borderRadius: "5px"
                       }}
                     />
                   </div>
@@ -389,14 +278,7 @@ const OrdersPage = props => {
           </div>
           <div className="product_small_screen none column">
             {orders &&
-              orders.map((order, index) => (
-                <OrderSmallScreen
-                  determine_color={determine_color}
-                  key={index}
-                  order={order}
-                  admin={true}
-                />
-              ))}
+              orders.map((order, index) => <OrderSmallScreen determine_color={determine_color} key={index} order={order} admin={true} />)}
           </div>
         </Loading>
         <div className="jc-c">

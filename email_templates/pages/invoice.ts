@@ -2,7 +2,7 @@ import { format_date, email_sale_price_switch, determine_product_name, determin_
 
 export default (props: any) => {
   const { order } = props;
-  console.log({ order });
+
   return `<body id="invoice" style="background-color:transparent;zoom:100%">
   <div
     style="display:flex;flex-direction:column;margin:40px;margin-top:75px;font-size:25px;line-height:35px;font-family:&#x27;Helvetica Neue&#x27;, &#x27;Helvetica&#x27;, Helvetica, Arial, sans-serif;color:black;background-color:white">

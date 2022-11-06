@@ -87,13 +87,11 @@ export const top_code_usage_upload = async (year: string, month: string, google_
     // doc.useApiKey('YOUR-API-KEY');
 
     await doc.loadInfo(); // loads document properties and worksheets
-    // console.log(doc.title);
+    //
     // await doc.updateProperties({ title: 'KYEO FB Product Sheet' });
 
     const { data: last_months_rows } = await axios.get(`${domain()}/api/orders/affiliate_code_usage/${year}/${month}`);
     const { data: total_rows } = await axios.get(`${domain()}/api/orders/affiliate_code_usage`);
-    console.log({ last_months_rows });
-    console.log({ total_rows });
 
     const sorted_total_rows = total_rows.affiliates.sort((a: any, b: any) => (parseFloat(a.Uses) > parseFloat(b.Uses) ? -1 : 1));
 
@@ -125,9 +123,7 @@ export const top_code_usage_upload = async (year: string, month: string, google_
     await newSheet.addRows(formated_last_month);
     await newSheet.saveUpdatedCells();
     // // await newSheet.delete();
-  } catch (error) {
-    console.log({ error });
-  }
+  } catch (error) {}
 };
 
 export const top_earner_upload = async (year: string, month: string, google_sheet: string) => {
@@ -153,13 +149,11 @@ export const top_earner_upload = async (year: string, month: string, google_shee
     // doc.useApiKey('YOUR-API-KEY');
 
     await doc.loadInfo(); // loads document properties and worksheets
-    // console.log(doc.title);
+    //
     // await doc.updateProperties({ title: 'KYEO FB Product Sheet' });
 
     const { data: last_months_rows } = await axios.get(`${domain()}/api/orders/affiliate_code_usage/${year}/${month}`);
     const { data: total_rows } = await axios.get(`${domain()}/api/orders/affiliate_code_usage`);
-    console.log({ last_months_rows });
-    console.log({ total_rows });
 
     const sorted_last_months_rows = last_months_rows.affiliates.sort((a: any, b: any) =>
       parseFloat(a.Revenue) > parseFloat(b.Revenue) ? -1 : 1
@@ -191,14 +185,12 @@ export const top_earner_upload = async (year: string, month: string, google_shee
     await newSheet.addRows(formated_last_month);
     await newSheet.saveUpdatedCells();
     // await newSheet.delete();
-  } catch (error) {
-    console.log({ error });
-  }
+  } catch (error) {}
 };
 
 export const affiliate_revenue_upload = async (position: any, year: string, month: string, google_sheet: string) => {
   google_sheets_json.private_key = process.env.GOOGLE_SHEETS_PRIVATE;
-  console.log({ google_sheets_json });
+
   try {
     const { GoogleSpreadsheet } = require("google-spreadsheet");
 
@@ -219,7 +211,7 @@ export const affiliate_revenue_upload = async (position: any, year: string, mont
     // doc.useApiKey('YOUR-API-KEY');
 
     await doc.loadInfo(); // loads document properties and worksheets
-    // console.log(doc.title);
+    //
     // await doc.updateProperties({ title: 'KYEO FB Product Sheet' });
 
     // const { data: last_months_rows } = await API_Orders.affiliate_code_usage_orders_a({
@@ -236,9 +228,6 @@ export const affiliate_revenue_upload = async (position: any, year: string, mont
       `${domain()}/api/orders/affiliate_code_usage/${year}${month ? "/" + month : ""}${position ? `?position=${position}` : ""}`
     );
     const { data: total_rows } = await axios.get(`${domain()}/api/orders/affiliate_code_usage/?position=${position}`);
-
-    console.log({ last_months_rows });
-    console.log({ total_rows });
 
     const sorted_total_rows = total_rows.affiliates.sort((a: any, b: any) => (parseFloat(a.Revenue) > parseFloat(b.Revenue) ? -1 : 1));
     const sorted_last_months_rows = last_months_rows.affiliates.sort((a: any, b: any) =>
@@ -269,9 +258,7 @@ export const affiliate_revenue_upload = async (position: any, year: string, mont
     await newSheet.saveUpdatedCells();
 
     // // // await newSheet.delete();
-  } catch (error) {
-    console.log({ error });
-  }
+  } catch (error) {}
 };
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
@@ -279,13 +266,12 @@ const sponsor_monthly_code = async () => {
   try {
     const date = new Date();
     const last_date = new Date(date.setMonth(date.getMonth() - 1));
-    console.log(last_date.getMonth());
+
     const today = new Date().toISOString().slice(0, 10);
     const year = today.split("-")[0];
     const day = today.split("-")[2];
     const last_month = last_date.getMonth();
     if (day === "01") {
-      console.log("Run");
       // await axios.get(`${domain()}/api/paychecks/pay/promoter/${year}/${months[last_month].toLowerCase()}`);
       // await axios.get(`${domain()}/api/paychecks/pay/sponsor/${year}/${months[last_month].toLowerCase()}`);
       // await axios.get(`${domain()}/api/paychecks/pay/team/${year}/${months[last_month].toLowerCase()}`);
@@ -299,11 +285,8 @@ const sponsor_monthly_code = async () => {
       // );
       await axios.put(`${domain()}/api/promos/create_sponsor_codes`);
     } else {
-      console.log("Don't Run");
     }
-  } catch (error) {
-    console.log({ error });
-  }
+  } catch (error) {}
 };
 
 sponsor_monthly_code();

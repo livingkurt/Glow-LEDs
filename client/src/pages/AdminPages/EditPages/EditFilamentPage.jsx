@@ -1,14 +1,8 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  saveFilament,
-  detailsFilament,
-} from "../../../actions/filamentActions";
+import { saveFilament, detailsFilament } from "../../../actions/filamentActions";
 import { useHistory, Link } from "react-router-dom";
-import {
-  DropdownDisplay,
-  Loading,
-} from "../../../components/UtilityComponents";
+import { DropdownDisplay, Loading } from "../../../components/UtilityComponents";
 import { Helmet } from "react-helmet";
 import { humanize } from "../../../utils/helper_functions";
 import {
@@ -24,19 +18,19 @@ import {
   SketchPicker,
   SliderPicker,
   SwatchesPicker,
-  TwitterPicker,
+  TwitterPicker
 } from "react-color";
 import { listChips } from "../../../actions/chipActions";
 import { GLButton } from "../../../components/GlowLEDsComponents";
 
 const EditFilamentPage = props => {
-  const [ id, set_id ] = useState("");
-  const [ type, set_type ] = useState("");
-  const [ color, set_color ] = useState();
-  const [ color_code, set_color_code ] = useState();
-  const [ active, set_active ] = useState();
+  const [id, set_id] = useState("");
+  const [type, set_type] = useState("");
+  const [color, set_color] = useState();
+  const [color_code, set_color_code] = useState();
+  const [active, set_active] = useState();
 
-  const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
+  const [loading_checkboxes, set_loading_checkboxes] = useState(true);
 
   const history = useHistory();
 
@@ -60,40 +54,31 @@ const EditFilamentPage = props => {
 
   const dispatch = useDispatch();
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (props.match.params.id) {
-          console.log("Is ID");
-          dispatch(detailsFilament(props.match.params.id));
-          dispatch(detailsFilament(props.match.params.id));
-        } else {
-          dispatch(listChips({}));
-        }
-        set_state();
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (props.match.params.id) {
+        dispatch(detailsFilament(props.match.params.id));
+        dispatch(detailsFilament(props.match.params.id));
+      } else {
+        dispatch(listChips({}));
       }
-      return () => (clean = false);
-    },
-    [ dispatch, props.match.params.id ]
-  );
+      set_state();
+    }
+    return () => (clean = false);
+  }, [dispatch, props.match.params.id]);
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (filament) {
-          console.log("Set");
-          set_state();
-        } else {
-          console.log("UnSet");
-          unset_state();
-        }
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (filament) {
+        set_state();
+      } else {
+        unset_state();
       }
-      return () => (clean = false);
-    },
-    [ filament ]
-  );
+    }
+    return () => (clean = false);
+  }, [filament]);
 
   setTimeout(() => {
     set_loading_checkboxes(false);
@@ -107,7 +92,7 @@ const EditFilamentPage = props => {
         type,
         color,
         color_code,
-        active,
+        active
       })
     );
     e.target.reset();
@@ -118,9 +103,7 @@ const EditFilamentPage = props => {
   return (
     <div className="main_container p-20px">
       <ul>
-        <h1 style={{ textAlign: "center" }}>
-          {props.match.params.id ? "Edit Filament" : "Create Filament"}
-        </h1>
+        <h1 style={{ textAlign: "center" }}>{props.match.params.id ? "Edit Filament" : "Create Filament"}</h1>
 
         <div className="form">
           <form onSubmit={submitHandler} style={{ chip: "100%" }}>
@@ -130,25 +113,18 @@ const EditFilamentPage = props => {
                   <title>Edit Filament | Glow LEDs</title>
                 </Helmet>
 
-                <ul
-                  className="edit-form-container"
-                  style={{ maxWidth: "30rem", marginBottom: "20px" }}
-                >
+                <ul className="edit-form-container" style={{ maxWidth: "30rem", marginBottom: "20px" }}>
                   <div className="row wrap">
                     <div className="w-228px m-10px">
                       <li>
                         <div className="h-25px mv-10px mb-30px column">
                           <label>Filament Type</label>
                           <div className="custom-select w-100per">
-                            <select
-                              className="qty_select_dropdown w-100per"
-                              onChange={e => set_type(e.target.value)}
-                              value={type}
-                            >
+                            <select className="qty_select_dropdown w-100per" onChange={e => set_type(e.target.value)} value={type}>
                               <option key={1} defaultValue="">
                                 ---Choose Filament Type---
                               </option>
-                              {[ "PETG", "TPU" ].map((type, index) => (
+                              {["PETG", "TPU"].map((type, index) => (
                                 <option key={index} value={type}>
                                   {type}
                                 </option>
@@ -160,13 +136,7 @@ const EditFilamentPage = props => {
                       </li>
                       <li>
                         <label htmlFor="color">Color</label>
-                        <input
-                          type="text"
-                          name="color"
-                          defaultValue={color}
-                          id="color"
-                          onChange={e => set_color(e.target.value)}
-                        />
+                        <input type="text" name="color" defaultValue={color} id="color" onChange={e => set_color(e.target.value)} />
                       </li>
                       <li>
                         <label htmlFor="color_code">Color Code</label>
@@ -202,10 +172,7 @@ const EditFilamentPage = props => {
                     </GLButton>
                   </li>
                   <li>
-                    <GLButton
-                      variant="secondary"
-                      onClick={e => e.preventDefault()}
-                    >
+                    <GLButton variant="secondary" onClick={e => e.preventDefault()}>
                       <Link to="/secure/glow/filaments">Back to Filaments</Link>
                     </GLButton>
                   </li>

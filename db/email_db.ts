@@ -5,7 +5,6 @@ export default {
     try {
       return await Email.find(filter).sort(sort).limit(limit);
     } catch (error) {
-      console.log({ findAll_emails_db_error: error });
       throw new Error(error.message);
     }
   },
@@ -13,7 +12,6 @@ export default {
     try {
       return await Email.findOne({ _id: id });
     } catch (error) {
-      console.log({ findById_emails_db_error: error });
       throw new Error(error.message);
     }
   },
@@ -21,7 +19,6 @@ export default {
     try {
       return await Email.create(body);
     } catch (error) {
-      console.log({ create_emails_db_error: error });
       throw new Error(error.message);
     }
   },
@@ -32,7 +29,6 @@ export default {
         return await Email.updateOne({ _id: id }, body);
       }
     } catch (error) {
-      console.log({ update_emails_db_error: error });
       throw new Error(error.message);
     }
   },
@@ -43,8 +39,7 @@ export default {
         return await Email.updateOne({ _id: id }, { deleted: true });
       }
     } catch (error) {
-      console.log({ remove_emails_db_error: error });
       throw new Error(error.message);
     }
-  },
+  }
 };

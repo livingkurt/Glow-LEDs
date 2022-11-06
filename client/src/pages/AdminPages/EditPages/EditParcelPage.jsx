@@ -8,15 +8,15 @@ import { humanize } from "../../../utils/helper_functions";
 import { GLButton } from "../../../components/GlowLEDsComponents";
 
 const EditParcelPage = props => {
-  const [ id, set_id ] = useState("");
-  const [ type, set_type ] = useState("");
-  const [ length, set_length ] = useState();
-  const [ width, set_width ] = useState();
-  const [ height, set_height ] = useState();
-  const [ volume, set_volume ] = useState();
-  const [ quantity_state, set_quantity_state ] = useState();
+  const [id, set_id] = useState("");
+  const [type, set_type] = useState("");
+  const [length, set_length] = useState();
+  const [width, set_width] = useState();
+  const [height, set_height] = useState();
+  const [volume, set_volume] = useState();
+  const [quantity_state, set_quantity_state] = useState();
 
-  const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
+  const [loading_checkboxes, set_loading_checkboxes] = useState(true);
 
   const history = useHistory();
 
@@ -44,40 +44,31 @@ const EditParcelPage = props => {
 
   const dispatch = useDispatch();
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (props.match.params.id) {
-          console.log("Is ID");
-          dispatch(detailsParcel(props.match.params.id));
-          dispatch(detailsParcel(props.match.params.id));
-        } else {
-          dispatch(detailsParcel(""));
-        }
-        set_state();
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (props.match.params.id) {
+        dispatch(detailsParcel(props.match.params.id));
+        dispatch(detailsParcel(props.match.params.id));
+      } else {
+        dispatch(detailsParcel(""));
       }
-      return () => (clean = false);
-    },
-    [ dispatch, props.match.params.id ]
-  );
+      set_state();
+    }
+    return () => (clean = false);
+  }, [dispatch, props.match.params.id]);
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (parcel) {
-          console.log("Set");
-          set_state();
-        } else {
-          console.log("UnSet");
-          unset_state();
-        }
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (parcel) {
+        set_state();
+      } else {
+        unset_state();
       }
-      return () => (clean = false);
-    },
-    [ parcel ]
-  );
+    }
+    return () => (clean = false);
+  }, [parcel]);
 
   setTimeout(() => {
     set_loading_checkboxes(false);
@@ -93,7 +84,7 @@ const EditParcelPage = props => {
         width,
         height,
         volume: length * width * height,
-        quantity_state,
+        quantity_state
       })
     );
     e.target.reset();
@@ -102,9 +93,7 @@ const EditParcelPage = props => {
   };
   return (
     <div className="main_container p-20px">
-      <h1 style={{ textAlign: "center" }}>
-        {props.match.params.id ? "Edit Parcel" : "Create Parcel"}
-      </h1>
+      <h1 style={{ textAlign: "center" }}>{props.match.params.id ? "Edit Parcel" : "Create Parcel"}</h1>
 
       <div className="form">
         <form onSubmit={submitHandler} style={{ width: "100%" }}>
@@ -118,10 +107,7 @@ const EditParcelPage = props => {
                 <title>Edit Parcel | Glow LEDs</title>
               </Helmet>
 
-              <ul
-                className="edit-form-container"
-                style={{ maxWidth: "30rem", marginBottom: "20px" }}
-              >
+              <ul className="edit-form-container" style={{ maxWidth: "30rem", marginBottom: "20px" }}>
                 <div className="row wrap">
                   <div className="w-228px m-10px">
                     <div className="ai-c h-25px mv-10px mb-30px jc-c">
@@ -137,11 +123,7 @@ const EditParcelPage = props => {
                           <option key={1} defaultValue="">
                             ---Choose Parcel Type---
                           </option>
-                          {[
-                            "bubble_mailer",
-                            "box",
-                            "envelope",
-                          ].map((type, index) => (
+                          {["bubble_mailer", "box", "envelope"].map((type, index) => (
                             <option key={index} value={type}>
                               {humanize(type)}
                             </option>
@@ -153,43 +135,19 @@ const EditParcelPage = props => {
 
                     <li>
                       <label htmlFor="type">Type</label>
-                      <input
-                        type="text"
-                        name="type"
-                        defaultValue={type}
-                        id="type"
-                        onChange={e => set_type(e.target.value)}
-                      />
+                      <input type="text" name="type" defaultValue={type} id="type" onChange={e => set_type(e.target.value)} />
                     </li>
                     <li>
                       <label htmlFor="length">Length</label>
-                      <input
-                        type="text"
-                        name="length"
-                        defaultValue={length}
-                        id="length"
-                        onChange={e => set_length(e.target.value)}
-                      />
+                      <input type="text" name="length" defaultValue={length} id="length" onChange={e => set_length(e.target.value)} />
                     </li>
                     <li>
                       <label htmlFor="width">Width</label>
-                      <input
-                        type="text"
-                        name="width"
-                        defaultValue={width}
-                        id="width"
-                        onChange={e => set_width(e.target.value)}
-                      />
+                      <input type="text" name="width" defaultValue={width} id="width" onChange={e => set_width(e.target.value)} />
                     </li>
                     <li>
                       <label htmlFor="height">Height</label>
-                      <input
-                        type="text"
-                        name="height"
-                        defaultValue={height}
-                        id="height"
-                        onChange={e => set_height(e.target.value)}
-                      />
+                      <input type="text" name="height" defaultValue={height} id="height" onChange={e => set_height(e.target.value)} />
                     </li>
 
                     <li>
@@ -197,9 +155,7 @@ const EditParcelPage = props => {
                       <input
                         type="text"
                         name="volume"
-                        value={
-                          length && width && height && length * width * height
-                        }
+                        value={length && width && height && length * width * height}
                         id="volume"
                         onChange={e => set_volume(e.target.value)}
                       />
@@ -222,10 +178,7 @@ const EditParcelPage = props => {
                   </GLButton>
                 </li>
                 <li>
-                  <GLButton
-                    variant="secondary"
-                    onClick={e => e.preventDefault()}
-                  >
+                  <GLButton variant="secondary" onClick={e => e.preventDefault()}>
                     <Link to="/secure/glow/parcels">Back to Parcels</Link>
                   </GLButton>
                 </li>

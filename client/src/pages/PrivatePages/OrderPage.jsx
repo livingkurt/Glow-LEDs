@@ -2,31 +2,12 @@ import React, { useEffect, useState } from "react";
 import { addToCart, removeFromCart } from "../../actions/cartActions";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
-import {
-  createOrder,
-  detailsOrder,
-  payOrder,
-  saveOrder,
-} from "../../actions/orderActions";
-import {
-  determine_tracking_number,
-  format_date,
-  toCapitalize,
-} from "../../utils/helper_functions";
-import {
-  CartItem,
-  CheckoutSteps,
-  Stripe,
-} from "../../components/SpecialtyComponents";
+import { createOrder, detailsOrder, payOrder, saveOrder } from "../../actions/orderActions";
+import { determine_tracking_number, format_date, toCapitalize } from "../../utils/helper_functions";
+import { CartItem, CheckoutSteps, Stripe } from "../../components/SpecialtyComponents";
 import { Helmet } from "react-helmet";
 import { Loading, LoadingPayments } from "../../components/UtilityComponents";
-import {
-  deleteOrder,
-  listOrders,
-  update_order,
-  update_payment,
-  refundOrder,
-} from "../../actions/orderActions";
+import { deleteOrder, listOrders, update_order, update_payment, refundOrder } from "../../actions/orderActions";
 import { API_Emails, API_Orders, API_Shipping } from "../../utils";
 import useClipboard from "react-hook-clipboard";
 import useWindowDimensions from "../../components/Hooks/windowDimensions";
@@ -50,33 +31,32 @@ const OrderPage = props => {
 
   const orderDetails = useSelector(state => state.orderDetails);
   const { loading, order, error } = orderDetails;
-  console.log({ order });
 
-  const [ loading_label, set_loading_label ] = useState(false);
-  const [ product, set_product ] = useState("");
-  const [ secondary_product, set_secondary_product ] = useState("");
-  const [ product_object, set_product_object ] = useState("");
-  const [ payment_loading, set_payment_loading ] = useState(false);
-  const [ payment_method, set_payment_method ] = useState("");
-  const [ loading_email, set_loading_email ] = useState("");
+  const [loading_label, set_loading_label] = useState(false);
+  const [product, set_product] = useState("");
+  const [secondary_product, set_secondary_product] = useState("");
+  const [product_object, set_product_object] = useState("");
+  const [payment_loading, set_payment_loading] = useState(false);
+  const [payment_method, set_payment_method] = useState("");
+  const [loading_email, set_loading_email] = useState("");
 
-  const [ order_state, set_order_state ] = useState({});
-  const [ clipboard, copyToClipboard ] = useClipboard();
+  const [order_state, set_order_state] = useState({});
+  const [clipboard, copyToClipboard] = useClipboard();
 
-  const [ refund_state, set_refund_state ] = useState({});
-  const [ refund_amount, set_refund_amount ] = useState();
-  const [ refund_reason, set_refund_reason ] = useState("");
-  const [ all_orders, set_all_orders ] = useState("");
-  const [ loading_shipping_rates, set_loading_shipping_rates ] = useState("");
-  const [ shipping_rate, set_shipping_rate ] = useState({});
-  const [ shipment_id, set_shipment_id ] = useState("");
-  const [ shipping_rates, set_shipping_rates ] = useState([]);
-  const [ package_dimensions, set_package_dimensions ] = useState({});
-  const [ hide_label_button, set_hide_label_button ] = useState(true);
-  const [ rate, set_rate ] = useState("");
-  const [ order_items, set_order_items ] = useState([]);
+  const [refund_state, set_refund_state] = useState({});
+  const [refund_amount, set_refund_amount] = useState();
+  const [refund_reason, set_refund_reason] = useState("");
+  const [all_orders, set_all_orders] = useState("");
+  const [loading_shipping_rates, set_loading_shipping_rates] = useState("");
+  const [shipping_rate, set_shipping_rate] = useState({});
+  const [shipment_id, set_shipment_id] = useState("");
+  const [shipping_rates, set_shipping_rates] = useState([]);
+  const [package_dimensions, set_package_dimensions] = useState({});
+  const [hide_label_button, set_hide_label_button] = useState(true);
+  const [rate, set_rate] = useState("");
+  const [order_items, set_order_items] = useState([]);
 
-  const [ message_to_user, set_message_to_user ] = useState("");
+  const [message_to_user, set_message_to_user] = useState("");
 
   const parcelList = useSelector(state => state.parcelList);
   const { parcels } = parcelList;
@@ -89,70 +69,54 @@ const OrderPage = props => {
 
   const update_refund_state = amount => {
     set_loading_label(true);
-    const confirm = window.confirm(
-      "Are you sure you want to Refund this Order?"
-    );
+    const confirm = window.confirm("Are you sure you want to Refund this Order?");
     if (confirm) {
-      dispatch(
-        refundOrder(order, true, parseFloat(amount).toFixed(2), refund_reason)
-      );
+      dispatch(refundOrder(order, true, parseFloat(amount).toFixed(2), refund_reason));
       set_refund_state(true);
     }
 
     set_loading_label(false);
   };
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (refund) {
-          set_refund_state(refund.isRefunded);
-          dispatch(detailsOrder(props.match.params.id));
-        }
-      }
-      return () => (clean = false);
-    },
-    [ refund ]
-  );
-
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (refund) {
+        set_refund_state(refund.isRefunded);
         dispatch(detailsOrder(props.match.params.id));
       }
-      return () => (clean = false);
-    },
-    [ props.match.params.id ]
-  );
+    }
+    return () => (clean = false);
+  }, [refund]);
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (order) {
-          set_order_state(order);
-          set_order_items(order.orderItems);
-        }
-      }
-      return () => (clean = false);
-    },
-    [ order ]
-  );
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      dispatch(detailsOrder(props.match.params.id));
+    }
+    return () => (clean = false);
+  }, [props.match.params.id]);
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (product_object) {
-          set_product(product_object._id);
-        }
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (order) {
+        set_order_state(order);
+        set_order_items(order.orderItems);
       }
-      return () => (clean = false);
-    },
-    [ product_object ]
-  );
+    }
+    return () => (clean = false);
+  }, [order]);
+
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (product_object) {
+        set_product(product_object._id);
+      }
+    }
+    return () => (clean = false);
+  }, [product_object]);
 
   const empty_cart = () => {
     for (let item of cartItems) {
@@ -165,43 +129,34 @@ const OrderPage = props => {
     dispatch(payOrder(order, paymentMethod));
   };
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (successPay && order) {
-          // history.push('/secure/checkout/paymentcomplete/' + order._id);
-          history.push(
-            "/secure/checkout/order/receipt/" + order._id + "/order/true"
-          );
-          dispatch(detailsOrder(props.match.params.id));
-          set_payment_loading(false);
-          empty_cart();
-        } else if (errorPay) {
-          console.log({ errorPay });
-        }
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (successPay && order) {
+        // history.push('/secure/checkout/paymentcomplete/' + order._id);
+        history.push("/secure/checkout/order/receipt/" + order._id + "/order/true");
+        dispatch(detailsOrder(props.match.params.id));
+        set_payment_loading(false);
+        empty_cart();
+      } else if (errorPay) {
       }
-      return () => (clean = false);
-    },
-    [ successPay ]
-  );
+    }
+    return () => (clean = false);
+  }, [successPay]);
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (errorPay) {
-          set_payment_loading(false);
-        }
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (errorPay) {
+        set_payment_loading(false);
       }
-      return () => (clean = false);
-    },
-    [ errorPay ]
-  );
+    }
+    return () => (clean = false);
+  }, [errorPay]);
 
   const history = useHistory();
 
-  const [ show_color, set_show_color ] = useState(false);
+  const [show_color, set_show_color] = useState(false);
 
   const update_order_state = (order, state, is_action, action_at) => {
     set_loading_email(true);
@@ -220,20 +175,9 @@ const OrderPage = props => {
   };
 
   const send_email = async (status, message_to_user) => {
-    console.log(
-      order,
-      status === "manufactured"
-        ? "Your Order has been Crafted!"
-        : "Your Order has been " + toCapitalize(status) + "!",
-      order.shipping.email,
-      status,
-      message_to_user
-    );
     await API_Emails.send_order_status_email(
       order,
-      status === "manufactured"
-        ? "Your Order has been Crafted!"
-        : "Your Order has been " + toCapitalize(status) + "!",
+      status === "manufactured" ? "Your Order has been Crafted!" : "Your Order has been " + toCapitalize(status) + "!",
       order.shipping.email,
       status,
       message_to_user
@@ -242,10 +186,7 @@ const OrderPage = props => {
       order,
       status === "manufactured"
         ? order.shipping.first_name + "'s Order has been Crafted!"
-        : order.shipping.first_name +
-          "'s Order has been " +
-          toCapitalize(status) +
-          "!",
+        : order.shipping.first_name + "'s Order has been " + toCapitalize(status) + "!",
       process.env.REACT_APP_INFO_EMAIL,
       status,
       message_to_user
@@ -253,19 +194,9 @@ const OrderPage = props => {
   };
 
   const send_paid_email = async () => {
-    const { data: order } = await API_Orders.findById_orders_a(
-      props.match.params.id
-    );
-    await API_Emails.send_order_email(
-      order,
-      "Thank you for your Glow LEDs Order!",
-      order.shipping.email
-    );
-    await API_Emails.send_order_email(
-      order,
-      "New Order Created by " + order.shipping.first_name,
-      process.env.REACT_APP_INFO_EMAIL
-    );
+    const { data: order } = await API_Orders.findById_orders_a(props.match.params.id);
+    await API_Emails.send_order_email(order, "Thank you for your Glow LEDs Order!", order.shipping.email);
+    await API_Emails.send_order_email(order, "New Order Created by " + order.shipping.first_name, process.env.REACT_APP_INFO_EMAIL);
   };
   const update_order_payment_state = (order, state, is_action) => {
     if (state) {
@@ -283,11 +214,7 @@ const OrderPage = props => {
 
   const create_label = async speed => {
     set_loading_label(true);
-    const { data } = await API_Shipping.create_label(
-      order,
-      order.shipping.shipping_rate,
-      speed
-    );
+    const { data } = await API_Shipping.create_label(order, order.shipping.shipping_rate, speed);
     const { data: invoice } = await API_Orders.get_invoice(order);
     setTimeout(() => {
       print_invoice(invoice);
@@ -295,51 +222,34 @@ const OrderPage = props => {
     setTimeout(() => {
       print_label(data.postage_label.label_url);
     }, 1000);
-    console.log({ data });
+
     if (data) {
       set_loading_label(false);
     }
-    console.log({ tracking_code: data.tracking_code });
-    const request = await API_Shipping.add_tracking_number(
-      order,
-      data.tracking_code,
-      data
-    );
-    console.log(request);
+
+    const request = await API_Shipping.add_tracking_number(order, data.tracking_code, data);
+
     dispatch(detailsOrder(props.match.params.id));
   };
 
   const create_return_label = async () => {
     set_loading_label(true);
-    const { data } = await API_Shipping.create_return_label(
-      order,
-      order.shipping.shipping_rate
-    );
+    const { data } = await API_Shipping.create_return_label(order, order.shipping.shipping_rate);
     print_label(data.postage_label.label_url);
-    console.log({ data });
+
     if (data) {
       set_loading_label(false);
     }
-    console.log({ tracking_code: data.tracking_code });
-    const request = await API_Shipping.add_return_tracking_number(
-      order,
-      data.tracking_code,
-      data
-    );
-    console.log(request);
+
+    const request = await API_Shipping.add_return_tracking_number(order, data.tracking_code, data);
+
     dispatch(detailsOrder(props.match.params.id));
   };
 
   const buy_label = async () => {
     set_loading_label(true);
-    console.log({
-      shipment_id: order.shipping.shipment_id,
-      shipping_rate: order.shipping.shipping_rate,
-    });
-    const { data } = await API_Shipping.buy_label(
-      order.shipping.shipment_id,
-      order.shipping.shipping_rate
-    );
+
+    const { data } = await API_Shipping.buy_label(order.shipping.shipment_id, order.shipping.shipping_rate);
     const { data: invoice } = await API_Orders.get_invoice(order);
     // show_label(data.postage_label.label_url);
     setTimeout(() => {
@@ -352,13 +262,9 @@ const OrderPage = props => {
     if (data) {
       set_loading_label(false);
     }
-    console.log({ tracking_code: data.tracking_code });
-    const request = await API_Shipping.add_tracking_number(
-      order,
-      data.tracking_code,
-      data
-    );
-    console.log(request);
+
+    const request = await API_Shipping.add_tracking_number(order, data.tracking_code, data);
+
     dispatch(detailsOrder(props.match.params.id));
     // history.push('/secure/glow/emails/invoice/' + order._id);
     // history.push({
@@ -369,7 +275,7 @@ const OrderPage = props => {
 
   const get_invoice = async () => {
     const { data: invoice } = await API_Orders.get_invoice(order);
-    console.log({ invoice });
+
     print_invoice(invoice);
   };
 
@@ -383,14 +289,14 @@ const OrderPage = props => {
     const frameDoc = frame1.contentWindow
       ? frame1.contentWindow
       : frame1.contentDocument.document
-        ? frame1.contentDocument.document
-        : frame1.contentDocument;
+      ? frame1.contentDocument.document
+      : frame1.contentDocument;
     frameDoc.document.open();
     frameDoc.document.write("</head><body>");
     frameDoc.document.write(contents);
     frameDoc.document.write("</body></html>");
     frameDoc.document.close();
-    setTimeout(function() {
+    setTimeout(function () {
       window.frames["frame1"].focus();
       window.frames["frame1"].print();
       document.body.removeChild(frame1);
@@ -407,11 +313,10 @@ const OrderPage = props => {
     print_label(order.shipping.return_shipping_label.postage_label.label_url);
   };
 
-  const [ fetching, setFetching ] = useState(false);
-  const [ error_img, set_error_img ] = useState(false);
+  const [fetching, setFetching] = useState(false);
+  const [error_img, set_error_img] = useState(false);
 
   const download_return_label = (url, name, e) => {
-    console.log({ url });
     e.preventDefault();
     if (!url) {
       throw new Error("Resource URL not provided! You need to provide one");
@@ -442,8 +347,8 @@ const OrderPage = props => {
     const frameDoc = frame1.contentWindow
       ? frame1.contentWindow
       : frame1.contentDocument.document
-        ? frame1.contentDocument.document
-        : frame1.contentDocument;
+      ? frame1.contentDocument.document
+      : frame1.contentDocument;
     frameDoc.document.open();
     frameDoc.document.write("</head><body>");
     frameDoc.document.write(`<div style="width: 100%;
@@ -454,7 +359,7 @@ const OrderPage = props => {
     </div>`);
     frameDoc.document.write("</body></html>");
     frameDoc.document.close();
-    setTimeout(function() {
+    setTimeout(function () {
       window.frames["frame1"].focus();
       window.frames["frame1"].print();
       document.body.removeChild(frame1);
@@ -463,7 +368,6 @@ const OrderPage = props => {
   };
 
   const create_duplicate_order = () => {
-    console.log({ order });
     dispatch(
       createOrder({
         orderItems: order.orderItems,
@@ -471,16 +375,15 @@ const OrderPage = props => {
           ...order.shipping,
           shipment_id: null,
           shipping_rate: null,
-          shipping_label: null,
+          shipping_label: null
         },
         itemsPrice: order.itemsPrice,
         shippingPrice: 0,
         taxPrice: 0,
         totalPrice: 0,
         user: order.user._id,
-        order_note: `Replacement Order for ${order.shipping.first_name} ${order
-          .shipping.last_name} - Original Order Number is ${order._id}`,
-        production_note: order.production_note,
+        order_note: `Replacement Order for ${order.shipping.first_name} ${order.shipping.last_name} - Original Order Number is ${order._id}`,
+        production_note: order.production_note
       })
     );
     dispatch(listOrders({}));
@@ -490,9 +393,7 @@ const OrderPage = props => {
     e.preventDefault();
 
     if (all_orders) {
-      let current_order_index = all_orders
-        .map(item => item._id)
-        .indexOf(order._id);
+      let current_order_index = all_orders.map(item => item._id).indexOf(order._id);
       let left_order_index = current_order_index + 1;
       if (left_order_index >= all_orders.length) {
         left_order_index = 0;
@@ -503,16 +404,12 @@ const OrderPage = props => {
   const move_right = e => {
     e.preventDefault();
     if (all_orders) {
-      let current_order_index = all_orders
-        .map(item => item._id)
-        .indexOf(order._id);
+      let current_order_index = all_orders.map(item => item._id).indexOf(order._id);
       let right_order_index = current_order_index - 1;
       if (right_order_index === -1) {
         right_order_index = all_orders.length - 1;
       }
-      history.push(
-        "/secure/account/order/" + all_orders[right_order_index]._id
-      );
+      history.push("/secure/account/order/" + all_orders[right_order_index]._id);
     }
   };
 
@@ -523,9 +420,9 @@ const OrderPage = props => {
     const { data } = await API_Shipping.get_different_shipping_rates({
       shipment_id: order.shipping.shipment_id,
       userInfo,
-      order,
+      order
     });
-    console.log({ get_shipping_rates: data });
+
     set_shipping_rates(data.shipment.rates);
     set_shipment_id(data.shipment.id);
     set_loading_shipping_rates(false);
@@ -533,10 +430,7 @@ const OrderPage = props => {
 
   const buy_new_speed_label = async () => {
     set_loading_label(true);
-    const { data } = await API_Shipping.buy_label(
-      order.shipping.shipment_id,
-      shipping_rate
-    );
+    const { data } = await API_Shipping.buy_label(order.shipping.shipment_id, shipping_rate);
     print_label(data.postage_label.label_url);
     if (data) {
       set_loading_label(false);
@@ -544,14 +438,10 @@ const OrderPage = props => {
     dispatch(
       saveOrder({
         ...order,
-        shipping: { ...order.shipping, shipment_id, shipping_rate },
+        shipping: { ...order.shipping, shipment_id, shipping_rate }
       })
     );
-    const request = await API_Shipping.add_tracking_number(
-      order,
-      data.tracking_code,
-      data
-    );
+    const request = await API_Shipping.add_tracking_number(order, data.tracking_code, data);
     dispatch(detailsOrder(props.match.params.id));
     history.push("/secure/glow/emails/invoice/" + order._id);
   };
@@ -566,18 +456,18 @@ const OrderPage = props => {
     country: process.env.REACT_APP_RETURN_COUNTRY,
     phone: "906-284-2208",
     email: process.env.REACT_APP_INFO_EMAIL,
-    company: "Glow LEDs",
+    company: "Glow LEDs"
   };
 
   const update_parcel = (e, parcel) => {
     e.preventDefault();
     parcel = JSON.parse(parcel);
-    console.log({ parcel });
+
     set_package_dimensions({
       ...package_dimensions,
       package_length: parcel.length || 0,
       package_width: parcel.width || 0,
-      package_height: parcel.height || 0,
+      package_height: parcel.height || 0
     });
   };
 
@@ -585,7 +475,7 @@ const OrderPage = props => {
     e.preventDefault();
     // setShippingPrice(parseFloat(rate.retail_rate) + packaging_cost);
     // setPreviousShippingPrice(parseFloat(rate.retail_rate) + packaging_cost);
-    console.log({ rate, speed });
+
     set_hide_label_button(false);
     set_shipping_rate(rate);
     set_rate({ rate, speed });
@@ -605,49 +495,31 @@ const OrderPage = props => {
 
   const send_order_email = async () => {
     set_loading_label(true);
-    await API_Emails.send_order_email(
-      order,
-      "Thank you for your Glow LEDs Order",
-      order.shipping.email
-    );
-    await API_Emails.send_order_email(
-      order,
-      "New Order Created by " + order.shipping.first_name,
-      process.env.REACT_APP_INFO_EMAIL
-    );
+    await API_Emails.send_order_email(order, "Thank you for your Glow LEDs Order", order.shipping.email);
+    await API_Emails.send_order_email(order, "New Order Created by " + order.shipping.first_name, process.env.REACT_APP_INFO_EMAIL);
 
     set_loading_label(false);
   };
 
   const send_refund_email = async () => {
     set_loading_label(true);
-    await API_Emails.send_refund_email(
-      order,
-      "Refund Successful",
-      order.shipping.email,
-      true
-    );
-    await API_Emails.send_refund_email(
-      order,
-      "New Refunded for " + order.shipping.first_name,
-      process.env.REACT_APP_INFO_EMAIL,
-      true
-    );
+    await API_Emails.send_refund_email(order, "Refund Successful", order.shipping.email, true);
+    await API_Emails.send_refund_email(order, "New Refunded for " + order.shipping.first_name, process.env.REACT_APP_INFO_EMAIL, true);
 
     set_loading_label(false);
   };
 
   const check_item_as_manufactured = async index => {
-    let new_order_items = [ ...order_items ];
+    let new_order_items = [...order_items];
     new_order_items[index] = {
       ...new_order_items[index],
-      is_manufactured: order_items[index].is_manufactured ? false : true,
+      is_manufactured: order_items[index].is_manufactured ? false : true
     };
     set_order_items(new_order_items);
     dispatch(
       saveOrder({
         ...order,
-        orderItems: [ ...new_order_items ],
+        orderItems: [...new_order_items]
       })
     );
   };
@@ -660,57 +532,32 @@ const OrderPage = props => {
             <title>Your Order | Glow LEDs</title>
             <meta property="og:title" content="Your Order" />
             <meta name="twitter:title" content="Your Order" />
-            <link
-              rel="canonical"
-              href={
-                "https://www.glow-leds.com/secure/account/order/" +
-                props.match.params.id
-              }
-            />
-            <meta
-              property="og:url"
-              content={
-                "https://www.glow-leds.com/secure/account/order/" +
-                props.match.params.id
-              }
-            />
+            <link rel="canonical" href={"https://www.glow-leds.com/secure/account/order/" + props.match.params.id} />
+            <meta property="og:url" content={"https://www.glow-leds.com/secure/account/order/" + props.match.params.id} />
           </Helmet>
           <Loading loading={loading_shipping_rates} />
-          {order.isPaid ? (
-            <CheckoutSteps step1 step2 step3 step4 />
-          ) : (
-            <CheckoutSteps step1 step2 step3 />
-          )}
+          {order.isPaid ? <CheckoutSteps step1 step2 step3 step4 /> : <CheckoutSteps step1 step2 step3 />}
           <div className="mb-10px ml-20px jc-b">
             <div>
-              {userInfo &&
-              userInfo.isAdmin && (
-                <Link
-                  to={
-                    props.location.previous_path ||
-                    "/secure/glow/orders?page=1?limit=10"
-                  }
-                >
+              {userInfo && userInfo.isAdmin && (
+                <Link to={props.location.previous_path || "/secure/glow/orders?page=1?limit=10"}>
                   <GLButton variant="secondary">Back to Admin Orders</GLButton>
                 </Link>
               )}
-              {userInfo &&
-              userInfo.first_name && (
+              {userInfo && userInfo.first_name && (
                 <Link to={"/secure/account/orders"}>
                   <GLButton variant="secondary">Back to Orders</GLButton>
                 </Link>
               )}
             </div>
-            {userInfo &&
-            userInfo.isAdmin && (
+            {userInfo && userInfo.isAdmin && (
               <GLButton variant="secondary" onClick={() => add_items_to_cart()}>
                 Add Items to Cart
               </GLButton>
             )}
           </div>
 
-          {userInfo &&
-          userInfo.isAdmin && (
+          {userInfo && userInfo.isAdmin && (
             <div className="row">
               <div className="ai-c">
                 <GLButton
@@ -728,27 +575,21 @@ const OrderPage = props => {
                   textAlign: "center",
                   width: "100%",
                   marginRight: "auto",
-                  justifyContent: "center",
+                  justifyContent: "center"
                 }}
                 className="ta-c "
               >
                 <Link
                   to={{
                     pathname: "/collections/all/products/" + product.pathname,
-                    previous_path: history.location.pathname,
+                    previous_path: history.location.pathname
                   }}
                 >
                   {loading ? "Product" : product.name}
                 </Link>
               </h2>
               <div className="ai-c">
-                <GLButton
-                  style={{ borderRadius: "50%" }}
-                  variant="icon"
-                  className="h-59px"
-                  onClick={e => move_right(e)}
-                  aria-label="Next"
-                >
+                <GLButton style={{ borderRadius: "50%" }} variant="icon" className="h-59px" onClick={e => move_right(e)} aria-label="Next">
                   <i className="fas fa-arrow-circle-right fs-40px" />
                 </GLButton>
               </div>
@@ -761,7 +602,7 @@ const OrderPage = props => {
             <div className="placeorder-info">
               <div
                 style={{
-                  backgroundColor: width > 407 && determine_color(order),
+                  backgroundColor: width > 407 && determine_color(order)
                 }}
               >
                 <div className="column jc-b h-22rem w-25remm mb-1rem">
@@ -769,96 +610,58 @@ const OrderPage = props => {
                   <div>
                     <div className="row ai-c">
                       <div className="mv-5px">
-                        {order.isPaid ? (
-                          <i className="fas fa-check-circle" />
-                        ) : (
-                          <i className="fas fa-times-circle" />
-                        )}
+                        {order.isPaid ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
                       </div>
                       <div className="mh-10px">Paid</div>
 
-                      <div>
-                        {!order.paidAt ? "" : format_date(order.paidAt)}
-                      </div>
+                      <div>{!order.paidAt ? "" : format_date(order.paidAt)}</div>
                     </div>
                   </div>
                   <div>
                     <div className="row ai-c">
                       <div className="mv-5px">
-                        {order.isManufactured ? (
-                          <i className="fas fa-check-circle" />
-                        ) : (
-                          <i className="fas fa-times-circle" />
-                        )}
+                        {order.isManufactured ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
                       </div>
                       <div className="mh-10px">Manufactured</div>
 
-                      <div>
-                        {!order.manufacturedAt ? (
-                          ""
-                        ) : (
-                          format_date(order.manufacturedAt)
-                        )}
-                      </div>
+                      <div>{!order.manufacturedAt ? "" : format_date(order.manufacturedAt)}</div>
                     </div>
                   </div>
                   <div>
                     <div className="row ai-c">
                       <div className="mv-5px">
-                        {order.isPackaged ? (
-                          <i className="fas fa-check-circle" />
-                        ) : (
-                          <i className="fas fa-times-circle" />
-                        )}
+                        {order.isPackaged ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
                       </div>
                       <div className="mh-10px">Packaged</div>
 
-                      <div>
-                        {!order.packagedAt ? "" : format_date(order.packagedAt)}
-                      </div>
+                      <div>{!order.packagedAt ? "" : format_date(order.packagedAt)}</div>
                     </div>
                   </div>
                   <div>
                     <div className="row ai-c">
                       <div className="mv-5px">
-                        {order.isShipped ? (
-                          <i className="fas fa-check-circle" />
-                        ) : (
-                          <i className="fas fa-times-circle" />
-                        )}
+                        {order.isShipped ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
                       </div>
                       <div className="mh-10px">Shipped</div>
 
-                      <div>
-                        {!order.shippedAt ? "" : format_date(order.shippedAt)}
-                      </div>
+                      <div>{!order.shippedAt ? "" : format_date(order.shippedAt)}</div>
                     </div>
                   </div>
                   <div>
                     <div className="row ai-c">
                       <div className="mv-5px row">
-                        {order.isDelivered ? (
-                          <i className="fas fa-check-circle" />
-                        ) : (
-                          <i className="fas fa-times-circle" />
-                        )}
+                        {order.isDelivered ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
                       </div>
                       <div className="mh-10px">Delivered</div>
 
-                      <div>
-                        {!order.deliveredAt ? (
-                          ""
-                        ) : (
-                          format_date(order.deliveredAt)
-                        )}
-                      </div>
+                      <div>{!order.deliveredAt ? "" : format_date(order.deliveredAt)}</div>
                     </div>
                   </div>
                 </div>
               </div>
               <div
                 style={{
-                  backgroundColor: width > 407 && determine_color(order),
+                  backgroundColor: width > 407 && determine_color(order)
                 }}
               >
                 <div className="mb-1rem">Order #: {order._id}</div>
@@ -872,7 +675,7 @@ const OrderPage = props => {
                       className="mv-2rem"
                       style={{
                         textDecoration: "underline",
-                        color: "white",
+                        color: "white"
                       }}
                     >
                       {order.tracking_number}
@@ -880,22 +683,18 @@ const OrderPage = props => {
                   </div>
                 )}
 
-                {userInfo &&
-                userInfo.isAdmin &&
-                order.return_tracking_number && (
+                {userInfo && userInfo.isAdmin && order.return_tracking_number && (
                   <div className="w-100per column mt-1rem">
                     <label>
                       Return Tracking #:{" "}
                       <a
-                        href={determine_tracking_number(
-                          order.return_tracking_number
-                        )}
+                        href={determine_tracking_number(order.return_tracking_number)}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="mv-2rem"
                         style={{
                           textDecoration: "underline",
-                          color: "white",
+                          color: "white"
                         }}
                       >
                         {order.return_tracking_number}
@@ -905,10 +704,7 @@ const OrderPage = props => {
                 )}
 
                 <h2>Email</h2>
-                <div
-                  className="jc-b w-100per mb-1rem"
-                  style={{ borderTop: ".1rem white solid" }}
-                />
+                <div className="jc-b w-100per mb-1rem" style={{ borderTop: ".1rem white solid" }} />
                 <div className="jc-b wrap w-100per">
                   <div className="paragraph_font lh-25px mb-1rem">
                     <div>{order.shipping.email}</div>
@@ -917,28 +713,19 @@ const OrderPage = props => {
               </div>
               <div
                 style={{
-                  backgroundColor: width > 407 && determine_color(order),
+                  backgroundColor: width > 407 && determine_color(order)
                 }}
               >
                 {order.isRefunded && (
                   <h1>
-                    Refunded:{" "}
-                    {
-                      order.payment.refund_reason[
-                        order.payment.refund_reason.length - 1
-                      ]
-                    }{" "}
-                    on {format_date(order.refundedAt)}
+                    Refunded: {order.payment.refund_reason[order.payment.refund_reason.length - 1]} on {format_date(order.refundedAt)}
                   </h1>
                 )}
 
                 <div className="wrap jc-b">
                   <div className="w-100per ">
                     <h2>Shipping</h2>
-                    <div
-                      className="jc-b w-100per mb-1rem"
-                      style={{ borderTop: ".1rem white solid" }}
-                    />
+                    <div className="jc-b w-100per mb-1rem" style={{ borderTop: ".1rem white solid" }} />
                     <div className="jc-b wrap w-100per">
                       <div className="paragraph_font lh-25px mb-1rem">
                         <div>
@@ -948,56 +735,37 @@ const OrderPage = props => {
                           {order.shipping.address_1} {order.shipping.address_2}
                         </div>
                         <div>
-                          {order.shipping.city}, {order.shipping.state}{" "}
-                          {order.shipping.postalCode}, {order.shipping.country}
+                          {order.shipping.city}, {order.shipping.state} {order.shipping.postalCode}, {order.shipping.country}
                         </div>
-                        <div>
-                          {order.shipping.international && "International"}
-                        </div>
+                        <div>{order.shipping.international && "International"}</div>
                       </div>
                       {order.shipping.shipping_rate && (
                         <div className="max-w-300px w-100per lh-25px">
                           <div className="ai-c jc-b w-100per">
                             <label className="mv-0px mr-5px">Carrier: </label>
-                            <label className=" mv-0px">
-                              {order.shipping.shipping_rate.carrier}{" "}
-                            </label>
+                            <label className=" mv-0px">{order.shipping.shipping_rate.carrier} </label>
                           </div>
                           <div className="ai-c jc-b w-100per">
                             <label className="mv-0px mr-5px">Speed: </label>
-                            <label className=" mv-0px">
-                              {order.shipping.shipping_rate.service}{" "}
-                            </label>
+                            <label className=" mv-0px">{order.shipping.shipping_rate.service} </label>
                           </div>
                           <div className="ai-c jc-b w-100per">
-                            <label className="mv-0px mr-5px">
-                              Delivery Time:{" "}
-                            </label>
+                            <label className="mv-0px mr-5px">Delivery Time: </label>
                             <label className=" mv-0px">
-                              {
-                                order.shipping.shipping_rate.est_delivery_days
-                              }{" "}
-                              {order.shipping.shipping_rate
-                                .est_delivery_days === 1 ? (
-                                "Day"
-                              ) : (
-                                "Days"
-                              )}{" "}
+                              {order.shipping.shipping_rate.est_delivery_days}{" "}
+                              {order.shipping.shipping_rate.est_delivery_days === 1 ? "Day" : "Days"}{" "}
                             </label>
                           </div>
                           <div className="ai-c jc-b w-100per">
                             <label className="mv-0px mr-5px">Rate: </label>
-                            <label className=" mv-0px">
-                              ${order.shipping.shipping_rate.retail_rate}
-                            </label>
+                            <label className=" mv-0px">${order.shipping.shipping_rate.retail_rate}</label>
                           </div>
                         </div>
                       )}
                     </div>
                   </div>
                   <div>
-                    {userInfo &&
-                    userInfo.isAdmin && (
+                    {userInfo && userInfo.isAdmin && (
                       <GLButton
                         variant="secondary"
                         className="w-200px mv-10px mr-1rem"
@@ -1007,17 +775,14 @@ ${order.shipping.first_name} ${order.shipping.last_name}
 ${order.shipping.address_1} ${order.shipping.address_2}
 ${order.shipping.city}, ${order.shipping.state}
 ${order.shipping.postalCode} ${order.shipping.country}
-${order.shipping.email}`)}
+${order.shipping.email}`)
+                        }
                       >
                         Copy to clipboard
                       </GLButton>
                     )}
-                    {userInfo &&
-                    userInfo.isAdmin && (
-                      <Link
-                        to={`/secure/glow/userprofile/${order.user &&
-                          order.user._id}`}
-                      >
+                    {userInfo && userInfo.isAdmin && (
+                      <Link to={`/secure/glow/userprofile/${order.user && order.user._id}`}>
                         <GLButton variant="secondary">View User</GLButton>
                       </Link>
                     )}
@@ -1027,21 +792,14 @@ ${order.shipping.email}`)}
 
               <div
                 style={{
-                  backgroundColor: width > 407 && determine_color(order),
+                  backgroundColor: width > 407 && determine_color(order)
                 }}
               >
                 <h2>Payment</h2>
                 <div style={{ borderTop: ".1rem white solid", width: "100%" }}>
-                  <p style={{ marginBottom: "0px" }}>
-                    {order.isPaid ? (
-                      "Paid at " + format_date(order.paidAt)
-                    ) : (
-                      "Not Paid"
-                    )}
-                  </p>
+                  <p style={{ marginBottom: "0px" }}>{order.isPaid ? "Paid at " + format_date(order.paidAt) : "Not Paid"}</p>
                 </div>
-                {userInfo &&
-                userInfo.isAdmin && (
+                {userInfo && userInfo.isAdmin && (
                   <div className="">
                     <div className="pt-1rem" htmlFor="payment">
                       Payment Method: {order.payment.paymentMethod}
@@ -1050,17 +808,14 @@ ${order.shipping.email}`)}
                 )}
               </div>
             </div>
-            <div
-              className="placeorder-action"
-              style={{ backgroundColor: width > 407 && determine_color(order) }}
-            >
+            <div className="placeorder-action" style={{ backgroundColor: width > 407 && determine_color(order) }}>
               <ul>
                 <li>
                   <h2 style={{ marginTop: 0 }}>Order Summary</h2>
                 </li>
                 <div
                   style={{
-                    backgroundColor: width > 407 && determine_color(order),
+                    backgroundColor: width > 407 && determine_color(order)
                   }}
                 >
                   <ul className="cart-list-container mt-0px">
@@ -1071,14 +826,7 @@ ${order.shipping.email}`)}
                       <div>Cart is empty</div>
                     ) : (
                       order.orderItems.map((item, index) => (
-                        <CartItem
-                          check_item_as_manufactured={
-                            check_item_as_manufactured
-                          }
-                          item={item}
-                          index={index}
-                          show_qty={false}
-                        />
+                        <CartItem check_item_as_manufactured={check_item_as_manufactured} item={item} index={index} show_qty={false} />
                       ))
                     )}
                   </ul>
@@ -1086,9 +834,7 @@ ${order.shipping.email}`)}
                 {!order.promo_code && (
                   <li>
                     <div>Subtotal</div>
-                    <div>
-                      ${order.itemsPrice && order.itemsPrice.toFixed(2)}
-                    </div>
+                    <div>${order.itemsPrice && order.itemsPrice.toFixed(2)}</div>
                   </li>
                 )}
 
@@ -1100,10 +846,7 @@ ${order.shipping.email}`)}
                     <div>
                       <del style={{ color: "red" }}>
                         <label style={{ color: "white" }}>
-                          ${order.orderItems &&
-                            order.orderItems
-                              .reduce((a, c) => a + c.price * c.qty, 0)
-                              .toFixed(2)}
+                          ${order.orderItems && order.orderItems.reduce((a, c) => a + c.price * c.qty, 0).toFixed(2)}
                         </label>
                       </del>
                     </div>
@@ -1112,12 +855,7 @@ ${order.shipping.email}`)}
                 {order.promo_code && (
                   <li>
                     <div>Discount</div>
-                    <div>
-                      -${(order.orderItems.reduce(
-                        (a, c) => a + c.price * c.qty,
-                        0
-                      ) - order.itemsPrice).toFixed(2)}
-                    </div>
+                    <div>-${(order.orderItems.reduce((a, c) => a + c.price * c.qty, 0) - order.itemsPrice).toFixed(2)}</div>
                   </li>
                 )}
                 {order.promo_code && (
@@ -1128,23 +866,11 @@ ${order.shipping.email}`)}
                 )}
                 <li>
                   <div>Tax</div>
-                  <div>
-                    ${order.taxPrice ? (
-                      order.taxPrice.toFixed(2)
-                    ) : (
-                      order.taxPrice
-                    )}
-                  </div>
+                  <div>${order.taxPrice ? order.taxPrice.toFixed(2) : order.taxPrice}</div>
                 </li>
                 <li>
                   <div>Shipping</div>
-                  <div>
-                    ${order.shippingPrice ? (
-                      order.shippingPrice.toFixed(2)
-                    ) : (
-                      order.shippingPrice
-                    )}
-                  </div>
+                  <div>${order.shippingPrice ? order.shippingPrice.toFixed(2) : order.shippingPrice}</div>
                 </li>
 
                 {order.tip > 0 && (
@@ -1156,13 +882,7 @@ ${order.shipping.email}`)}
                 {!order.isRefunded && (
                   <li>
                     <div>Order Total</div>
-                    <div>
-                      ${order.totalPrice ? (
-                        order.totalPrice.toFixed(2)
-                      ) : (
-                        order.totalPrice
-                      )}
-                    </div>
+                    <div>${order.totalPrice ? order.totalPrice.toFixed(2) : order.totalPrice}</div>
                   </li>
                 )}
                 {order.isRefunded && (
@@ -1170,13 +890,7 @@ ${order.shipping.email}`)}
                     <div>Order Total</div>
                     <del style={{ color: "red" }}>
                       <label style={{ color: "white" }}>
-                        <div>
-                          ${order.totalPrice ? (
-                            order.totalPrice.toFixed(2)
-                          ) : (
-                            order.totalPrice
-                          )}
-                        </div>
+                        <div>${order.totalPrice ? order.totalPrice.toFixed(2) : order.totalPrice}</div>
                       </label>
                     </del>
                   </li>
@@ -1184,68 +898,43 @@ ${order.shipping.email}`)}
                 {order.isRefunded && (
                   <li>
                     <div>Refund Amount</div>
-                    <div>
-                      ${(order.payment.refund.reduce(
-                        (a, c) => a + c.amount,
-                        0
-                      ) / 100).toFixed(2)}
-                    </div>
+                    <div>${(order.payment.refund.reduce((a, c) => a + c.amount, 0) / 100).toFixed(2)}</div>
                   </li>
                 )}
                 {order.isRefunded && (
                   <li>
                     <div>New Order Total</div>
-                    <div>
-                      ${(order.totalPrice -
-                        order.payment.refund.reduce((a, c) => a + c.amount, 0) /
-                          100).toFixed(2)}
-                    </div>
+                    <div>${(order.totalPrice - order.payment.refund.reduce((a, c) => a + c.amount, 0) / 100).toFixed(2)}</div>
                   </li>
                 )}
 
-                <li
-                  className="placeorder-actions-payment"
-                  style={{ display: "flex", justifyContent: "center" }}
-                />
+                <li className="placeorder-actions-payment" style={{ display: "flex", justifyContent: "center" }} />
                 {!order.isPaid && <Stripe pay_order={pay_order} />}
 
                 {order.promo_code && (
                   <div className="">
-                    <div
-                      style={{ borderTop: ".1rem white solid" }}
-                      className="pt-1rem"
-                      htmlFor="promo_code"
-                    >
+                    <div style={{ borderTop: ".1rem white solid" }} className="pt-1rem" htmlFor="promo_code">
                       Promo Code: {order.promo_code}
                     </div>
                   </div>
                 )}
                 {order.order_note && (
                   <div className="">
-                    <div
-                      style={{ borderTop: ".1rem white solid" }}
-                      className="pt-1rem"
-                      htmlFor="order_note"
-                    >
+                    <div style={{ borderTop: ".1rem white solid" }} className="pt-1rem" htmlFor="order_note">
                       Order Note: {order.order_note}
                     </div>
                   </div>
                 )}
                 {order.production_note && (
                   <div className="">
-                    <div
-                      style={{ borderTop: ".1rem white solid" }}
-                      className="pt-1rem"
-                      htmlFor="production_note"
-                    >
+                    <div style={{ borderTop: ".1rem white solid" }} className="pt-1rem" htmlFor="production_note">
                       Production Note: {order.production_note}
                     </div>
                   </div>
                 )}
               </ul>
 
-              {userInfo &&
-              userInfo.isAdmin && (
+              {userInfo && userInfo.isAdmin && (
                 <div className="column">
                   <label htmlFor="message_to_user">Message to User</label>
                   <input
@@ -1253,8 +942,7 @@ ${order.shipping.email}`)}
                     // value={message_to_user}
                     name="message_to_user"
                     id="message_to_user"
-                    onChange={e =>
-                      localStorage.setItem("message_to_user", e.target.value)}
+                    onChange={e => localStorage.setItem("message_to_user", e.target.value)}
                   />
                 </div>
               )}
@@ -1272,8 +960,7 @@ ${order.shipping.email}`)}
 									</Link>
 								</GLButton>
 							)} */}
-              {userInfo &&
-              userInfo.isAdmin && (
+              {userInfo && userInfo.isAdmin && (
                 <div>
                   <div className="jc-b">
                     <div className="column jc-b w-100per mr-1rem">
@@ -1287,52 +974,28 @@ ${order.shipping.email}`)}
                     </div>
                     <div className="column jc-b w-100per">
                       {order.shipping.shipping_label && (
-                        <GLButton
-                          variant="secondary"
-                          className="mv-5px"
-                          onClick={() => view_label()}
-                        >
+                        <GLButton variant="secondary" className="mv-5px" onClick={() => view_label()}>
                           Print Label
                         </GLButton>
                       )}
-                      {userInfo &&
-                      userInfo.isAdmin && (
-                        <GLButton
-                          variant="secondary"
-                          className="w-100per mv-5px "
-                          onClick={get_invoice}
-                        >
+                      {userInfo && userInfo.isAdmin && (
+                        <GLButton variant="secondary" className="w-100per mv-5px " onClick={get_invoice}>
                           Print Invoice
                         </GLButton>
                       )}
-                      {hide_label_button &&
-                      !order.shipping.shipping_label && (
-                        <GLButton
-                          variant="primary"
-                          className="mv-5px"
-                          onClick={() => buy_label()}
-                        >
+                      {hide_label_button && !order.shipping.shipping_label && (
+                        <GLButton variant="primary" className="mv-5px" onClick={() => buy_label()}>
                           Buy Label
                         </GLButton>
                       )}
                       <GLButton variant="secondary" className="mv-5px">
-                        <Link to={"/secure/glow/editorder/" + order._id}>
-                          Edit Order
-                        </Link>
+                        <Link to={"/secure/glow/editorder/" + order._id}>Edit Order</Link>
                       </GLButton>
-                      <GLButton
-                        variant="secondary"
-                        className="mv-5px"
-                        onClick={() => dispatch(deleteOrder(order._id))}
-                      >
+                      <GLButton variant="secondary" className="mv-5px" onClick={() => dispatch(deleteOrder(order._id))}>
                         Delete Order
                       </GLButton>
                       {hide_label_button && (
-                        <GLButton
-                          variant="secondary"
-                          className="mv-5px"
-                          onClick={e => get_shipping_rates(e)}
-                        >
+                        <GLButton variant="secondary" className="mv-5px" onClick={e => get_shipping_rates(e)}>
                           Change Shipping Speed
                         </GLButton>
                       )}
@@ -1347,97 +1010,51 @@ ${order.shipping.email}`)}
 
                                 <div>${parseFloat(rate.rate).toFixed(2)}</div>
                                 <div>
-                                  {rate.delivery_days}{" "}
-                                  {rate.delivery_days === 1 ? "Day" : "Days"}
+                                  {rate.delivery_days} {rate.delivery_days === 1 ? "Day" : "Days"}
                                 </div>
                               </div>
-                              <GLButton
-                                className="rates"
-                                onClick={e =>
-                                  choose_shipping_rate(e, rate, rate.service)}
-                              >
+                              <GLButton className="rates" onClick={e => choose_shipping_rate(e, rate, rate.service)}>
                                 Select
                               </GLButton>
                             </div>
                           );
                         })}
-                      {!hide_label_button &&
-                      rate && (
+                      {!hide_label_button && rate && (
                         <div className=" mv-1rem jc-b ai-c w-100per">
                           <div className="shipping_rates jc-b w-100per ">
                             <div>
                               {rate.speed} ${parseFloat(rate.rate.rate)}
-                              {rate.rate.delivery_days}{" "}
-                              {rate.rate.delivery_days === 1 ? "Day" : "Days"}
+                              {rate.rate.delivery_days} {rate.rate.delivery_days === 1 ? "Day" : "Days"}
                             </div>
                           </div>
-                          <GLButton
-                            className="rates w-10rem"
-                            onClick={e => re_choose_shipping_rate(e)}
-                          >
+                          <GLButton className="rates w-10rem" onClick={e => re_choose_shipping_rate(e)}>
                             Change
                           </GLButton>
                         </div>
                       )}
                       {!hide_label_button && (
-                        <GLButton
-                          variant="primary"
-                          className="mv-5px"
-                          onClick={() => buy_new_speed_label()}
-                        >
+                        <GLButton variant="primary" className="mv-5px" onClick={() => buy_new_speed_label()}>
                           Buy New Speed Label
                         </GLButton>
                       )}
 
-                      <GLButton
-                        variant="secondary"
-                        className="mv-5px"
-                        onClick={() => create_label("first")}
-                      >
-                        {!order.shipping.shipping_label ? (
-                          "Create First Class Label"
-                        ) : (
-                          "Create First Class New Label"
-                        )}
+                      <GLButton variant="secondary" className="mv-5px" onClick={() => create_label("first")}>
+                        {!order.shipping.shipping_label ? "Create First Class Label" : "Create First Class New Label"}
                       </GLButton>
-                      <GLButton
-                        variant="secondary"
-                        className="mv-5px"
-                        onClick={() => create_label("priority")}
-                      >
-                        {!order.shipping.shipping_label ? (
-                          "Create Priority Label"
-                        ) : (
-                          "Create New Prioirty Label"
-                        )}
+                      <GLButton variant="secondary" className="mv-5px" onClick={() => create_label("priority")}>
+                        {!order.shipping.shipping_label ? "Create Priority Label" : "Create New Prioirty Label"}
                       </GLButton>
-                      <GLButton
-                        variant="secondary"
-                        className="mv-5px"
-                        onClick={() => create_label("express")}
-                      >
-                        {!order.shipping.shipping_label ? (
-                          "Create Express Label"
-                        ) : (
-                          "Create New Express Label"
-                        )}
+                      <GLButton variant="secondary" className="mv-5px" onClick={() => create_label("express")}>
+                        {!order.shipping.shipping_label ? "Create Express Label" : "Create New Express Label"}
                       </GLButton>
 
                       {!order.shipping.return_shipping_label && (
-                        <GLButton
-                          variant="secondary"
-                          className="mv-5px"
-                          onClick={() => create_return_label()}
-                        >
+                        <GLButton variant="secondary" className="mv-5px" onClick={() => create_return_label()}>
                           Create Return Label
                         </GLButton>
                       )}
                       {order.shipping.return_shipping_label && (
-                        <GLButton
-                          variant="secondary"
-                          className="mv-5px"
-                          onClick={() => view_return_label()}
-                        >
+                        <GLButton variant="secondary" className="mv-5px" onClick={() => view_return_label()}>
                           View Return Label
                         </GLButton>
                       )}
@@ -1457,31 +1074,18 @@ ${order.shipping.email}`)}
 											)} */}
                       {order.shipping.return_shipping_label && (
                         <a
-                          href={
-                            order.shipping.return_shipping_label.postage_label
-                              .label_url
-                          }
+                          href={order.shipping.return_shipping_label.postage_label.label_url}
                           style={{ width: "100%" }}
                           target="_blank"
                           rel="noreferrer"
-                          download={
-                            order.shipping.return_shipping_label.postage_label
-                              .label_url
-                          }
+                          download={order.shipping.return_shipping_label.postage_label.label_url}
                         >
-                          <GLButton
-                            variant="secondary"
-                            className="mv-5px w-100per"
-                          >
+                          <GLButton variant="secondary" className="mv-5px w-100per">
                             Download Return Label
                           </GLButton>
                         </a>
                       )}
-                      <GLButton
-                        variant="secondary"
-                        className="mv-5px"
-                        onClick={() => create_duplicate_order(order._id)}
-                      >
+                      <GLButton variant="secondary" className="mv-5px" onClick={() => create_duplicate_order(order._id)}>
                         Create Duplicate Order
                       </GLButton>
 
@@ -1549,31 +1153,15 @@ ${order.shipping.email}`)}
                       </div>
                     </div>
                     <div className="">
-                      <GLButton
-                        variant="primary"
-                        className="mv-5px w-100per"
-                        onClick={() => update_refund_state(refund_amount)}
-                      >
+                      <GLButton variant="primary" className="mv-5px w-100per" onClick={() => update_refund_state(refund_amount)}>
                         Refund Partial Amount
                       </GLButton>
-                      <GLButton
-                        variant="primary"
-                        className="mv-5px w-100per"
-                        onClick={() => update_refund_state(order.totalPrice)}
-                      >
+                      <GLButton variant="primary" className="mv-5px w-100per" onClick={() => update_refund_state(order.totalPrice)}>
                         Refund Full Amount
                       </GLButton>
 
                       <GLButton variant="secondary" className="mv-5px w-100per">
-                        <Link
-                          to={
-                            "/secure/glow/emails/order/" +
-                            order._id +
-                            "/order/false"
-                          }
-                        >
-                          View Email
-                        </Link>
+                        <Link to={"/secure/glow/emails/order/" + order._id + "/order/false"}>View Email</Link>
                       </GLButton>
                     </div>
                   </div>

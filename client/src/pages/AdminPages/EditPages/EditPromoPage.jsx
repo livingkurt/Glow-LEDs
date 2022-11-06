@@ -58,7 +58,6 @@ const EditPromoPage = props => {
     let clean = true;
     if (clean) {
       if (props.match.params.id) {
-        console.log("Is ID");
         dispatch(detailsPromo(props.match.params.id));
         dispatch(detailsPromo(props.match.params.id));
       } else {
@@ -78,7 +77,7 @@ const EditPromoPage = props => {
       limit: 0,
       page: 1
     });
-    console.log(data);
+
     set_categories(data);
   };
 
@@ -86,10 +85,8 @@ const EditPromoPage = props => {
     let clean = true;
     if (clean) {
       if (promo) {
-        console.log("Set");
         set_state();
       } else {
-        console.log("UnSet");
         unset_state();
       }
     }
@@ -101,7 +98,6 @@ const EditPromoPage = props => {
   }, 500);
 
   const set_state = () => {
-    console.log({ promo });
     set_id(promo._id);
     set_affiliate(promo.affiliate && promo.affiliate._id);
     set_user(promo.user && promo.user._id);

@@ -20,7 +20,6 @@ export default {
 
       return await content_db.findAll_contents_db(filter, sort, limit);
     } catch (error) {
-      console.log({ findAll_contents_s_error: error });
       throw new Error(error.message);
     }
   },
@@ -31,7 +30,6 @@ export default {
       const filter = { deleted: false, active: true };
       return await content_db.findAll_contents_db(filter, sort, limit);
     } catch (error) {
-      console.log({ findAll_contents_s_error: error });
       throw new Error(error.message);
     }
   },
@@ -44,9 +42,9 @@ export default {
       const dates_html = root.querySelectorAll(".wideeventDate");
       const venues_html = root.querySelectorAll(".wideeventVenue");
       const titles = titles_html.map((node: any) => node.childNodes.map((node: any) => node.childNodes[0].childNodes[0]._rawText));
-      // console.log({ links: titles_html[0].childNodes[0].rawAttrs.split("'")[1] });
+      //
       const links = titles_html.map((node: any) => node.childNodes.map((node: any) => node.rawAttrs.split("'")[1]));
-      // console.log({ links });
+      //
       const dates = dates_html.map((node: any) => node.childNodes[0]._rawText);
       const cities = venues_html.map((node: any) => node.childNodes[0].childNodes[0].childNodes[0]._rawText);
       const states = venues_html.map((node: any) => node.childNodes[0].childNodes[2].childNodes[0]._rawText);
@@ -69,7 +67,6 @@ export default {
       });
       return events;
     } catch (error) {
-      console.log({ error });
       throw new Error(error.message);
     }
   },
@@ -82,9 +79,9 @@ export default {
       const dates_html = root.querySelectorAll(".wideeventDate");
       const venues_html = root.querySelectorAll(".wideeventVenue");
       const titles = titles_html.map((node: any) => node.childNodes.map((node: any) => node.childNodes[0].childNodes[0]._rawText));
-      // console.log({ links: titles_html[0].childNodes[0].rawAttrs.split("'")[1] });
+      //
       const links = titles_html.map((node: any) => node.childNodes.map((node: any) => node.rawAttrs.split("'")[1]));
-      // console.log({ links });
+      //
       const dates = dates_html.map((node: any) => node.childNodes[0]._rawText);
       const cities = venues_html.map((node: any) => node.childNodes[0].childNodes[0].childNodes[0]._rawText);
       const states = venues_html.map((node: any) => node.childNodes[0].childNodes[2].childNodes[0]._rawText);
@@ -107,7 +104,6 @@ export default {
       });
       return events;
     } catch (error) {
-      console.log({ error });
       throw new Error(error.message);
     }
   },
@@ -115,7 +111,6 @@ export default {
     try {
       return await content_db.findById_contents_db(params.id);
     } catch (error) {
-      console.log({ findById_contents_s_error: error });
       throw new Error(error.message);
     }
   },
@@ -123,7 +118,6 @@ export default {
     try {
       return await content_db.create_contents_db(body);
     } catch (error) {
-      console.log({ create_contents_s_error: error });
       throw new Error(error.message);
     }
   },
@@ -131,7 +125,6 @@ export default {
     try {
       return await content_db.update_contents_db(params.id, body);
     } catch (error) {
-      console.log({ update_contents_s_error: error });
       throw new Error(error.message);
     }
   },
@@ -139,7 +132,6 @@ export default {
     try {
       return await content_db.remove_contents_db(params.id);
     } catch (error) {
-      console.log({ remove_contents_s_error: error });
       throw new Error(error.message);
     }
   }

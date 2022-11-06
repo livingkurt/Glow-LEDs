@@ -67,7 +67,6 @@ const AffiliatesPage = props => {
   }, []);
 
   const deleteHandler = pathname => {
-    console.log({ pathname });
     dispatch(deleteAffiliate(pathname));
   };
 
@@ -109,12 +108,12 @@ const AffiliatesPage = props => {
 
   const get_last_months_orders = async () => {
     const { data } = await API_Orders.last_months_orders();
-    console.log({ data });
+
     set_last_months_orders(data);
   };
   const get_total_orders = async () => {
     const { data } = await API_Orders.findAll_orders_a();
-    console.log({ data });
+
     set_total_orders(data);
   };
 
@@ -129,11 +128,11 @@ const AffiliatesPage = props => {
   };
 
   const get_code_usage = async affiliate => {
-    // console.log({ pathname: affiliate.pathname });
+    //
     const {
       data: { number_of_uses, revenue }
     } = await API_Promos.get_code_usage(affiliate.public_code.promo_code);
-    console.log({ number_of_uses, revenue });
+
     return { number_of_uses, revenue };
     // set_number_of_uses(number_of_uses);
     // set_revenue(revenue);
@@ -152,7 +151,7 @@ const AffiliatesPage = props => {
 
   const upload_rave_mob_csv = async csv => {
     const { data } = API_Affiliates.upload_rave_mob_csv(csv);
-    console.log({ upload_rave_mob_csv: data });
+
     dispatch(listAffiliates({}));
     dispatch(listAffiliates({}));
   };

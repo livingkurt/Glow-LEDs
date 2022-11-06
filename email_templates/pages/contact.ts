@@ -12,8 +12,6 @@ export default (props: {
   song_id: string;
   quote: string;
 }) => {
-  console.log({ props });
-
   return `
     <h1>
       Hello Kurt,
@@ -21,8 +19,9 @@ export default (props: {
     <p>
       ${props.message}
     </p>
-    ${props.reason_for_contact === "Custom Orders"
-      ? `<h2
+    ${
+      props.reason_for_contact === "Custom Orders"
+        ? `<h2
     className="title_font"
     style={{ textAlign: "center", marginBottom: "30px" }}
     id="ordering_custom_products"
@@ -96,7 +95,8 @@ export default (props: {
     free to send it as a suggestion and we may have it on the
     website in the near future!
   </p>`
-      : ""}
+        : ""
+    }
     <h3>
       Thank you,
     </h3>
@@ -106,25 +106,17 @@ export default (props: {
 
       <div>Email: ${props.email}</div>
 
-      ${props.order_number
-        ? `<div>Order Number: ${props.order_number}</div>`
-        : `<div></div>`}
+      ${props.order_number ? `<div>Order Number: ${props.order_number}</div>` : `<div></div>`}
 
       <div>Reason For Contact: ${props.reason_for_contact}</div>
 
      
 
-      ${props.artist_name
-        ? `<div>Glover Name: ${props.artist_name}</div>`
-        : `<div></div>`}
+      ${props.artist_name ? `<div>Glover Name: ${props.artist_name}</div>` : `<div></div>`}
 
-      ${props.instagram_handle
-        ? `<div>Instagram Handle: ${props.instagram_handle}</div>`
-        : `<div></div>`}
+      ${props.instagram_handle ? `<div>Instagram Handle: ${props.instagram_handle}</div>` : `<div></div>`}
 
-      ${props.facebook_name
-        ? `<div>Facebook Name: ${props.facebook_name}</div>`
-        : `<div></div>`}
+      ${props.facebook_name ? `<div>Facebook Name: ${props.facebook_name}</div>` : `<div></div>`}
 
       ${props.song_id ? `<div>Song ID: ${props.song_id}</div>` : `<div></div>`}
 

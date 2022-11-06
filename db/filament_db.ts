@@ -5,7 +5,6 @@ export default {
     try {
       return await Filament.find(filter).sort(sort);
     } catch (error) {
-      console.log({ findAll_filaments_db_error: error });
       throw new Error(error.message);
     }
   },
@@ -13,17 +12,15 @@ export default {
     try {
       return await Filament.findOne({ _id: id });
     } catch (error) {
-      console.log({ findById_filaments_db_error: error });
       throw new Error(error.message);
     }
   },
   findMy_filaments_db: async (user_id: string) => {
     try {
       return await Filament.find({ deleted: false, user: user_id }).sort({
-        _id: -1,
+        _id: -1
       });
     } catch (error) {
-      console.log({ findById_filaments_db_error: error });
       throw new Error(error.message);
     }
   },
@@ -31,7 +28,6 @@ export default {
     try {
       return await Filament.create(body);
     } catch (error) {
-      console.log({ create_filaments_db_error: error });
       throw new Error(error.message);
     }
   },
@@ -42,7 +38,6 @@ export default {
         return await Filament.updateOne({ _id: id }, body);
       }
     } catch (error) {
-      console.log({ update_filaments_db_error: error });
       throw new Error(error.message);
     }
   },
@@ -53,8 +48,7 @@ export default {
         return await Filament.updateOne({ _id: id }, { deleted: true });
       }
     } catch (error) {
-      console.log({ remove_filaments_db_error: error });
       throw new Error(error.message);
     }
-  },
+  }
 };

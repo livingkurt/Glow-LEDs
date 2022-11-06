@@ -2,10 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { detailsProduct } from "../../actions/productActions";
-import {
-  PictureChooser,
-  ProductSlideshow,
-} from "../../components/SpecialtyComponents";
+import { PictureChooser, ProductSlideshow } from "../../components/SpecialtyComponents";
 import { Loading } from "../../components/UtilityComponents";
 import { Helmet } from "react-helmet";
 import { addToCart } from "../../actions/cartActions";
@@ -17,7 +14,7 @@ import {
   ProductFacts,
   ProductImages,
   ProductOptions,
-  ProductSelection,
+  ProductSelection
 } from "../../components/SpecialtyComponents/ProductPageComponents";
 import { GLButton } from "../../components/GlowLEDsComponents";
 
@@ -27,61 +24,52 @@ const ProductPage = props => {
   const cart = useSelector(state => state.cart);
   let { cartItems } = cart;
 
-  const [ name, set_name ] = useState("");
-  const [ description, set_description ] = useState("");
-  const [ facts, set_facts ] = useState("");
-  const [ included_items, set_included_items ] = useState("");
-  const [ qty, setQty ] = useState(1);
-  const [ images, set_images ] = useState([]);
-  const [ price, set_price ] = useState();
+  const [name, set_name] = useState("");
+  const [description, set_description] = useState("");
+  const [facts, set_facts] = useState("");
+  const [included_items, set_included_items] = useState("");
+  const [qty, setQty] = useState(1);
+  const [images, set_images] = useState([]);
+  const [price, set_price] = useState();
 
-  const [ previous_price, set_previous_price ] = useState(0);
-  const [ sale_price, set_sale_price ] = useState(0);
-  const [ size, set_size ] = useState();
-  const [ quantity, set_quantity ] = useState();
-  const [ count_in_stock, set_count_in_stock ] = useState();
-  const [ image, set_image ] = useState("");
-  const [ secondary_image, set_secondary_image ] = useState("");
-  const [ secondary_images, set_secondary_images ] = useState([]);
+  const [previous_price, set_previous_price] = useState(0);
+  const [sale_price, set_sale_price] = useState(0);
+  const [size, set_size] = useState();
+  const [quantity, set_quantity] = useState();
+  const [count_in_stock, set_count_in_stock] = useState();
+  const [image, set_image] = useState("");
+  const [secondary_image, set_secondary_image] = useState("");
+  const [secondary_images, set_secondary_images] = useState([]);
 
-  const [ dimensions, set_dimensions ] = useState({});
+  const [dimensions, set_dimensions] = useState({});
 
-  const [ color, set_color ] = useState("");
-  const [ secondary_color, set_secondary_color ] = useState("");
+  const [color, set_color] = useState("");
+  const [secondary_color, set_secondary_color] = useState("");
 
-  const [ color_code, set_color_code ] = useState("");
-  const [ secondary_color_code, set_secondary_color_code ] = useState("");
+  const [color_code, set_color_code] = useState("");
+  const [secondary_color_code, set_secondary_color_code] = useState("");
 
-  const [ color_product, set_color_product ] = useState(null);
-  const [ color_products, set_color_products ] = useState([]);
-  const [ secondary_color_product, set_secondary_color_product ] = useState(
-    null
-  );
-  const [ secondary_color_products, set_secondary_color_products ] = useState(
-    []
-  );
-  const [ option_product, set_option_product ] = useState(null);
-  const [ option_products, set_option_products ] = useState([]);
-  const [ secondary_product, set_secondary_product ] = useState(null);
-  const [ secondary_products, set_secondary_products ] = useState([]);
-  const [ preorder, set_preorder ] = useState(false);
+  const [color_product, set_color_product] = useState(null);
+  const [color_products, set_color_products] = useState([]);
+  const [secondary_color_product, set_secondary_color_product] = useState(null);
+  const [secondary_color_products, set_secondary_color_products] = useState([]);
+  const [option_product, set_option_product] = useState(null);
+  const [option_products, set_option_products] = useState([]);
+  const [secondary_product, set_secondary_product] = useState(null);
+  const [secondary_products, set_secondary_products] = useState([]);
+  const [preorder, set_preorder] = useState(false);
 
-  const [ secondary_product_name, set_secondary_product_name ] = useState("");
-  const [ option_product_name, set_option_product_name ] = useState("");
+  const [secondary_product_name, set_secondary_product_name] = useState("");
+  const [option_product_name, set_option_product_name] = useState("");
 
-  const [ color_product_object, set_color_product_object ] = useState({});
-  const [
-    secondary_color_product_object,
-    set_secondary_color_product_object,
-  ] = useState({});
-  const [ option_product_object, set_option_product_object ] = useState({});
-  const [ secondary_product_object, set_secondary_product_object ] = useState(
-    {}
-  );
+  const [color_product_object, set_color_product_object] = useState({});
+  const [secondary_color_product_object, set_secondary_color_product_object] = useState({});
+  const [option_product_object, set_option_product_object] = useState({});
+  const [secondary_product_object, set_secondary_product_object] = useState({});
 
-  const [ show_add_on, set_show_add_on ] = useState(false);
-  const [ add_on_price, set_add_on_price ] = useState(0);
-  const [ has_add_on, set_has_add_on ] = useState(false);
+  const [show_add_on, set_show_add_on] = useState(false);
+  const [add_on_price, set_add_on_price] = useState(0);
+  const [has_add_on, set_has_add_on] = useState(false);
   // const [ color_group_name, set_color_group_name ] = useState('');
   // const [ secondary_color_group_name, set_secondary_color_group_name ] = useState('');
   // const [ option_group_name, set_option_group_name ] = useState('');
@@ -101,7 +89,7 @@ const ProductPage = props => {
 
   const open_cart = () => {
     const cart = document.querySelector(".cart_sidebar");
-    console.log(cart.classList.value);
+
     if (cart.classList.value === "cart_sidebar open") {
       document.querySelector(".cart_sidebar").classList.remove("open");
     } else if (cart.classList.value === "cart_sidebar") {
@@ -121,16 +109,13 @@ const ProductPage = props => {
     return () => (clean = false);
   }, []);
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        dispatch(detailsProduct(props.match.params.pathname));
-      }
-      return () => (clean = false);
-    },
-    [ props.match.params.pathname ]
-  );
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      dispatch(detailsProduct(props.match.params.pathname));
+    }
+    return () => (clean = false);
+  }, [props.match.params.pathname]);
 
   const update_universal_state = item => {
     set_previous_price(0);
@@ -162,7 +147,7 @@ const ProductPage = props => {
       set_color_products(item.color_products);
       set_secondary_color_products(item.secondary_color_products);
       set_option_products(item.option_products);
-      console.log({ option_products: item.option_products });
+
       set_secondary_products(item.secondary_products);
       set_included_items(item.included_items);
       set_has_add_on(item.has_add_on);
@@ -172,41 +157,34 @@ const ProductPage = props => {
         package_length: item.package_length,
         package_width: item.package_width,
         package_height: item.package_height,
-        package_volume: item.package_volume,
+        package_volume: item.package_volume
       });
       set_size(item.size);
     }
   };
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (product) {
-          determine_options(product);
-        } else {
-          console.log("UnSet");
-          unset_state();
-        }
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (product) {
+        determine_options(product);
+      } else {
+        unset_state();
       }
-      return () => (clean = false);
-    },
-    [ product ]
-  );
+    }
+    return () => (clean = false);
+  }, [product]);
 
   const determine_options = product => {
-    console.log({ product });
     update_universal_state(product);
     const query = getUrlParameter(props.location);
     if (props.location.search.length === 0) {
-      // console.log({ message: 'Query Does Not Exist' });
+      //
       if (product.color_products) {
         set_color_products(product.color_products);
 
-        const color = product.color_products.find(
-          color => color.default_option === true
-        );
-        // console.log({ color });
+        const color = product.color_products.find(color => color.default_option === true);
+        //
         if (color) {
           update_color_product_state(color);
         }
@@ -214,10 +192,8 @@ const ProductPage = props => {
       if (product.secondary_color_products) {
         set_secondary_color_products(product.secondary_color_products);
 
-        const secondary_color = product.secondary_color_products.find(
-          secondary_color => secondary_color.default_option === true
-        );
-        // console.log({ secondary_color });
+        const secondary_color = product.secondary_color_products.find(secondary_color => secondary_color.default_option === true);
+        //
         if (secondary_color) {
           update_secondary_color_product_state(secondary_color);
           if (product.has_add_on) {
@@ -235,9 +211,7 @@ const ProductPage = props => {
       if (product.option_products) {
         set_option_products(product.option_products);
 
-        const option = product.option_products.find(
-          option => option.default_option === true
-        );
+        const option = product.option_products.find(option => option.default_option === true);
         if (option) {
           update_option_product_state(option);
         }
@@ -246,21 +220,17 @@ const ProductPage = props => {
         // update_secondary_product_state(product.secondary_products[0]);
       }
     } else if (props.location.search.length > 0) {
-      // console.log({ message: 'Query Does Exist' });
+      //
       if (product.color_products) {
-        const color = product.color_products.find(
-          color => color.color === query.color
-        );
-        // console.log({ query_color: color });
+        const color = product.color_products.find(color => color.color === query.color);
+        //
         if (color) {
           update_color_product_state(color);
         }
       }
       if (product.secondary_color_products) {
         set_secondary_products(product.secondary_products);
-        const secondary_color = product.secondary_color_products.find(
-          secondary_color => secondary_color.color === query.secondary_color
-        );
+        const secondary_color = product.secondary_color_products.find(secondary_color => secondary_color.color === query.secondary_color);
         if (secondary_color) {
           update_secondary_color_product_state(secondary_color);
         }
@@ -271,26 +241,19 @@ const ProductPage = props => {
           query_option = query.option.split("%20").join(" ");
         }
 
-        const option = product.option_products.find(
-          option => option.size === query_option.split("%20").join(" ")
-        );
+        const option = product.option_products.find(option => option.size === query_option.split("%20").join(" "));
         if (option) {
           update_option_product_state(option);
         }
       }
       if (product.secondary_products && product.secondary_products.length > 0) {
-        console.log({ query_secondary: query.secondary });
         set_secondary_products(product.secondary_products);
         let query_secondary = query.secondary;
         if (query.secondary && query.secondary.indexOf("%20") > -1) {
           query_secondary = query.secondary.split("%20").join(" ");
         }
         const secondary =
-          query.secondary &&
-          product.secondary_products.find(
-            secondary =>
-              secondary.name === query_secondary.split("%20").join(" ")
-          );
+          query.secondary && product.secondary_products.find(secondary => secondary.name === query_secondary.split("%20").join(" "));
         if (secondary) {
           update_secondary_product_state(secondary);
         }
@@ -299,7 +262,7 @@ const ProductPage = props => {
   };
 
   const update_color_product_state = color => {
-    // console.log({ color });
+    //
     set_color_product(color._id);
     set_color(color.color);
     set_color_code(color.color_code);
@@ -370,7 +333,7 @@ const ProductPage = props => {
       package_length: option.package_length,
       package_width: option.package_width,
       package_height: option.package_height,
-      package_volume: option.package_volume,
+      package_volume: option.package_volume
     });
     set_option_product(option._id);
     set_option_product_name(option.name);
@@ -378,7 +341,7 @@ const ProductPage = props => {
   };
 
   const update_secondary_product_state = secondary => {
-    // console.log({ secondary });
+    //
     set_secondary_product(secondary._id);
     set_secondary_product_name(secondary.name);
     set_secondary_product_object(secondary);
@@ -437,33 +400,23 @@ const ProductPage = props => {
     set_has_add_on(false);
   };
 
-  const update_url = (
-    color = "",
-    secondary_color = "",
-    option = "",
-    secondary_product = ""
-  ) => {
+  const update_url = (color = "", secondary_color = "", option = "", secondary_product = "") => {
     history.push({
-      search: `${color ? "?color=" + color : ""}${show_add_on && secondary_color
-        ? "?secondary_color=" + secondary_color
-        : ""}${option ? "?option=" + option : ""}${secondary_product
-        ? "?secondary=" + secondary_product
-        : ""}`,
+      search: `${color ? "?color=" + color : ""}${show_add_on && secondary_color ? "?secondary_color=" + secondary_color : ""}${
+        option ? "?option=" + option : ""
+      }${secondary_product ? "?secondary=" + secondary_product : ""}`
     });
   };
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (error) {
-          props.history.push("/collections/all/products");
-        }
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (error) {
+        props.history.push("/collections/all/products");
       }
-      return () => (clean = false);
-    },
-    [ error ]
-  );
+    }
+    return () => (clean = false);
+  }, [error]);
 
   useEffect(() => {
     let clean = true;
@@ -471,20 +424,14 @@ const ProductPage = props => {
       if (process.env.NODE_ENV === "production") {
         const recently_viewed = sessionStorage.getItem("recently_viewed");
         const products = JSON.parse(recently_viewed);
-        // console.log({ product });
+        //
         if (recently_viewed) {
           if (product && product.hasOwnProperty("name")) {
-            sessionStorage.setItem(
-              "recently_viewed",
-              JSON.stringify([ product, ...products ])
-            );
+            sessionStorage.setItem("recently_viewed", JSON.stringify([product, ...products]));
           }
         } else {
           if (product && product.hasOwnProperty("name")) {
-            sessionStorage.setItem(
-              "recently_viewed",
-              JSON.stringify([ product ])
-            );
+            sessionStorage.setItem("recently_viewed", JSON.stringify([product]));
           }
         }
       }
@@ -506,19 +453,11 @@ const ProductPage = props => {
       product: product._id,
       color_product,
       color_code,
-      secondary_color_code: determine_addon_color()
-        ? secondary_color_code
-        : null,
-      secondary_color_product: determine_addon_color()
-        ? secondary_color_product
-        : null,
-      secondary_color_group_name: determine_addon_color()
-        ? product.secondary_color_group_name
-        : null,
+      secondary_color_code: determine_addon_color() ? secondary_color_code : null,
+      secondary_color_product: determine_addon_color() ? secondary_color_product : null,
+      secondary_color_group_name: determine_addon_color() ? product.secondary_color_group_name : null,
       secondary_color: determine_addon_color() ? secondary_color : null,
-      secondary_color_product_name: determine_addon_color()
-        ? product.secondary_color_product_name
-        : null,
+      secondary_color_product_name: determine_addon_color() ? product.secondary_color_product_name : null,
       color_group_name: product.color_group_name,
       option_group_name: product.option_group_name,
       secondary_group_name: product.secondary_group_name,
@@ -552,7 +491,7 @@ const ProductPage = props => {
       count_in_stock: product.count_in_stock,
       add_on_price,
       show_add_on,
-      has_add_on: product.has_add_on,
+      has_add_on: product.has_add_on
     };
     if (preorder) {
       const confirm = window.confirm(
@@ -580,7 +519,7 @@ const ProductPage = props => {
   // 				date_2
   // 			)} \n\nThank you so much for your support! 💙`
   // 		);
-  // 		console.log({ confirm });
+  //
   // 		return confirm;
   // 	} else {
   // 		return true;
@@ -589,7 +528,7 @@ const ProductPage = props => {
 
   const update_color = e => {
     const option = JSON.parse(e.target.value);
-    // console.log({ option });
+    //
     // if (
     //   option.price !== 0 ||
     //   option.price === null ||
@@ -618,17 +557,12 @@ const ProductPage = props => {
     if (option.count_in_stock) {
       set_count_in_stock(option.count_in_stock);
     }
-    update_url(
-      option.color,
-      secondary_color,
-      option_product_name,
-      secondary_product_name
-    );
+    update_url(option.color, secondary_color, option_product_name, secondary_product_name);
   };
 
   const update_secondary_color = e => {
     const option = JSON.parse(e.target.value);
-    // console.log({ option });
+    //
 
     // if (
     //   option.price !== 0 ||
@@ -672,12 +606,7 @@ const ProductPage = props => {
         set_sale_price(option.sale_price + product.price);
       }
     }
-    update_url(
-      color,
-      option.color,
-      option_product_name,
-      secondary_product_name
-    );
+    update_url(color, option.color, option_product_name, secondary_product_name);
   };
 
   const update_option = e => {
@@ -691,7 +620,6 @@ const ProductPage = props => {
       set_preorder(false);
     }
     if (option.price > 0) {
-      console.log({ has_add_on, price: option.price + add_on_price });
       if (has_add_on && show_add_on) {
         set_price(option.price + add_on_price);
         set_sale_price(option.sale_price + add_on_price);
@@ -729,7 +657,7 @@ const ProductPage = props => {
       package_length: option.package_length,
       package_width: option.package_width,
       package_height: option.package_height,
-      package_volume: option.package_volume,
+      package_volume: option.package_volume
     });
     set_option_product_object(option);
     set_option_product(option._id);
@@ -744,10 +672,7 @@ const ProductPage = props => {
         set_images(secondary.images);
         set_image(secondary.images[0]);
       }
-      if (
-        product.name !== "Diffuser Caps + Adapters Starter Kit V4" &&
-        product.name !== "CLOZD Omniskinz Sleds"
-      ) {
+      if (product.name !== "Diffuser Caps + Adapters Starter Kit V4" && product.name !== "CLOZD Omniskinz Sleds") {
         set_option_products(secondary.option_products);
       }
     }
@@ -758,9 +683,6 @@ const ProductPage = props => {
       set_count_in_stock(secondary.count_in_stock);
     }
 
-    console.log({ secondary });
-    console.log({ name: product.name });
-    console.log({ color_products: secondary.color_products });
     if (
       product.name === "CLOZD Nanoskinz V2" ||
       product.name === "OPYN Nanoskinz V2" ||
@@ -788,41 +710,28 @@ const ProductPage = props => {
     update_url(color, secondary_color, option_product_name, secondary.name);
   };
 
-  const [ out_of_stock, set_out_of_stock ] = useState();
-  const [ show_product_options, set_show_product_options ] = useState();
+  const [out_of_stock, set_out_of_stock] = useState();
+  const [show_product_options, set_show_product_options] = useState();
 
   return (
     <div className="">
       <div className="p-1rem">
         <div className="jc-b">
           <div className="mb-10px">
-            <Link
-              to={props.location.previous_path || "/collections/all/products"}
-              className="m-auto"
-            >
+            <Link to={props.location.previous_path || "/collections/all/products"} className="m-auto">
               <GLButton variant="secondary">Back to Products</GLButton>
             </Link>
           </div>
-          {userInfo &&
-          userInfo.isAdmin && (
+          {userInfo && userInfo.isAdmin && (
             <div className=" pos-rel z-pos-1 br-10px">
-              <GLButton
-                variant="secondary"
-                className=" w-300px"
-                onClick={e =>
-                  set_show_product_options(show => (show ? false : true))}
-              >
+              <GLButton variant="secondary" className=" w-300px" onClick={e => set_show_product_options(show => (show ? false : true))}>
                 Edit Product
               </GLButton>
               {show_product_options && (
                 <div className="pos-abs bg-secondary br-10px">
                   <div className="column bg-secondary br-10px">
                     <Link
-                      to={
-                        "/secure/glow/editproduct/" +
-                        props.match.params.pathname +
-                        "/false"
-                      }
+                      to={"/secure/glow/editproduct/" + props.match.params.pathname + "/false"}
                       className="btn nav p-10px w-100per  br-10px"
                     >
                       Edit Macro
@@ -830,14 +739,7 @@ const ProductPage = props => {
 
                     {product &&
                       product.option_products.map(option => (
-                        <Link
-                          to={
-                            "/secure/glow/editproduct/" +
-                            option.pathname +
-                            "/false"
-                          }
-                          className="btn nav p-10px w-100per  br-10px"
-                        >
+                        <Link to={"/secure/glow/editproduct/" + option.pathname + "/false"} className="btn nav p-10px w-100per  br-10px">
                           Edit {option.name}
                         </Link>
                       ))}
@@ -856,74 +758,47 @@ const ProductPage = props => {
               <title>{product.meta_title + " | Glow LEDs"}</title>
               <meta property="og:title" content={product.meta_title} />
               <meta name="twitter:title" content={product.meta_title} />
-              <link
-                rel="canonical"
-                href={`https://www.glow-leds.com/collections/all/products/${product.pathname}`}
-              />
-              <meta
-                property="og:url"
-                content={`https://www.glow-leds.com/collections/all/products/${product.pathname}`}
-              />
+              <link rel="canonical" href={`https://www.glow-leds.com/collections/all/products/${product.pathname}`} />
+              <meta property="og:url" content={`https://www.glow-leds.com/collections/all/products/${product.pathname}`} />
               {product.images && (
                 <div>
-                  <meta
-                    property="og:image"
-                    content={"https://www.glow-leds.com/" + product.images[0]}
-                  />
+                  <meta property="og:image" content={"https://www.glow-leds.com/" + product.images[0]} />
 
-                  <meta
-                    property="og:image:secure_url"
-                    content={"https://www.glow-leds.com/" + product.images[0]}
-                  />
-                  <meta
-                    name="twitter:image"
-                    content={"https://www.glow-leds.com/" + product.images[0]}
-                  />
+                  <meta property="og:image:secure_url" content={"https://www.glow-leds.com/" + product.images[0]} />
+                  <meta name="twitter:image" content={"https://www.glow-leds.com/" + product.images[0]} />
                 </div>
               )}
               <meta
                 name="description"
                 content={
-                  product.meta_description ? (
-                    product.meta_description
-                  ) : (
-                    "Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Glowskinz, and Glowstringz."
-                  )
+                  product.meta_description
+                    ? product.meta_description
+                    : "Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Glowskinz, and Glowstringz."
                 }
               />
 
               <meta
                 property="og:description"
                 content={
-                  product.meta_description ? (
-                    product.meta_description
-                  ) : (
-                    "Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Glowskinz, and Glowstringz."
-                  )
+                  product.meta_description
+                    ? product.meta_description
+                    : "Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Glowskinz, and Glowstringz."
                 }
               />
 
               <meta
                 name="twitter:description"
                 content={
-                  product.meta_description ? (
-                    product.meta_description
-                  ) : (
-                    "Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Glowskinz, and Glowstringz."
-                  )
+                  product.meta_description
+                    ? product.meta_description
+                    : "Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Glowskinz, and Glowstringz."
                 }
               />
             </Helmet>
-            {!secondary_image &&
-            width <= 819 && (
+            {!secondary_image && width <= 819 && (
               <div>
-                <h1 className="product_title_side ta-c lh-50px fs-25px mv-0px">
-                  {name}
-                </h1>
-                <div
-                  className=" w-100per h-auto m-auto br-20px pos-rel"
-                  style={{ overflowX: "hidden" }}
-                >
+                <h1 className="product_title_side ta-c lh-50px fs-25px mv-0px">{name}</h1>
+                <div className=" w-100per h-auto m-auto br-20px pos-rel" style={{ overflowX: "hidden" }}>
                   {images && (
                     <ProductSlideshow
                       product={product}
@@ -955,13 +830,8 @@ const ProductPage = props => {
                       {name}
                     </label>
                     <div className="details-image">
-                      <ProductImages
-                        secondary_image={secondary_image}
-                        name={name}
-                        image={image}
-                      />
-                      {!secondary_image &&
-                      width > 819 && (
+                      <ProductImages secondary_image={secondary_image} name={name} image={image} />
+                      {!secondary_image && width > 819 && (
                         <div>
                           <PictureChooser
                             product={product}
@@ -978,27 +848,22 @@ const ProductPage = props => {
               </div>
 
               {width < 500 &&
-              product &&
-              (product.category === "diffusers" ||
-                product.category === "diffuser_caps" ||
-                product.category === "exo_diffusers") && (
-                <div className=" w-100per m-auto">
-                  <RelatedProductsSlideshow
-                    product_category={"glowskinz"}
-                    product_subcategory={"opyn"}
-                    product={product}
-                    random={false}
-                    className=""
-                    product_pathname={product.pathname}
-                    title="Pairs great with OPYN Glowskinz"
-                    category="opyn"
-                  />
-                </div>
-              )}
-              <div
-                className="details-info desktop_product_view"
-                style={{ display: width > 819 ? "block" : "none" }}
-              >
+                product &&
+                (product.category === "diffusers" || product.category === "diffuser_caps" || product.category === "exo_diffusers") && (
+                  <div className=" w-100per m-auto">
+                    <RelatedProductsSlideshow
+                      product_category={"glowskinz"}
+                      product_subcategory={"opyn"}
+                      product={product}
+                      random={false}
+                      className=""
+                      product_pathname={product.pathname}
+                      title="Pairs great with OPYN Glowskinz"
+                      category="opyn"
+                    />
+                  </div>
+                )}
+              <div className="details-info desktop_product_view" style={{ display: width > 819 ? "block" : "none" }}>
                 <ProductSelection
                   product={product}
                   name={name}
@@ -1008,10 +873,7 @@ const ProductPage = props => {
                   facts={facts}
                 />
               </div>
-              <div
-                className="details-action desktop_product_view"
-                style={{ display: width > 819 ? "block" : "none" }}
-              >
+              <div className="details-action desktop_product_view" style={{ display: width > 819 ? "block" : "none" }}>
                 <ProductOptions
                   product={product}
                   price={price}
@@ -1027,9 +889,7 @@ const ProductPage = props => {
                   secondary_color_products={secondary_color_products}
                   secondary_color_code={secondary_color_code}
                   update_secondary_color={update_secondary_color}
-                  secondary_color_product_object={
-                    secondary_color_product_object
-                  }
+                  secondary_color_product_object={secondary_color_product_object}
                   option_products={option_products}
                   update_option={update_option}
                   option_product_object={option_product_object}
@@ -1047,9 +907,7 @@ const ProductPage = props => {
                   set_show_add_on={set_show_add_on}
                   set_price={set_price}
                   set_add_on_price={set_add_on_price}
-                  set_secondary_color_product_object={
-                    set_secondary_color_product_object
-                  }
+                  set_secondary_color_product_object={set_secondary_color_product_object}
                   set_secondary_color_product={set_secondary_color_product}
                   set_secondary_color_products={set_secondary_color_products}
                   set_secondary_color={set_secondary_color}
@@ -1061,10 +919,7 @@ const ProductPage = props => {
               </div>
 
               <div className="w-100per">
-                <div
-                  className="details-action mobile_product_view"
-                  style={{ display: width <= 819 ? "block" : "none" }}
-                >
+                <div className="details-action mobile_product_view" style={{ display: width <= 819 ? "block" : "none" }}>
                   <ProductOptions
                     product={product}
                     width={width}
@@ -1081,9 +936,7 @@ const ProductPage = props => {
                     secondary_color_products={secondary_color_products}
                     secondary_color_code={secondary_color_code}
                     update_secondary_color={update_secondary_color}
-                    secondary_color_product_object={
-                      secondary_color_product_object
-                    }
+                    secondary_color_product_object={secondary_color_product_object}
                     option_products={option_products}
                     update_option={update_option}
                     option_product_object={option_product_object}
@@ -1099,9 +952,7 @@ const ProductPage = props => {
                     set_show_add_on={set_show_add_on}
                     set_price={set_price}
                     set_add_on_price={set_add_on_price}
-                    set_secondary_color_product_object={
-                      set_secondary_color_product_object
-                    }
+                    set_secondary_color_product_object={set_secondary_color_product_object}
                     set_secondary_color_product={set_secondary_color_product}
                     set_secondary_color_products={set_secondary_color_products}
                     set_secondary_color={set_secondary_color}
@@ -1111,10 +962,7 @@ const ProductPage = props => {
                     set_sale_price={set_sale_price}
                   />
                 </div>
-                <div
-                  className="details-info mobile_product_view"
-                  style={{ display: width <= 819 ? "block" : "none" }}
-                >
+                <div className="details-info mobile_product_view" style={{ display: width <= 819 ? "block" : "none" }}>
                   <ProductFacts
                     facts={facts}
                     category={product.category}
@@ -1136,9 +984,7 @@ const ProductPage = props => {
           </div>
         )}
       </Loading>
-      {product &&
-      product.name !== "Glowstringz V2" &&
-      product.name !== "Nova Clip" && (
+      {product && product.name !== "Glowstringz V2" && product.name !== "Nova Clip" && (
         <div className=" w-100per m-auto">
           <RelatedProductsSlideshow
             product_category={product.category}
@@ -1151,9 +997,7 @@ const ProductPage = props => {
           />
         </div>
       )}
-      {product &&
-      product.name !== "Glowstringz V2" &&
-      product.name !== "Nova Clip" && (
+      {product && product.name !== "Glowstringz V2" && product.name !== "Nova Clip" && (
         <div className=" w-100per m-auto">
           <RelatedProductsSlideshow
             product_category={product.category}
@@ -1165,10 +1009,7 @@ const ProductPage = props => {
           />
         </div>
       )}
-      {product &&
-      product.category !== "batteries" &&
-      product.name !== "Glowstringz V2" &&
-      product.name !== "Nova Clip" && (
+      {product && product.category !== "batteries" && product.name !== "Glowstringz V2" && product.name !== "Nova Clip" && (
         <div className=" w-100per m-auto">
           <RelatedProductsSlideshow
             product_category={product.category}

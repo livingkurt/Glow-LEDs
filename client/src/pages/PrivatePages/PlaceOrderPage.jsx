@@ -29,7 +29,7 @@ const PlaceOrderPage = props => {
   // const order_note_ref = useRef(null);
   const userLogin = useSelector(state => state.userLogin);
   const { userInfo, loading: user_loading, success: user_success } = userLogin;
-  console.log({ user_loading });
+
   const cart = useSelector(state => state.cart);
   const { cartItems, shipping, payment } = cart;
   const orderCreate = useSelector(state => state.orderCreate);
@@ -129,7 +129,7 @@ const PlaceOrderPage = props => {
     let clean = true;
     if (clean) {
       const shipping_storage = sessionStorage.getItem("shippingAddress");
-      console.log({ shipping_storage });
+
       if (shipping_storage) {
         dispatch(saveShipping(JSON.parse(shipping_storage)));
       }
@@ -159,7 +159,7 @@ const PlaceOrderPage = props => {
       if (shipping && Object.keys(shipping).length > 0) {
         set_loading_shipping(true);
         const package_volume = cartItems.reduce((a, c) => a + c.package_volume, 0);
-        console.log({ package_volume });
+
         if (!package_volume) {
           set_loading(false);
           set_hide_pay_button(false);
@@ -168,7 +168,6 @@ const PlaceOrderPage = props => {
           set_loading_shipping(false);
           set_show_shipping_complete(true);
         } else {
-          console.log({ shipping });
           if (shipping.hasOwnProperty("address_1") && shipping.address_1.length > 0 && shipping_completed) {
             get_shipping_rates(verify_shipping);
           }
@@ -210,13 +209,12 @@ const PlaceOrderPage = props => {
       },
       verify
     );
-    console.log({ get_shipping_rates: request });
+
     if (request.data.message) {
       set_error_shipping(request.data);
       set_error_happened(true);
       set_loading_shipping(false);
     } else {
-      console.log("Shipment Ran");
       set_shipping_rates(request.data.shipment);
       set_shipment_id(request.data.shipment.id);
       set_parcel(request.data.parcel._id);
@@ -267,9 +265,8 @@ const PlaceOrderPage = props => {
 
   const get_promo_code = () => {
     const promo_code_storage = sessionStorage.getItem("promo_code");
-    console.log({ promo_code_storage });
+
     if (promo_code_storage && promo_code_storage.length > 0) {
-      console.log({ promo_code_storage });
       set_promo_code(promo_code_storage.toLowerCase());
       set_show_promo_code(true);
       set_show_message(promo_code_storage);
@@ -349,7 +346,6 @@ const PlaceOrderPage = props => {
   };
   const dimminish_stock = async () => {
     const request = await API_Products.update_stock(cartItems);
-    console.log({ dimminish_stock: request });
   };
 
   const promo_code_used = async () => {
@@ -363,7 +359,7 @@ const PlaceOrderPage = props => {
     // create an order
 
     const order_paid = isPaid ? isPaid : paid ? paid : false;
-    console.log({ user });
+
     dispatch(
       createOrder({
         orderItems: cartItems,
@@ -476,7 +472,6 @@ const PlaceOrderPage = props => {
   }, [success_order]);
 
   const empty_cart = () => {
-    console.log(cartItems);
     for (let item of cartItems) {
       dispatch(removeFromCart(item));
     }
@@ -503,7 +498,7 @@ const PlaceOrderPage = props => {
     if (clean) {
       if (error_pay) {
         set_loading_payment(false);
-        console.log({ error_pay });
+
         set_error(error_pay);
       }
     }
@@ -513,8 +508,6 @@ const PlaceOrderPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      console.log({ tip });
-
       setTotalPrice(
         tip === 0 || tip === "" || isNaN(tip)
           ? itemsPrice + shippingPrice + taxPrice
@@ -531,8 +524,7 @@ const PlaceOrderPage = props => {
 
   const check_code = e => {
     e.preventDefault();
-    console.log({ userInfo });
-    console.log({ cartItems });
+
     const data = {
       promo_code: promo_code,
       promos,
@@ -540,12 +532,10 @@ const PlaceOrderPage = props => {
       items_price,
       cartItems
     };
-    // console.log({ data });
+    //
     const request = validate_promo_code(data);
 
     set_promo_code_validations(request.errors.promo_code);
-    console.log(request);
-    console.log({ promo_code });
 
     if (request.isValid) {
       activate_promo_code(promo_code.toLowerCase());
@@ -555,10 +545,8 @@ const PlaceOrderPage = props => {
   };
 
   const activate_promo_code = code => {
-    console.log({ code });
-    console.log({ promos });
     const promo = promos.find(promo => promo.promo_code === code.toLowerCase());
-    console.log({ isValid: promo, promo_code: code.toLowerCase() });
+
     let promo_excluded = 0;
 
     let promo_included = 0;
@@ -575,11 +563,9 @@ const PlaceOrderPage = props => {
       }
       if (promo.include) {
         const category_cart_items = cartItems.filter(item => promo.included_categories.includes(item.category));
-        console.log({ category_cart_items });
-        console.log({ cartItems });
-        console.log({ included_products: promo.included_products });
+
         const product_cart_items = cartItems.filter(item => promo.included_products.includes(item.product));
-        console.log({ product_cart_items });
+
         promo_included = category_cart_items.length > 0 || product_cart_items.length > 0;
         if (promo_included) {
           update_promo();
@@ -589,8 +575,6 @@ const PlaceOrderPage = props => {
         }
       }
 
-      console.log({ promo_excluded });
-      console.log({ promo_included });
       if (show_message) {
         set_promo_code_validations("Can only use one promo code at a time");
       } else {

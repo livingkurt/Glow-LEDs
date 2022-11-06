@@ -10,7 +10,6 @@ export default {
       }
       return res.status(404).send({ message: "Contents Not Found" });
     } catch (error) {
-      console.log({ findAll_contents_c_error: error });
       res.status(500).send({ error, message: "Error Finding Contents" });
     }
   },
@@ -23,7 +22,6 @@ export default {
       }
       return res.status(404).send({ message: "Contents Not Found" });
     } catch (error) {
-      console.log({ findAll_contents_c_error: error });
       res.status(500).send({ error, message: "Error Finding Contents" });
     }
   },
@@ -36,7 +34,6 @@ export default {
       }
       return res.status(404).send({ message: "Contents Not Found" });
     } catch (error) {
-      console.log({ findAll_contents_c_error: error });
       res.status(500).send({ error, message: "Error Finding Contents" });
     }
   },
@@ -49,7 +46,6 @@ export default {
       }
       return res.status(404).send({ message: "Contents Not Found" });
     } catch (error) {
-      console.log({ findAll_contents_c_error: error });
       res.status(500).send({ error, message: "Error Finding Contents" });
     }
   },
@@ -62,7 +58,6 @@ export default {
       }
       return res.status(404).send({ message: "Content Not Found" });
     } catch (error) {
-      console.log({ findById_contents_c_error: error });
       res.status(500).send({ error, message: "Error Finding Content" });
     }
   },
@@ -75,7 +70,6 @@ export default {
       }
       return res.status(500).send({ message: "Error Creating Content" });
     } catch (error) {
-      console.log({ create_contents_c_error: error });
       res.status(500).send({ error, message: "Error Creating Content" });
     }
   },
@@ -88,7 +82,6 @@ export default {
       }
       return res.status(500).send({ message: "Error Updating Content" });
     } catch (error) {
-      console.log({ update_contents_c_error: error });
       res.status(500).send({ error, message: "Error Updating Content" });
     }
   },
@@ -101,7 +94,6 @@ export default {
       }
       return res.status(500).send({ message: "Error Deleting Content" });
     } catch (error) {
-      console.log({ remove_contents_c_error: error });
       res.status(500).send({ error, message: "Error Deleting Content" });
     }
   }

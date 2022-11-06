@@ -1,10 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  listPalettes,
-  deletePalette,
-  savePalette,
-} from "../../../actions/paletteActions";
+import { listPalettes, deletePalette, savePalette } from "../../../actions/paletteActions";
 import { Link } from "react-router-dom";
 import { Loading, Notification } from "../../../components/UtilityComponents";
 import { Helmet } from "react-helmet";
@@ -16,23 +12,21 @@ import {
   promoter_revenue_upload,
   sponsor_revenue_upload,
   team_revenue_upload,
-  top_earner_upload,
+  top_earner_upload
 } from "../../../utils/google_sheets_upload";
 import { listTeams } from "../../../actions/teamActions";
 import { listOrders } from "../../../actions/orderActions";
 import { GLButton } from "../../../components/GlowLEDsComponents";
 
 const PalettesPage = props => {
-  const [ search, set_search ] = useState("");
-  const [ sort, setSortOrder ] = useState("");
-  const [ last_months_orders, set_last_months_orders ] = useState([]);
-  const [ total_orders, set_total_orders ] = useState([]);
-  const [ loading_palettes, set_loading_palettes ] = useState(false);
-  const [ loading_checkboxes, set_loading_checkboxes ] = useState(false);
-  const [ create_palettes, set_create_palettes ] = useState(true);
-  const category = props.match.params.category
-    ? props.match.params.category
-    : "";
+  const [search, set_search] = useState("");
+  const [sort, setSortOrder] = useState("");
+  const [last_months_orders, set_last_months_orders] = useState([]);
+  const [total_orders, set_total_orders] = useState([]);
+  const [loading_palettes, set_loading_palettes] = useState(false);
+  const [loading_checkboxes, set_loading_checkboxes] = useState(false);
+  const [create_palettes, set_create_palettes] = useState(true);
+  const category = props.match.params.category ? props.match.params.category : "";
   const paletteList = useSelector(state => state.paletteList);
   const { loading, palettes, message, error } = paletteList;
 
@@ -53,30 +47,27 @@ const PalettesPage = props => {
     set_loading_checkboxes(false);
   }, 500);
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        dispatch(listPalettes({}));
-        dispatch(listAffiliates({}));
-        dispatch(listTeams({}));
-        dispatch(listOrders({}));
-        get_last_months_orders();
-        get_total_orders();
-      }
-      return () => (clean = false);
-    },
-    [ successSave, successDelete, dispatch ]
-  );
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      dispatch(listPalettes({}));
+      dispatch(listAffiliates({}));
+      dispatch(listTeams({}));
+      dispatch(listOrders({}));
+      get_last_months_orders();
+      get_total_orders();
+    }
+    return () => (clean = false);
+  }, [successSave, successDelete, dispatch]);
 
   const get_last_months_orders = async () => {
     const { data } = await API_Orders.last_months_orders();
-    console.log({ data });
+
     set_last_months_orders(data);
   };
   const get_total_orders = async () => {
     const { data } = await API_Orders.findAll_orders_a();
-    console.log({ data });
+
     set_total_orders(data);
   };
   const submitHandler = e => {
@@ -89,16 +80,13 @@ const PalettesPage = props => {
     dispatch(listPalettes({ category, search, sort: e.target.value }));
   };
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        dispatch(listPalettes({ category, search, sort }));
-      }
-      return () => (clean = false);
-    },
-    [ dispatch, category, search, sort ]
-  );
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      dispatch(listPalettes({ category, search, sort }));
+    }
+    return () => (clean = false);
+  }, [dispatch, category, search, sort]);
   const deleteHandler = palette => {
     dispatch(deletePalette(palette._id));
   };
@@ -112,24 +100,17 @@ const PalettesPage = props => {
       savePalette({
         ...palette,
         paid: true,
-        paid_at: format_date(today),
+        paid_at: format_date(today)
       })
     );
     dispatch(listPalettes({}));
   };
 
-  const sort_options = [
-    "Newest",
-    "Artist Name",
-    "Facebook Name",
-    "Instagram Handle",
-    "Sponsor",
-    "Promoter",
-  ];
+  const sort_options = ["Newest", "Artist Name", "Facebook Name", "Instagram Handle", "Sponsor", "Promoter"];
 
   const colors = [
     { name: "Box", color: "#44648c" },
-    { name: "Bubble Mailer", color: "#448c89" },
+    { name: "Bubble Mailer", color: "#448c89" }
   ];
 
   const determine_color = palette => {
@@ -161,7 +142,7 @@ const PalettesPage = props => {
                     backgroundColor: color.color,
                     height: "20px",
                     width: "60px",
-                    borderRadius: "5px",
+                    borderRadius: "5px"
                   }}
                 />
               </div>
@@ -175,16 +156,8 @@ const PalettesPage = props => {
       <div className="jc-c">
         <h1 style={{ textAlign: "center" }}>Palettes</h1>
       </div>
-      <div
-        className="search_and_sort row jc-c ai-c"
-        style={{ overflowX: "scroll" }}
-      >
-        <Search
-          search={search}
-          set_search={set_search}
-          submitHandler={submitHandler}
-          category={category}
-        />
+      <div className="search_and_sort row jc-c ai-c" style={{ overflowX: "scroll" }}>
+        <Search search={search} set_search={set_search} submitHandler={submitHandler} category={category} />
         <Sort sortHandler={sortHandler} sort_options={sort_options} />
       </div>
       <Loading loading={loading} error={error}>
@@ -209,15 +182,13 @@ const PalettesPage = props => {
                     key={index}
                     style={{
                       backgroundColor: determine_color(palette),
-                      fontSize: "16px",
+                      fontSize: "16px"
                     }}
                   >
                     <td className="p-10px" style={{ minWidth: "15rem" }}>
-                      {palette.type === "bubble_mailer" ? (
-                        `${palette.length} X ${palette.width}`
-                      ) : (
-                        `${palette.length} X ${palette.width} X ${palette.height}`
-                      )}
+                      {palette.type === "bubble_mailer"
+                        ? `${palette.length} X ${palette.width}`
+                        : `${palette.length} X ${palette.width} X ${palette.height}`}
                     </td>
                     <td className="p-10px" style={{ minWidth: "15rem" }}>
                       {palette.type}
@@ -234,11 +205,7 @@ const PalettesPage = props => {
                             <i className="fas fa-edit" />
                           </GLButton>
                         </Link>
-                        <GLButton
-                          variant="icon"
-                          onClick={() => deleteHandler(palette)}
-                          aria-label="Delete"
-                        >
+                        <GLButton variant="icon" onClick={() => deleteHandler(palette)} aria-label="Delete">
                           <i className="fas fa-trash-alt" />
                         </GLButton>
                       </div>

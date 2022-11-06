@@ -4,11 +4,7 @@ import { Link, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { LazyImage } from "../UtilityComponents";
 import { sale_price_switch } from "../../utils/react_helper_functions";
-import {
-  deleteProduct,
-  listProducts,
-  saveProduct,
-} from "../../actions/productActions";
+import { deleteProduct, listProducts, saveProduct } from "../../actions/productActions";
 import styled from "styled-components";
 import { GLButton } from "../GlowLEDsComponents";
 
@@ -32,10 +28,7 @@ const SelectionCount = styled.div`
 const Container = styled.div`
   border-radius: ${props => (props.isDragging ? "3rem" : "2rem")};
   background-color: ${props => (props.isDragging ? "#4d5061" : "white")};
-  animation: ${props =>
-    props.isDragging
-      ? "${keyFrameDragRowAnimation} 0.5s ease-in-out 0s infinite"
-      : null};
+  animation: ${props => (props.isDragging ? "${keyFrameDragRowAnimation} 0.5s ease-in-out 0s infinite" : null)};
 `;
 
 const ProductListItem = props => {
@@ -45,7 +38,7 @@ const ProductListItem = props => {
     escape: 27,
     arrowDown: 40,
     arrowUp: 38,
-    tab: 9,
+    tab: 9
   };
   const getBackgroundColor = ({ isSelected, isDragging }) => {
     if (isDragging) {
@@ -61,27 +54,17 @@ const ProductListItem = props => {
     return determine_color(product, false, false);
   };
 
-  const {
-    product,
-    determine_color,
-    admin,
-    snapshot,
-    provided,
-    disAppearProduct,
-    isSelected,
-    selectionCount,
-  } = props;
+  const { product, determine_color, admin, snapshot, provided, disAppearProduct, isSelected, selectionCount } = props;
   const dispatch = useDispatch();
 
-  // console.log({ snapshot });
+  //
 
   const show_hide = id => {
     const row = document.getElementById(id);
-    console.log(row);
+
     row.classList.toggle("hide-row");
   };
   const deleteHandler = product => {
-    console.log(product._id);
     dispatch(deleteProduct(product._id));
   };
 
@@ -111,7 +94,7 @@ const ProductListItem = props => {
   // Using onClick as it will be correctly
   // preventing if there was a drag
   const onClick = event => {
-    // console.log("onClick event called");
+    //
     if (event.defaultPrevented) {
       return;
     }
@@ -148,13 +131,8 @@ const ProductListItem = props => {
   const wasMultiSelectKeyUsed = event => event.shiftKey;
 
   const performAction = event => {
-    // console.log("OnClick performAction called");
-    const {
-      product,
-      toggleSelection,
-      toggleSelectionInGroup,
-      multiSelectTo,
-    } = props;
+    //
+    const { product, toggleSelection, toggleSelectionInGroup, multiSelectTo } = props;
 
     if (wasToggleInSelectionGroupKeyUsed(event)) {
       toggleSelectionInGroup(product._id);
@@ -165,22 +143,22 @@ const ProductListItem = props => {
       multiSelectTo(product._id);
       return;
     }
-    // console.log({ props: props });
+    //
     toggleSelection(product._id);
   };
 
   const shouldShowSelection = snapshot.isDragging && selectionCount > 1;
   if (disAppearProduct) {
-    // console.log('Product id - ' + product._id + 'diappear flag - ' + disAppearProduct);
+    //
     return null;
   }
-  // console.log("Product - Draggable Rendering");
+  //
 
   const show_hide_product = product => {
     dispatch(
       saveProduct({
         ...product,
-        hidden: product.hidden ? false : true,
+        hidden: product.hidden ? false : true
       })
     );
     dispatch(listProducts({ option: false }));
@@ -201,74 +179,40 @@ const ProductListItem = props => {
           className="w-500px"
           to={{
             pathname: "/collections/all/products/" + product.pathname,
-            previous_path: history.location.pathname,
+            previous_path: history.location.pathname
           }}
         >
-          <label style={{ fontSize: "1.6rem" }}>
-            {snapshot.isDragging ? (
-              props.product.name + " - Moving"
-            ) : (
-              props.product.name
-            )}
-          </label>
+          <label style={{ fontSize: "1.6rem" }}>{snapshot.isDragging ? props.product.name + " - Moving" : props.product.name}</label>
           {/* <label style={{ fontSize: '1.6rem' }}>{product.name}</label> */}
         </Link>
         {/* <label className="w-100px">
 					{product.hidden ? <i className="fas fa-eye-slash" /> : <i className="fas fa-eye" />}
 				</label> */}
-        <GLButton
-          variant="icon"
-          onClick={() => show_hide_product(product)}
-          aria-label={product.hidden ? "hide" : "show"}
-        >
-          {product.hidden ? (
-            <i className="fas fa-eye-slash" />
-          ) : (
-            <i className="fas fa-eye" />
-          )}
+        <GLButton variant="icon" onClick={() => show_hide_product(product)} aria-label={product.hidden ? "hide" : "show"}>
+          {product.hidden ? <i className="fas fa-eye-slash" /> : <i className="fas fa-eye" />}
         </GLButton>
         <label className="w-200px">{product.category}</label>
         <label className="w-100px">{product.order}</label>
-        <label className="product-price w-500px">
-          {sale_price_switch(product, product.product_options)}
-        </label>
-        <Link
-          className="w-500px"
-          to={"/secure/glow/editproduct/" + product.pathname + "/" + true}
-        >
+        <label className="product-price w-500px">{sale_price_switch(product, product.product_options)}</label>
+        <Link className="w-500px" to={"/secure/glow/editproduct/" + product.pathname + "/" + true}>
           <GLButton variant="primary">Use as Template</GLButton>
         </Link>
         {/* <label className="product-price w-250px">{product.product_options.length} Options</label> */}
         <div>
           <div>
             <div className="jc-b">
-              <Link
-                to={
-                  "/secure/glow/editproduct/" + product.pathname + "/" + false
-                }
-              >
+              <Link to={"/secure/glow/editproduct/" + product.pathname + "/" + false}>
                 <GLButton variant="icon" aria-label="Edit">
                   <i className="fas fa-edit" />
                 </GLButton>
               </Link>
-              <GLButton
-                variant="icon"
-                onClick={() => deleteHandler(product)}
-                aria-label="Delete"
-              >
+              <GLButton variant="icon" onClick={() => deleteHandler(product)} aria-label="Delete">
                 <i className="fas fa-trash-alt" />
               </GLButton>
               {admin && (
                 <div className="jc-fe column ml-auto ">
-                  <GLButton
-                    variant="icon"
-                    className="h-3rem"
-                    onClick={() => show_hide(product._id)}
-                  >
-                    <i
-                      style={{ WebkitTransform: "rotate(-180deg)" }}
-                      className="top-8px fas fa-sort-up"
-                    />
+                  <GLButton variant="icon" className="h-3rem" onClick={() => show_hide(product._id)}>
+                    <i style={{ WebkitTransform: "rotate(-180deg)" }} className="top-8px fas fa-sort-up" />
                   </GLButton>
                 </div>
               )}
@@ -276,16 +220,11 @@ const ProductListItem = props => {
           </div>
           <div />
         </div>
-        {shouldShowSelection ? (
-          <SelectionCount>{selectionCount}</SelectionCount>
-        ) : null}
+        {shouldShowSelection ? <SelectionCount>{selectionCount}</SelectionCount> : null}
       </div>
       {admin && (
         <div id={product._id} className="expanded-row-content hide-row">
-          <div
-            className="jc-b pt-10px mt-10px"
-            style={{ borderTop: "1px solid white" }}
-          >
+          <div className="jc-b pt-10px mt-10px" style={{ borderTop: "1px solid white" }}>
             {/* <div className="" /> */}
             <ul className="ai-c jc-a w-100per">
               <li className="">
@@ -317,47 +256,29 @@ const ProductListItem = props => {
           {product.option_products &&
             product.option_products.map(product => (
               <div className="ai-c jc-b w-100per">
-                {/* {console.log({ product })} */}
                 <Link
                   className="w-500px"
                   to={{
                     pathname: "/collections/all/products/" + product.pathname,
-                    previous_path: history.location.pathname,
+                    previous_path: history.location.pathname
                   }}
                 >
                   <label style={{ fontSize: "1.6rem" }}>{product.name}</label>
                   {/* <label style={{ fontSize: '1.6rem' }}>{product.name}</label> */}
                 </Link>
-                <label className="w-100px">
-                  {product.hidden ? (
-                    <i className="fas fa-eye-slash" />
-                  ) : (
-                    <i className="fas fa-eye" />
-                  )}
-                </label>
+                <label className="w-100px">{product.hidden ? <i className="fas fa-eye-slash" /> : <i className="fas fa-eye" />}</label>
                 <label className="w-200px">{product.category}</label>
                 {/* <label className="w-100px">{product.order}</label> */}
                 <label className="w-200px">${product.price}</label>
                 <div>
                   <div>
                     <div className="jc-b">
-                      <Link
-                        to={
-                          "/secure/glow/editproduct/" +
-                          product.pathname +
-                          "/" +
-                          false
-                        }
-                      >
+                      <Link to={"/secure/glow/editproduct/" + product.pathname + "/" + false}>
                         <GLButton variant="icon" aria-label="Edit">
                           <i className="fas fa-edit" />
                         </GLButton>
                       </Link>
-                      <GLButton
-                        variant="icon"
-                        onClick={() => deleteHandler(product)}
-                        aria-label="Delete"
-                      >
+                      <GLButton variant="icon" onClick={() => deleteHandler(product)} aria-label="Delete">
                         <i className="fas fa-trash-alt" />
                       </GLButton>
                       {/* {admin && (
@@ -378,55 +299,35 @@ const ProductListItem = props => {
                   </div>
                   <div />
                 </div>
-                {shouldShowSelection ? (
-                  <SelectionCount>{selectionCount}</SelectionCount>
-                ) : null}
+                {shouldShowSelection ? <SelectionCount>{selectionCount}</SelectionCount> : null}
               </div>
             ))}
           {product.color_products &&
             product.color_products.map(product => (
               <div className="ai-c jc-b w-100per">
-                {/* {console.log({ product })} */}
                 <Link
                   className="w-500px"
                   to={{
                     pathname: "/collections/all/products/" + product.pathname,
-                    previous_path: history.location.pathname,
+                    previous_path: history.location.pathname
                   }}
                 >
                   <label style={{ fontSize: "1.6rem" }}>{product.name}</label>
                   {/* <label style={{ fontSize: '1.6rem' }}>{product.name}</label> */}
                 </Link>
-                <label className="w-100px">
-                  {product.hidden ? (
-                    <i className="fas fa-eye-slash" />
-                  ) : (
-                    <i className="fas fa-eye" />
-                  )}
-                </label>
+                <label className="w-100px">{product.hidden ? <i className="fas fa-eye-slash" /> : <i className="fas fa-eye" />}</label>
                 <label className="w-200px">{product.category}</label>
                 {/* <label className="w-100px">{product.order}</label> */}
                 <label className="w-200px">${product.price}</label>
                 <div>
                   <div>
                     <div className="jc-b">
-                      <Link
-                        to={
-                          "/secure/glow/editproduct/" +
-                          product.pathname +
-                          "/" +
-                          false
-                        }
-                      >
+                      <Link to={"/secure/glow/editproduct/" + product.pathname + "/" + false}>
                         <GLButton variant="icon" aria-label="Edit">
                           <i className="fas fa-edit" />
                         </GLButton>
                       </Link>
-                      <GLButton
-                        variant="icon"
-                        onClick={() => deleteHandler(product)}
-                        aria-label="Delete"
-                      >
+                      <GLButton variant="icon" onClick={() => deleteHandler(product)} aria-label="Delete">
                         <i className="fas fa-trash-alt" />
                       </GLButton>
                       {/* {admin && (
@@ -447,55 +348,35 @@ const ProductListItem = props => {
                   </div>
                   <div />
                 </div>
-                {shouldShowSelection ? (
-                  <SelectionCount>{selectionCount}</SelectionCount>
-                ) : null}
+                {shouldShowSelection ? <SelectionCount>{selectionCount}</SelectionCount> : null}
               </div>
             ))}
           {product.secondary_color_products &&
             product.secondary_color_products.map(product => (
               <div className="ai-c jc-b w-100per">
-                {/* {console.log({ product })} */}
                 <Link
                   className="w-500px"
                   to={{
                     pathname: "/collections/all/products/" + product.pathname,
-                    previous_path: history.location.pathname,
+                    previous_path: history.location.pathname
                   }}
                 >
                   <label style={{ fontSize: "1.6rem" }}>{product.name}</label>
                   {/* <label style={{ fontSize: '1.6rem' }}>{product.name}</label> */}
                 </Link>
-                <label className="w-100px">
-                  {product.hidden ? (
-                    <i className="fas fa-eye-slash" />
-                  ) : (
-                    <i className="fas fa-eye" />
-                  )}
-                </label>
+                <label className="w-100px">{product.hidden ? <i className="fas fa-eye-slash" /> : <i className="fas fa-eye" />}</label>
                 <label className="w-200px">{product.category}</label>
                 {/* <label className="w-100px">{product.order}</label> */}
                 <label className="w-200px">${product.price}</label>
                 <div>
                   <div>
                     <div className="jc-b">
-                      <Link
-                        to={
-                          "/secure/glow/editproduct/" +
-                          product.pathname +
-                          "/" +
-                          false
-                        }
-                      >
+                      <Link to={"/secure/glow/editproduct/" + product.pathname + "/" + false}>
                         <GLButton variant="icon" aria-label="Edit">
                           <i className="fas fa-edit" />
                         </GLButton>
                       </Link>
-                      <GLButton
-                        variant="icon"
-                        onClick={() => deleteHandler(product)}
-                        aria-label="Delete"
-                      >
+                      <GLButton variant="icon" onClick={() => deleteHandler(product)} aria-label="Delete">
                         <i className="fas fa-trash-alt" />
                       </GLButton>
                       {/* {admin && (
@@ -516,64 +397,42 @@ const ProductListItem = props => {
                   </div>
                   <div />
                 </div>
-                {shouldShowSelection ? (
-                  <SelectionCount>{selectionCount}</SelectionCount>
-                ) : null}
+                {shouldShowSelection ? <SelectionCount>{selectionCount}</SelectionCount> : null}
               </div>
             ))}
           {product.secondary_products &&
             product.secondary_products.map(product => (
               <div className="ai-c jc-b w-100per">
-                {/* {console.log({ product })} */}
                 <Link
                   className=""
                   to={{
                     pathname: "/collections/all/products/" + product.pathname,
-                    previous_path: history.location.pathname,
+                    previous_path: history.location.pathname
                   }}
                 >
                   <label style={{ fontSize: "1.6rem" }}>{product.name}</label>
                   {/* <label style={{ fontSize: '1.6rem' }}>{product.name}</label> */}
                 </Link>
-                <label className="">
-                  {product.hidden ? (
-                    <i className="fas fa-eye-slash" />
-                  ) : (
-                    <i className="fas fa-eye" />
-                  )}
-                </label>
+                <label className="">{product.hidden ? <i className="fas fa-eye-slash" /> : <i className="fas fa-eye" />}</label>
                 <label className="">{product.category}</label>
                 {/* <label className="">{product.order}</label> */}
                 <label className="w-200px">${product.price}</label>
                 <div>
                   <div>
                     <div className="jc-b">
-                      <Link
-                        to={
-                          "/secure/glow/editproduct/" +
-                          product.pathname +
-                          "/" +
-                          false
-                        }
-                      >
+                      <Link to={"/secure/glow/editproduct/" + product.pathname + "/" + false}>
                         <GLButton variant="icon" aria-label="Edit">
                           <i className="fas fa-edit" />
                         </GLButton>
                       </Link>
-                      <GLButton
-                        variant="icon"
-                        onClick={() => deleteHandler(product)}
-                        aria-label="Delete"
-                      >
+                      <GLButton variant="icon" onClick={() => deleteHandler(product)} aria-label="Delete">
                         <i className="fas fa-trash-alt" />
                       </GLButton>
                     </div>
                   </div>
                   <div />
                 </div>
-                {shouldShowSelection ? (
-                  <SelectionCount>{selectionCount}</SelectionCount>
-                ) : null}
+                {shouldShowSelection ? <SelectionCount>{selectionCount}</SelectionCount> : null}
               </div>
             ))}
         </div>

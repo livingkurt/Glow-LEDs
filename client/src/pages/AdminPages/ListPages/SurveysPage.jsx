@@ -13,13 +13,11 @@ import { listOrders } from "../../../actions/orderActions";
 import { GLButton } from "../../../components/GlowLEDsComponents";
 
 const SurveysPage = props => {
-  const [ search, set_search ] = useState("");
-  const [ sort, setSortOrder ] = useState("");
+  const [search, set_search] = useState("");
+  const [sort, setSortOrder] = useState("");
 
-  const [ loading_surveys, set_loading_surveys ] = useState(false);
-  const category = props.match.params.category
-    ? props.match.params.category
-    : "";
+  const [loading_surveys, set_loading_surveys] = useState(false);
+  const category = props.match.params.category ? props.match.params.category : "";
   const surveyList = useSelector(state => state.surveyList);
   const { loading, surveys, message, error } = surveyList;
 
@@ -30,19 +28,16 @@ const SurveysPage = props => {
   const { success: successDelete } = surveyDelete;
   const dispatch = useDispatch();
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        dispatch(listSurveys({}));
-        dispatch(listAffiliates({}));
-        dispatch(listTeams({}));
-        dispatch(listOrders({}));
-      }
-      return () => (clean = false);
-    },
-    [ successSave, successDelete, dispatch ]
-  );
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      dispatch(listSurveys({}));
+      dispatch(listAffiliates({}));
+      dispatch(listTeams({}));
+      dispatch(listOrders({}));
+    }
+    return () => (clean = false);
+  }, [successSave, successDelete, dispatch]);
   const submitHandler = e => {
     e.preventDefault();
     dispatch(listSurveys({ category, search, sort }));
@@ -53,28 +48,18 @@ const SurveysPage = props => {
     dispatch(listSurveys({ category, search, sort: e.target.value }));
   };
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        dispatch(listSurveys({ category, search, sort }));
-      }
-      return () => (clean = false);
-    },
-    [ dispatch, category, search, sort ]
-  );
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      dispatch(listSurveys({ category, search, sort }));
+    }
+    return () => (clean = false);
+  }, [dispatch, category, search, sort]);
   const deleteHandler = survey => {
     dispatch(deleteSurvey(survey._id));
   };
 
-  const sort_options = [
-    "Newest",
-    "Artist Name",
-    "Facebook Name",
-    "Instagram Handle",
-    "Sponsor",
-    "Promoter",
-  ];
+  const sort_options = ["Newest", "Artist Name", "Facebook Name", "Instagram Handle", "Sponsor", "Promoter"];
 
   const colors = [
     { name: "Survey", color: "#3e4c6d" },
@@ -83,7 +68,7 @@ const SurveysPage = props => {
     { name: "2 Rating", color: "#8a502e" },
     { name: "3 Rating", color: "#898a2e" },
     { name: "4 Rating", color: "#2e8a42" },
-    { name: "5 Rating", color: "#2e578a" },
+    { name: "5 Rating", color: "#2e578a" }
   ];
 
   const determine_color = survey => {
@@ -112,7 +97,6 @@ const SurveysPage = props => {
 
     return result;
   };
-  console.log({ surveys });
 
   return (
     <div className="main_container p-20px">
@@ -132,7 +116,7 @@ const SurveysPage = props => {
                     backgroundColor: color.color,
                     height: "20px",
                     width: "60px",
-                    borderRadius: "5px",
+                    borderRadius: "5px"
                   }}
                 />
               </div>
@@ -146,16 +130,8 @@ const SurveysPage = props => {
       <div className="jc-c">
         <h1 style={{ textAlign: "center" }}>Surveys</h1>
       </div>
-      <div
-        className="search_and_sort row jc-c ai-c"
-        style={{ overflowX: "scroll" }}
-      >
-        <Search
-          search={search}
-          set_search={set_search}
-          submitHandler={submitHandler}
-          category={category}
-        />
+      <div className="search_and_sort row jc-c ai-c" style={{ overflowX: "scroll" }}>
+        <Search search={search} set_search={set_search} submitHandler={submitHandler} category={category} />
         <Sort sortHandler={sortHandler} sort_options={sort_options} />
       </div>
       <Loading loading={loading} error={error}>
@@ -182,41 +158,23 @@ const SurveysPage = props => {
                     key={index}
                     style={{
                       backgroundColor: determine_color(survey),
-                      fontSize: "16px",
+                      fontSize: "16px"
                     }}
                   >
                     <td className="p-10px" style={{ minWidth: "15rem" }}>
                       {survey.createdAt && format_date(survey.createdAt)}
                     </td>
                     <td className="p-10px">
-                      {survey.is_survey ? (
-                        <i className="fas fa-check-circle" />
-                      ) : (
-                        <i className="fas fa-times-circle" />
-                      )}
+                      {survey.is_survey ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
                     </td>
                     <td className="p-10px">{survey.rating}</td>
+                    <td className="p-10px">{survey.is_survey ? survey.question_1 : survey.answer_1}</td>
+                    <td className="p-10px">{survey.is_survey ? survey.question_2 : survey.answer_2}</td>
+                    <td className="p-10px">{survey.is_survey ? survey.question_3 : survey.answer_3}</td>
+                    <td className="p-10px">{survey.is_survey ? survey.question_4 : survey.answer_4}</td>
+                    <td className="p-10px">{survey.is_survey ? survey.question_5 : survey.answer_5}</td>
                     <td className="p-10px">
-                      {survey.is_survey ? survey.question_1 : survey.answer_1}
-                    </td>
-                    <td className="p-10px">
-                      {survey.is_survey ? survey.question_2 : survey.answer_2}
-                    </td>
-                    <td className="p-10px">
-                      {survey.is_survey ? survey.question_3 : survey.answer_3}
-                    </td>
-                    <td className="p-10px">
-                      {survey.is_survey ? survey.question_4 : survey.answer_4}
-                    </td>
-                    <td className="p-10px">
-                      {survey.is_survey ? survey.question_5 : survey.answer_5}
-                    </td>
-                    <td className="p-10px">
-                      {survey.active ? (
-                        <i className="fas fa-check-circle" />
-                      ) : (
-                        <i className="fas fa-times-circle" />
-                      )}
+                      {survey.active ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
                     </td>
                     <td className="p-10px">
                       <div className="jc-b">
@@ -225,11 +183,7 @@ const SurveysPage = props => {
                             <i className="fas fa-edit" />
                           </GLButton>
                         </Link>
-                        <GLButton
-                          variant="icon"
-                          onClick={() => deleteHandler(survey)}
-                          aria-label="Delete"
-                        >
+                        <GLButton variant="icon" onClick={() => deleteHandler(survey)} aria-label="Delete">
                           <i className="fas fa-trash-alt" />
                         </GLButton>
                       </div>

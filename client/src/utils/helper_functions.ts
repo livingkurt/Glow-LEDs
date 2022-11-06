@@ -27,12 +27,7 @@ export const snake_case = (str: string) => {
   let snake_case = str;
   snake_case.replace(/\W+/g, " ").toLowerCase().split(" ").join("_");
   if (snake_case.substr(-1) === ")") {
-    return str
-      .replace(/\W+/g, " ")
-      .toLowerCase()
-      .split(" ")
-      .join("_")
-      .slice(0, -1);
+    return str.replace(/\W+/g, " ").toLowerCase().split(" ").join("_").slice(0, -1);
   } else {
     return str.replace(/\W+/g, " ").toLowerCase().split(" ").join("_");
   }
@@ -63,10 +58,7 @@ export const shuffle = (array: any) => {
     currentIndex--;
 
     // And swap it with the current element.
-    [ array[currentIndex], array[randomIndex] ] = [
-      array[randomIndex],
-      array[currentIndex],
-    ];
+    [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
   }
 
   return array;
@@ -77,28 +69,28 @@ export const sizes = (width: number) => {
     {
       size: width > 500 ? "Small" : "S",
       hand_length: "4 - 5",
-      hand_width: "2.8 - 3.1",
+      hand_width: "2.8 - 3.1"
     },
     {
       size: width > 500 ? "Medium" : "M",
       hand_length: "4.5 - 5.5",
-      hand_width: "2.9 - 3.2",
+      hand_width: "2.9 - 3.2"
     },
     {
       size: width > 500 ? "Large" : "L",
       hand_length: "5.5 - 6",
-      hand_width: "3.2 - 3.5",
+      hand_width: "3.2 - 3.5"
     },
     {
       size: width > 500 ? "X-Large" : "XL",
       hand_length: "6 - 6.5",
-      hand_width: "3.5 - 3.7",
+      hand_width: "3.5 - 3.7"
     },
     {
       size: width > 500 ? "XX-Large (Coming Soon)" : "XXL",
       hand_length: "7.5 - 8",
-      hand_width: "3.7 - 4",
-    },
+      hand_width: "3.7 - 4"
+    }
   ];
 };
 
@@ -107,28 +99,28 @@ export const sizes_short = (width: number) => {
     S: {
       size: width > 500 ? "Small" : "S",
       hand_length: "4 - 5",
-      hand_width: "2.8 - 3.1",
+      hand_width: "2.8 - 3.1"
     },
     M: {
       size: width > 500 ? "Medium" : "M",
       hand_length: "4.5 - 5.5",
-      hand_width: "2.9 - 3.2",
+      hand_width: "2.9 - 3.2"
     },
     L: {
       size: width > 500 ? "Large" : "L",
       hand_length: "5.5 - 6",
-      hand_width: "3.2 - 3.5",
+      hand_width: "3.2 - 3.5"
     },
     XL: {
       size: width > 500 ? "X-Large" : "XL",
       hand_length: "6 - 6.5",
-      hand_width: "3.5 - 3.7",
+      hand_width: "3.5 - 3.7"
     },
     XXL: {
       size: width > 500 ? "XX-Large (Coming Soon)" : "XXL",
       hand_length: "7.5 - 8",
-      hand_width: "3.7 - 4",
-    },
+      hand_width: "3.7 - 4"
+    }
   };
 };
 
@@ -162,24 +154,19 @@ export const sizes_conversion = (size: string) => {
 // 		: ''}`;
 // };
 export const determnine_link = (item: any) => {
-  // console.log({ [item.name]: item });
-  const link = `/collections/all/products/${item.pathname}${item.color
-    ? "?color=" + item.color
-    : ""}${item.secondary_color
-    ? "?secondary_color=" + item.secondary_color
-    : ""}${item.option_product
-    ? "?option=" + item.size
-    : ""}${item.secondary_product_name
-    ? "?secondary=" +
-      determine_secondary_product_name(item.secondary_product_name, item)
-    : ""}`;
-  // console.log({ [item.name]: link });
+  //
+  const link = `/collections/all/products/${item.pathname}${item.color ? "?color=" + item.color : ""}${
+    item.secondary_color ? "?secondary_color=" + item.secondary_color : ""
+  }${item.option_product ? "?option=" + item.size : ""}${
+    item.secondary_product_name ? "?secondary=" + determine_secondary_product_name(item.secondary_product_name, item) : ""
+  }`;
+  //
   return link;
 };
 
 // item.size ? item.size : item.option_product_name
 // export const determnine_link = (item: any) => {
-// 	console.log({ [item.name]: item });
+//
 // 	const link = `/collections/all/products/${item.pathname}${item.color
 // 		? '?color=' + item.color
 // 		: ''}${item.secondary_color ? '?secondary_color=' + item.secondary_color : ''}${item.name === 'Nova Clip'
@@ -187,7 +174,7 @@ export const determnine_link = (item: any) => {
 // 		: item.option_product_name
 // 			? '?option=' + item.option_product_name.split('-')[1].trim()
 // 			: ''}${item.secondary_product_name ? '?secondary=' + item.secondary_product_name.split('-')[1].trim() : ''}`;
-// 	console.log({ [item.name]: link });
+//
 // 	return link;
 // };
 
@@ -199,10 +186,7 @@ export const determine_tracking_number = (tracking_number: string) => {
   if (tracking_number) {
     const tracking: any = getTracking(tracking_number);
     if (tracking.name.includes("USPS")) {
-      return (
-        "https://tools.usps.com/go/TrackConfirmAction_input?qtc_tLabels1=" +
-        tracking_number
-      );
+      return "https://tools.usps.com/go/TrackConfirmAction_input?qtc_tLabels1=" + tracking_number;
     }
     if (tracking.name.includes("UPS")) {
       return (
@@ -212,27 +196,18 @@ export const determine_tracking_number = (tracking_number: string) => {
       );
     }
     if (tracking.name.includes("FedEx")) {
-      return (
-        "https://www.fedex.com/fedextrack/?trknbr=" +
-        tracking_number +
-        "&trkqual=2459474000~" +
-        tracking_number +
-        "~FX"
-      );
+      return "https://www.fedex.com/fedextrack/?trknbr=" + tracking_number + "&trkqual=2459474000~" + tracking_number + "~FX";
     }
   }
 };
 
-export const prnt = (info: any) => {
-  console.log(info);
-};
+export const prnt = (info: any) => {};
 
 export const toCapitalize = (string: string) => {
   return string.charAt(0).toUpperCase() + string.slice(1);
 };
 
 export const determine_promoter_code_tier = (code_usage: number) => {
-  console.log({ promter_code_usage: code_usage });
   if (code_usage === 0 || code_usage === 1) {
     return 20;
   } else if (code_usage >= 2 && code_usage <= 5) {
@@ -250,7 +225,6 @@ export const determine_promoter_code_tier = (code_usage: number) => {
   }
 };
 export const determine_sponsor_code_tier = (code_usage: number) => {
-  console.log({ sponsor_code_usage: code_usage });
   if (code_usage === 0 || code_usage === 1) {
     return 30;
   } else if (code_usage >= 2 && code_usage <= 5) {
@@ -276,9 +250,7 @@ export const format_time = (unformatted_time: any) => {
   let formatted_hour = hour > 12 ? hour - 12 : hour;
   const minute = unformatted_time.slice(14, 16);
   const second = unformatted_time.slice(17, 19);
-  const formatted_time = `${formatted_hour}:${minute} ${hour >= 12
-    ? "PM"
-    : "AM"}`;
+  const formatted_time = `${formatted_hour}:${minute} ${hour >= 12 ? "PM" : "AM"}`;
   return formatted_time;
 };
 
@@ -287,16 +259,14 @@ export const unformat_time = (formatted_time: any) => {
   let formatted_hour = hour > 12 ? hour - 12 : hour;
   const minute = formatted_time.slice(14, 16);
   const second = formatted_time.slice(17, 19);
-  const unformatted_time = `${formatted_hour}:${minute} ${hour >= 12
-    ? "PM"
-    : "AM"}`;
+  const unformatted_time = `${formatted_hour}:${minute} ${hour >= 12 ? "PM" : "AM"}`;
   return formatted_time;
 };
 
 export const accurate_date = (date: any) => {
   var tzo = -date.getTimezoneOffset(),
     dif = tzo >= 0 ? "+" : "-",
-    pad = function(num: any) {
+    pad = function (num: any) {
       var norm = Math.floor(Math.abs(num));
       return (norm < 10 ? "0" : "") + norm;
     };
@@ -323,7 +293,7 @@ export const accurate_date = (date: any) => {
 // var dt = new Date();
 
 export const unformat_date = (formatted_date: string) => {
-  // console.log({ formatted_date });
+  //
   const date = formatted_date.split("/");
   const day = date[1];
   const month = date[0];
@@ -331,10 +301,7 @@ export const unformat_date = (formatted_date: string) => {
   const unformat_date = `${year}-${month}-${day}`;
   return unformat_date;
 };
-export const unformat_date_and_time = (
-  formatted_date: string,
-  formatted_time: string
-) => {
+export const unformat_date_and_time = (formatted_date: string, formatted_time: string) => {
   const date = formatted_date.split("/");
   const time = formatted_time.trim().split(":");
   const day = date[1];
@@ -353,14 +320,11 @@ export const unformat_date_and_time = (
     }
   }
   const unformat_date = `${year}-${month}-${day}T${hour}:${minute}:00`;
-  console.log({ unformat_date });
+
   return unformat_date;
 };
-export const format_date_and_time = (
-  formatted_date: string,
-  formatted_time: string
-) => {
-  // console.log({ formatted_date });
+export const format_date_and_time = (formatted_date: string, formatted_time: string) => {
+  //
   const date = formatted_date.split("/");
   const time = formatted_time.split(":");
   const day = date[1];
@@ -374,25 +338,25 @@ export const format_date_and_time = (
 };
 
 export const daysBetween = (date1: any, date2: any) => {
-  // console.log({ date1, date2 });
+  //
   const date_1: any = new Date(date1);
   const date_2: any = new Date(date2);
   const diffTime = date_1 - date_2;
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) - 1;
-  // console.log({ diffDays });
+  //
   return diffDays;
 };
 
-export const occurrence = function(array: any) {
-  // console.log(array);
+export const occurrence = function (array: any) {
+  //
   const result: any = {};
   if (array instanceof Array) {
     // Check if input is array.
     for (let i of array) {
-      i.orderItems.forEach(function(v: any, i: any) {
+      i.orderItems.forEach(function (v: any, i: any) {
         if (!result[v.product]) {
           // Initial object property creation.
-          result[v.product] = [ i ]; // Create an array for that property.
+          result[v.product] = [i]; // Create an array for that property.
         } else {
           // Same occurrences found.
           result[v.product].push(i); // Fill the array.
@@ -407,15 +371,13 @@ export const occurrence = function(array: any) {
 export const decide_warning = (date_1: string, date_2: string) => {
   if (new Date() > new Date(date_1) && new Date() < new Date(date_2)) {
     const confirm = window.confirm(
-      `Glow LEDs will be out of office from ${format_date(
-        date_1
-      )} - ${format_date(
+      `Glow LEDs will be out of office from ${format_date(date_1)} - ${format_date(
         date_2
       )}. \n\nYou may still place orders in this time, but orders will not be shipped until after ${format_date(
         date_2
       )} \n\nThank you so much for your support! 💙`
     );
-    console.log({ confirm });
+
     return confirm;
   } else {
     return true;
@@ -427,11 +389,7 @@ export const determine_total = (cartItems: any) => {
   let total = 0;
   if (cartItems) {
     cartItems.forEach((item: any) => {
-      if (
-        today >= new Date(item.sale_start_date) &&
-        today <= new Date(item.sale_end_date) &&
-        item.sale_price !== 0
-      ) {
+      if (today >= new Date(item.sale_start_date) && today <= new Date(item.sale_end_date) && item.sale_price !== 0) {
         total = total + item.sale_price * item.qty;
       } else {
         total = total + item.price * item.qty;
@@ -448,7 +406,7 @@ const colors = [
   { color: "Green", price: 15.99 },
   { color: "Blue", price: 15.99 },
   { color: "Violet", price: 15.99 },
-  { color: "Purple", price: 15.99 },
+  { color: "Purple", price: 15.99 }
 ];
 const diffuser_colors = [
   { color: "Translucent White", price: 11.99 },
@@ -456,12 +414,10 @@ const diffuser_colors = [
   { color: "Green", price: 11.99 },
   { color: "Blue", price: 11.99 },
   { color: "Violet", price: 11.99 },
-  { color: "Purple", price: 11.99 },
+  { color: "Purple", price: 11.99 }
 ];
 
 export const determine_price = (color: any, diffuser_cap: any) => {
-  console.log(color);
-  console.log(diffuser_cap);
   let price: any = 11.99;
   if (diffuser_cap) {
     price = colors.filter((cap_color: any) => {
@@ -509,7 +465,7 @@ export const determine_price = (color: any, diffuser_cap: any) => {
 // };
 
 export const hslToHex = (h: any, s: any, l: any) => {
-  // console.log(h);
+  //
   h /= 360;
   s /= 100;
   l /= 100;
@@ -541,43 +497,23 @@ export const hslToHex = (h: any, s: any, l: any) => {
 export const calculate_affiliate_usage = (affiliates: any, orders: any) => {
   return affiliates.map((affiliate: any) => {
     const code_usage = orders.filter((order: any) => {
-      return (
-        order.promo_code &&
-        order.promo_code.toLowerCase() ===
-          affiliate.public_code.promo_code.toLowerCase()
-      );
+      return order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase();
     }).length;
     return {
       "Promo Code": toCapitalize(affiliate.public_code.promo_code),
       Uses: code_usage,
       Revenue: ` $${orders
-        .filter(
-          (order: any) =>
-            order.promo_code &&
-            order.promo_code.toLowerCase() ===
-              affiliate.public_code.promo_code.toLowerCase()
-        )
-        .reduce(
-          (a: any, order: any) => a + order.totalPrice - order.taxPrice,
-          0
-        )
+        .filter((order: any) => order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase())
+        .reduce((a: any, order: any) => a + order.totalPrice - order.taxPrice, 0)
         .toFixed(2)}`,
       Earned: `$${orders
-        .filter(
-          (order: any) =>
-            order.promo_code &&
-            order.promo_code.toLowerCase() ===
-              affiliate.public_code.promo_code.toLowerCase()
-        )
-        .reduce(
-          (a: any, order: any) => a + (order.totalPrice - order.taxPrice) * 0.1,
-          0
-        )
+        .filter((order: any) => order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase())
+        .reduce((a: any, order: any) => a + (order.totalPrice - order.taxPrice) * 0.1, 0)
         .toFixed(2)}`,
       "Percentage Off":
         !affiliate.team && affiliate.promoter
           ? `${determine_promoter_code_tier(code_usage)}%`
-          : `${determine_sponsor_code_tier(code_usage)}%`,
+          : `${determine_sponsor_code_tier(code_usage)}%`
     };
   });
 };
@@ -585,44 +521,23 @@ export const calculate_affiliate_usage = (affiliates: any, orders: any) => {
 export const calculate_sponsor_usage = (affiliates: any, orders: any) => {
   return affiliates.map((affiliate: any) => {
     const code_usage = orders.filter((order: any) => {
-      return (
-        order.promo_code &&
-        order.promo_code.toLowerCase() ===
-          affiliate.public_code.promo_code.toLowerCase()
-      );
+      return order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase();
     }).length;
     return {
       "Promo Code": toCapitalize(affiliate.public_code.promo_code),
       Uses: code_usage,
       Revenue: ` $${orders
-        .filter(
-          (order: any) =>
-            order.promo_code &&
-            order.promo_code.toLowerCase() ===
-              affiliate.public_code.promo_code.toLowerCase()
-        )
-        .reduce(
-          (a: any, order: any) => a + order.totalPrice - order.taxPrice,
-          0
-        )
+        .filter((order: any) => order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase())
+        .reduce((a: any, order: any) => a + order.totalPrice - order.taxPrice, 0)
         .toFixed(2)}`,
       Earned: `$${orders
-        .filter(
-          (order: any) =>
-            order.promo_code &&
-            order.promo_code.toLowerCase() ===
-              affiliate.public_code.promo_code.toLowerCase()
-        )
-        .reduce(
-          (a: any, order: any) =>
-            a + (order.totalPrice - order.taxPrice) * 0.15,
-          0
-        )
+        .filter((order: any) => order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase())
+        .reduce((a: any, order: any) => a + (order.totalPrice - order.taxPrice) * 0.15, 0)
         .toFixed(2)}`,
       "Percentage Off":
         !affiliate.team && affiliate.promoter
           ? `${determine_promoter_code_tier(code_usage)}%`
-          : `${determine_sponsor_code_tier(code_usage)}%`,
+          : `${determine_sponsor_code_tier(code_usage)}%`
     };
   });
 };
@@ -753,19 +668,10 @@ export const state_names = [
   { long_name: "Washington", short_name: "WA" },
   { long_name: "West Virginia", short_name: "WV" },
   { long_name: "Wisconsin", short_name: "WI" },
-  { long_name: "Wyoming", short_name: "WY" },
+  { long_name: "Wyoming", short_name: "WY" }
 ];
 
-export const categories = [
-  "whites",
-  "batteries",
-  "decals",
-  "diffuser_caps",
-  "diffusers",
-  "exo_diffusers",
-  "glowstringz",
-  "glowskinz",
-];
+export const categories = ["whites", "batteries", "decals", "diffuser_caps", "diffusers", "exo_diffusers", "glowstringz", "glowskinz"];
 export const subcategories = [
   "singles",
   "refresh",
@@ -803,7 +709,7 @@ export const subcategories = [
   "custom",
   "colors",
   "sizes",
-  "secondary_colors",
+  "secondary_colors"
 ];
 
 export const homepage_videos = [
@@ -813,7 +719,7 @@ export const homepage_videos = [
     video: "hPxFDj7R5Lg",
     color: "#8e4a4a",
     description:
-      "The next breakthrough in diffuser technology is here!! Wiffle Ball Diffusers! Wiffle Ball Diffusers or filter use a 2 material technology that allows for a perfect blend of the colors as well as incorporating a opaque layer to give a light filtering effect that will leave the viewer speechless! ",
+      "The next breakthrough in diffuser technology is here!! Wiffle Ball Diffusers! Wiffle Ball Diffusers or filter use a 2 material technology that allows for a perfect blend of the colors as well as incorporating a opaque layer to give a light filtering effect that will leave the viewer speechless! "
   },
   // {
   //   name: "Glowstringz V2",
@@ -830,7 +736,7 @@ export const homepage_videos = [
     video: "_aJDfd6vlYU",
     color: "#b1a72f",
     description:
-      "What makes Glowskinz special? Glowskinz are a Casing and Diffuser all in one! Place your entire chip inside and create a glow throughout the whole casing! This differs from our Frosted Diffusers which create a glow only around the bulb. There are 3 unique sizes, each designed for Coffin, Nano or Coin chip microlights. Glowskinz are made with semi-flexible TPU plastic so your fingers will always feel comfortable! They do not inhibit access to your microlight button for mode switching. Our light and streamline design makes your fingers feel weightless. Smooth finish for easy removal from whites.",
+      "What makes Glowskinz special? Glowskinz are a Casing and Diffuser all in one! Place your entire chip inside and create a glow throughout the whole casing! This differs from our Frosted Diffusers which create a glow only around the bulb. There are 3 unique sizes, each designed for Coffin, Nano or Coin chip microlights. Glowskinz are made with semi-flexible TPU plastic so your fingers will always feel comfortable! They do not inhibit access to your microlight button for mode switching. Our light and streamline design makes your fingers feel weightless. Smooth finish for easy removal from whites."
   },
   {
     name: "CLOZD Glowskinz",
@@ -839,7 +745,7 @@ export const homepage_videos = [
     video: "3Yk0QOMBlAo",
     color: "#427942",
     description:
-      "What makes Glowskinz special? Glowskinz are a Casing and Diffuser all in one! Place your entire chip inside and create a glow throughout the whole casing! This differs from our Frosted Diffusers which create a glow only around the bulb. There are 3 unique sizes, each designed for Coffin, Nano or Coin chip microlights. Glowskinz are made with semi-flexible TPU plastic so your fingers will always feel comfortable! They do not inhibit access to your microlight button for mode switching. Our light and streamline design makes your fingers feel weightless. Smooth finish for easy removal from whites.",
+      "What makes Glowskinz special? Glowskinz are a Casing and Diffuser all in one! Place your entire chip inside and create a glow throughout the whole casing! This differs from our Frosted Diffusers which create a glow only around the bulb. There are 3 unique sizes, each designed for Coffin, Nano or Coin chip microlights. Glowskinz are made with semi-flexible TPU plastic so your fingers will always feel comfortable! They do not inhibit access to your microlight button for mode switching. Our light and streamline design makes your fingers feel weightless. Smooth finish for easy removal from whites."
   },
 
   {
@@ -848,7 +754,7 @@ export const homepage_videos = [
     video: "0b1cn_3EczE",
     color: "#416d63",
     description:
-      "Take your light shows to a new dimension with Diffuser Caps! This new gloving tech puts patterns and designs on the outside of your glove to add a mesmerizing and unique effect to your lightshows. These Diffuser Adapters are the secret to the technology. Simply place the Diffuser Adapters (sold separately) on your microlight inside of the glove and then twist on the cap to the Diffuser Adapter from the outside of the glove! Diffuser caps are about the size of a classic dome diffuser. 15mm in Diameter. People will be speechless at your tracers and effects! 100% facemelt guarantee. Lights not included. Patent pending. The Diffuser Caps are compatible with the Mini Diffuser Caps purchased before 12/3/20. View the graphic below for visual representation of what we",
+      "Take your light shows to a new dimension with Diffuser Caps! This new gloving tech puts patterns and designs on the outside of your glove to add a mesmerizing and unique effect to your lightshows. These Diffuser Adapters are the secret to the technology. Simply place the Diffuser Adapters (sold separately) on your microlight inside of the glove and then twist on the cap to the Diffuser Adapter from the outside of the glove! Diffuser caps are about the size of a classic dome diffuser. 15mm in Diameter. People will be speechless at your tracers and effects! 100% facemelt guarantee. Lights not included. Patent pending. The Diffuser Caps are compatible with the Mini Diffuser Caps purchased before 12/3/20. View the graphic below for visual representation of what we"
   },
   {
     name: "Diffusers",
@@ -856,8 +762,8 @@ export const homepage_videos = [
     video: "uY2xjrGrZd0",
     color: "#6d416d",
     description:
-      "Tired of diffusers that dont actually diffuse? these frosted diffusers will give your lightshow an added smoothness and flow. these diffusers will distribute the light into an even glow without a bright center point.",
-  },
+      "Tired of diffusers that dont actually diffuse? these frosted diffusers will give your lightshow an added smoothness and flow. these diffusers will distribute the light into an even glow without a bright center point."
+  }
 ];
 
 export const manuals = {
@@ -867,21 +773,21 @@ export const manuals = {
     videos: [
       {
         title: "One Button Functionality",
-        video: "oHNFMaUepLs",
+        video: "oHNFMaUepLs"
       },
       {
         title: "Everyday Modes",
-        video: "dCjgyMdiKhY",
+        video: "dCjgyMdiKhY"
       },
       {
         title: "Festival Modes",
-        video: "LxtZ1noaxlk",
+        video: "LxtZ1noaxlk"
       },
       {
         title: "Color Modes",
-        video: "6RCxB4waLAI",
-      },
-    ],
+        video: "6RCxB4waLAI"
+      }
+    ]
   },
   diffuser_caps: {
     name: "Diffuser Caps Manual",
@@ -889,13 +795,13 @@ export const manuals = {
     videos: [
       {
         title: "Diffuser Caps 101",
-        video: "FJbKd0ClkFM",
+        video: "FJbKd0ClkFM"
       },
       {
         title: "Orienting Diffuser Caps 101",
-        video: "vG4qgtrotkw",
-      },
-    ],
+        video: "vG4qgtrotkw"
+      }
+    ]
   },
   glowskinz: {
     name: "Glowskinz Manual",
@@ -903,10 +809,10 @@ export const manuals = {
     videos: [
       {
         title: "Glowskinz 101",
-        video: "s49fiZPC5G0",
-      },
-    ],
-  },
+        video: "s49fiZPC5G0"
+      }
+    ]
+  }
   // diffusers: {
   // 	name: 'Diffuser Caps Manual',
   // 	manual: '/Diffuser_Caps_Manual.png',
@@ -965,7 +871,7 @@ export const descriptions = {
   glowstringz:
     "Decorate your home and festival with these stunning Glowstringz at Glow LEDs. Shop String Lights, LED Strips, and Addressable LEDs. Click to Shop.",
   glowskinz:
-    "Take your gloving light shows to the next level with our Glowskinz at Glow LEDs. Shop Diffuser Skins, LED Skins, and Diffuser Casing Combo. Click to Shop.",
+    "Take your gloving light shows to the next level with our Glowskinz at Glow LEDs. Shop Diffuser Skins, LED Skins, and Diffuser Casing Combo. Click to Shop."
 };
 
 export const description_determination = (category: any) => {
@@ -988,31 +894,19 @@ export const description_determination = (category: any) => {
   }
 };
 
-export const update_products_url = (
-  history: any,
-  search = "",
-  sort = "",
-  filter = "",
-  page = 1,
-  limit = 0,
-  pathname = ""
-) => {
+export const update_products_url = (history: any, search = "", sort = "", filter = "", page = 1, limit = 0, pathname = "") => {
   if (pathname) {
     history.push({
       pathname: pathname,
-      search: `${search ? "?search=" + search : ""}${sort
-        ? "?sort=" + sort
-        : ""}${filter ? "?filter=" + filter : ""}${page
-        ? "?page=" + page
-        : ""}${limit ? "?limit=" + limit : ""}`,
+      search: `${search ? "?search=" + search : ""}${sort ? "?sort=" + sort : ""}${filter ? "?filter=" + filter : ""}${
+        page ? "?page=" + page : ""
+      }${limit ? "?limit=" + limit : ""}`
     });
   } else {
     history.push({
-      search: `${search ? "?search=" + search : ""}${sort
-        ? "?sort=" + sort
-        : ""}${filter ? "?filter=" + filter : ""}${page
-        ? "?page=" + page
-        : ""}${limit ? "?limit=" + limit : ""}`,
+      search: `${search ? "?search=" + search : ""}${sort ? "?sort=" + sort : ""}${filter ? "?filter=" + filter : ""}${
+        page ? "?page=" + page : ""
+      }${limit ? "?limit=" + limit : ""}`
     });
   }
 };
@@ -1020,16 +914,17 @@ export const update_products_url = (
 export const getUrlParameter = (location: any) => {
   const search: any = location.search.split("?");
   const search_object: any = {};
-  search.filter((item: any) => item !== "").forEach((item: any) => {
-    search_object[item.split("=")[0]] = item.split("=")[1];
-  });
+  search
+    .filter((item: any) => item !== "")
+    .forEach((item: any) => {
+      search_object[item.split("=")[0]] = item.split("=")[1];
+    });
   return search_object;
 };
 
-export const sort_options = [ "Category", "Newest", "Lowest", "Highest" ];
+export const sort_options = ["Category", "Newest", "Lowest", "Highest"];
 
 export const mutliDragAwareReorder = (args: any) => {
-  console.log("hello");
   if (args.selectedProductIds.length > 1) {
     return reorderMultiDrag(args);
   }
@@ -1037,7 +932,7 @@ export const mutliDragAwareReorder = (args: any) => {
 };
 // const reorder_entities = (list: any, startIndex: any, endIndex: any) => {
 // 	// const result = Array.from(list);
-// 	// console.log({ list });
+// 	//
 // 	const result = list.products;
 // 	const [ removed ] = result.splice(startIndex, 1);
 // 	result.splice(endIndex, 0, removed);
@@ -1045,35 +940,25 @@ export const mutliDragAwareReorder = (args: any) => {
 // 	return result;
 // };
 
-const reorderSingleDrag = ({
-  entities,
-  selectedProductIds,
-  source,
-  destination,
-}: any) => {
-  console.log("reorderSingleDrag");
+const reorderSingleDrag = ({ entities, selectedProductIds, source, destination }: any) => {
   // moving in the same list
 
   if (source.droppableId === destination.droppableId) {
     const column = entities.columns[source.droppableId];
-    const reordered = reorder(
-      column.product_ids,
-      source.index,
-      destination.index
-    );
+    const reordered = reorder(column.product_ids, source.index, destination.index);
     // const reordered_entities = reorder_entities(entities, source.index, destination.index);
-    console.log({ entities, selectedProductIds, source, destination });
+
     const updated = {
       ...entities,
       columns: {
         ...entities.columns,
-        [column.id]: withNewProductIds(column, reordered),
-      },
+        [column.id]: withNewProductIds(column, reordered)
+      }
     };
-    console.log({ reorderSingleDrag: updated });
+
     return {
       entities: updated,
-      selectedProductIds,
+      selectedProductIds
     };
   }
 
@@ -1085,11 +970,11 @@ const reorderSingleDrag = ({
   const productId = home.product_ids[source.index];
 
   // remove from home column
-  const newHomeProductIds = [ ...home.product_ids ];
+  const newHomeProductIds = [...home.product_ids];
   newHomeProductIds.splice(source.index, 1);
 
   // add to foreign column
-  const newForeignProductIds = [ ...foreign.product_ids ];
+  const newForeignProductIds = [...foreign.product_ids];
   newForeignProductIds.splice(destination.index, 0, productId);
 
   const updated = {
@@ -1097,57 +982,48 @@ const reorderSingleDrag = ({
     columns: {
       ...entities.columns,
       [home.id]: withNewProductIds(home, newHomeProductIds),
-      [foreign.id]: withNewProductIds(foreign, newForeignProductIds),
-    },
+      [foreign.id]: withNewProductIds(foreign, newForeignProductIds)
+    }
   };
 
   return {
     entities: updated,
-    selectedProductIds,
+    selectedProductIds
   };
 };
 
-const reorderMultiDrag = ({
-  entities,
-  selectedProductIds,
-  source,
-  destination,
-}: any) => {
-  console.log("reorderMultiDrag");
-  // console.log({ entities });
-  // console.log({ columns: entities.columns });
-  // console.log({ source });
-  // console.log({ droppableId: source.droppableId });
+const reorderMultiDrag = ({ entities, selectedProductIds, source, destination }: any) => {
+  //
+  //
+  //
+  //
   const start = entities.columns[source.droppableId];
-  console.log({ start });
+
   const dragged = start.product_ids[source.index];
-  console.log({ dragged });
+
   const insertAtIndex = (() => {
-    const destinationIndexOffset = selectedProductIds.reduce(
-      (previous: any, current: any) => {
-        if (current === dragged) {
-          return previous;
-        }
+    const destinationIndexOffset = selectedProductIds.reduce((previous: any, current: any) => {
+      if (current === dragged) {
+        return previous;
+      }
 
-        const final = entities.columns[destination.droppableId];
-        const column = getHomeColumn(entities, current);
+      const final = entities.columns[destination.droppableId];
+      const column = getHomeColumn(entities, current);
 
-        if (column !== final) {
-          return previous;
-        }
+      if (column !== final) {
+        return previous;
+      }
 
-        const index = column.product_ids.indexOf(current);
+      const index = column.product_ids.indexOf(current);
 
-        if (index >= destination.index) {
-          return previous;
-        }
+      if (index >= destination.index) {
+        return previous;
+      }
 
-        // the selected item is before the destination index
-        // we need to account for this when inserting into the new location
-        return previous + 1;
-      },
-      0
-    );
+      // the selected item is before the destination index
+      // we need to account for this when inserting into the new location
+      return previous + 1;
+    }, 0);
 
     const result = destination.index - destinationIndexOffset;
 
@@ -1156,7 +1032,7 @@ const reorderMultiDrag = ({
 
   // doing the ordering now as we are required to look up columns
   // and know original ordering
-  const orderedSelectedProductIds = [ ...selectedProductIds ];
+  const orderedSelectedProductIds = [...selectedProductIds];
   orderedSelectedProductIds.sort((a, b) => {
     // moving the dragged item to the top of the list
     if (a === dragged) {
@@ -1181,25 +1057,20 @@ const reorderMultiDrag = ({
   });
 
   // we need to remove all of the selected products from their columns
-  const withRemovedProducts = entities.columnOrder.reduce(
-    (previous: any, columnId: any) => {
-      const column = entities.columns[columnId];
+  const withRemovedProducts = entities.columnOrder.reduce((previous: any, columnId: any) => {
+    const column = entities.columns[columnId];
 
-      // remove the id's of the items that are selected
-      const remainingProductIds = column.product_ids.filter(
-        (id: any) => !selectedProductIds.includes(id)
-      );
+    // remove the id's of the items that are selected
+    const remainingProductIds = column.product_ids.filter((id: any) => !selectedProductIds.includes(id));
 
-      previous[column.id] = withNewProductIds(column, remainingProductIds);
-      return previous;
-    },
-    entities.columns
-  );
+    previous[column.id] = withNewProductIds(column, remainingProductIds);
+    return previous;
+  }, entities.columns);
 
   const final = withRemovedProducts[destination.droppableId];
-  console.log({ final });
+
   const withInserted = (() => {
-    const base = [ ...final.product_ids ];
+    const base = [...final.product_ids];
     base.splice(insertAtIndex, 0, ...orderedSelectedProductIds);
     return base;
   })();
@@ -1207,35 +1078,30 @@ const reorderMultiDrag = ({
   // insert all selected products into final column
   const withAddedProducts = {
     ...withRemovedProducts,
-    [final.id]: withNewProductIds(final, withInserted),
+    [final.id]: withNewProductIds(final, withInserted)
   };
-  console.log({ withAddedProducts });
 
   const updated = {
     ...entities,
-    columns: withAddedProducts,
+    columns: withAddedProducts
   };
-  console.log({ updated });
-  console.log({ entities });
 
   return {
     entities: updated,
-    selectedProductIds: orderedSelectedProductIds,
+    selectedProductIds: orderedSelectedProductIds
   };
 };
 
 const withNewProductIds = (column: any, product_ids: any) => ({
   id: column.id,
   title: column.title,
-  product_ids,
+  product_ids
 });
 
 export const getHomeColumn = (entities: any, productId: any) => {
-  console.log({ entities, productId });
   const columnId = entities.columnOrder.find((id: any) => {
     const column = entities.columns[id];
-    console.log({ column });
-    console.log({ includes: column.product_ids.includes(productId) });
+
     return column.product_ids.includes(productId);
   });
 
@@ -1244,14 +1110,10 @@ export const getHomeColumn = (entities: any, productId: any) => {
   return entities.columns[columnId];
 };
 
-export const multiSelectTo = (
-  entities: any,
-  selectedProductIds: any,
-  newProductId: any
-) => {
+export const multiSelectTo = (entities: any, selectedProductIds: any, newProductId: any) => {
   // Nothing already selected
   if (!selectedProductIds.length) {
-    return [ newProductId ];
+    return [newProductId];
   }
 
   const columnOfNew = getHomeColumn(entities, newProductId);
@@ -1293,15 +1155,15 @@ export const multiSelectTo = (
     return true;
   });
 
-  const sorted = isSelectingForwards ? toAdd : [ ...toAdd ].reverse();
-  const combined = [ ...selectedProductIds, ...sorted ];
+  const sorted = isSelectingForwards ? toAdd : [...toAdd].reverse();
+  const combined = [...selectedProductIds, ...sorted];
 
   return combined;
 };
 
 const reorder = (list: any, startIndex: any, endIndex: any) => {
   const result = Array.from(list);
-  const [ removed ] = result.splice(startIndex, 1);
+  const [removed] = result.splice(startIndex, 1);
   result.splice(endIndex, 0, removed);
 
   return result;
@@ -1313,73 +1175,73 @@ export const dates_in_year = (year: number) => {
       month: "january",
       number_of_days: 31,
       start_date: year + "-01-01",
-      end_date: year + "-01-31",
+      end_date: year + "-01-31"
     },
     {
       month: "february",
       number_of_days: 28,
       start_date: year + "-02-01",
-      end_date: year + "-02-28",
+      end_date: year + "-02-28"
     },
     {
       month: "march",
       number_of_days: 31,
       start_date: year + "-03-01",
-      end_date: year + "-03-31",
+      end_date: year + "-03-31"
     },
     {
       month: "april",
       number_of_days: 30,
       start_date: year + "-04-01",
-      end_date: year + "-04-30",
+      end_date: year + "-04-30"
     },
     {
       month: "may",
       number_of_days: 31,
       start_date: year + "-05-01",
-      end_date: year + "-05-31",
+      end_date: year + "-05-31"
     },
     {
       month: "june",
       number_of_days: 30,
       start_date: year + "-06-01",
-      end_date: year + "-06-30",
+      end_date: year + "-06-30"
     },
     {
       month: "july",
       number_of_days: 31,
       start_date: year + "-07-01",
-      end_date: year + "-07-31",
+      end_date: year + "-07-31"
     },
     {
       month: "august",
       number_of_days: 31,
       start_date: year + "-08-01",
-      end_date: year + "-08-31",
+      end_date: year + "-08-31"
     },
     {
       month: "september",
       number_of_days: 30,
       start_date: year + "-09-01",
-      end_date: year + "-09-30",
+      end_date: year + "-09-30"
     },
     {
       month: "october",
       number_of_days: 31,
       start_date: year + "-10-01",
-      end_date: year + "-10-31",
+      end_date: year + "-10-31"
     },
     {
       month: "november",
       number_of_days: 30,
       start_date: year + "-11-01",
-      end_date: year + "-11-30",
+      end_date: year + "-11-30"
     },
     {
       month: "december",
       number_of_days: 31,
       start_date: year + "-12-01",
-      end_date: year + "-12-31",
-    },
+      end_date: year + "-12-31"
+    }
   ];
 };

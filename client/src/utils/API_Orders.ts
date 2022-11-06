@@ -24,13 +24,12 @@ const order_routes = {
     return axios.get(`/api/orders/income${year ? "/" + year : ""}${month ? "/" + month : ""}`);
   },
   affiliate_code_usage_orders_a: (arg: any) => {
-    console.log({ arg });
     return axios.get(
       `/api/orders/affiliate_code_usage/${arg.year}${arg.month ? "/" + arg.month : ""}${arg.position ? `?position=${arg.position}` : ""}`
     );
   },
   promo_code_usage_orders_a: (year: number, month: string, query: string) => {
-    // console.log({ query });
+    //
     return axios.get(`/api/orders/promo_code_usage/${year}${month ? "/" + month : ""}?${create_query(query)}`);
   },
   // yearly_income: (year: number) => {
@@ -43,7 +42,7 @@ const order_routes = {
     return axios.get("/api/expenses/total_expenses");
   },
   mark_as_shipped: () => {
-    // console.log({ get_email: email_id });
+    //
     return axios.put("/api/orders/mark_as_shipped");
   }
 };

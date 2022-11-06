@@ -82,7 +82,7 @@ const UsersPage = props => {
     if (user.isAdmin) {
       result = colors[2].color;
     }
-    // console.log(result);
+    //
     return result;
   };
 

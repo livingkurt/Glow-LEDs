@@ -12,54 +12,46 @@ const UserProfilePage = props => {
   const userDetails = useSelector(state => state.userDetails);
   const { loading, user, message, error } = userDetails;
 
-  const [ first_name, set_first_name ] = useState("");
-  const [ last_name, set_last_name ] = useState("");
-  const [ email, setEmail ] = useState("");
-  const [ verified, set_verified ] = useState();
-  const [ admin, set_admin ] = useState();
-  const [ shipping, set_shipping ] = useState({});
-  const [ email_subscription, set_email_subscription ] = useState();
+  const [first_name, set_first_name] = useState("");
+  const [last_name, set_last_name] = useState("");
+  const [email, setEmail] = useState("");
+  const [verified, set_verified] = useState();
+  const [admin, set_admin] = useState();
+  const [shipping, set_shipping] = useState({});
+  const [email_subscription, set_email_subscription] = useState();
 
   const dispatch = useDispatch();
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        dispatch(detailsUser(props.match.params.id));
-      }
-      return () => (clean = false);
-    },
-    [ dispatch ]
-  );
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      dispatch(detailsUser(props.match.params.id));
+    }
+    return () => (clean = false);
+  }, [dispatch]);
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (user) {
-          setEmail(user.email);
-          set_first_name(user.first_name);
-          set_last_name(user.last_name);
-          set_verified(user.isVerified);
-          set_admin(user.isAdmin);
-          set_shipping(user.shipping);
-          set_email_subscription(user.email_subscription);
-        }
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (user) {
+        setEmail(user.email);
+        set_first_name(user.first_name);
+        set_last_name(user.last_name);
+        set_verified(user.isVerified);
+        set_admin(user.isAdmin);
+        set_shipping(user.shipping);
+        set_email_subscription(user.email_subscription);
       }
-      return () => (clean = false);
-    },
-    [ user ]
-  );
+    }
+    return () => (clean = false);
+  }, [user]);
 
   const container_styles = {
-    marginBottom: "20px",
+    marginBottom: "20px"
   };
 
   const send_not_verified_email = async () => {
     const request = await API_Emails.not_verified_email(user);
-
-    console.log(request);
   };
   return (
     <div className="p-20px inner_content">
@@ -71,9 +63,7 @@ const UserProfilePage = props => {
         Back to Users
       </GLButton>
       <div className="row">
-        <h1 style={{ textAlign: "center", width: "100%" }}>
-          {first_name}'s Profile
-        </h1>
+        <h1 style={{ textAlign: "center", width: "100%" }}>{first_name}'s Profile</h1>
       </div>
       <Loading loading={loading} error={error}>
         {user && (
@@ -106,8 +96,7 @@ const UserProfilePage = props => {
                       {shipping.address_1} {shipping.address_2}
                     </div>
                     <div>
-                      {shipping.city}, {shipping.state} {shipping.postalCode}{" "}
-                      {shipping.country}
+                      {shipping.city}, {shipping.state} {shipping.postalCode} {shipping.country}
                     </div>
                     <div>{shipping.international && "International"}</div>
                     <div>{shipping.email}</div>
@@ -116,9 +105,7 @@ const UserProfilePage = props => {
               </div>
               <div className="mb-20px">
                 <h3>Promotional Emails</h3>
-                <label>
-                  {email_subscription ? "Subscribed" : "Not Subscribed"}
-                </label>
+                <label>{email_subscription ? "Subscribed" : "Not Subscribed"}</label>
               </div>
               <div className="" style={container_styles}>
                 <h3>Verified</h3>
@@ -132,43 +119,28 @@ const UserProfilePage = props => {
             <div className="row">
               <div style={{ height: 50 }}>
                 <Link to={"/secure/glow/edituser/" + props.match.params.id}>
-                  <GLButton
-                    style={{ marginRight: "10px", maxWidth: "225px" }}
-                    variant="primary"
-                  >
+                  <GLButton style={{ marginRight: "10px", maxWidth: "225px" }} variant="primary">
                     Edit Profile
                   </GLButton>
                 </Link>
               </div>
               <div style={{ height: 50 }}>
-                <Link
-                  to={"/secure/glow/change_password/" + props.match.params.id}
-                >
-                  <GLButton
-                    style={{ marginRight: "10px", maxWidth: "210px" }}
-                    variant="primary"
-                  >
+                <Link to={"/secure/glow/change_password/" + props.match.params.id}>
+                  <GLButton style={{ marginRight: "10px", maxWidth: "210px" }} variant="primary">
                     Change Password
                   </GLButton>
                 </Link>
               </div>
               <div style={{ height: 50 }}>
                 <Link to={"/secure/glow/userorders/" + props.match.params.id}>
-                  <GLButton
-                    style={{ maxWidth: "225px", marginRight: "10px" }}
-                    variant="primary"
-                  >
+                  <GLButton style={{ maxWidth: "225px", marginRight: "10px" }} variant="primary">
                     View Orders
                   </GLButton>
                 </Link>
               </div>
               <div style={{ height: 50 }}>
                 {/* <Link to={'/secure/account/orders'}> */}
-                <GLButton
-                  style={{ maxWidth: "225px" }}
-                  onClick={send_not_verified_email}
-                  variant="primary"
-                >
+                <GLButton style={{ maxWidth: "225px" }} onClick={send_not_verified_email} variant="primary">
                   Still Not Verified
                 </GLButton>
                 {/* </Link> */}

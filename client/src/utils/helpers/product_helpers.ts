@@ -91,7 +91,6 @@ export const create_color_products = async (
   color_modifier: string,
   color_images: any
 ) => {
-  console.log({ color_modifier, category: product.category });
   let list: any = [];
   if (product.category === "glowskinz" && product.subcategory === "clozd" && product.collection === "capez") {
     list = [
@@ -940,11 +939,8 @@ export const create_secondary_color_products = async (
   secondary_color_modifier: string,
   secondary_color_images: any
 ) => {
-  console.log({ product });
-  console.log({ secondary_color_modifier, category: product.category });
   let list: any = [];
   if (product.category === "glowskinz") {
-    console.log({ create_secondary_color_products: "secondary_color" });
     list = [
       {
         name: `Clear ${product.name}${secondary_color_modifier && " - " + secondary_color_modifier}`,

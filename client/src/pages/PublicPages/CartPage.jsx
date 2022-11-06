@@ -32,7 +32,6 @@ const CartPage = props => {
 
   const dimminish_stock = async () => {
     const request = await API_Products.update_stock(cartItems);
-    console.log({ dimminish_stock: request });
   };
 
   return (

@@ -4,16 +4,13 @@ import { Link } from "react-router-dom";
 import Rating from "./Rating";
 import { format_date } from "../../utils/helper_functions";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  saveProductReview,
-  detailsProduct,
-} from "../../actions/productActions";
+import { saveProductReview, detailsProduct } from "../../actions/productActions";
 import { PRODUCT_REVIEW_SAVE_RESET } from "../../constants/productConstants";
 import { GLButton } from "../GlowLEDsComponents";
 // Components
 
 const Review = props => {
-  // console.log(props.product);
+  //
   const dispatch = useDispatch();
 
   const userLogin = useSelector(state => state.userLogin);
@@ -22,9 +19,9 @@ const Review = props => {
   const productReviewSave = useSelector(state => state.productReviewSave);
   const { success: productSaveSuccess } = productReviewSave;
 
-  const [ review_modal, setReviewModal ] = useState("none");
-  const [ rating, setRating ] = useState(5);
-  const [ comment, setComment ] = useState("");
+  const [review_modal, setReviewModal] = useState("none");
+  const [rating, setRating] = useState(5);
+  const [comment, setComment] = useState("");
   const show_write_review = () => {
     setReviewModal("block");
   };
@@ -40,7 +37,7 @@ const Review = props => {
         first_name: userInfo.first_name,
         last_name: userInfo.last_name,
         rating: rating,
-        comment: comment,
+        comment: comment
       })
     );
     setRating(0);
@@ -64,8 +61,7 @@ const Review = props => {
             background: "#616161",
             padding: "5px",
             borderRadius: "15px",
-            boxShadow:
-              "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+            boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
           }}
         >
           <div className="jc-b">
@@ -78,14 +74,9 @@ const Review = props => {
               <div>{format_date(review.createdAt.substring(0, 10))}</div>
               <div>{review.comment}</div>
             </div>
-            {userInfo &&
-            userInfo.isAdmin && (
+            {userInfo && userInfo.isAdmin && (
               <div className="ta-r">
-                <GLButton
-                  variant="icon"
-                  onClick={() => remove_review(review._id)}
-                  aria-label="Delete"
-                >
+                <GLButton variant="icon" onClick={() => remove_review(review._id)} aria-label="Delete">
                   <i className="fas fa-trash-alt" />
                 </GLButton>
               </div>
@@ -103,7 +94,7 @@ const Review = props => {
           style={{
             textAlign: "center",
             width: "100%",
-            justifyContent: "center",
+            justifyContent: "center"
           }}
         >
           Write a Review
@@ -117,7 +108,7 @@ const Review = props => {
                     textAlign: "center",
                     width: "100%",
                     justifyContent: "center",
-                    marginTop: "-35px",
+                    marginTop: "-35px"
                   }}
                 >
                   {productSaveSuccess ? "Review Saved Successfully" : ""}
@@ -144,19 +135,10 @@ const Review = props => {
               </li>
               <li>
                 <label htmlFor="comment" id="comment" />
-                <textarea
-                  htmlFor="comment"
-                  className="rating_textarea"
-                  value={comment}
-                  onChange={e => setComment(e.target.value)}
-                />
+                <textarea htmlFor="comment" className="rating_textarea" value={comment} onChange={e => setComment(e.target.value)} />
               </li>
               <li>
-                <GLButton
-                  style={{ marginBottom: "10px" }}
-                  onClick={submitHandler}
-                  variant="primary"
-                >
+                <GLButton style={{ marginBottom: "10px" }} onClick={submitHandler} variant="primary">
                   Submit
                 </GLButton>
 
@@ -169,9 +151,7 @@ const Review = props => {
         ) : (
           <div>
             Please{" "}
-            <Link
-              to={`/account/login?redirect=/collections/all/products/${props.pathname}`}
-            >
+            <Link to={`/account/login?redirect=/collections/all/products/${props.pathname}`}>
               <GLButton variant="primary">Login</GLButton>
             </Link>{" "}
             to Write a Review

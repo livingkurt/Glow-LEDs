@@ -81,10 +81,6 @@ async function generateSitemap() {
   ];
   const menu_types = [{ pathname: "gloving" }, { pathname: "featured" }, { pathname: "support" }];
 
-  console.log({ productMap });
-  console.log({ categoryMap });
-  console.log({ subcategoryMap });
-
   const paramsConfig = {
     "/collections/all/products/category/:category": categoryMap,
     "/collections/all/products/category/glowskinz/subcategory/:subcategory": subcategoryMap,

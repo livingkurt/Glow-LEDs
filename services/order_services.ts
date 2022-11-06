@@ -121,7 +121,6 @@ export default {
         currentPage: parseInt(page)
       };
     } catch (error) {
-      console.log({ findAll_orders_s_error: error });
       throw new Error(error.message);
     }
   },
@@ -133,7 +132,6 @@ export default {
       const page = 1;
       return await order_db.findAll_orders_db(filter, sort, limit, page);
     } catch (error) {
-      console.log({ findById_orders_s_error: error });
       throw new Error(error.message);
     }
   },
@@ -141,16 +139,13 @@ export default {
     try {
       return await order_db.findById_orders_db(params.id);
     } catch (error) {
-      console.log({ findById_orders_s_error: error });
       throw new Error(error.message);
     }
   },
   create_orders_s: async (body: any) => {
-    console.log({ body });
     try {
       return await order_db.create_orders_db(body);
     } catch (error) {
-      console.log({ create_orders_s_error: error });
       throw new Error(error.message);
     }
   },
@@ -158,7 +153,6 @@ export default {
     try {
       return await order_db.update_orders_db(params.id, body);
     } catch (error) {
-      console.log({ update_orders_s_error: error });
       throw new Error(error.message);
     }
   },
@@ -166,7 +160,6 @@ export default {
     try {
       return await order_db.remove_orders_db(params.id);
     } catch (error) {
-      console.log({ remove_orders_s_error: error });
       throw new Error(error.message);
     }
   },
@@ -189,7 +182,7 @@ export default {
           }
         });
       });
-      // // console.log({ ids });
+      // //
       const result: any = {};
       const ids_result: any = {};
       for (let i = 0; i < products.length; ++i) {
@@ -200,7 +193,6 @@ export default {
         ++result[products[i]];
         ++ids_result[ids[i]];
       }
-      // // console.log({ ids_result });
       const final_result = [];
       for (const i in result) {
         const entry = { name: i, occurrence: result[i], id: ids_result[i] };
@@ -209,7 +201,6 @@ export default {
       final_result.sort((a, b) => (a.occurrence > b.occurrence ? -1 : 1));
       return final_result;
     } catch (error) {
-      console.log({ occurrences_orders_s_error: error });
       throw new Error(error.message);
     }
   },
@@ -239,7 +230,6 @@ export default {
         .slice(0, 20);
       return sorted_orders;
     } catch (error) {
-      console.log({ top_customers_orders_s_error: error });
       throw new Error(error.message);
     }
   },
@@ -262,7 +252,7 @@ export default {
           }
         });
       });
-      // // console.log({ ids });
+      // //
       const result: any = {};
       const ids_result: any = {};
       for (let i = 0; i < products.length; ++i) {
@@ -273,7 +263,7 @@ export default {
         ++result[products[i]];
         ++ids_result[ids[i]];
       }
-      // // console.log({ ids_result });
+      // //
       const final_result = [];
       for (const i in result) {
         const entry = { category: i, occurrence: result[i], id: ids_result[i] };
@@ -282,7 +272,6 @@ export default {
       final_result.sort((a, b) => (a.occurrence > b.occurrence ? -1 : 1));
       return final_result;
     } catch (error) {
-      console.log({ category_occurrences_orders_s_error: error });
       throw new Error(error.message);
     }
   },
@@ -302,10 +291,9 @@ export default {
         .reduce((a: any, order: any) => a + order.totalPrice - order.taxPrice, 0)
         .toFixed(2);
 
-      // console.log({ number_of_uses, revenue });
+      //
       return { number_of_uses, revenue };
     } catch (error) {
-      console.log({ code_usage_orders_s_error: error });
       throw new Error(error.message);
     }
   },
@@ -323,23 +311,16 @@ export default {
       });
       return result;
     } catch (error) {
-      console.log({ tax_rates_orders_s_error: error });
       throw new Error(error.message);
     }
   },
   affiliate_code_usage_orders_s: async (params: any, query: any) => {
     try {
       const sort = {};
-      console.log({ params });
+
       let o_filter = {};
 
-      console.log({
-        month: params.month,
-        year: params.year,
-        position: query.position
-      });
       if (params.month && params.month.length > 0) {
-        console.log("Month True");
         const start_date = month_dates(params.month, params.year).start_date;
         const end_date = month_dates(params.month, params.year).end_date;
         o_filter = {
@@ -351,7 +332,6 @@ export default {
           }
         };
       } else if (params.year && params.year.length > 0) {
-        console.log("Year True");
         const start_date = params.year + "-01-01";
         const end_date = params.year + "-12-31";
         o_filter = {
@@ -363,10 +343,9 @@ export default {
           }
         };
       } else {
-        console.log("No True");
         o_filter = { deleted: false, isPaid: true };
       }
-      console.log({ query });
+
       let a_filter: any = { deleted: false, active: true };
       if (query.position === "promoter") {
         a_filter = { deleted: false, active: true, promoter: true };
@@ -377,7 +356,7 @@ export default {
       // const o_filter = determine_o_filter(query, {});
       const limit = 0;
       const page = 1;
-      console.log({ o_filter, a_filter });
+
       const orders = await order_db.findAll_orders_db(o_filter, sort, limit, page);
       let affiliates = await affiliate_db.findAll_affiliates_db(a_filter, {});
       if (!query.position) {
@@ -442,7 +421,7 @@ export default {
               : `${determine_sponsor_code_tier(code_usage)}%`
         };
       });
-      // console.log({ affiliate_earnings_dups });
+      //
       // const sorted_by_uses = affiliate_earnings_dups.sort(
       // 	(a: any, b: any) => (parseFloat(a.Uses) > parseFloat(b.Uses) ? -1 : 1)
       // );
@@ -476,15 +455,10 @@ export default {
       // 	(a: any, affiliate: any) => parseFloat(a) + parseFloat(affiliate.Earned),
       // 	0
       // );
-      // console.log({ rows });
+      //
 
       // return { affiliate_earnings, uses, revenue, earned };
-      console.log({
-        affiliates: affiliate_s,
-        uses: uses_s,
-        revenue: revenue_s,
-        earned: earned_s
-      });
+
       return {
         affiliates: affiliate_s,
         uses: uses_s,
@@ -493,22 +467,16 @@ export default {
       };
       // return 'Success';
     } catch (error) {
-      console.log({ affiliate_code_usage_orders_s_error: error });
       throw new Error(error.message);
     }
   },
   promo_code_usage_orders_s: async (params: any, query: any) => {
     try {
       const sort = {};
-      console.log({ params, query });
+
       let o_filter = {};
 
-      console.log({
-        month: params.month,
-        year: params.year
-      });
       if (params.month && params.month.length > 0) {
-        console.log("Month True");
         const start_date = month_dates(params.month, params.year).start_date;
         const end_date = month_dates(params.month, params.year).end_date;
         o_filter = {
@@ -520,7 +488,6 @@ export default {
           }
         };
       } else if (params.year && params.year.length > 0) {
-        console.log("Year True");
         const start_date = params.year + "-01-01";
         const end_date = params.year + "-12-31";
         o_filter = {
@@ -532,18 +499,16 @@ export default {
           }
         };
       } else {
-        console.log("No True");
         o_filter = { deleted: false, isPaid: true };
       }
-      console.log({ o_filter });
 
       const p_filter = determine_filter(query, {});
-      console.log({ p_filter });
+
       const limit = 0;
       const page = 1;
       const orders = await order_db.findAll_orders_db(o_filter, sort, limit, page);
       const promos = await promo_db.findAll_promos_db(p_filter, {});
-      // console.log({ affiliates_w_inkybois, orders });
+      //
       const promos_earnings: any = promos.map((code: any) => {
         return {
           "Promo Code": toCapitalize(code.promo_code),
@@ -570,7 +535,6 @@ export default {
         discount: discount_s
       };
     } catch (error) {
-      console.log({ promo_code_usage_orders_s_error: error });
       throw new Error(error.message);
     }
   },
@@ -590,7 +554,6 @@ export default {
       const page = 1;
       return await order_db.findAll_orders_db(filter, sort, limit, page);
     } catch (error) {
-      console.log({ each_day_income_orders_s_error: error });
       throw new Error(error.message);
     }
   },
@@ -613,7 +576,6 @@ export default {
       const page = 1;
       return await order_db.findAll_orders_db(filter, sort, limit, page);
     } catch (error) {
-      console.log({ each_month_income_orders_s_error: error });
       throw new Error(error.message);
     }
   },
@@ -630,7 +592,6 @@ export default {
       const page = 1;
       return await order_db.findAll_orders_db(filter, sort, limit, page);
     } catch (error) {
-      console.log({ previous_income_orders_s_error: error });
       throw new Error(error.message);
     }
   },
@@ -648,7 +609,6 @@ export default {
       const page = 1;
       return await order_db.findAll_orders_db(filter, sort, limit, page);
     } catch (error) {
-      console.log({ mark_as_shipped_orders_s_error: error });
       throw new Error(error.message);
     }
   },
@@ -661,7 +621,7 @@ export default {
     const e_filter: any = {
       deleted: false
     };
-    console.log({ params });
+
     if (params.year) {
       const createdAt = {
         $gte: new Date(params.year + "-01-01"),
@@ -683,16 +643,7 @@ export default {
 
       const limit = 0;
       const page = 1;
-      console.log({
-        o_filter,
-        sort,
-        limit,
-        page
-      });
-      console.log({
-        e_filter,
-        sort
-      });
+
       const orders_data = await order_db.findAll_orders_db(o_filter, sort, limit, page);
       const expenses_data = await expense_db.findAll_expenses_db(e_filter, sort);
       const income = orders_data.reduce(
@@ -731,7 +682,6 @@ export default {
             .reduce((a: any, c: any) => parseFloat(a) + parseFloat(c.amount), 0)
         };
       });
-      console.log({ category_expenses });
 
       const batt_1620 = orders_data
         .map((order: any) => order.orderItems)
@@ -1000,10 +950,9 @@ export default {
           total_income: whites_total
         }
       };
-      console.log({ breakdown: breakdown });
+
       return breakdown;
     } catch (error) {
-      console.log({ income_orders_s_error: error });
       throw new Error(error.message);
     }
   }

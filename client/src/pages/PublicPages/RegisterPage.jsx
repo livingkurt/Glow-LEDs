@@ -23,7 +23,7 @@ const RegisterPage = props => {
 
   const userRegister = useSelector(state => state.userRegister);
   const { loading, userInfo, error } = userRegister;
-  console.log({ error });
+
   const dispatch = useDispatch();
 
   const redirect = props.location.search ? props.location.search.split("=")[1] : "/";
@@ -38,8 +38,7 @@ const RegisterPage = props => {
     setEmailValidations(request.errors.email);
     setPasswordValidations(request.errors.password);
     setRePasswordValidations(request.errors.rePassword);
-    console.log(request);
-    console.log(request.errors.email);
+
     if (request.isValid) {
       dispatch(
         register({

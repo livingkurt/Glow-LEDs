@@ -18,7 +18,6 @@ const ControlPanelPage = props => {
 
   const expenseList = useSelector(state => state.expenseList);
   const { expenses } = expenseList;
-  console.log({ expenses });
 
   const productList = useSelector(state => state.productList);
   const { products } = productList;
@@ -32,40 +31,37 @@ const ControlPanelPage = props => {
   const promoList = useSelector(state => state.promoList);
   const { promos } = promoList;
 
-  const [ product_occurrences, set_product_occurrences ] = useState([]);
-  const [ daily_orders, set_daily_orders ] = useState([]);
-  const [ orders, set_orders ] = useState([]);
-  const [ weekly_orders, set_weekly_orders ] = useState([]);
-  const [ monthly_orders, set_monthly_orders ] = useState([]);
-  const [ yesterday_income, set_yesterday_income ] = useState([]);
-  const [ monthly_income, set_monthly_income ] = useState([]);
-  const [ total_affiliate_revenue, set_total_affiliate_revenue ] = useState([]);
-  const [
-    total_affiliate_code_usage,
-    set_total_affiliate_code_usage,
-  ] = useState([]);
-  const [ yearly_income, set_yearly_income ] = useState([]);
-  const [ year, set_year ] = useState(2021);
-  const [ month, set_month ] = useState();
-  const [ batteries, set_batteries ] = useState({});
-  const [ top_customers, set_top_customers ] = useState([]);
+  const [product_occurrences, set_product_occurrences] = useState([]);
+  const [daily_orders, set_daily_orders] = useState([]);
+  const [orders, set_orders] = useState([]);
+  const [weekly_orders, set_weekly_orders] = useState([]);
+  const [monthly_orders, set_monthly_orders] = useState([]);
+  const [yesterday_income, set_yesterday_income] = useState([]);
+  const [monthly_income, set_monthly_income] = useState([]);
+  const [total_affiliate_revenue, set_total_affiliate_revenue] = useState([]);
+  const [total_affiliate_code_usage, set_total_affiliate_code_usage] = useState([]);
+  const [yearly_income, set_yearly_income] = useState([]);
+  const [year, set_year] = useState(2021);
+  const [month, set_month] = useState();
+  const [batteries, set_batteries] = useState({});
+  const [top_customers, set_top_customers] = useState([]);
 
-  const [ year_2020, set_year_2020 ] = useState({});
-  const [ year_2021, set_year_2021 ] = useState({});
-  const [ year_2022, set_year_2022 ] = useState({});
-  const [ year_2023, set_year_2023 ] = useState({});
-  const [ year_2024, set_year_2024 ] = useState({});
-  const [ year_2025, set_year_2025 ] = useState({});
-  const [ year_2026, set_year_2026 ] = useState({});
-  const [ year_2027, set_year_2027 ] = useState({});
-  const [ year_2028, set_year_2028 ] = useState({});
-  const [ year_2029, set_year_2029 ] = useState({});
-  const [ year_2030, set_year_2030 ] = useState({});
-  const [ year_2031, set_year_2031 ] = useState({});
+  const [year_2020, set_year_2020] = useState({});
+  const [year_2021, set_year_2021] = useState({});
+  const [year_2022, set_year_2022] = useState({});
+  const [year_2023, set_year_2023] = useState({});
+  const [year_2024, set_year_2024] = useState({});
+  const [year_2025, set_year_2025] = useState({});
+  const [year_2026, set_year_2026] = useState({});
+  const [year_2027, set_year_2027] = useState({});
+  const [year_2028, set_year_2028] = useState({});
+  const [year_2029, set_year_2029] = useState({});
+  const [year_2030, set_year_2030] = useState({});
+  const [year_2031, set_year_2031] = useState({});
 
   const get_orders = async () => {
     const { data } = await API_Orders.findAll_orders_a();
-    console.log({ data });
+
     const batt_1620 = data.orders
       .map(order => order.orderItems)
       .flat(1)
@@ -75,35 +71,19 @@ const ControlPanelPage = props => {
       .flat(1)
       .filter(item => item.name === "Bulk CR1225 Batteries");
 
-    const batt_1620_options = batt_1620
-      .filter(item => item.product_option)
-      .reduce((a, c) => a + c.product_option.size, 0);
-    const batt_1225_options = batt_1225
-      .filter(item => item.product_option)
-      .reduce((a, c) => a + c.product_option.size, 0);
-    const batt_1620_size = batt_1620
-      .filter(item => item.size > 0)
-      .reduce((a, c) => parseInt(a) + parseInt(c.size), 0);
-    const batt_1225_size = batt_1225
-      .filter(item => item.size > 0)
-      .reduce((a, c) => parseInt(a) + parseInt(c.size), 0);
-    const batt_1620_options_total = batt_1620
-      .filter(item => item.product_option)
-      .reduce((a, c) => a + c.product_option.price, 0);
-    const batt_1225_options_total = batt_1225
-      .filter(item => item.product_option)
-      .reduce((a, c) => a + c.product_option.price, 0);
-    const batt_1620_size_total = batt_1620
-      .filter(item => item.size > 0)
-      .reduce((a, c) => parseFloat(a) + parseFloat(c.price), 0);
-    const batt_1225_size_total = batt_1225
-      .filter(item => item.size > 0)
-      .reduce((a, c) => parseFloat(a) + parseFloat(c.price), 0);
+    const batt_1620_options = batt_1620.filter(item => item.product_option).reduce((a, c) => a + c.product_option.size, 0);
+    const batt_1225_options = batt_1225.filter(item => item.product_option).reduce((a, c) => a + c.product_option.size, 0);
+    const batt_1620_size = batt_1620.filter(item => item.size > 0).reduce((a, c) => parseInt(a) + parseInt(c.size), 0);
+    const batt_1225_size = batt_1225.filter(item => item.size > 0).reduce((a, c) => parseInt(a) + parseInt(c.size), 0);
+    const batt_1620_options_total = batt_1620.filter(item => item.product_option).reduce((a, c) => a + c.product_option.price, 0);
+    const batt_1225_options_total = batt_1225.filter(item => item.product_option).reduce((a, c) => a + c.product_option.price, 0);
+    const batt_1620_size_total = batt_1620.filter(item => item.size > 0).reduce((a, c) => parseFloat(a) + parseFloat(c.price), 0);
+    const batt_1225_size_total = batt_1225.filter(item => item.size > 0).reduce((a, c) => parseFloat(a) + parseFloat(c.price), 0);
     set_batteries({
       batteries_1620: batt_1620_options + batt_1620_size,
       batteries_1225: batt_1225_options + batt_1225_size,
       batteries_1620_total: batt_1620_options_total + batt_1620_size_total,
-      batteries_1225_total: batt_1225_options_total + batt_1225_size_total,
+      batteries_1225_total: batt_1225_options_total + batt_1225_size_total
     });
     set_orders(data.orders);
   };
@@ -124,46 +104,31 @@ const ControlPanelPage = props => {
     return () => (clean = false);
   }, []);
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (orders && affiliates) {
-          get_total();
-        }
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (orders && affiliates) {
+        get_total();
       }
-      return () => (clean = false);
-    },
-    [ affiliates, orders ]
-  );
+    }
+    return () => (clean = false);
+  }, [affiliates, orders]);
 
   const get_total = () => {
     const uses = affiliates.map(affiliate => {
       return orders.filter(order => {
-        return (
-          order.promo_code &&
-          order.promo_code.toLowerCase() ===
-            affiliate.public_code.promo_code.toLowerCase()
-        );
+        return order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase();
       }).length;
     });
     set_total_affiliate_code_usage(uses.reduce((a, c) => a + c, 0));
-    console.log({ uses });
+
     const revenue = affiliates.map(affiliate => {
       return orders
-        .filter(
-          order =>
-            order.promo_code &&
-            order.promo_code.toLowerCase() ===
-              affiliate.public_code.promo_code.toLowerCase()
-        )
+        .filter(order => order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase())
         .reduce((a, order) => a + order.totalPrice - order.taxPrice, 0)
         .toFixed(2);
     });
-    set_total_affiliate_revenue(
-      revenue.reduce((a, c) => parseFloat(a) + parseFloat(c), 0)
-    );
-    console.log({ revenue });
+    set_total_affiliate_revenue(revenue.reduce((a, c) => parseFloat(a) + parseFloat(c), 0));
   };
 
   const duration_of_opening = () => {
@@ -181,37 +146,32 @@ const ControlPanelPage = props => {
   };
   const get_occurrences = async () => {
     const { data: occurrences } = await API_Products.get_occurrences();
-    console.log({ occurrences });
+
     set_product_occurrences(occurrences);
     // initialize_occurrence_chart(occurrences);
   };
 
   const get_income = async () => {
     const { data: daily } = await API_Revenue.get_previous_income(1);
-    console.log({ daily });
+
     set_daily_orders(daily);
     const { data: weekly } = await API_Revenue.get_previous_income(7);
-    console.log({ weekly });
+
     set_weekly_orders(weekly);
     const { data: monthly } = await API_Revenue.get_previous_income(30);
-    console.log({ monthly });
+
     set_monthly_orders(monthly);
   };
 
-  const occurence_multiplier =
-    360 / product_occurrences.filter(product => product.occurrence > 10).length;
+  const occurence_multiplier = 360 / product_occurrences.filter(product => product.occurrence > 10).length;
 
   let occurence_num = -occurence_multiplier;
   const occurences_bar_data = {
-    labels: product_occurrences
-      .filter(product => product.occurrence > 10)
-      .map(product => product.name),
+    labels: product_occurrences.filter(product => product.occurrence > 10).map(product => product.name),
     datasets: [
       {
         label: "Product",
-        data: product_occurrences
-          .filter(product => product.occurrence > 1)
-          .map(product => product.occurrence),
+        data: product_occurrences.filter(product => product.occurrence > 1).map(product => product.occurrence),
         fill: true,
         borderColor: "#3e4c6d",
         // backgroundColor: '#333333',
@@ -222,15 +182,15 @@ const ControlPanelPage = props => {
           // return `hsl(${occurence_num}, 50%, 100%)`;
           return color;
         }),
-        color: "white",
-      },
-    ],
+        color: "white"
+      }
+    ]
   };
 
   const occurences_bar_options = {
     responsive: true,
     maintainAspectRatio: true,
-    fontColor: "#000000",
+    fontColor: "#000000"
   };
 
   // const yearly_income_multiplier = 360 / [ 2020, 2021 ].length;
@@ -292,49 +252,34 @@ const ControlPanelPage = props => {
         <div>
           <h2>Total Income</h2>
           <div className="fs-25px">
-            ${orders && orders.length > 0 ? (
-              orders
-                .reduce((a, order) => a + order.totalPrice - order.taxPrice, 0)
-                .toFixed(2)
-            ) : (
-              "0.00"
-            )}
+            ${orders && orders.length > 0 ? orders.reduce((a, order) => a + order.totalPrice - order.taxPrice, 0).toFixed(2) : "0.00"}
           </div>
         </div>
         <div>
           <h2>Total Expenses</h2>
           <div className="fs-25px">
-            ${expenses && expenses.length > 0 ? (
-              expenses.reduce((a, expense) => a + expense.amount, 0).toFixed(2)
-            ) : (
-              "0.00"
-            )}
+            ${expenses && expenses.length > 0 ? expenses.reduce((a, expense) => a + expense.amount, 0).toFixed(2) : "0.00"}
           </div>
         </div>
         <div>
           <h2>Total Profit</h2>
           <div className="fs-25px">
-            ${orders && orders.length > 0 && expenses && expenses.length > 0 ? (
-              (orders.reduce(
-                (a, order) => a + order.totalPrice - order.taxPrice,
-                0
-              ) +
-                expenses.reduce((a, expense) => a + expense.amount, 0)).toFixed(
-                2
-              )
-            ) : (
-              "0.00"
-            )}
+            $
+            {orders && orders.length > 0 && expenses && expenses.length > 0
+              ? (
+                  orders.reduce((a, order) => a + order.totalPrice - order.taxPrice, 0) +
+                  expenses.reduce((a, expense) => a + expense.amount, 0)
+                ).toFixed(2)
+              : "0.00"}
           </div>
         </div>
         <div>
           <h2>Total Taxes</h2>
           <div className="fs-25px">
-            ${orders && orders.length > 0 && expenses && expenses.length > 0 ? (
-              orders.reduce((a, order) => a + order.taxPrice, 0).toFixed(2)
-            ) : (
-              "0.00"
-            )}
+            $
+            {orders && orders.length > 0 && expenses && expenses.length > 0
+              ? orders.reduce((a, order) => a + order.taxPrice, 0).toFixed(2)
+              : "0.00"}
           </div>
         </div>
         <div>
@@ -362,11 +307,7 @@ const ControlPanelPage = props => {
               </select>
               <span className="custom-arrow" />
             </div>
-            <Link
-              to={`/secure/glow/controlpanel/monthly_expenes/${year}${month
-                ? `/${month}`
-                : ""}`}
-            >
+            <Link to={`/secure/glow/controlpanel/monthly_expenes/${year}${month ? `/${month}` : ""}`}>
               <GLButton variant="primary">Go</GLButton>
             </Link>
           </div>
@@ -414,11 +355,7 @@ const ControlPanelPage = props => {
       <Loading loading={expenses && expenses.length === 0} />
       <Loading loading={orders && orders.length === 0} />
       <div className="">
-        {expenses &&
-        orders &&
-        weekly_orders &&
-        daily_orders &&
-        monthly_orders && (
+        {expenses && orders && weekly_orders && daily_orders && monthly_orders && (
           <div className="order-list responsive_table">
             <h2 className="ta-c w-100per jc-c">Income</h2>
             <table className="styled-table">
@@ -433,101 +370,72 @@ const ControlPanelPage = props => {
                   style={{
                     backgroundColor: "#626262",
                     fontSize: "16px",
-                    height: "50px",
+                    height: "50px"
                   }}
                 >
                   <th style={{ padding: "15px" }}>Yesterdays Income</th>
                   <th style={{ padding: "15px" }}>
-                    ${daily_orders &&
-                      daily_orders
-                        .reduce(
-                          (a, order) => a + order.totalPrice - order.taxPrice,
-                          0
-                        )
-                        .toFixed(2)}
+                    ${daily_orders && daily_orders.reduce((a, order) => a + order.totalPrice - order.taxPrice, 0).toFixed(2)}
                   </th>
                 </tr>
                 <tr
                   style={{
                     backgroundColor: "#626262",
                     fontSize: "16px",
-                    height: "50px",
+                    height: "50px"
                   }}
                 >
                   <th style={{ padding: "15px" }}>Last Weeks Income</th>
                   <th style={{ padding: "15px" }}>
-                    ${weekly_orders &&
-                      weekly_orders
-                        .reduce(
-                          (a, order) => a + order.totalPrice - order.taxPrice,
-                          0
-                        )
-                        .toFixed(2)}
+                    ${weekly_orders && weekly_orders.reduce((a, order) => a + order.totalPrice - order.taxPrice, 0).toFixed(2)}
                   </th>
                 </tr>
                 <tr
                   style={{
                     backgroundColor: "#626262",
                     fontSize: "16px",
-                    height: "50px",
+                    height: "50px"
                   }}
                 >
                   <th style={{ padding: "15px" }}>Last Month Income</th>
                   <th style={{ padding: "15px" }}>
-                    ${monthly_orders &&
-                      monthly_orders
-                        .reduce(
-                          (a, order) => a + order.totalPrice - order.taxPrice,
-                          0
-                        )
-                        .toFixed(2)}
+                    ${monthly_orders && monthly_orders.reduce((a, order) => a + order.totalPrice - order.taxPrice, 0).toFixed(2)}
                   </th>
                 </tr>
                 <tr
                   style={{
                     backgroundColor: "#626262",
                     fontSize: "16px",
-                    height: "50px",
+                    height: "50px"
                   }}
                 >
                   <th style={{ padding: "15px" }}>Average Daily Income</th>
                   <th style={{ padding: "15px" }}>
-                    ${(orders.reduce(
-                      (a, order) => a + order.totalPrice - order.taxPrice,
-                      0
-                    ) / duration_of_opening()).toFixed(2)}
+                    ${(orders.reduce((a, order) => a + order.totalPrice - order.taxPrice, 0) / duration_of_opening()).toFixed(2)}
                   </th>
                 </tr>
                 <tr
                   style={{
                     backgroundColor: "#626262",
                     fontSize: "16px",
-                    height: "50px",
+                    height: "50px"
                   }}
                 >
                   <th style={{ padding: "15px" }}>Average Weekly Income</th>
                   <th style={{ padding: "15px" }}>
-                    ${(orders.reduce(
-                      (a, order) => a + order.totalPrice - order.taxPrice,
-                      0
-                    ) /
-                      (duration_of_opening() / 7)).toFixed(2)}
+                    ${(orders.reduce((a, order) => a + order.totalPrice - order.taxPrice, 0) / (duration_of_opening() / 7)).toFixed(2)}
                   </th>
                 </tr>
                 <tr
                   style={{
                     backgroundColor: "#626262",
                     fontSize: "16px",
-                    height: "50px",
+                    height: "50px"
                   }}
                 >
                   <th style={{ padding: "15px" }}>Average Monthly Income</th>
                   <th style={{ padding: "15px" }}>
-                    ${(orders.reduce(
-                      (a, order) => a + order.totalPrice - order.taxPrice,
-                      0
-                    ) /
-                      (duration_of_opening() / 30)).toFixed(2)}
+                    ${(orders.reduce((a, order) => a + order.totalPrice - order.taxPrice, 0) / (duration_of_opening() / 30)).toFixed(2)}
                   </th>
                 </tr>
               </tbody>
@@ -552,23 +460,17 @@ const ControlPanelPage = props => {
                     style={{
                       backgroundColor: "#626262",
                       fontSize: "16px",
-                      height: "50px",
+                      height: "50px"
                     }}
                   >
                     <th style={{ padding: "15px" }}>{index + 1}</th>
                     <th style={{ padding: "15px" }}>
-                      <Link
-                        to={"/secure/glow/userprofile/" + customer.user._id}
-                      >
+                      <Link to={"/secure/glow/userprofile/" + customer.user._id}>
                         {customer.user.first_name} {customer.user.last_name}
                       </Link>
                     </th>
-                    <th style={{ padding: "15px" }}>
-                      {customer.number_of_orders}
-                    </th>
-                    <th style={{ padding: "15px" }}>
-                      ${customer.amount.toFixed(2)}
-                    </th>
+                    <th style={{ padding: "15px" }}>{customer.number_of_orders}</th>
+                    <th style={{ padding: "15px" }}>${customer.amount.toFixed(2)}</th>
                   </tr>
                 ))}
               </tbody>
@@ -577,10 +479,7 @@ const ControlPanelPage = props => {
         )}
         <Loading loading={products && products.length === 0} />
         <Loading loading={users && users.length === 0} />
-        {expenses &&
-        orders &&
-        products &&
-        users && (
+        {expenses && orders && products && users && (
           <div className="order-list responsive_table">
             <h2 className="ta-c w-100per jc-c">Metrics</h2>
             <table className="styled-table">
@@ -595,47 +494,37 @@ const ControlPanelPage = props => {
                   style={{
                     backgroundColor: "#626262",
                     fontSize: "16px",
-                    height: "50px",
+                    height: "50px"
                   }}
                   className=""
                 >
                   <th style={{ padding: "15px" }}>Total Products</th>
-                  <th style={{ padding: "15px" }}>
-                    {products.filter(product => !product.hidden).length}
-                  </th>
+                  <th style={{ padding: "15px" }}>{products.filter(product => !product.hidden).length}</th>
                 </tr>
                 <tr
                   style={{
                     backgroundColor: "#626262",
                     fontSize: "16px",
-                    height: "50px",
+                    height: "50px"
                   }}
                   className=""
                 >
                   <th style={{ padding: "15px" }}>Total Macro Products</th>
                   <th style={{ padding: "15px" }}>
-                    {
-                      products
-                        .filter(product => !product.hidden)
-                        .filter(product => !product.option).length
-                    }
+                    {products.filter(product => !product.hidden).filter(product => !product.option).length}
                   </th>
                 </tr>
                 <tr
                   style={{
                     backgroundColor: "#626262",
                     fontSize: "16px",
-                    height: "50px",
+                    height: "50px"
                   }}
                   className=""
                 >
                   <th style={{ padding: "15px" }}>Total Product Options</th>
                   <th style={{ padding: "15px" }}>
-                    {
-                      products
-                        .filter(product => !product.hidden)
-                        .filter(product => product.option).length
-                    }
+                    {products.filter(product => !product.hidden).filter(product => product.option).length}
                   </th>
                 </tr>
 
@@ -643,20 +532,18 @@ const ControlPanelPage = props => {
                   style={{
                     backgroundColor: "#626262",
                     fontSize: "16px",
-                    height: "50px",
+                    height: "50px"
                   }}
                 >
                   <th style={{ padding: "15px" }}>Total Orders Paid</th>
-                  <th style={{ padding: "15px" }}>
-                    {orders.filter(order => order.isPaid).length}
-                  </th>
+                  <th style={{ padding: "15px" }}>{orders.filter(order => order.isPaid).length}</th>
                 </tr>
 
                 <tr
                   style={{
                     backgroundColor: "#626262",
                     fontSize: "16px",
-                    height: "50px",
+                    height: "50px"
                   }}
                 >
                   <th style={{ padding: "15px" }}>Total Users</th>
@@ -666,7 +553,7 @@ const ControlPanelPage = props => {
                   style={{
                     backgroundColor: "#626262",
                     fontSize: "16px",
-                    height: "50px",
+                    height: "50px"
                   }}
                 >
                   <th style={{ padding: "15px" }}>Total Expenses</th>
@@ -677,15 +564,11 @@ const ControlPanelPage = props => {
                     style={{
                       backgroundColor: "#626262",
                       fontSize: "16px",
-                      height: "50px",
+                      height: "50px"
                     }}
                   >
-                    <th style={{ padding: "15px" }}>
-                      Total 1620 Batteries Sold
-                    </th>
-                    <th style={{ padding: "15px" }}>
-                      {batteries.batteries_1620}
-                    </th>
+                    <th style={{ padding: "15px" }}>Total 1620 Batteries Sold</th>
+                    <th style={{ padding: "15px" }}>{batteries.batteries_1620}</th>
                   </tr>
                 )}
 
@@ -694,15 +577,11 @@ const ControlPanelPage = props => {
                     style={{
                       backgroundColor: "#626262",
                       fontSize: "16px",
-                      height: "50px",
+                      height: "50px"
                     }}
                   >
-                    <th style={{ padding: "15px" }}>
-                      Total 1620 Batteries Left
-                    </th>
-                    <th style={{ padding: "15px" }}>
-                      {10000 - batteries.batteries_1620}
-                    </th>
+                    <th style={{ padding: "15px" }}>Total 1620 Batteries Left</th>
+                    <th style={{ padding: "15px" }}>{10000 - batteries.batteries_1620}</th>
                   </tr>
                 )}
                 {batteries && (
@@ -710,15 +589,11 @@ const ControlPanelPage = props => {
                     style={{
                       backgroundColor: "#626262",
                       fontSize: "16px",
-                      height: "50px",
+                      height: "50px"
                     }}
                   >
-                    <th style={{ padding: "15px" }}>
-                      Total 1225 Batteries Sold
-                    </th>
-                    <th style={{ padding: "15px" }}>
-                      {batteries.batteries_1225}
-                    </th>
+                    <th style={{ padding: "15px" }}>Total 1225 Batteries Sold</th>
+                    <th style={{ padding: "15px" }}>{batteries.batteries_1225}</th>
                   </tr>
                 )}
                 {batteries && (
@@ -726,15 +601,11 @@ const ControlPanelPage = props => {
                     style={{
                       backgroundColor: "#626262",
                       fontSize: "16px",
-                      height: "50px",
+                      height: "50px"
                     }}
                   >
-                    <th style={{ padding: "15px" }}>
-                      Total 1225 Batteries Left
-                    </th>
-                    <th style={{ padding: "15px" }}>
-                      {10000 - batteries.batteries_1225}
-                    </th>
+                    <th style={{ padding: "15px" }}>Total 1225 Batteries Left</th>
+                    <th style={{ padding: "15px" }}>{10000 - batteries.batteries_1225}</th>
                   </tr>
                 )}
               </tbody>
@@ -743,9 +614,7 @@ const ControlPanelPage = props => {
         )}
         <Loading loading={affiliates && affiliates.length === 0} />
         <Loading loading={promos && promos.length === 0} />
-        {orders &&
-        promos &&
-        affiliates && (
+        {orders && promos && affiliates && (
           <div className="order-list responsive_table">
             <h2 className="ta-c w-100per jc-c">Affiliate Revenue</h2>
             <table className="styled-table">
@@ -763,36 +632,25 @@ const ControlPanelPage = props => {
                       style={{
                         backgroundColor: "#626262",
                         fontSize: "16px",
-                        height: "50px",
+                        height: "50px"
                       }}
                       className=""
                     >
-                      <th style={{ padding: "15px" }}>
-                        {affiliate.public_code.promo_code}
-                      </th>
+                      <th style={{ padding: "15px" }}>{affiliate.public_code.promo_code}</th>
                       <th style={{ padding: "15px" }}>
                         {
                           orders.filter(order => {
-                            return (
-                              order.promo_code &&
-                              order.promo_code.toLowerCase() ===
-                                affiliate.public_code.promo_code.toLowerCase()
-                            );
+                            return order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase();
                           }).length
                         }
                       </th>
                       <th style={{ padding: "15px" }}>
-                        ${orders
+                        $
+                        {orders
                           .filter(
-                            order =>
-                              order.promo_code &&
-                              order.promo_code.toLowerCase() ===
-                                affiliate.public_code.promo_code.toLowerCase()
+                            order => order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
                           )
-                          .reduce(
-                            (a, order) => a + order.totalPrice - order.taxPrice,
-                            0
-                          )
+                          .reduce((a, order) => a + order.totalPrice - order.taxPrice, 0)
                           .toFixed(2)}
                       </th>
                     </tr>
@@ -802,7 +660,7 @@ const ControlPanelPage = props => {
                   style={{
                     backgroundColor: "#626262",
                     fontSize: "16px",
-                    height: "50px",
+                    height: "50px"
                   }}
                   className=""
                 >
@@ -819,8 +677,7 @@ const ControlPanelPage = props => {
                     {total_affiliate_code_usage}
                   </th>
                   <th style={{ padding: "15px" }}>
-                    ${total_affiliate_revenue > 0 &&
-                      total_affiliate_revenue.toFixed(2)}
+                    ${total_affiliate_revenue > 0 && total_affiliate_revenue.toFixed(2)}
                     {/* ${orders
 											.filter((order) =>
 												affiliates
@@ -836,8 +693,7 @@ const ControlPanelPage = props => {
           </div>
         )}
       </div>
-      {product_occurrences &&
-      product_occurrences.length > 0 && (
+      {product_occurrences && product_occurrences.length > 0 && (
         <div>
           <h2 className="ta-c w-100per jc-c">Product Occurences</h2>
           <div style={{ backgroundColor: "white" }} className="p-1rem br-10px">

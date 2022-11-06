@@ -19,10 +19,10 @@ const LoginPage = props => {
   const userLogin = useSelector(state => state.userLogin);
   const { loading: user_loading, userInfo, error } = userLogin;
   // const errors = useSelector((state) => state.errors);
-  // console.log({ errors });
-  console.log({ userLogin });
+  //
+
   // const { loading, userInfo, error } = errors;
-  // console.log({ userInfo });
+  //
   const dispatch = useDispatch();
   const redirect = props.location.search ? props.location.search.split("=")[1] : "/";
 
@@ -47,10 +47,10 @@ const LoginPage = props => {
 
     setEmailValidations(request.errors.email);
     setPasswordValidations(request.errors.password);
-    console.log({ isValid: request.isValid });
+
     if (request.isValid) {
       dispatch(login({ email: email.toLowerCase(), password }));
-      // console.log({ email, password });
+      //
       set_loading(user_loading);
       // dispatch(loginUser(email, password));
     }

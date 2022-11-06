@@ -53,7 +53,6 @@ const EditAffiliatePage = props => {
 
   const affiliateDetails = useSelector(state => state.affiliateDetails);
   const { loading, affiliate, message, error } = affiliateDetails;
-  console.log({ affiliate });
 
   const productList = useSelector(state => state.productList);
   const { products: products_list } = productList;
@@ -65,7 +64,7 @@ const EditAffiliatePage = props => {
   const { promos: promos_list } = promoList;
 
   const set_state = () => {
-    // console.log({ affiliate });
+    //
     set_id(affiliate._id);
     set_user(affiliate.user && affiliate.user._id);
     set_artist_name(affiliate.artist_name);
@@ -93,7 +92,7 @@ const EditAffiliatePage = props => {
     set_pathname(affiliate.pathname);
     set_public_code(affiliate.public_code);
     set_private_code(affiliate.private_code);
-    // console.log({ affiliate });
+    //
   };
   const unset_state = () => {
     set_id("");
@@ -133,8 +132,8 @@ const EditAffiliatePage = props => {
     let clean = true;
     if (clean) {
       if (props.match.params.pathname) {
-        // console.log('Is ID');
-        // console.log(props.match.params.pathname);
+        //
+        //
         dispatch(detailsAffiliate(props.match.params.pathname));
         dispatch(detailsAffiliate(props.match.params.pathname));
       } else {
@@ -153,10 +152,8 @@ const EditAffiliatePage = props => {
     let clean = true;
     if (clean) {
       if (affiliate) {
-        console.log("Set");
         set_state();
       } else {
-        console.log("UnSet");
         unset_state();
       }
     }
@@ -206,10 +203,8 @@ const EditAffiliatePage = props => {
     e.preventDefault();
     const product_object = JSON.parse(e.target.value);
     if (products) {
-      console.log("products.length > 0");
       set_products(products => [...products, product_object]);
     } else {
-      console.log("products.length === 0");
       set_products([product_object]);
     }
 
@@ -252,18 +247,16 @@ const EditAffiliatePage = props => {
   const add_chip = e => {
     e.preventDefault();
     const chip_object = JSON.parse(e.target.value);
-    // console.log(chip);
+    //
     // if (chip.indexOf(' ') >= 0) {
-    // 	console.log('indexOf');
+    //
     // 	chip.split(' ').map((chip) => {
     // 		set_chips((chips) => [ ...chips, chip ]);
     // 	});
     // } else
     if (chips) {
-      console.log("chips.length > 0");
       set_chips(chips => [...chips, chip_object]);
     } else {
-      console.log("chips.length === 0");
       set_chips([chip_object]);
     }
 
@@ -304,19 +297,17 @@ const EditAffiliatePage = props => {
   const add_promo = (e, code_type) => {
     e.preventDefault();
     const promo_object = JSON.parse(e.target.value);
-    console.log({ promo_object });
-    // console.log(promo);
+
+    //
     // if (promo.indexOf(' ') >= 0) {
-    // 	console.log('indexOf');
+    //
     // 	promo.split(' ').map((promo) => {
     // 		set_promos((promos) => [ ...promos, promo ]);
     // 	});
     // } else
     if (code_type === "public") {
-      console.log("public");
       set_public_code(promo_object);
     } else if (code_type === "private") {
-      console.log("private");
       set_private_code(promo_object);
     }
   };
@@ -324,10 +315,8 @@ const EditAffiliatePage = props => {
   const remove_promo = (e, code_type) => {
     e.preventDefault();
     if (code_type === "public") {
-      console.log("public");
       set_public_code("");
     } else if (code_type === "private") {
-      console.log("private");
       set_private_code("");
     }
   };

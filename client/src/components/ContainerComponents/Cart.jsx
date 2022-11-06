@@ -27,6 +27,7 @@ const Cart = props => {
       }
       // Bind the event listener
       document.addEventListener("mousedown", handleClickOutside);
+
       return () => {
         // Unbind the event listener on clean up
         document.removeEventListener("mousedown", handleClickOutside);
@@ -54,10 +55,9 @@ const Cart = props => {
 
   const get_display_content = async () => {
     const { data } = await API_Content.get_display_content();
-    console.log({ data });
+
     if (data && data[0]) {
       if (data[0].home_page && data[0].home_page.slideshow) {
-        console.log({ slideshow: data[0].home_page.slideshow });
         set_category_items(shuffle(data[0].home_page.slideshow));
       }
     }
@@ -66,7 +66,6 @@ const Cart = props => {
   const cart = useSelector(state => state.cart);
 
   const { cartItems } = cart;
-  console.log({ cartItems_qty: cartItems.map(item => item.qty) });
 
   const [no_items_in_cart, set_no_items_in_cart] = useState("");
 

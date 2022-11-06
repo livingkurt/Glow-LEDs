@@ -5,15 +5,12 @@ import { Helmet } from "react-helmet";
 import { detailsAffiliate } from "../../actions/affiliateActions";
 import { useHistory } from "react-router-dom";
 import { LazyImage } from "../../components/UtilityComponents";
-import {
-  ProductSimple,
-  ProductSimpleSmallScreen,
-} from "../../components/SpecialtyComponents";
+import { ProductSimple, ProductSimpleSmallScreen } from "../../components/SpecialtyComponents";
 import { API_Users } from "../../utils";
 import { GLButton } from "../../components/GlowLEDsComponents";
 
 const SponsorPage = props => {
-  const [ teams, set_teams ] = useState([]);
+  const [teams, set_teams] = useState([]);
   const history = useHistory();
   const affiliateDetails = useSelector(state => state.affiliateDetails);
   const { affiliate } = affiliateDetails;
@@ -30,24 +27,19 @@ const SponsorPage = props => {
     return () => (clean = false);
   }, []);
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (affiliate && affiliate._id) {
-          find_team();
-        }
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (affiliate && affiliate._id) {
+        find_team();
       }
-      return () => (clean = false);
-    },
-    [ affiliate ]
-  );
+    }
+    return () => (clean = false);
+  }, [affiliate]);
 
   const find_team = async () => {
-    console.log({ affiliate: affiliate._id });
     const { data } = await API_Users.get_teams(affiliate._id);
     set_teams(data);
-    console.log({ data });
   };
 
   const date = new Date();
@@ -58,28 +50,10 @@ const SponsorPage = props => {
       {affiliate && (
         <Helmet>
           <title>{affiliate.artist_name + " | Glow LEDs"}</title>
-          <meta
-            property="og:title"
-            content={affiliate.artist_name + " | Glow LEDs"}
-          />
-          <meta
-            name="twitter:title"
-            content={affiliate.artist_name + " | Glow LEDs"}
-          />
-          <link
-            rel="canonical"
-            href={
-              "https://www.glow-leds.com/collections/all/sponsors/" +
-              affiliate.pathname
-            }
-          />
-          <meta
-            property="og:url"
-            content={
-              "https://www.glow-leds.com/collections/all/sponsors/" +
-              affiliate.pathname
-            }
-          />
+          <meta property="og:title" content={affiliate.artist_name + " | Glow LEDs"} />
+          <meta name="twitter:title" content={affiliate.artist_name + " | Glow LEDs"} />
+          <link rel="canonical" href={"https://www.glow-leds.com/collections/all/sponsors/" + affiliate.pathname} />
+          <meta property="og:url" content={"https://www.glow-leds.com/collections/all/sponsors/" + affiliate.pathname} />
           <meta name="description" content={affiliate.bio} />
           <meta property="og:description" content={affiliate.bio} />
           <meta name="twitter:description" content={affiliate.bio} />
@@ -92,11 +66,8 @@ const SponsorPage = props => {
             <GLButton variant="secondary" onClick={() => history.goBack()}>
               Back
             </GLButton>
-            {userInfo &&
-            userInfo.isAdmin && (
-              <Link
-                to={"/secure/glow/editaffiliate/" + props.match.params.pathname}
-              >
+            {userInfo && userInfo.isAdmin && (
+              <Link to={"/secure/glow/editaffiliate/" + props.match.params.pathname}>
                 <GLButton variant="secondary" style={{ width: "156px" }}>
                   Edit Affiliate
                 </GLButton>
@@ -117,7 +88,7 @@ const SponsorPage = props => {
                 width: "100%",
                 display: "none",
                 maxWidth: "unset",
-                maxHeight: "unset",
+                maxHeight: "unset"
               }}
               effect="blur"
               src={affiliate.picture}
@@ -128,8 +99,7 @@ const SponsorPage = props => {
               <div>
                 <h3 className="">Who be this</h3>
                 <p className="p_descriptions">
-                  {affiliate.user && affiliate.user.first_name}{" "}
-                  {affiliate.user && affiliate.user.last_name}
+                  {affiliate.user && affiliate.user.first_name} {affiliate.user && affiliate.user.last_name}
                 </p>
               </div>
               <div>
@@ -152,7 +122,7 @@ const SponsorPage = props => {
               )}
               {/* <div>
 								<h3 className="">Team</h3>
-								{console.log({ teams })}
+								{
 								{teams.map((team) => {
 									return (
 										<Link to={'/collections/all/teams/' + teams.pathname} className=" pos-rel">
@@ -178,11 +148,7 @@ const SponsorPage = props => {
                 <h3 className="">Team{teams > 1 && "'s"}</h3>
                 {teams.map((team, index) => {
                   return (
-                    <Link
-                      to={"/collections/all/teams/" + team.pathname}
-                      className="pos-rel"
-                      key={index}
-                    >
+                    <Link to={"/collections/all/teams/" + team.pathname} className="pos-rel" key={index}>
                       {/* <h3
 												className="pos-abs fs-25px w-200px"
 												style={{ top: '-146px', left: '27%' }}
@@ -200,7 +166,7 @@ const SponsorPage = props => {
                         style={{
                           top: "-119px",
                           left: "50%",
-                          transform: "translate(-50%, -50%)",
+                          transform: "translate(-50%, -50%)"
                         }}
                       >
                         {team.team_name}
@@ -215,12 +181,7 @@ const SponsorPage = props => {
                   <div className="fs-25px jc-fs w-100per max-w-500px ai-c">
                     <div className="fs-40px">
                       {affiliate.facebook_name && (
-                        <a
-                          href={affiliate.facebook_name}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          aria-label="Facebook"
-                        >
+                        <a href={affiliate.facebook_name} target="_blank" rel="noopener noreferrer" aria-label="Facebook">
                           <i className="fab fa-facebook zoom" />
                         </a>
                       )}
@@ -228,10 +189,7 @@ const SponsorPage = props => {
                     <div className="ml-10px fs-40px">
                       {affiliate.instagram_handle && (
                         <a
-                          href={
-                            "https://www.instagram.com/" +
-                            affiliate.instagram_handle
-                          }
+                          href={"https://www.instagram.com/" + affiliate.instagram_handle}
                           target="_blank"
                           rel="noopener noreferrer"
                           aria-label="Instagram"
@@ -256,9 +214,7 @@ const SponsorPage = props => {
             </div>
           </div>
           <div className="column jc-c">
-            <h3 style={{ textAlign: "center" }}>
-              Watch {affiliate.artist_name} Throw Down
-            </h3>
+            <h3 style={{ textAlign: "center" }}>Watch {affiliate.artist_name} Throw Down</h3>
           </div>
           {affiliate.video && (
             <div className="jc-c pos-rel mt-2rem max-w-75rem m-auto">
@@ -279,7 +235,7 @@ const SponsorPage = props => {
           <h3 className=""> {affiliate.artist_name}'s Glow Gear</h3>
           {/* <div className="product_big_screen">
 						<div className="products jc-b m-auto">
-							{console.log({ products: affiliate.products })}
+							{
 							{affiliate.products && (
 								<ul className="products" style={{ marginTop: 0 }}>
 									{affiliate.products.map((product, index) => (
@@ -296,7 +252,7 @@ const SponsorPage = props => {
 					</div>
 					<div className="product_small_screen none">
 						<div className="products jc-b m-auto">
-							{console.log({ products: affiliate.products })}
+							{
 							{affiliate.products && (
 								<ul className="products" style={{ marginTop: 0 }}>
 									{affiliate.products.map((product, index) => (

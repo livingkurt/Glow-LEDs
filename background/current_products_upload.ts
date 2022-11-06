@@ -63,9 +63,7 @@ const current_products_upload = async () => {
         console.error(err);
         return;
       }
-      records.forEach(function (record: any) {
-        console.log(record.getId());
-      });
+      records.forEach(function (record: any) {});
     });
 
     // await sheet.addRows(new_rows);
@@ -73,9 +71,7 @@ const current_products_upload = async () => {
     // adding / removing sheets
     // const newSheet = await doc.addSheet({ title: 'hot new sheet!' });
     // await newSheet.delete();
-  } catch (error) {
-    console.log({ error });
-  }
+  } catch (error) {}
 };
 
 current_products_upload();

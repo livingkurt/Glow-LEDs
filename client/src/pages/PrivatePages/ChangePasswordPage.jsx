@@ -9,18 +9,15 @@ import { GLButton } from "../../components/GlowLEDsComponents";
 
 const ChangePasswordPage = props => {
   const history = useHistory();
-  const [ current_password, setCurrentPassword ] = useState("");
-  const [ password, setPassword ] = useState("");
-  const [ rePassword, setRePassword ] = useState("");
+  const [current_password, setCurrentPassword] = useState("");
+  const [password, setPassword] = useState("");
+  const [rePassword, setRePassword] = useState("");
 
   const dispatch = useDispatch();
 
-  const [
-    current_password_validations,
-    setCurrentPasswordValidations,
-  ] = useState("");
-  const [ password_validations, setPasswordValidations ] = useState("");
-  const [ re_password_validations, setRePasswordValidations ] = useState("");
+  const [current_password_validations, setCurrentPasswordValidations] = useState("");
+  const [password_validations, setPasswordValidations] = useState("");
+  const [re_password_validations, setRePasswordValidations] = useState("");
 
   const userLogin = useSelector(state => state.userLogin);
   const { userInfo } = userLogin;
@@ -31,33 +28,30 @@ const ChangePasswordPage = props => {
       id: userInfo._id,
       current_password,
       password,
-      rePassword,
+      rePassword
     };
     const request = await validate_password_change(validation_data);
-    console.log({ request });
+
     setCurrentPasswordValidations(request.errors.current_password);
     setPasswordValidations(request.errors.password);
     setRePasswordValidations(request.errors.rePassword);
-    console.log({ isValid: request.isValid });
+
     if (request.isValid) {
       dispatch(password_reset(userInfo._id, password, rePassword));
       history.push("/secure/account/profile");
     }
   };
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (userInfo) {
-          setPassword(userInfo.password);
-        }
-        dispatch(listMyOrders());
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (userInfo) {
+        setPassword(userInfo.password);
       }
-      return () => (clean = false);
-    },
-    [ userInfo, dispatch ]
-  );
+      dispatch(listMyOrders());
+    }
+    return () => (clean = false);
+  }, [userInfo, dispatch]);
 
   return (
     <div className="profile_container column p-20px">
@@ -65,14 +59,8 @@ const ChangePasswordPage = props => {
         <title>Change Password | Glow LEDs</title>
         <meta property="og:title" content="Change Password" />
         <meta name="twitter:title" content="Change Password" />
-        <link
-          rel="canonical"
-          href="https://www.glow-leds.com/secure/account/changepassword"
-        />
-        <meta
-          property="og:url"
-          content="https://www.glow-leds.com/secure/account/changepassword"
-        />
+        <link rel="canonical" href="https://www.glow-leds.com/secure/account/changepassword" />
+        <meta property="og:url" content="https://www.glow-leds.com/secure/account/changepassword" />
       </Helmet>
       <div className="mb-10px">
         <GLButton variant="secondary" onClick={() => history.goBack()}>
@@ -102,26 +90,14 @@ const ChangePasswordPage = props => {
                   onChange={e => setCurrentPassword(e.target.value)}
                 />
               </li>
-              <label
-                className="validation_text"
-                style={{ fontSize: 16, justifyContent: "center" }}
-              >
+              <label className="validation_text" style={{ fontSize: 16, justifyContent: "center" }}>
                 {current_password_validations}
               </label>
               <li>
                 <label htmlFor="password">Password</label>
-                <input
-                  className="form_input"
-                  type="password"
-                  id="password"
-                  name="password"
-                  onChange={e => setPassword(e.target.value)}
-                />
+                <input className="form_input" type="password" id="password" name="password" onChange={e => setPassword(e.target.value)} />
               </li>
-              <label
-                className="validation_text"
-                style={{ fontSize: 16, justifyContent: "center" }}
-              >
+              <label className="validation_text" style={{ fontSize: 16, justifyContent: "center" }}>
                 {password_validations}
               </label>
               <li>
@@ -134,10 +110,7 @@ const ChangePasswordPage = props => {
                   onChange={e => setRePassword(e.target.value)}
                 />
               </li>
-              <label
-                className="validation_text"
-                style={{ fontSize: 16, justifyContent: "center" }}
-              >
+              <label className="validation_text" style={{ fontSize: 16, justifyContent: "center" }}>
                 {re_password_validations}
               </label>
               <li>
@@ -147,11 +120,7 @@ const ChangePasswordPage = props => {
               </li>
               <li>
                 <Link to="/secure/account/profile">
-                  <GLButton
-                    type="button"
-                    variant="secondary"
-                    className="w-100per"
-                  >
+                  <GLButton type="button" variant="secondary" className="w-100per">
                     Cancel
                   </GLButton>
                 </Link>

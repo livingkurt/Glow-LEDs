@@ -1,32 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  saveCategory,
-  detailsCategory,
-  listCategorys,
-} from "../../../actions/categoryActions";
+import { saveCategory, detailsCategory, listCategorys } from "../../../actions/categoryActions";
 import { useHistory } from "react-router-dom";
-import {
-  DropdownDisplay,
-  Loading,
-} from "../../../components/UtilityComponents";
+import { DropdownDisplay, Loading } from "../../../components/UtilityComponents";
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../../components/GlowLEDsComponents";
 
 const EditCategoryPage = props => {
-  const [ id, set_id ] = useState("");
-  const [ name, set_name ] = useState("");
-  const [ pathname, set_pathname ] = useState("");
+  const [id, set_id] = useState("");
+  const [name, set_name] = useState("");
+  const [pathname, set_pathname] = useState("");
 
-  const [ subcategorys, set_subcategorys ] = useState("");
-  const [ nest_level, set_nest_level ] = useState("");
-  const [ display_order, set_display_order ] = useState("");
-  const [ display, set_display ] = useState("");
-  const [ meta_title, set_meta_title ] = useState("");
-  const [ meta_description, set_meta_description ] = useState("");
-  const [ meta_keywords, set_meta_keywords ] = useState("");
-  const [ masthead, set_masthead ] = useState("");
-  const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
+  const [subcategorys, set_subcategorys] = useState("");
+  const [nest_level, set_nest_level] = useState("");
+  const [display_order, set_display_order] = useState("");
+  const [display, set_display] = useState("");
+  const [meta_title, set_meta_title] = useState("");
+  const [meta_description, set_meta_description] = useState("");
+  const [meta_keywords, set_meta_keywords] = useState("");
+  const [masthead, set_masthead] = useState("");
+  const [loading_checkboxes, set_loading_checkboxes] = useState(true);
 
   const history = useHistory();
 
@@ -46,7 +39,6 @@ const EditCategoryPage = props => {
     let clean = true;
     if (clean) {
       if (props.match.params.id) {
-        console.log("Is ID");
         dispatch(detailsCategory(props.match.params.id));
         dispatch(detailsCategory(props.match.params.id));
       } else {
@@ -57,22 +49,17 @@ const EditCategoryPage = props => {
     }
     return () => (clean = false);
   }, []);
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (category) {
-          console.log("Set");
-          set_state();
-        } else {
-          console.log("UnSet");
-          unset_state();
-        }
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (category) {
+        set_state();
+      } else {
+        unset_state();
       }
-      return () => (clean = false);
-    },
-    [ category ]
-  );
+    }
+    return () => (clean = false);
+  }, [category]);
 
   const set_state = () => {
     set_id(category._id);
@@ -103,8 +90,8 @@ const EditCategoryPage = props => {
 
   const submitHandler = e => {
     e.preventDefault();
-    // console.log({ id });
-    // console.log({ sub: subcategorys.map((category) => category._id) });
+    //
+    //
     dispatch(
       saveCategory({
         _id: id,
@@ -117,8 +104,7 @@ const EditCategoryPage = props => {
         meta_description,
         meta_keywords,
         masthead,
-        subcategorys:
-          subcategorys && subcategorys.map(category => category._id),
+        subcategorys: subcategorys && subcategorys.map(category => category._id)
       })
     );
     e.target.reset();
@@ -142,16 +128,9 @@ const EditCategoryPage = props => {
             {subcategorys &&
               subcategorys.map((subcategory, index) => {
                 return (
-                  <div
-                    className="promo_code mv-1rem row jc-b max-w-55rem w-100per"
-                    key={index}
-                  >
+                  <div className="promo_code mv-1rem row jc-b max-w-55rem w-100per" key={index}>
                     <div>
-                      <GLButton
-                        variant="icon"
-                        onClick={e => remove_subcategory(index, e)}
-                        aria-label="Delete"
-                      >
+                      <GLButton variant="icon" onClick={e => remove_subcategory(index, e)} aria-label="Delete">
                         <i className="fas fa-times mr-5px" />
                       </GLButton>
                       {subcategory.name}
@@ -169,18 +148,14 @@ const EditCategoryPage = props => {
     e.preventDefault();
     const subcategory_object = JSON.parse(e.target.value);
     if (subcategorys) {
-      console.log("subcategorys.length > 0");
-      set_subcategorys(subcategorys => [ ...subcategorys, subcategory_object ]);
+      set_subcategorys(subcategorys => [...subcategorys, subcategory_object]);
     } else {
-      console.log("subcategorys.length === 0");
-      set_subcategorys([ subcategory_object ]);
+      set_subcategorys([subcategory_object]);
     }
   };
   return (
     <div className="main_container p-20px">
-      <h1 style={{ textAlign: "center" }}>
-        {props.match.params.id ? "Edit Category" : "Create Category"}
-      </h1>
+      <h1 style={{ textAlign: "center" }}>{props.match.params.id ? "Edit Category" : "Create Category"}</h1>
 
       <div className="form">
         <form onSubmit={submitHandler} style={{ width: "100%" }}>
@@ -194,21 +169,12 @@ const EditCategoryPage = props => {
                   <title>Edit Category| Glow LEDs</title>
                 </Helmet>
 
-                <ul
-                  className="edit-form-container"
-                  style={{ maxWidth: "30rem", marginBottom: "20px" }}
-                >
+                <ul className="edit-form-container" style={{ maxWidth: "30rem", marginBottom: "20px" }}>
                   <div className="row wrap">
                     <div className="w-228px m-10px">
                       <li>
                         <label htmlFor="name">Name</label>
-                        <input
-                          type="text"
-                          name="name"
-                          value={name}
-                          id="name"
-                          onChange={e => set_name(e.target.value)}
-                        />
+                        <input type="text" name="name" value={name} id="name" onChange={e => set_name(e.target.value)} />
                       </li>
                       <DropdownDisplay
                         display_key={"name"}
@@ -219,13 +185,7 @@ const EditCategoryPage = props => {
                       />
                       <li>
                         <label htmlFor="pathname">Pathname</label>
-                        <input
-                          type="text"
-                          name="pathname"
-                          value={pathname}
-                          id="pathname"
-                          onChange={e => set_pathname(e.target.value)}
-                        />
+                        <input type="text" name="pathname" value={pathname} id="pathname" onChange={e => set_pathname(e.target.value)} />
                       </li>
                       <li>
                         <label htmlFor="nest_level">Nest Level</label>
@@ -275,9 +235,7 @@ const EditCategoryPage = props => {
                       </li>
 
                       <li>
-                        <label htmlFor="meta_description">
-                          Meta Description
-                        </label>
+                        <label htmlFor="meta_description">Meta Description</label>
                         <input
                           type="text"
                           name="meta_description"
@@ -320,10 +278,7 @@ const EditCategoryPage = props => {
                     </GLButton>
                   </li>
                   <li>
-                    <GLButton
-                      variant="secondary"
-                      onClick={() => history.goBack()}
-                    >
+                    <GLButton variant="secondary" onClick={() => history.goBack()}>
                       Back to Categorys
                     </GLButton>
                   </li>

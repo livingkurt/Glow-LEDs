@@ -10,31 +10,31 @@ import { listPromos } from "../../../actions/promoActions";
 import { GLButton } from "../../../components/GlowLEDsComponents";
 
 const EditTeamPage = props => {
-  const [ id, set_id ] = useState("");
-  const [ affiliate, set_affiliate ] = useState("");
-  const [ affiliates, set_affiliates ] = useState([]);
-  const [ team_name, set_team_name ] = useState("");
-  const [ instagram_handle, set_instagram_handle ] = useState("");
-  const [ facebook_name, set_facebook_name ] = useState("");
-  const [ percentage_off, set_percentage_off ] = useState("");
-  const [ promo_code, set_promo_code ] = useState("");
-  const [ sponsor, set_sponsor ] = useState("");
-  const [ promoter, set_promoter ] = useState("");
-  const [ rave_mob, set_rave_mob ] = useState("");
-  const [ active, set_active ] = useState("");
-  const [ bio, set_bio ] = useState("");
-  const [ map, set_map ] = useState("");
-  const [ link, set_link ] = useState("");
-  const [ pathname, set_pathname ] = useState("");
-  const [ images, set_images ] = useState([]);
-  const [ image, set_image ] = useState("");
-  const [ picture, set_picture ] = useState("");
-  const [ video, set_video ] = useState("");
-  const [ public_code, set_public_code ] = useState("");
-  const [ private_code, set_private_code ] = useState("");
-  const [ venmo, set_venmo ] = useState("");
+  const [id, set_id] = useState("");
+  const [affiliate, set_affiliate] = useState("");
+  const [affiliates, set_affiliates] = useState([]);
+  const [team_name, set_team_name] = useState("");
+  const [instagram_handle, set_instagram_handle] = useState("");
+  const [facebook_name, set_facebook_name] = useState("");
+  const [percentage_off, set_percentage_off] = useState("");
+  const [promo_code, set_promo_code] = useState("");
+  const [sponsor, set_sponsor] = useState("");
+  const [promoter, set_promoter] = useState("");
+  const [rave_mob, set_rave_mob] = useState("");
+  const [active, set_active] = useState("");
+  const [bio, set_bio] = useState("");
+  const [map, set_map] = useState("");
+  const [link, set_link] = useState("");
+  const [pathname, set_pathname] = useState("");
+  const [images, set_images] = useState([]);
+  const [image, set_image] = useState("");
+  const [picture, set_picture] = useState("");
+  const [video, set_video] = useState("");
+  const [public_code, set_public_code] = useState("");
+  const [private_code, set_private_code] = useState("");
+  const [venmo, set_venmo] = useState("");
 
-  const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
+  const [loading_checkboxes, set_loading_checkboxes] = useState(true);
 
   const affiliateList = useSelector(state => state.affiliateList);
   const { affiliates: affiliates_list } = affiliateList;
@@ -95,51 +95,40 @@ const EditTeamPage = props => {
 
   const dispatch = useDispatch();
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (props.match.params.pathname) {
-          console.log("Is ID");
-          dispatch(detailsTeam(props.match.params.pathname));
-          // dispatch(detailsTeam(props.match.params.pathname));
-          // set_state();
-        } else {
-          unset_state();
-          dispatch(detailsTeam(""));
-        }
-        dispatch(listAffiliates({}));
-        dispatch(listPromos({}));
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (props.match.params.pathname) {
+        dispatch(detailsTeam(props.match.params.pathname));
+        // dispatch(detailsTeam(props.match.params.pathname));
+        // set_state();
+      } else {
+        unset_state();
+        dispatch(detailsTeam(""));
       }
-      return () => (clean = false);
-    },
-    [ props.match.params.pathname ]
-  );
+      dispatch(listAffiliates({}));
+      dispatch(listPromos({}));
+    }
+    return () => (clean = false);
+  }, [props.match.params.pathname]);
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (team) {
-          console.log("Set");
-          set_state();
-        } else {
-          console.log("UnSet");
-          unset_state();
-        }
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (team) {
+        set_state();
+      } else {
+        unset_state();
       }
-      return () => (clean = false);
-    },
-    [ team ]
-  );
+    }
+    return () => (clean = false);
+  }, [team]);
 
   setTimeout(() => {
     set_loading_checkboxes(false);
   }, 500);
 
   const submitHandler = e => {
-    console.log({ public_code });
-    console.log({ private_code });
     e.preventDefault();
     dispatch(
       saveTeam({
@@ -162,7 +151,7 @@ const EditTeamPage = props => {
         public_code: public_code && public_code._id,
         private_code: private_code && private_code._id,
         pathname: pathname ? pathname : snake_case(team_name),
-        affiliates: affiliates && affiliates.map(affiliate => affiliate._id),
+        affiliates: affiliates && affiliates.map(affiliate => affiliate._id)
       })
     );
     e.target.reset();
@@ -173,19 +162,17 @@ const EditTeamPage = props => {
   const add_affiliate = e => {
     e.preventDefault();
     const affiliate_object = JSON.parse(e.target.value);
-    // console.log(affiliate);
+    //
     // if (affiliate.indexOf(' ') >= 0) {
-    // 	console.log('indexOf');
+    //
     // 	affiliate.split(' ').map((affiliate) => {
     // 		set_affiliates((affiliates) => [ ...affiliates, affiliate ]);
     // 	});
     // } else
     if (affiliates) {
-      console.log("affiliates.length > 0");
-      set_affiliates(affiliates => [ ...affiliates, affiliate_object ]);
+      set_affiliates(affiliates => [...affiliates, affiliate_object]);
     } else {
-      console.log("affiliates.length === 0");
-      set_affiliates([ affiliate_object ]);
+      set_affiliates([affiliate_object]);
     }
 
     set_affiliate("");
@@ -208,16 +195,9 @@ const EditTeamPage = props => {
             {affiliates &&
               affiliates.map((affiliate, index) => {
                 return (
-                  <div
-                    className="promo_code mv-1rem row jc-b max-w-55rem w-100per"
-                    key={index}
-                  >
+                  <div className="promo_code mv-1rem row jc-b max-w-55rem w-100per" key={index}>
                     <div>
-                      <GLButton
-                        variant="icon"
-                        onClick={e => remove_affiliate(index, e)}
-                        aria-label="Delete"
-                      >
+                      <GLButton variant="icon" onClick={e => remove_affiliate(index, e)} aria-label="Delete">
                         <i className="fas fa-times mr-5px" />
                       </GLButton>
                       {affiliate.artist_name}
@@ -234,19 +214,17 @@ const EditTeamPage = props => {
   const add_promo = (e, code_type) => {
     e.preventDefault();
     const promo_object = JSON.parse(e.target.value);
-    console.log({ promo_object });
-    // console.log(promo);
+
+    //
     // if (promo.indexOf(' ') >= 0) {
-    // 	console.log('indexOf');
+    //
     // 	promo.split(' ').map((promo) => {
     // 		set_promos((promos) => [ ...promos, promo ]);
     // 	});
     // } else
     if (code_type === "public") {
-      console.log("public");
       set_public_code(promo_object);
     } else if (code_type === "private") {
-      console.log("private");
       set_private_code(promo_object);
     }
   };
@@ -254,15 +232,12 @@ const EditTeamPage = props => {
   const remove_promo = (e, code_type) => {
     e.preventDefault();
     if (code_type === "public") {
-      console.log("public");
       set_public_code({});
     } else if (code_type === "private") {
-      console.log("private");
       set_private_code({});
     }
   };
   const promo_display = (promo, code_type) => {
-    console.log({ promo });
     if (promo) {
       return (
         <div>
@@ -270,11 +245,7 @@ const EditTeamPage = props => {
             <div>
               <div className="promo_code mv-1rem row jc-b max-w-55rem w-100per">
                 <div>
-                  <GLButton
-                    variant="icon"
-                    onClick={e => remove_promo(e, code_type)}
-                    aria-label="Delete"
-                  >
+                  <GLButton variant="icon" onClick={e => remove_promo(e, code_type)} aria-label="Delete">
                     <i className="fas fa-times mr-5px" />
                   </GLButton>
                   {promo && promo.promo_code}
@@ -289,13 +260,10 @@ const EditTeamPage = props => {
 
   return (
     <div className="main_container p-20px">
-      <h1 style={{ textAlign: "center" }}>
-        {props.match.params.id ? "Edit Team" : "Create Team"}
-      </h1>
+      <h1 style={{ textAlign: "center" }}>{props.match.params.id ? "Edit Team" : "Create Team"}</h1>
 
       <div className="form">
         <form onSubmit={submitHandler} style={{ width: "100%" }}>
-          {console.log({ team })}
           <Loading loading={loading} error={error}>
             {team && (
               <div>
@@ -303,40 +271,27 @@ const EditTeamPage = props => {
                   <title>Edit Team | Glow LEDs</title>
                 </Helmet>
 
-                <ul
-                  className="edit-form-container"
-                  style={{ maxWidth: "30rem", marginBottom: "20px" }}
-                >
+                <ul className="edit-form-container" style={{ maxWidth: "30rem", marginBottom: "20px" }}>
                   <div className="row wrap">
                     <div className="w-228px m-10px">
                       <li>
                         <label htmlFor="affiliate">Affiliate</label>
                         <div className="ai-c h-25px mv-15px jc-c">
                           <div className="custom-select">
-                            <select
-                              className="qty_select_dropdown"
-                              onChange={e => add_affiliate(e)}
-                            >
+                            <select className="qty_select_dropdown" onChange={e => add_affiliate(e)}>
                               <option key={1} defaultValue="">
                                 ---Choose Affiliate---
                               </option>
                               {affiliates_list.map((affiliate, index) => (
-                                <option
-                                  key={index}
-                                  value={JSON.stringify(affiliate)}
-                                >
-                                  {affiliate.artist_name ||
-                                    affiliate.glover_name}
+                                <option key={index} value={JSON.stringify(affiliate)}>
+                                  {affiliate.artist_name || affiliate.glover_name}
                                 </option>
                               ))}
                             </select>
                             <span className="custom-arrow" />
                           </div>
                         </div>
-                        <GLButton
-                          variant="primary"
-                          onClick={e => add_affiliate(e)}
-                        >
+                        <GLButton variant="primary" onClick={e => add_affiliate(e)}>
                           Add Affiliate
                         </GLButton>
                         {affiliate_display(affiliates)}
@@ -354,9 +309,7 @@ const EditTeamPage = props => {
                       </li>
 
                       <li>
-                        <label htmlFor="instagram_handle">
-                          Instagram Handle
-                        </label>
+                        <label htmlFor="instagram_handle">Instagram Handle</label>
                         <input
                           type="text"
                           name="instagram_handle"
@@ -377,33 +330,15 @@ const EditTeamPage = props => {
                       </li>
                       <li>
                         <label htmlFor="picture">Picture</label>
-                        <input
-                          type="text"
-                          name="picture"
-                          value={picture}
-                          id="picture"
-                          onChange={e => set_picture(e.target.value)}
-                        />
+                        <input type="text" name="picture" value={picture} id="picture" onChange={e => set_picture(e.target.value)} />
                       </li>
                       <li>
                         <label htmlFor="map">Map</label>
-                        <input
-                          type="text"
-                          name="map"
-                          value={map}
-                          id="map"
-                          onChange={e => set_map(e.target.value)}
-                        />
+                        <input type="text" name="map" value={map} id="map" onChange={e => set_map(e.target.value)} />
                       </li>
                       <li>
                         <label htmlFor="video">Video</label>
-                        <input
-                          type="text"
-                          name="video"
-                          value={video}
-                          id="video"
-                          onChange={e => set_video(e.target.value)}
-                        />
+                        <input type="text" name="video" value={video} id="video" onChange={e => set_video(e.target.value)} />
                       </li>
                       <li>
                         <label htmlFor="bio">Bio</label>
@@ -434,26 +369,14 @@ const EditTeamPage = props => {
                         <input
                           type="text"
                           name="pathname"
-                          defaultValue={
-                            pathname ? (
-                              pathname
-                            ) : (
-                              team_name && snake_case(team_name)
-                            )
-                          }
+                          defaultValue={pathname ? pathname : team_name && snake_case(team_name)}
                           id="pathname"
                           onChange={e => set_pathname(e.target.value)}
                         />
                       </li>
                       <li>
                         <label htmlFor="venmo">Venmo</label>
-                        <input
-                          type="text"
-                          name="venmo"
-                          value={venmo}
-                          id="venmo"
-                          onChange={e => set_venmo(e.target.value)}
-                        />
+                        <input type="text" name="venmo" value={venmo} id="venmo" onChange={e => set_venmo(e.target.value)} />
                       </li>
                       <li>
                         <label htmlFor="percentage_off">Percentage Off</label>
@@ -465,31 +388,19 @@ const EditTeamPage = props => {
                           onChange={e => set_percentage_off(e.target.value)}
                         />
                       </li>
-                      <ImageDisplay
-                        images={images}
-                        set_images={set_images}
-                        image={image}
-                        set_image={set_image}
-                        name={"Images"}
-                      />
+                      <ImageDisplay images={images} set_images={set_images} image={image} set_image={set_image} name={"Images"} />
                       <li>
                         <label htmlFor="promo">Public Code</label>
                         <div className="ai-c h-25px mv-15px jc-c">
                           <div className="custom-select">
-                            <select
-                              className="qty_select_dropdown"
-                              onChange={e => add_promo(e, "public")}
-                            >
+                            <select className="qty_select_dropdown" onChange={e => add_promo(e, "public")}>
                               <option key={1} defaultValue="">
                                 ---Choose Public Code---
                               </option>
                               {promos_list
                                 .filter(promo => !promo.hidden)
                                 .map((promo, index) => (
-                                  <option
-                                    key={index}
-                                    value={JSON.stringify(promo)}
-                                  >
+                                  <option key={index} value={JSON.stringify(promo)}>
                                     {promo.promo_code}
                                   </option>
                                 ))}
@@ -505,20 +416,14 @@ const EditTeamPage = props => {
                         <label htmlFor="promo">Private Code</label>
                         <div className="ai-c h-25px mv-15px jc-c">
                           <div className="custom-select">
-                            <select
-                              className="qty_select_dropdown"
-                              onChange={e => add_promo(e, "private")}
-                            >
+                            <select className="qty_select_dropdown" onChange={e => add_promo(e, "private")}>
                               <option key={1} defaultValue="">
                                 ---Choose Private Code---
                               </option>
                               {promos_list
                                 .filter(promo => !promo.hidden)
                                 .map((promo, index) => (
-                                  <option
-                                    key={index}
-                                    value={JSON.stringify(promo)}
-                                  >
+                                  <option key={index} value={JSON.stringify(promo)}>
                                     {promo.promo_code}
                                   </option>
                                 ))}
@@ -601,10 +506,7 @@ const EditTeamPage = props => {
                     </GLButton>
                   </li>
                   <li>
-                    <GLButton
-                      variant="econdary"
-                      onClick={() => history.goBack()}
-                    >
+                    <GLButton variant="econdary" onClick={() => history.goBack()}>
                       Back to Teams
                     </GLButton>
                   </li>

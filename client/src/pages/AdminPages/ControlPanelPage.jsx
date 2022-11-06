@@ -4,11 +4,7 @@ import { Link, useHistory } from "react-router-dom";
 
 // import { Chart, CategoryScale } from 'chart.js';
 import { Bar, Pie } from "react-chartjs-2";
-import {
-  dates_in_year,
-  hslToHex,
-  toCapitalize,
-} from "../../utils/helper_functions";
+import { dates_in_year, hslToHex, toCapitalize } from "../../utils/helper_functions";
 import { API_Orders } from "../../utils";
 import { Helmet } from "react-helmet";
 import { Loading } from "../../components/UtilityComponents";
@@ -21,11 +17,11 @@ const ControlPanelPage = props => {
 
   const all_time_income_chart_ref = useRef();
 
-  const [ all_time_income, set_all_time_income ] = useState({});
-  const [ loading, set_loading ] = useState(false);
+  const [all_time_income, set_all_time_income] = useState({});
+  const [loading, set_loading] = useState(false);
 
-  const [ year, set_year ] = useState(this_year);
-  const [ canScroll, setCanScroll ] = useState(false);
+  const [year, set_year] = useState(this_year);
+  const [canScroll, setCanScroll] = useState(false);
 
   useEffect(() => {
     let clean = true;
@@ -38,7 +34,7 @@ const ControlPanelPage = props => {
   const get_all_time_income = async year => {
     set_loading(true);
     const { data } = await API_Orders.income();
-    console.log({ get_all_time_income: data });
+
     if (data) {
       set_all_time_income(data);
       set_loading(false);
@@ -46,56 +42,41 @@ const ControlPanelPage = props => {
   };
 
   const bar_income_expenses_profit_data = {
-    labels: [ "Income" ],
+    labels: ["Income"],
     datasets: [
       {
-        label: [ "Income" ],
-        data: [
-          all_time_income &&
-            all_time_income.macro_income &&
-            all_time_income.macro_income.income,
-        ],
+        label: ["Income"],
+        data: [all_time_income && all_time_income.macro_income && all_time_income.macro_income.income],
         borderWidth: 1,
         fill: true,
         borderColor: "#3e4c6d",
         backgroundColor: hslToHex(150, 100, 50),
-        color: "white",
+        color: "white"
       },
       {
-        label: [ "Expenses" ],
-        data: [
-          all_time_income &&
-            all_time_income.macro_income &&
-            all_time_income.macro_income.expenses,
-        ],
+        label: ["Expenses"],
+        data: [all_time_income && all_time_income.macro_income && all_time_income.macro_income.expenses],
         borderWidth: 1,
         fill: true,
         borderColor: "#3e4c6d",
         backgroundColor: hslToHex(360, 100, 50),
-        color: "white",
+        color: "white"
       },
       {
-        label: [ "Profit" ],
-        data: [
-          all_time_income &&
-            all_time_income.macro_income &&
-            all_time_income.macro_income.profit,
-        ],
+        label: ["Profit"],
+        data: [all_time_income && all_time_income.macro_income && all_time_income.macro_income.profit],
         borderWidth: 1,
         fill: true,
         borderColor: "#3e4c6d",
-        backgroundColor:
-          all_time_income.profit > 0
-            ? hslToHex(0, 100, 100)
-            : hslToHex(0, 0, 0),
-        color: "white",
-      },
-    ],
+        backgroundColor: all_time_income.profit > 0 ? hslToHex(0, 100, 100) : hslToHex(0, 0, 0),
+        color: "white"
+      }
+    ]
   };
   const bar_income_expenses_profit_options = {
     responsive: true,
     maintainAspectRatio: true,
-    fontColor: "#000000",
+    fontColor: "#000000"
   };
 
   const history = useHistory();
@@ -141,18 +122,15 @@ const ControlPanelPage = props => {
       </div>
       <h2 className="ta-c w-100per jc-c">All Time Monthly Breakdown</h2>
       <Loading loading={loading} />
-      {all_time_income &&
-      Object.keys(all_time_income).length > 0 && (
+      {all_time_income && Object.keys(all_time_income).length > 0 && (
         <Tabs>
-          <Overflow
-            onStateChange={state => setCanScroll(state.canScroll.right)}
-          >
+          <Overflow onStateChange={state => setCanScroll(state.canScroll.right)}>
             <Overflow.Content>
               <TabList>
                 <Tab
                   style={{
                     padding: "10px",
-                    borderRadius: "10px 10px 0px 0px",
+                    borderRadius: "10px 10px 0px 0px"
                   }}
                 >
                   All Time Monthly Expenses
@@ -160,7 +138,7 @@ const ControlPanelPage = props => {
                 <Tab
                   style={{
                     padding: "10px",
-                    borderRadius: "10px 10px 0px 0px",
+                    borderRadius: "10px 10px 0px 0px"
                   }}
                 >
                   All Time Whites
@@ -168,7 +146,7 @@ const ControlPanelPage = props => {
                 <Tab
                   style={{
                     padding: "10px",
-                    borderRadius: "10px 10px 0px 0px",
+                    borderRadius: "10px 10px 0px 0px"
                   }}
                 >
                   All Time Refresh Packs
@@ -176,7 +154,7 @@ const ControlPanelPage = props => {
                 <Tab
                   style={{
                     padding: "10px",
-                    borderRadius: "10px 10px 0px 0px",
+                    borderRadius: "10px 10px 0px 0px"
                   }}
                 >
                   All Time All Whites
@@ -184,7 +162,7 @@ const ControlPanelPage = props => {
                 <Tab
                   style={{
                     padding: "10px",
-                    borderRadius: "10px 10px 0px 0px",
+                    borderRadius: "10px 10px 0px 0px"
                   }}
                 >
                   All Time Batteries
@@ -192,18 +170,14 @@ const ControlPanelPage = props => {
                 <Tab
                   style={{
                     padding: "10px",
-                    borderRadius: "10px 10px 0px 0px",
+                    borderRadius: "10px 10px 0px 0px"
                   }}
                 >
                   All Time Decals
                 </Tab>
               </TabList>
             </Overflow.Content>
-            {canScroll && (
-              <div className="tab_indicator bob br-5px ta-c bg-primary h-30px w-30px p-4px box-s-d b-1px">
-                {">"}
-              </div>
-            )}
+            {canScroll && <div className="tab_indicator bob br-5px ta-c bg-primary h-30px w-30px p-4px box-s-d b-1px">{">"}</div>}
           </Overflow>
           <TabPanel style={{ borderRadius: "0px 10px 10px 10px" }}>
             <table className="styled-table">
@@ -218,44 +192,18 @@ const ControlPanelPage = props => {
                 <tr
                   style={{
                     backgroundColor: "#d1d1d1",
-                    color: "#4d5061",
+                    color: "#4d5061"
                   }}
                   className=""
                 >
-                  <th>
-                    ${all_time_income.macro_income.income ? (
-                      all_time_income.macro_income.income.toFixed(2)
-                    ) : (
-                      "0.00"
-                    )}
-                  </th>
-                  <th>
-                    ${all_time_income.macro_income.expenses ? (
-                      all_time_income.macro_income.expenses.toFixed(2)
-                    ) : (
-                      "0.00"
-                    )}
-                  </th>
-                  <th>
-                    ${all_time_income.macro_income.profit ? (
-                      all_time_income.macro_income.profit.toFixed(2)
-                    ) : (
-                      "0.00"
-                    )}
-                  </th>
+                  <th>${all_time_income.macro_income.income ? all_time_income.macro_income.income.toFixed(2) : "0.00"}</th>
+                  <th>${all_time_income.macro_income.expenses ? all_time_income.macro_income.expenses.toFixed(2) : "0.00"}</th>
+                  <th>${all_time_income.macro_income.profit ? all_time_income.macro_income.profit.toFixed(2) : "0.00"}</th>
                 </tr>
               </tbody>
             </table>
-            <div
-              style={{ backgroundColor: "white" }}
-              className="p-1rem br-10px m-1rem"
-            >
-              {all_time_income && (
-                <Bar
-                  data={bar_income_expenses_profit_data}
-                  options={bar_income_expenses_profit_options}
-                />
-              )}
+            <div style={{ backgroundColor: "white" }} className="p-1rem br-10px m-1rem">
+              {all_time_income && <Bar data={bar_income_expenses_profit_data} options={bar_income_expenses_profit_options} />}
             </div>
           </TabPanel>
           <TabPanel>
@@ -272,38 +220,18 @@ const ControlPanelPage = props => {
                 <tr
                   style={{
                     backgroundColor: "#d1d1d1",
-                    color: "#4d5061",
+                    color: "#4d5061"
                   }}
                   className=""
                 >
-                  <th>
-                    ${all_time_income.whites.total_income ? (
-                      all_time_income.whites.total_income.toFixed(2)
-                    ) : (
-                      "0.00"
-                    )}
-                  </th>
-                  <th>
-                    ${all_time_income.whites.total_expenses ? (
-                      all_time_income.whites.total_expenses.toFixed(2)
-                    ) : (
-                      "0.00"
-                    )}
-                  </th>
+                  <th>${all_time_income.whites.total_income ? all_time_income.whites.total_income.toFixed(2) : "0.00"}</th>
+                  <th>${all_time_income.whites.total_expenses ? all_time_income.whites.total_expenses.toFixed(2) : "0.00"}</th>
 
-                  <th>
-                    ${all_time_income.whites.total_profit ? (
-                      all_time_income.whites.total_profit.toFixed(2)
-                    ) : (
-                      "0.00"
-                    )}
-                  </th>
+                  <th>${all_time_income.whites.total_profit ? all_time_income.whites.total_profit.toFixed(2) : "0.00"}</th>
                 </tr>
               </tbody>
             </table>
-            <h2 className="ta-c w-100per jc-c">
-              All Time Whites Income By Size
-            </h2>
+            <h2 className="ta-c w-100per jc-c">All Time Whites Income By Size</h2>
             <table className="styled-table">
               <thead>
                 <tr>
@@ -318,45 +246,15 @@ const ControlPanelPage = props => {
                 <tr
                   style={{
                     backgroundColor: "#d1d1d1",
-                    color: "#4d5061",
+                    color: "#4d5061"
                   }}
                   className=""
                 >
-                  <th>
-                    ${all_time_income.whites.s_total_income ? (
-                      all_time_income.whites.s_total_income.toFixed(2)
-                    ) : (
-                      "0.00"
-                    )}
-                  </th>
-                  <th>
-                    ${all_time_income.whites.m_total_income ? (
-                      all_time_income.whites.m_total_income.toFixed(2)
-                    ) : (
-                      "0.00"
-                    )}
-                  </th>
-                  <th>
-                    ${all_time_income.whites.l_total_income ? (
-                      all_time_income.whites.l_total_income.toFixed(2)
-                    ) : (
-                      "0.00"
-                    )}
-                  </th>
-                  <th>
-                    ${all_time_income.whites.xl_total_income ? (
-                      all_time_income.whites.xl_total_income.toFixed(2)
-                    ) : (
-                      "0.00"
-                    )}
-                  </th>
-                  <th>
-                    ${all_time_income.whites.total_income ? (
-                      all_time_income.whites.total_income.toFixed(2)
-                    ) : (
-                      "0.00"
-                    )}
-                  </th>
+                  <th>${all_time_income.whites.s_total_income ? all_time_income.whites.s_total_income.toFixed(2) : "0.00"}</th>
+                  <th>${all_time_income.whites.m_total_income ? all_time_income.whites.m_total_income.toFixed(2) : "0.00"}</th>
+                  <th>${all_time_income.whites.l_total_income ? all_time_income.whites.l_total_income.toFixed(2) : "0.00"}</th>
+                  <th>${all_time_income.whites.xl_total_income ? all_time_income.whites.xl_total_income.toFixed(2) : "0.00"}</th>
+                  <th>${all_time_income.whites.total_income ? all_time_income.whites.total_income.toFixed(2) : "0.00"}</th>
                 </tr>
               </tbody>
             </table>
@@ -375,45 +273,15 @@ const ControlPanelPage = props => {
                 <tr
                   style={{
                     backgroundColor: "#d1d1d1",
-                    color: "#4d5061",
+                    color: "#4d5061"
                   }}
                   className=""
                 >
-                  <th>
-                    {all_time_income.whites.s_qty_sold ? (
-                      all_time_income.whites.s_qty_sold
-                    ) : (
-                      "0"
-                    )}
-                  </th>
-                  <th>
-                    {all_time_income.whites.m_qty_sold ? (
-                      all_time_income.whites.m_qty_sold
-                    ) : (
-                      "0"
-                    )}
-                  </th>
-                  <th>
-                    {all_time_income.whites.l_qty_sold ? (
-                      all_time_income.whites.l_qty_sold
-                    ) : (
-                      "0"
-                    )}
-                  </th>
-                  <th>
-                    {all_time_income.whites.xl_qty_sold ? (
-                      all_time_income.whites.xl_qty_sold
-                    ) : (
-                      "0"
-                    )}
-                  </th>
-                  <th>
-                    {all_time_income.whites.total_qty_sold ? (
-                      all_time_income.whites.total_qty_sold
-                    ) : (
-                      "0"
-                    )}
-                  </th>
+                  <th>{all_time_income.whites.s_qty_sold ? all_time_income.whites.s_qty_sold : "0"}</th>
+                  <th>{all_time_income.whites.m_qty_sold ? all_time_income.whites.m_qty_sold : "0"}</th>
+                  <th>{all_time_income.whites.l_qty_sold ? all_time_income.whites.l_qty_sold : "0"}</th>
+                  <th>{all_time_income.whites.xl_qty_sold ? all_time_income.whites.xl_qty_sold : "0"}</th>
+                  <th>{all_time_income.whites.total_qty_sold ? all_time_income.whites.total_qty_sold : "0"}</th>
                 </tr>
               </tbody>
             </table>
@@ -432,38 +300,20 @@ const ControlPanelPage = props => {
                 <tr
                   style={{
                     backgroundColor: "#d1d1d1",
-                    color: "#4d5061",
+                    color: "#4d5061"
                   }}
                   className=""
                 >
+                  <th>${all_time_income.refresh_packs.total_income ? all_time_income.refresh_packs.total_income.toFixed(2) : "0.00"}</th>
                   <th>
-                    ${all_time_income.refresh_packs.total_income ? (
-                      all_time_income.refresh_packs.total_income.toFixed(2)
-                    ) : (
-                      "0.00"
-                    )}
-                  </th>
-                  <th>
-                    ${all_time_income.refresh_packs.total_expenses ? (
-                      all_time_income.refresh_packs.total_expenses.toFixed(2)
-                    ) : (
-                      "0.00"
-                    )}
+                    ${all_time_income.refresh_packs.total_expenses ? all_time_income.refresh_packs.total_expenses.toFixed(2) : "0.00"}
                   </th>
 
-                  <th>
-                    ${all_time_income.refresh_packs.total_profit ? (
-                      all_time_income.refresh_packs.total_profit.toFixed(2)
-                    ) : (
-                      "0.00"
-                    )}
-                  </th>
+                  <th>${all_time_income.refresh_packs.total_profit ? all_time_income.refresh_packs.total_profit.toFixed(2) : "0.00"}</th>
                 </tr>
               </tbody>
             </table>
-            <h2 className="ta-c w-100per jc-c">
-              All Time Refresh Income By Size
-            </h2>
+            <h2 className="ta-c w-100per jc-c">All Time Refresh Income By Size</h2>
             <table className="styled-table">
               <thead>
                 <tr>
@@ -478,45 +328,23 @@ const ControlPanelPage = props => {
                 <tr
                   style={{
                     backgroundColor: "#d1d1d1",
-                    color: "#4d5061",
+                    color: "#4d5061"
                   }}
                   className=""
                 >
                   <th>
-                    ${all_time_income.refresh_packs.s_total_income ? (
-                      all_time_income.refresh_packs.s_total_income.toFixed(2)
-                    ) : (
-                      "0.00"
-                    )}
+                    ${all_time_income.refresh_packs.s_total_income ? all_time_income.refresh_packs.s_total_income.toFixed(2) : "0.00"}
                   </th>
                   <th>
-                    ${all_time_income.refresh_packs.m_total_income ? (
-                      all_time_income.refresh_packs.m_total_income.toFixed(2)
-                    ) : (
-                      "0.00"
-                    )}
+                    ${all_time_income.refresh_packs.m_total_income ? all_time_income.refresh_packs.m_total_income.toFixed(2) : "0.00"}
                   </th>
                   <th>
-                    ${all_time_income.refresh_packs.l_total_income ? (
-                      all_time_income.refresh_packs.l_total_income.toFixed(2)
-                    ) : (
-                      "0.00"
-                    )}
+                    ${all_time_income.refresh_packs.l_total_income ? all_time_income.refresh_packs.l_total_income.toFixed(2) : "0.00"}
                   </th>
                   <th>
-                    ${all_time_income.refresh_packs.xl_total_income ? (
-                      all_time_income.refresh_packs.xl_total_income.toFixed(2)
-                    ) : (
-                      "0.00"
-                    )}
+                    ${all_time_income.refresh_packs.xl_total_income ? all_time_income.refresh_packs.xl_total_income.toFixed(2) : "0.00"}
                   </th>
-                  <th>
-                    ${all_time_income.refresh_packs.total_income ? (
-                      all_time_income.refresh_packs.total_income.toFixed(2)
-                    ) : (
-                      "0.00"
-                    )}
-                  </th>
+                  <th>${all_time_income.refresh_packs.total_income ? all_time_income.refresh_packs.total_income.toFixed(2) : "0.00"}</th>
                 </tr>
               </tbody>
             </table>
@@ -535,45 +363,15 @@ const ControlPanelPage = props => {
                 <tr
                   style={{
                     backgroundColor: "#d1d1d1",
-                    color: "#4d5061",
+                    color: "#4d5061"
                   }}
                   className=""
                 >
-                  <th>
-                    {all_time_income.refresh_packs.s_qty_sold ? (
-                      all_time_income.refresh_packs.s_qty_sold
-                    ) : (
-                      "0"
-                    )}
-                  </th>
-                  <th>
-                    {all_time_income.refresh_packs.m_qty_sold ? (
-                      all_time_income.refresh_packs.m_qty_sold
-                    ) : (
-                      "0"
-                    )}
-                  </th>
-                  <th>
-                    {all_time_income.refresh_packs.l_qty_sold ? (
-                      all_time_income.refresh_packs.l_qty_sold
-                    ) : (
-                      "0"
-                    )}
-                  </th>
-                  <th>
-                    {all_time_income.refresh_packs.xl_qty_sold ? (
-                      all_time_income.refresh_packs.xl_qty_sold
-                    ) : (
-                      "0"
-                    )}
-                  </th>
-                  <th>
-                    {all_time_income.refresh_packs.total_qty_sold ? (
-                      all_time_income.refresh_packs.total_qty_sold
-                    ) : (
-                      "0"
-                    )}
-                  </th>
+                  <th>{all_time_income.refresh_packs.s_qty_sold ? all_time_income.refresh_packs.s_qty_sold : "0"}</th>
+                  <th>{all_time_income.refresh_packs.m_qty_sold ? all_time_income.refresh_packs.m_qty_sold : "0"}</th>
+                  <th>{all_time_income.refresh_packs.l_qty_sold ? all_time_income.refresh_packs.l_qty_sold : "0"}</th>
+                  <th>{all_time_income.refresh_packs.xl_qty_sold ? all_time_income.refresh_packs.xl_qty_sold : "0"}</th>
+                  <th>{all_time_income.refresh_packs.total_qty_sold ? all_time_income.refresh_packs.total_qty_sold : "0"}</th>
                 </tr>
               </tbody>
             </table>
@@ -592,38 +390,18 @@ const ControlPanelPage = props => {
                 <tr
                   style={{
                     backgroundColor: "#d1d1d1",
-                    color: "#4d5061",
+                    color: "#4d5061"
                   }}
                   className=""
                 >
-                  <th>
-                    ${all_time_income.total_whites.total_income ? (
-                      all_time_income.total_whites.total_income.toFixed(2)
-                    ) : (
-                      "0.00"
-                    )}
-                  </th>
-                  <th>
-                    ${all_time_income.total_whites.total_expenses ? (
-                      all_time_income.total_whites.total_expenses.toFixed(2)
-                    ) : (
-                      "0.00"
-                    )}
-                  </th>
+                  <th>${all_time_income.total_whites.total_income ? all_time_income.total_whites.total_income.toFixed(2) : "0.00"}</th>
+                  <th>${all_time_income.total_whites.total_expenses ? all_time_income.total_whites.total_expenses.toFixed(2) : "0.00"}</th>
 
-                  <th>
-                    ${all_time_income.total_whites.total_profit ? (
-                      all_time_income.total_whites.total_profit.toFixed(2)
-                    ) : (
-                      "0.00"
-                    )}
-                  </th>
+                  <th>${all_time_income.total_whites.total_profit ? all_time_income.total_whites.total_profit.toFixed(2) : "0.00"}</th>
                 </tr>
               </tbody>
             </table>
-            <h2 className="ta-c w-100per jc-c">
-              All Time Whites Income By Size
-            </h2>
+            <h2 className="ta-c w-100per jc-c">All Time Whites Income By Size</h2>
             <table className="styled-table">
               <thead>
                 <tr>
@@ -638,45 +416,17 @@ const ControlPanelPage = props => {
                 <tr
                   style={{
                     backgroundColor: "#d1d1d1",
-                    color: "#4d5061",
+                    color: "#4d5061"
                   }}
                   className=""
                 >
+                  <th>${all_time_income.total_whites.s_total_income ? all_time_income.total_whites.s_total_income.toFixed(2) : "0.00"}</th>
+                  <th>${all_time_income.total_whites.m_total_income ? all_time_income.total_whites.m_total_income.toFixed(2) : "0.00"}</th>
+                  <th>${all_time_income.total_whites.l_total_income ? all_time_income.total_whites.l_total_income.toFixed(2) : "0.00"}</th>
                   <th>
-                    ${all_time_income.total_whites.s_total_income ? (
-                      all_time_income.total_whites.s_total_income.toFixed(2)
-                    ) : (
-                      "0.00"
-                    )}
+                    ${all_time_income.total_whites.xl_total_income ? all_time_income.total_whites.xl_total_income.toFixed(2) : "0.00"}
                   </th>
-                  <th>
-                    ${all_time_income.total_whites.m_total_income ? (
-                      all_time_income.total_whites.m_total_income.toFixed(2)
-                    ) : (
-                      "0.00"
-                    )}
-                  </th>
-                  <th>
-                    ${all_time_income.total_whites.l_total_income ? (
-                      all_time_income.total_whites.l_total_income.toFixed(2)
-                    ) : (
-                      "0.00"
-                    )}
-                  </th>
-                  <th>
-                    ${all_time_income.total_whites.xl_total_income ? (
-                      all_time_income.total_whites.xl_total_income.toFixed(2)
-                    ) : (
-                      "0.00"
-                    )}
-                  </th>
-                  <th>
-                    ${all_time_income.total_whites.total_income ? (
-                      all_time_income.total_whites.total_income.toFixed(2)
-                    ) : (
-                      "0.00"
-                    )}
-                  </th>
+                  <th>${all_time_income.total_whites.total_income ? all_time_income.total_whites.total_income.toFixed(2) : "0.00"}</th>
                 </tr>
               </tbody>
             </table>
@@ -695,45 +445,15 @@ const ControlPanelPage = props => {
                 <tr
                   style={{
                     backgroundColor: "#d1d1d1",
-                    color: "#4d5061",
+                    color: "#4d5061"
                   }}
                   className=""
                 >
-                  <th>
-                    {all_time_income.total_whites.s_qty_sold ? (
-                      all_time_income.total_whites.s_qty_sold
-                    ) : (
-                      "0"
-                    )}
-                  </th>
-                  <th>
-                    {all_time_income.total_whites.m_qty_sold ? (
-                      all_time_income.total_whites.m_qty_sold
-                    ) : (
-                      "0"
-                    )}
-                  </th>
-                  <th>
-                    {all_time_income.total_whites.l_qty_sold ? (
-                      all_time_income.total_whites.l_qty_sold
-                    ) : (
-                      "0"
-                    )}
-                  </th>
-                  <th>
-                    {all_time_income.total_whites.xl_qty_sold ? (
-                      all_time_income.total_whites.xl_qty_sold
-                    ) : (
-                      "0"
-                    )}
-                  </th>
-                  <th>
-                    {all_time_income.total_whites.total_qty_sold ? (
-                      all_time_income.total_whites.total_qty_sold
-                    ) : (
-                      "0"
-                    )}
-                  </th>
+                  <th>{all_time_income.total_whites.s_qty_sold ? all_time_income.total_whites.s_qty_sold : "0"}</th>
+                  <th>{all_time_income.total_whites.m_qty_sold ? all_time_income.total_whites.m_qty_sold : "0"}</th>
+                  <th>{all_time_income.total_whites.l_qty_sold ? all_time_income.total_whites.l_qty_sold : "0"}</th>
+                  <th>{all_time_income.total_whites.xl_qty_sold ? all_time_income.total_whites.xl_qty_sold : "0"}</th>
+                  <th>{all_time_income.total_whites.total_qty_sold ? all_time_income.total_whites.total_qty_sold : "0"}</th>
                 </tr>
               </tbody>
             </table>
@@ -755,60 +475,33 @@ const ControlPanelPage = props => {
                 <tr
                   style={{
                     backgroundColor: "#d1d1d1",
-                    color: "#4d5061",
+                    color: "#4d5061"
                   }}
                   className=""
                 >
                   <th>
-                    ${all_time_income.batteries.batt_1620_total_income ? (
-                      all_time_income.batteries.batt_1620_total_income.toFixed(
-                        2
-                      )
-                    ) : (
-                      "0.00"
-                    )}
+                    $
+                    {all_time_income.batteries.batt_1620_total_income
+                      ? all_time_income.batteries.batt_1620_total_income.toFixed(2)
+                      : "0.00"}
                   </th>
 
                   <th>
-                    ${all_time_income.batteries.batt_1616_total_income ? (
-                      all_time_income.batteries.batt_1616_total_income.toFixed(
-                        2
-                      )
-                    ) : (
-                      "0.00"
-                    )}
+                    $
+                    {all_time_income.batteries.batt_1616_total_income
+                      ? all_time_income.batteries.batt_1616_total_income.toFixed(2)
+                      : "0.00"}
                   </th>
 
                   <th>
-                    ${all_time_income.batteries.batt_1225_total_income ? (
-                      all_time_income.batteries.batt_1225_total_income.toFixed(
-                        2
-                      )
-                    ) : (
-                      "0.00"
-                    )}
+                    $
+                    {all_time_income.batteries.batt_1225_total_income
+                      ? all_time_income.batteries.batt_1225_total_income.toFixed(2)
+                      : "0.00"}
                   </th>
-                  <th>
-                    ${all_time_income.batteries.total_income ? (
-                      all_time_income.batteries.total_income.toFixed(2)
-                    ) : (
-                      "0.00"
-                    )}
-                  </th>
-                  <th>
-                    ${all_time_income.batteries.total_expenses ? (
-                      all_time_income.batteries.total_expenses.toFixed(2)
-                    ) : (
-                      "0.00"
-                    )}
-                  </th>
-                  <th>
-                    ${all_time_income.batteries.total_profit ? (
-                      all_time_income.batteries.total_profit.toFixed(2)
-                    ) : (
-                      "0.00"
-                    )}
-                  </th>
+                  <th>${all_time_income.batteries.total_income ? all_time_income.batteries.total_income.toFixed(2) : "0.00"}</th>
+                  <th>${all_time_income.batteries.total_expenses ? all_time_income.batteries.total_expenses.toFixed(2) : "0.00"}</th>
+                  <th>${all_time_income.batteries.total_profit ? all_time_income.batteries.total_profit.toFixed(2) : "0.00"}</th>
                 </tr>
               </tbody>
             </table>
@@ -826,38 +519,14 @@ const ControlPanelPage = props => {
                 <tr
                   style={{
                     backgroundColor: "#d1d1d1",
-                    color: "#4d5061",
+                    color: "#4d5061"
                   }}
                   className=""
                 >
-                  <th>
-                    {all_time_income.batteries.batt_1620_qty_sold ? (
-                      all_time_income.batteries.batt_1620_qty_sold
-                    ) : (
-                      "0"
-                    )}
-                  </th>
-                  <th>
-                    {all_time_income.batteries.batt_1616_qty_sold ? (
-                      all_time_income.batteries.batt_1616_qty_sold
-                    ) : (
-                      "0"
-                    )}
-                  </th>
-                  <th>
-                    {all_time_income.batteries.batt_1225_qty_sold ? (
-                      all_time_income.batteries.batt_1225_qty_sold
-                    ) : (
-                      "0"
-                    )}
-                  </th>
-                  <th>
-                    {all_time_income.batteries.total_qty_sold ? (
-                      all_time_income.batteries.total_qty_sold
-                    ) : (
-                      "0"
-                    )}
-                  </th>
+                  <th>{all_time_income.batteries.batt_1620_qty_sold ? all_time_income.batteries.batt_1620_qty_sold : "0"}</th>
+                  <th>{all_time_income.batteries.batt_1616_qty_sold ? all_time_income.batteries.batt_1616_qty_sold : "0"}</th>
+                  <th>{all_time_income.batteries.batt_1225_qty_sold ? all_time_income.batteries.batt_1225_qty_sold : "0"}</th>
+                  <th>{all_time_income.batteries.total_qty_sold ? all_time_income.batteries.total_qty_sold : "0"}</th>
                 </tr>
               </tbody>
             </table>
@@ -877,31 +546,13 @@ const ControlPanelPage = props => {
                 <tr
                   style={{
                     backgroundColor: "#d1d1d1",
-                    color: "#4d5061",
+                    color: "#4d5061"
                   }}
                   className=""
                 >
-                  <th>
-                    {all_time_income.decals.qty_sold ? (
-                      all_time_income.decals.qty_sold
-                    ) : (
-                      "0"
-                    )}
-                  </th>
-                  <th>
-                    {all_time_income.decals.sets ? (
-                      all_time_income.decals.sets
-                    ) : (
-                      "0"
-                    )}
-                  </th>
-                  <th>
-                    ${all_time_income.decals.total_income ? (
-                      all_time_income.decals.total_income.toFixed(2)
-                    ) : (
-                      "0.00"
-                    )}
-                  </th>
+                  <th>{all_time_income.decals.qty_sold ? all_time_income.decals.qty_sold : "0"}</th>
+                  <th>{all_time_income.decals.sets ? all_time_income.decals.sets : "0"}</th>
+                  <th>${all_time_income.decals.total_income ? all_time_income.decals.total_income.toFixed(2) : "0.00"}</th>
                 </tr>
               </tbody>
             </table>

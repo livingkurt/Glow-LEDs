@@ -15,7 +15,6 @@ const DropdownDisplay = ({ item_list, list_items, set_items, list_name, placemen
       })
     );
   };
-  console.log({ item_list, list_items, set_items, list_name, placement, display_key, item_group_id });
 
   const remove_list_item_and_delete = (item_index, e, product_id) => {
     e.preventDefault();
@@ -31,14 +30,12 @@ const DropdownDisplay = ({ item_list, list_items, set_items, list_name, placemen
     e.preventDefault();
     const item_object = JSON.parse(e.target.value);
     if (list_items) {
-      console.log("items.length > 0");
       if (placement === "top") {
         set_items(items => [item_object, ...items]);
       } else {
         set_items(items => [...items, item_object]);
       }
     } else {
-      console.log("items.length === 0");
       set_items([item_object]);
     }
   };

@@ -11,12 +11,12 @@ import { GLButton } from "../GlowLEDsComponents";
 
 const Order = props => {
   const dispatch = useDispatch();
-  const [ clipboard, copyToClipboard ] = useClipboard();
+  const [clipboard, copyToClipboard] = useClipboard();
   const history = useHistory();
 
-  const [ refund_state, set_refund_state ] = useState({});
-  const [ refund_amount, set_refund_amount ] = useState(0);
-  const [ refund_reason, set_refund_reason ] = useState("");
+  const [refund_state, set_refund_state] = useState({});
+  const [refund_amount, set_refund_amount] = useState(0);
+  const [refund_reason, set_refund_reason] = useState("");
 
   const orderRefund = useSelector(state => state.orderRefund);
   const { order: refund } = orderRefund;
@@ -26,17 +26,14 @@ const Order = props => {
     dispatch(refundOrder(props.order, true, refund_amount, refund_reason));
     // }
   };
-  useEffect(
-    () => {
-      if (refund) {
-        set_refund_state(refund.isRefunded);
-      }
-    },
-    [ refund ]
-  );
+  useEffect(() => {
+    if (refund) {
+      set_refund_state(refund.isRefunded);
+    }
+  }, [refund]);
   const show_hide = id => {
     const row = document.getElementById(id);
-    console.log(row);
+
     row.classList.toggle("hide-row");
   };
   const daysBetween = (date1, date2) => {
@@ -55,85 +52,50 @@ const Order = props => {
   // 	}
   // 	return week;
   // }
-  // console.log(dates(new Date(2020, 1, 27)));
+  //
 
   const today = new Date();
   return (
-    <div
-      className="container"
-      style={{ backgroundColor: props.determine_color(props.order) }}
-      key={props.key}
-    >
-      <div
-        className="pb-15px mb-10px row"
-        style={{ borderBottom: "1px solid white" }}
-      >
+    <div className="container" style={{ backgroundColor: props.determine_color(props.order) }} key={props.key}>
+      <div className="pb-15px mb-10px row" style={{ borderBottom: "1px solid white" }}>
         <div className="w-50per jc-b ">
           <div className="fs-16px">
             <h3>Order Placed</h3>
-            <div>
-              {props.order.createdAt && format_date(props.order.createdAt)}
-            </div>
+            <div>{props.order.createdAt && format_date(props.order.createdAt)}</div>
           </div>
           <div className="fs-16px">
             <h3>Total</h3>
             {!props.order.isRefunded && (
               <div>
-                <div>
-                  ${props.order.totalPrice ? (
-                    props.order.totalPrice.toFixed(2)
-                  ) : (
-                    props.order.totalPrice
-                  )}
-                </div>
+                <div>${props.order.totalPrice ? props.order.totalPrice.toFixed(2) : props.order.totalPrice}</div>
               </div>
             )}
             {props.order.isRefunded && (
               <div>
                 <del style={{ color: "red" }}>
                   <label style={{ color: "white" }}>
-                    <div>
-                      ${props.order.totalPrice ? (
-                        props.order.totalPrice.toFixed(2)
-                      ) : (
-                        props.order.totalPrice
-                      )}
-                    </div>
+                    <div>${props.order.totalPrice ? props.order.totalPrice.toFixed(2) : props.order.totalPrice}</div>
                   </label>
                 </del>
               </div>
             )}
             {props.order.isRefunded && (
               <div>
-                <div>
-                  -${(props.order.payment.refund.reduce(
-                    (a, c) => a + c.amount,
-                    0
-                  ) / 100).toFixed(2)}
-                </div>
+                <div>-${(props.order.payment.refund.reduce((a, c) => a + c.amount, 0) / 100).toFixed(2)}</div>
               </div>
             )}
             {props.order.isRefunded && (
               <div>
-                <div>
-                  ${(props.order.totalPrice -
-                    props.order.payment.refund.reduce(
-                      (a, c) => a + c.amount,
-                      0
-                    ) /
-                      100).toFixed(2)}
-                </div>
+                <div>${(props.order.totalPrice - props.order.payment.refund.reduce((a, c) => a + c.amount, 0) / 100).toFixed(2)}</div>
               </div>
             )}
           </div>
           {props.admin && (
             <div className="fs-16px">
               <h3>Since Order</h3>
-              {daysBetween(today, props.order.createdAt) > 1 ? (
-                `${daysBetween(today, props.order.createdAt)} Days`
-              ) : (
-                `${daysBetween(today, props.order.createdAt)} Day`
-              )}
+              {daysBetween(today, props.order.createdAt) > 1
+                ? `${daysBetween(today, props.order.createdAt)} Days`
+                : `${daysBetween(today, props.order.createdAt)} Day`}
             </div>
           )}
           <div className="fs-16px">
@@ -153,17 +115,14 @@ const Order = props => {
               <Link
                 to={{
                   pathname: "/secure/account/order/" + props.order._id,
-                  previous_path:
-                    history.location.pathname + history.location.search,
+                  previous_path: history.location.pathname + history.location.search
                 }}
               >
                 <GLButton variant="primary">Order Details</GLButton>
               </Link>
               <div>|</div>
               <GLButton variant="secondary">
-                <Link to={"/secure/glow/emails/invoice/" + props.order._id}>
-                  View Invoice
-                </Link>
+                <Link to={"/secure/glow/emails/invoice/" + props.order._id}>View Invoice</Link>
               </GLButton>
             </div>
           </div>
@@ -199,7 +158,7 @@ const Order = props => {
                         style={{
                           backgroundColor: "white",
                           color: "black",
-                          border: "1px solid #ccc",
+                          border: "1px solid #ccc"
                         }}
                       >
                         <div className="mt-3px ml-2px">{item.qty}</div>
@@ -225,110 +184,57 @@ const Order = props => {
           <div>
             <div className="row ai-c">
               <div className="mv-5px">
-                {props.order.isPaid ? (
-                  <i className="fas fa-check-circle" />
-                ) : (
-                  <i className="fas fa-times-circle" />
-                )}
+                {props.order.isPaid ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
               </div>
               <div className="mh-10px">Paid</div>
-              <div>
-                {!props.order.paidAt ? "" : format_date(props.order.paidAt)}
-              </div>
+              <div>{!props.order.paidAt ? "" : format_date(props.order.paidAt)}</div>
             </div>
           </div>
           <div>
             <div className="row ai-c">
               <div className="mv-5px">
-                {props.order.isManufactured ? (
-                  <i className="fas fa-check-circle" />
-                ) : (
-                  <i className="fas fa-times-circle" />
-                )}
+                {props.order.isManufactured ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
               </div>
               <div className="mh-10px">Manufactured</div>
 
-              <div>
-                {!props.order.manufacturedAt ? (
-                  ""
-                ) : (
-                  format_date(props.order.manufacturedAt)
-                )}
-              </div>
+              <div>{!props.order.manufacturedAt ? "" : format_date(props.order.manufacturedAt)}</div>
             </div>
           </div>
           <div>
             <div className="row ai-c">
               <div className="mv-5px">
-                {props.order.isPackaged ? (
-                  <i className="fas fa-check-circle" />
-                ) : (
-                  <i className="fas fa-times-circle" />
-                )}
+                {props.order.isPackaged ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
               </div>
               <div className="mh-10px">Packaged</div>
 
-              <div>
-                {!props.order.packagedAt ? (
-                  ""
-                ) : (
-                  format_date(props.order.packagedAt)
-                )}
-              </div>
+              <div>{!props.order.packagedAt ? "" : format_date(props.order.packagedAt)}</div>
             </div>
           </div>
           <div>
             <div className="row ai-c">
               <div className="mv-5px">
-                {props.order.isShipped ? (
-                  <i className="fas fa-check-circle" />
-                ) : (
-                  <i className="fas fa-times-circle" />
-                )}
+                {props.order.isShipped ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
               </div>
               <div className="mh-10px">Shipped</div>
 
-              <div>
-                {!props.order.shippedAt ? (
-                  ""
-                ) : (
-                  format_date(props.order.shippedAt)
-                )}
-              </div>
+              <div>{!props.order.shippedAt ? "" : format_date(props.order.shippedAt)}</div>
             </div>
           </div>
           <div>
             <div className="row ai-c">
               <div className="mv-5px row">
-                {props.order.isDelivered ? (
-                  <i className="fas fa-check-circle" />
-                ) : (
-                  <i className="fas fa-times-circle" />
-                )}
+                {props.order.isDelivered ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
               </div>
               <div className="mh-10px">Delivered</div>
 
-              <div>
-                {!props.order.deliveredAt ? (
-                  ""
-                ) : (
-                  format_date(props.order.deliveredAt)
-                )}
-              </div>
+              <div>{!props.order.deliveredAt ? "" : format_date(props.order.deliveredAt)}</div>
             </div>
           </div>
         </div>
         {props.admin && (
           <div className="jc-fe column ">
-            <GLButton
-              variant="icon"
-              className="h-3rem"
-              onClick={() => show_hide(props.order._id)}
-            >
-              <i
-                style={{ WebkitTransform: "rotate(-180deg)" }}
-                className="top-8px fas fa-sort-up"
-              />
+            <GLButton variant="icon" className="h-3rem" onClick={() => show_hide(props.order._id)}>
+              <i style={{ WebkitTransform: "rotate(-180deg)" }} className="top-8px fas fa-sort-up" />
             </GLButton>
           </div>
         )}
@@ -336,10 +242,7 @@ const Order = props => {
 
       {props.admin && (
         <div id={props.order._id} className="expanded-row-content hide-row">
-          <div
-            className="jc-b pt-10px mt-10px"
-            style={{ borderTop: "1px solid white" }}
-          >
+          <div className="jc-b pt-10px mt-10px" style={{ borderTop: "1px solid white" }}>
             <div className="row ai-c jc-b">
               <div>
                 <div className="mv-10px">
@@ -378,17 +281,11 @@ const Order = props => {
                     </div>
                   </div>
                   <div className="">
-                    <GLButton
-                      variant="primary"
-                      onClick={update_refund_state}
-                      className="mv-5px"
-                    >
+                    <GLButton variant="primary" onClick={update_refund_state} className="mv-5px">
                       Refund Customer
                     </GLButton>
                     <GLButton variant="primary" className="mv-5px">
-                      <Link to={"/secure/glow/emails/order/" + props.order._id}>
-                        View Email
-                      </Link>
+                      <Link to={"/secure/glow/emails/order/" + props.order._id}>View Email</Link>
                     </GLButton>
                   </div>
                 </div>
@@ -399,21 +296,16 @@ const Order = props => {
                 <h2>Shipping</h2>
                 <div className="paragraph_font lh-25px">
                   <div>
-                    {props.order.shipping.first_name}{" "}
-                    {props.order.shipping.last_name}
+                    {props.order.shipping.first_name} {props.order.shipping.last_name}
                   </div>
                   <div>
-                    {props.order.shipping.address_1}{" "}
-                    {props.order.shipping.address_2}
+                    {props.order.shipping.address_1} {props.order.shipping.address_2}
                   </div>
                   <div>
-                    {props.order.shipping.city}, {props.order.shipping.state}{" "}
-                    {props.order.shipping.postalCode}
+                    {props.order.shipping.city}, {props.order.shipping.state} {props.order.shipping.postalCode}
                   </div>
                   <div>{props.order.shipping.country}</div>
-                  <div>
-                    {props.order.shipping.international && "International"}
-                  </div>
+                  <div>{props.order.shipping.international && "International"}</div>
                   <div>{props.order.shipping.email}</div>
                 </div>
                 <GLButton
@@ -425,126 +317,71 @@ ${props.order.shipping.first_name} ${props.order.shipping.last_name}
 ${props.order.shipping.address_1} ${props.order.shipping.address_2}
 ${props.order.shipping.city}, ${props.order.shipping.state}
 ${props.order.shipping.postalCode} ${props.order.shipping.country}
-${props.order.shipping.email}`)}
+${props.order.shipping.email}`)
+                  }
                 >
                   Copy to clipboard
                 </GLButton>
               </li>
               <li className="row">
                 <h3 className="">Order Note: </h3>
-                <label className="mv-2rem ml-1rem">
-                  {props.order.order_note}
-                </label>
+                <label className="mv-2rem ml-1rem">{props.order.order_note}</label>
               </li>
               {props.order.production_note && (
                 <li className="row">
                   <h3 className="">Order Note: </h3>
-                  <label className="mv-2rem ml-1rem">
-                    {props.order.production_note}
-                  </label>
+                  <label className="mv-2rem ml-1rem">{props.order.production_note}</label>
                 </li>
               )}
               <li className="row">
                 <h3 className="">Promo Code: </h3>
-                <label className="mv-2rem ml-1rem">
-                  {props.order.promo_code}
-                </label>
+                <label className="mv-2rem ml-1rem">{props.order.promo_code}</label>
               </li>
             </ul>
 
             <div className="jc-b">
               <div className="column jc-b w-25rem">
                 <GLButton variant="primary">
-                  <Link to={"/secure/glow/editorder/" + props.order._id}>
-                    Edit Order
-                  </Link>
+                  <Link to={"/secure/glow/editorder/" + props.order._id}>Edit Order</Link>
                 </GLButton>
                 <GLButton variant="primary" className="mv-5px">
-                  <Link to={"/secure/glow/emails/invoice/" + props.order._id}>
-                    View Invoice
-                  </Link>
+                  <Link to={"/secure/glow/emails/invoice/" + props.order._id}>View Invoice</Link>
                 </GLButton>
 
                 <GLButton
                   variant="primary"
                   className="mv-5px"
-                  onClick={() =>
-                    props.update_order_payment_state(
-                      props.order,
-                      props.order.isPaid,
-                      "isPaid",
-                      "paidAt"
-                    )}
+                  onClick={() => props.update_order_payment_state(props.order, props.order.isPaid, "isPaid", "paidAt")}
                 >
                   {props.order.isPaid ? "Unset to Paid" : "Set to Paid"}
                 </GLButton>
                 <GLButton
                   variant="primary"
                   className="mv-5px"
-                  onClick={() =>
-                    props.update_order_state(
-                      props.order,
-                      props.order.isManufactured,
-                      "isManufactured",
-                      "manufacturedAt"
-                    )}
+                  onClick={() => props.update_order_state(props.order, props.order.isManufactured, "isManufactured", "manufacturedAt")}
                 >
-                  {props.order.isManufactured ? (
-                    "Unset to Manufactured"
-                  ) : (
-                    "Set to Manufactured"
-                  )}
+                  {props.order.isManufactured ? "Unset to Manufactured" : "Set to Manufactured"}
                 </GLButton>
                 <GLButton
                   variant="primary"
                   className="mv-5px"
-                  onClick={() =>
-                    props.update_order_state(
-                      props.order,
-                      props.order.isPackaged,
-                      "isPackaged",
-                      "packagedAt"
-                    )}
+                  onClick={() => props.update_order_state(props.order, props.order.isPackaged, "isPackaged", "packagedAt")}
                 >
-                  {props.order.isPackaged ? (
-                    "Unset to Packaged"
-                  ) : (
-                    "Set to Packaged"
-                  )}
+                  {props.order.isPackaged ? "Unset to Packaged" : "Set to Packaged"}
                 </GLButton>
                 <GLButton
                   variant="primary"
                   className="mv-5px"
-                  onClick={() =>
-                    props.update_order_state(
-                      props.order,
-                      props.order.isShipped,
-                      "isShipped",
-                      "shippedAt"
-                    )}
+                  onClick={() => props.update_order_state(props.order, props.order.isShipped, "isShipped", "shippedAt")}
                 >
-                  {props.order.isShipped ? (
-                    "Unset to Shipped"
-                  ) : (
-                    "Set to Shipped"
-                  )}
+                  {props.order.isShipped ? "Unset to Shipped" : "Set to Shipped"}
                 </GLButton>
                 <GLButton
                   variant="primary"
                   className="mv-5px"
-                  onClick={() =>
-                    props.update_order_state(
-                      props.order,
-                      props.order.isDelivered,
-                      "isDelivered",
-                      "deliveredAt"
-                    )}
+                  onClick={() => props.update_order_state(props.order, props.order.isDelivered, "isDelivered", "deliveredAt")}
                 >
-                  {props.order.isDelivered ? (
-                    "Unset to Delivered"
-                  ) : (
-                    "Set to Delivered"
-                  )}
+                  {props.order.isDelivered ? "Unset to Delivered" : "Set to Delivered"}
                 </GLButton>
               </div>
             </div>

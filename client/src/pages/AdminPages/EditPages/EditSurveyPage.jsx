@@ -6,33 +6,29 @@ import { Loading } from "../../../components/UtilityComponents";
 import { Helmet } from "react-helmet";
 import { listUsers } from "../../../actions/userActions";
 import { listOrders } from "../../../actions/orderActions";
-import {
-  format_date,
-  snake_case,
-  unformat_date,
-} from "../../../utils/helper_functions";
+import { format_date, snake_case, unformat_date } from "../../../utils/helper_functions";
 import { GLButton } from "../../../components/GlowLEDsComponents";
 
 const EditSurveyPage = props => {
-  const [ id, set_id ] = useState("");
-  const [ question_1, set_question_1 ] = useState("");
-  const [ question_2, set_question_2 ] = useState("");
-  const [ question_3, set_question_3 ] = useState("");
-  const [ question_4, set_question_4 ] = useState("");
-  const [ question_5, set_question_5 ] = useState("");
-  const [ answer_1, set_answer_1 ] = useState("");
-  const [ answer_2, set_answer_2 ] = useState("");
-  const [ answer_3, set_answer_3 ] = useState("");
-  const [ answer_4, set_answer_4 ] = useState("");
-  const [ answer_5, set_answer_5 ] = useState("");
-  const [ user, set_user ] = useState("");
-  const [ survey_questions, set_survey_questions ] = useState("");
-  const [ order, set_order ] = useState("");
-  const [ is_survey, set_is_survey ] = useState("");
-  const [ active, set_active ] = useState("");
-  const [ rating, set_rating ] = useState(null);
+  const [id, set_id] = useState("");
+  const [question_1, set_question_1] = useState("");
+  const [question_2, set_question_2] = useState("");
+  const [question_3, set_question_3] = useState("");
+  const [question_4, set_question_4] = useState("");
+  const [question_5, set_question_5] = useState("");
+  const [answer_1, set_answer_1] = useState("");
+  const [answer_2, set_answer_2] = useState("");
+  const [answer_3, set_answer_3] = useState("");
+  const [answer_4, set_answer_4] = useState("");
+  const [answer_5, set_answer_5] = useState("");
+  const [user, set_user] = useState("");
+  const [survey_questions, set_survey_questions] = useState("");
+  const [order, set_order] = useState("");
+  const [is_survey, set_is_survey] = useState("");
+  const [active, set_active] = useState("");
+  const [rating, set_rating] = useState(null);
 
-  const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
+  const [loading_checkboxes, set_loading_checkboxes] = useState(true);
 
   const history = useHistory();
 
@@ -44,7 +40,6 @@ const EditSurveyPage = props => {
 
   const orderList = useSelector(state => state.orderList);
   const { orders, loading: loading_orders, error: error_orders } = orderList;
-  console.log({ orders });
 
   const set_state = () => {
     set_id(survey._id);
@@ -86,41 +81,32 @@ const EditSurveyPage = props => {
 
   const stable_set_state = useCallback(set_state, []);
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (props.match.params.id) {
-          console.log("Is ID");
-          dispatch(detailsSurvey(props.match.params.id));
-          dispatch(detailsSurvey(props.match.params.id));
-        } else {
-          dispatch(detailsSurvey(""));
-        }
-        dispatch(listUsers({}));
-        dispatch(listOrders({}));
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (props.match.params.id) {
+        dispatch(detailsSurvey(props.match.params.id));
+        dispatch(detailsSurvey(props.match.params.id));
+      } else {
+        dispatch(detailsSurvey(""));
+      }
+      dispatch(listUsers({}));
+      dispatch(listOrders({}));
+      stable_set_state();
+    }
+    return () => (clean = false);
+  }, [dispatch, props.match.params.id, stable_set_state]);
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (survey) {
         stable_set_state();
+      } else {
+        unset_state();
       }
-      return () => (clean = false);
-    },
-    [ dispatch, props.match.params.id, stable_set_state ]
-  );
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (survey) {
-          console.log("Set");
-          stable_set_state();
-        } else {
-          console.log("UnSet");
-          unset_state();
-        }
-      }
-      return () => (clean = false);
-    },
-    [ survey ]
-  );
+    }
+    return () => (clean = false);
+  }, [survey]);
 
   setTimeout(() => {
     set_loading_checkboxes(false);
@@ -145,7 +131,7 @@ const EditSurveyPage = props => {
         order,
         rating,
         is_survey,
-        active,
+        active
       })
     );
     e.target.reset();
@@ -155,9 +141,7 @@ const EditSurveyPage = props => {
 
   return (
     <div className="main_container p-20px">
-      <h1 style={{ textAlign: "center" }}>
-        {props.match.params.id ? "Edit Survey" : "Create Survey"}
-      </h1>
+      <h1 style={{ textAlign: "center" }}>{props.match.params.id ? "Edit Survey" : "Create Survey"}</h1>
 
       <div className="form">
         <form onSubmit={submitHandler} style={{ width: "100%" }}>
@@ -171,10 +155,7 @@ const EditSurveyPage = props => {
                 <title>Edit Survey | Glow LEDs</title>
               </Helmet>
 
-              <ul
-                className="edit-form-container"
-                style={{ maxWidth: "30rem", marginBottom: "20px" }}
-              >
+              <ul className="edit-form-container" style={{ maxWidth: "30rem", marginBottom: "20px" }}>
                 <div className="row wrap">
                   <div className="w-228px m-10px">
                     {/* {users && (
@@ -249,13 +230,7 @@ const EditSurveyPage = props => {
                     </li>
                     <li>
                       <label htmlFor="answer_1">Answer 1</label>
-                      <input
-                        type="text"
-                        name="answer_1"
-                        value={answer_1}
-                        id="answer_1"
-                        onChange={e => set_answer_1(e.target.value)}
-                      />
+                      <input type="text" name="answer_1" value={answer_1} id="answer_1" onChange={e => set_answer_1(e.target.value)} />
                     </li>
                     <li>
                       <label htmlFor="question_2">Question 2</label>
@@ -269,13 +244,7 @@ const EditSurveyPage = props => {
                     </li>
                     <li>
                       <label htmlFor="answer_2">Answer 2</label>
-                      <input
-                        type="text"
-                        name="answer_2"
-                        value={answer_2}
-                        id="answer_2"
-                        onChange={e => set_answer_2(e.target.value)}
-                      />
+                      <input type="text" name="answer_2" value={answer_2} id="answer_2" onChange={e => set_answer_2(e.target.value)} />
                     </li>
                     <li>
                       <label htmlFor="question_3">Question 3</label>
@@ -289,13 +258,7 @@ const EditSurveyPage = props => {
                     </li>
                     <li>
                       <label htmlFor="answer_3">Answer 3</label>
-                      <input
-                        type="text"
-                        name="answer_3"
-                        value={answer_3}
-                        id="answer_3"
-                        onChange={e => set_answer_3(e.target.value)}
-                      />
+                      <input type="text" name="answer_3" value={answer_3} id="answer_3" onChange={e => set_answer_3(e.target.value)} />
                     </li>
                     <li>
                       <label htmlFor="question_4">Question 4</label>
@@ -309,13 +272,7 @@ const EditSurveyPage = props => {
                     </li>
                     <li>
                       <label htmlFor="answer_4">Answer 4</label>
-                      <input
-                        type="text"
-                        name="answer_4"
-                        value={answer_4}
-                        id="answer_4"
-                        onChange={e => set_answer_4(e.target.value)}
-                      />
+                      <input type="text" name="answer_4" value={answer_4} id="answer_4" onChange={e => set_answer_4(e.target.value)} />
                     </li>
                     <li>
                       <label htmlFor="question_5">Question 5</label>
@@ -329,23 +286,11 @@ const EditSurveyPage = props => {
                     </li>
                     <li>
                       <label htmlFor="answer_5">Answer 5</label>
-                      <input
-                        type="text"
-                        name="answer_5"
-                        value={answer_5}
-                        id="answer_5"
-                        onChange={e => set_answer_5(e.target.value)}
-                      />
+                      <input type="text" name="answer_5" value={answer_5} id="answer_5" onChange={e => set_answer_5(e.target.value)} />
                     </li>
                     <li>
                       <label htmlFor="rating">Rating</label>
-                      <input
-                        type="text"
-                        name="rating"
-                        defaultValue={rating}
-                        id="rating"
-                        onChange={e => set_rating(e.target.value)}
-                      />
+                      <input type="text" name="rating" defaultValue={rating} id="rating" onChange={e => set_rating(e.target.value)} />
                     </li>
 
                     {loading_checkboxes ? (
@@ -388,10 +333,7 @@ const EditSurveyPage = props => {
                   </GLButton>
                 </li>
                 <li>
-                  <GLButton
-                    variant="secondary"
-                    onClick={e => e.preventDefault()}
-                  >
+                  <GLButton variant="secondary" onClick={e => e.preventDefault()}>
                     <Link to="/secure/glow/surveys">Back to Surveys</Link>
                   </GLButton>
                 </li>

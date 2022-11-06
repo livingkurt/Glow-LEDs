@@ -1,10 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  listFilaments,
-  deleteFilament,
-  saveFilament,
-} from "../../../actions/filamentActions";
+import { listFilaments, deleteFilament, saveFilament } from "../../../actions/filamentActions";
 import { Link } from "react-router-dom";
 import { Loading, Notification } from "../../../components/UtilityComponents";
 import { Helmet } from "react-helmet";
@@ -16,27 +12,23 @@ import {
   promoter_revenue_upload,
   sponsor_revenue_upload,
   team_revenue_upload,
-  top_earner_upload,
+  top_earner_upload
 } from "../../../utils/google_sheets_upload";
 import { listTeams } from "../../../actions/teamActions";
 import { listOrders } from "../../../actions/orderActions";
 import { GLButton } from "../../../components/GlowLEDsComponents";
 
 const FilamentsPage = props => {
-  const [ search, set_search ] = useState("");
-  const [ sort, setSortOrder ] = useState("");
-  const [ last_months_orders, set_last_months_orders ] = useState([]);
-  const [ total_orders, set_total_orders ] = useState([]);
-  const [ loading_filaments, set_loading_filaments ] = useState(false);
-  const [ loading_checkboxes, set_loading_checkboxes ] = useState(false);
-  const [ create_filaments, set_create_filaments ] = useState(true);
-  const category = props.match.params.category
-    ? props.match.params.category
-    : "";
+  const [search, set_search] = useState("");
+  const [sort, setSortOrder] = useState("");
+  const [last_months_orders, set_last_months_orders] = useState([]);
+  const [total_orders, set_total_orders] = useState([]);
+  const [loading_filaments, set_loading_filaments] = useState(false);
+  const [loading_checkboxes, set_loading_checkboxes] = useState(false);
+  const [create_filaments, set_create_filaments] = useState(true);
+  const category = props.match.params.category ? props.match.params.category : "";
   const filamentList = useSelector(state => state.filamentList);
   const { loading, filaments, message, error } = filamentList;
-
-  console.log({ filaments });
 
   const filamentSave = useSelector(state => state.filamentSave);
   const { success: successSave } = filamentSave;
@@ -49,16 +41,13 @@ const FilamentsPage = props => {
     set_loading_checkboxes(false);
   }, 500);
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        dispatch(listFilaments({}));
-      }
-      return () => (clean = false);
-    },
-    [ successSave, successDelete, dispatch ]
-  );
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      dispatch(listFilaments({}));
+    }
+    return () => (clean = false);
+  }, [successSave, successDelete, dispatch]);
 
   // const submitHandler = e => {
   //   e.preventDefault();
@@ -70,16 +59,13 @@ const FilamentsPage = props => {
   //   dispatch(listFilaments({ category, search, sort: e.target.value }));
   // };
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        dispatch(listFilaments({ category, search, sort }));
-      }
-      return () => (clean = false);
-    },
-    [ dispatch, category, search, sort ]
-  );
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      dispatch(listFilaments({ category, search, sort }));
+    }
+    return () => (clean = false);
+  }, [dispatch, category, search, sort]);
 
   const deleteHandler = filament => {
     dispatch(deleteFilament(filament._id));
@@ -111,7 +97,7 @@ const FilamentsPage = props => {
 
   const colors = [
     { name: "PETG", color: "#44648c" },
-    { name: "TPU", color: "#448c89" },
+    { name: "TPU", color: "#448c89" }
   ];
 
   const determine_color = filament => {
@@ -129,7 +115,7 @@ const FilamentsPage = props => {
     dispatch(
       saveFilament({
         ...filament,
-        active: filament.active ? false : true,
+        active: filament.active ? false : true
       })
     );
     dispatch(listFilaments({}));
@@ -154,7 +140,7 @@ const FilamentsPage = props => {
                     backgroundColor: color.color,
                     height: "20px",
                     width: "60px",
-                    borderRadius: "5px",
+                    borderRadius: "5px"
                   }}
                 />
               </div>
@@ -168,10 +154,7 @@ const FilamentsPage = props => {
       <div className="jc-c">
         <h1 style={{ textAlign: "center" }}>Filaments</h1>
       </div>
-      <div
-        className="search_and_sort row jc-c ai-c"
-        style={{ overflowX: "scroll" }}
-      >
+      <div className="search_and_sort row jc-c ai-c" style={{ overflowX: "scroll" }}>
         {/* <Search
           search={search}
           set_search={set_search}
@@ -199,7 +182,7 @@ const FilamentsPage = props => {
                     key={index}
                     style={{
                       backgroundColor: determine_color(filament),
-                      fontSize: "16px",
+                      fontSize: "16px"
                     }}
                   >
                     <td className="p-10px">
@@ -208,11 +191,7 @@ const FilamentsPage = props => {
                         onClick={() => change_filament_status(filament)}
                         aria-label={filament.active ? "deactive" : "activate"}
                       >
-                        {filament.active ? (
-                          <i className="fas fa-check-circle" />
-                        ) : (
-                          <i className="fas fa-times-circle" />
-                        )}
+                        {filament.active ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
                       </GLButton>
                     </td>
                     <td className="p-10px" style={{ minWidth: "15rem" }}>
@@ -227,11 +206,7 @@ const FilamentsPage = props => {
                             <i className="fas fa-edit" />
                           </GLButton>
                         </Link>
-                        <GLButton
-                          variant="icon"
-                          onClick={() => deleteHandler(filament)}
-                          aria-label="Delete"
-                        >
+                        <GLButton variant="icon" onClick={() => deleteHandler(filament)} aria-label="Delete">
                           <i className="fas fa-trash-alt" />
                         </GLButton>
                       </div>

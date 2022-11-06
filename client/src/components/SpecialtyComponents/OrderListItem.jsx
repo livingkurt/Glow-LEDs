@@ -30,7 +30,7 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
 
   const show_hide = id => {
     const row = document.getElementById(id);
-    // console.log(row);
+    //
     row.classList.toggle("hide-row");
   };
   const daysBetween = (date1, date2) => {
@@ -49,9 +49,7 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
   };
 
   const create_duplicate_order = () => {
-    console.log({ create_duplicate_order: order });
-    console.log({ create_duplicate_order_user: order.user._id });
-    // console.log({ user: order.user });
+    //
     dispatch(
       createOrder({
         orderItems: order.orderItems,
@@ -115,7 +113,7 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
 
   const get_invoice = async () => {
     const { data: invoice } = await API_Orders.get_invoice(order);
-    console.log({ invoice });
+
     print_invoice(invoice);
   };
 
@@ -204,9 +202,7 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
       ...new_order_items[index],
       is_manufactured: order_items[index].is_manufactured ? false : true
     };
-    console.log({
-      new_order_items: new_order_items.map(item => item.is_manufactured)
-    });
+
     set_order_items(new_order_items);
     set_order_state({
       ...order,
@@ -221,8 +217,6 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
   };
 
   const update_order_state = (order, state, is_action, action_at) => {
-    console.log({ order_state });
-    console.log({ order });
     set_loading_email(true);
     if (state) {
       set_order_state({ ...order_state, [is_action]: false });

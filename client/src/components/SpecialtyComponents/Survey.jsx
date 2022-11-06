@@ -1,10 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  saveSurvey,
-  detailsSurvey,
-  listSurveys,
-} from "../../actions/surveyActions";
+import { saveSurvey, detailsSurvey, listSurveys } from "../../actions/surveyActions";
 import { useHistory } from "react-router-dom";
 import { Loading } from "../../components/UtilityComponents";
 import { Helmet } from "react-helmet";
@@ -15,26 +11,26 @@ import { detailsOrder } from "../../actions/orderActions";
 import { GLButton } from "../GlowLEDsComponents";
 
 const Survey = props => {
-  const [ question_1, set_question_1 ] = useState("");
-  const [ question_2, set_question_2 ] = useState("");
-  const [ question_3, set_question_3 ] = useState("");
-  const [ question_4, set_question_4 ] = useState("");
-  const [ question_5, set_question_5 ] = useState("");
-  const [ answer_1, set_answer_1 ] = useState("");
-  const [ answer_2, set_answer_2 ] = useState("");
-  const [ answer_3, set_answer_3 ] = useState("");
-  const [ answer_4, set_answer_4 ] = useState("");
-  const [ answer_5, set_answer_5 ] = useState("");
-  const [ user, set_user ] = useState("");
-  const [ survey_questions, set_survey_questions ] = useState("");
-  const [ order, set_order ] = useState("");
-  const [ is_survey, set_is_survey ] = useState("");
-  const [ active, set_active ] = useState("");
+  const [question_1, set_question_1] = useState("");
+  const [question_2, set_question_2] = useState("");
+  const [question_3, set_question_3] = useState("");
+  const [question_4, set_question_4] = useState("");
+  const [question_5, set_question_5] = useState("");
+  const [answer_1, set_answer_1] = useState("");
+  const [answer_2, set_answer_2] = useState("");
+  const [answer_3, set_answer_3] = useState("");
+  const [answer_4, set_answer_4] = useState("");
+  const [answer_5, set_answer_5] = useState("");
+  const [user, set_user] = useState("");
+  const [survey_questions, set_survey_questions] = useState("");
+  const [order, set_order] = useState("");
+  const [is_survey, set_is_survey] = useState("");
+  const [active, set_active] = useState("");
 
-  const [ rating, set_rating ] = useState(null);
-  const [ loading_checkboxes, set_loading_checkboxes ] = useState();
-  const [ loading_submit, set_loading_submit ] = useState();
-  const [ finished, set_finished ] = useState(false);
+  const [rating, set_rating] = useState(null);
+  const [loading_checkboxes, set_loading_checkboxes] = useState();
+  const [loading_submit, set_loading_submit] = useState();
+  const [finished, set_finished] = useState(false);
 
   setTimeout(() => {
     set_loading_checkboxes(false);
@@ -61,25 +57,18 @@ const Survey = props => {
 
   const dispatch = useDispatch();
 
-  console.log({ survey });
-
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        const active_survey = surveys.find(
-          survey => survey.is_survey === true && survey.active === true
-        );
-        if (active_survey) {
-          dispatch(detailsSurvey(active_survey._id));
-          set_survey_questions(active_survey._id);
-        }
-        dispatch(detailsOrder(props.order_id));
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      const active_survey = surveys.find(survey => survey.is_survey === true && survey.active === true);
+      if (active_survey) {
+        dispatch(detailsSurvey(active_survey._id));
+        set_survey_questions(active_survey._id);
       }
-      return () => (clean = false);
-    },
-    [ surveys, dispatch ]
-  );
+      dispatch(detailsOrder(props.order_id));
+    }
+    return () => (clean = false);
+  }, [surveys, dispatch]);
 
   useEffect(() => {
     let clean = true;
@@ -92,22 +81,17 @@ const Survey = props => {
     return () => (clean = false);
   }, []);
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (survey) {
-          console.log("Set");
-          set_state();
-        } else {
-          console.log("UnSet");
-          unset_state();
-        }
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (survey) {
+        set_state();
+      } else {
+        unset_state();
       }
-      return () => (clean = false);
-    },
-    [ survey ]
-  );
+    }
+    return () => (clean = false);
+  }, [survey]);
 
   const set_state = () => {
     set_question_1(survey.question_1);
@@ -172,7 +156,7 @@ const Survey = props => {
         survey: survey_questions,
         is_survey: false,
         active,
-        rating,
+        rating
       })
     );
     // e.target.reset();
@@ -182,24 +166,20 @@ const Survey = props => {
     // history.push('/secure/account/submission_complete');
   };
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (success && survey_saved) {
-          console.log({ survey_saved });
-          // history.push('/account/survey/receipt/' + survey_saved.data.pathname + '/survey/true');
-          set_finished(true);
-        }
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (success && survey_saved) {
+        // history.push('/account/survey/receipt/' + survey_saved.data.pathname + '/survey/true');
+        set_finished(true);
       }
-      return () => (clean = false);
-    },
-    [ success ]
-  );
+    }
+    return () => (clean = false);
+  }, [success]);
 
-  const categories = [ "Glovers", "Artists", "Producers", "VFX" ];
+  const categories = ["Glovers", "Artists", "Producers", "VFX"];
 
-  const [ hovered, setHovered ] = useState(false);
+  const [hovered, setHovered] = useState(false);
   const toggleHover = () => setHovered(!hovered);
 
   const determine_rating_word = () => {
@@ -221,13 +201,7 @@ const Survey = props => {
 
   return (
     <div className="main_container p-20px">
-      {console.log({ survey, finished })}
-      {survey &&
-      !finished && (
-        <h1 style={{ textAlign: "center" }}>
-          {props.pathname ? "Edit Survey" : "Submit Survey"}
-        </h1>
-      )}
+      {survey && !finished && <h1 style={{ textAlign: "center" }}>{props.pathname ? "Edit Survey" : "Submit Survey"}</h1>}
 
       <div className="form">
         <form style={{ width: "100%" }}>
@@ -238,16 +212,11 @@ const Survey = props => {
                 <Helmet>
                   <title>Survey | Glow LEDs</title>
                 </Helmet>
-                <ul
-                  className="edit-form-container"
-                  style={{ maxWidth: "60rem" }}
-                >
+                <ul className="edit-form-container" style={{ maxWidth: "60rem" }}>
                   <div>
                     <label htmlFor="description">{question_1}</label>
                     <StarRating set_rating={set_rating} rating={rating} />
-                    <p className="ta-c">
-                      {rating && determine_rating_word(rating)}
-                    </p>
+                    <p className="ta-c">{rating && determine_rating_word(rating)}</p>
                     <div className="ai-c mv-2rem jc-c">
                       {/* <h3 className="mr-1rem">{question_2}</h3> */}
 
@@ -275,37 +244,19 @@ const Survey = props => {
                     {question_3 && (
                       <li>
                         <label htmlFor="where">{question_3}</label>
-                        <input
-                          type="text"
-                          name="where"
-                          value={answer_3}
-                          id="where"
-                          onChange={e => set_answer_3(e.target.value)}
-                        />
+                        <input type="text" name="where" value={answer_3} id="where" onChange={e => set_answer_3(e.target.value)} />
                       </li>
                     )}
                     {question_4 && (
                       <li>
                         <label htmlFor="where">{question_4}</label>
-                        <input
-                          type="text"
-                          name="where"
-                          value={answer_4}
-                          id="where"
-                          onChange={e => set_answer_4(e.target.value)}
-                        />
+                        <input type="text" name="where" value={answer_4} id="where" onChange={e => set_answer_4(e.target.value)} />
                       </li>
                     )}
                     {question_5 && (
                       <li>
                         <label htmlFor="where">{question_5}</label>
-                        <input
-                          type="text"
-                          name="where"
-                          value={answer_5}
-                          id="where"
-                          onChange={e => set_answer_5(e.target.value)}
-                        />
+                        <input type="text" name="where" value={answer_5} id="where" onChange={e => set_answer_5(e.target.value)} />
                       </li>
                     )}
                   </div>
@@ -326,7 +277,7 @@ const Survey = props => {
                   style={{
                     textAlign: "center",
                     width: "100%",
-                    borderRadius: "20px",
+                    borderRadius: "20px"
                   }}
                 />
                 <div
@@ -335,10 +286,7 @@ const Survey = props => {
                 >
                   {finished && (
                     <div>
-                      <div>
-                        Thank you for Taking the Time to Give us Feedback!
-                      </div>{" "}
-                      <div>We Greatly Appreciate it! 💙</div>
+                      <div>Thank you for Taking the Time to Give us Feedback!</div> <div>We Greatly Appreciate it! 💙</div>
                       <br />
                       <div>Follow us on Social Media</div>
                       <div className="mt-2rem wrap jc-c ">
@@ -354,12 +302,7 @@ const Survey = props => {
                             </a>
                           </div>
                           <div className="ml-10px fs-40px">
-                            <a
-                              href="https://www.instagram.com/glow_leds/"
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              aria-label="Instagram"
-                            >
+                            <a href="https://www.instagram.com/glow_leds/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
                               <i className="fab fa-instagram zoom" />
                             </a>
                           </div>
@@ -384,12 +327,7 @@ const Survey = props => {
                             </a>
                           </div>
                           <div className="mr-10px fs-40px">
-                            <a
-                              href="https://soundcloud.com/ntre/tracks"
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              aria-label="Soundcloud"
-                            >
+                            <a href="https://soundcloud.com/ntre/tracks" target="_blank" rel="noopener noreferrer" aria-label="Soundcloud">
                               <i className="fab fa-soundcloud" />
                             </a>
                           </div>

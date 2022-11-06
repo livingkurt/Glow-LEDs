@@ -10,30 +10,27 @@ export default {
         {
           amount: (order.totalPrice * 100).toFixed(0),
           currency: "usd",
-          payment_method_types: [ "card" ],
+          payment_method_types: ["card"]
         },
         async (err: any, result: any) => {
           if (err) {
-            console.log({ err });
             return res.status(500).send({
               error: err,
               message: err.raw.message,
-              solution:
-                "Please Try a Different Card if Error Persists and Contact Glow LEDs for Support",
+              solution: "Please Try a Different Card if Error Persists and Contact Glow LEDs for Support"
             });
           } else {
             await stripe.paymentIntents.confirm(
               result.id,
               {
-                payment_method: req.body.paymentMethod.id,
+                payment_method: req.body.paymentMethod.id
               },
               async (err: any, result: any) => {
                 if (err) {
                   return res.status(500).send({
                     error: err,
                     message: err.raw.message,
-                    solution:
-                      "Please Try a Different Card if Error Persists and Contact Glow LEDs for Support",
+                    solution: "Please Try a Different Card if Error Persists and Contact Glow LEDs for Support"
                   });
                 } else {
                   order.isPaid = true;
@@ -41,10 +38,8 @@ export default {
                   order.payment = {
                     paymentMethod: "stripe",
                     charge: result,
-                    payment: req.body.paymentMethod,
+                    payment: req.body.paymentMethod
                   };
-                  console.log({ first_pm: req.body.paymentMethod.id });
-                  console.log({ second_pm: result.payment_method });
 
                   const updatedOrder = await order.save();
                   // stripe.customers.create({
@@ -78,8 +73,7 @@ export default {
                     return res.status(500).send({
                       error: err,
                       message: "Error Saving Payment",
-                      solution:
-                        "Please Try a Different Card if Error Persists and Contact Glow LEDs for Support",
+                      solution: "Please Try a Different Card if Error Persists and Contact Glow LEDs for Support"
                     });
                   }
                 }
@@ -89,12 +83,10 @@ export default {
         }
       );
     } catch (error) {
-      console.log({ error });
       res.status(500).send({
         error,
         message: "Error Paying for Order",
-        solution:
-          "Please Try a Different Card if Error Persists and Contact Glow LEDs for Support",
+        solution: "Please Try a Different Card if Error Persists and Contact Glow LEDs for Support"
       });
     }
   },
@@ -105,30 +97,27 @@ export default {
         {
           amount: (order.totalPrice * 100).toFixed(0),
           currency: "usd",
-          payment_method_types: [ "card" ],
+          payment_method_types: ["card"]
         },
         async (err: any, result: any) => {
           if (err) {
-            console.log({ err });
             return res.status(500).send({
               error: err,
               message: err.raw.message,
-              solution:
-                "Please Try a Different Card if Error Persists and Contact Glow LEDs for Support",
+              solution: "Please Try a Different Card if Error Persists and Contact Glow LEDs for Support"
             });
           } else {
             await stripe.paymentIntents.confirm(
               result.id,
               {
-                payment_method: req.body.paymentMethod.id,
+                payment_method: req.body.paymentMethod.id
               },
               async (err: any, result: any) => {
                 if (err) {
                   return res.status(500).send({
                     error: err,
                     message: err.raw.message,
-                    solution:
-                      "Please Try a Different Card if Error Persists and Contact Glow LEDs for Support",
+                    solution: "Please Try a Different Card if Error Persists and Contact Glow LEDs for Support"
                   });
                 } else {
                   order.isPaid = true;
@@ -136,7 +125,7 @@ export default {
                   order.payment = {
                     paymentMethod: "stripe",
                     charge: result,
-                    payment: req.body.paymentMethod,
+                    payment: req.body.paymentMethod
                   };
                   const updatedOrder = await order.save();
                   // stripe.customers.create({
@@ -170,8 +159,7 @@ export default {
                     return res.status(500).send({
                       error: err,
                       message: "Error Saving Payment",
-                      solution:
-                        "Please Try a Different Card if Error Persists and Contact Glow LEDs for Support",
+                      solution: "Please Try a Different Card if Error Persists and Contact Glow LEDs for Support"
                     });
                   }
                 }
@@ -181,38 +169,33 @@ export default {
         }
       );
     } catch (error) {
-      console.log({ error });
       res.status(500).send({
         error,
         message: "Error Paying for Order",
-        solution:
-          "Please Try a Different Card if Error Persists and Contact Glow LEDs for Support",
+        solution: "Please Try a Different Card if Error Persists and Contact Glow LEDs for Support"
       });
     }
   },
   secure_refund_payments_c: async (req: any, res: any) => {
     try {
-      // console.log({ refund_amount: req.body.refund_amount });
+      //
       const order = await Order.findById(req.params.id);
       const refund = await stripe.refunds.create({
         payment_intent: order.payment.charge.id,
-        amount: (parseFloat(req.body.refund_amount) * 100).toFixed(0),
+        amount: (parseFloat(req.body.refund_amount) * 100).toFixed(0)
       });
-      console.log({ refund });
+
       if (refund) {
         order.isRefunded = true;
         order.refundedAt = Date.now();
         order.payment = {
           paymentMethod: order.payment.paymentMethod,
           charge: order.payment.charge,
-          refund: [ ...order.payment.refund, refund ],
-          refund_reason: [
-            ...order.payment.refund_reason,
-            req.body.refund_reason,
-          ],
+          refund: [...order.payment.refund, refund],
+          refund_reason: [...order.payment.refund_reason, req.body.refund_reason]
         };
         const updated = await Order.updateOne({ _id: req.params.id }, order);
-        console.log({ updated });
+
         if (updated) {
           res.send(order);
         } else {
@@ -222,10 +205,9 @@ export default {
         res.status(500).send({ message: "Refund not Created" });
       }
     } catch (error) {
-      console.log({ error });
       res.status(500).send({ error, message: "Error Refunding Order" });
     }
-  },
+  }
   // payout_account_creation: async (req: any, res: any) => {
   //   try {
   //     const account = await stripe.accounts.create({type: 'express'});
@@ -237,7 +219,7 @@ export default {
   //       type: 'account_onboarding',
   //     });
   //   } catch (error) {
-  //     console.log({ error });
+  //
   //     res.status(500).send({ error, message: "Error Refunding Order" });
   //   }
   // },
@@ -255,7 +237,7 @@ export default {
 // 			}
 // 			return res.status(500).send({ message: 'Error Updating Chip' });
 // 		} catch (error) {
-// 			console.log({ secure_pay_payments_c_error: error });
+//
 // 			res.status(500).send({ error, message: 'Error Updating Chip' });
 // 		}
 // 	},
@@ -268,7 +250,7 @@ export default {
 // 			}
 // 			return res.status(500).send({ message: 'Error Updating Chip' });
 // 		} catch (error) {
-// 			console.log({ guest_pay_payments_c_error: error });
+//
 // 			res.status(500).send({ error, message: 'Error Updating Chip' });
 // 		}
 // 	},
@@ -281,7 +263,7 @@ export default {
 // 			}
 // 			return res.status(500).send({ message: 'Error Updating Chip' });
 // 		} catch (error) {
-// 			console.log({ secure_refund_payments_c_error: error });
+//
 // 			res.status(500).send({ error, message: 'Error Updating Chip' });
 // 		}
 // 	}

@@ -29,13 +29,10 @@ import {
   ORDER_SAVE_FAIL,
   ORDER_DETAILS_PUBLIC_REQUEST,
   ORDER_DETAILS_PUBLIC_SUCCESS,
-  ORDER_DETAILS_PUBLIC_FAIL,
+  ORDER_DETAILS_PUBLIC_FAIL
 } from "../constants/orderConstants";
 
-export const orderCreateReducer = (
-  state = {},
-  action: { type: any; payload: any }
-) => {
+export const orderCreateReducer = (state = {}, action: { type: any; payload: any }) => {
   switch (action.type) {
     case ORDER_CREATE_REQUEST:
       return { loading: true };
@@ -44,13 +41,13 @@ export const orderCreateReducer = (
         loading: false,
         order: action.payload,
         success: true,
-        message: "Order Created",
+        message: "Order Created"
       };
     case ORDER_CREATE_FAIL:
       return {
         loading: false,
         error: action.payload,
-        message: action.payload.message,
+        message: action.payload.message
       };
     // case ORDER_REMOVE_STATE:
     // 	return { loading: false, order: action.payload, success: false };
@@ -64,8 +61,8 @@ export const orderDetailsReducer = (
     order: {
       orderItems: [],
       shipping: {},
-      payment: {},
-    },
+      payment: {}
+    }
   },
   action: { type: any; payload: any }
 ) => {
@@ -78,7 +75,7 @@ export const orderDetailsReducer = (
       return {
         loading: false,
         error: action.payload.error,
-        message: action.payload.message,
+        message: action.payload.message
       };
     default:
       return state;
@@ -87,7 +84,7 @@ export const orderDetailsReducer = (
 
 export const myOrderListReducer = (
   state = {
-    orders: [],
+    orders: []
   },
   action: { type: any; payload: any }
 ) => {
@@ -98,13 +95,13 @@ export const myOrderListReducer = (
       return {
         loading: false,
         orders: action.payload,
-        message: "Orders Found",
+        message: "Orders Found"
       };
     case MY_ORDER_LIST_FAIL:
       return {
         loading: false,
         error: action.payload.error,
-        message: action.payload.message,
+        message: action.payload.message
       };
     default:
       return state;
@@ -115,11 +112,11 @@ export const orderListReducer = (
   state = {
     orders: [],
     totalPages: 0,
-    currentPage: 1,
+    currentPage: 1
   },
   action: { type: any; payload: any }
 ) => {
-  // console.log({ orderListReducer: action.payload });
+  //
   switch (action.type) {
     case ORDER_LIST_REQUEST:
       return { loading: true };
@@ -129,13 +126,13 @@ export const orderListReducer = (
         orders: action.payload.orders,
         totalPages: action.payload.totalPages,
         currentPage: action.payload.currentPage,
-        message: "Orders Found",
+        message: "Orders Found"
       };
     case ORDER_LIST_FAIL:
       return {
         loading: false,
         error: action.payload,
-        message: action.payload.message,
+        message: action.payload.message
       };
     default:
       return state;
@@ -147,8 +144,8 @@ export const orderPayReducer = (
     order: {
       orderItems: [],
       shipping: {},
-      payment: {},
-    },
+      payment: {}
+    }
   },
   action: { type: any; payload: any }
 ) => {
@@ -161,7 +158,7 @@ export const orderPayReducer = (
       return {
         loading: false,
         error: action.payload.error,
-        message: action.payload.message,
+        message: action.payload.message
       };
     case ORDER_REMOVE_STATE:
       return { loading: false, success: false };
@@ -175,8 +172,8 @@ export const orderDeleteReducer = (
     order: {
       orderItems: [],
       shipping: {},
-      payment: {},
-    },
+      payment: {}
+    }
   },
   action: { type: any; payload: any }
 ) => {
@@ -189,17 +186,14 @@ export const orderDeleteReducer = (
       return {
         loading: false,
         error: action.payload.error,
-        message: action.payload.message,
+        message: action.payload.message
       };
     default:
       return state;
   }
 };
 
-export const orderRefundReducer = (
-  state = {},
-  action: { type: any; payload: any }
-) => {
+export const orderRefundReducer = (state = {}, action: { type: any; payload: any }) => {
   switch (action.type) {
     case ORDER_REFUND_REQUEST:
       return { loading: true };
@@ -208,23 +202,20 @@ export const orderRefundReducer = (
         loading: false,
         order: action.payload,
         success: true,
-        message: "Order Refunded",
+        message: "Order Refunded"
       };
     case ORDER_REFUND_FAIL:
       return {
         loading: false,
         error: action.payload.error,
-        message: action.payload.message,
+        message: action.payload.message
       };
     default:
       return state;
   }
 };
 
-export const orderUpdateReducer = (
-  state = {},
-  action: { type: any; payload: any }
-) => {
+export const orderUpdateReducer = (state = {}, action: { type: any; payload: any }) => {
   switch (action.type) {
     case ORDER_UPDATE_REQUEST:
       return { loading: true };
@@ -233,23 +224,20 @@ export const orderUpdateReducer = (
         loading: false,
         order: action.payload,
         success: true,
-        message: "Order Updated",
+        message: "Order Updated"
       };
     case ORDER_UPDATE_FAIL:
       return {
         loading: false,
         error: action.payload.error,
-        message: action.payload.message,
+        message: action.payload.message
       };
     default:
       return state;
   }
 };
 
-export const orderSaveReducer = (
-  state = { order: {} },
-  action: { type: any; payload: any }
-) => {
+export const orderSaveReducer = (state = { order: {} }, action: { type: any; payload: any }) => {
   switch (action.type) {
     case ORDER_SAVE_REQUEST:
       return { loading: true };
@@ -258,13 +246,13 @@ export const orderSaveReducer = (
         loading: false,
         success: true,
         order: action.payload,
-        message: "Order Saved",
+        message: "Order Saved"
       };
     case ORDER_SAVE_FAIL:
       return {
         loading: false,
         error: action.payload.error,
-        message: action.payload.message,
+        message: action.payload.message
       };
     default:
       return state;

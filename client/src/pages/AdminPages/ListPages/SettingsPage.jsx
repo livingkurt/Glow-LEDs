@@ -1,10 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  listSettings,
-  deleteSetting,
-  saveSetting,
-} from "../../../actions/settingActions";
+import { listSettings, deleteSetting, saveSetting } from "../../../actions/settingActions";
 import { Link } from "react-router-dom";
 import { Loading, Notification } from "../../../components/UtilityComponents";
 import { Helmet } from "react-helmet";
@@ -17,20 +13,18 @@ import {
   sponsor_revenue_upload,
   team_revenue_upload,
   top_code_usage_upload,
-  top_earner_upload,
+  top_earner_upload
 } from "../../../utils/google_sheets_upload";
 import { listTeams } from "../../../actions/teamActions";
 import { listOrders } from "../../../actions/orderActions";
 import { GLButton } from "../../../components/GlowLEDsComponents";
 
 const SettingsPage = props => {
-  const [ search, set_search ] = useState("");
-  const [ sort, setSortOrder ] = useState("");
-  const [ loading_settings, set_loading_settings ] = useState(false);
-  const [ loading_checkboxes, set_loading_checkboxes ] = useState(false);
-  const category = props.match.params.category
-    ? props.match.params.category
-    : "";
+  const [search, set_search] = useState("");
+  const [sort, setSortOrder] = useState("");
+  const [loading_settings, set_loading_settings] = useState(false);
+  const [loading_checkboxes, set_loading_checkboxes] = useState(false);
+  const category = props.match.params.category ? props.match.params.category : "";
 
   const settingList = useSelector(state => state.settingList);
   const { loading, settings, message, error } = settingList;
@@ -46,19 +40,16 @@ const SettingsPage = props => {
     set_loading_checkboxes(false);
   }, 500);
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        dispatch(listSettings({}));
-        dispatch(listAffiliates({}));
-        dispatch(listTeams({}));
-        dispatch(listOrders({}));
-      }
-      return () => (clean = false);
-    },
-    [ successSave, successDelete, dispatch ]
-  );
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      dispatch(listSettings({}));
+      dispatch(listAffiliates({}));
+      dispatch(listTeams({}));
+      dispatch(listOrders({}));
+    }
+    return () => (clean = false);
+  }, [successSave, successDelete, dispatch]);
 
   const submitHandler = e => {
     e.preventDefault();
@@ -70,32 +61,22 @@ const SettingsPage = props => {
     dispatch(listSettings({ category, search, sort: e.target.value }));
   };
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        dispatch(listSettings({ category, search, sort }));
-      }
-      return () => (clean = false);
-    },
-    [ dispatch, category, search, sort ]
-  );
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      dispatch(listSettings({ category, search, sort }));
+    }
+    return () => (clean = false);
+  }, [dispatch, category, search, sort]);
   const deleteHandler = setting => {
     dispatch(deleteSetting(setting._id));
   };
 
-  const sort_options = [
-    "Newest",
-    "Artist Name",
-    "Facebook Name",
-    "Instagram Handle",
-    "Sponsor",
-    "Promoter",
-  ];
+  const sort_options = ["Newest", "Artist Name", "Facebook Name", "Instagram Handle", "Sponsor", "Promoter"];
 
   const colors = [
     { name: "Paid", color: "#3e4c6d" },
-    { name: "Not Paid", color: "#6f3c3c" },
+    { name: "Not Paid", color: "#6f3c3c" }
   ];
 
   const determine_color = setting => {
@@ -108,7 +89,6 @@ const SettingsPage = props => {
     }
     return result;
   };
-  console.log({ settings });
 
   return (
     <div className="main_container p-20px">
@@ -128,7 +108,7 @@ const SettingsPage = props => {
                     backgroundColor: color.color,
                     height: "20px",
                     width: "60px",
-                    borderRadius: "5px",
+                    borderRadius: "5px"
                   }}
                 />
               </div>
@@ -142,16 +122,8 @@ const SettingsPage = props => {
       <div className="jc-c">
         <h1 style={{ textAlign: "center" }}>Settings</h1>
       </div>
-      <div
-        className="search_and_sort row jc-c ai-c"
-        style={{ overflowX: "scroll" }}
-      >
-        <Search
-          search={search}
-          set_search={set_search}
-          submitHandler={submitHandler}
-          category={category}
-        />
+      <div className="search_and_sort row jc-c ai-c" style={{ overflowX: "scroll" }}>
+        <Search search={search} set_search={set_search} submitHandler={submitHandler} category={category} />
         <Sort sortHandler={sortHandler} sort_options={sort_options} />
       </div>
       <Loading loading={loading} error={error}>
@@ -171,15 +143,11 @@ const SettingsPage = props => {
                     key={index}
                     style={{
                       backgroundColor: determine_color(setting),
-                      fontSize: "16px",
+                      fontSize: "16px"
                     }}
                   >
                     <td className="p-10px">
-                      {setting.active ? (
-                        <i className="fas fa-check-circle" />
-                      ) : (
-                        <i className="fas fa-times-circle" />
-                      )}
+                      {setting.active ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
                     </td>
 
                     {/* <td className="p-10px">{setting.settings}</td> */}
@@ -191,11 +159,7 @@ const SettingsPage = props => {
                             <i className="fas fa-edit" />
                           </GLButton>
                         </Link>
-                        <GLButton
-                          variant="icon"
-                          onClick={() => deleteHandler(setting)}
-                          aria-label="Delete"
-                        >
+                        <GLButton variant="icon" onClick={() => deleteHandler(setting)} aria-label="Delete">
                           <i className="fas fa-trash-alt" />
                         </GLButton>
                       </div>

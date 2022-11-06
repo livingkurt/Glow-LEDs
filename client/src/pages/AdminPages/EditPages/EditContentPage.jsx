@@ -4,29 +4,25 @@ import { saveContent, detailsContent } from "../../../actions/contentActions";
 import { useHistory } from "react-router-dom";
 import { ImageDisplay, Loading } from "../../../components/UtilityComponents";
 import { Helmet } from "react-helmet";
-import {
-  detailsEmail,
-  listEmails,
-  saveEmail,
-} from "../../../actions/emailActions";
+import { detailsEmail, listEmails, saveEmail } from "../../../actions/emailActions";
 import { API_Emails } from "../../../utils";
 import { GLButton } from "../../../components/GlowLEDsComponents";
 
 const EditContentPage = props => {
-  const [ id, set_id ] = useState("");
-  const [ home_page, set_home_page ] = useState({});
-  const [ links, set_links ] = useState([ {} ]);
-  const [ banner, set_banner ] = useState({});
-  const [ images, set_images ] = useState([]);
-  const [ slideshow, set_slideshow ] = useState([ {} ]);
-  const [ image, set_image ] = useState("");
-  const [ create_email, set_create_email ] = useState(true);
+  const [id, set_id] = useState("");
+  const [home_page, set_home_page] = useState({});
+  const [links, set_links] = useState([{}]);
+  const [banner, set_banner] = useState({});
+  const [images, set_images] = useState([]);
+  const [slideshow, set_slideshow] = useState([{}]);
+  const [image, set_image] = useState("");
+  const [create_email, set_create_email] = useState(true);
   // const [ slideshow, set_slideshow ] = useState('');
 
-  const [ active, set_active ] = useState(true);
-  const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
-  const [ using_template, set_using_template ] = useState(false);
-  const [ email, set_email ] = useState(false);
+  const [active, set_active] = useState(true);
+  const [loading_checkboxes, set_loading_checkboxes] = useState(true);
+  const [using_template, set_using_template] = useState(false);
+  const [email, set_email] = useState(false);
 
   const history = useHistory();
 
@@ -53,13 +49,11 @@ const EditContentPage = props => {
     }
     set_banner(content.banner);
     set_links(content.links);
-    console.log({ links: content.links });
+
     set_active(content.active);
   };
 
   const set_email_state = data => {
-    console.log({ data });
-
     set_home_page(data);
     // if (content.home_page && content.home_page.images) {
     set_images(data.images);
@@ -76,26 +70,22 @@ const EditContentPage = props => {
     set_active(true);
   };
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (props.match.params.id) {
-          console.log("Is ID");
-          dispatch(detailsContent(props.match.params.id));
-          dispatch(detailsContent(props.match.params.id));
-        } else {
-          dispatch(detailsContent(""));
-        }
-        dispatch(listEmails({}));
-
-        // set_loading_data(false);
-        set_state();
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (props.match.params.id) {
+        dispatch(detailsContent(props.match.params.id));
+        dispatch(detailsContent(props.match.params.id));
+      } else {
+        dispatch(detailsContent(""));
       }
-      return () => (clean = false);
-    },
-    [ dispatch ]
-  );
+      dispatch(listEmails({}));
+
+      // set_loading_data(false);
+      set_state();
+    }
+    return () => (clean = false);
+  }, [dispatch]);
 
   const use_template = e => {
     dispatch(detailsContent(e.target.value));
@@ -111,28 +101,22 @@ const EditContentPage = props => {
     // dispatch(detailsContent(e.target.value));
     const { data } = await API_Emails.get_email(e.target.value);
     set_email(data);
-    const formatted_link =
-      data.link && data.link.replace("https://www.glow-leds.com", "");
+    const formatted_link = data.link && data.link.replace("https://www.glow-leds.com", "");
     set_email_state({ ...data, link: formatted_link });
     set_using_template(true);
   };
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (content && content.home_page) {
-          console.log("Set");
-          set_state(content.home_page);
-        } else {
-          console.log("UnSet");
-          unset_state();
-        }
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (content && content.home_page) {
+        set_state(content.home_page);
+      } else {
+        unset_state();
       }
-      return () => (clean = false);
-    },
-    [ content ]
-  );
+    }
+    return () => (clean = false);
+  }, [content]);
 
   setTimeout(() => {
     set_loading_checkboxes(false);
@@ -140,14 +124,14 @@ const EditContentPage = props => {
 
   const submitHandler = e => {
     e.preventDefault();
-    console.log({ id });
+
     dispatch(
       saveContent({
         _id: using_template ? null : id,
         home_page: { ...home_page, images, slideshow },
         banner,
         links,
-        active,
+        active
       })
     );
     if (create_email && (using_template || id)) {
@@ -161,7 +145,7 @@ const EditContentPage = props => {
           p: home_page.p,
           button: home_page.button,
           link: `https://www.glow-leds.com${home_page.link}`,
-          active: home_page.active,
+          active: home_page.active
         })
       );
     }
@@ -171,33 +155,31 @@ const EditContentPage = props => {
   };
 
   const update_link_item_property = (e, field_name, index) => {
-    console.log({ value: e.target.value, field_name, index });
     e.preventDefault();
-    let new_link_items = [ ...links ];
+    let new_link_items = [...links];
     new_link_items[index] = {
       ...new_link_items[index],
-      [field_name]: e.target.value,
+      [field_name]: e.target.value
     };
     set_links(new_link_items);
-    console.log({ links });
   };
 
   const add_link = (e, index, location) => {
     e.preventDefault();
     if (Number.isInteger(index)) {
-      let new_array = [ ...links ];
+      let new_array = [...links];
       if (location === "above") {
         if (index === 0) {
-          set_links(links => [ { label: "", link: "", icon: "" }, ...links ]);
+          set_links(links => [{ label: "", link: "", icon: "" }, ...links]);
         }
         new_array.splice(index, 0, { label: "", link: "", icon: "" });
       } else if (location === "below") {
         new_array.splice(index + 1, 0, { label: "", link: "", icon: "" });
       }
-      console.log({ new_array });
+
       set_links(new_array);
     } else {
-      set_links(links => [ ...links, { label: "", link: "", icon: "" } ]);
+      set_links(links => [...links, { label: "", link: "", icon: "" }]);
     }
   };
   const remove_link = async (link_index, e) => {
@@ -210,39 +192,31 @@ const EditContentPage = props => {
   };
 
   const update_slideshow_item_property = (e, field_name, index) => {
-    console.log({ value: e.target.value, field_name, index });
     e.preventDefault();
-    let new_slideshow_items = [ ...slideshow ];
+    let new_slideshow_items = [...slideshow];
     new_slideshow_items[index] = {
       ...new_slideshow_items[index],
-      [field_name]: e.target.value,
+      [field_name]: e.target.value
     };
     set_slideshow(new_slideshow_items);
-    console.log({ slideshow });
   };
 
   const add_slideshow = (e, index, location) => {
     e.preventDefault();
     if (Number.isInteger(index)) {
-      let new_array = [ ...slideshow ];
+      let new_array = [...slideshow];
       if (location === "above") {
         if (index === 0) {
-          set_slideshow(slideshow => [
-            { label: "", image: "", link: "" },
-            ...slideshow,
-          ]);
+          set_slideshow(slideshow => [{ label: "", image: "", link: "" }, ...slideshow]);
         }
         new_array.splice(index, 0, { label: "", image: "", link: "" });
       } else if (location === "below") {
         new_array.splice(index + 1, 0, { label: "", image: "", link: "" });
       }
-      console.log({ new_array });
+
       set_slideshow(new_array);
     } else {
-      set_slideshow(slideshow => [
-        ...slideshow,
-        { label: "", image: "", link: "" },
-      ]);
+      set_slideshow(slideshow => [...slideshow, { label: "", image: "", link: "" }]);
     }
   };
   const remove_slideshow = async (slideshow_index, e) => {
@@ -256,7 +230,7 @@ const EditContentPage = props => {
 
   const move = (from, to, arr, e, set_state) => {
     e.preventDefault();
-    const newArr = [ ...arr ];
+    const newArr = [...arr];
 
     const item = newArr.splice(from, 1)[0];
     newArr.splice(to, 0, item);
@@ -265,9 +239,7 @@ const EditContentPage = props => {
 
   return (
     <div className="main_container p-20px">
-      <h1 style={{ textAlign: "center" }}>
-        {props.match.params.id ? "Edit Content" : "Create Content"}
-      </h1>
+      <h1 style={{ textAlign: "center" }}>{props.match.params.id ? "Edit Content" : "Create Content"}</h1>
 
       <div className="form">
         <form onSubmit={submitHandler} style={{ width: "100%" }}>
@@ -281,16 +253,10 @@ const EditContentPage = props => {
                   <title>Edit Content | Glow LEDs</title>
                 </Helmet>
 
-                <ul
-                  className="edit-form-container jc-b"
-                  style={{ maxWidth: "90rem", marginBottom: "20px" }}
-                >
+                <ul className="edit-form-container jc-b" style={{ maxWidth: "90rem", marginBottom: "20px" }}>
                   <div className="ai-c h-25px mb-15px jc-c">
                     <div className="custom-select">
-                      <select
-                        className="qty_select_dropdown"
-                        onChange={e => use_template(e)}
-                      >
+                      <select className="qty_select_dropdown" onChange={e => use_template(e)}>
                         <option key={1} defaultValue="">
                           ---Content Template---
                         </option>
@@ -305,10 +271,7 @@ const EditContentPage = props => {
                   </div>
                   <div className="ai-c h-25px mb-15px jc-c">
                     <div className="custom-select">
-                      <select
-                        className="qty_select_dropdown"
-                        onChange={e => use_email_template(e)}
-                      >
+                      <select className="qty_select_dropdown" onChange={e => use_email_template(e)}>
                         <option key={1} defaultValue="">
                           ---Email Template---
                         </option>
@@ -331,8 +294,7 @@ const EditContentPage = props => {
                           name="home_page_h1"
                           value={home_page && home_page.h1}
                           id="home_page_h1"
-                          onChange={e =>
-                            set_home_page({ ...home_page, h1: e.target.value })}
+                          onChange={e => set_home_page({ ...home_page, h1: e.target.value })}
                         />
                       </li>
                       {/* <li>
@@ -357,8 +319,9 @@ const EditContentPage = props => {
                           onChange={e =>
                             set_home_page({
                               ...home_page,
-                              video: e.target.value,
-                            })}
+                              video: e.target.value
+                            })
+                          }
                         />
                       </li>
                       {loading_checkboxes ? (
@@ -374,7 +337,7 @@ const EditContentPage = props => {
                             onChange={e => {
                               set_home_page({
                                 ...home_page,
-                                show_video: e.target.checked,
+                                show_video: e.target.checked
                               });
                             }}
                           />
@@ -387,8 +350,7 @@ const EditContentPage = props => {
                           name="home_page_h2"
                           value={home_page && home_page.h2}
                           id="home_page_h2"
-                          onChange={e =>
-                            set_home_page({ ...home_page, h2: e.target.value })}
+                          onChange={e => set_home_page({ ...home_page, h2: e.target.value })}
                         />
                       </li>
 
@@ -399,14 +361,11 @@ const EditContentPage = props => {
                           name="home_page_p"
                           value={home_page && home_page.p}
                           id="home_page_p"
-                          onChange={e =>
-                            set_home_page({ ...home_page, p: e.target.value })}
+                          onChange={e => set_home_page({ ...home_page, p: e.target.value })}
                         />
                       </li>
                       <li>
-                        <label htmlFor="home_page_button">
-                          Home Page Button
-                        </label>
+                        <label htmlFor="home_page_button">Home Page Button</label>
                         <input
                           type="text"
                           name="home_page_button"
@@ -415,8 +374,9 @@ const EditContentPage = props => {
                           onChange={e =>
                             set_home_page({
                               ...home_page,
-                              button: e.target.value,
-                            })}
+                              button: e.target.value
+                            })
+                          }
                         />
                       </li>
 
@@ -430,8 +390,9 @@ const EditContentPage = props => {
                           onChange={e =>
                             set_home_page({
                               ...home_page,
-                              link: e.target.value,
-                            })}
+                              link: e.target.value
+                            })
+                          }
                         />
                       </li>
                       {loading_checkboxes ? (
@@ -447,7 +408,7 @@ const EditContentPage = props => {
                             onChange={e => {
                               set_home_page({
                                 ...home_page,
-                                show_image: e.target.checked,
+                                show_image: e.target.checked
                               });
                             }}
                           />
@@ -460,13 +421,7 @@ const EditContentPage = props => {
 												set_image={set_slideshow}
 												name={'Slideshow Images'}
 											/> */}
-                      <ImageDisplay
-                        images={images}
-                        set_images={set_images}
-                        image={image}
-                        set_image={set_image}
-                        name={"Images"}
-                      />
+                      <ImageDisplay images={images} set_images={set_images} image={image} set_image={set_image} name={"Images"} />
                       {/* <div className="w-228px m-10px"> */}
                       <h2>Images</h2>
                       <div className="scroll-y h-100per max-h-900px ">
@@ -489,14 +444,7 @@ const EditContentPage = props => {
                                   <GLButton
                                     variant="secondary icon"
                                     className="ph-10px pb-20px ml-5px"
-                                    onClick={e =>
-                                      move(
-                                        index,
-                                        index - 1,
-                                        slideshow,
-                                        e,
-                                        set_slideshow
-                                      )}
+                                    onClick={e => move(index, index - 1, slideshow, e, set_slideshow)}
                                     aria-label="Move Up"
                                   >
                                     <i className=" fas fa-sort-up" />
@@ -507,19 +455,12 @@ const EditContentPage = props => {
                                   <GLButton
                                     variant="secondary icon"
                                     className="ph-10px pb-20px ml-5px "
-                                    onClick={e =>
-                                      move(
-                                        index,
-                                        index + 1,
-                                        slideshow,
-                                        e,
-                                        set_slideshow
-                                      )}
+                                    onClick={e => move(index, index + 1, slideshow, e, set_slideshow)}
                                     aria-label="Move Down"
                                   >
                                     <i
                                       style={{
-                                        WebkitTransform: "rotate(-180deg)",
+                                        WebkitTransform: "rotate(-180deg)"
                                       }}
                                       className=" fas fa-sort-up"
                                     />
@@ -527,11 +468,7 @@ const EditContentPage = props => {
                                 )}
                               </div>
                               <li>
-                                <GLButton
-                                  variant="primary"
-                                  onClick={e =>
-                                    add_slideshow(e, index, "above")}
-                                >
+                                <GLButton variant="primary" onClick={e => add_slideshow(e, index, "above")}>
                                   Add Image Above
                                 </GLButton>
                               </li>
@@ -542,12 +479,7 @@ const EditContentPage = props => {
                                   name="label"
                                   value={items.label}
                                   id="label"
-                                  onChange={e =>
-                                    update_slideshow_item_property(
-                                      e,
-                                      e.target.name,
-                                      index
-                                    )}
+                                  onChange={e => update_slideshow_item_property(e, e.target.name, index)}
                                 />
                               </li>
                               <li>
@@ -557,12 +489,7 @@ const EditContentPage = props => {
                                   name="image"
                                   value={slideshow.image}
                                   id="image"
-                                  onChange={e =>
-                                    update_slideshow_item_property(
-                                      e,
-                                      e.target.name,
-                                      index
-                                    )}
+                                  onChange={e => update_slideshow_item_property(e, e.target.name, index)}
                                 />
                               </li>
                               <li>
@@ -572,21 +499,12 @@ const EditContentPage = props => {
                                   name="link"
                                   value={items.link}
                                   id="link"
-                                  onChange={e =>
-                                    update_slideshow_item_property(
-                                      e,
-                                      e.target.name,
-                                      index
-                                    )}
+                                  onChange={e => update_slideshow_item_property(e, e.target.name, index)}
                                 />
                               </li>
                               {index !== slideshow.length - 1 && (
                                 <li>
-                                  <GLButton
-                                    variant="primary"
-                                    onClick={e =>
-                                      add_slideshow(e, index, "below")}
-                                  >
+                                  <GLButton variant="primary" onClick={e => add_slideshow(e, index, "below")}>
                                     Add Image Below
                                   </GLButton>
                                 </li>
@@ -595,10 +513,7 @@ const EditContentPage = props => {
                           ))}
 
                         <li>
-                          <GLButton
-                            variant="primary"
-                            onClick={e => add_slideshow(e)}
-                          >
+                          <GLButton variant="primary" onClick={e => add_slideshow(e)}>
                             Add Image
                           </GLButton>
                         </li>
@@ -615,21 +530,17 @@ const EditContentPage = props => {
                           name="banner_label"
                           value={banner && banner.label}
                           id="banner_label"
-                          onChange={e =>
-                            set_banner({ ...banner, label: e.target.value })}
+                          onChange={e => set_banner({ ...banner, label: e.target.value })}
                         />
                       </li>
                       <li>
-                        <label htmlFor="banner_button_text">
-                          Banner Button Text
-                        </label>
+                        <label htmlFor="banner_button_text">Banner Button Text</label>
                         <input
                           type="text"
                           name="banner_button_text"
                           value={banner && banner.button}
                           id="banner_button_text"
-                          onChange={e =>
-                            set_banner({ ...banner, button: e.target.value })}
+                          onChange={e => set_banner({ ...banner, button: e.target.value })}
                         />
                       </li>
                       <li>
@@ -639,8 +550,7 @@ const EditContentPage = props => {
                           name="banner_link"
                           value={banner && banner.link}
                           id="banner_link"
-                          onChange={e =>
-                            set_banner({ ...banner, link: e.target.value })}
+                          onChange={e => set_banner({ ...banner, link: e.target.value })}
                         />
                       </li>
                       {loading_checkboxes ? (
@@ -685,14 +595,7 @@ const EditContentPage = props => {
                                   <GLButton
                                     variant="secondary icon"
                                     className="ph-10px pb-20px ml-5px"
-                                    onClick={e =>
-                                      move(
-                                        index,
-                                        index - 1,
-                                        links,
-                                        e,
-                                        set_links
-                                      )}
+                                    onClick={e => move(index, index - 1, links, e, set_links)}
                                     aria-label="Move Up"
                                   >
                                     <i className=" fas fa-sort-up" />
@@ -703,19 +606,12 @@ const EditContentPage = props => {
                                   <GLButton
                                     variant="secondary icon"
                                     className="ph-10px pb-20px ml-5px "
-                                    onClick={e =>
-                                      move(
-                                        index,
-                                        index + 1,
-                                        links,
-                                        e,
-                                        set_links
-                                      )}
+                                    onClick={e => move(index, index + 1, links, e, set_links)}
                                     aria-label="Move Down"
                                   >
                                     <i
                                       style={{
-                                        WebkitTransform: "rotate(-180deg)",
+                                        WebkitTransform: "rotate(-180deg)"
                                       }}
                                       className=" fas fa-sort-up"
                                     />
@@ -723,10 +619,7 @@ const EditContentPage = props => {
                                 )}
                               </div>
                               <li>
-                                <GLButton
-                                  variant="primary"
-                                  onClick={e => add_link(e, index, "above")}
-                                >
+                                <GLButton variant="primary" onClick={e => add_link(e, index, "above")}>
                                   Add Link Above
                                 </GLButton>
                               </li>
@@ -737,12 +630,7 @@ const EditContentPage = props => {
                                   name="label"
                                   value={link.label}
                                   id="label"
-                                  onChange={e =>
-                                    update_link_item_property(
-                                      e,
-                                      e.target.name,
-                                      index
-                                    )}
+                                  onChange={e => update_link_item_property(e, e.target.name, index)}
                                 />
                               </li>
                               <li>
@@ -752,12 +640,7 @@ const EditContentPage = props => {
                                   name="link"
                                   value={link.link}
                                   id="link"
-                                  onChange={e =>
-                                    update_link_item_property(
-                                      e,
-                                      e.target.name,
-                                      index
-                                    )}
+                                  onChange={e => update_link_item_property(e, e.target.name, index)}
                                 />
                               </li>
                               <li>
@@ -767,20 +650,12 @@ const EditContentPage = props => {
                                   name="icon"
                                   value={link.icon}
                                   id="icon"
-                                  onChange={e =>
-                                    update_link_item_property(
-                                      e,
-                                      e.target.name,
-                                      index
-                                    )}
+                                  onChange={e => update_link_item_property(e, e.target.name, index)}
                                 />
                               </li>
                               {index !== links.length - 1 && (
                                 <li>
-                                  <GLButton
-                                    variant="primary"
-                                    onClick={e => add_link(e, index, "below")}
-                                  >
+                                  <GLButton variant="primary" onClick={e => add_link(e, index, "below")}>
                                     Add Link Below
                                   </GLButton>
                                 </li>
@@ -789,10 +664,7 @@ const EditContentPage = props => {
                           ))}
 
                         <li>
-                          <GLButton
-                            variant="primary"
-                            onClick={e => add_link(e)}
-                          >
+                          <GLButton variant="primary" onClick={e => add_link(e)}>
                             Add Link
                           </GLButton>
                         </li>
@@ -821,10 +693,7 @@ const EditContentPage = props => {
                     </GLButton>
                   </li>
                   <li>
-                    <GLButton
-                      variant="secondary"
-                      onClick={() => history.goBack()}
-                    >
+                    <GLButton variant="secondary" onClick={() => history.goBack()}>
                       Back to Contents
                     </GLButton>
                   </li>

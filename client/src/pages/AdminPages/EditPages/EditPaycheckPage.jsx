@@ -1,33 +1,26 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  savePaycheck,
-  detailsPaycheck,
-} from "../../../actions/paycheckActions";
+import { savePaycheck, detailsPaycheck } from "../../../actions/paycheckActions";
 import { useHistory, Link } from "react-router-dom";
 import { Loading } from "../../../components/UtilityComponents";
 import { Helmet } from "react-helmet";
 import { listUsers } from "../../../actions/userActions";
-import {
-  format_date,
-  snake_case,
-  unformat_date,
-} from "../../../utils/helper_functions";
+import { format_date, snake_case, unformat_date } from "../../../utils/helper_functions";
 import { listAffiliates } from "../../../actions/affiliateActions";
 import { listTeams } from "../../../actions/teamActions";
 import { GLButton } from "../../../components/GlowLEDsComponents";
 
 const EditPaycheckPage = props => {
-  const [ id, set_id ] = useState("");
-  const [ affiliate, set_affiliate ] = useState("");
-  const [ team, set_team ] = useState("");
-  const [ amount, set_amount ] = useState("");
-  const [ venmo, set_venmo ] = useState("");
-  const [ paid, set_paid ] = useState("");
-  const [ reciept, set_reciept ] = useState("");
-  const [ paid_at, set_paid_at ] = useState("");
+  const [id, set_id] = useState("");
+  const [affiliate, set_affiliate] = useState("");
+  const [team, set_team] = useState("");
+  const [amount, set_amount] = useState("");
+  const [venmo, set_venmo] = useState("");
+  const [paid, set_paid] = useState("");
+  const [reciept, set_reciept] = useState("");
+  const [paid_at, set_paid_at] = useState("");
 
-  const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
+  const [loading_checkboxes, set_loading_checkboxes] = useState(true);
 
   const history = useHistory();
 
@@ -65,42 +58,33 @@ const EditPaycheckPage = props => {
 
   const dispatch = useDispatch();
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (props.match.params.id) {
-          console.log("Is ID");
-          dispatch(detailsPaycheck(props.match.params.id));
-          dispatch(detailsPaycheck(props.match.params.id));
-        } else {
-          dispatch(detailsPaycheck(""));
-        }
-        dispatch(listAffiliates({}));
-        dispatch(listTeams({}));
-        set_state();
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (props.match.params.id) {
+        dispatch(detailsPaycheck(props.match.params.id));
+        dispatch(detailsPaycheck(props.match.params.id));
+      } else {
+        dispatch(detailsPaycheck(""));
       }
-      return () => (clean = false);
-    },
-    [ dispatch, props.match.params.id ]
-  );
+      dispatch(listAffiliates({}));
+      dispatch(listTeams({}));
+      set_state();
+    }
+    return () => (clean = false);
+  }, [dispatch, props.match.params.id]);
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (paycheck) {
-          console.log("Set");
-          set_state();
-        } else {
-          console.log("UnSet");
-          unset_state();
-        }
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (paycheck) {
+        set_state();
+      } else {
+        unset_state();
       }
-      return () => (clean = false);
-    },
-    [ paycheck ]
-  );
+    }
+    return () => (clean = false);
+  }, [paycheck]);
 
   setTimeout(() => {
     set_loading_checkboxes(false);
@@ -108,7 +92,7 @@ const EditPaycheckPage = props => {
 
   const submitHandler = e => {
     e.preventDefault();
-    console.log({ affiliate });
+
     dispatch(
       savePaycheck({
         _id: id,
@@ -118,7 +102,7 @@ const EditPaycheckPage = props => {
         venmo,
         paid,
         reciept,
-        paid_at: paid_at ? paid_at : paid && format_date(today),
+        paid_at: paid_at ? paid_at : paid && format_date(today)
       })
     );
     e.target.reset();
@@ -132,17 +116,13 @@ const EditPaycheckPage = props => {
     set_affiliate(data);
     // set_team(data);
     set_venmo(data.venmo);
-    console.log({ venmo: data.venmo });
-    console.log({ venmo: data._id });
   };
   const date = new Date();
 
   const today = date.toISOString();
   return (
     <div className="main_container p-20px">
-      <h1 style={{ textAlign: "center" }}>
-        {props.match.params.id ? "Edit Paycheck" : "Create Paycheck"}
-      </h1>
+      <h1 style={{ textAlign: "center" }}>{props.match.params.id ? "Edit Paycheck" : "Create Paycheck"}</h1>
 
       <div className="form">
         <form onSubmit={submitHandler} style={{ width: "100%" }}>
@@ -156,10 +136,7 @@ const EditPaycheckPage = props => {
                 <title>Edit Paycheck | Glow LEDs</title>
               </Helmet>
 
-              <ul
-                className="edit-form-container"
-                style={{ maxWidth: "30rem", marginBottom: "20px" }}
-              >
+              <ul className="edit-form-container" style={{ maxWidth: "30rem", marginBottom: "20px" }}>
                 <div className="row wrap">
                   <div className="w-228px m-10px">
                     {affiliates && (
@@ -177,10 +154,7 @@ const EditPaycheckPage = props => {
                               ---Choose Affiliate---
                             </option>
                             {affiliates.map((affiliate, index) => (
-                              <option
-                                key={index}
-                                value={JSON.stringify(affiliate)}
-                              >
+                              <option key={index} value={JSON.stringify(affiliate)}>
                                 {affiliate.artist_name}
                               </option>
                             ))}
@@ -216,23 +190,11 @@ const EditPaycheckPage = props => {
 
                     <li>
                       <label htmlFor="amount">Amount</label>
-                      <input
-                        type="text"
-                        name="amount"
-                        value={amount}
-                        id="amount"
-                        onChange={e => set_amount(e.target.value)}
-                      />
+                      <input type="text" name="amount" value={amount} id="amount" onChange={e => set_amount(e.target.value)} />
                     </li>
                     <li>
                       <label htmlFor="venmo">Venmo</label>
-                      <input
-                        type="text"
-                        name="venmo"
-                        value={venmo}
-                        id="venmo"
-                        onChange={e => set_venmo(e.target.value)}
-                      />
+                      <input type="text" name="venmo" value={venmo} id="venmo" onChange={e => set_venmo(e.target.value)} />
                     </li>
                     {loading_checkboxes ? (
                       <div>Loading...</div>
@@ -255,22 +217,14 @@ const EditPaycheckPage = props => {
                       <input
                         type="text"
                         name="paid_at"
-                        value={
-                          paid_at ? paid_at : paid ? format_date(today) : ""
-                        }
+                        value={paid_at ? paid_at : paid ? format_date(today) : ""}
                         id="paid_at"
                         onChange={e => set_paid_at(e.target.value)}
                       />
                     </li>
                     <li>
                       <label htmlFor="reciept">Receipt</label>
-                      <input
-                        type="text"
-                        name="reciept"
-                        defaultValue={reciept}
-                        id="reciept"
-                        onChange={e => set_reciept(e.target.value)}
-                      />
+                      <input type="text" name="reciept" defaultValue={reciept} id="reciept" onChange={e => set_reciept(e.target.value)} />
                     </li>
                   </div>
                 </div>
@@ -280,10 +234,7 @@ const EditPaycheckPage = props => {
                   </GLButton>
                 </li>
                 <li>
-                  <GLButton
-                    variant="secondary"
-                    onClick={e => e.preventDefault()}
-                  >
+                  <GLButton variant="secondary" onClick={e => e.preventDefault()}>
                     <Link to="/secure/glow/paychecks">Back to Paychecks</Link>
                   </GLButton>
                 </li>

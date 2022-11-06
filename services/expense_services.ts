@@ -1,11 +1,5 @@
 import { expense_db } from "../db";
-import {
-  determine_category,
-  determine_application,
-  determine_filter,
-  determine_place,
-  unformat_date,
-} from "../util";
+import { determine_category, determine_application, determine_filter, determine_place, unformat_date } from "../util";
 
 export default {
   findAll_expenses_s: async (query: any) => {
@@ -14,8 +8,8 @@ export default {
         ? {
             expense_name: {
               $regex: query.search,
-              $options: "i",
-            },
+              $options: "i"
+            }
           }
         : {};
       const filter = determine_filter(query, search);
@@ -37,7 +31,6 @@ export default {
 
       return await expense_db.findAll_expenses_db(filter, sort);
     } catch (error) {
-      console.log({ findAll_expenses_s_error: error });
       throw new Error(error.message);
     }
   },
@@ -47,14 +40,13 @@ export default {
         deleted: false,
         date_of_purchase: {
           $gte: new Date(body.date_1),
-          $lt: new Date(body.date_2),
-        },
+          $lt: new Date(body.date_2)
+        }
       };
       const sort = { date_of_purchase: 1 };
 
       return await expense_db.findAll_expenses_db(filter, sort);
     } catch (error) {
-      console.log({ findAll_expenses_s_error: error });
       throw new Error(error.message);
     }
   },
@@ -62,7 +54,6 @@ export default {
     try {
       return await expense_db.findById_expenses_db(params.id);
     } catch (error) {
-      console.log({ findById_expenses_s_error: error });
       throw new Error(error.message);
     }
   },
@@ -70,7 +61,6 @@ export default {
     try {
       return await expense_db.create_expenses_db(body);
     } catch (error) {
-      console.log({ create_expenses_s_error: error });
       throw new Error(error.message);
     }
   },
@@ -85,13 +75,8 @@ export default {
         }
         expenses.push(object);
       }
-      console.log({ expenses, card, properties });
 
-      const payment_check = [
-        "AUTOPAY PAYMENT - THANK YOU",
-        "CUSTOMER SERVICE PAYMENT - THANK YOU",
-        "RETURNED AUTOPAY (DEORY)",
-      ];
+      const payment_check = ["AUTOPAY PAYMENT - THANK YOU", "CUSTOMER SERVICE PAYMENT - THANK YOU", "RETURNED AUTOPAY (DEORY)"];
 
       expenses.forEach(async (expense: any) => {
         if (!payment_check.includes(expense.description)) {
@@ -103,10 +88,7 @@ export default {
             url: "",
             application: determine_application(expense.description),
             category: determine_category(expense.description),
-            amount:
-              card === "GL AMEX"
-                ? Math.abs(parseFloat(expense.amount)) * -1
-                : parseFloat(expense.amount),
+            amount: card === "GL AMEX" ? Math.abs(parseFloat(expense.amount)) * -1 : parseFloat(expense.amount)
           };
           await expense_db.create_expenses_db(row);
         }
@@ -114,7 +96,6 @@ export default {
 
       return "Success";
     } catch (error) {
-      console.log({ create_all_expenses_s_error: error });
       throw new Error(error.message);
     }
   },
@@ -122,7 +103,6 @@ export default {
     try {
       return await expense_db.update_expenses_db(params.id, body);
     } catch (error) {
-      console.log({ update_expenses_s_error: error });
       throw new Error(error.message);
     }
   },
@@ -130,8 +110,7 @@ export default {
     try {
       return await expense_db.remove_expenses_db(params.id);
     } catch (error) {
-      console.log({ remove_expenses_s_error: error });
       throw new Error(error.message);
     }
-  },
+  }
 };

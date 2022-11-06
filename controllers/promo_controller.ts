@@ -10,7 +10,6 @@ export default {
       }
       return res.status(404).send({ message: "Promos Not Found" });
     } catch (error) {
-      console.log({ findAll_promos_c_error: error });
       res.status(500).send({ error, message: "Error Finding Promos" });
     }
   },
@@ -23,7 +22,6 @@ export default {
       }
       return res.status(404).send({ message: "Promo Not Found" });
     } catch (error) {
-      console.log({ findById_promos_c_error: error });
       res.status(500).send({ error, message: "Error Finding Promo" });
     }
   },
@@ -36,7 +34,6 @@ export default {
       }
       return res.status(404).send({ message: "Promo Not Found" });
     } catch (error) {
-      console.log({ findById_promos_c_error: error });
       res.status(500).send({ error, message: "Error Finding Promo" });
     }
   },
@@ -49,7 +46,6 @@ export default {
       }
       return res.status(500).send({ message: "Error Creating Promo" });
     } catch (error) {
-      console.log({ create_promos_c_error: error });
       res.status(500).send({ error, message: "Error Creating Promo" });
     }
   },
@@ -62,7 +58,6 @@ export default {
       }
       return res.status(500).send({ message: "Error Creating Promo" });
     } catch (error) {
-      console.log({ create_promos_c_error: error });
       res.status(500).send({ error, message: "Error Creating Promo" });
     }
   },
@@ -75,7 +70,6 @@ export default {
       }
       return res.status(500).send({ message: "Error Creating Promo" });
     } catch (error) {
-      console.log({ create_promos_c_error: error });
       res.status(500).send({ error, message: "Error Creating Promo" });
     }
   },
@@ -88,7 +82,6 @@ export default {
       }
       return res.status(500).send({ message: "Error Updating Promo" });
     } catch (error) {
-      console.log({ update_promos_c_error: error });
       res.status(500).send({ error, message: "Error Updating Promo" });
     }
   },
@@ -101,7 +94,6 @@ export default {
       }
       return res.status(500).send({ message: "Error Updating Promo" });
     } catch (error) {
-      console.log({ update_promos_c_error: error });
       res.status(500).send({ error, message: "Error Updating Promo" });
     }
   },
@@ -114,7 +106,6 @@ export default {
       }
       return res.status(500).send({ message: "Error Updating Promo" });
     } catch (error) {
-      console.log({ update_promos_c_error: error });
       res.status(500).send({ error, message: "Error Updating Promo" });
     }
   },
@@ -128,7 +119,6 @@ export default {
       }
       return res.status(500).send({ message: "Error Deleting Promo" });
     } catch (error) {
-      console.log({ remove_promos_c_error: error });
       res.status(500).send({ error, message: "Error Deleting Promo" });
     }
   }

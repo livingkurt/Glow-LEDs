@@ -12,7 +12,6 @@ export default {
         .populate("excluded_products")
         .populate("included_products");
     } catch (error) {
-      console.log({ findAll_promos_db_error: error });
       throw new Error(error.message);
     }
   },
@@ -26,12 +25,10 @@ export default {
         .populate("excluded_products")
         .populate("included_products");
     } catch (error) {
-      console.log({ findById_promos_db_error: error });
       throw new Error(error.message);
     }
   },
   findByCode_promos_db: async (promo_code: string) => {
-    console.log({ promo_code });
     try {
       return await Promo.findOne({ promo_code: promo_code })
         .populate("affiliate")
@@ -41,7 +38,6 @@ export default {
         .populate("excluded_products")
         .populate("included_products");
     } catch (error) {
-      console.log({ findById_promos_db_error: error });
       throw new Error(error.message);
     }
   },
@@ -49,7 +45,6 @@ export default {
     try {
       return await Promo.create(body);
     } catch (error) {
-      console.log({ create_promos_db_error: error });
       throw new Error(error.message);
     }
   },
@@ -60,7 +55,6 @@ export default {
         return await Promo.updateOne({ _id: id }, body);
       }
     } catch (error) {
-      console.log({ update_promos_db_error: error });
       throw new Error(error.message);
     }
   },
@@ -71,7 +65,6 @@ export default {
         return await Promo.updateOne({ _id: id }, { deleted: true });
       }
     } catch (error) {
-      console.log({ remove_promos_db_error: error });
       throw new Error(error.message);
     }
   }

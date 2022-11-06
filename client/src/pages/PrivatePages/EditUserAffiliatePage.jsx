@@ -1,9 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  saveAffiliate,
-  detailsAffiliate,
-} from "../../actions/affiliateActions";
+import { saveAffiliate, detailsAffiliate } from "../../actions/affiliateActions";
 import { Link, useHistory } from "react-router-dom";
 import { DropdownDisplay, Loading } from "../../components/UtilityComponents";
 import { Helmet } from "react-helmet";
@@ -16,36 +13,36 @@ import useWindowDimensions from "../../components/Hooks/windowDimensions";
 import { GLButton } from "../../components/GlowLEDsComponents";
 
 const EditUserAffiliatePage = props => {
-  const [ id, set_id ] = useState("");
-  const [ user, set_user ] = useState("");
-  const [ artist_name, set_artist_name ] = useState("");
-  const [ instagram_handle, set_instagram_handle ] = useState("");
-  const [ facebook_name, set_facebook_name ] = useState("");
+  const [id, set_id] = useState("");
+  const [user, set_user] = useState("");
+  const [artist_name, set_artist_name] = useState("");
+  const [instagram_handle, set_instagram_handle] = useState("");
+  const [facebook_name, set_facebook_name] = useState("");
   // const [ promo_code, set_promo_code ] = useState('');
-  const [ sponsor, set_sponsor ] = useState("");
-  const [ promoter, set_promoter ] = useState("");
-  const [ style, set_style ] = useState("");
-  const [ inspiration, set_inspiration ] = useState("");
-  const [ bio, set_bio ] = useState("");
-  const [ link, set_link ] = useState("");
-  const [ location, set_location ] = useState("");
-  const [ years, set_years ] = useState("");
-  const [ tiktok, set_tiktok ] = useState("");
-  const [ venmo, set_venmo ] = useState("");
-  const [ pathname, set_pathname ] = useState("");
-  const [ product, set_product ] = useState("");
-  const [ products, set_products ] = useState([]);
-  const [ chip, set_chip ] = useState("");
-  const [ chips, set_chips ] = useState([]);
+  const [sponsor, set_sponsor] = useState("");
+  const [promoter, set_promoter] = useState("");
+  const [style, set_style] = useState("");
+  const [inspiration, set_inspiration] = useState("");
+  const [bio, set_bio] = useState("");
+  const [link, set_link] = useState("");
+  const [location, set_location] = useState("");
+  const [years, set_years] = useState("");
+  const [tiktok, set_tiktok] = useState("");
+  const [venmo, set_venmo] = useState("");
+  const [pathname, set_pathname] = useState("");
+  const [product, set_product] = useState("");
+  const [products, set_products] = useState([]);
+  const [chip, set_chip] = useState("");
+  const [chips, set_chips] = useState([]);
   // const [ answers, set_answers ] = useState([]);
-  const [ answer_1, set_answer_1 ] = useState("");
-  const [ answer_2, set_answer_2 ] = useState("");
-  const [ answer_3, set_answer_3 ] = useState("");
-  const [ public_code, set_public_code ] = useState("");
-  const [ private_code, set_private_code ] = useState("");
-  const [ active, set_active ] = useState("");
+  const [answer_1, set_answer_1] = useState("");
+  const [answer_2, set_answer_2] = useState("");
+  const [answer_3, set_answer_3] = useState("");
+  const [public_code, set_public_code] = useState("");
+  const [private_code, set_private_code] = useState("");
+  const [active, set_active] = useState("");
 
-  const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
+  const [loading_checkboxes, set_loading_checkboxes] = useState(true);
 
   const { height, width } = useWindowDimensions();
 
@@ -66,11 +63,7 @@ const EditUserAffiliatePage = props => {
   const { affiliate, loading, error } = affiliateDetails;
 
   const affiliateSave = useSelector(state => state.affiliateSave);
-  const {
-    affiliate: affiliate_saved,
-    loading: loading_saved,
-    success,
-  } = affiliateSave;
+  const { affiliate: affiliate_saved, loading: loading_saved, success } = affiliateSave;
 
   const userLogin = useSelector(state => state.userLogin);
   const { userInfo } = userLogin;
@@ -130,43 +123,34 @@ const EditUserAffiliatePage = props => {
 
   const dispatch = useDispatch();
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (props.match.params.id) {
-          console.log("Is ID");
-          dispatch(detailsAffiliate(props.match.params.id));
-          dispatch(detailsAffiliate(props.match.params.id));
-        } else {
-          dispatch(detailsAffiliate(""));
-        }
-        dispatch(listUsers({}));
-        dispatch(listProducts({ option: false, hidden: false }));
-        dispatch(listChips({}));
-        set_state();
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (props.match.params.id) {
+        dispatch(detailsAffiliate(props.match.params.id));
+        dispatch(detailsAffiliate(props.match.params.id));
+      } else {
+        dispatch(detailsAffiliate(""));
       }
-      return () => (clean = false);
-    },
-    [ dispatch, props.match.params.id ]
-  );
+      dispatch(listUsers({}));
+      dispatch(listProducts({ option: false, hidden: false }));
+      dispatch(listChips({}));
+      set_state();
+    }
+    return () => (clean = false);
+  }, [dispatch, props.match.params.id]);
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (affiliate) {
-          console.log("Set");
-          set_state();
-        } else {
-          console.log("UnSet");
-          unset_state();
-        }
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (affiliate) {
+        set_state();
+      } else {
+        unset_state();
       }
-      return () => (clean = false);
-    },
-    [ affiliate ]
-  );
+    }
+    return () => (clean = false);
+  }, [affiliate]);
   setTimeout(() => {
     set_loading_checkboxes(false);
   }, 500);
@@ -193,10 +177,7 @@ const EditUserAffiliatePage = props => {
         pathname: pathname ? pathname : artist_name && snake_case(artist_name),
         products,
         chips: chips && chips.map(chip => chip._id),
-        answers: answer_1 &&
-        answer_2 &&
-        answer_3 &&
-        !props.match.params.id && [ answer_1, answer_2, answer_3 ],
+        answers: answer_1 && answer_2 && answer_3 && !props.match.params.id && [answer_1, answer_2, answer_3]
       })
     );
 
@@ -204,40 +185,29 @@ const EditUserAffiliatePage = props => {
     unset_state();
   };
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        console.log({ success, affiliate_saved });
-        if (success && affiliate_saved) {
-          props.history.push(
-            "/pages/complete/affiliate/" + affiliate_saved.pathname
-          );
-        }
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (success && affiliate_saved) {
+        props.history.push("/pages/complete/affiliate/" + affiliate_saved.pathname);
       }
-      return () => (clean = false);
-    },
-    [ success ]
-  );
+    }
+    return () => (clean = false);
+  }, [success]);
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (userInfo && !userInfo.is_affiliated) {
-          history.push("/secure/account/profile");
-        }
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (userInfo && !userInfo.is_affiliated) {
+        history.push("/secure/account/profile");
       }
-      return () => (clean = false);
-    },
-    [ userInfo ]
-  );
+    }
+    return () => (clean = false);
+  }, [userInfo]);
 
   return (
     <div className="main_container p-20px">
-      <h1 style={{ textAlign: "center" }}>
-        {props.match.params.id ? "Update Affiliate" : "Affiliate Sign Up"}
-      </h1>
+      <h1 style={{ textAlign: "center" }}>{props.match.params.id ? "Update Affiliate" : "Affiliate Sign Up"}</h1>
 
       <div className="form">
         <form onSubmit={submitHandler} style={{ width: "100%" }}>
@@ -252,17 +222,11 @@ const EditUserAffiliatePage = props => {
                 </Helmet>
 
                 <ul
-                  className={`edit-form-container ${width > 617
-                    ? "max-w-55rem"
-                    : "max-w-40rem"}`}
+                  className={`edit-form-container ${width > 617 ? "max-w-55rem" : "max-w-40rem"}`}
                   style={{ maxWidth: "55rem", marginBottom: "20px" }}
                 >
                   <div className="wrap jc-b">
-                    <div
-                      className={`${width > 617
-                        ? "w-228px"
-                        : "max-w-500px w-100per"}`}
-                    >
+                    <div className={`${width > 617 ? "w-228px" : "max-w-500px w-100per"}`}>
                       <li>
                         <label htmlFor="artist_name">Artist Name</label>
                         <input
@@ -298,13 +262,7 @@ const EditUserAffiliatePage = props => {
                       </li>
                       <li>
                         <label htmlFor="tiktok">Tiktok</label>
-                        <input
-                          type="text"
-                          name="tiktok"
-                          value={tiktok}
-                          id="tiktok"
-                          onChange={e => set_tiktok(e.target.value)}
-                        />
+                        <input type="text" name="tiktok" value={tiktok} id="tiktok" onChange={e => set_tiktok(e.target.value)} />
                       </li>
                       <li>
                         <label htmlFor="style">Your Style</label>
@@ -333,30 +291,14 @@ const EditUserAffiliatePage = props => {
                         />
                       </li>
                     </div>
-                    <div
-                      className={`${width > 617
-                        ? "w-228px"
-                        : "max-w-500px w-100per"}`}
-                    >
+                    <div className={`${width > 617 ? "w-228px" : "max-w-500px w-100per"}`}>
                       <li>
                         <label htmlFor="location">Location</label>
-                        <input
-                          type="text"
-                          name="location"
-                          value={location}
-                          id="location"
-                          onChange={e => set_location(e.target.value)}
-                        />
+                        <input type="text" name="location" value={location} id="location" onChange={e => set_location(e.target.value)} />
                       </li>
                       <li>
                         <label htmlFor="years">Years Gloving</label>
-                        <input
-                          type="text"
-                          name="years"
-                          value={years}
-                          id="years"
-                          onChange={e => set_years(e.target.value)}
-                        />
+                        <input type="text" name="years" value={years} id="years" onChange={e => set_years(e.target.value)} />
                       </li>
                       <li>
                         <label htmlFor="bio">Bio</label>
@@ -405,9 +347,7 @@ const EditUserAffiliatePage = props => {
                   {!props.match.params.id && (
                     <div className="jc-b wrap">
                       <li className="w-100per">
-                        <label htmlFor="answer_1">
-                          How did you hear about Glow LEDs?
-                        </label>
+                        <label htmlFor="answer_1">How did you hear about Glow LEDs?</label>
                         <input
                           type="text"
                           name="answer_1"
@@ -418,9 +358,7 @@ const EditUserAffiliatePage = props => {
                         />
                       </li>
                       <li className="w-100per">
-                        <label htmlFor="answer_2">
-                          Question 2: What is your favorite Glow LEDs Product?
-                        </label>
+                        <label htmlFor="answer_2">Question 2: What is your favorite Glow LEDs Product?</label>
                         <input
                           type="text"
                           name="answer_2"
@@ -431,10 +369,7 @@ const EditUserAffiliatePage = props => {
                         />
                       </li>
                       <li className="w-100per">
-                        <label htmlFor="answer_3">
-                          Question 3: Why do you want to be a Glow LEDs
-                          Affiliate?
-                        </label>
+                        <label htmlFor="answer_3">Question 3: Why do you want to be a Glow LEDs Affiliate?</label>
                         <input
                           type="text"
                           name="answer_3"

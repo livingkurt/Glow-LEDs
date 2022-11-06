@@ -155,7 +155,7 @@ const PaychecksPage = props => {
 
   const create_affiliate_paychecks = async () => {
     set_loading_paychecks(true);
-    console.log({ year, month });
+
     if (create_paychecks) {
       await API_Paychecks.create_affiliate_paychecks_a("promoter", year, month.toLowerCase());
       await API_Paychecks.create_affiliate_paychecks_a("sponsor", year, month.toLowerCase());

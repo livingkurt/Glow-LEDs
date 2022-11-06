@@ -24,7 +24,6 @@ export default {
       }
       return await paycheck_db.findAll_paychecks_db(filter, sort);
     } catch (error) {
-      console.log({ findAll_paychecks_s_error: error });
       throw new Error(error.message);
     }
   },
@@ -32,7 +31,6 @@ export default {
     try {
       return await paycheck_db.findById_paychecks_db(params.id);
     } catch (error) {
-      console.log({ findById_paychecks_s_error: error });
       throw new Error(error.message);
     }
   },
@@ -40,7 +38,6 @@ export default {
     try {
       return await paycheck_db.findMy_paychecks_db(params.id);
     } catch (error) {
-      console.log({ findById_paychecks_s_error: error });
       throw new Error(error.message);
     }
   },
@@ -48,7 +45,6 @@ export default {
     try {
       return await paycheck_db.create_paychecks_db(body);
     } catch (error) {
-      console.log({ create_paychecks_s_error: error });
       throw new Error(error.message);
     }
   },
@@ -58,7 +54,7 @@ export default {
       let o_filter = {};
       let t_filter = {};
       let discount = 0.1;
-      console.log({ params });
+
       if (params.position === "promoter") {
         a_filter = { deleted: false, active: true, promoter: true };
         discount = 0.1;
@@ -71,7 +67,6 @@ export default {
         discount = 0.15;
       }
       if (params.month && params.month.length > 0) {
-        console.log("Month True");
         const start_date = month_dates(params.month, params.year).start_date;
         const end_date = month_dates(params.month, params.year).end_date;
         o_filter = {
@@ -83,7 +78,6 @@ export default {
           }
         };
       } else if (params.year && params.year.length > 0) {
-        console.log("Year True");
         const start_date = params.year + "-01-01";
         const end_date = params.year + "-12-31";
         o_filter = {
@@ -95,7 +89,6 @@ export default {
           }
         };
       } else {
-        console.log("No True");
         o_filter = { deleted: false, isPaid: true };
       }
       let affiliates = [];
@@ -106,7 +99,7 @@ export default {
         teams = await team_db.findAll_teams_db(t_filter, {});
       }
       const orders = await order_db.findAll_orders_db(o_filter, {}, 0, 1);
-      console.log({ orders });
+
       let paychecks = [];
       if (params.position !== "team") {
         paychecks = await Promise.all(
@@ -184,11 +177,9 @@ export default {
         );
       }
 
-      console.log({ paychecks });
       return paychecks;
       return "Success";
     } catch (error) {
-      console.log({ create_paychecks_s_error: error });
       throw new Error(error.message);
     }
   },
@@ -196,7 +187,6 @@ export default {
     try {
       return await paycheck_db.update_paychecks_db(params.id, body);
     } catch (error) {
-      console.log({ update_paychecks_s_error: error });
       throw new Error(error.message);
     }
   },
@@ -204,7 +194,6 @@ export default {
     try {
       return await paycheck_db.remove_paychecks_db(params.id);
     } catch (error) {
-      console.log({ remove_paychecks_s_error: error });
       throw new Error(error.message);
     }
   }

@@ -13,51 +13,46 @@ const ShippingPage = props => {
   const cart = useSelector(state => state.cart);
   const { cartItems, shipping, payment } = cart;
 
-  const [ email, set_email ] = useState("");
-  const [ first_name, set_first_name ] = useState("");
-  const [ last_name, set_last_name ] = useState("");
-  const [ address_1, set_address_1 ] = useState("");
-  const [ address_2, set_address_2 ] = useState("");
-  const [ city, setCity ] = useState("");
-  const [ state, setState ] = useState("");
-  const [ postalCode, setPostalCode ] = useState("");
-  const [ country, setCountry ] = useState("United States");
-  const [ international, setInternational ] = useState(false);
-  const [ loading, set_loading ] = useState(true);
+  const [email, set_email] = useState("");
+  const [first_name, set_first_name] = useState("");
+  const [last_name, set_last_name] = useState("");
+  const [address_1, set_address_1] = useState("");
+  const [address_2, set_address_2] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [postalCode, setPostalCode] = useState("");
+  const [country, setCountry] = useState("United States");
+  const [international, setInternational] = useState(false);
+  const [loading, set_loading] = useState(true);
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (shipping) {
-          set_email(shipping.email);
-          set_first_name(shipping.first_name);
-          set_last_name(shipping.last_name);
-          set_address_1(shipping.address_1);
-          set_address_2(shipping.address_2);
-          setCity(shipping.city);
-          setState(shipping.state);
-          setPostalCode(shipping.postalCode);
-          setCountry(shipping.country);
-          setInternational(shipping.international);
-        }
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (shipping) {
+        set_email(shipping.email);
+        set_first_name(shipping.first_name);
+        set_last_name(shipping.last_name);
+        set_address_1(shipping.address_1);
+        set_address_2(shipping.address_2);
+        setCity(shipping.city);
+        setState(shipping.state);
+        setPostalCode(shipping.postalCode);
+        setCountry(shipping.country);
+        setInternational(shipping.international);
       }
-      return () => (clean = false);
-    },
-    [ shipping ]
-  );
+    }
+    return () => (clean = false);
+  }, [shipping]);
 
-  const [ email_validations, set_email_validations ] = useState("");
-  const [ first_name_validations, set_first_name_validations ] = useState("");
-  const [ last_name_validations, set_last_name_validations ] = useState("");
-  const [ address_validations, set_address_validations ] = useState("");
-  const [ city_validations, set_city_validations ] = useState("");
-  const [ state_validations, set_state_validations ] = useState("");
-  const [ postal_code_validations, set_postal_code_validations ] = useState("");
-  const [ country_validations, set_country_validations ] = useState("");
-  const [ international_validations, set_international_validations ] = useState(
-    ""
-  );
+  const [email_validations, set_email_validations] = useState("");
+  const [first_name_validations, set_first_name_validations] = useState("");
+  const [last_name_validations, set_last_name_validations] = useState("");
+  const [address_validations, set_address_validations] = useState("");
+  const [city_validations, set_city_validations] = useState("");
+  const [state_validations, set_state_validations] = useState("");
+  const [postal_code_validations, set_postal_code_validations] = useState("");
+  const [country_validations, set_country_validations] = useState("");
+  const [international_validations, set_international_validations] = useState("");
   const dispatch = useDispatch();
 
   const submitHandler = e => {
@@ -72,7 +67,7 @@ const ShippingPage = props => {
       state,
       postalCode,
       country,
-      international,
+      international
     };
     const request = validate_shipping(data);
     set_email_validations(request.errors.email);
@@ -85,8 +80,6 @@ const ShippingPage = props => {
     set_country_validations(request.errors.country);
     set_international_validations(request.errors.international);
 
-    console.log(request);
-    console.log(request.errors.email);
     if (request.isValid) {
       dispatch(
         saveShipping({
@@ -99,7 +92,7 @@ const ShippingPage = props => {
           state,
           postalCode,
           country: international ? country : "United States",
-          international,
+          international
         })
       );
       const paymentMethod = "stripe";
@@ -117,14 +110,8 @@ const ShippingPage = props => {
         <title>Shipping | Glow LEDs</title>
         <meta property="og:title" content="Shipping" />
         <meta name="twitter:title" content="Shipping" />
-        <link
-          rel="canonical"
-          href="https://www.glow-leds.com/secure/checkout/shipping"
-        />
-        <meta
-          property="og:url"
-          content="https://www.glow-leds.com/secure/checkout/shipping"
-        />
+        <link rel="canonical" href="https://www.glow-leds.com/secure/checkout/shipping" />
+        <meta property="og:url" content="https://www.glow-leds.com/secure/checkout/shipping" />
       </Helmet>
       <CheckoutSteps step1 step2 />
 
@@ -136,119 +123,53 @@ const ShippingPage = props => {
             </li>
             <li>
               <label htmlFor="email">Email</label>
-              <input
-                type="text"
-                value={email}
-                name="email"
-                id="email"
-                onChange={e => set_email(e.target.value)}
-              />
+              <input type="text" value={email} name="email" id="email" onChange={e => set_email(e.target.value)} />
             </li>
             {email_validations}
             <li>
               <label htmlFor="first_name">First Name</label>
-              <input
-                type="text"
-                value={first_name}
-                name="first_name"
-                id="first_name"
-                onChange={e => set_first_name(e.target.value)}
-              />
+              <input type="text" value={first_name} name="first_name" id="first_name" onChange={e => set_first_name(e.target.value)} />
             </li>
-            <label
-              className="validation_text"
-              style={{ justifyContent: "center" }}
-            >
+            <label className="validation_text" style={{ justifyContent: "center" }}>
               {first_name_validations}
             </label>
             <li>
               <label htmlFor="last_name">Last Name</label>
-              <input
-                type="text"
-                value={last_name}
-                name="last_name"
-                id="last_name"
-                onChange={e => set_last_name(e.target.value)}
-              />
+              <input type="text" value={last_name} name="last_name" id="last_name" onChange={e => set_last_name(e.target.value)} />
             </li>
-            <label
-              className="validation_text"
-              style={{ justifyContent: "center" }}
-            >
+            <label className="validation_text" style={{ justifyContent: "center" }}>
               {last_name_validations}
             </label>
             <li>
               <label htmlFor="address_1">Address</label>
-              <input
-                type="text"
-                value={address_1}
-                name="address_1"
-                id="address_1"
-                onChange={e => set_address_1(e.target.value)}
-              />
+              <input type="text" value={address_1} name="address_1" id="address_1" onChange={e => set_address_1(e.target.value)} />
             </li>
-            <label
-              className="validation_text"
-              style={{ justifyContent: "center" }}
-            >
+            <label className="validation_text" style={{ justifyContent: "center" }}>
               {address_validations}
             </label>
             <li>
               <label htmlFor="address_2">Apt/Suite</label>
-              <input
-                type="text"
-                value={address_2}
-                name="address_2"
-                id="address_2"
-                onChange={e => set_address_2(e.target.value)}
-              />
+              <input type="text" value={address_2} name="address_2" id="address_2" onChange={e => set_address_2(e.target.value)} />
             </li>
             <li>
               <label htmlFor="city">City</label>
-              <input
-                type="text"
-                value={city}
-                name="city"
-                id="city"
-                onChange={e => setCity(e.target.value)}
-              />
+              <input type="text" value={city} name="city" id="city" onChange={e => setCity(e.target.value)} />
             </li>
-            <label
-              className="validation_text"
-              style={{ justifyContent: "center" }}
-            >
+            <label className="validation_text" style={{ justifyContent: "center" }}>
               {city_validations}
             </label>
             <li>
               <label htmlFor="state">State</label>
-              <input
-                type="text"
-                value={state}
-                name="state"
-                id="state"
-                onChange={e => setState(e.target.value)}
-              />
+              <input type="text" value={state} name="state" id="state" onChange={e => setState(e.target.value)} />
             </li>
-            <label
-              className="validation_text"
-              style={{ justifyContent: "center" }}
-            >
+            <label className="validation_text" style={{ justifyContent: "center" }}>
               {state_validations}
             </label>
             <li>
               <label htmlFor="postalCode">Postal Code</label>
-              <input
-                type="text"
-                value={postalCode}
-                name="postalCode"
-                id="postalCode"
-                onChange={e => setPostalCode(e.target.value)}
-              />
+              <input type="text" value={postalCode} name="postalCode" id="postalCode" onChange={e => setPostalCode(e.target.value)} />
             </li>
-            <label
-              className="validation_text"
-              style={{ justifyContent: "center" }}
-            >
+            <label className="validation_text" style={{ justifyContent: "center" }}>
               {postal_code_validations}
             </label>
             {loading ? (
@@ -273,22 +194,13 @@ const ShippingPage = props => {
                 {international && (
                   <li>
                     <label htmlFor="country">Country</label>
-                    <input
-                      type="text"
-                      value={country}
-                      name="country"
-                      id="country"
-                      onChange={e => setCountry(e.target.value)}
-                    />
+                    <input type="text" value={country} name="country" id="country" onChange={e => setCountry(e.target.value)} />
                   </li>
                 )}
               </div>
             )}
 
-            <label
-              className="validation_text"
-              style={{ justifyContent: "center" }}
-            >
+            <label className="validation_text" style={{ justifyContent: "center" }}>
               {country_validations}
             </label>
 

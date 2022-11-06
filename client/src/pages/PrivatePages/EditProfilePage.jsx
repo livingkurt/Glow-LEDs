@@ -11,17 +11,17 @@ const EditProfilePage = props => {
   const userLogin = useSelector(state => state.userLogin);
   const { userInfo } = userLogin;
   const history = useHistory();
-  const [ first_name, set_first_name ] = useState("");
-  const [ last_name, set_last_name ] = useState("");
-  const [ email, setEmail ] = useState("");
-  const [ shipping, set_shipping ] = useState({});
-  const [ email_subscription, set_email_subscription ] = useState("");
-  const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
-  const [ international, setInternational ] = useState(false);
+  const [first_name, set_first_name] = useState("");
+  const [last_name, set_last_name] = useState("");
+  const [email, setEmail] = useState("");
+  const [shipping, set_shipping] = useState({});
+  const [email_subscription, set_email_subscription] = useState("");
+  const [loading_checkboxes, set_loading_checkboxes] = useState(true);
+  const [international, setInternational] = useState(false);
 
-  const [ first_name_validations, setFirstnameValidations ] = useState("");
-  const [ last_name_validations, setLastNameValidations ] = useState("");
-  const [ email_validations, setEmailValidations ] = useState(false);
+  const [first_name_validations, setFirstnameValidations] = useState("");
+  const [last_name_validations, setLastNameValidations] = useState("");
+  const [email_validations, setEmailValidations] = useState(false);
   const dispatch = useDispatch();
 
   // const userLogin = useSelector((state) => state.userLogin);
@@ -36,7 +36,6 @@ const EditProfilePage = props => {
     setLastNameValidations(request.errors.last_name);
     setEmailValidations(request.errors.email);
 
-    console.log(request);
     if (request.isValid) {
       dispatch(
         update({
@@ -45,7 +44,7 @@ const EditProfilePage = props => {
           first_name,
           last_name,
           email_subscription,
-          shipping,
+          shipping
         })
       );
       history.push("/secure/account/profile");
@@ -58,23 +57,20 @@ const EditProfilePage = props => {
     set_loading_checkboxes(false);
   }, 500);
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (userInfo) {
-          setEmail(userInfo.email);
-          set_first_name(userInfo.first_name);
-          set_last_name(userInfo.last_name);
-          set_email_subscription(userInfo.email_subscription);
-          set_shipping(userInfo.shipping);
-          // setPassword(userInfo.password);
-        }
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (userInfo) {
+        setEmail(userInfo.email);
+        set_first_name(userInfo.first_name);
+        set_last_name(userInfo.last_name);
+        set_email_subscription(userInfo.email_subscription);
+        set_shipping(userInfo.shipping);
+        // setPassword(userInfo.password);
       }
-      return () => (clean = false);
-    },
-    [ userInfo ]
-  );
+    }
+    return () => (clean = false);
+  }, [userInfo]);
 
   return (
     <div className="profile_container column p-20px">
@@ -82,14 +78,8 @@ const EditProfilePage = props => {
         <title>Edit Profile | Glow LEDs</title>
         <meta property="og:title" content="Edit Profile" />
         <meta name="twitter:title" content="Edit Profile" />
-        <link
-          rel="canonical"
-          href="https://www.glow-leds.com/secure/account/editprofile"
-        />
-        <meta
-          property="og:url"
-          content="https://www.glow-leds.com/secure/account/editprofile"
-        />
+        <link rel="canonical" href="https://www.glow-leds.com/secure/account/editprofile" />
+        <meta property="og:url" content="https://www.glow-leds.com/secure/account/editprofile" />
       </Helmet>
       <div className="mb-10px">
         <GLButton variant="primary" onClick={() => history.goBack()}>
@@ -106,11 +96,7 @@ const EditProfilePage = props => {
               <li>
                 <div className="jc-c">
                   <Loading loading={loading} error={error}>
-                    {success && (
-                      <h3 style={{ textAlign: "center" }}>
-                        Profile Saved Successfully
-                      </h3>
-                    )}
+                    {success && <h3 style={{ textAlign: "center" }}>Profile Saved Successfully</h3>}
                   </Loading>
                 </div>
               </li>
@@ -125,10 +111,7 @@ const EditProfilePage = props => {
                   onChange={e => set_first_name(e.target.value)}
                 />
               </li>
-              <label
-                className="validation_text"
-                style={{ fontSize: 16, justifyContent: "center" }}
-              >
+              <label className="validation_text" style={{ fontSize: 16, justifyContent: "center" }}>
                 {first_name_validations}
               </label>
               <li>
@@ -141,26 +124,14 @@ const EditProfilePage = props => {
                   onChange={e => set_last_name(e.target.value)}
                 />
               </li>
-              <label
-                className="validation_text"
-                style={{ fontSize: 16, justifyContent: "center" }}
-              >
+              <label className="validation_text" style={{ fontSize: 16, justifyContent: "center" }}>
                 {last_name_validations}
               </label>
               <li>
                 <label htmlFor="email">Email</label>
-                <input
-                  defaultValue={email}
-                  type="text"
-                  name="email"
-                  id="email"
-                  onChange={e => setEmail(e.target.value)}
-                />
+                <input defaultValue={email} type="text" name="email" id="email" onChange={e => setEmail(e.target.value)} />
               </li>
-              <label
-                className="validation_text"
-                style={{ fontSize: 16, justifyContent: "center" }}
-              >
+              <label className="validation_text" style={{ fontSize: 16, justifyContent: "center" }}>
                 {email_validations}
               </label>
               {loading_checkboxes ? (
@@ -189,8 +160,7 @@ const EditProfilePage = props => {
                   type="first_name"
                   name="first_name"
                   id="first_name"
-                  onChange={e =>
-                    set_shipping({ ...shipping, first_name: e.target.value })}
+                  onChange={e => set_shipping({ ...shipping, first_name: e.target.value })}
                 />
               </li>
               {/* <label className="validation_text" style={{ fontSize: 16, justifyContent: 'center' }}>
@@ -203,8 +173,7 @@ const EditProfilePage = props => {
                   type="last_name"
                   name="last_name"
                   id="last_name"
-                  onChange={e =>
-                    set_shipping({ ...shipping, last_name: e.target.value })}
+                  onChange={e => set_shipping({ ...shipping, last_name: e.target.value })}
                 />
               </li>
               {/* <label className="validation_text" style={{ fontSize: 16, justifyContent: 'center' }}>
@@ -217,8 +186,7 @@ const EditProfilePage = props => {
                   value={shipping.address_1}
                   name="address_1"
                   id="address_1"
-                  onChange={e =>
-                    set_shipping({ ...shipping, address_1: e.target.value })}
+                  onChange={e => set_shipping({ ...shipping, address_1: e.target.value })}
                 />
               </li>
               <li>
@@ -228,8 +196,7 @@ const EditProfilePage = props => {
                   value={shipping.address_2}
                   name="address_2"
                   id="address_2"
-                  onChange={e =>
-                    set_shipping({ ...shipping, address_2: e.target.value })}
+                  onChange={e => set_shipping({ ...shipping, address_2: e.target.value })}
                 />
               </li>
               {/* <label className="validation_text" style={{ justifyContent: 'center' }}>
@@ -242,8 +209,7 @@ const EditProfilePage = props => {
                   value={shipping.city}
                   name="city"
                   id="city"
-                  onChange={e =>
-                    set_shipping({ ...shipping, city: e.target.value })}
+                  onChange={e => set_shipping({ ...shipping, city: e.target.value })}
                 />
               </li>
               {/* <label className="validation_text" style={{ justifyContent: 'center' }}>
@@ -256,8 +222,7 @@ const EditProfilePage = props => {
                   value={shipping.state}
                   name="state"
                   id="state"
-                  onChange={e =>
-                    set_shipping({ ...shipping, state: e.target.value })}
+                  onChange={e => set_shipping({ ...shipping, state: e.target.value })}
                 />
               </li>
               {/* <label className="validation_text" style={{ justifyContent: 'center' }}>
@@ -270,8 +235,7 @@ const EditProfilePage = props => {
                   value={shipping.postalCode}
                   name="postalCode"
                   id="postalCode"
-                  onChange={e =>
-                    set_shipping({ ...shipping, postalCode: e.target.value })}
+                  onChange={e => set_shipping({ ...shipping, postalCode: e.target.value })}
                 />
               </li>
               {/* <label className="validation_text" style={{ justifyContent: 'center' }}>
@@ -307,8 +271,9 @@ const EditProfilePage = props => {
                         onChange={e =>
                           set_shipping({
                             ...shipping,
-                            country: e.target.value,
-                          })}
+                            country: e.target.value
+                          })
+                        }
                       />
                     </li>
                   )}
@@ -325,11 +290,7 @@ const EditProfilePage = props => {
               </li>
               <li>
                 <Link to="/secure/account/profile">
-                  <GLButton
-                    type="button"
-                    variant="secondary"
-                    className="w-100per"
-                  >
+                  <GLButton type="button" variant="secondary" className="w-100per">
                     Cancel
                   </GLButton>
                 </Link>

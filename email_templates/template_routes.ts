@@ -50,7 +50,7 @@ router.get("/refund", async (req: { body: any }, res: { send: (arg0: string) => 
   //   .populate("user")
   //   .populate("orderItems.product")
   //   .populate("orderItems.secondary_product");
-  console.log({ data: data.orderItems[0].name });
+
   const body = {
     email: {
       show_image: true,
@@ -1512,7 +1512,7 @@ router.get("/affiliate", async (req: { body: any }, res: { send: (arg0: string) 
       venmo: "@joseph-conner-12"
     }
   };
-  console.log({ body });
+
   res.send(App({ body: affiliate(body), title: "Welcome to the Team!" }));
 });
 router.get("/feature", async (req: { body: any }, res: { send: (arg0: string) => void }) => {
@@ -1545,7 +1545,7 @@ router.get("/feature", async (req: { body: any }, res: { send: (arg0: string) =>
 });
 router.get("/announcement", async (req: { body: any }, res: { send: (arg0: string) => void }) => {
   const email = await email_db.findAll_emails_db({ deleted: false, active: true }, { _id: -1 }, 1);
-  console.log({ email });
+
   res.send(
     App({
       body: announcement(email[0]),

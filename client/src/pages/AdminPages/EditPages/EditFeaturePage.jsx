@@ -10,22 +10,22 @@ import { listUsers } from "../../../actions/userActions";
 import { GLButton } from "../../../components/GlowLEDsComponents";
 
 const EditFeaturePage = props => {
-  const [ id, set_id ] = useState("");
-  const [ user, set_user ] = useState("");
-  const [ artist_name, set_artist_name ] = useState("");
-  const [ instagram_handle, set_instagram_handle ] = useState("");
-  const [ facebook_name, set_facebook_name ] = useState("");
-  const [ product, set_product ] = useState("");
-  const [ song_id, set_song_id ] = useState("");
-  const [ video, set_video ] = useState("");
-  const [ category, set_category ] = useState("");
-  const [ pathname, set_pathname ] = useState("");
-  const [ images, set_images ] = useState([]);
-  const [ image, set_image ] = useState("");
-  const [ link, set_link ] = useState("");
-  const [ logo, set_logo ] = useState("");
-  const [ description, set_description ] = useState("");
-  const [ release_date, set_release_date ] = useState("");
+  const [id, set_id] = useState("");
+  const [user, set_user] = useState("");
+  const [artist_name, set_artist_name] = useState("");
+  const [instagram_handle, set_instagram_handle] = useState("");
+  const [facebook_name, set_facebook_name] = useState("");
+  const [product, set_product] = useState("");
+  const [song_id, set_song_id] = useState("");
+  const [video, set_video] = useState("");
+  const [category, set_category] = useState("");
+  const [pathname, set_pathname] = useState("");
+  const [images, set_images] = useState([]);
+  const [image, set_image] = useState("");
+  const [link, set_link] = useState("");
+  const [logo, set_logo] = useState("");
+  const [description, set_description] = useState("");
+  const [release_date, set_release_date] = useState("");
 
   const userList = useSelector(state => state.userList);
   const { users } = userList;
@@ -44,7 +44,6 @@ const EditFeaturePage = props => {
     let clean = true;
     if (clean) {
       if (props.match.params.pathname) {
-        console.log("Is ID");
         dispatch(detailsFeature(props.match.params.pathname));
         dispatch(detailsFeature(props.match.params.pathname));
       } else {
@@ -58,22 +57,17 @@ const EditFeaturePage = props => {
     return () => (clean = false);
   }, []);
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (feature) {
-          console.log("Set");
-          set_state();
-        } else {
-          console.log("UnSet");
-          unset_state();
-        }
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (feature) {
+        set_state();
+      } else {
+        unset_state();
       }
-      return () => (clean = false);
-    },
-    [ feature ]
-  );
+    }
+    return () => (clean = false);
+  }, [feature]);
 
   const set_state = () => {
     set_id(feature._id);
@@ -131,7 +125,7 @@ const EditFeaturePage = props => {
         description,
         pathname,
         category,
-        release_date: unformat_date(release_date),
+        release_date: unformat_date(release_date)
       })
     );
     e.target.reset();
@@ -141,18 +135,15 @@ const EditFeaturePage = props => {
 
   const add_image = e => {
     e.preventDefault();
-    console.log(image);
+
     if (image.indexOf(" ") >= 0) {
-      console.log("indexOf");
       image.split(" ").map(image => {
-        set_images(images => [ ...images, image ]);
+        set_images(images => [...images, image]);
       });
     } else if (images) {
-      console.log("images.length > 0");
-      set_images(images => [ ...images, image ]);
+      set_images(images => [...images, image]);
     } else {
-      console.log("images.length === 0");
-      set_images([ image ]);
+      set_images([image]);
     }
 
     set_image("");
@@ -183,7 +174,6 @@ const EditFeaturePage = props => {
   };
 
   function move(arr, old_index, new_index) {
-    console.log({ arr, old_index, new_index });
     while (old_index < 0) {
       old_index += arr.length;
     }
@@ -197,7 +187,7 @@ const EditFeaturePage = props => {
       }
     }
     arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
-    console.log({ arr });
+
     return arr;
   }
 
@@ -217,7 +207,7 @@ const EditFeaturePage = props => {
                         package_height: "auto",
                         maxWidth: "100px",
                         maxHeight: "100px",
-                        borderRadius: "15px",
+                        borderRadius: "15px"
                       }}
                       className="mv-10px ml-10px"
                       src={picture}
@@ -234,24 +224,14 @@ const EditFeaturePage = props => {
                     </GLButton>
                     <div className="pos-abs right-40px top-15px column">
                       {index > 0 && (
-                        <GLButton
-                          variant="icon"
-                          onClick={e => move_image_up(index, e)}
-                          aria-label="Move Up"
-                        >
+                        <GLButton variant="icon" onClick={e => move_image_up(index, e)} aria-label="Move Up">
                           <i className=" fas fa-sort-up" />
                         </GLButton>
                       )}
 
                       {index < images.length - 1 && (
-                        <GLButton
-                          variant="icon"
-                          onClick={e => move_image_down(index, e)}
-                        >
-                          <i
-                            style={{ WebkitTransform: "rotate(-180deg)" }}
-                            className=" fas fa-sort-up"
-                          />
+                        <GLButton variant="icon" onClick={e => move_image_down(index, e)}>
+                          <i style={{ WebkitTransform: "rotate(-180deg)" }} className=" fas fa-sort-up" />
                         </GLButton>
                       )}
                     </div>
@@ -273,9 +253,7 @@ const EditFeaturePage = props => {
   };
   return (
     <div className="main_container p-20px">
-      <h1 style={{ textAlign: "center" }}>
-        {props.match.params.pathname ? "Edit Feature" : "Create Feature"}
-      </h1>
+      <h1 style={{ textAlign: "center" }}>{props.match.params.pathname ? "Edit Feature" : "Create Feature"}</h1>
 
       <div className="form">
         <form onSubmit={submitHandler} style={{ width: "100%" }}>
@@ -286,27 +264,16 @@ const EditFeaturePage = props => {
                   <title>Edit Feature| Glow LEDs</title>
                 </Helmet>
 
-                <ul
-                  className="edit-form-container"
-                  style={{ maxWidth: "95rem", marginBottom: "20px" }}
-                >
+                <ul className="edit-form-container" style={{ maxWidth: "95rem", marginBottom: "20px" }}>
                   <div className="row wrap jc-b m-10px">
                     <div className="w-420px m-10px">
                       <li>
-                        <label
-                          aria-label="Sort"
-                          htmlFor="sort"
-                          className="select-label mb-15px"
-                        >
+                        <label aria-label="Sort" htmlFor="sort" className="select-label mb-15px">
                           Users
                         </label>
                         <div className="ai-c h-25px mb-15px">
                           <div className="custom-select">
-                            <select
-                              defaultValue={users}
-                              className="qty_select_dropdown"
-                              onChange={e => set_user(e.target.value)}
-                            >
+                            <select defaultValue={users} className="qty_select_dropdown" onChange={e => set_user(e.target.value)}>
                               <option key={1} defaultValue="">
                                 ---Choose User---
                               </option>
@@ -323,13 +290,7 @@ const EditFeaturePage = props => {
                       </li>
                       <li>
                         <label htmlFor="user">User</label>
-                        <input
-                          type="text"
-                          name="user"
-                          value={user}
-                          id="user"
-                          onChange={e => set_user(e.target.value)}
-                        />
+                        <input type="text" name="user" value={user} id="user" onChange={e => set_user(e.target.value)} />
                       </li>
 
                       <li>
@@ -343,9 +304,7 @@ const EditFeaturePage = props => {
                         />
                       </li>
                       <li>
-                        <label htmlFor="instagram_handle">
-                          Instagram Handle
-                        </label>
+                        <label htmlFor="instagram_handle">Instagram Handle</label>
                         <input
                           type="text"
                           name="instagram_handle"
@@ -366,23 +325,11 @@ const EditFeaturePage = props => {
                       </li>
                       <li>
                         <label htmlFor="category">Category</label>
-                        <input
-                          type="text"
-                          name="category"
-                          value={category}
-                          id="category"
-                          onChange={e => set_category(e.target.value)}
-                        />
+                        <input type="text" name="category" value={category} id="category" onChange={e => set_category(e.target.value)} />
                       </li>
                       <li>
                         <label htmlFor="pathname">Pathname</label>
-                        <input
-                          type="text"
-                          name="pathname"
-                          value={pathname}
-                          id="pathname"
-                          onChange={e => set_pathname(e.target.value)}
-                        />
+                        <input type="text" name="pathname" value={pathname} id="pathname" onChange={e => set_pathname(e.target.value)} />
                       </li>
                       <li>
                         <label htmlFor="description">Description</label>
@@ -398,20 +345,12 @@ const EditFeaturePage = props => {
 
                     <div className="w-420px m-10px">
                       <li>
-                        <label
-                          aria-label="Sort"
-                          htmlFor="sort"
-                          className="select-label mb-15px"
-                        >
+                        <label aria-label="Sort" htmlFor="sort" className="select-label mb-15px">
                           Product
                         </label>
                         <div className="ai-c h-25px mb-15px">
                           <div className="custom-select">
-                            <select
-                              defaultValue={product}
-                              className="qty_select_dropdown"
-                              onChange={e => set_product(e.target.value)}
-                            >
+                            <select defaultValue={product} className="qty_select_dropdown" onChange={e => set_product(e.target.value)}>
                               <option key={1} defaultValue="">
                                 ---Choose Product---
                               </option>
@@ -430,54 +369,24 @@ const EditFeaturePage = props => {
                       </li>
                       <li>
                         <label htmlFor="product">Product</label>
-                        <input
-                          type="text"
-                          name="product"
-                          value={product}
-                          id="product"
-                          onChange={e => set_product(e.target.value)}
-                        />
+                        <input type="text" name="product" value={product} id="product" onChange={e => set_product(e.target.value)} />
                       </li>
 
                       <li>
                         <label htmlFor="video">Video</label>
-                        <input
-                          type="text"
-                          name="video"
-                          value={video}
-                          id="video"
-                          onChange={e => set_video(e.target.value)}
-                        />
+                        <input type="text" name="video" value={video} id="video" onChange={e => set_video(e.target.value)} />
                       </li>
                       <li>
                         <label htmlFor="link">Link</label>
-                        <input
-                          type="text"
-                          name="link"
-                          value={link}
-                          id="link"
-                          onChange={e => set_link(e.target.value)}
-                        />
+                        <input type="text" name="link" value={link} id="link" onChange={e => set_link(e.target.value)} />
                       </li>
                       <li>
                         <label htmlFor="logo">Logo</label>
-                        <input
-                          type="text"
-                          name="logo"
-                          value={logo}
-                          id="logo"
-                          onChange={e => set_logo(e.target.value)}
-                        />
+                        <input type="text" name="logo" value={logo} id="logo" onChange={e => set_logo(e.target.value)} />
                       </li>
                       <li>
                         <label htmlFor="song_id">Song ID</label>
-                        <input
-                          type="text"
-                          name="song_id"
-                          value={song_id}
-                          id="song_id"
-                          onChange={e => set_song_id(e.target.value)}
-                        />
+                        <input type="text" name="song_id" value={song_id} id="song_id" onChange={e => set_song_id(e.target.value)} />
                       </li>
                       <li>
                         <label htmlFor="release_date">Release Date</label>
@@ -491,13 +400,7 @@ const EditFeaturePage = props => {
                       </li>
                       <li>
                         <label htmlFor="image">Image</label>
-                        <input
-                          type="text"
-                          name="image"
-                          value={image}
-                          id="image"
-                          onChange={e => set_image(e.target.value)}
-                        />
+                        <input type="text" name="image" value={image} id="image" onChange={e => set_image(e.target.value)} />
                         <GLButton variant="primary" onClick={e => add_image(e)}>
                           Add Image
                         </GLButton>
@@ -512,10 +415,7 @@ const EditFeaturePage = props => {
                     </GLButton>
                   </li>
                   <li>
-                    <GLButton
-                      variant="secondary"
-                      onClick={() => history.goBack()}
-                    >
+                    <GLButton variant="secondary" onClick={() => history.goBack()}>
                       Back to Features
                     </GLButton>
                   </li>

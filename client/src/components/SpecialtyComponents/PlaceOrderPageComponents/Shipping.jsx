@@ -63,7 +63,6 @@ export function Shipping({
     let clean = true;
     if (clean) {
       if (shipping && shipping.first_name && shipping.first_name.length > 1) {
-        console.log({ ShippingPage: shipping });
         set_email(shipping.email);
         set_first_name(shipping.first_name);
         set_last_name(shipping.last_name);
@@ -99,7 +98,6 @@ export function Shipping({
   const get_all_shipping = async () => {
     const { data } = await API_Shipping.get_all_shipping();
     set_all_shipping(data);
-    console.log({ data });
   };
 
   // const [ email_validations, set_email_validations ] = useState('');
@@ -128,7 +126,7 @@ export function Shipping({
       country,
       international
     };
-    console.log({ data });
+
     const request = validate_shipping(data);
     // set_email_validations(request.errors.email);
     set_first_name_validations(request.errors.first_name);
@@ -140,8 +138,6 @@ export function Shipping({
     set_country_validations(request.errors.country);
     set_international_validations(request.errors.international);
 
-    console.log(request);
-    console.log(request.errors.email);
     if (request.isValid) {
       dispatch(
         saveShipping({
@@ -221,34 +217,29 @@ export function Shipping({
 
   const update_google_shipping = shipping => {
     const street_num = document.querySelector("#autocomplete").value;
-    console.log({ street_num });
-
-    console.log({ shipping });
 
     const street_number = shipping.address_components.filter(comp => comp.types.includes("street_number"))[0];
-    console.log({ street_number });
+
     if (!street_number) {
       set_verify_shipping(false);
     }
     const address = shipping.address_components.filter(comp => comp.types.includes("route"))[0];
-    console.log({ address });
-    console.log({ address_1 });
+
     const street_1 = `${(street_number && street_number.long_name) || street_num.split(" ")[0]} ${address.short_name}`;
 
     const city = shipping.address_components.filter(comp => comp.types.includes("locality"))[0];
-    console.log({ street_1 });
-    console.log({ city });
+
     const state = shipping.address_components.filter(comp => comp.types.includes("administrative_area_level_1"))[0];
-    console.log({ state });
+
     const country = shipping.address_components.filter(comp => comp.types.includes("country"))[0];
-    console.log({ country });
+
     const postal_code = shipping.address_components.filter(comp => comp.types.includes("postal_code"))[0];
-    console.log({ postal_code });
+
     set_address_1(street_1);
     setCity(city.long_name || city.short_name);
     setState(state.short_name);
     setPostalCode(postal_code.long_name);
-    console.log({ country: country.short_name });
+
     setCountry(country.short_name);
     if (country.short_name !== "US") {
       setInternational(true);
@@ -263,14 +254,14 @@ export function Shipping({
   // const { ref } = usePlacesWidget({
   //   apiKey: process.env.REACT_APP_GOOGLE_PLACES_KEY,
   //   onPlaceSelected: place => {
-  //     console.log({ place });
+  //
   //     update_google_shipping(place);
   //   },
   //   options: {
   //     types: [ "address" ],
   //   },
   // });
-  // console.log({ ref });
+  //
 
   return (
     <div>
@@ -590,7 +581,7 @@ export function Shipping({
                   {Math.max(...cartItems.map(item => item.processing_time[1]))} business days
                 </h4>
               )}
-              {console.log({ agree })}
+
               <GLModal
                 show_modal={show_modal}
                 set_show_modal={set_show_modal}

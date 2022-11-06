@@ -12,22 +12,20 @@ export default {
       }
       return res.status(404).send({ message: "Products Not Found" });
     } catch (error) {
-      console.log({ findAll_products_c_error: error });
       res.status(500).send({ error, message: "Error Finding Products" });
     }
   },
   findById_products_c: async (req: any, res: any) => {
     const { params } = req;
-    console.log({ findById_products_c: params });
+
     try {
       const product = await product_services.findById_products_s(params);
-      console.log({ product });
+
       if (product) {
         return res.status(200).send(product);
       }
       return res.status(404).send({ message: "Product Not Found" });
     } catch (error) {
-      console.log({ findById_products_c_error: error });
       res.status(500).send({ error, message: "Error Finding Product" });
     }
   },
@@ -40,7 +38,6 @@ export default {
       }
       return res.status(500).send({ message: "Error Creating Product" });
     } catch (error) {
-      console.log({ create_products_c_error: error });
       res.status(500).send({ error, message: "Error Creating Product" });
     }
   },
@@ -53,7 +50,6 @@ export default {
       }
       return res.status(500).send({ message: "Error Updating Product" });
     } catch (error) {
-      console.log({ update_products_c_error: error });
       res.status(500).send({ error, message: "Error Updating Product" });
     }
   },
@@ -66,7 +62,6 @@ export default {
       }
       return res.status(500).send({ message: "Error Deleting Product" });
     } catch (error) {
-      console.log({ remove_products_c_error: error });
       res.status(500).send({ error, message: "Error Deleting Product" });
     }
   },
@@ -79,7 +74,6 @@ export default {
       }
       return res.status(500).send({ message: "Error Creating Product" });
     } catch (error) {
-      console.log({ create_products_c_error: error });
       res.status(500).send({ error, message: "Error Creating Product" });
     }
   },
@@ -92,7 +86,6 @@ export default {
       }
       return res.status(500).send({ message: "Error Updating Product" });
     } catch (error) {
-      console.log({ update_products_c_error: error });
       res.status(500).send({ error, message: "Error Updating Product" });
     }
   },
@@ -105,7 +98,6 @@ export default {
       }
       return res.status(500).send({ message: "Error Updating Product" });
     } catch (error) {
-      console.log({ update_products_c_error: error });
       res.status(500).send({ error, message: "Error Updating Product" });
     }
   },
@@ -118,7 +110,6 @@ export default {
       }
       return res.status(500).send({ message: "Error Deleting Product" });
     } catch (error) {
-      console.log({ update_stockproducts_c_error: error });
       res.status(500).send({ error, message: "Error Deleting Product" });
     }
   },
@@ -131,7 +122,6 @@ export default {
       }
       return res.status(404).send({ message: "Products Not Found" });
     } catch (error) {
-      console.log({ update_product_order_products_c_error: error });
       res.status(500).send({ error, message: "Error Finding Products" });
     }
   },
@@ -144,7 +134,6 @@ export default {
       }
       return res.status(404).send({ message: "Products Not Found" });
     } catch (error) {
-      console.log({ add_product_options_products_c_error: error });
       res.status(500).send({ error, message: "Error Finding Products" });
     }
   },
@@ -157,7 +146,6 @@ export default {
       }
       return res.status(500).send({ message: "Error Creating Product" });
     } catch (error) {
-      console.log({ create_products_c_error: error });
       res.status(500).send({ error, message: "Error Creating Product" });
     }
   },
@@ -170,7 +158,6 @@ export default {
       }
       return res.status(500).send({ message: "Error Deleting Product" });
     } catch (error) {
-      console.log({ reviews_products_c_error: error });
       res.status(500).send({ error, message: "Error Deleting Product" });
     }
   }
@@ -183,7 +170,7 @@ export default {
   //     }
   //     return res.status(500).send({ message: "Error Deleting Product" });
   //   } catch (error) {
-  //     console.log({ compress_images_products_c_error: error });
+  //
   //     res.status(500).send({ error, message: "Error Deleting Product" });
   //   }
   // },

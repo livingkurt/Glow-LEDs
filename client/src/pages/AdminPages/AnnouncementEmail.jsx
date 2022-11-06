@@ -5,12 +5,7 @@ import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { detailsEmail, listEmails } from "../../actions/emailActions";
 import { API_Emails } from "../../utils";
-import {
-  accurate_date,
-  format_date,
-  format_time,
-  unformat_date_and_time,
-} from "../../utils/helper_functions";
+import { accurate_date, format_date, format_time, unformat_date_and_time } from "../../utils/helper_functions";
 import { Notification } from "../../components/UtilityComponents";
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../components/GlowLEDsComponents";
@@ -18,14 +13,14 @@ const HtmlToReactParser = require("html-to-react").Parser;
 
 const AnnouncementEmail = props => {
   const history = useHistory();
-  const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
-  const [ test, set_test ] = useState(true);
-  const [ subject, set_subject ] = useState("");
-  const [ schedule, set_schedule ] = useState(false);
-  const [ email_sent_message, set_email_sent_message ] = useState("");
+  const [loading_checkboxes, set_loading_checkboxes] = useState(true);
+  const [test, set_test] = useState(true);
+  const [subject, set_subject] = useState("");
+  const [schedule, set_schedule] = useState(false);
+  const [email_sent_message, set_email_sent_message] = useState("");
   const today = new Date();
 
-  const [ template, set_template ] = useState("");
+  const [template, set_template] = useState("");
 
   const userLogin = useSelector(state => state.userLogin);
   const { userInfo } = userLogin;
@@ -36,8 +31,8 @@ const AnnouncementEmail = props => {
   const emailDetails = useSelector(state => state.emailDetails);
   const { email } = emailDetails;
 
-  const [ date, set_date ] = useState(format_date(accurate_date(today)));
-  const [ time, set_time ] = useState(format_time(accurate_date(today)));
+  const [date, set_date] = useState(format_date(accurate_date(today)));
+  const [time, set_time] = useState(format_time(accurate_date(today)));
 
   const dispatch = useDispatch();
 
@@ -49,24 +44,21 @@ const AnnouncementEmail = props => {
     return () => (clean = false);
   }, []);
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (email) {
-          view_announcement_email(email);
-          const scheduled = new Date(email.scheduled_at);
-          if (email.scheduled_at) {
-            set_schedule(true);
-            set_date(format_date(accurate_date(scheduled)));
-            set_time(format_time(accurate_date(scheduled)));
-          }
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (email) {
+        view_announcement_email(email);
+        const scheduled = new Date(email.scheduled_at);
+        if (email.scheduled_at) {
+          set_schedule(true);
+          set_date(format_date(accurate_date(scheduled)));
+          set_time(format_time(accurate_date(scheduled)));
         }
       }
-      return () => (clean = false);
-    },
-    [ email ]
-  );
+    }
+    return () => (clean = false);
+  }, [email]);
 
   setTimeout(() => {
     set_loading_checkboxes(false);
@@ -82,22 +74,17 @@ const AnnouncementEmail = props => {
   const send_announcement_email = async () => {
     const confirm = window.confirm("Are you sure you want to send this email?");
     if (confirm) {
-      set_email_sent_message(
-        `${schedule ? "Scheduled" : ""} ${test
-          ? "Test"
-          : ""} Email Successfully`
-      );
+      set_email_sent_message(`${schedule ? "Scheduled" : ""} ${test ? "Test" : ""} Email Successfully`);
       setTimeout(() => {
         set_email_sent_message("");
       }, 5000);
-      console.log({ send_announcement_email: "test" });
+
       const data = await API_Emails.send_announcement_email(
         email,
         `${test ? "[Test]" : ""} ${subject ? subject : email.h1}`,
         test,
         schedule ? unformat_date_and_time(date, time) : ""
       );
-      console.log(data);
     }
   };
   return (
@@ -139,26 +126,11 @@ const AnnouncementEmail = props => {
         )}
         {schedule && (
           <div className="jc-b g-10px">
-            <input
-              type="text"
-              value={date}
-              className="w-50per"
-              onChange={e => set_date(e.target.value)}
-            />
-            <input
-              type="text"
-              value={time}
-              className="w-50per"
-              onChange={e => set_time(e.target.value)}
-            />
+            <input type="text" value={date} className="w-50per" onChange={e => set_date(e.target.value)} />
+            <input type="text" value={time} className="w-50per" onChange={e => set_time(e.target.value)} />
           </div>
         )}
-        <input
-          type="text"
-          placeholder="Subject"
-          defaultValue={email && email.h1}
-          onChange={e => set_subject(e.target.value)}
-        />
+        <input type="text" placeholder="Subject" defaultValue={email && email.h1} onChange={e => set_subject(e.target.value)} />
         {loading_checkboxes ? (
           <div>Loading...</div>
         ) : (
@@ -175,11 +147,7 @@ const AnnouncementEmail = props => {
             />
           </div>
         )}
-        <GLButton
-          variant="primary"
-          className="mb-1rem"
-          onClick={() => send_announcement_email()}
-        >
+        <GLButton variant="primary" className="mb-1rem" onClick={() => send_announcement_email()}>
           Send {schedule && "Scheduled"} {test && "Test"} Email
         </GLButton>
       </div>

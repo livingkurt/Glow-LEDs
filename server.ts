@@ -33,7 +33,7 @@ mongoose
     useUnifiedTopology: true,
     useCreateIndex: true
   })
-  .catch((error: { reason: any }) => console.log(error.reason));
+  .catch((error: { reason: any }) => console.log(error));
 
 // Initialize your express application
 const app = express();
@@ -85,9 +85,7 @@ app.get("*", (request: any, response: any) => {
   response.sendFile(path.join(__dirname, "client/build", "index.html"));
 });
 
-app.listen(config.PORT, () => {
-  console.log("Server started at http://localhost:8080");
-});
+app.listen(config.PORT, () => {});
 
 app.post("/api/gcode", async (req: any, res: any) => {
   try {
@@ -95,12 +93,10 @@ app.post("/api/gcode", async (req: any, res: any) => {
     const data = req.body.gcode;
     fs.writeFile(`/Users/kurtlavacque/Desktop/${filename}`, data, (err: any) => {
       if (err) throw err;
-      console.log("Gcode Continous File Created");
+
       res.send("Gcode Continous File Created");
     });
-  } catch (err) {
-    console.log(err);
-  }
+  } catch (err) {}
 });
 
 //   // Start express

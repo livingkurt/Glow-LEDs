@@ -12,7 +12,7 @@ const day = unformatted_date.toString().slice(8, 10);
 
 const day_num = parseInt(day);
 
-// console.log({ day_num });
+//
 
 export const top_code_usage_upload = async (year: number, month: string) => {
   google_sheets_json.private_key = process.env.REACT_APP_GOOGLE_SHEETS_PRIVATE;
@@ -37,7 +37,7 @@ export const top_code_usage_upload = async (year: number, month: string) => {
     // doc.useApiKey('YOUR-API-KEY');
 
     await doc.loadInfo(); // loads document properties and worksheets
-    // console.log(doc.title);
+    //
     // await doc.updateProperties({ title: 'KYEO FB Product Sheet' });
 
     const { data: last_months_rows } = await API_Orders.affiliate_code_usage_orders_a({
@@ -50,8 +50,6 @@ export const top_code_usage_upload = async (year: number, month: string) => {
       month: "",
       position: ""
     });
-    console.log({ last_months_rows });
-    console.log({ total_rows });
 
     const sorted_total_rows = total_rows.affiliates.sort((a: any, b: any) => (parseFloat(a.Uses) > parseFloat(b.Uses) ? -1 : 1));
 
@@ -83,9 +81,7 @@ export const top_code_usage_upload = async (year: number, month: string) => {
     await newSheet.addRows(formated_last_month);
     await newSheet.saveUpdatedCells();
     // // await newSheet.delete();
-  } catch (error) {
-    console.log({ error });
-  }
+  } catch (error) {}
 };
 
 export const top_earner_upload = async (year: number, month: string) => {
@@ -111,7 +107,7 @@ export const top_earner_upload = async (year: number, month: string) => {
     // doc.useApiKey('YOUR-API-KEY');
 
     await doc.loadInfo(); // loads document properties and worksheets
-    // console.log(doc.title);
+    //
     // await doc.updateProperties({ title: 'KYEO FB Product Sheet' });
 
     const { data: last_months_rows } = await API_Orders.affiliate_code_usage_orders_a({
@@ -124,8 +120,6 @@ export const top_earner_upload = async (year: number, month: string) => {
       month: "",
       position: ""
     });
-    console.log({ last_months_rows });
-    console.log({ total_rows });
 
     const sorted_last_months_rows = last_months_rows.affiliates.sort((a: any, b: any) =>
       parseFloat(a.Revenue) > parseFloat(b.Revenue) ? -1 : 1
@@ -157,9 +151,7 @@ export const top_earner_upload = async (year: number, month: string) => {
     await newSheet.addRows(formated_last_month);
     await newSheet.saveUpdatedCells();
     // await newSheet.delete();
-  } catch (error) {
-    console.log({ error });
-  }
+  } catch (error) {}
 };
 
 export const affiliate_revenue_upload = async (position: any, year: number, month: string, google_sheet: string) => {
@@ -185,7 +177,7 @@ export const affiliate_revenue_upload = async (position: any, year: number, mont
     // doc.useApiKey('YOUR-API-KEY');
 
     await doc.loadInfo(); // loads document properties and worksheets
-    // console.log(doc.title);
+    //
     // await doc.updateProperties({ title: 'KYEO FB Product Sheet' });
 
     const { data: last_months_rows } = await API_Orders.affiliate_code_usage_orders_a({
@@ -198,9 +190,6 @@ export const affiliate_revenue_upload = async (position: any, year: number, mont
       month: "",
       position
     });
-
-    console.log({ last_months_rows });
-    console.log({ total_rows });
 
     const sorted_total_rows = total_rows.affiliates.sort((a: any, b: any) => (parseFloat(a.Revenue) > parseFloat(b.Revenue) ? -1 : 1));
     const sorted_last_months_rows = last_months_rows.affiliates.sort((a: any, b: any) =>
@@ -231,9 +220,7 @@ export const affiliate_revenue_upload = async (position: any, year: number, mont
     await newSheet.saveUpdatedCells();
 
     // await newSheet.delete();
-  } catch (error) {
-    console.log({ error });
-  }
+  } catch (error) {}
 };
 
 export const facebook_catalog_upload = async (products: any) => {
@@ -260,7 +247,7 @@ export const facebook_catalog_upload = async (products: any) => {
     // doc.useApiKey('YOUR-API-KEY');
 
     await doc.loadInfo(); // loads document properties and worksheets
-    // console.log(doc.title);
+    //
     // await doc.updateProperties({ title: 'KYEO FB Product Sheet' });
 
     const sheet = doc.sheetsByIndex[0]; // or use doc.sheetsById[id] or doc.sheetsByTitle[title]
@@ -346,9 +333,7 @@ export const facebook_catalog_upload = async (products: any) => {
     // adding / removing sheets
     // const newSheet = await doc.addSheet({ title: 'hot new sheet!' });
     // await newSheet.delete();
-  } catch (error) {
-    console.log({ error });
-  }
+  } catch (error) {}
 };
 export const current_products_upload = async (products: any) => {
   google_sheets_json.private_key = process.env.REACT_APP_GOOGLE_SHEETS_PRIVATE;
@@ -374,7 +359,7 @@ export const current_products_upload = async (products: any) => {
     // doc.useApiKey('YOUR-API-KEY');
 
     await doc.loadInfo(); // loads document properties and worksheets
-    // console.log(doc.title);
+    //
     // await doc.updateProperties({ title: 'KYEO FB Product Sheet' });
 
     const sheet = doc.sheetsByIndex[0]; // or use doc.sheetsById[id] or doc.sheetsByTitle[title]
@@ -463,9 +448,7 @@ export const current_products_upload = async (products: any) => {
     // adding / removing sheets
     // const newSheet = await doc.addSheet({ title: 'hot new sheet!' });
     // await newSheet.delete();
-  } catch (error) {
-    console.log({ error });
-  }
+  } catch (error) {}
 };
 
 export const google_catalog_upload = async (products: any) => {
@@ -490,7 +473,7 @@ export const google_catalog_upload = async (products: any) => {
     // doc.useApiKey('YOUR-API-KEY');
 
     await doc.loadInfo(); // loads document properties and worksheets
-    // console.log(doc.title);
+    //
     // await doc.updateProperties({ title: 'KYEO FB Product Sheet' });
 
     const sheet = doc.sheetsByIndex[0]; // or use doc.sheetsById[id] or doc.sheetsByTitle[title]
@@ -550,9 +533,7 @@ export const google_catalog_upload = async (products: any) => {
     // adding / removing sheets
     // const newSheet = await doc.addSheet({ title: 'hot new sheet!' });
     // await newSheet.delete();
-  } catch (error) {
-    console.log({ error });
-  }
+  } catch (error) {}
 };
 
 export const orders_upload = async (orders: any) => {
@@ -579,7 +560,7 @@ export const orders_upload = async (orders: any) => {
     // doc.useApiKey('YOUR-API-KEY');
 
     await doc.loadInfo(); // loads document properties and worksheets
-    // console.log(doc.title);
+    //
     // await doc.updateProperties({ title: 'KYEO FB Product Sheet' });
 
     const sheet = doc.sheetsByIndex[0]; // or use doc.sheetsById[id] or doc.sheetsByTitle[title]
@@ -655,7 +636,5 @@ export const orders_upload = async (orders: any) => {
     // adding / removing sheets
     // const newSheet = await doc.addSheet({ title: 'hot new sheet!' });
     // await newSheet.delete();
-  } catch (error) {
-    console.log({ error });
-  }
+  } catch (error) {}
 };

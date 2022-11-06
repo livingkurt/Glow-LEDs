@@ -13,18 +13,15 @@ const ImageDisplay = ({ images, set_images, image, set_image, name }) => {
 
   const add_image = e => {
     e.preventDefault();
-    console.log(image);
+
     if (image.indexOf(" ") >= 0) {
-      console.log("indexOf");
       image.split(" ").map(image => {
-        set_images(images => [ ...images, image ]);
+        set_images(images => [...images, image]);
       });
     } else if (images) {
-      console.log("images.length > 0");
-      set_images(images => [ ...images, image ]);
+      set_images(images => [...images, image]);
     } else {
-      console.log("images.length === 0");
-      set_images([ image ]);
+      set_images([image]);
     }
     set_image("");
   };
@@ -45,7 +42,7 @@ const ImageDisplay = ({ images, set_images, image, set_image, name }) => {
   };
 
   // const move = (arr, old_index, new_index) => {
-  // 	console.log({ arr, old_index, new_index });
+  //
   // 	while (old_index < 0) {
   // 		old_index += arr.length;
   // 	}
@@ -59,12 +56,12 @@ const ImageDisplay = ({ images, set_images, image, set_image, name }) => {
   // 		}
   // 	}
   // 	arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
-  // 	console.log({ arr });
+  //
   // 	return arr;
   // };
 
   const move = (from, to, arr) => {
-    const newArr = [ ...arr ];
+    const newArr = [...arr];
 
     const item = newArr.splice(from, 1)[0];
     newArr.splice(to, 0, item);
@@ -75,13 +72,7 @@ const ImageDisplay = ({ images, set_images, image, set_image, name }) => {
     <div>
       <li>
         <label htmlFor="image">{name ? name : "Image"}</label>
-        <input
-          type="text"
-          name="image"
-          value={image}
-          id="image"
-          onChange={e => set_image(e.target.value)}
-        />
+        <input type="text" name="image" value={image} id="image" onChange={e => set_image(e.target.value)} />
         <GLButton variant="primary" onClick={e => add_image(e)}>
           Add Image
         </GLButton>
@@ -90,10 +81,7 @@ const ImageDisplay = ({ images, set_images, image, set_image, name }) => {
         {images &&
           images.map((picture, index) => {
             return (
-              <div
-                className="promo_code mv-1rem jc-b max-w-17rem w-100per"
-                key={index}
-              >
+              <div className="promo_code mv-1rem jc-b max-w-17rem w-100per" key={index}>
                 <div className="w-100per">
                   <div className="row ai-fs jc-b w-100per">
                     <img
@@ -103,7 +91,7 @@ const ImageDisplay = ({ images, set_images, image, set_image, name }) => {
                         package_height: "auto",
                         maxWidth: "100px",
                         maxHeight: "100px",
-                        borderRadius: "15px",
+                        borderRadius: "15px"
                       }}
                       className="mv-10px ml-10px"
                       src={picture}
@@ -112,32 +100,18 @@ const ImageDisplay = ({ images, set_images, image, set_image, name }) => {
                     {picture}
                   </div> */}
                     <div className="jc-fe column">
-                      <GLButton
-                        variant="icon"
-                        onClick={e => remove_image(index, e)}
-                      >
+                      <GLButton variant="icon" onClick={e => remove_image(index, e)}>
                         <i className="fas fa-times" aria-label="Delete" />
                       </GLButton>
                       {index > 0 && (
-                        <GLButton
-                          variant="icon"
-                          onClick={() => move(index, index - 1, images)}
-                          aria-label="Move Up"
-                        >
+                        <GLButton variant="icon" onClick={() => move(index, index - 1, images)} aria-label="Move Up">
                           <i className=" fas fa-sort-up" />
                         </GLButton>
                       )}
 
                       {index < images.length - 1 && (
-                        <GLButton
-                          variant="icon"
-                          onClick={() => move(index, index + 1, images)}
-                          aria-label="Move Down"
-                        >
-                          <i
-                            style={{ WebkitTransform: "rotate(-180deg)" }}
-                            className=" fas fa-sort-up"
-                          />
+                        <GLButton variant="icon" onClick={() => move(index, index + 1, images)} aria-label="Move Down">
+                          <i style={{ WebkitTransform: "rotate(-180deg)" }} className=" fas fa-sort-up" />
                         </GLButton>
                       )}
                     </div>

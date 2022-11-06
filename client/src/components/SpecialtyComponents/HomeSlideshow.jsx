@@ -33,20 +33,18 @@ const HomeSlideshow = ({ slideshow }) => {
       "test",
       null,
       Object.defineProperty({}, "passive", {
-        get: function() {
+        get: function () {
           supportsPassive = true;
-        },
+        }
       })
     );
   } catch (e) {}
 
   var wheelOpt = supportsPassive ? { passive: false } : false;
-  var wheelEvent =
-    "onwheel" in document.createElement("div") ? "wheel" : "mousewheel";
+  var wheelEvent = "onwheel" in document.createElement("div") ? "wheel" : "mousewheel";
 
   // call this to Disable
   function disableScroll() {
-    console.log("disableScroll");
     window.addEventListener("DOMMouseScroll", preventDefault, false); // older FF
     window.addEventListener(wheelEvent, preventDefault, wheelOpt); // modern desktop
     window.addEventListener("touchmove", preventDefault, wheelOpt); // mobile
@@ -55,7 +53,6 @@ const HomeSlideshow = ({ slideshow }) => {
 
   // call this to Enable
   function enableScroll() {
-    console.log("enableScroll");
     window.removeEventListener("DOMMouseScroll", preventDefault, false);
     window.removeEventListener(wheelEvent, preventDefault, wheelOpt);
     window.removeEventListener("touchmove", preventDefault, wheelOpt);
@@ -66,24 +63,24 @@ const HomeSlideshow = ({ slideshow }) => {
     superLargeDesktop: {
       // the naming can be any, depends on you.
       breakpoint: { max: 8000, min: 1400 },
-      items: 1,
+      items: 1
     },
     desktop: {
       breakpoint: { max: 1400, min: 1100 },
-      items: 1,
+      items: 1
     },
     desktop_2: {
       breakpoint: { max: 1100, min: 900 },
-      items: 1,
+      items: 1
     },
     tablet: {
       breakpoint: { max: 900, min: 464 },
-      items: 1,
+      items: 1
     },
     mobile: {
       breakpoint: { max: 464, min: 0 },
-      items: 1,
-    },
+      items: 1
+    }
   };
   return (
     <Carousel
@@ -102,7 +99,7 @@ const HomeSlideshow = ({ slideshow }) => {
       // keyBoardControl={true}
       // transitionDuration={5000}
       containerClass="carousel-container"
-      removeArrowOnDeviceType={[ "tablet", "mobile" ]}
+      removeArrowOnDeviceType={["tablet", "mobile"]}
       deviceType={mobile_check() ? "mobile" : "desktop"}
       dotListClass="custom-dot-list-style"
       itemClass="carousel-item-padding-40-px"
@@ -114,13 +111,7 @@ const HomeSlideshow = ({ slideshow }) => {
               {slide.label}
             </GLButton>
           </Link>
-          <img
-            key={index}
-            src={slide.image}
-            draggable={false}
-            alt="carousel"
-            title="carousel item"
-          />
+          <img key={index} src={slide.image} draggable={false} alt="carousel" title="carousel item" />
         </div>
       ))}
     </Carousel>

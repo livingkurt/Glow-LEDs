@@ -9,8 +9,8 @@ export default {
         ? {
             email_type: {
               $regex: query.search,
-              $options: "i",
-            },
+              $options: "i"
+            }
           }
         : {};
       const filter = determine_filter(query, search);
@@ -24,7 +24,6 @@ export default {
 
       return await email_db.findAll_emails_db(filter, sort);
     } catch (error) {
-      console.log({ findAll_emails_s_error: error });
       throw new Error(error.message);
     }
   },
@@ -32,7 +31,6 @@ export default {
     try {
       return await email_db.findById_emails_db(params.id);
     } catch (error) {
-      console.log({ findById_emails_s_error: error });
       throw new Error(error.message);
     }
   },
@@ -40,7 +38,6 @@ export default {
     try {
       return await email_db.create_emails_db(body);
     } catch (error) {
-      console.log({ create_emails_s_error: error });
       throw new Error(error.message);
     }
   },
@@ -48,7 +45,6 @@ export default {
     try {
       return await email_db.update_emails_db(params.id, body);
     } catch (error) {
-      console.log({ update_emails_s_error: error });
       throw new Error(error.message);
     }
   },
@@ -56,50 +52,44 @@ export default {
     try {
       return await email_db.remove_emails_db(params.id);
     } catch (error) {
-      console.log({ remove_emails_s_error: error });
       throw new Error(error.message);
     }
   },
   send_emails_s: async (body: any) => {
-    const test = [ "lavacquek@icloud.com" ];
-    const email: any = body.test
-      ? test
-      : body.email ? body.email : process.env.INFO_EMAIL;
+    const test = ["lavacquek@icloud.com"];
+    const email: any = body.test ? test : body.email ? body.email : process.env.INFO_EMAIL;
     const mailOptions = {
       to: email,
       from: process.env.DISPLAY_INFO_EMAIL,
       subject: body.subject,
-      html: body.template,
+      html: body.template
     };
     return mailOptions;
   },
   send_all_emails_s: async (body: any) => {
     // const users = await User.find({ deleted: false, email_subscription: true });
-    const users = await user_db.findAll_users_db(
-      { deleted: false, email_subscription: true },
-      {}
-    );
+    const users = await user_db.findAll_users_db({ deleted: false, email_subscription: true }, {});
     const all_emails = users
       .filter((user: any) => user.deleted === false)
       .filter((user: any) => user.email_subscription === true)
       .map((user: any) => user.email);
-    console.log({ all_emails });
+
     const test = [
       "lavacquek@icloud.com",
       "lavacquek@gmail.com",
       "livingkurt222@gmail.com",
       "destanyesalinas@gmail.com",
-      "zestanye@gmail.com",
+      "zestanye@gmail.com"
     ];
     const emails: any = body.test ? test : all_emails;
-    console.log({ emails });
+
     const mailOptions = {
       to: body.email ? body.email : process.env.INFO_EMAIL,
       from: process.env.DISPLAY_INFO_EMAIL,
       subject: body.subject,
       html: body.template,
-      bcc: emails,
+      bcc: emails
     };
     return mailOptions;
-  },
+  }
 };

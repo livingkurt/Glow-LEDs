@@ -39,7 +39,7 @@ const SubmitFeaturePage = props => {
 
   const userLogin = useSelector(state => state.userLogin);
   const { userInfo } = userLogin;
-  // console.log(users);
+  //
   // setTimeout(() => {
   // 	set_loading_checkboxes(false);
   // }, 500);
@@ -56,13 +56,10 @@ const SubmitFeaturePage = props => {
 
   const dispatch = useDispatch();
 
-  console.log({ feature });
-
   useEffect(() => {
     let clean = true;
     if (clean) {
       if (props.match.params.pathname) {
-        console.log("Is ID");
         dispatch(detailsFeature(props.match.params.pathname));
         dispatch(detailsFeature(props.match.params.pathname));
       } else {
@@ -80,10 +77,8 @@ const SubmitFeaturePage = props => {
     let clean = true;
     if (clean) {
       if (feature) {
-        console.log("Set");
         set_state();
       } else {
-        console.log("UnSet");
         unset_state();
       }
     }
@@ -168,7 +163,6 @@ const SubmitFeaturePage = props => {
     let clean = true;
     if (clean) {
       if (success && feature_saved) {
-        console.log({ feature_saved });
         props.history.push("/pages/complete/feature/" + feature_saved.pathname);
         // history.push('/account/feature/receipt/' + feature_saved.pathname + '/feature/true');
       }

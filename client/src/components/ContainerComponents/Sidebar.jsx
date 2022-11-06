@@ -70,7 +70,7 @@ const Sidebar = props => {
 
   const show_hide = id => {
     const current_menu = document.getElementById(id);
-    console.log(current_menu.classList);
+
     current_menu.classList.toggle("hide-menu");
   };
 

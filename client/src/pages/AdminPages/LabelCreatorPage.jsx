@@ -17,21 +17,19 @@ const LabelCreatorPage = props => {
   const parcelList = useSelector(state => state.parcelList);
   const { parcels } = parcelList;
 
-  const [ all_shipping, set_all_shipping ] = useState([]);
-  const [ loading, set_loading ] = useState(true);
-  const [ to_shipping, set_to_shipping ] = useState({});
-  const [ from_shipping, set_from_shipping ] = useState({});
-  const [ package_dimensions, set_package_dimensions ] = useState({});
-  const [ shipping_rates, set_shipping_rates ] = useState([]);
-  const [ shipping_rate, set_shipping_rate ] = useState({});
-  const [ rate, set_rate ] = useState("");
-  const [ shipment_id, set_shipment_id ] = useState("");
-  const [ hide_label_button, set_hide_label_button ] = useState(true);
-  const [ loading_shipping_rates, set_loading_shipping_rates ] = useState(
-    false
-  );
-  const [ loading_label, set_loading_label ] = useState(false);
-  const [ label, set_label ] = useState(false);
+  const [all_shipping, set_all_shipping] = useState([]);
+  const [loading, set_loading] = useState(true);
+  const [to_shipping, set_to_shipping] = useState({});
+  const [from_shipping, set_from_shipping] = useState({});
+  const [package_dimensions, set_package_dimensions] = useState({});
+  const [shipping_rates, set_shipping_rates] = useState([]);
+  const [shipping_rate, set_shipping_rate] = useState({});
+  const [rate, set_rate] = useState("");
+  const [shipment_id, set_shipment_id] = useState("");
+  const [hide_label_button, set_hide_label_button] = useState(true);
+  const [loading_shipping_rates, set_loading_shipping_rates] = useState(false);
+  const [loading_label, set_loading_label] = useState(false);
+  const [label, set_label] = useState(false);
 
   useEffect(() => {
     let clean = true;
@@ -47,7 +45,6 @@ const LabelCreatorPage = props => {
   const get_all_shipping = async () => {
     const { data } = await API_Shipping.get_all_shipping();
     set_all_shipping(data);
-    console.log({ data });
   };
 
   const dispatch = useDispatch();
@@ -56,8 +53,7 @@ const LabelCreatorPage = props => {
     e.preventDefault();
     set_loading_label(true);
     const { data } = await API_Shipping.buy_label(shipment_id, shipping_rate);
-    console.log({ data });
-    console.log({ label: data.postage_label.label_url });
+
     show_label(data.postage_label.label_url, e);
     set_label(data.postage_label.label_url);
     // print_invoice(data.postage_label.label_url);
@@ -75,8 +71,8 @@ const LabelCreatorPage = props => {
   // 		userInfo,
   // 		shipping_rate
   // 	});
-  // 	console.log({ data });
-  // 	console.log({ label: data.postage_label.label_url });
+  //
+  //
   // 	show_label(data.postage_label.label_url);
   // 	set_label(data.postage_label.label_url);
   // 	// print_invoice(data.postage_label.label_url);
@@ -115,8 +111,8 @@ const LabelCreatorPage = props => {
     const frameDoc = frame1.contentWindow
       ? frame1.contentWindow
       : frame1.contentDocument.document
-        ? frame1.contentDocument.document
-        : frame1.contentDocument;
+      ? frame1.contentDocument.document
+      : frame1.contentDocument;
     frameDoc.document.open();
     frameDoc.document.write("</head><body>");
     frameDoc.document.write(`<div style="width: 100%;
@@ -127,7 +123,7 @@ const LabelCreatorPage = props => {
     </div>`);
     frameDoc.document.write("</body></html>");
     frameDoc.document.close();
-    setTimeout(function() {
+    setTimeout(function () {
       window.frames["frame1"].focus();
       window.frames["frame1"].print();
       document.body.removeChild(frame1);
@@ -146,10 +142,9 @@ const LabelCreatorPage = props => {
       to_shipping,
       from_shipping,
       package_dimensions,
-      userInfo,
+      userInfo
     });
-    console.log({ data });
-    console.log({ rates: data.shipment.rates });
+
     set_shipping_rates(data.shipment.rates);
     set_shipment_id(data.shipment.id);
     set_loading_shipping_rates(false);
@@ -168,7 +163,7 @@ const LabelCreatorPage = props => {
   const update_to_shipping = (e, shipping) => {
     e.preventDefault();
     shipping = JSON.parse(shipping);
-    console.log({ shipping });
+
     set_to_shipping({
       ...to_shipping,
       first_name: shipping.first_name || "",
@@ -182,13 +177,13 @@ const LabelCreatorPage = props => {
       international: shipping.international || "",
       phone: shipping.phone || "",
       email: shipping.email || "",
-      company: shipping.company || "",
+      company: shipping.company || ""
     });
   };
   const update_from_shipping = (e, shipping) => {
     e.preventDefault();
     shipping = JSON.parse(shipping);
-    console.log({ shipping });
+
     set_from_shipping({
       ...to_shipping,
       first_name: shipping.first_name || "",
@@ -202,18 +197,18 @@ const LabelCreatorPage = props => {
       international: shipping.international || "",
       phone: shipping.phone || "",
       email: shipping.email || "",
-      company: shipping.company || "",
+      company: shipping.company || ""
     });
   };
   const update_parcel = (e, parcel) => {
     e.preventDefault();
     parcel = JSON.parse(parcel);
-    console.log({ parcel });
+
     set_package_dimensions({
       ...package_dimensions,
       package_length: parcel.length || 0,
       package_width: parcel.width || 0,
-      package_height: parcel.height || 0,
+      package_height: parcel.height || 0
     });
   };
   const address = {
@@ -226,7 +221,7 @@ const LabelCreatorPage = props => {
     country: process.env.REACT_APP_RETURN_COUNTRY,
     phone: "906-284-2208",
     email: process.env.REACT_APP_INFO_EMAIL,
-    company: "Glow LEDs",
+    company: "Glow LEDs"
   };
   const destanye_address = {
     first_name: "Destanye",
@@ -238,7 +233,7 @@ const LabelCreatorPage = props => {
     country: process.env.REACT_APP_RETURN_COUNTRY,
     phone: "",
     email: "destanyesalinas@gmail.com",
-    company: "",
+    company: ""
   };
 
   const choose_shipping_rate = (e, rate, speed) => {
@@ -269,27 +264,13 @@ const LabelCreatorPage = props => {
   };
 
   const update_google_shipping = (shipping, type) => {
-    console.log({ shipping });
-    console.log({ to_shipping, from_shipping });
-    const street_number = shipping.address_components.filter(comp =>
-      comp.types.includes("street_number")
-    )[0];
-    const address = shipping.address_components.filter(comp =>
-      comp.types.includes("route")
-    )[0];
+    const street_number = shipping.address_components.filter(comp => comp.types.includes("street_number"))[0];
+    const address = shipping.address_components.filter(comp => comp.types.includes("route"))[0];
     const address_1 = `${street_number.long_name} ${address.short_name}`;
-    const city = shipping.address_components.filter(comp =>
-      comp.types.includes("locality")
-    )[0];
-    const state = shipping.address_components.filter(comp =>
-      comp.types.includes("administrative_area_level_1")
-    )[0];
-    const country = shipping.address_components.filter(comp =>
-      comp.types.includes("country")
-    )[0];
-    const postal_code = shipping.address_components.filter(comp =>
-      comp.types.includes("postal_code")
-    )[0];
+    const city = shipping.address_components.filter(comp => comp.types.includes("locality"))[0];
+    const state = shipping.address_components.filter(comp => comp.types.includes("administrative_area_level_1"))[0];
+    const country = shipping.address_components.filter(comp => comp.types.includes("country"))[0];
+    const postal_code = shipping.address_components.filter(comp => comp.types.includes("postal_code"))[0];
     if (type === "to") {
       set_to_shipping({
         ...to_shipping,
@@ -297,9 +278,8 @@ const LabelCreatorPage = props => {
         city: city.long_name,
         state: state.short_name,
         postalCode: postal_code.long_name,
-        country:
-          country.short_name !== "US" ? country.long_name : country.short_name,
-        international: country.short_name !== "US" ? true : false,
+        country: country.short_name !== "US" ? country.long_name : country.short_name,
+        international: country.short_name !== "US" ? true : false
       });
     } else if (type === "from") {
       set_from_shipping({
@@ -308,18 +288,16 @@ const LabelCreatorPage = props => {
         city: city.long_name,
         state: state.short_name,
         postalCode: postal_code.long_name,
-        country:
-          country.short_name !== "US" ? country.long_name : country.short_name,
-        international: country.short_name !== "US" ? true : false,
+        country: country.short_name !== "US" ? country.long_name : country.short_name,
+        international: country.short_name !== "US" ? true : false
       });
     }
-    console.log({ to_shipping, from_shipping });
 
     // set_address_1(address_1);
     // setCity(city.long_name);
     // setState(state.short_name);
     // setPostalCode(postal_code.long_name);
-    // console.log({ country: country.short_name });
+    //
     // setCountry(country.short_name);
     // if (country.short_name !== 'US') {
     // 	setInternational(true);
@@ -334,14 +312,8 @@ const LabelCreatorPage = props => {
         <title>Shipping | Glow LEDs</title>
         <meta property="og:title" content="Shipping" />
         <meta name="twitter:title" content="Shipping" />
-        <link
-          rel="canonical"
-          href="https://www.glow-leds.com/secure/checkout/shipping"
-        />
-        <meta
-          property="og:url"
-          content="https://www.glow-leds.com/secure/checkout/shipping"
-        />
+        <link rel="canonical" href="https://www.glow-leds.com/secure/checkout/shipping" />
+        <meta property="og:url" content="https://www.glow-leds.com/secure/checkout/shipping" />
       </Helmet>
       {/* <CheckoutSteps step1 step2 /> */}
       <Loading loading={loading_shipping_rates} />
@@ -352,37 +324,24 @@ const LabelCreatorPage = props => {
             <div className="wrap jc-b">
               <div className="w-35rem m-10px">
                 <li>
-                  <h1 style={{ textAlign: "center", width: "100%" }}>
-                    To Shipping
-                  </h1>
+                  <h1 style={{ textAlign: "center", width: "100%" }}>To Shipping</h1>
                 </li>
                 <li>
-                  <GLButton
-                    variant="primary"
-                    onClick={e =>
-                      update_to_shipping(e, JSON.stringify(address))}
-                  >
+                  <GLButton variant="primary" onClick={e => update_to_shipping(e, JSON.stringify(address))}>
                     To Glow LEDs
                   </GLButton>
                 </li>
-                {userInfo &&
-                userInfo.isAdmin && (
+                {userInfo && userInfo.isAdmin && (
                   <li>
                     <div className="ai-c h-25px mv-10px mb-30px jc-c">
                       <div className="custom-select w-100per">
-                        <select
-                          className="qty_select_dropdown w-100per"
-                          onChange={e => update_to_shipping(e, e.target.value)}
-                        >
+                        <select className="qty_select_dropdown w-100per" onChange={e => update_to_shipping(e, e.target.value)}>
                           <option key={1} defaultValue="">
                             ---Choose To Shipping---
                           </option>
                           {all_shipping &&
                             all_shipping.map((shipping, index) => (
-                              <option
-                                key={index}
-                                value={JSON.stringify(shipping)}
-                              >
+                              <option key={index} value={JSON.stringify(shipping)}>
                                 {shipping.first_name} {shipping.last_name}
                               </option>
                             ))}
@@ -403,8 +362,9 @@ const LabelCreatorPage = props => {
                     onChange={e =>
                       set_to_shipping({
                         ...to_shipping,
-                        email: e.target.value,
-                      })}
+                        email: e.target.value
+                      })
+                    }
                   />
                 </li>
                 <li>
@@ -417,8 +377,9 @@ const LabelCreatorPage = props => {
                     onChange={e =>
                       set_to_shipping({
                         ...to_shipping,
-                        phone: e.target.value,
-                      })}
+                        phone: e.target.value
+                      })
+                    }
                   />
                 </li>
                 <li>
@@ -431,8 +392,9 @@ const LabelCreatorPage = props => {
                     onChange={e =>
                       set_to_shipping({
                         ...to_shipping,
-                        first_name: e.target.value,
-                      })}
+                        first_name: e.target.value
+                      })
+                    }
                   />
                 </li>
                 {/* <label className="validation_text" style={{ justifyContent: 'center' }}>
@@ -448,8 +410,9 @@ const LabelCreatorPage = props => {
                     onChange={e =>
                       set_to_shipping({
                         ...to_shipping,
-                        last_name: e.target.value,
-                      })}
+                        last_name: e.target.value
+                      })
+                    }
                   />
                 </li>
                 {/* <label className="validation_text" style={{ justifyContent: 'center' }}>
@@ -465,8 +428,9 @@ const LabelCreatorPage = props => {
                     onChange={e =>
                       set_to_shipping({
                         ...to_shipping,
-                        company: e.target.value,
-                      })}
+                        company: e.target.value
+                      })
+                    }
                   />
                 </li>
                 {/* <li>
@@ -490,10 +454,11 @@ const LabelCreatorPage = props => {
                     onChange={e =>
                       set_to_shipping({
                         ...to_shipping,
-                        address_1: e.target.value,
-                      })}
+                        address_1: e.target.value
+                      })
+                    }
                     options={{
-                      types: [ "address" ],
+                      types: ["address"]
                     }}
                     onPlaceSelected={place => {
                       update_google_shipping(place, "to");
@@ -513,8 +478,9 @@ const LabelCreatorPage = props => {
                     onChange={e =>
                       set_to_shipping({
                         ...to_shipping,
-                        address_2: e.target.value,
-                      })}
+                        address_2: e.target.value
+                      })
+                    }
                   />
                 </li>
                 <li>
@@ -524,8 +490,7 @@ const LabelCreatorPage = props => {
                     value={to_shipping.city}
                     name="city"
                     id="city"
-                    onChange={e =>
-                      set_to_shipping({ ...to_shipping, city: e.target.value })}
+                    onChange={e => set_to_shipping({ ...to_shipping, city: e.target.value })}
                   />
                 </li>
                 {/* <label className="validation_text" style={{ justifyContent: 'center' }}>
@@ -543,8 +508,9 @@ const LabelCreatorPage = props => {
                           onChange={e =>
                             set_to_shipping({
                               ...to_shipping,
-                              state: e.target.value,
-                            })}
+                              state: e.target.value
+                            })
+                          }
                           value={to_shipping.state}
                         >
                           {state_names.map((state, index) => (
@@ -569,8 +535,9 @@ const LabelCreatorPage = props => {
                       onChange={e =>
                         set_to_shipping({
                           ...to_shipping,
-                          state: e.target.value,
-                        })}
+                          state: e.target.value
+                        })
+                      }
                     />
                   </li>
                 )}
@@ -587,8 +554,9 @@ const LabelCreatorPage = props => {
                     onChange={e =>
                       set_to_shipping({
                         ...to_shipping,
-                        postalCode: e.target.value,
-                      })}
+                        postalCode: e.target.value
+                      })
+                    }
                   />
                 </li>
                 {/* <label className="validation_text" style={{ justifyContent: 'center' }}>
@@ -610,8 +578,9 @@ const LabelCreatorPage = props => {
                         onChange={e =>
                           set_to_shipping({
                             ...to_shipping,
-                            city: e.target.checked,
-                          })}
+                            city: e.target.checked
+                          })
+                        }
                       />
                     </li>
 
@@ -626,8 +595,9 @@ const LabelCreatorPage = props => {
                           onChange={e =>
                             set_to_shipping({
                               ...to_shipping,
-                              country: e.target.checked,
-                            })}
+                              country: e.target.checked
+                            })
+                          }
                         />
                       </li>
                     )}
@@ -641,47 +611,29 @@ const LabelCreatorPage = props => {
 
               <div className="w-35rem m-10px">
                 <li>
-                  <h1 style={{ textAlign: "center", width: "100%" }}>
-                    From Shipping
-                  </h1>
+                  <h1 style={{ textAlign: "center", width: "100%" }}>From Shipping</h1>
                 </li>
                 <li>
-                  <GLButton
-                    variant="primary"
-                    onClick={e =>
-                      update_from_shipping(e, JSON.stringify(address))}
-                  >
+                  <GLButton variant="primary" onClick={e => update_from_shipping(e, JSON.stringify(address))}>
                     From Glow LEDs
                   </GLButton>
                 </li>
                 <li>
-                  <GLButton
-                    variant="primary"
-                    onClick={e =>
-                      update_from_shipping(e, JSON.stringify(destanye_address))}
-                  >
+                  <GLButton variant="primary" onClick={e => update_from_shipping(e, JSON.stringify(destanye_address))}>
                     From Destanye
                   </GLButton>
                 </li>
-                {userInfo &&
-                userInfo.isAdmin && (
+                {userInfo && userInfo.isAdmin && (
                   <li>
                     <div className="ai-c h-25px mv-10px mb-30px jc-c">
                       <div className="custom-select w-100per">
-                        <select
-                          className="qty_select_dropdown w-100per"
-                          onChange={e =>
-                            update_from_shipping(e, e.target.value)}
-                        >
+                        <select className="qty_select_dropdown w-100per" onChange={e => update_from_shipping(e, e.target.value)}>
                           <option key={1} defaultValue="">
                             ---Choose From Shipping---
                           </option>
                           {all_shipping &&
                             all_shipping.map((shipping, index) => (
-                              <option
-                                key={index}
-                                value={JSON.stringify(shipping)}
-                              >
+                              <option key={index} value={JSON.stringify(shipping)}>
                                 {shipping.first_name} {shipping.last_name}
                               </option>
                             ))}
@@ -701,8 +653,9 @@ const LabelCreatorPage = props => {
                     onChange={e =>
                       set_from_shipping({
                         ...from_shipping,
-                        email: e.target.value,
-                      })}
+                        email: e.target.value
+                      })
+                    }
                   />
                 </li>
                 <li>
@@ -715,8 +668,9 @@ const LabelCreatorPage = props => {
                     onChange={e =>
                       set_from_shipping({
                         ...from_shipping,
-                        phone: e.target.value,
-                      })}
+                        phone: e.target.value
+                      })
+                    }
                   />
                 </li>
                 <li>
@@ -729,8 +683,9 @@ const LabelCreatorPage = props => {
                     onChange={e =>
                       set_from_shipping({
                         ...from_shipping,
-                        first_name: e.target.value,
-                      })}
+                        first_name: e.target.value
+                      })
+                    }
                   />
                 </li>
                 {/* <label className="validation_text" style={{ justifyContent: 'center' }}>
@@ -746,8 +701,9 @@ const LabelCreatorPage = props => {
                     onChange={e =>
                       set_from_shipping({
                         ...from_shipping,
-                        last_name: e.target.value,
-                      })}
+                        last_name: e.target.value
+                      })
+                    }
                   />
                 </li>
                 {/* <label className="validation_text" style={{ justifyContent: 'center' }}>
@@ -763,8 +719,9 @@ const LabelCreatorPage = props => {
                     onChange={e =>
                       set_from_shipping({
                         ...from_shipping,
-                        company: e.target.value,
-                      })}
+                        company: e.target.value
+                      })
+                    }
                   />
                 </li>
                 {/* <li>
@@ -789,10 +746,11 @@ const LabelCreatorPage = props => {
                     onChange={e =>
                       set_from_shipping({
                         ...from_shipping,
-                        address_1: e.target.value,
-                      })}
+                        address_1: e.target.value
+                      })
+                    }
                     options={{
-                      types: [ "address" ],
+                      types: ["address"]
                     }}
                     onPlaceSelected={place => {
                       update_google_shipping(place, "from");
@@ -812,8 +770,9 @@ const LabelCreatorPage = props => {
                     onChange={e =>
                       set_from_shipping({
                         ...from_shipping,
-                        address_2: e.target.value,
-                      })}
+                        address_2: e.target.value
+                      })
+                    }
                   />
                 </li>
                 <li>
@@ -826,8 +785,9 @@ const LabelCreatorPage = props => {
                     onChange={e =>
                       set_from_shipping({
                         ...from_shipping,
-                        city: e.target.value,
-                      })}
+                        city: e.target.value
+                      })
+                    }
                   />
                 </li>
                 {/* <label className="validation_text" style={{ justifyContent: 'center' }}>
@@ -845,8 +805,9 @@ const LabelCreatorPage = props => {
                           onChange={e =>
                             set_from_shipping({
                               ...from_shipping,
-                              state: e.target.value,
-                            })}
+                              state: e.target.value
+                            })
+                          }
                           value={from_shipping.state}
                         >
                           {state_names.map((state, index) => (
@@ -871,8 +832,9 @@ const LabelCreatorPage = props => {
                       onChange={e =>
                         set_from_shipping({
                           ...from_shipping,
-                          state: e.target.value,
-                        })}
+                          state: e.target.value
+                        })
+                      }
                     />
                   </li>
                 )}
@@ -889,8 +851,9 @@ const LabelCreatorPage = props => {
                     onChange={e =>
                       set_from_shipping({
                         ...from_shipping,
-                        postalCode: e.target.value,
-                      })}
+                        postalCode: e.target.value
+                      })
+                    }
                   />
                 </li>
                 {/* <label className="validation_text" style={{ justifyContent: 'center' }}>
@@ -912,8 +875,9 @@ const LabelCreatorPage = props => {
                         onChange={e =>
                           set_from_shipping({
                             ...from_shipping,
-                            city: e.target.checked,
-                          })}
+                            city: e.target.checked
+                          })
+                        }
                       />
                     </li>
 
@@ -928,8 +892,9 @@ const LabelCreatorPage = props => {
                           onChange={e =>
                             set_from_shipping({
                               ...from_shipping,
-                              country: e.target.value,
-                            })}
+                              country: e.target.value
+                            })
+                          }
                         />
                       </li>
                     )}
@@ -943,26 +908,20 @@ const LabelCreatorPage = props => {
             </div>
             <div className="w-35rem m-10px">
               <h3>Package Dimmensions</h3>
-              {userInfo &&
-              userInfo.isAdmin && (
+              {userInfo && userInfo.isAdmin && (
                 <li>
                   <div className="ai-c h-25px mv-10px mb-30px jc-c">
                     <div className="custom-select w-100per">
-                      <select
-                        className="qty_select_dropdown w-100per"
-                        onChange={e => update_parcel(e, e.target.value)}
-                      >
+                      <select className="qty_select_dropdown w-100per" onChange={e => update_parcel(e, e.target.value)}>
                         <option key={1} defaultValue="">
                           ---Choose Parcel---
                         </option>
                         {parcels &&
                           parcels.map((parcel, index) => (
                             <option key={index} value={JSON.stringify(parcel)}>
-                              {parcel.type === "bubble_mailer" ? (
-                                `${parcel.length} X ${parcel.width}`
-                              ) : (
-                                `${parcel.length} X ${parcel.width} X ${parcel.height}`
-                              )}
+                              {parcel.type === "bubble_mailer"
+                                ? `${parcel.length} X ${parcel.width}`
+                                : `${parcel.length} X ${parcel.width} X ${parcel.height}`}
                             </option>
                           ))}
                       </select>
@@ -982,8 +941,9 @@ const LabelCreatorPage = props => {
                   onChange={e =>
                     set_package_dimensions({
                       ...package_dimensions,
-                      package_length: e.target.value,
-                    })}
+                      package_length: e.target.value
+                    })
+                  }
                 />
               </li>
               <li>
@@ -996,8 +956,9 @@ const LabelCreatorPage = props => {
                   onChange={e =>
                     set_package_dimensions({
                       ...package_dimensions,
-                      package_width: e.target.value,
-                    })}
+                      package_width: e.target.value
+                    })
+                  }
                 />
               </li>
               <li>
@@ -1010,8 +971,9 @@ const LabelCreatorPage = props => {
                   onChange={e =>
                     set_package_dimensions({
                       ...package_dimensions,
-                      package_height: e.target.value,
-                    })}
+                      package_height: e.target.value
+                    })
+                  }
                 />
               </li>
               <li>
@@ -1024,8 +986,9 @@ const LabelCreatorPage = props => {
                   onChange={e =>
                     set_package_dimensions({
                       ...package_dimensions,
-                      weight_pounds: e.target.value,
-                    })}
+                      weight_pounds: e.target.value
+                    })
+                  }
                 />
               </li>
               <li>
@@ -1038,8 +1001,9 @@ const LabelCreatorPage = props => {
                   onChange={e =>
                     set_package_dimensions({
                       ...package_dimensions,
-                      weight_ounces: e.target.value,
-                    })}
+                      weight_ounces: e.target.value
+                    })
+                  }
                 />
               </li>
             </div>
@@ -1054,34 +1018,25 @@ const LabelCreatorPage = props => {
 
                       <div>${parseFloat(rate.rate).toFixed(2)}</div>
                       <div>
-                        {rate.delivery_days}{" "}
-                        {rate.delivery_days === 1 ? "Day" : "Days"}
+                        {rate.delivery_days} {rate.delivery_days === 1 ? "Day" : "Days"}
                       </div>
                     </div>
-                    <GLButton
-                      className="rates"
-                      onClick={e => choose_shipping_rate(e, rate, rate.service)}
-                    >
+                    <GLButton className="rates" onClick={e => choose_shipping_rate(e, rate, rate.service)}>
                       Select
                     </GLButton>
                   </div>
                 );
               })}
             <li>
-              {!hide_label_button &&
-              rate && (
+              {!hide_label_button && rate && (
                 <div className=" mv-1rem jc-b ai-c w-100per">
                   <div className="shipping_rates jc-b w-100per ">
                     <div>
                       {rate.speed} ${parseFloat(rate.rate.rate)}
-                      {rate.rate.delivery_days}{" "}
-                      {rate.rate.delivery_days === 1 ? "Day" : "Days"}
+                      {rate.rate.delivery_days} {rate.rate.delivery_days === 1 ? "Day" : "Days"}
                     </div>
                   </div>
-                  <GLButton
-                    className="rates w-10rem"
-                    onClick={e => re_choose_shipping_rate(e)}
-                  >
+                  <GLButton className="rates w-10rem" onClick={e => re_choose_shipping_rate(e)}>
                     Change
                   </GLButton>
                 </div>
@@ -1095,10 +1050,7 @@ const LabelCreatorPage = props => {
             </li>
             {hide_label_button && (
               <li>
-                <GLButton
-                  variant="primary"
-                  onClick={e => get_shipping_rates(e)}
-                >
+                <GLButton variant="primary" onClick={e => get_shipping_rates(e)}>
                   Get Shipping Rates
                 </GLButton>
               </li>

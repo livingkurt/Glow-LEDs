@@ -52,7 +52,7 @@ export const getRefreshToken = (user: any) => {
       }
     );
     // const token = await Token.create({ token: refreshToken });
-    // console.log({ token });
+    //
     // if (token) {
     return refreshToken;
     // }
@@ -69,7 +69,7 @@ export const onlyUnique = (value: any, index: any, self: any) => {
 export const isEmail = (email: string) => {
   const re =
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  console.log({ re: re.test(String(email).toLowerCase()) });
+
   return re.test(String(email).toLowerCase());
 };
 
@@ -107,7 +107,7 @@ export const toCapitalize = (string: string) => {
 
 export const isAuth = (req: any, res: any, next: () => void) => {
   const token = req.headers.authorization;
-  // console.log({ isAuth: token });
+  //
 
   if (token) {
     const onlyToken = token.slice(7, token.length);
@@ -125,8 +125,8 @@ export const isAuth = (req: any, res: any, next: () => void) => {
 };
 
 export const isAdmin = (req: any, res: any, next: () => any) => {
-  // console.log(req.user);
-  // console.log({ isAdmin: req.user });
+  //
+  //
   if (req.user && req.user.isAdmin) {
     return next();
   }
@@ -148,7 +148,7 @@ export const make_private_code = (length: any) => {
 // 		const data = await Promise;
 // 		return [ data, null ];
 // 	} catch (error) {
-// console.log({ error });
+//
 // 		console.error(error);
 // 		return [ null, error ];
 // 	}
@@ -156,7 +156,7 @@ export const make_private_code = (length: any) => {
 
 export const determine_parcel = (orderItems: any, parcels: any) => {
   const dimmensions = orderItems.map((item: any) => {
-    // console.log({ item });
+    //
     if (item.product_option && item.product_option.length === 0) {
       return {
         length: item.product_option.package_length,
@@ -175,13 +175,11 @@ export const determine_parcel = (orderItems: any, parcels: any) => {
       };
     }
   });
-  console.log({ dimmensions });
+
   const total_length = dimmensions.reduce((a: any, c: { length: any; qty: any }) => a + c.length * c.qty, 0);
   const total_width = dimmensions.reduce((a: any, c: { width: any; qty: any }) => a + c.width * c.qty, 0);
   const total_height = dimmensions.reduce((a: any, c: { height: any; qty: any }) => a + c.height * c.qty, 0);
-  console.log({ total_length });
-  console.log({ total_width });
-  console.log({ total_height });
+
   // const total_length = orderItems.reduce(
   // 	(a: any, c: { package_length: any; qty: any }) => a + c.package_length * c.qty,
   // 	0
@@ -198,24 +196,24 @@ export const determine_parcel = (orderItems: any, parcels: any) => {
   const lengths = dimmensions.map((item: any) => item.length);
   const widths = dimmensions.map((item: any) => item.width);
   const heights = dimmensions.map((item: any) => item.height);
-  // console.log({ lengths });
-  // console.log({ widths });
-  // console.log({ heights });
+  //
+  //
+  //
   const max_length: any = Math.max(...lengths);
   const max_width: any = Math.max(...widths);
   const max_height: any = Math.max(...heights);
   // const len_num = parseInt(max_length);
-  // console.log({ max_length });
-  // console.log({ max_width });
-  // console.log({ max_height });
-  // console.log({ parcels });
+  //
+  //
+  //
+  //
   let fit_parcels = [];
 
   // const check_name = (item) =>  {
   //   return item.name >= 'Glowstringz V2';
   // }
   // const check = orderItems.map((item: any) => item.name === 'Glowstringz V2');
-  // console.log({ check: orderItems.some((item: any) => item.name === 'Glowstringz V2') });
+  //
   const check = orderItems.some((item: any) => item.name === "Glowstringz V2");
   if (parcels.length <= 3) {
     if (check) {
@@ -257,12 +255,11 @@ export const determine_parcel = (orderItems: any, parcels: any) => {
       .filter((parcel: any) => parcel.type !== "box")
       .sort((a: any, b: any) => (a.volume > b.volume ? -1 : 1));
     parcel = sorted_fit_parcels[0];
-    console.log({ parcel });
+
     return parcel;
   }
   const sorted_fit_parcels = fit_parcels.sort((a: any, b: any) => (a.volume > b.volume ? 1 : -1));
   parcel = sorted_fit_parcels[0];
-  console.log({ parcel });
 
   return parcel;
 };
@@ -303,7 +300,6 @@ export const deepEqual = (object1: any, object2: any) => {
   const keys1 = Object.keys(object1);
   const keys2 = Object.keys(object2);
   if (keys1.length !== keys2.length) {
-    console.log("Not Same amount of Keys");
     return false;
   }
   for (const key of keys1) {
@@ -320,15 +316,13 @@ function isObject(object: any) {
   return object != null && typeof object === "object";
 }
 
-export const prnt = (info: any) => {
-  console.log(info);
-};
+export const prnt = (info: any) => {};
 
 export const snake_case = (str: any) => {
   const snake_case = str;
   if (snake_case && snake_case.length > 0) {
     snake_case.replace(/\W+/g, " ").toLowerCase().split(" ").join("_");
-    console.log({ snake_case: snake_case.substr(-1) });
+
     if (snake_case.substr(-1) === ")") {
       return str.replace(/\W+/g, " ").toLowerCase().split(" ").join("_").slice(0, -1);
     } else {
@@ -435,7 +429,6 @@ export const determine_filter = (query: any, search: any) => {
       return {};
     } else {
       if (item[0] === "sale" && item[1] === "true") {
-        console.log("sale");
         filter.$or = [
           {
             sale_price: {
@@ -459,7 +452,7 @@ export const determine_filter = (query: any, search: any) => {
       }
     }
   });
-  console.log({ determine_filter: filter });
+
   return { deleted: false, ...filter, ...search };
 };
 
@@ -606,7 +599,7 @@ export const format_date = (unformatted_date: any) => {
 };
 
 export const unformat_date = (formatted_date: string) => {
-  // console.log({ formatted_date });
+  //
   const date = formatted_date.split("/");
   const day = date[1];
   const month = date[0];
@@ -707,7 +700,6 @@ const size = (item: any) => {
 };
 
 const secondary_color = (item: any) => {
-  console.log({ item });
   return `${item.secondary_color && item.secondary_color_product ? `${second_dash(item)} ${item.secondary_color}` : ""}`;
 };
 const secondary_color_name = (item: any) => {

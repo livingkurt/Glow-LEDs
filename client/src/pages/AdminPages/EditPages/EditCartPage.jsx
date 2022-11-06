@@ -8,16 +8,16 @@ import { Helmet } from "react-helmet";
 import { GLButton } from "../../../components/GlowLEDsComponents";
 
 const EditCartPage = props => {
-  const [ id, set_id ] = useState("");
-  const [ user, set_user ] = useState("");
-  const [ artist_name, set_artist_name ] = useState("");
-  const [ instagram_handle, set_instagram_handle ] = useState("");
-  const [ facebook_name, set_facebook_name ] = useState("");
-  const [ product, set_product ] = useState("");
-  const [ song_id, set_song_id ] = useState("");
-  const [ video, set_video ] = useState("");
-  const [ picture, set_picture ] = useState("");
-  const [ release_date, set_release_date ] = useState("");
+  const [id, set_id] = useState("");
+  const [user, set_user] = useState("");
+  const [artist_name, set_artist_name] = useState("");
+  const [instagram_handle, set_instagram_handle] = useState("");
+  const [facebook_name, set_facebook_name] = useState("");
+  const [product, set_product] = useState("");
+  const [song_id, set_song_id] = useState("");
+  const [video, set_video] = useState("");
+  const [picture, set_picture] = useState("");
+  const [release_date, set_release_date] = useState("");
 
   const history = useHistory();
 
@@ -30,7 +30,6 @@ const EditCartPage = props => {
     let clean = true;
     if (clean) {
       if (props.match.params.id) {
-        console.log("Is ID");
         dispatch(detailsCart(props.match.params.id));
         dispatch(detailsCart(props.match.params.id));
       }
@@ -39,22 +38,17 @@ const EditCartPage = props => {
     return () => (clean = false);
   }, []);
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (cart) {
-          console.log("Set");
-          set_state();
-        } else {
-          console.log("UnSet");
-          unset_state();
-        }
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (cart) {
+        set_state();
+      } else {
+        unset_state();
       }
-      return () => (clean = false);
-    },
-    [ cart ]
-  );
+    }
+    return () => (clean = false);
+  }, [cart]);
 
   const set_state = () => {
     set_id(cart._id);
@@ -96,7 +90,7 @@ const EditCartPage = props => {
         song_id,
         video,
         picture,
-        release_date: unformat_date(release_date),
+        release_date: unformat_date(release_date)
       })
     );
     e.target.reset();
@@ -107,9 +101,7 @@ const EditCartPage = props => {
 
   return (
     <div className="main_container p-20px">
-      <h1 style={{ textAlign: "center" }}>
-        {props.match.params.id ? "Edit Cart" : "Create Cart"}
-      </h1>
+      <h1 style={{ textAlign: "center" }}>{props.match.params.id ? "Edit Cart" : "Create Cart"}</h1>
 
       <div className="form">
         <form onSubmit={submitHandler} style={{ width: "100%" }}>
@@ -123,23 +115,13 @@ const EditCartPage = props => {
                   <title>Edit Cart | Glow LEDs</title>
                 </Helmet>
 
-                <ul
-                  className="edit-form-container"
-                  style={{ maxWidth: "30rem", marginBottom: "20px" }}
-                >
+                <ul className="edit-form-container" style={{ maxWidth: "30rem", marginBottom: "20px" }}>
                   <div className="row wrap">
                     <div className="w-228px m-10px">
                       <li>
                         <label htmlFor="user">User</label>
-                        <input
-                          type="text"
-                          name="user"
-                          value={user}
-                          id="user"
-                          onChange={e => set_user(e.target.value)}
-                        />
+                        <input type="text" name="user" value={user} id="user" onChange={e => set_user(e.target.value)} />
                       </li>
-                      {console.log({ release_date })}
 
                       <li>
                         <label htmlFor="release_date">Release Date</label>
@@ -162,9 +144,7 @@ const EditCartPage = props => {
                         />
                       </li>
                       <li>
-                        <label htmlFor="instagram_handle">
-                          Instagram Handle
-                        </label>
+                        <label htmlFor="instagram_handle">Instagram Handle</label>
                         <input
                           type="text"
                           name="instagram_handle"
@@ -185,44 +165,20 @@ const EditCartPage = props => {
                       </li>
                       <li>
                         <label htmlFor="product">Product</label>
-                        <input
-                          type="text"
-                          name="product"
-                          value={product}
-                          id="product"
-                          onChange={e => set_product(e.target.value)}
-                        />
+                        <input type="text" name="product" value={product} id="product" onChange={e => set_product(e.target.value)} />
                       </li>
 
                       <li>
                         <label htmlFor="video">Video</label>
-                        <input
-                          type="text"
-                          name="video"
-                          value={video}
-                          id="video"
-                          onChange={e => set_video(e.target.value)}
-                        />
+                        <input type="text" name="video" value={video} id="video" onChange={e => set_video(e.target.value)} />
                       </li>
                       <li>
                         <label htmlFor="song_id">Song ID</label>
-                        <input
-                          type="text"
-                          name="song_id"
-                          value={song_id}
-                          id="song_id"
-                          onChange={e => set_song_id(e.target.value)}
-                        />
+                        <input type="text" name="song_id" value={song_id} id="song_id" onChange={e => set_song_id(e.target.value)} />
                       </li>
                       <li>
                         <label htmlFor="picture">Picture</label>
-                        <input
-                          type="text"
-                          name="picture"
-                          value={picture}
-                          id="picture"
-                          onChange={e => set_picture(e.target.value)}
-                        />
+                        <input type="text" name="picture" value={picture} id="picture" onChange={e => set_picture(e.target.value)} />
                       </li>
                     </div>
                   </div>
@@ -234,21 +190,13 @@ const EditCartPage = props => {
                   <li>
                     {id ? (
                       <Link to="/secure/glow/carts">
-                        <GLButton
-                          style={{ width: "100%" }}
-                          type="button"
-                          variant="secondary"
-                        >
+                        <GLButton style={{ width: "100%" }} type="button" variant="secondary">
                           Back to Cart
                         </GLButton>
                       </Link>
                     ) : (
                       <Link to="/secure/glow/carts">
-                        <GLButton
-                          style={{ width: "100%" }}
-                          type="button"
-                          variant="secondary"
-                        >
+                        <GLButton style={{ width: "100%" }} type="button" variant="secondary">
                           Back to Carts
                         </GLButton>
                       </Link>

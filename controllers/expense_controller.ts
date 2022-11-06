@@ -10,7 +10,6 @@ export default {
       }
       return res.status(404).send({ message: "Expenses Not Found" });
     } catch (error) {
-      console.log({ findAll_expenses_c_error: error });
       res.status(500).send({ error, message: "Error Finding Expenses" });
     }
   },
@@ -23,7 +22,6 @@ export default {
       }
       return res.status(404).send({ message: "Expenses Not Found" });
     } catch (error) {
-      console.log({ findAll_expenses_c_error: error });
       res.status(500).send({ error, message: "Error Finding Expenses" });
     }
   },
@@ -31,13 +29,12 @@ export default {
     const { params } = req;
     try {
       const expense = await expense_services.findById_expenses_s(params);
-      console.log({ expense });
+
       if (expense) {
         return res.status(200).send(expense);
       }
       return res.status(404).send({ message: "Expense Not Found" });
     } catch (error) {
-      console.log({ findById_expenses_c_error: error });
       res.status(500).send({ error, message: "Error Finding Expense" });
     }
   },
@@ -50,7 +47,6 @@ export default {
       }
       return res.status(500).send({ message: "Error Creating Expense" });
     } catch (error) {
-      console.log({ create_expenses_c_error: error });
       res.status(500).send({ error, message: "Error Creating Expense" });
     }
   },
@@ -63,7 +59,6 @@ export default {
       }
       return res.status(500).send({ message: "Error Creating Expense" });
     } catch (error) {
-      console.log({ create_expenses_c_error: error });
       res.status(500).send({ error, message: "Error Creating Expense" });
     }
   },
@@ -76,7 +71,6 @@ export default {
       }
       return res.status(500).send({ message: "Error Updating Expense" });
     } catch (error) {
-      console.log({ update_expenses_c_error: error });
       res.status(500).send({ error, message: "Error Updating Expense" });
     }
   },
@@ -89,8 +83,7 @@ export default {
       }
       return res.status(500).send({ message: "Error Deleting Expense" });
     } catch (error) {
-      console.log({ remove_expenses_c_error: error });
       res.status(500).send({ error, message: "Error Deleting Expense" });
     }
-  },
+  }
 };

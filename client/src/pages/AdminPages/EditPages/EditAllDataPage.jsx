@@ -3,13 +3,7 @@ import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Helmet } from "react-helmet";
 import { API_Products } from "../../../utils";
-import {
-  accurate_date,
-  format_date,
-  format_time,
-  unformat_date,
-  unformat_date_and_time,
-} from "../../../utils/helper_functions";
+import { accurate_date, format_date, format_time, unformat_date, unformat_date_and_time } from "../../../utils/helper_functions";
 import { GLButton } from "../../../components/GlowLEDsComponents";
 
 const EditAllDataPage = props => {
@@ -26,21 +20,21 @@ const EditAllDataPage = props => {
   const userLogin = useSelector(state => state.userLogin);
   const { userInfo } = userLogin;
 
-  const [ collection, set_collection ] = useState("");
-  const [ search_parameter_field, set_search_parameter_field ] = useState("");
-  const [ search_parameter, set_search_parameter ] = useState("");
-  const [ value, set_value ] = useState("");
-  const [ method, set_method ] = useState("");
-  const [ property, set_property ] = useState("");
-  const [ action, set_action ] = useState("");
-  const [ request, set_request ] = useState("");
-  const [ sale_price_request, set_sale_price_request ] = useState("");
-  const [ discount_percentage, set_discount_percentage ] = useState(0);
-  const [ sale_start_date, set_sale_start_date ] = useState(format_date(today));
-  const [ sale_end_date, set_sale_end_date ] = useState(format_date(end_date));
-  const [ sale_start_time, set_sale_start_time ] = useState(format_time(today));
-  const [ sale_end_time, set_sale_end_time ] = useState("9:00 PM");
-  const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
+  const [collection, set_collection] = useState("");
+  const [search_parameter_field, set_search_parameter_field] = useState("");
+  const [search_parameter, set_search_parameter] = useState("");
+  const [value, set_value] = useState("");
+  const [method, set_method] = useState("");
+  const [property, set_property] = useState("");
+  const [action, set_action] = useState("");
+  const [request, set_request] = useState("");
+  const [sale_price_request, set_sale_price_request] = useState("");
+  const [discount_percentage, set_discount_percentage] = useState(0);
+  const [sale_start_date, set_sale_start_date] = useState(format_date(today));
+  const [sale_end_date, set_sale_end_date] = useState(format_date(end_date));
+  const [sale_start_time, set_sale_start_time] = useState(format_time(today));
+  const [sale_end_time, set_sale_end_time] = useState("9:00 PM");
+  const [loading_checkboxes, set_loading_checkboxes] = useState(true);
 
   setTimeout(() => {
     set_loading_checkboxes(false);
@@ -48,16 +42,6 @@ const EditAllDataPage = props => {
   const history = useHistory();
 
   const batch_request = async e => {
-    console.log({
-      method,
-      collection,
-      search_parameter_field,
-      search_parameter,
-      action,
-      property,
-      value,
-      userInfo,
-    });
     e.preventDefault();
     const request = await API_Products.batch_request(
       method,
@@ -70,26 +54,13 @@ const EditAllDataPage = props => {
       userInfo
     );
 
-    console.log({ request });
     set_request(request);
   };
 
   const update_sale_price = async e => {
     e.preventDefault();
-    // console.log({
-    // 	start_date: unformat_date_and_time(sale_start_date, sale_start_time),
-    // 	end_date: unformat_date_and_time(sale_end_date, sale_end_time)
-    // });
-    const start_date = new Date(
-      unformat_date_and_time(sale_start_date, sale_start_time)
-    );
-    const end_date = new Date(
-      unformat_date_and_time(sale_end_date, sale_end_time)
-    );
-    console.log({
-      start_date: accurate_date(start_date),
-      end_date: accurate_date(start_date),
-    });
+    const start_date = new Date(unformat_date_and_time(sale_start_date, sale_start_time));
+    const end_date = new Date(unformat_date_and_time(sale_end_date, sale_end_time));
     const request = await API_Products.set_sale_price(
       parseInt(discount_percentage) / 100,
       accurate_date(start_date),
@@ -121,11 +92,11 @@ const EditAllDataPage = props => {
     "carts",
     "affiliates",
     "teams",
-    "paychecks",
+    "paychecks"
   ];
-  const methods = [ "get", "updateMany" ];
+  const methods = ["get", "updateMany"];
 
-  const actions = [ "$rename", "$set", "$unset" ];
+  const actions = ["$rename", "$set", "$unset"];
 
   return (
     <div className="main_container p-20px">
@@ -142,10 +113,7 @@ const EditAllDataPage = props => {
             <Helmet>
               <title>Edit All Data | Glow LEDs</title>
             </Helmet>
-            <ul
-              className="edit-form-container"
-              style={{ maxWidth: "30rem", marginBottom: "20px" }}
-            >
+            <ul className="edit-form-container" style={{ maxWidth: "30rem", marginBottom: "20px" }}>
               {/* {loading_checkboxes ? (
 								<div>Loading...</div>
 							) : (
@@ -238,28 +206,16 @@ const EditAllDataPage = props => {
                 </GLButton>
               </li>
             </ul>
-            <ul
-              className="edit-form-container"
-              style={{ maxWidth: "30rem", marginBottom: "20px" }}
-            >
+            <ul className="edit-form-container" style={{ maxWidth: "30rem", marginBottom: "20px" }}>
               <div className="row wrap">
                 <div className="w-228px m-10px">
                   <li>
                     <label htmlFor="method">Method</label>
-                    <input
-                      type="text"
-                      name="method"
-                      value={method}
-                      id="method"
-                      onChange={e => set_method(e.target.value)}
-                    />
+                    <input type="text" name="method" value={method} id="method" onChange={e => set_method(e.target.value)} />
                   </li>
                   <div className="ai-c h-25px mv-10px mb-30px jc-c">
                     <div className="custom-select w-100per">
-                      <select
-                        className="qty_select_dropdown w-100per"
-                        onChange={e => set_method(e.target.value)}
-                      >
+                      <select className="qty_select_dropdown w-100per" onChange={e => set_method(e.target.value)}>
                         <option key={0} defaultValue="">
                           ---Choose Method---
                         </option>
@@ -284,10 +240,7 @@ const EditAllDataPage = props => {
                   </li>
                   <div className="ai-c h-25px mv-10px mb-30px jc-c">
                     <div className="custom-select w-100per">
-                      <select
-                        className="qty_select_dropdown w-100per"
-                        onChange={e => set_collection(e.target.value)}
-                      >
+                      <select className="qty_select_dropdown w-100per" onChange={e => set_collection(e.target.value)}>
                         <option key={0} defaultValue="">
                           ---Choose Collection---
                         </option>
@@ -303,20 +256,11 @@ const EditAllDataPage = props => {
 
                   <li>
                     <label htmlFor="action">Action</label>
-                    <input
-                      type="text"
-                      name="action"
-                      value={action}
-                      id="action"
-                      onChange={e => set_action(e.target.value)}
-                    />
+                    <input type="text" name="action" value={action} id="action" onChange={e => set_action(e.target.value)} />
                   </li>
                   <div className="ai-c h-25px mv-10px mb-30px jc-c">
                     <div className="custom-select w-100per">
-                      <select
-                        className="qty_select_dropdown w-100per"
-                        onChange={e => set_action(e.target.value)}
-                      >
+                      <select className="qty_select_dropdown w-100per" onChange={e => set_action(e.target.value)}>
                         <option key={0} defaultValue="">
                           ---Choose Action---
                         </option>
@@ -331,9 +275,7 @@ const EditAllDataPage = props => {
                   </div>
 
                   <li>
-                    <label htmlFor="search_parameter_field">
-                      Search Parameter Field
-                    </label>
+                    <label htmlFor="search_parameter_field">Search Parameter Field</label>
                     <input
                       type="text"
                       name="search_parameter_field"
@@ -354,13 +296,7 @@ const EditAllDataPage = props => {
                   </li>
                   <li>
                     <label htmlFor="property">Property</label>
-                    <input
-                      type="text"
-                      name="property"
-                      value={property}
-                      id="property"
-                      onChange={e => set_property(e.target.value)}
-                    />
+                    <input type="text" name="property" value={property} id="property" onChange={e => set_property(e.target.value)} />
                   </li>
                   <li>
                     <label htmlFor="value">Value</label>
@@ -402,13 +338,7 @@ const EditAllDataPage = props => {
       </div>
       <div>
         <label htmlFor="request">Results</label>
-        <textarea
-          type="text"
-          className="w-100per h-99rem"
-          name="request"
-          value={JSON.stringify(request.data, undefined, 4)}
-          id="request"
-        />
+        <textarea type="text" className="w-100per h-99rem" name="request" value={JSON.stringify(request.data, undefined, 4)} id="request" />
       </div>
     </div>
   );

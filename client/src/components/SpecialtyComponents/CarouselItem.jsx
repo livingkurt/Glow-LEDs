@@ -11,39 +11,28 @@ import { addToCart } from "../../actions/cartActions";
 import { GLButton } from "../GlowLEDsComponents";
 
 const CarouselItem = props => {
-  const [ product, set_product ] = useState(props.product);
-  const [ loading, set_loading ] = useState(true);
-  const [ qty, set_qty ] = useState(1);
-  const [ size, set_size ] = useState(null);
+  const [product, set_product] = useState(props.product);
+  const [loading, set_loading] = useState(true);
+  const [qty, set_qty] = useState(1);
+  const [size, set_size] = useState(null);
   const dispatch = useDispatch();
   const history = useHistory();
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        set_loading(false);
-      }
-      return () => (clean = false);
-    },
-    [ props.product ]
-  );
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      set_loading(false);
+    }
+    return () => (clean = false);
+  }, [props.product]);
 
   const handleAddToCart = e => {
     e.preventDefault();
-    const color =
-      product.color_products &&
-      product.color_products.find(color => color.default_option === true);
+    const color = product.color_products && product.color_products.find(color => color.default_option === true);
     const secondary_color =
-      product.secondary_color_products &&
-      product.secondary_color_products.find(
-        secondary_color => secondary_color.default_option === true
-      );
-    const option =
-      product.option_products &&
-      product.option_products.find(option => option.default_option === true);
-    console.log({ size });
-    console.log({ option: option });
+      product.secondary_color_products && product.secondary_color_products.find(secondary_color => secondary_color.default_option === true);
+    const option = product.option_products && product.option_products.find(option => option.default_option === true);
+
     dispatch(
       addToCart({
         product: product._id,
@@ -79,7 +68,7 @@ const CarouselItem = props => {
         category: product.category,
         subcategory: product.subcategory,
         qty,
-        finite_stock: product.category,
+        finite_stock: product.category
         // // determine_default_color(color),
         // diffuser_cap: diffuser_cap,
       })
@@ -88,7 +77,7 @@ const CarouselItem = props => {
     // set_product_option({});
   };
 
-  const [ show_options, set_show_options ] = useState(false);
+  const [show_options, set_show_options] = useState(false);
 
   const update_option = e => {
     const option = JSON.parse(e.target.value);
@@ -107,8 +96,7 @@ const CarouselItem = props => {
 
   return (
     <div>
-      {product &&
-      !loading && (
+      {product && !loading && (
         <li key={props.product && product.pathname} style={props.style}>
           <div className="tooltip">
             <span className="tooltiptext">
@@ -122,10 +110,7 @@ const CarouselItem = props => {
                     ) : (
                       <li>
                         {!show_options && (
-                          <GLButton
-                            variant="primary"
-                            onClick={() => set_show_options(true)}
-                          >
+                          <GLButton variant="primary" onClick={() => set_show_options(true)}>
                             Quick Add to Cart
                           </GLButton>
                         )}
@@ -134,19 +119,11 @@ const CarouselItem = props => {
                             className="w-250px br-20px m-auto br-20px p-10px"
                             style={{
                               backgroundColor: "#27272780",
-                              color: "white",
+                              color: "white"
                             }}
                           >
-                            <label
-                              aria-label="Sort"
-                              htmlFor="sort"
-                              className="select-label mr-1rem mt-1rem"
-                            >
-                              {product.option_group_name ? (
-                                product.option_group_name
-                              ) : (
-                                "Size"
-                              )}:
+                            <label aria-label="Sort" htmlFor="sort" className="select-label mr-1rem mt-1rem">
+                              {product.option_group_name ? product.option_group_name : "Size"}:
                             </label>
                             <div className="ai-c wrap jc-c">
                               {product.option_products &&
@@ -156,9 +133,9 @@ const CarouselItem = props => {
                                     id={option.size}
                                     value={JSON.stringify(option)}
                                     onClick={e => update_option(e)}
-                                    className={`packs fs-13px flex-s-0 min-w-40px mr-2px mb-1rem btn ${option.default_option
-                                      ? "secondary"
-                                      : "primary"}`}
+                                    className={`packs fs-13px flex-s-0 min-w-40px mr-2px mb-1rem btn ${
+                                      option.default_option ? "secondary" : "primary"
+                                    }`}
                                   >
                                     {option.size}
                                   </GLButton>
@@ -166,11 +143,7 @@ const CarouselItem = props => {
                             </div>
 
                             <div className="ai-c h-25px max-w-500px w-100per jc-b mb-10px">
-                              <label
-                                aria-label="Sort"
-                                htmlFor="sort"
-                                className="select-label mr-1rem"
-                              >
+                              <label aria-label="Sort" htmlFor="sort" className="select-label mr-1rem">
                                 Qty:
                               </label>
                               <div className="custom-select">
@@ -181,11 +154,8 @@ const CarouselItem = props => {
                                     set_qty(e.target.value);
                                   }}
                                 >
-                                  {[ ...Array(10).keys() ].map((x, index) => (
-                                    <option
-                                      key={index}
-                                      defaultValue={parseInt(x + 1)}
-                                    >
+                                  {[...Array(10).keys()].map((x, index) => (
+                                    <option key={index} defaultValue={parseInt(x + 1)}>
                                       {parseInt(x + 1)}
                                     </option>
                                   ))}
@@ -194,11 +164,7 @@ const CarouselItem = props => {
                               </div>
                             </div>
 
-                            <GLButton
-                              variant="primary"
-                              className="w-100per"
-                              onClick={handleAddToCart}
-                            >
+                            <GLButton variant="primary" className="w-100per" onClick={handleAddToCart}>
                               {" "}
                               Add to Cart
                             </GLButton>
@@ -214,9 +180,8 @@ const CarouselItem = props => {
             </span>
             <Link
               to={{
-                pathname:
-                  product && "/collections/all/products/" + product.pathname,
-                previous_path: history.location.pathname,
+                pathname: product && "/collections/all/products/" + product.pathname,
+                previous_path: history.location.pathname
               }}
               onClick={() => dispatch(detailsProduct(product.pathname))}
             >
@@ -249,16 +214,11 @@ const CarouselItem = props => {
                     $549.99 - $<i className="fas fa-arrow-up" />
                   </label>
                 ) : (
-                  <label className="product-price">
-                    {sale_price_switch(props.product)}
-                  </label>
+                  <label className="product-price">{sale_price_switch(props.product)}</label>
                 )}
 
                 {product.rating ? (
-                  <Rating
-                    rating={product.rating}
-                    numReviews={product.numReviews}
-                  />
+                  <Rating rating={product.rating} numReviews={product.numReviews} />
                 ) : (
                   <span className="rating vis-hid ta-c">No Reviews</span>
                 )}

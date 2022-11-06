@@ -11,7 +11,7 @@ import {
   determine_option_product_name,
   determine_product_name_display,
   mobile_check,
-  sale_price_switch,
+  sale_price_switch
 } from "../../utils/react_helper_functions";
 import useWindowDimensions from "../Hooks/windowDimensions";
 import { LazyImage } from "../UtilityComponents";
@@ -25,27 +25,24 @@ const RelatedProductsSlideshow = ({
   title,
   product_pathname,
   add_to_cart,
-  product,
+  product
 }) => {
   const { height, width } = useWindowDimensions();
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const [ products, set_products ] = useState([]);
-  const [ loading, set_loading ] = useState(false);
-  const [ qty, set_qty ] = useState(1);
-  const [ size, set_size ] = useState("");
+  const [products, set_products] = useState([]);
+  const [loading, set_loading] = useState(false);
+  const [qty, set_qty] = useState(1);
+  const [size, set_size] = useState("");
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        get_products();
-      }
-      return () => (clean = false);
-    },
-    [ product_category ]
-  );
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      get_products();
+    }
+    return () => (clean = false);
+  }, [product_category]);
 
   const get_products = async () => {
     set_loading(true);
@@ -60,62 +57,51 @@ const RelatedProductsSlideshow = ({
       query = {
         category: product_category,
         hidden: false,
-        option: false,
+        option: false
       };
     } else if (category === "opyn") {
       query = {
         subcategory: product_subcategory,
         hidden: false,
-        option: false,
+        option: false
       };
     }
-    console.log({ query });
 
     const { data } = await API_Products.findAll_products_a(query);
-    console.log({ [product_subcategory]: data });
-    set_products(
-      typeof data === "object" &&
-        data.products.filter(product => product.pathname !== product_pathname)
-    );
+
+    set_products(typeof data === "object" && data.products.filter(product => product.pathname !== product_pathname));
     if (random) {
-      set_products(
-        typeof data === "object" &&
-          shuffle(
-            data.products.filter(
-              product => product.pathname !== product_pathname
-            )
-          )
-      );
+      set_products(typeof data === "object" && shuffle(data.products.filter(product => product.pathname !== product_pathname)));
     }
     set_loading(false);
   };
 
-  const [ image_number, set_image_number ] = useState(0);
-  const [ number_of_items, set_number_of_items ] = useState(5);
+  const [image_number, set_image_number] = useState(0);
+  const [number_of_items, set_number_of_items] = useState(5);
   // const [ image, set_image ] = useState(product.name);
   // const [ images, set_images ] = useState(product.images);
   const responsive = {
     superLargeDesktop: {
       // the naming can be any, depends on you.
       breakpoint: { max: 8000, min: 1400 },
-      items: 5,
+      items: 5
     },
     desktop: {
       breakpoint: { max: 1400, min: 1100 },
-      items: 4,
+      items: 4
     },
     desktop_2: {
       breakpoint: { max: 1100, min: 900 },
-      items: 3,
+      items: 3
     },
     tablet: {
       breakpoint: { max: 900, min: 464 },
-      items: 2,
+      items: 2
     },
     mobile: {
       breakpoint: { max: 464, min: 0 },
-      items: 1,
-    },
+      items: 1
+    }
   };
 
   // const update_option = (e) => {
@@ -135,18 +121,11 @@ const RelatedProductsSlideshow = ({
 
   const handleAddToCart = (e, product) => {
     e.preventDefault();
-    console.log({ product });
-    const color =
-      product.color_products &&
-      product.color_products.find(color => color.default_option === true);
+
+    const color = product.color_products && product.color_products.find(color => color.default_option === true);
     const secondary_color =
-      product.secondary_color_products &&
-      product.secondary_color_products.find(
-        secondary_color => secondary_color.default_option === true
-      );
-    const option =
-      product.option_products &&
-      product.option_products.find(option => option.default_option === true);
+      product.secondary_color_products && product.secondary_color_products.find(secondary_color => secondary_color.default_option === true);
+    const option = product.option_products && product.option_products.find(option => option.default_option === true);
     dispatch(
       addToCart({
         product: product._id,
@@ -182,7 +161,7 @@ const RelatedProductsSlideshow = ({
         category: product.category,
         subcategory: product.subcategory,
         qty,
-        finite_stock: product.category,
+        finite_stock: product.category
         // // determine_default_color(color),
         // diffuser_cap: diffuser_cap,
       })
@@ -222,7 +201,7 @@ const RelatedProductsSlideshow = ({
   };
   const update_option = e => {
     const option = JSON.parse(e.target.value);
-    console.log({ option });
+
     // let button = document.getElementById(e.target.id);
     // let buttons = document.querySelectorAll('.packs');
     // buttons.forEach((node) => {
@@ -236,7 +215,7 @@ const RelatedProductsSlideshow = ({
     set_size(option.size);
   };
 
-  const [ show_options, set_show_options ] = useState(false);
+  const [show_options, set_show_options] = useState(false);
 
   return (
     <div className="">
@@ -257,7 +236,7 @@ const RelatedProductsSlideshow = ({
         // customTransition="all .5"
         // transitionDuration={1000}
         containerClass="carousel-container"
-        removeArrowOnDeviceType={[ "tablet", "mobile" ]}
+        removeArrowOnDeviceType={["tablet", "mobile"]}
         deviceType={mobile_check() ? "mobile" : "desktop"}
         dotListClass="custom-dot-list-style"
         itemClass="carousel-item-padding-40-px"
@@ -271,19 +250,13 @@ const RelatedProductsSlideshow = ({
                     {product.quantity > 0 && add_to_cart ? (
                       <div>
                         {product.subcategory !== "batteries" ? (
-                          <GLButton
-                            onClick={e => handleAddToCart(e, product)}
-                            variant="primary"
-                          >
+                          <GLButton onClick={e => handleAddToCart(e, product)} variant="primary">
                             Quick Add to Cart
                           </GLButton>
                         ) : (
                           <li>
                             {!show_options && (
-                              <GLButton
-                                onClick={() => set_show_options(true)}
-                                variant="primary"
-                              >
+                              <GLButton onClick={() => set_show_options(true)} variant="primary">
                                 Quick Add to Cart
                               </GLButton>
                             )}
@@ -292,7 +265,7 @@ const RelatedProductsSlideshow = ({
                                 className="w-250px br-20px m-auto br-20px p-10px"
                                 style={{
                                   backgroundColor: "#27272780",
-                                  color: "white",
+                                  color: "white"
                                 }}
                               >
                                 {/* <label
@@ -318,21 +291,9 @@ const RelatedProductsSlideshow = ({
 																			</GLButton>
 																		))}
 																</div> */}
-                                <div
-                                  className={`ai-c  mv-10px ${width < 1150
-                                    ? "jc-b"
-                                    : ""}`}
-                                >
-                                  <h3
-                                    aria-label="Sort"
-                                    htmlFor="sort"
-                                    className="select-label mr-1rem mt-1rem"
-                                  >
-                                    {product.option_group_name ? (
-                                      product.option_group_name
-                                    ) : (
-                                      "Size"
-                                    )}:
+                                <div className={`ai-c  mv-10px ${width < 1150 ? "jc-b" : ""}`}>
+                                  <h3 aria-label="Sort" htmlFor="sort" className="select-label mr-1rem mt-1rem">
+                                    {product.option_group_name ? product.option_group_name : "Size"}:
                                   </h3>
                                   <div className="ai-c wrap">
                                     {product.option_products
@@ -342,10 +303,7 @@ const RelatedProductsSlideshow = ({
                                           {option_buttons(
                                             option,
                                             index,
-                                            product.option_products.find(
-                                              option =>
-                                                option.default_option === true
-                                            )
+                                            product.option_products.find(option => option.default_option === true)
                                           )}
                                         </div>
                                       ))}
@@ -353,11 +311,7 @@ const RelatedProductsSlideshow = ({
                                 </div>
 
                                 <div className="ai-c h-25px max-w-500px w-100per jc-b mb-10px">
-                                  <label
-                                    aria-label="Sort"
-                                    htmlFor="sort"
-                                    className="select-label mr-1rem"
-                                  >
+                                  <label aria-label="Sort" htmlFor="sort" className="select-label mr-1rem">
                                     Qty:
                                   </label>
                                   <div className="custom-select">
@@ -368,13 +322,8 @@ const RelatedProductsSlideshow = ({
                                         set_qty(e.target.value);
                                       }}
                                     >
-                                      {[
-                                        ...Array(10).keys(),
-                                      ].map((x, index) => (
-                                        <option
-                                          key={index}
-                                          defaultValue={parseInt(x + 1)}
-                                        >
+                                      {[...Array(10).keys()].map((x, index) => (
+                                        <option key={index} defaultValue={parseInt(x + 1)}>
                                           {parseInt(x + 1)}
                                         </option>
                                       ))}
@@ -382,11 +331,7 @@ const RelatedProductsSlideshow = ({
                                     <span className="custom-arrow" />
                                   </div>
                                 </div>
-                                <GLButton
-                                  onClick={e => handleAddToCart(e, product)}
-                                  variant="primary"
-                                  className="w-100per"
-                                >
+                                <GLButton onClick={e => handleAddToCart(e, product)} variant="primary" className="w-100per">
                                   Add to Cart
                                 </GLButton>
                               </div>
@@ -404,7 +349,7 @@ const RelatedProductsSlideshow = ({
                   <Link
                     to={{
                       pathname: "/collections/all/products/" + product.pathname,
-                      previous_path: history.location.pathname,
+                      previous_path: history.location.pathname
                     }}
                     className="m-auto"
                   >
@@ -437,7 +382,7 @@ const RelatedProductsSlideshow = ({
 																	</GLButton>
 																</div>
 															)} */}
-                              {[ ...Array(1).keys() ].map(x => (
+                              {[...Array(1).keys()].map(x => (
                                 <LazyImage
                                   key={image_number + x}
                                   className="carousel-image"
@@ -490,24 +435,17 @@ const RelatedProductsSlideshow = ({
                   <Link
                     to={{
                       pathname: "/collections/all/products/" + product.pathname,
-                      previous_path: history.location.pathname,
+                      previous_path: history.location.pathname
                     }}
                     className="mt-13px"
                   >
-                    <label style={{ fontSize: "1.6rem" }}>
-                      {determine_product_name_display(product, false)}
-                    </label>
+                    <label style={{ fontSize: "1.6rem" }}>{determine_product_name_display(product, false)}</label>
                   </Link>
 
-                  <label className="product-price mv-3px">
-                    {sale_price_switch(product, false)}
-                  </label>
+                  <label className="product-price mv-3px">{sale_price_switch(product, false)}</label>
 
                   {product.rating ? (
-                    <Rating
-                      rating={product.rating}
-                      numReviews={product.numReviews}
-                    />
+                    <Rating rating={product.rating} numReviews={product.numReviews} />
                   ) : (
                     <span className="rating vis-hid ta-c">No Reviews</span>
                   )}

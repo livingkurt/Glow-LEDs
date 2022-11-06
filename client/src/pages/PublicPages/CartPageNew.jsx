@@ -59,7 +59,7 @@ const CartPage = props => {
       !categories.includes("Custom Diffuser Caps Deposit")
     ) {
       if (categories.includes("diffuser_caps")) {
-        // console.log('Caps');
+        // 
         if (!categories.includes("diffuser_adapters")) {
           return "Don't Forget: You'll need a set of Diffuser Adapters to use Diffuser Caps!";
         }
@@ -95,7 +95,7 @@ const CartPage = props => {
                 <h4>{no_adapters_warning()}</h4>
                 {cart.cartItems.map((item, index) => (
                   <li key={index}>
-                    {/* {console.log({ item })} */}
+                    {/* {
                     <div className="cart-image">
                       <Link to={"/collections/all/products/" + item.pathname}>
                         <img

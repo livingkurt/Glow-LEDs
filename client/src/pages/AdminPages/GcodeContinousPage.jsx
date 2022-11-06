@@ -4,15 +4,15 @@ import { Loading } from "../../components/UtilityComponents";
 import { API_Content } from "../../utils";
 
 function GcodeContinousPage() {
-  const [ number_of_copies, set_number_of_copies ] = useState(12);
-  const [ gcode_name, set_gcode_name ] = useState([]);
-  const [ gcode_parts, set_gcode_parts ] = useState({});
+  const [number_of_copies, set_number_of_copies] = useState(12);
+  const [gcode_name, set_gcode_name] = useState([]);
+  const [gcode_parts, set_gcode_parts] = useState({});
 
-  const [ filename, set_filename ] = useState("");
-  const [ status, set_status ] = useState("");
-  const [ loading, set_loading ] = useState(false);
-  const [ color_change, set_color_change ] = useState(false);
-  const [ cascade, set_cascade ] = useState(false);
+  const [filename, set_filename] = useState("");
+  const [status, set_status] = useState("");
+  const [loading, set_loading] = useState(false);
+  const [color_change, set_color_change] = useState(false);
+  const [cascade, set_cascade] = useState(false);
 
   const remove_print = `G1 X105 Y195 Z50 F8000 ; Move up and back
   
@@ -50,10 +50,10 @@ function GcodeContinousPage() {
         for (let i = 0; i <= 100; i++) {
           if (gcode[i] === "M83 ; use relative distances for extrusion") {
             beginning_boolean = false;
-            beginning_array = [ ...beginning_array, gcode[i] ];
+            beginning_array = [...beginning_array, gcode[i]];
             middle_start = i + 1;
           } else if (beginning_boolean) {
-            beginning_array = [ ...beginning_array, gcode[i] ];
+            beginning_array = [...beginning_array, gcode[i]];
           }
         }
 
@@ -62,12 +62,11 @@ function GcodeContinousPage() {
 
         for (let i = gcode.length - 1; i >= gcode.length - 300; i--) {
           if (gcode[i] === "G4 ; wait") {
-            ending_array = [ ...ending_array, "G4 ; wait" ];
+            ending_array = [...ending_array, "G4 ; wait"];
             ending_boolean = false;
             middle_finished = i;
-            console.log({ middle_finished });
           } else if (ending_boolean) {
-            ending_array = [ ...ending_array, gcode[i] ];
+            ending_array = [...ending_array, gcode[i]];
           }
         }
         const middle_array = gcode.slice(middle_start, middle_finished);
@@ -78,8 +77,8 @@ function GcodeContinousPage() {
             ["file_" + num]: {
               ["beginning_" + num]: beginning_array,
               ["middle_" + num]: middle_array,
-              ["ending_" + num]: ending_array,
-            },
+              ["ending_" + num]: ending_array
+            }
           };
         });
       };
@@ -87,19 +86,14 @@ function GcodeContinousPage() {
       reader.readAsText(file);
       set_filename(document.getElementById("file").files[0].name);
       set_gcode_name(name => {
-        return [ ...name, document.getElementById("file").files[index].name ];
+        return [...name, document.getElementById("file").files[index].name];
       });
     }
   };
 
   const gcode_placer = async (gcode_array, number_of_copies) => {
     if (number_of_copies === 1) {
-      gcode_array = [
-        ...gcode_array,
-        gcode_parts.file_1.middle_1,
-        remove_print,
-        gcode_parts.file_2.ending_2,
-      ];
+      gcode_array = [...gcode_array, gcode_parts.file_1.middle_1, remove_print, gcode_parts.file_2.ending_2];
     } else if (number_of_copies === 2) {
       gcode_array = [
         ...gcode_array,
@@ -107,34 +101,18 @@ function GcodeContinousPage() {
         remove_print,
         gcode_parts.file_2.middle_2,
         remove_print,
-        gcode_parts.file_2.ending_2,
+        gcode_parts.file_2.ending_2
       ];
     } else if (number_of_copies > 2) {
-      gcode_array = [
-        ...gcode_array,
-        gcode_parts.file_1.middle_1,
-        remove_print,
-        gcode_parts.file_2.middle_2,
-        remove_print,
-      ];
+      gcode_array = [...gcode_array, gcode_parts.file_1.middle_1, remove_print, gcode_parts.file_2.middle_2, remove_print];
       for (let i = 2; i < number_of_copies; i++) {
         if (i % 2 === 0) {
-          console.log("odd");
-          gcode_array = [
-            ...gcode_array,
-            gcode_parts.file_1.middle_1,
-            remove_print,
-          ];
+          gcode_array = [...gcode_array, gcode_parts.file_1.middle_1, remove_print];
         } else if (i % 2 === 1) {
-          console.log("even");
-          gcode_array = [
-            ...gcode_array,
-            gcode_parts.file_2.middle_2,
-            remove_print,
-          ];
+          gcode_array = [...gcode_array, gcode_parts.file_2.middle_2, remove_print];
         }
       }
-      gcode_array = [ ...gcode_array, gcode_parts.file_2.ending_2 ];
+      gcode_array = [...gcode_array, gcode_parts.file_2.ending_2];
     }
 
     const array = gcode_array.map(item => {
@@ -142,10 +120,7 @@ function GcodeContinousPage() {
     });
     const gcode = array.join("\n");
     if (number_of_copies !== 0) {
-      const response = await API_Content.export_gcode(
-        update_filename(filename, number_of_copies),
-        gcode
-      );
+      const response = await API_Content.export_gcode(update_filename(filename, number_of_copies), gcode);
       if (response) {
         set_loading(false);
         set_status(`Created ${update_filename(filename, number_of_copies)}`);
@@ -156,22 +131,22 @@ function GcodeContinousPage() {
   const update_filename = (filename, number_of_copies) => {
     const removed = filename.slice(4);
     const new_filename = `${number_of_copies}x ${removed}`;
-    console.log({ new_filename });
+
     return new_filename;
   };
 
   const create_new_gcode = async e => {
     e.preventDefault();
-    console.log({ gcode_parts });
+
     set_loading(true);
-    let gcode_array = [ gcode_parts.file_1.beginning_1 ];
+    let gcode_array = [gcode_parts.file_1.beginning_1];
     gcode_placer(gcode_array, number_of_copies);
   };
   const create_cascade_gcode = async e => {
     e.preventDefault();
-    console.log({ gcode_parts });
+
     set_loading(true);
-    let gcode_array = [ gcode_parts.file_1.beginning_1 ];
+    let gcode_array = [gcode_parts.file_1.beginning_1];
     for (var i = 0; i <= number_of_copies; i += 2) {
       gcode_placer(gcode_array, i);
     }
@@ -193,29 +168,16 @@ function GcodeContinousPage() {
           <label className="mr-1rem fw-800">Select Gcode</label>
           <label className="btn primary">
             <label className="">Choose gcode files</label>
-            <input
-              className="btn primary"
-              type="file"
-              id="file"
-              multiple
-              onChange={e => showFiles(e)}
-            />
+            <input className="btn primary" type="file" id="file" multiple onChange={e => showFiles(e)} />
           </label>
         </div>
         {gcode_name.map(name => (
-          <label className="form-item bg-secondary p-15px br-20px">
-            {name}
-          </label>
+          <label className="form-item bg-secondary p-15px br-20px">{name}</label>
         ))}
 
         <div className="form-item">
           <label className="mr-1rem w-50per fw-800">Number of Copies</label>
-          <input
-            type="number"
-            className="w-50per"
-            defaultValue={number_of_copies}
-            onChange={e => set_number_of_copies(e.target.value)}
-          />
+          <input type="number" className="w-50per" defaultValue={number_of_copies} onChange={e => set_number_of_copies(e.target.value)} />
         </div>
         <div className="w-100per mb-2rem">
           <label htmlFor="color_change">Color Change</label>
@@ -243,29 +205,17 @@ function GcodeContinousPage() {
 				</div> */}
 
         <div className="form-item">
-          <GLButton
-            variant="primary"
-            className="w-100per"
-            onClick={e => create_new_gcode(e)}
-          >
+          <GLButton variant="primary" className="w-100per" onClick={e => create_new_gcode(e)}>
             Make Continuous Gcode
           </GLButton>
         </div>
         <div className="form-item">
-          <GLButton
-            variant="primary"
-            className="w-100per"
-            onClick={e => create_cascade_gcode(e)}
-          >
+          <GLButton variant="primary" className="w-100per" onClick={e => create_cascade_gcode(e)}>
             Make Cascade Continuous Gcode
           </GLButton>
         </div>
         <div className="form-item">
-          <GLButton
-            variant="primary"
-            className="w-100per"
-            onClick={e => reset(e)}
-          >
+          <GLButton variant="primary" className="w-100per" onClick={e => reset(e)}>
             Reset
           </GLButton>
         </div>

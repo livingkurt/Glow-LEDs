@@ -69,7 +69,6 @@ export default {
         .skip((page - 1) * limit)
         .exec();
     } catch (error) {
-      console.log({ findAll_products_db_error: error });
       throw new Error(error.message);
     }
   },
@@ -90,13 +89,12 @@ export default {
         }
       ]).sort({ _id: 1 });
     } catch (error) {
-      console.log({ findAll_products_db_error: error });
       throw new Error(error.message);
     }
   },
   findById_products_db: async (id: string) => {
     let query = {};
-    console.log({ id });
+
     try {
       if (id && id.match(/^[0-9a-fA-F]{24}$/)) {
         query = { _id: id };
@@ -161,7 +159,6 @@ export default {
         .populate("subcategorys")
         .populate("contributers");
     } catch (error) {
-      console.log({ findById_products_db_error: error });
       throw new Error(error.message);
     }
   },
@@ -194,16 +191,15 @@ export default {
       // ];
       // CurrentProducts.create(fields, async (err: any, updated_records: any) => {
       //   if (err) {
-      //     console.log({ update_error: err });
+      //
       //     return;
       //   }
       //   updated_records.forEach(function (record: any) {
-      //     console.log(record.get("title"));
+      //
       //   });
       // });
       return await Product.create(body);
     } catch (error) {
-      console.log({ create_products_db_error: error });
       throw new Error(error.message);
     }
   },
@@ -224,7 +220,7 @@ export default {
       const product: any = await Product.findOne(query);
       // CurrentProducts.select({ filterByFormula: `id = "${product._id}"` }).firstPage((err: any, records: any) => {
       //   if (err) {
-      //     console.log(err);
+      //
       //     const fields = [
       //       {
       //         fields: {
@@ -241,11 +237,11 @@ export default {
       //     ];
       //     CurrentProducts.create(fields, async (err: any, updated_records: any) => {
       //       if (err) {
-      //         console.log({ update_error: err });
+      //
       //         return;
       //       }
       //       updated_records.forEach(function (record: any) {
-      //         console.log(record.get("title"));
+      //
       //       });
       //     });
       //     return;
@@ -268,33 +264,32 @@ export default {
       //   try {
       //     CurrentProducts.update(fields, async (err: any, updated_records: any) => {
       //       if (err) {
-      //         console.log({ update_error: err });
+      //
       //         return;
       //       }
       //       updated_records.forEach(function (record: any) {
-      //         console.log(record.get("title"));
+      //
       //       });
       //     });
       //   } catch (error) {
-      //     console.log({ error });
+      //
       //   }
       // });
       if (product) {
         return await Product.updateOne({ _id: id }, body);
       }
     } catch (error) {
-      console.log({ update_products_db_error: error });
       throw new Error(error.message);
     }
   },
   remove_products_db: async (id: string) => {
     try {
       const product: any = await Product.findOne({ _id: id });
-      console.log({ remove_products_db: product });
+
       if (product) {
         // CurrentProducts.select({ filterByFormula: `id = "${product._id}"` }).firstPage((err: any, records: any) => {
         //   if (err) {
-        //     console.log(err);
+        //
         //     return;
         //   }
         //   if (records.length > 0) {
@@ -306,7 +301,7 @@ export default {
         //         }
         //       });
         //     } catch (error) {
-        //       console.log({ error });
+        //
         //     }
         //   }
         // });
@@ -314,7 +309,6 @@ export default {
         // return await Product.deleteOne({ _id: id });
       }
     } catch (error) {
-      console.log({ remove_products_db_error: error });
       throw new Error(error.message);
     }
   },
@@ -322,7 +316,6 @@ export default {
     try {
       return await Product.countDocuments(filter);
     } catch (error) {
-      console.log({ remove_products_db_error: error });
       throw new Error(error.message);
     }
   }

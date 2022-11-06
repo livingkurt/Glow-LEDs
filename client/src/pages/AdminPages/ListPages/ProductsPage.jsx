@@ -64,7 +64,7 @@ function ProductPage(props) {
         // 	sort = query.sort;
         // }
         // if (query.filter) {
-        // 	// console.log({ filter: query.filter, chips_list });
+        // 	//
         // 	filter = waitForElement(query.filter, chips_list);
         // }
         if (query.page) {
@@ -76,7 +76,7 @@ function ProductPage(props) {
           limit = query.limit;
         }
       }
-      console.log({ category, subcategory, search, sort, filter, collection });
+
       dispatch(
         listProducts({
           category,
@@ -124,7 +124,7 @@ function ProductPage(props) {
 
   const update_order = async () => {
     set_loading_upload(true);
-    console.log({ state });
+
     const { data } = await API_Products.update_product_order(state);
     if (data) {
       dispatch(
@@ -202,7 +202,7 @@ function ProductPage(props) {
       deleted: false,
       option: false
     });
-    console.log({ data });
+
     await facebook_catalog_upload(data.products);
     await current_products_upload(data.products);
     await google_catalog_upload(data.products);
@@ -257,7 +257,6 @@ function ProductPage(props) {
 
   const set_state = () => {
     if (items) {
-      console.log({ set_state: items });
       if (items.columns) {
         setState({
           entities: items,
@@ -298,13 +297,12 @@ function ProductPage(props) {
     let hidden = "";
     let limit = 30;
     let option = false;
-    console.log({ e, new_page });
+
     e.preventDefault();
     const page = parseInt(new_page);
     set_page(page);
     update_products_url(history, search, "", "", page, limit);
 
-    console.log(new_page);
     dispatch(
       listProducts({
         category,
@@ -322,7 +320,7 @@ function ProductPage(props) {
   };
 
   const onDragStart = start => {
-    // console.log("OnDragStart event started");
+    //
     const id = start.draggableId;
     const selected = state.selectedProductIds.find(productId => productId === id);
 
@@ -336,7 +334,7 @@ function ProductPage(props) {
   };
 
   const onDragEnd = result => {
-    // console.log("OnDragEnd event started");
+    //
     const { destination, source, draggableId } = result;
 
     if (!destination) {
@@ -370,7 +368,6 @@ function ProductPage(props) {
   };
 
   const onWindowClick = event => {
-    console.log({ event });
     if (event.defaultPrevented) {
       return;
     }
@@ -386,7 +383,7 @@ function ProductPage(props) {
 
   const toggleSelection = productId => {
     const selectedProductIds = state.selectedProductIds;
-    // console.log({ selectedProductIds });
+    //
     const wasSelected = selectedProductIds.includes(productId);
 
     const newProductIds = (() => {
@@ -439,8 +436,6 @@ function ProductPage(props) {
   const multiSelectTo = newProductId => {
     const updated = multiSelect(state.entities, state.selectedProductIds, newProductId);
 
-    console.log({ updated });
-
     if (updated == null) {
       return;
     }
@@ -459,7 +454,7 @@ function ProductPage(props) {
       return { ...state, selectedProductIds: [] };
     });
   };
-  // console.log({ selectionCount: state.selectedProductIds.length });
+  //
 
   const getSelectedMap = memoizeOne(selectedProductIds =>
     selectedProductIds.reduce((previous, current) => {
@@ -474,10 +469,6 @@ function ProductPage(props) {
     items.forEach(item_group => {
       const options = [...item_group.color_products, ...item_group.secondary_color_products, ...item_group.option_products];
       options.forEach(async option => {
-        console.log({
-          [option.name]: option._id,
-          item_group_id: item_group._id
-        });
         const { data } = await API_Products.save_item_group_id(option._id, item_group._id);
       });
     });
@@ -616,7 +607,7 @@ function ProductPage(props) {
         <DragDropContext onDragStart={onDragStart} onDragEnd={onDragEnd}>
           {state.entities.columnOrder.map((columnId, index) => {
             const column = state.entities.columns[columnId];
-            console.log({ column });
+
             // const products = column.product_ids.map((product_id, index) => state.entities.products[index]);
             let products = [];
             state.entities.products
@@ -625,13 +616,11 @@ function ProductPage(props) {
                 products[column.product_ids.indexOf(a._id)] = a;
               });
             const products_2 = column.product_ids.map((product_id, index) => state.entities.products[index + 1]);
-            console.log({ products_2 });
 
             return (
               <Droppable droppableId={"column-1"} key={index}>
                 {provided => (
                   <ul {...provided.droppableProps} ref={provided.innerRef}>
-                    {/* {console.log({ state.entities })} */}
                     {products
                       .filter(product => !product.hidden)
                       .map((product, index) => {
@@ -646,8 +635,8 @@ function ProductPage(props) {
                                 state.draggingProductId &&
                                 product._id !== state.draggingProductId
                               ) {
-                                // console.log("Dragging Over - Product not to render - " + product._id);
-                                // console.log("draggingProductId - " + draggingProductId);
+                                //
+                                //
                                 disAppearProduct = true;
                               }
                               return (
@@ -683,7 +672,7 @@ function ProductPage(props) {
         <DragDropContext onDragStart={onDragStart} onDragEnd={onDragEnd}>
           {state.entities.columnOrder.map(columnId => {
             const column = state.entities.columns[columnId];
-            console.log({ column });
+
             // const products = column.product_ids.map((product_id, index) => state.entities.products[index]);
             let products = [];
             state.entities.products
@@ -691,15 +680,13 @@ function ProductPage(props) {
               .forEach(function (a) {
                 products[column.product_ids.indexOf(a._id)] = a;
               });
-            console.log({ product_ids: column.product_ids });
+
             const products_2 = column.product_ids.map((product_id, index) => state.entities.products[index + 1]);
-            console.log({ products_2 });
 
             return (
               <Droppable droppableId={"column-1"} index>
                 {provided => (
                   <ul {...provided.droppableProps} ref={provided.innerRef}>
-                    {/* {console.log({ state.entities })} */}
                     {products.map((product, index) => {
                       return (
                         <Draggable key={product._id} draggableId={product._id} index={index}>
@@ -712,8 +699,8 @@ function ProductPage(props) {
                               state.draggingProductId &&
                               product._id !== state.draggingProductId
                             ) {
-                              // console.log("Dragging Over - Product not to render - " + product._id);
-                              // console.log("draggingProductId - " + draggingProductId);
+                              //
+                              //
                               disAppearProduct = true;
                             }
                             return (

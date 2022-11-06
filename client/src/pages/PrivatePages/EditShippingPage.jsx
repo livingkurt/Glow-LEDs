@@ -8,9 +8,9 @@ import { GLButton } from "../../components/GlowLEDsComponents";
 
 const ProfilePage = props => {
   const history = useHistory();
-  const [ name, setName ] = useState("");
-  const [ password, setPassword ] = useState("");
-  const [ email, setEmail ] = useState("");
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
   const dispatch = useDispatch();
 
   const userLogin = useSelector(state => state.userLogin);
@@ -22,23 +22,19 @@ const ProfilePage = props => {
     history.push("/secure/account/profile");
   };
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (userInfo) {
-          console.log(userInfo.name);
-          setEmail(userInfo.email);
-          setName(userInfo.name);
-          console.log(name);
-          setPassword(userInfo.password);
-        }
-        dispatch(listMyOrders());
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (userInfo) {
+        setEmail(userInfo.email);
+        setName(userInfo.name);
+
+        setPassword(userInfo.password);
       }
-      return () => (clean = false);
-    },
-    [ userInfo ]
-  );
+      dispatch(listMyOrders());
+    }
+    return () => (clean = false);
+  }, [userInfo]);
 
   return (
     <div className="profile_container wrap p-20px">
@@ -46,14 +42,8 @@ const ProfilePage = props => {
         <title>Edit Shipping | Glow LEDs</title>
         <meta property="og:title" content="Edit Shipping" />
         <meta name="twitter:title" content="Edit Shipping" />
-        <link
-          rel="canonical"
-          href="https://www.glow-leds.com/secure/account/editshipping"
-        />
-        <meta
-          property="og:url"
-          content="https://www.glow-leds.com/secure/account/editshipping"
-        />
+        <link rel="canonical" href="https://www.glow-leds.com/secure/account/editshipping" />
+        <meta property="og:url" content="https://www.glow-leds.com/secure/account/editshipping" />
       </Helmet>
       <div className="profile-info">
         <div className="form">
@@ -67,33 +57,15 @@ const ProfilePage = props => {
               </li>
               <li>
                 <label htmlFor="name">Name</label>
-                <input
-                  defaultValue={name}
-                  type="name"
-                  name="name"
-                  id="name"
-                  onChange={e => setName(e.target.value)}
-                />
+                <input defaultValue={name} type="name" name="name" id="name" onChange={e => setName(e.target.value)} />
               </li>
               <li>
                 <label htmlFor="email">Email</label>
-                <input
-                  defaultValue={email}
-                  type="email"
-                  name="email"
-                  id="email"
-                  onChange={e => setEmail(e.target.value)}
-                />
+                <input defaultValue={email} type="email" name="email" id="email" onChange={e => setEmail(e.target.value)} />
               </li>
               <li>
                 <label htmlFor="password">Password</label>
-                <input
-                  defaultValue={password}
-                  type="password"
-                  id="password"
-                  name="password"
-                  onChange={e => setPassword(e.target.value)}
-                />
+                <input defaultValue={password} type="password" id="password" name="password" onChange={e => setPassword(e.target.value)} />
               </li>
 
               <li>
@@ -103,11 +75,7 @@ const ProfilePage = props => {
               </li>
               <li>
                 <Link to="/secure/account/profile">
-                  <GLButton
-                    type="button"
-                    variant="secondary"
-                    className="w-100per"
-                  >
+                  <GLButton type="button" variant="secondary" className="w-100per">
                     Cancel
                   </GLButton>
                 </Link>

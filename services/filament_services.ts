@@ -8,8 +8,8 @@ export default {
         ? {
             facebook_name: {
               $regex: query.search,
-              $options: "i",
-            },
+              $options: "i"
+            }
           }
         : {};
       const filter = determine_filter(query, search);
@@ -18,7 +18,6 @@ export default {
 
       return await filament_db.findAll_filaments_db(filter, sort);
     } catch (error) {
-      console.log({ findAll_filaments_s_error: error });
       throw new Error(error.message);
     }
   },
@@ -26,7 +25,6 @@ export default {
     try {
       return await filament_db.findById_filaments_db(params.id);
     } catch (error) {
-      console.log({ findById_filaments_s_error: error });
       throw new Error(error.message);
     }
   },
@@ -34,7 +32,6 @@ export default {
     try {
       return await filament_db.findMy_filaments_db(params.id);
     } catch (error) {
-      console.log({ findById_filaments_s_error: error });
       throw new Error(error.message);
     }
   },
@@ -42,7 +39,6 @@ export default {
     try {
       return await filament_db.create_filaments_db(body);
     } catch (error) {
-      console.log({ create_filaments_s_error: error });
       throw new Error(error.message);
     }
   },
@@ -50,7 +46,6 @@ export default {
     try {
       return await filament_db.update_filaments_db(params.id, body);
     } catch (error) {
-      console.log({ update_filaments_s_error: error });
       throw new Error(error.message);
     }
   },
@@ -58,8 +53,7 @@ export default {
     try {
       return await filament_db.remove_filaments_db(params.id);
     } catch (error) {
-      console.log({ remove_filaments_s_error: error });
       throw new Error(error.message);
     }
-  },
+  }
 };

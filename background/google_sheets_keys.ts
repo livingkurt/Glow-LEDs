@@ -10,9 +10,7 @@ const facebook_catalog_upload = async () => {
 
     // spreadsheet key is the long id in the sheets URL
     // const doc = new GoogleSpreadsheet('1qf9xryR0EPOCD0YkFQXqYioAxJRfWg6QFpdFwFTpErg');
-    const doc = new GoogleSpreadsheet(
-      "1NqPY49Q-58oCVuslOw576zNyBUnyAAaOmGdzCrVT4g8"
-    );
+    const doc = new GoogleSpreadsheet("1NqPY49Q-58oCVuslOw576zNyBUnyAAaOmGdzCrVT4g8");
 
     // use service account creds
     // await doc.useServiceAccountAuth({
@@ -27,7 +25,7 @@ const facebook_catalog_upload = async () => {
     // doc.useApiKey('YOUR-API-KEY');
 
     await doc.loadInfo(); // loads document properties and worksheets
-    // console.log(doc.title);
+    //
     // await doc.updateProperties({ title: 'KYEO FB Product Sheet' });
 
     const sheet = doc.sheetsByIndex[0]; // or use doc.sheetsById[id] or doc.sheetsByTitle[title]
@@ -48,12 +46,10 @@ const facebook_catalog_upload = async () => {
       "google_product_category",
       "sale_price",
       "sale_price_effective_date",
-      "product_type",
+      "product_type"
     ]);
 
-    const { data } = await axios.get(
-      "https://www.glow-leds.com/api/products/shown"
-    );
+    const { data } = await axios.get("https://www.glow-leds.com/api/products/shown");
 
     const new_rows = data.map((product: any, i: number) => {
       const id = product._id;
@@ -87,7 +83,7 @@ const facebook_catalog_upload = async () => {
         google_product_category,
         sale_price,
         sale_price_effective_date,
-        product_type,
+        product_type
       };
     });
 
@@ -96,10 +92,7 @@ const facebook_catalog_upload = async () => {
     // adding / removing sheets
     // const newSheet = await doc.addSheet({ title: 'hot new sheet!' });
     // await newSheet.delete();
-  } catch (error) {
-    console.log({ error });
-    console.log({ error });
-  }
+  } catch (error) {}
 };
 
 facebook_catalog_upload();

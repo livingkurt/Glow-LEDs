@@ -1,59 +1,46 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  saveEmail,
-  detailsEmail,
-  listEmails,
-} from "../../../actions/emailActions";
+import { saveEmail, detailsEmail, listEmails } from "../../../actions/emailActions";
 import { useHistory, Link } from "react-router-dom";
-import {
-  ImageDisplay,
-  Loading,
-  Notification,
-} from "../../../components/UtilityComponents";
+import { ImageDisplay, Loading, Notification } from "../../../components/UtilityComponents";
 import { Helmet } from "react-helmet";
 import { detailsContent, listContents } from "../../../actions/contentActions";
 import { API_Emails } from "../../../utils";
 import { SketchPicker } from "react-color";
 import reactCSS from "reactcss";
-import {
-  accurate_date,
-  format_date,
-  format_time,
-  unformat_date_and_time,
-} from "../../../utils/helper_functions";
+import { accurate_date, format_date, format_time, unformat_date_and_time } from "../../../utils/helper_functions";
 import { GLButton } from "../../../components/GlowLEDsComponents";
 const ReactDOMServer = require("react-dom/server");
 const HtmlToReactParser = require("html-to-react").Parser;
 
 const EditEmailPage = props => {
-  const [ id, set_id ] = useState("");
-  const [ email_type, set_email_type ] = useState("");
-  const [ email_h1, set_email_h1 ] = useState("");
-  const [ email_image, set_email_image ] = useState("");
-  const [ email_images, set_email_images ] = useState([]);
-  const [ background_color, set_background_color ] = useState("#7d7c7c");
-  const [ module_color, set_module_color ] = useState("#585858");
-  const [ button_color, set_button_color ] = useState("#4c4f60");
-  const [ text_color, set_text_color ] = useState("#FFFFFF");
-  const [ title_color, set_title_color ] = useState("#333333");
-  const [ header_footer_color, set_header_footer_color ] = useState("#333333");
-  const [ template, set_template ] = useState("");
-  const [ status, set_status ] = useState("");
+  const [id, set_id] = useState("");
+  const [email_type, set_email_type] = useState("");
+  const [email_h1, set_email_h1] = useState("");
+  const [email_image, set_email_image] = useState("");
+  const [email_images, set_email_images] = useState([]);
+  const [background_color, set_background_color] = useState("#7d7c7c");
+  const [module_color, set_module_color] = useState("#585858");
+  const [button_color, set_button_color] = useState("#4c4f60");
+  const [text_color, set_text_color] = useState("#FFFFFF");
+  const [title_color, set_title_color] = useState("#333333");
+  const [header_footer_color, set_header_footer_color] = useState("#333333");
+  const [template, set_template] = useState("");
+  const [status, set_status] = useState("");
 
-  const [ email_h2, set_email_h2 ] = useState("");
-  const [ email_p, set_email_p ] = useState("");
-  const [ email_button, set_email_button ] = useState("");
-  const [ email_link, set_email_link ] = useState("");
-  const [ email_active, set_email_active ] = useState(true);
-  const [ images, set_images ] = useState([]);
-  const [ image, set_image ] = useState("");
-  const [ scheduled_at, set_scheduled_at ] = useState("");
-  const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
-  const [ content, set_content ] = useState({});
-  const [ date, set_date ] = useState();
-  const [ time, set_time ] = useState();
-  const [ subject, set_subject ] = useState("");
+  const [email_h2, set_email_h2] = useState("");
+  const [email_p, set_email_p] = useState("");
+  const [email_button, set_email_button] = useState("");
+  const [email_link, set_email_link] = useState("");
+  const [email_active, set_email_active] = useState(true);
+  const [images, set_images] = useState([]);
+  const [image, set_image] = useState("");
+  const [scheduled_at, set_scheduled_at] = useState("");
+  const [loading_checkboxes, set_loading_checkboxes] = useState(true);
+  const [content, set_content] = useState({});
+  const [date, set_date] = useState();
+  const [time, set_time] = useState();
+  const [subject, set_subject] = useState("");
 
   const history = useHistory();
 
@@ -75,7 +62,6 @@ const EditEmailPage = props => {
   const dispatch = useDispatch();
 
   const set_content_state = content => {
-    console.log({ set_content_state: content });
     props.match.params.id && set_id(email._id);
     set_email_type(content.email_type);
     set_email_h1(content.h1);
@@ -89,7 +75,6 @@ const EditEmailPage = props => {
     set_email_active(content.active);
   };
   const set_email_state = () => {
-    console.log({ set_state: email });
     props.match.params.id && set_id(email._id);
     set_email_type(email.email_type);
     set_email_h1(email.h1);
@@ -143,26 +128,22 @@ const EditEmailPage = props => {
     // dispatch(detailsContent(''));
   };
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (props.match.params.id) {
-          console.log("Is ID");
-          dispatch(detailsEmail(props.match.params.id));
-          dispatch(detailsEmail(props.match.params.id));
-        } else {
-          dispatch(detailsEmail(""));
-        }
-        dispatch(listEmails({}));
-        dispatch(listContents({}));
-
-        set_email_state();
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (props.match.params.id) {
+        dispatch(detailsEmail(props.match.params.id));
+        dispatch(detailsEmail(props.match.params.id));
+      } else {
+        dispatch(detailsEmail(""));
       }
-      return () => (clean = false);
-    },
-    [ dispatch, props.match.params.id ]
-  );
+      dispatch(listEmails({}));
+      dispatch(listContents({}));
+
+      set_email_state();
+    }
+    return () => (clean = false);
+  }, [dispatch, props.match.params.id]);
 
   const use_template = e => {
     dispatch(detailsEmail(e.target.value));
@@ -171,18 +152,17 @@ const EditEmailPage = props => {
     // dispatch(detailsContent(e.target.value));
     const { data } = await API_Emails.get_content(e.target.value);
     // set_content(data);
-    console.log({ data });
-    console.log({ home_page: data.home_page });
+
     const new_link = `https://www.glow-leds.com${data.home_page.link}`;
-    console.log({ new_link });
+
     set_content_state({
       ...data.home_page,
-      link: new_link,
+      link: new_link
     });
   };
   const view_announcement_email = async () => {
     // dispatch(detailsContent(e.target.value));
-    console.log({ email });
+
     const { data } = await API_Emails.view_announcement_email({
       _id: id ? id : null,
       email_type: "Announcements",
@@ -200,46 +180,38 @@ const EditEmailPage = props => {
       button_color,
       text_color,
       title_color,
-      active: email_active,
+      active: email_active
     });
-    console.log({ data });
+
     const htmlToReactParser = new HtmlToReactParser();
     const reactElement = htmlToReactParser.parse(data);
     set_template(reactElement);
   };
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (email) {
-          // console.log('Set');
-          set_email_state();
-        } else {
-          // console.log('UnSet');
-          unset_state();
-        }
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (email) {
+        //
+        set_email_state();
+      } else {
+        //
+        unset_state();
       }
-      return () => (clean = false);
-    },
-    [ email ]
-  );
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (content && content.home_page) {
-          console.log("Set");
-          set_content_state(content.home_page);
-        } else {
-          console.log("UnSet");
-          unset_state();
-        }
+    }
+    return () => (clean = false);
+  }, [email]);
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (content && content.home_page) {
+        set_content_state(content.home_page);
+      } else {
+        unset_state();
       }
-      return () => (clean = false);
-    },
-    [ content ]
-  );
+    }
+    return () => (clean = false);
+  }, [content]);
 
   setTimeout(() => {
     set_loading_checkboxes(false);
@@ -266,7 +238,7 @@ const EditEmailPage = props => {
         text_color,
         title_color,
         scheduled_at: date && time ? unformat_date_and_time(date, time) : null,
-        active: email_active,
+        active: email_active
       })
     );
     e.target.reset();
@@ -274,17 +246,12 @@ const EditEmailPage = props => {
     // history.push('/secure/glow/emails');
   };
 
-  const [ title_color_picker, set_title_color_picker ] = useState(false);
-  const [ text_color_picker, set_text_color_picker ] = useState(false);
-  const [ background_color_picker, set_background_color_picker ] = useState(
-    false
-  );
-  const [ module_color_picker, set_module_color_picker ] = useState(false);
-  const [ button_color_picker, set_button_color_picker ] = useState(false);
-  const [
-    header_footer_color_picker,
-    set_header_footer_color_picker,
-  ] = useState(false);
+  const [title_color_picker, set_title_color_picker] = useState(false);
+  const [text_color_picker, set_text_color_picker] = useState(false);
+  const [background_color_picker, set_background_color_picker] = useState(false);
+  const [module_color_picker, set_module_color_picker] = useState(false);
+  const [button_color_picker, set_button_color_picker] = useState(false);
+  const [header_footer_color_picker, set_header_footer_color_picker] = useState(false);
 
   const styles = reactCSS({
     default: {
@@ -294,36 +261,27 @@ const EditEmailPage = props => {
         borderRadius: "1px",
         boxShadow: "0 0 0 1px rgba(0,0,0,.1)",
         display: "inline-block",
-        cursor: "pointer",
+        cursor: "pointer"
       },
       popover: {
         position: "absolute",
-        zIndex: "2",
+        zIndex: "2"
       },
       cover: {
         position: "fixed",
         top: "0px",
         right: "0px",
         bottom: "0px",
-        left: "0px",
-      },
-    },
+        left: "0px"
+      }
+    }
   });
 
-  const preset_colors = [
-    "#333333",
-    "#333333",
-    "#FFFFFF",
-    "#7d7c7c",
-    "#585858",
-    "#4c4f60",
-  ];
+  const preset_colors = ["#333333", "#333333", "#FFFFFF", "#7d7c7c", "#585858", "#4c4f60"];
 
   return (
     <div className="main_container p-20px">
-      <h1 style={{ textAlign: "center" }}>
-        {props.match.params.id ? "Edit Email" : "Create Email"}
-      </h1>
+      <h1 style={{ textAlign: "center" }}>{props.match.params.id ? "Edit Email" : "Create Email"}</h1>
 
       <div className="form">
         <form onSubmit={submitHandler} style={{ width: "100%" }}>
@@ -343,16 +301,13 @@ const EditEmailPage = props => {
                   style={{
                     maxWidth: "100rem",
                     width: "100%",
-                    marginBottom: "20px",
+                    marginBottom: "20px"
                   }}
                 >
                   <li>
                     <div className="ai-c h-25px mb-15px jc-c">
                       <div className="custom-select w-100per">
-                        <select
-                          className="qty_select_dropdown w-100per"
-                          onChange={e => use_template(e)}
-                        >
+                        <select className="qty_select_dropdown w-100per" onChange={e => use_template(e)}>
                           <option key={1} defaultValue="">
                             ---Template---
                           </option>
@@ -370,11 +325,7 @@ const EditEmailPage = props => {
                   <li>
                     <div className="ai-c h-25px mb-15px jc-c">
                       <div className="custom-select w-100per">
-                        <select
-                          className="qty_select_dropdown w-100per"
-                          onChange={e => use_content_template(e)}
-                          vd
-                        >
+                        <select className="qty_select_dropdown w-100per" onChange={e => use_content_template(e)} vd>
                           <option key={1} defaultValue="">
                             ---Content Template---
                           </option>
@@ -392,11 +343,7 @@ const EditEmailPage = props => {
                   <li>
                     <div className="ai-c h-25px mb-15px jc-c">
                       <div className="custom-select w-100per">
-                        <select
-                          className="qty_select_dropdown w-100per"
-                          onChange={e => set_status(e.target.value)}
-                          value={status}
-                        >
+                        <select className="qty_select_dropdown w-100per" onChange={e => set_status(e.target.value)} value={status}>
                           <option defaultValue="">---Status---</option>
 
                           <option value={"draft"}>Draft</option>
@@ -411,49 +358,32 @@ const EditEmailPage = props => {
                     <div className="w-100per m-10px">
                       <ul className="jc-b ai-c">
                         <li className="w-100per max-w-150px mr-10px">
-                          <label htmlFor="header_footer_color">
-                            Header Footer
-                          </label>
+                          <label htmlFor="header_footer_color">Header Footer</label>
                           <input
                             type="text"
                             name="header_footer_color"
                             value={header_footer_color}
                             id="header_footer_color"
-                            onChange={e =>
-                              set_header_footer_color(e.target.value)}
+                            onChange={e => set_header_footer_color(e.target.value)}
                           />
                           <div>
-                            <div
-                              style={styles.swatch}
-                              onClick={() =>
-                                set_header_footer_color_picker(
-                                  !header_footer_color_picker
-                                )}
-                            >
+                            <div style={styles.swatch} onClick={() => set_header_footer_color_picker(!header_footer_color_picker)}>
                               <div
                                 style={{
                                   width: "36px",
                                   height: "14px",
                                   borderRadius: "2px",
-                                  background: header_footer_color,
+                                  background: header_footer_color
                                 }}
                               />
                             </div>
                             {header_footer_color_picker ? (
-                              <div
-                                style={styles.popover}
-                                className="jc-c w-100per"
-                              >
-                                <div
-                                  style={styles.cover}
-                                  onClick={() =>
-                                    set_header_footer_color_picker(false)}
-                                />
+                              <div style={styles.popover} className="jc-c w-100per">
+                                <div style={styles.cover} onClick={() => set_header_footer_color_picker(false)} />
                                 <SketchPicker
                                   color={header_footer_color}
                                   presetColors={preset_colors}
-                                  onChange={color =>
-                                    set_header_footer_color(color.hex)}
+                                  onChange={color => set_header_footer_color(color.hex)}
                                 />
                               </div>
                             ) : null}
@@ -469,29 +399,19 @@ const EditEmailPage = props => {
                             onChange={e => set_title_color(e.target.value)}
                           />
                           <div>
-                            <div
-                              style={styles.swatch}
-                              onClick={() =>
-                                set_title_color_picker(!title_color_picker)}
-                            >
+                            <div style={styles.swatch} onClick={() => set_title_color_picker(!title_color_picker)}>
                               <div
                                 style={{
                                   width: "36px",
                                   height: "14px",
                                   borderRadius: "2px",
-                                  background: title_color,
+                                  background: title_color
                                 }}
                               />
                             </div>
                             {title_color_picker ? (
-                              <div
-                                style={styles.popover}
-                                className="jc-c w-100per"
-                              >
-                                <div
-                                  style={styles.cover}
-                                  onClick={() => set_title_color_picker(false)}
-                                />
+                              <div style={styles.popover} className="jc-c w-100per">
+                                <div style={styles.cover} onClick={() => set_title_color_picker(false)} />
                                 <SketchPicker
                                   color={title_color}
                                   presetColors={preset_colors}
@@ -511,26 +431,19 @@ const EditEmailPage = props => {
                             onChange={e => set_text_color(e.target.value)}
                           />
                           <div>
-                            <div
-                              style={styles.swatch}
-                              onClick={() =>
-                                set_text_color_picker(!text_color_picker)}
-                            >
+                            <div style={styles.swatch} onClick={() => set_text_color_picker(!text_color_picker)}>
                               <div
                                 style={{
                                   width: "36px",
                                   height: "14px",
                                   borderRadius: "2px",
-                                  background: text_color,
+                                  background: text_color
                                 }}
                               />
                             </div>
                             {text_color_picker ? (
                               <div style={styles.popover}>
-                                <div
-                                  style={styles.cover}
-                                  onClick={() => set_text_color_picker(false)}
-                                />
+                                <div style={styles.cover} onClick={() => set_text_color_picker(false)} />
                                 <SketchPicker
                                   color={text_color}
                                   presetColors={preset_colors}
@@ -553,34 +466,23 @@ const EditEmailPage = props => {
                             }}
                           />
                           <div>
-                            <div
-                              style={styles.swatch}
-                              onClick={() =>
-                                set_background_color_picker(
-                                  !background_color_picker
-                                )}
-                            >
+                            <div style={styles.swatch} onClick={() => set_background_color_picker(!background_color_picker)}>
                               <div
                                 style={{
                                   width: "36px",
                                   height: "14px",
                                   borderRadius: "2px",
-                                  background: background_color,
+                                  background: background_color
                                 }}
                               />
                             </div>
                             {background_color_picker ? (
                               <div style={styles.popover}>
-                                <div
-                                  style={styles.cover}
-                                  onClick={() =>
-                                    set_background_color_picker(false)}
-                                />
+                                <div style={styles.cover} onClick={() => set_background_color_picker(false)} />
                                 <SketchPicker
                                   color={background_color}
                                   presetColors={preset_colors}
-                                  onChange={color =>
-                                    set_background_color(color.hex)}
+                                  onChange={color => set_background_color(color.hex)}
                                 />
                               </div>
                             ) : null}
@@ -596,31 +498,23 @@ const EditEmailPage = props => {
                             onChange={e => set_module_color(e.target.value)}
                           />
                           <div>
-                            <div
-                              style={styles.swatch}
-                              onClick={() =>
-                                set_module_color_picker(!module_color_picker)}
-                            >
+                            <div style={styles.swatch} onClick={() => set_module_color_picker(!module_color_picker)}>
                               <div
                                 style={{
                                   width: "36px",
                                   height: "14px",
                                   borderRadius: "2px",
-                                  background: module_color,
+                                  background: module_color
                                 }}
                               />
                             </div>
                             {module_color_picker ? (
                               <div style={styles.popover}>
-                                <div
-                                  style={styles.cover}
-                                  onClick={() => set_module_color_picker(false)}
-                                />
+                                <div style={styles.cover} onClick={() => set_module_color_picker(false)} />
                                 <SketchPicker
                                   color={module_color}
                                   presetColors={preset_colors}
-                                  onChange={color =>
-                                    set_module_color(color.hex)}
+                                  onChange={color => set_module_color(color.hex)}
                                 />
                               </div>
                             ) : null}
@@ -636,31 +530,23 @@ const EditEmailPage = props => {
                             onChange={e => set_button_color(e.target.value)}
                           />
                           <div>
-                            <div
-                              style={styles.swatch}
-                              onClick={() =>
-                                set_button_color_picker(!button_color_picker)}
-                            >
+                            <div style={styles.swatch} onClick={() => set_button_color_picker(!button_color_picker)}>
                               <div
                                 style={{
                                   width: "36px",
                                   height: "14px",
                                   borderRadius: "2px",
-                                  background: button_color,
+                                  background: button_color
                                 }}
                               />
                             </div>
                             {button_color_picker ? (
                               <div style={styles.popover}>
-                                <div
-                                  style={styles.cover}
-                                  onClick={() => set_button_color_picker(false)}
-                                />
+                                <div style={styles.cover} onClick={() => set_button_color_picker(false)} />
                                 <SketchPicker
                                   color={button_color}
                                   presetColors={preset_colors}
-                                  onChange={color =>
-                                    set_button_color(color.hex)}
+                                  onChange={color => set_button_color(color.hex)}
                                 />
                               </div>
                             ) : null}
@@ -669,23 +555,11 @@ const EditEmailPage = props => {
                       </ul>
                       <li>
                         <label htmlFor="subject">Subject</label>
-                        <input
-                          type="text"
-                          name="subject"
-                          value={subject}
-                          id="subject"
-                          onChange={e => set_subject(e.target.value)}
-                        />
+                        <input type="text" name="subject" value={subject} id="subject" onChange={e => set_subject(e.target.value)} />
                       </li>
                       <li>
                         <label htmlFor="email_h1">Heading</label>
-                        <input
-                          type="text"
-                          name="email_h1"
-                          value={email_h1}
-                          id="email_h1"
-                          onChange={e => set_email_h1(e.target.value)}
-                        />
+                        <input type="text" name="email_h1" value={email_h1} id="email_h1" onChange={e => set_email_h1(e.target.value)} />
                       </li>
                       <li>
                         <label htmlFor="email_h2">Summary</label>
@@ -697,12 +571,7 @@ const EditEmailPage = props => {
                           onChange={e => set_email_h2(e.target.value)}
                         />
                       </li>
-                      <ImageDisplay
-                        images={images}
-                        set_images={set_images}
-                        image={image}
-                        set_image={set_image}
-                      />
+                      <ImageDisplay images={images} set_images={set_images} image={image} set_image={set_image} />
                       <li>
                         <label htmlFor="email_p">Body</label>
                         <textarea
@@ -736,21 +605,11 @@ const EditEmailPage = props => {
                       <div className="jc-b g-10px">
                         <div className="column w-100per">
                           <label htmlFor="email_link">Scheduled Date</label>
-                          <input
-                            type="text"
-                            value={date}
-                            className="w-100per"
-                            onChange={e => set_date(e.target.value)}
-                          />
+                          <input type="text" value={date} className="w-100per" onChange={e => set_date(e.target.value)} />
                         </div>
                         <div className="column w-100per">
                           <label htmlFor="email_link">Scheduled Time</label>
-                          <input
-                            type="text"
-                            value={time}
-                            className="w-100per"
-                            onChange={e => set_time(e.target.value)}
-                          />
+                          <input type="text" value={time} className="w-100per" onChange={e => set_time(e.target.value)} />
                         </div>
                       </div>
 
@@ -781,11 +640,7 @@ const EditEmailPage = props => {
                   </li>
                   <li>
                     <Link to={"/secure/glow/emails/announcement/" + email._id}>
-                      <GLButton
-                        variant="secondary"
-                        className="w-100per"
-                        aria-label="view"
-                      >
+                      <GLButton variant="secondary" className="w-100per" aria-label="view">
                         Go to Email Sender
                       </GLButton>
                     </Link>

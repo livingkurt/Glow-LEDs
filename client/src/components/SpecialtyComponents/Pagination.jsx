@@ -4,25 +4,18 @@ import { usePagination, DOTS } from "../Hooks/usePagination";
 import { userWindowDimensions } from "../Hooks";
 import { GLButton } from "../GlowLEDsComponents";
 const Pagination = props => {
-  const {
-    onPageChange,
-    totalCount,
-    siblingCount = 1,
-    currentPage,
-    pageSize,
-    className,
-  } = props;
+  const { onPageChange, totalCount, siblingCount = 1, currentPage, pageSize, className } = props;
   const { width, height } = userWindowDimensions();
-  // console.log({ props });
+  //
 
   const paginationRange = usePagination({
     currentPage: parseInt(currentPage),
     totalCount,
     siblingCount,
     pageSize,
-    width,
+    width
   });
-  // console.log({ paginationRange });
+  //
 
   if (currentPage === 0 || paginationRange.length < 2) {
     return null;
@@ -37,14 +30,12 @@ const Pagination = props => {
   // };
 
   let lastPage = paginationRange[paginationRange.length - 1];
-  // console.log({ lastPage });
+  //
   return (
-    <ul
-      className={classnames("pagination-container", { [className]: className })}
-    >
+    <ul className={classnames("pagination-container", { [className]: className })}>
       <li
         className={classnames("pagination-item", {
-          disabled: currentPage === 1,
+          disabled: currentPage === 1
         })}
         onClick={e => onPageChange(e, parseInt(currentPage) - 1)}
       >
@@ -66,23 +57,17 @@ const Pagination = props => {
           return (
             <li
               className={classnames("pagination-item", {
-                page: pageNumber === currentPage,
+                page: pageNumber === currentPage
               })}
               onClick={e => onPageChange(e, pageNumber)}
             >
-              <div
-                className={`btn ${pageNumber === parseInt(currentPage)
-                  ? "off ft-primary"
-                  : "on ft-white"} w-40px`}
-              >
-                {pageNumber}
-              </div>
+              <div className={`btn ${pageNumber === parseInt(currentPage) ? "off ft-primary" : "on ft-white"} w-40px`}>{pageNumber}</div>
             </li>
           );
         })}
       <li
         className={classnames("pagination-item", {
-          disabled: currentPage === lastPage,
+          disabled: currentPage === lastPage
         })}
         onClick={e => onPageChange(e, parseInt(currentPage) + 1)}
       >

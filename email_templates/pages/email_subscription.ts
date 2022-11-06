@@ -1,5 +1,4 @@
 export default (props: any) => {
-  console.log({ props });
   return `<div style="background-color:#7d7c7c;padding:10px">
 
 
@@ -101,16 +100,15 @@ export default (props: any) => {
                     <table style="width:100%;border-spacing:0">
                       <tbody>
                         <tr>
-                          ${props.categories[0]
-                            ? `<td style="font-family:helvetica;width:50%">
+                          ${
+                            props.categories[0]
+                              ? `<td style="font-family:helvetica;width:50%">
                             <table width="100%" style="max-width:800px">
                               <tr>
                                 <td style="position: relative;">
 
-                                  <a href=${props.categories[0]
-                                    .link} target="_blank" rel="noopener noreferrer"><img
-                                      src=${props.categories[0]
-                                        .image} alt="Glow LEDs" title="Email Image"
+                                  <a href=${props.categories[0].link} target="_blank" rel="noopener noreferrer"><img
+                                      src=${props.categories[0].image} alt="Glow LEDs" title="Email Image"
                                       style="text-decoration: none; text-align:center;width:100%;border-radius:20px; " />
                                     <h3
                                       style="color: white; font-size: 25px; width: 100%; text-align: center;  position: absolute; top: 10%; left: 50%; transform: translate(-50%, -50%);">
@@ -120,17 +118,17 @@ export default (props: any) => {
                               </tr>
                             </table>
                           </td>`
-                            : ""}
-                          ${props.categories[1]
-                            ? `<td style="font-family:helvetica;width:50%">
+                              : ""
+                          }
+                          ${
+                            props.categories[1]
+                              ? `<td style="font-family:helvetica;width:50%">
                             <table width="100%" style="max-width:800px">
                               <tr>
                                 <td style="position: relative;">
 
-                                  <a href=${props.categories[1]
-                                    .link} target="_blank" rel="noopener noreferrer"><img
-                                      src=${props.categories[1]
-                                        .image} alt="Glow LEDs" title="Email Image"
+                                  <a href=${props.categories[1].link} target="_blank" rel="noopener noreferrer"><img
+                                      src=${props.categories[1].image} alt="Glow LEDs" title="Email Image"
                                       style="text-decoration: none; text-align:center;width:100%;border-radius:20px; " />
                                     <h3
                                       style="color: white; font-size: 25px; width: 100%; text-align: center; margin-left: auto; position: absolute; top: 10%; left: 50%; transform: translate(-50%, -50%);">
@@ -140,7 +138,8 @@ export default (props: any) => {
                               </tr>
                             </table>
                           </td>`
-                            : ""}
+                              : ""
+                          }
 
                         </tr>
                       </tbody>
@@ -148,16 +147,15 @@ export default (props: any) => {
                     <table style="width:100%;border-spacing:0">
                       <tbody>
                         <tr>
-                          ${props.categories[2]
-                            ? `<td style="font-family:helvetica;width:50%">
+                          ${
+                            props.categories[2]
+                              ? `<td style="font-family:helvetica;width:50%">
                             <table width="100%" style="max-width:800px">
                               <tr>
                                 <td style="position: relative;">
 
-                                  <a href=${props.categories[2]
-                                    .link} target="_blank" rel="noopener noreferrer"><img
-                                      src=${props.categories[2]
-                                        .image} alt="Glow LEDs" title="Email Image"
+                                  <a href=${props.categories[2].link} target="_blank" rel="noopener noreferrer"><img
+                                      src=${props.categories[2].image} alt="Glow LEDs" title="Email Image"
                                       style="text-decoration: none; text-align:center;width:100%;border-radius:20px; " />
                                     <h3
                                       style="color: white; font-size: 25px; width: 100%; text-align: center;  position: absolute; top: 10%; left: 50%; transform: translate(-50%, -50%);">
@@ -167,17 +165,17 @@ export default (props: any) => {
                               </tr>
                             </table>
                           </td>`
-                            : ""}
-                          ${props.categories[3]
-                            ? `<td style="font-family:helvetica;width:50%">
+                              : ""
+                          }
+                          ${
+                            props.categories[3]
+                              ? `<td style="font-family:helvetica;width:50%">
                             <table width="100%" style="max-width:800px">
                               <tr>
                                 <td style="position: relative;">
 
-                                  <a href=${props.categories[3]
-                                    .link} target="_blank" rel="noopener noreferrer"><img
-                                      src=${props.categories[3]
-                                        .image} alt="Glow LEDs" title="Email Image"
+                                  <a href=${props.categories[3].link} target="_blank" rel="noopener noreferrer"><img
+                                      src=${props.categories[3].image} alt="Glow LEDs" title="Email Image"
                                       style="text-decoration: none; text-align:center;width:100%;border-radius:20px; " />
                                     <h3
                                       style="color: white; font-size: 25px; width: 100%; text-align: center; margin-left: auto; position: absolute; top: 10%; left: 50%; transform: translate(-50%, -50%);">
@@ -187,7 +185,8 @@ export default (props: any) => {
                               </tr>
                             </table>
                           </td>`
-                            : ""}
+                              : ""
+                          }
 
                         </tr>
                       </tbody>
@@ -195,16 +194,15 @@ export default (props: any) => {
                     <table style="width:100%;border-spacing:0">
                       <tbody>
                         <tr>
-                          ${props.categories[4]
-                            ? `<td style="font-family:helvetica;width:50%">
+                          ${
+                            props.categories[4]
+                              ? `<td style="font-family:helvetica;width:50%">
                             <table width="100%" style="max-width:800px">
                               <tr>
                                 <td style="position: relative;">
 
-                                  <a href=${props.categories[4]
-                                    .link} target="_blank" rel="noopener noreferrer"><img
-                                      src=${props.categories[4]
-                                        .image} alt="Glow LEDs" title="Email Image"
+                                  <a href=${props.categories[4].link} target="_blank" rel="noopener noreferrer"><img
+                                      src=${props.categories[4].image} alt="Glow LEDs" title="Email Image"
                                       style="text-decoration: none; text-align:center;width:100%;border-radius:20px; " />
                                     <h3
                                       style="color: white; font-size: 25px; width: 100%; text-align: center;  position: absolute; top: 10%; left: 50%; transform: translate(-50%, -50%);">
@@ -214,17 +212,17 @@ export default (props: any) => {
                               </tr>
                             </table>
                           </td>`
-                            : ""}
-                          ${props.categories[5]
-                            ? `<td style="font-family:helvetica;width:50%">
+                              : ""
+                          }
+                          ${
+                            props.categories[5]
+                              ? `<td style="font-family:helvetica;width:50%">
                             <table width="100%" style="max-width:800px">
                               <tr>
                                 <td style="position: relative;">
 
-                                  <a href=${props.categories[5]
-                                    .link} target="_blank" rel="noopener noreferrer"><img
-                                      src=${props.categories[5]
-                                        .image} alt="Glow LEDs" title="Email Image"
+                                  <a href=${props.categories[5].link} target="_blank" rel="noopener noreferrer"><img
+                                      src=${props.categories[5].image} alt="Glow LEDs" title="Email Image"
                                       style="text-decoration: none; text-align:center;width:100%;border-radius:20px; " />
                                     <h3
                                       style="color: white; font-size: 25px; width: 100%; text-align: center; margin-left: auto; position: absolute; top: 10%; left: 50%; transform: translate(-50%, -50%);">
@@ -234,7 +232,8 @@ export default (props: any) => {
                               </tr>
                             </table>
                           </td>`
-                            : ""}
+                              : ""
+                          }
 
                         </tr>
                       </tbody>
@@ -242,16 +241,15 @@ export default (props: any) => {
                     <table style="width:100%;border-spacing:0">
                       <tbody>
                         <tr>
-                          ${props.categories[6]
-                            ? `<td style="font-family:helvetica;width:50%">
+                          ${
+                            props.categories[6]
+                              ? `<td style="font-family:helvetica;width:50%">
                             <table width="100%" style="max-width:800px">
                               <tr>
                                 <td style="position: relative;">
 
-                                  <a href=${props.categories[6]
-                                    .link} target="_blank" rel="noopener noreferrer"><img
-                                      src=${props.categories[6]
-                                        .image} alt="Glow LEDs" title="Email Image"
+                                  <a href=${props.categories[6].link} target="_blank" rel="noopener noreferrer"><img
+                                      src=${props.categories[6].image} alt="Glow LEDs" title="Email Image"
                                       style="text-decoration: none; text-align:center;width:100%;border-radius:20px; " />
                                     <h3
                                       style="color: white; font-size: 25px; width: 100%; text-align: center;  position: absolute; top: 10%; left: 50%; transform: translate(-50%, -50%);">
@@ -261,17 +259,17 @@ export default (props: any) => {
                               </tr>
                             </table>
                           </td>`
-                            : ""}
-                          ${props.categories[7]
-                            ? `<td style="font-family:helvetica;width:50%">
+                              : ""
+                          }
+                          ${
+                            props.categories[7]
+                              ? `<td style="font-family:helvetica;width:50%">
                             <table width="100%" style="max-width:800px">
                               <tr>
                                 <td style="position: relative;">
 
-                                  <a href=${props.categories[7]
-                                    .link} target="_blank" rel="noopener noreferrer"><img
-                                      src=${props.categories[7]
-                                        .image} alt="Glow LEDs" title="Email Image"
+                                  <a href=${props.categories[7].link} target="_blank" rel="noopener noreferrer"><img
+                                      src=${props.categories[7].image} alt="Glow LEDs" title="Email Image"
                                       style="text-decoration: none; text-align:center;width:100%;border-radius:20px; " />
                                     <h3
                                       style="color: white; font-size: 25px; width: 100%; text-align: center; margin-left: auto; position: absolute; top: 10%; left: 50%; transform: translate(-50%, -50%);">
@@ -281,7 +279,8 @@ export default (props: any) => {
                               </tr>
                             </table>
                           </td>`
-                            : ""}
+                              : ""
+                          }
 
                         </tr>
                       </tbody>
@@ -289,16 +288,15 @@ export default (props: any) => {
                     <table style="width:100%;border-spacing:0">
                       <tbody>
                         <tr>
-                          ${props.categories[8]
-                            ? `<td style="font-family:helvetica;width:50%">
+                          ${
+                            props.categories[8]
+                              ? `<td style="font-family:helvetica;width:50%">
                             <table width="100%" style="max-width:800px">
                               <tr>
                                 <td style="position: relative;">
 
-                                  <a href=${props.categories[8]
-                                    .link} target="_blank" rel="noopener noreferrer"><img
-                                      src=${props.categories[8]
-                                        .image} alt="Glow LEDs" title="Email Image"
+                                  <a href=${props.categories[8].link} target="_blank" rel="noopener noreferrer"><img
+                                      src=${props.categories[8].image} alt="Glow LEDs" title="Email Image"
                                       style="text-decoration: none; text-align:center;width:100%;border-radius:20px; " />
                                     <h3
                                       style="color: white; font-size: 25px; width: 100%; text-align: center;  position: absolute; top: 10%; left: 50%; transform: translate(-50%, -50%);">
@@ -308,17 +306,17 @@ export default (props: any) => {
                               </tr>
                             </table>
                           </td>`
-                            : ""}
-                          ${props.categories[9]
-                            ? `<td style="font-family:helvetica;width:50%">
+                              : ""
+                          }
+                          ${
+                            props.categories[9]
+                              ? `<td style="font-family:helvetica;width:50%">
                             <table width="100%" style="max-width:800px">
                               <tr>
                                 <td style="position: relative;">
 
-                                  <a href=${props.categories[9]
-                                    .link} target="_blank" rel="noopener noreferrer"><img
-                                      src=${props.categories[9]
-                                        .image} alt="Glow LEDs" title="Email Image"
+                                  <a href=${props.categories[9].link} target="_blank" rel="noopener noreferrer"><img
+                                      src=${props.categories[9].image} alt="Glow LEDs" title="Email Image"
                                       style="text-decoration: none; text-align:center;width:100%;border-radius:20px; " />
                                     <h3
                                       style="color: white; font-size: 25px; width: 100%; text-align: center; margin-left: auto; position: absolute; top: 10%; left: 50%; transform: translate(-50%, -50%);">
@@ -328,7 +326,8 @@ export default (props: any) => {
                               </tr>
                             </table>
                           </td>`
-                            : ""}
+                              : ""
+                          }
 
                         </tr>
                       </tbody>
@@ -336,16 +335,15 @@ export default (props: any) => {
                     <table style="width:100%;border-spacing:0">
                       <tbody>
                         <tr>
-                          ${props.categories[10]
-                            ? `<td style="font-family:helvetica;width:50%">
+                          ${
+                            props.categories[10]
+                              ? `<td style="font-family:helvetica;width:50%">
                             <table width="100%" style="max-width:800px">
                               <tr>
                                 <td style="position: relative;">
 
-                                  <a href=${props.categories[10]
-                                    .link} target="_blank" rel="noopener noreferrer"><img
-                                      src=${props.categories[10]
-                                        .image} alt="Glow LEDs" title="Email Image"
+                                  <a href=${props.categories[10].link} target="_blank" rel="noopener noreferrer"><img
+                                      src=${props.categories[10].image} alt="Glow LEDs" title="Email Image"
                                       style="text-decoration: none; text-align:center;width:100%;border-radius:20px; " />
                                     <h3
                                       style="color: white; font-size: 25px; width: 100%; text-align: center;  position: absolute; top: 10%; left: 50%; transform: translate(-50%, -50%);">
@@ -355,17 +353,17 @@ export default (props: any) => {
                               </tr>
                             </table>
                           </td>`
-                            : ""}
-                          ${props.categories[11]
-                            ? `<td style="font-family:helvetica;width:50%">
+                              : ""
+                          }
+                          ${
+                            props.categories[11]
+                              ? `<td style="font-family:helvetica;width:50%">
                             <table width="100%" style="max-width:800px">
                               <tr>
                                 <td style="position: relative;">
 
-                                  <a href=${props.categories[11]
-                                    .link} target="_blank" rel="noopener noreferrer"><img
-                                      src=${props.categories[11]
-                                        .image} alt="Glow LEDs" title="Email Image"
+                                  <a href=${props.categories[11].link} target="_blank" rel="noopener noreferrer"><img
+                                      src=${props.categories[11].image} alt="Glow LEDs" title="Email Image"
                                       style="text-decoration: none; text-align:center;width:100%;border-radius:20px; " />
                                     <h3
                                       style="color: white; font-size: 25px; width: 100%; text-align: center; margin-left: auto; position: absolute; top: 10%; left: 50%; transform: translate(-50%, -50%);">
@@ -375,7 +373,8 @@ export default (props: any) => {
                               </tr>
                             </table>
                           </td>`
-                            : ""}
+                              : ""
+                          }
 
                         </tr>
                       </tbody>

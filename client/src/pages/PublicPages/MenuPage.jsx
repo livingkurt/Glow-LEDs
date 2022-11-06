@@ -33,11 +33,11 @@ const MenuPage = props => {
   const get_display_content = async () => {
     set_loading_pictures(true);
     const { data } = await API_Content.get_display_content();
-    console.log({ data });
+
     if (data) {
       const menu_items = determine_menu_items(data[0]);
       set_items(menu_items);
-      console.log({ determine_menu_items: menu_items });
+
       set_loading_pictures(false);
     }
     set_loading_pictures(false);
@@ -48,10 +48,10 @@ const MenuPage = props => {
     const { data: artists } = await API_Features.get_features_by_category("artists");
     const { data: producers } = await API_Features.get_features_by_category("producers");
     const { data: vfx } = await API_Features.get_features_by_category("vfx");
-    // console.log({ glovers: glovers[0] });
-    // console.log({ artists: artists[0] });
-    // console.log({ producers: producers[0] });
-    // console.log({ vfx: vfx[0] });
+    //
+    //
+    //
+    //
     if (glovers && artists && producers && vfx) {
       const menu_items = await featured_menu_items(glovers, artists, producers, vfx);
       set_items(menu_items);
@@ -63,9 +63,7 @@ const MenuPage = props => {
   const today = date.toISOString();
 
   const featured_menu_items = (glovers, artists, producers, vfx) => {
-    console.log({ featured: producers });
     if (glovers && artists && producers && vfx) {
-      console.log({ glovers, artists, producers, vfx });
       return [
         {
           label: "Artists",
@@ -96,7 +94,6 @@ const MenuPage = props => {
   };
 
   const determine_menu_items = content => {
-    console.log({ determine_menu_items: content });
     if (pathname === "gloving") {
       if (content) {
         return content && content.home_page && content.home_page.slideshow;

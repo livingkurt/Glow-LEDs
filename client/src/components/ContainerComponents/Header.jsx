@@ -58,16 +58,14 @@ const Header = props => {
 
   const open_sidebar = () => {
     const sidebar = document.querySelector(".sidebar");
-    console.log(sidebar.classList.value);
+
     if (sidebar.classList.value === "sidebar open") {
-      console.log("Close");
       document.querySelector(".sidebar").classList.remove("open");
       document.querySelector(".side-btn").classList.remove("active");
       document.querySelector(".side-btn").classList.add("not-active");
       document.querySelector(".head-btn").classList.remove("active");
       document.querySelector(".head-btn").classList.add("not-active");
     } else if (sidebar.classList.value === "sidebar") {
-      console.log("Open");
       document.querySelector(".sidebar").classList.add("open");
       document.querySelector(".side-btn").classList.remove("not-active");
       document.querySelector(".side-btn").classList.add("active");
@@ -77,7 +75,7 @@ const Header = props => {
   };
   const open_cart = () => {
     const cart = document.querySelector(".cart_sidebar");
-    console.log(cart.classList.value);
+
     if (cart.classList.value === "cart_sidebar open") {
       document.querySelector(".cart_sidebar").classList.remove("open");
     } else if (cart.classList.value === "cart_sidebar") {
@@ -100,7 +98,7 @@ const Header = props => {
       el.classList.remove("show-dropdown");
     });
     const current_menu = document.getElementById(id);
-    console.log(current_menu.classList);
+
     if (last_id === id) {
       current_menu.classList.remove("show-dropdown");
     } else {
@@ -116,7 +114,7 @@ const Header = props => {
       el.classList.remove("show-dropdown-nested");
     });
     const current_menu = document.getElementById(id);
-    console.log(current_menu.classList);
+
     if (last_id === id) {
       current_menu.classList.remove("show-dropdown-nested");
     } else {
@@ -164,7 +162,7 @@ const Header = props => {
   const findAll_products_a = async () => {
     set_loading(true);
     const { data } = await API_Products.findAll_products_a();
-    console.log({ data });
+
     set_options([
       ...categories.map(category => {
         return { name: humanize(category) };
@@ -177,7 +175,7 @@ const Header = props => {
     set_loading(false);
   };
   // var btn = document.querySelector('.side-btn');
-  // console.log({ btn });
+  //
 
   // btn.addEventListener('click', function(e) {
   // 	// check the target has an attribute of `a[href^="http"]`

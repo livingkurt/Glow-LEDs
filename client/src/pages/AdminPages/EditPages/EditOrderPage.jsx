@@ -13,42 +13,42 @@ import Overflow from "react-overflow-indicator";
 import { GLButton } from "../../../components/GlowLEDsComponents";
 
 const EditOrderPage = props => {
-  const [ id, set_id ] = useState("");
-  const [ orderItems, set_orderItems ] = useState([ {} ]);
-  const [ order_items, set_order_items ] = useState([ {} ]);
-  const [ shipping, set_shipping ] = useState({});
-  const [ user, set_user ] = useState("");
-  const [ display_image, set_display_image ] = useState("");
-  const [ payment, set_payment ] = useState({});
-  const [ itemsPrice, set_itemsPrice ] = useState(0);
-  const [ taxPrice, set_taxPrice ] = useState(0);
-  const [ shippingPrice, set_shippingPrice ] = useState(0);
-  const [ totalPrice, set_totalPrice ] = useState(0);
-  const [ isPaid, set_isPaid ] = useState(false);
-  const [ paidAt, set_paidAt ] = useState();
-  const [ isManufactured, set_isManufactured ] = useState(false);
-  const [ manufacturedAt, set_manufacturedAt ] = useState("");
-  const [ isPackaged, set_isPackaged ] = useState(false);
-  const [ packagedAt, set_packagedAt ] = useState();
-  const [ isShipped, set_isShipped ] = useState(false);
-  const [ shippedAt, set_shippedAt ] = useState("");
-  const [ isDelivered, set_isDelivered ] = useState(false);
-  const [ deliveredAt, set_deliveredAt ] = useState();
-  const [ isRefunded, set_isRefunded ] = useState(false);
-  const [ refundedAt, set_refundedAt ] = useState("");
-  const [ createdAt, set_createdAt ] = useState("");
-  const [ order_note, set_order_note ] = useState("");
-  const [ production_note, set_production_note ] = useState("");
-  const [ tax_rate, set_tax_rate ] = useState("");
-  const [ promo_code, set_promo_code ] = useState("");
-  const [ tracking_number, set_tracking_number ] = useState("");
-  const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
-  const [ loading_tax_rate, set_loading_tax_rate ] = useState(false);
-  const [ order_products, set_order_products ] = useState(false);
-  const [ update_total_prices, set_update_total_prices ] = useState(true);
+  const [id, set_id] = useState("");
+  const [orderItems, set_orderItems] = useState([{}]);
+  const [order_items, set_order_items] = useState([{}]);
+  const [shipping, set_shipping] = useState({});
+  const [user, set_user] = useState("");
+  const [display_image, set_display_image] = useState("");
+  const [payment, set_payment] = useState({});
+  const [itemsPrice, set_itemsPrice] = useState(0);
+  const [taxPrice, set_taxPrice] = useState(0);
+  const [shippingPrice, set_shippingPrice] = useState(0);
+  const [totalPrice, set_totalPrice] = useState(0);
+  const [isPaid, set_isPaid] = useState(false);
+  const [paidAt, set_paidAt] = useState();
+  const [isManufactured, set_isManufactured] = useState(false);
+  const [manufacturedAt, set_manufacturedAt] = useState("");
+  const [isPackaged, set_isPackaged] = useState(false);
+  const [packagedAt, set_packagedAt] = useState();
+  const [isShipped, set_isShipped] = useState(false);
+  const [shippedAt, set_shippedAt] = useState("");
+  const [isDelivered, set_isDelivered] = useState(false);
+  const [deliveredAt, set_deliveredAt] = useState();
+  const [isRefunded, set_isRefunded] = useState(false);
+  const [refundedAt, set_refundedAt] = useState("");
+  const [createdAt, set_createdAt] = useState("");
+  const [order_note, set_order_note] = useState("");
+  const [production_note, set_production_note] = useState("");
+  const [tax_rate, set_tax_rate] = useState("");
+  const [promo_code, set_promo_code] = useState("");
+  const [tracking_number, set_tracking_number] = useState("");
+  const [loading_checkboxes, set_loading_checkboxes] = useState(true);
+  const [loading_tax_rate, set_loading_tax_rate] = useState(false);
+  const [order_products, set_order_products] = useState(false);
+  const [update_total_prices, set_update_total_prices] = useState(true);
   // const [ product_option, set_product_option ] = useState({});
   // const [ product_option_images, set_product_option_images ] = useState([] ]);
-  const [ canScroll, setCanScroll ] = useState(false);
+  const [canScroll, setCanScroll] = useState(false);
 
   const history = useHistory();
 
@@ -64,8 +64,6 @@ const EditOrderPage = props => {
   const { products } = productList;
 
   const dispatch = useDispatch();
-
-  console.log({ order });
 
   const set_state = () => {
     set_id(order._id);
@@ -115,12 +113,12 @@ const EditOrderPage = props => {
     // 	product.product_options && product.product_options.map((option, index) => option.images)
     // );
 
-    // console.log(format_date(order.isManufactured));
+    //
   };
   const unset_state = () => {
     set_id("");
     set_user("");
-    set_orderItems([ {} ]);
+    set_orderItems([{}]);
     set_shipping("");
     set_payment("");
     set_itemsPrice("");
@@ -146,47 +144,37 @@ const EditOrderPage = props => {
     // set_product_option({});
   };
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (props.match.params.id) {
-          console.log("Is ID");
-          dispatch(detailsOrder(props.match.params.id));
-          dispatch(detailsOrder(props.match.params.id));
-          dispatch(listProducts({ limit: 0, option: false }));
-          dispatch(listUsers({}));
-        } else {
-          dispatch(detailsOrder(""));
-        }
-        set_state();
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (props.match.params.id) {
+        dispatch(detailsOrder(props.match.params.id));
+        dispatch(detailsOrder(props.match.params.id));
+        dispatch(listProducts({ limit: 0, option: false }));
+        dispatch(listUsers({}));
+      } else {
+        dispatch(detailsOrder(""));
       }
-      return () => (clean = false);
-    },
-    [ dispatch ]
-  );
+      set_state();
+    }
+    return () => (clean = false);
+  }, [dispatch]);
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (order) {
-          console.log("Set");
-          set_state();
-          get_products(order.orderItems);
-        } else {
-          console.log("UnSet");
-          unset_state();
-          set_orderItems([ {} ]);
-        }
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (order) {
+        set_state();
+        get_products(order.orderItems);
+      } else {
+        unset_state();
+        set_orderItems([{}]);
       }
-      return () => (clean = false);
-    },
-    [ order ]
-  );
+    }
+    return () => (clean = false);
+  }, [order]);
 
   const submitHandler = e => {
-    console.log({ user });
     e.preventDefault();
     dispatch(
       saveOrder({
@@ -215,20 +203,18 @@ const EditOrderPage = props => {
         order_note,
         production_note,
         promo_code,
-        tracking_number,
+        tracking_number
         // product_option
       })
     );
     e.target.reset();
     unset_state();
-    history.push(
-      props.location.previous_path || "/secure/glow/orders?page=1?limit=10"
-    );
+    history.push(props.location.previous_path || "/secure/glow/orders?page=1?limit=10");
   };
 
   const add_order_item = e => {
     e.preventDefault();
-    set_orderItems(items => [ ...items, { product_option: {} } ]);
+    set_orderItems(items => [...items, { product_option: {} }]);
   };
 
   const remove_order_item = async (order_item_index, e) => {
@@ -242,20 +228,14 @@ const EditOrderPage = props => {
       })
     );
     if (update_total_prices) {
-      console.log({ orderItems: [ ...new_order_items ] });
-      const price_items = [ ...new_order_items ].reduce(
-        (a, c) => a + c.price * c.qty,
-        0
-      );
-      // [ ...new_order_items ].forEach((item) => console.log(item.price));
+      const price_items = [...new_order_items].reduce((a, c) => a + c.price * c.qty, 0);
+      // [ ...new_order_items ].forEach((item) =>
 
       set_itemsPrice(price_items);
       const rate_tax = await get_tax_rates();
-      console.log({ rate_tax });
+
       const tax = rate_tax * price_items;
-      console.log({ price_items });
-      console.log({ tax });
-      console.log({ shippingPrice });
+
       set_taxPrice(tax);
       set_totalPrice(price_items + shippingPrice + tax);
     }
@@ -267,7 +247,7 @@ const EditOrderPage = props => {
 
   const update_order_item = async (e, index) => {
     const order_item = JSON.parse(e.target.value);
-    let new_order_items = [ ...orderItems ];
+    let new_order_items = [...orderItems];
     new_order_items[index] = {
       ...new_order_items[index],
       name: order_item.name,
@@ -283,9 +263,7 @@ const EditOrderPage = props => {
       package_length: order_item.package_length,
       package_width: order_item.package_width,
       package_height: order_item.package_height,
-      product_option: order_item.product_options.find(
-        option => option.default === true
-      ),
+      product_option: order_item.product_options.find(option => option.default === true),
       reviewed: order_item.reviewed,
       product: { _id: order_item._id },
       color_products: order_item.color_products,
@@ -295,15 +273,12 @@ const EditOrderPage = props => {
       color_group_name: order_item.color_group_name,
       secondary_color_group_name: order_item.secondary_color_group_name,
       option_group_name: order_item.option_group_name,
-      secondary_group_name: order_item.secondary_group_name,
+      secondary_group_name: order_item.secondary_group_name
     };
     set_orderItems(new_order_items);
     set_orderItems(new_order_items);
     if (update_total_prices) {
-      const price_items = [ ...new_order_items ].reduce(
-        (a, c) => a + c.price * c.qty,
-        0
-      );
+      const price_items = [...new_order_items].reduce((a, c) => a + c.price * c.qty, 0);
       set_itemsPrice(price_items);
       const rate_tax = await get_tax_rates();
       const tax = rate_tax * price_items;
@@ -319,9 +294,7 @@ const EditOrderPage = props => {
     const tax_rate = parseFloat(data[shipping.state]) / 100;
 
     if (isNaN(tax_rate)) {
-      console.log("Not a Number");
     } else {
-      console.log({ [shipping.state]: tax_rate });
       set_tax_rate(tax_rate);
       if (shipping.international) {
         set_taxPrice(0);
@@ -333,20 +306,18 @@ const EditOrderPage = props => {
   };
 
   const update_order_item_property = (value, field_name, index) => {
-    console.log({ value, field_name, index });
-    let new_order_items = [ ...orderItems ];
+    let new_order_items = [...orderItems];
     new_order_items[index] = {
       ...new_order_items[index],
-      [field_name]: value,
+      [field_name]: value
     };
     set_orderItems(new_order_items);
-    console.log({ orderItems });
   };
 
   const update_order_item_property_by_template = (value, field_name, index) => {
     const option = JSON.parse(value);
-    console.log({ value, field_name, index });
-    let new_order_items = [ ...orderItems ];
+
+    let new_order_items = [...orderItems];
     if (field_name === "color_product") {
       new_order_items[index] = {
         ...new_order_items[index],
@@ -354,10 +325,7 @@ const EditOrderPage = props => {
         color_code: option.color_code,
         color_product_name: option.name,
         color_product: option._id,
-        display_image:
-          option.images.length > 0
-            ? option.images[0]
-            : orderItems[index].display_image,
+        display_image: option.images.length > 0 ? option.images[0] : orderItems[index].display_image
       };
     }
     if (field_name === "secondary_color_product") {
@@ -367,10 +335,7 @@ const EditOrderPage = props => {
         secondary_color_code: option.color_code,
         secondary_color_product_name: option.name,
         secondary_color_product: option._id,
-        display_image:
-          option.images.length > 0
-            ? option.images[0]
-            : orderItems[index].display_image,
+        display_image: option.images.length > 0 ? option.images[0] : orderItems[index].display_image
       };
     }
     if (field_name === "option_product") {
@@ -379,10 +344,7 @@ const EditOrderPage = props => {
         option_product_name: option.name,
         option_product: option._id,
         size: option.size,
-        display_image:
-          option.images.length > 0
-            ? option.images[0]
-            : orderItems[index].display_image,
+        display_image: option.images.length > 0 ? option.images[0] : orderItems[index].display_image
       };
     }
     if (field_name === "secondary_product") {
@@ -390,15 +352,10 @@ const EditOrderPage = props => {
         ...new_order_items[index],
         secondary_product_name: option.name,
         secondary_product: option._id,
-        display_image:
-          option.images.length > 0
-            ? option.images[0]
-            : orderItems[index].display_image,
+        display_image: option.images.length > 0 ? option.images[0] : orderItems[index].display_image
       };
     }
     set_orderItems(new_order_items);
-
-    console.log({ orderItems });
   };
 
   const get_products = async orderItems => {
@@ -408,7 +365,7 @@ const EditOrderPage = props => {
         return data;
       })
     );
-    console.log({ products });
+
     set_order_products(products);
   };
 
@@ -419,9 +376,7 @@ const EditOrderPage = props => {
 
   return (
     <div className="main_container p-20px">
-      <h1 style={{ textAlign: "center" }}>
-        {props.match.params.id ? "Edit Order" : "Create Order"}
-      </h1>
+      <h1 style={{ textAlign: "center" }}>{props.match.params.id ? "Edit Order" : "Create Order"}</h1>
 
       <div className="form">
         <form onSubmit={submitHandler} style={{ width: "100%" }}>
@@ -435,29 +390,17 @@ const EditOrderPage = props => {
                   <title>Edit Order | Glow LEDs</title>
                 </Helmet>
 
-                <ul
-                  className="edit-form-container"
-                  style={{ maxWidth: "105rem", marginBottom: "20px" }}
-                >
+                <ul className="edit-form-container" style={{ maxWidth: "105rem", marginBottom: "20px" }}>
                   <div className="row wrap jc-b">
                     <div className="w-228px m-10px">
                       <li>
                         <label htmlFor="user">User</label>
-                        <input
-                          type="text"
-                          name="user"
-                          defaultValue={user}
-                          id="user"
-                          onChange={e => set_user(e.target.value)}
-                        />
+                        <input type="text" name="user" defaultValue={user} id="user" onChange={e => set_user(e.target.value)} />
                       </li>
                       {users && (
                         <div className="ai-c h-25px mv-10px mb-30px jc-c">
                           <div className="custom-select w-100per">
-                            <select
-                              className="qty_select_dropdown w-100per"
-                              onChange={e => set_user(e.target.value)}
-                            >
+                            <select className="qty_select_dropdown w-100per" onChange={e => set_user(e.target.value)}>
                               <option key={1} defaultValue="">
                                 ---Choose User---
                               </option>
@@ -483,8 +426,9 @@ const EditOrderPage = props => {
                           onChange={e =>
                             set_shipping({
                               ...shipping,
-                              email: e.target.value,
-                            })}
+                              email: e.target.value
+                            })
+                          }
                         />
                       </li>
                       <li>
@@ -497,8 +441,9 @@ const EditOrderPage = props => {
                           onChange={e =>
                             set_shipping({
                               ...shipping,
-                              first_name: e.target.value,
-                            })}
+                              first_name: e.target.value
+                            })
+                          }
                         />
                       </li>
                       <li>
@@ -511,8 +456,9 @@ const EditOrderPage = props => {
                           onChange={e =>
                             set_shipping({
                               ...shipping,
-                              last_name: e.target.value,
-                            })}
+                              last_name: e.target.value
+                            })
+                          }
                         />
                       </li>
                       <li>
@@ -525,8 +471,9 @@ const EditOrderPage = props => {
                           onChange={e =>
                             set_shipping({
                               ...shipping,
-                              address_1: e.target.value,
-                            })}
+                              address_1: e.target.value
+                            })
+                          }
                         />
                       </li>
                       <li>
@@ -539,8 +486,9 @@ const EditOrderPage = props => {
                           onChange={e =>
                             set_shipping({
                               ...shipping,
-                              address_2: e.target.value,
-                            })}
+                              address_2: e.target.value
+                            })
+                          }
                         />
                       </li>
                       <li>
@@ -550,8 +498,7 @@ const EditOrderPage = props => {
                           defaultValue={shipping && shipping.city}
                           name="city"
                           id="city"
-                          onChange={e =>
-                            set_shipping({ ...shipping, city: e.target.value })}
+                          onChange={e => set_shipping({ ...shipping, city: e.target.value })}
                         />
                       </li>
                       <li>
@@ -564,8 +511,9 @@ const EditOrderPage = props => {
                           onChange={e =>
                             set_shipping({
                               ...shipping,
-                              state: e.target.value,
-                            })}
+                              state: e.target.value
+                            })
+                          }
                         />
                       </li>
                       <li>
@@ -578,8 +526,9 @@ const EditOrderPage = props => {
                           onChange={e =>
                             set_shipping({
                               ...shipping,
-                              postalCode: e.target.value,
-                            })}
+                              postalCode: e.target.value
+                            })
+                          }
                         />
                       </li>
 
@@ -597,8 +546,9 @@ const EditOrderPage = props => {
                             onChange={e =>
                               set_shipping({
                                 ...shipping,
-                                international: e.target.value,
-                              })}
+                                international: e.target.value
+                              })
+                            }
                           />
                         </li>
                       )}
@@ -612,8 +562,9 @@ const EditOrderPage = props => {
                           onChange={e =>
                             set_shipping({
                               ...shipping,
-                              country: e.target.value,
-                            })}
+                              country: e.target.value
+                            })
+                          }
                         />
                       </li>
                     </div>
@@ -622,13 +573,7 @@ const EditOrderPage = props => {
                       <h2>Payment</h2>
                       <li>
                         <label htmlFor="payment">Payment</label>
-                        <input
-                          type="text"
-                          name="payment"
-                          value={payment}
-                          id="payment"
-                          onChange={e => set_payment(e.target.value)}
-                        />
+                        <input type="text" name="payment" value={payment} id="payment" onChange={e => set_payment(e.target.value)} />
                       </li>
                       <li>
                         <label htmlFor="payment">Payment Method</label>
@@ -640,8 +585,9 @@ const EditOrderPage = props => {
                           onChange={e =>
                             set_payment({
                               ...payment,
-                              paymentMethod: e.target.value,
-                            })}
+                              paymentMethod: e.target.value
+                            })
+                          }
                         />
                       </li>
                       <li>
@@ -657,13 +603,7 @@ const EditOrderPage = props => {
 
                       <li>
                         <label htmlFor="taxPrice">Tax Price</label>
-                        <input
-                          type="text"
-                          name="taxPrice"
-                          value={taxPrice}
-                          id="taxPrice"
-                          onChange={e => set_taxPrice(e.target.value)}
-                        />
+                        <input type="text" name="taxPrice" value={taxPrice} id="taxPrice" onChange={e => set_taxPrice(e.target.value)} />
                       </li>
                       <li>
                         <label htmlFor="shippingPrice">Shipping Price</label>
@@ -688,12 +628,9 @@ const EditOrderPage = props => {
                         />
                       </li>
                       <h2>Other Info</h2>
-                      {userInfo &&
-                      userInfo.isAdmin && (
+                      {userInfo && userInfo.isAdmin && (
                         <li>
-                          <label htmlFor="production_note">
-                            Production Note
-                          </label>
+                          <label htmlFor="production_note">Production Note</label>
                           <input
                             type="text"
                             name="production_note"
@@ -769,13 +706,7 @@ const EditOrderPage = props => {
                       )}
                       <li>
                         <label htmlFor="paidAt">Paid At</label>
-                        <input
-                          type="text"
-                          name="paidAt"
-                          value={paidAt}
-                          id="paidAt"
-                          onChange={e => set_paidAt(e.target.value)}
-                        />
+                        <input type="text" name="paidAt" value={paidAt} id="paidAt" onChange={e => set_paidAt(e.target.value)} />
                       </li>
 
                       {loading_checkboxes ? (
@@ -925,10 +856,7 @@ const EditOrderPage = props => {
                     </div>
                   </div>
                   <li>
-                    <GLButton
-                      variant="primary"
-                      onClick={e => add_order_item(e)}
-                    >
+                    <GLButton variant="primary" onClick={e => add_order_item(e)}>
                       Add Another Order Item
                     </GLButton>
                   </li>
@@ -943,16 +871,12 @@ const EditOrderPage = props => {
                         defaultValue={update_total_prices}
                         defaultChecked={update_total_prices}
                         id="update_total_prices"
-                        onChange={e =>
-                          set_update_total_prices(e.target.checked)}
+                        onChange={e => set_update_total_prices(e.target.checked)}
                       />
                     </li>
                   )}
                   <Tabs>
-                    <Overflow
-                      onStateChange={state =>
-                        setCanScroll(state.canScroll.right)}
-                    >
+                    <Overflow onStateChange={state => setCanScroll(state.canScroll.right)}>
                       <Overflow.Content>
                         <TabList>
                           {orderItems &&
@@ -961,7 +885,7 @@ const EditOrderPage = props => {
                                 <Tab
                                   style={{
                                     padding: "10px",
-                                    borderRadius: "10px 10px 0px 0px",
+                                    borderRadius: "10px 10px 0px 0px"
                                   }}
                                 >
                                   {item.name}
@@ -970,11 +894,7 @@ const EditOrderPage = props => {
                             })}
                         </TabList>
                       </Overflow.Content>
-                      {canScroll && (
-                        <div className="tab_indicator bob br-5px ta-c bg-primary h-30px w-30px p-4px box-s-d b-1px">
-                          {">"}
-                        </div>
-                      )}
+                      {canScroll && <div className="tab_indicator bob br-5px ta-c bg-primary h-30px w-30px p-4px box-s-d b-1px">{">"}</div>}
                     </Overflow>
                     <div className="w-100per h-500px scroll-y">
                       {orderItems &&
@@ -993,49 +913,30 @@ const EditOrderPage = props => {
                                 </GLButton>
                                 <li>
                                   <label htmlFor="product">Product</label>
-                                  {console.log({ product: item.product })}
                                   <input
                                     type="text"
                                     name="product"
-                                    defaultValue={
-                                      item.product && item.product._id
-                                    }
+                                    defaultValue={item.product && item.product._id}
                                     value={item.product && item.product._id}
                                     id="product"
-                                    onChange={e =>
-                                      update_order_item_property(
-                                        e.target.value,
-                                        e.target.name,
-                                        index
-                                      )}
+                                    onChange={e => update_order_item_property(e.target.value, e.target.name, index)}
                                   />
                                 </li>
 
                                 <li>
-                                  <label
-                                    aria-label="Sort"
-                                    htmlFor="sort"
-                                    className="select-label mb-15px"
-                                  >
+                                  <label aria-label="Sort" htmlFor="sort" className="select-label mb-15px">
                                     Product
                                   </label>
                                   <div className="ai-c h-25px mb-15px">
                                     <div className="custom-select">
-                                      <select
-                                        className="qty_select_dropdown"
-                                        onChange={e =>
-                                          update_order_item(e, index)}
-                                      >
+                                      <select className="qty_select_dropdown" onChange={e => update_order_item(e, index)}>
                                         <option key={1} defaultValue="">
                                           ---Choose Product---
                                         </option>
                                         {products
                                           .filter(product => !product.option)
                                           .map((product, index) => (
-                                            <option
-                                              key={index}
-                                              value={JSON.stringify(product)}
-                                            >
+                                            <option key={index} value={JSON.stringify(product)}>
                                               {product.name}
                                             </option>
                                           ))}
@@ -1052,12 +953,7 @@ const EditOrderPage = props => {
                                     defaultValue={item.name}
                                     value={item.name}
                                     id="name"
-                                    onChange={e =>
-                                      update_order_item_property(
-                                        e.target.value,
-                                        e.target.name,
-                                        index
-                                      )}
+                                    onChange={e => update_order_item_property(e.target.value, e.target.name, index)}
                                   />
                                 </li>
                                 <li>
@@ -1068,30 +964,18 @@ const EditOrderPage = props => {
                                     defaultValue={item.qty}
                                     value={item.qty}
                                     id="qty"
-                                    onChange={e =>
-                                      update_order_item_property(
-                                        e.target.value,
-                                        e.target.name,
-                                        index
-                                      )}
+                                    onChange={e => update_order_item_property(e.target.value, e.target.name, index)}
                                   />
                                 </li>
                                 <li>
-                                  <label htmlFor="display_image">
-                                    Display Image
-                                  </label>
+                                  <label htmlFor="display_image">Display Image</label>
                                   <input
                                     type="text"
                                     name="display_image"
                                     defaultValue={item.display_image}
                                     value={item.display_image}
                                     id="display_image"
-                                    onChange={e =>
-                                      update_order_item_property(
-                                        e.target.value,
-                                        e.target.name,
-                                        index
-                                      )}
+                                    onChange={e => update_order_item_property(e.target.value, e.target.name, index)}
                                   />
                                 </li>
                                 <li>
@@ -1102,12 +986,7 @@ const EditOrderPage = props => {
                                     defaultValue={item.price}
                                     value={item.price}
                                     id="price"
-                                    onChange={e =>
-                                      update_order_item_property(
-                                        e.target.value,
-                                        e.target.name,
-                                        index
-                                      )}
+                                    onChange={e => update_order_item_property(e.target.value, e.target.name, index)}
                                   />
                                 </li>
                                 <li>
@@ -1118,12 +997,7 @@ const EditOrderPage = props => {
                                     defaultValue={item.category}
                                     value={item.category}
                                     id="category"
-                                    onChange={e =>
-                                      update_order_item_property(
-                                        e.target.value,
-                                        e.target.name,
-                                        index
-                                      )}
+                                    onChange={e => update_order_item_property(e.target.value, e.target.name, index)}
                                   />
                                 </li>
                                 <li>
@@ -1134,30 +1008,18 @@ const EditOrderPage = props => {
                                     defaultValue={item.sale_price}
                                     value={item.sale_price}
                                     id="sale_price"
-                                    onChange={e =>
-                                      update_order_item_property(
-                                        e.target.value,
-                                        e.target.name,
-                                        index
-                                      )}
+                                    onChange={e => update_order_item_property(e.target.value, e.target.name, index)}
                                   />
                                 </li>
                                 <li>
-                                  <label htmlFor="count_in_stock">
-                                    Count In Stock
-                                  </label>
+                                  <label htmlFor="count_in_stock">Count In Stock</label>
                                   <input
                                     type="text"
                                     name="count_in_stock"
                                     defaultValue={item.count_in_stock}
                                     value={item.count_in_stock}
                                     id="count_in_stock"
-                                    onChange={e =>
-                                      update_order_item_property(
-                                        e.target.value,
-                                        e.target.name,
-                                        index
-                                      )}
+                                    onChange={e => update_order_item_property(e.target.value, e.target.name, index)}
                                   />
                                 </li>
                                 <li>
@@ -1168,12 +1030,7 @@ const EditOrderPage = props => {
                                     defaultValue={item.pathname}
                                     value={item.pathname}
                                     id="pathname"
-                                    onChange={e =>
-                                      update_order_item_property(
-                                        e.target.value,
-                                        e.target.name,
-                                        index
-                                      )}
+                                    onChange={e => update_order_item_property(e.target.value, e.target.name, index)}
                                   />
                                 </li>
                                 <li>
@@ -1187,12 +1044,7 @@ const EditOrderPage = props => {
                                     defaultValue={item.package_length}
                                     value={item.package_length}
                                     id="package_length"
-                                    onChange={e =>
-                                      update_order_item_property(
-                                        e.target.value,
-                                        e.target.name,
-                                        index
-                                      )}
+                                    onChange={e => update_order_item_property(e.target.value, e.target.name, index)}
                                   />
                                 </li>
                                 <li>
@@ -1203,12 +1055,7 @@ const EditOrderPage = props => {
                                     defaultValue={item.package_width}
                                     value={item.package_width}
                                     id="package_width"
-                                    onChange={e =>
-                                      update_order_item_property(
-                                        e.target.value,
-                                        e.target.name,
-                                        index
-                                      )}
+                                    onChange={e => update_order_item_property(e.target.value, e.target.name, index)}
                                   />
                                 </li>
                                 <li>
@@ -1219,12 +1066,7 @@ const EditOrderPage = props => {
                                     defaultValue={item.package_height}
                                     value={item.package_height}
                                     id="package_height"
-                                    onChange={e =>
-                                      update_order_item_property(
-                                        e.target.value,
-                                        e.target.name,
-                                        index
-                                      )}
+                                    onChange={e => update_order_item_property(e.target.value, e.target.name, index)}
                                   />
                                 </li>
                                 <li>
@@ -1235,69 +1077,43 @@ const EditOrderPage = props => {
                                     defaultValue={item.package_volume}
                                     value={item.package_volume}
                                     id="package_volume"
-                                    onChange={e =>
-                                      update_order_item_property(
-                                        e.target.value,
-                                        e.target.name,
-                                        index
-                                      )}
+                                    onChange={e => update_order_item_property(e.target.value, e.target.name, index)}
                                   />
                                 </li>
                                 <li>
-                                  <label htmlFor="weight_pounds">
-                                    Weight Pounds
-                                  </label>
+                                  <label htmlFor="weight_pounds">Weight Pounds</label>
                                   <input
                                     type="text"
                                     name="weight_pounds"
                                     defaultValue={item.weight_pounds}
                                     value={item.weight_pounds}
                                     id="weight_pounds"
-                                    onChange={e =>
-                                      update_order_item_property(
-                                        e.target.value,
-                                        e.target.name,
-                                        index
-                                      )}
+                                    onChange={e => update_order_item_property(e.target.value, e.target.name, index)}
                                   />
                                 </li>
                                 <li>
-                                  <label htmlFor="weight_ounces">
-                                    Weight Ounces
-                                  </label>
+                                  <label htmlFor="weight_ounces">Weight Ounces</label>
                                   <input
                                     type="text"
                                     name="weight_ounces"
                                     defaultValue={item.weight_ounces}
                                     value={item.weight_ounces}
                                     id="weight_ounces"
-                                    onChange={e =>
-                                      update_order_item_property(
-                                        e.target.value,
-                                        e.target.name,
-                                        index
-                                      )}
+                                    onChange={e => update_order_item_property(e.target.value, e.target.name, index)}
                                   />
                                 </li>
                                 <li>
                                   <h3>Color</h3>
                                 </li>
                                 <li>
-                                  <label htmlFor="color_group_name">
-                                    Color Group Name
-                                  </label>
+                                  <label htmlFor="color_group_name">Color Group Name</label>
                                   <input
                                     type="text"
                                     name="color_group_name"
                                     defaultValue={item.color_group_name}
                                     value={item.color_group_name}
                                     id="color_group_name"
-                                    onChange={e =>
-                                      update_order_item_property(
-                                        e.target.value,
-                                        e.target.name,
-                                        index
-                                      )}
+                                    onChange={e => update_order_item_property(e.target.value, e.target.name, index)}
                                   />
                                 </li>
                                 <li>
@@ -1308,12 +1124,7 @@ const EditOrderPage = props => {
                                     defaultValue={item.color}
                                     value={item.color}
                                     id="color"
-                                    onChange={e =>
-                                      update_order_item_property(
-                                        e.target.value,
-                                        e.target.name,
-                                        index
-                                      )}
+                                    onChange={e => update_order_item_property(e.target.value, e.target.name, index)}
                                   />
                                 </li>
                                 <li>
@@ -1324,61 +1135,34 @@ const EditOrderPage = props => {
                                     defaultValue={item.color_code}
                                     value={item.color_code}
                                     id="color_code"
-                                    onChange={e =>
-                                      update_order_item_property(
-                                        e.target.value,
-                                        e.target.name,
-                                        index
-                                      )}
+                                    onChange={e => update_order_item_property(e.target.value, e.target.name, index)}
                                   />
                                 </li>
 
                                 <li>
-                                  <label htmlFor="color_product_name">
-                                    Color Product Name
-                                  </label>
+                                  <label htmlFor="color_product_name">Color Product Name</label>
                                   <input
                                     type="text"
                                     name="color_product_name"
                                     defaultValue={item.color_product_name}
                                     value={item.color_product_name}
                                     id="color_product_name"
-                                    onChange={e =>
-                                      update_order_item_property(
-                                        e.target.value,
-                                        e.target.name,
-                                        index
-                                      )}
+                                    onChange={e => update_order_item_property(e.target.value, e.target.name, index)}
                                   />
                                 </li>
                                 <li>
-                                  <label htmlFor="color_product">
-                                    Color Product
-                                  </label>
+                                  <label htmlFor="color_product">Color Product</label>
                                   <input
                                     type="text"
                                     name="color_product"
-                                    defaultValue={
-                                      item.color_product && item.color_product
-                                    }
-                                    value={
-                                      item.color_product && item.color_product
-                                    }
+                                    defaultValue={item.color_product && item.color_product}
+                                    value={item.color_product && item.color_product}
                                     id="color_product"
-                                    onChange={e =>
-                                      update_order_item_property(
-                                        e.target.value,
-                                        e.target.name,
-                                        index
-                                      )}
+                                    onChange={e => update_order_item_property(e.target.value, e.target.name, index)}
                                   />
                                 </li>
                                 <li>
-                                  <label
-                                    aria-label="Sort"
-                                    htmlFor="sort"
-                                    className="select-label mb-15px"
-                                  >
+                                  <label aria-label="Sort" htmlFor="sort" className="select-label mb-15px">
                                     Color Product
                                   </label>
                                   <div className="ai-c h-25px mb-15px">
@@ -1388,30 +1172,18 @@ const EditOrderPage = props => {
                                         value={item.color_product}
                                         className="qty_select_dropdown"
                                         name="color_product"
-                                        onChange={e =>
-                                          update_order_item_property_by_template(
-                                            e.target.value,
-                                            e.target.name,
-                                            index
-                                          )}
+                                        onChange={e => update_order_item_property_by_template(e.target.value, e.target.name, index)}
                                       >
                                         <option key={1} defaultValue="">
                                           ---Choose Product---
                                         </option>
                                         {order_products &&
                                           order_products[index] &&
-                                          order_products[
-                                            index
-                                          ].color_products.map(
-                                            (product, index) => (
-                                              <option
-                                                key={index}
-                                                value={JSON.stringify(product)}
-                                              >
-                                                {product.name}
-                                              </option>
-                                            )
-                                          )}
+                                          order_products[index].color_products.map((product, index) => (
+                                            <option key={index} value={JSON.stringify(product)}>
+                                              {product.name}
+                                            </option>
+                                          ))}
                                       </select>
                                       <span className="custom-arrow" />
                                     </div>
@@ -1421,148 +1193,85 @@ const EditOrderPage = props => {
                                   <h3>Secondary Color</h3>
                                 </li>
                                 <li>
-                                  <label htmlFor="secondary_color_group_name">
-                                    Secondary Color Group Name
-                                  </label>
+                                  <label htmlFor="secondary_color_group_name">Secondary Color Group Name</label>
                                   <input
                                     type="text"
                                     name="secondary_color_group_name"
-                                    defaultValue={
-                                      item.secondary_color_group_name
-                                    }
+                                    defaultValue={item.secondary_color_group_name}
                                     value={item.secondary_color_group_name}
                                     id="secondary_color_group_name"
-                                    onChange={e =>
-                                      update_order_item_property(
-                                        e.target.value,
-                                        e.target.name,
-                                        index
-                                      )}
+                                    onChange={e => update_order_item_property(e.target.value, e.target.name, index)}
                                   />
                                 </li>
                                 <li>
-                                  <label htmlFor="secondary_color">
-                                    Secondary Color
-                                  </label>
+                                  <label htmlFor="secondary_color">Secondary Color</label>
                                   <input
                                     type="text"
                                     name="secondary_color"
                                     defaultValue={item.secondary_color}
                                     value={item.secondary_color}
                                     id="secondary_color"
-                                    onChange={e =>
-                                      update_order_item_property(
-                                        e.target.value,
-                                        e.target.name,
-                                        index
-                                      )}
+                                    onChange={e => update_order_item_property(e.target.value, e.target.name, index)}
                                   />
                                 </li>
 
                                 <li>
-                                  <label htmlFor="secondary_color_code">
-                                    Secondary Color Code
-                                  </label>
+                                  <label htmlFor="secondary_color_code">Secondary Color Code</label>
                                   <input
                                     type="text"
                                     name="secondary_color_code"
                                     defaultValue={item.secondary_color_code}
                                     value={item.secondary_color_code}
                                     id="secondary_color_code"
-                                    onChange={e =>
-                                      update_order_item_property(
-                                        e.target.value,
-                                        e.target.name,
-                                        index
-                                      )}
+                                    onChange={e => update_order_item_property(e.target.value, e.target.name, index)}
                                   />
                                 </li>
 
                                 <li>
-                                  <label htmlFor="secondary_color_product_name">
-                                    Secondary Color Product Name
-                                  </label>
+                                  <label htmlFor="secondary_color_product_name">Secondary Color Product Name</label>
                                   <input
                                     type="text"
                                     name="secondary_color_product_name"
-                                    defaultValue={
-                                      item.secondary_color_product_name
-                                    }
+                                    defaultValue={item.secondary_color_product_name}
                                     value={item.secondary_color_product_name}
                                     id="secondary_color_product_name"
-                                    onChange={e =>
-                                      update_order_item_property(
-                                        e.target.value,
-                                        e.target.name,
-                                        index
-                                      )}
+                                    onChange={e => update_order_item_property(e.target.value, e.target.name, index)}
                                   />
                                 </li>
                                 <li>
-                                  <label htmlFor="secondary_color_product">
-                                    Secondary Color Product
-                                  </label>
+                                  <label htmlFor="secondary_color_product">Secondary Color Product</label>
                                   <input
                                     type="text"
                                     name="secondary_color_product"
-                                    defaultValue={
-                                      item.secondary_color_product &&
-                                      item.secondary_color_product
-                                    }
-                                    value={
-                                      item.secondary_color_product &&
-                                      item.secondary_color_product
-                                    }
+                                    defaultValue={item.secondary_color_product && item.secondary_color_product}
+                                    value={item.secondary_color_product && item.secondary_color_product}
                                     id="secondary_color_product"
-                                    onChange={e =>
-                                      update_order_item_property(
-                                        e.target.value,
-                                        e.target.name,
-                                        index
-                                      )}
+                                    onChange={e => update_order_item_property(e.target.value, e.target.name, index)}
                                   />
                                 </li>
                                 <li>
-                                  <label
-                                    aria-label="Sort"
-                                    htmlFor="sort"
-                                    className="select-label mb-15px"
-                                  >
+                                  <label aria-label="Sort" htmlFor="sort" className="select-label mb-15px">
                                     Secondary Color Product
                                   </label>
                                   <div className="ai-c h-25px mb-15px">
                                     <div className="custom-select">
                                       <select
-                                        defaultValue={
-                                          item.secondary_color_product
-                                        }
+                                        defaultValue={item.secondary_color_product}
                                         value={item.secondary_color_product}
                                         className="qty_select_dropdown"
                                         name="secondary_color_product"
-                                        onChange={e =>
-                                          update_order_item_property_by_template(
-                                            e.target.value,
-                                            e.target.name,
-                                            index
-                                          )}
+                                        onChange={e => update_order_item_property_by_template(e.target.value, e.target.name, index)}
                                       >
                                         <option key={1} defaultValue="">
                                           ---Choose Product---
                                         </option>
                                         {order_products &&
                                           order_products[index] &&
-                                          order_products[
-                                            index
-                                          ].secondary_color_products.map(
-                                            (product, index) => (
-                                              <option
-                                                key={index}
-                                                value={JSON.stringify(product)}
-                                              >
-                                                {product.name}
-                                              </option>
-                                            )
-                                          )}
+                                          order_products[index].secondary_color_products.map((product, index) => (
+                                            <option key={index} value={JSON.stringify(product)}>
+                                              {product.name}
+                                            </option>
+                                          ))}
                                       </select>
                                       <span className="custom-arrow" />
                                     </div>
@@ -1572,39 +1281,25 @@ const EditOrderPage = props => {
                                   <h3>Option</h3>
                                 </li>
                                 <li>
-                                  <label htmlFor="option_group_name">
-                                    Option Group Name
-                                  </label>
+                                  <label htmlFor="option_group_name">Option Group Name</label>
                                   <input
                                     type="text"
                                     name="option_group_name"
                                     defaultValue={item.option_group_name}
                                     value={item.option_group_name}
                                     id="option_group_name"
-                                    onChange={e =>
-                                      update_order_item_property(
-                                        e.target.value,
-                                        e.target.name,
-                                        index
-                                      )}
+                                    onChange={e => update_order_item_property(e.target.value, e.target.name, index)}
                                   />
                                 </li>
                                 <li>
-                                  <label htmlFor="option_product_name">
-                                    Option Product Name
-                                  </label>
+                                  <label htmlFor="option_product_name">Option Product Name</label>
                                   <input
                                     type="text"
                                     name="option_product_name"
                                     defaultValue={item.option_product_name}
                                     value={item.option_product_name}
                                     id="option_product_name"
-                                    onChange={e =>
-                                      update_order_item_property(
-                                        e.target.value,
-                                        e.target.name,
-                                        index
-                                      )}
+                                    onChange={e => update_order_item_property(e.target.value, e.target.name, index)}
                                   />
                                 </li>
                                 <li>
@@ -1615,42 +1310,22 @@ const EditOrderPage = props => {
                                     defaultValue={item.size}
                                     value={item.size}
                                     id="size"
-                                    onChange={e =>
-                                      update_order_item_property(
-                                        e.target.value,
-                                        e.target.name,
-                                        index
-                                      )}
+                                    onChange={e => update_order_item_property(e.target.value, e.target.name, index)}
                                   />
                                 </li>
                                 <li>
-                                  <label htmlFor="option_product">
-                                    Option Product
-                                  </label>
+                                  <label htmlFor="option_product">Option Product</label>
                                   <input
                                     type="text"
                                     name="option_product"
-                                    defaultValue={
-                                      item.option_product && item.option_product
-                                    }
-                                    value={
-                                      item.option_product && item.option_product
-                                    }
+                                    defaultValue={item.option_product && item.option_product}
+                                    value={item.option_product && item.option_product}
                                     id="option_product"
-                                    onChange={e =>
-                                      update_order_item_property(
-                                        e.target.value,
-                                        e.target.name,
-                                        index
-                                      )}
+                                    onChange={e => update_order_item_property(e.target.value, e.target.name, index)}
                                   />
                                 </li>
                                 <li>
-                                  <label
-                                    aria-label="Sort"
-                                    htmlFor="sort"
-                                    className="select-label mb-15px"
-                                  >
+                                  <label aria-label="Sort" htmlFor="sort" className="select-label mb-15px">
                                     Option Product
                                   </label>
                                   <div className="ai-c h-25px mb-15px">
@@ -1660,30 +1335,18 @@ const EditOrderPage = props => {
                                         value={item.option_product}
                                         className="qty_select_dropdown"
                                         name="option_product"
-                                        onChange={e =>
-                                          update_order_item_property_by_template(
-                                            e.target.value,
-                                            e.target.name,
-                                            index
-                                          )}
+                                        onChange={e => update_order_item_property_by_template(e.target.value, e.target.name, index)}
                                       >
                                         <option key={1} defaultValue="">
                                           ---Choose Product---
                                         </option>
                                         {order_products &&
                                           order_products[index] &&
-                                          order_products[
-                                            index
-                                          ].option_products.map(
-                                            (product, index) => (
-                                              <option
-                                                key={index}
-                                                value={JSON.stringify(product)}
-                                              >
-                                                {product.name}
-                                              </option>
-                                            )
-                                          )}
+                                          order_products[index].option_products.map((product, index) => (
+                                            <option key={index} value={JSON.stringify(product)}>
+                                              {product.name}
+                                            </option>
+                                          ))}
                                       </select>
                                       <span className="custom-arrow" />
                                     </div>
@@ -1694,72 +1357,41 @@ const EditOrderPage = props => {
                                   <h3>Secondary Product</h3>
                                 </li>
                                 <li>
-                                  <label htmlFor="secondary_group_name">
-                                    Secondary Group Name
-                                  </label>
+                                  <label htmlFor="secondary_group_name">Secondary Group Name</label>
                                   <input
                                     type="text"
                                     name="secondary_group_name"
                                     defaultValue={item.secondary_group_name}
                                     value={item.secondary_group_name}
                                     id="secondary_group_name"
-                                    onChange={e =>
-                                      update_order_item_property(
-                                        e.target.value,
-                                        e.target.name,
-                                        index
-                                      )}
+                                    onChange={e => update_order_item_property(e.target.value, e.target.name, index)}
                                   />
                                 </li>
                                 <li>
-                                  <label htmlFor="secondary_product_name">
-                                    Secondary Product Name
-                                  </label>
+                                  <label htmlFor="secondary_product_name">Secondary Product Name</label>
                                   <input
                                     type="text"
                                     name="secondary_product_name"
                                     defaultValue={item.secondary_product_name}
                                     value={item.secondary_product_name}
                                     id="secondary_product_name"
-                                    onChange={e =>
-                                      update_order_item_property(
-                                        e.target.value,
-                                        e.target.name,
-                                        index
-                                      )}
+                                    onChange={e => update_order_item_property(e.target.value, e.target.name, index)}
                                   />
                                 </li>
 
                                 <li>
-                                  <label htmlFor="secondary_product">
-                                    Secondary Product
-                                  </label>
+                                  <label htmlFor="secondary_product">Secondary Product</label>
                                   <input
                                     type="text"
                                     name="secondary_product"
-                                    defaultValue={
-                                      item.secondary_product &&
-                                      item.secondary_product._id
-                                    }
-                                    value={
-                                      item.secondary_product &&
-                                      item.secondary_product._id
-                                    }
+                                    defaultValue={item.secondary_product && item.secondary_product._id}
+                                    value={item.secondary_product && item.secondary_product._id}
                                     id="secondary_product"
-                                    onChange={e =>
-                                      update_order_item_property(
-                                        e.target.value,
-                                        e.target.name,
-                                        index
-                                      )}
+                                    onChange={e => update_order_item_property(e.target.value, e.target.name, index)}
                                   />
                                 </li>
                                 <li>
-                                  <label
-                                    aria-label="Sort"
-                                    htmlFor="sort"
-                                    className="select-label mb-15px"
-                                  >
+                                  <label aria-label="Sort" htmlFor="sort" className="select-label mb-15px">
                                     Secondary Product
                                   </label>
                                   <div className="ai-c h-25px mb-15px">
@@ -1769,30 +1401,18 @@ const EditOrderPage = props => {
                                         value={item.secondary_product}
                                         className="qty_select_dropdown"
                                         name="secondary_product"
-                                        onChange={e =>
-                                          update_order_item_property_by_template(
-                                            e.target.value,
-                                            e.target.name,
-                                            index
-                                          )}
+                                        onChange={e => update_order_item_property_by_template(e.target.value, e.target.name, index)}
                                       >
                                         <option key={1} defaultValue="">
                                           ---Choose Product---
                                         </option>
                                         {order_products &&
                                           order_products[index] &&
-                                          order_products[
-                                            index
-                                          ].secondary_products.map(
-                                            (product, index) => (
-                                              <option
-                                                key={index}
-                                                value={JSON.stringify(product)}
-                                              >
-                                                {product.name}
-                                              </option>
-                                            )
-                                          )}
+                                          order_products[index].secondary_products.map((product, index) => (
+                                            <option key={index} value={JSON.stringify(product)}>
+                                              {product.name}
+                                            </option>
+                                          ))}
                                       </select>
                                       <span className="custom-arrow" />
                                     </div>
@@ -1810,10 +1430,7 @@ const EditOrderPage = props => {
                     </GLButton>
                   </li>
                   <li>
-                    <GLButton
-                      variant="secondary"
-                      onClick={() => history.goBack()}
-                    >
+                    <GLButton variant="secondary" onClick={() => history.goBack()}>
                       Back to Orders
                     </GLButton>
                   </li>

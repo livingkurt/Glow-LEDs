@@ -1,21 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  saveSetting,
-  detailsSetting,
-  listSettings,
-} from "../../../actions/settingActions";
+import { saveSetting, detailsSetting, listSettings } from "../../../actions/settingActions";
 import { useHistory, Link } from "react-router-dom";
 import { Loading } from "../../../components/UtilityComponents";
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../../components/GlowLEDsComponents";
 
 const EditSettingPage = props => {
-  const [ id, set_id ] = useState("");
-  const [ settings, set_settings ] = useState("");
-  const [ active, set_active ] = useState("");
+  const [id, set_id] = useState("");
+  const [settings, set_settings] = useState("");
+  const [active, set_active] = useState("");
 
-  const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
+  const [loading_checkboxes, set_loading_checkboxes] = useState(true);
 
   const history = useHistory();
 
@@ -41,40 +37,31 @@ const EditSettingPage = props => {
 
   const dispatch = useDispatch();
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (props.match.params.id) {
-          console.log("Is ID");
-          dispatch(detailsSetting(props.match.params.id));
-          dispatch(detailsSetting(props.match.params.id));
-        } else {
-          dispatch(detailsSetting(""));
-        }
-        dispatch(listSettings(""));
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (props.match.params.id) {
+        dispatch(detailsSetting(props.match.params.id));
+        dispatch(detailsSetting(props.match.params.id));
+      } else {
+        dispatch(detailsSetting(""));
+      }
+      dispatch(listSettings(""));
+      set_state();
+    }
+    return () => (clean = false);
+  }, [dispatch, props.match.params.id]);
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (setting) {
         set_state();
+      } else {
+        unset_state();
       }
-      return () => (clean = false);
-    },
-    [ dispatch, props.match.params.id ]
-  );
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (setting) {
-          console.log("Set");
-          set_state();
-        } else {
-          console.log("UnSet");
-          unset_state();
-        }
-      }
-      return () => (clean = false);
-    },
-    [ setting ]
-  );
+    }
+    return () => (clean = false);
+  }, [setting]);
 
   setTimeout(() => {
     set_loading_checkboxes(false);
@@ -82,12 +69,12 @@ const EditSettingPage = props => {
 
   const submitHandler = e => {
     e.preventDefault();
-    console.log({ settings });
+
     dispatch(
       saveSetting({
         _id: id,
         settings,
-        active,
+        active
       })
     );
     e.target.reset();
@@ -101,8 +88,8 @@ const EditSettingPage = props => {
   // 	set_settings(data);
   // 	// set_team(data);
   // 	set_venmo(data.venmo);
-  // 	console.log({ venmo: data.venmo });
-  // 	console.log({ venmo: data._id });
+  //
+  //
   // };
   // const date = new Date();
 
@@ -113,15 +100,13 @@ const EditSettingPage = props => {
     // set_settings((options) => { ...options });
     set_settings(prevState => ({
       ...prevState,
-      setting: "",
+      setting: ""
     }));
   };
 
   return (
     <div className="main_container p-20px">
-      <h1 style={{ textAlign: "center" }}>
-        {props.match.params.id ? "Edit Setting" : "Create Setting"}
-      </h1>
+      <h1 style={{ textAlign: "center" }}>{props.match.params.id ? "Edit Setting" : "Create Setting"}</h1>
 
       <div className="form">
         <form onSubmit={submitHandler} style={{ width: "100%" }}>
@@ -135,10 +120,7 @@ const EditSettingPage = props => {
                 <title>Edit Setting | Glow LEDs</title>
               </Helmet>
 
-              <ul
-                className="edit-form-container"
-                style={{ maxWidth: "30rem", marginBottom: "20px" }}
-              >
+              <ul className="edit-form-container" style={{ maxWidth: "30rem", marginBottom: "20px" }}>
                 <div className="row wrap">
                   <div className="w-228px m-10px">
                     <GLButton variant="primary" onClick={e => add_setting(e)}>
@@ -148,9 +130,7 @@ const EditSettingPage = props => {
                       Object.entries(settings).map((setting, index) => {
                         return (
                           <li>
-                            <label htmlFor={"setting_" + index}>
-                              {setting.key}
-                            </label>
+                            <label htmlFor={"setting_" + index}>{setting.key}</label>
                             <input
                               type="text"
                               name={"setting_" + index}
@@ -159,8 +139,9 @@ const EditSettingPage = props => {
                               onChange={e =>
                                 set_settings(prevState => ({
                                   ...prevState,
-                                  [setting.key]: setting.value,
-                                }))}
+                                  [setting.key]: setting.value
+                                }))
+                              }
                             />
                           </li>
                         );
@@ -211,10 +192,7 @@ const EditSettingPage = props => {
                   </GLButton>
                 </li>
                 <li>
-                  <GLButton
-                    variant="secondary"
-                    onClick={e => e.preventDefault()}
-                  >
+                  <GLButton variant="secondary" onClick={e => e.preventDefault()}>
                     <Link to="/secure/glow/settings">Back to Settings</Link>
                   </GLButton>
                 </li>

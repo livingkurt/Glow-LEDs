@@ -10,21 +10,21 @@ import { BlockPicker } from "react-color";
 import { GLButton } from "../../../components/GlowLEDsComponents";
 
 const EditChipPage = props => {
-  const [ id, set_id ] = useState("");
-  const [ name, set_name ] = useState("");
-  const [ company, set_company ] = useState("");
-  const [ category, set_category ] = useState("");
-  const [ programmmable, set_programmmable ] = useState("");
-  const [ number_of_modes, set_number_of_modes ] = useState("");
-  const [ pathname, set_pathname ] = useState("");
-  const [ characteristics, set_characteristics ] = useState("");
-  const [ colors_per_mode, set_colors_per_mode ] = useState(0);
-  const [ image, set_image ] = useState("");
-  const [ colors, set_colors ] = useState([]);
-  const [ dimensions, set_dimensions ] = useState({});
-  const [ color, set_color ] = useState("#333333");
+  const [id, set_id] = useState("");
+  const [name, set_name] = useState("");
+  const [company, set_company] = useState("");
+  const [category, set_category] = useState("");
+  const [programmmable, set_programmmable] = useState("");
+  const [number_of_modes, set_number_of_modes] = useState("");
+  const [pathname, set_pathname] = useState("");
+  const [characteristics, set_characteristics] = useState("");
+  const [colors_per_mode, set_colors_per_mode] = useState(0);
+  const [image, set_image] = useState("");
+  const [colors, set_colors] = useState([]);
+  const [dimensions, set_dimensions] = useState({});
+  const [color, set_color] = useState("#333333");
 
-  const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
+  const [loading_checkboxes, set_loading_checkboxes] = useState(true);
 
   const history = useHistory();
 
@@ -62,39 +62,30 @@ const EditChipPage = props => {
 
   const dispatch = useDispatch();
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (props.match.params.id) {
-          console.log("Is ID");
-          dispatch(detailsChip(props.match.params.id));
-          dispatch(detailsChip(props.match.params.id));
-        } else {
-          dispatch(detailsChip(""));
-        }
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (props.match.params.id) {
+        dispatch(detailsChip(props.match.params.id));
+        dispatch(detailsChip(props.match.params.id));
+      } else {
+        dispatch(detailsChip(""));
+      }
+      set_state();
+    }
+    return () => (clean = false);
+  }, [dispatch, props.match.params.id]);
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (chip) {
         set_state();
+      } else {
+        unset_state();
       }
-      return () => (clean = false);
-    },
-    [ dispatch, props.match.params.id ]
-  );
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (chip) {
-          console.log("Set");
-          set_state();
-        } else {
-          console.log("UnSet");
-          unset_state();
-        }
-      }
-      return () => (clean = false);
-    },
-    [ chip ]
-  );
+    }
+    return () => (clean = false);
+  }, [chip]);
 
   setTimeout(() => {
     set_loading_checkboxes(false);
@@ -115,14 +106,13 @@ const EditChipPage = props => {
         image,
         colors,
         dimensions,
-        pathname: pathname ? pathname : snake_case(name),
+        pathname: pathname ? pathname : snake_case(name)
       })
     );
     e.target.reset();
     unset_state();
     history.push("/secure/glow/chips");
   };
-  console.log({ colors });
 
   // const remove_color = (color_index, e) => {
   // 	e.preventDefault();
@@ -145,37 +135,31 @@ const EditChipPage = props => {
   // }
 
   const update_color_item_property = (e, field_name, index) => {
-    console.log({ value: e.target.value, field_name, index });
     e.preventDefault();
-    let new_color_items = [ ...colors ];
+    let new_color_items = [...colors];
     new_color_items[index] = {
       ...new_color_items[index],
-      [field_name]: e.target.value,
+      [field_name]: e.target.value
     };
     set_colors(new_color_items);
-    console.log({ colors });
   };
 
   const add_color = (e, index, location) => {
     e.preventDefault();
     if (Number.isInteger(index)) {
-      let new_array = [ ...colors ];
+      let new_array = [...colors];
       if (location === "above") {
         if (index === 0) {
-          set_colors(colors => [
-            { label: "", color: "", icon: "" },
-            ...colors,
-          ]);
+          set_colors(colors => [{ label: "", color: "", icon: "" }, ...colors]);
         }
         new_array.splice(index, 0, { label: "", color: "", icon: "" });
       } else if (location === "below") {
         new_array.splice(index + 1, 0, { label: "", color: "", icon: "" });
       }
 
-      console.log({ new_array });
       set_colors(new_array);
     } else {
-      set_colors(colors => [ ...colors, { label: "", color: "", icon: "" } ]);
+      set_colors(colors => [...colors, { label: "", color: "", icon: "" }]);
     }
   };
   const remove_color = async (color_index, e) => {
@@ -188,9 +172,7 @@ const EditChipPage = props => {
   };
   return (
     <div className="main_container p-20px">
-      <h1 style={{ textAlign: "center" }}>
-        {props.match.params.id ? "Edit Chip" : "Create Chip"}
-      </h1>
+      <h1 style={{ textAlign: "center" }}>{props.match.params.id ? "Edit Chip" : "Create Chip"}</h1>
 
       <div className="form">
         <form onSubmit={submitHandler} style={{ width: "100%" }}>
@@ -201,41 +183,20 @@ const EditChipPage = props => {
                 <title>Edit Chip| Glow LEDs</title>
               </Helmet>
 
-              <ul
-                className="edit-form-container"
-                style={{ maxWidth: "30rem", marginBottom: "20px" }}
-              >
+              <ul className="edit-form-container" style={{ maxWidth: "30rem", marginBottom: "20px" }}>
                 <div className="row wrap">
                   <div className="w-228px m-10px">
                     <li>
                       <label htmlFor="name">Chip Name</label>
-                      <input
-                        type="text"
-                        name="name"
-                        value={name}
-                        id="name"
-                        onChange={e => set_name(e.target.value)}
-                      />
+                      <input type="text" name="name" value={name} id="name" onChange={e => set_name(e.target.value)} />
                     </li>
                     <li>
                       <label htmlFor="company">Company</label>
-                      <input
-                        type="text"
-                        name="company"
-                        value={company}
-                        id="company"
-                        onChange={e => set_company(e.target.value)}
-                      />
+                      <input type="text" name="company" value={company} id="company" onChange={e => set_company(e.target.value)} />
                     </li>
                     <li>
                       <label htmlFor="category">Category</label>
-                      <input
-                        type="text"
-                        name="category"
-                        value={category}
-                        id="category"
-                        onChange={e => set_category(e.target.value)}
-                      />
+                      <input type="text" name="category" value={category} id="category" onChange={e => set_category(e.target.value)} />
                     </li>
                     <li>
                       <label htmlFor="number_of_modes">Number of Modes</label>
@@ -330,22 +291,14 @@ const EditChipPage = props => {
 										</li> */}
                     <li>
                       <label htmlFor="image">Image</label>
-                      <input
-                        type="text"
-                        name="image"
-                        value={image}
-                        id="image"
-                        onChange={e => set_image(e.target.value)}
-                      />
+                      <input type="text" name="image" value={image} id="image" onChange={e => set_image(e.target.value)} />
                     </li>
                     <li>
                       <label htmlFor="pathname">Pathname</label>
                       <input
                         type="text"
                         name="pathname"
-                        defaultValue={
-                          pathname ? pathname : name && snake_case(name)
-                        }
+                        defaultValue={pathname ? pathname : name && snake_case(name)}
                         id="pathname"
                         onChange={e => set_pathname(e.target.value)}
                       />
@@ -386,10 +339,7 @@ const EditChipPage = props => {
                         </div>
 
                         <li>
-                          <GLButton
-                            variant="primary"
-                            onClick={e => add_color(e, index, "above")}
-                          >
+                          <GLButton variant="primary" onClick={e => add_color(e, index, "above")}>
                             Add Color Above
                           </GLButton>
                         </li>
@@ -400,12 +350,7 @@ const EditChipPage = props => {
                             name="name"
                             value={color.name}
                             id="name"
-                            onChange={e =>
-                              update_color_item_property(
-                                e,
-                                e.target.name,
-                                index
-                              )}
+                            onChange={e => update_color_item_property(e, e.target.name, index)}
                           />
                         </li>
                         <li>
@@ -415,20 +360,12 @@ const EditChipPage = props => {
                             name="color"
                             value={color.color}
                             id="color"
-                            onChange={e =>
-                              update_color_item_property(
-                                e,
-                                e.target.name,
-                                index
-                              )}
+                            onChange={e => update_color_item_property(e, e.target.name, index)}
                           />
                         </li>
                         {index !== colors.length - 1 && (
                           <li>
-                            <GLButton
-                              variant="primary"
-                              onClick={e => add_color(e, index, "below")}
-                            >
+                            <GLButton variant="primary" onClick={e => add_color(e, index, "below")}>
                               Add Color Below
                             </GLButton>
                           </li>
@@ -447,10 +384,7 @@ const EditChipPage = props => {
                   </GLButton>
                 </li>
                 <li>
-                  <GLButton
-                    variant="secondary"
-                    onClick={e => e.preventDefault()}
-                  >
+                  <GLButton variant="secondary" onClick={e => e.preventDefault()}>
                     <Link to="/secure/glow/chips">Back to Chips</Link>
                   </GLButton>
                 </li>

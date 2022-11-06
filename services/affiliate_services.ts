@@ -38,7 +38,6 @@ export default {
 
       return await affiliate_db.findAll_affiliates_db(filter, sort);
     } catch (error) {
-      console.log({ error });
       throw new Error(error.message);
     }
   },
@@ -46,7 +45,6 @@ export default {
     try {
       return await affiliate_db.findById_affiliates_db(params.pathname);
     } catch (error) {
-      console.log({ error });
       throw new Error(error.message);
     }
   },
@@ -84,7 +82,6 @@ export default {
     try {
       return await affiliate_db.create_affiliates_db(body, public_code, private_code);
     } catch (error) {
-      console.log({ error });
       throw new Error(error.message);
     }
   },
@@ -92,13 +89,12 @@ export default {
     try {
       return await affiliate_db.update_affiliates_db(params, body);
     } catch (error) {
-      console.log({ error });
       throw new Error(error.message);
     }
   },
   upload_rave_mob_csv_affiliates_s: async (params: any, body: any) => {
     const { csv } = body;
-    console.log({ upload_rave_mob_csv_affiliates_s: csv });
+
     const rave_mobers = [];
     const properties = [
       "Timestamp",
@@ -174,10 +170,8 @@ export default {
           active: true
         };
 
-        console.log({ public_code });
-        console.log({ private_code });
         const user_found = await user_db.findByEmail_users_db(user.email);
-        console.log({ user_found });
+
         if (user_found) {
           return await affiliate_db.create_affiliates_db({ ...affiliate, user: user_found._id }, public_code, private_code);
         } else {
@@ -191,17 +185,14 @@ export default {
                 const user_w_password = { ...user, password: hashed_password };
                 try {
                   const new_user = await user_db.create_users_db(user_w_password);
-                  console.log({ new_user });
+
                   return await affiliate_db.create_affiliates_db({ ...affiliate, user: new_user._id }, public_code, private_code);
                 } catch (error) {
-                  console.log({ error });
                   throw new Error(error.message);
                 }
               });
             });
           } catch (error) {
-            console.log({ create_users_error: error });
-
             throw new Error(error.message);
           }
         }
@@ -209,7 +200,6 @@ export default {
 
       return "Succes";
     } catch (error) {
-      console.log({ error });
       throw new Error(error.message);
     }
   },
@@ -217,7 +207,6 @@ export default {
     try {
       return await affiliate_db.remove_affiliates_db(params);
     } catch (error) {
-      console.log({ error });
       throw new Error(error.message);
     }
   }

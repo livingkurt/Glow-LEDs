@@ -56,7 +56,6 @@ const ProductOptions = ({
   set_sale_price
 }) => {
   const { width } = useWindowDimensions();
-  console.log({ ProductOptions: option_products });
 
   const determine_option_styles = (option_product_object, option) => {
     const classes = "packs fs-13px flex-s-0 min-w-40px mr-1rem mb-1rem ";
@@ -74,7 +73,6 @@ const ProductOptions = ({
   };
 
   const option_buttons = (option, index) => {
-    console.log({ option_buttons: option });
     return (
       <div>
         <GLButton
@@ -280,7 +278,7 @@ const ProductOptions = ({
                   {secondary_color_code && (
                     <canvas className=" mh-1rem w-60px h-20px br-7px" style={{ backgroundColor: secondary_color_code }} />
                   )}
-                  {/* {console.log({ Inside: secondary_color_products })} */}
+
                   <div className="custom-select">
                     <select
                       className="qty_select_dropdown w-100per"
@@ -293,8 +291,6 @@ const ProductOptions = ({
                         .map((secondary_color, index) => (
                           <option key={index} value={JSON.stringify(secondary_color)}>
                             {secondary_color.name.split(" ")[0]}
-                            {console.log({ secondary_color: secondary_color.name })}
-                            {console.log({ Inside: secondary_color })}
                           </option>
                         ))}
                     </select>
@@ -493,7 +489,7 @@ const ProductOptions = ({
               id="show_add_on"
               onChange={e => {
                 set_show_add_on(show => {
-                  console.log({
+                  
                     secondary_color_product_object:
                       secondary_color_product_object.price,
                   });

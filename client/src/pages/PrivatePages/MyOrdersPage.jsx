@@ -4,22 +4,17 @@ import { listMyOrders } from "../../actions/orderActions";
 import { useDispatch, useSelector } from "react-redux";
 import { Loading } from "../../components/UtilityComponents";
 import { Helmet } from "react-helmet";
-import {
-  Order,
-  OrderListItem,
-  OrderSmallScreen,
-} from "../../components/SpecialtyComponents";
+import { Order, OrderListItem, OrderSmallScreen } from "../../components/SpecialtyComponents";
 import { check_authentication } from "../../utils/react_helper_functions";
 import { GLButton } from "../../components/GlowLEDsComponents";
 
 const MyOrdersPage = props => {
   const dispatch = useDispatch();
 
-  const [ block_list_view, set_block_list_view ] = useState(false);
-  const [ user_orders, set_user_orders ] = useState(false);
+  const [block_list_view, set_block_list_view] = useState(false);
+  const [user_orders, set_user_orders] = useState(false);
   const userLogin = useSelector(state => state.userLogin);
   const { userInfo } = userLogin;
-  console.log({ user_orders_page: userInfo });
 
   const myOrderList = useSelector(state => state.myOrderList);
   const { loading, orders, error } = myOrderList;
@@ -47,7 +42,7 @@ const MyOrdersPage = props => {
     { name: "Manufactured", color: "#4b7188" },
     { name: "Packaged", color: "#6f5f7d" },
     { name: "Shipped", color: "#636363" },
-    { name: "Delivered", color: "#333333" },
+    { name: "Delivered", color: "#333333" }
   ];
 
   const determine_color = order => {
@@ -79,14 +74,8 @@ const MyOrdersPage = props => {
         <title>My Orders | Glow LEDs</title>
         <meta property="og:title" content="My Orders" />
         <meta name="twitter:title" content="My Orders" />
-        <link
-          rel="canonical"
-          href="https://www.glow-leds.com/secure/account/orders"
-        />
-        <meta
-          property="og:url"
-          content="https://www.glow-leds.com/secure/account/orders"
-        />
+        <link rel="canonical" href="https://www.glow-leds.com/secure/account/orders" />
+        <meta property="og:url" content="https://www.glow-leds.com/secure/account/orders" />
       </Helmet>
       <div className="wrap jc-b">
         <Link to="/secure/account/profile">
@@ -101,45 +90,32 @@ const MyOrdersPage = props => {
                   backgroundColor: color.color,
                   height: "20px",
                   width: "60px",
-                  borderRadius: "5px",
+                  borderRadius: "5px"
                 }}
               />
             </div>
           );
         })}
       </div>
-      <div
-        className="profile-orders profile_orders_container"
-        style={{ width: "100%" }}
-      >
+      <div className="profile-orders profile_orders_container" style={{ width: "100%" }}>
         {/* <GLButton type="button" onClick={handleLogout} variant="secondary" className="w-100per">Logout</GLButton> */}
 
         <h1
           style={{
             textAlign: "center",
             width: "100%",
-            justifyContent: "center",
+            justifyContent: "center"
           }}
         >
           {" "}
-          {user_orders ? (
-            orders && orders[0] && orders[0].shipping.first_name + "'s Orders"
-          ) : (
-            "My Orders"
-          )}
+          {user_orders ? orders && orders[0] && orders[0].shipping.first_name + "'s Orders" : "My Orders"}
         </h1>
         {/* <h1 style={{ textAlign: 'center', width: '100%', justifyContent: 'center' }}>My Orders</h1> */}
-        <div
-          className="search_and_sort product_big_screen row jc-c ai-c"
-          style={{ overflowX: "scroll" }}
-        >
+        <div className="search_and_sort product_big_screen row jc-c ai-c" style={{ overflowX: "scroll" }}>
           <div className="mb-1rem">
             <div className="custom-select w-100per">
-              <select
-                className="qty_select_dropdown w-100per"
-                onChange={e => change_view(e)}
-              >
-                {[ "List View", "Block View" ].map((view, index) => (
+              <select className="qty_select_dropdown w-100per" onChange={e => change_view(e)}>
+                {["List View", "Block View"].map((view, index) => (
                   <option key={index} value={view}>
                     {view}
                   </option>
@@ -153,34 +129,15 @@ const MyOrdersPage = props => {
           <div className="product_big_screen">
             {!block_list_view &&
               orders &&
-              orders.map((order, index) => (
-                <OrderListItem
-                  key={index}
-                  determine_color={determine_color}
-                  order={order}
-                />
-              ))}
+              orders.map((order, index) => <OrderListItem key={index} determine_color={determine_color} order={order} />)}
           </div>
           <div className="product_big_screen">
             {block_list_view &&
               orders &&
-              orders.map((order, index) => (
-                <Order
-                  key={index}
-                  determine_color={determine_color}
-                  order={order}
-                />
-              ))}
+              orders.map((order, index) => <Order key={index} determine_color={determine_color} order={order} />)}
           </div>
           <div className="product_small_screen none column">
-            {orders &&
-              orders.map((order, index) => (
-                <OrderSmallScreen
-                  key={index}
-                  determine_color={determine_color}
-                  order={order}
-                />
-              ))}
+            {orders && orders.map((order, index) => <OrderSmallScreen key={index} determine_color={determine_color} order={order} />)}
           </div>
         </Loading>
       </div>

@@ -91,18 +91,15 @@ const ExpensesPage = props => {
     if (expense.amount < 0) {
       result = colors[5].color;
     }
-    // console.log(result);
+    //
     return result;
   };
 
   const sort_options = ["Date", "Category", "Application", "Newest", "Lowest", "Highest"];
 
   const handle_csv_expenses = async (data, fileInfo, properties, card) => {
-    console.log({ data });
-    console.log({ properties });
-    console.log({ card });
     const create_all_expenses_s = await API_Revenue.create_all_expenses_s(data, userInfo, card, properties);
-    console.log({ create_all_expenses_s });
+
     dispatch(listExpenses({ category, search, sort }));
   };
 

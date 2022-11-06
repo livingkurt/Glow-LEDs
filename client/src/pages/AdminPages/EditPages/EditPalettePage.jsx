@@ -2,10 +2,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { savePalette, detailsPalette } from "../../../actions/paletteActions";
 import { useHistory, Link } from "react-router-dom";
-import {
-  DropdownDisplay,
-  Loading,
-} from "../../../components/UtilityComponents";
+import { DropdownDisplay, Loading } from "../../../components/UtilityComponents";
 import { Helmet } from "react-helmet";
 import { humanize } from "../../../utils/helper_functions";
 import {
@@ -21,31 +18,27 @@ import {
   SketchPicker,
   SliderPicker,
   SwatchesPicker,
-  TwitterPicker,
+  TwitterPicker
 } from "react-color";
 import { listChips } from "../../../actions/chipActions";
 
 const EditPalettePage = props => {
-  const [ id, set_id ] = useState("");
-  const [ type, set_type ] = useState("");
-  const [ name, set_name ] = useState();
-  const [ chip, set_chip ] = useState({});
-  const [ colors_per_mode, set_colors_per_mode ] = useState();
-  const [ colors, set_colors ] = useState(0);
-  const [ quantity_state, set_quantity_state ] = useState(1);
-  const [ color, set_color ] = useState("#333333");
-  const [ chips, set_chips ] = useState([]);
-  const [ preset_colors, set_preset_colors ] = useState([
-    "red",
-    "green",
-    "blue",
-  ]);
+  const [id, set_id] = useState("");
+  const [type, set_type] = useState("");
+  const [name, set_name] = useState();
+  const [chip, set_chip] = useState({});
+  const [colors_per_mode, set_colors_per_mode] = useState();
+  const [colors, set_colors] = useState(0);
+  const [quantity_state, set_quantity_state] = useState(1);
+  const [color, set_color] = useState("#333333");
+  const [chips, set_chips] = useState([]);
+  const [preset_colors, set_preset_colors] = useState(["red", "green", "blue"]);
   // const [ chip_object, set_chip_object ] = useState({});
 
   const chipList = useSelector(state => state.chipList);
   const { chips: chips_list } = chipList;
 
-  const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
+  const [loading_checkboxes, set_loading_checkboxes] = useState(true);
 
   const history = useHistory();
 
@@ -71,57 +64,45 @@ const EditPalettePage = props => {
 
   const dispatch = useDispatch();
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (props.match.params.id) {
-          console.log("Is ID");
-          dispatch(detailsPalette(props.match.params.id));
-          dispatch(detailsPalette(props.match.params.id));
-        } else {
-          dispatch(listChips({}));
-        }
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (props.match.params.id) {
+        dispatch(detailsPalette(props.match.params.id));
+        dispatch(detailsPalette(props.match.params.id));
+      } else {
+        dispatch(listChips({}));
+      }
+      set_state();
+    }
+    return () => (clean = false);
+  }, [dispatch, props.match.params.id]);
+
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (chip && chip.colors) {
+        //
+        const chip_colors = chip.colors.map(color => color.color);
+        //
+        set_preset_colors(chip_colors);
+        set_colors_per_mode(chip.colors_per_mode);
+      }
+    }
+    return () => (clean = false);
+  }, [chip]);
+
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (palette) {
         set_state();
+      } else {
+        unset_state();
       }
-      return () => (clean = false);
-    },
-    [ dispatch, props.match.params.id ]
-  );
-
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (chip && chip.colors) {
-          // console.log({ chip });
-          const chip_colors = chip.colors.map(color => color.color);
-          // console.log({ chip_colors });
-          set_preset_colors(chip_colors);
-          set_colors_per_mode(chip.colors_per_mode);
-        }
-      }
-      return () => (clean = false);
-    },
-    [ chip ]
-  );
-
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (palette) {
-          console.log("Set");
-          set_state();
-        } else {
-          console.log("UnSet");
-          unset_state();
-        }
-      }
-      return () => (clean = false);
-    },
-    [ palette ]
-  );
+    }
+    return () => (clean = false);
+  }, [palette]);
 
   setTimeout(() => {
     set_loading_checkboxes(false);
@@ -137,7 +118,7 @@ const EditPalettePage = props => {
         chip,
         colors_per_mode,
         colors: name * chip * colors_per_mode,
-        quantity_state,
+        quantity_state
       })
     );
     e.target.reset();
@@ -151,9 +132,7 @@ const EditPalettePage = props => {
   return (
     <div className="main_container p-20px">
       <ul>
-        <h1 style={{ textAlign: "center" }}>
-          {props.match.params.id ? "Edit Palette" : "Create Palette"}
-        </h1>
+        <h1 style={{ textAlign: "center" }}>{props.match.params.id ? "Edit Palette" : "Create Palette"}</h1>
         {/* <Circle color={color} onChangeComplete={handleChangeComplete} /> */}
         {/* <AlphaPicker color={color} onChangeComplete={handleChangeComplete} /> */}
         {/* <BlockPicker color={color} onChangeComplete={handleChangeComplete} /> */}
@@ -165,11 +144,7 @@ const EditPalettePage = props => {
         {/* <MaterialPicker color={color} onChangeComplete={handleChangeComplete} /> */}
         {/* <PhotoshopPicker color={color} onChangeComplete={handleChangeComplete} /> */}
         <li className="mb-20px">
-          <label
-            aria-label="Sort"
-            htmlFor="sort"
-            className="select-label mb-20px"
-          >
+          <label aria-label="Sort" htmlFor="sort" className="select-label mb-20px">
             Chips
           </label>
         </li>
@@ -197,14 +172,8 @@ const EditPalettePage = props => {
             </div>
           </div>
         </li>
-        {console.log({ colors: chip && chip.colors })}
-        {chip && (
-          <SketchPicker
-            color={color}
-            presetColors={preset_colors}
-            onChangeComplete={handleChangeComplete}
-          />
-        )}
+
+        {chip && <SketchPicker color={color} presetColors={preset_colors} onChangeComplete={handleChangeComplete} />}
         <div className="jc-b h-100per mt-10px">
           {chip &&
             chip.colors &&
@@ -212,24 +181,16 @@ const EditPalettePage = props => {
               <div>
                 <label>{color.name}</label>
                 <canvas
-                  className={
-                    "ml-5px h-100per br-7px w-" +
-                    (100 / chip.colors.length - 2).toFixed(0) +
-                    "per"
-                  }
+                  className={"ml-5px h-100per br-7px w-" + (100 / chip.colors.length - 2).toFixed(0) + "per"}
                   style={{ backgroundColor: color.color }}
                 />
               </div>
             ))}
         </div>
         <div className="jc-b h-100per mt-10px">
-          {[ ...Array(colors_per_mode) ].map((tile, index) => (
+          {[...Array(colors_per_mode)].map((tile, index) => (
             <canvas
-              className={
-                "ml-5px h-100per br-7px w-" +
-                (100 / colors_per_mode - 2).toFixed(0) +
-                "per"
-              }
+              className={"ml-5px h-100per br-7px w-" + (100 / colors_per_mode - 2).toFixed(0) + "per"}
               style={{ backgroundColor: colors ? colors[index] : "#333333" }}
             />
           ))}

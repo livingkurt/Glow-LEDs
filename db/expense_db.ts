@@ -8,26 +8,20 @@ export default {
         .populate("user")
         .populate("affiliate");
     } catch (error) {
-      console.log({ findAll_expenses_db_error: error });
       throw new Error(error.message);
     }
   },
   findById_expenses_db: async (id: string) => {
     try {
-      return await Expense.findOne({ _id: id })
-        .populate("user")
-        .populate("affiliate");
+      return await Expense.findOne({ _id: id }).populate("user").populate("affiliate");
     } catch (error) {
-      console.log({ findById_expenses_db_error: error });
       throw new Error(error.message);
     }
   },
   create_expenses_db: async (body: any) => {
-    console.log({ body });
     try {
       return await Expense.create(body);
     } catch (error) {
-      console.log({ create_expenses_db_error: error });
       throw new Error(error.message);
     }
   },
@@ -38,7 +32,6 @@ export default {
         return await Expense.updateOne({ _id: id }, body);
       }
     } catch (error) {
-      console.log({ update_expenses_db_error: error });
       throw new Error(error.message);
     }
   },
@@ -49,8 +42,7 @@ export default {
         return await Expense.updateOne({ _id: id }, { deleted: true });
       }
     } catch (error) {
-      console.log({ remove_expenses_db_error: error });
       throw new Error(error.message);
     }
-  },
+  }
 };

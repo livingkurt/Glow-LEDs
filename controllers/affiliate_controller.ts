@@ -10,7 +10,6 @@ export default {
       }
       return res.status(404).send({ message: "Affiliates Not Found" });
     } catch (error) {
-      console.log({ findAll_affiliates_c_error: error });
       res.status(500).send({ error, message: "Error Finding Affiliates" });
     }
   },
@@ -23,7 +22,6 @@ export default {
       }
       return res.status(404).send({ message: "Affiliate Not Found" });
     } catch (error) {
-      console.log({ findById_affiliates_c_error: error });
       res.status(500).send({ error, message: "Error Finding Affiliate" });
     }
   },
@@ -36,7 +34,6 @@ export default {
       }
       return res.status(500).send({ message: "Error Creating Affiliate" });
     } catch (error) {
-      console.log({ create_affiliates_c_error: error });
       res.status(500).send({ error, message: "Error Creating Affiliate" });
     }
   },
@@ -49,13 +46,12 @@ export default {
       }
       return res.status(500).send({ message: "Error Updating Affiliate" });
     } catch (error) {
-      console.log({ update_affiliates_c_error: error });
       res.status(500).send({ error, message: "Error Updating Affiliate" });
     }
   },
   upload_rave_mob_csv_affiliates_c: async (req: any, res: any) => {
     const { params, body } = req;
-    console.log({ body });
+
     try {
       const affiliate = await affiliate_services.upload_rave_mob_csv_affiliates_s(params, body);
       if (affiliate) {
@@ -63,7 +59,6 @@ export default {
       }
       return res.status(500).send({ message: "Error Updating Affiliate" });
     } catch (error) {
-      console.log({ update_affiliates_c_error: error });
       res.status(500).send({ error, message: "Error Updating Affiliate" });
     }
   },
@@ -76,7 +71,6 @@ export default {
       }
       return res.status(500).send({ message: "Error Deleting Affiliate" });
     } catch (error) {
-      console.log({ remove_affiliates_c_error: error });
       res.status(500).send({ error, message: "Error Deleting Affiliate" });
     }
   }

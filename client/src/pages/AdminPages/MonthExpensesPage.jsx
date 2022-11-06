@@ -2,13 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 
 import { Link, useHistory } from "react-router-dom";
 import { Bar, Pie } from "react-chartjs-2";
-import {
-  hslToHex,
-  humanize,
-  toCapitalize,
-  categories,
-  dates_in_year,
-} from "../../utils/helper_functions";
+import { hslToHex, humanize, toCapitalize, categories, dates_in_year } from "../../utils/helper_functions";
 import { API_Orders } from "../../utils";
 import { useSelector, useDispatch } from "react-redux";
 import { Helmet } from "react-helmet";
@@ -23,7 +17,7 @@ const MonthExpensesPage = props => {
 
   const monthly_income_chart_ref = useRef();
 
-  const [ canScroll, setCanScroll ] = useState(false);
+  const [canScroll, setCanScroll] = useState(false);
   const affiliateList = useSelector(state => state.affiliateList);
   // const { affiliates, loading: loading_affiliates, error_affiliates } = affiliateList;
   // const promoList = useSelector((state) => state.promoList);
@@ -31,28 +25,25 @@ const MonthExpensesPage = props => {
 
   // const [ expenses, set_expenses ] = useState([]);
   // const [ orders, set_orders ] = useState([]);
-  const [ monthly_income, set_monthly_income ] = useState([]);
-  const [ affiliate_earnings, set_affiliate_earnings ] = useState([]);
-  const [ promo_earnings, set_promo_earnings ] = useState([]);
-  const [ month, set_month ] = useState(props.match.params.month);
-  const [ year, set_year ] = useState(this_year);
-  const [ loading, set_loading ] = useState(false);
+  const [monthly_income, set_monthly_income] = useState([]);
+  const [affiliate_earnings, set_affiliate_earnings] = useState([]);
+  const [promo_earnings, set_promo_earnings] = useState([]);
+  const [month, set_month] = useState(props.match.params.month);
+  const [year, set_year] = useState(this_year);
+  const [loading, set_loading] = useState(false);
   const dispatch = useDispatch();
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        // calculate_expenses(props.match.params.month);
-        if (props.match.params.month) {
-          get_monthly_income(year, props.match.params.month);
-        }
-        // affiliate_code_usage(year, props.match.params.mont);
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      // calculate_expenses(props.match.params.month);
+      if (props.match.params.month) {
+        get_monthly_income(year, props.match.params.month);
       }
-      return () => (clean = false);
-    },
-    [ props.match.params.month ]
-  );
+      // affiliate_code_usage(year, props.match.params.mont);
+    }
+    return () => (clean = false);
+  }, [props.match.params.month]);
 
   useEffect(() => {
     let clean = true;
@@ -65,7 +56,7 @@ const MonthExpensesPage = props => {
       promo_code_usage(year, props.match.params.month, { single_use: true });
       promo_code_usage(year, props.match.params.month, { used_once: true });
       promo_code_usage(year, props.match.params.month, {
-        affiliate_only: true,
+        affiliate_only: true
       });
       promo_code_usage(year, props.match.params.month, { sponsor_only: true });
       promo_code_usage(year, props.match.params.month, { admin_only: true });
@@ -78,33 +69,27 @@ const MonthExpensesPage = props => {
     set_loading(true);
     const { data } = await API_Orders.affiliate_code_usage_orders_a({
       year,
-      month,
+      month
     });
-    console.log({ data });
+
     set_affiliate_earnings(data);
     set_loading(false);
   };
 
   const promo_code_usage = async (year, month, query) => {
     set_loading(true);
-    const { data } = await API_Orders.promo_code_usage_orders_a(
-      year,
-      month,
-      query
-    );
-    console.log({ promo_code_usage: data });
+    const { data } = await API_Orders.promo_code_usage_orders_a(year, month, query);
+
     set_promo_earnings(promo => {
       return { ...promo, [Object.keys(query)[0]]: data };
     });
     set_loading(false);
   };
-  console.log({ promo_earnings });
-  console.log({ affiliate_earnings });
 
   const get_monthly_income = async (year, month) => {
     set_loading(true);
     const { data } = await API_Orders.income(year, month);
-    console.log({ get_monthly_income: data });
+
     if (data) {
       set_monthly_income(data);
     }
@@ -115,61 +100,39 @@ const MonthExpensesPage = props => {
   let exenses_pie_num = -expenses_pie_multiplier;
 
   const expenses_pie_data = {
-    labels:
-      monthly_income.macro_income &&
-      monthly_income.macro_income.category_expenses.map(item =>
-        toCapitalize(item.category)
-      ),
+    labels: monthly_income.macro_income && monthly_income.macro_income.category_expenses.map(item => toCapitalize(item.category)),
     datasets: [
       {
         label: "Income",
-        data:
-          monthly_income.macro_income &&
-          monthly_income.macro_income.category_expenses.map(item =>
-            item.expense.toFixed(2)
-          ),
+        data: monthly_income.macro_income && monthly_income.macro_income.category_expenses.map(item => item.expense.toFixed(2)),
         borderWidth: 1,
         fill: true,
         borderColor: "#3e4c6d",
-        backgroundColor: [
-          "Supplies",
-          "Entertainment",
-          "Website",
-          "Shipping",
-          "Equipment",
-        ].map(item => {
+        backgroundColor: ["Supplies", "Entertainment", "Website", "Shipping", "Equipment"].map(item => {
           exenses_pie_num += expenses_pie_multiplier;
           let color = hslToHex(exenses_pie_num, 100, 50);
           return color;
         }),
-        color: "white",
-      },
-    ],
+        color: "white"
+      }
+    ]
   };
 
   const expenses_pie_options = {
     responsive: true,
     maintainAspectRatio: true,
-    fontColor: "#000000",
+    fontColor: "#000000"
   };
 
   const income_pie_multiplier = 360 / categories.length;
   let income_pie_num = -income_pie_multiplier;
 
   const income_pie_data = {
-    labels:
-      monthly_income.macro_income &&
-      monthly_income.macro_income.category_income.map(item =>
-        toCapitalize(item.category)
-      ),
+    labels: monthly_income.macro_income && monthly_income.macro_income.category_income.map(item => toCapitalize(item.category)),
     datasets: [
       {
         label: "Income",
-        data:
-          monthly_income.macro_income &&
-          monthly_income.macro_income.category_income.map(item =>
-            item.income.toFixed(2)
-          ),
+        data: monthly_income.macro_income && monthly_income.macro_income.category_income.map(item => item.income.toFixed(2)),
         borderWidth: 1,
         fill: true,
         borderColor: "#3e4c6d",
@@ -178,35 +141,28 @@ const MonthExpensesPage = props => {
           let color = hslToHex(income_pie_num, 100, 50);
           return color;
         }),
-        color: "white",
-      },
-    ],
+        color: "white"
+      }
+    ]
   };
   const income_pie_options = {
     responsive: true,
     maintainAspectRatio: true,
-    fontColor: "#000000",
+    fontColor: "#000000"
   };
   const history = useHistory();
 
   const switch_month = e => {
     e.preventDefault();
     set_month(e.target.value);
-    history.push(
-      "/secure/glow/controlpanel/monthly_expenes/" + year + "/" + e.target.value
-    );
+    history.push("/secure/glow/controlpanel/monthly_expenes/" + year + "/" + e.target.value);
     // calculate_expenses(e.target.value.toLowerCase());
     get_monthly_income(year, e.target.value.toLowerCase());
   };
   const switch_year = e => {
     e.preventDefault();
     set_year(e.target.value);
-    history.push(
-      "/secure/glow/controlpanel/monthly_expenes/" +
-        e.target.value +
-        "/" +
-        month
-    );
+    history.push("/secure/glow/controlpanel/monthly_expenes/" + e.target.value + "/" + month);
     // calculate_expenses(month);
     get_monthly_income(year, month);
   };
@@ -221,7 +177,7 @@ const MonthExpensesPage = props => {
   // 		}).length;
   // 	});
   // 	set_total_promo_affiliate_code_usage(uses.reduce((a, c) => a + c, 0));
-  // 	console.log({ uses });
+  //
   // 	const revenue = promos.map((promo) => {
   // 		return orders
   // 			.filter(
@@ -231,7 +187,7 @@ const MonthExpensesPage = props => {
   // 			.toFixed(2);
   // 	});
   // 	set_total_promo_revenue(revenue.reduce((a, c) => parseFloat(a) + parseFloat(c), 0));
-  // 	console.log({ revenue });
+  //
   // };
 
   // useEffect(
@@ -305,9 +261,7 @@ const MonthExpensesPage = props => {
               >
                 <option value="">---Choose Month---</option>
                 {dates_in_year(year).map(month => (
-                  <option value={month.month}>
-                    {toCapitalize(month.month)}
-                  </option>
+                  <option value={month.month}>{toCapitalize(month.month)}</option>
                 ))}
               </select>
               <span className="custom-arrow" />
@@ -318,44 +272,27 @@ const MonthExpensesPage = props => {
           </div>
         </div>
       </div>
-      {monthly_income &&
-      Object.keys(monthly_income).length > 0 && (
+      {monthly_income && Object.keys(monthly_income).length > 0 && (
         <div className="jc-b mb-1rem">
           <div>
             <h2>
               {this_month} {year} Income
             </h2>
-            <div className="fs-25px">
-              ${monthly_income.macro_income.income ? (
-                monthly_income.macro_income.income.toFixed(2)
-              ) : (
-                "0.00"
-              )}
-            </div>
+            <div className="fs-25px">${monthly_income.macro_income.income ? monthly_income.macro_income.income.toFixed(2) : "0.00"}</div>
           </div>
           <div>
             <h2>
               {this_month} {year} Expenses
             </h2>
             <div className="fs-25px">
-              ${monthly_income.macro_income.expenses ? (
-                monthly_income.macro_income.expenses.toFixed(2)
-              ) : (
-                "0.00"
-              )}
+              ${monthly_income.macro_income.expenses ? monthly_income.macro_income.expenses.toFixed(2) : "0.00"}
             </div>
           </div>
           <div>
             <h2>
               {this_month} {year} Profit
             </h2>
-            <div className="fs-25px">
-              ${monthly_income.macro_income.profit ? (
-                monthly_income.macro_income.profit.toFixed(2)
-              ) : (
-                "0.00"
-              )}
-            </div>
+            <div className="fs-25px">${monthly_income.macro_income.profit ? monthly_income.macro_income.profit.toFixed(2) : "0.00"}</div>
           </div>
         </div>
       )}
@@ -384,37 +321,24 @@ const MonthExpensesPage = props => {
         <Overflow onStateChange={state => setCanScroll(state.canScroll.right)}>
           <Overflow.Content>
             <TabList>
-              <Tab
-                style={{ padding: "10px", borderRadius: "10px 10px 0px 0px" }}
-              >
+              <Tab style={{ padding: "10px", borderRadius: "10px 10px 0px 0px" }}>
                 {this_month} {year} Income
               </Tab>
-              <Tab
-                style={{ padding: "10px", borderRadius: "10px 10px 0px 0px" }}
-              >
+              <Tab style={{ padding: "10px", borderRadius: "10px 10px 0px 0px" }}>
                 {this_month} {year} Expenses
               </Tab>
-              <Tab
-                style={{ padding: "10px", borderRadius: "10px 10px 0px 0px" }}
-              >
+              <Tab style={{ padding: "10px", borderRadius: "10px 10px 0px 0px" }}>
                 {this_month} {year} Affiliate Code Usage
               </Tab>
-              <Tab
-                style={{ padding: "10px", borderRadius: "10px 10px 0px 0px" }}
-              >
+              <Tab style={{ padding: "10px", borderRadius: "10px 10px 0px 0px" }}>
                 {this_month} {year} Promo Code Usage
               </Tab>
             </TabList>
           </Overflow.Content>
-          {canScroll && (
-            <div className="tab_indicator bob br-5px ta-c bg-primary h-30px w-30px p-4px box-s-d b-1px">
-              {">"}
-            </div>
-          )}
+          {canScroll && <div className="tab_indicator bob br-5px ta-c bg-primary h-30px w-30px p-4px box-s-d b-1px">{">"}</div>}
         </Overflow>
         <TabPanel>
-          {monthly_income &&
-          Object.keys(monthly_income).length > 0 && (
+          {monthly_income && Object.keys(monthly_income).length > 0 && (
             <div>
               <h2 className="ta-c w-100per jc-c">
                 {this_month} {this_year} Category Income
@@ -431,46 +355,32 @@ const MonthExpensesPage = props => {
                       </thead>
                       <tbody>
                         {monthly_income.macro_income.category_income &&
-                          monthly_income.macro_income.category_income.map(
-                            (item, index) => (
-                              <tr
-                                key={index}
-                                style={{
-                                  backgroundColor: "#2f3244",
-                                  fontSize: "16px",
-                                  height: "50px",
-                                }}
-                              >
-                                <th style={{ padding: "15px" }}>
-                                  {toCapitalize(humanize(item.category))}
-                                </th>
-                                <th style={{ padding: "15px" }}>
-                                  ${item.income ? (
-                                    item.income.toFixed(2)
-                                  ) : (
-                                    "0.00"
-                                  )}
-                                </th>
-                              </tr>
-                            )
-                          )}
+                          monthly_income.macro_income.category_income.map((item, index) => (
+                            <tr
+                              key={index}
+                              style={{
+                                backgroundColor: "#2f3244",
+                                fontSize: "16px",
+                                height: "50px"
+                              }}
+                            >
+                              <th style={{ padding: "15px" }}>{toCapitalize(humanize(item.category))}</th>
+                              <th style={{ padding: "15px" }}>${item.income ? item.income.toFixed(2) : "0.00"}</th>
+                            </tr>
+                          ))}
                       </tbody>
                     </table>
                   </div>
                 </div>
                 <div className="order-list responsive_table w-50per">
-                  <div
-                    style={{ backgroundColor: "white" }}
-                    className="p-1rem br-10px jc-b "
-                  >
+                  <div style={{ backgroundColor: "white" }} className="p-1rem br-10px jc-b ">
                     <Pie data={income_pie_data} options={income_pie_options} />
                   </div>
                 </div>
               </div>
             </div>
           )}
-          {monthly_income &&
-          Object.keys(monthly_income).length > 0 && (
+          {monthly_income && Object.keys(monthly_income).length > 0 && (
             <div>
               <h2 className="ta-c w-100per jc-c">
                 {this_month} {this_year} Subcategory Income
@@ -487,38 +397,25 @@ const MonthExpensesPage = props => {
                       </thead>
                       <tbody>
                         {monthly_income.macro_income.subcategory_income &&
-                          monthly_income.macro_income.subcategory_income.map(
-                            (item, index) => (
-                              <tr
-                                key={index}
-                                style={{
-                                  backgroundColor: "#2f3244",
-                                  fontSize: "16px",
-                                  height: "50px",
-                                }}
-                              >
-                                <th style={{ padding: "15px" }}>
-                                  {toCapitalize(humanize(item.subcategory))}
-                                </th>
-                                <th style={{ padding: "15px" }}>
-                                  ${item.income ? (
-                                    item.income.toFixed(2)
-                                  ) : (
-                                    "0.00"
-                                  )}
-                                </th>
-                              </tr>
-                            )
-                          )}
+                          monthly_income.macro_income.subcategory_income.map((item, index) => (
+                            <tr
+                              key={index}
+                              style={{
+                                backgroundColor: "#2f3244",
+                                fontSize: "16px",
+                                height: "50px"
+                              }}
+                            >
+                              <th style={{ padding: "15px" }}>{toCapitalize(humanize(item.subcategory))}</th>
+                              <th style={{ padding: "15px" }}>${item.income ? item.income.toFixed(2) : "0.00"}</th>
+                            </tr>
+                          ))}
                       </tbody>
                     </table>
                   </div>
                 </div>
                 <div className="order-list responsive_table w-50per">
-                  <div
-                    style={{ backgroundColor: "white" }}
-                    className="p-1rem br-10px jc-b "
-                  >
+                  <div style={{ backgroundColor: "white" }} className="p-1rem br-10px jc-b ">
                     <Pie data={income_pie_data} options={income_pie_options} />
                   </div>
                 </div>
@@ -527,8 +424,7 @@ const MonthExpensesPage = props => {
           )}
         </TabPanel>
         <TabPanel>
-          {monthly_income &&
-          Object.keys(monthly_income).length > 0 && (
+          {monthly_income && Object.keys(monthly_income).length > 0 && (
             <div>
               <h2 className="ta-c w-100per jc-c">
                 {this_month} {this_year} Expenses Income
@@ -545,42 +441,26 @@ const MonthExpensesPage = props => {
                       </thead>
                       <tbody>
                         {monthly_income.macro_income.category_expenses &&
-                          monthly_income.macro_income.category_expenses.map(
-                            (item, index) => (
-                              <tr
-                                key={index}
-                                style={{
-                                  backgroundColor: "#2f3244",
-                                  fontSize: "16px",
-                                  height: "50px",
-                                }}
-                              >
-                                <th style={{ padding: "15px" }}>
-                                  {toCapitalize(humanize(item.category))}
-                                </th>
-                                <th style={{ padding: "15px" }}>
-                                  ${item.expense ? (
-                                    item.expense.toFixed(2)
-                                  ) : (
-                                    "0.00"
-                                  )}
-                                </th>
-                              </tr>
-                            )
-                          )}
+                          monthly_income.macro_income.category_expenses.map((item, index) => (
+                            <tr
+                              key={index}
+                              style={{
+                                backgroundColor: "#2f3244",
+                                fontSize: "16px",
+                                height: "50px"
+                              }}
+                            >
+                              <th style={{ padding: "15px" }}>{toCapitalize(humanize(item.category))}</th>
+                              <th style={{ padding: "15px" }}>${item.expense ? item.expense.toFixed(2) : "0.00"}</th>
+                            </tr>
+                          ))}
                       </tbody>
                     </table>
                   </div>
                 </div>
                 <div className="order-list responsive_table w-50per">
-                  <div
-                    style={{ backgroundColor: "white" }}
-                    className="p-1rem br-10px jc-b "
-                  >
-                    <Pie
-                      data={expenses_pie_data}
-                      options={expenses_pie_options}
-                    />
+                  <div style={{ backgroundColor: "white" }} className="p-1rem br-10px jc-b ">
+                    <Pie data={expenses_pie_data} options={expenses_pie_options} />
                   </div>
                 </div>
               </div>
@@ -590,19 +470,13 @@ const MonthExpensesPage = props => {
         <TabPanel>
           <Tabs>
             <TabList>
-              <Tab
-                style={{ padding: "10px", borderRadius: "10px 10px 0px 0px" }}
-              >
+              <Tab style={{ padding: "10px", borderRadius: "10px 10px 0px 0px" }}>
                 {this_month} {year} Top Code Revenue
               </Tab>
-              <Tab
-                style={{ padding: "10px", borderRadius: "10px 10px 0px 0px" }}
-              >
+              <Tab style={{ padding: "10px", borderRadius: "10px 10px 0px 0px" }}>
                 {this_month} {year} Top Code Earned
               </Tab>
-              <Tab
-                style={{ padding: "10px", borderRadius: "10px 10px 0px 0px" }}
-              >
+              <Tab style={{ padding: "10px", borderRadius: "10px 10px 0px 0px" }}>
                 {this_month} {year} Top Code Usage
               </Tab>
             </TabList>
@@ -626,41 +500,20 @@ const MonthExpensesPage = props => {
                         <tbody>
                           {affiliate_earnings.affiliates &&
                             affiliate_earnings.affiliates
-                              .sort(
-                                (a, b) =>
-                                  parseFloat(a.Revenue) > parseFloat(b.Revenue)
-                                    ? -1
-                                    : 1
-                              )
+                              .sort((a, b) => (parseFloat(a.Revenue) > parseFloat(b.Revenue) ? -1 : 1))
                               .map((affiliate, index) => (
                                 <tr
                                   style={{
                                     backgroundColor: "#2f3244",
                                     fontSize: "1.6rem",
-                                    height: "50px",
+                                    height: "50px"
                                   }}
                                 >
-                                  <th style={{ padding: "15px" }}>
-                                    {affiliate["Promo Code"]}
-                                  </th>
+                                  <th style={{ padding: "15px" }}>{affiliate["Promo Code"]}</th>
 
-                                  <th style={{ padding: "15px" }}>
-                                    ${affiliate.Revenue ? (
-                                      parseFloat(affiliate.Revenue)
-                                    ) : (
-                                      "0.00"
-                                    )}
-                                  </th>
-                                  <th style={{ padding: "15px" }}>
-                                    ${affiliate.Earned ? (
-                                      parseFloat(affiliate.Earned)
-                                    ) : (
-                                      "0.00"
-                                    )}
-                                  </th>
-                                  <th style={{ padding: "15px" }}>
-                                    {affiliate.Uses}
-                                  </th>
+                                  <th style={{ padding: "15px" }}>${affiliate.Revenue ? parseFloat(affiliate.Revenue) : "0.00"}</th>
+                                  <th style={{ padding: "15px" }}>${affiliate.Earned ? parseFloat(affiliate.Earned) : "0.00"}</th>
+                                  <th style={{ padding: "15px" }}>{affiliate.Uses}</th>
                                 </tr>
                               ))}
                         </tbody>
@@ -668,15 +521,9 @@ const MonthExpensesPage = props => {
                           <tr>
                             <th>Total</th>
                             <th>{affiliate_earnings.uses}</th>
-                            <th>
-                              ${affiliate_earnings.revenue &&
-                                affiliate_earnings.revenue}
-                            </th>
+                            <th>${affiliate_earnings.revenue && affiliate_earnings.revenue}</th>
 
-                            <th>
-                              ${affiliate_earnings.earned &&
-                                affiliate_earnings.earned}
-                            </th>
+                            <th>${affiliate_earnings.earned && affiliate_earnings.earned}</th>
                           </tr>
                         </tfoot>
                       </table>
@@ -705,41 +552,20 @@ const MonthExpensesPage = props => {
                         <tbody>
                           {affiliate_earnings.affiliates &&
                             affiliate_earnings.affiliates
-                              .sort(
-                                (a, b) =>
-                                  parseFloat(a.Earned) > parseFloat(b.Earned)
-                                    ? -1
-                                    : 1
-                              )
+                              .sort((a, b) => (parseFloat(a.Earned) > parseFloat(b.Earned) ? -1 : 1))
                               .map((affiliate, index) => (
                                 <tr
                                   style={{
                                     backgroundColor: "#2f3244",
                                     fontSize: "1.6rem",
-                                    height: "50px",
+                                    height: "50px"
                                   }}
                                 >
-                                  <th style={{ padding: "15px" }}>
-                                    {affiliate["Promo Code"]}
-                                  </th>
-                                  <th style={{ padding: "15px" }}>
-                                    ${affiliate.Earned ? (
-                                      parseFloat(affiliate.Earned)
-                                    ) : (
-                                      "0.00"
-                                    )}
-                                  </th>
-                                  <th style={{ padding: "15px" }}>
-                                    ${affiliate.Revenue ? (
-                                      parseFloat(affiliate.Revenue)
-                                    ) : (
-                                      "0.00"
-                                    )}
-                                  </th>
+                                  <th style={{ padding: "15px" }}>{affiliate["Promo Code"]}</th>
+                                  <th style={{ padding: "15px" }}>${affiliate.Earned ? parseFloat(affiliate.Earned) : "0.00"}</th>
+                                  <th style={{ padding: "15px" }}>${affiliate.Revenue ? parseFloat(affiliate.Revenue) : "0.00"}</th>
 
-                                  <th style={{ padding: "15px" }}>
-                                    {affiliate.Uses}
-                                  </th>
+                                  <th style={{ padding: "15px" }}>{affiliate.Uses}</th>
                                 </tr>
                               ))}
                         </tbody>
@@ -747,15 +573,9 @@ const MonthExpensesPage = props => {
                           <tr>
                             <th>Total</th>
                             <th>{affiliate_earnings.uses}</th>
-                            <th>
-                              ${affiliate_earnings.revenue &&
-                                affiliate_earnings.revenue}
-                            </th>
+                            <th>${affiliate_earnings.revenue && affiliate_earnings.revenue}</th>
 
-                            <th>
-                              ${affiliate_earnings.earned &&
-                                affiliate_earnings.earned}
-                            </th>
+                            <th>${affiliate_earnings.earned && affiliate_earnings.earned}</th>
                           </tr>
                         </tfoot>
                       </table>
@@ -784,40 +604,19 @@ const MonthExpensesPage = props => {
                         <tbody>
                           {affiliate_earnings.affiliates &&
                             affiliate_earnings.affiliates
-                              .sort(
-                                (a, b) =>
-                                  parseFloat(a.Uses) > parseFloat(b.Uses)
-                                    ? -1
-                                    : 1
-                              )
+                              .sort((a, b) => (parseFloat(a.Uses) > parseFloat(b.Uses) ? -1 : 1))
                               .map((affiliate, index) => (
                                 <tr
                                   style={{
                                     backgroundColor: "#2f3244",
                                     fontSize: "1.6rem",
-                                    height: "50px",
+                                    height: "50px"
                                   }}
                                 >
-                                  <th style={{ padding: "15px" }}>
-                                    {affiliate["Promo Code"]}
-                                  </th>
-                                  <th style={{ padding: "15px" }}>
-                                    {affiliate.Uses}
-                                  </th>
-                                  <th style={{ padding: "15px" }}>
-                                    ${affiliate.Earned ? (
-                                      parseFloat(affiliate.Earned)
-                                    ) : (
-                                      "0.00"
-                                    )}
-                                  </th>
-                                  <th style={{ padding: "15px" }}>
-                                    ${affiliate.Revenue ? (
-                                      parseFloat(affiliate.Revenue)
-                                    ) : (
-                                      "0.00"
-                                    )}
-                                  </th>
+                                  <th style={{ padding: "15px" }}>{affiliate["Promo Code"]}</th>
+                                  <th style={{ padding: "15px" }}>{affiliate.Uses}</th>
+                                  <th style={{ padding: "15px" }}>${affiliate.Earned ? parseFloat(affiliate.Earned) : "0.00"}</th>
+                                  <th style={{ padding: "15px" }}>${affiliate.Revenue ? parseFloat(affiliate.Revenue) : "0.00"}</th>
                                 </tr>
                               ))}
                         </tbody>
@@ -825,15 +624,9 @@ const MonthExpensesPage = props => {
                           <tr>
                             <th>Total</th>
                             <th>{affiliate_earnings.uses}</th>
-                            <th>
-                              ${affiliate_earnings.revenue &&
-                                affiliate_earnings.revenue}
-                            </th>
+                            <th>${affiliate_earnings.revenue && affiliate_earnings.revenue}</th>
 
-                            <th>
-                              ${affiliate_earnings.earned &&
-                                affiliate_earnings.earned}
-                            </th>
+                            <th>${affiliate_earnings.earned && affiliate_earnings.earned}</th>
                           </tr>
                         </tfoot>
                       </table>
@@ -862,40 +655,19 @@ const MonthExpensesPage = props => {
                         <tbody>
                           {affiliate_earnings.affiliates &&
                             affiliate_earnings.affiliates
-                              .sort(
-                                (a, b) =>
-                                  parseFloat(a.Reveue) > parseFloat(b.Reveue)
-                                    ? -1
-                                    : 1
-                              )
+                              .sort((a, b) => (parseFloat(a.Reveue) > parseFloat(b.Reveue) ? -1 : 1))
                               .map((affiliate, index) => (
                                 <tr
                                   style={{
                                     backgroundColor: "#2f3244",
                                     fontSize: "1.6rem",
-                                    height: "50px",
+                                    height: "50px"
                                   }}
                                 >
-                                  <th style={{ padding: "15px" }}>
-                                    {affiliate["Promo Code"]}
-                                  </th>
-                                  <th style={{ padding: "15px" }}>
-                                    {affiliate.Uses}
-                                  </th>
-                                  <th style={{ padding: "15px" }}>
-                                    ${affiliate.Revenue ? (
-                                      parseFloat(affiliate.Revenue)
-                                    ) : (
-                                      "0.00"
-                                    )}
-                                  </th>
-                                  <th style={{ padding: "15px" }}>
-                                    ${affiliate.Earned ? (
-                                      parseFloat(affiliate.Earned)
-                                    ) : (
-                                      "0.00"
-                                    )}
-                                  </th>
+                                  <th style={{ padding: "15px" }}>{affiliate["Promo Code"]}</th>
+                                  <th style={{ padding: "15px" }}>{affiliate.Uses}</th>
+                                  <th style={{ padding: "15px" }}>${affiliate.Revenue ? parseFloat(affiliate.Revenue) : "0.00"}</th>
+                                  <th style={{ padding: "15px" }}>${affiliate.Earned ? parseFloat(affiliate.Earned) : "0.00"}</th>
                                 </tr>
                               ))}
                         </tbody>
@@ -903,15 +675,9 @@ const MonthExpensesPage = props => {
                           <tr>
                             <th>Total</th>
                             <th>{affiliate_earnings.uses}</th>
-                            <th>
-                              ${affiliate_earnings.revenue &&
-                                affiliate_earnings.revenue}
-                            </th>
+                            <th>${affiliate_earnings.revenue && affiliate_earnings.revenue}</th>
 
-                            <th>
-                              ${affiliate_earnings.earned &&
-                                affiliate_earnings.earned}
-                            </th>
+                            <th>${affiliate_earnings.earned && affiliate_earnings.earned}</th>
                           </tr>
                         </tfoot>
                       </table>
@@ -924,16 +690,14 @@ const MonthExpensesPage = props => {
         </TabPanel>
         <TabPanel>
           <Tabs>
-            <Overflow
-              onStateChange={state => setCanScroll(state.canScroll.right)}
-            >
+            <Overflow onStateChange={state => setCanScroll(state.canScroll.right)}>
               <Overflow.Content>
                 <TabList>
                   {Object.entries(promo_earnings).map(promo => (
                     <Tab
                       style={{
                         padding: "10px",
-                        borderRadius: "10px 10px 0px 0px",
+                        borderRadius: "10px 10px 0px 0px"
                       }}
                     >
                       {this_month} {this_year} {humanize(promo[0])}
@@ -941,11 +705,7 @@ const MonthExpensesPage = props => {
                   ))}
                 </TabList>
               </Overflow.Content>
-              {canScroll && (
-                <div className="tab_indicator bob br-5px ta-c bg-primary h-30px w-30px p-4px box-s-d b-1px">
-                  {">"}
-                </div>
-              )}
+              {canScroll && <div className="tab_indicator bob br-5px ta-c bg-primary h-30px w-30px p-4px box-s-d b-1px">{">"}</div>}
             </Overflow>
             {Object.entries(promo_earnings).map(promo => (
               <TabPanel>
@@ -966,41 +726,20 @@ const MonthExpensesPage = props => {
                         </thead>
                         <tbody>
                           {promo[1].promos
-                            .sort(
-                              (a, b) =>
-                                parseFloat(a.Revenue) > parseFloat(b.Revenue)
-                                  ? -1
-                                  : 1
-                            )
+                            .sort((a, b) => (parseFloat(a.Revenue) > parseFloat(b.Revenue) ? -1 : 1))
                             .map((affiliate, index) => (
                               <tr
                                 style={{
                                   backgroundColor: "#2f3244",
                                   fontSize: "1.6rem",
-                                  height: "50px",
+                                  height: "50px"
                                 }}
                               >
-                                <th style={{ padding: "15px" }}>
-                                  {affiliate["Promo Code"]}
-                                </th>
+                                <th style={{ padding: "15px" }}>{affiliate["Promo Code"]}</th>
 
-                                <th style={{ padding: "15px" }}>
-                                  ${affiliate.Revenue ? (
-                                    parseFloat(affiliate.Revenue)
-                                  ) : (
-                                    "0.00"
-                                  )}
-                                </th>
-                                <th style={{ padding: "15px" }}>
-                                  ${affiliate.Earned ? (
-                                    parseFloat(affiliate.Earned)
-                                  ) : (
-                                    "0.00"
-                                  )}
-                                </th>
-                                <th style={{ padding: "15px" }}>
-                                  {affiliate.Uses}
-                                </th>
+                                <th style={{ padding: "15px" }}>${affiliate.Revenue ? parseFloat(affiliate.Revenue) : "0.00"}</th>
+                                <th style={{ padding: "15px" }}>${affiliate.Earned ? parseFloat(affiliate.Earned) : "0.00"}</th>
+                                <th style={{ padding: "15px" }}>{affiliate.Uses}</th>
                               </tr>
                             ))}
                         </tbody>

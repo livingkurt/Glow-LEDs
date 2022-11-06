@@ -177,9 +177,8 @@ const EditProductPage = props => {
     let clean = true;
     if (clean) {
       if (props.match.params.pathname) {
-        console.log("Is ID");
         // if (props.match.params.template) {
-        console.log({ template: props.match.params.template });
+
         dispatch(detailsProduct(props.match.params.pathname));
         dispatch(detailsProduct(props.match.params.pathname));
         // }
@@ -228,7 +227,7 @@ const EditProductPage = props => {
       // option: false,
       limit: 0
     });
-    console.log({ data });
+
     set_macro_products_list(data.products.sort((a, b) => (a.name > b.name ? 1 : -1)));
   };
   const get_all_options = async () => {
@@ -236,7 +235,7 @@ const EditProductPage = props => {
       option: true,
       limit: 0
     });
-    console.log({ data });
+
     set_option_products_list(data.products.sort((a, b) => (a.name > b.name ? 1 : -1)));
   };
 
@@ -245,7 +244,7 @@ const EditProductPage = props => {
   };
   const use_product_options_template = async e => {
     const { data } = await API_Products.get_product(e.target.value);
-    console.log({ data });
+
     set_group_name(data.group_name);
     set_color_product_group(data.color_product_group);
     set_color_group_name(data.color_group_name);
@@ -300,10 +299,8 @@ const EditProductPage = props => {
     let clean = true;
     if (clean) {
       if (product) {
-        console.log("Set");
         set_state();
       } else {
-        console.log("UnSet");
         unset_state();
         set_product_options([{}]);
       }
@@ -316,7 +313,7 @@ const EditProductPage = props => {
   }, 500);
 
   const set_state = () => {
-    // console.log({ product_length: product.length });
+    //
     set_product_id(product._id);
     setName(product.name);
     setPrice(product.price);
@@ -715,7 +712,6 @@ const EditProductPage = props => {
   };
 
   const submitHandler = e => {
-    console.log({ product_options });
     e.preventDefault();
     save_product();
     // e.target.reset();
@@ -727,19 +723,14 @@ const EditProductPage = props => {
     e.preventDefault();
     // const current_product = all_products.find(item => item._id ===  product._id)
     // const filtered_products = all_products.filter((item) => !item.option).filter((item) => !item.hidden);
-    console.log(product._id);
+
     const current_product_index = filtered_products.map(item => item.pathname).indexOf(product.pathname);
-    console.log({ current_product_index });
 
     let left_product_index = current_product_index - 1;
     if (left_product_index === -1) {
       left_product_index = filtered_products.length - 1;
     }
-    console.log({
-      current_product_index,
-      left_product_index,
-      new_product: filtered_products[left_product_index]
-    });
+
     set_new_index(left_product_index);
     if (save) {
       save_product();
@@ -750,18 +741,14 @@ const EditProductPage = props => {
   const move_right = e => {
     e.preventDefault();
     // const filtered_products = all_products.filter((item) => !item.option).filter((item) => !item.hidden);
-    console.log(product.pathname);
+
     const current_product_index = filtered_products.map(item => item.pathname).indexOf(product.pathname);
-    console.log({ current_product_index });
+
     let right_product_index = current_product_index + 1;
     if (right_product_index >= filtered_products.length) {
       right_product_index = 0;
     }
-    console.log({
-      current_product_index,
-      right_product_index,
-      new_product: filtered_products[right_product_index]
-    });
+
     set_new_index(right_product_index);
     if (save) {
       save_product();
@@ -773,7 +760,7 @@ const EditProductPage = props => {
   const create_product_options = (e, type) => {
     e.preventDefault();
     set_loading_options(true);
-    console.log({ type });
+
     switch (type) {
       case "color":
         create_color_products(product, set_color_products, color_products, color_modifier, color_images);
@@ -781,7 +768,6 @@ const EditProductPage = props => {
         break;
 
       case "secondary_color":
-        console.log({ create_product_options: "secondary_color" });
         create_secondary_color_products(
           product,
           set_secondary_color_products,
@@ -810,7 +796,6 @@ const EditProductPage = props => {
   const add_product_options = async (option_ids, type) => {
     const { data } = await API_Products.add_product_options(product._id, option_ids, type);
     set_secondary_color_products(data);
-    console.log({ data });
   };
 
   return (
@@ -824,7 +809,6 @@ const EditProductPage = props => {
           <Loading loading={loading} error={error}>
             {product && (
               <div>
-                {console.log({ product })}
                 <Helmet>
                   <title>Edit Product | Glow LEDs</title>
                 </Helmet>

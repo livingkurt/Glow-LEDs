@@ -50,7 +50,6 @@ const AllFeaturesPage = props => {
   }, [sort]);
 
   const submitHandler = e => {
-    console.log({ search });
     e.preventDefault();
     // history.push(
     // 	'/collections/all/features/category' + category + '/' + subcategory + '?search=' + search

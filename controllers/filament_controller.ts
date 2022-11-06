@@ -10,7 +10,6 @@ export default {
       }
       return res.status(404).send({ message: "Filaments Not Found" });
     } catch (error) {
-      console.log({ findAll_filaments_c_error: error });
       res.status(500).send({ error, message: "Error Finding Filaments" });
     }
   },
@@ -18,13 +17,12 @@ export default {
     const { params } = req;
     try {
       const filament = await filament_services.findById_filaments_s(params);
-      console.log({ filament });
+
       if (filament) {
         return res.status(200).send(filament);
       }
       return res.status(404).send({ message: "Filament Not Found" });
     } catch (error) {
-      console.log({ findById_filaments_c_error: error });
       res.status(500).send({ error, message: "Error Finding Filament" });
     }
   },
@@ -32,13 +30,12 @@ export default {
     const { params } = req;
     try {
       const filament = await filament_services.findMy_filaments_s(params);
-      console.log({ filament });
+
       if (filament) {
         return res.status(200).send(filament);
       }
       return res.status(404).send({ message: "Paycheck Not Found" });
     } catch (error) {
-      console.log({ findById_filaments_c_error: error });
       res.status(500).send({ error, message: "Error Finding Paycheck" });
     }
   },
@@ -51,7 +48,6 @@ export default {
       }
       return res.status(500).send({ message: "Error Creating Filament" });
     } catch (error) {
-      console.log({ create_filaments_c_error: error });
       res.status(500).send({ error, message: "Error Creating Filament" });
     }
   },
@@ -64,7 +60,6 @@ export default {
       }
       return res.status(500).send({ message: "Error Updating Filament" });
     } catch (error) {
-      console.log({ update_filaments_c_error: error });
       res.status(500).send({ error, message: "Error Updating Filament" });
     }
   },
@@ -77,8 +72,7 @@ export default {
       }
       return res.status(500).send({ message: "Error Deleting Filament" });
     } catch (error) {
-      console.log({ remove_filaments_c_error: error });
       res.status(500).send({ error, message: "Error Deleting Filament" });
     }
-  },
+  }
 };

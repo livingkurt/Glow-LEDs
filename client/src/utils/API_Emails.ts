@@ -9,22 +9,15 @@ const email_routes = {
     return axios.post("/api/emails/order", { order, subject, email });
   },
   send_refund_email: (order: object, subject: string, email: string) => {
-    console.log({ order, subject, email });
     return axios.post("/api/emails/refund", { order, subject, email });
   },
-  send_order_status_email: (
-    order: object,
-    subject: string,
-    email: string,
-    status: string,
-    message_to_user: string
-  ) => {
+  send_order_status_email: (order: object, subject: string, email: string, status: string, message_to_user: string) => {
     return axios.post("/api/emails/order_status", {
       order,
       subject,
       email,
       status,
-      message_to_user,
+      message_to_user
     });
   },
   send_affiliate_email: (affiliate: object, subject: string, email: string) => {
@@ -42,7 +35,7 @@ const email_routes = {
   send_contact_confirmation: (email: string, promo_code: string) => {
     return axios.post("/api/emails/contact_confirmation", {
       email,
-      promo_code,
+      promo_code
     });
   },
   send_password_reset: (email: string, promo_code: string) => {
@@ -54,21 +47,15 @@ const email_routes = {
   send_verified: (email: string, promo_code: string) => {
     return axios.post("/api/emails/account_created", { email, promo_code });
   },
-  send_announcement_email: (
-    template: any,
-    subject: string,
-    test: boolean,
-    time: string
-  ) => {
+  send_announcement_email: (template: any, subject: string, test: boolean, time: string) => {
     return axios.post("/api/emails/announcement", {
       template,
       subject,
       test,
-      time,
+      time
     });
   },
   view_announcement_email: (template: any) => {
-    console.log({ template });
     return axios.post("/api/emails/view_announcement", { template });
   },
   send_email: (template: string, subject: string, email: string) => {
@@ -76,35 +63,30 @@ const email_routes = {
   },
 
   save_html: (template: string, email: any, access_token: any) => {
-    console.log({ template, email, access_token });
     email = { ...email, html: template };
     return axios.put("/api/emails/" + email._id, email, {
       headers: {
-        Authorization: "Bearer " + access_token,
-      },
+        Authorization: "Bearer " + access_token
+      }
     });
   },
   // not_verified_email: (userInfo: any) => {
-  // 	console.log({ not_paid_email: userInfo });
+  //
   // 	return axios.post('/api/emails/notverified', userInfo);
   // },
   print_invoice: (order: any) => {
-    // console.log({ not_paid_email: array });
+    //
     return axios.post("/api/emails/invoice", order);
   },
   get_email: (email_id: string) => {
-    console.log({ get_email: email_id });
     return axios.get("/api/emails/" + email_id);
   },
   get_last_active_email: () => {
-    return axios.get(
-      "/api/emails/?" + create_query({ active: true, sort: "newest", limit: 1 })
-    );
+    return axios.get("/api/emails/?" + create_query({ active: true, sort: "newest", limit: 1 }));
   },
   get_content: (content_id: string) => {
-    console.log({ get_content: content_id });
     return axios.get("/api/contents/" + content_id);
-  },
+  }
 };
 
 export default email_routes;

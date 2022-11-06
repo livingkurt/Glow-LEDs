@@ -1,30 +1,18 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  listEmails,
-  deleteEmail,
-  saveEmail,
-} from "../../../actions/emailActions";
+import { listEmails, deleteEmail, saveEmail } from "../../../actions/emailActions";
 import { Link } from "react-router-dom";
 import { Loading, Notification } from "../../../components/UtilityComponents";
 import { Helmet } from "react-helmet";
 import { Search, Sort } from "../../../components/SpecialtyComponents";
-import {
-  accurate_date,
-  format_date,
-  format_time,
-  humanize,
-  toCapitalize,
-} from "../../../utils/helper_functions";
+import { accurate_date, format_date, format_time, humanize, toCapitalize } from "../../../utils/helper_functions";
 import { GLButton } from "../../../components/GlowLEDsComponents";
 
 const EmailsPage = props => {
-  const [ search, set_search ] = useState("");
-  const [ sort, setSortOrder ] = useState("");
+  const [search, set_search] = useState("");
+  const [sort, setSortOrder] = useState("");
 
-  const category = props.match.params.category
-    ? props.match.params.category
-    : "";
+  const category = props.match.params.category ? props.match.params.category : "";
   const emailList = useSelector(state => state.emailList);
   const { loading, emails, message, error } = emailList;
 
@@ -35,16 +23,13 @@ const EmailsPage = props => {
   const { success: successDelete } = emailDelete;
   const dispatch = useDispatch();
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        dispatch(listEmails({}));
-      }
-      return () => (clean = false);
-    },
-    [ successSave, successDelete, dispatch ]
-  );
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      dispatch(listEmails({}));
+    }
+    return () => (clean = false);
+  }, [successSave, successDelete, dispatch]);
 
   const submitHandler = e => {
     e.preventDefault();
@@ -56,23 +41,20 @@ const EmailsPage = props => {
     dispatch(listEmails({ category, search, sort: e.target.value }));
   };
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        dispatch(listEmails({ category, search, sort }));
-      }
-      return () => (clean = false);
-    },
-    [ dispatch, category, search, sort ]
-  );
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      dispatch(listEmails({ category, search, sort }));
+    }
+    return () => (clean = false);
+  }, [dispatch, category, search, sort]);
   const deleteHandler = email => {
     dispatch(deleteEmail(email._id));
   };
   const colors = [
     { name: "Draft", color: "#7d5555" },
     { name: "Scheduled", color: "#3e4c6d" },
-    { name: "Sent", color: "#3e6d69" },
+    { name: "Sent", color: "#3e6d69" }
   ];
 
   const determine_color = email => {
@@ -85,7 +67,6 @@ const EmailsPage = props => {
       result = colors[2].color;
     }
 
-    console.log(result);
     return result;
   };
 
@@ -93,14 +74,14 @@ const EmailsPage = props => {
     dispatch(
       saveEmail({
         ...email,
-        active: email.active ? false : true,
+        active: email.active ? false : true
       })
     );
     dispatch(listEmails({}));
     dispatch(listEmails({}));
   };
 
-  const sort_options = [ "Email Type" ];
+  const sort_options = ["Email Type"];
 
   const templates = [
     "announcement",
@@ -116,10 +97,10 @@ const EmailsPage = props => {
     "contact",
     "contact_confirmation",
     "custom_contact",
-    "account_created",
+    "account_created"
   ];
 
-  const [ link, set_link ] = useState("announcement");
+  const [link, set_link] = useState("announcement");
 
   const determine_status_icon = status => {
     switch (status) {
@@ -144,10 +125,7 @@ const EmailsPage = props => {
       <div className="wrap jc-b ai-c">
         <div className="ai-c h-25px mv-15px jc-c">
           <div className="custom-select">
-            <select
-              className="qty_select_dropdown"
-              onChange={e => set_link(e.target.value)}
-            >
+            <select className="qty_select_dropdown" onChange={e => set_link(e.target.value)}>
               <option key={1} defaultValue="">
                 ---Choose Email Template---
               </option>
@@ -159,12 +137,7 @@ const EmailsPage = props => {
             </select>
             <span className="custom-arrow" />
           </div>
-          <a
-            href={"/api/templates/" + link}
-            rel="noreferrer"
-            target="_blank"
-            className="ml-10px"
-          >
+          <a href={"/api/templates/" + link} rel="noreferrer" target="_blank" className="ml-10px">
             <GLButton variant="primary">Preview</GLButton>
           </a>
         </div>
@@ -184,7 +157,7 @@ const EmailsPage = props => {
                   backgroundColor: color.color,
                   height: "20px",
                   width: "60px",
-                  borderRadius: "5px",
+                  borderRadius: "5px"
                 }}
               />
             </div>
@@ -194,16 +167,8 @@ const EmailsPage = props => {
       <div className="jc-c">
         <h1 style={{ textAlign: "center" }}>Emails</h1>
       </div>
-      <div
-        className="search_and_sort row jc-c ai-c"
-        style={{ overflowX: "scroll" }}
-      >
-        <Search
-          search={search}
-          set_search={set_search}
-          submitHandler={submitHandler}
-          category={category}
-        />
+      <div className="search_and_sort row jc-c ai-c" style={{ overflowX: "scroll" }}>
+        <Search search={search} set_search={set_search} submitHandler={submitHandler} category={category} />
         <Sort sortHandler={sortHandler} sort_options={sort_options} />
       </div>
       <Loading loading={loading} error={error}>
@@ -226,7 +191,7 @@ const EmailsPage = props => {
                     key={index}
                     style={{
                       backgroundColor: determine_color(email),
-                      fontSize: "16px",
+                      fontSize: "16px"
                     }}
                   >
                     <td className="paragraph_font ta-c">
@@ -238,15 +203,9 @@ const EmailsPage = props => {
                         <i className="fas fa-paper-plane" />
                       )}
                     </td>
-                    <td className="p-10px min-w-300px paragraph_font">
-                      {email.subject}
-                    </td>
-                    <td className="p-10px min-w-300px paragraph_font">
-                      {email.h1}
-                    </td>
-                    <td className="p-10px  min-w-350px paragraph_font">
-                      {email.h2 && email.h2.slice(0, 30)}...
-                    </td>
+                    <td className="p-10px min-w-300px paragraph_font">{email.subject}</td>
+                    <td className="p-10px min-w-300px paragraph_font">{email.h1}</td>
+                    <td className="p-10px  min-w-350px paragraph_font">{email.h2 && email.h2.slice(0, 30)}...</td>
                     {/* <td className="p-10px  min-w-200px paragraph_font">
                       {email.scheduled_at &&
                         `${format_date(email.scheduled_at)} ${format_time(
@@ -272,18 +231,12 @@ const EmailsPage = props => {
                             <i className="fas fa-edit" />
                           </GLButton>
                         </Link>
-                        <Link
-                          to={"/secure/glow/emails/announcement/" + email._id}
-                        >
+                        <Link to={"/secure/glow/emails/announcement/" + email._id}>
                           <GLButton variant="icon" aria-label="view">
                             <i className="fas fa-mountain" />
                           </GLButton>
                         </Link>
-                        <GLButton
-                          variant="icon"
-                          onClick={() => deleteHandler(email)}
-                          aria-label="Delete"
-                        >
+                        <GLButton variant="icon" onClick={() => deleteHandler(email)} aria-label="Delete">
                           <i className="fas fa-trash-alt" />
                         </GLButton>
                       </div>

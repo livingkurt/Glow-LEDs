@@ -32,8 +32,6 @@ const EditUserPage = props => {
 
   const dispatch = useDispatch();
 
-  console.log({ user });
-
   const set_state = () => {
     set_id(user._id);
     set_first_name(user.first_name);
@@ -67,7 +65,6 @@ const EditUserPage = props => {
     let clean = true;
     if (clean) {
       if (props.match.params.id) {
-        console.log("Is ID");
         dispatch(detailsUser(props.match.params.id));
         dispatch(detailsUser(props.match.params.id));
       } else {
@@ -83,10 +80,8 @@ const EditUserPage = props => {
     let clean = true;
     if (clean) {
       if (user) {
-        console.log("Set");
         set_state();
       } else {
-        console.log("UnSet");
         unset_state();
       }
     }
@@ -100,7 +95,6 @@ const EditUserPage = props => {
   const submitHandler = e => {
     e.preventDefault();
 
-    console.log({ id });
     dispatch(
       saveUser({
         _id: id,
