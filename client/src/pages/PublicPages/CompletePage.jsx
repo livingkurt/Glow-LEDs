@@ -6,6 +6,7 @@ import { Survey } from "../../components/SpecialtyComponents";
 import { Loading } from "../../components/UtilityComponents";
 import { API_Affiliates, API_Emails, API_Features, API_Orders } from "../../utils";
 import { GLButton } from "../../components/GlowLEDsComponents";
+import OrderComplete from "../../components/SpecialtyComponents/CompletePageComponents/OrderComplete";
 
 const CompletePage = props => {
   const [data, set_data] = useState();
@@ -32,7 +33,7 @@ const CompletePage = props => {
         title: "Order Complete",
         id: "Order ID: " + props.match.params.id,
         h1: "Thank you for your order!",
-        h2: "",
+        h2: "What to expect",
         p: `You will be receiving a confirmation email with your order details shortly.\n
 
         All of our products are handmade and made to order! 💙  \n
@@ -88,9 +89,6 @@ const CompletePage = props => {
       if (order.orderItems.some(item => item.category === "custom")) {
         await API_Emails.send_custom_contact_email(order, order.shipping.email);
       }
-      setTimeout(() => {
-        set_show_modal(true);
-      }, 2000);
     } else if (props.match.params.type === "affiliate") {
       const { data: affiliate } = await API_Affiliates.findById_affiliates_a(props.match.params.id);
       await API_Emails.send_affiliate_email(affiliate, "Welcome to the Team!", affiliate.user.email);
@@ -107,7 +105,7 @@ const CompletePage = props => {
     set_loading(false);
   };
 
-  const [show_modal, set_show_modal] = useState(false);
+  // const [show_modal, set_show_modal] = useState(false);
 
   return (
     <div>
@@ -136,17 +134,20 @@ const CompletePage = props => {
               <GLButton variant="primary" className="mb-1rem" onClick={() => send_email()}>
                 Send Email
               </GLButton>
-              <GLButton variant="primary" className="mh-10px" id="myBtn" onClick={() => set_show_modal(true)}>
+              {/* <GLButton variant="primary" className="mh-10px" id="myBtn" onClick={() => set_show_modal(true)}>
                 Open Modal
-              </GLButton>
+              </GLButton> */}
             </div>
           )}
-          <div className="column jc-c">
+
+          <OrderComplete userInfo={userInfo} order_id={props.match.params.id} />
+          {/* <div className="column jc-c">
             {data.h1 && <h1 className="ta-c">{data.h1}</h1>}
-            {data.h2 && <h2 className="ta-c">{data.h2}</h2>}
+
             {data.p.split("\n").map(line => (
               <p className="ta-c max-w-800px lh-30px m-auto">{line}</p>
             ))}
+            {data.h2 && <h2 className="ta-c">{data.h2}</h2>}
             <div className="max-w-800px w-100per m-auto column g-20px">
               <p className="ta-c max-w-800px lh-30px m-auto">
                 In the meantime, check out these pages for answers to frequently asked questions.
@@ -193,7 +194,6 @@ const CompletePage = props => {
             )}
             {type === "order" && (
               <div>
-                {/* <h3 className="ta-c">Order Details</h3> */}
                 <div className="jc-c m-auto wrap">
                   <Link
                     to={
@@ -273,7 +273,7 @@ const CompletePage = props => {
                 </div>
               </div>
             )}
-          </div>
+          </div> */}
         </div>
       )}
     </div>

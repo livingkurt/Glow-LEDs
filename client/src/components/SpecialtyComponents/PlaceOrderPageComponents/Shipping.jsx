@@ -217,24 +217,16 @@ export function Shipping({
 
   const update_google_shipping = shipping => {
     const street_num = document.querySelector("#autocomplete").value;
-
     const street_number = shipping.address_components.filter(comp => comp.types.includes("street_number"))[0];
-
     if (!street_number) {
       set_verify_shipping(false);
     }
     const address = shipping.address_components.filter(comp => comp.types.includes("route"))[0];
-
     const street_1 = `${(street_number && street_number.long_name) || street_num.split(" ")[0]} ${address.short_name}`;
-
     const city = shipping.address_components.filter(comp => comp.types.includes("locality"))[0];
-
     const state = shipping.address_components.filter(comp => comp.types.includes("administrative_area_level_1"))[0];
-
     const country = shipping.address_components.filter(comp => comp.types.includes("country"))[0];
-
     const postal_code = shipping.address_components.filter(comp => comp.types.includes("postal_code"))[0];
-
     set_address_1(street_1);
     setCity(city.long_name || city.short_name);
     setState(state.short_name);
@@ -250,18 +242,6 @@ export function Shipping({
   };
 
   const { width } = useWindowDimensions();
-
-  // const { ref } = usePlacesWidget({
-  //   apiKey: process.env.REACT_APP_GOOGLE_PLACES_KEY,
-  //   onPlaceSelected: place => {
-  //
-  //     update_google_shipping(place);
-  //   },
-  //   options: {
-  //     types: [ "address" ],
-  //   },
-  // });
-  //
 
   return (
     <div>
@@ -582,7 +562,7 @@ export function Shipping({
                 </h4>
               )}
 
-              <GLModal
+              {/* <GLModal
                 show_modal={show_modal}
                 set_show_modal={set_show_modal}
                 title={"Processing Time Explained"}
@@ -611,7 +591,7 @@ export function Shipping({
                     {Math.max(...cartItems.map(item => item.processing_time[1]))} business days
                   </h3>
                 </GLCheckbox>
-              </GLModal>
+              </GLModal> */}
               {show_shipping_complete && (
                 <GLButton
                   type="submit"
@@ -619,7 +599,8 @@ export function Shipping({
                   id="open-modal"
                   className="w-100per bob mt-1rem"
                   onClick={() => {
-                    set_show_modal(true);
+                    // set_show_modal(true);
+                    next_step("payment");
                   }}
                 >
                   Continue
