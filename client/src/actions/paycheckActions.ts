@@ -44,7 +44,7 @@ export const listMyPaychecks =
       const {
         userLogin: { userInfo }
       } = getState();
-      const { data } = await axios.get("/api/paychecks/user", {
+      const { data } = await axios.get("/api/paychecks/affiliate/" + affiliate_id, {
         headers: { Authorization: "Bearer " + userInfo.access_token }
       });
 
