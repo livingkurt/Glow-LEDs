@@ -218,7 +218,7 @@ const EditPalettePage = props => {
 												>
 													<option key={1} defaultValue="">
 														---Choose Palette Type---
-													</option>
+                        </option>
 													{[ 'bubble_mailer', 'box', 'envelope' ].map((type, index) => (
 														<option key={index} value={type}>
 															{humanize(type)}

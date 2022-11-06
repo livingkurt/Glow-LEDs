@@ -8,11 +8,9 @@ import { Search, Sort } from "../../../components/SpecialtyComponents";
 import { GLButton } from "../../../components/GlowLEDsComponents";
 
 const ChipsPage = props => {
-  const [ search, set_search ] = useState("");
-  const [ sort, setSortOrder ] = useState("");
-  const category = props.match.params.category
-    ? props.match.params.category
-    : "";
+  const [search, set_search] = useState("");
+  const [sort, setSortOrder] = useState("");
+  const category = props.match.params.category ? props.match.params.category : "";
   const chipList = useSelector(state => state.chipList);
   const { loading, chips, message, error } = chipList;
 
@@ -23,16 +21,13 @@ const ChipsPage = props => {
   const { success: successDelete } = chipDelete;
   const dispatch = useDispatch();
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        dispatch(listChips({}));
-      }
-      return () => (clean = false);
-    },
-    [ successSave, successDelete, dispatch ]
-  );
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      dispatch(listChips({}));
+    }
+    return () => (clean = false);
+  }, [successSave, successDelete, dispatch]);
   const submitHandler = e => {
     e.preventDefault();
     dispatch(listChips({ category, search, sort }));
@@ -43,28 +38,18 @@ const ChipsPage = props => {
     dispatch(listChips({ category, search, sort: e.target.value }));
   };
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        dispatch(listChips({ category, search, sort }));
-      }
-      return () => (clean = false);
-    },
-    [ dispatch, category, search, sort ]
-  );
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      dispatch(listChips({ category, search, sort }));
+    }
+    return () => (clean = false);
+  }, [dispatch, category, search, sort]);
   const deleteHandler = chip => {
     dispatch(deleteChip(chip._id));
   };
 
-  const sort_options = [
-    "Newest",
-    "Artist Name",
-    "Facebook Name",
-    "Instagram Handle",
-    "Sponsor",
-    "Promoter",
-  ];
+  const sort_options = ["Newest", "Artist Name", "Facebook Name", "Instagram Handle", "Sponsor", "Promoter"];
 
   const colors = [
     { name: "EL Nano", color: "#3e4c6d" },
@@ -76,7 +61,7 @@ const ChipsPage = props => {
     { name: "FL Coin", color: "#4b7188" },
     { name: "Apollo", color: "#6f5f7d" },
     { name: "Coffin", color: "#636363" },
-    { name: "Inova", color: "#333333" },
+    { name: "Inova", color: "#333333" }
   ];
 
   const determine_color = chip => {
@@ -131,7 +116,7 @@ const ChipsPage = props => {
                     backgroundColor: color.color,
                     height: "20px",
                     width: "60px",
-                    borderRadius: "5px",
+                    borderRadius: "5px"
                   }}
                 />
               </div>
@@ -147,16 +132,8 @@ const ChipsPage = props => {
       <div className="jc-c">
         <h1 style={{ textAlign: "center" }}>Chips</h1>
       </div>
-      <div
-        className="search_and_sort row jc-c ai-c"
-        style={{ overflowX: "scroll" }}
-      >
-        <Search
-          search={search}
-          set_search={set_search}
-          submitHandler={submitHandler}
-          category={category}
-        />
+      <div className="search_and_sort row jc-c ai-c" style={{ overflowX: "scroll" }}>
+        <Search search={search} set_search={set_search} submitHandler={submitHandler} category={category} />
         <Sort sortHandler={sortHandler} sort_options={sort_options} />
       </div>
       <Notification message={message} />
@@ -180,7 +157,7 @@ const ChipsPage = props => {
                     key={index}
                     style={{
                       backgroundColor: determine_color(chip),
-                      fontSize: "16px",
+                      fontSize: "16px"
                     }}
                   >
                     <td className="p-10px">{chip._id}</td>
@@ -188,11 +165,7 @@ const ChipsPage = props => {
                     <td className="p-10px">{chip.company}</td>
                     <td className="p-10px">{chip.category}</td>
                     <td className="p-10px">
-                      {chip.programmmable ? (
-                        <i className="fas fa-check-circle" />
-                      ) : (
-                        <i className="fas fa-times-circle" />
-                      )}
+                      {chip.programmmable ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
                     </td>
                     <td className="p-10px">
                       <div className="jc-b">
@@ -201,11 +174,7 @@ const ChipsPage = props => {
                             <i className="fas fa-edit" />
                           </GLButton>
                         </Link>
-                        <GLButton
-                          ariant="icon"
-                          onClick={() => deleteHandler(chip)}
-                          aria-label="Delete"
-                        >
+                        <GLButton ariant="icon" onClick={() => deleteHandler(chip)} aria-label="Delete">
                           <i className="fas fa-trash-alt" />
                         </GLButton>
                       </div>

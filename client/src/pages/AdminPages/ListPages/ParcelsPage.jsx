@@ -1,10 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  listParcels,
-  deleteParcel,
-  saveParcel,
-} from "../../../actions/parcelActions";
+import { listParcels, deleteParcel, saveParcel } from "../../../actions/parcelActions";
 import { Link } from "react-router-dom";
 import { Loading, Notification } from "../../../components/UtilityComponents";
 import { Helmet } from "react-helmet";
@@ -13,12 +9,10 @@ import { format_date } from "../../../utils/helper_functions";
 import { GLButton } from "../../../components/GlowLEDsComponents";
 
 const ParcelsPage = props => {
-  const [ search, set_search ] = useState("");
-  const [ sort, setSortOrder ] = useState("");
-  const [ loading_parcels, set_loading_parcels ] = useState(false);
-  const category = props.match.params.category
-    ? props.match.params.category
-    : "";
+  const [search, set_search] = useState("");
+  const [sort, setSortOrder] = useState("");
+  const [loading_parcels, set_loading_parcels] = useState(false);
+  const category = props.match.params.category ? props.match.params.category : "";
   const parcelList = useSelector(state => state.parcelList);
   const { loading, parcels, message, error } = parcelList;
 
@@ -29,16 +23,13 @@ const ParcelsPage = props => {
   const { success: successDelete } = parcelDelete;
   const dispatch = useDispatch();
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        dispatch(listParcels({}));
-      }
-      return () => (clean = false);
-    },
-    [ successSave, successDelete, dispatch ]
-  );
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      dispatch(listParcels({}));
+    }
+    return () => (clean = false);
+  }, [successSave, successDelete, dispatch]);
 
   const submitHandler = e => {
     e.preventDefault();
@@ -50,16 +41,13 @@ const ParcelsPage = props => {
     dispatch(listParcels({ category, search, sort: e.target.value }));
   };
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        dispatch(listParcels({ category, search, sort }));
-      }
-      return () => (clean = false);
-    },
-    [ dispatch, category, search, sort ]
-  );
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      dispatch(listParcels({ category, search, sort }));
+    }
+    return () => (clean = false);
+  }, [dispatch, category, search, sort]);
 
   const deleteHandler = parcel => {
     dispatch(deleteParcel(parcel._id));
@@ -67,18 +55,11 @@ const ParcelsPage = props => {
 
   const date = new Date();
 
-  const sort_options = [
-    "Newest",
-    "Artist Name",
-    "Facebook Name",
-    "Instagram Handle",
-    "Sponsor",
-    "Promoter",
-  ];
+  const sort_options = ["Newest", "Artist Name", "Facebook Name", "Instagram Handle", "Sponsor", "Promoter"];
 
   const colors = [
     { name: "Box", color: "#44648c" },
-    { name: "Bubble Mailer", color: "#448c89" },
+    { name: "Bubble Mailer", color: "#448c89" }
   ];
 
   const determine_color = parcel => {
@@ -110,7 +91,7 @@ const ParcelsPage = props => {
                     backgroundColor: color.color,
                     height: "20px",
                     width: "60px",
-                    borderRadius: "5px",
+                    borderRadius: "5px"
                   }}
                 />
               </div>
@@ -124,16 +105,8 @@ const ParcelsPage = props => {
       <div className="jc-c">
         <h1 style={{ textAlign: "center" }}>Parcels</h1>
       </div>
-      <div
-        className="search_and_sort row jc-c ai-c"
-        style={{ overflowX: "scroll" }}
-      >
-        <Search
-          search={search}
-          set_search={set_search}
-          submitHandler={submitHandler}
-          category={category}
-        />
+      <div className="search_and_sort row jc-c ai-c" style={{ overflowX: "scroll" }}>
+        <Search search={search} set_search={set_search} submitHandler={submitHandler} category={category} />
         <Sort sortHandler={sortHandler} sort_options={sort_options} />
       </div>
       <Loading loading={loading} error={error}>
@@ -158,15 +131,13 @@ const ParcelsPage = props => {
                     key={index}
                     style={{
                       backgroundColor: determine_color(parcel),
-                      fontSize: "16px",
+                      fontSize: "16px"
                     }}
                   >
                     <td className="p-10px" style={{ minWidth: "15rem" }}>
-                      {parcel.type === "bubble_mailer" ? (
-                        `${parcel.length} X ${parcel.width}`
-                      ) : (
-                        `${parcel.length} X ${parcel.width} X ${parcel.height}`
-                      )}
+                      {parcel.type === "bubble_mailer"
+                        ? `${parcel.length} X ${parcel.width}`
+                        : `${parcel.length} X ${parcel.width} X ${parcel.height}`}
                     </td>
                     <td className="p-10px" style={{ minWidth: "15rem" }}>
                       {parcel.type}
@@ -183,11 +154,7 @@ const ParcelsPage = props => {
                             <i className="fas fa-edit" />
                           </GLButton>
                         </Link>
-                        <GLButton
-                          variant="icon"
-                          onClick={() => deleteHandler(parcel)}
-                          aria-label="Delete"
-                        >
+                        <GLButton variant="icon" onClick={() => deleteHandler(parcel)} aria-label="Delete">
                           <i className="fas fa-trash-alt" />
                         </GLButton>
                       </div>

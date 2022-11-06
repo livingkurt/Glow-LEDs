@@ -5,8 +5,8 @@ import { Helmet } from "react-helmet";
 import { GLButton } from "../../components/GlowLEDsComponents";
 
 const ResetPasswordPage = props => {
-  const [ password, setPassword ] = useState("");
-  const [ rePassword, setRePassword ] = useState("");
+  const [password, setPassword] = useState("");
+  const [rePassword, setRePassword] = useState("");
   // const userRegister = useSelector((state) => state.userRegister);
   // const { loading, userInfo, error } = userRegister;
   const dispatch = useDispatch();
@@ -25,14 +25,8 @@ const ResetPasswordPage = props => {
         <title>Reset Password | Glow LEDs</title>
         <meta property="og:title" content="Reset Password" />
         <meta name="twitter:title" content="Reset Password" />
-        <link
-          rel="canonical"
-          href="https://www.glow-leds.com/account/resetpassword"
-        />
-        <meta
-          property="og:url"
-          content="https://www.glow-leds.com/account/resetpassword"
-        />
+        <link rel="canonical" href="https://www.glow-leds.com/account/resetpassword" />
+        <meta property="og:url" content="https://www.glow-leds.com/account/resetpassword" />
       </Helmet>
       <form onSubmit={submitHandler}>
         <ul className="form-container">
@@ -44,21 +38,11 @@ const ResetPasswordPage = props => {
           <li />
           <li>
             <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              onChange={e => setPassword(e.target.value)}
-            />
+            <input type="password" id="password" name="password" onChange={e => setPassword(e.target.value)} />
           </li>
           <li>
             <label htmlFor="rePassword">Re-Enter Password</label>
-            <input
-              type="password"
-              id="rePassword"
-              name="rePassword"
-              onChange={e => setRePassword(e.target.value)}
-            />
+            <input type="password" id="rePassword" name="rePassword" onChange={e => setRePassword(e.target.value)} />
           </li>
           <li>
             <GLButton type="submit" variant="primary">

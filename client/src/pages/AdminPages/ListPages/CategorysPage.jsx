@@ -1,31 +1,21 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  listCategorys,
-  deleteCategory,
-  saveCategory,
-} from "../../../actions/categoryActions";
+import { listCategorys, deleteCategory, saveCategory } from "../../../actions/categoryActions";
 import { Link } from "react-router-dom";
 import { Loading, Notification } from "../../../components/UtilityComponents";
 import { Helmet } from "react-helmet";
 import { Search, Sort } from "../../../components/SpecialtyComponents";
 import { API_Products } from "../../../utils";
-import {
-  categories,
-  snake_case,
-  subcategories,
-} from "../../../utils/helper_functions";
+import { categories, snake_case, subcategories } from "../../../utils/helper_functions";
 import { GLButton } from "../../../components/GlowLEDsComponents";
 const fetch = require("node-fetch");
 
 const CategorysPage = props => {
-  const [ search, set_search ] = useState("");
-  const [ sort, setSortOrder ] = useState("");
-  const [ loading_checkboxes, set_loading_checkboxes ] = useState(false);
-  const [ loading_categorys, set_loading_categorys ] = useState(false);
-  const category = props.match.params.category
-    ? props.match.params.category
-    : "";
+  const [search, set_search] = useState("");
+  const [sort, setSortOrder] = useState("");
+  const [loading_checkboxes, set_loading_checkboxes] = useState(false);
+  const [loading_categorys, set_loading_categorys] = useState(false);
+  const category = props.match.params.category ? props.match.params.category : "";
   const categoryList = useSelector(state => state.categoryList);
   const { loading, categorys, message, error } = categoryList;
 
@@ -46,16 +36,13 @@ const CategorysPage = props => {
     set_loading_checkboxes(false);
   }, 500);
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        dispatch(listCategorys({}));
-      }
-      return () => (clean = false);
-    },
-    [ successSave, successDelete, dispatch ]
-  );
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      dispatch(listCategorys({}));
+    }
+    return () => (clean = false);
+  }, [successSave, successDelete, dispatch]);
 
   const submitHandler = e => {
     e.preventDefault();
@@ -67,36 +54,26 @@ const CategorysPage = props => {
     dispatch(listCategorys({ category, search, sort: e.target.value }));
   };
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        dispatch(listCategorys({ category, search, sort }));
-      }
-      return () => (clean = false);
-    },
-    [ dispatch, category, search, sort ]
-  );
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      dispatch(listCategorys({ category, search, sort }));
+    }
+    return () => (clean = false);
+  }, [dispatch, category, search, sort]);
   const deleteHandler = category => {
     dispatch(deleteCategory(category._id));
     dispatch(listCategorys({ category, search, sort }));
   };
 
-  const sort_options = [
-    "Newest",
-    "Artist Name",
-    "Facebook Name",
-    "Instagram Handle",
-    "Sponsor",
-    "Promoter",
-  ];
+  const sort_options = ["Newest", "Artist Name", "Facebook Name", "Instagram Handle", "Sponsor", "Promoter"];
 
   const colors = [
     { name: "Nest Level 1", color: "#8a2e2e" },
     { name: "Nest Level 2", color: "#8a502e" },
     { name: "Nest Level 3", color: "#898a2e" },
     { name: "Nest Level 4", color: "#2e8a42" },
-    { name: "Nest Level 5", color: "#2e578a" },
+    { name: "Nest Level 5", color: "#2e578a" }
   ];
 
   const determine_color = category => {
@@ -121,32 +98,36 @@ const CategorysPage = props => {
   };
 
   const create_categories = async () => {
-    categories.filter(category => category !== null).forEach(category => {
-      dispatch(
-        saveCategory({
-          name: category,
-          pathname: snake_case(category),
-          nest_level: 1,
-          display: true,
-          meta_title: `${category} | Glow LEDs`,
-        })
-      );
-    });
+    categories
+      .filter(category => category !== null)
+      .forEach(category => {
+        dispatch(
+          saveCategory({
+            name: category,
+            pathname: snake_case(category),
+            nest_level: 1,
+            display: true,
+            meta_title: `${category} | Glow LEDs`
+          })
+        );
+      });
     dispatch(listCategorys({}));
   };
 
   const create_subcategories = async () => {
-    subcategories.filter(category => category !== null).forEach(category => {
-      dispatch(
-        saveCategory({
-          name: category,
-          pathname: snake_case(category),
-          nest_level: 1,
-          display: true,
-          meta_title: `${category} | Glow LEDs`,
-        })
-      );
-    });
+    subcategories
+      .filter(category => category !== null)
+      .forEach(category => {
+        dispatch(
+          saveCategory({
+            name: category,
+            pathname: snake_case(category),
+            nest_level: 1,
+            display: true,
+            meta_title: `${category} | Glow LEDs`
+          })
+        );
+      });
     dispatch(listCategorys({}));
   };
 
@@ -168,7 +149,7 @@ const CategorysPage = props => {
                     backgroundColor: color.color,
                     height: "20px",
                     width: "60px",
-                    borderRadius: "5px",
+                    borderRadius: "5px"
                   }}
                 />
               </div>
@@ -189,16 +170,8 @@ const CategorysPage = props => {
       <div className="jc-c">
         <h1 style={{ textAlign: "center" }}>Categorys</h1>
       </div>
-      <div
-        className="search_and_sort row jc-c ai-c"
-        style={{ overflowX: "scroll" }}
-      >
-        <Search
-          search={search}
-          set_search={set_search}
-          submitHandler={submitHandler}
-          category={category}
-        />
+      <div className="search_and_sort row jc-c ai-c" style={{ overflowX: "scroll" }}>
+        <Search search={search} set_search={set_search} submitHandler={submitHandler} category={category} />
         <Sort sortHandler={sortHandler} sort_options={sort_options} />
       </div>
       <Loading loading={loading} error={error}>
@@ -224,7 +197,7 @@ const CategorysPage = props => {
                     key={index}
                     style={{
                       backgroundColor: determine_color(category),
-                      fontSize: "16px",
+                      fontSize: "16px"
                     }}
                   >
                     <td className="p-10px" style={{ minWidth: "15rem" }}>
@@ -240,21 +213,13 @@ const CategorysPage = props => {
                       {category.display_order}
                     </td>
                     <td className="p-10px">
-                      {category.display ? (
-                        <i className="fas fa-check-circle" />
-                      ) : (
-                        <i className="fas fa-times-circle" />
-                      )}
+                      {category.display ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
                     </td>
                     <td className="p-10px">{category.meta_title}</td>
                     <td className="p-10px">{category.meta_description}</td>
                     <td className="p-10px">{category.meta_keywords}</td>
                     <td className="p-10px">
-                      {category.masthead ? (
-                        <i className="fas fa-check-circle" />
-                      ) : (
-                        <i className="fas fa-times-circle" />
-                      )}
+                      {category.masthead ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
                     </td>
                     <td className="p-10px">
                       <div className="jc-b">
@@ -263,11 +228,7 @@ const CategorysPage = props => {
                             <i className="fas fa-edit" />
                           </GLButton>
                         </Link>
-                        <GLButton
-                          variant="icon"
-                          onClick={() => deleteHandler(category)}
-                          aria-label="Delete"
-                        >
+                        <GLButton variant="icon" onClick={() => deleteHandler(category)} aria-label="Delete">
                           <i className="fas fa-trash-alt" />
                         </GLButton>
                       </div>

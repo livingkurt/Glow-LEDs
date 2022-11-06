@@ -10,13 +10,13 @@ import { GLButton } from "../../components/GlowLEDsComponents";
 
 const AdminChangePasswordPage = props => {
   const history = useHistory();
-  const [ password, setPassword ] = useState("");
-  const [ rePassword, setRePassword ] = useState("");
+  const [password, setPassword] = useState("");
+  const [rePassword, setRePassword] = useState("");
 
   const dispatch = useDispatch();
 
-  const [ password_validations, setPasswordValidations ] = useState("");
-  const [ re_password_validations, setRePasswordValidations ] = useState("");
+  const [password_validations, setPasswordValidations] = useState("");
+  const [re_password_validations, setRePasswordValidations] = useState("");
 
   const userLogin = useSelector(state => state.userLogin);
   const { userInfo } = userLogin;
@@ -27,19 +27,16 @@ const AdminChangePasswordPage = props => {
     history.push("/secure/glow/userprofile/" + props.match.params.id);
   };
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        if (userInfo) {
-          setPassword(userInfo.password);
-        }
-        dispatch(listMyOrders());
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (userInfo) {
+        setPassword(userInfo.password);
       }
-      return () => (clean = false);
-    },
-    [ userInfo, dispatch ]
-  );
+      dispatch(listMyOrders());
+    }
+    return () => (clean = false);
+  }, [userInfo, dispatch]);
 
   return (
     <div className="profile_container column p-20px">
@@ -47,14 +44,8 @@ const AdminChangePasswordPage = props => {
         <title>Change Password | Glow LEDs</title>
         <meta property="og:title" content="Change Password" />
         <meta name="twitter:title" content="Change Password" />
-        <link
-          rel="canonical"
-          href="https://www.glow-leds.com/secure/account/changepassword"
-        />
-        <meta
-          property="og:url"
-          content="https://www.glow-leds.com/secure/account/changepassword"
-        />
+        <link rel="canonical" href="https://www.glow-leds.com/secure/account/changepassword" />
+        <meta property="og:url" content="https://www.glow-leds.com/secure/account/changepassword" />
       </Helmet>
       <div className="mb-10px">
         <GLButton variant="secondary" onClick={() => history.goBack()}>
@@ -70,18 +61,9 @@ const AdminChangePasswordPage = props => {
               </li>
               <li>
                 <label htmlFor="password">Password</label>
-                <input
-                  className="form_input"
-                  type="password"
-                  id="password"
-                  name="password"
-                  onChange={e => setPassword(e.target.value)}
-                />
+                <input className="form_input" type="password" id="password" name="password" onChange={e => setPassword(e.target.value)} />
               </li>
-              <label
-                className="validation_text"
-                style={{ fontSize: 16, justifyContent: "center" }}
-              >
+              <label className="validation_text" style={{ fontSize: 16, justifyContent: "center" }}>
                 {password_validations}
               </label>
               <li>
@@ -94,10 +76,7 @@ const AdminChangePasswordPage = props => {
                   onChange={e => setRePassword(e.target.value)}
                 />
               </li>
-              <label
-                className="validation_text"
-                style={{ fontSize: 16, justifyContent: "center" }}
-              >
+              <label className="validation_text" style={{ fontSize: 16, justifyContent: "center" }}>
                 {re_password_validations}
               </label>
               <li>
@@ -107,11 +86,7 @@ const AdminChangePasswordPage = props => {
               </li>
               <li>
                 <Link to="/secure/account/profile">
-                  <GLButton
-                    type="button"
-                    variant="secondary"
-                    className="w-100per"
-                  >
+                  <GLButton type="button" variant="secondary" className="w-100per">
                     Cancel
                   </GLButton>
                 </Link>

@@ -2,21 +2,16 @@ import React from "react";
 import GLButton from "../GLButton/GLButton";
 import { Link } from "react-router-dom";
 
-const GLTable = ({
-  rows,
-  column_defs,
-  colors,
-  edit_row_link,
-  view_row_link,
-  complete_row,
-  duplicate_row,
-  delete_row,
-}) => {
+const GLTable = ({ rows, column_defs, colors, edit_row_link, view_row_link, complete_row, duplicate_row, delete_row }) => {
   return (
     <div className="survey-list responsive_table">
       <table className="table">
         <thead>
-          <tr>{column_defs.map(column => <th>{column.title}</th>)}</tr>
+          <tr>
+            {column_defs.map(column => (
+              <th>{column.title}</th>
+            ))}
+          </tr>
         </thead>
         <tbody>
           {rows.map((row, index) => (
@@ -24,14 +19,11 @@ const GLTable = ({
               key={index}
               style={{
                 backgroundColor: colors(row),
-                fontSize: "16px",
+                fontSize: "16px"
               }}
             >
               {column_defs.map(column => {
-                const value =
-                  typeof column.display === "function"
-                    ? column.display(row)
-                    : row[column.display];
+                const value = typeof column.display === "function" ? column.display(row) : row[column.display];
                 <td className="p-10px" style={{ minWidth: "15rem" }}>
                   {value}
                 </td>;
@@ -54,29 +46,17 @@ const GLTable = ({
                     </Link>
                   )}
                   {duplicate_row && (
-                    <GLButton
-                      variant="icon"
-                      onClick={() => duplicate_row(row)}
-                      aria-label="duplicate"
-                    >
-                      <i class="fas fa-clone" />
+                    <GLButton variant="icon" onClick={() => duplicate_row(row)} aria-label="duplicate">
+                      <i className="fas fa-clone" />
                     </GLButton>
                   )}
                   {complete_row && (
-                    <GLButton
-                      variant="icon"
-                      onClick={() => complete_row(row)}
-                      aria-label="complete"
-                    >
+                    <GLButton variant="icon" onClick={() => complete_row(row)} aria-label="complete">
                       <i className="fas fa-check-circle" />
                     </GLButton>
                   )}
                   {delete_row && (
-                    <GLButton
-                      variant="icon"
-                      onClick={() => delete_row(row)}
-                      aria-label="Delete"
-                    >
+                    <GLButton variant="icon" onClick={() => delete_row(row)} aria-label="Delete">
                       <i className="fas fa-trash-alt" />
                     </GLButton>
                   )}

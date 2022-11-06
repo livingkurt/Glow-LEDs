@@ -343,7 +343,7 @@ const PaychecksPage = props => {
                           </GLButton>
                         </Link>
                         <GLButton variant="icon" onClick={() => duplicate_paycheck(paycheck)} aria-label="duplicate">
-                          <i class="fas fa-clone" />
+                          <i className="fas fa-clone" />
                         </GLButton>
                         <GLButton variant="icon" onClick={() => mark_paid(paycheck)} aria-label="mark paid">
                           <i className="fas fa-check-circle" />

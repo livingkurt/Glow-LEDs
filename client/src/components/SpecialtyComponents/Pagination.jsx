@@ -40,7 +40,7 @@ const Pagination = props => {
         onClick={e => onPageChange(e, parseInt(currentPage) - 1)}
       >
         <GLButton variant="primary" className="w-40px">
-          <i class="fas fa-arrow-left" />
+          <i className="fas fa-arrow-left" />
         </GLButton>
       </li>
       {width > 430 &&
@@ -59,6 +59,7 @@ const Pagination = props => {
               className={classnames("pagination-item", {
                 page: pageNumber === currentPage
               })}
+              key={pageNumber}
               onClick={e => onPageChange(e, pageNumber)}
             >
               <div className={`btn ${pageNumber === parseInt(currentPage) ? "off ft-primary" : "on ft-white"} w-40px`}>{pageNumber}</div>
@@ -72,7 +73,7 @@ const Pagination = props => {
         onClick={e => onPageChange(e, parseInt(currentPage) + 1)}
       >
         <GLButton variant="primary" className="w-40px">
-          <i class="fas fa-arrow-right" />
+          <i className="fas fa-arrow-right" />
         </GLButton>
       </li>
     </ul>

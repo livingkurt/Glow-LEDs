@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  listContents,
-  deleteContent,
-  saveContent,
-} from "../../../actions/contentActions";
+import { listContents, deleteContent, saveContent } from "../../../actions/contentActions";
 import { Link } from "react-router-dom";
 import { Loading, Notification } from "../../../components/UtilityComponents";
 import { Helmet } from "react-helmet";
@@ -12,10 +8,8 @@ import { Search } from "../../../components/SpecialtyComponents";
 import { GLButton } from "../../../components/GlowLEDsComponents";
 
 const ContentsPage = props => {
-  const [ search, set_search ] = useState("");
-  const category = props.match.params.category
-    ? props.match.params.category
-    : "";
+  const [search, set_search] = useState("");
+  const category = props.match.params.category ? props.match.params.category : "";
   const contentList = useSelector(state => state.contentList);
   const { loading, contents, message, error } = contentList;
 
@@ -26,16 +20,13 @@ const ContentsPage = props => {
   const { success: successDelete } = contentDelete;
   const dispatch = useDispatch();
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        dispatch(listContents({}));
-      }
-      return () => (clean = false);
-    },
-    [ successSave, successDelete, dispatch ]
-  );
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      dispatch(listContents({}));
+    }
+    return () => (clean = false);
+  }, [successSave, successDelete, dispatch]);
   const submitHandler = e => {
     e.preventDefault();
     dispatch(listContents({ category, search }));
@@ -49,7 +40,7 @@ const ContentsPage = props => {
     dispatch(
       saveContent({
         ...content,
-        active: content.active ? false : true,
+        active: content.active ? false : true
       })
     );
     dispatch(listContents({}));
@@ -63,15 +54,7 @@ const ContentsPage = props => {
       </Helmet>
       <Notification message={message} />
       <div className="wrap jc-b">
-        <a
-          href={
-            process.env.NODE_ENV === "production" ? (
-              "https://www.glow-leds.com/links"
-            ) : (
-              "http://localhost:3000/links"
-            )
-          }
-        >
+        <a href={process.env.NODE_ENV === "production" ? "https://www.glow-leds.com/links" : "http://localhost:3000/links"}>
           <GLButton variant="primary" style={{ width: "160px" }}>
             Visit Links Page
           </GLButton>
@@ -86,16 +69,8 @@ const ContentsPage = props => {
       <div className="jc-c">
         <h1 style={{ textAlign: "center" }}>Contents</h1>
       </div>
-      <div
-        className="search_and_sort row jc-c ai-c"
-        style={{ overflowX: "scroll" }}
-      >
-        <Search
-          search={search}
-          set_search={set_search}
-          submitHandler={submitHandler}
-          category={category}
-        />
+      <div className="search_and_sort row jc-c ai-c" style={{ overflowX: "scroll" }}>
+        <Search search={search} set_search={set_search} submitHandler={submitHandler} category={category} />
       </div>
       <Loading loading={loading} error={error}>
         {contents && (
@@ -115,7 +90,7 @@ const ContentsPage = props => {
                     key={index}
                     style={{
                       backgroundColor: "#3e4c6d",
-                      fontSize: "16px",
+                      fontSize: "16px"
                     }}
                   >
                     <td className="p-10px">
@@ -124,23 +99,13 @@ const ContentsPage = props => {
                         onClick={() => change_content_status(content)}
                         aria-label={content.active ? "deactive" : "activate"}
                       >
-                        {content.active ? (
-                          <i className="fas fa-check-circle" />
-                        ) : (
-                          <i className="fas fa-times-circle" />
-                        )}
+                        {content.active ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
                       </GLButton>
                     </td>
-                    <td
-                      className="p-10px paragraph_font"
-                      style={{ minWidth: "5rem" }}
-                    >
+                    <td className="p-10px paragraph_font" style={{ minWidth: "5rem" }}>
                       {content.home_page && content.home_page.h1}
                     </td>
-                    <td
-                      className="p-10px paragraph_font"
-                      style={{ minWidth: "15rem" }}
-                    >
+                    <td className="p-10px paragraph_font" style={{ minWidth: "15rem" }}>
                       {content.banner && content.banner.label}
                     </td>
                     {/* <td className="p-10px paragraph_font" style={{ minWidth: '10rem' }}>{content.about_page}</td> */}
@@ -151,11 +116,7 @@ const ContentsPage = props => {
                             <i className="fas fa-edit" />
                           </GLButton>
                         </Link>
-                        <GLButton
-                          variant="icon"
-                          onClick={() => deleteHandler(content)}
-                          aria-label="Delete"
-                        >
+                        <GLButton variant="icon" onClick={() => deleteHandler(content)} aria-label="Delete">
                           <i className="fas fa-trash-alt" />
                         </GLButton>
                       </div>

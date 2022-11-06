@@ -1,10 +1,7 @@
 // React
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
-import {
-  determine_product_name_display,
-  sale_price_switch,
-} from "../../utils/react_helper_functions";
+import { determine_product_name_display, sale_price_switch } from "../../utils/react_helper_functions";
 import { Rating } from "../SpecialtyComponents";
 import { LazyImage } from "../UtilityComponents";
 
@@ -16,7 +13,7 @@ const ProductItemM = props => {
         <Link
           to={{
             pathname: "/collections/all/products/" + props.product.pathname,
-            state: { prevPath: history.location.pathname },
+            state: { prevPath: history.location.pathname }
           }}
         >
           <div className="small_screen_product row">
@@ -38,13 +35,12 @@ const ProductItemM = props => {
                   src={props.product.images && props.product.images[0]}
                 />
 
-                {[ ...Array(12).keys() ].map(
+                {[...Array(12).keys()].map(
                   (x, index) =>
                     props.product_occurrences &&
                     props.product_occurrences[index] &&
-                    props.product_occurrences[index].name ===
-                      props.product.name && (
-                      <div className="pos-abs br-10px w-2rem h-2rem  ai-c ta-c jc-c top-0px left-5px">
+                    props.product_occurrences[index].name === props.product.name && (
+                      <div className="pos-abs br-10px w-2rem h-2rem  ai-c ta-c jc-c top-0px left-5px" key={props.product.name}>
                         <img
                           className=" mt-3px ml-2px h-100px w-100px"
                           alt={props.product.name}
@@ -57,10 +53,7 @@ const ProductItemM = props => {
               </div>
             </div>
             <div className="ph-10px">
-              <div
-                className="product_text mt-10px"
-                style={{ fontSize: "1.6rem" }}
-              >
+              <div className="product_text mt-10px" style={{ fontSize: "1.6rem" }}>
                 {determine_product_name_display(props.product, false)}
               </div>
               <div className="product_text mt-10px">
@@ -73,10 +66,7 @@ const ProductItemM = props => {
                 )}
               </div>
               {props.product.rating ? (
-                <Rating
-                  rating={props.product.rating}
-                  numReviews={props.product.numReviews}
-                />
+                <Rating rating={props.product.rating} numReviews={props.product.numReviews} />
               ) : (
                 <span className="rating vis-hid ta-c">No Reviews</span>
               )}

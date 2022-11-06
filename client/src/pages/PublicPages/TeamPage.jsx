@@ -31,10 +31,7 @@ const TeamPage = props => {
         <meta property="og:title" content="Team" />
         <meta name="twitter:title" content="Team" />
         <link rel="canonical" href="https://www.glow-leds.com/pages/teamd" />
-        <meta
-          property="og:url"
-          content="https://www.glow-leds.com/pages/teamd"
-        />
+        <meta property="og:url" content="https://www.glow-leds.com/pages/teamd" />
         <meta
           name="description"
           content="Here at Glow LEDs we want all you glovers, ravers, festival goers, and even home decor peeps to be apart of our community."
@@ -58,8 +55,7 @@ const TeamPage = props => {
             {/* <Link to="/collections/all/teams">
 							<GLButton variant="secondary">Back to Teams</GLButton>
 						</Link> */}
-            {userInfo &&
-            userInfo.isAdmin && (
+            {userInfo && userInfo.isAdmin && (
               <Link to={"/secure/glow/editteam/" + props.match.params.pathname}>
                 <GLButton variant="secondary" style={{ width: "156px" }}>
                   Edit Team
@@ -80,7 +76,7 @@ const TeamPage = props => {
                 width: "100%",
                 display: "none",
                 maxWidth: "unset",
-                maxHeight: "unset",
+                maxHeight: "unset"
               }}
               effect="blur"
               src={team.picture}
@@ -128,9 +124,7 @@ const TeamPage = props => {
                       <div className="fs-40px">
                         {team.facebook_name && (
                           <a
-                            href={
-                              "https://www.facebook.com/" + team.facebook_name
-                            }
+                            href={"https://www.facebook.com/" + team.facebook_name}
                             target="_blank"
                             rel="noopener noreferrer"
                             aria-label="Facebook"
@@ -142,10 +136,7 @@ const TeamPage = props => {
                       <div className="ml-10px fs-40px">
                         {team.instagram_handle && (
                           <a
-                            href={
-                              "https://www.instagram.com/" +
-                              team.instagram_handle
-                            }
+                            href={"https://www.instagram.com/" + team.instagram_handle}
                             target="_blank"
                             rel="noopener noreferrer"
                             aria-label="Instagram"
@@ -177,10 +168,7 @@ const TeamPage = props => {
                 return (
                   <div className="pos-rel">
                     {affiliate.sponsor && (
-                      <Link
-                        to={"/collections/all/sponsors/" + affiliate.pathname}
-                        key={index}
-                      >
+                      <Link to={"/collections/all/sponsors/" + affiliate.pathname} key={index}>
                         <img
                           className="m-1rem br-10px h-auto max-h-200px max-w-200px ta-c responsive_img "
                           alt="Team Mate"
@@ -191,7 +179,7 @@ const TeamPage = props => {
                           style={{
                             top: "40%",
                             left: "50%",
-                            transform: "translate(-50%, -50%)",
+                            transform: "translate(-50%, -50%)"
                           }}
                         >
                           {affiliate.artist_name}
@@ -201,7 +189,7 @@ const TeamPage = props => {
                           style={{
                             top: "70%",
                             left: "50%",
-                            transform: "translate(-50%, -50%)",
+                            transform: "translate(-50%, -50%)"
                           }}
                         >
                           Sponsored
@@ -211,14 +199,11 @@ const TeamPage = props => {
                     {!affiliate.sponsor && (
                       <a
                         href={
-                          affiliate.instagram_handle ? (
-                            "https://www.instagram.com/" +
-                            affiliate.instagram_handle
-                          ) : affiliate.facebook ? (
-                            affiliate.facebook
-                          ) : (
-                            ""
-                          )
+                          affiliate.instagram_handle
+                            ? "https://www.instagram.com/" + affiliate.instagram_handle
+                            : affiliate.facebook
+                            ? affiliate.facebook
+                            : ""
                         }
                         target="_blank"
                         rel="noopener noreferrer"
@@ -234,7 +219,7 @@ const TeamPage = props => {
                           style={{
                             top: "40%",
                             left: "50%",
-                            transform: "translate(-50%, -50%)",
+                            transform: "translate(-50%, -50%)"
                           }}
                         >
                           {affiliate.artist_name}

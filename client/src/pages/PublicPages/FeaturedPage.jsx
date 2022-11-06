@@ -34,10 +34,7 @@ const FeaturedPage = props => {
         <meta property="og:title" content="Featured" />
         <meta name="twitter:title" content="Featured" />
         <link rel="canonical" href="https://www.glow-leds.com/pages/featured" />
-        <meta
-          property="og:url"
-          content="https://www.glow-leds.com/pages/featured"
-        />
+        <meta property="og:url" content="https://www.glow-leds.com/pages/featured" />
         <meta
           name="description"
           content="Here at Glow LEDs we want all you glovers, ravers, festival goers, and even home decor peeps to be apart of our community."
@@ -58,11 +55,8 @@ const FeaturedPage = props => {
             <GLButton variant="secondary" onClick={() => history.goBack()}>
               Back to Features
             </GLButton>
-            {userInfo &&
-            userInfo.isAdmin && (
-              <Link
-                to={"/secure/glow/editfeature/" + props.match.params.pathname}
-              >
+            {userInfo && userInfo.isAdmin && (
+              <Link to={"/secure/glow/editfeature/" + props.match.params.pathname}>
                 <GLButton variant="secondary" style={{ width: "156px" }}>
                   Edit Feature
                 </GLButton>
@@ -98,11 +92,7 @@ const FeaturedPage = props => {
                   // <Zoom className="m-auto">
                   <div className="m-auto">
                     {/* <div className="responsive_container"> */}
-                    <img
-                      className="m-1rem br-15px  h-auto ta-c responsive_img"
-                      alt="Feature"
-                      src={image}
-                    />
+                    <img className="m-1rem br-15px  h-auto ta-c responsive_img" alt="Feature" src={image} />
                     {/* </div> */}
                   </div>
                   // </Zoom>
@@ -117,12 +107,7 @@ const FeaturedPage = props => {
             <div className="ml-10px fs-25px jc-b w-100per max-w-500px">
               {feature.facebook_name && (
                 <div className="ml-10px fs-40px">
-                  <a
-                    href={feature.facebook_name}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Facebook"
-                  >
+                  <a href={feature.facebook_name} target="_blank" rel="noopener noreferrer" aria-label="Facebook">
                     <i className="fab fa-facebook zoom" />
                   </a>
                 </div>
@@ -130,9 +115,7 @@ const FeaturedPage = props => {
               {feature.instagram_handle && (
                 <div className="ml-10px fs-40px">
                   <a
-                    href={
-                      "https://www.instagram.com/" + feature.instagram_handle
-                    }
+                    href={"https://www.instagram.com/" + feature.instagram_handle}
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="Instagram"
@@ -150,18 +133,9 @@ const FeaturedPage = props => {
           )}
 
           <div className="p_descriptions" style={{ textAlign: "center" }}>
-            <a
-              className="jc-c w-100per"
-              href={feature.link}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <a className="jc-c w-100per" href={feature.link} target="_blank" rel="noopener noreferrer">
               {feature.product && (
-                <GLButton
-                  variant="primary"
-                  className=""
-                  style={{ margin: "auto", marginBottom: "10px" }}
-                >
+                <GLButton variant="primary" className="" style={{ margin: "auto", marginBottom: "10px" }}>
                   {humanize(feature.product)}
                 </GLButton>
               )}

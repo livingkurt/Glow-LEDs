@@ -120,14 +120,14 @@ const Links = props => {
         <div id="links">
           {content &&
             content.links &&
-            content.links.map((link, index) => {
+            content.links.map(link => {
               num += multiplier;
               return link.link && link.link.substring(0, 1) === "/" ? (
                 <a
                   className="link special_font"
                   rel="noreferrer"
                   aria-label={link.label}
-                  key={index}
+                  key={link.label}
                   style={{
                     borderColor: hslToHex(num, 100, 100),
                     webkitBoxShadow: `0 0 10px ${hslToHex(num, 100, 50)}`,
@@ -143,7 +143,7 @@ const Links = props => {
                   className="link special_font"
                   rel="noreferrer"
                   aria-label={link.label}
-                  key={index}
+                  key={link.label}
                   style={{
                     borderColor: hslToHex(num, 100, 100),
                     webkitBoxShadow: `0 0 10px ${hslToHex(num, 100, 50)}`,

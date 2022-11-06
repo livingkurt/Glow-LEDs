@@ -8,11 +8,9 @@ import { Search, Sort } from "../../../components/SpecialtyComponents";
 import { GLButton } from "../../../components/GlowLEDsComponents";
 
 const TeamsPage = props => {
-  const [ search, set_search ] = useState("");
-  const [ sort, setSortOrder ] = useState("");
-  const category = props.match.params.category
-    ? props.match.params.category
-    : "";
+  const [search, set_search] = useState("");
+  const [sort, setSortOrder] = useState("");
+  const category = props.match.params.category ? props.match.params.category : "";
   const teamList = useSelector(state => state.teamList);
   const { loading, teams, message, error } = teamList;
 
@@ -23,16 +21,13 @@ const TeamsPage = props => {
   const { success: successDelete } = teamDelete;
   const dispatch = useDispatch();
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        dispatch(listTeams({}));
-      }
-      return () => (clean = false);
-    },
-    [ successSave, successDelete, dispatch ]
-  );
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      dispatch(listTeams({}));
+    }
+    return () => (clean = false);
+  }, [successSave, successDelete, dispatch]);
   const submitHandler = e => {
     e.preventDefault();
     dispatch(listTeams({ category, search, sort }));
@@ -43,32 +38,22 @@ const TeamsPage = props => {
     dispatch(listTeams({ category, search, sort: e.target.value }));
   };
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        dispatch(listTeams({ category, search, sort }));
-      }
-      return () => (clean = false);
-    },
-    [ dispatch, category, search, sort ]
-  );
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      dispatch(listTeams({ category, search, sort }));
+    }
+    return () => (clean = false);
+  }, [dispatch, category, search, sort]);
   const deleteHandler = team => {
     dispatch(deleteTeam(team._id));
   };
 
-  const sort_options = [
-    "Newest",
-    "Artist Name",
-    "Facebook Name",
-    "Instagram Handle",
-    "Sponsor",
-    "Promoter",
-  ];
+  const sort_options = ["Newest", "Artist Name", "Facebook Name", "Instagram Handle", "Sponsor", "Promoter"];
 
   const colors = [
     { name: "Sponsor", color: "#3e4c6d" },
-    { name: "Promoter", color: "#7d5555" },
+    { name: "Promoter", color: "#7d5555" }
   ];
 
   const determine_color = team => {
@@ -100,7 +85,7 @@ const TeamsPage = props => {
                     backgroundColor: color.color,
                     height: "20px",
                     width: "60px",
-                    borderRadius: "5px",
+                    borderRadius: "5px"
                   }}
                 />
               </div>
@@ -116,16 +101,8 @@ const TeamsPage = props => {
       <div className="jc-c">
         <h1 style={{ textAlign: "center" }}>Teams</h1>
       </div>
-      <div
-        className="search_and_sort row jc-c ai-c"
-        style={{ overflowX: "scroll" }}
-      >
-        <Search
-          search={search}
-          set_search={set_search}
-          submitHandler={submitHandler}
-          category={category}
-        />
+      <div className="search_and_sort row jc-c ai-c" style={{ overflowX: "scroll" }}>
+        <Search search={search} set_search={set_search} submitHandler={submitHandler} category={category} />
         <Sort sortHandler={sortHandler} sort_options={sort_options} />
       </div>
       <Loading loading={loading} error={error}>
@@ -152,7 +129,7 @@ const TeamsPage = props => {
                     key={index}
                     style={{
                       backgroundColor: determine_color(team),
-                      fontSize: "16px",
+                      fontSize: "16px"
                     }}
                   >
                     <td className="p-10px">{team._id}</td>
@@ -163,25 +140,13 @@ const TeamsPage = props => {
                     <td className="p-10px">{team.venmo}</td>
                     <td className="p-10px">{team.promo_code}</td>
                     <td className="p-10px">
-                      {team.sponsor ? (
-                        <i className="fas fa-check-circle" />
-                      ) : (
-                        <i className="fas fa-times-circle" />
-                      )}
+                      {team.sponsor ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
                     </td>
                     <td className="p-10px">
-                      {team.promoter ? (
-                        <i className="fas fa-check-circle" />
-                      ) : (
-                        <i className="fas fa-times-circle" />
-                      )}
+                      {team.promoter ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
                     </td>
                     <td className="p-10px">
-                      {team.active ? (
-                        <i className="fas fa-check-circle" />
-                      ) : (
-                        <i className="fas fa-times-circle" />
-                      )}
+                      {team.active ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
                     </td>
                     <td className="p-10px">
                       <div className="jc-b">
@@ -190,11 +155,7 @@ const TeamsPage = props => {
                             <i className="fas fa-edit" />
                           </GLButton>
                         </Link>
-                        <GLButton
-                          variant="icon"
-                          onClick={() => deleteHandler(team)}
-                          aria-label="Delete"
-                        >
+                        <GLButton variant="icon" onClick={() => deleteHandler(team)} aria-label="Delete">
                           <i className="fas fa-trash-alt" />
                         </GLButton>
                       </div>

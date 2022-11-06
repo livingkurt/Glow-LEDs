@@ -1020,7 +1020,7 @@ const EditProductPage = props => {
                         </div>
                       </li>
                       <div className="w-100per ta-c fs-20px">
-                        <i class="fas fa-arrow-down" />
+                        <i className="fas fa-arrow-down" />
                       </div>
                       <li>
                         <div className="jc-b">

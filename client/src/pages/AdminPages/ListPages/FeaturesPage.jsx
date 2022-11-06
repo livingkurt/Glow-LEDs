@@ -9,11 +9,9 @@ import { Search, Sort } from "../../../components/SpecialtyComponents";
 import { GLButton } from "../../../components/GlowLEDsComponents";
 
 const FeaturesPage = props => {
-  const [ search, set_search ] = useState("");
-  const [ sort, setSortOrder ] = useState("");
-  const category = props.match.params.category
-    ? props.match.params.category
-    : "";
+  const [search, set_search] = useState("");
+  const [sort, setSortOrder] = useState("");
+  const category = props.match.params.category ? props.match.params.category : "";
   const featureList = useSelector(state => state.featureList);
   const { loading, features, message, error } = featureList;
 
@@ -24,16 +22,13 @@ const FeaturesPage = props => {
   const { success: successDelete } = featureDelete;
   const dispatch = useDispatch();
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        dispatch(listFeatures({}));
-      }
-      return () => (clean = false);
-    },
-    [ successSave, successDelete, dispatch ]
-  );
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      dispatch(listFeatures({}));
+    }
+    return () => (clean = false);
+  }, [successSave, successDelete, dispatch]);
   const submitHandler = e => {
     e.preventDefault();
     dispatch(listFeatures({ category, search, sort }));
@@ -44,35 +39,24 @@ const FeaturesPage = props => {
     dispatch(listFeatures({ category, search, sort: e.target.value }));
   };
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        dispatch(listFeatures({ category, search, sort }));
-      }
-      return () => (clean = false);
-    },
-    [ category, search, sort, dispatch ]
-  );
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      dispatch(listFeatures({ category, search, sort }));
+    }
+    return () => (clean = false);
+  }, [category, search, sort, dispatch]);
   const deleteHandler = feature => {
     dispatch(deleteFeature(feature._id));
   };
 
-  const sort_options = [
-    "Release Date",
-    "Glover Name",
-    "Facebook Name",
-    "Instagram Handle",
-    "Product",
-    "Song ID",
-    "Newest",
-  ];
+  const sort_options = ["Release Date", "Glover Name", "Facebook Name", "Instagram Handle", "Product", "Song ID", "Newest"];
   const colors = [
     { name: "Glovers", color: "#3e4c6d" },
     { name: "Producers", color: "#4b7188" },
     { name: "Artists", color: "#6f5f7d" },
     { name: "VFX", color: "#408184" },
-    { name: "Unreleased", color: "#636363" },
+    { name: "Unreleased", color: "#636363" }
     // { name: 'Refunded', color: '#a9a9a9' }
   ];
 
@@ -120,7 +104,7 @@ const FeaturesPage = props => {
                   backgroundColor: color.color,
                   height: "20px",
                   width: "60px",
-                  borderRadius: "5px",
+                  borderRadius: "5px"
                 }}
               />
             </div>
@@ -130,16 +114,8 @@ const FeaturesPage = props => {
       <div className="jc-c">
         <h1 style={{ textAlign: "center" }}>Features</h1>
       </div>
-      <div
-        className="search_and_sort row jc-c ai-c"
-        style={{ overflowX: "scroll" }}
-      >
-        <Search
-          search={search}
-          set_search={set_search}
-          submitHandler={submitHandler}
-          category={category}
-        />
+      <div className="search_and_sort row jc-c ai-c" style={{ overflowX: "scroll" }}>
+        <Search search={search} set_search={set_search} submitHandler={submitHandler} category={category} />
         <Sort sortHandler={sortHandler} sort_options={sort_options} />
       </div>
       <Loading loading={loading} error={error}>
@@ -162,12 +138,11 @@ const FeaturesPage = props => {
                     key={index}
                     style={{
                       backgroundColor: determine_color(feature),
-                      fontSize: "16px",
+                      fontSize: "16px"
                     }}
                   >
                     <td className="p-10px" style={{ minWidth: "15rem" }}>
-                      {feature.release_date &&
-                        format_date(feature.release_date)}
+                      {feature.release_date && format_date(feature.release_date)}
                     </td>
                     <td className="p-10px" style={{ minWidth: "15rem" }}>
                       {feature.category}
@@ -186,18 +161,12 @@ const FeaturesPage = props => {
                     </td>
                     <td className="p-10px">
                       <div className="jc-b">
-                        <Link
-                          to={"/secure/glow/editfeature/" + feature.pathname}
-                        >
+                        <Link to={"/secure/glow/editfeature/" + feature.pathname}>
                           <GLButton variant="icon" aria-label="Edit">
                             <i className="fas fa-edit" />
                           </GLButton>
                         </Link>
-                        <GLButton
-                          variant="icon"
-                          onClick={() => deleteHandler(feature)}
-                          aria-label="Delete"
-                        >
+                        <GLButton variant="icon" onClick={() => deleteHandler(feature)} aria-label="Delete">
                           <i className="fas fa-trash-alt" />
                         </GLButton>
                       </div>

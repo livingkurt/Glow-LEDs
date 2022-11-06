@@ -18,22 +18,10 @@ const ManualPage = props => {
         <meta property="og:title" content="Manual" />
         <meta name="twitter:title" content="Manual" />
         <link rel="canonical" href="https://www.glow-leds.com/pages/about" />
-        <meta
-          property="og:url"
-          content="https://www.glow-leds.com/pages/about"
-        />
-        <meta
-          name="description"
-          content="Learn how Glow LEDs got started and more in our Manual Page"
-        />
-        <meta
-          property="og:description"
-          content="Learn how Glow LEDs got started and more in our Manual Page"
-        />
-        <meta
-          name="twitter:description"
-          content="Learn how Glow LEDs got started and more in our Manual Page"
-        />
+        <meta property="og:url" content="https://www.glow-leds.com/pages/about" />
+        <meta name="description" content="Learn how Glow LEDs got started and more in our Manual Page" />
+        <meta property="og:description" content="Learn how Glow LEDs got started and more in our Manual Page" />
+        <meta name="twitter:description" content="Learn how Glow LEDs got started and more in our Manual Page" />
       </Helmet>
       <div className="jc-b">
         <div className="mb-10px">
@@ -41,16 +29,12 @@ const ManualPage = props => {
             <GLButton variant="secondary">Back to Manuals</GLButton>
           </Link>
         </div>
-        {(pathname === "glow_strings_v2_manual" ||
-          pathname === "glowstringz_v2" ||
-          pathname === "glow_strings_v2") && (
+        {(pathname === "glow_strings_v2_manual" || pathname === "glowstringz_v2" || pathname === "glow_strings_v2") && (
           <div className="mb-10px">
             <a
               href={
                 manuals[
-                  pathname === "glow_strings_v2_manual" ||
-                  pathname === "glowstringz_v2" ||
-                  pathname === "glow_strings_v2"
+                  pathname === "glow_strings_v2_manual" || pathname === "glowstringz_v2" || pathname === "glow_strings_v2"
                     ? "glowstringz"
                     : pathname
                 ].manual
@@ -63,15 +47,13 @@ const ManualPage = props => {
         )}
         <div className="mb-10px">
           <Link
-            to={`/collections/all/products/${pathname === "glow_strings_v2" ||
-            pathname === "glowstringz_v2" ||
-            pathname === "glow_strings_v2_manual"
-              ? "glowstringz_v2"
-              : pathname}`}
+            to={`/collections/all/products/${
+              pathname === "glow_strings_v2" || pathname === "glowstringz_v2" || pathname === "glow_strings_v2_manual"
+                ? "glowstringz_v2"
+                : pathname
+            }`}
           >
-            <GLButton variant="secondary">
-              View Available {toCapitalize(humanize(pathname))}
-            </GLButton>
+            <GLButton variant="secondary">View Available {toCapitalize(humanize(pathname))}</GLButton>
           </Link>
         </div>
       </div>
@@ -79,32 +61,24 @@ const ManualPage = props => {
         style={{
           textAlign: "center",
           width: "100%",
-          justifyContent: "center",
+          justifyContent: "center"
         }}
       >
         {
           manuals[
-            pathname === "glow_strings_v2_manual" ||
-            pathname === "glowstringz_v2" ||
-            pathname === "glow_strings_v2"
+            pathname === "glow_strings_v2_manual" || pathname === "glowstringz_v2" || pathname === "glow_strings_v2"
               ? "glowstringz"
               : pathname
           ].name
         }
       </h2>
       {manuals[
-        pathname === "glow_strings_v2_manual" ||
-        pathname === "glowstringz_v2" ||
-        pathname === "glow_strings_v2"
-          ? "glowstringz"
-          : pathname
+        pathname === "glow_strings_v2_manual" || pathname === "glowstringz_v2" || pathname === "glow_strings_v2" ? "glowstringz" : pathname
       ].manual && (
         <img
           src={
             manuals[
-              pathname === "glow_strings_v2_manual" ||
-              pathname === "glowstringz_v2" ||
-              pathname === "glow_strings_v2"
+              pathname === "glow_strings_v2_manual" || pathname === "glowstringz_v2" || pathname === "glow_strings_v2"
                 ? "glowstringz"
                 : pathname
             ].manual
@@ -114,17 +88,13 @@ const ManualPage = props => {
         />
       )}
       {manuals[
-        pathname === "glow_strings_v2_manual" ||
-        pathname === "glowstringz_v2" ||
-        pathname === "glow_strings_v2"
-          ? "glowstringz"
-          : pathname
+        pathname === "glow_strings_v2_manual" || pathname === "glowstringz_v2" || pathname === "glow_strings_v2" ? "glowstringz" : pathname
       ].manual && (
         <h2
           style={{
             textAlign: "center",
             width: "100%",
-            justifyContent: "center",
+            justifyContent: "center"
           }}
         >
           Watch the Videos below to Learn More
@@ -132,9 +102,7 @@ const ManualPage = props => {
       )}
       <div className="jc-c column m-0px">
         {manuals[
-          pathname === "glow_strings_v2_manual" ||
-          pathname === "glowstringz_v2" ||
-          pathname === "glow_strings_v2"
+          pathname === "glow_strings_v2_manual" || pathname === "glowstringz_v2" || pathname === "glow_strings_v2"
             ? "glowstringz"
             : pathname
         ].videos.map(video => (
@@ -143,7 +111,7 @@ const ManualPage = props => {
               style={{
                 textAlign: "center",
                 width: "100%",
-                justifyContent: "center",
+                justifyContent: "center"
               }}
             >
               {video.title}

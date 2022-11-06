@@ -6,12 +6,12 @@ import { Helmet } from "react-helmet";
 import { GLButton } from "../../components/GlowLEDsComponents";
 
 const PasswordResetPublicPage = props => {
-  const [ email, setEmail ] = useState("");
+  const [email, setEmail] = useState("");
   const userPasswordReset = useSelector(state => state.userPasswordReset);
   const { loading, userInfo, error } = userPasswordReset;
   const dispatch = useDispatch();
 
-  const [ words, setWords ] = useState("");
+  const [words, setWords] = useState("");
 
   const submitHandler = e => {
     e.preventDefault();
@@ -25,14 +25,8 @@ const PasswordResetPublicPage = props => {
         <title>Password Reset | Glow LEDs</title>
         <meta property="og:title" content="Password Reset" />
         <meta name="twitter:title" content="Password Reset" />
-        <link
-          rel="canonical"
-          href="https://www.glow-leds.com/account/passwordreset"
-        />
-        <meta
-          property="og:url"
-          content="https://www.glow-leds.com/account/passwordreset"
-        />
+        <link rel="canonical" href="https://www.glow-leds.com/account/passwordreset" />
+        <meta property="og:url" content="https://www.glow-leds.com/account/passwordreset" />
       </Helmet>
       <form onSubmit={submitHandler}>
         <ul className="form-container">
@@ -47,12 +41,7 @@ const PasswordResetPublicPage = props => {
           </li>
           <li>
             <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              name="email"
-              id="email"
-              onChange={e => setEmail(e.target.value)}
-            />
+            <input type="email" name="email" id="email" onChange={e => setEmail(e.target.value)} />
           </li>
 
           <li>

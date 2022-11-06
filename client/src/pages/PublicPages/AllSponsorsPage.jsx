@@ -1,10 +1,7 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import {
-  Sponsor,
-  SponsorSmallScreen,
-} from "../../components/SpecialtyComponents/index";
+import { Sponsor, SponsorSmallScreen } from "../../components/SpecialtyComponents/index";
 import { Loading } from "../../components/UtilityComponents";
 import { Helmet } from "react-helmet";
 import { listAffiliates } from "../../actions/affiliateActions";
@@ -15,16 +12,13 @@ const AllSponsorsPage = props => {
   const { affiliates, loading, error } = affiliateList;
   const dispatch = useDispatch();
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        dispatch(listAffiliates({ sponsor: true }));
-      }
-      return () => (clean = false);
-    },
-    [ dispatch ]
-  );
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      dispatch(listAffiliates({ sponsor: true }));
+    }
+    return () => (clean = false);
+  }, [dispatch]);
 
   return (
     <div>
@@ -32,23 +26,11 @@ const AllSponsorsPage = props => {
         <title>Sponsors| Glow LEDs</title>
         <meta property="og:title" content="Affiliated" />
         <meta name="twitter:title" content="Affiliated" />
-        <link
-          rel="canonical"
-          href="https://www.glow-leds.com/collections/affiliates"
-        />
-        <meta
-          property="og:url"
-          content="https://www.glow-leds.com/collections/affiliates"
-        />
+        <link rel="canonical" href="https://www.glow-leds.com/collections/affiliates" />
+        <meta property="og:url" content="https://www.glow-leds.com/collections/affiliates" />
         <meta name="description" content={"Glow LEDs Sponsored Glovers"} />
-        <meta
-          property="og:description"
-          content={"Glow LEDs Sponsored Glovers"}
-        />
-        <meta
-          name="twitter:description"
-          content={"Glow LEDs Sponsored Glovers"}
-        />
+        <meta property="og:description" content={"Glow LEDs Sponsored Glovers"} />
+        <meta name="twitter:description" content={"Glow LEDs Sponsored Glovers"} />
       </Helmet>
 
       <div className="jc-fe">
@@ -69,20 +51,10 @@ const AllSponsorsPage = props => {
           <div>
             <div className="product_big_screen">
               {affiliates && (
-                <ul
-                  className="products"
-                  style={{ marginTop: 0, textDecoration: "none" }}
-                >
+                <ul className="products" style={{ marginTop: 0, textDecoration: "none" }}>
                   {affiliates.map(
                     (affiliate, index) =>
-                      !affiliate.hidden && (
-                        <Sponsor
-                          size="300px"
-                          key={index}
-                          affiliate={affiliate}
-                          category={props.match.params.category}
-                        />
-                      )
+                      !affiliate.hidden && <Sponsor size="300px" key={index} affiliate={affiliate} category={props.match.params.category} />
                   )}
                 </ul>
               )}
@@ -90,30 +62,18 @@ const AllSponsorsPage = props => {
 
             <div className="product_small_screen none">
               {affiliates && (
-                <ul
-                  className="products"
-                  style={{ marginTop: 0, textDecoration: "none" }}
-                >
+                <ul className="products" style={{ marginTop: 0, textDecoration: "none" }}>
                   {affiliates.map(
                     (affiliate, index) =>
                       !affiliate.hidden && (
-                        <SponsorSmallScreen
-                          size="300px"
-                          key={index}
-                          affiliate={affiliate}
-                          category={props.match.params.category}
-                        />
+                        <SponsorSmallScreen size="300px" key={index} affiliate={affiliate} category={props.match.params.category} />
                       )
                   )}
                 </ul>
               )}
             </div>
           </div>
-          {affiliates.length === 0 && (
-            <h2 style={{ textAlign: "center" }}>
-              Sorry we can't find anything with that name
-            </h2>
-          )}
+          {affiliates.length === 0 && <h2 style={{ textAlign: "center" }}>Sorry we can't find anything with that name</h2>}
         </Loading>
       )}
     </div>

@@ -108,7 +108,7 @@ const ProductItemD = props => {
                       props.product_occurrences &&
                       props.product_occurrences[index] &&
                       props.product_occurrences[index].name === props.product.name && (
-                        <div className="pos-abs br-10px w-2rem h-2rem  ai-c ta-c jc-c top-0px left-5px">
+                        <div className="pos-abs br-10px w-2rem h-2rem  ai-c ta-c jc-c top-0px left-5px" key={props.product.name}>
                           <img
                             className=" mt-3px ml-2px h-100px w-100px"
                             alt={props.product.name}

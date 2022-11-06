@@ -360,11 +360,11 @@ const AllProductsPage = props => {
             {products &&
               products
                 .filter(product => !product.option)
-                .map((product, index) =>
+                .map(product =>
                   width >= 704 ? (
-                    <ProductItemD size="300px" key={index} product={product} product_occurrences={product_occurrences} />
+                    <ProductItemD size="300px" key={product.name} product={product} product_occurrences={product_occurrences} />
                   ) : (
-                    <ProductItemM size="300px" key={index} product={product} product_occurrences={product_occurrences} />
+                    <ProductItemM size="300px" key={product.name} product={product} product_occurrences={product_occurrences} />
                   )
                 )}
           </ul>
