@@ -72,8 +72,11 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
   };
 
   const delete_order = () => {
-    dispatch(deleteOrder(order._id));
-    dispatch(listOrders({ limit: 10, page: 1 }));
+    const confirm = window.confirm("Are you sure you want to DELETE this order?");
+    if (confirm) {
+      dispatch(deleteOrder(order._id));
+      dispatch(listOrders({ limit: 10, page: 1 }));
+    }
   };
 
   const view_label = async () => {
