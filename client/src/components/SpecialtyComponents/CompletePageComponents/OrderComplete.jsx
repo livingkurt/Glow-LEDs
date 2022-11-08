@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { GLButton } from "../../GlowLEDsComponents";
 import { Link } from "react-router-dom";
 import Survey from "../Survey";
@@ -7,9 +7,14 @@ import { Helmet } from "react-helmet";
 const OrderComplete = ({ userInfo, order_id }) => {
   const [show_modal, set_show_modal] = useState(false);
 
-  setTimeout(() => {
-    set_show_modal(true);
-  }, 2000);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      set_show_modal(true);
+    }, 2000);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, []);
   return (
     <div className="column jc-c">
       <Helmet>
