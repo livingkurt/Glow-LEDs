@@ -5,7 +5,7 @@ import { Email } from "./../../components/SpecialtyComponents/PlaceOrderPageComp
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
-import { createPayOrder, createOrder, createOrderGuest, createPayOrderGuest } from "../../actions/orderActions";
+import { createPayOrder, createOrder, createOrderGuest, createPayOrderGuest, removeOrderState } from "../../actions/orderActions";
 import { CartItem, CheckoutSteps, Stripe } from "../../components/SpecialtyComponents";
 import { Helmet } from "react-helmet";
 import { removeFromCart, saveShipping, savePayment } from "../../actions/cartActions";
@@ -453,10 +453,12 @@ const PlaceOrderPage = props => {
     sessionStorage.removeItem("shippingAddress");
   };
 
+  console.log({ success_order, order });
+
   useEffect(() => {
     let clean = true;
     if (clean) {
-      if (success_order && order) {
+      if (success_order && order && totalPrice === 0) {
         setTimeout(() => {
           props.history.push("/pages/complete/order/" + order._id);
           set_loading_payment(false);
@@ -464,6 +466,7 @@ const PlaceOrderPage = props => {
           promo_code_used();
           dimminish_stock();
           sessionStorage.removeItem("shippingAddress");
+          dispatch(removeOrderState());
         }, 2000);
       } else if (error_order) {
       }
@@ -487,6 +490,7 @@ const PlaceOrderPage = props => {
         promo_code_used();
         dimminish_stock();
         sessionStorage.removeItem("shippingAddress");
+        dispatch(removeOrderState());
       } else if (error_pay) {
       }
     }

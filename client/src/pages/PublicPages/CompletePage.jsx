@@ -7,6 +7,9 @@ import { Loading } from "../../components/UtilityComponents";
 import { API_Affiliates, API_Emails, API_Features, API_Orders } from "../../utils";
 import { GLButton } from "../../components/GlowLEDsComponents";
 import OrderComplete from "../../components/SpecialtyComponents/CompletePageComponents/OrderComplete";
+import FeatureComplete from "../../components/SpecialtyComponents/CompletePageComponents/FeatureComplete";
+import EmailComplete from "../../components/SpecialtyComponents/CompletePageComponents/EmailComplete";
+import AffiliateComplete from "../../components/SpecialtyComponents/CompletePageComponents/AffiliateComplete";
 
 const CompletePage = props => {
   const [data, set_data] = useState();
@@ -140,7 +143,10 @@ const CompletePage = props => {
             </div>
           )}
 
-          <OrderComplete userInfo={userInfo} order_id={props.match.params.id} />
+          {props.match.params.type === "order" && <OrderComplete userInfo={userInfo} order_id={props.match.params.id} />}
+          {props.match.params.type === "affiliate" && <AffiliateComplete userInfo={userInfo} />}
+          {props.match.params.type === "email" && <EmailComplete userInfo={userInfo} />}
+          {props.match.params.type === "feature" && <FeatureComplete userInfo={userInfo} />}
           {/* <div className="column jc-c">
             {data.h1 && <h1 className="ta-c">{data.h1}</h1>}
 

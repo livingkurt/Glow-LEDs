@@ -85,6 +85,11 @@ export const createPayOrder =
     }
   };
 
+export const removeOrderState =
+  () => async (dispatch: (arg0: { type: string; payload: any }) => void, getState: () => { userLogin: { userInfo: any } }) => {
+    dispatch({ type: ORDER_REMOVE_STATE, payload: {} });
+  };
+
 export const createPayOrderGuest =
   (
     order: {
@@ -222,10 +227,10 @@ export const createOrder =
       if (create_order_res.data) {
         dispatch({ type: ORDER_CREATE_SUCCESS, payload: create_order_res.data });
         sessionStorage.removeItem("shippingAddress");
-        dispatch({ type: ORDER_REMOVE_STATE, payload: {} });
       } else {
         dispatch({ type: ORDER_CREATE_FAIL, payload: create_order_res });
       }
+      dispatch({ type: ORDER_REMOVE_STATE, payload: {} });
     } catch (error) {
       dispatch({ type: ORDER_CREATE_FAIL, payload: error });
     }

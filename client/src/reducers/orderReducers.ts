@@ -49,8 +49,8 @@ export const orderCreateReducer = (state = {}, action: { type: any; payload: any
         error: action.payload,
         message: action.payload.message
       };
-    // case ORDER_REMOVE_STATE:
-    // 	return { loading: false, order: action.payload, success: false };
+    case ORDER_REMOVE_STATE:
+      return { loading: false, order: {}, success: false };
     default:
       return state;
   }
