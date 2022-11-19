@@ -30,7 +30,6 @@ export function Payment({
   loading_payment,
   set_loading_payment,
   users,
-  no_user,
   set_paid,
   paid,
   set_paymentMethod,
@@ -195,7 +194,7 @@ export function Payment({
             </li>
             {userInfo && userInfo.isAdmin && (
               <div className="mt-2rem">
-                {userInfo && userInfo.isAdmin && users && !no_user && (
+                {userInfo && userInfo.isAdmin && users && (
                   <div>
                     {loading_checkboxes ? (
                       <div>Loading...</div>
@@ -269,7 +268,7 @@ export function Payment({
                     </GLButton>
                   </div>
                 )}
-                {userInfo && userInfo.isAdmin && users && no_user && (
+                {userInfo && userInfo.isAdmin && users && (
                   <GLButton onClick={create_order_without_user} variant="secondary" className="w-100per mb-12px">
                     Create Order Without User
                   </GLButton>

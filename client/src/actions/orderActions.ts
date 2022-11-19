@@ -27,13 +27,9 @@ import {
   ORDER_SAVE_FAIL,
   ORDER_REFUND_REQUEST,
   ORDER_REFUND_SUCCESS,
-  ORDER_REFUND_FAIL,
-  ORDER_DETAILS_PUBLIC_REQUEST,
-  ORDER_DETAILS_PUBLIC_SUCCESS,
-  ORDER_DETAILS_PUBLIC_FAIL
+  ORDER_REFUND_FAIL
 } from "../constants/orderConstants";
 import { USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS, USER_SAVE_REQUEST, USER_SAVE_SUCCESS } from "../constants/userConstants";
-import { API_Emails } from "../utils";
 import { create_query } from "../utils/helper_functions";
 require("dotenv").config();
 

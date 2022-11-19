@@ -2,31 +2,24 @@ import { OrderSummary } from "./../../components/SpecialtyComponents/PlaceOrderP
 import { Payment } from "./../../components/SpecialtyComponents/PlaceOrderPageComponents/Payment";
 import { Shipping } from "./../../components/SpecialtyComponents/PlaceOrderPageComponents/Shipping";
 import { Email } from "./../../components/SpecialtyComponents/PlaceOrderPageComponents/Email";
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { createPayOrder, createOrder, createOrderGuest, createPayOrderGuest, removeOrderState } from "../../actions/orderActions";
-import { CartItem, CheckoutSteps, Stripe } from "../../components/SpecialtyComponents";
+import { CheckoutSteps } from "../../components/SpecialtyComponents";
 import { Helmet } from "react-helmet";
 import { removeFromCart, saveShipping, savePayment } from "../../actions/cartActions";
 import { listPromos } from "../../actions/promoActions";
 import { Loading, LoadingPayments, LoadingShipping } from "../../components/UtilityComponents";
-import { validate_login, validate_passwords, validate_promo_code, validate_shipping } from "../../utils/validations";
-import { Carousel } from "../../components/SpecialtyComponents";
-import { listUsers, login, logout, update } from "../../actions/userActions";
+import { validate_promo_code } from "../../utils/validations";
+import { listUsers } from "../../actions/userActions";
 import { API_External, API_Products, API_Promos, API_Shipping } from "../../utils";
-import { ShippingChoice, ShippingSpeed } from "../../components/SpecialtyComponents/ShippingComponents";
-import Autocomplete from "react-google-autocomplete";
-import { determine_total, prnt, state_names } from "../../utils/helper_functions";
+import { determine_total, state_names } from "../../utils/helper_functions";
 import { check_authentication } from "../../utils/react_helper_functions";
 import useWindowDimensions from "../../components/Hooks/windowDimensions";
-import { userWindowDimensions } from "../../components/Hooks";
 import { isMobile } from "react-device-detect";
-// import { Shipping } from '../../components/SpecialtyComponents/PlaceOrderPageComponents';
 
 const PlaceOrderPage = props => {
-  // const promo_code_ref = useRef(null);
-  // const order_note_ref = useRef(null);
   const userLogin = useSelector(state => state.userLogin);
   const { userInfo, loading: user_loading, success: user_success } = userLogin;
 
@@ -47,8 +40,6 @@ const PlaceOrderPage = props => {
 
   const [shipping_rates, set_shipping_rates] = useState({});
   const [current_shipping_speed, set_current_shipping_speed] = useState("");
-  const [handling_costs, set_handling_costs] = useState((5 / 60) * 20);
-  const [packaging_cost, set_packaging_cost] = useState(0);
   const [shipment_id, set_shipment_id] = useState("");
   const [shipping_rate, set_shipping_rate] = useState({});
   const [hide_pay_button, set_hide_pay_button] = useState(true);
@@ -59,7 +50,6 @@ const PlaceOrderPage = props => {
   const [show_email, set_show_email] = useState(true);
   const [show_shipping, set_show_shipping] = useState(false);
   const [show_payment, set_show_payment] = useState(false);
-  const [show_review, set_show_review] = useState(false);
 
   const [is_guest, set_is_guest] = useState(true);
 
@@ -71,7 +61,6 @@ const PlaceOrderPage = props => {
 
   const [email_validations, setEmailValidations] = useState("");
   const [password_validations, setPasswordValidations] = useState("");
-  const [loading_login, set_loading_login] = useState(false);
 
   const [shippingPrice, setShippingPrice] = useState(0);
   const [previousShippingPrice, setPreviousShippingPrice] = useState(0);
@@ -93,7 +82,6 @@ const PlaceOrderPage = props => {
   const [error, set_error] = useState();
   const [error_shipping, set_error_shipping] = useState();
 
-  const [no_user, set_no_user] = useState(false);
   const [paid, set_paid] = useState(false);
 
   const [loading_checkboxes, set_loading_checkboxes] = useState(true);
@@ -225,8 +213,8 @@ const PlaceOrderPage = props => {
   const [show_shipping_complete, set_show_shipping_complete] = useState();
 
   const choose_shipping_rate = (rate, speed) => {
-    setShippingPrice(parseFloat(rate.retail_rate || rate.rate) + packaging_cost);
-    setPreviousShippingPrice(parseFloat(rate.retail_rate || rate.rate) + packaging_cost);
+    setShippingPrice(parseFloat(rate.retail_rate || rate.rate));
+    setPreviousShippingPrice(parseFloat(rate.retail_rate || rate.rate));
     set_hide_pay_button(false);
     set_shipping_rate(rate);
     set_current_shipping_speed({ rate, speed });
@@ -345,7 +333,7 @@ const PlaceOrderPage = props => {
     }
   };
   const dimminish_stock = async () => {
-    const request = await API_Products.update_stock(cartItems);
+    await API_Products.update_stock(cartItems);
   };
 
   const promo_code_used = async () => {
@@ -654,7 +642,7 @@ const PlaceOrderPage = props => {
       set_show_email(true);
       set_show_shipping(false);
       set_show_payment(false);
-      set_show_review(false);
+
       set_shipping_completed(false);
       set_payment_completed(false);
       re_choose_shipping_rate();
@@ -663,7 +651,7 @@ const PlaceOrderPage = props => {
       set_show_shipping(true);
       set_show_email(false);
       set_show_payment(false);
-      set_show_review(false);
+
       // set_shipping_completed(false);
       set_payment_completed(false);
       re_choose_shipping_rate();
@@ -672,13 +660,12 @@ const PlaceOrderPage = props => {
       set_show_payment(true);
       set_show_shipping(false);
       set_show_email(false);
-      set_show_review(false);
+
       set_shipping_completed(false);
       set_payment_completed(false);
       re_choose_shipping_rate();
     }
     if (step === "review") {
-      set_show_review(true);
       set_show_payment(false);
       set_show_shipping(false);
       set_show_email(false);
@@ -690,7 +677,7 @@ const PlaceOrderPage = props => {
       set_show_email(true);
       set_show_shipping(false);
       set_show_payment(false);
-      set_show_review(false);
+
       set_shipping_completed(true);
     }
     if (step === "shipping") {
@@ -698,7 +685,7 @@ const PlaceOrderPage = props => {
         set_show_shipping(true);
         set_show_email(false);
         set_show_payment(false);
-        set_show_review(false);
+
         set_email_completed(true);
         set_shipping_completed(true);
         re_choose_shipping_rate();
@@ -712,14 +699,13 @@ const PlaceOrderPage = props => {
       set_show_payment(true);
       set_show_shipping(false);
       set_show_email(false);
-      set_show_review(false);
+
       set_shipping_completed(true);
       set_show_shipping_complete(false);
       // re_choose_shipping_rate();
       isMobile && window.scrollTo({ top: 560, behavior: "smooth" });
     }
     if (step === "review") {
-      set_show_review(true);
       set_show_payment(false);
       set_show_shipping(false);
       set_show_email(false);
@@ -746,10 +732,6 @@ const PlaceOrderPage = props => {
     }
     return () => (clean = false);
   }, [user_success]);
-
-  setTimeout(() => {
-    set_loading_login(false);
-  }, 3000);
 
   const decide_steps = () => {
     if (successPay) {
@@ -856,7 +838,6 @@ const PlaceOrderPage = props => {
               loading_payment={loading_payment}
               set_loading_payment={set_loading_payment}
               users={users}
-              no_user={no_user}
               set_paid={set_paid}
               paid={paid}
               set_paymentMethod={set_paymentMethod}

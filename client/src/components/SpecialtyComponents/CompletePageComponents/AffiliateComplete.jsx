@@ -1,7 +1,4 @@
-import React, { useState } from "react";
-import { GLButton } from "../../GlowLEDsComponents";
-import { Link } from "react-router-dom";
-import Survey from "../Survey";
+import React from "react";
 import { Helmet } from "react-helmet";
 
 const AffiliateComplete = ({ userInfo, order_id }) => {

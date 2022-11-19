@@ -686,6 +686,11 @@ const Header = props => {
                             1620 Batteries
                           </GLButton>
                         </Link>
+                        <Link to="/collections/all/products/2016_batteries">
+                          <GLButton variant="nav" className="w-100per ta-l">
+                            2016 Batteries
+                          </GLButton>
+                        </Link>
                         <Link to="/collections/all/products/category/batteries/subcategory/storage">
                           <GLButton variant="nav" className="w-100per ta-l">
                             Battery Storage

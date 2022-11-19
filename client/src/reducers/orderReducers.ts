@@ -26,10 +26,7 @@ import {
   ORDER_UPDATE_FAIL,
   ORDER_SAVE_REQUEST,
   ORDER_SAVE_SUCCESS,
-  ORDER_SAVE_FAIL,
-  ORDER_DETAILS_PUBLIC_REQUEST,
-  ORDER_DETAILS_PUBLIC_SUCCESS,
-  ORDER_DETAILS_PUBLIC_FAIL
+  ORDER_SAVE_FAIL
 } from "../constants/orderConstants";
 
 export const orderCreateReducer = (state = {}, action: { type: any; payload: any }) => {

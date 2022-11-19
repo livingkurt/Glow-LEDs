@@ -14,7 +14,7 @@ import {
   AFFILIATE_REMOVE_STATE
 } from "../constants/affiliateConstants";
 import axios from "axios";
-import { setCurrentUser, update } from "./userActions";
+import { setCurrentUser } from "./userActions";
 import { USER_UPDATE_SUCCESS } from "../constants/userConstants";
 import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";

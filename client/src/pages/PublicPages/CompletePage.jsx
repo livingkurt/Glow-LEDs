@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import { Survey } from "../../components/SpecialtyComponents";
-import { Loading } from "../../components/UtilityComponents";
 import { API_Affiliates, API_Emails, API_Features, API_Orders } from "../../utils";
 import { GLButton } from "../../components/GlowLEDsComponents";
 import OrderComplete from "../../components/SpecialtyComponents/CompletePageComponents/OrderComplete";
@@ -13,8 +11,6 @@ import AffiliateComplete from "../../components/SpecialtyComponents/CompletePage
 
 const CompletePage = props => {
   const [data, set_data] = useState();
-  const [type, set_type] = useState(props.match.params.type);
-  const [loading, set_loading] = useState(false);
 
   const userLogin = useSelector(state => state.userLogin);
   const { userInfo } = userLogin;
@@ -83,7 +79,6 @@ const CompletePage = props => {
   };
 
   const send_email = async () => {
-    set_loading(true);
     if (props.match.params.type === "order") {
       const { data: order } = await API_Orders.findById_orders_a(props.match.params.id);
       await API_Emails.send_order_email(order, "Thank you for your Glow LEDs Order", order.shipping.email);
@@ -105,7 +100,6 @@ const CompletePage = props => {
       await API_Emails.send_feature_email(feature, "Your Glow LEDs Feature", feature.user.email);
       await API_Emails.send_feature_email(feature, "New Feature Created by " + feature.artist_name, process.env.REACT_APP_INFO_EMAIL);
     }
-    set_loading(false);
   };
 
   // const [show_modal, set_show_modal] = useState(false);

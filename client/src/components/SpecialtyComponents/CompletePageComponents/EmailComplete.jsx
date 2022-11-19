@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { GLButton } from "../../GlowLEDsComponents";
 import { Link } from "react-router-dom";
-import Survey from "../Survey";
 
-const EmailComplete = ({ userInfo, order_id }) => {
+const EmailComplete = () => {
   return (
     <div className="column jc-c">
       <h2 className="ta-c">Thank You for Contacting Glow LEDs!</h2>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Helmet } from "react-helmet";
@@ -7,7 +7,6 @@ import { detailsAffiliate } from "../../actions/affiliateActions";
 import { listMyPaychecks } from "../../actions/paycheckActions";
 import { Loading } from "../../components/UtilityComponents";
 import { format_date } from "../../utils/helper_functions";
-import { check_authentication } from "../../utils/react_helper_functions";
 import { GLButton } from "../../components/GlowLEDsComponents";
 import { listPromos } from "../../actions/promoActions";
 
@@ -17,13 +16,13 @@ const ProfilePage = props => {
   //
 
   const affiliateDetails = useSelector(state => state.affiliateDetails);
-  const { affiliate, loading, error } = affiliateDetails;
+  const { affiliate } = affiliateDetails;
 
   const myPaycheckList = useSelector(state => state.myPaycheckList);
   const { loading: loading_paychecks, paychecks, error: error_paychecks } = myPaycheckList;
 
   const promoList = useSelector(state => state.promoList);
-  const { loading: loading_promoes, promos, error: error_promos } = promoList;
+  const { promos } = promoList;
 
   //
 

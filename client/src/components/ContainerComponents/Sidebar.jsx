@@ -506,6 +506,11 @@ const Sidebar = props => {
                   1620 Batteries
                 </GLButton>
               </Link>
+              <Link to="/collections/all/products/2016_batteries">
+                <GLButton className="sidebar-btn nested" onClick={closeMenu}>
+                  2016 Batteries
+                </GLButton>
+              </Link>
               <Link to="/collections/all/products/category/batteries/subcategory/storage">
                 <GLButton className="sidebar-btn nested" onClick={closeMenu}>
                   Battery Storage
