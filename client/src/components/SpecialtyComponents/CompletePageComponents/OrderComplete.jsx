@@ -34,24 +34,6 @@ const OrderComplete = ({ userInfo, order_id }) => {
         <p className="mv-10px ">Keep in mind, items may ship out at different times on the Glow LEDs product journey.</p>
         <p className="mv-10px ">For more information about how we create our products and shipping times, refer to our FAQs.</p>
       </div>
-      {/* <p className="ta-c max-w-800px lh-30px m-auto">All of our products are handmade and made to order! 💙</p>
-      <p className="ta-c max-w-800px lh-30px m-auto"> Processing time is usually 3-10 business days.</p>
-      <p className="ta-c max-w-800px lh-30px m-auto"> Standard shipping time is 1-5 business days after processing is complete. </p>
-      <p className="ta-c max-w-800px lh-30px m-auto"> Processing time is independent of the selected shipping speed. </p>
-      <p className="ta-c max-w-800px lh-30px m-auto" style={{ webkitTextStroke: "1px black !important" }}>
-        Add this processing time to your shipping speed to get the most accurate delivery date.
-      </p>
-      <p className="ta-c max-w-800px lh-30px m-auto">
-        {" "}
-        Many of our products are hand-made and made to order which means they are not made until your order is placed.{" "}
-      </p>
-      <p className="ta-c max-w-800px lh-30px m-auto">
-        {" "}
-        There may be many orders in front of you that need just as much love and care as yours.{" "}
-      </p>
-      <p className="ta-c max-w-800px lh-30px m-auto">
-        We are a small company, not an Amazon, and always appriciate your understanding and support as we continue to grow!
-      </p>{" "} */}
       <div className="max-w-800px w-100per m-auto column g-20px">
         {/* <p className="ta-c max-w-800px lh-30px m-auto">In the meantime, check out these pages for answers to frequently asked questions.</p> */}
         <Link to="/pages/faq#glowskinz">
