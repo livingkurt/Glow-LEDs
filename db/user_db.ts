@@ -44,22 +44,20 @@ export default {
   },
   findByEmail_users_db: async (email: string) => {
     try {
-      return await User.findOne({ email })
-        .populate({
-          path: "affiliate",
-          populate: [
-            {
-              path: "public_code"
-            },
-            {
-              path: "private_code"
-            }
-          ]
-        })
-        .populate("products");
-    } catch (error) {
-      throw new Error(error.message);
-    }
+      return await User.findOne({ email }).populate("affiliate");
+      // .populate({
+      //   path: "affiliate",
+      //   populate: [
+      //     {
+      //       path: "public_code"
+      //     },
+      //     {
+      //       path: "private_code"
+      //     }
+      //   ]
+      // })
+      // .populate("products");
+    } catch (error) {}
   },
   create_users_db: async (user: any) => {
     prnt({ create_users_db: user });
