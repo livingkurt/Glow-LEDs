@@ -1,6 +1,7 @@
 import isEmpty from "is-empty";
 // import Validator from 'validator';
 import axios, { AxiosResponse } from "axios";
+import { isAdmin } from "./helpers/user_helpers";
 
 interface errors {
   email: string;
@@ -22,7 +23,7 @@ export const validate_promo_code = (data: any) => {
     errors.promo_code = "Promo Code Field Empty";
   }
   if (data.userInfo) {
-    if (promo && promo.admin_only && data.userInfo.isAdmin === false) {
+    if (promo && promo.admin_only && isAdmin(data.userInfo) === false) {
       errors.promo_code = "Promo Code Not Active";
     } else if (promo && promo.affiliate_only && data.userInfo.is_affiliated === false) {
       errors.promo_code = "Promo Code Not Active";

@@ -11,6 +11,7 @@ import { OrderStatusButtons } from "./OrderPageComponents";
 import { API_Emails, API_Orders, API_Shipping } from "../../utils";
 import ReactTooltip from "react-tooltip";
 import { GLButton } from "../GlowLEDsComponents";
+import { isAdmin } from "../../utils/helpers/user_helpers";
 
 const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_email, listOrdersFilters }) => {
   const history = useHistory();
@@ -373,28 +374,6 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
             )}
           </div>
         )}
-        {/* <div className="jc-a w-100per mb-15px">
-          {userInfo &&
-          userInfo.isAdmin &&
-          order.order_note && (
-            <label
-              className="title_font fs-18px br-10px p-10px "
-              style={{ border: "1px solid white" }}
-            >
-              {order.order_note && "Check Order Note"}
-            </label>
-          )}
-          {userInfo &&
-          userInfo.isAdmin &&
-          order.production_note && (
-            <label
-              className="title_font fs-18px br-10px p-10px "
-              style={{ border: "1px solid white" }}
-            >
-              {order.production_note && "Check Production Note"}
-            </label>
-          )}
-        </div> */}
       </div>
 
       <div className="row">

@@ -89,7 +89,7 @@ export function Shipping({
   useEffect(() => {
     let clean = true;
     if (clean) {
-      if (userInfo.isAdmin) {
+      if (isAdmin(userInfo)) {
         get_all_shipping();
       }
     }
@@ -292,8 +292,7 @@ export function Shipping({
                     </div>
                   </li>
                 )}
-                {userInfo &&
-                  userInfo.isAdmin &&
+                {isAdmin(userInfo) &&
                   (loading_checkboxes ? (
                     <div>Loading...</div>
                   ) : (

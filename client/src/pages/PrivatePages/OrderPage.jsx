@@ -948,19 +948,6 @@ ${order.shipping.email}`)
                 </div>
               )}
 
-              {/* {userInfo &&
-							userInfo.isAdmin && (
-								<GLButton variant="secondary" className="w-100per mv-5px ">
-									<Link
-										to={{
-											pathname: '/secure/glow/emails/invoice/' + order._id,
-											previous_path: props.location.previous_path
-										}}
-									>
-										View Invoice
-									</Link>
-								</GLButton>
-							)} */}
               {isAdmin(userInfo) && (
                 <div>
                   <div className="jc-b">

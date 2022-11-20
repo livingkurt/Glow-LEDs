@@ -5,15 +5,13 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { determnine_link } from "../../utils/helper_functions";
 import { LazyImage } from "../UtilityComponents";
-import {
-  cart_item_name,
-  sale_price_switch,
-} from "../../utils/react_helper_functions";
+import { cart_item_name, sale_price_switch } from "../../utils/react_helper_functions";
 import { removeFromCart } from "../../actions/cartActions";
 import { GLButton } from "../GlowLEDsComponents";
+import { isAdmin } from "../../utils/helpers/user_helpers";
 
 const CartItem = ({ index, item, check_item_as_manufactured }) => {
-  const [ loading_checkboxes, set_loading_checkboxes ] = useState(true);
+  const [loading_checkboxes, set_loading_checkboxes] = useState(true);
   const removeFromCartHandler = product => {
     dispatch(removeFromCart(product));
   };
@@ -29,9 +27,7 @@ const CartItem = ({ index, item, check_item_as_manufactured }) => {
   return (
     <li key={index} className="">
       <div className="cart-image m-auto ai-c">
-        {check_item_as_manufactured &&
-        userInfo &&
-        userInfo.isAdmin && (
+        {check_item_as_manufactured && isAdmin(userInfo) && (
           <div>
             {loading_checkboxes ? (
               <div>Loading...</div>
@@ -42,7 +38,7 @@ const CartItem = ({ index, item, check_item_as_manufactured }) => {
                   name="is_manufactured"
                   defaultChecked={item.is_manufactured}
                   style={{
-                    transform: "scale(1.5)",
+                    transform: "scale(1.5)"
                   }}
                   className=""
                   id="is_manufactured"
@@ -66,30 +62,19 @@ const CartItem = ({ index, item, check_item_as_manufactured }) => {
               />
             )}
             {item.secondary_image && (
-              <div
-                className={` double-image-cart${item.name &&
-                item.name.split("-")[1] === "2 Tone"
-                  ? "-vertical"
-                  : " row"}`}
-              >
+              <div className={` double-image-cart${item.name && item.name.split("-")[1] === "2 Tone" ? "-vertical" : " row"}`}>
                 <LazyImage
                   id="expandedImg"
                   alt={item.name}
                   title={item.name}
-                  className={`details-image-cart-page-${item.name &&
-                  item.name.split("-")[1] === "2 Tone"
-                    ? "top"
-                    : "left"} m-0px`}
+                  className={`details-image-cart-page-${item.name && item.name.split("-")[1] === "2 Tone" ? "top" : "left"} m-0px`}
                   src={item.display_image}
                 />
                 <LazyImage
                   id="expandedSecondaryImg"
                   alt={item.name}
                   title={item.name}
-                  className={`details-image-cart-page-${item.name &&
-                  item.name.split("-")[1] === "2 Tone"
-                    ? "bottom"
-                    : "right"} `}
+                  className={`details-image-cart-page-${item.name && item.name.split("-")[1] === "2 Tone" ? "bottom" : "right"} `}
                   src={item.secondary_image}
                 />
               </div>
@@ -99,22 +84,12 @@ const CartItem = ({ index, item, check_item_as_manufactured }) => {
       </div>
       <div className="cart-name">
         <div className="jc-b ai-c mb-20px">
-          <Link
-            to={"/collections/all/products/" + item.pathname}
-            className="m-0px"
-          >
-            <label className="paragraph_font lh-0px mv-0px fs-18px">
-              {item.name}
-            </label>
+          <Link to={"/collections/all/products/" + item.pathname} className="m-0px">
+            <label className="paragraph_font lh-0px mv-0px fs-18px">{item.name}</label>
           </Link>
-          {userInfo &&
-          userInfo.isAdmin && (
+          {isAdmin(userInfo) && (
             <div className="ai-c">
-              <GLButton
-                variant="icon"
-                onClick={() => removeFromCartHandler(item)}
-                aria-label="Delete"
-              >
+              <GLButton variant="icon" onClick={() => removeFromCartHandler(item)} aria-label="Delete">
                 <i className="fas fa-trash-alt" />
               </GLButton>
             </div>
@@ -123,11 +98,7 @@ const CartItem = ({ index, item, check_item_as_manufactured }) => {
         {cart_item_name(item)}
 
         <div className="ai-c h-25px  w-100per jc-b mb-10px">
-          <label
-            aria-label="Sort"
-            htmlFor="sort"
-            className="select-label mr-1rem"
-          >
+          <label aria-label="Sort" htmlFor="sort" className="select-label mr-1rem">
             Qty:
           </label>
           <label>{item.qty}</label>

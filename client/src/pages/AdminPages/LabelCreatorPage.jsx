@@ -35,7 +35,7 @@ const LabelCreatorPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      if (userInfo.isAdmin) {
+      if (isAdmin(userInfo)) {
         get_all_shipping();
       }
       dispatch(listParcels({}));

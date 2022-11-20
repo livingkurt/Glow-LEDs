@@ -33,7 +33,7 @@ const OrderCombinerPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      if (userInfo.isAdmin) {
+      if (isAdmin(userInfo)) {
         get_orders();
       }
       dispatch(listParcels({}));

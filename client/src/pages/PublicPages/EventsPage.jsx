@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Loading } from "../../components/UtilityComponents";
 import { daysBetween, format_date } from "../../utils/helper_functions";
 import { GLButton } from "../../components/GlowLEDsComponents";
+import { isAdmin } from "../../utils/helpers/user_helpers";
 
 const EventsPage = props => {
   const [events, set_events] = useState([]);
@@ -113,8 +114,7 @@ const EventsPage = props => {
       <Loading loading={loading} />
       <div className="wrap jc-b">
         <div className="wrap jc-b">
-          {userInfo &&
-            userInfo.isAdmin &&
+          {isAdmin(userInfo) &&
             colors.map((color, index) => {
               return (
                 <div className="wrap jc-b w-16rem m-1rem" key={index}>

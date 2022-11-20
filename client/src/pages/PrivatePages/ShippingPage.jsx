@@ -10,6 +10,7 @@ import { update } from "../../actions/userActions";
 import { useAddressPredictions } from "../../components/Hooks";
 import Autocomplete from "react-google-autocomplete";
 import { GLButton } from "../../components/GlowLEDsComponents";
+import { isAdmin } from "../../utils/helpers/user_helpers";
 // import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 // import { googleAutocomplete } from '../../utils/helper_functions';
 
@@ -58,7 +59,7 @@ const ShippingPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      if (userInfo.isAdmin) {
+      if (isAdmin(userInfo)) {
         get_all_shipping();
       }
     }
