@@ -196,7 +196,7 @@ export default {
         first_name: user.first_name,
         last_name: user.last_name,
         email: user.email,
-        affiliate: user.affiliate,
+        // affiliate: user.affiliate,
         cart: user.cart,
         email_subscription: user.email_subscription,
         is_affiliated: user.is_affiliated,

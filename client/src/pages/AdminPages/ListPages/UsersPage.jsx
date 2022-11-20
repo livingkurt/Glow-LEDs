@@ -139,15 +139,15 @@ const UsersPage = props => {
             <table className="table">
               <thead>
                 <tr>
-                  <th>ID</th>
+                  {/* <th>ID</th> */}
                   <th>DATE</th>
                   <th>FIRST</th>
                   <th>LAST</th>
                   <th>EMAIL</th>
                   <th>Guest</th>
                   <th>Affiliated</th>
-                  <th>VERIFIED</th>
-                  <th>ADMIN</th>
+                  {/* <th>VERIFIED</th> */}
+                  {/* <th>ADMIN</th> */}
                   <th>ACTIONS</th>
                 </tr>
               </thead>
@@ -159,7 +159,7 @@ const UsersPage = props => {
                       backgroundColor: determine_color(user)
                     }}
                   >
-                    <td className="p-10px">{user._id}</td>
+                    {/* <td className="p-10px">{user._id}</td> */}
                     <td className="p-10px">{format_date(user.createdAt)}</td>
                     <td className="p-10px">{user.first_name}</td>
                     <td className="p-10px">{user.last_name}</td>
@@ -172,12 +172,12 @@ const UsersPage = props => {
                     <td className="p-10px">
                       {user.is_affiliated ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
                     </td>
-                    <td className="p-10px">
+                    {/* <td className="p-10px">
                       {user.isVerified ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
                     </td>
                     <td className="p-10px">
                       {user.isAdmin ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
-                    </td>
+                    </td> */}
                     <td className="p-10px">
                       <div className="jc-b">
                         <Link to={"/secure/glow/edituser/" + user._id}>
