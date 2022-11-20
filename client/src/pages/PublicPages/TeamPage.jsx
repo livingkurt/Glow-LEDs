@@ -6,6 +6,7 @@ import { detailsTeam } from "../../actions/teamActions";
 import { useHistory } from "react-router-dom";
 import { LazyImage } from "../../components/UtilityComponents";
 import { GLButton } from "../../components/GlowLEDsComponents";
+import { isAdmin } from "../../utils/helpers/user_helpers";
 
 const TeamPage = props => {
   const history = useHistory();

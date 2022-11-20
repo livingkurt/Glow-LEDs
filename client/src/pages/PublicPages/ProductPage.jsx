@@ -17,6 +17,7 @@ import {
   ProductSelection
 } from "../../components/SpecialtyComponents/ProductPageComponents";
 import { GLButton } from "../../components/GlowLEDsComponents";
+import { isAdmin } from "../../utils/helpers/user_helpers";
 
 const ProductPage = props => {
   const userLogin = useSelector(state => state.userLogin);

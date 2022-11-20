@@ -6,6 +6,7 @@ import { detailsFeature } from "../../actions/featureActions";
 import { humanize } from "../../utils/helper_functions";
 import { useHistory } from "react-router-dom";
 import { GLButton } from "../../components/GlowLEDsComponents";
+import { isAdmin } from "../../utils/helpers/user_helpers";
 
 const FeaturedPage = props => {
   const history = useHistory();

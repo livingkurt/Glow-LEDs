@@ -8,6 +8,7 @@ import OrderComplete from "../../components/SpecialtyComponents/CompletePageComp
 import FeatureComplete from "../../components/SpecialtyComponents/CompletePageComponents/FeatureComplete";
 import EmailComplete from "../../components/SpecialtyComponents/CompletePageComponents/EmailComplete";
 import AffiliateComplete from "../../components/SpecialtyComponents/CompletePageComponents/AffiliateComplete";
+import { isAdmin } from "../../utils/helpers/user_helpers";
 
 const CompletePage = props => {
   const [data, set_data] = useState();

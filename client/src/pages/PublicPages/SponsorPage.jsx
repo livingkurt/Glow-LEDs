@@ -8,6 +8,7 @@ import { LazyImage } from "../../components/UtilityComponents";
 import { ProductSimple, ProductSimpleSmallScreen } from "../../components/SpecialtyComponents";
 import { API_Users } from "../../utils";
 import { GLButton } from "../../components/GlowLEDsComponents";
+import { isAdmin } from "../../utils/helpers/user_helpers";
 
 const SponsorPage = props => {
   const [teams, set_teams] = useState([]);

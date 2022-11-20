@@ -6,6 +6,7 @@ import { decide_warning, determine_total } from "../../utils/helper_functions";
 import RelatedProductsSlideshow from "../../components/SpecialtyComponents/RelatedProductsSlideshow";
 import { GLButton } from "../../components/GlowLEDsComponents";
 import { API_Products } from "../../utils";
+import { isAdmin } from "../../utils/helpers/user_helpers";
 
 const CartPage = props => {
   const cart = useSelector(state => state.cart);
