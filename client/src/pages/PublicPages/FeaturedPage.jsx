@@ -55,7 +55,7 @@ const FeaturedPage = props => {
             <GLButton variant="secondary" onClick={() => history.goBack()}>
               Back to Features
             </GLButton>
-            {userInfo && userInfo.isAdmin && (
+            {isAdmin(userInfo) && (
               <Link to={"/secure/glow/editfeature/" + props.match.params.pathname}>
                 <GLButton variant="secondary" style={{ width: "156px" }}>
                   Edit Feature

@@ -55,7 +55,7 @@ const TeamPage = props => {
             {/* <Link to="/collections/all/teams">
 							<GLButton variant="secondary">Back to Teams</GLButton>
 						</Link> */}
-            {userInfo && userInfo.isAdmin && (
+            {isAdmin(userInfo) && (
               <Link to={"/secure/glow/editteam/" + props.match.params.pathname}>
                 <GLButton variant="secondary" style={{ width: "156px" }}>
                   Edit Team

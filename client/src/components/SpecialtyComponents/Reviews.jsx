@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { saveProductReview, detailsProduct } from "../../actions/productActions";
 import { PRODUCT_REVIEW_SAVE_RESET } from "../../constants/productConstants";
 import { GLButton } from "../GlowLEDsComponents";
+import { isAdmin } from "../../utils/helpers/user_helpers";
 // Components
 
 const Review = props => {
@@ -74,7 +75,7 @@ const Review = props => {
               <div>{format_date(review.createdAt.substring(0, 10))}</div>
               <div>{review.comment}</div>
             </div>
-            {userInfo && userInfo.isAdmin && (
+            {isAdmin(userInfo) && (
               <div className="ta-r">
                 <GLButton variant="icon" onClick={() => remove_review(review._id)} aria-label="Delete">
                   <i className="fas fa-trash-alt" />

@@ -15,6 +15,7 @@ import { hide_search_bar, show_search_bar } from "../../actions/settingActions";
 import { Filter } from "../SpecialtyComponents";
 import { listChips } from "../../actions/chipActions";
 import { GLButton } from "../GlowLEDsComponents";
+import { isAdmin } from "../../utils/helpers/user_helpers";
 
 const Header = props => {
   const history = useHistory();
@@ -940,7 +941,7 @@ const Header = props => {
                   </Link>
                 </div>
               )}
-              {userInfo && userInfo.isAdmin && (
+              {isAdmin(userInfo) && (
                 <div className="dropdown ">
                   <GLButton variant="nav" className="title_font">
                     Admin

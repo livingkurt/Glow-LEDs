@@ -258,7 +258,7 @@ const ShippingPage = props => {
                 </GLButton>
               </li>
             )}
-            {userInfo && userInfo.isAdmin && (
+            {isAdmin(userInfo) && (
               <li className="w-100per">
                 <div className="ai-c h-25px mv-10px mb-30px jc-c w-100per">
                   <div className="custom-select w-100per">

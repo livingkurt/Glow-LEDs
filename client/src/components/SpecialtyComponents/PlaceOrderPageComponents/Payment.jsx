@@ -59,7 +59,7 @@ export function Payment({
               <div htmlFor="order_note">Add a note</div>
               <input type="text" name="order_note" id="order_note" className="w-100per" onChange={e => set_order_note(e.target.value)} />
             </div>
-            {userInfo && userInfo.isAdmin && (
+            {isAdmin(userInfo) && (
               <div className="w-100per mt-10px">
                 <div htmlFor="production_note">Add a production note</div>
                 <input
@@ -192,9 +192,9 @@ export function Payment({
                 </>
               )}
             </li>
-            {userInfo && userInfo.isAdmin && (
+            {isAdmin(userInfo) && (
               <div className="mt-2rem">
-                {userInfo && userInfo.isAdmin && users && (
+                {isAdmin(userInfo) && users && (
                   <div>
                     {loading_checkboxes ? (
                       <div>Loading...</div>
@@ -268,7 +268,7 @@ export function Payment({
                     </GLButton>
                   </div>
                 )}
-                {userInfo && userInfo.isAdmin && users && (
+                {isAdmin(userInfo) && users && (
                   <GLButton onClick={create_order_without_user} variant="secondary" className="w-100per mb-12px">
                     Create Order Without User
                   </GLButton>

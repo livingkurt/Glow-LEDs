@@ -305,7 +305,7 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
                 {order.shipping.first_name} {order.shipping.last_name}
               </Link>
             </div>
-            {userInfo && userInfo.isAdmin && order.isPaused ? (
+            {isAdmin(userInfo) && order.isPaused ? (
               <p className="title_font ai-c fs-30px">{order.isPaused && "PAUSED"}</p>
             ) : (
               order.shipping.shipping_rate && (
@@ -357,7 +357,7 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
             </div>
           </div>
         </div>
-        {userInfo && userInfo.isAdmin && (
+        {isAdmin(userInfo) && (
           <div>
             {order.order_note && (
               <li className="row mv-2rem">
@@ -449,7 +449,7 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
                         <div className="mt-3px ml-2px">{item.qty}</div>
                       </div>
                     )}
-                    {userInfo && userInfo.isAdmin && (
+                    {isAdmin(userInfo) && (
                       <div>
                         {loading_checkboxes ? (
                           <div>Loading...</div>

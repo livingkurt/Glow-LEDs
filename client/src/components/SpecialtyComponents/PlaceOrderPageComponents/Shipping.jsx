@@ -15,6 +15,7 @@ import Autocomplete from "./Autocomplete";
 import { GLButton } from "../../GlowLEDsComponents";
 import GLModal from "../../GlowLEDsComponents/GLModal/GLModal";
 import GLCheckbox from "../../GlowLEDsComponents/GLCheckbox/GLCheckbox";
+import { isAdmin } from "../../../utils/helpers/user_helpers";
 
 export function Shipping({
   shipping_completed,
@@ -265,7 +266,7 @@ export function Shipping({
                     </GLButton>
                   </li>
                 )}
-                {userInfo && userInfo.isAdmin && (
+                {isAdmin(userInfo) && (
                   <li className="w-100per">
                     <div className="ai-c h-25px mv-10px mb-30px jc-c w-100per">
                       <div className="custom-select w-100per">

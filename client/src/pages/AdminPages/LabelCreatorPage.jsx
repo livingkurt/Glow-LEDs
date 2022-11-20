@@ -8,6 +8,7 @@ import { listParcels } from "../../actions/parcelActions";
 import { Loading } from "../../components/UtilityComponents";
 import Autocomplete from "react-google-autocomplete";
 import { GLButton } from "../../components/GlowLEDsComponents";
+import { isAdmin } from "../../utils/helpers/user_helpers";
 
 const LabelCreatorPage = props => {
   const userLogin = useSelector(state => state.userLogin);
@@ -331,7 +332,7 @@ const LabelCreatorPage = props => {
                     To Glow LEDs
                   </GLButton>
                 </li>
-                {userInfo && userInfo.isAdmin && (
+                {isAdmin(userInfo) && (
                   <li>
                     <div className="ai-c h-25px mv-10px mb-30px jc-c">
                       <div className="custom-select w-100per">
@@ -623,7 +624,7 @@ const LabelCreatorPage = props => {
                     From Destanye
                   </GLButton>
                 </li>
-                {userInfo && userInfo.isAdmin && (
+                {isAdmin(userInfo) && (
                   <li>
                     <div className="ai-c h-25px mv-10px mb-30px jc-c">
                       <div className="custom-select w-100per">
@@ -908,7 +909,7 @@ const LabelCreatorPage = props => {
             </div>
             <div className="w-35rem m-10px">
               <h3>Package Dimmensions</h3>
-              {userInfo && userInfo.isAdmin && (
+              {isAdmin(userInfo) && (
                 <li>
                   <div className="ai-c h-25px mv-10px mb-30px jc-c">
                     <div className="custom-select w-100per">

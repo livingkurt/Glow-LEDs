@@ -722,7 +722,7 @@ const ProductPage = props => {
               <GLButton variant="secondary">Back to Products</GLButton>
             </Link>
           </div>
-          {userInfo && userInfo.isAdmin && (
+          {isAdmin(userInfo) && (
             <div className=" pos-rel z-pos-1 br-10px">
               <GLButton variant="secondary" className=" w-300px" onClick={e => set_show_product_options(show => (show ? false : true))}>
                 Edit Product

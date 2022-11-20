@@ -10,6 +10,7 @@ import { listMyPaychecks } from "../../actions/paycheckActions";
 import { listPromos } from "../../actions/promoActions";
 import { format_date } from "../../utils/helper_functions";
 import { detailsAffiliate } from "../../actions/affiliateActions";
+import { isAdmin } from "../../utils/helpers/user_helpers";
 
 const UserProfilePage = props => {
   const history = useHistory();
@@ -205,7 +206,7 @@ const UserProfilePage = props => {
                     </GLButton>
                   </Link>
                 </div>
-                {userInfo && userInfo.isAdmin ? (
+                {isAdmin(userInfo) ? (
                   <div style={{ height: 50 }}>
                     <Link to={"/secure/glow/change_password/" + props.match.params.id}>
                       <GLButton style={{ marginRight: "10px", maxWidth: "210px" }} variant="primary">

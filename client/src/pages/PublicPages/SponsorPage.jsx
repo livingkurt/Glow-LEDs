@@ -66,7 +66,7 @@ const SponsorPage = props => {
             <GLButton variant="secondary" onClick={() => history.goBack()}>
               Back
             </GLButton>
-            {userInfo && userInfo.isAdmin && (
+            {isAdmin(userInfo) && (
               <Link to={"/secure/glow/editaffiliate/" + props.match.params.pathname}>
                 <GLButton variant="secondary" style={{ width: "156px" }}>
                   Edit Affiliate

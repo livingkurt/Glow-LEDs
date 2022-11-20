@@ -144,8 +144,7 @@ const EventsPage = props => {
             <li
               className={`container`}
               style={{
-                backgroundColor:
-                  userInfo && userInfo.isAdmin ? determine_color(event) : festivals_going.includes(event.title) ? "#4d5061" : "#6a6c80"
+                backgroundColor: isAdmin(userInfo) ? determine_color(event) : festivals_going.includes(event.title) ? "#4d5061" : "#6a6c80"
               }}
             >
               <div className="jc-b">
@@ -163,7 +162,7 @@ const EventsPage = props => {
                   </div>
                   <div className="mt-5px">{event.age}</div>
                 </div>
-                {userInfo && userInfo.isAdmin && (
+                {isAdmin(userInfo) && (
                   <div className="w-350px">
                     <div className="mt-5px p-5px br-10px" style={determine_font(event.date, 28)}>
                       Sale: {determine_action_dates(event.date, 28)}

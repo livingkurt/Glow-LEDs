@@ -115,7 +115,7 @@ const CompletePage = props => {
             <link rel="canonical" href={data.link} />
             <meta property="og:url" content={data.link} />
           </Helmet>
-          {userInfo && userInfo.isAdmin && (
+          {isAdmin(userInfo) && (
             <div className="jc-b mb-1rem">
               <Link to="/secure/glow/emails">
                 <GLButton variant="primary" className="mh-10px">

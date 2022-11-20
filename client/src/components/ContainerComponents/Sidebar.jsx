@@ -9,6 +9,7 @@ import { update_products_url } from "../../utils/helper_functions";
 import { Filter } from "../SpecialtyComponents";
 import { listChips } from "../../actions/chipActions";
 import { GLButton } from "../GlowLEDsComponents";
+import { isAdmin } from "../../utils/helpers/user_helpers";
 
 const Sidebar = props => {
   const history = useHistory();
@@ -772,7 +773,7 @@ const Sidebar = props => {
 						<i className="fas fa-sort-up" />
 					</GLButton> */}
         </div>
-        {userInfo && userInfo.isAdmin && (
+        {isAdmin(userInfo) && (
           <div className="sidebar_dropdown">
             {/* <GLButton  className="sidebar-btn primary">Admin</GLButton> */}
             <div className="sidebar-btn-container">
