@@ -26,9 +26,10 @@ export const validate_promo_code = (data: any) => {
       errors.promo_code = "Promo Code Not Active";
     } else if (promo && promo.affiliate_only && data.userInfo.is_affiliated === false) {
       errors.promo_code = "Promo Code Not Active";
-    } else if (promo && promo.sponsor_only && data.userInfo.affiliate.sponsor === false) {
-      errors.promo_code = "Promo Code Not Active";
     }
+    // else if (promo && promo.sponsor_only && data.userInfo.affiliate.sponsor === false) {
+    //   errors.promo_code = "Promo Code Not Active";
+    // }
   }
   if (!data.userInfo.hasOwnProperty("first_name")) {
     if (promo && promo.admin_only) {

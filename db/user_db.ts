@@ -44,7 +44,7 @@ export default {
   },
   findByEmail_users_db: async (email: string) => {
     try {
-      return await User.findOne({ email }).populate("affiliate");
+      return await User.findOne({ email });
       // .populate({
       //   path: "affiliate",
       //   populate: [

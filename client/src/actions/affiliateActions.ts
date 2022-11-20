@@ -103,16 +103,23 @@ export const saveAffiliate =
     }
   };
 
-export const detailsAffiliate = (pathname: string) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
-  try {
-    dispatch({ type: AFFILIATE_DETAILS_REQUEST, payload: pathname });
-    const { data } = await axios.get("/api/affiliates/" + pathname);
-
-    dispatch({ type: AFFILIATE_DETAILS_SUCCESS, payload: data });
-  } catch (error) {
-    dispatch({ type: AFFILIATE_DETAILS_FAIL, payload: error });
-  }
-};
+export const detailsAffiliate =
+  ({ pathname, id }: any) =>
+  async (dispatch: (arg0: { type: string; payload: any }) => void) => {
+    try {
+      if (id) {
+        dispatch({ type: AFFILIATE_DETAILS_REQUEST, payload: pathname });
+        const { data } = await axios.get(`/api/affiliates/id/${id}`);
+        dispatch({ type: AFFILIATE_DETAILS_SUCCESS, payload: data });
+      } else if (pathname) {
+        dispatch({ type: AFFILIATE_DETAILS_REQUEST, payload: pathname });
+        const { data } = await axios.get(`/api/affiliates/${pathname}/pathname`);
+        dispatch({ type: AFFILIATE_DETAILS_SUCCESS, payload: data });
+      }
+    } catch (error) {
+      dispatch({ type: AFFILIATE_DETAILS_FAIL, payload: error });
+    }
+  };
 
 export const deleteAffiliate =
   (pathname: string) =>

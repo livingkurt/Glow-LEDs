@@ -13,6 +13,18 @@ export default {
       res.status(500).send({ error, message: "Error Finding Affiliates" });
     }
   },
+  findByPathname_affiliates_c: async (req: any, res: any) => {
+    const { params } = req;
+    try {
+      const affiliate = await affiliate_services.findByPathname_affiliates_s(params);
+      if (affiliate) {
+        return res.status(200).send(affiliate);
+      }
+      return res.status(404).send({ message: "Affiliate Not Found" });
+    } catch (error) {
+      res.status(500).send({ error, message: "Error Finding Affiliate" });
+    }
+  },
   findById_affiliates_c: async (req: any, res: any) => {
     const { params } = req;
     try {

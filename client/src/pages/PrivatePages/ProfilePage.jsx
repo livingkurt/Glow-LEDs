@@ -36,7 +36,7 @@ const ProfilePage = props => {
     let clean = true;
     if (clean) {
       if (userInfo && userInfo.is_affiliated && userInfo.affiliate) {
-        dispatch(detailsAffiliate(userInfo.affiliate.pathname));
+        dispatch(detailsAffiliate({ id: userInfo.affiliate }));
         dispatch(listMyPaychecks(userInfo.affiliate._id));
         dispatch(listPromos({ affiliate: userInfo.affiliate._id }));
       }

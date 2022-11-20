@@ -9,6 +9,7 @@ import { GLButton } from "../../components/GlowLEDsComponents";
 import { listMyPaychecks } from "../../actions/paycheckActions";
 import { listPromos } from "../../actions/promoActions";
 import { format_date } from "../../utils/helper_functions";
+import { detailsAffiliate } from "../../actions/affiliateActions";
 
 const UserProfilePage = props => {
   const history = useHistory();
@@ -18,6 +19,9 @@ const UserProfilePage = props => {
 
   const userDetails = useSelector(state => state.userDetails);
   const { loading, user, message, error } = userDetails;
+
+  const affiliateDetails = useSelector(state => state.affiliateDetails);
+  const { affiliate } = affiliateDetails;
 
   const myPaycheckList = useSelector(state => state.myPaycheckList);
   const { loading: loading_paychecks, paychecks, error: error_paychecks } = myPaycheckList;
@@ -59,6 +63,7 @@ const UserProfilePage = props => {
         set_shipping(user.shipping);
         set_email_subscription(user.email_subscription);
         if (user && user.is_affiliated && user.affiliate) {
+          dispatch(detailsAffiliate({ id: user.affiliate._id }));
           dispatch(listMyPaychecks(user.affiliate._id));
           dispatch(listPromos({ affiliate: user.affiliate._id }));
         }
@@ -73,7 +78,7 @@ const UserProfilePage = props => {
   //   if (clean) {
   //     if (promo_message) {
   //       setTimeout(() => {
-  //         dispatch(listPromos({ affiliate: user.affiliate._id }));
+  //         dispatch(listPromos({ affiliate: user.affiliate }));
   //       }, 2000);
   //     }
   //   }
@@ -85,7 +90,7 @@ const UserProfilePage = props => {
   //   if (clean) {
   //     if (error_paychecks) {
   //       setTimeout(() => {
-  //         dispatch(listMyPaychecks(user.affiliate._id));
+  //         dispatch(listMyPaychecks(user.affiliate));
   //       }, 1000);
   //     }
   //   }
@@ -234,9 +239,9 @@ const UserProfilePage = props => {
                   </div>
                 )}
                 <div className="ml-10px">
-                  {userInfo.is_affiliated && userInfo.affiliate && userInfo.affiliate.pathname && (
+                  {userInfo.is_affiliated && affiliate && affiliate.pathname && (
                     <div>
-                      <Link to={"/secure/account/edit_affiliate/" + userInfo.affiliate.pathname}>
+                      <Link to={"/secure/account/edit_affiliate/" + affiliate.pathname}>
                         <GLButton variant="primary">Edit Affiliate Profile</GLButton>
                       </Link>
                     </div>
@@ -251,16 +256,16 @@ const UserProfilePage = props => {
                 </div>
               </div>
               <div className="group_item">
-                {user.is_affiliated && user.affiliate && user.affiliate.public_code && promos && (
+                {user.is_affiliated && user.affiliate && affiliate && affiliate.public_code && promos && (
                   <div className="mb-20px max-w-700px w-500px">
                     <h2 className="group_images">Affiliate Metrics</h2>
                     <div className="mb-20px">
                       <h3>Public Code</h3>
-                      <label>{user.affiliate.public_code.promo_code.toUpperCase()}</label>
+                      <label>{affiliate && affiliate.public_code.promo_code.toUpperCase()}</label>
                     </div>
                     <div className="mb-20px">
                       <h3>Private Code</h3>
-                      <label>{user.affiliate.private_code.promo_code.toUpperCase()}</label>
+                      <label>{affiliate && affiliate.private_code.promo_code.toUpperCase()}</label>
                     </div>
                     <div className="mb-20px">
                       <h3>Monthly Sponsor Code ($25 off)</h3>
@@ -273,7 +278,7 @@ const UserProfilePage = props => {
                     <div className="mb-20px">
                       <h3>Code Usage</h3>
                       <label>
-                        {user.affiliate.public_code.promo_code.toUpperCase()} used {number_of_uses} times
+                        {affiliate && affiliate.public_code.promo_code.toUpperCase()} used {number_of_uses} times
                       </label>
                     </div>
                     <div className="mb-20px">
@@ -282,10 +287,10 @@ const UserProfilePage = props => {
                     </div>
                     <div className="mb-20px">
                       <h3>Total Earrned</h3>
-                      <label>${parseFloat(user.affiliate.promoter ? 0.1 * revenue : 0.15 * revenue).toFixed(2)}</label>
+                      <label>${parseFloat(affiliate && affiliate.promoter ? 0.1 * revenue : 0.15 * revenue).toFixed(2)}</label>
                     </div>
                     <div className="mt-1rem">
-                      {user.affiliate.promoter && (
+                      {affiliate && affiliate.promoter && (
                         <div>
                           <a
                             href={"https://docs.google.com/document/d/1j3Bcv2__QGiTlVf--R-BNVpvGRN_RzWvuvMFCPodqS4/edit?usp=sharing"}
@@ -303,7 +308,7 @@ const UserProfilePage = props => {
                           </a>
                         </div>
                       )}
-                      {user.affiliate.sponsor && (
+                      {affiliate && affiliate.sponsor && (
                         <div>
                           <a
                             href={"https://docs.google.com/document/d/1t1HwnnPbsgE5THHLWS_-5gYyXwIRcSv8yunXK2oRxOE/edit?usp=sharing"}
@@ -321,7 +326,7 @@ const UserProfilePage = props => {
                           </a>
                         </div>
                       )}
-                      {user.affiliate.team && (
+                      {affiliate.team && (
                         <div>
                           <a
                             href={"https://docs.google.com/document/d/1WRCW4psn0U2iRHDk9ZVJuaOYU8vj9nRbj8O2SdfUo90/edit?usp=sharing"}
@@ -356,7 +361,7 @@ const UserProfilePage = props => {
           </div>
         )}
       </Loading>
-      {user && user.is_affiliated && user.affiliate && (user.affiliate.promoter || user.affiliate.sponsor) && (
+      {user && user.is_affiliated && user.affiliate && affiliate && (affiliate.promoter || affiliate.sponsor) && (
         <div>
           <div className="jc-c">
             <h1 style={{ textAlign: "center" }}>Paychecks</h1>

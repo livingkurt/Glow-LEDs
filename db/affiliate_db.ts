@@ -16,9 +16,21 @@ export default {
       throw new Error(error.message);
     }
   },
-  findById_affiliates_db: async (pathname: string) => {
+  findByPathname_affiliates_db: async (pathname: string) => {
     try {
       return await Affiliate.findOne({ pathname: pathname })
+        .populate("user")
+        .populate("chips")
+        .populate("products")
+        .populate("public_code")
+        .populate("private_code");
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  },
+  findById_affiliates_db: async (id: string) => {
+    try {
+      return await Affiliate.findOne({ _id: id })
         .populate("user")
         .populate("chips")
         .populate("products")

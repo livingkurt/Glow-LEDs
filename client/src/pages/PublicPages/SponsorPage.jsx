@@ -22,7 +22,7 @@ const SponsorPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(detailsAffiliate(props.match.params.promo_code));
+      dispatch(detailsAffiliate({ pathname: props.match.params.promo_code }));
     }
     return () => (clean = false);
   }, []);

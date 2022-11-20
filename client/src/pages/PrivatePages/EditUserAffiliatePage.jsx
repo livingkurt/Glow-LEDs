@@ -127,8 +127,8 @@ const EditUserAffiliatePage = props => {
     let clean = true;
     if (clean) {
       if (props.match.params.id) {
-        dispatch(detailsAffiliate(props.match.params.id));
-        dispatch(detailsAffiliate(props.match.params.id));
+        dispatch(detailsAffiliate({ pathname: props.match.params.id }));
+        dispatch(detailsAffiliate({ pathname: props.match.params.id }));
       } else {
         dispatch(detailsAffiliate(""));
       }

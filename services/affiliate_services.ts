@@ -41,9 +41,16 @@ export default {
       throw new Error(error.message);
     }
   },
+  findByPathname_affiliates_s: async (params: any) => {
+    try {
+      return await affiliate_db.findByPathname_affiliates_db(params.pathname);
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  },
   findById_affiliates_s: async (params: any) => {
     try {
-      return await affiliate_db.findById_affiliates_db(params.pathname);
+      return await affiliate_db.findById_affiliates_db(params.id);
     } catch (error) {
       throw new Error(error.message);
     }

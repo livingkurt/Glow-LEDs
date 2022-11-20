@@ -132,12 +132,10 @@ const EditAffiliatePage = props => {
     let clean = true;
     if (clean) {
       if (props.match.params.pathname) {
-        //
-        //
-        dispatch(detailsAffiliate(props.match.params.pathname));
-        dispatch(detailsAffiliate(props.match.params.pathname));
+        dispatch(detailsAffiliate({ pathname: props.match.params.pathname }));
+        dispatch(detailsAffiliate({ pathname: props.match.params.pathname }));
       } else {
-        dispatch(detailsAffiliate(""));
+        dispatch(detailsAffiliate({}));
       }
       dispatch(listUsers({}));
       dispatch(listProducts({ option: false, hidden: false }));

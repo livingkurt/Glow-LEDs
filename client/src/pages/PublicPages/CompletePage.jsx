@@ -88,7 +88,7 @@ const CompletePage = props => {
         await API_Emails.send_custom_contact_email(order, order.shipping.email);
       }
     } else if (props.match.params.type === "affiliate") {
-      const { data: affiliate } = await API_Affiliates.findById_affiliates_a(props.match.params.id);
+      const { data: affiliate } = await API_Affiliates.findByPathname_affiliates_a(props.match.params.id);
       await API_Emails.send_affiliate_email(affiliate, "Welcome to the Team!", affiliate.user.email);
       await API_Emails.send_affiliate_email(
         affiliate,
