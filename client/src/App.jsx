@@ -57,7 +57,6 @@ import {
   SubmitFeaturePage,
   SubmissionComplete,
   EditUserAffiliatePage,
-  AffiliateCreationComplete,
   ChipsPage,
   AllSponsorsPage,
   SponsorPage,
@@ -308,8 +307,10 @@ const App = props => {
           <ScrollToTop>
             <Switch>
               {/* Private Routes */}
-              <PrivateRoute path="/secure/account/profile" component={ProfilePage} />
-              <PrivateRoute path="/secure/account/editprofile" component={EditProfilePage} />
+              <PrivateRoute path="/secure/account/profile/:id" component={UserProfilePage} />
+              <PrivateRoute path="/secure/account/editprofile/:id" component={EditUserPage} />
+              {/* <PrivateRoute path="/secure/account/profile" component={ProfilePage} />
+              <PrivateRoute path="/secure/account/editprofile" component={EditProfilePage} /> */}
               {/* <PrivateRoute path="/account/submit_feature" component={SubmitFeaturePage} /> */}
               <PrivateRoute path="/secure/account/orders" component={MyOrdersPage} />
               <PrivateRoute path="/secure/checkout/shipping" component={ShippingPage} />
@@ -325,7 +326,7 @@ const App = props => {
 									/>
 								)}
 							/> */}
-              <PrivateRoute path="/secure/account/affiliate_sign_up_complete" component={AffiliateCreationComplete} />
+
               <PrivateRoute path="/secure/account/edit_affiliate/:id?" component={EditUserAffiliatePage} />
               <PrivateRoute path="/secure/account/submission_complete" component={SubmissionComplete} />
               {/* Admin Routes */}
@@ -347,8 +348,8 @@ const App = props => {
               <AdminRoute path="/secure/glow/parcels" component={ParcelsPage} />
               <AdminRoute path="/secure/glow/palettes" component={PalettesPage} />
               <AdminRoute path="/secure/glow/filaments" component={FilamentsPage} />
-              <AdminRoute path="/secure/glow/userprofile/:id" component={UserProfilePage} />
               <AdminRoute path="/secure/glow/userorders/:id" component={MyOrdersPage} />
+              <AdminRoute path="/secure/glow/userprofile/:id" component={UserProfilePage} />
               <AdminRoute path="/secure/glow/edituser/:id?" component={EditUserPage} />
               <AdminRoute path="/secure/glow/editorder/:id?" component={EditOrderPage} />
               <AdminRoute path="/secure/glow/editpaycheck/:id?" component={EditPaycheckPage} />

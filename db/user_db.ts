@@ -5,21 +5,58 @@ require("dotenv");
 export default {
   findAll_users_db: async (filter: any, sort: any) => {
     try {
-      return await User.find(filter).sort(sort).populate("affiliate");
+      return await User.find(filter)
+        .sort(sort)
+        .populate({
+          path: "affiliate",
+          populate: [
+            {
+              path: "public_code"
+            },
+            {
+              path: "private_code"
+            }
+          ]
+        })
+        .populate("products");
     } catch (error) {
       throw new Error(error.message);
     }
   },
   findById_users_db: async (id: string) => {
     try {
-      return await User.findOne({ _id: id }).populate("affiliate");
+      return await User.findOne({ _id: id })
+        .populate({
+          path: "affiliate",
+          populate: [
+            {
+              path: "public_code"
+            },
+            {
+              path: "private_code"
+            }
+          ]
+        })
+        .populate("products");
     } catch (error) {
       throw new Error(error.message);
     }
   },
   findByEmail_users_db: async (email: string) => {
     try {
-      return await User.findOne({ email }).populate("affiliate");
+      return await User.findOne({ email })
+        .populate({
+          path: "affiliate",
+          populate: [
+            {
+              path: "public_code"
+            },
+            {
+              path: "private_code"
+            }
+          ]
+        })
+        .populate("products");
     } catch (error) {
       throw new Error(error.message);
     }

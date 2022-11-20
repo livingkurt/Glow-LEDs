@@ -112,7 +112,8 @@ const EditUserPage = props => {
     );
     e.target.reset();
     unset_state();
-    history.push("/secure/glow/users");
+    // history.push("/secure/glow/users");
+    history.goBack();
   };
 
   return (
@@ -447,7 +448,7 @@ const EditUserPage = props => {
                   </li>
                   <li>
                     <GLButton variant="secondary" onClick={() => history.goBack()}>
-                      Back to Users
+                      Back
                     </GLButton>
                   </li>
                 </ul>

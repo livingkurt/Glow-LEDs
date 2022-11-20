@@ -47,7 +47,7 @@ const Pagination = props => {
         paginationRange.map(pageNumber => {
           if (pageNumber === DOTS) {
             return (
-              <li className="pagination-item dots">
+              <li className="pagination-item dots" key={pageNumber}>
                 {" "}
                 <div className="fs-35px">...</div>
               </li>

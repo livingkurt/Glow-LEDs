@@ -81,6 +81,7 @@ const ProfilePage = props => {
     }
     return result;
   };
+  console.log({ userInfo });
 
   return (
     <div className="p-20px inner_content">
