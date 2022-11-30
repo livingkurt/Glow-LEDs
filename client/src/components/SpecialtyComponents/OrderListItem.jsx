@@ -391,6 +391,7 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
                             alt={item.name}
                             title="Product Image"
                             effect="blur"
+                            border={item.color_code}
                             src={item.display_image && item.display_image}
                           />
                         )}
@@ -400,6 +401,7 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
                               id="expandedImg"
                               alt={item.name}
                               title={item.name}
+                              border={item.color_code}
                               className={`details-image-cart-${item.name && item.name.split("-")[1] === "2 Tone" ? "top" : "left"} m-0px`}
                               src={item.display_image}
                             />
@@ -407,6 +409,7 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
                               id="expandedSecondaryImg"
                               alt={item.name}
                               title={item.name}
+                              border={item.color_code}
                               className={`details-image-cart-${
                                 item.name && item.name.split("-")[1] === "2 Tone" ? "bottom" : "right"
                               } mr-15px`}
