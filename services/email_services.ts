@@ -79,7 +79,8 @@ export default {
       "lavacquek@gmail.com",
       "livingkurt222@gmail.com",
       "destanyesalinas@gmail.com",
-      "zestanye@gmail.com"
+      "zestanye@gmail.com",
+      "codychau122@gmail.com"
     ];
     const emails: any = body.test ? test : all_emails;
 

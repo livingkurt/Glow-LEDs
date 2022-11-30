@@ -159,11 +159,9 @@ const HomePage = props => {
         />
       </Helmet>
       <Loading loading={slideshow.length === 0} />
-      {/* <div className="carousel-wrapper pos-rel w-100per"> */}
-      {/* <div className="skeleton-img-container "> */}
-
-      {/* </div> */}
-      {/* </div> */}
+      {/* {contents &&
+          contents
+            .filter(content => content.active === true)} */}
       <div>
         {width > 1019 && (
           <div>

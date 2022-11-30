@@ -31,7 +31,6 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
 
   const show_hide = id => {
     const row = document.getElementById(id);
-    //
     row.classList.toggle("hide-row");
   };
   const daysBetween = (date1, date2) => {

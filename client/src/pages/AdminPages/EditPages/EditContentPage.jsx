@@ -236,6 +236,7 @@ const EditContentPage = props => {
     newArr.splice(to, 0, item);
     set_state(newArr);
   };
+  console.log({ content });
 
   return (
     <div className="main_container p-20px">
@@ -414,13 +415,21 @@ const EditContentPage = props => {
                           />
                         </li>
                       )}
-                      {/* <ImageDisplay
-												images={slideshow}
-												set_images={set_slideshow}
-												image={slideshow}
-												set_image={set_slideshow}
-												name={'Slideshow Images'}
-											/> */}
+                      <li>
+                        <label htmlFor="image">Banner Image</label>
+                        <input
+                          type="text"
+                          name="image"
+                          value={content.home_page.banner_image}
+                          id="image"
+                          onChange={e => {
+                            set_home_page({
+                              ...home_page,
+                              banner_image: e.target.value
+                            });
+                          }}
+                        />
+                      </li>
                       <ImageDisplay images={images} set_images={set_images} image={image} set_image={set_image} name={"Images"} />
                       {/* <div className="w-228px m-10px"> */}
                       <h2>Images</h2>
@@ -487,7 +496,7 @@ const EditContentPage = props => {
                                 <input
                                   type="text"
                                   name="image"
-                                  value={slideshow.image}
+                                  value={items.image}
                                   id="image"
                                   onChange={e => update_slideshow_item_property(e, e.target.name, index)}
                                 />
