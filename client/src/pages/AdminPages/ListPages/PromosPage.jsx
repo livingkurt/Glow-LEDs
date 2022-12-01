@@ -195,6 +195,7 @@ const PromosPage = props => {
                   {/* <th>User</th> */}
                   {/* <th>affiliate</th> */}
                   <th>Promo Code</th>
+                  <th>Affiliate</th>
 
                   <th>Percentage Off</th>
                   <th>Amount Off</th>
@@ -231,9 +232,11 @@ const PromosPage = props => {
                     {/* <td className="p-10px">{promo.user}</td> */}
                     {/* <td className="p-10px">{promo.affiliate}</td> */}
                     <td className="p-10px">{promo.promo_code}</td>
+                    <td className="p-10px">{promo?.affiliate?.artist_name}</td>
 
                     <td className="p-10px">{promo.percentage_off && promo.percentage_off + "%"}</td>
                     <td className="p-10px">{promo.amount_off && "$" + promo.amount_off}</td>
+
                     <td className="p-10px">
                       {promo.free_shipping ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
                     </td>

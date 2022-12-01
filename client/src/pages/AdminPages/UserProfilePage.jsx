@@ -29,6 +29,7 @@ const UserProfilePage = props => {
 
   const promoList = useSelector(state => state.promoList);
   const { promos, error: promo_errors, message: promo_message } = promoList;
+  console.log({ promos });
 
   const [first_name, set_first_name] = useState("");
   const [last_name, set_last_name] = useState("");
@@ -66,7 +67,7 @@ const UserProfilePage = props => {
         if (user && user.is_affiliated && user.affiliate) {
           dispatch(detailsAffiliate({ id: user.affiliate._id }));
           dispatch(listMyPaychecks(user.affiliate._id));
-          dispatch(listPromos({ affiliate: user.affiliate._id }));
+          dispatch(listPromos({ affiliate: user.affiliate._id, active: true }));
         }
       }
     }

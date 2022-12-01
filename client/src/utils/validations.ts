@@ -88,13 +88,14 @@ export const validate_promo_code = (data: any) => {
     //
     errors.promo_code = "Promo Code Not Active";
   }
-  if (!promo_codes.includes(data.promo_code.toLowerCase())) {
-    errors.promo_code = "Promo Code Not Valid";
-  }
+  console.log({ promo_code: data.promo_code.toLowerCase(), promo_codes });
+  // if (!promo_codes.includes(data.promo_code.toLowerCase())) {
+  //   errors.promo_code = "Promo Code Not Valid";
+  // }
   const today = new Date();
 
   if (promo && promo.time_limit) {
-    if (today > new Date(promo.end_date) || today < new Date(promo.start_date)) {
+    if (today >= new Date(promo.end_date) || today <= new Date(promo.start_date)) {
       //
       errors.promo_code = "Promo Code Not Active 7";
     }

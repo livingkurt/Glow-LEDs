@@ -95,7 +95,7 @@ export default {
             percentage_off: 0,
             amount_off: 25,
             free_shipping: true,
-
+            affiliate: affiliate._id,
             time_limit: true,
             start_date: start_date,
             end_date: end_date,

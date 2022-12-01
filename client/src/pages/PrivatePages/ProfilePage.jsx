@@ -23,6 +23,7 @@ const ProfilePage = props => {
 
   const promoList = useSelector(state => state.promoList);
   const { promos } = promoList;
+  console.log({ promos });
 
   //
 

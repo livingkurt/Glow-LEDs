@@ -441,8 +441,6 @@ const PlaceOrderPage = props => {
     sessionStorage.removeItem("shippingAddress");
   };
 
-  console.log({ success_order, order });
-
   useEffect(() => {
     let clean = true;
     if (clean) {
@@ -544,35 +542,35 @@ const PlaceOrderPage = props => {
     let promo_included = 0;
     // setPreviousShippingPrice(shippingPrice);
     if (promo) {
-      if (promo.exclude) {
-        const category_cart_items = cartItems
-          .filter(item => promo.excluded_categories.includes(item.category))
-          .reduce((a, item) => a + item.price, 0);
-        const product_cart_items = cartItems
-          .filter(item => promo.excluded_products.includes(item._id))
-          .reduce((a, item) => a + item.price, 0);
-        promo_excluded = category_cart_items + product_cart_items;
-      }
-      if (promo.include) {
-        const category_cart_items = cartItems.filter(item => promo.included_categories.includes(item.category));
+      // if (promo.exclude) {
+      //   const category_cart_items = cartItems
+      //     .filter(item => promo.excluded_categories.includes(item.category))
+      //     .reduce((a, item) => a + item.price, 0);
+      //   const product_cart_items = cartItems
+      //     .filter(item => promo.excluded_products.includes(item._id))
+      //     .reduce((a, item) => a + item.price, 0);
+      //   promo_excluded = category_cart_items + product_cart_items;
+      // }
+      // if (promo.include) {
+      //   const category_cart_items = cartItems.filter(item => promo.included_categories.includes(item.category));
 
-        const product_cart_items = cartItems.filter(item => promo.included_products.includes(item.product));
+      //   const product_cart_items = cartItems.filter(item => promo.included_products.includes(item.product));
 
-        promo_included = category_cart_items.length > 0 || product_cart_items.length > 0;
-        if (promo_included) {
-          update_promo();
-        } else {
-          set_promo_code_validations("Promo Code Not Valid");
-          set_show_promo_code_input_box(true);
-        }
-      }
+      //   promo_included = category_cart_items.length > 0 || product_cart_items.length > 0;
+      //   if (promo_included) {
+      //     update_promo();
+      //   } else {
+      //     set_promo_code_validations("Promo Code Not Valid");
+      //     set_show_promo_code_input_box(true);
+      //   }
+      // }
 
       if (show_message) {
         set_promo_code_validations("Can only use one promo code at a time");
       } else {
-        if (!promo.include) {
-          update_promo(promo, promo_excluded);
-        }
+        // if (!promo.include) {
+        update_promo(promo, promo_excluded);
+        // }
       }
     }
   };
