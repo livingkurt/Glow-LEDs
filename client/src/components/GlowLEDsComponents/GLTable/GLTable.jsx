@@ -71,3 +71,44 @@ const GLTable = ({ rows, column_defs, colors, edit_row_link, view_row_link, comp
 };
 
 export default GLTable;
+
+// import React from 'react';
+
+// function Table({ columns, data }) {
+//   return (
+//     <table>
+//       <thead>
+//         <tr>
+//           {columns.map(column => (
+//             <th key={column.key}>{column.label}</th>
+//           ))}
+//         </tr>
+//       </thead>
+//       <tbody>
+//         {data.map(item => (
+//           <tr key={item.id}>
+//             {columns.map(column => (
+//               <td key={column.key}>{item[column.key]}</td>
+//             ))}
+//           </tr>
+//         ))}
+//       </tbody>
+//     </table>
+//   );
+// }
+// function MyComponent(props) {
+//   const columns = [
+//     { key: 'name', label: 'Name' },
+//     { key: 'email', label: 'Email' },
+//     { key: 'phone', label: 'Phone' },
+//   ];
+//   const data = [
+//     { id: 1, name: 'Alice', email: 'alice@example.com', phone: '555-1234' },
+//     { id: 2, name: 'Bob', email: 'bob@example.com', phone: '555-5678' },
+//     { id: 3, name: 'Carol', email: 'carol@example.com', phone: '555-9101' },
+//   ];
+
+//   return (
+//     <Table columns={columns} data={data} />
+//   );
+// }

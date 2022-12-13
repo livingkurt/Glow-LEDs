@@ -385,7 +385,6 @@ const UserProfilePage = props => {
               );
             })}
           </div>
-          {console.log({ paychecks })}
           <div className="mb-1rem">Total Payout ${paychecks && paychecks.reduce((a, paycheck) => a + paycheck.amount, 0).toFixed(2)}</div>
           <Loading loading={loading_paychecks} error={error_paychecks}>
             {paychecks && (
