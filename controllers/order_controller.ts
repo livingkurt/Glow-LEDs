@@ -123,6 +123,19 @@ export default {
       res.status(500).send({ error, message: "Error Deleting Order" });
     }
   },
+  affiliate_code_usage_orders_c: async (req: any, res: any) => {
+    const { params, query } = req;
+    console.log({ params, query });
+    try {
+      const orders = await order_services.affiliate_code_usage_orders_s(params, query);
+      if (orders) {
+        return res.status(200).send(orders);
+      }
+      return res.status(500).send({ message: "Error Deleting Order" });
+    } catch (error) {
+      res.status(500).send({ error, message: "Error Deleting Order" });
+    }
+  },
   tax_rates_orders_c: async (req: any, res: any) => {
     try {
       const orders = await order_services.tax_rates_orders_s();
@@ -134,10 +147,10 @@ export default {
       res.status(500).send({ error, message: "Error Deleting Order" });
     }
   },
-  affiliate_code_usage_orders_c: async (req: any, res: any) => {
+  all_affiliate_code_usage_orders_c: async (req: any, res: any) => {
     const { params, query } = req;
     try {
-      const orders = await order_services.affiliate_code_usage_orders_s(params, query);
+      const orders = await order_services.all_affiliate_code_usage_orders_s(params, query);
       if (orders) {
         return res.status(200).send(orders);
       }

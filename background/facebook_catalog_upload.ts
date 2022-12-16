@@ -5,7 +5,7 @@ dotenv.config();
 // const google_sheets_json = require("./glow-leds-0e697a43198d.json");
 
 const facebook_catalog_upload = async () => {
-  // google_sheets_json.private_key = process.env.REACT_APP_GOOGLE_SHEETS_PRIVATE;
+  // // google_sheets_json.private_key = process.env.REACT_APP_GOOGLE_SHEETS_PRIVATE;
 
   try {
     const { GoogleSpreadsheet } = require("google-spreadsheet");

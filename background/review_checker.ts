@@ -35,7 +35,7 @@ const affiliate_revenue_upload = async () => {
     await sheet.clear();
     await sheet.setHeaderRow(["Promo Code", "Uses", "Revenue", "Earned"]);
 
-    let total_affiliate_code_usage: any;
+    let total_all_affiliate_code_usage: any;
     let total_affiliate_revenue: any;
 
     // const { data: last_month_orders } = await axios.get(
@@ -54,7 +54,7 @@ const affiliate_revenue_upload = async () => {
     // 			return order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase();
     // 		}).length;
     // 	});
-    // 	total_affiliate_code_usage = uses.reduce((a: any, c: any) => a + c, 0);
+    // 	total_all_affiliate_code_usage = uses.reduce((a: any, c: any) => a + c, 0);
     //
     // 	const revenue = affiliates.map((affiliate: { promo_code: string }) => {
     // 		return orders

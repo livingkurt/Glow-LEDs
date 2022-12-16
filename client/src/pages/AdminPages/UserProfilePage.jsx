@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { detailsUser } from "../../actions/userActions";
 import { Loading, Notification } from "../../components/UtilityComponents";
 import { Helmet } from "react-helmet";
-import { API_Emails, API_Promos } from "../../utils";
+import { API_Emails, API_Orders, API_Promos } from "../../utils";
 import { GLButton } from "../../components/GlowLEDsComponents";
 import { listMyPaychecks } from "../../actions/paycheckActions";
 import { listPromos } from "../../actions/promoActions";
@@ -29,7 +29,6 @@ const UserProfilePage = props => {
 
   const promoList = useSelector(state => state.promoList);
   const { promos, error: promo_errors, message: promo_message } = promoList;
-  console.log({ promos });
 
   const [first_name, set_first_name] = useState("");
   const [last_name, set_last_name] = useState("");
@@ -38,9 +37,14 @@ const UserProfilePage = props => {
   const [admin, set_admin] = useState();
   const [shipping, set_shipping] = useState({});
   const [email_subscription, set_email_subscription] = useState();
+  const [loading_revenue, set_loading_revenue] = useState(true);
 
-  const [number_of_uses, set_number_of_uses] = useState(0);
-  const [revenue, set_revenue] = useState(0);
+  const [current_month_number_of_uses, set_current_month_number_of_uses] = useState(0);
+  const [current_month_revenue, set_current_month_revenue] = useState(0);
+  const [current_year_number_of_uses, set_current_year_number_of_uses] = useState(0);
+  const [current_year_revenue, set_current_year_revenue] = useState(0);
+  const [total_number_of_uses, set_total_number_of_uses] = useState(0);
+  const [total_revenue, set_total_revenue] = useState(0);
 
   const dispatch = useDispatch();
 
@@ -75,17 +79,16 @@ const UserProfilePage = props => {
   }, [user]);
 
   // console.log({ promoList });
-  // useEffect(() => {
-  //   let clean = true;
-  //   if (clean) {
-  //     if (promo_message) {
-  //       setTimeout(() => {
-  //         dispatch(listPromos({ affiliate: user.affiliate }));
-  //       }, 2000);
-  //     }
-  //   }
-  //   return () => (clean = false);
-  // }, [promo_message]);
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (affiliate && affiliate.public_code && affiliate.public_code.promo_code) {
+        console.log({ affiliate: affiliate.public_code.promo_code.toUpperCase() });
+        get_code_usage(affiliate.public_code.promo_code.toUpperCase());
+      }
+    }
+    return () => (clean = false);
+  }, [affiliate]);
 
   // useEffect(() => {
   //   let clean = true;
@@ -99,18 +102,48 @@ const UserProfilePage = props => {
   //   return () => (clean = false);
   // }, [error_paychecks]);
 
+  const monthNames = [
+    "january",
+    "february",
+    "march",
+    "april",
+    "may",
+    "june",
+    "july",
+    "august",
+    "september",
+    "october",
+    "november",
+    "december"
+  ];
+
   const container_styles = {
     marginBottom: "20px"
   };
 
   const get_code_usage = async public_code => {
-    //
-    const {
-      data: { number_of_uses, revenue }
-    } = await API_Promos.get_code_usage(public_code.promo_code);
+    set_loading_revenue(true);
+    const date = new Date();
+    const monthNumber = date.getMonth();
+    const year = date.getFullYear();
+    const monthName = monthNames[monthNumber];
+    const { data: current_month } = await API_Orders.affiliate_code_usage_orders_a(public_code, {
+      year: year,
+      month: monthName
+    });
+    const { data: current_year } = await API_Orders.affiliate_code_usage_orders_a(public_code, {
+      year: year
+    });
+    const { data: total } = await API_Orders.affiliate_code_usage_orders_a(public_code);
+    console.log({ current_month, current_year, total });
 
-    set_number_of_uses(number_of_uses);
-    set_revenue(revenue);
+    set_current_year_number_of_uses(current_year.number_of_uses);
+    set_current_year_revenue(current_year.revenue);
+    set_current_month_number_of_uses(current_month.number_of_uses);
+    set_current_month_revenue(current_month.revenue);
+    set_total_number_of_uses(total.number_of_uses);
+    set_total_revenue(total.revenue);
+    set_loading_revenue(false);
   };
 
   const colors = [
@@ -257,9 +290,9 @@ const UserProfilePage = props => {
                   )}
                 </div>
               </div>
-              <div className="group_item">
+              <div className="group_item w-100per">
                 {user.is_affiliated && user.affiliate && affiliate && affiliate.public_code && promos && (
-                  <div className="mb-20px max-w-700px w-500px">
+                  <div className="mb-20px ">
                     <h2 className="group_images">Affiliate Metrics</h2>
                     <div className="mb-20px">
                       <h3>Public Code</h3>
@@ -277,20 +310,103 @@ const UserProfilePage = props => {
                       <h3>Refresh Pack Sponsor Code</h3>
                       <label>{promos && promos[1] && promos[1].promo_code.toUpperCase()}</label>
                     </div>
-                    <div className="mb-20px">
+                    {/* <div className="mb-20px">
                       <h3>Code Usage</h3>
                       <label>
-                        {affiliate && affiliate.public_code.promo_code.toUpperCase()} used {number_of_uses} times
+                        {affiliate && affiliate.public_code.promo_code.toUpperCase()} used {total_number_of_uses} times
                       </label>
-                    </div>
-                    <div className="mb-20px">
-                      <h3>Total Revenue</h3>
-                      <label>${parseFloat(revenue).toFixed(2)}</label>
-                    </div>
-                    <div className="mb-20px">
-                      <h3>Total Earrned</h3>
-                      <label>${parseFloat(affiliate && affiliate.promoter ? 0.1 * revenue : 0.15 * revenue).toFixed(2)}</label>
-                    </div>
+                    </div> */}
+                    <h2 className="ta-c">Affiliate Earnings</h2>
+                    <Loading loading={loading_revenue} error={error}>
+                      <table className="styled-table w-100per">
+                        <thead>
+                          <tr>
+                            <th></th>
+                            <th>Revenue</th>
+                            <th>Earned</th>
+                            <th>Uses</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr
+                            style={{
+                              backgroundColor: "#656a87"
+                            }}
+                          >
+                            <th>Current Month</th>
+                            <th>${parseFloat(current_month_revenue).toFixed(2)}</th>
+                            <th>
+                              $
+                              {parseFloat(
+                                affiliate && affiliate.promoter ? 0.1 * current_month_revenue : 0.15 * current_month_revenue
+                              ).toFixed(2)}
+                            </th>
+                            <th>{current_month_number_of_uses}</th>
+                          </tr>
+                          <tr
+                            style={{
+                              backgroundColor: "#656a87"
+                            }}
+                          >
+                            <th>Current Year</th>
+                            <th>${parseFloat(current_year_revenue).toFixed(2)}</th>
+                            <th>
+                              $
+                              {parseFloat(
+                                affiliate && affiliate.promoter ? 0.1 * current_year_revenue : 0.15 * current_year_revenue
+                              ).toFixed(2)}
+                            </th>
+                            <th>{current_year_number_of_uses}</th>
+                          </tr>
+                          <tr
+                            style={{
+                              backgroundColor: "#656a87"
+                            }}
+                          >
+                            <th>Total</th>
+                            <th>${parseFloat(total_revenue).toFixed(2)}</th>
+                            <th>${parseFloat(affiliate && affiliate.promoter ? 0.1 * total_revenue : 0.15 * total_revenue).toFixed(2)}</th>
+                            <th>{total_number_of_uses}</th>
+                          </tr>
+                        </tbody>
+                      </table>
+                      {/* <div className="mb-20px">
+                        <h3>Total Revenue</h3>
+                        <label>${parseFloat(total_revenue).toFixed(2)}</label>
+                      </div>
+                      <div className="mb-20px">
+                        <h3>Total Earrned</h3>
+                        <label>
+                          ${parseFloat(affiliate && affiliate.promoter ? 0.1 * total_revenue : 0.15 * total_revenue).toFixed(2)}
+                        </label>
+                      </div>
+                      <div className="mb-20px">
+                        <h3>Current Month Revenue</h3>
+                        <label>${parseFloat(current_month_revenue).toFixed(2)}</label>
+                      </div>
+                      <div className="mb-20px">
+                        <h3>Current Month Earrned</h3>
+                        <label>
+                          $
+                          {parseFloat(affiliate && affiliate.promoter ? 0.1 * current_month_revenue : 0.15 * current_month_revenue).toFixed(
+                            2
+                          )}
+                        </label>
+                      </div>
+                      <div className="mb-20px">
+                        <h3>Current Year Revenue</h3>
+                        <label>${parseFloat(current_year_revenue).toFixed(2)}</label>
+                      </div>
+                      <div className="mb-20px">
+                        <h3>Current Year Earrned</h3>
+                        <label>
+                          $
+                          {parseFloat(affiliate && affiliate.promoter ? 0.1 * current_year_revenue : 0.15 * current_year_revenue).toFixed(
+                            2
+                          )}
+                        </label>
+                      </div> */}
+                    </Loading>
                     <div className="mt-1rem">
                       {affiliate && affiliate.promoter && (
                         <div>

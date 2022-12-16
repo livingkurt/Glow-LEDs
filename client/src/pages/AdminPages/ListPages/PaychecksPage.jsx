@@ -184,12 +184,12 @@ const PaychecksPage = props => {
 
   const get_affiliate_data = async () => {
     set_loading_paychecks(true);
-    const { data: last_months_rows } = await API_Orders.affiliate_code_usage_orders_a({
+    const { data: last_months_rows } = await API_Orders.all_affiliate_code_usage_orders_a({
       year,
       month: month.toLowerCase(),
       position: ""
     });
-    // const { data: total_rows } = await API_Orders.affiliate_code_usage_orders_a({
+    // const { data: total_rows } = await API_Orders.all_affiliate_code_usage_orders_a({
     //   year: "",
     //   month: month.toLowerCase(),
     //   position: ""

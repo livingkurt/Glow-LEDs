@@ -23,10 +23,16 @@ const order_routes = {
   income: (year: number, month: string) => {
     return axios.get(`/api/orders/income${year ? "/" + year : ""}${month ? "/" + month : ""}`);
   },
-  affiliate_code_usage_orders_a: (arg: any) => {
+  all_affiliate_code_usage_orders_a: (arg: any) => {
     return axios.get(
-      `/api/orders/affiliate_code_usage/${arg.year}${arg.month ? "/" + arg.month : ""}${arg.position ? `?position=${arg.position}` : ""}`
+      `/api/orders/all_affiliate_code_usage/${arg.year}${arg.month ? "/" + arg.month : ""}${
+        arg.position ? `?position=${arg.position}` : ""
+      }`
     );
+  },
+  affiliate_code_usage_orders_a: (promo_code: string, query: any) => {
+    console.log({ query: `/api/orders/affiliate_code_usage/${promo_code}?${create_query(query)}` });
+    return axios.get(`/api/orders/affiliate_code_usage/${promo_code}?${create_query(query)}`);
   },
   promo_code_usage_orders_a: (year: number, month: string, query: string) => {
     //

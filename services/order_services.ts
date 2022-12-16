@@ -297,6 +297,73 @@ export default {
       throw new Error(error.message);
     }
   },
+  affiliate_code_usage_orders_s: async (params: any, query: any) => {
+    try {
+      const sort = {};
+      let filter = {};
+      // const filter = {
+      //   deleted: false,
+      //   promo_code: params.promo_code,
+      //   isPaid: true,
+      //   createdAt: {
+      //     $gte: new Date(start_date),
+      //     $lte: new Date(end_date)
+      //   }
+      // };
+
+      if (query.month && query.month.length > 0) {
+        const start_date = month_dates(query.month, query.year).start_date;
+        const end_date = month_dates(query.month, query.year).end_date;
+        filter = {
+          deleted: false,
+          isPaid: true,
+          promo_code: params.promo_code,
+          createdAt: {
+            $gte: new Date(start_date),
+            $lte: new Date(end_date)
+          }
+        };
+      } else if (query.year && query.year.length > 0) {
+        const start_date = query.year + "-01-01";
+        const end_date = query.year + "-12-31";
+        filter = {
+          deleted: false,
+          isPaid: true,
+          promo_code: params.promo_code,
+          createdAt: {
+            $gte: new Date(start_date),
+            $lte: new Date(end_date)
+          }
+        };
+      } else {
+        filter = { deleted: false, promo_code: params.promo_code, isPaid: true };
+      }
+      const limit = 0;
+      const page = 1;
+
+      const orders = await order_db.findAll_orders_db(filter, sort, limit, page);
+
+      const number_of_uses = orders
+        .filter((order: any) => order.promo_code)
+        .filter((order: any) => order.promo_code.toLowerCase() === params.promo_code.toLowerCase()).length;
+      const revenue = orders
+        .filter((order: any) => order.promo_code)
+        .filter((order: any) => order.promo_code.toLowerCase() === params.promo_code.toLowerCase())
+        .reduce(
+          (a: any, order: any) =>
+            a +
+            order.totalPrice -
+            order.taxPrice -
+            (order.payment.refund ? order.payment.refund.reduce((a: any, c: any) => a + c.amount, 0) / 100 : 0),
+          0
+        )
+        .toFixed(2);
+
+      return { number_of_uses, revenue };
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  },
   tax_rates_orders_s: async () => {
     try {
       const updatedSalesTaxes = "http://www.salestaxinstitute.com/resources/rates";
@@ -314,7 +381,7 @@ export default {
       throw new Error(error.message);
     }
   },
-  affiliate_code_usage_orders_s: async (params: any, query: any) => {
+  all_affiliate_code_usage_orders_s: async (params: any, query: any) => {
     try {
       const sort = {};
 

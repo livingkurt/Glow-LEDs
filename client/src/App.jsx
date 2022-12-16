@@ -11,12 +11,10 @@ import {
   ShippingPage,
   PlaceOrderPage,
   OrderPage,
-  ProfilePage,
   OrdersPage,
   ContactPage,
   MyOrdersPage,
   Four04Page,
-  EditProfilePage,
   EditProductPage,
   PasswordResetPage,
   VerifiedPage,
@@ -309,8 +307,6 @@ const App = props => {
               {/* Private Routes */}
               <PrivateRoute path="/secure/account/profile/:id" component={UserProfilePage} />
               <PrivateRoute path="/secure/account/editprofile/:id" component={EditUserPage} />
-              {/* <PrivateRoute path="/secure/account/profile" component={ProfilePage} />
-              <PrivateRoute path="/secure/account/editprofile" component={EditProfilePage} /> */}
               {/* <PrivateRoute path="/account/submit_feature" component={SubmitFeaturePage} /> */}
               <PrivateRoute path="/secure/account/orders" component={MyOrdersPage} />
               <PrivateRoute path="/secure/checkout/shipping" component={ShippingPage} />

@@ -40,7 +40,7 @@ const MonthExpensesPage = props => {
       if (props.match.params.month) {
         get_monthly_income(year, props.match.params.month);
       }
-      // affiliate_code_usage(year, props.match.params.mont);
+      // all_affiliate_code_usage(year, props.match.params.mont);
     }
     return () => (clean = false);
   }, [props.match.params.month]);
@@ -52,7 +52,7 @@ const MonthExpensesPage = props => {
       if (props.match.params.month) {
         get_monthly_income(year, props.match.params.month);
       }
-      affiliate_code_usage(year, props.match.params.month);
+      all_affiliate_code_usage(year, props.match.params.month);
       promo_code_usage(year, props.match.params.month, { single_use: true });
       promo_code_usage(year, props.match.params.month, { used_once: true });
       promo_code_usage(year, props.match.params.month, {
@@ -65,9 +65,9 @@ const MonthExpensesPage = props => {
     return () => (clean = false);
   }, []);
 
-  const affiliate_code_usage = async (year, month) => {
+  const all_affiliate_code_usage = async (year, month) => {
     set_loading(true);
-    const { data } = await API_Orders.affiliate_code_usage_orders_a({
+    const { data } = await API_Orders.all_affiliate_code_usage_orders_a({
       year,
       month
     });
@@ -168,7 +168,7 @@ const MonthExpensesPage = props => {
   };
 
   // const [ total_promo_revenue, set_total_promo_revenue ] = useState();
-  // const [ total_promo_affiliate_code_usage, set_total_promo_affiliate_code_usage ] = useState();
+  // const [ total_promo_all_affiliate_code_usage, set_total_promo_all_affiliate_code_usage ] = useState();
 
   // const get_total_promos = () => {
   // 	const uses = promos.map((promo) => {
@@ -176,7 +176,7 @@ const MonthExpensesPage = props => {
   // 			return order.promo_code && order.promo_code.toLowerCase() === promo.promo_code.toLowerCase();
   // 		}).length;
   // 	});
-  // 	set_total_promo_affiliate_code_usage(uses.reduce((a, c) => a + c, 0));
+  // 	set_total_promo_all_affiliate_code_usage(uses.reduce((a, c) => a + c, 0));
   //
   // 	const revenue = promos.map((promo) => {
   // 		return orders
