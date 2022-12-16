@@ -574,7 +574,7 @@ export default {
       const limit = 0;
       const page = 1;
       const orders = await order_db.findAll_orders_db(o_filter, sort, limit, page);
-      const promos = await promo_db.findAll_promos_db(p_filter, {});
+      const promos = await promo_db.findAll_promos_db(p_filter, {}, 0);
       //
       const promos_earnings: any = promos.map((code: any) => {
         return {

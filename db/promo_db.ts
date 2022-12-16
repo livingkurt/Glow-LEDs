@@ -1,7 +1,7 @@
 import Promo from "../models/promo";
 
 export default {
-  findAll_promos_db: async (filter: any, sort: any) => {
+  findAll_promos_db: async (filter: any, sort: any, limit: number) => {
     try {
       return await Promo.find(filter)
         .sort(sort)
@@ -10,7 +10,8 @@ export default {
         .populate("excluded_categories")
         .populate("included_categories")
         .populate("excluded_products")
-        .populate("included_products");
+        .populate("included_products")
+        .limit(limit);
     } catch (error) {
       throw new Error(error.message);
     }

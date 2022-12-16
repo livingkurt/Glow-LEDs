@@ -25,7 +25,7 @@ export default {
       } else if (sort_query === "newest") {
         sort = { _id: -1 };
       }
-      return await promo_db.findAll_promos_db(filter, sort);
+      return await promo_db.findAll_promos_db(filter, sort, 0);
     } catch (error) {
       throw new Error(error.message);
     }
@@ -84,7 +84,7 @@ export default {
     try {
       const sponsor_codes = await Promise.all(
         affiliates.map(async (affiliate: any) => {
-          const old_codes = await promo_db.findAll_promos_db({ affiliate: affiliate._id, active: true }, {});
+          const old_codes = await promo_db.findAll_promos_db({ affiliate: affiliate._id, active: true }, {}, 2);
           console.log({ old_codes });
           await Promise.all(
             old_codes.map(async (code: any) => {
