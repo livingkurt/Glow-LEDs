@@ -37,7 +37,9 @@ const UserProfilePage = props => {
   const [admin, set_admin] = useState();
   const [shipping, set_shipping] = useState({});
   const [email_subscription, set_email_subscription] = useState();
-  const [loading_revenue, set_loading_revenue] = useState(true);
+  const [loading_current_month, set_loading_current_month] = useState(true);
+  const [loading_current_year, set_loading_current_year] = useState(true);
+  // const [loading_revenue, set_loading_revenue] = useState(true);
 
   const [current_month_number_of_uses, set_current_month_number_of_uses] = useState(0);
   const [current_month_revenue, set_current_month_revenue] = useState(0);
@@ -122,7 +124,8 @@ const UserProfilePage = props => {
   };
 
   const get_code_usage = async public_code => {
-    set_loading_revenue(true);
+    set_loading_current_month(true);
+    set_loading_current_year(true);
     const date = new Date();
     const monthNumber = date.getMonth();
     const year = date.getFullYear();
@@ -131,19 +134,17 @@ const UserProfilePage = props => {
       year: year,
       month: monthName
     });
+    set_current_month_number_of_uses(current_month.number_of_uses);
+    set_current_month_revenue(current_month.revenue);
+    set_loading_current_month(false);
     const { data: current_year } = await API_Orders.affiliate_code_usage_orders_a(public_code, {
       year: year
     });
-    const { data: total } = await API_Orders.affiliate_code_usage_orders_a(public_code);
-    console.log({ current_month, current_year, total });
-
     set_current_year_number_of_uses(current_year.number_of_uses);
     set_current_year_revenue(current_year.revenue);
-    set_current_month_number_of_uses(current_month.number_of_uses);
-    set_current_month_revenue(current_month.revenue);
-    set_total_number_of_uses(total.number_of_uses);
-    set_total_revenue(total.revenue);
-    set_loading_revenue(false);
+    // set_total_number_of_uses(total.number_of_uses);
+    // set_total_revenue(total.revenue);
+    set_loading_current_year(false);
   };
 
   const colors = [
@@ -317,7 +318,8 @@ const UserProfilePage = props => {
                       </label>
                     </div> */}
                     <h2 className="ta-c">Affiliate Earnings</h2>
-                    <Loading loading={loading_revenue} error={error}>
+                    <Loading loading={loading_current_year} error={error} />
+                    <Loading loading={loading_current_month} error={error}>
                       <table className="styled-table w-100per">
                         <thead>
                           <tr>
@@ -334,14 +336,15 @@ const UserProfilePage = props => {
                             }}
                           >
                             <th>Current Month</th>
-                            <th>${parseFloat(current_month_revenue).toFixed(2)}</th>
+                            <th>${!loading_current_month && parseFloat(current_month_revenue).toFixed(2)}</th>
                             <th>
                               $
-                              {parseFloat(
-                                affiliate && affiliate.promoter ? 0.1 * current_month_revenue : 0.15 * current_month_revenue
-                              ).toFixed(2)}
+                              {!loading_current_month &&
+                                parseFloat(
+                                  affiliate && affiliate.promoter ? 0.1 * current_month_revenue : 0.15 * current_month_revenue
+                                ).toFixed(2)}
                             </th>
-                            <th>{current_month_number_of_uses}</th>
+                            <th>{!loading_current_month && current_month_number_of_uses}</th>
                           </tr>
                           <tr
                             style={{
@@ -349,16 +352,17 @@ const UserProfilePage = props => {
                             }}
                           >
                             <th>Current Year</th>
-                            <th>${parseFloat(current_year_revenue).toFixed(2)}</th>
+                            <th>${!loading_current_year && parseFloat(current_year_revenue).toFixed(2)}</th>
                             <th>
                               $
-                              {parseFloat(
-                                affiliate && affiliate.promoter ? 0.1 * current_year_revenue : 0.15 * current_year_revenue
-                              ).toFixed(2)}
+                              {!loading_current_year &&
+                                parseFloat(
+                                  affiliate && affiliate.promoter ? 0.1 * current_year_revenue : 0.15 * current_year_revenue
+                                ).toFixed(2)}
                             </th>
-                            <th>{current_year_number_of_uses}</th>
+                            <th>{!loading_current_year && current_year_number_of_uses}</th>
                           </tr>
-                          <tr
+                          {/* <tr
                             style={{
                               backgroundColor: "#656a87"
                             }}
@@ -367,7 +371,7 @@ const UserProfilePage = props => {
                             <th>${parseFloat(total_revenue).toFixed(2)}</th>
                             <th>${parseFloat(affiliate && affiliate.promoter ? 0.1 * total_revenue : 0.15 * total_revenue).toFixed(2)}</th>
                             <th>{total_number_of_uses}</th>
-                          </tr>
+                          </tr> */}
                         </tbody>
                       </table>
                       {/* <div className="mb-20px">
