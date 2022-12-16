@@ -59,7 +59,8 @@ const PromosPage = props => {
     { name: "Affiliate Only", color: "#7d5555" },
     { name: "No Restrictions", color: "#3e4c6d" },
     { name: "Single Use", color: "#5f557d" },
-    { name: "Used", color: "#303030" }
+    { name: "Used", color: "#303030" },
+    { name: "Deactivated", color: "#466475" }
     // { name: 'Specific User', color: '#3d7f79' }
     // { name: 'Active', color: '#3f6561' }
   ];
@@ -93,6 +94,9 @@ const PromosPage = props => {
     }
     if (promo.used_once) {
       result = colors[4].color;
+    }
+    if (!promo.active) {
+      result = colors[5].color;
     }
     //  else {
     // 	result = colors[2].color;
