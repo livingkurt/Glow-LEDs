@@ -125,7 +125,6 @@ export default {
   },
   affiliate_code_usage_orders_c: async (req: any, res: any) => {
     const { params, query } = req;
-    console.log({ params, query });
     try {
       const orders = await order_services.affiliate_code_usage_orders_s(params, query);
       if (orders) {

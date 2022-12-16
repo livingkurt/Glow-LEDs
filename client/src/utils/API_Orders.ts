@@ -31,7 +31,6 @@ const order_routes = {
     );
   },
   affiliate_code_usage_orders_a: (promo_code: string, query: any) => {
-    console.log({ query: `/api/orders/affiliate_code_usage/${promo_code}?${create_query(query)}` });
     return axios.get(`/api/orders/affiliate_code_usage/${promo_code}?${create_query(query)}`);
   },
   promo_code_usage_orders_a: (year: number, month: string, query: string) => {

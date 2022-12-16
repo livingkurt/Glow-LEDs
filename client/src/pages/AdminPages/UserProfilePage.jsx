@@ -54,7 +54,6 @@ const UserProfilePage = props => {
     let clean = true;
     if (clean) {
       dispatch(detailsUser(props.match.params.id));
-      console.log({ user });
     }
     return () => (clean = false);
   }, [dispatch]);
@@ -80,12 +79,10 @@ const UserProfilePage = props => {
     return () => (clean = false);
   }, [user]);
 
-  // console.log({ promoList });
   useEffect(() => {
     let clean = true;
     if (clean) {
       if (affiliate && affiliate.public_code && affiliate.public_code.promo_code) {
-        console.log({ affiliate: affiliate.public_code.promo_code.toUpperCase() });
         get_code_usage(affiliate.public_code.promo_code.toUpperCase());
       }
     }

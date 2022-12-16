@@ -236,7 +236,6 @@ const EditContentPage = props => {
     newArr.splice(to, 0, item);
     set_state(newArr);
   };
-  console.log({ content });
 
   return (
     <div className="main_container p-20px">

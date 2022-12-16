@@ -159,7 +159,6 @@ const HomePage = props => {
         />
       </Helmet>
       <Loading loading={slideshow.length === 0} />
-      {console.log(contents && contents.filter(content => content.active === true)[0]?.home_page.banner_image)}
       {contents && contents.filter(content => content.active === true)[0] && (
         <img
           style={{ borderRadius: "20px", width: "100%" }}

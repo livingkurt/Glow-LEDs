@@ -85,7 +85,6 @@ export default {
       const sponsor_codes = await Promise.all(
         affiliates.map(async (affiliate: any) => {
           const old_codes = await promo_db.findAll_promos_db({ affiliate: affiliate._id, active: true }, {}, 2);
-          console.log({ old_codes });
           await Promise.all(
             old_codes.map(async (code: any) => {
               await promo_db.update_promos_db(code.id, { active: false });

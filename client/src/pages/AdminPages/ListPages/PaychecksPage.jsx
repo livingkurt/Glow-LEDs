@@ -162,7 +162,6 @@ const PaychecksPage = props => {
       await API_Paychecks.create_affiliate_paychecks_a("team", year, month.toLowerCase());
     }
     if (update_google_sheets) {
-      console.log("Hello");
       get_affiliate_data();
       // set_message_note("paychecks");
       // await affiliate_revenue_upload("promoter", year, month.toLowerCase(), "1vy1OKH0P96cDkjuq-_yBT56CA1yQRMY3XZ2kgN95Spg");
@@ -201,13 +200,10 @@ const PaychecksPage = props => {
     //   return { ...affiliate, Revenue: `$${affiliate.Revenue}` };
     // });
 
-    // console.log({ formated_total });
-
     const sorted_last_months_rows = last_months_rows.affiliates.sort((a, b) => (parseFloat(a.Uses) > parseFloat(b.Uses) ? -1 : 1));
     const formated_last_month = removeDuplicates(sorted_last_months_rows, "Promo Code").map(affiliate => {
       return { ...affiliate, Revenue: `$${affiliate.Revenue}` };
     });
-    console.log({ formated_last_month });
     set_loading_paychecks(false);
   };
 

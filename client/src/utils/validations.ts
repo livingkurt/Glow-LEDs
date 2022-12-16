@@ -88,7 +88,6 @@ export const validate_promo_code = (data: any) => {
     //
     errors.promo_code = "Promo Code Not Active";
   }
-  console.log({ promo_code: data.promo_code.toLowerCase(), promo_codes });
   // if (!promo_codes.includes(data.promo_code.toLowerCase())) {
   //   errors.promo_code = "Promo Code Not Valid";
   // }

@@ -163,8 +163,6 @@ export const affiliate_revenue_upload = async (position: any, year: number, mont
     // spreadsheet key is the long id in the sheets URL
     // const doc = new GoogleSpreadsheet('1qf9xryR0EPOCD0YkFQXqYioAxJRfWg6QFpdFwFTpErg');
     const doc = new GoogleSpreadsheet(google_sheet);
-    console.log({ doc });
-    console.log({ google_sheet });
 
     // use service account creds
     // await doc.useServiceAccountAuth({
@@ -192,8 +190,6 @@ export const affiliate_revenue_upload = async (position: any, year: number, mont
       month: "",
       position
     });
-    console.log({ last_months_rows });
-    console.log({ total_rows });
 
     const sorted_total_rows = total_rows.affiliates.sort((a: any, b: any) => (parseFloat(a.Revenue) > parseFloat(b.Revenue) ? -1 : 1));
     const sorted_last_months_rows = last_months_rows.affiliates.sort((a: any, b: any) =>
@@ -205,8 +201,6 @@ export const affiliate_revenue_upload = async (position: any, year: number, mont
     const formated_last_month = removeDuplicates(sorted_last_months_rows, "Promo Code").map((affiliate: any) => {
       return { ...affiliate, Revenue: `$${affiliate.Revenue}` };
     });
-    console.log({ formated_total });
-    console.log({ formated_last_month });
 
     const sheet = doc.sheetsByIndex[0]; // or use doc.sheetsById[id] or doc.sheetsByTitle[title]
 
@@ -226,9 +220,7 @@ export const affiliate_revenue_upload = async (position: any, year: number, mont
     await newSheet.saveUpdatedCells();
 
     // await newSheet.delete();
-  } catch (error) {
-    console.log({ error });
-  }
+  } catch (error) {}
 };
 
 export const facebook_catalog_upload = async (products: any) => {
