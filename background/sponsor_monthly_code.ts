@@ -270,28 +270,26 @@ const months = ["January", "February", "March", "April", "May", "June", "July", 
 
 const sponsor_monthly_code = async () => {
   try {
-    const date = new Date();
-    const last_date = new Date(date.setMonth(date.getMonth() - 1));
-
-    const today = new Date().toISOString().slice(0, 10);
-    const year = today.split("-")[0];
-    const day = today.split("-")[2];
-    const last_month = last_date.getMonth();
-    if (day === "01") {
-      // await axios.get(`${domain()}/api/paychecks/pay/promoter/${year}/${months[last_month].toLowerCase()}`);
-      // await axios.get(`${domain()}/api/paychecks/pay/sponsor/${year}/${months[last_month].toLowerCase()}`);
-      // await axios.get(`${domain()}/api/paychecks/pay/team/${year}/${months[last_month].toLowerCase()}`);
-      // await affiliate_revenue_upload("promoter", year, months[last_month].toLowerCase(), determine_promoter_sheet());
-      // await affiliate_revenue_upload("sponsor", year, months[last_month].toLowerCase(), determine_sponsors_sheet());
-      // await affiliate_revenue_upload("team", year, months[last_month].toLowerCase(), determine_teams_sheet());
-      // await top_earner_upload(year, months[last_month].toLowerCase(), determine_top_earners_sheet());
-      // await top_code_usage_upload(year, months[last_month].toLowerCase(), determine_top_uses_sheet());
-      // await axios.put(
-      //   `${domain()}/api/promos/update_discount/${year}${months[last_month].toLowerCase() ? "/" + months[last_month].toLowerCase() : ""}`
-      // );
-      await axios.put(`${domain()}/api/promos/create_sponsor_codes`);
-    } else {
-    }
+    // const date = new Date();
+    // const last_date = new Date(date.setMonth(date.getMonth() - 1));
+    // const today = new Date().toISOString().slice(0, 10);
+    // const year = today.split("-")[0];
+    // const day = today.split("-")[2];
+    // const last_month = last_date.getMonth();
+    // if (day === "01") {
+    //   // await axios.get(`${domain()}/api/paychecks/pay/promoter/${year}/${months[last_month].toLowerCase()}`);
+    //   // await axios.get(`${domain()}/api/paychecks/pay/sponsor/${year}/${months[last_month].toLowerCase()}`);
+    //   // await axios.get(`${domain()}/api/paychecks/pay/team/${year}/${months[last_month].toLowerCase()}`);
+    //   // await affiliate_revenue_upload("promoter", year, months[last_month].toLowerCase(), determine_promoter_sheet());
+    //   // await affiliate_revenue_upload("sponsor", year, months[last_month].toLowerCase(), determine_sponsors_sheet());
+    //   // await affiliate_revenue_upload("team", year, months[last_month].toLowerCase(), determine_teams_sheet());
+    //   // await top_earner_upload(year, months[last_month].toLowerCase(), determine_top_earners_sheet());
+    //   // await top_code_usage_upload(year, months[last_month].toLowerCase(), determine_top_uses_sheet());
+    //   // await axios.put(
+    //   //   `${domain()}/api/promos/update_discount/${year}${months[last_month].toLowerCase() ? "/" + months[last_month].toLowerCase() : ""}`
+    //   // );
+    //   await axios.put(`${domain()}/api/promos/create_sponsor_codes`);
+    // }
   } catch (error) {}
 };
 
