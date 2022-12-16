@@ -84,6 +84,13 @@ export default {
     try {
       const sponsor_codes = await Promise.all(
         affiliates.map(async (affiliate: any) => {
+          const old_codes = await promo_db.findAll_promos_db({ affiliate: affiliate._id, active: true }, {});
+          console.log({ old_codes });
+          await Promise.all(
+            old_codes.map(async (code: any) => {
+              await promo_db.update_promos_db(code.id, { active: false });
+            })
+          );
           const private_code = {
             promo_code: `${affiliate.artist_name[0].toLowerCase()}${make_private_code(5)}`,
             admin_only: false,
@@ -119,7 +126,6 @@ export default {
             end_date: end_date,
             active: true
           };
-
           const refresh_pack_code: any = await promo_db.create_promos_db(refresh_private_code);
           const allowance_code: any = await promo_db.create_promos_db(private_code);
           return [...refresh_pack_code, ...allowance_code];
