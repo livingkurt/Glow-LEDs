@@ -2,30 +2,30 @@ $justify: "c" center, "fs" flex-start, "fe" flex-end, "b" space-between, "a" spa
 $align: "c" center, "fs" flex-start, "fe" flex-end, "b" stretch, "b" baseline;
 
 @each $i in $justify {
-	.jc-#{nth($i, 1)} {
-		display: flex !important;
-		justify-content: nth($i, 2) !important;
-	}
+  .jc-#{nth($i, 1)} {
+    display: flex !important;
+    justify-content: nth($i, 2) !important;
+  }
 }
 
 @each $i in $align {
-	.ai-#{nth($i, 1)} {
-		display: flex !important;
-		align-items: nth($i, 2) !important;
-	}
+  .ai-#{nth($i, 1)} {
+    display: flex !important;
+    align-items: nth($i, 2) !important;
+  }
 }
 
 @for $i from 0 to 100 {
-	.g-#{$i}rem {
-		display: flex !important;
-		gap: $i + rem !important;
-	}
+  .g-#{$i}rem {
+    display: flex !important;
+    gap: $i + rem !important;
+  }
 }
 @for $i from 0 to 100 {
-	.g-#{$i}px {
-		display: flex !important;
-		gap: $i + px !important;
-	}
+  .g-#{$i}px {
+    display: flex !important;
+    gap: $i + px !important;
+  }
 }
 
 // @for $i from 0 to 100 {
@@ -35,28 +35,28 @@ $align: "c" center, "fs" flex-start, "fe" flex-end, "b" stretch, "b" baseline;
 // }
 
 .row {
-	display: flex !important;
-	flex-direction: row;
+  display: flex !important;
+  flex-direction: row;
 }
 .column {
-	display: flex !important;
-	flex-direction: column;
+  display: flex !important;
+  flex-direction: column;
 }
 .none {
-	display: none !important;
+  display: none !important;
 }
-.black {
-	display: block !important;
+.block {
+  display: block !important;
 }
 
 .wrap {
-	display: flex !important;
-	flex-wrap: wrap !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
 }
 
 .flex-s-0 {
-	display: flex !important;
-	flex-shrink: 0 !important;
+  display: flex !important;
+  flex-shrink: 0 !important;
 }
 
 // .flex-auto {

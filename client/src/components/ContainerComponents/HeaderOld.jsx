@@ -16,7 +16,6 @@ import { Filter } from "../SpecialtyComponents";
 import { listChips } from "../../actions/chipActions";
 import { GLButton } from "../GlowLEDsComponents";
 import { isAdmin } from "../../utils/helpers/user_helpers";
-import { navigation } from "../../utils/helpers/header_sidebar_helpers";
 
 const Header = props => {
   const history = useHistory();
@@ -266,13 +265,6 @@ const Header = props => {
               </div>
 
               <nav className="jc-b nav_bar">
-                {/* {navigation.map(button => (
-                  <Link to={button.link} aria-label="Home Page">
-                    <GLButton variant="nav" className="title_font">
-                      {button.title}
-                    </GLButton>
-                  </Link>
-                ))} */}
                 <Link to="/" aria-label="Home Page">
                   <GLButton variant="nav" className="title_font">
                     Home
@@ -303,7 +295,7 @@ const Header = props => {
                           />
                         </div>
                         <Link to="/collections/all/products/category/new_releases">
-                          <GLButton variant="nav" fullWidth className="ta-l" style={{ padding: "7px 10px 7px 10px" }}>
+                          <GLButton variant="nav" className="w-100per ta-l" style={{ padding: "7px 10px 7px 10px" }}>
                             New Releases!{" "}
                             <span aria-label="emoji" role="img">
                               🆕
@@ -312,7 +304,7 @@ const Header = props => {
                           </GLButton>
                         </Link>
                         <Link to="/collections/all/products/category/best_sellers">
-                          <GLButton variant="nav" fullWidth className="ta-l" style={{ padding: "7px 10px 7px 10px" }}>
+                          <GLButton variant="nav" className="w-100per ta-l" style={{ padding: "7px 10px 7px 10px" }}>
                             Best Sellers
                             <span aria-label="emoji" role="img">
                               {" "}
@@ -321,30 +313,30 @@ const Header = props => {
                           </GLButton>
                         </Link>
                         <Link to="/collections/all/products/category/our_picks">
-                          <GLButton variant="nav" fullWidth className="ta-l jc-b" style={{ padding: "7px 10px 7px 10px" }}>
+                          <GLButton variant="nav" className="w-100per ta-l jc-b" style={{ padding: "7px 10px 7px 10px" }}>
                             Our Picks ⭐
                           </GLButton>
                         </Link>
                         <Link to="/collections/all/products/category/discounted">
-                          <GLButton variant="nav" fullWidth className="ta-l" style={{ padding: "7px 10px 7px 10px" }}>
+                          <GLButton variant="nav" className="w-100per ta-l" style={{ padding: "7px 10px 7px 10px" }}>
                             On Sale! 💰
                           </GLButton>
                         </Link>
 
                         <Link to="/collections/all/products/category/merch/subcategory/stickers">
-                          <GLButton variant="nav" fullWidth className="ta-l">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Stickers
                           </GLButton>
                         </Link>
                         {/* <Link to="/collections/all/products/custom_product_deposit">
-                          <GLButton variant="nav" fullWidth className="ta-l">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Customize Any Product!
                           </GLButton>
                         </Link> */}
                       </div>
                       <div className="nav-column">
                         <Link to="/pages/menu/gloving">
-                          <GLButton variant="nav" fullWidth className="ta-l fs-18px title_font">
+                          <GLButton variant="nav" className="w-100per ta-l fs-18px title_font">
                             Enhancers
                           </GLButton>
                         </Link>
@@ -373,7 +365,7 @@ const Header = props => {
                           </GLButton>
                         </div>
                         <Link to="/collections/all/products/category/glowframez">
-                          <GLButton variant="nav" fullWidth className="ta-l">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Glowframez
                           </GLButton>
                         </Link>
@@ -403,7 +395,7 @@ const Header = props => {
                           </GLButton>
                         </div>
                         <Link to="/collections/all/products/category/decals">
-                          <GLButton variant="nav" fullWidth className="ta-l">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Decals
                           </GLButton>
                         </Link>
@@ -412,7 +404,7 @@ const Header = props => {
                       {/* Glowskinz */}
                       <div className="nav-dropdown-subcategory-content hover_fade_in " id="glowskinz_dropdown">
                         <Link to="/collections/all/products/category/glowskinz">
-                          <GLButton variant="nav" fullWidth className="ta-l fs-18px title_font">
+                          <GLButton variant="nav" className="w-100per ta-l fs-18px title_font">
                             Glowskinz
                           </GLButton>
                         </Link>
@@ -427,7 +419,7 @@ const Header = props => {
                         </div>
 
                         <Link to="/collections/all/products/category/glowskinz/subcategory/opyn" className="w-100per">
-                          <GLButton variant="nav" fullWidth className="ta-l">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             OPYN Glowskinz
                           </GLButton>
                         </Link>
@@ -438,20 +430,20 @@ const Header = props => {
                           id="exo_diffusers_dropdown"
                         >
                           <Link to="/collections/all/products/category/exo_diffusers">
-                            <GLButton variant="nav" fullWidth className="ta-l fs-20px title_font">
+                            <GLButton variant="nav" className="w-100per ta-l fs-20px title_font">
                               EXO Diffusers
                             </GLButton>
                           </Link>
                           <hr className="w-95per m-0px" />
                           <Link to="/collections/all/products/category/exo_diffusers/subcategory/polyhedrons/collection/platonic_solids">
-                              <GLButton variant="nav" fullWidth className="ta-l">
+                              <GLButton variant="nav" className="w-100per ta-l">
                                 Platonic Solids
                               </GLButton>
                           </Link>
                         </div> */}
                       <div className="nav-dropdown-subcategory-content hover_fade_in " id="exo_diffusers_dropdown">
                         <Link to="/collections/all/products/category/exo_diffusers">
-                          <GLButton variant="nav" fullWidth className="ta-l fs-20px title_font">
+                          <GLButton variant="nav" className="w-100per ta-l fs-20px title_font">
                             EXO Diffusers
                           </GLButton>
                         </Link>
@@ -470,12 +462,12 @@ const Header = props => {
                         </div>
 
                         <Link to="/collections/all/products/category/exo_diffusers/subcategory/polyhedrons" className="w-100per">
-                          <GLButton variant="nav" fullWidth className="ta-l block">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Polyhedrons
                           </GLButton>
                         </Link>
                         <Link to="/collections/all/products/category/exo_diffusers/subcategory/domes" className="w-100per">
-                          <GLButton variant="nav" fullWidth className="ta-l block">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Domes
                           </GLButton>
                         </Link>
@@ -483,38 +475,38 @@ const Header = props => {
                       {/* Frosted Diffusers */}
                       <div className="nav-dropdown-subcategory-content hover_fade_in " id="diffusers_dropdown">
                         <Link to="/collections/all/products/category/diffusers">
-                          <GLButton variant="nav" fullWidth className="ta-l fs-20px title_font">
+                          <GLButton variant="nav" className="w-100per ta-l fs-20px title_font">
                             Diffusers
                           </GLButton>
                         </Link>
                         <hr className="w-95per m-0px" />
                         <Link to="/collections/all/products/category/diffusers/subcategory/abstract">
-                          <GLButton variant="nav" className="ta-l block" fullWidth>
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Abstract
                           </GLButton>
                         </Link>
                         <Link to="/collections/all/products/category/diffusers/subcategory/polygons">
-                          <GLButton variant="nav" className="ta-l block" fullWidth>
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Polygons
                           </GLButton>
                         </Link>
                         <Link to="/collections/all/products/category/diffusers/subcategory/cylinders">
-                          <GLButton variant="nav" className="ta-l block" fullWidth>
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Cylinders
                           </GLButton>
                         </Link>
                         <Link to="/collections/all/products/category/diffusers/subcategory/domes">
-                          <GLButton variant="nav" className="ta-l block" fullWidth>
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Domes
                           </GLButton>
                         </Link>
                         <Link to="/collections/all/products/category/diffusers/subcategory/open_hole">
-                          <GLButton variant="nav" className="ta-l block" fullWidth>
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Open Hole
                           </GLButton>
                         </Link>
                         <Link to="/collections/all/products/category/diffusers/subcategory/closed_hole">
-                          <GLButton variant="nav" className="ta-l block" fullWidth>
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Closed Hole
                           </GLButton>
                         </Link>
@@ -522,13 +514,13 @@ const Header = props => {
                       {/* Diffuser Caps */}
                       <div className="nav-dropdown-subcategory-content hover_fade_in " id="diffuser_caps_dropdown">
                         <Link to="/collections/all/products/category/diffuser_caps">
-                          <GLButton variant="nav" fullWidth className="ta-l fs-20px title_font">
+                          <GLButton variant="nav" className="w-100per ta-l fs-20px title_font">
                             Diffuser Caps
                           </GLButton>
                         </Link>
                         <hr className="w-95per m-0px" />
                         <Link to="/collections/all/products/diffuser_caps_adapters_starter_kit">
-                          <GLButton variant="nav" fullWidth className="ta-l">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Diffuser Caps Starter Kit
                           </GLButton>
                         </Link>
@@ -541,27 +533,27 @@ const Header = props => {
                           </GLButton>
                         </div>
                         <Link to="/collections/all/products/category/diffuser_caps/subcategory/geometric">
-                          <GLButton variant="nav" fullWidth className="ta-l block">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Geometric
                           </GLButton>
                         </Link>
                         <Link to="/collections/all/products/category/diffuser_caps/subcategory/shapes">
-                          <GLButton variant="nav" fullWidth className="ta-l block">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Shapes
                           </GLButton>
                         </Link>
                         <Link to="/collections/all/products/category/diffuser_caps/subcategory/abstract">
-                          <GLButton variant="nav" fullWidth className="ta-l block">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Abstract
                           </GLButton>
                         </Link>
                         <Link to="/collections/all/products/category/diffuser_caps/subcategory/patterns">
-                          <GLButton variant="nav" fullWidth className="ta-l block">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Patterns
                           </GLButton>
                         </Link>
                         {/* <Link to="/collections/all/products/category/diffuser_caps/subcategory/imperfect">
-                              <GLButton variant="nav" fullWidth className="ta-l">
+                              <GLButton variant="nav" className="w-100per ta-l">
                                 Imperfect
                               </GLButton>
                           </Link> */}
@@ -569,74 +561,74 @@ const Header = props => {
                       {/* Collections */}
                       <div className="nav-dropdown-nested-content hover_fade_in" id="collections_dropdown">
                         <Link to="/pages/menu/collections">
-                          <GLButton variant="nav" fullWidth className="ta-l fs-20px title_font">
+                          <GLButton variant="nav" className="w-100per ta-l fs-20px title_font">
                             Collections
                           </GLButton>
                         </Link>
                         <hr className="w-95per m-0px" />
                         <Link to="/collections/all/products/category/diffuser_caps/subcategory/geometric/collection/texture">
-                          <GLButton variant="nav" fullWidth className="ta-l">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Texture
                           </GLButton>
                         </Link>
                         <Link to="/collections/all/products/category/diffuser_caps/subcategory/geometric/collection/fractal">
-                          <GLButton variant="nav" fullWidth className="ta-l">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Fractal
                           </GLButton>
                         </Link>
                         <Link to="/collections/all/products/category/diffuser_caps/subcategory/shapes/collection/space_cadet">
-                          <GLButton variant="nav" fullWidth className="ta-l">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Space Cadet
                           </GLButton>
                         </Link>
                         <Link to="/collections/all/products/category/diffuser_caps/subcategory/shapes/collection/festie_bestie">
-                          <GLButton variant="nav" fullWidth className="ta-l">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Festie Bestie
                           </GLButton>
                         </Link>
                         <Link to="/collections/all/products/category/diffuser_caps/subcategory/geometric/collection/platonic_solids">
-                          <GLButton variant="nav" fullWidth className="ta-l">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Platonic Solids
                           </GLButton>
                         </Link>
                       </div>
                       <div className="nav-dropdown-nested-content hover_fade_in" id="exo_diffusers_collections_dropdown">
                         <Link to="/collections/all/products/category/exo_diffusers">
-                          <GLButton variant="nav" fullWidth className="ta-l fs-20px title_font">
+                          <GLButton variant="nav" className="w-100per ta-l fs-20px title_font">
                             Collections
                           </GLButton>
                         </Link>
                         <hr className="w-95per m-0px" />
                         <Link to="/collections/all/products/category/exo_diffusers/subcategory/polyhedrons/collection/platonic_solids">
-                          <GLButton variant="nav" fullWidth className="ta-l">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Platonic Solids
                           </GLButton>
                         </Link>
                         <Link to="/collections/all/products/category/exo_diffusers/subcategory/domes/collection/spheroid">
-                          <GLButton variant="nav" fullWidth className="ta-l">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Spheroid
                           </GLButton>
                         </Link>
                       </div>
                       <div className="nav-dropdown-nested-content hover_fade_in" id="clozd_dropdown">
                         <Link to="/collections/all/products/category/glowskinz/subcategory/clozd">
-                          <GLButton variant="nav" fullWidth className="ta-l fs-20px title_font">
+                          <GLButton variant="nav" className="w-100per ta-l fs-20px title_font">
                             CLOZD
                           </GLButton>
                         </Link>
                         <hr className="w-95per m-0px" />
                         <Link to="/collections/all/products/category/glowskinz/subcategory/clozd/collection/classics">
-                          <GLButton variant="nav" fullWidth className="ta-l">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Classics
                           </GLButton>
                         </Link>
                         <Link to="/collections/all/products/category/glowskinz/subcategory/clozd/collection/novaskinz">
-                          <GLButton variant="nav" fullWidth className="ta-l">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Novaskinz
                           </GLButton>
                         </Link>
                         {/* <Link to="/collections/all/products/category/glowskinz/subcategory/clozd/collection/imperfect">
-                            <GLButton variant="nav" fullWidth className="ta-l">
+                            <GLButton variant="nav" className="w-100per ta-l">
                             Imperfect
                             </GLButton>
                           </Link> */}
@@ -646,62 +638,62 @@ const Header = props => {
                           id="opyn_dropdown"
                         >
                           <Link to="/collections/all/products/category/glowskinz/subcategory/opyn">
-                            <GLButton variant="nav" fullWidth className="ta-l fs-20px title_font">
+                            <GLButton variant="nav" className="w-100per ta-l fs-20px title_font">
                               OPYN
                             </GLButton>
                           </Link>
                           <hr className="w-95per m-0px" />
                           <Link to="/collections/all/products/category/glowskinz/subcategory/opyn/collection/classics">
-                            <GLButton variant="nav" fullWidth className="ta-l">
+                            <GLButton variant="nav" className="w-100per ta-l">
                             Classics
                             </GLButton>
                           </Link>
                         </div> */}
                       <div className="nav-column">
                         <Link to="/collections/all/products/category/essentials">
-                          <GLButton variant="nav" fullWidth className="ta-l fs-18px title_font max-w-244px">
+                          <GLButton variant="nav" className="w-100per ta-l fs-18px title_font max-w-244px">
                             Essentials
                           </GLButton>
                         </Link>
                         <hr className="w-95per m-0px" />
                         <Link to="/collections/all/products/supremes">
-                          <GLButton variant="nav" fullWidth className="ta-l">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Supreme Whites
                           </GLButton>
                         </Link>
                         <Link to="/collections/all/products/refresh_pack">
-                          <GLButton variant="nav" fullWidth className="ta-l">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Refresh Packs
                           </GLButton>
                         </Link>
                         <Link to="/collections/all/products/supremes_sizing_sampler_pack">
-                          <GLButton variant="nav" fullWidth className="ta-l">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Sizing Sampler
                           </GLButton>
                         </Link>
 
                         <Link to="/collections/all/products/1225_batteries">
-                          <GLButton variant="nav" fullWidth className="ta-l">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             1225 Batteries
                           </GLButton>
                         </Link>
                         <Link to="/collections/all/products/1616_batteries">
-                          <GLButton variant="nav" fullWidth className="ta-l">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             1616 Batteries
                           </GLButton>
                         </Link>
                         <Link to="/collections/all/products/1620_batteries">
-                          <GLButton variant="nav" fullWidth className="ta-l">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             1620 Batteries
                           </GLButton>
                         </Link>
                         <Link to="/collections/all/products/2016_batteries">
-                          <GLButton variant="nav" fullWidth className="ta-l">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             2016 Batteries
                           </GLButton>
                         </Link>
                         <Link to="/collections/all/products/category/batteries/subcategory/storage">
-                          <GLButton variant="nav" fullWidth className="ta-l">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Battery Storage
                           </GLButton>
                         </Link>
@@ -719,13 +711,13 @@ const Header = props => {
                     <div className="jc-c">
                       <div className="w-100per max-w-300px">
                         <Link to="/pages/menu/featured">
-                          <GLButton variant="nav" fullWidth className="ta-l fs-18px title_font">
+                          <GLButton variant="nav" className="w-100per ta-l fs-18px title_font">
                             Featured
                           </GLButton>
                         </Link>
                         <hr className="w-95per m-0px" />
                         <Link to="/collections/all/teams/category/rave_mob">
-                          <GLButton variant="nav" fullWidth className="ta-l">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Rave Mob
                           </GLButton>
                         </Link>
@@ -738,27 +730,27 @@ const Header = props => {
                           </GLButton>
                         </div>
                         <Link to="/collections/all/features/category/artists">
-                          <GLButton variant="nav" fullWidth className="ta-l">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Artists
                           </GLButton>
                         </Link>
                         <Link to="/collections/all/features/category/glovers">
-                          <GLButton variant="nav" fullWidth className="ta-l jc-b">
+                          <GLButton variant="nav" className="w-100per ta-l jc-b">
                             Glovers
                           </GLButton>
                         </Link>
                         <Link to="/collections/all/features/category/producers">
-                          <GLButton variant="nav" fullWidth className="ta-l">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Producers
                           </GLButton>
                         </Link>
                         <Link to="/collections/all/features/category/vfx">
-                          <GLButton variant="nav" fullWidth className="ta-l">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             VFX
                           </GLButton>
                         </Link>
                         {/* <Link to="/collections/all/features/category/submit_feature">
-                          <GLButton variant="nav" fullWidth className="ta-l">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Submit Feature
                           </GLButton>
                         </Link> */}
@@ -766,18 +758,18 @@ const Header = props => {
 
                       <div className="nav-dropdown-subcategory-content hover_fade_in" id="sponsored_artists_dropdown">
                         <Link to="/pages/menu/sponsored_artists">
-                          <GLButton variant="nav" fullWidth className="block ta-l fs-20px title_font">
+                          <GLButton variant="nav" className="w-100per ta-l fs-20px title_font">
                             Sponsored Artists
                           </GLButton>
                         </Link>
                         <hr className="w-95per m-0px" />
                         <Link to="/collections/all/sponsors">
-                          <GLButton variant="nav" fullWidth className="block ta-l">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Sponsored Glovers
                           </GLButton>
                         </Link>
                         <Link to="/collections/all/teams">
-                          <GLButton variant="nav" fullWidth className="block ta-l">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Sponsored Teams
                           </GLButton>
                         </Link>
@@ -796,38 +788,38 @@ const Header = props => {
                     <div className="jc-c">
                       <div className="w-100per max-w-300px">
                         <Link to="/pages/menu/support">
-                          <GLButton variant="nav" fullWidth className="ta-l fs-18px title_font">
+                          <GLButton variant="nav" className="w-100per ta-l fs-18px title_font">
                             Support
                           </GLButton>
                         </Link>
                         <hr className="w-95per m-0px" />
                         <Link to="/pages/track_your_order">
-                          <GLButton variant="nav" fullWidth className="ta-l">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Track Your Order
                           </GLButton>
                         </Link>
                         {/* <Link to="/pages/color_palettes">
-													<GLButton variant="nav" fullWidth className="ta-l jc-b">
+													<GLButton variant="nav" className="w-100per ta-l jc-b">
 														Color Palettes
 													</GLButton>
 												</Link> */}
                         <Link to="/pages/about">
-                          <GLButton variant="nav" fullWidth className="ta-l jc-b">
+                          <GLButton variant="nav" className="w-100per ta-l jc-b">
                             About
                           </GLButton>
                         </Link>
                         <Link to="/pages/events">
-                          <GLButton variant="nav" fullWidth className="ta-l jc-b">
+                          <GLButton variant="nav" className="w-100per ta-l jc-b">
                             Events
                           </GLButton>
                         </Link>
                         <Link to="/pages/menu/manuals">
-                          <GLButton variant="nav" fullWidth className="ta-l jc-b">
+                          <GLButton variant="nav" className="w-100per ta-l jc-b">
                             Manuals
                           </GLButton>
                         </Link>
                         <Link to="/pages/announcements">
-                          <GLButton variant="nav" fullWidth className="ta-l">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Announcements
                           </GLButton>
                         </Link>
@@ -840,12 +832,12 @@ const Header = props => {
                           </GLButton>
                         </div>
                         <Link to="/pages/contact">
-                          <GLButton variant="nav" fullWidth className="ta-l">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Contact
                           </GLButton>
                         </Link>
                         <Link to="/pages/terms">
-                          <GLButton variant="nav" fullWidth className="ta-l">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Term and Conditions
                           </GLButton>
                         </Link>
@@ -853,39 +845,39 @@ const Header = props => {
 
                       <div className="nav-dropdown-subcategory-content hover_fade_in" id="faq_dropdown">
                         <Link to="/pages/faq">
-                          <GLButton variant="nav" fullWidth className="ta-l fs-20px title_font">
+                          <GLButton variant="nav" className="w-100per ta-l fs-20px title_font">
                             FAQ
                           </GLButton>
                         </Link>
                         <hr className="w-95per m-0px" />
                         <HashLink to="/pages/faq#glowskinz">
-                          <GLButton variant="nav" fullWidth className="ta-l block">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Glowskinz
                           </GLButton>
                         </HashLink>
                         <HashLink to="/pages/faq#diffuser_caps">
-                          <GLButton variant="nav" fullWidth className="ta-l block">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Diffuser Caps
                           </GLButton>
                         </HashLink>
                         <HashLink to="/pages/faq#ordering_custom_products">
-                          <GLButton variant="nav" fullWidth className="ta-l block">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Ordering Custom Products
                           </GLButton>
                         </HashLink>
                         <HashLink to="/pages/faq#featured_content">
-                          <GLButton variant="nav" fullWidth className="ta-l block">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Featured Content
                           </GLButton>
                         </HashLink>
 
                         <HashLink to="/pages/faq#processing_shipping">
-                          <GLButton variant="nav" fullWidth className="ta-l block">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Processing/Shipping
                           </GLButton>
                         </HashLink>
                         <HashLink to="/pages/faq#order_issues">
-                          <GLButton variant="nav" fullWidth className="ta-l block">
+                          <GLButton variant="nav" className="w-100per ta-l">
                             Order Issues
                           </GLButton>
                         </HashLink>
@@ -956,122 +948,122 @@ const Header = props => {
                   </GLButton>
                   <ul className="dropdown-content hover_fade_in w-175px">
                     <Link to="/secure/glow/controlpanel">
-                      <GLButton variant="nav" fullWidth className="ta-l">
+                      <GLButton variant="nav" className="w-100per ta-l">
                         Control Panel
                       </GLButton>
                     </Link>
                     <Link to="/secure/glow/orders?page=1?limit=10">
-                      <GLButton variant="nav" fullWidth className="ta-l">
+                      <GLButton variant="nav" className="w-100per ta-l">
                         Orders
                       </GLButton>
                     </Link>
                     <Link to="/secure/glow/products">
-                      <GLButton variant="nav" fullWidth className="ta-l">
+                      <GLButton variant="nav" className="w-100per ta-l">
                         Products
                       </GLButton>
                     </Link>
                     <Link to="/secure/glow/users">
-                      <GLButton variant="nav" fullWidth className="ta-l">
+                      <GLButton variant="nav" className="w-100per ta-l">
                         Users
                       </GLButton>
                     </Link>
                     <Link to="/secure/glow/expenses">
-                      <GLButton variant="nav" fullWidth className="ta-l">
+                      <GLButton variant="nav" className="w-100per ta-l">
                         Expenses
                       </GLButton>
                     </Link>
                     <Link to="/secure/glow/features">
-                      <GLButton variant="nav" fullWidth className="ta-l">
+                      <GLButton variant="nav" className="w-100per ta-l">
                         Features
                       </GLButton>
                     </Link>
                     <Link to="/secure/glow/paychecks">
-                      <GLButton variant="nav" fullWidth className="ta-l">
+                      <GLButton variant="nav" className="w-100per ta-l">
                         Paychecks
                       </GLButton>
                     </Link>
                     <Link to="/secure/glow/affiliates">
-                      <GLButton variant="nav" fullWidth className="ta-l">
+                      <GLButton variant="nav" className="w-100per ta-l">
                         Affiliates
                       </GLButton>
                     </Link>
                     <Link to="/secure/glow/teams">
-                      <GLButton variant="nav" fullWidth className="ta-l">
+                      <GLButton variant="nav" className="w-100per ta-l">
                         Teams
                       </GLButton>
                     </Link>
                     <Link to="/secure/glow/promos">
-                      <GLButton variant="nav" fullWidth className="ta-l">
+                      <GLButton variant="nav" className="w-100per ta-l">
                         Promos
                       </GLButton>
                     </Link>
                     <Link to="/secure/glow/carts">
-                      <GLButton variant="nav" fullWidth className="ta-l">
+                      <GLButton variant="nav" className="w-100per ta-l">
                         Carts
                       </GLButton>
                     </Link>
                     <Link to="/secure/glow/contents">
-                      <GLButton variant="nav" fullWidth className="ta-l">
+                      <GLButton variant="nav" className="w-100per ta-l">
                         Contents
                       </GLButton>
                     </Link>
                     <Link to="/secure/glow/emails">
-                      <GLButton variant="nav" fullWidth className="ta-l">
+                      <GLButton variant="nav" className="w-100per ta-l">
                         Emails
                       </GLButton>
                     </Link>
                     <Link to="/secure/glow/logs">
-                      <GLButton variant="nav" fullWidth className="ta-l">
+                      <GLButton variant="nav" className="w-100per ta-l">
                         Logs
                       </GLButton>
                     </Link>
                     <Link to="/secure/glow/chips">
-                      <GLButton variant="nav" fullWidth className="ta-l">
+                      <GLButton variant="nav" className="w-100per ta-l">
                         Chips
                       </GLButton>
                     </Link>
                     <Link to="/secure/glow/surveys">
-                      <GLButton variant="nav" fullWidth className="ta-l">
+                      <GLButton variant="nav" className="w-100per ta-l">
                         Surveys
                       </GLButton>
                     </Link>
                     <Link to="/secure/glow/parcels">
-                      <GLButton variant="nav" fullWidth className="ta-l">
+                      <GLButton variant="nav" className="w-100per ta-l">
                         Parcels
                       </GLButton>
                     </Link>
                     <Link to="/secure/glow/categorys">
-                      <GLButton variant="nav" fullWidth className="ta-l">
+                      <GLButton variant="nav" className="w-100per ta-l">
                         Categorys
                       </GLButton>
                     </Link>
                     <Link to="/secure/glow/settings">
-                      <GLButton variant="nav" fullWidth className="ta-l">
+                      <GLButton variant="nav" className="w-100per ta-l">
                         Settings
                       </GLButton>
                     </Link>
                     <Link to="/secure/glow/palettes">
-                      <GLButton variant="nav" fullWidth className="ta-l">
+                      <GLButton variant="nav" className="w-100per ta-l">
                         Palettes
                       </GLButton>
                     </Link>
                     <Link to="/secure/glow/filaments">
-                      <GLButton variant="nav" fullWidth className="ta-l">
+                      <GLButton variant="nav" className="w-100per ta-l">
                         Filaments
                       </GLButton>
                     </Link>
                     <Link to="/secure/glow/edit_all_data">
-                      <GLButton variant="nav" fullWidth className="ta-l">
+                      <GLButton variant="nav" className="w-100per ta-l">
                         Edit All Data
                       </GLButton>
                     </Link>
                     <Link to="/secure/glow/gcode_continous">
-                      <GLButton variant="nav" fullWidth className="ta-l">
+                      <GLButton variant="nav" className="w-100per ta-l">
                         Gcode
                       </GLButton>
                     </Link>
                     <Link to="/secure/glow/image_compressor">
-                      <GLButton variant="nav" fullWidth className="ta-l">
+                      <GLButton variant="nav" className="w-100per ta-l">
                         Compressor
                       </GLButton>
                     </Link>
