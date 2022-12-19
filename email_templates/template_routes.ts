@@ -16,7 +16,8 @@ import {
   review,
   email_subscription,
   order_status,
-  custom_contact
+  custom_contact,
+  code_used
 } from "./pages";
 import express from "express";
 import { Header, Footer } from "./components";
@@ -70,6 +71,89 @@ router.get("/refund", async (req: { body: any }, res: { send: (arg0: string) => 
     order: data
   };
   res.send(App({ body: order(body), unsubscribe: false }));
+});
+router.get("/code_used", async (req: { body: any }, res: { send: (arg0: string) => void }) => {
+  const body = {
+    affiliate: {
+      _id: "5f6a57dbf04766002a52230e",
+      active: true,
+      deleted: false,
+      artist_name: "Cosmo",
+      instagram_handle: "cosmoglover",
+      facebook_name: "cosmoglover",
+      percentage_off: 30,
+      promo_code: "cosmo",
+      createdAt: "2020-09-22T20:00:27.101Z",
+      updatedAt: "2022-01-10T20:58:07.152Z",
+      __v: 0,
+      promoter: false,
+      sponsor: true,
+      user: "5f6a7891f8bfc0002ab4904b",
+      picture: "https://thumbs2.imgbox.com/f7/ca/Su3FEQr9_t.jpg",
+      bio: "I'm here for the flow.  Gaming, Magic the Gathering, Poi",
+      inspiration: "Stunna, Flowsonn, Megasloth, Puppet",
+      location: "Baytown, TX",
+      years: "9",
+      team: true,
+      video: "k5GRzQ8683w",
+      products: [
+        "5f610da07279cf002a073d89",
+        "5eb1eb29094a5e002a417d0a",
+        "5f90e245454528002af7df4a",
+        "5f90e21b454528002af7df42",
+        "605008e3d2946c002a82c293",
+        "5ff882654cb3b7002a667747",
+        "5f90e202454528002af7df30",
+        "600722965510ff002aceaeb0"
+      ],
+      chips: [],
+      pathname: "cosmo",
+      private_code: {
+        _id: "5f6a5a82f04766002a522310",
+        excluded_categories: [],
+        excluded_products: [],
+        active: true,
+        deleted: false,
+        promo_code: "xcpwtv",
+        for_customer: false,
+        percentage_off: 50,
+        createdAt: "2020-09-22T20:11:46.431Z",
+        updatedAt: "2021-07-02T00:41:15.084Z",
+        __v: 0,
+        user: "5f6a7891f8bfc0002ab4904b",
+        minimum_total: null,
+        admin_only: false,
+        affiliate_only: true,
+        used_once: false,
+        free_shipping: true
+      },
+      public_code: {
+        _id: "5f6a57ebf04766002a52230f",
+        excluded_categories: [],
+        excluded_products: [],
+        active: true,
+        deleted: false,
+        promo_code: "cosmo",
+        for_customer: true,
+        percentage_off: 10,
+        createdAt: "2020-09-22T20:00:43.566Z",
+        updatedAt: "2021-12-09T03:40:49.329Z",
+        __v: 0,
+        minimum_total: 0,
+        admin_only: false,
+        affiliate_only: false,
+        used_once: true,
+        end_date: "2021-01-01T00:00:00.000Z",
+        start_date: "2021-01-01T00:00:00.000Z",
+        included_categories: [],
+        included_products: [],
+        sponsor_only: false
+      },
+      venmo: "@joseph-conner-12"
+    }
+  };
+
+  res.send(App({ body: code_used(body), title: "Welcome to the Team!" }));
 });
 router.get("/order", async (req: { body: any }, res: { send: (arg0: string) => void }) => {
   // const order = await order_db.findById_orders_db('61e423d48fff204d7a14f174');
