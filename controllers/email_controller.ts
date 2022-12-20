@@ -314,7 +314,7 @@ export default {
     const stats: any = await order_services.affiliate_code_usage_orders_s(
       { promo_code },
       {
-        month: months[monthNumber],
+        month: months[monthNumber].toLowerCase(),
         year: year
       }
     );
@@ -328,6 +328,7 @@ export default {
         earnings: affiliate.sponsor ? stats.revenue * 0.15 : stats.revenue * 0.1
       })
     };
+
     sendEmail(mailOptions, res, "info", "Code Used Email sent to " + user.email);
   },
   send_password_reset_emails_c: async (req: any, res: any) => {

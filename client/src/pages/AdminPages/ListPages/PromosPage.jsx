@@ -7,7 +7,7 @@ import { Helmet } from "react-helmet";
 import { Search, Sort } from "../../../components/SpecialtyComponents";
 import { format_date } from "../../../utils/helper_functions";
 import { GLButton } from "../../../components/GlowLEDsComponents";
-import { API_Promos } from "../../../utils";
+import { API_Emails, API_Promos } from "../../../utils";
 
 const PromosPage = props => {
   const [search, set_search] = useState("");
@@ -147,6 +147,9 @@ const PromosPage = props => {
     await API_Promos.create_sponsor_codes();
     dispatch(listPromos({}));
   };
+  const send_code_used_email = async () => {
+    await API_Emails.send_code_used_emails_a("cosmo");
+  };
 
   return (
     <div className="main_container p-20px">
@@ -179,6 +182,9 @@ const PromosPage = props => {
         </Link>
         <GLButton variant="primary" className="h-40px" onClick={create_sponsor_codes}>
           Create Sponsor Codes
+        </GLButton>
+        <GLButton variant="primary" className="h-40px" onClick={send_code_used_email}>
+          Send Code Used Email
         </GLButton>
       </div>
 

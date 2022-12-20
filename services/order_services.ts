@@ -310,6 +310,7 @@ export default {
       //     $lte: new Date(end_date)
       //   }
       // };
+      console.log({ params, query });
 
       if (query.month && query.month.length > 0) {
         const start_date = month_dates(query.month, query.year).start_date;
