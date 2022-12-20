@@ -29,6 +29,19 @@ export default {
       throw new Error(error.message);
     }
   },
+  findBy_promos_db: async (params: any) => {
+    try {
+      return await Promo.findOne(params)
+        .populate("affiliate")
+        .populate("user")
+        .populate("excluded_categories")
+        .populate("included_categories")
+        .populate("excluded_products")
+        .populate("included_products");
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  },
   findByCode_promos_db: async (promo_code: string) => {
     try {
       return await Promo.findOne({ promo_code: promo_code })

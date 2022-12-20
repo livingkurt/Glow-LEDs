@@ -40,6 +40,13 @@ export default {
       throw new Error(error.message);
     }
   },
+  findByAffiliateId_users_s: async (params: any) => {
+    try {
+      return await user_db.findByAffiliateId_users_db(params.id);
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  },
   findByEmail_users_s: async (params: any) => {
     try {
       return await user_db.findByEmail_users_db(params.email);

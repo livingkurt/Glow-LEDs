@@ -1,4 +1,4 @@
-import { email_services } from "../services";
+import { email_services, order_services } from "../services";
 const nodemailer = require("nodemailer");
 import App from "../email_templates/App";
 import {
@@ -13,11 +13,12 @@ import {
   affiliate,
   feature,
   announcement,
-  custom_contact
+  custom_contact,
+  code_used
 } from "../email_templates/pages/index";
 import email_subscription from "../email_templates/pages/email_subscription";
-import { affiliate_db, content_db, email_db, order_db, user_db } from "../db";
-import { format_date, toCapitalize } from "../util";
+import { affiliate_db, content_db, email_db, order_db, promo_db, user_db } from "../db";
+import { format_date, months, toCapitalize } from "../util";
 const cron = require("node-cron");
 const schedule = require("node-schedule");
 const { google } = require("googleapis");
@@ -301,6 +302,33 @@ export default {
       html: custom_contact({ order })
     };
     sendEmail(mailOptions, res, "contact", "Custom Contact Email Sent to " + order.shipping.first_name);
+  },
+  send_code_used_emails_c: async (req: any, res: any) => {
+    const { promo_code } = req.params;
+    const date = new Date();
+    const monthNumber = date.getMonth();
+    const year = date.getFullYear();
+    const promo = await promo_db.findBy_promos_db({ promo_code });
+    const affiliate = await affiliate_db.findBy_affiliates_db({ public_code: promo._id });
+    const user = await user_db.findByAffiliateId_users_db(affiliate._id);
+    const stats: any = await order_services.affiliate_code_usage_orders_s(
+      { promo_code },
+      {
+        month: months[monthNumber],
+        year: year
+      }
+    );
+    const mailOptions = {
+      from: process.env.DISPLAY_CONTACT_EMAIL,
+      to: user.email,
+      subject: `You're code was just used!`,
+      html: code_used({
+        affiliate,
+        number_of_uses: stats.number_of_uses,
+        earnings: affiliate.sponsor ? stats.revenue * 0.15 : stats.revenue * 0.1
+      })
+    };
+    sendEmail(mailOptions, res, "info", "Code Used Email sent to " + user.email);
   },
   send_password_reset_emails_c: async (req: any, res: any) => {
     const mailOptions = {

@@ -338,10 +338,12 @@ export default {
       } else {
         filter = { deleted: false, promo_code: params.promo_code, isPaid: true };
       }
+
       const limit = 0;
       const page = 1;
 
       const orders = await order_db.findAll_orders_db(filter, sort, limit, page);
+      console.log({ orders });
 
       const number_of_uses = orders
         .filter((order: any) => order.promo_code)

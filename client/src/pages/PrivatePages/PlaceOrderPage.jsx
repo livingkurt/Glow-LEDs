@@ -13,7 +13,7 @@ import { listPromos } from "../../actions/promoActions";
 import { Loading, LoadingPayments, LoadingShipping } from "../../components/UtilityComponents";
 import { validate_promo_code } from "../../utils/validations";
 import { listUsers } from "../../actions/userActions";
-import { API_External, API_Products, API_Promos, API_Shipping } from "../../utils";
+import { API_Emails, API_External, API_Products, API_Promos, API_Shipping } from "../../utils";
 import { determine_total, state_names } from "../../utils/helper_functions";
 import { check_authentication } from "../../utils/react_helper_functions";
 import useWindowDimensions from "../../components/Hooks/windowDimensions";
@@ -477,6 +477,9 @@ const PlaceOrderPage = props => {
         dimminish_stock();
         sessionStorage.removeItem("shippingAddress");
         dispatch(removeOrderState());
+        if (promo_code) {
+          API_Emails.send_code_used_emails_a(promo_code);
+        }
       } else if (error_pay) {
       }
     }

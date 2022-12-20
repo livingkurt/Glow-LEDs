@@ -42,6 +42,25 @@ export default {
       throw new Error(error.message);
     }
   },
+  findByAffiliateId_users_db: async (id: string) => {
+    try {
+      return await User.findOne({ affiliate: id })
+        .populate({
+          path: "affiliate",
+          populate: [
+            {
+              path: "public_code"
+            },
+            {
+              path: "private_code"
+            }
+          ]
+        })
+        .populate("products");
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  },
   findByEmail_users_db: async (email: string) => {
     try {
       return await User.findOne({ email });

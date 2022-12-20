@@ -157,6 +157,9 @@ export const createPayOrderGuest =
         paymentMethod
       });
       dispatch({ type: ORDER_PAY_SUCCESS, payload: payment_created });
+      if (order_created.promo_code) {
+        await axios.put("/api/emails/code_used/" + order_created.promo_code);
+      }
       sessionStorage.removeItem("shippingAddress");
     } catch (error) {
       dispatch({ type: ORDER_CREATE_FAIL, payload: error.response.data });

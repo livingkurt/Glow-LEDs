@@ -23,6 +23,9 @@ const email_routes = {
   send_affiliate_email: (affiliate: object, subject: string, email: string) => {
     return axios.post("/api/emails/affiliate", { affiliate, subject, email });
   },
+  send_code_used_emails_a: (promo_code: string) => {
+    return axios.post("/api/emails/code_used" + promo_code);
+  },
   send_feature_email: (feature: object, subject: string, email: string) => {
     return axios.post("/api/emails/feature", { feature, subject, email });
   },

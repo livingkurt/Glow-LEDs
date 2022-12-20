@@ -16,6 +16,18 @@ export default {
       throw new Error(error.message);
     }
   },
+  findBy_affiliates_db: async (params: any) => {
+    try {
+      return await Affiliate.findOne(params)
+        .populate("user")
+        .populate("chips")
+        .populate("products")
+        .populate("public_code")
+        .populate("private_code");
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  },
   findByPathname_affiliates_db: async (pathname: string) => {
     try {
       return await Affiliate.findOne({ pathname: pathname })
