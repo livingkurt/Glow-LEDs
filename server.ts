@@ -79,7 +79,8 @@ app.get("/api/config/paypal", (req: any, res: any) => {
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
-  app.use(express.static("dist"));
+  // app.use(express.static("dist"));
+  app.use("/dist", express.static(path.join(__dirname, "dist")));
 }
 
 app.get("*", (request: any, response: any) => {
