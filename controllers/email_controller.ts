@@ -320,12 +320,16 @@ export default {
     );
     const mailOptions = {
       from: process.env.DISPLAY_CONTACT_EMAIL,
+      // to: "lavacquek@icloud.com",
       to: user.email,
       subject: `You're code was just used!`,
-      html: code_used({
-        affiliate,
-        number_of_uses: stats.number_of_uses,
-        earnings: affiliate.sponsor ? stats.revenue * 0.15 : stats.revenue * 0.1
+      html: App({
+        body: code_used({
+          affiliate,
+          number_of_uses: stats.number_of_uses,
+          earnings: affiliate.sponsor ? stats.revenue * 0.15 : stats.revenue * 0.1
+        }),
+        unsubscribe: false
       })
     };
 
