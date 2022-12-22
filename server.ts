@@ -1,7 +1,7 @@
 require("newrelic");
 export {};
 import sslRedirect from "heroku-ssl-redirect";
-// import express from 'express';
+import express from "express";
 import path from "path";
 import mongoose from "mongoose";
 import routes from "./routes";
@@ -14,7 +14,7 @@ const compression = require("compression");
 const expressAttack = require("express-attack");
 const requestIp = require("request-ip");
 // const scout = require("@scout_apm/scout-apm");
-const express = require("express");
+// const express = require("express");
 const fs = require("fs");
 
 // // The "main" function
@@ -82,7 +82,7 @@ if (process.env.NODE_ENV === "production") {
   // app.use(express.static("dist"));
   app.use("/dist", express.static(path.join(__dirname, "dist")));
 
-  app.get("*", (request: any, response: any) => {
+  app.get("*", (request: express.Request, response: express.Response) => {
     console.log({ response, __dirname });
     response.sendFile(path.join(__dirname, "client/build", "index.html"));
   });
