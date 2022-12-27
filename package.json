@@ -2,7 +2,7 @@
   "name": "glow_leds",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "dist/server.js",
   "engines": {
     "npm": "6.14.17",
     "node": "14.20.1"
