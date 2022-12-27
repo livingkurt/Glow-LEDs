@@ -84,7 +84,7 @@ if (process.env.NODE_ENV === "production") {
 
   app.get("*", (request: express.Request, response: express.Response) => {
     console.log({ response, __dirname });
-    response.sendFile(path.join(__dirname, "client/build", "index.html"));
+    response.sendFile(path.join("/app", "client/build", "index.html"));
   });
 }
 
