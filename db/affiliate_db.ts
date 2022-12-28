@@ -13,7 +13,9 @@ export default {
         .populate("private_code")
         .populate("chips");
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   findBy_affiliates_db: async (params: any) => {
@@ -25,7 +27,9 @@ export default {
         .populate("public_code")
         .populate("private_code");
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   findByPathname_affiliates_db: async (pathname: string) => {
@@ -37,7 +41,9 @@ export default {
         .populate("public_code")
         .populate("private_code");
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   findById_affiliates_db: async (id: string) => {
@@ -49,7 +55,9 @@ export default {
         .populate("public_code")
         .populate("private_code");
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   create_affiliates_db: async (body: any, public_code: any, private_code: any) => {
@@ -64,7 +72,9 @@ export default {
         });
       }
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   update_affiliates_db: async (params: any, body: any) => {
@@ -74,17 +84,21 @@ export default {
         return await Affiliate.updateOne({ pathname: params.pathname }, body);
       }
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
-  remove_affiliates_db: async (params: any) => {
+  remove_affiliates_db: async (params: { pathname: string }) => {
     try {
       const affiliate: any = await Affiliate.findOne({ pathname: params.pathname });
       if (affiliate) {
         return await Affiliate.updateOne({ pathname: params.pathname }, { deleted: true });
       }
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   }
 };

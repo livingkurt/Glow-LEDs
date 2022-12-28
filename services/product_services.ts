@@ -63,28 +63,36 @@ export default {
         currentPage: parseInt(page)
       };
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   findById_products_s: async (params: any) => {
     try {
       return await product_db.findById_products_db(params.id);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   findByPathname_products_s: async (params: any) => {
     try {
       return await product_db.findById_products_db(params.pathname);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   create_products_s: async (body: any) => {
     try {
       return await product_db.create_products_db(body);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
 
@@ -92,14 +100,18 @@ export default {
     try {
       return await product_db.update_products_db(params.id, body);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   remove_products_s: async (params: any) => {
     try {
       return await product_db.remove_products_db(params.id);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
 
@@ -115,7 +127,9 @@ export default {
       const page = 1;
       return await product_db.findAll_products_db(filter, sort, limit, page);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   get_our_picks_products_s: async (params: any, body: any) => {
@@ -151,7 +165,9 @@ export default {
       const page = 1;
       return await product_db.findAll_products_db(filter, sort, limit, page);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   get_new_releases_products_s: async (params: any, body: any) => {
@@ -160,7 +176,9 @@ export default {
 
       return products.map((product: any) => product.data);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   update_stock_products_s: async (params: any, body: any) => {
@@ -180,7 +198,9 @@ export default {
       });
       return "Success";
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   update_product_order_products_s: async (params: any, body: any) => {
@@ -200,7 +220,9 @@ export default {
         });
       });
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   add_product_options_products_s: async (params: any, body: any) => {
@@ -219,7 +241,9 @@ export default {
       // });
       return Kaleidoscope[type];
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
 
@@ -238,7 +262,9 @@ export default {
         throw new Error("Error in Updating Product.");
       }
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
 
@@ -269,7 +295,9 @@ export default {
         throw new Error("Product Not Found");
       }
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   }
   // compress_images_products_s: async (body: any) => {
@@ -286,7 +314,9 @@ export default {
   //     return "Success";
   //   } catch (error) {
   //
-  //     throw new Error(error.message);
+  // //     if (error instanceof Error) {
+  //             throw new Error(error.message);
+  //           }
   //   }
   // },
 };

@@ -27,28 +27,36 @@ export default {
       }
       return await promo_db.findAll_promos_db(filter, sort, 0);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   findById_promos_s: async (params: any) => {
     try {
       return await promo_db.findById_promos_db(params.id);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   findByCode_promos_s: async (params: any) => {
     try {
       return await promo_db.findByCode_promos_db(params.promo_code);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   create_promos_s: async (body: any) => {
     try {
       return await promo_db.create_promos_db(body);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   create_one_time_use_code_promos_s: async (body: any) => {
@@ -71,7 +79,9 @@ export default {
     try {
       return await promo_db.create_promos_db(private_code);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   create_sponsor_codes_promos_s: async (body: any) => {
@@ -132,14 +142,18 @@ export default {
       );
       return sponsor_codes;
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   update_promos_s: async (params: any, body: any) => {
     try {
       return await promo_db.update_promos_db(params.id, body);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   update_affiliate_codes_promos_s: async (params: any, query: any) => {
@@ -201,7 +215,9 @@ export default {
 
       return "Success";
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   update_code_used_promos_s: async (params: any, body: any) => {
@@ -217,7 +233,9 @@ export default {
               return updatedPromo;
             }
           } catch (error) {
-            throw new Error(error.message);
+            if (error instanceof Error) {
+              throw new Error(error.message);
+            }
           }
         } else {
           throw new Error("No Promo Code Found");
@@ -225,14 +243,18 @@ export default {
       }
       return promo;
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   remove_promos_s: async (params: any) => {
     try {
       return await promo_db.remove_promos_db(params.id);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   }
 };

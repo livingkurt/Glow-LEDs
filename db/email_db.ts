@@ -5,21 +5,27 @@ export default {
     try {
       return await Email.find(filter).sort(sort).limit(limit);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   findById_emails_db: async (id: string) => {
     try {
       return await Email.findOne({ _id: id });
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   create_emails_db: async (body: any) => {
     try {
       return await Email.create(body);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   update_emails_db: async (id: string, body: any) => {
@@ -29,7 +35,9 @@ export default {
         return await Email.updateOne({ _id: id }, body);
       }
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   remove_emails_db: async (id: string) => {
@@ -39,7 +47,9 @@ export default {
         return await Email.updateOne({ _id: id }, { deleted: true });
       }
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   }
 };

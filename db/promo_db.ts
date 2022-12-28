@@ -13,7 +13,9 @@ export default {
         .populate("included_products")
         .limit(limit);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   findById_promos_db: async (id: string) => {
@@ -26,7 +28,9 @@ export default {
         .populate("excluded_products")
         .populate("included_products");
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   findBy_promos_db: async (params: any) => {
@@ -39,7 +43,9 @@ export default {
         .populate("excluded_products")
         .populate("included_products");
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   findByCode_promos_db: async (promo_code: string) => {
@@ -52,14 +58,18 @@ export default {
         .populate("excluded_products")
         .populate("included_products");
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   create_promos_db: async (body: any) => {
     try {
       return await Promo.create(body);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   update_promos_db: async (id: string, body: any) => {
@@ -69,7 +79,9 @@ export default {
         return await Promo.updateOne({ _id: id }, body);
       }
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   remove_promos_db: async (id: string) => {
@@ -79,7 +91,9 @@ export default {
         return await Promo.updateOne({ _id: id }, { deleted: true });
       }
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   }
 };

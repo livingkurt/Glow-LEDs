@@ -31,42 +31,54 @@ export default {
       }
       return await team_db.findAll_teams_db(filter, sort);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   findByPathname_teams_s: async (params: any) => {
     try {
       return await team_db.findByPathname_teams_db(params.pathname);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   findByAffiliate_teams_s: async (params: any) => {
     try {
       return await team_db.findByAffiliate_teams_db(params.id);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   create_teams_s: async (body: any) => {
     try {
       return await team_db.create_teams_db(body);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   update_teams_s: async (params: any, body: any) => {
     try {
       return await team_db.update_teams_db(params.pathname, body);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   remove_teams_s: async (params: any) => {
     try {
       return await team_db.remove_teams_db(params.pathname);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   }
 };

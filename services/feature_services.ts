@@ -25,14 +25,18 @@ export default {
 
       return await feature_db.findAll_features_db(filter, sort);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   findByPathname_features_s: async (params: any) => {
     try {
       return await feature_db.findByPathname_features_db(params.id);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
 
@@ -40,21 +44,27 @@ export default {
     try {
       return await feature_db.create_features_db(body);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   update_features_s: async (params: any, body: any) => {
     try {
       return await feature_db.update_features_db(params.id, body);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   remove_features_s: async (params: any) => {
     try {
       return await feature_db.remove_features_db(params.id);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   }
 };

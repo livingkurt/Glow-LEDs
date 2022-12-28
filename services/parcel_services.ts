@@ -24,35 +24,45 @@ export default {
       }
       return await parcel_db.findAll_parcels_db(filter, sort);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   findById_parcels_s: async (params: any) => {
     try {
       return await parcel_db.findById_parcels_db(params.id);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   create_parcels_s: async (body: any) => {
     try {
       return await parcel_db.create_parcels_db(body);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   update_parcels_s: async (params: any, body: any) => {
     try {
       return await parcel_db.update_parcels_db(params.id, body);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   remove_parcels_s: async (params: any) => {
     try {
       return await parcel_db.remove_parcels_db(params.id);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   }
 };

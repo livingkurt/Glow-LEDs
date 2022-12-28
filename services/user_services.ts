@@ -30,28 +30,36 @@ export default {
       }
       return await user_db.findAll_users_db(filter, sort);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   findById_users_s: async (params: any) => {
     try {
       return await user_db.findById_users_db(params.id);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   findByAffiliateId_users_s: async (params: any) => {
     try {
       return await user_db.findByAffiliateId_users_db(params.id);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   findByEmail_users_s: async (params: any) => {
     try {
       return await user_db.findByEmail_users_db(params.email);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   create_users_s: async (body: any) => {
@@ -70,7 +78,9 @@ export default {
       });
       return response;
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   // update_profile_users_s: async (params: any, body: any) => {
@@ -113,7 +123,9 @@ export default {
   // 		}
   // 	} catch (error) {
   //
-  // 		throw new Error(error.message);
+  // 		if (error instanceof Error) {
+  // throw new Error(error.message);
+  // }
   // 	}
   // },
   // update_profile_users_s: async (params: any, body: any) => {
@@ -149,14 +161,18 @@ export default {
     try {
       return await user_db.update_users_db(params.id, body);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   remove_users_s: async (params: any) => {
     try {
       return await user_db.remove_users_db(params.id);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
 
@@ -310,7 +326,9 @@ export default {
         return user;
       }
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   // reset_password_users_s: async (params: any) => {
@@ -318,8 +336,10 @@ export default {
   // 		return await user_db.findById_users_db(params.id);
   // 	} catch (error) {
   //
-  // 		throw new Error(error.message);
-  // 	}
+  // 		if (error instanceof Error) {
+  //             throw new Error(error.message);
+  //           }
+  // // 	}
   // },
   // verify_users_s: async (req: any, res: any) => {
   // 	try {
@@ -394,7 +414,9 @@ export default {
         };
       }
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   validate_email_s: async (params: any, body: any) => {
@@ -405,7 +427,9 @@ export default {
       }
       return false;
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   }
   // checkemail_users_s: async (req: any, res: any) => {

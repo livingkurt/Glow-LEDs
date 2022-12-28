@@ -5,21 +5,27 @@ export default {
     try {
       return await Setting.find(filter).sort(sort).populate("user").populate("affiliate").populate("team");
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   findById_settings_db: async (id: string) => {
     try {
       return await Setting.findOne({ _id: id }).populate("user").populate("affiliate").populate("team");
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   create_settings_db: async (body: any) => {
     try {
       return await Setting.create(body);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   update_settings_db: async (id: string, body: any) => {
@@ -29,7 +35,9 @@ export default {
         return await Setting.updateOne({ _id: id }, body);
       }
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   remove_settings_db: async (id: string) => {
@@ -39,7 +47,9 @@ export default {
         return await Setting.updateOne({ _id: id }, { deleted: true });
       }
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   }
 };

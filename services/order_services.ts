@@ -121,7 +121,9 @@ export default {
         currentPage: parseInt(page)
       };
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   findMy_orders_s: async (params: any) => {
@@ -132,35 +134,45 @@ export default {
       const page = 1;
       return await order_db.findAll_orders_db(filter, sort, limit, page);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   findById_orders_s: async (params: any) => {
     try {
       return await order_db.findById_orders_db(params.id);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   create_orders_s: async (body: any) => {
     try {
       return await order_db.create_orders_db(body);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   update_orders_s: async (params: any, body: any) => {
     try {
       return await order_db.update_orders_db(params.id, body);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   remove_orders_s: async (params: any) => {
     try {
       return await order_db.remove_orders_db(params.id);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   occurrences_orders_s: async (params: any) => {
@@ -201,7 +213,9 @@ export default {
       final_result.sort((a, b) => (a.occurrence > b.occurrence ? -1 : 1));
       return final_result;
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   top_customers_orders_s: async (params: any) => {
@@ -230,7 +244,9 @@ export default {
         .slice(0, 20);
       return sorted_orders;
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   category_occurrences_orders_s: async (params: any) => {
@@ -272,7 +288,9 @@ export default {
       final_result.sort((a, b) => (a.occurrence > b.occurrence ? -1 : 1));
       return final_result;
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   code_usage_orders_s: async (params: any, body: any) => {
@@ -294,7 +312,9 @@ export default {
       //
       return { number_of_uses, revenue };
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   affiliate_code_usage_orders_s: async (params: any, query: any) => {
@@ -364,7 +384,9 @@ export default {
 
       return { number_of_uses, revenue };
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   tax_rates_orders_s: async () => {
@@ -381,7 +403,9 @@ export default {
       });
       return result;
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   all_affiliate_code_usage_orders_s: async (params: any, query: any) => {
@@ -537,7 +561,9 @@ export default {
       };
       // return 'Success';
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   promo_code_usage_orders_s: async (params: any, query: any) => {
@@ -605,7 +631,9 @@ export default {
         discount: discount_s
       };
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   each_day_income_orders_s: async (params: any) => {
@@ -624,7 +652,9 @@ export default {
       const page = 1;
       return await order_db.findAll_orders_db(filter, sort, limit, page);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   each_month_income_orders_s: async (params: any) => {
@@ -646,7 +676,9 @@ export default {
       const page = 1;
       return await order_db.findAll_orders_db(filter, sort, limit, page);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   previous_income_orders_s: async (params: any) => {
@@ -662,7 +694,9 @@ export default {
       const page = 1;
       return await order_db.findAll_orders_db(filter, sort, limit, page);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   mark_as_shipped_orders_s: async (body: any) => {
@@ -679,7 +713,9 @@ export default {
       const page = 1;
       return await order_db.findAll_orders_db(filter, sort, limit, page);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   income_orders_s: async (params: any) => {
@@ -1023,7 +1059,9 @@ export default {
 
       return breakdown;
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   }
 };

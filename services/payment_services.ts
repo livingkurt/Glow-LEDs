@@ -58,7 +58,9 @@ export default {
         }
       );
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   }
   // guest_pay_payments_s: async (params: any, body: any) => {
@@ -66,7 +68,9 @@ export default {
   // 		return await order_db.update_payments_db(params.id, body);
   // 	} catch (error) {
   //
-  // 		throw new Error(error.message);
+  // // 		if (error instanceof Error) {
+  //             throw new Error(error.message);
+  //           }
   // 	}
   // },
   // secure_refund_payments_s: async (params: any, body: any) => {
@@ -74,7 +78,9 @@ export default {
   // 		return await order_db.update_payments_db(params.id, body);
   // 	} catch (error) {
   //
-  // 		throw new Error(error.message);
+  // // 		if (error instanceof Error) {
+  //             throw new Error(error.message);
+  //           }
   // 	}
   // },
 };

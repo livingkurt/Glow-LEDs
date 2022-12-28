@@ -20,7 +20,9 @@ export default {
         })
         .populate("products");
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   findById_users_db: async (id: string) => {
@@ -39,7 +41,9 @@ export default {
         })
         .populate("products");
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   findByAffiliateId_users_db: async (id: string) => {
@@ -58,7 +62,9 @@ export default {
         })
         .populate("products");
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   findByEmail_users_db: async (email: string) => {
@@ -83,7 +89,9 @@ export default {
     try {
       return await User.create(user);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   create_token_users_db: async (token: any) => {
@@ -91,7 +99,9 @@ export default {
     try {
       return await Token.create(token);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   update_users_db: async (id: string, body: any) => {
@@ -102,7 +112,9 @@ export default {
         return await User.updateOne({ _id: id }, body);
       }
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   remove_users_db: async (id: string) => {
@@ -112,7 +124,9 @@ export default {
         return await User.updateOne({ _id: id }, { deleted: true });
       }
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   }
 };

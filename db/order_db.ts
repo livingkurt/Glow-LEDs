@@ -13,7 +13,9 @@ export default {
         .skip((page - 1) * limit)
         .exec();
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
 
@@ -21,14 +23,18 @@ export default {
     try {
       return await Order.findOne({ _id: id }).populate("user").populate("orderItems.product").populate("orderItems.secondary_product");
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   create_orders_db: async (body: any) => {
     try {
       return await Order.create(body);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   update_orders_db: async (id: string, body: any) => {
@@ -38,7 +44,9 @@ export default {
         return await Order.updateOne({ _id: id }, body);
       }
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   remove_orders_db: async (id: string) => {
@@ -48,14 +56,18 @@ export default {
         return await Order.updateOne({ _id: id }, { deleted: true });
       }
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   count_orders_db: async (filter: any) => {
     try {
       return await Order.countDocuments(filter);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   }
 };

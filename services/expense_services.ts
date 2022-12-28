@@ -31,7 +31,9 @@ export default {
 
       return await expense_db.findAll_expenses_db(filter, sort);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   findAllByDate_expenses_s: async (body: any) => {
@@ -47,21 +49,27 @@ export default {
 
       return await expense_db.findAll_expenses_db(filter, sort);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   findById_expenses_s: async (params: any) => {
     try {
       return await expense_db.findById_expenses_db(params.id);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   create_expenses_s: async (body: any) => {
     try {
       return await expense_db.create_expenses_db(body);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   create_all_expenses_s: async (body: any) => {
@@ -96,21 +104,27 @@ export default {
 
       return "Success";
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   update_expenses_s: async (params: any, body: any) => {
     try {
       return await expense_db.update_expenses_db(params.id, body);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   remove_expenses_s: async (params: any) => {
     try {
       return await expense_db.remove_expenses_db(params.id);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   }
 };

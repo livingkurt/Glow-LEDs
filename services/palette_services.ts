@@ -25,42 +25,54 @@ export default {
 
       return await palette_db.findAll_palettes_db(filter, sort);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   findById_palettes_s: async (params: any) => {
     try {
       return await palette_db.findById_palettes_db(params.id);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   findMy_palettes_s: async (params: any) => {
     try {
       return await palette_db.findMy_palettes_db(params.id);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   create_palettes_s: async (body: any) => {
     try {
       return await palette_db.create_palettes_db(body);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   update_palettes_s: async (params: any, body: any) => {
     try {
       return await palette_db.update_palettes_db(params.id, body);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   remove_palettes_s: async (params: any) => {
     try {
       return await palette_db.remove_palettes_db(params.id);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   }
 };

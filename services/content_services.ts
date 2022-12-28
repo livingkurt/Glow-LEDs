@@ -20,7 +20,9 @@ export default {
 
       return await content_db.findAll_contents_db(filter, sort, limit);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   findDisplay_contents_s: async (query: any) => {
@@ -30,7 +32,9 @@ export default {
       const filter = { deleted: false, active: true };
       return await content_db.findAll_contents_db(filter, sort, limit);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   findAllEvents_contents_s: async (query: any) => {
@@ -67,7 +71,9 @@ export default {
       });
       return events;
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   findAllYoutube_contents_s: async (query: any) => {
@@ -104,35 +110,45 @@ export default {
       });
       return events;
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   findById_contents_s: async (params: any) => {
     try {
       return await content_db.findById_contents_db(params.id);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   create_contents_s: async (body: any) => {
     try {
       return await content_db.create_contents_db(body);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   update_contents_s: async (params: any, body: any) => {
     try {
       return await content_db.update_contents_db(params.id, body);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   remove_contents_s: async (params: any) => {
     try {
       return await content_db.remove_contents_db(params.id);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   }
 };

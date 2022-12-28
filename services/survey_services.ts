@@ -24,35 +24,45 @@ export default {
       }
       return await survey_db.findAll_surveys_db(filter, sort);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   findById_surveys_s: async (params: any) => {
     try {
       return await survey_db.findById_surveys_db(params.id);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   create_surveys_s: async (body: any) => {
     try {
       return await survey_db.create_surveys_db(body);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   update_surveys_s: async (params: any, body: any) => {
     try {
       return await survey_db.update_surveys_db(params.id, body);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   remove_surveys_s: async (params: any) => {
     try {
       return await survey_db.remove_surveys_db(params.id);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   }
 };

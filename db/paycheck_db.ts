@@ -5,28 +5,36 @@ export default {
     try {
       return await Paycheck.find(filter).sort(sort).populate("user").populate("affiliate");
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   findById_paychecks_db: async (id: string) => {
     try {
       return await Paycheck.findOne({ _id: id }).populate("user").populate("affiliate");
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   findMy_paychecks_db: async (affiliate_id: string) => {
     try {
       return await Paycheck.find({ deleted: false, affiliate: affiliate_id }).sort({ _id: -1 }).populate("affiliate");
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   create_paychecks_db: async (body: any) => {
     try {
       return await Paycheck.create(body);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   update_paychecks_db: async (id: string, body: any) => {
@@ -36,7 +44,9 @@ export default {
         return await Paycheck.updateOne({ _id: id }, body);
       }
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   remove_paychecks_db: async (id: string) => {
@@ -46,7 +56,9 @@ export default {
         return await Paycheck.updateOne({ _id: id }, { deleted: true });
       }
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   }
 };

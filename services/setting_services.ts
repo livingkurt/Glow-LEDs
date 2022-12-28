@@ -25,35 +25,45 @@ export default {
 
       return await setting_db.findAll_settings_db(filter, sort);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   findById_settings_s: async (params: any) => {
     try {
       return await setting_db.findById_settings_db(params.id);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   create_settings_s: async (body: any) => {
     try {
       return await setting_db.create_settings_db(body);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   update_settings_s: async (params: any, body: any) => {
     try {
       return await setting_db.update_settings_db(params.id, body);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   remove_settings_s: async (params: any) => {
     try {
       return await setting_db.remove_settings_db(params.id);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   }
 };

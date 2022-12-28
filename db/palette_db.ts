@@ -5,28 +5,36 @@ export default {
     try {
       return await Palette.find(filter).sort(sort).populate("user");
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   findById_palettes_db: async (id: string) => {
     try {
       return await Palette.findOne({ _id: id });
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   findMy_palettes_db: async (user_id: string) => {
     try {
       return await Palette.find({ deleted: false, user: user_id }).sort({ _id: -1 }).populate("user");
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   create_palettes_db: async (body: any) => {
     try {
       return await Palette.create(body);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   update_palettes_db: async (id: string, body: any) => {
@@ -36,7 +44,9 @@ export default {
         return await Palette.updateOne({ _id: id }, body);
       }
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   remove_palettes_db: async (id: string) => {
@@ -46,7 +56,9 @@ export default {
         return await Palette.updateOne({ _id: id }, { deleted: true });
       }
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   }
 };

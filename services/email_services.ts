@@ -24,35 +24,45 @@ export default {
 
       return await email_db.findAll_emails_db(filter, sort);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   findById_emails_s: async (params: any) => {
     try {
       return await email_db.findById_emails_db(params.id);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   create_emails_s: async (body: any) => {
     try {
       return await email_db.create_emails_db(body);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   update_emails_s: async (params: any, body: any) => {
     try {
       return await email_db.update_emails_db(params.id, body);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   remove_emails_s: async (params: any) => {
     try {
       return await email_db.remove_emails_db(params.id);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   send_emails_s: async (body: any) => {

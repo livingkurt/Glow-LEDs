@@ -13,7 +13,9 @@ export default {
       });
       return all_shipping;
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   get_shipping_rates_shipping_s: async (body: any) => {
@@ -170,7 +172,9 @@ export default {
 
       return created_shipment;
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   tracking_number_shipping_s: async (body: any) => {
@@ -196,7 +200,9 @@ export default {
         }
       }
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   create_label_shipping_s: async (body: any) => {
@@ -286,7 +292,9 @@ export default {
         return await created_shipment.buy(rate, 0);
       }
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   buy_label_shipping_s: async (body: any) => {
@@ -298,7 +306,9 @@ export default {
       const label = await created_shipment.buy(shipping_rate, 0);
       return label;
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   get_custom_shipping_rates_shipping_s: async (body: any) => {
@@ -357,7 +367,9 @@ export default {
       const saved_shipment = await shipment.save();
       return { shipment: saved_shipment, parcel: package_dimensions };
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   create_return_label_shipping_s: async (body: any) => {
@@ -441,7 +453,9 @@ export default {
 
       return label;
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
 
@@ -467,7 +481,9 @@ export default {
         }
       }
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   }
 };

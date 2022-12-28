@@ -4,11 +4,12 @@ import { determine_filter, make_private_code, snake_case } from "../util";
 import { affiliate_db, user_db } from "../db";
 import dotenv from "dotenv";
 import { user_controller } from "../controllers";
+import { IAffiliate } from "../types/affiliateTypes";
 const bcrypt = require("bcryptjs");
 dotenv.config();
 
 export default {
-  findAll_affiliates_s: async (query: any) => {
+  findAll_affiliates_s: async (query: { search: any; sort: string }) => {
     try {
       const search = query.search
         ? {
@@ -38,24 +39,30 @@ export default {
 
       return await affiliate_db.findAll_affiliates_db(filter, sort);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
-  findByPathname_affiliates_s: async (params: any) => {
+  findByPathname_affiliates_s: async (params: { pathname: string }) => {
     try {
       return await affiliate_db.findByPathname_affiliates_db(params.pathname);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
-  findById_affiliates_s: async (params: any) => {
+  findById_affiliates_s: async (params: { id: string }) => {
     try {
       return await affiliate_db.findById_affiliates_db(params.id);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
-  create_affiliates_s: async (body: any) => {
+  create_affiliates_s: async (body: { artist_name: string }) => {
     const public_code = {
       promo_code: body.artist_name.toLowerCase(),
       admin_only: false,
@@ -89,14 +96,18 @@ export default {
     try {
       return await affiliate_db.create_affiliates_db(body, public_code, private_code);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
-  update_affiliates_s: async (params: any, body: any) => {
+  update_affiliates_s: async (params: { pathname: string }, body: IAffiliate) => {
     try {
       return await affiliate_db.update_affiliates_db(params, body);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   upload_rave_mob_csv_affiliates_s: async (params: any, body: any) => {
@@ -130,7 +141,7 @@ export default {
         rave_mobers.push(object);
       }
 
-      rave_mobers.forEach(async (member: any) => {
+      rave_mobers.forEach(async member => {
         const affiliate: any = {};
         const user: any = {};
         user.first_name = member["First and Last Name"].split(" ")[0];
@@ -191,30 +202,38 @@ export default {
                 hashed_password = hash;
                 const user_w_password = { ...user, password: hashed_password };
                 try {
-                  const new_user = await user_db.create_users_db(user_w_password);
+                  const new_user: any = await user_db.create_users_db(user_w_password);
 
                   return await affiliate_db.create_affiliates_db({ ...affiliate, user: new_user._id }, public_code, private_code);
                 } catch (error) {
-                  throw new Error(error.message);
+                  if (error instanceof Error) {
+                    throw new Error(error.message);
+                  }
                 }
               });
             });
           } catch (error) {
-            throw new Error(error.message);
+            if (error instanceof Error) {
+              throw new Error(error.message);
+            }
           }
         }
       });
 
       return "Succes";
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
-  remove_affiliates_s: async (params: any) => {
+  remove_affiliates_s: async (params: { pathname: string }) => {
     try {
       return await affiliate_db.remove_affiliates_db(params);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   }
 };

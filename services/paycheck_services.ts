@@ -24,28 +24,36 @@ export default {
       }
       return await paycheck_db.findAll_paychecks_db(filter, sort);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   findById_paychecks_s: async (params: any) => {
     try {
       return await paycheck_db.findById_paychecks_db(params.id);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   findMy_paychecks_s: async (params: any) => {
     try {
       return await paycheck_db.findMy_paychecks_db(params.id);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   create_paychecks_s: async (body: any) => {
     try {
       return await paycheck_db.create_paychecks_db(body);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   create_affiliate_paychecks_s: async (params: any) => {
@@ -180,21 +188,27 @@ export default {
       return paychecks;
       return "Success";
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   update_paychecks_s: async (params: any, body: any) => {
     try {
       return await paycheck_db.update_paychecks_db(params.id, body);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   remove_paychecks_s: async (params: any) => {
     try {
       return await paycheck_db.remove_paychecks_db(params.id);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   }
 };

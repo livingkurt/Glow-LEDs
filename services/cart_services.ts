@@ -17,21 +17,27 @@ export default {
 
       return await cart_db.findAll_carts_db(filter, sort);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   findById_carts_s: async (params: any) => {
     try {
       return await cart_db.findById_carts_db(params.id);
     } catch (error) {
-      // throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   findByUser_carts_s: async (params: any) => {
     try {
       return await cart_db.findByUser_carts_db(params.id);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   create_carts_s: async (body: any) => {
@@ -51,7 +57,9 @@ export default {
         return await cart_db.create_carts_db({ user: userInfo._id, cartItems: [...cartItems, item] });
       }
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   update_carts_s: async (params: any, body: any) => {
@@ -72,14 +80,18 @@ export default {
         });
       }
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   remove_carts_s: async (params: any) => {
     try {
       return await cart_db.remove_carts_db(params.id);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   remove_cartitem_carts_s: async (params: any, body: any) => {
@@ -94,7 +106,9 @@ export default {
         cartItems: [...new_cart_items]
       });
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   }
 };

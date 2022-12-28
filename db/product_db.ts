@@ -69,7 +69,9 @@ export default {
         .skip((page - 1) * limit)
         .exec();
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   aggregateAll_products_db: async () => {
@@ -89,7 +91,9 @@ export default {
         }
       ]).sort({ _id: 1 });
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   findById_products_db: async (id: string) => {
@@ -159,7 +163,9 @@ export default {
         .populate("subcategorys")
         .populate("contributers");
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
 
@@ -200,7 +206,9 @@ export default {
       // });
       return await Product.create(body);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
 
@@ -279,7 +287,9 @@ export default {
         return await Product.updateOne({ _id: id }, body);
       }
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   remove_products_db: async (id: string) => {
@@ -309,14 +319,18 @@ export default {
         // return await Product.deleteOne({ _id: id });
       }
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   },
   count_products_db: async (filter: any) => {
     try {
       return await Product.countDocuments(filter);
     } catch (error) {
-      throw new Error(error.message);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
     }
   }
 };
