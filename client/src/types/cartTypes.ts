@@ -1,3 +1,4 @@
+import { IProduct } from "./productTypes";
 import { IUser } from "./userTypes";
 
 export interface ICart {
