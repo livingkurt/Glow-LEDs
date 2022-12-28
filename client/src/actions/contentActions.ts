@@ -14,7 +14,7 @@ import {
 } from "../constants/contentConstants";
 import axios from "axios";
 import { create_query } from "../utils/helper_functions";
-import { IDispatch } from "../types/reduxTypes";
+import { IDispatch, IDispatchSuccess, IGetState } from "../types/reduxTypes";
 
 export const listContents = (query: any) => async (dispatch: (arg0: IDispatch) => void) => {
   try {
@@ -26,32 +26,31 @@ export const listContents = (query: any) => async (dispatch: (arg0: IDispatch) =
   }
 };
 
-export const saveContent =
-  (content: any) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
-    try {
-      dispatch({ type: CONTENT_SAVE_REQUEST, payload: content });
-      const {
-        userLogin: { userInfo }
-      } = getState();
-      if (!content._id) {
-        const { data } = await axios.post("/api/contents", content, {
-          headers: {
-            Authorization: "Bearer " + userInfo.access_token
-          }
-        });
-        dispatch({ type: CONTENT_SAVE_SUCCESS, payload: data });
-      } else {
-        const { data } = await axios.put("/api/contents/" + content._id, content, {
-          headers: {
-            Authorization: "Bearer " + userInfo.access_token
-          }
-        });
-        dispatch({ type: CONTENT_SAVE_SUCCESS, payload: data });
-      }
-    } catch (error) {
-      dispatch({ type: CONTENT_SAVE_FAIL, payload: error });
+export const saveContent = (content: any) => async (dispatch: (arg0: IDispatch) => void, getState: () => IGetState) => {
+  try {
+    dispatch({ type: CONTENT_SAVE_REQUEST, payload: content });
+    const {
+      userLogin: { userInfo }
+    } = getState();
+    if (!content._id) {
+      const { data } = await axios.post("/api/contents", content, {
+        headers: {
+          Authorization: "Bearer " + userInfo.access_token
+        }
+      });
+      dispatch({ type: CONTENT_SAVE_SUCCESS, payload: data });
+    } else {
+      const { data } = await axios.put("/api/contents/" + content._id, content, {
+        headers: {
+          Authorization: "Bearer " + userInfo.access_token
+        }
+      });
+      dispatch({ type: CONTENT_SAVE_SUCCESS, payload: data });
     }
-  };
+  } catch (error) {
+    dispatch({ type: CONTENT_SAVE_FAIL, payload: error });
+  }
+};
 
 export const detailsContent = (pathname: string) => async (dispatch: (arg0: IDispatch) => void) => {
   try {
@@ -63,20 +62,19 @@ export const detailsContent = (pathname: string) => async (dispatch: (arg0: IDis
   }
 };
 
-export const deleteContent =
-  (contentId: string) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
-    try {
-      const {
-        userLogin: { userInfo }
-      } = getState();
-      dispatch({ type: CONTENT_DELETE_REQUEST, payload: contentId });
-      const { data } = await axios.delete("/api/contents/" + contentId, {
-        headers: {
-          Authorization: "Bearer " + userInfo.access_token
-        }
-      });
-      dispatch({ type: CONTENT_DELETE_SUCCESS, payload: data, success: true });
-    } catch (error) {
-      dispatch({ type: CONTENT_DELETE_FAIL, payload: error });
-    }
-  };
+export const deleteContent = (contentId: string) => async (dispatch: (arg0: IDispatchSuccess) => void, getState: () => IGetState) => {
+  try {
+    const {
+      userLogin: { userInfo }
+    } = getState();
+    dispatch({ type: CONTENT_DELETE_REQUEST, payload: contentId });
+    const { data } = await axios.delete("/api/contents/" + contentId, {
+      headers: {
+        Authorization: "Bearer " + userInfo.access_token
+      }
+    });
+    dispatch({ type: CONTENT_DELETE_SUCCESS, payload: data, success: true });
+  } catch (error) {
+    dispatch({ type: CONTENT_DELETE_FAIL, payload: error });
+  }
+};

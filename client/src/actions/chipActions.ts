@@ -14,7 +14,7 @@ import {
 } from "../constants/chipConstants";
 import axios from "axios";
 import { create_query } from "../utils/helper_functions";
-import { IDispatch } from "../types/reduxTypes";
+import { IDispatch, IDispatchSuccess, IGetState } from "../types/reduxTypes";
 
 export const listChips = (query: any) => async (dispatch: (arg0: IDispatch) => void) => {
   try {
@@ -26,7 +26,7 @@ export const listChips = (query: any) => async (dispatch: (arg0: IDispatch) => v
   }
 };
 
-export const saveChip = (chip: any) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
+export const saveChip = (chip: any) => async (dispatch: (arg0: IDispatch) => void, getState: () => IGetState) => {
   //
   try {
     dispatch({ type: CHIP_SAVE_REQUEST, payload: chip });
@@ -63,20 +63,19 @@ export const detailsChip = (pathname: string) => async (dispatch: (arg0: IDispat
   }
 };
 
-export const deleteChip =
-  (chipId: string) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
-    try {
-      const {
-        userLogin: { userInfo }
-      } = getState();
-      dispatch({ type: CHIP_DELETE_REQUEST, payload: chipId });
-      const { data } = await axios.delete("/api/chips/" + chipId, {
-        headers: {
-          Authorization: "Bearer " + userInfo.access_token
-        }
-      });
-      dispatch({ type: CHIP_DELETE_SUCCESS, payload: data, success: true });
-    } catch (error) {
-      dispatch({ type: CHIP_DELETE_FAIL, payload: error });
-    }
-  };
+export const deleteChip = (chipId: string) => async (dispatch: (arg0: IDispatchSuccess) => void, getState: () => IGetState) => {
+  try {
+    const {
+      userLogin: { userInfo }
+    } = getState();
+    dispatch({ type: CHIP_DELETE_REQUEST, payload: chipId });
+    const { data } = await axios.delete("/api/chips/" + chipId, {
+      headers: {
+        Authorization: "Bearer " + userInfo.access_token
+      }
+    });
+    dispatch({ type: CHIP_DELETE_SUCCESS, payload: data, success: true });
+  } catch (error) {
+    dispatch({ type: CHIP_DELETE_FAIL, payload: error });
+  }
+};

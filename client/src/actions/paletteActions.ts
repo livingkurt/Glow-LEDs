@@ -17,7 +17,7 @@ import {
 } from "../constants/paletteConstants";
 import axios from "axios";
 import { create_query } from "../utils/helper_functions";
-import { IDispatch, IDispatchSuccess } from "../types/reduxTypes";
+import { IDispatch, IGetState, IDispatchSuccess } from "../types/reduxTypes";
 
 export const listPalettes = (query: any) => async (dispatch: (arg0: IDispatch) => void) => {
   try {
@@ -29,7 +29,7 @@ export const listPalettes = (query: any) => async (dispatch: (arg0: IDispatch) =
   }
 };
 
-export const listMyPalettes = () => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
+export const listMyPalettes = () => async (dispatch: (arg0: IDispatch) => void, getState: () => IGetState) => {
   try {
     dispatch({ type: MY_PALETTE_LIST_REQUEST });
     const {
@@ -45,32 +45,31 @@ export const listMyPalettes = () => async (dispatch: (arg0: IDispatch) => void, 
   }
 };
 
-export const savePalette =
-  (palette: any) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
-    try {
-      dispatch({ type: PALETTE_SAVE_REQUEST, payload: palette });
-      const {
-        userLogin: { userInfo }
-      } = getState();
-      if (!palette._id) {
-        const { data } = await axios.post("/api/palettes", palette, {
-          headers: {
-            Authorization: "Bearer " + userInfo.access_token
-          }
-        });
-        dispatch({ type: PALETTE_SAVE_SUCCESS, payload: data });
-      } else {
-        const { data } = await axios.put("/api/palettes/" + palette._id, palette, {
-          headers: {
-            Authorization: "Bearer " + userInfo.access_token
-          }
-        });
-        dispatch({ type: PALETTE_SAVE_SUCCESS, payload: data });
-      }
-    } catch (error) {
-      dispatch({ type: PALETTE_SAVE_FAIL, payload: error });
+export const savePalette = (palette: any) => async (dispatch: (arg0: IDispatch) => void, getState: () => IGetState) => {
+  try {
+    dispatch({ type: PALETTE_SAVE_REQUEST, payload: palette });
+    const {
+      userLogin: { userInfo }
+    } = getState();
+    if (!palette._id) {
+      const { data } = await axios.post("/api/palettes", palette, {
+        headers: {
+          Authorization: "Bearer " + userInfo.access_token
+        }
+      });
+      dispatch({ type: PALETTE_SAVE_SUCCESS, payload: data });
+    } else {
+      const { data } = await axios.put("/api/palettes/" + palette._id, palette, {
+        headers: {
+          Authorization: "Bearer " + userInfo.access_token
+        }
+      });
+      dispatch({ type: PALETTE_SAVE_SUCCESS, payload: data });
     }
-  };
+  } catch (error) {
+    dispatch({ type: PALETTE_SAVE_FAIL, payload: error });
+  }
+};
 
 export const detailsPalette = (pathname: string) => async (dispatch: (arg0: IDispatch) => void) => {
   try {
@@ -82,20 +81,19 @@ export const detailsPalette = (pathname: string) => async (dispatch: (arg0: IDis
   }
 };
 
-export const deletePalette =
-  (paletteId: string) => async (dispatch: (arg0: IDispatchSuccess) => void, getState: () => { userLogin: { userInfo: any } }) => {
-    try {
-      const {
-        userLogin: { userInfo }
-      } = getState();
-      dispatch({ type: PALETTE_DELETE_REQUEST, payload: paletteId });
-      const { data } = await axios.delete("/api/palettes/" + paletteId, {
-        headers: {
-          Authorization: "Bearer " + userInfo.access_token
-        }
-      });
-      dispatch({ type: PALETTE_DELETE_SUCCESS, payload: data, success: true });
-    } catch (error) {
-      dispatch({ type: PALETTE_DELETE_FAIL, payload: error });
-    }
-  };
+export const deletePalette = (paletteId: string) => async (dispatch: (arg0: IDispatchSuccess) => void, getState: () => IGetState) => {
+  try {
+    const {
+      userLogin: { userInfo }
+    } = getState();
+    dispatch({ type: PALETTE_DELETE_REQUEST, payload: paletteId });
+    const { data } = await axios.delete("/api/palettes/" + paletteId, {
+      headers: {
+        Authorization: "Bearer " + userInfo.access_token
+      }
+    });
+    dispatch({ type: PALETTE_DELETE_SUCCESS, payload: data, success: true });
+  } catch (error) {
+    dispatch({ type: PALETTE_DELETE_FAIL, payload: error });
+  }
+};

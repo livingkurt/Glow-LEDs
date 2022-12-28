@@ -14,25 +14,24 @@ import {
 } from "../constants/expenseConstants";
 import axios from "axios";
 import { create_query } from "../utils/helper_functions";
-import { IDispatch } from "../types/reduxTypes";
+import { IDispatch, IDispatchSuccess, IGetState } from "../types/reduxTypes";
 
-export const listExpenses =
-  (query: any) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
-    try {
-      dispatch({ type: EXPENSE_LIST_REQUEST });
-      const {
-        userLogin: { userInfo }
-      } = getState();
-      const { data } = await axios.get("/api/expenses?" + create_query(query), {
-        headers: {
-          Authorization: "Bearer " + userInfo.access_token
-        }
-      });
-      dispatch({ type: EXPENSE_LIST_SUCCESS, payload: data });
-    } catch (error) {
-      dispatch({ type: EXPENSE_LIST_FAIL, payload: error });
-    }
-  };
+export const listExpenses = (query: any) => async (dispatch: (arg0: IDispatch) => void, getState: () => IGetState) => {
+  try {
+    dispatch({ type: EXPENSE_LIST_REQUEST });
+    const {
+      userLogin: { userInfo }
+    } = getState();
+    const { data } = await axios.get("/api/expenses?" + create_query(query), {
+      headers: {
+        Authorization: "Bearer " + userInfo.access_token
+      }
+    });
+    dispatch({ type: EXPENSE_LIST_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({ type: EXPENSE_LIST_FAIL, payload: error });
+  }
+};
 
 export const saveExpense =
   (expense: {
@@ -46,7 +45,7 @@ export const saveExpense =
     card?: number;
     amount?: string;
   }) =>
-  async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  async (dispatch: (arg0: IDispatch) => void, getState: () => IGetState) => {
     try {
       dispatch({ type: EXPENSE_SAVE_REQUEST, payload: expense });
       const {
@@ -72,38 +71,36 @@ export const saveExpense =
     }
   };
 
-export const detailsExpense =
-  (pathname: string) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
-    try {
-      dispatch({ type: EXPENSE_DETAILS_REQUEST, payload: pathname });
-      const {
-        userLogin: { userInfo }
-      } = getState();
-      const { data } = await axios.get("/api/expenses/" + pathname, {
-        headers: {
-          Authorization: "Bearer " + userInfo.access_token
-        }
-      });
-      dispatch({ type: EXPENSE_DETAILS_SUCCESS, payload: data });
-    } catch (error) {
-      dispatch({ type: EXPENSE_DETAILS_FAIL, payload: error });
-    }
-  };
+export const detailsExpense = (pathname: string) => async (dispatch: (arg0: IDispatch) => void, getState: () => IGetState) => {
+  try {
+    dispatch({ type: EXPENSE_DETAILS_REQUEST, payload: pathname });
+    const {
+      userLogin: { userInfo }
+    } = getState();
+    const { data } = await axios.get("/api/expenses/" + pathname, {
+      headers: {
+        Authorization: "Bearer " + userInfo.access_token
+      }
+    });
+    dispatch({ type: EXPENSE_DETAILS_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({ type: EXPENSE_DETAILS_FAIL, payload: error });
+  }
+};
 
-export const deleteExpense =
-  (expenseId: string) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
-    try {
-      const {
-        userLogin: { userInfo }
-      } = getState();
-      dispatch({ type: EXPENSE_DELETE_REQUEST, payload: expenseId });
-      const { data } = await axios.delete("/api/expenses/" + expenseId, {
-        headers: {
-          Authorization: "Bearer " + userInfo.access_token
-        }
-      });
-      dispatch({ type: EXPENSE_DELETE_SUCCESS, payload: data, success: true });
-    } catch (error) {
-      dispatch({ type: EXPENSE_DELETE_FAIL, payload: error });
-    }
-  };
+export const deleteExpense = (expenseId: string) => async (dispatch: (arg0: IDispatchSuccess) => void, getState: () => IGetState) => {
+  try {
+    const {
+      userLogin: { userInfo }
+    } = getState();
+    dispatch({ type: EXPENSE_DELETE_REQUEST, payload: expenseId });
+    const { data } = await axios.delete("/api/expenses/" + expenseId, {
+      headers: {
+        Authorization: "Bearer " + userInfo.access_token
+      }
+    });
+    dispatch({ type: EXPENSE_DELETE_SUCCESS, payload: data, success: true });
+  } catch (error) {
+    dispatch({ type: EXPENSE_DELETE_FAIL, payload: error });
+  }
+};

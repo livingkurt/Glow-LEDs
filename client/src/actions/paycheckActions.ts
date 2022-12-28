@@ -17,102 +17,97 @@ import {
 } from "../constants/paycheckConstants";
 import axios from "axios";
 import { create_query } from "../utils/helper_functions";
-import { IDispatch, IDispatchSuccess } from "../types/reduxTypes";
+import { IDispatch, IGetState, IDispatchSuccess } from "../types/reduxTypes";
 
-export const listPaychecks =
-  (query: any) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
-    try {
-      dispatch({ type: PAYCHECK_LIST_REQUEST });
-      const {
-        userLogin: { userInfo }
-      } = getState();
-      const { data } = await axios.get("/api/paychecks?" + create_query(query), {
-        headers: {
-          Authorization: "Bearer " + userInfo.access_token
-        }
-      });
-      dispatch({ type: PAYCHECK_LIST_SUCCESS, payload: data });
-    } catch (error) {
-      dispatch({ type: PAYCHECK_LIST_FAIL, payload: error });
-    }
-  };
-
-export const listMyPaychecks =
-  (affiliate_id: string) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
-    try {
-      dispatch({ type: MY_PAYCHECK_LIST_REQUEST });
-      const {
-        userLogin: { userInfo }
-      } = getState();
-      const { data } = await axios.get("/api/paychecks/affiliate/" + affiliate_id, {
-        headers: { Authorization: "Bearer " + userInfo.access_token }
-      });
-
-      dispatch({ type: MY_PAYCHECK_LIST_SUCCESS, payload: data });
-    } catch (error) {
-      dispatch({ type: MY_PAYCHECK_LIST_FAIL, payload: error });
-    }
-  };
-
-export const savePaycheck =
-  (paycheck: any) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
-    try {
-      dispatch({ type: PAYCHECK_SAVE_REQUEST, payload: paycheck });
-      const {
-        userLogin: { userInfo }
-      } = getState();
-      if (!paycheck._id) {
-        const { data } = await axios.post("/api/paychecks", paycheck, {
-          headers: {
-            Authorization: "Bearer " + userInfo.access_token
-          }
-        });
-        dispatch({ type: PAYCHECK_SAVE_SUCCESS, payload: data });
-      } else {
-        const { data } = await axios.put("/api/paychecks/" + paycheck._id, paycheck, {
-          headers: {
-            Authorization: "Bearer " + userInfo.access_token
-          }
-        });
-        dispatch({ type: PAYCHECK_SAVE_SUCCESS, payload: data });
+export const listPaychecks = (query: any) => async (dispatch: (arg0: IDispatch) => void, getState: () => IGetState) => {
+  try {
+    dispatch({ type: PAYCHECK_LIST_REQUEST });
+    const {
+      userLogin: { userInfo }
+    } = getState();
+    const { data } = await axios.get("/api/paychecks?" + create_query(query), {
+      headers: {
+        Authorization: "Bearer " + userInfo.access_token
       }
-    } catch (error) {
-      dispatch({ type: PAYCHECK_SAVE_FAIL, payload: error });
-    }
-  };
+    });
+    dispatch({ type: PAYCHECK_LIST_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({ type: PAYCHECK_LIST_FAIL, payload: error });
+  }
+};
 
-export const detailsPaycheck =
-  (pathname: string) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
-    try {
-      dispatch({ type: PAYCHECK_DETAILS_REQUEST, payload: pathname });
-      const {
-        userLogin: { userInfo }
-      } = getState();
-      const { data } = await axios.get("/api/paychecks/" + pathname, {
+export const listMyPaychecks = (affiliate_id: string) => async (dispatch: (arg0: IDispatch) => void, getState: () => IGetState) => {
+  try {
+    dispatch({ type: MY_PAYCHECK_LIST_REQUEST });
+    const {
+      userLogin: { userInfo }
+    } = getState();
+    const { data } = await axios.get("/api/paychecks/affiliate/" + affiliate_id, {
+      headers: { Authorization: "Bearer " + userInfo.access_token }
+    });
+
+    dispatch({ type: MY_PAYCHECK_LIST_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({ type: MY_PAYCHECK_LIST_FAIL, payload: error });
+  }
+};
+
+export const savePaycheck = (paycheck: any) => async (dispatch: (arg0: IDispatch) => void, getState: () => IGetState) => {
+  try {
+    dispatch({ type: PAYCHECK_SAVE_REQUEST, payload: paycheck });
+    const {
+      userLogin: { userInfo }
+    } = getState();
+    if (!paycheck._id) {
+      const { data } = await axios.post("/api/paychecks", paycheck, {
         headers: {
           Authorization: "Bearer " + userInfo.access_token
         }
       });
-      dispatch({ type: PAYCHECK_DETAILS_SUCCESS, payload: data });
-    } catch (error) {
-      dispatch({ type: PAYCHECK_DETAILS_FAIL, payload: error });
-    }
-  };
-
-export const deletePaycheck =
-  (paycheckId: string) => async (dispatch: (arg0: IDispatchSuccess) => void, getState: () => { userLogin: { userInfo: any } }) => {
-    try {
-      const {
-        userLogin: { userInfo }
-      } = getState();
-      dispatch({ type: PAYCHECK_DELETE_REQUEST, payload: paycheckId });
-      const { data } = await axios.delete("/api/paychecks/" + paycheckId, {
+      dispatch({ type: PAYCHECK_SAVE_SUCCESS, payload: data });
+    } else {
+      const { data } = await axios.put("/api/paychecks/" + paycheck._id, paycheck, {
         headers: {
           Authorization: "Bearer " + userInfo.access_token
         }
       });
-      dispatch({ type: PAYCHECK_DELETE_SUCCESS, payload: data, success: true });
-    } catch (error) {
-      dispatch({ type: PAYCHECK_DELETE_FAIL, payload: error });
+      dispatch({ type: PAYCHECK_SAVE_SUCCESS, payload: data });
     }
-  };
+  } catch (error) {
+    dispatch({ type: PAYCHECK_SAVE_FAIL, payload: error });
+  }
+};
+
+export const detailsPaycheck = (pathname: string) => async (dispatch: (arg0: IDispatch) => void, getState: () => IGetState) => {
+  try {
+    dispatch({ type: PAYCHECK_DETAILS_REQUEST, payload: pathname });
+    const {
+      userLogin: { userInfo }
+    } = getState();
+    const { data } = await axios.get("/api/paychecks/" + pathname, {
+      headers: {
+        Authorization: "Bearer " + userInfo.access_token
+      }
+    });
+    dispatch({ type: PAYCHECK_DETAILS_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({ type: PAYCHECK_DETAILS_FAIL, payload: error });
+  }
+};
+
+export const deletePaycheck = (paycheckId: string) => async (dispatch: (arg0: IDispatchSuccess) => void, getState: () => IGetState) => {
+  try {
+    const {
+      userLogin: { userInfo }
+    } = getState();
+    dispatch({ type: PAYCHECK_DELETE_REQUEST, payload: paycheckId });
+    const { data } = await axios.delete("/api/paychecks/" + paycheckId, {
+      headers: {
+        Authorization: "Bearer " + userInfo.access_token
+      }
+    });
+    dispatch({ type: PAYCHECK_DELETE_SUCCESS, payload: data, success: true });
+  } catch (error) {
+    dispatch({ type: PAYCHECK_DELETE_FAIL, payload: error });
+  }
+};

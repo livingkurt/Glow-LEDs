@@ -14,7 +14,7 @@ import {
 } from "../constants/emailConstants";
 import axios from "axios";
 import { create_query } from "../utils/helper_functions";
-import { IDispatch } from "../types/reduxTypes";
+import { IDispatch, IDispatchSuccess, IGetState } from "../types/reduxTypes";
 
 export const listEmails = (query: any) => async (dispatch: (arg0: IDispatch) => void) => {
   try {
@@ -26,7 +26,7 @@ export const listEmails = (query: any) => async (dispatch: (arg0: IDispatch) => 
   }
 };
 
-export const saveEmail = (email: any) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
+export const saveEmail = (email: any) => async (dispatch: (arg0: IDispatch) => void, getState: () => IGetState) => {
   try {
     dispatch({ type: EMAIL_SAVE_REQUEST, payload: email });
     const {
@@ -62,20 +62,19 @@ export const detailsEmail = (id: string) => async (dispatch: (arg0: IDispatch) =
   }
 };
 
-export const deleteEmail =
-  (emailId: string) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
-    try {
-      const {
-        userLogin: { userInfo }
-      } = getState();
-      dispatch({ type: EMAIL_DELETE_REQUEST, payload: emailId });
-      const { data } = await axios.delete("/api/emails/" + emailId, {
-        headers: {
-          Authorization: "Bearer " + userInfo.access_token
-        }
-      });
-      dispatch({ type: EMAIL_DELETE_SUCCESS, payload: data, success: true });
-    } catch (error) {
-      dispatch({ type: EMAIL_DELETE_FAIL, payload: error });
-    }
-  };
+export const deleteEmail = (emailId: string) => async (dispatch: (arg0: IDispatchSuccess) => void, getState: () => IGetState) => {
+  try {
+    const {
+      userLogin: { userInfo }
+    } = getState();
+    dispatch({ type: EMAIL_DELETE_REQUEST, payload: emailId });
+    const { data } = await axios.delete("/api/emails/" + emailId, {
+      headers: {
+        Authorization: "Bearer " + userInfo.access_token
+      }
+    });
+    dispatch({ type: EMAIL_DELETE_SUCCESS, payload: data, success: true });
+  } catch (error) {
+    dispatch({ type: EMAIL_DELETE_FAIL, payload: error });
+  }
+};

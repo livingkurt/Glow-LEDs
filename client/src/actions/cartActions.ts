@@ -19,7 +19,7 @@ import {
 } from "../constants/cartConstants";
 import axios from "axios";
 import { create_query } from "../utils/helper_functions";
-import { IDispatch } from "../types/reduxTypes";
+import { IDispatch, IDispatchSuccess, IGetState } from "../types/reduxTypes";
 
 export interface CartItem {
   product: any;
@@ -257,20 +257,19 @@ export const detailsCart = (cart_id: string) => async (dispatch: (arg0: IDispatc
   }
 };
 
-export const deleteCart =
-  (cartId: string) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
-    try {
-      const {
-        userLogin: { userInfo }
-      } = getState();
-      dispatch({ type: CART_DELETE_REQUEST, payload: cartId });
-      const { data } = await axios.delete("/api/carts/" + cartId, {
-        headers: {
-          Authorization: "Bearer " + userInfo.access_token
-        }
-      });
-      dispatch({ type: CART_DELETE_SUCCESS, payload: data, success: true });
-    } catch (error) {
-      dispatch({ type: CART_DELETE_FAIL, payload: error });
-    }
-  };
+export const deleteCart = (cartId: string) => async (dispatch: (arg0: IDispatchSuccess) => void, getState: () => IGetState) => {
+  try {
+    const {
+      userLogin: { userInfo }
+    } = getState();
+    dispatch({ type: CART_DELETE_REQUEST, payload: cartId });
+    const { data } = await axios.delete("/api/carts/" + cartId, {
+      headers: {
+        Authorization: "Bearer " + userInfo.access_token
+      }
+    });
+    dispatch({ type: CART_DELETE_SUCCESS, payload: data, success: true });
+  } catch (error) {
+    dispatch({ type: CART_DELETE_FAIL, payload: error });
+  }
+};

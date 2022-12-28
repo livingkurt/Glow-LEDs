@@ -14,7 +14,7 @@ import {
 } from "../constants/categoryConstants";
 import axios from "axios";
 import { create_query } from "../utils/helper_functions";
-import { IDispatch } from "../types/reduxTypes";
+import { IDispatch, IDispatchSuccess, IGetState } from "../types/reduxTypes";
 
 export const listCategorys = (query: any) => async (dispatch: (arg0: IDispatch) => void) => {
   try {
@@ -28,66 +28,63 @@ export const listCategorys = (query: any) => async (dispatch: (arg0: IDispatch) 
   }
 };
 
-export const saveCategory =
-  (category: any) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
-    //
-    try {
-      dispatch({ type: CATEGORY_SAVE_REQUEST, payload: category });
-      const {
-        userLogin: { userInfo }
-      } = getState();
-      if (!category._id) {
-        const { data } = await axios.post("/api/categorys", category, {
-          headers: {
-            Authorization: "Bearer " + userInfo.access_token
-          }
-        });
-        dispatch({ type: CATEGORY_SAVE_SUCCESS, payload: data });
-      } else {
-        const { data } = await axios.put("/api/categorys/" + category._id, category, {
-          headers: {
-            Authorization: "Bearer " + userInfo.access_token
-          }
-        });
-        dispatch({ type: CATEGORY_SAVE_SUCCESS, payload: data });
+export const saveCategory = (category: any) => async (dispatch: (arg0: IDispatch) => void, getState: () => IGetState) => {
+  //
+  try {
+    dispatch({ type: CATEGORY_SAVE_REQUEST, payload: category });
+    const {
+      userLogin: { userInfo }
+    } = getState();
+    if (!category._id) {
+      const { data } = await axios.post("/api/categorys", category, {
+        headers: {
+          Authorization: "Bearer " + userInfo.access_token
+        }
+      });
+      dispatch({ type: CATEGORY_SAVE_SUCCESS, payload: data });
+    } else {
+      const { data } = await axios.put("/api/categorys/" + category._id, category, {
+        headers: {
+          Authorization: "Bearer " + userInfo.access_token
+        }
+      });
+      dispatch({ type: CATEGORY_SAVE_SUCCESS, payload: data });
+    }
+  } catch (error) {
+    dispatch({ type: CATEGORY_SAVE_FAIL, payload: error });
+  }
+};
+
+export const detailsCategory = (pathname: string) => async (dispatch: (arg0: IDispatch) => void, getState: () => IGetState) => {
+  try {
+    dispatch({ type: CATEGORY_DETAILS_REQUEST, payload: pathname });
+    const {
+      userLogin: { userInfo }
+    } = getState();
+    const { data } = await axios.get("/api/categorys/" + pathname, {
+      headers: {
+        Authorization: "Bearer " + userInfo.access_token
       }
-    } catch (error) {
-      dispatch({ type: CATEGORY_SAVE_FAIL, payload: error });
-    }
-  };
+    });
+    dispatch({ type: CATEGORY_DETAILS_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({ type: CATEGORY_DETAILS_FAIL, payload: error });
+  }
+};
 
-export const detailsCategory =
-  (pathname: string) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
-    try {
-      dispatch({ type: CATEGORY_DETAILS_REQUEST, payload: pathname });
-      const {
-        userLogin: { userInfo }
-      } = getState();
-      const { data } = await axios.get("/api/categorys/" + pathname, {
-        headers: {
-          Authorization: "Bearer " + userInfo.access_token
-        }
-      });
-      dispatch({ type: CATEGORY_DETAILS_SUCCESS, payload: data });
-    } catch (error) {
-      dispatch({ type: CATEGORY_DETAILS_FAIL, payload: error });
-    }
-  };
-
-export const deleteCategory =
-  (categoryId: string) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
-    try {
-      const {
-        userLogin: { userInfo }
-      } = getState();
-      dispatch({ type: CATEGORY_DELETE_REQUEST, payload: categoryId });
-      const { data } = await axios.delete("/api/categorys/" + categoryId, {
-        headers: {
-          Authorization: "Bearer " + userInfo.access_token
-        }
-      });
-      dispatch({ type: CATEGORY_DELETE_SUCCESS, payload: data, success: true });
-    } catch (error) {
-      dispatch({ type: CATEGORY_DELETE_FAIL, payload: error });
-    }
-  };
+export const deleteCategory = (categoryId: string) => async (dispatch: (arg0: IDispatchSuccess) => void, getState: () => IGetState) => {
+  try {
+    const {
+      userLogin: { userInfo }
+    } = getState();
+    dispatch({ type: CATEGORY_DELETE_REQUEST, payload: categoryId });
+    const { data } = await axios.delete("/api/categorys/" + categoryId, {
+      headers: {
+        Authorization: "Bearer " + userInfo.access_token
+      }
+    });
+    dispatch({ type: CATEGORY_DELETE_SUCCESS, payload: data, success: true });
+  } catch (error) {
+    dispatch({ type: CATEGORY_DELETE_FAIL, payload: error });
+  }
+};

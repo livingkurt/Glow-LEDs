@@ -14,7 +14,7 @@ import {
 } from "../constants/featureConstants";
 import axios from "axios";
 import { create_query } from "../utils/helper_functions";
-import { IDispatch } from "../types/reduxTypes";
+import { IDispatch, IDispatchSuccess, IGetState } from "../types/reduxTypes";
 
 export const listFeatures = (query: any) => async (dispatch: (arg0: IDispatch) => void) => {
   try {
@@ -38,7 +38,7 @@ export const saveFeature =
     card?: number;
     amount?: string;
   }) =>
-  async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  async (dispatch: (arg0: IDispatch) => void, getState: () => IGetState) => {
     try {
       dispatch({ type: FEATURE_SAVE_REQUEST, payload: feature });
       const {
@@ -74,20 +74,19 @@ export const detailsFeature = (pathname: string) => async (dispatch: (arg0: IDis
   }
 };
 
-export const deleteFeature =
-  (featureId: string) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
-    try {
-      const {
-        userLogin: { userInfo }
-      } = getState();
-      dispatch({ type: FEATURE_DELETE_REQUEST, payload: featureId });
-      const { data } = await axios.delete("/api/features/" + featureId, {
-        headers: {
-          Authorization: "Bearer " + userInfo.access_token
-        }
-      });
-      dispatch({ type: FEATURE_DELETE_SUCCESS, payload: data, success: true });
-    } catch (error) {
-      dispatch({ type: FEATURE_DELETE_FAIL, payload: error });
-    }
-  };
+export const deleteFeature = (featureId: string) => async (dispatch: (arg0: IDispatchSuccess) => void, getState: () => IGetState) => {
+  try {
+    const {
+      userLogin: { userInfo }
+    } = getState();
+    dispatch({ type: FEATURE_DELETE_REQUEST, payload: featureId });
+    const { data } = await axios.delete("/api/features/" + featureId, {
+      headers: {
+        Authorization: "Bearer " + userInfo.access_token
+      }
+    });
+    dispatch({ type: FEATURE_DELETE_SUCCESS, payload: data, success: true });
+  } catch (error) {
+    dispatch({ type: FEATURE_DELETE_FAIL, payload: error });
+  }
+};

@@ -30,7 +30,7 @@ import {
   ORDER_REFUND_FAIL
 } from "../constants/orderConstants";
 import { USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS, USER_SAVE_REQUEST, USER_SAVE_SUCCESS } from "../constants/userConstants";
-import { IDispatch } from "../types/reduxTypes";
+import { IDispatch, IGetState } from "../types/reduxTypes";
 import { create_query } from "../utils/helper_functions";
 require("dotenv").config();
 
@@ -51,7 +51,7 @@ export const createPayOrder =
     },
     paymentMethod: any
   ) =>
-  async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  async (dispatch: (arg0: IDispatch) => void, getState: () => IGetState) => {
     try {
       dispatch({ type: ORDER_CREATE_REQUEST, payload: order });
       const {
@@ -82,7 +82,7 @@ export const createPayOrder =
     }
   };
 
-export const removeOrderState = () => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
+export const removeOrderState = () => async (dispatch: (arg0: IDispatch) => void, getState: () => IGetState) => {
   dispatch({ type: ORDER_REMOVE_STATE, payload: {} });
 };
 
@@ -212,7 +212,7 @@ export const createOrder =
     production_note: string;
     promo_code: string;
   }) =>
-  async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  async (dispatch: (arg0: IDispatch) => void, getState: () => IGetState) => {
     try {
       dispatch({ type: ORDER_CREATE_REQUEST, payload: order });
       const {
@@ -235,29 +235,28 @@ export const createOrder =
     }
   };
 
-export const payOrder =
-  (order: any, paymentMethod: any) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
-    try {
-      dispatch({ type: ORDER_PAY_REQUEST, payload: paymentMethod });
-      const {
-        userLogin: { userInfo }
-      } = getState();
-      const payment_res = await axios.put(
-        "/api/payments/secure/pay/" + order._id,
-        { paymentMethod },
-        {
-          headers: { Authorization: "Bearer " + userInfo.access_token }
-        }
-      );
-      if (payment_res.data) {
-        dispatch({ type: ORDER_PAY_SUCCESS, payload: payment_res.data });
-      } else {
-        dispatch({ type: ORDER_PAY_FAIL, payload: payment_res });
+export const payOrder = (order: any, paymentMethod: any) => async (dispatch: (arg0: IDispatch) => void, getState: () => IGetState) => {
+  try {
+    dispatch({ type: ORDER_PAY_REQUEST, payload: paymentMethod });
+    const {
+      userLogin: { userInfo }
+    } = getState();
+    const payment_res = await axios.put(
+      "/api/payments/secure/pay/" + order._id,
+      { paymentMethod },
+      {
+        headers: { Authorization: "Bearer " + userInfo.access_token }
       }
-    } catch (error) {
-      dispatch({ type: ORDER_PAY_FAIL, payload: error });
+    );
+    if (payment_res.data) {
+      dispatch({ type: ORDER_PAY_SUCCESS, payload: payment_res.data });
+    } else {
+      dispatch({ type: ORDER_PAY_FAIL, payload: payment_res });
     }
-  };
+  } catch (error) {
+    dispatch({ type: ORDER_PAY_FAIL, payload: error });
+  }
+};
 export const payOrderGuest = (order: any, paymentMethod: any) => async (dispatch: (arg0: IDispatch) => void) => {
   try {
     dispatch({ type: ORDER_PAY_REQUEST, payload: paymentMethod });
@@ -272,40 +271,38 @@ export const payOrderGuest = (order: any, paymentMethod: any) => async (dispatch
   }
 };
 
-export const listMyOrders =
-  (user_id: string) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
-    try {
-      dispatch({ type: MY_ORDER_LIST_REQUEST });
-      const {
-        userLogin: { userInfo }
-      } = getState();
-      const { data } = await axios.get("/api/orders/user/" + user_id, {
-        headers: { Authorization: "Bearer " + userInfo.access_token }
-      });
+export const listMyOrders = (user_id: string) => async (dispatch: (arg0: IDispatch) => void, getState: () => IGetState) => {
+  try {
+    dispatch({ type: MY_ORDER_LIST_REQUEST });
+    const {
+      userLogin: { userInfo }
+    } = getState();
+    const { data } = await axios.get("/api/orders/user/" + user_id, {
+      headers: { Authorization: "Bearer " + userInfo.access_token }
+    });
 
-      dispatch({ type: MY_ORDER_LIST_SUCCESS, payload: data });
-    } catch (error) {
-      dispatch({ type: MY_ORDER_LIST_FAIL, payload: error });
-    }
-  };
-export const listUserOrders =
-  (user_id: string) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
-    try {
-      dispatch({ type: MY_ORDER_LIST_REQUEST });
-      const {
-        userLogin: { userInfo }
-      } = getState();
-      const { data } = await axios.get("/api/orders/glow/" + user_id, {
-        headers: { Authorization: "Bearer " + userInfo.access_token }
-      });
+    dispatch({ type: MY_ORDER_LIST_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({ type: MY_ORDER_LIST_FAIL, payload: error });
+  }
+};
+export const listUserOrders = (user_id: string) => async (dispatch: (arg0: IDispatch) => void, getState: () => IGetState) => {
+  try {
+    dispatch({ type: MY_ORDER_LIST_REQUEST });
+    const {
+      userLogin: { userInfo }
+    } = getState();
+    const { data } = await axios.get("/api/orders/glow/" + user_id, {
+      headers: { Authorization: "Bearer " + userInfo.access_token }
+    });
 
-      dispatch({ type: MY_ORDER_LIST_SUCCESS, payload: data });
-    } catch (error) {
-      dispatch({ type: MY_ORDER_LIST_FAIL, payload: error });
-    }
-  };
+    dispatch({ type: MY_ORDER_LIST_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({ type: MY_ORDER_LIST_FAIL, payload: error });
+  }
+};
 
-export const listOrders = (query: any) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
+export const listOrders = (query: any) => async (dispatch: (arg0: IDispatch) => void, getState: () => IGetState) => {
   try {
     dispatch({ type: ORDER_LIST_REQUEST });
     const {
@@ -322,46 +319,44 @@ export const listOrders = (query: any) => async (dispatch: (arg0: IDispatch) => 
   }
 };
 
-export const detailsOrder =
-  (orderId: string) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
-    try {
-      dispatch({ type: ORDER_DETAILS_REQUEST, payload: orderId });
-      const {
-        userLogin: { userInfo }
-      } = getState();
-      if (userInfo && userInfo.first_name) {
-        const { data } = await axios.get("/api/orders/secure/" + orderId, {
-          headers: { Authorization: "Bearer " + userInfo.access_token }
-        });
-        dispatch({ type: ORDER_DETAILS_SUCCESS, payload: data });
-      } else {
-        const { data } = await axios.get("/api/orders/guest/" + orderId);
-        dispatch({ type: ORDER_DETAILS_SUCCESS, payload: data });
-      }
-    } catch (error) {
-      dispatch({ type: ORDER_DETAILS_FAIL, payload: error });
-    }
-  };
-
-export const deleteOrder =
-  (orderId: string) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
-    try {
-      dispatch({ type: ORDER_DELETE_REQUEST, payload: orderId });
-      const {
-        userLogin: { userInfo }
-      } = getState();
-      const { data } = await axios.delete("/api/orders/glow/" + orderId, {
+export const detailsOrder = (orderId: string) => async (dispatch: (arg0: IDispatch) => void, getState: () => IGetState) => {
+  try {
+    dispatch({ type: ORDER_DETAILS_REQUEST, payload: orderId });
+    const {
+      userLogin: { userInfo }
+    } = getState();
+    if (userInfo && userInfo.first_name) {
+      const { data } = await axios.get("/api/orders/secure/" + orderId, {
         headers: { Authorization: "Bearer " + userInfo.access_token }
       });
-      dispatch({ type: ORDER_DELETE_SUCCESS, payload: data });
-    } catch (error) {
-      dispatch({ type: ORDER_DELETE_FAIL, payload: error });
+      dispatch({ type: ORDER_DETAILS_SUCCESS, payload: data });
+    } else {
+      const { data } = await axios.get("/api/orders/guest/" + orderId);
+      dispatch({ type: ORDER_DETAILS_SUCCESS, payload: data });
     }
-  };
+  } catch (error) {
+    dispatch({ type: ORDER_DETAILS_FAIL, payload: error });
+  }
+};
+
+export const deleteOrder = (orderId: string) => async (dispatch: (arg0: IDispatch) => void, getState: () => IGetState) => {
+  try {
+    dispatch({ type: ORDER_DELETE_REQUEST, payload: orderId });
+    const {
+      userLogin: { userInfo }
+    } = getState();
+    const { data } = await axios.delete("/api/orders/glow/" + orderId, {
+      headers: { Authorization: "Bearer " + userInfo.access_token }
+    });
+    dispatch({ type: ORDER_DELETE_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({ type: ORDER_DELETE_FAIL, payload: error });
+  }
+};
 
 export const refundOrder =
   (order: { _id: string }, refundResult: boolean, refund_amount: number, refund_reason: string) =>
-  async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  async (dispatch: (arg0: IDispatch) => void, getState: () => IGetState) => {
     try {
       dispatch({ type: ORDER_REFUND_REQUEST, payload: refundResult });
       const {
@@ -393,7 +388,7 @@ export const refundOrder =
 
 export const update_order =
   (order: { _id: string; isManufactured: boolean }, result: boolean, is_action: string, action_at: string) =>
-  async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  async (dispatch: (arg0: IDispatch) => void, getState: () => IGetState) => {
     try {
       dispatch({ type: ORDER_UPDATE_REQUEST, payload: result });
       const {
@@ -427,7 +422,7 @@ export const update_order =
   };
 export const update_payment =
   (order: { _id: string }, result: boolean, payment_method: string) =>
-  async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  async (dispatch: (arg0: IDispatch) => void, getState: () => IGetState) => {
     try {
       dispatch({ type: ORDER_UPDATE_REQUEST, payload: result });
       const {
@@ -454,7 +449,7 @@ export const update_payment =
     }
   };
 
-export const saveOrder = (order: any) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
+export const saveOrder = (order: any) => async (dispatch: (arg0: IDispatch) => void, getState: () => IGetState) => {
   try {
     dispatch({ type: ORDER_SAVE_REQUEST, payload: order });
     const {

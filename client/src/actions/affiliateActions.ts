@@ -40,68 +40,67 @@ export const listAffiliates = (query: IListAffiliate) => async (dispatch: (arg0:
   }
 };
 
-export const saveAffiliate =
-  (affiliate: ISaveAffiliate) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
-    //
-    try {
-      dispatch({ type: AFFILIATE_SAVE_REQUEST, payload: affiliate });
-      const {
-        userLogin: { userInfo }
-      } = getState();
-      if (!affiliate._id) {
-        const { data } = await axios.post("/api/affiliates", affiliate, {
+export const saveAffiliate = (affiliate: ISaveAffiliate) => async (dispatch: (arg0: IDispatch) => void, getState: () => IGetState) => {
+  //
+  try {
+    dispatch({ type: AFFILIATE_SAVE_REQUEST, payload: affiliate });
+    const {
+      userLogin: { userInfo }
+    } = getState();
+    if (!affiliate._id) {
+      const { data } = await axios.post("/api/affiliates", affiliate, {
+        headers: {
+          Authorization: "Bearer " + userInfo.access_token
+        }
+      });
+
+      dispatch({ type: AFFILIATE_SAVE_SUCCESS, payload: data });
+      const { data: user } = await axios.put(
+        "/api/users/update/" + userInfo._id,
+        {
+          first_name: userInfo.first_name,
+          last_name: userInfo.last_name,
+          email: userInfo.email,
+          password: userInfo.password,
+          is_affiliated: true,
+          email_subscription: userInfo.email_subscription,
+          affiliate: data._id,
+          shipping: userInfo.shipping,
+          isVerified: userInfo.isVerified,
+          isAdmin: userInfo.isAdmin,
+          access_token: userInfo.access_token,
+          refresh_token: userInfo.refresh_token
+        },
+        {
           headers: {
             Authorization: "Bearer " + userInfo.access_token
           }
-        });
+        }
+      );
 
-        dispatch({ type: AFFILIATE_SAVE_SUCCESS, payload: data });
-        const { data: user } = await axios.put(
-          "/api/users/update/" + userInfo._id,
-          {
-            first_name: userInfo.first_name,
-            last_name: userInfo.last_name,
-            email: userInfo.email,
-            password: userInfo.password,
-            is_affiliated: true,
-            email_subscription: userInfo.email_subscription,
-            affiliate: data._id,
-            shipping: userInfo.shipping,
-            isVerified: userInfo.isVerified,
-            isAdmin: userInfo.isAdmin,
-            access_token: userInfo.access_token,
-            refresh_token: userInfo.refresh_token
-          },
-          {
-            headers: {
-              Authorization: "Bearer " + userInfo.access_token
-            }
-          }
-        );
+      dispatch({ type: USER_UPDATE_SUCCESS, payload: user });
 
-        dispatch({ type: USER_UPDATE_SUCCESS, payload: user });
+      const { access_token, refresh_token } = user;
+      setAuthToken(access_token);
+      const decoded = jwt_decode(access_token);
 
-        const { access_token, refresh_token } = user;
-        setAuthToken(access_token);
-        const decoded = jwt_decode(access_token);
-
-        // Set current user
-        localStorage.setItem("accessToken", access_token);
-        localStorage.setItem("refreshToken", refresh_token);
-        dispatch(setCurrentUser(decoded));
-      } else {
-        const { data } = await axios.put("/api/affiliates/" + affiliate.pathname, affiliate, {
-          headers: {
-            Authorization: "Bearer " + userInfo.access_token
-          }
-        });
-        dispatch({ type: AFFILIATE_SAVE_SUCCESS, payload: data });
-        dispatch({ type: AFFILIATE_REMOVE_STATE, payload: {} });
-      }
-    } catch (error) {
-      dispatch({ type: AFFILIATE_SAVE_FAIL, payload: error });
+      // Set current user
+      localStorage.setItem("accessToken", access_token);
+      localStorage.setItem("refreshToken", refresh_token);
+      dispatch(setCurrentUser(decoded));
+    } else {
+      const { data } = await axios.put("/api/affiliates/" + affiliate.pathname, affiliate, {
+        headers: {
+          Authorization: "Bearer " + userInfo.access_token
+        }
+      });
+      dispatch({ type: AFFILIATE_SAVE_SUCCESS, payload: data });
+      dispatch({ type: AFFILIATE_REMOVE_STATE, payload: {} });
     }
-  };
+  } catch (error) {
+    dispatch({ type: AFFILIATE_SAVE_FAIL, payload: error });
+  }
+};
 
 export interface DetailsAffiliate {
   pathname: string;
@@ -143,20 +142,19 @@ export const detailsAffiliate =
 //     }
 //   };
 
-export const deleteAffiliate =
-  (pathname: string) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
-    try {
-      const {
-        userLogin: { userInfo }
-      } = getState();
-      dispatch({ type: AFFILIATE_DELETE_REQUEST, payload: pathname });
-      const { data } = await axios.delete("/api/affiliates/" + pathname, {
-        headers: {
-          Authorization: "Bearer " + userInfo.access_token
-        }
-      });
-      dispatch({ type: AFFILIATE_DELETE_SUCCESS, payload: data, success: true });
-    } catch (error) {
-      dispatch({ type: AFFILIATE_DELETE_FAIL, payload: error });
-    }
-  };
+export const deleteAffiliate = (pathname: string) => async (dispatch: (arg0: IDispatch) => void, getState: () => IGetState) => {
+  try {
+    const {
+      userLogin: { userInfo }
+    } = getState();
+    dispatch({ type: AFFILIATE_DELETE_REQUEST, payload: pathname });
+    const { data } = await axios.delete("/api/affiliates/" + pathname, {
+      headers: {
+        Authorization: "Bearer " + userInfo.access_token
+      }
+    });
+    dispatch({ type: AFFILIATE_DELETE_SUCCESS, payload: data, success: true });
+  } catch (error) {
+    dispatch({ type: AFFILIATE_DELETE_FAIL, payload: error });
+  }
+};

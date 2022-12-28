@@ -23,7 +23,7 @@ import {
 } from "../constants/productConstants";
 import axios from "axios";
 import { create_query } from "../utils/helper_functions";
-import { IDispatch, IDispatchSuccess } from "../types/reduxTypes";
+import { IDispatch, IGetState, IDispatchSuccess } from "../types/reduxTypes";
 
 export const listProducts = (query: any) => async (dispatch: (arg0: IDispatch) => void) => {
   try {
@@ -35,33 +35,32 @@ export const listProducts = (query: any) => async (dispatch: (arg0: IDispatch) =
   }
 };
 
-export const saveProduct =
-  (product: any) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
-    //
-    try {
-      dispatch({ type: PRODUCT_SAVE_REQUEST, payload: product });
-      const {
-        userLogin: { userInfo }
-      } = getState();
-      if (!product._id) {
-        const { data } = await axios.post("/api/products", product, {
-          headers: {
-            Authorization: "Bearer " + userInfo.access_token
-          }
-        });
-        dispatch({ type: PRODUCT_SAVE_SUCCESS, payload: data });
-      } else {
-        const { data } = await axios.put("/api/products/" + product._id, product, {
-          headers: {
-            Authorization: "Bearer " + userInfo.access_token
-          }
-        });
-        dispatch({ type: PRODUCT_SAVE_SUCCESS, payload: data });
-      }
-    } catch (error) {
-      dispatch({ type: PRODUCT_SAVE_FAIL, payload: error });
+export const saveProduct = (product: any) => async (dispatch: (arg0: IDispatch) => void, getState: () => IGetState) => {
+  //
+  try {
+    dispatch({ type: PRODUCT_SAVE_REQUEST, payload: product });
+    const {
+      userLogin: { userInfo }
+    } = getState();
+    if (!product._id) {
+      const { data } = await axios.post("/api/products", product, {
+        headers: {
+          Authorization: "Bearer " + userInfo.access_token
+        }
+      });
+      dispatch({ type: PRODUCT_SAVE_SUCCESS, payload: data });
+    } else {
+      const { data } = await axios.put("/api/products/" + product._id, product, {
+        headers: {
+          Authorization: "Bearer " + userInfo.access_token
+        }
+      });
+      dispatch({ type: PRODUCT_SAVE_SUCCESS, payload: data });
     }
-  };
+  } catch (error) {
+    dispatch({ type: PRODUCT_SAVE_FAIL, payload: error });
+  }
+};
 
 export const detailsProduct = (pathname: string) => async (dispatch: (arg0: IDispatch) => void) => {
   try {
@@ -73,28 +72,27 @@ export const detailsProduct = (pathname: string) => async (dispatch: (arg0: IDis
   }
 };
 
-export const deleteProduct =
-  (id: string) => async (dispatch: (arg0: IDispatchSuccess) => void, getState: () => { userLogin: { userInfo: any } }) => {
-    try {
-      const {
-        userLogin: { userInfo }
-      } = getState();
-      //
-      dispatch({ type: PRODUCT_DELETE_REQUEST, payload: id });
-      const { data } = await axios.delete("/api/products/" + id, {
-        headers: {
-          Authorization: "Bearer " + userInfo.access_token
-        }
-      });
-      dispatch({ type: PRODUCT_DELETE_SUCCESS, payload: data, success: true });
-    } catch (error) {
-      dispatch({ type: PRODUCT_DELETE_FAIL, payload: error });
-    }
-  };
+export const deleteProduct = (id: string) => async (dispatch: (arg0: IDispatchSuccess) => void, getState: () => IGetState) => {
+  try {
+    const {
+      userLogin: { userInfo }
+    } = getState();
+    //
+    dispatch({ type: PRODUCT_DELETE_REQUEST, payload: id });
+    const { data } = await axios.delete("/api/products/" + id, {
+      headers: {
+        Authorization: "Bearer " + userInfo.access_token
+      }
+    });
+    dispatch({ type: PRODUCT_DELETE_SUCCESS, payload: data, success: true });
+  } catch (error) {
+    dispatch({ type: PRODUCT_DELETE_FAIL, payload: error });
+  }
+};
 
 export const saveProductReview =
   (product_pathname: string, review: { name: string; rating: number; comment: string }) =>
-  async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  async (dispatch: (arg0: IDispatch) => void, getState: () => IGetState) => {
     try {
       const {
         userLogin: { userInfo }
@@ -116,7 +114,7 @@ export const saveProductReview =
   };
 // export const deleteProductReview = (product_pathname: string, review_id: string) => async (
 // 	dispatch: (arg0: IDispatch) => void,
-// 	getState: () => { userLogin: { userInfo: any } }
+// 	getState: () => IGetState
 // ) => {
 //
 // 	try {

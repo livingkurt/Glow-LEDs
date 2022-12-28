@@ -14,7 +14,7 @@ import {
 } from "../constants/promoConstants";
 import axios from "axios";
 import { create_query } from "../utils/helper_functions";
-import { IDispatch, IDispatchSuccess } from "../types/reduxTypes";
+import { IDispatch, IGetState, IDispatchSuccess } from "../types/reduxTypes";
 
 export const listPromos = (query: any) => async (dispatch: (arg0: IDispatch) => void) => {
   try {
@@ -26,7 +26,7 @@ export const listPromos = (query: any) => async (dispatch: (arg0: IDispatch) => 
   }
 };
 
-export const savePromo = (promo: any) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
+export const savePromo = (promo: any) => async (dispatch: (arg0: IDispatch) => void, getState: () => IGetState) => {
   try {
     dispatch({ type: PROMO_SAVE_REQUEST, payload: promo });
     const {
@@ -62,20 +62,19 @@ export const detailsPromo = (pathname: string) => async (dispatch: (arg0: IDispa
   }
 };
 
-export const deletePromo =
-  (promoId: string) => async (dispatch: (arg0: IDispatchSuccess) => void, getState: () => { userLogin: { userInfo: any } }) => {
-    try {
-      const {
-        userLogin: { userInfo }
-      } = getState();
-      dispatch({ type: PROMO_DELETE_REQUEST, payload: promoId });
-      const { data } = await axios.delete("/api/promos/" + promoId, {
-        headers: {
-          Authorization: "Bearer " + userInfo.access_token
-        }
-      });
-      dispatch({ type: PROMO_DELETE_SUCCESS, payload: data, success: true });
-    } catch (error) {
-      dispatch({ type: PROMO_DELETE_FAIL, payload: error });
-    }
-  };
+export const deletePromo = (promoId: string) => async (dispatch: (arg0: IDispatchSuccess) => void, getState: () => IGetState) => {
+  try {
+    const {
+      userLogin: { userInfo }
+    } = getState();
+    dispatch({ type: PROMO_DELETE_REQUEST, payload: promoId });
+    const { data } = await axios.delete("/api/promos/" + promoId, {
+      headers: {
+        Authorization: "Bearer " + userInfo.access_token
+      }
+    });
+    dispatch({ type: PROMO_DELETE_SUCCESS, payload: data, success: true });
+  } catch (error) {
+    dispatch({ type: PROMO_DELETE_FAIL, payload: error });
+  }
+};
