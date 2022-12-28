@@ -3,9 +3,9 @@ export interface ISettings {
 }
 
 export interface ISetting {
-  settings: ISettings;
-  active: boolean;
-  deleted: boolean;
-  createdAt: Date;
-  updatedAt: Date;
+  settings?: ISettings;
+  active?: boolean;
+  deleted?: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
 }

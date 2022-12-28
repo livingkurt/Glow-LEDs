@@ -4,35 +4,35 @@ import { IPromo } from "./promoTypes";
 import { IUser } from "./userTypes";
 
 export interface IAffiliate {
-  user: IUser;
-  products: IProduct[];
-  chips: IChip[];
-  artist_name: string;
-  instagram_handle: string;
-  facebook_name: string;
-  tiktok: string;
-  percentage_off: number;
-  public_code: IPromo;
-  private_code: IPromo;
-  location: string;
-  years: string;
-  bio: string;
-  picture: string;
-  video: string;
-  style: string;
-  inspiration: string;
-  link: string;
-  venmo: string;
-  pathname: string;
-  answers: any[];
-  promoter: boolean;
-  rave_mob: boolean;
-  team: boolean;
-  sponsor: boolean;
-  active: boolean;
-  deleted: boolean;
-  createdAt: Date;
-  updatedAt: Date;
+  user?: IUser;
+  products?: IProduct[];
+  chips?: IChip[];
+  artist_name?: string;
+  instagram_handle?: string;
+  facebook_name?: string;
+  tiktok?: string;
+  percentage_off?: number;
+  public_code?: IPromo;
+  private_code?: IPromo;
+  location?: string;
+  years?: string;
+  bio?: string;
+  picture?: string;
+  video?: string;
+  style?: string;
+  inspiration?: string;
+  link?: string;
+  venmo?: string;
+  pathname?: string;
+  answers?: any[];
+  promoter?: boolean;
+  rave_mob?: boolean;
+  team?: boolean;
+  sponsor?: boolean;
+  active?: boolean;
+  deleted?: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export interface IListAffiliate {
@@ -43,7 +43,7 @@ export interface IListAffiliate {
 }
 
 export interface ISaveAffiliate {
-  _id: string;
+  _id?: string;
   user?: string;
   artist_name?: string;
   instagram_handle?: string;
@@ -65,7 +65,7 @@ export interface ISaveAffiliate {
   venmo?: string;
   public_code?: string;
   private_code?: string;
-  pathname: string;
+  pathname?: string;
   products?: IProduct[];
   chips?: string[];
   tiktok?: string;

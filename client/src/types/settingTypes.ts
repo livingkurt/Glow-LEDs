@@ -1,11 +1,11 @@
 export interface ISettings {
-  load_orders: boolean;
+  load_orders?: boolean;
 }
 
 export interface ISetting {
-  settings: ISettings;
-  active: boolean;
-  deleted: boolean;
-  createdAt: Date;
-  updatedAt: Date;
+  settings?: ISettings;
+  active?: boolean;
+  deleted?: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
