@@ -17,7 +17,7 @@ import {
 } from "../constants/paycheckConstants";
 import axios from "axios";
 import { create_query } from "../utils/helper_functions";
-import { IDispatch, IGetState, IDispatchSuccess } from "../types/reduxTypes";
+import { IDispatch, IGetState } from "../types/reduxTypes";
 
 export const listPaychecks = (query: any) => async (dispatch: (arg0: IDispatch) => void, getState: () => IGetState) => {
   try {
@@ -95,7 +95,7 @@ export const detailsPaycheck = (pathname: string) => async (dispatch: (arg0: IDi
   }
 };
 
-export const deletePaycheck = (paycheckId: string) => async (dispatch: (arg0: IDispatchSuccess) => void, getState: () => IGetState) => {
+export const deletePaycheck = (paycheckId: string) => async (dispatch: (arg0: IDispatch) => void, getState: () => IGetState) => {
   try {
     const {
       userLogin: { userInfo }

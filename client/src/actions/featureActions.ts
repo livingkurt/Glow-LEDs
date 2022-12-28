@@ -14,7 +14,7 @@ import {
 } from "../constants/featureConstants";
 import axios from "axios";
 import { create_query } from "../utils/helper_functions";
-import { IDispatch, IDispatchSuccess, IGetState } from "../types/reduxTypes";
+import { IDispatch, IGetState } from "../types/reduxTypes";
 
 export const listFeatures = (query: any) => async (dispatch: (arg0: IDispatch) => void) => {
   try {
@@ -74,7 +74,7 @@ export const detailsFeature = (pathname: string) => async (dispatch: (arg0: IDis
   }
 };
 
-export const deleteFeature = (featureId: string) => async (dispatch: (arg0: IDispatchSuccess) => void, getState: () => IGetState) => {
+export const deleteFeature = (featureId: string) => async (dispatch: (arg0: IDispatch) => void, getState: () => IGetState) => {
   try {
     const {
       userLogin: { userInfo }

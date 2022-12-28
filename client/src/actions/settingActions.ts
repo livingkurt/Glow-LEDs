@@ -16,7 +16,7 @@ import {
 } from "../constants/settingConstants";
 import axios from "axios";
 import { create_query } from "../utils/helper_functions";
-import { IDispatch, IGetState, IDispatchSuccess } from "../types/reduxTypes";
+import { IDispatch, IGetState } from "../types/reduxTypes";
 
 export const listSettings = (query: any) => async (dispatch: (arg0: IDispatch) => void, getState: () => IGetState) => {
   try {
@@ -86,7 +86,7 @@ export const detailsSetting = (pathname: string) => async (dispatch: (arg0: IDis
   }
 };
 
-export const deleteSetting = (settingId: string) => async (dispatch: (arg0: IDispatchSuccess) => void, getState: () => IGetState) => {
+export const deleteSetting = (settingId: string) => async (dispatch: (arg0: IDispatch) => void, getState: () => IGetState) => {
   try {
     const {
       userLogin: { userInfo }

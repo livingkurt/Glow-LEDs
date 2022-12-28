@@ -14,7 +14,7 @@ import {
 } from "../constants/contentConstants";
 import axios from "axios";
 import { create_query } from "../utils/helper_functions";
-import { IDispatch, IDispatchSuccess, IGetState } from "../types/reduxTypes";
+import { IDispatch, IGetState } from "../types/reduxTypes";
 
 export const listContents = (query: any) => async (dispatch: (arg0: IDispatch) => void) => {
   try {
@@ -62,7 +62,7 @@ export const detailsContent = (pathname: string) => async (dispatch: (arg0: IDis
   }
 };
 
-export const deleteContent = (contentId: string) => async (dispatch: (arg0: IDispatchSuccess) => void, getState: () => IGetState) => {
+export const deleteContent = (contentId: string) => async (dispatch: (arg0: IDispatch) => void, getState: () => IGetState) => {
   try {
     const {
       userLogin: { userInfo }

@@ -17,7 +17,7 @@ import {
 } from "../constants/filamentConstants";
 import axios from "axios";
 import { create_query } from "../utils/helper_functions";
-import { IDispatch, IDispatchSuccess, IGetState } from "../types/reduxTypes";
+import { IDispatch, IGetState } from "../types/reduxTypes";
 
 export const listFilaments = (query: any) => async (dispatch: (arg0: IDispatch) => void) => {
   try {
@@ -81,7 +81,7 @@ export const detailsFilament = (pathname: string) => async (dispatch: (arg0: IDi
   }
 };
 
-export const deleteFilament = (filamentId: string) => async (dispatch: (arg0: IDispatchSuccess) => void, getState: () => IGetState) => {
+export const deleteFilament = (filamentId: string) => async (dispatch: (arg0: IDispatch) => void, getState: () => IGetState) => {
   try {
     const {
       userLogin: { userInfo }

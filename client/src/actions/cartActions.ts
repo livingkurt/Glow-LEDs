@@ -19,7 +19,7 @@ import {
 } from "../constants/cartConstants";
 import axios from "axios";
 import { create_query } from "../utils/helper_functions";
-import { IDispatch, IDispatchSuccess, IGetState } from "../types/reduxTypes";
+import { IDispatch, IGetState } from "../types/reduxTypes";
 
 export interface CartItem {
   product: any;
@@ -257,7 +257,7 @@ export const detailsCart = (cart_id: string) => async (dispatch: (arg0: IDispatc
   }
 };
 
-export const deleteCart = (cartId: string) => async (dispatch: (arg0: IDispatchSuccess) => void, getState: () => IGetState) => {
+export const deleteCart = (cartId: string) => async (dispatch: (arg0: IDispatch) => void, getState: () => IGetState) => {
   try {
     const {
       userLogin: { userInfo }

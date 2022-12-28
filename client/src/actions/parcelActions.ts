@@ -17,7 +17,7 @@ import {
 } from "../constants/parcelConstants";
 import axios from "axios";
 import { create_query } from "../utils/helper_functions";
-import { IDispatch, IGetState, IDispatchSuccess } from "../types/reduxTypes";
+import { IDispatch, IGetState } from "../types/reduxTypes";
 
 export const listParcels = (query: any) => async (dispatch: (arg0: IDispatch) => void) => {
   try {
@@ -81,7 +81,7 @@ export const detailsParcel = (pathname: string) => async (dispatch: (arg0: IDisp
   }
 };
 
-export const deleteParcel = (parcelId: string) => async (dispatch: (arg0: IDispatchSuccess) => void, getState: () => IGetState) => {
+export const deleteParcel = (parcelId: string) => async (dispatch: (arg0: IDispatch) => void, getState: () => IGetState) => {
   try {
     const {
       userLogin: { userInfo }

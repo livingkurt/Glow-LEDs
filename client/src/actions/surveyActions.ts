@@ -15,7 +15,7 @@ import {
 } from "../constants/surveyConstants";
 import axios from "axios";
 import { create_query } from "../utils/helper_functions";
-import { IDispatch, IGetState, IDispatchSuccess } from "../types/reduxTypes";
+import { IDispatch, IGetState } from "../types/reduxTypes";
 
 export const listSurveys = (query: any) => async (dispatch: (arg0: IDispatch) => void) => {
   try {
@@ -71,7 +71,7 @@ export const detailsSurvey = (id: string) => async (dispatch: (arg0: IDispatch) 
   }
 };
 
-export const deleteSurvey = (surveyId: string) => async (dispatch: (arg0: IDispatchSuccess) => void, getState: () => IGetState) => {
+export const deleteSurvey = (surveyId: string) => async (dispatch: (arg0: IDispatch) => void, getState: () => IGetState) => {
   try {
     const {
       userLogin: { userInfo }

@@ -1,14 +1,11 @@
-export interface IDispatch {
-  type: string;
-  payload?: any;
-}
+import { IUser } from "./userTypes";
 
-export interface IDispatchSuccess {
+export interface IDispatch {
   type: string;
   payload?: any;
   success?: boolean;
 }
 
 export interface IGetState {
-  userLogin: { userInfo: any };
+  userLogin: { userInfo: IUser };
 }

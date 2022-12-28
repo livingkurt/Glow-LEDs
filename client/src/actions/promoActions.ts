@@ -14,7 +14,7 @@ import {
 } from "../constants/promoConstants";
 import axios from "axios";
 import { create_query } from "../utils/helper_functions";
-import { IDispatch, IGetState, IDispatchSuccess } from "../types/reduxTypes";
+import { IDispatch, IGetState } from "../types/reduxTypes";
 
 export const listPromos = (query: any) => async (dispatch: (arg0: IDispatch) => void) => {
   try {
@@ -62,7 +62,7 @@ export const detailsPromo = (pathname: string) => async (dispatch: (arg0: IDispa
   }
 };
 
-export const deletePromo = (promoId: string) => async (dispatch: (arg0: IDispatchSuccess) => void, getState: () => IGetState) => {
+export const deletePromo = (promoId: string) => async (dispatch: (arg0: IDispatch) => void, getState: () => IGetState) => {
   try {
     const {
       userLogin: { userInfo }

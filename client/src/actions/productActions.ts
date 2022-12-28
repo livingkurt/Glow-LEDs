@@ -23,7 +23,7 @@ import {
 } from "../constants/productConstants";
 import axios from "axios";
 import { create_query } from "../utils/helper_functions";
-import { IDispatch, IGetState, IDispatchSuccess } from "../types/reduxTypes";
+import { IDispatch, IGetState } from "../types/reduxTypes";
 
 export const listProducts = (query: any) => async (dispatch: (arg0: IDispatch) => void) => {
   try {
@@ -72,7 +72,7 @@ export const detailsProduct = (pathname: string) => async (dispatch: (arg0: IDis
   }
 };
 
-export const deleteProduct = (id: string) => async (dispatch: (arg0: IDispatchSuccess) => void, getState: () => IGetState) => {
+export const deleteProduct = (id: string) => async (dispatch: (arg0: IDispatch) => void, getState: () => IGetState) => {
   try {
     const {
       userLogin: { userInfo }

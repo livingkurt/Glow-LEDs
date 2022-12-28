@@ -14,7 +14,7 @@ import {
 } from "../constants/expenseConstants";
 import axios from "axios";
 import { create_query } from "../utils/helper_functions";
-import { IDispatch, IDispatchSuccess, IGetState } from "../types/reduxTypes";
+import { IDispatch, IGetState } from "../types/reduxTypes";
 
 export const listExpenses = (query: any) => async (dispatch: (arg0: IDispatch) => void, getState: () => IGetState) => {
   try {
@@ -88,7 +88,7 @@ export const detailsExpense = (pathname: string) => async (dispatch: (arg0: IDis
   }
 };
 
-export const deleteExpense = (expenseId: string) => async (dispatch: (arg0: IDispatchSuccess) => void, getState: () => IGetState) => {
+export const deleteExpense = (expenseId: string) => async (dispatch: (arg0: IDispatch) => void, getState: () => IGetState) => {
   try {
     const {
       userLogin: { userInfo }
