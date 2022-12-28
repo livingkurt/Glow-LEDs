@@ -17,9 +17,10 @@ import {
 } from "../constants/paycheckConstants";
 import axios from "axios";
 import { create_query } from "../utils/helper_functions";
+import { IDispatch, IDispatchSuccess } from "../types/reduxTypes";
 
 export const listPaychecks =
-  (query: any) => async (dispatch: (arg0: { type: string; payload?: any }) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  (query: any) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
     try {
       dispatch({ type: PAYCHECK_LIST_REQUEST });
       const {
@@ -37,8 +38,7 @@ export const listPaychecks =
   };
 
 export const listMyPaychecks =
-  (affiliate_id: string) =>
-  async (dispatch: (arg0: { type: string; payload?: any }) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  (affiliate_id: string) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
     try {
       dispatch({ type: MY_PAYCHECK_LIST_REQUEST });
       const {
@@ -55,7 +55,7 @@ export const listMyPaychecks =
   };
 
 export const savePaycheck =
-  (paycheck: any) => async (dispatch: (arg0: { type: string; payload: any }) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  (paycheck: any) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
     try {
       dispatch({ type: PAYCHECK_SAVE_REQUEST, payload: paycheck });
       const {
@@ -82,8 +82,7 @@ export const savePaycheck =
   };
 
 export const detailsPaycheck =
-  (pathname: string) =>
-  async (dispatch: (arg0: { type: string; payload: any }) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  (pathname: string) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
     try {
       dispatch({ type: PAYCHECK_DETAILS_REQUEST, payload: pathname });
       const {
@@ -101,8 +100,7 @@ export const detailsPaycheck =
   };
 
 export const deletePaycheck =
-  (paycheckId: string) =>
-  async (dispatch: (arg0: { type: string; payload: any; success?: boolean }) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  (paycheckId: string) => async (dispatch: (arg0: IDispatchSuccess) => void, getState: () => { userLogin: { userInfo: any } }) => {
     try {
       const {
         userLogin: { userInfo }

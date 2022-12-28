@@ -30,6 +30,7 @@ import {
   ORDER_REFUND_FAIL
 } from "../constants/orderConstants";
 import { USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS, USER_SAVE_REQUEST, USER_SAVE_SUCCESS } from "../constants/userConstants";
+import { IDispatch } from "../types/reduxTypes";
 import { create_query } from "../utils/helper_functions";
 require("dotenv").config();
 
@@ -50,7 +51,7 @@ export const createPayOrder =
     },
     paymentMethod: any
   ) =>
-  async (dispatch: (arg0: { type: string; payload: any }) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
     try {
       dispatch({ type: ORDER_CREATE_REQUEST, payload: order });
       const {
@@ -81,10 +82,9 @@ export const createPayOrder =
     }
   };
 
-export const removeOrderState =
-  () => async (dispatch: (arg0: { type: string; payload: any }) => void, getState: () => { userLogin: { userInfo: any } }) => {
-    dispatch({ type: ORDER_REMOVE_STATE, payload: {} });
-  };
+export const removeOrderState = () => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  dispatch({ type: ORDER_REMOVE_STATE, payload: {} });
+};
 
 export const createPayOrderGuest =
   (
@@ -104,7 +104,7 @@ export const createPayOrderGuest =
     password: string,
     paymentMethod: any
   ) =>
-  async (dispatch: (arg0: { type: string; payload: any }) => void) => {
+  async (dispatch: (arg0: IDispatch) => void) => {
     try {
       let user_id = "";
       if (create_account) {
@@ -179,7 +179,7 @@ export const createOrderGuest =
     production_note: string;
     promo_code: string;
   }) =>
-  async (dispatch: (arg0: { type: string; payload: any }) => void) => {
+  async (dispatch: (arg0: IDispatch) => void) => {
     try {
       dispatch({ type: ORDER_CREATE_REQUEST, payload: order });
       const create_guest_order_res = await axios.post("/api/orders/guest", order);
@@ -212,7 +212,7 @@ export const createOrder =
     production_note: string;
     promo_code: string;
   }) =>
-  async (dispatch: (arg0: { type: string; payload: any }) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
     try {
       dispatch({ type: ORDER_CREATE_REQUEST, payload: order });
       const {
@@ -236,8 +236,7 @@ export const createOrder =
   };
 
 export const payOrder =
-  (order: any, paymentMethod: any) =>
-  async (dispatch: (arg0: { type: string; payload: any }) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  (order: any, paymentMethod: any) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
     try {
       dispatch({ type: ORDER_PAY_REQUEST, payload: paymentMethod });
       const {
@@ -259,7 +258,7 @@ export const payOrder =
       dispatch({ type: ORDER_PAY_FAIL, payload: error });
     }
   };
-export const payOrderGuest = (order: any, paymentMethod: any) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
+export const payOrderGuest = (order: any, paymentMethod: any) => async (dispatch: (arg0: IDispatch) => void) => {
   try {
     dispatch({ type: ORDER_PAY_REQUEST, payload: paymentMethod });
     const guest_payment_res = await axios.put("/api/payments/guest/pay/" + order._id, { paymentMethod });
@@ -274,8 +273,7 @@ export const payOrderGuest = (order: any, paymentMethod: any) => async (dispatch
 };
 
 export const listMyOrders =
-  (user_id: string) =>
-  async (dispatch: (arg0: { type: string; payload?: any }) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  (user_id: string) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
     try {
       dispatch({ type: MY_ORDER_LIST_REQUEST });
       const {
@@ -291,8 +289,7 @@ export const listMyOrders =
     }
   };
 export const listUserOrders =
-  (user_id: string) =>
-  async (dispatch: (arg0: { type: string; payload?: any }) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  (user_id: string) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
     try {
       dispatch({ type: MY_ORDER_LIST_REQUEST });
       const {
@@ -308,27 +305,25 @@ export const listUserOrders =
     }
   };
 
-export const listOrders =
-  (query: any) => async (dispatch: (arg0: { type: string; payload?: any }) => void, getState: () => { userLogin: { userInfo: any } }) => {
-    try {
-      dispatch({ type: ORDER_LIST_REQUEST });
-      const {
-        userLogin: { userInfo }
-      } = getState();
+export const listOrders = (query: any) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  try {
+    dispatch({ type: ORDER_LIST_REQUEST });
+    const {
+      userLogin: { userInfo }
+    } = getState();
 
-      const { data } = await axios.get("/api/orders/?" + create_query(query), {
-        headers: { Authorization: "Bearer " + userInfo.access_token }
-      });
+    const { data } = await axios.get("/api/orders/?" + create_query(query), {
+      headers: { Authorization: "Bearer " + userInfo.access_token }
+    });
 
-      dispatch({ type: ORDER_LIST_SUCCESS, payload: data });
-    } catch (error) {
-      dispatch({ type: ORDER_LIST_FAIL, payload: error });
-    }
-  };
+    dispatch({ type: ORDER_LIST_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({ type: ORDER_LIST_FAIL, payload: error });
+  }
+};
 
 export const detailsOrder =
-  (orderId: string) =>
-  async (dispatch: (arg0: { type: string; payload: any }) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  (orderId: string) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
     try {
       dispatch({ type: ORDER_DETAILS_REQUEST, payload: orderId });
       const {
@@ -349,8 +344,7 @@ export const detailsOrder =
   };
 
 export const deleteOrder =
-  (orderId: string) =>
-  async (dispatch: (arg0: { type: string; payload: any }) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  (orderId: string) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
     try {
       dispatch({ type: ORDER_DELETE_REQUEST, payload: orderId });
       const {
@@ -367,7 +361,7 @@ export const deleteOrder =
 
 export const refundOrder =
   (order: { _id: string }, refundResult: boolean, refund_amount: number, refund_reason: string) =>
-  async (dispatch: (arg0: { type: string; payload: any }) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
     try {
       dispatch({ type: ORDER_REFUND_REQUEST, payload: refundResult });
       const {
@@ -399,7 +393,7 @@ export const refundOrder =
 
 export const update_order =
   (order: { _id: string; isManufactured: boolean }, result: boolean, is_action: string, action_at: string) =>
-  async (dispatch: (arg0: { type: string; payload: any }) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
     try {
       dispatch({ type: ORDER_UPDATE_REQUEST, payload: result });
       const {
@@ -433,7 +427,7 @@ export const update_order =
   };
 export const update_payment =
   (order: { _id: string }, result: boolean, payment_method: string) =>
-  async (dispatch: (arg0: { type: string; payload: any }) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
     try {
       dispatch({ type: ORDER_UPDATE_REQUEST, payload: result });
       const {
@@ -460,29 +454,28 @@ export const update_payment =
     }
   };
 
-export const saveOrder =
-  (order: any) => async (dispatch: (arg0: { type: string; payload: any }) => void, getState: () => { userLogin: { userInfo: any } }) => {
-    try {
-      dispatch({ type: ORDER_SAVE_REQUEST, payload: order });
-      const {
-        userLogin: { userInfo }
-      } = getState();
-      if (!order._id) {
-        const { data } = await axios.post("/api/orders/glow", order, {
-          headers: {
-            Authorization: "Bearer " + userInfo.access_token
-          }
-        });
-        dispatch({ type: ORDER_SAVE_SUCCESS, payload: data });
-      } else {
-        const { data } = await axios.put("/api/orders/glow/" + order._id, order, {
-          headers: {
-            Authorization: "Bearer " + userInfo.access_token
-          }
-        });
-        dispatch({ type: ORDER_SAVE_SUCCESS, payload: data });
-      }
-    } catch (error) {
-      dispatch({ type: ORDER_SAVE_FAIL, payload: error });
+export const saveOrder = (order: any) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  try {
+    dispatch({ type: ORDER_SAVE_REQUEST, payload: order });
+    const {
+      userLogin: { userInfo }
+    } = getState();
+    if (!order._id) {
+      const { data } = await axios.post("/api/orders/glow", order, {
+        headers: {
+          Authorization: "Bearer " + userInfo.access_token
+        }
+      });
+      dispatch({ type: ORDER_SAVE_SUCCESS, payload: data });
+    } else {
+      const { data } = await axios.put("/api/orders/glow/" + order._id, order, {
+        headers: {
+          Authorization: "Bearer " + userInfo.access_token
+        }
+      });
+      dispatch({ type: ORDER_SAVE_SUCCESS, payload: data });
     }
-  };
+  } catch (error) {
+    dispatch({ type: ORDER_SAVE_FAIL, payload: error });
+  }
+};

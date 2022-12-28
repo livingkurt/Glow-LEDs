@@ -14,8 +14,9 @@ import {
 } from "../constants/chipConstants";
 import axios from "axios";
 import { create_query } from "../utils/helper_functions";
+import { IDispatch } from "../types/reduxTypes";
 
-export const listChips = (query: any) => async (dispatch: (arg0: { type: string; payload?: any }) => void) => {
+export const listChips = (query: any) => async (dispatch: (arg0: IDispatch) => void) => {
   try {
     dispatch({ type: CHIP_LIST_REQUEST });
     const { data } = await axios.get("/api/chips?" + create_query(query));
@@ -25,35 +26,34 @@ export const listChips = (query: any) => async (dispatch: (arg0: { type: string;
   }
 };
 
-export const saveChip =
-  (chip: any) => async (dispatch: (arg0: { type: string; payload: any }) => void, getState: () => { userLogin: { userInfo: any } }) => {
-    //
-    try {
-      dispatch({ type: CHIP_SAVE_REQUEST, payload: chip });
-      const {
-        userLogin: { userInfo }
-      } = getState();
-      if (!chip._id) {
-        const { data } = await axios.post("/api/chips", chip, {
-          headers: {
-            Authorization: "Bearer " + userInfo.access_token
-          }
-        });
-        dispatch({ type: CHIP_SAVE_SUCCESS, payload: data });
-      } else {
-        const { data } = await axios.put("/api/chips/" + chip._id, chip, {
-          headers: {
-            Authorization: "Bearer " + userInfo.access_token
-          }
-        });
-        dispatch({ type: CHIP_SAVE_SUCCESS, payload: data });
-      }
-    } catch (error) {
-      dispatch({ type: CHIP_SAVE_FAIL, payload: error });
+export const saveChip = (chip: any) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  //
+  try {
+    dispatch({ type: CHIP_SAVE_REQUEST, payload: chip });
+    const {
+      userLogin: { userInfo }
+    } = getState();
+    if (!chip._id) {
+      const { data } = await axios.post("/api/chips", chip, {
+        headers: {
+          Authorization: "Bearer " + userInfo.access_token
+        }
+      });
+      dispatch({ type: CHIP_SAVE_SUCCESS, payload: data });
+    } else {
+      const { data } = await axios.put("/api/chips/" + chip._id, chip, {
+        headers: {
+          Authorization: "Bearer " + userInfo.access_token
+        }
+      });
+      dispatch({ type: CHIP_SAVE_SUCCESS, payload: data });
     }
-  };
+  } catch (error) {
+    dispatch({ type: CHIP_SAVE_FAIL, payload: error });
+  }
+};
 
-export const detailsChip = (pathname: string) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
+export const detailsChip = (pathname: string) => async (dispatch: (arg0: IDispatch) => void) => {
   try {
     dispatch({ type: CHIP_DETAILS_REQUEST, payload: pathname });
     const { data } = await axios.get("/api/chips/" + pathname);
@@ -64,8 +64,7 @@ export const detailsChip = (pathname: string) => async (dispatch: (arg0: { type:
 };
 
 export const deleteChip =
-  (chipId: string) =>
-  async (dispatch: (arg0: { type: string; payload: any; success?: boolean }) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  (chipId: string) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
     try {
       const {
         userLogin: { userInfo }

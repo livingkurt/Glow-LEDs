@@ -14,9 +14,10 @@ import {
 } from "../constants/expenseConstants";
 import axios from "axios";
 import { create_query } from "../utils/helper_functions";
+import { IDispatch } from "../types/reduxTypes";
 
 export const listExpenses =
-  (query: any) => async (dispatch: (arg0: { type: string; payload?: any }) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  (query: any) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
     try {
       dispatch({ type: EXPENSE_LIST_REQUEST });
       const {
@@ -45,7 +46,7 @@ export const saveExpense =
     card?: number;
     amount?: string;
   }) =>
-  async (dispatch: (arg0: { type: string; payload: any }) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
     try {
       dispatch({ type: EXPENSE_SAVE_REQUEST, payload: expense });
       const {
@@ -72,8 +73,7 @@ export const saveExpense =
   };
 
 export const detailsExpense =
-  (pathname: string) =>
-  async (dispatch: (arg0: { type: string; payload: any }) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  (pathname: string) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
     try {
       dispatch({ type: EXPENSE_DETAILS_REQUEST, payload: pathname });
       const {
@@ -91,8 +91,7 @@ export const detailsExpense =
   };
 
 export const deleteExpense =
-  (expenseId: string) =>
-  async (dispatch: (arg0: { type: string; payload: any; success?: boolean }) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  (expenseId: string) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
     try {
       const {
         userLogin: { userInfo }

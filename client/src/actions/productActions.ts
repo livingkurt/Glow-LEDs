@@ -23,8 +23,9 @@ import {
 } from "../constants/productConstants";
 import axios from "axios";
 import { create_query } from "../utils/helper_functions";
+import { IDispatch, IDispatchSuccess } from "../types/reduxTypes";
 
-export const listProducts = (query: any) => async (dispatch: (arg0: { type: string; payload?: any }) => void) => {
+export const listProducts = (query: any) => async (dispatch: (arg0: IDispatch) => void) => {
   try {
     dispatch({ type: PRODUCT_LIST_REQUEST });
     const { data } = await axios.get("/api/products?" + create_query(query));
@@ -35,7 +36,7 @@ export const listProducts = (query: any) => async (dispatch: (arg0: { type: stri
 };
 
 export const saveProduct =
-  (product: any) => async (dispatch: (arg0: { type: string; payload: any }) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  (product: any) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
     //
     try {
       dispatch({ type: PRODUCT_SAVE_REQUEST, payload: product });
@@ -62,7 +63,7 @@ export const saveProduct =
     }
   };
 
-export const detailsProduct = (pathname: string) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
+export const detailsProduct = (pathname: string) => async (dispatch: (arg0: IDispatch) => void) => {
   try {
     dispatch({ type: PRODUCT_DETAILS_REQUEST, payload: pathname });
     const { data } = await axios.get("/api/products/" + pathname);
@@ -73,8 +74,7 @@ export const detailsProduct = (pathname: string) => async (dispatch: (arg0: { ty
 };
 
 export const deleteProduct =
-  (id: string) =>
-  async (dispatch: (arg0: { type: string; payload: any; success?: boolean }) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  (id: string) => async (dispatch: (arg0: IDispatchSuccess) => void, getState: () => { userLogin: { userInfo: any } }) => {
     try {
       const {
         userLogin: { userInfo }
@@ -94,7 +94,7 @@ export const deleteProduct =
 
 export const saveProductReview =
   (product_pathname: string, review: { name: string; rating: number; comment: string }) =>
-  async (dispatch: (arg0: { type: string; payload: any }) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
     try {
       const {
         userLogin: { userInfo }
@@ -115,7 +115,7 @@ export const saveProductReview =
     }
   };
 // export const deleteProductReview = (product_pathname: string, review_id: string) => async (
-// 	dispatch: (arg0: { type: string; payload: any }) => void,
+// 	dispatch: (arg0: IDispatch) => void,
 // 	getState: () => { userLogin: { userInfo: any } }
 // ) => {
 //

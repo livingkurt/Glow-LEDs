@@ -19,10 +19,57 @@ import {
 } from "../constants/cartConstants";
 import axios from "axios";
 import { create_query } from "../utils/helper_functions";
+import { IDispatch } from "../types/reduxTypes";
+
+export interface CartItem {
+  product: any;
+  color_product: any;
+  color_product_name: string;
+  color_group_name: string;
+  secondary_color_group_name: string;
+  secondary_color_product: any;
+  secondary_color_product_name: string;
+  option_group_name: string;
+  option_product: any;
+  option_product_name: string;
+  secondary_product: any;
+  secondary_product_name: string;
+  secondary_group_name: string;
+  name: string;
+  size: string;
+  color: string;
+  color_code: string;
+  secondary_color: string;
+  secondary_color_code: string;
+  display_image: string;
+  secondary_image: string;
+  price: number;
+  preorder: boolean;
+  sale_price: number;
+  sale_start_date: Date;
+  sale_end_date: Date;
+  count_in_stock: number;
+  weight_pounds: number;
+  weight_ounces: number;
+  package_length: number;
+  package_width: number;
+  package_height: number;
+  package_volume: number;
+  processing_time: number;
+  product_collection: string;
+  pathname: string;
+  collection: string;
+  subcategory: string;
+  category: string;
+  qty: string;
+  quantity: number;
+  finite_stock: boolean;
+  add_on_price: number;
+  show_add_on: boolean;
+}
 
 export const addToCart =
-  (cart_item_1: any) =>
-  async (dispatch: (arg0: any) => void, getState: () => { cart: { cartItems: any }; userLogin: { userInfo: any } }) => {
+  (cart_item_1: CartItem) => async (dispatch: (arg0: IDispatch) => void, getState: () => { cart: { cartItems: any } }) => {
     try {
       let cart_data = cart_item_1;
 
@@ -97,10 +144,7 @@ export const addToCart =
 
 export const removeFromCart =
   (product: string) =>
-  async (
-    dispatch: (arg0: { type: string; payload: any }) => void,
-    getState: () => { cart: { cartItems: object }; userLogin: { userInfo: any } }
-  ) => {
+  async (dispatch: (arg0: IDispatch) => void, getState: () => { cart: { cartItems: object }; userLogin: { userInfo: any } }) => {
     const {
       userLogin: { userInfo }
     } = getState();
@@ -141,16 +185,16 @@ export const saveShipping =
     international: boolean;
     country: string;
   }) =>
-  (dispatch: (arg0: { type: string; payload: any }) => void) => {
+  (dispatch: (arg0: IDispatch) => void) => {
     //
     dispatch({ type: CART_SAVE_SHIPPING, payload: data });
   };
 
-export const savePayment = (data: { paymentMethod: any }) => (dispatch: (arg0: { type: string; payload: any }) => void) => {
+export const savePayment = (data: { paymentMethod: any }) => (dispatch: (arg0: IDispatch) => void) => {
   dispatch({ type: CART_SAVE_PAYMENT, payload: data });
 };
 
-export const listCarts = (query: any) => async (dispatch: (arg0: { type: string; payload?: any }) => void) => {
+export const listCarts = (query: any) => async (dispatch: (arg0: IDispatch) => void) => {
   try {
     dispatch({ type: CART_LIST_REQUEST });
     const { data } = await axios.get("/api/carts?" + create_query(query));
@@ -162,10 +206,7 @@ export const listCarts = (query: any) => async (dispatch: (arg0: { type: string;
 
 export const saveCart =
   (cartItem: any) =>
-  async (
-    dispatch: (arg0: { type: string; payload: any }) => void,
-    getState: () => { cart: { cartItems: any }; userLogin: { userInfo: any } }
-  ) => {
+  async (dispatch: (arg0: IDispatch) => void, getState: () => { cart: { cartItems: any }; userLogin: { userInfo: any } }) => {
     try {
       dispatch({ type: CART_SAVE_REQUEST, payload: cartItem });
       const {
@@ -206,7 +247,7 @@ export const saveCart =
     }
   };
 
-export const detailsCart = (cart_id: string) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
+export const detailsCart = (cart_id: string) => async (dispatch: (arg0: IDispatch) => void) => {
   try {
     dispatch({ type: CART_DETAILS_REQUEST, payload: cart_id });
     const { data } = await axios.get("/api/carts/" + cart_id);
@@ -217,8 +258,7 @@ export const detailsCart = (cart_id: string) => async (dispatch: (arg0: { type: 
 };
 
 export const deleteCart =
-  (cartId: string) =>
-  async (dispatch: (arg0: { type: string; payload: any; success?: boolean }) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  (cartId: string) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
     try {
       const {
         userLogin: { userInfo }

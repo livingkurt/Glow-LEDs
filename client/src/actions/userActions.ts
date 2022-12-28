@@ -46,11 +46,12 @@ import {
 import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
 import { create_query } from "../utils/helper_functions";
+import { IDispatch } from "../types/reduxTypes";
 
 // import { GET_ERRORS, SET_CURRENT_USER, USER_LOADING } from './types';
 
 // // Register User
-// export const register = (userData: any) => (dispatch: (arg0: { type: string; payload: any }) => any) => {
+// export const register = (userData: any) => (dispatch: (arg0: IDispatch) => any) => {
 //
 // 	axios.post('/api/users/register', userData).catch((err) =>
 // 		dispatch({
@@ -60,7 +61,7 @@ import { create_query } from "../utils/helper_functions";
 // 	);
 // };
 
-export const register = (userData: any) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
+export const register = (userData: any) => async (dispatch: (arg0: IDispatch) => void) => {
   dispatch({ type: USER_REGISTER_REQUEST, payload: userData });
   try {
     const { data } = await axios.post("/api/users/register", userData);
@@ -79,7 +80,7 @@ export const register = (userData: any) => async (dispatch: (arg0: { type: strin
   }
 };
 
-export const login = (userData: any) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
+export const login = (userData: any) => async (dispatch: (arg0: IDispatch) => void) => {
   dispatch({ type: USER_LOGIN_REQUEST, payload: userData });
   try {
     const { data } = await axios.post("/api/users/login", userData);
@@ -119,7 +120,7 @@ export const setUserLoading = () => {
 };
 
 // Log user out
-export const logout = (refresh_token: string) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
+export const logout = (refresh_token: string) => async (dispatch: (arg0: IDispatch) => void) => {
   localStorage.removeItem("accessToken");
   // localStorage.removeItem('refreshToken');
   // const { data } = await axios.post('/api/users/logout', {
@@ -134,7 +135,7 @@ export const logout = (refresh_token: string) => async (dispatch: (arg0: { type:
 };
 
 // export const check_refresh_token = (access_token: any) => async (
-// 	dispatch: (arg0: { type: string; payload: any }) => void
+// 	dispatch: (arg0: IDispatch) => void
 // ) => {
 // 	dispatch({ type: USER_LOGIN_REQUEST, payload: access_token });
 // 	try {
@@ -158,85 +159,81 @@ export const logout = (refresh_token: string) => async (dispatch: (arg0: { type:
 // 	}
 // };
 
-export const update =
-  (user_data: any) =>
-  async (dispatch: (arg0: { type: string; payload: any }) => void, getState: () => { userLogin: { userInfo: any } }) => {
+export const update = (user_data: any) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  const {
+    userLogin: { userInfo }
+  } = getState();
+  dispatch({
+    type: USER_UPDATE_REQUEST,
+    payload: {}
+  });
+  try {
+    const { data } = await axios.put(
+      "/api/users/update/" + user_data._id,
+      {
+        first_name: user_data.first_name,
+        last_name: user_data.last_name,
+        email: user_data.email,
+        password: user_data.password,
+        is_affiliated: user_data.is_affiliated,
+        email_subscription: user_data.email_subscription,
+        affiliate: user_data.affiliate,
+        shipping: user_data.shipping,
+        isVerified: user_data.isVerified,
+        isAdmin: user_data.isAdmin,
+        access_token: userInfo.access_token,
+        refresh_token: userInfo.refresh_token
+      },
+      {
+        headers: {
+          Authorization: "Bearer " + userInfo.access_token
+        }
+      }
+    );
+
+    dispatch({ type: USER_UPDATE_SUCCESS, payload: data });
+
+    const { access_token, refresh_token } = data;
+    setAuthToken(access_token);
+    const decoded = jwt_decode(access_token);
+
+    // Set current user
+    localStorage.setItem("accessToken", access_token);
+    localStorage.setItem("refreshToken", refresh_token);
+    dispatch(setCurrentUser(decoded));
+  } catch (error) {
+    dispatch({ type: USER_UPDATE_FAIL, payload: error });
+  }
+};
+
+export const saveUser = (user: any) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  try {
+    dispatch({ type: USER_SAVE_REQUEST, payload: user });
     const {
       userLogin: { userInfo }
     } = getState();
-    dispatch({
-      type: USER_UPDATE_REQUEST,
-      payload: {}
-    });
-    try {
-      const { data } = await axios.put(
-        "/api/users/update/" + user_data._id,
-        {
-          first_name: user_data.first_name,
-          last_name: user_data.last_name,
-          email: user_data.email,
-          password: user_data.password,
-          is_affiliated: user_data.is_affiliated,
-          email_subscription: user_data.email_subscription,
-          affiliate: user_data.affiliate,
-          shipping: user_data.shipping,
-          isVerified: user_data.isVerified,
-          isAdmin: user_data.isAdmin,
-          access_token: userInfo.access_token,
-          refresh_token: userInfo.refresh_token
-        },
-        {
-          headers: {
-            Authorization: "Bearer " + userInfo.access_token
-          }
+    if (!user._id) {
+      const { data } = await axios.post("/api/users", user, {
+        headers: {
+          Authorization: "Bearer " + userInfo.access_token
         }
-      );
-
-      dispatch({ type: USER_UPDATE_SUCCESS, payload: data });
-
-      const { access_token, refresh_token } = data;
-      setAuthToken(access_token);
-      const decoded = jwt_decode(access_token);
-
-      // Set current user
-      localStorage.setItem("accessToken", access_token);
-      localStorage.setItem("refreshToken", refresh_token);
-      dispatch(setCurrentUser(decoded));
-    } catch (error) {
-      dispatch({ type: USER_UPDATE_FAIL, payload: error });
+      });
+      dispatch({ type: USER_SAVE_SUCCESS, payload: data });
+    } else {
+      const { data } = await axios.put("/api/users/" + user._id, user, {
+        headers: {
+          Authorization: "Bearer " + userInfo.access_token
+        }
+      });
+      dispatch({ type: USER_SAVE_SUCCESS, payload: data });
     }
-  };
-
-export const saveUser =
-  (user: any) => async (dispatch: (arg0: { type: string; payload: any }) => void, getState: () => { userLogin: { userInfo: any } }) => {
-    try {
-      dispatch({ type: USER_SAVE_REQUEST, payload: user });
-      const {
-        userLogin: { userInfo }
-      } = getState();
-      if (!user._id) {
-        const { data } = await axios.post("/api/users", user, {
-          headers: {
-            Authorization: "Bearer " + userInfo.access_token
-          }
-        });
-        dispatch({ type: USER_SAVE_SUCCESS, payload: data });
-      } else {
-        const { data } = await axios.put("/api/users/" + user._id, user, {
-          headers: {
-            Authorization: "Bearer " + userInfo.access_token
-          }
-        });
-        dispatch({ type: USER_SAVE_SUCCESS, payload: data });
-      }
-    } catch (error) {
-      dispatch({ type: USER_SAVE_FAIL, payload: error });
-    }
-  };
+  } catch (error) {
+    dispatch({ type: USER_SAVE_FAIL, payload: error });
+  }
+};
 
 export const updateUser =
-  (user_data: any) =>
-  async (dispatch: (arg0: { type: string; payload: any }) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  (user_data: any) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
     const {
       userLogin: { userInfo }
     } = getState();
@@ -286,7 +283,7 @@ export const updateUser =
 
 export const password_reset =
   (user_id: string, password: string, repassword: string) =>
-  async (dispatch: (arg0: { type: string; payload: any }) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
     dispatch({
       type: USER_RESET_PASSWORD_REQUEST,
       payload: { user_id, password, repassword }
@@ -307,7 +304,7 @@ export const password_reset =
     }
   };
 
-export const reset_password = (email: string) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
+export const reset_password = (email: string) => async (dispatch: (arg0: IDispatch) => void) => {
   dispatch({ type: USER_PASSWORD_RESET_REQUEST, payload: { email } });
   try {
     const { data } = await axios.post("/api/users/reset_password", { email });
@@ -319,7 +316,7 @@ export const reset_password = (email: string) => async (dispatch: (arg0: { type:
   }
 };
 
-export const verify = (user_id: string) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
+export const verify = (user_id: string) => async (dispatch: (arg0: IDispatch) => void) => {
   dispatch({ type: USER_VERIFY_REQUEST, payload: { user_id } });
   try {
     const { data } = await axios.put("/api/users/verify/" + user_id);
@@ -346,7 +343,7 @@ export const contact =
     song_id: string,
     quote: string
   ) =>
-  async (dispatch: (arg0: { type: string; payload: any }) => void) => {
+  async (dispatch: (arg0: IDispatch) => void) => {
     const reason_for_contact = reason;
     dispatch({
       type: USER_CONTACT_REQUEST,
@@ -395,25 +392,23 @@ export const contact =
     }
   };
 
-export const listUsers =
-  (query: any) => async (dispatch: (arg0: { type: string; payload?: any }) => void, getState: () => { userLogin: { userInfo: any } }) => {
-    try {
-      dispatch({ type: USER_LIST_REQUEST });
-      const {
-        userLogin: { userInfo }
-      } = getState();
-      const { data } = await axios.get("/api/users?" + create_query(query), {
-        headers: { Authorization: "Bearer " + userInfo.access_token }
-      });
-      dispatch({ type: USER_LIST_SUCCESS, payload: data });
-    } catch (error) {
-      dispatch({ type: USER_LIST_FAIL, payload: error });
-    }
-  };
+export const listUsers = (query: any) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  try {
+    dispatch({ type: USER_LIST_REQUEST });
+    const {
+      userLogin: { userInfo }
+    } = getState();
+    const { data } = await axios.get("/api/users?" + create_query(query), {
+      headers: { Authorization: "Bearer " + userInfo.access_token }
+    });
+    dispatch({ type: USER_LIST_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({ type: USER_LIST_FAIL, payload: error });
+  }
+};
 
 export const deleteUser =
-  (userId: string) =>
-  async (dispatch: (arg0: { type: string; payload: any }) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  (userId: string) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
     try {
       dispatch({ type: USER_DELETE_REQUEST, payload: userId });
       const {
@@ -429,8 +424,7 @@ export const deleteUser =
   };
 
 export const detailsUser =
-  (userId: string) =>
-  async (dispatch: (arg0: { type: string; payload: any }) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  (userId: string) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
     try {
       dispatch({ type: USER_DETAILS_REQUEST, payload: userId });
       const {

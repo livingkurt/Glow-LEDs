@@ -14,8 +14,9 @@ import {
 } from "../constants/promoConstants";
 import axios from "axios";
 import { create_query } from "../utils/helper_functions";
+import { IDispatch, IDispatchSuccess } from "../types/reduxTypes";
 
-export const listPromos = (query: any) => async (dispatch: (arg0: { type: string; payload?: any }) => void) => {
+export const listPromos = (query: any) => async (dispatch: (arg0: IDispatch) => void) => {
   try {
     dispatch({ type: PROMO_LIST_REQUEST });
     const { data } = await axios.get("/api/promos?" + create_query(query));
@@ -25,34 +26,33 @@ export const listPromos = (query: any) => async (dispatch: (arg0: { type: string
   }
 };
 
-export const savePromo =
-  (promo: any) => async (dispatch: (arg0: { type: string; payload: any }) => void, getState: () => { userLogin: { userInfo: any } }) => {
-    try {
-      dispatch({ type: PROMO_SAVE_REQUEST, payload: promo });
-      const {
-        userLogin: { userInfo }
-      } = getState();
-      if (!promo._id) {
-        const { data } = await axios.post("/api/promos", promo, {
-          headers: {
-            Authorization: "Bearer " + userInfo.access_token
-          }
-        });
-        dispatch({ type: PROMO_SAVE_SUCCESS, payload: data });
-      } else {
-        const { data } = await axios.put("/api/promos/" + promo._id, promo, {
-          headers: {
-            Authorization: "Bearer " + userInfo.access_token
-          }
-        });
-        dispatch({ type: PROMO_SAVE_SUCCESS, payload: data });
-      }
-    } catch (error) {
-      dispatch({ type: PROMO_SAVE_FAIL, payload: error });
+export const savePromo = (promo: any) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  try {
+    dispatch({ type: PROMO_SAVE_REQUEST, payload: promo });
+    const {
+      userLogin: { userInfo }
+    } = getState();
+    if (!promo._id) {
+      const { data } = await axios.post("/api/promos", promo, {
+        headers: {
+          Authorization: "Bearer " + userInfo.access_token
+        }
+      });
+      dispatch({ type: PROMO_SAVE_SUCCESS, payload: data });
+    } else {
+      const { data } = await axios.put("/api/promos/" + promo._id, promo, {
+        headers: {
+          Authorization: "Bearer " + userInfo.access_token
+        }
+      });
+      dispatch({ type: PROMO_SAVE_SUCCESS, payload: data });
     }
-  };
+  } catch (error) {
+    dispatch({ type: PROMO_SAVE_FAIL, payload: error });
+  }
+};
 
-export const detailsPromo = (pathname: string) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
+export const detailsPromo = (pathname: string) => async (dispatch: (arg0: IDispatch) => void) => {
   try {
     dispatch({ type: PROMO_DETAILS_REQUEST, payload: pathname });
     const { data } = await axios.get("/api/promos/" + pathname);
@@ -63,8 +63,7 @@ export const detailsPromo = (pathname: string) => async (dispatch: (arg0: { type
 };
 
 export const deletePromo =
-  (promoId: string) =>
-  async (dispatch: (arg0: { type: string; payload: any; success?: boolean }) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  (promoId: string) => async (dispatch: (arg0: IDispatchSuccess) => void, getState: () => { userLogin: { userInfo: any } }) => {
     try {
       const {
         userLogin: { userInfo }

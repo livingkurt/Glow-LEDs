@@ -14,8 +14,9 @@ import {
 } from "../constants/categoryConstants";
 import axios from "axios";
 import { create_query } from "../utils/helper_functions";
+import { IDispatch } from "../types/reduxTypes";
 
-export const listCategorys = (query: any) => async (dispatch: (arg0: { type: string; payload?: any }) => void) => {
+export const listCategorys = (query: any) => async (dispatch: (arg0: IDispatch) => void) => {
   try {
     dispatch({ type: CATEGORY_LIST_REQUEST });
 
@@ -28,7 +29,7 @@ export const listCategorys = (query: any) => async (dispatch: (arg0: { type: str
 };
 
 export const saveCategory =
-  (category: any) => async (dispatch: (arg0: { type: string; payload: any }) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  (category: any) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
     //
     try {
       dispatch({ type: CATEGORY_SAVE_REQUEST, payload: category });
@@ -56,8 +57,7 @@ export const saveCategory =
   };
 
 export const detailsCategory =
-  (pathname: string) =>
-  async (dispatch: (arg0: { type: string; payload: any }) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  (pathname: string) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
     try {
       dispatch({ type: CATEGORY_DETAILS_REQUEST, payload: pathname });
       const {
@@ -75,8 +75,7 @@ export const detailsCategory =
   };
 
 export const deleteCategory =
-  (categoryId: string) =>
-  async (dispatch: (arg0: { type: string; payload: any; success?: boolean }) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  (categoryId: string) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
     try {
       const {
         userLogin: { userInfo }

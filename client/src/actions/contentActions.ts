@@ -14,8 +14,9 @@ import {
 } from "../constants/contentConstants";
 import axios from "axios";
 import { create_query } from "../utils/helper_functions";
+import { IDispatch } from "../types/reduxTypes";
 
-export const listContents = (query: any) => async (dispatch: (arg0: { type: string; payload?: any }) => void) => {
+export const listContents = (query: any) => async (dispatch: (arg0: IDispatch) => void) => {
   try {
     dispatch({ type: CONTENT_LIST_REQUEST });
     const { data } = await axios.get("/api/contents?" + create_query(query));
@@ -26,7 +27,7 @@ export const listContents = (query: any) => async (dispatch: (arg0: { type: stri
 };
 
 export const saveContent =
-  (content: any) => async (dispatch: (arg0: { type: string; payload: any }) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  (content: any) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
     try {
       dispatch({ type: CONTENT_SAVE_REQUEST, payload: content });
       const {
@@ -52,7 +53,7 @@ export const saveContent =
     }
   };
 
-export const detailsContent = (pathname: string) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
+export const detailsContent = (pathname: string) => async (dispatch: (arg0: IDispatch) => void) => {
   try {
     dispatch({ type: CONTENT_DETAILS_REQUEST, payload: pathname });
     const { data } = await axios.get("/api/contents/" + pathname);
@@ -63,8 +64,7 @@ export const detailsContent = (pathname: string) => async (dispatch: (arg0: { ty
 };
 
 export const deleteContent =
-  (contentId: string) =>
-  async (dispatch: (arg0: { type: string; payload: any; success?: boolean }) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  (contentId: string) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
     try {
       const {
         userLogin: { userInfo }

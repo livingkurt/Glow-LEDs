@@ -16,9 +16,10 @@ import {
 } from "../constants/settingConstants";
 import axios from "axios";
 import { create_query } from "../utils/helper_functions";
+import { IDispatch, IDispatchSuccess } from "../types/reduxTypes";
 
 export const listSettings =
-  (query: any) => async (dispatch: (arg0: { type: string; payload?: any }) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  (query: any) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
     try {
       dispatch({ type: SETTING_LIST_REQUEST });
       const {
@@ -44,7 +45,7 @@ export const show_search_bar = (show: boolean) => async (dispatch: any) => {
 };
 
 export const saveSetting =
-  (setting: any) => async (dispatch: (arg0: { type: string; payload: any }) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  (setting: any) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
     try {
       dispatch({ type: SETTING_SAVE_REQUEST, payload: setting });
       const {
@@ -71,8 +72,7 @@ export const saveSetting =
   };
 
 export const detailsSetting =
-  (pathname: string) =>
-  async (dispatch: (arg0: { type: string; payload: any }) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  (pathname: string) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
     try {
       dispatch({ type: SETTING_DETAILS_REQUEST, payload: pathname });
       const {
@@ -90,8 +90,7 @@ export const detailsSetting =
   };
 
 export const deleteSetting =
-  (settingId: string) =>
-  async (dispatch: (arg0: { type: string; payload: any; success?: boolean }) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  (settingId: string) => async (dispatch: (arg0: IDispatchSuccess) => void, getState: () => { userLogin: { userInfo: any } }) => {
     try {
       const {
         userLogin: { userInfo }

@@ -14,8 +14,9 @@ import {
 } from "../constants/teamConstants";
 import axios from "axios";
 import { create_query } from "../utils/helper_functions";
+import { IDispatch, IDispatchSuccess } from "../types/reduxTypes";
 
-export const listTeams = (query: any) => async (dispatch: (arg0: { type: string; payload?: any }) => void) => {
+export const listTeams = (query: any) => async (dispatch: (arg0: IDispatch) => void) => {
   try {
     dispatch({ type: TEAM_LIST_REQUEST });
     const { data } = await axios.get("/api/teams?" + create_query(query));
@@ -26,34 +27,33 @@ export const listTeams = (query: any) => async (dispatch: (arg0: { type: string;
   }
 };
 
-export const saveTeam =
-  (team: any) => async (dispatch: (arg0: { type: string; payload: any }) => void, getState: () => { userLogin: { userInfo: any } }) => {
-    try {
-      dispatch({ type: TEAM_SAVE_REQUEST, payload: team });
-      const {
-        userLogin: { userInfo }
-      } = getState();
-      if (!team._id) {
-        const { data } = await axios.post("/api/teams", team, {
-          headers: {
-            Authorization: "Bearer " + userInfo.access_token
-          }
-        });
-        dispatch({ type: TEAM_SAVE_SUCCESS, payload: data });
-      } else {
-        const { data } = await axios.put("/api/teams/" + team._id, team, {
-          headers: {
-            Authorization: "Bearer " + userInfo.access_token
-          }
-        });
-        dispatch({ type: TEAM_SAVE_SUCCESS, payload: data });
-      }
-    } catch (error) {
-      dispatch({ type: TEAM_SAVE_FAIL, payload: error });
+export const saveTeam = (team: any) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  try {
+    dispatch({ type: TEAM_SAVE_REQUEST, payload: team });
+    const {
+      userLogin: { userInfo }
+    } = getState();
+    if (!team._id) {
+      const { data } = await axios.post("/api/teams", team, {
+        headers: {
+          Authorization: "Bearer " + userInfo.access_token
+        }
+      });
+      dispatch({ type: TEAM_SAVE_SUCCESS, payload: data });
+    } else {
+      const { data } = await axios.put("/api/teams/" + team._id, team, {
+        headers: {
+          Authorization: "Bearer " + userInfo.access_token
+        }
+      });
+      dispatch({ type: TEAM_SAVE_SUCCESS, payload: data });
     }
-  };
+  } catch (error) {
+    dispatch({ type: TEAM_SAVE_FAIL, payload: error });
+  }
+};
 
-export const detailsTeam = (pathname: string) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
+export const detailsTeam = (pathname: string) => async (dispatch: (arg0: IDispatch) => void) => {
   try {
     dispatch({ type: TEAM_DETAILS_REQUEST, payload: {} });
     if (pathname) {
@@ -68,8 +68,7 @@ export const detailsTeam = (pathname: string) => async (dispatch: (arg0: { type:
 };
 
 export const deleteTeam =
-  (teamId: string) =>
-  async (dispatch: (arg0: { type: string; payload: any; success?: boolean }) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  (teamId: string) => async (dispatch: (arg0: IDispatchSuccess) => void, getState: () => { userLogin: { userInfo: any } }) => {
     try {
       const {
         userLogin: { userInfo }

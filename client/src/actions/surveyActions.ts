@@ -15,8 +15,9 @@ import {
 } from "../constants/surveyConstants";
 import axios from "axios";
 import { create_query } from "../utils/helper_functions";
+import { IDispatch, IDispatchSuccess } from "../types/reduxTypes";
 
-export const listSurveys = (query: any) => async (dispatch: (arg0: { type: string; payload?: any }) => void) => {
+export const listSurveys = (query: any) => async (dispatch: (arg0: IDispatch) => void) => {
   try {
     dispatch({ type: SURVEY_LIST_REQUEST });
     const { data } = await axios.get("/api/surveys?" + create_query(query));
@@ -27,7 +28,7 @@ export const listSurveys = (query: any) => async (dispatch: (arg0: { type: strin
 };
 
 export const saveSurvey =
-  (survey: any) => async (dispatch: (arg0: { type: string; payload: any }) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  (survey: any) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
     try {
       dispatch({ type: SURVEY_SAVE_REQUEST, payload: survey });
       const {
@@ -55,7 +56,7 @@ export const saveSurvey =
   };
 
 export const detailsSurvey =
-  (id: string) => async (dispatch: (arg0: { type: string; payload: any }) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  (id: string) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
     try {
       dispatch({ type: SURVEY_DETAILS_REQUEST, payload: id });
       const {
@@ -73,8 +74,7 @@ export const detailsSurvey =
   };
 
 export const deleteSurvey =
-  (surveyId: string) =>
-  async (dispatch: (arg0: { type: string; payload: any; success?: boolean }) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  (surveyId: string) => async (dispatch: (arg0: IDispatchSuccess) => void, getState: () => { userLogin: { userInfo: any } }) => {
     try {
       const {
         userLogin: { userInfo }

@@ -14,8 +14,9 @@ import {
 } from "../constants/featureConstants";
 import axios from "axios";
 import { create_query } from "../utils/helper_functions";
+import { IDispatch } from "../types/reduxTypes";
 
-export const listFeatures = (query: any) => async (dispatch: (arg0: { type: string; payload?: any }) => void) => {
+export const listFeatures = (query: any) => async (dispatch: (arg0: IDispatch) => void) => {
   try {
     dispatch({ type: FEATURE_LIST_REQUEST });
     const { data } = await axios.get("/api/features?" + create_query(query));
@@ -37,7 +38,7 @@ export const saveFeature =
     card?: number;
     amount?: string;
   }) =>
-  async (dispatch: (arg0: { type: string; payload: any }) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
     try {
       dispatch({ type: FEATURE_SAVE_REQUEST, payload: feature });
       const {
@@ -63,7 +64,7 @@ export const saveFeature =
     }
   };
 
-export const detailsFeature = (pathname: string) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
+export const detailsFeature = (pathname: string) => async (dispatch: (arg0: IDispatch) => void) => {
   try {
     dispatch({ type: FEATURE_DETAILS_REQUEST, payload: pathname });
     const { data } = await axios.get("/api/features/" + pathname);
@@ -74,8 +75,7 @@ export const detailsFeature = (pathname: string) => async (dispatch: (arg0: { ty
 };
 
 export const deleteFeature =
-  (featureId: string) =>
-  async (dispatch: (arg0: { type: string; payload: any; success?: boolean }) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  (featureId: string) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
     try {
       const {
         userLogin: { userInfo }

@@ -17,8 +17,9 @@ import {
 } from "../constants/parcelConstants";
 import axios from "axios";
 import { create_query } from "../utils/helper_functions";
+import { IDispatch, IDispatchSuccess } from "../types/reduxTypes";
 
-export const listParcels = (query: any) => async (dispatch: (arg0: { type: string; payload?: any }) => void) => {
+export const listParcels = (query: any) => async (dispatch: (arg0: IDispatch) => void) => {
   try {
     dispatch({ type: PARCEL_LIST_REQUEST });
     const { data } = await axios.get("/api/parcels?" + create_query(query));
@@ -29,8 +30,7 @@ export const listParcels = (query: any) => async (dispatch: (arg0: { type: strin
 };
 
 export const listMyParcels =
-  (affiliate_id: string) =>
-  async (dispatch: (arg0: { type: string; payload?: any }) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  (affiliate_id: string) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
     try {
       dispatch({ type: MY_PARCEL_LIST_REQUEST });
       const {
@@ -47,7 +47,7 @@ export const listMyParcels =
   };
 
 export const saveParcel =
-  (parcel: any) => async (dispatch: (arg0: { type: string; payload: any }) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  (parcel: any) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
     try {
       dispatch({ type: PARCEL_SAVE_REQUEST, payload: parcel });
       const {
@@ -73,7 +73,7 @@ export const saveParcel =
     }
   };
 
-export const detailsParcel = (pathname: string) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
+export const detailsParcel = (pathname: string) => async (dispatch: (arg0: IDispatch) => void) => {
   try {
     dispatch({ type: PARCEL_DETAILS_REQUEST, payload: pathname });
     const { data } = await axios.get("/api/parcels/" + pathname);
@@ -84,8 +84,7 @@ export const detailsParcel = (pathname: string) => async (dispatch: (arg0: { typ
 };
 
 export const deleteParcel =
-  (parcelId: string) =>
-  async (dispatch: (arg0: { type: string; payload: any; success?: boolean }) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  (parcelId: string) => async (dispatch: (arg0: IDispatchSuccess) => void, getState: () => { userLogin: { userInfo: any } }) => {
     try {
       const {
         userLogin: { userInfo }

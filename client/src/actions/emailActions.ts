@@ -14,8 +14,9 @@ import {
 } from "../constants/emailConstants";
 import axios from "axios";
 import { create_query } from "../utils/helper_functions";
+import { IDispatch } from "../types/reduxTypes";
 
-export const listEmails = (query: any) => async (dispatch: (arg0: { type: string; payload?: any }) => void) => {
+export const listEmails = (query: any) => async (dispatch: (arg0: IDispatch) => void) => {
   try {
     dispatch({ type: EMAIL_LIST_REQUEST });
     const { data } = await axios.get("/api/emails?" + create_query(query));
@@ -25,34 +26,33 @@ export const listEmails = (query: any) => async (dispatch: (arg0: { type: string
   }
 };
 
-export const saveEmail =
-  (email: any) => async (dispatch: (arg0: { type: string; payload: any }) => void, getState: () => { userLogin: { userInfo: any } }) => {
-    try {
-      dispatch({ type: EMAIL_SAVE_REQUEST, payload: email });
-      const {
-        userLogin: { userInfo }
-      } = getState();
-      if (!email._id) {
-        const { data } = await axios.post("/api/emails", email, {
-          headers: {
-            Authorization: "Bearer " + userInfo.access_token
-          }
-        });
-        dispatch({ type: EMAIL_SAVE_SUCCESS, payload: data });
-      } else {
-        const { data } = await axios.put("/api/emails/" + email._id, email, {
-          headers: {
-            Authorization: "Bearer " + userInfo.access_token
-          }
-        });
-        dispatch({ type: EMAIL_SAVE_SUCCESS, payload: data });
-      }
-    } catch (error) {
-      dispatch({ type: EMAIL_SAVE_FAIL, payload: error });
+export const saveEmail = (email: any) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  try {
+    dispatch({ type: EMAIL_SAVE_REQUEST, payload: email });
+    const {
+      userLogin: { userInfo }
+    } = getState();
+    if (!email._id) {
+      const { data } = await axios.post("/api/emails", email, {
+        headers: {
+          Authorization: "Bearer " + userInfo.access_token
+        }
+      });
+      dispatch({ type: EMAIL_SAVE_SUCCESS, payload: data });
+    } else {
+      const { data } = await axios.put("/api/emails/" + email._id, email, {
+        headers: {
+          Authorization: "Bearer " + userInfo.access_token
+        }
+      });
+      dispatch({ type: EMAIL_SAVE_SUCCESS, payload: data });
     }
-  };
+  } catch (error) {
+    dispatch({ type: EMAIL_SAVE_FAIL, payload: error });
+  }
+};
 
-export const detailsEmail = (id: string) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
+export const detailsEmail = (id: string) => async (dispatch: (arg0: IDispatch) => void) => {
   try {
     dispatch({ type: EMAIL_DETAILS_REQUEST, payload: id });
     const { data } = await axios.get("/api/emails/" + id);
@@ -63,8 +63,7 @@ export const detailsEmail = (id: string) => async (dispatch: (arg0: { type: stri
 };
 
 export const deleteEmail =
-  (emailId: string) =>
-  async (dispatch: (arg0: { type: string; payload: any; success?: boolean }) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  (emailId: string) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
     try {
       const {
         userLogin: { userInfo }

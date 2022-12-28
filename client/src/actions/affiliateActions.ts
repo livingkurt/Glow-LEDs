@@ -20,57 +20,28 @@ import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
 
 import { create_query } from "../utils/helper_functions";
+import { IListAffiliate, ISaveAffiliate } from "../types/affiliateTypes";
+import { IDispatch, IGetState } from "../types/reduxTypes";
 
-export const listAffiliates =
-  (query: { category?: any; search?: string; sort?: any; sponsor?: boolean }) =>
-  async (dispatch: (arg0: { type: string; payload?: any }) => void) => {
-    try {
-      dispatch({ type: AFFILIATE_LIST_REQUEST });
-      const {
-        userLogin: { userInfo }
-      } = getState();
-      const { data } = await axios.get("/api/affiliates?" + create_query(query), {
-        headers: {
-          Authorization: "Bearer " + userInfo.access_token
-        }
-      });
-      dispatch({ type: AFFILIATE_LIST_SUCCESS, payload: data });
-    } catch (error) {
-      dispatch({ type: AFFILIATE_LIST_FAIL, payload: error });
-    }
-  };
+export const listAffiliates = (query: IListAffiliate) => async (dispatch: (arg0: IDispatch) => void, getState: () => IGetState) => {
+  try {
+    dispatch({ type: AFFILIATE_LIST_REQUEST });
+    const {
+      userLogin: { userInfo }
+    } = getState();
+    const { data } = await axios.get("/api/affiliates?" + create_query(query), {
+      headers: {
+        Authorization: "Bearer " + userInfo.access_token
+      }
+    });
+    dispatch({ type: AFFILIATE_LIST_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({ type: AFFILIATE_LIST_FAIL, payload: error });
+  }
+};
 
 export const saveAffiliate =
-  (affiliate: {
-    _id: any;
-    user?: any;
-    artist_name?: string;
-    instagram_handle?: string;
-    facebook_name?: string;
-    percentage_off?: string | number;
-    sponsor?: string;
-    promoter?: string;
-    rave_mob?: string;
-    active?: string;
-    bio?: string;
-    link?: string;
-    picture?: string;
-    team?: string;
-    style?: string;
-    inspiration?: string;
-    location?: string;
-    years?: string;
-    video?: string;
-    venmo?: string;
-    public_code?: any;
-    private_code?: any;
-    pathname: any;
-    products?: never[];
-    chips?: any[];
-    tiktok?: string;
-    answers?: false | "" | string[];
-  }) =>
-  async (dispatch: (arg0: { type: string; payload: any }) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  (affiliate: ISaveAffiliate) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
     //
     try {
       dispatch({ type: AFFILIATE_SAVE_REQUEST, payload: affiliate });
@@ -139,7 +110,7 @@ export interface DetailsAffiliate {
 
 export const detailsAffiliate =
   ({ pathname, id }: DetailsAffiliate) =>
-  async (dispatch: (arg0: { type: string; payload: any }) => void) => {
+  async (dispatch: (arg0: IDispatch) => void) => {
     try {
       if (id) {
         dispatch({ type: AFFILIATE_DETAILS_REQUEST, payload: pathname });
@@ -156,7 +127,7 @@ export const detailsAffiliate =
   };
 
 // export const detailsAffiliate =
-//   (affiliate_id: { pathname: string; id: string }) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
+//   (affiliate_id: { pathname: string; id: string }) => async (dispatch: (arg0: IDispatch) => void) => {
 //     try {
 //       if (affiliate_id.id) {
 //         dispatch({ type: AFFILIATE_DETAILS_REQUEST, payload: affiliate_id.pathname });
@@ -173,8 +144,7 @@ export const detailsAffiliate =
 //   };
 
 export const deleteAffiliate =
-  (pathname: string) =>
-  async (dispatch: (arg0: { type: string; payload: any; success?: boolean }) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  (pathname: string) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
     try {
       const {
         userLogin: { userInfo }

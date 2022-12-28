@@ -17,8 +17,9 @@ import {
 } from "../constants/paletteConstants";
 import axios from "axios";
 import { create_query } from "../utils/helper_functions";
+import { IDispatch, IDispatchSuccess } from "../types/reduxTypes";
 
-export const listPalettes = (query: any) => async (dispatch: (arg0: { type: string; payload?: any }) => void) => {
+export const listPalettes = (query: any) => async (dispatch: (arg0: IDispatch) => void) => {
   try {
     dispatch({ type: PALETTE_LIST_REQUEST });
     const { data } = await axios.get("/api/palettes?" + create_query(query));
@@ -28,25 +29,24 @@ export const listPalettes = (query: any) => async (dispatch: (arg0: { type: stri
   }
 };
 
-export const listMyPalettes =
-  () => async (dispatch: (arg0: { type: string; payload?: any }) => void, getState: () => { userLogin: { userInfo: any } }) => {
-    try {
-      dispatch({ type: MY_PALETTE_LIST_REQUEST });
-      const {
-        userLogin: { userInfo }
-      } = getState();
-      const { data } = await axios.get("/api/palettes/get_mine", {
-        headers: { Authorization: "Bearer " + userInfo.access_token }
-      });
+export const listMyPalettes = () => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  try {
+    dispatch({ type: MY_PALETTE_LIST_REQUEST });
+    const {
+      userLogin: { userInfo }
+    } = getState();
+    const { data } = await axios.get("/api/palettes/get_mine", {
+      headers: { Authorization: "Bearer " + userInfo.access_token }
+    });
 
-      dispatch({ type: MY_PALETTE_LIST_SUCCESS, payload: data });
-    } catch (error) {
-      dispatch({ type: MY_PALETTE_LIST_FAIL, payload: error });
-    }
-  };
+    dispatch({ type: MY_PALETTE_LIST_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({ type: MY_PALETTE_LIST_FAIL, payload: error });
+  }
+};
 
 export const savePalette =
-  (palette: any) => async (dispatch: (arg0: { type: string; payload: any }) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  (palette: any) => async (dispatch: (arg0: IDispatch) => void, getState: () => { userLogin: { userInfo: any } }) => {
     try {
       dispatch({ type: PALETTE_SAVE_REQUEST, payload: palette });
       const {
@@ -72,7 +72,7 @@ export const savePalette =
     }
   };
 
-export const detailsPalette = (pathname: string) => async (dispatch: (arg0: { type: string; payload: any }) => void) => {
+export const detailsPalette = (pathname: string) => async (dispatch: (arg0: IDispatch) => void) => {
   try {
     dispatch({ type: PALETTE_DETAILS_REQUEST, payload: pathname });
     const { data } = await axios.get("/api/palettes/" + pathname);
@@ -83,8 +83,7 @@ export const detailsPalette = (pathname: string) => async (dispatch: (arg0: { ty
 };
 
 export const deletePalette =
-  (paletteId: string) =>
-  async (dispatch: (arg0: { type: string; payload: any; success?: boolean }) => void, getState: () => { userLogin: { userInfo: any } }) => {
+  (paletteId: string) => async (dispatch: (arg0: IDispatchSuccess) => void, getState: () => { userLogin: { userInfo: any } }) => {
     try {
       const {
         userLogin: { userInfo }
