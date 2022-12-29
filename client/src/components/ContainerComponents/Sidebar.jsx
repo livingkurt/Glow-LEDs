@@ -179,7 +179,7 @@ const Sidebar = props => {
               </GLButton>
             </div>
             <ul className="sidebar_dropdown_container" id="user_dropdown">
-              <Link to="/secure/account/profile">
+              <Link to={`/secure/account/profile/${userInfo._id}`}>
                 <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
                   Profile
                 </GLButton>

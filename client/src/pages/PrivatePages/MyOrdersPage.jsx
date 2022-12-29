@@ -78,7 +78,7 @@ const MyOrdersPage = props => {
         <meta property="og:url" content="https://www.glow-leds.com/secure/account/orders" />
       </Helmet>
       <div className="wrap jc-b">
-        <Link to="/secure/account/profile">
+        <Link to={`/secure/account/profile/${userInfo._id}`}>
           <GLButton variant="secondary">Back to Profile</GLButton>
         </Link>
         {colors.map((color, index) => {

@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { browser_check } from "../../utils/react_helper_functions";
 import useWindowDimensions from "../Hooks/windowDimensions";
@@ -6,6 +7,9 @@ import useWindowDimensions from "../Hooks/windowDimensions";
 const Footer = () => {
   const { height, width } = useWindowDimensions();
 
+  const userLogin = useSelector(state => state.userLogin);
+
+  const { userInfo } = userLogin;
   return (
     <footer className="ta-c w-100per mt-5rem h-450px">
       <div className="footer-image">
@@ -208,7 +212,7 @@ const Footer = () => {
               </h2>
               <ul className="lst-none">
                 <li className="ta-l mv-2rem">
-                  <Link to="/secure/account/profile">My Account</Link>
+                  <Link to={`/secure/account/profile/${userInfo._id}`}>My Account</Link>
                 </li>
                 <li className="ta-l mv-2rem">
                   <Link to="/pages/track_your_order">Track Your Order</Link>
