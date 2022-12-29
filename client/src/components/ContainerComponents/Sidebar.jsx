@@ -230,7 +230,7 @@ const Sidebar = props => {
               <ul className="sidebar_dropdown_secondary_container" id="gloving_dropdown">
                 {/* {browser_check() !== "safari" ? (
                   <Link to="/collections/all/products/glowstringz_v2">
-                    <GLButton 
+                    <GLButton
                       className={`sidebar-btn nested  special_font gradient-btn`}
                       onClick={closeMenu}
                     >
@@ -477,7 +477,7 @@ const Sidebar = props => {
               </GLButton>
             </div>
             <ul className="sidebar_dropdown_secondary_container" id="glowskinz_dropdown_6">
-              <Link to="/collections/all/products/supremes">
+              <Link to="/collections/all/products/category/whites">
                 <GLButton className="sidebar-btn nested" onClick={closeMenu}>
                   Supremes
                 </GLButton>
@@ -519,7 +519,7 @@ const Sidebar = props => {
               </Link>
             </ul>
             {/* <Link to="/collections/all/products/shop_by_chip">
-              <GLButton 
+              <GLButton
                 className="sidebar-btn secondary"
                 style={{ padding: "7px 10px 7px 20px" }}
                 onClick={closeMenu}
@@ -567,7 +567,7 @@ const Sidebar = props => {
 						</Link> */}
             {/* {browser_check() !== 'safari' ? (
 							<Link to="/collections/all/products/glowstringz_v2">
-								<GLButton 
+								<GLButton
 									className={`sidebar-btn secondary  special_font gradient-btn`}
 									onClick={closeMenu}
 								>
@@ -582,7 +582,7 @@ const Sidebar = props => {
 							</Link>
 						)} */}
           </ul>
-          {/* <GLButton 
+          {/* <GLButton
 						className="sidebar-btn icon trans-neg-180 pos-abs right-10px top-4px "
 						onClick={() => show_hide('products_dropdown')}
 					>
@@ -630,7 +630,7 @@ const Sidebar = props => {
                   </GLButton>
                 </Link>
               </ul>
-              {/* <GLButton 
+              {/* <GLButton
 								className="sidebar-btn icon trans-neg-180 pos-abs right-10px top-4px "
 								onClick={() => show_hide('nested_sponsor_dropdown')}
 								aria-label="Show"
@@ -665,7 +665,7 @@ const Sidebar = props => {
               </GLButton>
             </Link> */}
           </ul>
-          {/* <GLButton 
+          {/* <GLButton
 						className="sidebar-btn icon trans-neg-180 pos-abs right-10px top-4px "
 						onClick={() => show_hide('featured_dropdown')}
 						aria-label="Show"
@@ -748,7 +748,7 @@ const Sidebar = props => {
                 </HashLink>
               </ul>
               {/* <i className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up" /> */}
-              {/* <GLButton 
+              {/* <GLButton
 								className="sidebar-btn icon trans-neg-180 pos-abs right-10px top-4px "
 								onClick={() => show_hide('nested_faq_dropdown')}
 							>
@@ -766,7 +766,7 @@ const Sidebar = props => {
               </GLButton>
             </Link>
           </ul>
-          {/* <GLButton 
+          {/* <GLButton
 						className="sidebar-btn icon trans-neg-180 pos-abs right-10px top-4px "
 						onClick={() => show_hide('support_dropdown')}
 					>

@@ -664,7 +664,7 @@ const Header = props => {
                           </GLButton>
                         </Link>
                         <hr className="w-95per m-0px" />
-                        <Link to="/collections/all/products/supremes">
+                        <Link to="/collections/all/products/category/whites">
                           <GLButton variant="nav" fullWidth className="ta-l">
                             Supreme Whites
                           </GLButton>
