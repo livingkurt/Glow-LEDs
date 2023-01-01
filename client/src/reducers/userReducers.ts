@@ -39,13 +39,11 @@ import {
   USER_SAVE_FAIL,
   SET_CURRENT_USER,
   USER_LOADING,
-  GET_ERRORS,
+  GET_ERRORS
 } from "../constants/userConstants";
+import { IAction } from "../types/reduxTypes";
 
-export const errorReducer = (
-  state = {},
-  action: { type: any; payload: any }
-) => {
+export const errorReducer = (state = {}, action: IAction) => {
   switch (action.type) {
     case GET_ERRORS:
       return action.payload;
@@ -54,10 +52,7 @@ export const errorReducer = (
   }
 };
 
-export const userLoginReducer = (
-  state = {},
-  action: { type: any; payload: any }
-) => {
+export const userLoginReducer = (state = {}, action: IAction) => {
   switch (action.type) {
     case USER_LOGIN_REQUEST:
       return { loading: true };
@@ -68,7 +63,7 @@ export const userLoginReducer = (
         userInfo: action.payload,
         message: "User Login Success",
         success: true,
-        loading: false,
+        loading: false
       };
     case USER_LOGIN_FAIL:
       return { loading: false, error: action.payload };
@@ -79,10 +74,7 @@ export const userLoginReducer = (
   }
 };
 
-export const userPasswordResetReducer = (
-  state = {},
-  action: { type: any; payload: any }
-) => {
+export const userPasswordResetReducer = (state = {}, action: IAction) => {
   switch (action.type) {
     case USER_PASSWORD_RESET_REQUEST:
       return { loading: true };
@@ -91,23 +83,20 @@ export const userPasswordResetReducer = (
         loading: false,
         userInfo: action.payload,
         message: "User Password Reset Success",
-        success: true,
+        success: true
       };
     case USER_PASSWORD_RESET_FAIL:
       return {
         loading: false,
         error: action.payload.error,
-        message: action.payload.message,
+        message: action.payload.message
       };
     default:
       return state;
   }
 };
 
-export const userResetPasswordReducer = (
-  state = {},
-  action: { type: any; payload: any }
-) => {
+export const userResetPasswordReducer = (state = {}, action: IAction) => {
   switch (action.type) {
     case USER_RESET_PASSWORD_REQUEST:
       return { loading: true };
@@ -116,23 +105,20 @@ export const userResetPasswordReducer = (
         loading: false,
         userInfo: action.payload,
         message: "User Reset Password Success",
-        success: true,
+        success: true
       };
     case USER_RESET_PASSWORD_FAIL:
       return {
         loading: false,
         error: action.payload.error,
-        message: action.payload.message,
+        message: action.payload.message
       };
     default:
       return state;
   }
 };
 
-export const userVerifyReducer = (
-  state = {},
-  action: { type: any; payload: any }
-) => {
+export const userVerifyReducer = (state = {}, action: IAction) => {
   switch (action.type) {
     case USER_VERIFY_REQUEST:
       return { loading: true };
@@ -141,23 +127,20 @@ export const userVerifyReducer = (
         loading: false,
         userInfo: action.payload,
         message: "User Verifed",
-        success: true,
+        success: true
       };
     case USER_VERIFY_FAIL:
       return {
         loading: false,
         error: action.payload.error,
-        message: action.payload.message,
+        message: action.payload.message
       };
     default:
       return state;
   }
 };
 
-export const userUpdateReducer = (
-  state = {},
-  action: { type: any; payload: any }
-) => {
+export const userUpdateReducer = (state = {}, action: IAction) => {
   switch (action.type) {
     case USER_UPDATE_REQUEST:
       return { loading: true };
@@ -165,23 +148,20 @@ export const userUpdateReducer = (
       return {
         loading: false,
         userInfo: action.payload,
-        message: "User Updated",
+        message: "User Updated"
       };
     case USER_UPDATE_FAIL:
       return {
         loading: false,
         error: action.payload.error,
-        message: action.payload.message,
+        message: action.payload.message
       };
     default:
       return state;
   }
 };
 
-export const userSaveReducer = (
-  state = { user: {} },
-  action: { type: any; payload: any }
-) => {
+export const userSaveReducer = (state = { user: {} }, action: IAction) => {
   switch (action.type) {
     case USER_SAVE_REQUEST:
       return { loading: true };
@@ -190,23 +170,20 @@ export const userSaveReducer = (
         loading: false,
         success: true,
         user: action.payload,
-        message: "User Saved",
+        message: "User Saved"
       };
     case USER_SAVE_FAIL:
       return {
         loading: false,
         error: action.payload.error,
-        message: action.payload.message,
+        message: action.payload.message
       };
     default:
       return state;
   }
 };
 
-export const userUpdateUserReducer = (
-  state = {},
-  action: { type: any; payload: any }
-) => {
+export const userUpdateUserReducer = (state = {}, action: IAction) => {
   switch (action.type) {
     case USER_UPDATE_USER_REQUEST:
       return { loading: true };
@@ -214,23 +191,20 @@ export const userUpdateUserReducer = (
       return {
         loading: false,
         userInfo: action.payload,
-        message: "User Updated",
+        message: "User Updated"
       };
     case USER_UPDATE_USER_FAIL:
       return {
         loading: false,
         error: action.payload.error,
-        message: action.payload.message,
+        message: action.payload.message
       };
     default:
       return state;
   }
 };
 
-export const userRegisterReducer = (
-  state = {},
-  action: { type: any; payload: any }
-) => {
+export const userRegisterReducer = (state = {}, action: IAction) => {
   switch (action.type) {
     case USER_REGISTER_REQUEST:
       return { loading: true };
@@ -238,23 +212,20 @@ export const userRegisterReducer = (
       return {
         loading: false,
         userInfo: action.payload,
-        message: "User Registered",
+        message: "User Registered"
       };
     case USER_REGISTER_FAIL:
       return {
         loading: false,
         error: action.payload.error,
-        message: action.payload.message,
+        message: action.payload.message
       };
     default:
       return state;
   }
 };
 
-export const userContactReducer = (
-  state = {},
-  action: { type: any; payload: any }
-) => {
+export const userContactReducer = (state = {}, action: IAction) => {
   switch (action.type) {
     case USER_CONTACT_REQUEST:
       return { loading: true };
@@ -262,13 +233,13 @@ export const userContactReducer = (
       return {
         loading: false,
         completed: true,
-        message: "Contact Email Delivered",
+        message: "Contact Email Delivered"
       };
     case USER_CONTACT_FAIL:
       return {
         loading: false,
         error: action.payload.error,
-        message: action.payload.message,
+        message: action.payload.message
       };
     case USER_CONTACT_REMOVE_SUCCESS:
       return { loading: false, completed: false };
@@ -279,9 +250,9 @@ export const userContactReducer = (
 
 export const userListReducer = (
   state = {
-    users: [],
+    users: []
   },
-  action: { type: any; payload: any }
+  action: IAction
 ) => {
   switch (action.type) {
     case USER_LIST_REQUEST:
@@ -292,7 +263,7 @@ export const userListReducer = (
       return {
         loading: false,
         error: action.payload.error,
-        message: action.payload.message,
+        message: action.payload.message
       };
     default:
       return state;
@@ -301,9 +272,9 @@ export const userListReducer = (
 
 export const userDeleteReducer = (
   state = {
-    user: {},
+    user: {}
   },
-  action: { type: any; payload: any }
+  action: IAction
 ) => {
   switch (action.type) {
     case USER_DELETE_REQUEST:
@@ -314,7 +285,7 @@ export const userDeleteReducer = (
       return {
         loading: false,
         error: action.payload.error,
-        message: action.payload.message,
+        message: action.payload.message
       };
     default:
       return state;
@@ -323,9 +294,9 @@ export const userDeleteReducer = (
 
 export const userDetailsReducer = (
   state = {
-    user: {},
+    user: {}
   },
-  action: { type: any; payload: any }
+  action: IAction
 ) => {
   switch (action.type) {
     case USER_DETAILS_REQUEST:
@@ -336,7 +307,7 @@ export const userDetailsReducer = (
       return {
         loading: false,
         error: action.payload.error,
-        message: action.payload.message,
+        message: action.payload.message
       };
     default:
       return state;

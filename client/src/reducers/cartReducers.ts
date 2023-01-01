@@ -16,8 +16,9 @@ import {
   CART_DELETE_SUCCESS,
   CART_DELETE_FAIL
 } from "../constants/cartConstants";
+import { IAction } from "../types/reduxTypes";
 
-export const cartReducer = (state = { cartItems: [] }, action: any) => {
+export const cartReducer = (state = { cartItems: [] }, action: IAction) => {
   switch (action.type) {
     case CART_ADD_ITEM:
       const item = action.payload;
@@ -70,7 +71,7 @@ export const cartReducer = (state = { cartItems: [] }, action: any) => {
   }
 };
 
-export const cartListReducer = (state = { carts: [] }, action: { type: any; payload: any }) => {
+export const cartListReducer = (state = { carts: [] }, action: IAction) => {
   switch (action.type) {
     case CART_LIST_REQUEST:
       return { loading: true, carts: [] };
@@ -83,7 +84,7 @@ export const cartListReducer = (state = { carts: [] }, action: { type: any; payl
   }
 };
 
-export const cartDetailsReducer = (state = { cart: { reviews: [] } }, action: { type: any; payload: any }) => {
+export const cartDetailsReducer = (state = { cart: { reviews: [] } }, action: IAction) => {
   switch (action.type) {
     case CART_DETAILS_REQUEST:
       return { loading: true };
@@ -96,7 +97,7 @@ export const cartDetailsReducer = (state = { cart: { reviews: [] } }, action: { 
   }
 };
 
-export const cartDeleteReducer = (state = { cart: {} }, action: { type: any; payload: any }) => {
+export const cartDeleteReducer = (state = { cart: {} }, action: IAction) => {
   switch (action.type) {
     case CART_DELETE_REQUEST:
       return { loading: true };
@@ -109,7 +110,7 @@ export const cartDeleteReducer = (state = { cart: {} }, action: { type: any; pay
   }
 };
 
-export const cartSaveReducer = (state = { cart: {} }, action: { type: any; payload: any }) => {
+export const cartSaveReducer = (state = { cart: {} }, action: IAction) => {
   switch (action.type) {
     case CART_SAVE_REQUEST:
       return { loading: true };

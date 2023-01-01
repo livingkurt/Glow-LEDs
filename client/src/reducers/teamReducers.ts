@@ -12,8 +12,9 @@ import {
   TEAM_DELETE_SUCCESS,
   TEAM_DELETE_FAIL
 } from "../constants/teamConstants";
+import { IAction } from "../types/reduxTypes";
 
-export const teamListReducer = (state = { teams: [] }, action: { type: any; payload: any }) => {
+export const teamListReducer = (state = { teams: [] }, action: IAction) => {
   switch (action.type) {
     case TEAM_LIST_REQUEST:
       return { loading: true, teams: [] };
@@ -26,7 +27,7 @@ export const teamListReducer = (state = { teams: [] }, action: { type: any; payl
   }
 };
 
-export const teamDetailsReducer = (state = { team: { reviews: [] } }, action: { type: any; payload: any }) => {
+export const teamDetailsReducer = (state = { team: { reviews: [] } }, action: IAction) => {
   switch (action.type) {
     case TEAM_DETAILS_REQUEST:
       return { loading: true };
@@ -39,7 +40,7 @@ export const teamDetailsReducer = (state = { team: { reviews: [] } }, action: { 
   }
 };
 
-export const teamDeleteReducer = (state = { team: {} }, action: { type: any; payload: any }) => {
+export const teamDeleteReducer = (state = { team: {} }, action: IAction) => {
   switch (action.type) {
     case TEAM_DELETE_REQUEST:
       return { loading: true };
@@ -52,7 +53,7 @@ export const teamDeleteReducer = (state = { team: {} }, action: { type: any; pay
   }
 };
 
-export const teamSaveReducer = (state = { team: {} }, action: { type: any; payload: any }) => {
+export const teamSaveReducer = (state = { team: {} }, action: IAction) => {
   switch (action.type) {
     case TEAM_SAVE_REQUEST:
       return { loading: true };

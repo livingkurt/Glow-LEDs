@@ -28,8 +28,9 @@ import {
   ORDER_SAVE_SUCCESS,
   ORDER_SAVE_FAIL
 } from "../constants/orderConstants";
+import { IAction } from "../types/reduxTypes";
 
-export const orderCreateReducer = (state = {}, action: { type: any; payload: any }) => {
+export const orderCreateReducer = (state = {}, action: IAction) => {
   switch (action.type) {
     case ORDER_CREATE_REQUEST:
       return { loading: true };
@@ -61,7 +62,7 @@ export const orderDetailsReducer = (
       payment: {}
     }
   },
-  action: { type: any; payload: any }
+  action: IAction
 ) => {
   switch (action.type) {
     case ORDER_DETAILS_REQUEST:
@@ -83,7 +84,7 @@ export const myOrderListReducer = (
   state = {
     orders: []
   },
-  action: { type: any; payload: any }
+  action: IAction
 ) => {
   switch (action.type) {
     case MY_ORDER_LIST_REQUEST:
@@ -111,7 +112,7 @@ export const orderListReducer = (
     totalPages: 0,
     currentPage: 1
   },
-  action: { type: any; payload: any }
+  action: IAction
 ) => {
   //
   switch (action.type) {
@@ -144,7 +145,7 @@ export const orderPayReducer = (
       payment: {}
     }
   },
-  action: { type: any; payload: any }
+  action: IAction
 ) => {
   switch (action.type) {
     case ORDER_PAY_REQUEST:
@@ -172,7 +173,7 @@ export const orderDeleteReducer = (
       payment: {}
     }
   },
-  action: { type: any; payload: any }
+  action: IAction
 ) => {
   switch (action.type) {
     case ORDER_DELETE_REQUEST:
@@ -190,7 +191,7 @@ export const orderDeleteReducer = (
   }
 };
 
-export const orderRefundReducer = (state = {}, action: { type: any; payload: any }) => {
+export const orderRefundReducer = (state = {}, action: IAction) => {
   switch (action.type) {
     case ORDER_REFUND_REQUEST:
       return { loading: true };
@@ -212,7 +213,7 @@ export const orderRefundReducer = (state = {}, action: { type: any; payload: any
   }
 };
 
-export const orderUpdateReducer = (state = {}, action: { type: any; payload: any }) => {
+export const orderUpdateReducer = (state = {}, action: IAction) => {
   switch (action.type) {
     case ORDER_UPDATE_REQUEST:
       return { loading: true };
@@ -234,7 +235,7 @@ export const orderUpdateReducer = (state = {}, action: { type: any; payload: any
   }
 };
 
-export const orderSaveReducer = (state = { order: {} }, action: { type: any; payload: any }) => {
+export const orderSaveReducer = (state = { order: {} }, action: IAction) => {
   switch (action.type) {
     case ORDER_SAVE_REQUEST:
       return { loading: true };

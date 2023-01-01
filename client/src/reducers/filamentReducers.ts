@@ -10,13 +10,11 @@ import {
   FILAMENT_SAVE_FAIL,
   FILAMENT_DELETE_REQUEST,
   FILAMENT_DELETE_SUCCESS,
-  FILAMENT_DELETE_FAIL,
+  FILAMENT_DELETE_FAIL
 } from "../constants/filamentConstants";
+import { IAction } from "../types/reduxTypes";
 
-export const filamentListReducer = (
-  state = { filaments: [] },
-  action: { type: any; payload: any }
-) => {
+export const filamentListReducer = (state = { filaments: [] }, action: IAction) => {
   switch (action.type) {
     case FILAMENT_LIST_REQUEST:
       return { loading: true, filaments: [] };
@@ -24,23 +22,20 @@ export const filamentListReducer = (
       return {
         loading: false,
         filaments: action.payload,
-        message: "Filaments Found",
+        message: "Filaments Found"
       };
     case FILAMENT_LIST_FAIL:
       return {
         loading: false,
         error: action.payload.error,
-        message: action.payload.message,
+        message: action.payload.message
       };
     default:
       return state;
   }
 };
 
-export const filamentDetailsReducer = (
-  state = { filament: {} },
-  action: { type: any; payload: any }
-) => {
+export const filamentDetailsReducer = (state = { filament: {} }, action: IAction) => {
   switch (action.type) {
     case FILAMENT_DETAILS_REQUEST:
       return { loading: true };
@@ -48,23 +43,20 @@ export const filamentDetailsReducer = (
       return {
         loading: false,
         filament: action.payload,
-        message: "Filament Found",
+        message: "Filament Found"
       };
     case FILAMENT_DETAILS_FAIL:
       return {
         loading: false,
         error: action.payload.error,
-        message: action.payload.message,
+        message: action.payload.message
       };
     default:
       return state;
   }
 };
 
-export const filamentDeleteReducer = (
-  state = { filament: {} },
-  action: { type: any; payload: any }
-) => {
+export const filamentDeleteReducer = (state = { filament: {} }, action: IAction) => {
   switch (action.type) {
     case FILAMENT_DELETE_REQUEST:
       return { loading: true };
@@ -73,23 +65,20 @@ export const filamentDeleteReducer = (
         loading: false,
         filament: action.payload,
         success: true,
-        message: "Filament Deleted",
+        message: "Filament Deleted"
       };
     case FILAMENT_DELETE_FAIL:
       return {
         loading: false,
         error: action.payload.error,
-        message: action.payload.message,
+        message: action.payload.message
       };
     default:
       return state;
   }
 };
 
-export const filamentSaveReducer = (
-  state = { filament: {} },
-  action: { type: any; payload: any }
-) => {
+export const filamentSaveReducer = (state = { filament: {} }, action: IAction) => {
   switch (action.type) {
     case FILAMENT_SAVE_REQUEST:
       return { loading: true };
@@ -98,13 +87,13 @@ export const filamentSaveReducer = (
         loading: false,
         success: true,
         filament: action.payload,
-        message: "Filament Saved",
+        message: "Filament Saved"
       };
     case FILAMENT_SAVE_FAIL:
       return {
         loading: false,
         error: action.payload.error,
-        message: action.payload.message,
+        message: action.payload.message
       };
     default:
       return state;
