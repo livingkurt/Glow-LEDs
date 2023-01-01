@@ -28,6 +28,7 @@ const PaychecksPage = props => {
   const [loading_checkboxes, set_loading_checkboxes] = useState(false);
   const [create_paychecks, set_create_paychecks] = useState(false);
   const [update_google_sheets, set_update_google_sheets] = useState(false);
+  const [update_discount_code, set_update_discount_code] = useState(false);
 
   const category = props.match.params.category ? props.match.params.category : "";
   const paycheckList = useSelector(state => state.paycheckList);
@@ -178,9 +179,12 @@ const PaychecksPage = props => {
       // set_message_note("top_code_usage_upload");
     }
 
-    // await API_Promos.update_discount(year, month.toLowerCase());
-    // set_message_note("update_discount");
-    // dispatch(listPaychecks({}));
+    if (update_discount_code) {
+      await API_Promos.update_discount(year, month.toLowerCase());
+      set_message_note("update_discount");
+    }
+    dispatch(listPaychecks({}));
+    set_loading_paychecks(false);
   };
 
   const get_affiliate_data = async () => {
@@ -274,6 +278,22 @@ const PaychecksPage = props => {
             id="update_google_sheets"
             onChange={e => {
               set_update_google_sheets(e.target.checked);
+            }}
+          />
+        </div>
+      )}
+      {loading_checkboxes ? (
+        <div>Loading...</div>
+      ) : (
+        <div>
+          <label htmlFor="update_discount_code">Update Discount Code</label>
+          <input
+            type="checkbox"
+            name="update_discount_code"
+            defaultChecked={update_discount_code}
+            id="update_discount_code"
+            onChange={e => {
+              set_update_discount_code(e.target.checked);
             }}
           />
         </div>

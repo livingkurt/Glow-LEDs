@@ -107,6 +107,7 @@ export default {
         teams = await team_db.findAll_teams_db(t_filter, {});
       }
       const orders = await order_db.findAll_orders_db(o_filter, {}, 0, 1);
+      console.log({ orders: orders.length });
 
       let paychecks = [];
       if (params.position !== "team") {
