@@ -62,7 +62,6 @@ export default {
       let o_filter = {};
       let t_filter = {};
       let discount = 0.1;
-
       if (params.position === "promoter") {
         a_filter = { deleted: false, active: true, promoter: true };
         discount = 0.1;
@@ -99,6 +98,7 @@ export default {
       } else {
         o_filter = { deleted: false, isPaid: true };
       }
+      console.log({ o_filter, params });
       let affiliates = [];
       let teams = [];
       if (params.position !== "team") {
@@ -186,12 +186,7 @@ export default {
       }
 
       return paychecks;
-      return "Success";
-    } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(error.message);
-      }
-    }
+    } catch (error) {}
   },
   update_paychecks_s: async (params: any, body: any) => {
     try {

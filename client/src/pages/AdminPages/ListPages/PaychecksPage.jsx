@@ -48,7 +48,9 @@ const PaychecksPage = props => {
   const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
   const date = new Date();
+  const previous_month_number = date.getMonth() - 1 === -1 ? 11 : date.getMonth();
   const [month, set_month] = useState(months[date.getMonth()]);
+  // const [previous_month, set_previous_month] = useState(months[previous_month_number]);
   const [year, set_year] = useState(date.getFullYear());
 
   setTimeout(() => {
@@ -211,6 +213,8 @@ const PaychecksPage = props => {
   //   await API_Paychecks.pay_employee({ employee_id, amount });
   // };
 
+  const years = ["2025", "2024", "2023", "2022", "2021", "2020"];
+
   return (
     <div className="main_container p-20px">
       <Helmet>
@@ -279,13 +283,13 @@ const PaychecksPage = props => {
           <div className="row">
             <div className="custom-select ">
               <select
-                defaultValue={year}
+                defaultValue={date.getFullYear()}
                 className="qty_select_dropdown"
                 onChange={e => {
                   set_year(e.target.value);
                 }}
               >
-                {[2022, 2021, 2020].map(year => (
+                {years.map(year => (
                   <option value={year}>{year}</option>
                 ))}
               </select>
@@ -298,6 +302,7 @@ const PaychecksPage = props => {
           <div className="row">
             <div className="custom-select ">
               <select
+                // defaultValue={previous_month && previous_month.toLowerCase()}
                 defaultValue={month && month.toLowerCase()}
                 className="qty_select_dropdown"
                 onChange={e => {
@@ -305,7 +310,7 @@ const PaychecksPage = props => {
                 }}
               >
                 {dates_in_year(year).map(month => (
-                  <option value={month.month}>{toCapitalize(month.month)}</option>
+                  <option value={month.month.toLowerCase()}>{toCapitalize(month.month)}</option>
                 ))}
               </select>
               <span className="custom-arrow" />
