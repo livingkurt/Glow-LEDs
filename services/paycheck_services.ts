@@ -98,7 +98,6 @@ export default {
       } else {
         o_filter = { deleted: false, isPaid: true };
       }
-      console.log({ o_filter, params });
       let affiliates = [];
       let teams = [];
       if (params.position !== "team") {
@@ -107,7 +106,6 @@ export default {
         teams = await team_db.findAll_teams_db(t_filter, {});
       }
       const orders = await order_db.findAll_orders_db(o_filter, {}, 0, 1);
-      console.log({ orders: orders.length });
 
       let paychecks = [];
       if (params.position !== "team") {
