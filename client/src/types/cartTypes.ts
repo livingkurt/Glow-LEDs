@@ -1,14 +1,6 @@
 import { IProduct } from "./productTypes";
 import { IUser } from "./userTypes";
 
-export interface ICart {
-  cartItems?: ICartItem[];
-  user?: IUser;
-  deleted?: boolean;
-  createdAt?: Date;
-  updatedAt?: Date;
-}
-
 export interface ICartItem {
   name?: string;
   qty?: number;
@@ -47,6 +39,14 @@ export interface ICartItem {
   option_product?: IProduct;
   secondary_product_name?: string;
   secondary_product?: IProduct;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+export interface ICart {
+  cartItems?: ICartItem[];
+  user?: IUser;
+  deleted?: boolean;
   createdAt?: Date;
   updatedAt?: Date;
 }
