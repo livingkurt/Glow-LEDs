@@ -3,8 +3,7 @@ import classnames from "classnames";
 import { usePagination, DOTS } from "../Hooks/usePagination";
 import { userWindowDimensions } from "../Hooks";
 import { GLButton } from "../GlowLEDsComponents";
-const Pagination = props => {
-  const { onPageChange, totalCount, siblingCount = 1, currentPage, pageSize, className } = props;
+const Pagination = ({ onPageChange, totalCount, siblingCount = 1, currentPage, pageSize, className }) => {
   const { width, height } = userWindowDimensions();
   //
 
@@ -15,7 +14,7 @@ const Pagination = props => {
     pageSize,
     width
   });
-  //
+  console.log({ pageSize });
 
   if (currentPage === 0 || paginationRange.length < 2) {
     return null;

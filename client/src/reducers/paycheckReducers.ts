@@ -22,7 +22,13 @@ export const paycheckListReducer = (state = { paychecks: [] }, action: IAction) 
     case PAYCHECK_LIST_REQUEST:
       return { loading: true, paychecks: [] };
     case PAYCHECK_LIST_SUCCESS:
-      return { loading: false, paychecks: action.payload, message: "Paychecks Found" };
+      return {
+        loading: false,
+        paychecks: action.payload.paychecks,
+        totalPages: action.payload.totalPages,
+        currentPage: action.payload.currentPage,
+        message: "Paychecks Found"
+      };
     case PAYCHECK_LIST_FAIL:
       return { loading: false, error: action.payload.error, message: action.payload.message };
     default:

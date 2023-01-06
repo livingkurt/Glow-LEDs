@@ -9,8 +9,10 @@ const bcrypt = require("bcryptjs");
 dotenv.config();
 
 export default {
-  findAll_affiliates_s: async (query: { search: any; sort: string }) => {
+  findAll_affiliates_s: async (query: { search: string; sort: string; page: string; limit: string }) => {
     try {
+      const page: any = query.page ? query.page : 1;
+      const limit: any = query.limit ? query.limit : 0;
       const search = query.search
         ? {
             facebook_name: {
@@ -37,7 +39,13 @@ export default {
         sort = { _id: -1 };
       }
 
-      return await affiliate_db.findAll_affiliates_db(filter, sort);
+      const affiliates = await affiliate_db.findAll_affiliates_db(filter, sort, limit, page);
+      const count = await affiliate_db.count_affiliates_db(filter);
+      return {
+        affiliates,
+        totalPages: Math.ceil(count / limit),
+        currentPage: parseInt(page)
+      };
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

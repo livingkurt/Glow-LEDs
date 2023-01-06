@@ -795,112 +795,112 @@ const Sidebar = props => {
                   Orders
                 </GLButton>
               </Link>
-              <Link to="/secure/glow/products">
+              <Link to="/secure/glow/products?page=1?limit=10">
                 <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
                   Products
                 </GLButton>
               </Link>
-              <Link to="/secure/glow/users">
+              <Link to="/secure/glow/users?page=1?limit=10">
                 <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
                   Users
                 </GLButton>
               </Link>
-              <Link to="/secure/glow/expenses">
+              <Link to="/secure/glow/expenses?page=1?limit=10">
                 <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
                   Expenses
                 </GLButton>
               </Link>
-              <Link to="/secure/glow/features">
+              <Link to="/secure/glow/features?page=1?limit=10">
                 <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
                   Features
                 </GLButton>
               </Link>
-              <Link to="/secure/glow/paychecks">
+              <Link to="/secure/glow/paychecks?page=1?limit=10">
                 <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
                   Paychecks
                 </GLButton>
               </Link>
-              <Link to="/secure/glow/affiliates">
+              <Link to="/secure/glow/affiliates?page=1?limit=10">
                 <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
                   Affiliates
                 </GLButton>
               </Link>
-              <Link to="/secure/glow/teams">
+              <Link to="/secure/glow/teams?page=1?limit=10">
                 <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
                   Teams
                 </GLButton>
               </Link>
-              <Link to="/secure/glow/promos">
+              <Link to="/secure/glow/promos?page=1?limit=10">
                 <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
                   Promos
                 </GLButton>
               </Link>
-              <Link to="/secure/glow/carts">
+              <Link to="/secure/glow/carts?page=1?limit=10">
                 <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
                   Carts
                 </GLButton>
               </Link>
-              <Link to="/secure/glow/contents">
+              <Link to="/secure/glow/contents?page=1?limit=10">
                 <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
                   Contents
                 </GLButton>
               </Link>
-              <Link to="/secure/glow/emails">
+              <Link to="/secure/glow/emails?page=1?limit=10">
                 <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
                   Emails
                 </GLButton>
               </Link>
-              <Link to="/secure/glow/logs">
+              <Link to="/secure/glow/logs?page=1?limit=10">
                 <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
                   Logs
                 </GLButton>
               </Link>
-              <Link to="/secure/glow/chips">
+              <Link to="/secure/glow/chips?page=1?limit=10">
                 <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
                   Chips
                 </GLButton>
               </Link>
-              <Link to="/secure/glow/surveys">
+              <Link to="/secure/glow/surveys?page=1?limit=10">
                 <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
                   Surveys
                 </GLButton>
               </Link>
-              <Link to="/secure/glow/parcels">
+              <Link to="/secure/glow/parcels?page=1?limit=10">
                 <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
                   Parcels
                 </GLButton>
               </Link>
-              <Link to="/secure/glow/categorys">
+              <Link to="/secure/glow/categorys?page=1?limit=10">
                 <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
                   Categorys
                 </GLButton>
               </Link>
-              <Link to="/secure/glow/settings">
+              <Link to="/secure/glow/settings?page=1?limit=10">
                 <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
                   Settings
                 </GLButton>
               </Link>
-              <Link to="/secure/glow/palettes">
+              <Link to="/secure/glow/palettes?page=1?limit=10">
                 <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
                   Palettes
                 </GLButton>
               </Link>
-              <Link to="/secure/glow/filaments">
+              <Link to="/secure/glow/filaments?page=1?limit=10">
                 <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
                   Filaments
                 </GLButton>
               </Link>
-              <Link to="/secure/glow/edit_all_data">
+              <Link to="/secure/glow/edit_all_data?page=1?limit=10">
                 <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
                   Edit All Data
                 </GLButton>
               </Link>
-              <Link to="/secure/glow/gcode_continous">
+              <Link to="/secure/glow/gcode_continous?page=1?limit=10">
                 <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
                   Gcode
                 </GLButton>
               </Link>
-              <Link to="/secure/glow/iamge_compressor">
+              <Link to="/secure/glow/iamge_compressor?page=1?limit=10">
                 <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
                   Compressor
                 </GLButton>

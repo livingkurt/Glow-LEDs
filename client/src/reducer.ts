@@ -62,6 +62,7 @@ import { parcelDeleteReducer, parcelDetailsReducer, parcelListReducer, parcelSav
 import { paletteDeleteReducer, paletteDetailsReducer, paletteListReducer, paletteSaveReducer } from "./reducers/paletteReducers";
 import { filamentDeleteReducer, filamentDetailsReducer, filamentListReducer, filamentSaveReducer } from "./reducers/filamentReducers";
 import { surveyDeleteReducer, surveyDetailsReducer, surveyListReducer, surveySaveReducer } from "./reducers/surveyReducers";
+import affiliateSlice from "./slices/affiliateSlice";
 
 export default combineReducers({
   productList: productListReducer,
@@ -108,6 +109,7 @@ export default combineReducers({
   promoDetails: promoDetailsReducer,
   promoSave: promoSaveReducer,
   promoDelete: promoDeleteReducer,
+  affiliateSlice: affiliateSlice,
   affiliateList: affiliateListReducer,
   affiliateDetails: affiliateDetailsReducer,
   affiliateSave: affiliateSaveReducer,

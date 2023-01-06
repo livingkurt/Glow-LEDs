@@ -965,112 +965,112 @@ const Header = props => {
                         Orders
                       </GLButton>
                     </Link>
-                    <Link to="/secure/glow/products">
+                    <Link to="/secure/glow/products?page=1?limit=10">
                       <GLButton variant="nav" fullWidth className="ta-l">
                         Products
                       </GLButton>
                     </Link>
-                    <Link to="/secure/glow/users">
+                    <Link to="/secure/glow/users?page=1?limit=10">
                       <GLButton variant="nav" fullWidth className="ta-l">
                         Users
                       </GLButton>
                     </Link>
-                    <Link to="/secure/glow/expenses">
+                    <Link to="/secure/glow/expenses?page=1?limit=10">
                       <GLButton variant="nav" fullWidth className="ta-l">
                         Expenses
                       </GLButton>
                     </Link>
-                    <Link to="/secure/glow/features">
+                    <Link to="/secure/glow/features?page=1?limit=10">
                       <GLButton variant="nav" fullWidth className="ta-l">
                         Features
                       </GLButton>
                     </Link>
-                    <Link to="/secure/glow/paychecks">
+                    <Link to="/secure/glow/paychecks?page=1?limit=10">
                       <GLButton variant="nav" fullWidth className="ta-l">
                         Paychecks
                       </GLButton>
                     </Link>
-                    <Link to="/secure/glow/affiliates">
+                    <Link to="/secure/glow/affiliates?page=1?limit=10">
                       <GLButton variant="nav" fullWidth className="ta-l">
                         Affiliates
                       </GLButton>
                     </Link>
-                    <Link to="/secure/glow/teams">
+                    <Link to="/secure/glow/teams?page=1?limit=10">
                       <GLButton variant="nav" fullWidth className="ta-l">
                         Teams
                       </GLButton>
                     </Link>
-                    <Link to="/secure/glow/promos">
+                    <Link to="/secure/glow/promos?page=1?limit=10">
                       <GLButton variant="nav" fullWidth className="ta-l">
                         Promos
                       </GLButton>
                     </Link>
-                    <Link to="/secure/glow/carts">
+                    <Link to="/secure/glow/carts?page=1?limit=10">
                       <GLButton variant="nav" fullWidth className="ta-l">
                         Carts
                       </GLButton>
                     </Link>
-                    <Link to="/secure/glow/contents">
+                    <Link to="/secure/glow/contents?page=1?limit=10">
                       <GLButton variant="nav" fullWidth className="ta-l">
                         Contents
                       </GLButton>
                     </Link>
-                    <Link to="/secure/glow/emails">
+                    <Link to="/secure/glow/emails?page=1?limit=10">
                       <GLButton variant="nav" fullWidth className="ta-l">
                         Emails
                       </GLButton>
                     </Link>
-                    <Link to="/secure/glow/logs">
+                    <Link to="/secure/glow/logs?page=1?limit=10">
                       <GLButton variant="nav" fullWidth className="ta-l">
                         Logs
                       </GLButton>
                     </Link>
-                    <Link to="/secure/glow/chips">
+                    <Link to="/secure/glow/chips?page=1?limit=10">
                       <GLButton variant="nav" fullWidth className="ta-l">
                         Chips
                       </GLButton>
                     </Link>
-                    <Link to="/secure/glow/surveys">
+                    <Link to="/secure/glow/surveys?page=1?limit=10">
                       <GLButton variant="nav" fullWidth className="ta-l">
                         Surveys
                       </GLButton>
                     </Link>
-                    <Link to="/secure/glow/parcels">
+                    <Link to="/secure/glow/parcels?page=1?limit=10">
                       <GLButton variant="nav" fullWidth className="ta-l">
                         Parcels
                       </GLButton>
                     </Link>
-                    <Link to="/secure/glow/categorys">
+                    <Link to="/secure/glow/categorys?page=1?limit=10">
                       <GLButton variant="nav" fullWidth className="ta-l">
                         Categorys
                       </GLButton>
                     </Link>
-                    <Link to="/secure/glow/settings">
+                    <Link to="/secure/glow/settings?page=1?limit=10">
                       <GLButton variant="nav" fullWidth className="ta-l">
                         Settings
                       </GLButton>
                     </Link>
-                    <Link to="/secure/glow/palettes">
+                    <Link to="/secure/glow/palettes?page=1?limit=10">
                       <GLButton variant="nav" fullWidth className="ta-l">
                         Palettes
                       </GLButton>
                     </Link>
-                    <Link to="/secure/glow/filaments">
+                    <Link to="/secure/glow/filaments?page=1?limit=10">
                       <GLButton variant="nav" fullWidth className="ta-l">
                         Filaments
                       </GLButton>
                     </Link>
-                    <Link to="/secure/glow/edit_all_data">
+                    <Link to="/secure/glow/edit_all_data?page=1?limit=10">
                       <GLButton variant="nav" fullWidth className="ta-l">
                         Edit All Data
                       </GLButton>
                     </Link>
-                    <Link to="/secure/glow/gcode_continous">
+                    <Link to="/secure/glow/gcode_continous?page=1?limit=10">
                       <GLButton variant="nav" fullWidth className="ta-l">
                         Gcode
                       </GLButton>
                     </Link>
-                    <Link to="/secure/glow/image_compressor">
+                    <Link to="/secure/glow/image_compressor?page=1?limit=10">
                       <GLButton variant="nav" fullWidth className="ta-l">
                         Compressor
                       </GLButton>

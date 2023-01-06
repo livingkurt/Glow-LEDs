@@ -20,7 +20,13 @@ export const affiliateListReducer = (state = { affiliates: [] }, action: IAction
     case AFFILIATE_LIST_REQUEST:
       return { loading: true, affiliates: [] };
     case AFFILIATE_LIST_SUCCESS:
-      return { loading: false, affiliates: action.payload, message: "Affiliates Found" };
+      return {
+        loading: false,
+        affiliates: action.payload.affiliates,
+        totalPages: action.payload.totalPages,
+        currentPage: action.payload.currentPage,
+        message: "Affiliates Found"
+      };
     case AFFILIATE_LIST_FAIL:
       return { loading: false, error: action.payload.error, message: action.payload.message };
     default:

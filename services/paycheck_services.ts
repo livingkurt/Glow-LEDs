@@ -4,6 +4,8 @@ import { determine_filter, month_dates } from "../util";
 export default {
   findAll_paychecks_s: async (query: any) => {
     try {
+      const page: any = query.page ? query.page : 1;
+      const limit: any = query.limit ? query.limit : 0;
       const search = query.search
         ? {
             facebook_name: {
@@ -22,7 +24,13 @@ export default {
       } else if (sort_query === "newest") {
         sort = { _id: -1 };
       }
-      return await paycheck_db.findAll_paychecks_db(filter, sort);
+      const paychecks = await paycheck_db.findAll_paychecks_db(filter, sort, limit, page);
+      const count = await paycheck_db.count_paychecks_db(filter);
+      return {
+        paychecks,
+        totalPages: Math.ceil(count / limit),
+        currentPage: parseInt(page)
+      };
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

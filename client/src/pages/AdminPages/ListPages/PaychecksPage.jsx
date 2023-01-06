@@ -1,11 +1,18 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { listPaychecks, deletePaycheck, savePaycheck } from "../../../actions/paycheckActions";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Loading, Notification } from "../../../components/UtilityComponents";
 import { Helmet } from "react-helmet";
 import { Search, Sort } from "../../../components/SpecialtyComponents";
-import { dates_in_year, format_date, removeDuplicates, toCapitalize } from "../../../utils/helper_functions";
+import {
+  dates_in_year,
+  format_date,
+  getUrlParameter,
+  removeDuplicates,
+  toCapitalize,
+  update_products_url
+} from "../../../utils/helper_functions";
 import { listAffiliates } from "../../../actions/affiliateActions";
 import { API_Orders, API_Paychecks, API_Promos } from "../../../utils";
 import {
@@ -19,20 +26,24 @@ import {
 import { listTeams } from "../../../actions/teamActions";
 import { listOrders } from "../../../actions/orderActions";
 import { GLButton } from "../../../components/GlowLEDsComponents";
+import GLTable from "../../../components/GlowLEDsComponents/GLTable/GLTable";
 
 const PaychecksPage = props => {
+  const history = useHistory();
   const [search, set_search] = useState("");
-  const [sort, setSortOrder] = useState("");
+  const [sort, set_sort] = useState("");
   const [message_note, set_message_note] = useState([]);
   const [loading_paychecks, set_loading_paychecks] = useState(false);
   const [loading_checkboxes, set_loading_checkboxes] = useState(false);
   const [create_paychecks, set_create_paychecks] = useState(false);
   const [update_google_sheets, set_update_google_sheets] = useState(false);
   const [update_discount_code, set_update_discount_code] = useState(false);
+  const [page, set_page] = useState(1);
+  const [limit, set_limit] = useState(10);
 
   const category = props.match.params.category ? props.match.params.category : "";
   const paycheckList = useSelector(state => state.paycheckList);
-  const { loading, paychecks, message, error } = paycheckList;
+  const { loading, paychecks, message, error, totalPages } = paycheckList;
 
   const paycheckSave = useSelector(state => state.paycheckSave);
   const { success: successSave } = paycheckSave;
@@ -72,7 +83,6 @@ const PaychecksPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(listPaychecks({}));
       dispatch(listAffiliates({}));
       dispatch(listTeams({}));
       dispatch(listOrders({}));
@@ -96,17 +106,17 @@ const PaychecksPage = props => {
   };
 
   const sortHandler = e => {
-    setSortOrder(e.target.value);
+    set_sort(e.target.value);
     dispatch(listPaychecks({ category, search, sort: e.target.value }));
   };
 
-  useEffect(() => {
-    let clean = true;
-    if (clean) {
-      dispatch(listPaychecks({ category, search, sort }));
-    }
-    return () => (clean = false);
-  }, [dispatch, category, search, sort]);
+  // useEffect(() => {
+  //   let clean = true;
+  //   if (clean) {
+  //     dispatch(listPaychecks({ category, search, sort }));
+  //   }
+  //   return () => (clean = false);
+  // }, [dispatch, category, search, sort]);
   const deleteHandler = paycheck => {
     dispatch(deletePaycheck(paycheck._id));
   };
@@ -121,7 +131,7 @@ const PaychecksPage = props => {
         paid_at: format_date(today)
       })
     );
-    dispatch(listPaychecks({}));
+    dispatch(listPaychecks({ limit, page }));
   };
   const duplicate_paycheck = paycheck => {
     dispatch(
@@ -135,26 +145,10 @@ const PaychecksPage = props => {
         paid_at: format_date(today)
       })
     );
-    dispatch(listPaychecks({}));
+    dispatch(listPaychecks({ limit, page }));
   };
 
   const sort_options = ["Newest", "Artist Name", "Facebook Name", "Instagram Handle", "Sponsor", "Promoter"];
-
-  const colors = [
-    { name: "Paid", color: "#3e4c6d" },
-    { name: "Not Paid", color: "#6f3c3c" }
-  ];
-
-  const determine_color = paycheck => {
-    let result = "";
-    if (paycheck.paid) {
-      result = colors[0].color;
-    }
-    if (!paycheck.paid) {
-      result = colors[1].color;
-    }
-    return result;
-  };
 
   const create_affiliate_paychecks = async () => {
     set_loading_paychecks(true);
@@ -183,7 +177,7 @@ const PaychecksPage = props => {
       await API_Promos.update_discount(year, month.toLowerCase());
       set_message_note("update_discount");
     }
-    dispatch(listPaychecks({}));
+    dispatch(listPaychecks({ limit, page }));
     set_loading_paychecks(false);
   };
 
@@ -219,35 +213,106 @@ const PaychecksPage = props => {
 
   const years = ["2025", "2024", "2023", "2022", "2021", "2020"];
 
+  const column_defs = [
+    { title: "Date Paid", display: paycheck => paycheck.paid_at && format_date(paycheck.paid_at) },
+    { title: "Paid", display: paycheck => (paycheck.paid ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />) },
+    {
+      title: "Affiliate",
+      display: paycheck => (paycheck.affiliate ? paycheck.affiliate.artist_name : paycheck.team && paycheck.team.team_name)
+    },
+    { title: "Amount", display: paycheck => `$${paycheck.amount.toFixed(2)}` },
+    { title: "Venmo", display: "venmo" }
+  ];
+
+  const colors = [
+    { name: "Paid", color: "#3e4c6d" },
+    { name: "Not Paid", color: "#6f3c3c" }
+  ];
+
+  const determine_color = paycheck => {
+    let result = "";
+    if (paycheck.paid) {
+      result = colors[0].color;
+    }
+    if (!paycheck.paid) {
+      result = colors[1].color;
+    }
+    return result;
+  };
+
+  const update_page = (e, new_page) => {
+    let search = "";
+    let sort = "";
+    let filter = "";
+    let limit = 10;
+    let option = false;
+
+    e.preventDefault();
+    const page = parseInt(new_page);
+    set_page(page);
+    update_products_url(history, search, "", "", page, limit);
+
+    dispatch(listPaychecks({ limit, page }));
+  };
+
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      determine_paychecks();
+    }
+    return () => (clean = false);
+  }, []);
+
+  const determine_paychecks = () => {
+    const query = getUrlParameter(props.location);
+    let search = "";
+    let sort = "";
+    let filter = "";
+    let limit = "";
+    let page = "";
+
+    // prnt({ query });
+    if (Object.keys(query).length > 0) {
+      if (query.search) {
+        set_search(query.search.split("%20").join(" "));
+        search = query.search.split("%20").join(" ");
+      }
+      if (query.sort) {
+        set_sort(query.sort);
+        sort = query.sort;
+      }
+      // if (query.filter) {
+      // 	//
+      // 	filter = waitForElement(query.filter, chips_list);
+      // }
+      if (query.page) {
+        set_page(query.page);
+        page = query.page;
+      }
+      if (query.limit) {
+        set_limit(query.limit);
+        limit = query.limit;
+      }
+
+      dispatch(
+        listPaychecks({
+          filter,
+          search,
+          sort,
+          page,
+          limit
+        })
+      );
+    }
+  };
   return (
-    <div className="main_container p-20px">
+    <div className="main_container">
       <Helmet>
         <title>Admin Paychecks | Glow LEDs</title>
       </Helmet>
       <Notification message={message_note} />
       <Loading loading={loading_paychecks} error={error} />
-      <div className="wrap jc-b">
-        <div className="wrap jc-b">
-          {colors.map((color, index) => {
-            return (
-              <div className="wrap jc-b  m-1rem" key={index}>
-                <label style={{ marginRight: "1rem" }}>{color.name}</label>
-                <div
-                  style={{
-                    backgroundColor: color.color,
-                    height: "20px",
-                    width: "60px",
-                    borderRadius: "5px"
-                  }}
-                />
-              </div>
-            );
-          })}
-        </div>
-        <Link to="/secure/glow/editpaycheck">
-          <GLButton variant="primary">Create Paycheck</GLButton>
-        </Link>
-      </div>
+
       <p className="fs-20px title_font">Choose Paycheck Month</p>
       {loading_checkboxes ? (
         <div>Loading...</div>
@@ -298,8 +363,8 @@ const PaychecksPage = props => {
           />
         </div>
       )}
-      <div className="ai-c jc-b w-100per max-w-600px">
-        <div className="mv-2rem mr-2rem">
+      <div className="jc-b">
+        <div className="row g-10px mv-10px">
           <div className="row">
             <div className="custom-select ">
               <select
@@ -316,9 +381,7 @@ const PaychecksPage = props => {
               <span className="custom-arrow" />
             </div>
           </div>
-        </div>
 
-        <div className="mv-2rem">
           <div className="row">
             <div className="custom-select ">
               <select
@@ -337,80 +400,50 @@ const PaychecksPage = props => {
             </div>
           </div>
         </div>
-        <GLButton variant="primary" className="h-40px" onClick={create_affiliate_paychecks}>
-          Create Affiliate Paychecks
-        </GLButton>
-      </div>
 
-      <div className="jc-c">
-        <h1 style={{ textAlign: "center" }}>Paychecks</h1>
+        <div className="row g-10px">
+          <GLButton variant="primary" className="h-40px" onClick={create_affiliate_paychecks}>
+            Create Affiliate Paychecks
+          </GLButton>
+          <Link to="/secure/glow/editpaycheck">
+            <GLButton variant="primary">Create Paycheck</GLButton>
+          </Link>
+        </div>
       </div>
-      <div className="search_and_sort row jc-c ai-c" style={{ overflowX: "scroll" }}>
-        <Search search={search} set_search={set_search} submitHandler={submitHandler} category={category} />
-        <Sort sortHandler={sortHandler} sort_options={sort_options} />
-      </div>
-      <div>Total Payout ${paychecks && paychecks.reduce((a, paycheck) => a + paycheck.amount, 0).toFixed(2)}</div>
-      <Loading loading={loading} error={error}>
-        {paychecks && (
-          <div className="paycheck-list responsive_table">
-            <table className="table">
-              <thead>
-                <tr>
-                  <th>Date Paid</th>
-                  <th>Affiliate</th>
-                  <th>Amount</th>
-                  <th>Venmo</th>
-                  <th>Receipt</th>
-                  <th>Paid</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {paychecks.map((paycheck, index) => (
-                  <tr
-                    key={index}
-                    style={{
-                      backgroundColor: determine_color(paycheck),
-                      fontSize: "16px"
-                    }}
-                  >
-                    <td className="p-10px" style={{ minWidth: "15rem" }}>
-                      {paycheck.paid_at && format_date(paycheck.paid_at)}
-                    </td>
-                    <td className="p-10px">
-                      {paycheck.affiliate ? paycheck.affiliate.artist_name : paycheck.team && paycheck.team.team_name}
-                    </td>
-                    <td className="p-10px">${paycheck.amount}</td>
-                    <td className="p-10px">{paycheck.venmo}</td>
-                    <td className="p-10px">{paycheck.receipt}</td>
-                    <td className="p-10px">
-                      {paycheck.paid ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
-                    </td>
-                    <td className="p-10px">
-                      <div className="jc-b">
-                        <Link to={"/secure/glow/editpaycheck/" + paycheck._id}>
-                          <GLButton variant="icon" aria-label="Edit">
-                            <i className="fas fa-edit" />
-                          </GLButton>
-                        </Link>
-                        <GLButton variant="icon" onClick={() => duplicate_paycheck(paycheck)} aria-label="duplicate">
-                          <i className="fas fa-clone" />
-                        </GLButton>
-                        <GLButton variant="icon" onClick={() => mark_paid(paycheck)} aria-label="mark paid">
-                          <i className="fas fa-check-circle" />
-                        </GLButton>
-                        <GLButton variant="icon" onClick={() => deleteHandler(paycheck)} aria-label="Delete">
-                          <i className="fas fa-trash-alt" />
-                        </GLButton>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+      <GLTable
+        title="Paychecks"
+        rows={paychecks}
+        column_defs={column_defs}
+        determine_color={determine_color}
+        colors={colors}
+        search={search}
+        set_search={set_search}
+        submitHandler={submitHandler}
+        sortHandler={sortHandler}
+        sort_options={sort_options}
+        totalPages={totalPages}
+        page={page}
+        limit={limit}
+        update_page={update_page}
+        action_row={paycheck => (
+          <div className="jc-b">
+            <Link to={"/secure/glow/editpaycheck/" + paycheck._id}>
+              <GLButton variant="icon" aria-label="Edit">
+                <i className="fas fa-edit" />
+              </GLButton>
+            </Link>
+            <GLButton variant="icon" onClick={() => duplicate_paycheck(paycheck)} aria-label="duplicate">
+              <i className="fas fa-clone" />
+            </GLButton>
+            <GLButton variant="icon" onClick={() => mark_paid(paycheck)} aria-label="mark paid">
+              <i className="fas fa-check-circle" />
+            </GLButton>
+            <GLButton variant="icon" onClick={() => deleteHandler(paycheck)} aria-label="Delete">
+              <i className="fas fa-trash-alt" />
+            </GLButton>
           </div>
         )}
-      </Loading>
+      />
     </div>
   );
 };

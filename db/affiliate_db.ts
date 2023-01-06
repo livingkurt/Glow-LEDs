@@ -3,7 +3,7 @@ import { Promo } from "../models";
 import { make_private_code } from "../util";
 
 export default {
-  findAll_affiliates_db: async (filter: any, sort: any) => {
+  findAll_affiliates_db: async (filter: any, sort: any, limit: any, page: any) => {
     try {
       return await Affiliate.find(filter)
         .sort(sort)
@@ -11,7 +11,10 @@ export default {
         .populate("products")
         .populate("public_code")
         .populate("private_code")
-        .populate("chips");
+        .populate("chips")
+        .limit(limit * 1)
+        .skip((page - 1) * limit)
+        .exec();
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -95,6 +98,15 @@ export default {
       if (affiliate) {
         return await Affiliate.updateOne({ pathname: params.pathname }, { deleted: true });
       }
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  count_affiliates_db: async (filter: any) => {
+    try {
+      return await Affiliate.countDocuments(filter);
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

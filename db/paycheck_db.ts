@@ -1,9 +1,15 @@
 import Paycheck from "../models/paycheck";
 
 export default {
-  findAll_paychecks_db: async (filter: any, sort: any) => {
+  findAll_paychecks_db: async (filter: any, sort: any, limit: any, page: any) => {
     try {
-      return await Paycheck.find(filter).sort(sort).populate("user").populate("affiliate");
+      return await Paycheck.find(filter)
+        .sort(sort)
+        .populate("user")
+        .populate("affiliate")
+        .limit(limit * 1)
+        .skip((page - 1) * limit)
+        .exec();
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -55,6 +61,15 @@ export default {
       if (paycheck) {
         return await Paycheck.updateOne({ _id: id }, { deleted: true });
       }
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  count_paychecks_db: async (filter: any) => {
+    try {
+      return await Paycheck.countDocuments(filter);
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
