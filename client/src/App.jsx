@@ -22,10 +22,8 @@ import {
   ChangePasswordPage,
   TermsPage,
   AboutPage,
-  UsersPage,
   FAQPage,
   UserProfilePage,
-  EditUserPage,
   SitemapPage,
   ControlPanelPage,
   FeaturedPage,
@@ -107,6 +105,7 @@ import EditFilamentPage from "./pages/AdminPages/EditPages/EditFilamentPage";
 import { AffiliatesPage, EditAffiliatePage } from "./pages/AffiliatesPage";
 import { createTheme, ThemeProvider } from "@mui/material";
 import glow_leds_theme from "./theme";
+import { EditUserPage, UsersPage } from "./pages/UsersPage";
 
 const App = props => {
   const theme_colors = {

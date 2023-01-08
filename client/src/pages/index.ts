@@ -1,9 +1,7 @@
 export { default as EditProductPage } from "./AdminPages/EditPages/EditProductPage";
-export { default as EditUserPage } from "./AdminPages/EditPages/EditUserPage";
 export { default as EditExpensePage } from "./AdminPages/EditPages/EditExpensePage";
 export { default as EditFeaturePage } from "./AdminPages/EditPages/EditFeaturePage";
 export { default as EditPromoPage } from "./AdminPages/EditPages/EditPromoPage";
-export { default as EditAffiliatePage } from "./AdminPages/EditPages/EditAffiliatePage";
 export { default as EditOrderPage } from "./AdminPages/EditPages/EditOrderPage";
 export { default as EditCartPage } from "./AdminPages/EditPages/EditCartPage";
 export { default as EditChipPage } from "./AdminPages/EditPages/EditChipPage";
@@ -20,11 +18,9 @@ export { default as EditPalettePage } from "./AdminPages/EditPages/EditPalettePa
 
 export { default as OrdersPage } from "./AdminPages/ListPages/OrdersPage";
 export { default as ProductsPage } from "./AdminPages/ListPages/ProductsPage";
-export { default as UsersPage } from "./AdminPages/ListPages/UsersPage";
 
 export { default as ExpensesPage } from "./AdminPages/ListPages/ExpensesPage";
 
-export { default as AffiliatesPage } from "./AdminPages/ListPages/AffiliatesPage";
 export { default as ChipsPage } from "./AdminPages/ListPages/ChipsPage";
 export { default as PromosPage } from "./AdminPages/ListPages/PromosPage";
 export { default as FeaturesPage } from "./AdminPages/ListPages/FeaturesPage";
