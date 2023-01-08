@@ -6,6 +6,24 @@ import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
 import { setCurrentUser } from "../actions/userActions";
 import { DetailsAffiliate } from "../actions/affiliateActions";
+// import { createApi } from "@reduxjs/toolkit/query/react";
+
+// const axiosBaseQuery =
+//   ({ baseUrl } = { baseUrl: "" }) =>
+//   async ({ url, method, data, params }) => {
+//     try {
+//       const result = await axios({ url: baseUrl + url, method, data, params });
+//       return { data: result.data };
+//     } catch (axiosError) {
+//       const err = axiosError;
+//       return {
+//         error: {
+//           status: err.response?.status,
+//           data: err.response?.data || err.message
+//         }
+//       };
+//     }
+//   };
 
 export const listAffiliates = createAsyncThunk("affiliates/listAffiliates", async (query: any, thunkApi: any) => {
   try {
@@ -111,3 +129,34 @@ export const deleteAffiliate = createAsyncThunk("affiliates/deleteAffiliate", as
     return data;
   } catch (error) {}
 });
+
+export const create_rave_mob_affiliates = createAsyncThunk("affiliates/create_rave_mob_affiliates", async (csv, thunkApi: any) => {
+  try {
+    const {
+      userLogin: { userInfo }
+    } = thunkApi.getState();
+    const { data } = await axios.put(
+      "/api/affiliates/create_rave_mob_affiliates",
+      { csv },
+      {
+        headers: {
+          Authorization: "Bearer " + userInfo.access_token
+        }
+      }
+    );
+    return data;
+  } catch (error) {}
+});
+
+// export const employeeInfoApi = createApi({
+//   reducerPath: "affiliateApi",
+//   baseQuery: axiosBaseQuery({ baseUrl: "/api/v1" }),
+//   endpoints: builder => ({
+//     getUsers: builder.query({
+//       query: () => ({ url: "/titles", method: "get" }),
+//       transformResponse: response => response.titles
+//     })
+//   })
+// });
+
+// export const { useGetTitlesQuery, useGetShiftsQuery, useGetRolesQuery, useGetTagsQuery } = employeeInfoApi;

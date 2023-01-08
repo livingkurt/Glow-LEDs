@@ -35,9 +35,8 @@ const EditAffiliatePage = props => {
 
   const affiliateSlice = useSelector(state => state.affiliateSlice);
   const affiliate = useSelector(state => state.affiliateSlice.affiliate);
-  const { loading, message, error } = affiliateSlice;
+  const { loading } = affiliateSlice;
   const {
-    id,
     user,
     artist_name,
     instagram_handle,
@@ -80,6 +79,8 @@ const EditAffiliatePage = props => {
     if (clean) {
       if (props.match.params.pathname) {
         dispatch(API.detailsAffiliate({ pathname: props.match.params.pathname }));
+      } else {
+        dispatch(set_affiliate({}));
       }
       dispatch(listUsers({}));
       dispatch(listProducts({ option: false, hidden: false }));
@@ -113,7 +114,7 @@ const EditAffiliatePage = props => {
                 margin="normal"
                 value={user}
                 options={users}
-                option_name={option => `${option.first_name} ${option.last_name}`}
+                option_name={option => (option.first_name ? `${option.first_name} ${option.last_name}` : "")}
                 getOptionLabel={option => `${option.first_name} ${option.last_name}`}
                 getOptionSelected={(option, value) => option._id === value._id}
                 name="user"

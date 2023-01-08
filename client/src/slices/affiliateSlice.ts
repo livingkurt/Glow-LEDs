@@ -10,7 +10,7 @@ const affiliatesSlice = createSlice({
     affiliates: [],
     affiliate: {
       id: "",
-      user: {},
+      user: undefined,
       artist_name: "",
       instagram_handle: "",
       facebook_name: "",
@@ -32,19 +32,15 @@ const affiliatesSlice = createSlice({
       products: [],
       chips: [],
       pathname: "",
-      public_code: {},
-      private_code: {}
+      public_code: undefined,
+      private_code: undefined
     },
     message: "",
     error: {},
-    affilate: {},
     search: "",
     sort: "",
     page: 1,
     limit: 10,
-    public_code: "",
-    private_code: "",
-    loading_checkboxes: false,
     sort_options: ["Newest", "Artist Name", "Facebook Name", "Instagram Handle", "Sponsor", "Promoter"],
     colors: [
       { name: "Sponsor", color: "#3e4c6d" },
@@ -76,15 +72,6 @@ const affiliatesSlice = createSlice({
     },
     set_limit: (state, { payload }) => {
       state.limit = payload;
-    },
-    set_public_code: (state, { payload }) => {
-      state.public_code = payload;
-    },
-    set_private_code: (state, { payload }) => {
-      state.private_code = payload;
-    },
-    set_loading_checkboxes: (state, { payload }) => {
-      state.loading_checkboxes = payload;
     }
   },
   extraReducers: {
@@ -147,15 +134,5 @@ const affiliatesSlice = createSlice({
   }
 });
 
-export const {
-  set_search,
-  set_sort,
-  set_page,
-  set_limit,
-  set_loading,
-  set_affiliate,
-  set_public_code,
-  set_private_code,
-  set_loading_checkboxes
-} = affiliatesSlice.actions;
+export const { set_search, set_sort, set_page, set_limit, set_loading, set_affiliate } = affiliatesSlice.actions;
 export default affiliatesSlice.reducer;

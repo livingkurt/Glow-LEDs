@@ -118,7 +118,7 @@ export default {
       }
     }
   },
-  upload_rave_mob_csv_affiliates_s: async (params: any, body: any) => {
+  create_rave_mob_affiliates_affiliates_s: async (params: any, body: any) => {
     const { csv } = body;
 
     const rave_mobers = [];

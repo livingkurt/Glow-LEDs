@@ -219,8 +219,8 @@ const AffiliatesPage = props => {
   //   dispatch(listAffiliates({ limit, page }));
   // };
 
-  // const upload_rave_mob_csv = async csv => {
-  //   const { data } = API_Affiliates.upload_rave_mob_csv(csv);
+  // const create_rave_mob_affiliates = async csv => {
+  //   const { data } = API_Affiliates.create_rave_mob_affiliates(csv);
 
   //   dispatch(listAffiliates({ limit, page }));
   //   dispatch(listAffiliates({ limit, page }));
@@ -267,9 +267,9 @@ const AffiliatesPage = props => {
       <div className="wrap jc-b">
         {/* <GLButton variant="primary" className="h-40px">
           Upload CSV */}
-        {/* <CSVReader onFileLoaded={(data, fileInfo) => upload_rave_mob_csv(data, fileInfo)} /> */}
+        {/* <CSVReader onFileLoaded={(data, fileInfo) => create_rave_mob_affiliates(data, fileInfo)} /> */}
         {/* <CSVReader
-          onFileLoaded={(data, fileInfo, originalFile) => upload_rave_mob_csv(data, fileInfo, originalFile)}
+          onFileLoaded={(data, fileInfo, originalFile) => create_rave_mob_affiliates(data, fileInfo, originalFile)}
           label="Upload Rave Mob CSV"
         /> */}
         {/* </GLButton> */}
