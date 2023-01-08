@@ -2,11 +2,11 @@ import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 // import { listAffiliates, deleteAffiliate, saveAffiliate } from "../../../actions/affiliateActions";
 import { Link, useHistory } from "react-router-dom";
-import { Loading, Notification } from "../../../components/UtilityComponents";
+import { Loading, Notification } from "../../components/UtilityComponents";
 import { Helmet } from "react-helmet";
-import { Search, Sort } from "../../../components/SpecialtyComponents";
-import { listOrders } from "../../../actions/orderActions";
-import * as API from "../../../api/affiliateApi";
+import { Search, Sort } from "../../components/SpecialtyComponents";
+import { listOrders } from "../../actions/orderActions";
+import * as API from "../../api/affiliateApi";
 import {
   dates_in_year,
   determine_promoter_code_tier,
@@ -15,12 +15,12 @@ import {
   months,
   toCapitalize,
   update_products_url
-} from "../../../utils/helper_functions";
-import { API_Affiliates, API_Orders, API_Promos, API_Revenue } from "../../../utils";
-import { GLButton } from "../../../components/GlowLEDsComponents";
+} from "../../utils/helper_functions";
+import { API_Affiliates, API_Orders, API_Promos, API_Revenue } from "../../utils";
+import { GLButton } from "../../components/GlowLEDsComponents";
 import CSVReader from "react-csv-reader";
-import GLTable from "../../../components/GlowLEDsComponents/GLTable/GLTable";
-import { set_limit, set_loading, set_page, set_search, set_sort } from "../../../slices/affiliateSlice";
+import GLTable from "../../components/GlowLEDsComponents/GLTable/GLTable";
+import { set_limit, set_loading, set_page, set_search, set_sort } from "../../slices/affiliateSlice";
 
 const AffiliatesPage = props => {
   const history = useHistory();

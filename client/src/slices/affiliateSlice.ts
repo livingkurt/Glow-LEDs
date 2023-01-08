@@ -8,6 +8,7 @@ const affiliatesSlice = createSlice({
   initialState: {
     loading: false,
     affiliates: [],
+    affiliate: {},
     message: "",
     error: {},
     affilate: {},
@@ -29,10 +30,10 @@ const affiliatesSlice = createSlice({
   },
   reducers: {
     set_affiliate: (state, { payload }) => {
-      const set_affiliate = payload;
+      const updated_affiliate = payload;
       return {
         ...state,
-        ...set_affiliate
+        affiliate: { ...state.affiliate, ...updated_affiliate }
       };
     },
     set_loading: (state, { payload }) => {
@@ -94,8 +95,9 @@ const affiliatesSlice = createSlice({
       state.loading = true;
     },
     [API.detailsAffiliate.fulfilled]: (state: any, { payload }: any) => {
+      console.log({ payload });
       state.loading = false;
-      state.affiliate = payload.affiliate;
+      state.affiliate = payload;
       state.message = "Affiliate Found";
     },
     [API.detailsAffiliate.rejected]: (state: any, { payload }: any) => {

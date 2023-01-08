@@ -25,7 +25,6 @@ const GLTable = ({
   limit,
   update_page
 }) => {
-  console.log({ page });
   return (
     <Loading loading={loading} error={error}>
       <div className="row wrap">

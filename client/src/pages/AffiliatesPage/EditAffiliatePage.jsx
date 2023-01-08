@@ -1,19 +1,45 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { saveAffiliate, detailsAffiliate } from "../../../actions/affiliateActions";
+// import { saveAffiliate, detailsAffiliate } from "../../../actions/affiliateActions";
 import { useHistory } from "react-router-dom";
-import { DropdownDisplay, Loading, Notification } from "../../../components/UtilityComponents";
+import { DropdownDisplay, Loading, Notification } from "../../components/UtilityComponents";
 import { Helmet } from "react-helmet";
 import { Prompt } from "react-router";
-import { listUsers } from "../../../actions/userActions";
-import { listProducts } from "../../../actions/productActions";
-import { listChips } from "../../../actions/chipActions";
-import { snake_case } from "../../../utils/helper_functions";
-import { listPromos } from "../../../actions/promoActions";
-import { option_list } from "../../../utils/react_helper_functions";
-import { GLButton } from "../../../components/GlowLEDsComponents";
+import { listUsers } from "../../actions/userActions";
+import { listProducts } from "../../actions/productActions";
+import { listChips } from "../../actions/chipActions";
+import { humanize, snake_case } from "../../utils/helper_functions";
+import { listPromos } from "../../actions/promoActions";
+import { option_list } from "../../utils/react_helper_functions";
+import { GLAutocomplete, GLButton, GLCheckboxV2, GLText, GLTextField } from "../../components/GlowLEDsComponents";
 import { set_affiliate, set_loading_checkboxes, set_private_code, set_public_code } from "../../slices/affiliateSlice";
-import * as API from "../../../api/affiliateApi";
+import * as API from "../../api/affiliateApi";
+import Autocomplete from "@mui/material/Autocomplete";
+import { makeStyles } from "@mui/styles";
+import { Container, Paper, Stack, TextField } from "@mui/material";
+import GLButtonV2 from "../../components/GlowLEDsComponents/GLButtonV2/GLButton";
+
+// const useStyles = makeStyles({
+//   root: {
+//     "& .MuiInputBase-root": {
+//       backgroundColor: "white !important"
+//     }
+//   }
+// });
+
+const useStyles = makeStyles(() => ({
+  textField: {
+    marginTop: 15,
+    marginBottom: 15
+  },
+  skeleton: {
+    marginTop: -10,
+    marginBottom: -10
+  },
+  inputRoot: {
+    backgroundColor: "white !important"
+  }
+}));
 
 const EditAffiliatePage = props => {
   // const [id, set_id] = useState("");
@@ -49,14 +75,13 @@ const EditAffiliatePage = props => {
   // const [loading_checkboxes, set_loading_checkboxes] = useState(true);
 
   const userList = useSelector(state => state.userList);
-  const { users } = userList;
+  const { users, loading: loading_users } = userList;
 
   const history = useHistory();
 
-  const affiliateDetails = useSelector(state => state.affiliateDetails);
+  const affiliateSlice = useSelector(state => state.affiliateSlice);
+  const { loading, affiliate } = affiliateSlice;
   const {
-    loading,
-    affiliate,
     message,
     error,
     id,
@@ -79,24 +104,22 @@ const EditAffiliatePage = props => {
     team,
     video,
     venmo,
-    product,
     products,
     chips,
     pathname,
     public_code,
     private_code,
-    chip,
     loading_checkboxes
-  } = affiliateDetails;
+  } = affiliate;
 
   const productList = useSelector(state => state.productList);
-  const { products: products_list } = productList;
+  const { products: products_list, loading: loading_products } = productList;
 
   const chipList = useSelector(state => state.chipList);
-  const { chips: chips_list } = chipList;
+  const { chips: chips_list, loading: loading_chips } = chipList;
 
   const promoList = useSelector(state => state.promoList);
-  const { promos: promos_list } = promoList;
+  const { promos: promos_list, loading: loading_promos } = promoList;
 
   const dispatch = useDispatch();
 
@@ -125,7 +148,7 @@ const EditAffiliatePage = props => {
   const submitHandler = e => {
     e.preventDefault();
     dispatch(
-      saveAffiliate({
+      API.saveAffiliate({
         _id: id,
         user,
         artist_name,
@@ -190,7 +213,7 @@ const EditAffiliatePage = props => {
         <div>
           <div className="jc-b">
             <div>
-              <div className="promo_code mv-1rem row jc-b max-w-55rem w-100per">
+              <div className="promo_code mv-1rem row jc-b  w-100per">
                 <div>
                   <GLButton variant="icon" onClick={e => remove_promo(e, code_type)} aria-label="Delete">
                     <i className="fas fa-times mr-5px" />
@@ -204,395 +227,353 @@ const EditAffiliatePage = props => {
       );
     }
   };
+  const classes = useStyles();
+
+  // const fields = [
+  //   // {
+  //   //   name: "user",
+  //   //   option_name: option => {return `${option.first_name} ${option.last_name}`},
+  //   //   display: option => `${option.first_name} ${option.last_name}`,
+  //   //   type: "autocomplete",
+  //   //   single: true
+  //   // },
+  //   // { name: "products", option_name: "name", display: "", type: "autocomplete", single: false },
+  //   // { name: "chips", option_name: "name", display: "", type: "autocomplete", single: false },
+  //   { name: "artist_name", option_name: "", display: "", type: "input" },
+  //   { name: "instagram_handle", option_name: "", display: "", type: "input" },
+  //   { name: "facebook_name", option_name: "", display: "", type: "input" },
+  //   { name: "tiktok", option_name: "", display: "", type: "input" },
+  //   { name: "percentage_off", option_name: "", display: "", type: "input" },
+  //   {
+  //     name: "public_code",
+  //     loading: loading_promos,
+  //     option_name: "promo_code",
+  //     options: promos_list,
+  //     display: "",
+  //     type: "autocomplete",
+  //     single: true
+  //   },
+  //   {
+  //     name: "private_code",
+  //     loading: loading_promos,
+  //     option_name: "promo_code",
+  //     options: promos_list,
+  //     display: "",
+  //     type: "autocomplete",
+  //     single: true
+  //   },
+  //   { name: "location", option_name: "", display: "", type: "input" },
+  //   { name: "years", option_name: "", display: "", type: "input" },
+  //   { name: "bio", option_name: "", display: "", type: "input" },
+  //   { name: "picture", option_name: "", display: "", type: "input" },
+  //   { name: "video", option_name: "", display: "", type: "input" },
+  //   { name: "style", option_name: "", display: "", type: "input" },
+  //   { name: "inspiration", option_name: "", display: "", type: "input" },
+  //   { name: "link", option_name: "", display: "", type: "input" },
+  //   { name: "venmo", option_name: "", display: "", type: "input" },
+  //   { name: "pathname", option_name: "", display: "", type: "input" },
+  //   { name: "promoter", option_name: "", display: "", type: "checkbox" },
+  //   { name: "rave_mob", option_name: "", display: "", type: "checkbox" },
+  //   { name: "team", option_name: "", display: "", type: "checkbox" },
+  //   { name: "sponsor", option_name: "", display: "", type: "checkbox" },
+  //   { name: "active", option_name: "", display: "", type: "checkbox" },
+  //   { name: "deleted", option_name: "", display: "", type: "checkbox" }
+  // ];
 
   return (
     <div className="main_container p-20px">
+      <Helmet>
+        <title>Edit Affiliate | Glow LEDs</title>
+      </Helmet>
       <h1 style={{ textAlign: "center" }}>{props.match.params.id ? "Edit Affiliate" : "Create Affiliate"}</h1>
 
-      <div className="form">
+      <div>
         <form onSubmit={submitHandler} style={{ width: "100%" }}>
           <Notification message={message} />
           <Loading loading={loading} error={error}>
             {affiliate && (
-              <div>
-                <Helmet>
-                  <title>Edit Affiliate | Glow LEDs</title>
-                </Helmet>
-                <ul className="edit-form-container" style={{ maxWidth: "30rem", marginBottom: "20px" }}>
-                  <div className="row wrap">
-                    <div className="w-228px m-10px">
-                      <li>
-                        <label htmlFor="user">User</label>
-                        <input
-                          type="text"
-                          name="user"
-                          value={user}
-                          id="user"
-                          onChange={e => dispatch(set_affiliate({ user: e.target.value }))}
-                        />
-                      </li>
-                      {users && (
-                        <div className="ai-c h-25px mv-10px mb-30px jc-c">
-                          <div className="custom-select w-100per">
-                            <select
-                              className="qty_select_dropdown w-100per"
-                              onChange={e => dispatch(set_affiliate({ user: e.target.value }))}
-                            >
-                              <option key={1} defaultValue="">
-                                ---Choose User---
-                              </option>
-                              {users.map((user, index) => (
-                                <option key={index} value={user._id}>
-                                  {user.first_name} {user.last_name}
-                                </option>
-                              ))}
-                            </select>
-                            <span className="custom-arrow" />
-                          </div>
-                        </div>
-                      )}
+              // <ul className="edit-form-container" style={{ width: "100%", maxWidth: "100rem", marginBottom: "20px" }}>
+              <Container maxWidth="md">
+                <Paper elevation={3} style={{ backgroundColor: "#5a5a5a", borderRadius: "20px", padding: "20px" }}>
+                  <GLAutocomplete
+                    loading={!loading_users}
+                    margin="normal"
+                    value={user}
+                    options={users}
+                    option_name={option => `${option.first_name} ${option.last_name}`}
+                    getOptionLabel={option => `${option.first_name} ${option.last_name}`}
+                    getOptionSelected={(option, value) => option._id === value._id}
+                    name="user"
+                    label="User"
+                    onChange={(e, value) => dispatch(set_affiliate({ user: value }))}
+                    classes={classes}
+                  />
+                  <GLTextField
+                    size="small"
+                    loading={!loading}
+                    value={artist_name}
+                    fullWidth
+                    type="text"
+                    margin="normal"
+                    name="artist_name"
+                    label="Artist Name"
+                    variant="outlined"
+                    onChange={e => dispatch(set_affiliate({ artist_name: e.target.value }))}
+                  />
+                  <GLTextField
+                    size="small"
+                    loading={!loading}
+                    value={facebook_name}
+                    fullWidth
+                    type="text"
+                    margin="normal"
+                    name="facebook_name"
+                    label="Facebook Name"
+                    variant="outlined"
+                    onChange={e => dispatch(set_affiliate({ facebook_name: e.target.value }))}
+                  />
+                  <GLTextField
+                    size="small"
+                    loading={!loading}
+                    value={instagram_handle}
+                    fullWidth
+                    type="text"
+                    margin="normal"
+                    name="instagram_handle"
+                    label="Instagram Handle"
+                    variant="outlined"
+                    onChange={e => dispatch(set_affiliate({ instagram_handle: e.target.value }))}
+                  />
+                  <GLTextField
+                    size="small"
+                    loading={!loading}
+                    value={location}
+                    fullWidth
+                    type="text"
+                    margin="normal"
+                    name="location"
+                    label="Location"
+                    variant="outlined"
+                    onChange={e => dispatch(set_affiliate({ location: e.target.value }))}
+                  />
+                  <GLTextField
+                    size="small"
+                    loading={!loading}
+                    value={years}
+                    fullWidth
+                    type="text"
+                    margin="normal"
+                    name="years"
+                    label="Years"
+                    variant="outlined"
+                    onChange={e => dispatch(set_affiliate({ years: e.target.value }))}
+                  />
+                  <GLTextField
+                    size="small"
+                    loading={!loading}
+                    value={picture}
+                    fullWidth
+                    type="text"
+                    margin="normal"
+                    name="picture"
+                    label="Picture"
+                    variant="outlined"
+                    onChange={e => dispatch(set_affiliate({ picture: e.target.value }))}
+                  />
+                  <GLTextField
+                    size="small"
+                    loading={!loading}
+                    value={video}
+                    fullWidth
+                    type="text"
+                    margin="normal"
+                    name="video"
+                    label="Video"
+                    variant="outlined"
+                    onChange={e => dispatch(set_affiliate({ video: e.target.value }))}
+                  />
+                  <GLTextField
+                    size="small"
+                    loading={!loading}
+                    value={style}
+                    fullWidth
+                    type="text"
+                    margin="normal"
+                    placeholder="Wave Tuts, Clusters, Whips..."
+                    name="style"
+                    label="Style"
+                    variant="outlined"
+                    onChange={e => dispatch(set_affiliate({ style: e.target.value }))}
+                  />
+                  <GLTextField
+                    size="small"
+                    loading={!loading}
+                    value={inspiration}
+                    placeholder="Flow, Megasloth, Jest..."
+                    fullWidth
+                    type="text"
+                    margin="normal"
+                    name="inspiration"
+                    label="Inspiration"
+                    variant="outlined"
+                    onChange={e => dispatch(set_affiliate({ inspiration: e.target.value }))}
+                  />
+                  <GLTextField
+                    size="small"
+                    loading={!loading}
+                    value={bio}
+                    placeholder="Write a little something to introduce yourself..."
+                    fullWidth
+                    type="text"
+                    multiline
+                    rows={4}
+                    margin="normal"
+                    name="bio"
+                    label="Bio"
+                    variant="outlined"
+                    onChange={e => dispatch(set_affiliate({ bio: e.target.value }))}
+                  />
+                  <GLTextField
+                    size="small"
+                    loading={!loading}
+                    value={link}
+                    placeholder="https://www..."
+                    fullWidth
+                    type="text"
+                    margin="normal"
+                    name="link"
+                    label="Link"
+                    variant="outlined"
+                    onChange={e => dispatch(set_affiliate({ link: e.target.value }))}
+                  />
+                  <GLTextField
+                    size="small"
+                    loading={!loading}
+                    value={percentage_off}
+                    placeholder="https://www..."
+                    fullWidth
+                    type="text"
+                    margin="normal"
+                    name="percentage_off"
+                    label="Percentage Off"
+                    variant="outlined"
+                    onChange={e => dispatch(set_affiliate({ percentage_off: e.target.value }))}
+                  />
+                  <GLAutocomplete
+                    loading={!loading_promos}
+                    margin="normal"
+                    value={public_code}
+                    options={promos_list}
+                    option_name="promo_code"
+                    getOptionLabel={option => option.promo_code}
+                    getOptionSelected={(option, value) => option.promo_code === value.promo_code}
+                    name="public_code"
+                    label="Public Code"
+                    onChange={(e, value) => dispatch(set_affiliate({ public_code: value }))}
+                    classes={classes}
+                  />
+                  <GLAutocomplete
+                    loading={!loading_promos}
+                    margin="normal"
+                    value={private_code}
+                    options={promos_list}
+                    option_name="promo_code"
+                    getOptionLabel={option => option.promo_code}
+                    getOptionSelected={(option, value) => option.promo_code === value.promo_code}
+                    name="private_code"
+                    label="Private Code"
+                    onChange={(e, value) => dispatch(set_affiliate({ private_code: value }))}
+                    classes={classes}
+                  />
 
-                      <li>
-                        <label htmlFor="artist_name">Artist Name</label>
-                        <input
-                          type="text"
-                          name="artist_name"
-                          value={artist_name}
-                          id="artist_name"
-                          onChange={e => dispatch(set_affiliate({ artist_name: e.target.value }))}
-                        />
-                      </li>
-
-                      <li>
-                        <label htmlFor="facebook_name">Facebook Glover Page</label>
-                        <input
-                          type="text"
-                          name="facebook_name"
-                          value={facebook_name}
-                          id="facebook_name"
-                          onChange={e => dispatch(set_affiliate({ facebook_name: e.target.value }))}
-                        />
-                      </li>
-                      <li>
-                        <label htmlFor="instagram_handle">Instagram Handle</label>
-                        <input
-                          type="text"
-                          name="instagram_handle"
-                          value={instagram_handle}
-                          id="instagram_handle"
-                          onChange={e => dispatch(set_affiliate({ instagram_handle: e.target.value }))}
-                        />
-                      </li>
-                      <li>
-                        <label htmlFor="location">Location</label>
-                        <input
-                          type="text"
-                          name="location"
-                          value={location}
-                          id="location"
-                          onChange={e => dispatch(set_affiliate({ location: e.target.value }))}
-                        />
-                      </li>
-                      <li>
-                        <label htmlFor="years">Years Gloving</label>
-                        <input
-                          type="text"
-                          name="years"
-                          value={years}
-                          id="years"
-                          onChange={e => dispatch(set_affiliate({ years: e.target.value }))}
-                        />
-                      </li>
-                      <li>
-                        <label htmlFor="picture">Picture</label>
-                        <input
-                          type="text"
-                          name="picture"
-                          value={picture}
-                          id="picture"
-                          onChange={e => dispatch(set_affiliate({ picture: e.target.value }))}
-                        />
-                      </li>
-                      <li>
-                        <label htmlFor="video">Video</label>
-                        <input
-                          type="text"
-                          name="video"
-                          value={video}
-                          id="video"
-                          onChange={e => dispatch(set_affiliate({ video: e.target.value }))}
-                        />
-                      </li>
-
-                      <li>
-                        <label htmlFor="style">Your Style</label>
-                        <input
-                          type="text"
-                          name="style"
-                          value={style}
-                          placeholder="Wave Tuts, Clusters, Whips..."
-                          // onFocus={() => this.placeholder('')}
-                          // onBlur={() => this.placeholder('Wave Tuts, Clusters, Whips...')}
-                          id="style"
-                          onChange={e => dispatch(set_affiliate({ style: e.target.value }))}
-                        />
-                      </li>
-                      <li>
-                        <label htmlFor="inspiration">Inspiration</label>
-                        <input
-                          type="text"
-                          name="inspiration"
-                          value={inspiration}
-                          placeholder="Flow, Megasloth, Jest..."
-                          // onFocus={() => this.placeholder('')}
-                          // onBlur={() => this.placeholder('Flow, Megasloth, Jest...')}
-                          id="inspiration"
-                          onChange={e => dispatch(set_affiliate({ inspiration: e.target.value }))}
-                        />
-                      </li>
-
-                      <li>
-                        <label htmlFor="bio">Bio</label>
-                        <textarea
-                          className="edit_product_textarea"
-                          name="bio"
-                          placeholder="Write a little something to introduce yourself..."
-                          // onFocus={() => this.placeholder('')}
-                          // onBlur={() =>
-                          // this.placeholder(
-                          // 	'Write a little something to introduce yourself...'
-                          // )}
-                          defaultValue={bio}
-                          id="bio"
-                          onChange={e => dispatch(set_affiliate({ bio: e.target.value }))}
-                        />
-                      </li>
-                      <li>
-                        <label htmlFor="link">Website</label>
-                        <input
-                          type="text"
-                          name="link"
-                          value={link}
-                          placeholder="https://www..."
-                          // onFocus={() => this.placeholder('')}
-                          // onBlur={() => this.placeholder('https://www...')}
-                          id="link"
-                          onChange={e => dispatch(set_affiliate({ link: e.target.value }))}
-                        />
-                      </li>
-                      <li>
-                        <label htmlFor="percentage_off">Percentage Off</label>
-                        <input
-                          type="text"
-                          name="percentage_off"
-                          value={percentage_off}
-                          id="percentage_off"
-                          onChange={e => dispatch(set_affiliate({ percentage_off: e.target.value }))}
-                        />
-                      </li>
-
-                      <li>
-                        <label htmlFor="promo">Public Code</label>
-                        <div className="ai-c h-25px mv-15px jc-c">
-                          <div className="custom-select">
-                            <select className="qty_select_dropdown" onChange={e => add_promo(e, "public")}>
-                              <option key={1} defaultValue="">
-                                ---Choose Public Code---
-                              </option>
-                              {promos_list
-                                .filter(promo => !promo.hidden)
-                                .map((promo, index) => (
-                                  <option key={index} value={JSON.stringify(promo)}>
-                                    {promo.promo_code}
-                                  </option>
-                                ))}
-                            </select>
-                            <span className="custom-arrow" />
-                          </div>
-                        </div>
-                        {promo_display(public_code, "public")}
-                      </li>
-
-                      <li>
-                        <label htmlFor="public_code">Public Code</label>
-                        <input
-                          type="text"
-                          name="public_code"
-                          value={public_code && public_code.promo_code}
-                          id="public_code"
-                          onChange={e => dispatch(set_affiliate({ public_code: e.target.value }))}
-                        />
-                      </li>
-                      <li>
-                        <label htmlFor="promo">Private Code</label>
-                        <div className="ai-c h-25px mv-15px jc-c">
-                          <div className="custom-select">
-                            <select className="qty_select_dropdown" onChange={e => add_promo(e, "private")}>
-                              <option key={1} defaultValue="">
-                                ---Choose Private Code---
-                              </option>
-                              {promos_list
-                                .filter(promo => !promo.hidden)
-                                .map((promo, index) => (
-                                  <option key={index} value={JSON.stringify(promo)}>
-                                    {promo.promo_code}
-                                  </option>
-                                ))}
-                            </select>
-                            <span className="custom-arrow" />
-                          </div>
-                        </div>
-                        {promo_display(private_code, "private")}
-                      </li>
-                      <li>
-                        <label htmlFor="private_code">Private Code</label>
-                        <input
-                          type="text"
-                          name="private_code"
-                          value={private_code && private_code.promo_code}
-                          id="private_code"
-                          onChange={e => dispatch(set_affiliate({ private_code: e.target.value }))}
-                        />
-                      </li>
-                      <li>
-                        <label htmlFor="pathname">Pathname</label>
-                        <input
-                          type="text"
-                          name="pathname"
-                          value={pathname ? pathname : artist_name && snake_case(artist_name)}
-                          id="pathname"
-                          onChange={e => dispatch(set_affiliate({ pathname: e.target.value }))}
-                        />
-                      </li>
-                      <li>
-                        <label htmlFor="venmo">Venmo</label>
-                        <input
-                          type="text"
-                          name="venmo"
-                          value={venmo}
-                          id="venmo"
-                          onChange={e => dispatch(set_affiliate({ venmo: e.target.value }))}
-                        />
-                      </li>
-                      {/* {option_list(products_list, products, set_products, 'Glow Gear')} */}
-                      <DropdownDisplay
-                        display_key={"name"}
-                        item_list={products_list}
-                        list_items={products}
-                        set_items={set_products}
-                        list_name={"Glow Gear"}
-                      />
-                      <DropdownDisplay
-                        display_key={"name"}
-                        item_list={chips_list}
-                        list_items={chips}
-                        set_items={set_chips}
-                        list_name={"Chips"}
-                      />
-                      {/* {option_list(chips_list, chips, set_chips, 'Chips')} */}
-
-                      {loading_checkboxes ? (
-                        <div>Loading...</div>
-                      ) : (
-                        <li>
-                          <label htmlFor="team">Team</label>
-                          <input
-                            type="checkbox"
-                            name="team"
-                            // defaultChecked={team ? 'checked' : 'unchecked'}
-                            // defaultValue={team}
-                            defaultChecked={team}
-                            // value={team ? '1' : '0'}
-                            id="team"
-                            onChange={e => dispatch(set_affiliate({ team: e.target.checked }))}
-                          />
-                        </li>
-                      )}
-                      {loading_checkboxes ? (
-                        <div>Loading...</div>
-                      ) : (
-                        <li>
-                          <label htmlFor="sponsor">Sponsor</label>
-                          <input
-                            type="checkbox"
-                            name="sponsor"
-                            // defaultChecked={sponsor ? 'checked' : 'unchecked'}
-                            // defaultValue={sponsor}
-                            defaultChecked={sponsor}
-                            // value={sponsor ? '1' : '0'}
-                            id="sponsor"
-                            onChange={e => dispatch(set_affiliate({ sponsor: e.target.checked }))}
-                          />
-                        </li>
-                      )}
-                      {loading_checkboxes ? (
-                        <div>Loading...</div>
-                      ) : (
-                        <li>
-                          <label htmlFor="promoter">Promoter</label>
-                          <input
-                            type="checkbox"
-                            name="promoter"
-                            // defaultChecked={promoter ? 'checked' : 'unchecked'}
-                            // defaultValue={promoter}
-                            defaultChecked={promoter}
-                            // value={promoter ? '1' : '0'}
-                            id="promoter"
-                            onChange={e => dispatch(set_affiliate({ rave_mob: e.target.checked }))}
-                          />
-                        </li>
-                      )}
-                      {loading_checkboxes ? (
-                        <div>Loading...</div>
-                      ) : (
-                        <li>
-                          <label htmlFor="rave_mob">Rave Mob</label>
-                          <input
-                            type="checkbox"
-                            name="rave_mob"
-                            // defaultChecked={rave_mob ? 'checked' : 'unchecked'}
-                            // defaultValue={rave_mob}
-                            defaultChecked={rave_mob}
-                            // value={rave_mob ? '1' : '0'}
-                            id="rave_mob"
-                            onChange={e => dispatch(set_affiliate({ rave_mob: e.target.checked }))}
-                          />
-                        </li>
-                      )}
-                      {loading_checkboxes ? (
-                        <div>Loading...</div>
-                      ) : (
-                        <li>
-                          <label htmlFor="active">Active</label>
-                          <input
-                            type="checkbox"
-                            name="active"
-                            // defaultChecked={active ? 'checked' : 'unchecked'}
-                            // defaultValue={active}
-                            defaultChecked={active}
-                            // value={active ? '1' : '0'}
-                            id="active"
-                            onChange={e => dispatch(set_affiliate({ active: e.target.checked }))}
-                          />
-                        </li>
-                      )}
-                    </div>
+                  <GLTextField
+                    size="small"
+                    loading={!loading}
+                    value={pathname ? pathname : artist_name && snake_case(artist_name)}
+                    fullWidth
+                    type="text"
+                    margin="normal"
+                    name="pathname"
+                    label="Pathname"
+                    variant="outlined"
+                    onChange={e => dispatch(set_affiliate({ pathname: e.target.value }))}
+                  />
+                  <GLTextField
+                    size="small"
+                    loading={!loading}
+                    value={venmo}
+                    placeholder="https://www..."
+                    fullWidth
+                    type="text"
+                    margin="normal"
+                    name="venmo"
+                    label="Venmo"
+                    variant="outlined"
+                    onChange={e => dispatch(set_affiliate({ venmo: e.target.value }))}
+                  />
+                  <GLAutocomplete
+                    loading={!loading_products}
+                    margin="normal"
+                    value={products}
+                    options={products_list}
+                    getOptionLabel={option => option.name}
+                    getOptionSelected={(option, value) => option.name === value.name}
+                    name="products"
+                    label="Products"
+                    chipColor={"primary"}
+                    onChange={(e, value) => dispatch(set_affiliate({ products: value }))}
+                    classes={classes}
+                    disableCloseOnSelect
+                    multiple
+                    showCheckbox
+                  />
+                  <GLAutocomplete
+                    loading={!loading_chips}
+                    margin="normal"
+                    value={chips}
+                    options={chips_list}
+                    getOptionLabel={option => option.name}
+                    getOptionSelected={(option, value) => option.name === value.name}
+                    name="products"
+                    label="Chips"
+                    chipColor={"primary"}
+                    onChange={(e, value) => dispatch(set_affiliate({ products: value }))}
+                    classes={classes}
+                    disableCloseOnSelect
+                    multiple
+                    showCheckbox
+                  />
+                  <div className="jc-b wrap">
+                    <GLCheckboxV2 onChecked={e => dispatch(set_affiliate({ team: e.target.checked }))} checked={team} label="Team" />
+                    <GLCheckboxV2
+                      onChecked={e => dispatch(set_affiliate({ sponsor: e.target.checked }))}
+                      checked={sponsor}
+                      label="Sponsor"
+                    />
+                    <GLCheckboxV2
+                      onChecked={e => dispatch(set_affiliate({ promoter: e.target.checked }))}
+                      checked={promoter}
+                      label="Promoter"
+                    />
+                    <GLCheckboxV2
+                      onChecked={e => dispatch(set_affiliate({ rave_mob: e.target.checked }))}
+                      checked={rave_mob}
+                      label="Rave Mob"
+                    />
+                    <GLCheckboxV2 onChecked={e => dispatch(set_affiliate({ active: e.target.checked }))} checked={active} label="Active" />
                   </div>
-                  <li>
-                    <GLButton type="submit" variant="primary">
+                  <Stack spacing={2} direction="column">
+                    <GLButtonV2 type="submit" variant="primary">
                       {id ? "Update" : "Create"}
-                    </GLButton>
-                  </li>
-                  <li>
-                    <GLButton variant="secondary" onClick={() => history.goBack()}>
+                    </GLButtonV2>
+                    <GLButtonV2 variant="secondary" onClick={() => history.goBack()}>
                       Back to Affiliates
-                    </GLButton>
-                  </li>
-                </ul>
-              </div>
+                    </GLButtonV2>
+                  </Stack>
+                </Paper>
+              </Container>
             )}
           </Loading>
-          {/* )} */}
         </form>
       </div>
     </div>
