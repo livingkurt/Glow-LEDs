@@ -7,5 +7,6 @@ const router = express.Router();
 router.route("/secure/pay/:id").put(isAuth, payment_controller.secure_pay_payments_c);
 router.route("/guest/pay/:id").put(payment_controller.guest_pay_payments_c);
 router.route("/secure/refund/:id").put(isAuth, isAdmin, payment_controller.secure_refund_payments_c);
+router.route("/secure/payout/:employee_id").put(isAuth, isAdmin, payment_controller.secure_payout_payments_c);
 
 export default router;

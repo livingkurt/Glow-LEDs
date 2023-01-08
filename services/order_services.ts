@@ -452,7 +452,7 @@ export default {
       const page = 1;
 
       const orders = await order_db.findAll_orders_db(o_filter, sort, limit, page);
-      let affiliates = await affiliate_db.findAll_affiliates_db(a_filter, {});
+      let affiliates = await affiliate_db.findAll_affiliates_db(a_filter, {}, 0, 1);
       if (!query.position) {
         affiliates = [...affiliates, { public_code: { promo_code: "inkybois" } }];
       }

@@ -109,7 +109,7 @@ export default {
       let affiliates = [];
       let teams = [];
       if (params.position !== "team") {
-        affiliates = await affiliate_db.findAll_affiliates_db(a_filter, {});
+        affiliates = await affiliate_db.findAll_affiliates_db(a_filter, {}, 0, 1);
       } else {
         teams = await team_db.findAll_teams_db(t_filter, {});
       }

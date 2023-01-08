@@ -86,7 +86,7 @@ export default {
   },
   create_sponsor_codes_promos_s: async (body: any) => {
     const a_filter: any = { deleted: false, active: true, sponsor: true };
-    const affiliates = await affiliate_db.findAll_affiliates_db(a_filter, {});
+    const affiliates = await affiliate_db.findAll_affiliates_db(a_filter, {}, 0, 1);
     const start_date = new Date();
     const next_date = new Date();
     const end_date = new Date(next_date.setMonth(next_date.getMonth() + 1));
@@ -194,7 +194,7 @@ export default {
       const limit = 0;
       const page = 1;
       const orders = await order_db.findAll_orders_db(o_filter, {}, limit, page);
-      const affiliates = await affiliate_db.findAll_affiliates_db(a_filter, {});
+      const affiliates = await affiliate_db.findAll_affiliates_db(a_filter, {}, 0, 1);
 
       affiliates
         .filter((affiliate: any) => !affiliate.deleted)

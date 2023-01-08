@@ -1,3 +1,4 @@
+import { handlePayment } from "../interactors/affiliate_interactors";
 import { Order } from "../models";
 require("dotenv").config();
 const stripe = require("stripe")(process.env.STRIPE_KEY);
@@ -6,24 +7,119 @@ export default {
   secure_pay_payments_c: async (req: any, res: any) => {
     try {
       const order = await Order.findById(req.params.id).populate("user");
-      await stripe.paymentIntents.create(
+      const userInformation = {
+        name: order.shipping.first_name + " " + order.shipping.last_name,
+        email: order.shipping.email,
+        address: {
+          city: order.shipping.city,
+          country: order.shipping.country,
+          line1: order.shipping.address_1,
+          line2: order.shipping.address_2,
+          postal_code: order.shipping.postalCode,
+          state: order.shipping.state
+        }
+      };
+      const paymentInformation = {
+        amount: (order.totalPrice * 100).toFixed(0),
+        currency: "usd",
+        payment_method_types: ["card"]
+      };
+
+      stripe.customers.create(
         {
-          amount: (order.totalPrice * 100).toFixed(0),
-          currency: "usd",
-          payment_method_types: ["card"]
+          name: userInformation.name,
+          email: userInformation.email,
+          address: userInformation.address
         },
-        async (err: any, result: any) => {
+        (err: any, customer: any) => {
           if (err) {
-            return res.status(500).send({
-              error: err,
-              message: err.raw.message,
-              solution: "Please Try a Different Card if Error Persists and Contact Glow LEDs for Support"
-            });
+            // An error occurred, check if the error is because the customer already exists
+            if (err.code === "resource_already_exists") {
+              // Get the existing customer
+              stripe.customers.retrieve(err.raw.requestId, (err: any, existingCustomer: any) => {
+                if (err) {
+                  // An error occurred, handle it
+                } else {
+                  // Update the existing customer with the new information
+                  stripe.customers.update(
+                    existingCustomer.id,
+                    {
+                      name: userInformation.name,
+                      address: userInformation.address
+                    },
+                    (err: any, updatedCustomer: any) => {
+                      if (err) {
+                        // An error occurred, handle it
+                      } else {
+                        // Customer was updated successfully, create the payment using the customer's ID
+                        stripe.paymentIntents.create(
+                          {
+                            amount: paymentInformation.amount,
+                            currency: "usd",
+                            payment_method_types: ["card"],
+                            customer: updatedCustomer.id
+                          },
+                          async (err: any, result: any) => {
+                            if (err) {
+                              return res.status(500).send({
+                                error: err,
+                                message: err.raw.message,
+                                solution: "Please Try a Different Card if Error Persists and Contact Glow LEDs for Support"
+                              });
+                            } else {
+                              await stripe.paymentIntents.confirm(
+                                result.id,
+                                {
+                                  payment_method: req.body.paymentMethod.id
+                                },
+                                async (err: any, result: any) => {
+                                  if (err) {
+                                    return res.status(500).send({
+                                      error: err,
+                                      message: err.raw.message,
+                                      solution: "Please Try a Different Card if Error Persists and Contact Glow LEDs for Support"
+                                    });
+                                  } else {
+                                    order.isPaid = true;
+                                    order.paidAt = Date.now();
+                                    order.payment = {
+                                      paymentMethod: "stripe",
+                                      charge: result,
+                                      payment: req.body.paymentMethod
+                                    };
+
+                                    const updatedOrder = await order.save();
+                                    if (updatedOrder) {
+                                      res.send({ message: "Order Paid.", order: updatedOrder });
+                                    } else {
+                                      return res.status(500).send({
+                                        error: err,
+                                        message: "Error Saving Payment",
+                                        solution: "Please Try a Different Card if Error Persists and Contact Glow LEDs for Support"
+                                      });
+                                    }
+                                  }
+                                }
+                              );
+                            }
+                          }
+                        );
+                      }
+                    }
+                  );
+                }
+              });
+            } else {
+              // An error occurred, handle it
+            }
           } else {
-            await stripe.paymentIntents.confirm(
-              result.id,
+            // Customer was created successfully, create the payment using the customer's ID
+            stripe.paymentIntents.create(
               {
-                payment_method: req.body.paymentMethod.id
+                amount: paymentInformation.amount,
+                currency: "usd",
+                payment_method_types: ["card"],
+                customer: customer.id
               },
               async (err: any, result: any) => {
                 if (err) {
@@ -33,49 +129,40 @@ export default {
                     solution: "Please Try a Different Card if Error Persists and Contact Glow LEDs for Support"
                   });
                 } else {
-                  order.isPaid = true;
-                  order.paidAt = Date.now();
-                  order.payment = {
-                    paymentMethod: "stripe",
-                    charge: result,
-                    payment: req.body.paymentMethod
-                  };
+                  await stripe.paymentIntents.confirm(
+                    result.id,
+                    {
+                      payment_method: req.body.paymentMethod.id
+                    },
+                    async (err: any, result: any) => {
+                      if (err) {
+                        return res.status(500).send({
+                          error: err,
+                          message: err.raw.message,
+                          solution: "Please Try a Different Card if Error Persists and Contact Glow LEDs for Support"
+                        });
+                      } else {
+                        order.isPaid = true;
+                        order.paidAt = Date.now();
+                        order.payment = {
+                          paymentMethod: "stripe",
+                          charge: result,
+                          payment: req.body.paymentMethod
+                        };
 
-                  const updatedOrder = await order.save();
-                  // stripe.customers.create({
-                  // 	address: {
-                  // 		city: order.shipping.city,
-                  // 		country: order.shipping.country,
-                  // 		line1: order.shipping.address_1,
-                  // 		line2: order.shipping.address_2,
-                  // 		postal_code: order.shipping.postalCode,
-                  // 		state: order.shipping.state
-                  // 	},
-                  // 	email: order.shipping.email,
-                  // 	description: 'My First Test Customer (created for API docs)',
-                  // 	name: order.shipping.first_name + ' ' + order.shipping.last_name,
-                  // 	payment_method: req.body.paymentMethod.id,
-                  // 	shipping: {
-                  // 		address: {
-                  // 			city: order.shipping.city,
-                  // 			country: order.shipping.country,
-                  // 			line1: order.shipping.address_1,
-                  // 			line2: order.shipping.address_2,
-                  // 			postal_code: order.shipping.postalCode,
-                  // 			state: order.shipping.state
-                  // 		},
-                  // 		name: order.shipping.first_name + ' ' + order.shipping.last_name
-                  // 	}
-                  // });
-                  if (updatedOrder) {
-                    res.send({ message: "Order Paid.", order: updatedOrder });
-                  } else {
-                    return res.status(500).send({
-                      error: err,
-                      message: "Error Saving Payment",
-                      solution: "Please Try a Different Card if Error Persists and Contact Glow LEDs for Support"
-                    });
-                  }
+                        const updatedOrder = await order.save();
+                        if (updatedOrder) {
+                          res.send({ message: "Order Paid.", order: updatedOrder });
+                        } else {
+                          return res.status(500).send({
+                            error: err,
+                            message: "Error Saving Payment",
+                            solution: "Please Try a Different Card if Error Persists and Contact Glow LEDs for Support"
+                          });
+                        }
+                      }
+                    }
+                  );
                 }
               }
             );
@@ -128,31 +215,30 @@ export default {
                     payment: req.body.paymentMethod
                   };
                   const updatedOrder = await order.save();
-                  // stripe.customers.create({
-                  // 	address: {
-                  // 		city: order.shipping.city,
-                  // 		country: order.shipping.country,
-                  // 		line1: order.shipping.address_1,
-                  // 		line2: order.shipping.address_2,
-                  // 		postal_code: order.shipping.postalCode,
-                  // 		state: order.shipping.state
-                  // 	},
-                  // 	email: order.shipping.email,
-                  // 	description: 'My First Test Customer (created for API docs)',
-                  // 	name: order.shipping.first_name + ' ' + order.shipping.last_name,
-                  // 	payment_method: req.body.paymentMethod.id,
-                  // 	shipping: {
-                  // 		address: {
-                  // 			city: order.shipping.city,
-                  // 			country: order.shipping.country,
-                  // 			line1: order.shipping.address_1,
-                  // 			line2: order.shipping.address_2,
-                  // 			postal_code: order.shipping.postalCode,
-                  // 			state: order.shipping.state
-                  // 		},
-                  // 		name: order.shipping.first_name + ' ' + order.shipping.last_name
-                  // 	}
-                  // });
+                  stripe.customers.create({
+                    address: {
+                      city: order.shipping.city,
+                      country: order.shipping.country,
+                      line1: order.shipping.address_1,
+                      line2: order.shipping.address_2,
+                      postal_code: order.shipping.postalCode,
+                      state: order.shipping.state
+                    },
+                    email: order.shipping.email,
+                    name: order.shipping.first_name + " " + order.shipping.last_name,
+                    payment_method: req.body.paymentMethod.id,
+                    shipping: {
+                      address: {
+                        city: order.shipping.city,
+                        country: order.shipping.country,
+                        line1: order.shipping.address_1,
+                        line2: order.shipping.address_2,
+                        postal_code: order.shipping.postalCode,
+                        state: order.shipping.state
+                      },
+                      name: order.shipping.first_name + " " + order.shipping.last_name
+                    }
+                  });
                   if (updatedOrder) {
                     res.send({ message: "Order Paid.", order: updatedOrder });
                   } else {
@@ -207,6 +293,45 @@ export default {
     } catch (error) {
       res.status(500).send({ error, message: "Error Refunding Order" });
     }
+  },
+  secure_payout_payments_c: async (req: any, res: any) => {
+    const { stripe_account_id, amount, description } = req.body;
+    try {
+      const transferAmount = amount; // amount to transfer, in cents
+      const transferCurrency = "USD"; // currency for the transfer
+      const transferDescription = description; // description for the transfer
+      const connectedAccountId = stripe_account_id; // ID of the connected account to transfer to
+
+      // // Set up a recurring transfer to occur every Friday at 2 PM
+      // const transferSchedule = {
+      //   interval: "week",
+      //   weekly_anchor: "friday",
+      //   start_time: "14:00:00"
+      // };
+
+      // Create the recurring transfer
+      stripe.transfers.create(
+        {
+          amount: transferAmount,
+          currency: transferCurrency,
+          description: transferDescription,
+          destination: connectedAccountId,
+          // schedule: transferSchedule,
+          metadata: { transfer_group: "weekly_payout" }
+        },
+        (err: any, transfer: any) => {
+          if (err) {
+            // An error occurred while creating the transfer
+            console.error(err);
+          } else {
+            // Transfer was successfully created
+            console.log(`Transfer to Connected Account Success: ${transfer.id}`);
+          }
+        }
+      );
+    } catch (error) {
+      res.status(500).send({ error, message: "Error Tranfering Funds" });
+    }
   }
   // payout_account_creation: async (req: any, res: any) => {
   //   try {
@@ -219,7 +344,7 @@ export default {
   //       type: 'account_onboarding',
   //     });
   //   } catch (error) {
-  //
+
   //     res.status(500).send({ error, message: "Error Refunding Order" });
   //   }
   // },
