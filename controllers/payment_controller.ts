@@ -210,20 +210,19 @@ export default {
     }
   },
   secure_payout_payments_c: async (req: any, res: any) => {
-    const { stripe_account_id, amount, description } = req.body;
+    const { stripe_connect_id, amount, description } = req.body;
     try {
-      const transferAmount = amount; // amount to transfer, in cents
+      console.log({ stripe_connect_id, amount, description });
+      const transferAmount = amount * 100; // amount to transfer, in cents
       const transferCurrency = "USD"; // currency for the transfer
       const transferDescription = description; // description for the transfer
-      const connectedAccountId = stripe_account_id; // ID of the connected account to transfer to
-
+      const connectedAccountId = stripe_connect_id; // ID of the connected account to transfer to
       // // Set up a recurring transfer to occur every Friday at 2 PM
       // const transferSchedule = {
       //   interval: "week",
       //   weekly_anchor: "friday",
       //   start_time: "14:00:00"
       // };
-
       // Create the recurring transfer
       stripe.transfers.create(
         {
@@ -241,9 +240,11 @@ export default {
           } else {
             // Transfer was successfully created
             console.log(`Transfer to Connected Account Success: ${transfer.id}`);
+            res.status(200).send({ message: `Transfer to Connected Account Success: ${transfer.id}` });
           }
         }
       );
+      return "Success";
     } catch (error) {
       res.status(500).send({ error, message: "Error Tranfering Funds" });
     }

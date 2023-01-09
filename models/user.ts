@@ -28,6 +28,7 @@ const userSchema = new mongoose.Schema(
     isVerified: { type: Boolean, required: true, default: false },
     is_affiliated: { type: Boolean, required: true, default: false },
     is_employee: { type: Boolean, required: true, default: false },
+    weekly_wage: { type: Number },
     palettes: [{ type: mongoose.Schema.Types.ObjectId, ref: "Palette" }],
     cart: { type: mongoose.Schema.Types.ObjectId, ref: "Cart" },
     affiliate: { type: mongoose.Schema.Types.ObjectId, ref: "Affiliate" },

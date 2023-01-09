@@ -22,6 +22,7 @@ const EditUserPage = props => {
   const [email_subscription, set_email_subscription] = useState("");
   const [international, setInternational] = useState(false);
   const [stripe_connect_id, set_stripe_connect_id] = useState("");
+  const [weekly_wage, set_weekly_wage] = useState("");
 
   const history = useHistory();
 
@@ -47,6 +48,7 @@ const EditUserPage = props => {
     set_email_subscription(user.email_subscription);
     setInternational(user.international);
     set_stripe_connect_id(user.stripe_connect_id);
+    set_weekly_wage(user.weekly_wage);
   };
   const unset_state = () => {
     set_id("");
@@ -110,7 +112,8 @@ const EditUserPage = props => {
         isAdmin,
         email_subscription,
         shipping,
-        stripe_connect_id
+        stripe_connect_id,
+        weekly_wage
       })
     );
     e.target.reset();
@@ -178,6 +181,16 @@ const EditUserPage = props => {
                           value={stripe_connect_id}
                           id="stripe_connect_id"
                           onChange={e => set_stripe_connect_id(e.target.value)}
+                        />
+                      </li>
+                      <li>
+                        <label htmlFor="weekly_wage">Weekly Wage</label>
+                        <input
+                          type="text"
+                          name="weekly_wage"
+                          value={weekly_wage}
+                          id="weekly_wage"
+                          onChange={e => set_weekly_wage(e.target.value)}
                         />
                       </li>
                       {affiliates && (
