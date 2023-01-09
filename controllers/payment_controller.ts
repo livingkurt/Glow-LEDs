@@ -217,12 +217,6 @@ export default {
       const transferCurrency = "USD"; // currency for the transfer
       const transferDescription = description; // description for the transfer
       const connectedAccountId = stripe_connect_id; // ID of the connected account to transfer to
-      // // Set up a recurring transfer to occur every Friday at 2 PM
-      // const transferSchedule = {
-      //   interval: "week",
-      //   weekly_anchor: "friday",
-      //   start_time: "14:00:00"
-      // };
       // Create the recurring transfer
       stripe.transfers.create(
         {
@@ -230,7 +224,6 @@ export default {
           currency: transferCurrency,
           description: transferDescription,
           destination: connectedAccountId,
-          // schedule: transferSchedule,
           metadata: { transfer_group: "weekly_payout" }
         },
         (err: any, transfer: any) => {
@@ -249,21 +242,6 @@ export default {
       res.status(500).send({ error, message: "Error Tranfering Funds" });
     }
   }
-  // payout_account_creation: async (req: any, res: any) => {
-  //   try {
-  //     const account = await stripe.accounts.create({type: 'express'});
-
-  //     const accountLink = await stripe.accountLinks.create({
-  //       account: 'acct_1032D82eZvKYlo2C',
-  //       refresh_url: 'https://example.com/reauth',
-  //       return_url: 'https://example.com/return',
-  //       type: 'account_onboarding',
-  //     });
-  //   } catch (error) {
-
-  //     res.status(500).send({ error, message: "Error Refunding Order" });
-  //   }
-  // },
 };
 
 // import { payment_services } from '../services';
