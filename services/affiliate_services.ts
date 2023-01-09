@@ -7,6 +7,7 @@ import { user_controller } from "../controllers";
 import { IAffiliate } from "../types/affiliateTypes";
 const bcrypt = require("bcryptjs");
 dotenv.config();
+const stripe = require("stripe")(process.env.STRIPE_KEY);
 
 export default {
   findAll_affiliates_s: async (query: { search: string; sort: string; page: string; limit: string }) => {
@@ -70,7 +71,13 @@ export default {
       }
     }
   },
-  create_affiliates_s: async (body: { artist_name: string }) => {
+  create_affiliates_s: async (body: { artist_name: string; email: string }) => {
+    interface AccountParams {
+      type: "express";
+      country: string;
+      email: string;
+      business_type: "individual" | "company";
+    }
     const public_code = {
       promo_code: body.artist_name.toLowerCase(),
       admin_only: false,
@@ -101,6 +108,26 @@ export default {
       end_date: "2021-01-01",
       active: true
     };
+    stripe.accounts.create(
+      {
+        type: "express",
+        country: "US",
+        email: body.email,
+        business_type: "individual",
+        capabilities: {
+          card_payments: { requested: true },
+          transfers: { requested: true }
+        }
+      } as AccountParams,
+      (err: Error, account: any) => {
+        // asynchronously called
+        if (err) {
+          console.log(err);
+        } else {
+          console.log(account);
+        }
+      }
+    );
     try {
       return await affiliate_db.create_affiliates_db(body, public_code, private_code);
     } catch (error) {

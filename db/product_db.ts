@@ -65,7 +65,7 @@ export default {
         .populate("categorys")
         .populate("subcategorys")
         .populate("contributers")
-        .limit(limit * 1)
+        .limit(parseInt(limit))
         .skip((page - 1) * limit)
         .exec();
     } catch (error) {

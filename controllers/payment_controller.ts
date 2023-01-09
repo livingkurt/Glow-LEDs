@@ -212,7 +212,6 @@ export default {
   secure_payout_payments_c: async (req: any, res: any) => {
     const { stripe_connect_id, amount, description } = req.body;
     try {
-      console.log({ stripe_connect_id, amount, description });
       const transferAmount = amount * 100; // amount to transfer, in cents
       const transferCurrency = "USD"; // currency for the transfer
       const transferDescription = description; // description for the transfer

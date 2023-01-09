@@ -18,9 +18,6 @@ const promo_routes = {
   },
   promo_code_used: (promo_code: any) => {
     return axios.put("/api/promos/code/" + promo_code);
-  },
-  get_code_usage: (promo_code: string) => {
-    return axios.put("/api/orders/code_usage", { promo_code });
   }
 };
 

@@ -4,6 +4,7 @@ import { make_private_code } from "../util";
 
 export default {
   findAll_affiliates_db: async (filter: any, sort: any, limit: any, page: any) => {
+    console.log({ filter });
     try {
       return await Affiliate.find(filter)
         .sort(sort)
@@ -12,7 +13,7 @@ export default {
         .populate("public_code")
         .populate("private_code")
         .populate("chips")
-        .limit(limit * 1)
+        .limit(parseInt(limit))
         .skip((page - 1) * limit)
         .exec();
     } catch (error) {

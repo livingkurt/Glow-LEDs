@@ -9,7 +9,7 @@ export default {
         .populate("orderItems.product")
         .populate("orderItems.secondary_product")
         .sort(sort)
-        .limit(limit * 1)
+        .limit(limit)
         .skip((page - 1) * limit)
         .exec();
     } catch (error) {

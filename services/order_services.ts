@@ -293,24 +293,45 @@ export default {
       }
     }
   },
-  code_usage_orders_s: async (params: any, body: any) => {
+  code_usage_orders_s: async (params: any, query: any) => {
+    const { start_date, end_date, sponsor } = query;
+    const { promo_code } = params;
     try {
       const sort = {};
-      const filter = { deleted: false, user: params._id, isPaid: true };
+
+      const filter = {
+        deleted: false,
+        isPaid: true,
+        createdAt: {
+          $gte: start_date,
+          $lte: end_date
+        },
+        promo_code: new RegExp(promo_code, "i")
+      };
+
       const limit = 0;
       const page = 1;
+
       const orders = await order_db.findAll_orders_db(filter, sort, limit, page);
+
       const number_of_uses = orders
         .filter((order: any) => order.promo_code)
-        .filter((order: any) => order.promo_code.toLowerCase() === body.promo_code.toLowerCase()).length;
+        .filter((order: any) => order.promo_code.toLowerCase() === promo_code.toLowerCase()).length;
       const revenue = orders
         .filter((order: any) => order.promo_code)
-        .filter((order: any) => order.promo_code.toLowerCase() === body.promo_code.toLowerCase())
-        .reduce((a: any, order: any) => a + order.totalPrice - order.taxPrice, 0)
-        .toFixed(2);
+        .filter((order: any) => order.promo_code.toLowerCase() === promo_code.toLowerCase())
+        .reduce(
+          (a: any, order: any) =>
+            a +
+            order.totalPrice -
+            order.taxPrice -
+            (order.payment.refund ? order.payment.refund.reduce((a: any, c: any) => a + c.amount, 0) / 100 : 0),
+          0
+        );
+      const earnings = sponsor === "true" ? revenue * 0.15 : revenue * 0.1;
 
-      //
-      return { number_of_uses, revenue };
+      return { number_of_uses, revenue, earnings };
+      // return "Success";
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

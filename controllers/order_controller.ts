@@ -112,9 +112,9 @@ export default {
     }
   },
   code_usage_orders_c: async (req: any, res: any) => {
-    const { params, body } = req;
+    const { params, query } = req;
     try {
-      const orders = await order_services.code_usage_orders_s(params, body);
+      const orders = await order_services.code_usage_orders_s(params, query);
       if (orders) {
         return res.status(200).send(orders);
       }
