@@ -40,6 +40,7 @@ export const listAffiliates = createAsyncThunk("affiliates/listAffiliates", asyn
 });
 
 export const saveAffiliate = createAsyncThunk("affiliates/saveAffiliate", async (affiliate: any, thunkApi: any) => {
+  console.log("saveAffiliate", affiliate);
   try {
     const {
       userLogin: { userInfo }
