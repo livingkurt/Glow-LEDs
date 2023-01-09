@@ -477,19 +477,19 @@ const Sidebar = props => {
               </GLButton>
             </div>
             <ul className="sidebar_dropdown_secondary_container" id="glowskinz_dropdown_6">
-              <Link to="/collections/all/products/category/whites">
+              <Link to="/collections/all/products/category/whites/subcategory/singles">
                 <GLButton className="sidebar-btn nested" onClick={closeMenu}>
-                  Supremes
+                  Supreme Whites
                 </GLButton>
               </Link>
-              <Link to="/collections/all/products/refresh_pack">
+              <Link to="/collections/all/products/category/whites/subcategory/refresh">
                 <GLButton className="sidebar-btn nested" onClick={closeMenu}>
                   Refresh Packs
                 </GLButton>
               </Link>
-              <Link to="/collections/all/products/supremes_sizing_sampler_pack">
+              <Link to="/collections/all/products/category/whites/subcategory/sampler">
                 <GLButton className="sidebar-btn nested" onClick={closeMenu}>
-                  Sizing Sampler
+                  Sizing Samplers
                 </GLButton>
               </Link>
               <Link to="/collections/all/products/1225_batteries">

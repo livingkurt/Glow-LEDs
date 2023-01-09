@@ -664,19 +664,19 @@ const Header = props => {
                           </GLButton>
                         </Link>
                         <hr className="w-95per m-0px" />
-                        <Link to="/collections/all/products/category/whites">
+                        <Link to="/collections/all/products/category/whites/subcategory/singles">
                           <GLButton variant="nav" fullWidth className="ta-l">
                             Supreme Whites
                           </GLButton>
                         </Link>
-                        <Link to="/collections/all/products/refresh_pack">
+                        <Link to="/collections/all/products/category/whites/subcategory/refresh">
                           <GLButton variant="nav" fullWidth className="ta-l">
                             Refresh Packs
                           </GLButton>
                         </Link>
-                        <Link to="/collections/all/products/supremes_sizing_sampler_pack">
+                        <Link to="/collections/all/products/category/whites/subcategory/sampler">
                           <GLButton variant="nav" fullWidth className="ta-l">
-                            Sizing Sampler
+                            Sizing Samplers
                           </GLButton>
                         </Link>
 

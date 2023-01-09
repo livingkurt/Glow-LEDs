@@ -21,6 +21,7 @@ const EditUserPage = props => {
   const [shipping, set_shipping] = useState({});
   const [email_subscription, set_email_subscription] = useState("");
   const [international, setInternational] = useState(false);
+  const [stripe_connect_id, set_stripe_connect_id] = useState("");
 
   const history = useHistory();
 
@@ -44,7 +45,8 @@ const EditUserPage = props => {
     set_isAdmin(user.isAdmin);
     set_shipping(user.shipping);
     set_email_subscription(user.email_subscription);
-    setInternational(user.nternational);
+    setInternational(user.international);
+    set_stripe_connect_id(user.stripe_connect_id);
   };
   const unset_state = () => {
     set_id("");
@@ -107,7 +109,8 @@ const EditUserPage = props => {
         isVerified,
         isAdmin,
         email_subscription,
-        shipping
+        shipping,
+        stripe_connect_id
       })
     );
     e.target.reset();
@@ -165,6 +168,16 @@ const EditUserPage = props => {
                           value={affiliate}
                           id="affiliate"
                           onChange={e => set_affiliate(e.target.value)}
+                        />
+                      </li>
+                      <li>
+                        <label htmlFor="stripe_connect_id">Stripe Connect ID</label>
+                        <input
+                          type="text"
+                          name="stripe_connect_id"
+                          value={stripe_connect_id}
+                          id="stripe_connect_id"
+                          onChange={e => set_stripe_connect_id(e.target.value)}
                         />
                       </li>
                       {affiliates && (
