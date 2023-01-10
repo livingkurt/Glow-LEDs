@@ -13,3 +13,4 @@ export { default as feature } from "./feature";
 export { default as announcement } from "./announcement";
 export { default as email_subscription } from "./email_subscription";
 export { default as code_used } from "./code_used";
+export { default as shipping_status } from "./shipping_status";

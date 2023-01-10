@@ -264,7 +264,7 @@ const OrderPage = props => {
       set_loading_label(false);
     }
 
-    const request = await API_Shipping.add_tracking_number(order, data.tracking_code, data);
+    const request = await API_Shipping.add_(order, data.tracking_code, data);
 
     dispatch(detailsOrder(props.match.params.id));
     // history.push('/secure/glow/emails/invoice/' + order._id);

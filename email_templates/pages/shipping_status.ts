@@ -1,49 +1,64 @@
-import { format_date, determine_product_name, order_status_steps, determine_tracking_number } from "../../util";
+import { format_date, determine_product_name, determine_tracking_number, shipping_status_steps } from "../../util";
+import { determine_status } from "../../interactors/email_interactors";
 
 const determine_emoji = (status: string) => {
   switch (status) {
-    case "manufactured":
-      return "🛠️";
-    case "packaged":
-      return "📦";
-    case "shipped":
+    case "delivered":
+      return "🏠";
+    case "out_for_delivery":
+      return "🚀";
+    case "in_transit":
       return "🚚";
-
+    case "pre_transit":
+      return "🏷️";
+    case "return_to_sender":
+      return "🔙";
+    case "failure":
+      return "❌";
     default:
       break;
   }
 };
+
 const determine_color = (status: string) => {
   switch (status) {
-    case "manufactured":
-      return "#4b7188";
-    case "packaged":
-      return "#6f5f7d";
-    case "shipped":
+    case "delivered":
+      return "#5c8883";
+    case "out_for_delivery":
+      return "#5c7088";
+    case "in_transit":
+      return "#5e5c88";
+    case "pre_transit":
+      return "#775c88";
+    case "return_to_sender":
       return "#636363";
-    case "reassured":
-      return "#585858";
+    case "failure":
+      return "#636363";
     default:
       break;
   }
 };
+
 const determine_message = (status: string) => {
   switch (status) {
-    case "manufactured":
-      return "your items just finished being hand crafted! We will notify you when you items have been cleaned up and packaged.";
-    case "packaged":
-      return "your order has been packaged and is ready to ship! We will notify you when it has been sent.";
-    case "shipped":
-      return "your shipment is on the way! Track your shipment to see the delivery status.";
-    case "reassured":
-      return "due to high order volume, orders are taking a little longer than usual. Don't worry we didn't forget about you, we still have your order and we will send it out to you as soon as we can 😊 Each product at Glow LEDs is handmade to order with love 😍 which allows us to think up new products as they are requested. 👍 Thank you so much for the support and patience!  We really appreciate you 💙 💙 💙 ";
+    case "delivered":
+      return "your items have been delivered! Please let us know if you have any questions or concerns.";
+    case "out_for_delivery":
+      return "your items are out for delivery! Be on the lookout for your package.";
+    case "in_transit":
+      return "your items are in transit! We will notify you when your items have been delivered.";
+    case "pre_transit":
+      return "your label has been created and is waiting to be scanned by the carrier.";
+    case "return_to_sender":
+      return "your package has been returned to sender. Please contact us if you have any questions or concerns.";
+    case "failure":
+      return "your package has failed to deliver. Please contact us if you have any questions or concerns.";
 
     default:
-      break;
   }
 };
 
-export default ({ email, order, status, message_to_user }: any) => {
+export default ({ email, order, status, title, tracker }: any) => {
   return `<table style="width:100%;border-spacing:0;padding:10px">
   <tr>
     <td style="font-family:helvetica;border:0">
@@ -54,14 +69,8 @@ export default ({ email, order, status, message_to_user }: any) => {
               <h1
                 style="text-align:center;font-family:helvetica;width:100%;margin:10px auto;line-height:50px;color:#333333;font-size:50px; padding-bottom: 7px;">
                 ${order.shipping.first_name.toUpperCase()}, </h1>
-              <h1 style="text-align:center;font-family:helvetica;width:100%;margin:0px;line-height:50px;color:#333333;font-size:${
-                status === " manufactured" ? "30px" : "30px"
-              }; padding-bottom: 7px;">
-                ${
-                  status === "reassured"
-                    ? "Apologies for the Longer Wait Time"
-                    : `YOUR ORDER HAS BEEN ${status === "manufactured" ? "CRAFTED" : status.toUpperCase()} ${determine_emoji(status)}`
-                }</h1>
+              <h1 style="text-align:center;font-family:helvetica;width:100%;margin:0px;line-height:50px;color:#333333;font-size:30px; padding-bottom: 7px;">
+              ${title.toUpperCase()} ${determine_emoji(status)} </h1>
             </td>
           </tr>
         </table>
@@ -77,6 +86,14 @@ export default ({ email, order, status, message_to_user }: any) => {
                         ${order._id}<br /><strong>
                       </td>
                     </tr>
+                    <tr>
+                      <td style="vertical-align:top;color:#333333;font-size:20px" valign="top" align="center">
+                        <strong>${tracker.carrier} Tracking #:</strong>
+                        <a
+                      style="color:#333333; padding: 15px 0px;border:none; font-family:helvetica;"
+                      href="${determine_tracking_number(order.tracking_number)}" target="_blank">${order.tracking_number}</a><br />
+                      </td>
+                    </tr>
                   </tbody>
                 </table>
               </td>
@@ -87,7 +104,7 @@ export default ({ email, order, status, message_to_user }: any) => {
           <tbody>
             <tr>
               <td style="font-family:helvetica">
-                ${order_status_steps(order, status)}
+                ${shipping_status_steps(order, status)}
 
               </td>
             </tr>
@@ -118,6 +135,7 @@ export default ({ email, order, status, message_to_user }: any) => {
                   }
                 </p>
                 <p>${email.p ? email.p : ""}</p>
+
                 <table style="width:100%;border-spacing:0;margin-top:20px">
                   <tbody>
                     <tr style="font-family:helvetica;line-height:0em">
@@ -125,26 +143,6 @@ export default ({ email, order, status, message_to_user }: any) => {
                       </td>
                     </tr>
                     <tr>
-                      <td style="font-family:helvetica">
-                        ${
-                          status === "shipped"
-                            ? order.tracking_number
-                              ? `
-
-                      <td style="font-family:helvetica;border-radius:10px; margin-right:10px; border-spacing: 2px;"
-                        align="center" bgcolor="#6a6c80"><a
-                          style="font-size:20px;text-decoration:none;display:block;color:white;    padding: 15px 0px;border:none; font-family:helvetica; font-weight: 800;"
-                          href="${determine_tracking_number(order.tracking_number)}">TRACK YOUR ORDER</a></td>
-                      <td style="font-family:helvetica;border-radius:4px; padding: 3px;" align="center"></td>
-
-                      `
-                              : ""
-                            : ""
-                        }
-
-
-
-
                       <td style="font-family:helvetica;border-radius:10px" align="center" bgcolor="${
                         status === " shipped" ? "#4c4f60" : "#6a6c80"
                       }"; margin-left:10px; border-spacing: 2px;><a
@@ -157,12 +155,21 @@ export default ({ email, order, status, message_to_user }: any) => {
                           ? `
                       <td style="font-family:helvetica;border-radius:4px; padding: 3px;" align="center"></td>
                       <td
-                        style="font-family:helvetica;border-radius:10px; margin-right:10px;    padding: 15px 0px; border-spacing: 2px;"
+                        style="font-family:helvetica;border-radius:10px; margin-right:10px;   padding: 15px 0px; border-spacing: 2px;"
                         align="center" bgcolor="#4c4f60"><a
                           style="font-size:16px;text-decoration:none;display:block;color:white;border:none; font-family:helvetica; font-weight: 800;"
                           target="_blank" href="https://www.glow-leds.com/">WEBSITE</a></td>`
                           : ""
                       }
+                    </tr>
+                  </tbody>
+                </table>
+                <table style="width:100%;border-spacing:0;margin-top:20px">
+                  <tbody>
+                    <tr style="font-family:helvetica;line-height:0em;  padding-top: 10px;">
+                      <td style="font-family:helvetica;border-radius:10px; margin-right:10px;    padding: 10px;border-spacing: 2px;" colspan="3" align="center" bgcolor="#6a6c80">
+                        <a style="font-size:20px;text-decoration:none;display:block;color:white; padding: 15px 0px;border:none; font-family:helvetica; font-weight: 800;"
+                        href="${determine_tracking_number(order.tracking_number)}">TRACK YOUR ORDER</a></td>
                     </tr>
                   </tbody>
                 </table>
@@ -277,26 +284,6 @@ export default ({ email, order, status, message_to_user }: any) => {
                     </tr>`
                       )
                       .join("")}
-                    ${
-                      order.order_note
-                        ? `<tr>
-                      <td style='vertical-align: top;color: white;font-size: 16px;line-height: 30px;' valign="top"
-                        align="left">
-                        <div>
-                          <strong>Order Note:</strong> ${order.order_note}
-                        </div>
-                        ${
-                          message_to_user
-                            ? `<div>
-                          <strong>Message To User:</strong>{' '}
-                          ${message_to_user}
-                        </div>`
-                            : ""
-                        }
-                      </td>
-                    </tr>`
-                        : ""
-                    }
                   </tbody>
                 </table>
               </td>

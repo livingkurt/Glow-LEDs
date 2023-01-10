@@ -739,6 +739,22 @@ export default {
       }
     }
   },
+  eligible_for_review_orders_s: async (body: any) => {
+    try {
+      const sort = {};
+      const filter = {
+        deleted: false,
+        ...body
+      };
+      const limit = 0;
+      const page = 1;
+      return await order_db.findAll_orders_db(filter, sort, limit, page);
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
   income_orders_s: async (params: any) => {
     // const { month, year } = params;
     const o_filter: any = {

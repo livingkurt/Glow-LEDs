@@ -185,6 +185,11 @@ export default {
       if (order) {
         //
         const tracker = await EasyPost.Tracker.retrieve(body.label.tracker.id);
+        // console.log({ tracker });
+        // const webhook = new api.Webhook({
+        //   url: "https://example.com",
+        //   webhook_secret: "A1B2C3"
+        // });
 
         // const tracker = new EasyPost.Tracker.retrieve(body.label.tracker.id);
 
@@ -205,6 +210,7 @@ export default {
       }
     }
   },
+
   create_label_shipping_s: async (body: any) => {
     try {
       const EasyPost = new easy_post_api(process.env.EASY_POST);
@@ -217,7 +223,8 @@ export default {
         city: order.shipping.city,
         state: order.shipping.state,
         zip: order.shipping.postalCode,
-        country: order.shipping.country
+        country: order.shipping.country,
+        email: order.shipping.email
       });
 
       const fromAddress = new EasyPost.Address({

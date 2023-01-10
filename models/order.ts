@@ -84,6 +84,7 @@ const orderItemSchema = new mongoose.Schema(
     package_width: { type: Number },
     package_height: { type: Number },
     reviewed: { type: Boolean, default: false },
+    review_email_sent: { type: Boolean, default: false },
     product_option: productOptionsSchema,
     product: {
       type: mongoose.Schema.Types.ObjectId,

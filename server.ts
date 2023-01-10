@@ -6,6 +6,7 @@ import path from "path";
 import mongoose from "mongoose";
 import routes from "./routes";
 import template_routes from "./email_templates/template_routes";
+import { order_db } from "./db";
 const config = require("./config");
 const cors = require("cors");
 require("dotenv").config();
@@ -13,9 +14,14 @@ const passport = require("passport");
 const compression = require("compression");
 const expressAttack = require("express-attack");
 const requestIp = require("request-ip");
+const EasyPost = require("@easypost/api");
+const bodyParser = require("body-parser");
+const easy_post_api = require("@easypost/api");
 // const scout = require("@scout_apm/scout-apm");
 // const express = require("express");
 const fs = require("fs");
+
+EasyPost.apiKey = process.env.EASYPOST_API_KEY;
 
 // // The "main" function
 // async function start() {

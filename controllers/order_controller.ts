@@ -237,5 +237,17 @@ export default {
     } catch (error) {
       res.status(500).send({ error, message: "Error Deleting Order" });
     }
+  },
+  eligible_for_review_orders_c: async (req: any, res: any) => {
+    const { body } = req;
+    try {
+      const orders = await order_services.eligible_for_review_orders_s(body);
+      if (orders) {
+        return res.status(200).send(orders);
+      }
+      return res.status(500).send({ message: "Error Deleting Order" });
+    } catch (error) {
+      res.status(500).send({ error, message: "Error Deleting Order" });
+    }
   }
 };

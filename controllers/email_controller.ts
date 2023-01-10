@@ -14,14 +14,18 @@ import {
   feature,
   announcement,
   custom_contact,
-  code_used
+  code_used,
+  shipping_status
 } from "../email_templates/pages/index";
 import email_subscription from "../email_templates/pages/email_subscription";
 import { affiliate_db, content_db, email_db, order_db, promo_db, user_db } from "../db";
 import { format_date, months, toCapitalize } from "../util";
+import { determine_status } from "../interactors/email_interactors";
 const cron = require("node-cron");
 const schedule = require("node-schedule");
 const { google } = require("googleapis");
+
+const easy_post_api = require("@easypost/api");
 
 const createTransporter = async (type: string) => {
   try {
@@ -79,6 +83,7 @@ const sendEmail = async (emailOptions: any, res: any, type: string, name: string
 
   if (emailTransporter) {
     await emailTransporter.sendMail(emailOptions, (err: any, data: any) => {
+      console.log({ err, data });
       if (err) {
         res.status(500).send({ error: err, message: "Error Sending Email" });
       } else {
@@ -501,5 +506,46 @@ export default {
     };
 
     sendEmail(mailOptions, res, "info", "Registration Email Sent to " + req.body.first_name);
+  },
+  send_shipping_status_emails_c: async (req: any, res: any) => {
+    try {
+      const EasyPost = new easy_post_api(process.env.EASY_POST);
+      const event = req.body;
+
+      if (event["object"] === "Event" && event["description"] === "tracker.updated") {
+        const tracker = event.result;
+        console.log({ event });
+        const order = await order_db.findBy_orders_db({ tracking_number: tracker.tracking_code });
+        console.log({ tracker, order });
+
+        const body = {
+          email: {},
+          title: determine_status(tracker.status),
+          order: order,
+          status: tracker.status,
+          tracker: tracker,
+          tracking_details: tracker.tracking_details.reverse()[0]
+        };
+        const mailOptions = {
+          from: process.env.DISPLAY_INFO_EMAIL,
+          to: "lavacquek@icloud.com",
+          // to: order.shipping.email,
+          subject: determine_status(tracker.status),
+          html: App({
+            body: shipping_status(body),
+            unsubscribe: false
+          })
+        };
+        if (tracker.status === "delivered" || tracker.status === "out_for_delivery" || tracker.status === "in_transit") {
+          sendEmail(mailOptions, res, "info", "Order Status Email Sent to " + order.shipping.email);
+        }
+      } else {
+        res.status(404).send("Not a Tracker event, so nothing to do here for now...");
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
   }
 };

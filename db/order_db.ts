@@ -28,6 +28,16 @@ export default {
       }
     }
   },
+
+  findBy_orders_db: async (params: any) => {
+    try {
+      return await Order.findOne(params).populate("user").populate("orderItems.product").populate("orderItems.secondary_product");
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
   create_orders_db: async (body: any) => {
     try {
       return await Order.create(body);

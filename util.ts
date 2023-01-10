@@ -695,7 +695,7 @@ const color = (item: any) => {
 
 const size = (item: any) => {
   const option_name = item.option_group_name ? item.option_group_name.split(" ")[0] : "";
-  return `${item.size && item.size !== 0 ? ` ${first_dash(item)} ${item.size}` : ""} 
+  return `${item.size && item.size !== 0 ? ` ${first_dash(item)} ${item.size}` : ""}
     ${determine_option_show_modifier(item) && option_name ? option_name : ""}`;
 };
 
@@ -846,7 +846,7 @@ export const order_status_steps = (order: any, status: string) => {
 			>
 				<div style='font-size: 16px;'>Placed</div>
 			</div>
-			
+
 			<div
 				style='${"width:100%; display:flex; justify-content: center;"} ${
     status === "manufactured" || status === "packaged" || status === "shipped"
@@ -873,7 +873,52 @@ export const order_status_steps = (order: any, status: string) => {
   }'
 			>
 				<div style='font-size: 16px;'>Shipped</div>
-			</div>		
+			</div>
+		</div>`;
+};
+
+export const shipping_status_steps = (order: any, status: string) => {
+  status = status.toLowerCase();
+  return `<div
+			style='display: flex;justify-content: space-between;max-width: 58rem;width: 100%;margin: 1rem auto;'
+		>
+			<div
+				style='${"width:100%; display:flex; justify-content: center;"} ${
+    status === "pre_transit" || status === "in_transit" || status === "out_for_delivery" || status === "delivered"
+      ? "border-top: .3rem white solid; color: white;flex: 1 1;padding-top: 1rem; text-align: center; "
+      : "	border-top: .3rem #c0c0c0 solid;color: white;flex: 1 1;padding-top: 1rem;text-align: center;"
+  }'
+			>
+				<div style='font-size: 16px;'>Label Created</div>
+			</div>
+
+			<div
+				style='${"width:100%; display:flex; justify-content: center;"} ${
+    status === "in_transit" || status === "out_for_delivery" || status === "delivered"
+      ? "border-top: .3rem white solid; color: white;flex: 1 1;padding-top: 1rem; text-align: center; "
+      : "	border-top: .3rem #c0c0c0 solid;color: white;flex: 1 1;padding-top: 1rem;text-align: center;"
+  }'
+			>
+				<div style='font-size: 16px;'>Shipped</div>
+			</div>
+			<div
+				style='${"width:100%; display:flex; justify-content: center;"} ${
+    status === "out_for_delivery" || status === "delivered"
+      ? "border-top: .3rem white solid; color: white;flex: 1 1;padding-top: 1rem; text-align: center; "
+      : "	border-top: .3rem #c0c0c0 solid;color: white;flex: 1 1;padding-top: 1rem;text-align: center;"
+  }'
+			>
+				<div style='font-size: 16px;'>Out For Delivery</div>
+			</div>
+			<div
+				style='${"width:100%; display:flex; justify-content: center;"} ${
+    status === "delivered"
+      ? "border-top: .3rem white solid; color: white;flex: 1 1;padding-top: 1rem; text-align: center; "
+      : "	border-top: .3rem #c0c0c0 solid;color: white;flex: 1 1;padding-top: 1rem;text-align: center;"
+  }'
+			>
+				<div style='font-size: 16px;'>Delivered</div>
+			</div>
 		</div>`;
 };
 
