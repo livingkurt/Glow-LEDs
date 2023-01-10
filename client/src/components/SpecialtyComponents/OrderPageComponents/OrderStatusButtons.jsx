@@ -45,13 +45,13 @@ const OrderStatusButtons = ({ order, update_order_payment_state, update_order_st
       >
         {order.isPackaged ? "Unset to Packaged" : "Set to Packaged"}
       </GLButton>
-      <GLButton
+      {/* <GLButton
         variant="primary"
         className="mv-5px w-100per"
         onClick={() => update_order_state(order, order.isShipped, "isShipped", "shippedAt")}
       >
         {order.isShipped ? "Unset to Shipped" : "Set to Shipped"}
-      </GLButton>
+      </GLButton> */}
 
       {/* <GLButton
         variant="primary"
@@ -60,7 +60,7 @@ const OrderStatusButtons = ({ order, update_order_payment_state, update_order_st
       >
         {order.isInTransit ? "Unset to In Transit" : "Set to In Transit"}
       </GLButton> */}
-      <GLButton
+      {/* <GLButton
         variant="primary"
         className="mv-5px w-100per"
         onClick={() => update_order_state(order, order.isOutForDelivery, "isOutForDelivery", "outForDeliveryAt")}
@@ -73,7 +73,7 @@ const OrderStatusButtons = ({ order, update_order_payment_state, update_order_st
         onClick={() => update_order_state(order, order.isDelivered, "isDelivered", "deliveredAt")}
       >
         {order.isDelivered ? "Unset to Delivered" : "Set to Delivered"}
-      </GLButton>
+      </GLButton> */}
       <GLButton
         variant="primary"
         className="mv-5px w-100per"
