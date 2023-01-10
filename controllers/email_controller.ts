@@ -509,6 +509,7 @@ export default {
   send_shipping_status_emails_c: async (req: any, res: any) => {
     try {
       const event = req.body;
+      console.log({ event });
       if (event["object"] === "Event" && event["description"] === "tracker.updated") {
         const tracker = event.result;
         const order = await order_db.findBy_orders_db({ tracking_number: tracker.tracking_code });
@@ -552,7 +553,7 @@ export default {
           sendEmail(mailOptions, res, "info", "Order Status Email Sent to " + order.shipping.email);
         }
       } else {
-        res.status(404).send("Not a Tracker event, so nothing to do here for now...");
+        res.status(404).json(req.body);
       }
     } catch (error) {
       if (error instanceof Error) {
