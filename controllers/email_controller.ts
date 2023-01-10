@@ -509,34 +509,53 @@ export default {
   },
   send_shipping_status_emails_c: async (req: any, res: any) => {
     try {
-      const EasyPost = new easy_post_api(process.env.EASY_POST);
       const event = req.body;
-
       if (event["object"] === "Event" && event["description"] === "tracker.updated") {
         const tracker = event.result;
-        console.log({ event });
         const order = await order_db.findBy_orders_db({ tracking_number: tracker.tracking_code });
-        console.log({ tracker, order });
+
+        switch (tracker.status) {
+          case "delivered":
+            order.isDelivered = true;
+            order.deliveredAt = new Date();
+            order.save();
+            return;
+          case "out_for_delivery":
+            order.isOutForDelivery = true;
+            order.outForDeliveryAt = new Date();
+            order.save();
+            return;
+          case "in_transit":
+            order.isShipped = true;
+            order.shippedAt = new Date();
+            order.save();
+            return;
+          default:
+            break;
+        }
 
         const body = {
           email: {},
           title: determine_status(tracker.status),
           order: order,
           status: tracker.status,
-          tracker: tracker,
-          tracking_details: tracker.tracking_details.reverse()[0]
+          tracker: tracker
+          // tracking_details: tracker.tracking_details.reverse()[0]
         };
         const mailOptions = {
           from: process.env.DISPLAY_INFO_EMAIL,
-          to: "lavacquek@icloud.com",
-          // to: order.shipping.email,
+          to: order.shipping.email,
           subject: determine_status(tracker.status),
           html: App({
             body: shipping_status(body),
             unsubscribe: false
           })
         };
-        if (tracker.status === "delivered" || tracker.status === "out_for_delivery" || tracker.status === "in_transit") {
+        if (
+          tracker.status === "delivered" ||
+          tracker.status === "out_for_delivery" ||
+          (tracker.status === "in_transit" && order.isShipped === false)
+        ) {
           sendEmail(mailOptions, res, "info", "Order Status Email Sent to " + order.shipping.email);
         }
       } else {

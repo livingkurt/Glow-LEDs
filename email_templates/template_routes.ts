@@ -1946,23 +1946,6 @@ router.get("/shipping_status", async (req: { body: any }, res: { send: (arg0: st
           }
         }
       ]
-    },
-    tracking_details: {
-      object: "TrackingDetail",
-      message: "Out for Delivery",
-      description: null,
-      status: "out_for_delivery",
-      status_detail: "out_for_delivery",
-      datetime: "2022-12-12T11:41:39Z",
-      source: "USPS",
-      carrier_code: null,
-      tracking_location: {
-        object: "TrackingLocation",
-        city: "CHARLESTON",
-        state: "SC",
-        country: null,
-        zip: "29407"
-      }
     }
   };
   res.send(App({ body: shipping_status(body), unsubscribe: false }));

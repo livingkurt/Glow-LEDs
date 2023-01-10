@@ -52,6 +52,21 @@ const OrderStatusButtons = ({ order, update_order_payment_state, update_order_st
       >
         {order.isShipped ? "Unset to Shipped" : "Set to Shipped"}
       </GLButton>
+
+      {/* <GLButton
+        variant="primary"
+        className="mv-5px w-100per"
+        onClick={() => update_order_state(order, order.isInTransit, "isInTransit", "inTransitAt")}
+      >
+        {order.isInTransit ? "Unset to In Transit" : "Set to In Transit"}
+      </GLButton> */}
+      <GLButton
+        variant="primary"
+        className="mv-5px w-100per"
+        onClick={() => update_order_state(order, order.isOutForDelivery, "isOutForDelivery", "outForDeliveryAt")}
+      >
+        {order.isOutForDelivery ? "Unset to Out For Delivery" : "Set to Out For Delivery"}
+      </GLButton>
       <GLButton
         variant="primary"
         className="mv-5px w-100per"
