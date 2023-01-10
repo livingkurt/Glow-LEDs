@@ -324,8 +324,7 @@ export default {
       }
     );
     const mailOptions = {
-      from: process.env.DISPLAY_CONTACT_EMAIL,
-      // to: "lavacquek@icloud.com",
+      from: process.env.DISPLAY_INFO_EMAIL,
       to: user.email,
       subject: `You're code was just used!`,
       html: App({
