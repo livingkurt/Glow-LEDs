@@ -514,24 +514,18 @@ export default {
         const tracker = event.result;
         const order = await order_db.findBy_orders_db({ tracking_number: tracker.tracking_code });
 
-        switch (tracker.status) {
-          case "delivered":
-            order.isDelivered = true;
-            order.deliveredAt = new Date();
-            order.save();
-            return;
-          case "out_for_delivery":
-            order.isOutForDelivery = true;
-            order.outForDeliveryAt = new Date();
-            order.save();
-            return;
-          case "in_transit":
-            order.isShipped = true;
-            order.shippedAt = new Date();
-            order.save();
-            return;
-          default:
-            break;
+        const updateOrder = (isStatus: any, statusAt: any) => {
+          order[isStatus] = true;
+          order[statusAt] = new Date();
+          order.save();
+        };
+
+        if (tracker.status === "delivered") {
+          updateOrder("isDelivered", "deliveredAt");
+        } else if (tracker.status === "out_for_delivery") {
+          updateOrder("isOutForDelivery", "outForDeliveryAt");
+        } else if (tracker.status === "in_transit") {
+          updateOrder("isShipped", "shippedAt");
         }
 
         const body = {
@@ -563,6 +557,7 @@ export default {
       }
     } catch (error) {
       if (error instanceof Error) {
+        console.log({ error });
         throw new Error(error.message);
       }
     }

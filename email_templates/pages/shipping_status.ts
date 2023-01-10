@@ -134,7 +134,9 @@ export default ({ email, order, status, title, tracker }: any) => {
                 </p>`
                   }
                 </p>
-                <p>${email.p ? email.p : ""}</p>
+                <p style="font-size: 18px; text-align: center;">Esitmated Delivery Date: <strong> ${format_date(
+                  tracker.est_delivery_date
+                )} </strong></p>
 
                 <table style="width:100%;border-spacing:0;margin-top:20px">
                   <tbody>
