@@ -4,7 +4,6 @@ import { make_private_code } from "../util";
 
 export default {
   findAll_affiliates_db: async (filter: any, sort: any, limit: any, page: any) => {
-    console.log({ filter });
     try {
       return await Affiliate.find(filter)
         .sort(sort)

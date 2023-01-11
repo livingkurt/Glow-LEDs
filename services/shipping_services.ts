@@ -179,21 +179,9 @@ export default {
   },
   tracking_number_shipping_s: async (body: any) => {
     try {
-      const EasyPost = new easy_post_api(process.env.EASY_POST);
       const order = await order_db.findById_orders_db(body.order._id);
 
       if (order) {
-        //
-        const tracker = await EasyPost.Tracker.retrieve(body.label.tracker.id);
-        // console.log({ tracker });
-        // const webhook = new api.Webhook({
-        //   url: "https://example.com",
-        //   webhook_secret: "A1B2C3"
-        // });
-
-        // const tracker = new EasyPost.Tracker.retrieve(body.label.tracker.id);
-
-        //
         order.shipping.shipment_tracking = body.tracker;
         order.tracking_number = body.tracking_number;
         order.shipping.shipping_label = body.label;

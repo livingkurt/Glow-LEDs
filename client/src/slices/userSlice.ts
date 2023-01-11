@@ -108,7 +108,6 @@ const affiliatesSlice = createSlice({
       state.loading = true;
     },
     [API.detailsAffiliate.fulfilled]: (state: any, { payload }: any) => {
-      console.log({ payload });
       state.loading = false;
       state.affiliate = payload;
       state.message = "Affiliate Found";

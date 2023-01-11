@@ -231,7 +231,6 @@ export default {
             console.error(err);
           } else {
             // Transfer was successfully created
-            console.log(`Transfer to Connected Account Success: ${transfer.id}`);
             res.status(200).send({ message: `Transfer to Connected Account Success: ${transfer.id}` });
           }
         }

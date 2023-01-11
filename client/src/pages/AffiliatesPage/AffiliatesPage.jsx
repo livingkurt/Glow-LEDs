@@ -52,7 +52,6 @@ const AffiliatesPage = props => {
 
     e.preventDefault();
     const page = parseInt(new_page);
-    console.log({ page });
     dispatch(set_page(page));
     update_products_url(history, search, "", "", page, limit);
 
@@ -186,7 +185,6 @@ const AffiliatesPage = props => {
         colors={colors}
         search={search}
         set_search={e => {
-          console.log({ value: e.target.value });
           dispatch(set_search(e.target.value));
         }}
         submitHandler={e => {

@@ -351,7 +351,6 @@ export default {
       //     $lte: new Date(end_date)
       //   }
       // };
-      console.log({ params, query });
 
       if (query.month && query.month.length > 0) {
         const start_date = month_dates(query.month, query.year).start_date;
@@ -385,7 +384,6 @@ export default {
       const page = 1;
 
       const orders = await order_db.findAll_orders_db(filter, sort, limit, page);
-      console.log({ orders });
 
       const number_of_uses = orders
         .filter((order: any) => order.promo_code)

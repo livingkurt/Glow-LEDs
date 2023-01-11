@@ -83,7 +83,6 @@ const sendEmail = async (emailOptions: any, res: any, type: string, name: string
 
   if (emailTransporter) {
     await emailTransporter.sendMail(emailOptions, (err: any, data: any) => {
-      console.log({ err, data });
       if (err) {
         res.status(500).send({ error: err, message: "Error Sending Email" });
       } else {
@@ -509,7 +508,6 @@ export default {
   send_shipping_status_emails_c: async (req: any, res: any) => {
     try {
       const event = req.body;
-      console.log({ event });
       if (event["object"] === "Event" && event["description"] === "tracker.updated") {
         const tracker = event.result;
         const order = await order_db.findBy_orders_db({ tracking_number: tracker.tracking_code });
@@ -557,7 +555,6 @@ export default {
       }
     } catch (error) {
       if (error instanceof Error) {
-        console.log({ error });
         throw new Error(error.message);
       }
     }

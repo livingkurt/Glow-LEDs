@@ -107,7 +107,6 @@ export default {
       return await affiliate_db.create_affiliates_db(body, public_code, private_code);
     } catch (error) {
       if (error instanceof Error) {
-        console.log(error);
         throw new Error(error.message);
       }
     }

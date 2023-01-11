@@ -5,7 +5,6 @@ import { userWindowDimensions } from "../Hooks";
 import { GLButton } from "../GlowLEDsComponents";
 const Pagination = ({ onPageChange, totalCount, siblingCount = 1, currentPage, pageSize, className }) => {
   const { width, height } = userWindowDimensions();
-  //
 
   const paginationRange = usePagination({
     currentPage: parseInt(currentPage),
@@ -14,7 +13,6 @@ const Pagination = ({ onPageChange, totalCount, siblingCount = 1, currentPage, p
     pageSize,
     width
   });
-  console.log({ pageSize });
 
   if (currentPage === 0 || paginationRange.length < 2) {
     return null;
