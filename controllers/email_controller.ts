@@ -553,7 +553,7 @@ export default {
           sendEmail(mailOptions, res, "info", "Order Status Email Sent to " + order.shipping.email);
         }
       } else {
-        res.status(404).json(req.body);
+        res.status(200).send("Not a Tracker event, so nothing to do here for now...");
       }
     } catch (error) {
       if (error instanceof Error) {
