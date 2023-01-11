@@ -160,7 +160,9 @@ export default {
       //   };
       // }
     } catch (error) {
-      throw new Error(error_message || error.message);
+      if (error instanceof Error) {
+        throw new Error(error_message || error.message);
+      }
     }
   },
   get_different_shipping_rates_shipping_s: async (body: any) => {
