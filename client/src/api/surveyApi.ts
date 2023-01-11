@@ -3,12 +3,12 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { create_query } from "../utils/helper_functions";
 
-export const listUsers = createAsyncThunk("users/listUsers", async (query: any, thunkApi: any) => {
+export const listSurveys = createAsyncThunk("surveys/listSurveys", async (query: any, thunkApi: any) => {
   try {
     const {
       userLogin: { userInfo }
     } = thunkApi.getState();
-    const { data } = await axios.get("/api/users?" + create_query(query), {
+    const { data } = await axios.get("/api/surveys?" + create_query(query), {
       headers: {
         Authorization: "Bearer " + userInfo.access_token
       }
@@ -17,12 +17,12 @@ export const listUsers = createAsyncThunk("users/listUsers", async (query: any, 
   } catch (error) {}
 });
 
-export const updateUser = createAsyncThunk("users/updateUser", async (user: any, thunkApi: any) => {
+export const updateSurvey = createAsyncThunk("surveys/updateSurvey", async (survey: any, thunkApi: any) => {
   try {
     const {
       userLogin: { userInfo }
     } = thunkApi.getState();
-    const { data } = await axios.put("/api/users/" + user.pathname, user, {
+    const { data } = await axios.put("/api/surveys/" + survey.pathname, survey, {
       headers: {
         Authorization: "Bearer " + userInfo.access_token
       }
@@ -31,12 +31,12 @@ export const updateUser = createAsyncThunk("users/updateUser", async (user: any,
   } catch (error) {}
 });
 
-export const createUser = createAsyncThunk("users/createUser", async (user: any, thunkApi: any) => {
+export const createSurvey = createAsyncThunk("surveys/createSurvey", async (survey: any, thunkApi: any) => {
   try {
     const {
       userLogin: { userInfo }
     } = thunkApi.getState();
-    const { data } = await axios.post("/api/users", user, {
+    const { data } = await axios.post("/api/surveys", survey, {
       headers: {
         Authorization: "Bearer " + userInfo.access_token
       }
@@ -45,12 +45,12 @@ export const createUser = createAsyncThunk("users/createUser", async (user: any,
   } catch (error) {}
 });
 
-export const detailsUser = createAsyncThunk("users/detailsUser", async ({ id }: any, thunkApi: any) => {
+export const detailsSurvey = createAsyncThunk("surveys/detailsSurvey", async ({ id }: any, thunkApi: any) => {
   try {
     const {
       userLogin: { userInfo }
     } = thunkApi.getState();
-    const { data } = await axios.get(`/api/users/${id}`, {
+    const { data } = await axios.get(`/api/surveys/${id}`, {
       headers: {
         Authorization: "Bearer " + userInfo.access_token
       }
@@ -59,12 +59,12 @@ export const detailsUser = createAsyncThunk("users/detailsUser", async ({ id }: 
   } catch (error) {}
 });
 
-export const deleteUser = createAsyncThunk("users/deleteUser", async (pathname, thunkApi: any) => {
+export const deleteSurvey = createAsyncThunk("surveys/deleteSurvey", async (pathname, thunkApi: any) => {
   try {
     const {
       userLogin: { userInfo }
     } = thunkApi.getState();
-    const { data } = await axios.delete("/api/users/" + pathname, {
+    const { data } = await axios.delete("/api/surveys/" + pathname, {
       headers: {
         Authorization: "Bearer " + userInfo.access_token
       }

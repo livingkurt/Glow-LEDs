@@ -1,14 +1,14 @@
 /* eslint-disable max-lines-per-function */
 /* eslint-disable no-param-reassign */
 import { createSlice } from "@reduxjs/toolkit";
-import * as API from "../api/affiliateApi";
+import * as API from "../api/userApi";
 
-const affiliatesSlice = createSlice({
-  name: "affiliates",
+const userSlice = createSlice({
+  name: "users",
   initialState: {
     loading: false,
-    affiliates: [],
-    affiliate: {
+    users: [],
+    user: {
       id: "",
       user: undefined,
       artist_name: "",
@@ -51,11 +51,11 @@ const affiliatesSlice = createSlice({
     ]
   },
   reducers: {
-    set_affiliate: (state, { payload }) => {
-      const updated_affiliate = payload;
+    set_user: (state, { payload }) => {
+      const updated_user = payload;
       return {
         ...state,
-        affiliate: { ...state.affiliate, ...updated_affiliate }
+        user: { ...state.user, ...updated_user }
       };
     },
     set_loading: (state, { payload }) => {
@@ -75,57 +75,57 @@ const affiliatesSlice = createSlice({
     }
   },
   extraReducers: {
-    [API.listAffiliates.pending]: (state: any, { payload }: any) => {
+    [API.listUsers.pending]: (state: any, { payload }: any) => {
       state.loading = true;
-      state.affilaites = [];
+      state.users = [];
     },
-    [API.listAffiliates.fulfilled]: (state: any, { payload }: any) => {
+    [API.listUsers.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.affiliates = payload.affiliates;
+      state.users = payload.users;
       state.totalPages = payload.totalPages;
       state.page = payload.currentPage;
-      state.message = "Affiliates Found";
+      state.message = "Users Found";
     },
-    [API.listAffiliates.rejected]: (state: any, { payload }: any) => {
+    [API.listUsers.rejected]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.saveAffiliate.pending]: (state: any, { payload }: any) => {
+    [API.saveUser.pending]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.saveAffiliate.fulfilled]: (state: any, { payload }: any) => {
+    [API.saveUser.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.affiliate = payload.affiliate;
-      state.message = "Affiliate Saved";
+      state.user = payload.user;
+      state.message = "User Saved";
     },
-    [API.saveAffiliate.rejected]: (state: any, { payload }: any) => {
+    [API.saveUser.rejected]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.detailsAffiliate.pending]: (state: any, { payload }: any) => {
+    [API.detailsUser.pending]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.detailsAffiliate.fulfilled]: (state: any, { payload }: any) => {
+    [API.detailsUser.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.affiliate = payload;
-      state.message = "Affiliate Found";
+      state.user = payload;
+      state.message = "User Found";
     },
-    [API.detailsAffiliate.rejected]: (state: any, { payload }: any) => {
+    [API.detailsUser.rejected]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.deleteAffiliate.pending]: (state: any, { payload }: any) => {
+    [API.deleteUser.pending]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.deleteAffiliate.fulfilled]: (state: any, { payload }: any) => {
+    [API.deleteUser.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.affiliate = payload.affiliate;
-      state.message = "Affiliate Deleted";
+      state.user = payload.user;
+      state.message = "User Deleted";
     },
-    [API.deleteAffiliate.rejected]: (state: any, { payload }: any) => {
+    [API.deleteUser.rejected]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
@@ -133,5 +133,5 @@ const affiliatesSlice = createSlice({
   }
 });
 
-export const { set_search, set_sort, set_page, set_limit, set_loading, set_affiliate } = affiliatesSlice.actions;
-export default affiliatesSlice.reducer;
+export const { set_search, set_sort, set_page, set_limit, set_loading, set_user } = userSlice.actions;
+export default userSlice.reducer;

@@ -1,14 +1,14 @@
 /* eslint-disable max-lines-per-function */
 /* eslint-disable no-param-reassign */
 import { createSlice } from "@reduxjs/toolkit";
-import * as API from "../api/affiliateApi";
+import * as API from "../api/emailApi";
 
-const affiliatesSlice = createSlice({
-  name: "affiliates",
+const emailSlice = createSlice({
+  name: "emails",
   initialState: {
     loading: false,
-    affiliates: [],
-    affiliate: {
+    emails: [],
+    email: {
       id: "",
       user: undefined,
       artist_name: "",
@@ -51,11 +51,11 @@ const affiliatesSlice = createSlice({
     ]
   },
   reducers: {
-    set_affiliate: (state, { payload }) => {
-      const updated_affiliate = payload;
+    set_email: (state, { payload }) => {
+      const updated_email = payload;
       return {
         ...state,
-        affiliate: { ...state.affiliate, ...updated_affiliate }
+        email: { ...state.email, ...updated_email }
       };
     },
     set_loading: (state, { payload }) => {
@@ -75,57 +75,57 @@ const affiliatesSlice = createSlice({
     }
   },
   extraReducers: {
-    [API.listAffiliates.pending]: (state: any, { payload }: any) => {
+    [API.listEmails.pending]: (state: any, { payload }: any) => {
       state.loading = true;
-      state.affiliates = [];
+      state.emails = [];
     },
-    [API.listAffiliates.fulfilled]: (state: any, { payload }: any) => {
+    [API.listEmails.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.affiliates = payload.affiliates;
+      state.emails = payload.emails;
       state.totalPages = payload.totalPages;
       state.page = payload.currentPage;
-      state.message = "Affiliates Found";
+      state.message = "Emails Found";
     },
-    [API.listAffiliates.rejected]: (state: any, { payload }: any) => {
+    [API.listEmails.rejected]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.saveAffiliate.pending]: (state: any, { payload }: any) => {
+    [API.saveEmail.pending]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.saveAffiliate.fulfilled]: (state: any, { payload }: any) => {
+    [API.saveEmail.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.affiliate = payload.affiliate;
-      state.message = "Affiliate Saved";
+      state.email = payload.email;
+      state.message = "Email Saved";
     },
-    [API.saveAffiliate.rejected]: (state: any, { payload }: any) => {
+    [API.saveEmail.rejected]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.detailsAffiliate.pending]: (state: any, { payload }: any) => {
+    [API.detailsEmail.pending]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.detailsAffiliate.fulfilled]: (state: any, { payload }: any) => {
+    [API.detailsEmail.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.affiliate = payload;
-      state.message = "Affiliate Found";
+      state.email = payload;
+      state.message = "Email Found";
     },
-    [API.detailsAffiliate.rejected]: (state: any, { payload }: any) => {
+    [API.detailsEmail.rejected]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.deleteAffiliate.pending]: (state: any, { payload }: any) => {
+    [API.deleteEmail.pending]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.deleteAffiliate.fulfilled]: (state: any, { payload }: any) => {
+    [API.deleteEmail.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.affiliate = payload.affiliate;
-      state.message = "Affiliate Deleted";
+      state.email = payload.email;
+      state.message = "Email Deleted";
     },
-    [API.deleteAffiliate.rejected]: (state: any, { payload }: any) => {
+    [API.deleteEmail.rejected]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
@@ -133,5 +133,5 @@ const affiliatesSlice = createSlice({
   }
 });
 
-export const { set_search, set_sort, set_page, set_limit, set_loading, set_affiliate } = affiliatesSlice.actions;
-export default affiliatesSlice.reducer;
+export const { set_search, set_sort, set_page, set_limit, set_loading, set_email } = emailSlice.actions;
+export default emailSlice.reducer;

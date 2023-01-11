@@ -107,7 +107,7 @@ export const detailsAffiliate = createAsyncThunk(
       } = thunkApi.getState();
       let response: any = {};
       if (id) {
-        response = await axios.get(`/api/affiliates/id/${id}`);
+        response = await axios.get(`/api/affiliates/${id}`);
       } else if (pathname) {
         response = await axios.get(`/api/affiliates/${pathname}/pathname`);
       }

@@ -1,14 +1,14 @@
 /* eslint-disable max-lines-per-function */
 /* eslint-disable no-param-reassign */
 import { createSlice } from "@reduxjs/toolkit";
-import * as API from "../api/affiliateApi";
+import * as API from "../api/filamentApi";
 
-const affiliatesSlice = createSlice({
-  name: "affiliates",
+const filamentSlice = createSlice({
+  name: "filaments",
   initialState: {
     loading: false,
-    affiliates: [],
-    affiliate: {
+    filaments: [],
+    filament: {
       id: "",
       user: undefined,
       artist_name: "",
@@ -51,11 +51,11 @@ const affiliatesSlice = createSlice({
     ]
   },
   reducers: {
-    set_affiliate: (state, { payload }) => {
-      const updated_affiliate = payload;
+    set_filament: (state, { payload }) => {
+      const updated_filament = payload;
       return {
         ...state,
-        affiliate: { ...state.affiliate, ...updated_affiliate }
+        filament: { ...state.filament, ...updated_filament }
       };
     },
     set_loading: (state, { payload }) => {
@@ -75,57 +75,57 @@ const affiliatesSlice = createSlice({
     }
   },
   extraReducers: {
-    [API.listAffiliates.pending]: (state: any, { payload }: any) => {
+    [API.listFilaments.pending]: (state: any, { payload }: any) => {
       state.loading = true;
-      state.affiliates = [];
+      state.filaments = [];
     },
-    [API.listAffiliates.fulfilled]: (state: any, { payload }: any) => {
+    [API.listFilaments.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.affiliates = payload.affiliates;
+      state.filaments = payload.filaments;
       state.totalPages = payload.totalPages;
       state.page = payload.currentPage;
-      state.message = "Affiliates Found";
+      state.message = "Filaments Found";
     },
-    [API.listAffiliates.rejected]: (state: any, { payload }: any) => {
+    [API.listFilaments.rejected]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.saveAffiliate.pending]: (state: any, { payload }: any) => {
+    [API.saveFilament.pending]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.saveAffiliate.fulfilled]: (state: any, { payload }: any) => {
+    [API.saveFilament.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.affiliate = payload.affiliate;
-      state.message = "Affiliate Saved";
+      state.filament = payload.filament;
+      state.message = "Filament Saved";
     },
-    [API.saveAffiliate.rejected]: (state: any, { payload }: any) => {
+    [API.saveFilament.rejected]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.detailsAffiliate.pending]: (state: any, { payload }: any) => {
+    [API.detailsFilament.pending]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.detailsAffiliate.fulfilled]: (state: any, { payload }: any) => {
+    [API.detailsFilament.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.affiliate = payload;
-      state.message = "Affiliate Found";
+      state.filament = payload;
+      state.message = "Filament Found";
     },
-    [API.detailsAffiliate.rejected]: (state: any, { payload }: any) => {
+    [API.detailsFilament.rejected]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.deleteAffiliate.pending]: (state: any, { payload }: any) => {
+    [API.deleteFilament.pending]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.deleteAffiliate.fulfilled]: (state: any, { payload }: any) => {
+    [API.deleteFilament.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.affiliate = payload.affiliate;
-      state.message = "Affiliate Deleted";
+      state.filament = payload.filament;
+      state.message = "Filament Deleted";
     },
-    [API.deleteAffiliate.rejected]: (state: any, { payload }: any) => {
+    [API.deleteFilament.rejected]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
@@ -133,5 +133,5 @@ const affiliatesSlice = createSlice({
   }
 });
 
-export const { set_search, set_sort, set_page, set_limit, set_loading, set_affiliate } = affiliatesSlice.actions;
-export default affiliatesSlice.reducer;
+export const { set_search, set_sort, set_page, set_limit, set_loading, set_filament } = filamentSlice.actions;
+export default filamentSlice.reducer;

@@ -1,14 +1,14 @@
 /* eslint-disable max-lines-per-function */
 /* eslint-disable no-param-reassign */
 import { createSlice } from "@reduxjs/toolkit";
-import * as API from "../api/affiliateApi";
+import * as API from "../api/paycheckApi";
 
-const affiliatesSlice = createSlice({
-  name: "affiliates",
+const paycheckSlice = createSlice({
+  name: "paychecks",
   initialState: {
     loading: false,
-    affiliates: [],
-    affiliate: {
+    paychecks: [],
+    paycheck: {
       id: "",
       user: undefined,
       artist_name: "",
@@ -51,11 +51,11 @@ const affiliatesSlice = createSlice({
     ]
   },
   reducers: {
-    set_affiliate: (state, { payload }) => {
-      const updated_affiliate = payload;
+    set_paycheck: (state, { payload }) => {
+      const updated_paycheck = payload;
       return {
         ...state,
-        affiliate: { ...state.affiliate, ...updated_affiliate }
+        paycheck: { ...state.paycheck, ...updated_paycheck }
       };
     },
     set_loading: (state, { payload }) => {
@@ -75,57 +75,57 @@ const affiliatesSlice = createSlice({
     }
   },
   extraReducers: {
-    [API.listAffiliates.pending]: (state: any, { payload }: any) => {
+    [API.listPaychecks.pending]: (state: any, { payload }: any) => {
       state.loading = true;
-      state.affiliates = [];
+      state.paychecks = [];
     },
-    [API.listAffiliates.fulfilled]: (state: any, { payload }: any) => {
+    [API.listPaychecks.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.affiliates = payload.affiliates;
+      state.paychecks = payload.paychecks;
       state.totalPages = payload.totalPages;
       state.page = payload.currentPage;
-      state.message = "Affiliates Found";
+      state.message = "Paychecks Found";
     },
-    [API.listAffiliates.rejected]: (state: any, { payload }: any) => {
+    [API.listPaychecks.rejected]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.saveAffiliate.pending]: (state: any, { payload }: any) => {
+    [API.savePaycheck.pending]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.saveAffiliate.fulfilled]: (state: any, { payload }: any) => {
+    [API.savePaycheck.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.affiliate = payload.affiliate;
-      state.message = "Affiliate Saved";
+      state.paycheck = payload.paycheck;
+      state.message = "Paycheck Saved";
     },
-    [API.saveAffiliate.rejected]: (state: any, { payload }: any) => {
+    [API.savePaycheck.rejected]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.detailsAffiliate.pending]: (state: any, { payload }: any) => {
+    [API.detailsPaycheck.pending]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.detailsAffiliate.fulfilled]: (state: any, { payload }: any) => {
+    [API.detailsPaycheck.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.affiliate = payload;
-      state.message = "Affiliate Found";
+      state.paycheck = payload;
+      state.message = "Paycheck Found";
     },
-    [API.detailsAffiliate.rejected]: (state: any, { payload }: any) => {
+    [API.detailsPaycheck.rejected]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.deleteAffiliate.pending]: (state: any, { payload }: any) => {
+    [API.deletePaycheck.pending]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.deleteAffiliate.fulfilled]: (state: any, { payload }: any) => {
+    [API.deletePaycheck.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.affiliate = payload.affiliate;
-      state.message = "Affiliate Deleted";
+      state.paycheck = payload.paycheck;
+      state.message = "Paycheck Deleted";
     },
-    [API.deleteAffiliate.rejected]: (state: any, { payload }: any) => {
+    [API.deletePaycheck.rejected]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
@@ -133,5 +133,5 @@ const affiliatesSlice = createSlice({
   }
 });
 
-export const { set_search, set_sort, set_page, set_limit, set_loading, set_affiliate } = affiliatesSlice.actions;
-export default affiliatesSlice.reducer;
+export const { set_search, set_sort, set_page, set_limit, set_loading, set_paycheck } = paycheckSlice.actions;
+export default paycheckSlice.reducer;

@@ -3,12 +3,12 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { create_query } from "../utils/helper_functions";
 
-export const listUsers = createAsyncThunk("users/listUsers", async (query: any, thunkApi: any) => {
+export const listTeams = createAsyncThunk("teams/listTeams", async (query: any, thunkApi: any) => {
   try {
     const {
       userLogin: { userInfo }
     } = thunkApi.getState();
-    const { data } = await axios.get("/api/users?" + create_query(query), {
+    const { data } = await axios.get("/api/teams?" + create_query(query), {
       headers: {
         Authorization: "Bearer " + userInfo.access_token
       }
@@ -17,12 +17,12 @@ export const listUsers = createAsyncThunk("users/listUsers", async (query: any, 
   } catch (error) {}
 });
 
-export const updateUser = createAsyncThunk("users/updateUser", async (user: any, thunkApi: any) => {
+export const updateTeam = createAsyncThunk("teams/updateTeam", async (team: any, thunkApi: any) => {
   try {
     const {
       userLogin: { userInfo }
     } = thunkApi.getState();
-    const { data } = await axios.put("/api/users/" + user.pathname, user, {
+    const { data } = await axios.put("/api/teams/" + team.pathname, team, {
       headers: {
         Authorization: "Bearer " + userInfo.access_token
       }
@@ -31,12 +31,12 @@ export const updateUser = createAsyncThunk("users/updateUser", async (user: any,
   } catch (error) {}
 });
 
-export const createUser = createAsyncThunk("users/createUser", async (user: any, thunkApi: any) => {
+export const createTeam = createAsyncThunk("teams/createTeam", async (team: any, thunkApi: any) => {
   try {
     const {
       userLogin: { userInfo }
     } = thunkApi.getState();
-    const { data } = await axios.post("/api/users", user, {
+    const { data } = await axios.post("/api/teams", team, {
       headers: {
         Authorization: "Bearer " + userInfo.access_token
       }
@@ -45,12 +45,12 @@ export const createUser = createAsyncThunk("users/createUser", async (user: any,
   } catch (error) {}
 });
 
-export const detailsUser = createAsyncThunk("users/detailsUser", async ({ id }: any, thunkApi: any) => {
+export const detailsTeam = createAsyncThunk("teams/detailsTeam", async ({ id }: any, thunkApi: any) => {
   try {
     const {
       userLogin: { userInfo }
     } = thunkApi.getState();
-    const { data } = await axios.get(`/api/users/${id}`, {
+    const { data } = await axios.get(`/api/teams/${id}`, {
       headers: {
         Authorization: "Bearer " + userInfo.access_token
       }
@@ -59,12 +59,12 @@ export const detailsUser = createAsyncThunk("users/detailsUser", async ({ id }: 
   } catch (error) {}
 });
 
-export const deleteUser = createAsyncThunk("users/deleteUser", async (pathname, thunkApi: any) => {
+export const deleteTeam = createAsyncThunk("teams/deleteTeam", async (pathname, thunkApi: any) => {
   try {
     const {
       userLogin: { userInfo }
     } = thunkApi.getState();
-    const { data } = await axios.delete("/api/users/" + pathname, {
+    const { data } = await axios.delete("/api/teams/" + pathname, {
       headers: {
         Authorization: "Bearer " + userInfo.access_token
       }

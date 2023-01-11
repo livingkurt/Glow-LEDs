@@ -1,14 +1,14 @@
 /* eslint-disable max-lines-per-function */
 /* eslint-disable no-param-reassign */
 import { createSlice } from "@reduxjs/toolkit";
-import * as API from "../api/affiliateApi";
+import * as API from "../api/expenseApi";
 
-const affiliatesSlice = createSlice({
-  name: "affiliates",
+const expenseSlice = createSlice({
+  name: "expenses",
   initialState: {
     loading: false,
-    affiliates: [],
-    affiliate: {
+    expenses: [],
+    expense: {
       id: "",
       user: undefined,
       artist_name: "",
@@ -51,11 +51,11 @@ const affiliatesSlice = createSlice({
     ]
   },
   reducers: {
-    set_affiliate: (state, { payload }) => {
-      const updated_affiliate = payload;
+    set_expense: (state, { payload }) => {
+      const updated_expense = payload;
       return {
         ...state,
-        affiliate: { ...state.affiliate, ...updated_affiliate }
+        expense: { ...state.expense, ...updated_expense }
       };
     },
     set_loading: (state, { payload }) => {
@@ -75,57 +75,57 @@ const affiliatesSlice = createSlice({
     }
   },
   extraReducers: {
-    [API.listAffiliates.pending]: (state: any, { payload }: any) => {
+    [API.listExpenses.pending]: (state: any, { payload }: any) => {
       state.loading = true;
-      state.affiliates = [];
+      state.expenses = [];
     },
-    [API.listAffiliates.fulfilled]: (state: any, { payload }: any) => {
+    [API.listExpenses.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.affiliates = payload.affiliates;
+      state.expenses = payload.expenses;
       state.totalPages = payload.totalPages;
       state.page = payload.currentPage;
-      state.message = "Affiliates Found";
+      state.message = "Expenses Found";
     },
-    [API.listAffiliates.rejected]: (state: any, { payload }: any) => {
+    [API.listExpenses.rejected]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.saveAffiliate.pending]: (state: any, { payload }: any) => {
+    [API.saveExpense.pending]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.saveAffiliate.fulfilled]: (state: any, { payload }: any) => {
+    [API.saveExpense.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.affiliate = payload.affiliate;
-      state.message = "Affiliate Saved";
+      state.expense = payload.expense;
+      state.message = "Expense Saved";
     },
-    [API.saveAffiliate.rejected]: (state: any, { payload }: any) => {
+    [API.saveExpense.rejected]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.detailsAffiliate.pending]: (state: any, { payload }: any) => {
+    [API.detailsExpense.pending]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.detailsAffiliate.fulfilled]: (state: any, { payload }: any) => {
+    [API.detailsExpense.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.affiliate = payload;
-      state.message = "Affiliate Found";
+      state.expense = payload;
+      state.message = "Expense Found";
     },
-    [API.detailsAffiliate.rejected]: (state: any, { payload }: any) => {
+    [API.detailsExpense.rejected]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.deleteAffiliate.pending]: (state: any, { payload }: any) => {
+    [API.deleteExpense.pending]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.deleteAffiliate.fulfilled]: (state: any, { payload }: any) => {
+    [API.deleteExpense.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.affiliate = payload.affiliate;
-      state.message = "Affiliate Deleted";
+      state.expense = payload.expense;
+      state.message = "Expense Deleted";
     },
-    [API.deleteAffiliate.rejected]: (state: any, { payload }: any) => {
+    [API.deleteExpense.rejected]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
@@ -133,5 +133,5 @@ const affiliatesSlice = createSlice({
   }
 });
 
-export const { set_search, set_sort, set_page, set_limit, set_loading, set_affiliate } = affiliatesSlice.actions;
-export default affiliatesSlice.reducer;
+export const { set_search, set_sort, set_page, set_limit, set_loading, set_expense } = expenseSlice.actions;
+export default expenseSlice.reducer;
