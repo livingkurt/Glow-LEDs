@@ -3,12 +3,12 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { create_query } from "../utils/helper_functions";
 
-export const listSettings = createAsyncThunk("settings/listSettings", async (query: any, thunkApi: any) => {
+export const listCarts = createAsyncThunk("carts/listCarts", async (query: any, thunkApi: any) => {
   try {
     const {
       userLogin: { userInfo }
     } = thunkApi.getState();
-    const { data } = await axios.get("/api/settings?" + create_query(query), {
+    const { data } = await axios.get("/api/carts?" + create_query(query), {
       headers: {
         Authorization: "Bearer " + userInfo.access_token
       }
@@ -17,12 +17,12 @@ export const listSettings = createAsyncThunk("settings/listSettings", async (que
   } catch (error) {}
 });
 
-export const updateSetting = createAsyncThunk("settings/updateSetting", async (setting: any, thunkApi: any) => {
+export const updateCart = createAsyncThunk("carts/updateCart", async (cart: any, thunkApi: any) => {
   try {
     const {
       userLogin: { userInfo }
     } = thunkApi.getState();
-    const { data } = await axios.put("/api/settings/" + setting.pathname, setting, {
+    const { data } = await axios.put("/api/carts/" + cart.pathname, cart, {
       headers: {
         Authorization: "Bearer " + userInfo.access_token
       }
@@ -31,12 +31,12 @@ export const updateSetting = createAsyncThunk("settings/updateSetting", async (s
   } catch (error) {}
 });
 
-export const createSetting = createAsyncThunk("settings/createSetting", async (setting: any, thunkApi: any) => {
+export const createCart = createAsyncThunk("carts/createCart", async (cart: any, thunkApi: any) => {
   try {
     const {
       userLogin: { userInfo }
     } = thunkApi.getState();
-    const { data } = await axios.post("/api/settings", setting, {
+    const { data } = await axios.post("/api/carts", cart, {
       headers: {
         Authorization: "Bearer " + userInfo.access_token
       }
@@ -45,12 +45,12 @@ export const createSetting = createAsyncThunk("settings/createSetting", async (s
   } catch (error) {}
 });
 
-export const detailsSetting = createAsyncThunk("settings/detailsSetting", async ({ id }: any, thunkApi: any) => {
+export const detailsCart = createAsyncThunk("carts/detailsCart", async ({ id }: any, thunkApi: any) => {
   try {
     const {
       userLogin: { userInfo }
     } = thunkApi.getState();
-    const { data } = await axios.get(`/api/settings/${id}`, {
+    const { data } = await axios.get(`/api/carts/${id}`, {
       headers: {
         Authorization: "Bearer " + userInfo.access_token
       }
@@ -59,12 +59,12 @@ export const detailsSetting = createAsyncThunk("settings/detailsSetting", async 
   } catch (error) {}
 });
 
-export const deleteSetting = createAsyncThunk("settings/deleteSetting", async (pathname, thunkApi: any) => {
+export const deleteCart = createAsyncThunk("carts/deleteCart", async (pathname, thunkApi: any) => {
   try {
     const {
       userLogin: { userInfo }
     } = thunkApi.getState();
-    const { data } = await axios.delete("/api/settings/" + pathname, {
+    const { data } = await axios.delete("/api/carts/" + pathname, {
       headers: {
         Authorization: "Bearer " + userInfo.access_token
       }

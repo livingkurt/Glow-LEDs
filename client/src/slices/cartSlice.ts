@@ -1,14 +1,14 @@
 /* eslint-disable max-lines-per-function */
 /* eslint-disable no-param-reassign */
 import { createSlice } from "@reduxjs/toolkit";
-import * as API from "../api/settingApi";
+import * as API from "../api/cartApi";
 
-const settingSlice = createSlice({
-  name: "settings",
+const cartSlice = createSlice({
+  name: "carts",
   initialState: {
     loading: false,
-    settings: [],
-    setting: {
+    carts: [],
+    cart: {
       id: "",
       user: undefined,
       artist_name: "",
@@ -51,11 +51,11 @@ const settingSlice = createSlice({
     ]
   },
   reducers: {
-    set_setting: (state, { payload }) => {
-      const updated_setting = payload;
+    set_cart: (state, { payload }) => {
+      const updated_cart = payload;
       return {
         ...state,
-        setting: { ...state.setting, ...updated_setting }
+        cart: { ...state.cart, ...updated_cart }
       };
     },
     set_loading: (state, { payload }) => {
@@ -75,57 +75,57 @@ const settingSlice = createSlice({
     }
   },
   extraReducers: {
-    [API.listSettings.pending]: (state: any, { payload }: any) => {
+    [API.listCarts.pending]: (state: any, { payload }: any) => {
       state.loading = true;
-      state.settings = [];
+      state.carts = [];
     },
-    [API.listSettings.fulfilled]: (state: any, { payload }: any) => {
+    [API.listCarts.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.settings = payload.settings;
+      state.carts = payload.carts;
       state.totalPages = payload.totalPages;
       state.page = payload.currentPage;
-      state.message = "Settings Found";
+      state.message = "Carts Found";
     },
-    [API.listSettings.rejected]: (state: any, { payload }: any) => {
+    [API.listCarts.rejected]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.saveSetting.pending]: (state: any, { payload }: any) => {
+    [API.saveCart.pending]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.saveSetting.fulfilled]: (state: any, { payload }: any) => {
+    [API.saveCart.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.setting = payload.setting;
-      state.message = "Setting Saved";
+      state.cart = payload.cart;
+      state.message = "Cart Saved";
     },
-    [API.saveSetting.rejected]: (state: any, { payload }: any) => {
+    [API.saveCart.rejected]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.detailsSetting.pending]: (state: any, { payload }: any) => {
+    [API.detailsCart.pending]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.detailsSetting.fulfilled]: (state: any, { payload }: any) => {
+    [API.detailsCart.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.setting = payload;
-      state.message = "Setting Found";
+      state.cart = payload;
+      state.message = "Cart Found";
     },
-    [API.detailsSetting.rejected]: (state: any, { payload }: any) => {
+    [API.detailsCart.rejected]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.deleteSetting.pending]: (state: any, { payload }: any) => {
+    [API.deleteCart.pending]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.deleteSetting.fulfilled]: (state: any, { payload }: any) => {
+    [API.deleteCart.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.setting = payload.setting;
-      state.message = "Setting Deleted";
+      state.cart = payload.cart;
+      state.message = "Cart Deleted";
     },
-    [API.deleteSetting.rejected]: (state: any, { payload }: any) => {
+    [API.deleteCart.rejected]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
@@ -133,5 +133,5 @@ const settingSlice = createSlice({
   }
 });
 
-export const { set_search, set_sort, set_page, set_limit, set_loading, set_setting } = settingSlice.actions;
-export default settingSlice.reducer;
+export const { set_search, set_sort, set_page, set_limit, set_loading, set_cart } = cartSlice.actions;
+export default cartSlice.reducer;
