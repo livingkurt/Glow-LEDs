@@ -1,40 +1,4 @@
-export { default as EditProductPage } from "./AdminPages/EditPages/EditProductPage";
-export { default as EditExpensePage } from "./AdminPages/EditPages/EditExpensePage";
-export { default as EditFeaturePage } from "./AdminPages/EditPages/EditFeaturePage";
-export { default as EditPromoPage } from "./AdminPages/EditPages/EditPromoPage";
-export { default as EditOrderPage } from "./AdminPages/EditPages/EditOrderPage";
-export { default as EditCartPage } from "./AdminPages/EditPages/EditCartPage";
-export { default as EditChipPage } from "./AdminPages/EditPages/EditChipPage";
-export { default as EditTeamPage } from "./AdminPages/EditPages/EditTeamPage";
-export { default as EditContentPage } from "./AdminPages/EditPages/EditContentPage";
-export { default as EditEmailPage } from "./AdminPages/EditPages/EditEmailPage";
 export { default as EditAllDataPage } from "./AdminPages/EditPages/EditAllDataPage";
-export { default as EditPaycheckPage } from "./AdminPages/EditPages/EditPaycheckPage";
-export { default as EditSurveyPage } from "./AdminPages/EditPages/EditSurveyPage";
-export { default as EditParcelPage } from "./AdminPages/EditPages/EditParcelPage";
-export { default as EditCategoryPage } from "./AdminPages/EditPages/EditCategoryPage";
-export { default as EditSettingPage } from "./AdminPages/EditPages/EditSettingPage";
-export { default as EditPalettePage } from "./AdminPages/EditPages/EditPalettePage";
-
-export { default as OrdersPage } from "./AdminPages/ListPages/OrdersPage";
-export { default as ProductsPage } from "./AdminPages/ListPages/ProductsPage";
-
-export { default as ExpensesPage } from "./AdminPages/ListPages/ExpensesPage";
-
-export { default as ChipsPage } from "./AdminPages/ListPages/ChipsPage";
-export { default as PromosPage } from "./AdminPages/ListPages/PromosPage";
-export { default as FeaturesPage } from "./AdminPages/ListPages/FeaturesPage";
-export { default as ContentsPage } from "./AdminPages/ListPages/ContentsPage";
-export { default as EmailsPage } from "./AdminPages/ListPages/EmailsPage";
-export { default as CartsPage } from "./AdminPages/ListPages/CartsPage";
-export { default as TeamsPage } from "./AdminPages/ListPages/TeamsPage";
-export { default as ProductsDisplayPage } from "./AdminPages/ListPages/ProductsDisplayPage";
-export { default as PaychecksPage } from "./AdminPages/ListPages/PaychecksPage";
-export { default as SurveysPage } from "./AdminPages/ListPages/SurveysPage";
-export { default as ParcelsPage } from "./AdminPages/ListPages/ParcelsPage";
-export { default as CategorysPage } from "./AdminPages/ListPages/CategorysPage";
-export { default as SettingsPage } from "./AdminPages/ListPages/SettingsPage";
-export { default as PalettesPage } from "./AdminPages/ListPages/PalettesPage";
 
 export { default as AnnouncementEmail } from "./AdminPages/AnnouncementEmail";
 export { default as ControlPanelPage } from "./AdminPages/ControlPanelPage";

@@ -7,43 +7,24 @@ import {
   CartPage,
   LoginPage,
   RegisterPage,
-  ProductsPage,
   ShippingPage,
   PlaceOrderPage,
   OrderPage,
-  OrdersPage,
   ContactPage,
   MyOrdersPage,
   Four04Page,
-  EditProductPage,
   PasswordResetPage,
   VerifiedPage,
   CheckEmailPage,
   ChangePasswordPage,
-  TermsPage,
   AboutPage,
   FAQPage,
   UserProfilePage,
   SitemapPage,
   ControlPanelPage,
-  FeaturedPage,
-  ExpensesPage,
-  EditExpensePage,
-  EditFeaturePage,
-  FeaturesPage,
-  EditPromoPage,
-  PromosPage,
-  EditOrderPage,
-  EditCartPage,
-  CartsPage,
-  ContentsPage,
-  EditContentPage,
   MusicPage,
-  EditEmailPage,
-  EmailsPage,
   MenuPage,
   ResetPasswordPage,
-  ProductsDisplayPage,
   TrackOrderPage,
   AnnouncementsPage,
   EditAllDataPage,
@@ -51,41 +32,27 @@ import {
   SubmitFeaturePage,
   SubmissionComplete,
   EditUserAffiliatePage,
-  ChipsPage,
   AllSponsorsPage,
   SponsorPage,
-  EditTeamPage,
-  TeamsPage,
   TeamPage,
   AllTeamsPage,
   ManualPage,
   AffiliateTermsPage,
   BecomeAffiliatePage,
-  EditPaycheckPage,
-  PaychecksPage,
-  EditSurveyPage,
-  SurveysPage,
-  EditParcelPage,
-  ParcelsPage,
-  CategorysPage,
-  EditCategoryPage,
-  EditSettingPage,
-  SettingsPage,
   LabelCreatorPage,
   AdminChangePasswordPage,
   MonthlyExpensesPage,
   MonthExpensesPage,
   ColorPalettePage,
-  EditPalettePage,
-  PalettesPage,
   OrderCombinerPage,
-  EditChipPage,
   EventsPage,
   CompletePage,
   GcodeContinousPage,
   AllProductsByChipPage,
   ImageCompressorPage,
-  AnnouncementEmail
+  AnnouncementEmail,
+  FeaturedPage,
+  TermsPage
 } from "./pages/index";
 import { Header, Container, Content, Footer, Sidebar, Cart } from "./components/ContainerComponents/index";
 import { AdminRoute, PrivateRoute } from "./components/RouteComponents";
@@ -100,12 +67,28 @@ import { EmailModal } from "./components/SpecialtyComponents";
 import { daysBetween } from "./utils/helper_functions";
 import { isBrowser, isMobile } from "react-device-detect";
 import Headroom from "react-headroom";
-import FilamentsPage from "./pages/AdminPages/ListPages/FilamentsPage";
-import EditFilamentPage from "./pages/AdminPages/EditPages/EditFilamentPage";
+import EditFilamentPage from "./pages/FilamentsPage/EditFilamentPage";
 import { AffiliatesPage, EditAffiliatePage } from "./pages/AffiliatesPage";
 import { createTheme, ThemeProvider } from "@mui/material";
 import glow_leds_theme from "./theme";
 import { EditUserPage, UsersPage } from "./pages/UsersPage";
+import { EditProductPage, ProductsDisplayPage, ProductsPage } from "./pages/ProductsPage";
+import { EditOrderPage, OrdersPage } from "./pages/OrdersPage";
+import { EditPaycheckPage, PaychecksPage } from "./pages/PaychecksPage";
+import { EditSettingPage, SettingsPage } from "./pages/SettingsPage";
+import { CategorysPage, EditCategoryPage } from "./pages/CategorysPage";
+import { EditSurveyPage, SurveysPage } from "./pages/SurveysPage";
+import { EditParcelPage, ParcelsPage } from "./pages/ParcelsPage";
+import { EditPalettePage, PalettesPage } from "./pages/PalettesPage";
+import { FilamentsPage } from "./pages/FilamentsPage";
+import { EditExpensePage, ExpensesPage } from "./pages/ExpensesPage";
+import { EditFeaturePage, FeaturesPage } from "./pages/FeaturesPage";
+import { CartsPage, EditCartPage } from "./pages/CartaPage";
+import { ContentsPage, EditContentPage } from "./pages/ContentsPage";
+import { EditEmailPage, EmailsPage } from "./pages/EmailsPage";
+import { EditPromoPage, PromosPage } from "./pages/PromosPage";
+import { EditTeamPage, TeamsPage } from "./pages/TeamsPage";
+import { ChipsPage, EditChipPage } from "./pages/ChipsPage";
 
 const App = props => {
   const theme_colors = {

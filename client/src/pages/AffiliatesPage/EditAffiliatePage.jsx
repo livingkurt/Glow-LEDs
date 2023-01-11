@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-// import { saveAffiliate, detailsAffiliate } from "../../../actions/affiliateActions";
 import { useHistory } from "react-router-dom";
 import { Loading, Notification } from "../../components/UtilityComponents";
 import { Helmet } from "react-helmet";
