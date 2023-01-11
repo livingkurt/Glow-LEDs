@@ -55,7 +55,7 @@ const AffiliatesPage = props => {
     dispatch(set_page(page));
     update_products_url(history, search, "", "", page, limit);
 
-    dispatch(API.listAffiliates({ limit, page, sort }));
+    dispatch(API.listAffiliates({ active: true, limit, page, sort }));
   };
 
   useEffect(() => {
@@ -98,6 +98,7 @@ const AffiliatesPage = props => {
       }
       dispatch(
         API.listAffiliates({
+          active: true,
           filter,
           search,
           sort,
@@ -138,7 +139,7 @@ const AffiliatesPage = props => {
                 active: affiliate.active ? false : true
               })
             );
-            dispatch(API.listAffiliates({ limit, page, sort }));
+            dispatch(API.listAffiliates({ active: true, limit, page, sort }));
           }}
           aria-label={affiliate.active ? "deactivate" : "activate"}
         >
@@ -189,11 +190,11 @@ const AffiliatesPage = props => {
         }}
         submitHandler={e => {
           e.preventDefault();
-          dispatch(API.listAffiliates({ category, search, sort, limit, page: 1 }));
+          dispatch(API.listAffiliates({ active: true, category, search, sort, limit, page: 1 }));
         }}
         sortHandler={e => {
           dispatch(set_sort(e.target.value));
-          dispatch(API.listAffiliates({ category, search, sort: e.target.value, limit, page: 1 }));
+          dispatch(API.listAffiliates({ active: true, category, search, sort: e.target.value, limit, page: 1 }));
         }}
         sort_options={sort_options}
         totalPages={totalPages}
