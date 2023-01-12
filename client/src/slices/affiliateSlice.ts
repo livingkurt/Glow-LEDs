@@ -91,15 +91,28 @@ const affiliatesSlice = createSlice({
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.saveAffiliate.pending]: (state: any, { payload }: any) => {
+    [API.createAffiliate.pending]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.saveAffiliate.fulfilled]: (state: any, { payload }: any) => {
+    [API.createAffiliate.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
       state.affiliate = payload.affiliate;
       state.message = "Affiliate Saved";
     },
-    [API.saveAffiliate.rejected]: (state: any, { payload }: any) => {
+    [API.createAffiliate.rejected]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.error = payload.error;
+      state.message = payload.message;
+    },
+    [API.updateAffiliate.pending]: (state: any, { payload }: any) => {
+      state.loading = true;
+    },
+    [API.updateAffiliate.fulfilled]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.affiliate = payload.affiliate;
+      state.message = "Affiliate Saved";
+    },
+    [API.updateAffiliate.rejected]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;

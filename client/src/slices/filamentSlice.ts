@@ -91,15 +91,28 @@ const filamentSlice = createSlice({
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.saveFilament.pending]: (state: any, { payload }: any) => {
+    [API.createFilament.pending]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.saveFilament.fulfilled]: (state: any, { payload }: any) => {
+    [API.createFilament.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
       state.filament = payload.filament;
       state.message = "Filament Saved";
     },
-    [API.saveFilament.rejected]: (state: any, { payload }: any) => {
+    [API.createFilament.rejected]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.error = payload.error;
+      state.message = payload.message;
+    },
+    [API.updateFilament.pending]: (state: any, { payload }: any) => {
+      state.loading = true;
+    },
+    [API.updateFilament.fulfilled]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.filament = payload.filament;
+      state.message = "Filament Saved";
+    },
+    [API.updateFilament.rejected]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;

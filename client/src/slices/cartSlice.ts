@@ -91,15 +91,28 @@ const cartSlice = createSlice({
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.saveCart.pending]: (state: any, { payload }: any) => {
+    [API.createCart.pending]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.saveCart.fulfilled]: (state: any, { payload }: any) => {
+    [API.createCart.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
       state.cart = payload.cart;
       state.message = "Cart Saved";
     },
-    [API.saveCart.rejected]: (state: any, { payload }: any) => {
+    [API.createCart.rejected]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.error = payload.error;
+      state.message = payload.message;
+    },
+    [API.updateCart.pending]: (state: any, { payload }: any) => {
+      state.loading = true;
+    },
+    [API.updateCart.fulfilled]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.cart = payload.cart;
+      state.message = "Cart Saved";
+    },
+    [API.updateCart.rejected]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;

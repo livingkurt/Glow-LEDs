@@ -91,15 +91,28 @@ const userSlice = createSlice({
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.saveUser.pending]: (state: any, { payload }: any) => {
+    [API.createUser.pending]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.saveUser.fulfilled]: (state: any, { payload }: any) => {
+    [API.createUser.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
       state.user = payload.user;
       state.message = "User Saved";
     },
-    [API.saveUser.rejected]: (state: any, { payload }: any) => {
+    [API.createUser.rejected]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.error = payload.error;
+      state.message = payload.message;
+    },
+    [API.updateUser.pending]: (state: any, { payload }: any) => {
+      state.loading = true;
+    },
+    [API.updateUser.fulfilled]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.user = payload.user;
+      state.message = "User Saved";
+    },
+    [API.updateUser.rejected]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;

@@ -91,15 +91,28 @@ const teamSlice = createSlice({
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.saveTeam.pending]: (state: any, { payload }: any) => {
+    [API.createTeam.pending]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.saveTeam.fulfilled]: (state: any, { payload }: any) => {
+    [API.createTeam.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
       state.team = payload.team;
       state.message = "Team Saved";
     },
-    [API.saveTeam.rejected]: (state: any, { payload }: any) => {
+    [API.createTeam.rejected]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.error = payload.error;
+      state.message = payload.message;
+    },
+    [API.updateTeam.pending]: (state: any, { payload }: any) => {
+      state.loading = true;
+    },
+    [API.updateTeam.fulfilled]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.team = payload.team;
+      state.message = "Team Saved";
+    },
+    [API.updateTeam.rejected]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
