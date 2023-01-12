@@ -36,6 +36,7 @@ const affiliatesSlice = createSlice({
       private_code: undefined
     },
     message: "",
+    success: false,
     error: {},
     search: "",
     sort: "",
@@ -58,35 +59,11 @@ const affiliatesSlice = createSlice({
         affiliate: { ...state.affiliate, ...updated_affiliate }
       };
     },
-    clear_affiliate: (state, { payload }) => {
-      state.affiliate.id = "";
-      state.affiliate.user = undefined;
-      state.affiliate.artist_name = "";
-      state.affiliate.instagram_handle = "";
-      state.affiliate.facebook_name = "";
-      state.affiliate.percentage_off = "";
-      state.affiliate.sponsor = "";
-      state.affiliate.promoter = "";
-      state.affiliate.rave_mob = "";
-      state.affiliate.active = "";
-      state.affiliate.style = "";
-      state.affiliate.inspiration = "";
-      state.affiliate.bio = "";
-      state.affiliate.link = "";
-      state.affiliate.picture = "";
-      state.affiliate.location = "";
-      state.affiliate.years = "";
-      state.affiliate.team = "";
-      state.affiliate.video = "";
-      state.affiliate.venmo = "";
-      state.affiliate.products = [];
-      state.affiliate.chips = [];
-      state.affiliate.pathname = "";
-      state.affiliate.public_code = undefined;
-      state.affiliate.private_code = undefined;
-    },
     set_loading: (state, { payload }) => {
       state.loading = payload;
+    },
+    set_success: (state, { payload }) => {
+      state.success = payload;
     },
     set_search: (state, { payload }) => {
       state.search = payload;
@@ -160,6 +137,7 @@ const affiliatesSlice = createSlice({
     },
     [API.updateAffiliate.pending]: (state: any, { payload }: any) => {
       state.loading = true;
+      state.success = false;
     },
     [API.updateAffiliate.fulfilled]: (state: any, { payload }: any) => {
       const affiliate = {
@@ -190,6 +168,7 @@ const affiliatesSlice = createSlice({
         private_code: undefined
       };
       state.loading = false;
+      state.success = true;
       state.affiliate = affiliate;
       state.message = "Affiliate Saved";
     },
@@ -197,6 +176,7 @@ const affiliatesSlice = createSlice({
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
+      state.success = false;
     },
     [API.detailsAffiliate.pending]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -227,5 +207,5 @@ const affiliatesSlice = createSlice({
   }
 });
 
-export const { set_search, set_sort, set_page, set_limit, set_loading, set_affiliate, clear_affiliate } = affiliatesSlice.actions;
+export const { set_search, set_sort, set_page, set_success, set_limit, set_loading, set_affiliate } = affiliatesSlice.actions;
 export default affiliatesSlice.reducer;

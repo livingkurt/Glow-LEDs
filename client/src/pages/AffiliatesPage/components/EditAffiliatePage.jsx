@@ -1,18 +1,17 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { Loading, Notification } from "../../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { listUsers } from "../../../actions/userActions";
 import { listProducts } from "../../../actions/productActions";
 import { listChips } from "../../../actions/chipActions";
 import { snake_case } from "../../../utils/helper_functions";
 import { listPromos } from "../../../actions/promoActions";
-import { GLAutocomplete, GLButton, GLCheckboxV2, GLText, GLTextField } from "../../../shared/GlowLEDsComponents";
-import { clear_affiliate, set_affiliate } from "../../../slices/affiliateSlice";
+import { GLAutocomplete, GLCheckboxV2, GLTextField } from "../../../shared/GlowLEDsComponents";
+import { clear_affiliate, set_affiliate, set_success } from "../../../slices/affiliateSlice";
 import * as API from "../../../api/affiliateApi";
 import { makeStyles } from "@mui/styles";
-import { Container, Paper, Stack, TextField } from "@mui/material";
+import { Container, Paper, Stack } from "@mui/material";
 import GLButtonV2 from "../../../shared/GlowLEDsComponents/GLButtonV2/GLButton";
 
 const useStyles = makeStyles(() => ({
@@ -34,7 +33,7 @@ const EditAffiliatePage = props => {
 
   const affiliateSlice = useSelector(state => state.affiliateSlice);
   const affiliate = useSelector(state => state.affiliateSlice.affiliate);
-  const { loading } = affiliateSlice;
+  const { loading, success } = affiliateSlice;
   const {
     user,
     artist_name,
@@ -78,8 +77,6 @@ const EditAffiliatePage = props => {
     if (clean) {
       if (props.match.params.pathname) {
         dispatch(API.detailsAffiliate({ pathname: props.match.params.pathname }));
-      } else {
-        dispatch(clear_affiliate());
       }
       dispatch(listUsers({}));
       dispatch(listProducts({ option: false, hidden: false }));
@@ -97,8 +94,14 @@ const EditAffiliatePage = props => {
     } else {
       dispatch(API.createAffiliate(affiliate));
     }
-    history.push("/secure/glow/affiliates?page=1?limit=10");
   };
+
+  useEffect(() => {
+    if (success) {
+      history.push("/secure/glow/affiliates?page=1?limit=10");
+      dispatch(set_success(false));
+    }
+  }, [dispatch, history, success]);
 
   const classes = useStyles();
   return (
