@@ -9,7 +9,7 @@ import { listChips } from "../../../actions/chipActions";
 import { snake_case } from "../../../utils/helper_functions";
 import { listPromos } from "../../../actions/promoActions";
 import { GLAutocomplete, GLButton, GLCheckboxV2, GLText, GLTextField } from "../../../shared/GlowLEDsComponents";
-import { set_affiliate } from "../../../slices/affiliateSlice";
+import { clear_affiliate, set_affiliate } from "../../../slices/affiliateSlice";
 import * as API from "../../../api/affiliateApi";
 import { makeStyles } from "@mui/styles";
 import { Container, Paper, Stack, TextField } from "@mui/material";
@@ -79,7 +79,7 @@ const EditAffiliatePage = props => {
       if (props.match.params.pathname) {
         dispatch(API.detailsAffiliate({ pathname: props.match.params.pathname }));
       } else {
-        dispatch(set_affiliate({}));
+        dispatch(clear_affiliate());
       }
       dispatch(listUsers({}));
       dispatch(listProducts({ option: false, hidden: false }));
@@ -92,9 +92,12 @@ const EditAffiliatePage = props => {
 
   const submitHandler = e => {
     e.preventDefault();
-    dispatch(API.createAffiliate(affiliate));
-    // dispatch(set_affiliate({}));
-    // history.push("/secure/glow/affiliates?page=1?limit=10");
+    if (props.match.params.pathname) {
+      dispatch(API.updateAffiliate(affiliate));
+    } else {
+      dispatch(API.createAffiliate(affiliate));
+    }
+    history.push("/secure/glow/affiliates?page=1?limit=10");
   };
 
   const classes = useStyles();

@@ -39,7 +39,7 @@ export const listAffiliates = createAsyncThunk("affiliates/listAffiliates", asyn
   } catch (error) {}
 });
 
-export const createAffiliate = createAsyncThunk("affiliates/saveAffiliate", async (affiliate: any, thunkApi: any) => {
+export const updateAffiliate = createAsyncThunk("affiliates/updateAffiliate", async (affiliate: any, thunkApi: any) => {
   try {
     const {
       userLogin: { userInfo }
@@ -53,7 +53,7 @@ export const createAffiliate = createAsyncThunk("affiliates/saveAffiliate", asyn
   } catch (error) {}
 });
 
-export const updateAffiliate = createAsyncThunk("affiliates/updateAffiliate", async (affiliate: any, thunkApi: any) => {
+export const createAffiliate = createAsyncThunk("affiliates/createAffiliate", async (affiliate: any, thunkApi: any) => {
   try {
     const {
       userLogin: { userInfo }
