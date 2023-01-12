@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { saveSetting, detailsSetting, listSettings } from "../../actions/settingActions";
+import { saveSetting, detailsSetting, listSettings } from "../../../actions/settingActions";
 import { useHistory, Link } from "react-router-dom";
-import { Loading } from "../../components/UtilityComponents";
+import { Loading } from "../../../components/SharedComponents";
 import { Helmet } from "react-helmet";
-import { GLButton } from "../../components/GlowLEDsComponents";
+import { GLButton } from "../../../components/GlowLEDsComponents";
 
 const EditSettingPage = props => {
   const [id, set_id] = useState("");

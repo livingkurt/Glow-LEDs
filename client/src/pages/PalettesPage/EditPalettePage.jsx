@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { savePalette, detailsPalette } from "../../actions/paletteActions";
+import { savePalette, detailsPalette } from "../../../actions/paletteActions";
 import { useHistory, Link } from "react-router-dom";
-import { DropdownDisplay, Loading } from "../../components/UtilityComponents";
+import { DropdownDisplay, Loading } from "../../../components/SharedComponents";
 import { Helmet } from "react-helmet";
 import { humanize } from "../../utils/helper_functions";
 import {
@@ -20,7 +20,7 @@ import {
   SwatchesPicker,
   TwitterPicker
 } from "react-color";
-import { listChips } from "../../actions/chipActions";
+import { listChips } from "../../../actions/chipActions";
 
 const EditPalettePage = props => {
   const [id, set_id] = useState("");

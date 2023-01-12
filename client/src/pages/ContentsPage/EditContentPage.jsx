@@ -1,12 +1,12 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { saveContent, detailsContent } from "../../actions/contentActions";
+import { saveContent, detailsContent } from "../../../actions/contentActions";
 import { useHistory } from "react-router-dom";
-import { ImageDisplay, Loading } from "../../components/UtilityComponents";
+import { ImageDisplay, Loading } from "../../../components/SharedComponents";
 import { Helmet } from "react-helmet";
-import { detailsEmail, listEmails, saveEmail } from "../../actions/emailActions";
+import { detailsEmail, listEmails, saveEmail } from "../../../actions/emailActions";
 import { API_Emails } from "../../utils";
-import { GLButton } from "../../components/GlowLEDsComponents";
+import { GLButton } from "../../../components/GlowLEDsComponents";
 
 const EditContentPage = props => {
   const [id, set_id] = useState("");

@@ -1,12 +1,13 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { listFeatures, deleteFeature } from "../../actions/featureActions";
+import { listFeatures, deleteFeature } from "../../../actions/featureActions";
 import { Link } from "react-router-dom";
-import { Loading, Notification } from "../../components/UtilityComponents";
+import { Loading, Notification } from "../../../components/SharedComponents";
 import { Helmet } from "react-helmet";
 import { format_date } from "../../utils/helper_functions";
-import { Search, Sort } from "../../components/SpecialtyComponents";
-import { GLButton } from "../../components/GlowLEDsComponents";
+import { GLButton } from "../../../components/GlowLEDsComponents";
+import Search from "../../components/GlowLEDsComponents/GLTable/Search";
+import Sort from "../../components/GlowLEDsComponents/GLTable/Sort";
 
 const FeaturesPage = props => {
   const [search, set_search] = useState("");

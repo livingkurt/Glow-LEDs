@@ -1,94 +1,85 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
-import {
-  HomePage,
-  AllProductsPage,
-  ProductPage,
-  CartPage,
-  LoginPage,
-  RegisterPage,
-  ShippingPage,
-  PlaceOrderPage,
-  OrderPage,
-  ContactPage,
-  MyOrdersPage,
-  Four04Page,
-  PasswordResetPage,
-  VerifiedPage,
-  CheckEmailPage,
-  ChangePasswordPage,
-  AboutPage,
-  FAQPage,
-  UserProfilePage,
-  SitemapPage,
-  ControlPanelPage,
-  MusicPage,
-  MenuPage,
-  ResetPasswordPage,
-  TrackOrderPage,
-  AnnouncementsPage,
-  EditAllDataPage,
-  AllFeaturesPage,
-  SubmitFeaturePage,
-  SubmissionComplete,
-  EditUserAffiliatePage,
-  AllSponsorsPage,
-  SponsorPage,
-  TeamPage,
-  AllTeamsPage,
-  ManualPage,
-  AffiliateTermsPage,
-  BecomeAffiliatePage,
-  LabelCreatorPage,
-  AdminChangePasswordPage,
-  MonthlyExpensesPage,
-  MonthExpensesPage,
-  ColorPalettePage,
-  OrderCombinerPage,
-  EventsPage,
-  CompletePage,
-  GcodeContinousPage,
-  AllProductsByChipPage,
-  ImageCompressorPage,
-  AnnouncementEmail,
-  FeaturedPage,
-  TermsPage
-} from "./pages/index";
 import { Header, Container, Content, Footer, Sidebar, Cart } from "./components/ContainerComponents/index";
 import { AdminRoute, PrivateRoute } from "./components/RouteComponents";
-import { Notification, ScrollToTop } from "./components/UtilityComponents";
+import { Notification, ScrollToTop } from "./components/SharedComponents";
 import MessengerCustomerChat from "react-messenger-customer-chat";
 import { Helmet } from "react-helmet";
 import useWindowDimensions from "./components/Hooks/windowDimensions";
 // import Particles from "react-particles-js";
 import particlesjs_config from "./particlesjs_config.json";
 import { check_authentication } from "./utils/react_helper_functions";
-import { EmailModal } from "./components/SpecialtyComponents";
 import { daysBetween } from "./utils/helper_functions";
 import { isBrowser, isMobile } from "react-device-detect";
 import Headroom from "react-headroom";
-import EditFilamentPage from "./pages/FilamentsPage/EditFilamentPage";
-import { AffiliatesPage, EditAffiliatePage } from "./pages/AffiliatesPage";
+
 import { createTheme, ThemeProvider } from "@mui/material";
 import glow_leds_theme from "./theme";
-import { EditUserPage, UsersPage } from "./pages/UsersPage";
-import { EditProductPage, ProductsDisplayPage, ProductsPage } from "./pages/ProductsPage";
-import { EditOrderPage, OrdersPage } from "./pages/OrdersPage";
+import {
+  AdminChangePasswordPage,
+  ChangePasswordPage,
+  EditUserPage,
+  PasswordResetPage,
+  ProfilePage,
+  ResetPasswordPage,
+  UsersPage
+} from "./pages/UsersPage";
+import { EditOrderPage, LabelCreatorPage, MyOrdersPage, OrderCombinerPage, TrackOrderPage } from "./pages/OrdersPage/components";
+import { OrderPage } from "./pages/OrderPage";
+import { PlaceOrderPage } from "./pages/PlaceOrderPage";
+import { EditUserAffiliatePage } from "./pages/ProfiePage/components";
+import { EditProductPage } from "./pages/ProductsPage/components";
+import { GcodeContinousPage } from "./pages/GcodeContinousPage";
+import { DatabaseMigrationPage } from "./pages/DatabaseMigrationPage";
+import { ProductsPage } from "./pages/ProductsPage";
+import { OrdersPage } from "./pages/OrdersPage";
 import { EditPaycheckPage, PaychecksPage } from "./pages/PaychecksPage";
 import { EditSettingPage, SettingsPage } from "./pages/SettingsPage";
 import { CategorysPage, EditCategoryPage } from "./pages/CategorysPage";
 import { EditSurveyPage, SurveysPage } from "./pages/SurveysPage";
 import { EditParcelPage, ParcelsPage } from "./pages/ParcelsPage";
 import { EditPalettePage, PalettesPage } from "./pages/PalettesPage";
-import { FilamentsPage } from "./pages/FilamentsPage";
+import { EditFilamentPage, FilamentsPage } from "./pages/FilamentsPage";
+import { MonthExpensesPage, MonthlyExpensesPage } from "./pages/ControlPanelPage/components";
+import { ControlPanelPage } from "./pages/ControlPanelPage";
 import { EditExpensePage, ExpensesPage } from "./pages/ExpensesPage";
 import { EditFeaturePage, FeaturesPage } from "./pages/FeaturesPage";
-import { CartsPage, EditCartPage } from "./pages/CartaPage";
+import { CartsPage, EditCartPage } from "./pages/CartsPage";
 import { ContentsPage, EditContentPage } from "./pages/ContentsPage";
-import { EditEmailPage, EmailsPage } from "./pages/EmailsPage";
+import { ProductsDisplayPage } from "./pages/ProductsGridPage/components";
+import { AnnouncementEmail, EditEmailPage, EmailModal } from "./pages/EmailsPage/components";
+import { EmailsPage } from "./pages/EmailsPage";
 import { EditPromoPage, PromosPage } from "./pages/PromosPage";
+import { AffiliatesPage, AffiliateTermsPage, EditAffiliatePage } from "./pages/AffiliatesPage";
 import { EditTeamPage, TeamsPage } from "./pages/TeamsPage";
 import { ChipsPage, EditChipPage } from "./pages/ChipsPage";
+import { HomePage } from "./pages/HomePage";
+import { CheckEmailPage, LoginPage } from "./pages/LoginPage";
+import VerifiedPage from "./pages/LoginPage/components/VerifiedPage";
+import { RegisterPage } from "./pages/RegisterPage";
+import ShippingPage from "./pages/ProfiePage/components/UserShippingPage";
+import { CartPage } from "./pages/CartPage";
+import { ProductsGridPage } from "./pages/ProductsGridPage";
+import { ProductsGridByChipPage } from "./pages/ProductsGridPage/components";
+import { ProductPage } from "./pages/ProductPage";
+import { FeaturesGridPage } from "./pages/FeaturesGridPage";
+import { FeaturedPage } from "./pages/FeaturedPage";
+import { SponsorsGridPage } from "./pages/SponsorsGridPage";
+import { SponsorPage } from "./pages/SponsorPage";
+import { TeamsGridPage } from "./pages/TeamsGridPage";
+import { TeamPage } from "./pages/TeamPage";
+import { AnnouncementsPage } from "./pages/AnnouncementsPage";
+import { ManualPage } from "./pages/ManualPage";
+import { ColorPalettePage } from "./pages/ColorPalettesPage";
+import { EventsPage } from "./pages/EventsPage";
+import { ContactPage } from "./pages/ContactPage";
+import { TermsPage } from "./pages/TermsPage";
+import { MenuPage } from "./pages/MenuPage";
+import { AboutPage } from "./pages/AboutPage";
+import { FAQPage } from "./pages/FAQPage";
+import { SitemapPage } from "./pages/SitemapPage";
+import { MusicPage } from "./pages/MusicPage";
+import { CompletePage } from "./pages/CompletePage";
 
 const App = props => {
   const theme_colors = {
@@ -290,34 +281,20 @@ const App = props => {
             <ScrollToTop>
               <Switch>
                 {/* Private Routes */}
-                <PrivateRoute path="/secure/account/profile/:id" component={UserProfilePage} />
+                <PrivateRoute path="/secure/account/profile/:id" component={ProfilePage} />
                 <PrivateRoute path="/secure/account/editprofile/:id" component={EditUserPage} />
-                {/* <PrivateRoute path="/account/submit_feature" component={SubmitFeaturePage} /> */}
                 <PrivateRoute path="/secure/account/orders" component={MyOrdersPage} />
-                <PrivateRoute path="/secure/checkout/shipping" component={ShippingPage} />
                 <PrivateRoute path="/secure/account/order/:id" component={OrderPage} />
                 <PrivateRoute path="/secure/checkout/placeorder" component={PlaceOrderPage} />
-                {/* <PrivateRoute
-								path="/secure/checkout/placeorder"
-								component={(props) => (
-									<PlaceOrderPage
-										{...props}
-										date_1={out_of_office_date_1}
-										date_2={out_of_office_date_2}
-									/>
-								)}
-							/> */}
 
                 <PrivateRoute path="/secure/account/edit_affiliate/:id?" component={EditUserAffiliatePage} />
-                <PrivateRoute path="/secure/account/submission_complete" component={SubmissionComplete} />
                 {/* Admin Routes */}
                 <AdminRoute
                   path="/secure/glow/editproduct/:pathname?/:template?/:product_option?/:item_group_id?"
                   component={EditProductPage}
                 />
                 <AdminRoute path="/secure/glow/gcode_continous" component={GcodeContinousPage} />
-                <AdminRoute path="/secure/glow/image_compressor" component={ImageCompressorPage} />
-                <AdminRoute path="/secure/glow/edit_all_data" component={EditAllDataPage} />
+                <AdminRoute path="/secure/glow/edit_all_data" component={DatabaseMigrationPage} />
                 <AdminRoute path="/secure/glow/products" component={ProductsPage} />
                 <AdminRoute path="/secure/glow/create_label" component={LabelCreatorPage} />
                 <AdminRoute path="/secure/glow/orders" component={OrdersPage} />
@@ -330,7 +307,7 @@ const App = props => {
                 <AdminRoute path="/secure/glow/palettes" component={PalettesPage} />
                 <AdminRoute path="/secure/glow/filaments" component={FilamentsPage} />
                 <AdminRoute path="/secure/glow/userorders/:id" component={MyOrdersPage} />
-                <AdminRoute path="/secure/glow/userprofile/:id" component={UserProfilePage} />
+                <AdminRoute path="/secure/glow/userprofile/:id" component={ProfilePage} />
                 <AdminRoute path="/secure/glow/edituser/:id?" component={EditUserPage} />
                 <AdminRoute path="/secure/glow/editorder/:id?" component={EditOrderPage} />
                 <AdminRoute path="/secure/glow/editpaycheck/:id?" component={EditPaycheckPage} />
@@ -379,7 +356,6 @@ const App = props => {
                 <Route path="/account/register" component={RegisterPage} />
                 <Route path="/account/passwordreset" component={PasswordResetPage} />
                 <Route path="/account/resetpassword/:id" component={ResetPasswordPage} />
-                <Route path="/account/submit_feature" component={SubmitFeaturePage} />
                 {/* Checkout */}
                 <Route path="/checkout/placeorder" component={PlaceOrderPage} />
                 <Route path="/checkout/shipping" component={ShippingPage} />
@@ -388,33 +364,32 @@ const App = props => {
 
                 {/* Collections */}
                 {/* Product Collections */}
-                <Route path="/collections/all/products/code/:promo_code" exact={true} component={AllProductsPage} />
-                <Route path="/collections/all/products" exact={true} component={AllProductsPage} />
-                <Route path="/collections/all/products/shop_by_chip" component={AllProductsByChipPage} />
+                <Route path="/collections/all/products/code/:promo_code" exact={true} component={ProductsGridPage} />
+                <Route path="/collections/all/products" exact={true} component={ProductsGridPage} />
+                <Route path="/collections/all/products/shop_by_chip" component={ProductsGridByChipPage} />
                 <Route
                   path="/collections/all/products/category/:category/subcategory/:subcategory/collection/:collection?"
-                  component={AllProductsPage}
+                  component={ProductsGridPage}
                 />
-                <Route path="/collections/all/products/category/:category/subcategory/:subcategory?" component={AllProductsPage} />
-                <Route path="/collections/all/products/category/:category" component={AllProductsPage} />
+                <Route path="/collections/all/products/category/:category/subcategory/:subcategory?" component={ProductsGridPage} />
+                <Route path="/collections/all/products/category/:category" component={ProductsGridPage} />
                 <Route path="/collections/all/products/:pathname" component={ProductPage} />
                 {/* Feature Collections */}
-                <Route path="/collections/all/features/category/:category?" exact={true} component={AllFeaturesPage} />
+                <Route path="/collections/all/features/category/:category?" exact={true} component={FeaturesGridPage} />
                 <Route path="/collections/all/features/category/:category/:pathname?" exact={true} component={FeaturedPage} />
                 {/* Sponsors Collections */}
-                <Route path="/collections/all/sponsors/category/:category?" exact={true} component={AllSponsorsPage} />
-                <Route path="/collections/all/sponsors" exact={true} component={AllSponsorsPage} />
+                <Route path="/collections/all/sponsors/category/:category?" exact={true} component={SponsorsGridPage} />
+                <Route path="/collections/all/sponsors" exact={true} component={SponsorsGridPage} />
                 <Route path="/collections/all/sponsors/:promo_code?" exact={true} component={SponsorPage} />
                 {/* Team Collections */}
-                <Route path="/collections/all/teams/category/:category?" exact={true} component={AllTeamsPage} />
-                <Route path="/collections/all/teams" exact={true} component={AllTeamsPage} />
+                <Route path="/collections/all/teams/category/:category?" exact={true} component={TeamsGridPage} />
+                <Route path="/collections/all/teams" exact={true} component={TeamsGridPage} />
                 <Route path="/collections/all/teams/:pathname?" exact={true} component={TeamPage} />
 
                 {/* Pages */}
                 <Route path="/pages/announcements" exact={true} component={AnnouncementsPage} />
                 <Route path="/pages/manual/:pathname?" exact={true} component={ManualPage} />
                 <Route path="/pages/affiliate_terms" exact={true} component={AffiliateTermsPage} />
-                <Route path="/pages/become_affiliate" exact={true} component={BecomeAffiliatePage} />
                 <Route path="/pages/color_palettes" exact={true} component={ColorPalettePage} />
                 <Route path="/pages/events" exact={true} component={EventsPage} />
                 <Route path="/pages/contact/:reason?" exact={true} component={ContactPage} />

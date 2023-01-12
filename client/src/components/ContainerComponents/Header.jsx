@@ -2,8 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link, useHistory } from "react-router-dom";
 import Headroom from "react-headroom";
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../../actions/userActions";
-import { listProducts } from "../../actions/productActions";
+import { logout } from "../../../actions/userActions";
+import { listProducts } from "../../../actions/productActions";
 import Banner from "./Banner";
 import { HashLink } from "react-router-hash-link";
 import { browser_check } from "../../utils/react_helper_functions";
@@ -11,12 +11,12 @@ import useWindowDimensions from "../Hooks/windowDimensions";
 import { API_Products } from "../../utils";
 import { categories, humanize, subcategories, update_products_url } from "../../utils/helper_functions";
 import { DirectLink, Element, Events, animateScroll as scroll, scrollSpy, scroller } from "react-scroll";
-import { hide_search_bar, show_search_bar } from "../../actions/settingActions";
-import { Filter } from "../SpecialtyComponents";
-import { listChips } from "../../actions/chipActions";
+import { hide_search_bar, show_search_bar } from "../../../actions/settingActions";
+import { listChips } from "../../../actions/chipActions";
 import { GLButton } from "../GlowLEDsComponents";
 import { isAdmin } from "../../utils/helpers/user_helpers";
 import { navigation } from "../../utils/helpers/header_sidebar_helpers";
+import Filter from "../GlowLEDsComponents/GLTable/Filter";
 
 const Header = props => {
   const history = useHistory();

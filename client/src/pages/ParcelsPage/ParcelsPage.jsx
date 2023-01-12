@@ -1,12 +1,13 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { listParcels, deleteParcel, saveParcel } from "../../actions/parcelActions";
+import { listParcels, deleteParcel, saveParcel } from "../../../actions/parcelActions";
 import { Link } from "react-router-dom";
-import { Loading, Notification } from "../../components/UtilityComponents";
+import { Loading, Notification } from "../../../components/SharedComponents";
 import { Helmet } from "react-helmet";
-import { Search, Sort } from "../../components/SpecialtyComponents";
 import { format_date } from "../../utils/helper_functions";
-import { GLButton } from "../../components/GlowLEDsComponents";
+import { GLButton } from "../../../components/GlowLEDsComponents";
+import Search from "../../components/GlowLEDsComponents/GLTable/Search";
+import Sort from "../../components/GlowLEDsComponents/GLTable/Sort";
 
 const ParcelsPage = props => {
   const [search, set_search] = useState("");

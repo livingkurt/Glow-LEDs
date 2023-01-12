@@ -1,9 +1,10 @@
 import React from "react";
-import { Pagination, Search, Sort } from "../../SpecialtyComponents";
-import { Loading } from "../../UtilityComponents";
+import { Loading } from "../../SharedComponents";
 import { gl_table_th, gl_table, gl_table_tr } from "./GLTable.module.scss";
 import "./gl_table.scss";
 import { GLSearch } from "../../../components/GlowLEDsComponents";
+import Pagination from "./Pagination";
+import Sort from "./Sort";
 
 const GLTable = ({
   rows,

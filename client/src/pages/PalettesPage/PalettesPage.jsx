@@ -1,17 +1,15 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { listPalettes, deletePalette, savePalette } from "../../actions/paletteActions";
+import { listPalettes, deletePalette, savePalette } from "../../../actions/paletteActions";
 import { Link } from "react-router-dom";
-import { Loading, Notification } from "../../components/UtilityComponents";
+import { Loading, Notification } from "../../../components/SharedComponents";
 import { Helmet } from "react-helmet";
-import { Search, Sort } from "../../components/SpecialtyComponents";
 import { format_date } from "../../utils/helper_functions";
-import { listAffiliates } from "../../actions/affiliateActions";
-import { API_Orders, API_Promos, API_Revenue } from "../../utils";
-import { promoter_revenue_upload, sponsor_revenue_upload, team_revenue_upload, top_earner_upload } from "../../utils/google_sheets_upload";
-import { listTeams } from "../../actions/teamActions";
-import { listOrders } from "../../actions/orderActions";
-import { GLButton } from "../../components/GlowLEDsComponents";
+import { listAffiliates } from "../../../actions/affiliateActions";
+import { API_Orders } from "../../utils";
+import { listTeams } from "../../../actions/teamActions";
+import { listOrders } from "../../../actions/orderActions";
+import { GLButton } from "../../../components/GlowLEDsComponents";
 
 const PalettesPage = props => {
   const [search, set_search] = useState("");

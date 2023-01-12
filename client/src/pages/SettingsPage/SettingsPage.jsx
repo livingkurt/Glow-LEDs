@@ -1,23 +1,15 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { listSettings, deleteSetting, saveSetting } from "../../actions/settingActions";
+import { listSettings, deleteSetting, saveSetting } from "../../../actions/settingActions";
 import { Link } from "react-router-dom";
-import { Loading, Notification } from "../../components/UtilityComponents";
+import { Loading, Notification } from "../../../components/SharedComponents";
 import { Helmet } from "react-helmet";
-import { Search, Sort } from "../../components/SpecialtyComponents";
-import { format_date } from "../../utils/helper_functions";
-import { API_Promos, API_Orders } from "../../utils";
 import * as API from "../../api/affiliateApi";
-import {
-  promoter_revenue_upload,
-  sponsor_revenue_upload,
-  team_revenue_upload,
-  top_code_usage_upload,
-  top_earner_upload
-} from "../../utils/google_sheets_upload";
-import { listTeams } from "../../actions/teamActions";
-import { listOrders } from "../../actions/orderActions";
-import { GLButton } from "../../components/GlowLEDsComponents";
+import { listTeams } from "../../../actions/teamActions";
+import { listOrders } from "../../../actions/orderActions";
+import { GLButton } from "../../../components/GlowLEDsComponents";
+import Search from "../../components/GlowLEDsComponents/GLTable/Search";
+import Sort from "../../components/GlowLEDsComponents/GLTable/Sort";
 
 const SettingsPage = props => {
   const [search, set_search] = useState("");

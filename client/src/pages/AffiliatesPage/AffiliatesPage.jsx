@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
-import { Notification } from "../../components/UtilityComponents";
+import { Notification } from "../../../components/SharedComponents";
 import { Helmet } from "react-helmet";
 import * as API from "../../api/affiliateApi";
 import { getUrlParameter, months, update_products_url } from "../../utils/helper_functions";
 import { API_Promos } from "../../utils";
-import { GLButton } from "../../components/GlowLEDsComponents";
+import { GLButton } from "../../../components/GlowLEDsComponents";
 import CSVReader from "react-csv-reader";
 import GLTable from "../../components/GlowLEDsComponents/GLTable/GLTable";
 import { set_limit, set_loading, set_page, set_search, set_sort } from "../../slices/affiliateSlice";

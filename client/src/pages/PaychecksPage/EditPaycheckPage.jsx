@@ -1,14 +1,14 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { savePaycheck, detailsPaycheck } from "../../actions/paycheckActions";
+import { savePaycheck, detailsPaycheck } from "../../../actions/paycheckActions";
 import { useHistory, Link } from "react-router-dom";
-import { Loading } from "../../components/UtilityComponents";
+import { Loading } from "../../../components/SharedComponents";
 import { Helmet } from "react-helmet";
-import { listUsers } from "../../actions/userActions";
+import { listUsers } from "../../../actions/userActions";
 import { format_date, snake_case, unformat_date } from "../../utils/helper_functions";
-import { listAffiliates } from "../../actions/affiliateActions";
-import { listTeams } from "../../actions/teamActions";
-import { GLButton } from "../../components/GlowLEDsComponents";
+import { listAffiliates } from "../../../actions/affiliateActions";
+import { listTeams } from "../../../actions/teamActions";
+import { GLButton } from "../../../components/GlowLEDsComponents";
 
 const EditPaycheckPage = props => {
   const [id, set_id] = useState("");

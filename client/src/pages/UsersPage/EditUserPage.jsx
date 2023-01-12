@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { saveUser, detailsUser } from "../../actions/userActions";
+import { saveUser, detailsUser } from "../../../actions/userActions";
 import { useHistory } from "react-router-dom";
-import { Loading } from "../../components/UtilityComponents";
+import { Loading } from "../../../components/SharedComponents";
 import { Helmet } from "react-helmet";
-import { listAffiliates } from "../../actions/affiliateActions";
-import { GLButton } from "../../components/GlowLEDsComponents";
+import { listAffiliates } from "../../../actions/affiliateActions";
+import { GLButton } from "../../../components/GlowLEDsComponents";
 
 const EditUserPage = props => {
   const [id, set_id] = useState("");

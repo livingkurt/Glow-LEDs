@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { saveChip, detailsChip } from "../../actions/chipActions";
+import { saveChip, detailsChip } from "../../../actions/chipActions";
 import { useHistory, Link } from "react-router-dom";
-import { Loading, Notification } from "../../components/UtilityComponents";
+import { Loading, Notification } from "../../../components/SharedComponents";
 import { Helmet } from "react-helmet";
 
 import { snake_case } from "../../utils/helper_functions";
 import { BlockPicker } from "react-color";
-import { GLButton } from "../../components/GlowLEDsComponents";
+import { GLButton } from "../../../components/GlowLEDsComponents";
 
 const EditChipPage = props => {
   const [id, set_id] = useState("");

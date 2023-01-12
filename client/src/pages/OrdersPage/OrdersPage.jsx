@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { listOrders, update_order, update_payment } from "../../actions/orderActions";
-import { Loading, Notification } from "../../components/UtilityComponents";
+import { listOrders, update_order } from "../../../actions/orderActions";
+import { Loading, Notification } from "../../../components/SharedComponents";
 import { Helmet } from "react-helmet";
-import { OrderListItem, OrderSmallScreen, Search, Sort, Pagination } from "../../components/SpecialtyComponents";
 import { API_Emails, API_Orders } from "../../utils";
 import { getUrlParameter, toCapitalize } from "../../utils/helper_functions";
 import { check_authentication } from "../../utils/react_helper_functions";
 import { orders_upload } from "../../utils/google_sheets_upload";
 import { colors, determine_color } from "../../utils/helpers/order_helpers";
-import { GLButton } from "../../components/GlowLEDsComponents";
+import { GLButton } from "../../../components/GlowLEDsComponents";
+import Search from "../../components/GlowLEDsComponents/GLTable/Search";
+import Pagination from "../../components/GlowLEDsComponents/GLTable/Pagination";
+import { OrderItemM, OrderListItem } from "./components";
+import Sort from "../../components/GlowLEDsComponents/GLTable/Sort";
 
 const OrdersPage = props => {
   const [search, set_search] = useState("");
@@ -278,7 +281,7 @@ const OrdersPage = props => {
           </div>
           <div className="product_small_screen none column">
             {orders &&
-              orders.map((order, index) => <OrderSmallScreen determine_color={determine_color} key={index} order={order} admin={true} />)}
+              orders.map((order, index) => <OrderItemM determine_color={determine_color} key={index} order={order} admin={true} />)}
           </div>
         </Loading>
         <div className="jc-c">

@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { listPaychecks, deletePaycheck, savePaycheck } from "../../actions/paycheckActions";
+import { listPaychecks, deletePaycheck, savePaycheck } from "../../../actions/paycheckActions";
 import { Link, useHistory } from "react-router-dom";
-import { Loading, Notification } from "../../components/UtilityComponents";
+import { Loading, Notification } from "../../../components/SharedComponents";
 import { Helmet } from "react-helmet";
-import { Search, Sort } from "../../components/SpecialtyComponents";
+import Search from "../../components/GlowLEDsComponents/GLTable/Search";
+import Sort from "../../components/GlowLEDsComponents/GLTable/Sort";
 import * as API from "../../api/affiliateApi";
 import {
   dates_in_year,
@@ -23,9 +24,9 @@ import {
   top_code_usage_upload,
   top_earner_upload
 } from "../../utils/google_sheets_upload";
-import { listTeams } from "../../actions/teamActions";
-import { listOrders } from "../../actions/orderActions";
-import { GLButton } from "../../components/GlowLEDsComponents";
+import { listTeams } from "../../../actions/teamActions";
+import { listOrders } from "../../../actions/orderActions";
+import { GLButton } from "../../../components/GlowLEDsComponents";
 import GLTable from "../../components/GlowLEDsComponents/GLTable/GLTable";
 
 const PaychecksPage = props => {

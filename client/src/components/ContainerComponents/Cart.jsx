@@ -1,11 +1,11 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart, removeFromCart } from "../../actions/cartActions";
+import { addToCart, removeFromCart } from "../../../actions/cartActions";
 import { sale_price_switch, determine_product_name } from "../../utils/react_helper_functions";
 import { mobile_check } from "../../utils/react_helper_functions";
 import { API_Content } from "../../utils";
-import { LazyImage, Loading } from "../UtilityComponents";
+import { LazyImage, Loading } from "../SharedComponents";
 import { determine_total, humanize, decide_warning, shuffle } from "../../utils/helper_functions";
 import useWindowDimensions from "../Hooks/windowDimensions";
 import { GLButton } from "../GlowLEDsComponents";

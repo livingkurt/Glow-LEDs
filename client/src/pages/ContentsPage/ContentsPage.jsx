@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { listContents, deleteContent, saveContent } from "../../actions/contentActions";
+import { listContents, deleteContent, saveContent } from "../../../actions/contentActions";
 import { Link } from "react-router-dom";
-import { Loading, Notification } from "../../components/UtilityComponents";
+import { Loading, Notification } from "../../../components/SharedComponents";
 import { Helmet } from "react-helmet";
-import { Search } from "../../components/SpecialtyComponents";
-import { GLButton } from "../../components/GlowLEDsComponents";
+import Search from "../../components/GlowLEDsComponents/GLTable/Search";
+import { GLButton } from "../../../components/GlowLEDsComponents";
 
 const ContentsPage = props => {
   const [search, set_search] = useState("");

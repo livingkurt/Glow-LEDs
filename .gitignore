@@ -123,7 +123,6 @@ passport.js
 
 routes/*.js
 models/*.js
-background/*.js
 controllers/*.js
 helpers/*.js
 routes/api/*.js
