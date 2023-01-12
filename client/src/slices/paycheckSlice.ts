@@ -91,15 +91,28 @@ const paycheckSlice = createSlice({
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.savePaycheck.pending]: (state: any, { payload }: any) => {
+    [API.createPaycheck.pending]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.savePaycheck.fulfilled]: (state: any, { payload }: any) => {
+    [API.createPaycheck.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
       state.paycheck = payload.paycheck;
       state.message = "Paycheck Saved";
     },
-    [API.savePaycheck.rejected]: (state: any, { payload }: any) => {
+    [API.createPaycheck.rejected]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.error = payload.error;
+      state.message = payload.message;
+    },
+    [API.updatePaycheck.pending]: (state: any, { payload }: any) => {
+      state.loading = true;
+    },
+    [API.updatePaycheck.fulfilled]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.paycheck = payload.paycheck;
+      state.message = "Paycheck Saved";
+    },
+    [API.updatePaycheck.rejected]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;

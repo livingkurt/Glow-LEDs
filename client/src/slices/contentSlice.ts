@@ -1,14 +1,14 @@
 /* eslint-disable max-lines-per-function */
 /* eslint-disable no-param-reassign */
 import { createSlice } from "@reduxjs/toolkit";
-import * as API from "../api/categoryApi";
+import * as API from "../api/contentApi";
 
-const categorySlice = createSlice({
-  name: "categorys",
+const contentSlice = createSlice({
+  name: "contents",
   initialState: {
     loading: false,
-    categorys: [],
-    category: {
+    contents: [],
+    content: {
       id: "",
       user: undefined,
       artist_name: "",
@@ -51,11 +51,11 @@ const categorySlice = createSlice({
     ]
   },
   reducers: {
-    set_category: (state, { payload }) => {
-      const updated_category = payload;
+    set_content: (state, { payload }) => {
+      const updated_content = payload;
       return {
         ...state,
-        category: { ...state.category, ...updated_category }
+        content: { ...state.content, ...updated_content }
       };
     },
     set_loading: (state, { payload }) => {
@@ -75,57 +75,70 @@ const categorySlice = createSlice({
     }
   },
   extraReducers: {
-    [API.listCategorys.pending]: (state: any, { payload }: any) => {
+    [API.listContents.pending]: (state: any, { payload }: any) => {
       state.loading = true;
-      state.categorys = [];
+      state.contents = [];
     },
-    [API.listCategorys.fulfilled]: (state: any, { payload }: any) => {
+    [API.listContents.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.categorys = payload.categorys;
+      state.contents = payload.contents;
       state.totalPages = payload.totalPages;
       state.page = payload.currentPage;
-      state.message = "Categorys Found";
+      state.message = "Contents Found";
     },
-    [API.listCategorys.rejected]: (state: any, { payload }: any) => {
+    [API.listContents.rejected]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.saveCategory.pending]: (state: any, { payload }: any) => {
+    [API.createContent.pending]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.saveCategory.fulfilled]: (state: any, { payload }: any) => {
+    [API.createContent.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.category = payload.category;
-      state.message = "Category Saved";
+      state.content = payload.content;
+      state.message = "Content Saved";
     },
-    [API.saveCategory.rejected]: (state: any, { payload }: any) => {
+    [API.createContent.rejected]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.detailsCategory.pending]: (state: any, { payload }: any) => {
+    [API.updateContent.pending]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.detailsCategory.fulfilled]: (state: any, { payload }: any) => {
+    [API.updateContent.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.category = payload;
-      state.message = "Category Found";
+      state.content = payload.content;
+      state.message = "Content Saved";
     },
-    [API.detailsCategory.rejected]: (state: any, { payload }: any) => {
+    [API.updateContent.rejected]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.deleteCategory.pending]: (state: any, { payload }: any) => {
+    [API.detailsContent.pending]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.deleteCategory.fulfilled]: (state: any, { payload }: any) => {
+    [API.detailsContent.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.category = payload.category;
-      state.message = "Category Deleted";
+      state.content = payload;
+      state.message = "Content Found";
     },
-    [API.deleteCategory.rejected]: (state: any, { payload }: any) => {
+    [API.detailsContent.rejected]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.error = payload.error;
+      state.message = payload.message;
+    },
+    [API.deleteContent.pending]: (state: any, { payload }: any) => {
+      state.loading = true;
+    },
+    [API.deleteContent.fulfilled]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.content = payload.content;
+      state.message = "Content Deleted";
+    },
+    [API.deleteContent.rejected]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
@@ -133,5 +146,5 @@ const categorySlice = createSlice({
   }
 });
 
-export const { set_search, set_sort, set_page, set_limit, set_loading, set_category } = categorySlice.actions;
-export default categorySlice.reducer;
+export const { set_search, set_sort, set_page, set_limit, set_loading, set_content } = contentSlice.actions;
+export default contentSlice.reducer;

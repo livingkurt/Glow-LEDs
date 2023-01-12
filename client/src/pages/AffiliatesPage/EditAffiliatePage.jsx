@@ -93,7 +93,7 @@ const EditAffiliatePage = props => {
 
   const submitHandler = e => {
     e.preventDefault();
-    dispatch(API.saveAffiliate(affiliate));
+    dispatch(API.createAffiliate(affiliate));
     // dispatch(set_affiliate({}));
     // history.push("/secure/glow/affiliates?page=1?limit=10");
   };

@@ -3,12 +3,12 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { create_query } from "../utils/helper_functions";
 
-export const listExpenses = createAsyncThunk("expenses/listExpenses", async (query: any, thunkApi: any) => {
+export const listContents = createAsyncThunk("contents/listContents", async (query: any, thunkApi: any) => {
   try {
     const {
       userLogin: { userInfo }
     } = thunkApi.getState();
-    const { data } = await axios.get("/api/expenses?" + create_query(query), {
+    const { data } = await axios.get("/api/contents?" + create_query(query), {
       headers: {
         Authorization: "Bearer " + userInfo.access_token
       }
@@ -17,12 +17,12 @@ export const listExpenses = createAsyncThunk("expenses/listExpenses", async (que
   } catch (error) {}
 });
 
-export const updateExpense = createAsyncThunk("expenses/updateExpense", async (expense: any, thunkApi: any) => {
+export const updateContent = createAsyncThunk("contents/updateContent", async (content: any, thunkApi: any) => {
   try {
     const {
       userLogin: { userInfo }
     } = thunkApi.getState();
-    const { data } = await axios.put("/api/expenses/" + expense.pathname, expense, {
+    const { data } = await axios.put("/api/contents/" + content.pathname, content, {
       headers: {
         Authorization: "Bearer " + userInfo.access_token
       }
@@ -31,12 +31,12 @@ export const updateExpense = createAsyncThunk("expenses/updateExpense", async (e
   } catch (error) {}
 });
 
-export const createExpense = createAsyncThunk("expenses/createExpense", async (expense: any, thunkApi: any) => {
+export const createContent = createAsyncThunk("contents/createContent", async (content: any, thunkApi: any) => {
   try {
     const {
       userLogin: { userInfo }
     } = thunkApi.getState();
-    const { data } = await axios.post("/api/expenses", expense, {
+    const { data } = await axios.post("/api/contents", content, {
       headers: {
         Authorization: "Bearer " + userInfo.access_token
       }
@@ -45,12 +45,12 @@ export const createExpense = createAsyncThunk("expenses/createExpense", async (e
   } catch (error) {}
 });
 
-export const detailsExpense = createAsyncThunk("expenses/detailsExpense", async ({ id }: any, thunkApi: any) => {
+export const detailsContent = createAsyncThunk("contents/detailsContent", async ({ id }: any, thunkApi: any) => {
   try {
     const {
       userLogin: { userInfo }
     } = thunkApi.getState();
-    const { data } = await axios.get(`/api/expenses/${id}`, {
+    const { data } = await axios.get(`/api/contents/${id}`, {
       headers: {
         Authorization: "Bearer " + userInfo.access_token
       }
@@ -59,12 +59,12 @@ export const detailsExpense = createAsyncThunk("expenses/detailsExpense", async 
   } catch (error) {}
 });
 
-export const deleteExpense = createAsyncThunk("expenses/deleteExpense", async (pathname, thunkApi: any) => {
+export const deleteContent = createAsyncThunk("contents/deleteContent", async (pathname, thunkApi: any) => {
   try {
     const {
       userLogin: { userInfo }
     } = thunkApi.getState();
-    const { data } = await axios.delete("/api/expenses/" + pathname, {
+    const { data } = await axios.delete("/api/contents/" + pathname, {
       headers: {
         Authorization: "Bearer " + userInfo.access_token
       }

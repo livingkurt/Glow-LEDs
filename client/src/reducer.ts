@@ -63,8 +63,46 @@ import { paletteDeleteReducer, paletteDetailsReducer, paletteListReducer, palett
 import { filamentDeleteReducer, filamentDetailsReducer, filamentListReducer, filamentSaveReducer } from "./reducers/filamentReducers";
 import { surveyDeleteReducer, surveyDetailsReducer, surveyListReducer, surveySaveReducer } from "./reducers/surveyReducers";
 import affiliateSlice from "./slices/affiliateSlice";
+import cartSlice from "./slices/cartSlice";
+import categorySlice from "./slices/categorySlice";
+import chipSlice from "./slices/chipSlice";
+import contentSlice from "./slices/contentSlice";
+import emailSlice from "./slices/emailSlice";
+import expenseSlice from "./slices/expenseSlice";
+import featureSlice from "./slices/featureSlice";
+import filamentSlice from "./slices/filamentSlice";
+import orderSlice from "./slices/orderSlice";
+import paletteSlice from "./slices/paletteSlice";
+import parcelSlice from "./slices/parcelSlice";
+import paycheckSlice from "./slices/paycheckSlice";
+import productSlice from "./slices/productSlice";
+import promoSlice from "./slices/promoSlice";
+import settingSlice from "./slices/settingSlice";
+import surveySlice from "./slices/surveySlice";
+import teamSlice from "./slices/teamSlice";
+import userSlice from "./slices/userSlice";
 
 export default combineReducers({
+  affiliateSlice: affiliateSlice,
+  cartSlice: cartSlice,
+  categorySlice: categorySlice,
+  chipSlice: chipSlice,
+  contentSlice: contentSlice,
+  emailSlice: emailSlice,
+  expenseSlice: expenseSlice,
+  featureSlice: featureSlice,
+  filamentSlice: filamentSlice,
+  orderSlice: orderSlice,
+  paletteSlice: paletteSlice,
+  parcelSlice: parcelSlice,
+  paycheckSlice: paycheckSlice,
+  productSlice: productSlice,
+  promoSlice: promoSlice,
+  settingSlice: settingSlice,
+  surveySlice: surveySlice,
+  teamSlice: teamSlice,
+  userSlice: userSlice,
+
   productList: productListReducer,
   productDetails: productDetailsReducer,
   cart: cartReducer,
@@ -109,7 +147,6 @@ export default combineReducers({
   promoDetails: promoDetailsReducer,
   promoSave: promoSaveReducer,
   promoDelete: promoDeleteReducer,
-  affiliateSlice: affiliateSlice,
   affiliateList: affiliateListReducer,
   affiliateDetails: affiliateDetailsReducer,
   affiliateSave: affiliateSaveReducer,

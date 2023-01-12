@@ -91,15 +91,28 @@ const parcelSlice = createSlice({
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.saveParcel.pending]: (state: any, { payload }: any) => {
+    [API.createParcel.pending]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.saveParcel.fulfilled]: (state: any, { payload }: any) => {
+    [API.createParcel.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
       state.parcel = payload.parcel;
       state.message = "Parcel Saved";
     },
-    [API.saveParcel.rejected]: (state: any, { payload }: any) => {
+    [API.createParcel.rejected]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.error = payload.error;
+      state.message = payload.message;
+    },
+    [API.updateParcel.pending]: (state: any, { payload }: any) => {
+      state.loading = true;
+    },
+    [API.updateParcel.fulfilled]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.parcel = payload.parcel;
+      state.message = "Parcel Saved";
+    },
+    [API.updateParcel.rejected]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;

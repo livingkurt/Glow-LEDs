@@ -91,15 +91,28 @@ const chipSlice = createSlice({
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.saveChip.pending]: (state: any, { payload }: any) => {
+    [API.createChip.pending]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.saveChip.fulfilled]: (state: any, { payload }: any) => {
+    [API.createChip.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
       state.chip = payload.chip;
       state.message = "Chip Saved";
     },
-    [API.saveChip.rejected]: (state: any, { payload }: any) => {
+    [API.createChip.rejected]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.error = payload.error;
+      state.message = payload.message;
+    },
+    [API.updateChip.pending]: (state: any, { payload }: any) => {
+      state.loading = true;
+    },
+    [API.updateChip.fulfilled]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.chip = payload.chip;
+      state.message = "Chip Saved";
+    },
+    [API.updateChip.rejected]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;

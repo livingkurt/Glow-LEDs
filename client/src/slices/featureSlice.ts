@@ -91,15 +91,28 @@ const featureSlice = createSlice({
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.saveFeature.pending]: (state: any, { payload }: any) => {
+    [API.createFeature.pending]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.saveFeature.fulfilled]: (state: any, { payload }: any) => {
+    [API.createFeature.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
       state.feature = payload.feature;
       state.message = "Feature Saved";
     },
-    [API.saveFeature.rejected]: (state: any, { payload }: any) => {
+    [API.createFeature.rejected]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.error = payload.error;
+      state.message = payload.message;
+    },
+    [API.updateFeature.pending]: (state: any, { payload }: any) => {
+      state.loading = true;
+    },
+    [API.updateFeature.fulfilled]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.feature = payload.feature;
+      state.message = "Feature Saved";
+    },
+    [API.updateFeature.rejected]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;

@@ -91,15 +91,28 @@ const paletteSlice = createSlice({
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.savePalette.pending]: (state: any, { payload }: any) => {
+    [API.createPalette.pending]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.savePalette.fulfilled]: (state: any, { payload }: any) => {
+    [API.createPalette.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
       state.palette = payload.palette;
       state.message = "Palette Saved";
     },
-    [API.savePalette.rejected]: (state: any, { payload }: any) => {
+    [API.createPalette.rejected]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.error = payload.error;
+      state.message = payload.message;
+    },
+    [API.updatePalette.pending]: (state: any, { payload }: any) => {
+      state.loading = true;
+    },
+    [API.updatePalette.fulfilled]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.palette = payload.palette;
+      state.message = "Palette Saved";
+    },
+    [API.updatePalette.rejected]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;

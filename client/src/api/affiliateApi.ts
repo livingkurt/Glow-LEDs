@@ -39,7 +39,7 @@ export const listAffiliates = createAsyncThunk("affiliates/listAffiliates", asyn
   } catch (error) {}
 });
 
-export const saveAffiliate = createAsyncThunk("affiliates/saveAffiliate", async (affiliate: any, thunkApi: any) => {
+export const createAffiliate = createAsyncThunk("affiliates/saveAffiliate", async (affiliate: any, thunkApi: any) => {
   try {
     const {
       userLogin: { userInfo }
