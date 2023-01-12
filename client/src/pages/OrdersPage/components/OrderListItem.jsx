@@ -3,15 +3,16 @@ import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { determine_tracking_number, determnine_link, format_date, getUrlParameter, toCapitalize } from "../../utils/helper_functions";
+import { determine_tracking_number, determnine_link, format_date, getUrlParameter, toCapitalize } from "../../../utils/helper_functions";
 import { createOrder, deleteOrder, detailsOrder, listOrders, saveOrder, update_order, update_payment } from "../../../actions/orderActions";
-import { LazyImage, Loading } from "../UtilityComponents";
-import { determine_product_name, determine_product_name_string } from "../../utils/react_helper_functions";
-import { OrderStatusButtons } from "../OrderPage/components";
-import { API_Emails, API_Orders, API_Shipping } from "../../utils";
+import { LazyImage, Loading } from "../../../shared/SharedComponents";
+import { determine_product_name, determine_product_name_string } from "../../../utils/react_helper_functions";
+
+import { API_Emails, API_Orders, API_Shipping } from "../../../utils";
 import ReactTooltip from "react-tooltip";
-import { GLButton } from "../GlowLEDsComponents";
-import { isAdmin } from "../../utils/helpers/user_helpers";
+import { GLButton } from "../../../shared/GlowLEDsComponents";
+import { isAdmin } from "../../../utils/helpers/user_helpers";
+import { OrderStatusButtons } from "../../OrderPage/components";
 
 const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_email, listOrdersFilters }) => {
   const history = useHistory();

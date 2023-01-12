@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { humanize, snake_case } from "../../utils/helper_functions";
 import { useDispatch } from "react-redux";
 import { API_Content, API_Features } from "../../utils";
-import { Loading } from "../../../components/SharedComponents";
+import { Loading } from "../../shared/SharedComponents";
 import { MenuItemD, MenuItemM } from "./components";
 
 const MenuPage = props => {

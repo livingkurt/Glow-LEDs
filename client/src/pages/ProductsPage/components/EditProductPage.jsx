@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { saveProduct, detailsProduct, listProducts } from "../../../actions/productActions";
 import { useHistory, Link } from "react-router-dom";
-import { DropdownDisplay, ImageDisplay, Loading, Notification } from "../../../components/SharedComponents";
+import { DropdownDisplay, ImageDisplay, Loading, Notification } from "../../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import {
   accurate_date,
@@ -32,7 +32,7 @@ import {
 } from "../../../utils/helpers/product_helpers";
 import { listUsers } from "../../../actions/userActions";
 import { listFilaments } from "../../../actions/filamentActions";
-import { GLButton } from "../../../components/GlowLEDsComponents";
+import { GLButton } from "../../../shared/GlowLEDsComponents";
 
 const EditProductPage = props => {
   // const [modalVisible, setModalVisible] = useState(false);

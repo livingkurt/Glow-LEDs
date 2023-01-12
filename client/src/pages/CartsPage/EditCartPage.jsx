@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { saveCart, detailsCart } from "../../../actions/cartActions";
+import { saveCart, detailsCart } from "../../actions/cartActions";
 import { Link, useHistory } from "react-router-dom";
-import { Loading } from "../../../components/SharedComponents";
+import { Loading } from "../../shared/SharedComponents";
 import { format_date, unformat_date } from "../../utils/helper_functions";
 import { Helmet } from "react-helmet";
-import { GLButton } from "../../../components/GlowLEDsComponents";
+import { GLButton } from "../../shared/GlowLEDsComponents";
 
 const EditCartPage = props => {
   const [id, set_id] = useState("");

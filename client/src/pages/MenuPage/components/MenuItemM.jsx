@@ -2,7 +2,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { LazyImage } from "../../../components/SharedComponents";
+import { LazyImage } from "../../../shared/SharedComponents";
 
 const MenuItemM = ({ item, index, decide_url }) => {
   return (

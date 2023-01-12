@@ -6,16 +6,16 @@ import { logout } from "../../../actions/userActions";
 import { listProducts } from "../../../actions/productActions";
 import Banner from "./Banner";
 import { HashLink } from "react-router-hash-link";
-import { browser_check } from "../../utils/react_helper_functions";
+import { browser_check } from "../../../utils/react_helper_functions";
 import useWindowDimensions from "../Hooks/windowDimensions";
 import { API_Products } from "../../utils";
-import { categories, humanize, subcategories, update_products_url } from "../../utils/helper_functions";
+import { categories, humanize, subcategories, update_products_url } from "../../../utils/helper_functions";
 import { DirectLink, Element, Events, animateScroll as scroll, scrollSpy, scroller } from "react-scroll";
 import { hide_search_bar, show_search_bar } from "../../../actions/settingActions";
 import { Filter } from "../SharedComponents";
 import { listChips } from "../../../actions/chipActions";
 import { GLButton } from "../GlowLEDsComponents";
-import { isAdmin } from "../../utils/helpers/user_helpers";
+import { isAdmin } from "../../../utils/helpers/user_helpers";
 
 const Header = props => {
   const history = useHistory();

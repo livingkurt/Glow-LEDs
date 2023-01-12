@@ -2,16 +2,16 @@ import React, { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import { listContents } from "../../../actions/contentActions";
+import { listContents } from "../../actions/contentActions";
 import { categories, homepage_videos, humanize, subcategories } from "../../utils/helper_functions";
 import { API_Content, API_Products } from "../../utils";
-import useWindowDimensions from "../../../components/Hooks/windowDimensions";
-import { Loading } from "../../../components/SharedComponents";
-import { show_search_bar } from "../../../actions/settingActions";
-import { listFeatures } from "../../../actions/featureActions";
-import { GLButton } from "../../../components/GlowLEDsComponents";
+import useWindowDimensions from "../../shared/Hooks/windowDimensions";
+import { Loading } from "../../shared/SharedComponents";
+import { show_search_bar } from "../../actions/settingActions";
+import { listFeatures } from "../../actions/featureActions";
+import { GLButton } from "../../shared/GlowLEDsComponents";
 import HomeSlideshow from "./HomeSlideshow";
-import ReadMore from "../../components/GlowLEDsComponents/GLReadMore/ReadMore";
+import ReadMore from "../../shared/GlowLEDsComponents/GLReadMore/ReadMore";
 
 const HomePage = props => {
   const history = useHistory();

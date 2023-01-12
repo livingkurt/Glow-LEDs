@@ -1,15 +1,15 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { listSettings, deleteSetting, saveSetting } from "../../../actions/settingActions";
+import { listSettings, deleteSetting } from "../../actions/settingActions";
 import { Link } from "react-router-dom";
-import { Loading, Notification } from "../../../components/SharedComponents";
+import { Loading, Notification } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import * as API from "../../api/affiliateApi";
-import { listTeams } from "../../../actions/teamActions";
-import { listOrders } from "../../../actions/orderActions";
-import { GLButton } from "../../../components/GlowLEDsComponents";
-import Search from "../../components/GlowLEDsComponents/GLTable/Search";
-import Sort from "../../components/GlowLEDsComponents/GLTable/Sort";
+import { listTeams } from "../../actions/teamActions";
+import { listOrders } from "../../actions/orderActions";
+import { GLButton } from "../../shared/GlowLEDsComponents";
+import Search from "../../shared/GlowLEDsComponents/GLTable/Search";
+import Sort from "../../shared/GlowLEDsComponents/GLTable/Sort";
 
 const SettingsPage = props => {
   const [search, set_search] = useState("");

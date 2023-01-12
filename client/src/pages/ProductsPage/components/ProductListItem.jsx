@@ -2,11 +2,11 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { LazyImage } from "../../../components/SharedComponents";
+import { LazyImage } from "../../../shared/SharedComponents";
 import { sale_price_switch } from "../../../utils/react_helper_functions";
 import { deleteProduct, listProducts, saveProduct } from "../../../actions/productActions";
 import styled from "styled-components";
-import { GLButton } from "../../../components/GlowLEDsComponents";
+import { GLButton } from "../../../shared/GlowLEDsComponents";
 
 const grid = 8;
 const size = 30;

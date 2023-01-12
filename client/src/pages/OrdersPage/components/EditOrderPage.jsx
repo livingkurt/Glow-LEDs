@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { saveOrder, detailsOrder } from "../../../actions/orderActions";
 import { Link, useHistory } from "react-router-dom";
-import { Loading } from "../../../components/SharedComponents";
+import { Loading } from "../../../shared/SharedComponents";
 import { format_date, unformat_date } from "../../../utils/helper_functions";
 import { Helmet } from "react-helmet";
 import { listProducts } from "../../../actions/productActions";
@@ -10,7 +10,7 @@ import { listUsers } from "../../../actions/userActions";
 import { API_External, API_Products } from "../../../utils";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import Overflow from "react-overflow-indicator";
-import { GLButton } from "../../../components/GlowLEDsComponents";
+import { GLButton } from "../../../shared/GlowLEDsComponents";
 import { isAdmin } from "../../../utils/helpers/user_helpers";
 
 const EditOrderPage = props => {

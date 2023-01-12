@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { saveCategory, detailsCategory, listCategorys } from "../../../actions/categoryActions";
+import { saveCategory, detailsCategory, listCategorys } from "../../actions/categoryActions";
 import { useHistory } from "react-router-dom";
-import { DropdownDisplay, Loading } from "../../../components/SharedComponents";
+import { DropdownDisplay, Loading } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
-import { GLButton } from "../../../components/GlowLEDsComponents";
+import { GLButton } from "../../shared/GlowLEDsComponents";
 
 const EditCategoryPage = props => {
   const [id, set_id] = useState("");

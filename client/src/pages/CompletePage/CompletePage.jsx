@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { API_Affiliates, API_Emails, API_Features, API_Orders } from "../../utils";
-import { GLButton } from "../../../components/GlowLEDsComponents";
+import { GLButton } from "../../shared/GlowLEDsComponents";
 import OrderComplete from "./components/OrderComplete";
 import FeatureComplete from "./components/FeatureComplete";
 import EmailComplete from "./components/EmailComplete";

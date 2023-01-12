@@ -2,10 +2,10 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import { detailsTeam } from "../../../actions/teamActions";
+import { detailsTeam } from "../../actions/teamActions";
 import { useHistory } from "react-router-dom";
-import { LazyImage } from "../../../components/SharedComponents";
-import { GLButton } from "../../../components/GlowLEDsComponents";
+import { LazyImage } from "../../shared/SharedComponents";
+import { GLButton } from "../../shared/GlowLEDsComponents";
 import { isAdmin } from "../../utils/helpers/user_helpers";
 
 const TeamPage = props => {

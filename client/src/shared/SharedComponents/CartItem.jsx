@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { determnine_link } from "../../utils/helper_functions";
 import { LazyImage } from ".";
 import { cart_item_name, sale_price_switch } from "../../utils/react_helper_functions";
-import { removeFromCart } from "../../../actions/cartActions";
+import { removeFromCart } from "../../actions/cartActions";
 import { GLButton } from "../GlowLEDsComponents";
 import { isAdmin } from "../../utils/helpers/user_helpers";
 

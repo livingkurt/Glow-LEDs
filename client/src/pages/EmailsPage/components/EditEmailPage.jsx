@@ -2,14 +2,14 @@ import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { saveEmail, detailsEmail, listEmails } from "../../../actions/emailActions";
 import { useHistory, Link } from "react-router-dom";
-import { ImageDisplay, Loading, Notification } from "../../../components/SharedComponents";
+import { ImageDisplay, Loading, Notification } from "../../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { detailsContent, listContents } from "../../../actions/contentActions";
-import { API_Emails } from "../../utils";
+import { API_Emails } from "../../../utils";
 import { SketchPicker } from "react-color";
 import reactCSS from "reactcss";
-import { accurate_date, format_date, format_time, unformat_date_and_time } from "../../utils/helper_functions";
-import { GLButton } from "../../../components/GlowLEDsComponents";
+import { accurate_date, format_date, format_time, unformat_date_and_time } from "../../../utils/helper_functions";
+import { GLButton } from "../../../shared/GlowLEDsComponents";
 const ReactDOMServer = require("react-dom/server");
 const HtmlToReactParser = require("html-to-react").Parser;
 

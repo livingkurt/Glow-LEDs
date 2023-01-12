@@ -1,7 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { browser_check } from "../../utils/react_helper_functions";
 import useWindowDimensions from "../Hooks/windowDimensions";
 
 const Footer = () => {

@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { listOrders, update_order } from "../../../actions/orderActions";
-import { Loading, Notification } from "../../../components/SharedComponents";
+import { listOrders, update_order } from "../../actions/orderActions";
+import { Loading, Notification } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { API_Emails, API_Orders } from "../../utils";
 import { getUrlParameter, toCapitalize } from "../../utils/helper_functions";
 import { check_authentication } from "../../utils/react_helper_functions";
 import { orders_upload } from "../../utils/google_sheets_upload";
 import { colors, determine_color } from "../../utils/helpers/order_helpers";
-import { GLButton } from "../../../components/GlowLEDsComponents";
-import Search from "../../components/GlowLEDsComponents/GLTable/Search";
-import Pagination from "../../components/GlowLEDsComponents/GLTable/Pagination";
+import { GLButton } from "../../shared/GlowLEDsComponents";
+import Search from "../../shared/GlowLEDsComponents/GLTable/Search";
+import Pagination from "../../shared/GlowLEDsComponents/GLTable/Pagination";
 import { OrderItemM, OrderListItem } from "./components";
-import Sort from "../../components/GlowLEDsComponents/GLTable/Sort";
+import Sort from "../../shared/GlowLEDsComponents/GLTable/Sort";
 
 const OrdersPage = props => {
   const [search, set_search] = useState("");

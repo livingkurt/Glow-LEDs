@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Helmet } from "react-helmet";
-import { detailsEmail, listEmails } from "../../../actions/emailActions";
+import { detailsEmail, listEmails } from "../../actions/emailActions";
 
 const AnnouncementsPage = props => {
   const emailList = useSelector(state => state.emailList);

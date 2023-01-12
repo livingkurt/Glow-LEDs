@@ -3,7 +3,7 @@ import React from "react";
 import "react-tabs/style/react-tabs.css";
 import { product_page_sale_price_switch } from "../../../utils/react_helper_functions";
 import { ProductFacts } from ".";
-import Rating from "../../../components/GlowLEDsComponents/GLRating/Rating";
+import Rating from "../../../shared/GlowLEDsComponents/GLRating/Rating";
 
 const ProductSelection = ({ product, name, price, sale_price, previous_price, facts }) => {
   return (

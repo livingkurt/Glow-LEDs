@@ -51,39 +51,31 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
 import { Link } from "react-router-dom";
-import { mobile_check } from "../../utils/react_helper_functions";
+import { mobile_check } from "../../../utils/react_helper_functions";
 
-const ProductSlideshow = ({
-  product,
-  images,
-  secondary_images,
-  className,
-  set_image,
-  interval,
-  transitionTime,
-}) => {
+const ProductSlideshow = ({ product, images, secondary_images, className, set_image, interval, transitionTime }) => {
   const responsive = {
     superLargeDesktop: {
       // the naming can be any, depends on you.
       breakpoint: { max: 8000, min: 1400 },
-      items: 1,
+      items: 1
     },
     desktop: {
       breakpoint: { max: 1400, min: 1100 },
-      items: 1,
+      items: 1
     },
     desktop_2: {
       breakpoint: { max: 1100, min: 900 },
-      items: 1,
+      items: 1
     },
     tablet: {
       breakpoint: { max: 900, min: 464 },
-      items: 1,
+      items: 1
     },
     mobile: {
       breakpoint: { max: 464, min: 0 },
-      items: 1,
-    },
+      items: 1
+    }
   };
 
   return (
@@ -106,21 +98,14 @@ const ProductSlideshow = ({
         // transitionDuration={5000}
         // containerClass="carousel-container"
         containerClass="carousel-with-custom-dots"
-        removeArrowOnDeviceType={[ "tablet", "mobile" ]}
+        removeArrowOnDeviceType={["tablet", "mobile"]}
         deviceType={mobile_check() ? "mobile" : "desktop"}
         // dotListClass="custom-dot-list-style"
         itemClass="carousel-item-padding-40-px br-20px "
       >
         {images.map((image, index) => (
           <div className={className}>
-            <img
-              draggable={false}
-              key={index}
-              src={image}
-              alt="carousel"
-              title="carousel item"
-              className="carousel-item br-40px mb-10px"
-            />
+            <img draggable={false} key={index} src={image} alt="carousel" title="carousel item" className="carousel-item br-40px mb-10px" />
           </div>
         ))}
       </Carousel>

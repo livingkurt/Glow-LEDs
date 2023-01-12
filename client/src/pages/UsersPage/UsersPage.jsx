@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { format_date } from "../../utils/helper_functions";
-import { Loading, Notification } from "../../../components/SharedComponents";
-import { listUsers, deleteUser } from "../../../actions/userActions";
+import { Loading, Notification } from "../../shared/SharedComponents";
+import { listUsers, deleteUser } from "../../actions/userActions";
 import { Helmet } from "react-helmet";
-import { GLButton } from "../../../components/GlowLEDsComponents";
-import Search from "../../components/GlowLEDsComponents/GLTable/Search";
-import Sort from "../../components/GlowLEDsComponents/GLTable/Sort";
+import { GLButton } from "../../shared/GlowLEDsComponents";
+import Search from "../../shared/GlowLEDsComponents/GLTable/Search";
+import Sort from "../../shared/GlowLEDsComponents/GLTable/Sort";
 
 const UsersPage = props => {
   const [search, set_search] = useState("");

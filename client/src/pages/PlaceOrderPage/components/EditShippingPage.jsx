@@ -4,7 +4,7 @@ import { update } from "../../../actions/userActions";
 import { listMyOrders } from "../../../actions/orderActions";
 import { useDispatch, useSelector } from "react-redux";
 import { Helmet } from "react-helmet";
-import { GLButton } from "../../../components/GlowLEDsComponents";
+import { GLButton } from "../../../shared/GlowLEDsComponents";
 
 const ProfilePage = props => {
   const history = useHistory();

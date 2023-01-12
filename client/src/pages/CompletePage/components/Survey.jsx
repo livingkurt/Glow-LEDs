@@ -2,13 +2,13 @@ import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { saveSurvey, detailsSurvey, listSurveys } from "../../../actions/surveyActions";
 import { useHistory } from "react-router-dom";
-import { Loading } from "../../../components/SharedComponents";
+import { Loading } from "../../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { listUsers } from "../../../actions/userActions";
 import "react-medium-image-zoom/dist/styles.css";
 import { detailsOrder } from "../../../actions/orderActions";
-import { GLButton } from "../../../components/GlowLEDsComponents";
-import StarRating from "../../../components/GlowLEDsComponents/GLRating/StarRating";
+import { GLButton } from "../../../shared/GlowLEDsComponents";
+import StarRating from "../../../shared/GlowLEDsComponents/GLRating/StarRating";
 
 const Survey = props => {
   const [question_1, set_question_1] = useState("");

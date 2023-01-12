@@ -1,13 +1,12 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { saveSurvey, detailsSurvey } from "../../../actions/surveyActions";
+import { saveSurvey, detailsSurvey } from "../../actions/surveyActions";
 import { useHistory, Link } from "react-router-dom";
-import { Loading } from "../../../components/SharedComponents";
+import { Loading } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
-import { listUsers } from "../../../actions/userActions";
-import { listOrders } from "../../../actions/orderActions";
-import { format_date, snake_case, unformat_date } from "../../utils/helper_functions";
-import { GLButton } from "../../../components/GlowLEDsComponents";
+import { listUsers } from "../../actions/userActions";
+import { listOrders } from "../../actions/orderActions";
+import { GLButton } from "../../shared/GlowLEDsComponents";
 
 const EditSurveyPage = props => {
   const [id, set_id] = useState("");

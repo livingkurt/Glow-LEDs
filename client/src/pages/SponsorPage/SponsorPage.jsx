@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import { detailsAffiliate } from "../../../actions/affiliateActions";
+import { detailsAffiliate } from "../../actions/affiliateActions";
 import { useHistory } from "react-router-dom";
-import { LazyImage } from "../../../components/SharedComponents";
+import { LazyImage } from "../../shared/SharedComponents";
 import { API_Users } from "../../utils";
-import { GLButton } from "../../../components/GlowLEDsComponents";
+import { GLButton } from "../../shared/GlowLEDsComponents";
 import { isAdmin } from "../../utils/helpers/user_helpers";
 import { ProductSimpleItemD, ProductSimpleItemM } from "../ProductsGridPage/components";
 

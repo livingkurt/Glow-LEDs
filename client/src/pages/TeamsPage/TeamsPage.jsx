@@ -1,12 +1,12 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { listTeams, deleteTeam } from "../../../actions/teamActions";
+import { listTeams, deleteTeam } from "../../actions/teamActions";
 import { Link } from "react-router-dom";
-import { Loading, Notification } from "../../../components/SharedComponents";
+import { Loading, Notification } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
-import Search from "../../components/GlowLEDsComponents/GLTable/Search";
-import Sort from "../../components/GlowLEDsComponents/GLTable/Sort";
-import { GLButton } from "../../../components/GlowLEDsComponents";
+import Search from "../../shared/GlowLEDsComponents/GLTable/Search";
+import Sort from "../../shared/GlowLEDsComponents/GLTable/Sort";
+import { GLButton } from "../../shared/GlowLEDsComponents";
 
 const TeamsPage = props => {
   const [search, set_search] = useState("");

@@ -1,12 +1,9 @@
 // React
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
-import Rating from "./Rating";
-import {
-  determine_product_name_display,
-  sale_price_switch,
-} from "../../utils/react_helper_functions";
-import { LazyImage } from "../UtilityComponents";
+import { determine_product_name_display, sale_price_switch } from "../../../utils/react_helper_functions";
+import { LazyImage } from "../../../shared/SharedComponents";
+import Rating from "../../../shared/GlowLEDsComponents/GLRating/Rating";
 
 const Product = props => {
   const history = useHistory();
@@ -18,7 +15,7 @@ const Product = props => {
             <Link
               to={{
                 pathname: "/collections/all/products/" + props.product.pathname,
-                previous_path: history.location.pathname,
+                previous_path: history.location.pathname
               }}
               className="m-auto"
             >
@@ -43,7 +40,7 @@ const Product = props => {
             <Link
               to={{
                 pathname: "/collections/all/products/" + props.product.pathname,
-                previous_path: history.location.pathname,
+                previous_path: history.location.pathname
               }}
             >
               <label className="mt-10px" style={{ fontSize: "1.6rem" }}>
@@ -55,19 +52,11 @@ const Product = props => {
                 $549.99 - $<i className="fas fa-arrow-up" />
               </label>
             ) : (
-              <label className="product-price">
-                {sale_price_switch(
-                  props.product,
-                  props.product.product_options
-                )}
-              </label>
+              <label className="product-price">{sale_price_switch(props.product, props.product.product_options)}</label>
             )}
 
             {props.product.rating ? (
-              <Rating
-                rating={props.product.rating}
-                numReviews={props.product.numReviews}
-              />
+              <Rating rating={props.product.rating} numReviews={props.product.numReviews} />
             ) : (
               <span className="rating vis-hid ta-c">No Reviews</span>
             )}

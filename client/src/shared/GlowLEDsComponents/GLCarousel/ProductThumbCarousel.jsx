@@ -2,9 +2,9 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import ProductThumbCarouselItem from "./CarouselItem";
-import { Loading } from "../UtilityComponents";
 import useWindowDimensions from "../Hooks/windowDimensions";
 import { GLButton } from "../GlowLEDsComponents";
+import { Loading } from "../../SharedComponents";
 
 const ProductThumbCarousel = props => {
   const dispatch = useDispatch();
@@ -13,8 +13,8 @@ const ProductThumbCarousel = props => {
   const { products, loading, error } = productList;
   const { height, width } = useWindowDimensions();
 
-  const [ product_number, set_product_number ] = useState(0);
-  const [ number_of_items, set_number_of_items ] = useState(5);
+  const [product_number, set_product_number] = useState(0);
+  const [number_of_items, set_number_of_items] = useState(5);
 
   const move_left = () => {
     if (product_number != 0) {
@@ -24,10 +24,7 @@ const ProductThumbCarousel = props => {
     }
   };
   const move_right = () => {
-    if (
-      product_number !=
-      products.filter(product => product.hidden === false).length - 5
-    ) {
+    if (product_number != products.filter(product => product.hidden === false).length - 5) {
       set_product_number(product_number => {
         return product_number + 1;
       });
@@ -48,16 +45,13 @@ const ProductThumbCarousel = props => {
     }
   };
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        handleWindowResize();
-      }
-      return () => (clean = false);
-    },
-    [ width ]
-  );
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      handleWindowResize();
+    }
+    return () => (clean = false);
+  }, [width]);
 
   return (
     <div className="mh-10px">
@@ -80,31 +74,19 @@ const ProductThumbCarousel = props => {
                 </GLButton>
               </div>
               {/* )} */}
-              {[ ...Array(1).keys() ].map(x => (
+              {[...Array(1).keys()].map(x => (
                 <div className="w-259px">
                   <ProductThumbCarouselItem
                     key={product_number + x}
                     size="175px"
-                    product={
-                      products
-                        .filter(product => !product.option)
-                        .filter(product => product.hidden === false)[
-                        product_number + x
-                      ]
-                    }
+                    product={products.filter(product => !product.option).filter(product => product.hidden === false)[product_number + x]}
                     style={{ listStyleType: "none" }}
                   />
                 </div>
               ))}
               {/* {product_number < products.filter((product) => product.hidden === false).length - 5 && ( */}
               <div className="ai-c">
-                <GLButton
-                  style={{ borderRadius: "50%" }}
-                  variant="icon"
-                  className="h-59px"
-                  onClick={() => move_right()}
-                  aria-label="Next"
-                >
+                <GLButton style={{ borderRadius: "50%" }} variant="icon" className="h-59px" onClick={() => move_right()} aria-label="Next">
                   <i className="fas fa-arrow-circle-right fs-40px" />
                 </GLButton>
               </div>

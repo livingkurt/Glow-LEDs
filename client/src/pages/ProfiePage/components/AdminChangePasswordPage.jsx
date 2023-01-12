@@ -3,10 +3,10 @@ import { Link, useHistory } from "react-router-dom";
 import { password_reset } from "../../../actions/userActions";
 import { listMyOrders } from "../../../actions/orderActions";
 import { useDispatch, useSelector } from "react-redux";
-import { validate_password_change } from "../../utils/validations";
-import { Loading } from "../../../components/SharedComponents";
+import { validate_password_change } from "../../../utils/validations";
+import { Loading } from "../../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
-import { GLButton } from "../../../components/GlowLEDsComponents";
+import { GLButton } from "../../../shared/GlowLEDsComponents";
 
 const AdminChangePasswordPage = props => {
   const history = useHistory();

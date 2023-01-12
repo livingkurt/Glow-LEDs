@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { GLButton } from "../../../components/GlowLEDsComponents";
-import { Loading } from "../../../components/SharedComponents";
+import { Loading } from "../../shared/SharedComponents";
+import { GLButton } from "../../shared/GlowLEDsComponents";
 import { API_Content } from "../../utils";
 
 function GcodeContinousPage() {

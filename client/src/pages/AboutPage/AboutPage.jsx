@@ -1,12 +1,11 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Helmet } from "react-helmet";
-// import MessengerCustomerChat from 'react-messenger-customer-chat';
-import { listAffiliates } from "../../../actions/affiliateActions";
-import { Loading } from "../../../components/SharedComponents";
-import { listTeams } from "../../../actions/teamActions";
-import useWindowDimensions from "../../../components/Hooks/windowDimensions";
-import ReadMore from "../../components/GlowLEDsComponents/GLReadMore/ReadMore";
+import { listAffiliates } from "../../actions/affiliateActions";
+import { Loading } from "../../shared/SharedComponents";
+import { listTeams } from "../../actions/teamActions";
+import useWindowDimensions from "../../shared/Hooks/windowDimensions";
+import ReadMore from "../../shared/GlowLEDsComponents/GLReadMore/ReadMore";
 import { SponsorItemD, SponsorItemM } from "../SponsorsGridPage/components";
 import { TeamItemD, TeamItemM } from "../TeamsGridPage/components";
 

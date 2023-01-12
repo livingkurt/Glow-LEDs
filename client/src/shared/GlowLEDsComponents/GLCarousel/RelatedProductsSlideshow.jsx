@@ -12,9 +12,9 @@ import {
   mobile_check,
   sale_price_switch
 } from "../../../utils/react_helper_functions";
-import useWindowDimensions from "../../../components/Hooks/windowDimensions";
-import { LazyImage } from "../../../components/SharedComponents";
-import { GLButton } from "../../../components/GlowLEDsComponents";
+import useWindowDimensions from "../../Hooks/windowDimensions";
+import { LazyImage } from "../../SharedComponents";
+import { GLButton } from "..";
 import Rating from "../GLRating/Rating";
 
 const RelatedProductsSlideshow = ({

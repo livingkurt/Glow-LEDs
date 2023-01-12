@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { detailsUser } from "../../../actions/userActions";
-import { Loading, Notification } from "../../../components/SharedComponents";
+import { detailsUser } from "../../actions/userActions";
+import { Loading, Notification } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
-import { API_Emails, API_Orders, API_Promos } from "../../utils";
-import { GLButton } from "../../../components/GlowLEDsComponents";
-import { listMyPaychecks } from "../../../actions/paycheckActions";
-import { listPromos } from "../../../actions/promoActions";
+import { API_Emails, API_Orders } from "../../utils";
+import { GLButton } from "../../shared/GlowLEDsComponents";
+import { listMyPaychecks } from "../../actions/paycheckActions";
+import { listPromos } from "../../actions/promoActions";
 import { format_date } from "../../utils/helper_functions";
-import { detailsAffiliate } from "../../../actions/affiliateActions";
+import { detailsAffiliate } from "../../actions/affiliateActions";
 import { isAdmin } from "../../utils/helpers/user_helpers";
 
 const ProfilePage = props => {

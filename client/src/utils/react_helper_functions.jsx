@@ -5,7 +5,7 @@ import jwt_decode from "jwt-decode";
 import setAuthToken from "../utils/setAuthToken";
 import { API_Users } from ".";
 import store from "../store";
-import { GLButton } from "../components/GlowLEDsComponents";
+import { GLButton } from "../shared/GlowLEDsComponents";
 
 const delay = 2000; // anti-rebound for 500ms
 let lastExecution = 0;
@@ -271,7 +271,7 @@ const color = item => {
 
 const size = (item, modifier) => {
   const option_name = item.option_group_name ? item.option_group_name.split(" ")[0] : "";
-  return `${item.size && item.size !== 0 ? ` ${first_dash(item)} ${item.size}` : ""} 
+  return `${item.size && item.size !== 0 ? ` ${first_dash(item)} ${item.size}` : ""}
     ${determine_option_show_modifier(item) && option_name ? option_name : ""}`;
 };
 

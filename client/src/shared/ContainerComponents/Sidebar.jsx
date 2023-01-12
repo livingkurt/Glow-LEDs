@@ -1,15 +1,14 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../../../actions/userActions";
+import { logout } from "../../actions/userActions";
 import { HashLink } from "react-router-hash-link";
-import { browser_check } from "../../utils/react_helper_functions";
-import { listProducts } from "../../../actions/productActions";
 import { update_products_url } from "../../utils/helper_functions";
-import { listChips } from "../../../actions/chipActions";
+import { listChips } from "../../actions/chipActions";
 import { GLButton } from "../GlowLEDsComponents";
 import { isAdmin } from "../../utils/helpers/user_helpers";
 import Filter from "../GlowLEDsComponents/GLTable/Filter";
+import { listProducts } from "../../api/productApi";
 
 const Sidebar = props => {
   const history = useHistory();

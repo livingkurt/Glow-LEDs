@@ -3,8 +3,8 @@ import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { login, logout } from "../../../actions/userActions";
 import { validate_login } from "../../../utils/validations";
-import useWindowDimensions from "../../../components/Hooks/windowDimensions";
-import { GLButton } from "../../../components/GlowLEDsComponents";
+import useWindowDimensions from "../../../shared/Hooks/windowDimensions";
+import { GLButton } from "../../../shared/GlowLEDsComponents";
 const EmailStep = ({
   email_completed,
   show_email,

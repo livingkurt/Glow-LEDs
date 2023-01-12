@@ -1,9 +1,9 @@
 // React
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
-import { determine_product_name_display, sale_price_switch } from "../../utils/react_helper_functions";
-import { LazyImage } from "../../../components/SharedComponents";
-import Rating from "../../../components/GlowLEDsComponents/GLRating/Rating";
+import { determine_product_name_display, sale_price_switch } from "../../../utils/react_helper_functions";
+import { LazyImage } from "../../../shared/SharedComponents";
+import Rating from "../../../shared/GlowLEDsComponents/GLRating/Rating";
 
 const ProductItemM = props => {
   const history = useHistory();

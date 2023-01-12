@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
-import { Header, Container, Content, Footer, Sidebar, Cart } from "./components/ContainerComponents/index";
-import { AdminRoute, PrivateRoute } from "./components/RouteComponents";
-import { Notification, ScrollToTop } from "./components/SharedComponents";
+import { Header, Container, Content, Footer, Sidebar, Cart } from "./shared/ContainerComponents/index";
+import { AdminRoute, PrivateRoute } from "./shared/RouteComponents";
+import { Notification, ScrollToTop } from "./shared/SharedComponents";
 import MessengerCustomerChat from "react-messenger-customer-chat";
 import { Helmet } from "react-helmet";
-import useWindowDimensions from "./components/Hooks/windowDimensions";
+import useWindowDimensions from "./shared/Hooks/windowDimensions";
 // import Particles from "react-particles-js";
 import particlesjs_config from "./particlesjs_config.json";
 import { check_authentication } from "./utils/react_helper_functions";
@@ -15,19 +15,16 @@ import Headroom from "react-headroom";
 
 import { createTheme, ThemeProvider } from "@mui/material";
 import glow_leds_theme from "./theme";
-import {
-  AdminChangePasswordPage,
-  ChangePasswordPage,
-  EditUserPage,
-  PasswordResetPage,
-  ProfilePage,
-  ResetPasswordPage,
-  UsersPage
-} from "./pages/UsersPage";
 import { EditOrderPage, LabelCreatorPage, MyOrdersPage, OrderCombinerPage, TrackOrderPage } from "./pages/OrdersPage/components";
 import { OrderPage } from "./pages/OrderPage";
 import { PlaceOrderPage } from "./pages/PlaceOrderPage";
-import { EditUserAffiliatePage } from "./pages/ProfiePage/components";
+import {
+  ChangePasswordPage,
+  EditUserAffiliatePage,
+  PasswordResetPage,
+  ResetPasswordPage,
+  AdminChangePasswordPage
+} from "./pages/ProfiePage/components";
 import { EditProductPage } from "./pages/ProductsPage/components";
 import { GcodeContinousPage } from "./pages/GcodeContinousPage";
 import { DatabaseMigrationPage } from "./pages/DatabaseMigrationPage";
@@ -50,11 +47,11 @@ import { ProductsDisplayPage } from "./pages/ProductsGridPage/components";
 import { AnnouncementEmail, EditEmailPage, EmailModal } from "./pages/EmailsPage/components";
 import { EmailsPage } from "./pages/EmailsPage";
 import { EditPromoPage, PromosPage } from "./pages/PromosPage";
-import { AffiliatesPage, AffiliateTermsPage, EditAffiliatePage } from "./pages/AffiliatesPage";
+import { AffiliatesPage, EditAffiliatePage } from "./pages/AffiliatesPage";
 import { EditTeamPage, TeamsPage } from "./pages/TeamsPage";
 import { ChipsPage, EditChipPage } from "./pages/ChipsPage";
 import { HomePage } from "./pages/HomePage";
-import { CheckEmailPage, LoginPage } from "./pages/LoginPage";
+import { LoginPage } from "./pages/LoginPage";
 import VerifiedPage from "./pages/LoginPage/components/VerifiedPage";
 import { RegisterPage } from "./pages/RegisterPage";
 import ShippingPage from "./pages/ProfiePage/components/UserShippingPage";
@@ -80,6 +77,11 @@ import { FAQPage } from "./pages/FAQPage";
 import { SitemapPage } from "./pages/SitemapPage";
 import { MusicPage } from "./pages/MusicPage";
 import { CompletePage } from "./pages/CompletePage";
+import { ProfilePage } from "./pages/ProfiePage";
+import { EditUserPage, UsersPage } from "./pages/UsersPage";
+import { CheckEmailPage } from "./pages/LoginPage/components";
+import { AffiliateTermsPage } from "./pages/AffiliatesPage/components";
+import { Four04Page } from "./pages/Four04Page";
 
 const App = props => {
   const theme_colors = {

@@ -6,11 +6,11 @@ import {
   determine_secondary_product_name,
   product_page_sale_price_switch
 } from "../../../utils/react_helper_functions";
-import useWindowDimensions from "../../../components/Hooks/windowDimensions";
-import { GLButton } from "../../../components/GlowLEDsComponents";
+import useWindowDimensions from "../../../shared/Hooks/windowDimensions";
+import { GLButton } from "../../../shared/GlowLEDsComponents";
 import ReactTooltip from "react-tooltip";
-import GLTooltip from "../../../components/GlowLEDsComponents/GLTooltip/GLTooltip";
-import Rating from "../../../components/GlowLEDsComponents/GLRating/Rating";
+import GLTooltip from "../../../shared/GlowLEDsComponents/GLTooltip/GLTooltip";
+import Rating from "../../../shared/GlowLEDsComponents/GLRating/Rating";
 
 const ProductOptions = ({
   product,

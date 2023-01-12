@@ -1,15 +1,15 @@
 // React
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import Overflow from "react-overflow-indicator";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "react-tabs/style/react-tabs.css";
 import { humanize, sizes, toCapitalize } from "../../../utils/helper_functions";
-import useWindowDimensions from "../../../components/Hooks/windowDimensions";
-import RelatedProductsSlideshow from "./RelatedProductsSlideshow";
-import { GLButton } from "../../../components/GlowLEDsComponents";
-import ReadMore from "../../../components/GlowLEDsComponents/GLReadMore/ReadMore";
+import useWindowDimensions from "../../../shared/Hooks/windowDimensions";
+import { GLButton } from "../../../shared/GlowLEDsComponents";
+import ReadMore from "../../../shared/GlowLEDsComponents/GLReadMore/ReadMore";
 import { Reviews } from ".";
+import RelatedProductsSlideshow from "../../../shared/GlowLEDsComponents/GLCarousel/RelatedProductsSlideshow";
 
 const ProductDetails = ({ product, manuals, description, included_items, pathname }) => {
   const [canScroll, setCanScroll] = useState(false);

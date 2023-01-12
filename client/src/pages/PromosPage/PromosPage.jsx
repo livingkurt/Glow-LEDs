@@ -1,13 +1,13 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { listPromos, deletePromo, savePromo } from "../../../actions/promoActions";
+import { listPromos, deletePromo, savePromo } from "../../actions/promoActions";
 import { Link } from "react-router-dom";
-import { Loading, Notification } from "../../../components/SharedComponents";
+import { Loading, Notification } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
-import Search from "../../components/GlowLEDsComponents/GLTable/Search";
-import Sort from "../../components/GlowLEDsComponents/GLTable/Sort";
+import Search from "../../shared/GlowLEDsComponents/GLTable/Search";
+import Sort from "../../shared/GlowLEDsComponents/GLTable/Sort";
 import { format_date } from "../../utils/helper_functions";
-import { GLButton } from "../../../components/GlowLEDsComponents";
+import { GLButton } from "../../shared/GlowLEDsComponents";
 import { API_Emails, API_Promos } from "../../utils";
 
 const PromosPage = props => {

@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Helmet } from "react-helmet";
-import { listChips } from "../../../actions/chipActions";
+import { listChips } from "../../actions/chipActions";
 import { update_products_url } from "../../utils/helper_functions";
-import { listProducts } from "../../../actions/productActions";
-import { GLButton } from "../../../components/GlowLEDsComponents";
+import { listProducts } from "../../actions/productActions";
+import { GLButton } from "../../shared/GlowLEDsComponents";
 import QuickButtons from "./QuickButtons";
-import Filter from "../../components/GlowLEDsComponents/GLTable/Filter";
+import Filter from "../../shared/GlowLEDsComponents/GLTable/Filter";
 
 const FAQPage = () => {
   const history = useHistory();

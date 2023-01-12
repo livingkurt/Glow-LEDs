@@ -1,34 +1,24 @@
 // React
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
+import { LazyImage } from "../../../shared/SharedComponents";
 
-import { format_date } from "../../utils/helper_functions";
+import { format_date } from "../../../utils/helper_functions";
 import { GLButton } from "../GlowLEDsComponents";
-import { LazyImage } from "../UtilityComponents";
 
 const OrderSmallScreen = props => {
   const history = useHistory();
   return (
-    <div
-      className="container p-15px "
-      style={{ backgroundColor: props.determine_color(props.order) }}
-    >
-      <div
-        className="pb-15px mb-10px row ai-c"
-        style={{ borderBottom: "1px solid white" }}
-      >
+    <div className="container p-15px " style={{ backgroundColor: props.determine_color(props.order) }}>
+      <div className="pb-15px mb-10px row ai-c" style={{ borderBottom: "1px solid white" }}>
         <div className="w-100per jc-b">
           <div className="fs-16px">
             <h3>Order Placed</h3>
-            <div>
-              {props.order.createdAt && format_date(props.order.createdAt)}
-            </div>
+            <div>{props.order.createdAt && format_date(props.order.createdAt)}</div>
           </div>
           <div className="fs-16px">
             <h3>Total</h3>
-            <div>
-              ${props.order.totalPrice && props.order.totalPrice.toFixed(2)}
-            </div>
+            <div>${props.order.totalPrice && props.order.totalPrice.toFixed(2)}</div>
           </div>
           {props.admin && (
             <div className="fs-16px">
@@ -41,8 +31,7 @@ const OrderSmallScreen = props => {
             <Link
               to={{
                 pathname: "/secure/account/order/" + props.order._id,
-                previous_path:
-                  history.location.pathname + history.location.search,
+                previous_path: history.location.pathname + history.location.search
               }}
               className="m-auto"
             >
@@ -73,7 +62,7 @@ const OrderSmallScreen = props => {
 											alt={item.name}
 											title="Product Image"
 											effect="blur"
-											src={item.display_image && item.display_image} 
+											src={item.display_image && item.display_image}
 										/> */}
                   </Link>
                   {item.qty > 1 && (
@@ -82,7 +71,7 @@ const OrderSmallScreen = props => {
                       style={{
                         backgroundColor: "white",
                         color: "black",
-                        border: "1px solid #ccc",
+                        border: "1px solid #ccc"
                       }}
                     >
                       <div className="mt-3px ml-2px">{item.qty}</div>

@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { Helmet } from "react-helmet";
 import { API_Products } from "../../utils";
 import { accurate_date, format_date, format_time, unformat_date, unformat_date_and_time } from "../../utils/helper_functions";
-import { GLButton } from "../../../components/GlowLEDsComponents";
+import { GLButton } from "../../shared/GlowLEDsComponents";
 
 const DatabaseMigrationPage = props => {
   const date = new Date();

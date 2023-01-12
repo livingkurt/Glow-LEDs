@@ -1,7 +1,7 @@
 // React
 import React from "react";
 import { Link } from "react-router-dom";
-import { LazyImage } from "../../../components/SharedComponents";
+import { LazyImage } from "../../../shared/SharedComponents";
 // import Resizer from 'react-image-file-resizer';
 
 const Team = props => {

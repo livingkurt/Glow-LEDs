@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 import { saveUser } from "../../../actions/userActions";
 import { API_Emails, API_Promos } from "../../../utils";
 import { validate_email } from "../../../utils/validations";
-import { GLButton } from "../../../components/GlowLEDsComponents";
-import useWindowDimensions from "../../../components/Hooks/windowDimensions";
+import { GLButton } from "../../../shared/GlowLEDsComponents";
+import useWindowDimensions from "../../../shared/Hooks/windowDimensions";
 
 const EmailModal = props => {
   const [email, set_email] = useState("");

@@ -3,9 +3,9 @@ import { Link, useHistory } from "react-router-dom";
 import { password_reset } from "../../../actions/userActions";
 import { listMyOrders } from "../../../actions/orderActions";
 import { useDispatch, useSelector } from "react-redux";
-import { validate_password_change } from "../../utils/validations";
+import { validate_password_change } from "../../../utils/validations";
 import { Helmet } from "react-helmet";
-import { GLButton } from "../../../components/GlowLEDsComponents";
+import { GLButton } from "../../../shared/GlowLEDsComponents";
 
 const ChangePasswordPage = props => {
   const history = useHistory();

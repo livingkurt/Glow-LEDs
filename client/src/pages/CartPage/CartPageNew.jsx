@@ -6,10 +6,10 @@ import {
 } from "../../../actions/cartActions";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { Carousel } from "../../../components/SharedComponents";
+import { Carousel } from "../../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
-import { determine_total } from "../../utils/helper_functions";
-import { GLButton } from "../../../components/GlowLEDsComponents";
+import { determine_total } from "../../../utils/helper_functions";
+import { GLButton } from "../../../shared/GlowLEDsComponents";
 const CartPage = props => {
   const userLogin = useSelector(state => state.userLogin);
   const { userInfo } = userLogin;

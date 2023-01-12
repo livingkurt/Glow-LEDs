@@ -1,13 +1,13 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { listEmails, deleteEmail, saveEmail } from "../../../actions/emailActions";
+import { listEmails, deleteEmail, saveEmail } from "../../actions/emailActions";
 import { Link } from "react-router-dom";
-import { Loading, Notification } from "../../../components/SharedComponents";
+import { Loading, Notification } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
-import Search from "../../components/GlowLEDsComponents/GLTable/Search";
-import Sort from "../../components/GlowLEDsComponents/GLTable/Sort";
-import { accurate_date, format_date, format_time, humanize, toCapitalize } from "../../utils/helper_functions";
-import { GLButton } from "../../../components/GlowLEDsComponents";
+import Search from "../../shared/GlowLEDsComponents/GLTable/Search";
+import Sort from "../../shared/GlowLEDsComponents/GLTable/Sort";
+import { humanize } from "../../utils/helper_functions";
+import { GLButton } from "../../shared/GlowLEDsComponents";
 
 const EmailsPage = props => {
   const [search, set_search] = useState("");

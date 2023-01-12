@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import useWindowDimensions from "./components/Hooks/windowDimensions";
+import useWindowDimensions from "./shared/Hooks/windowDimensions";
 import { hslToHex } from "./utils/helper_functions";
 import { API_Content } from "./utils";
 

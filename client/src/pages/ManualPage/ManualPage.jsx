@@ -1,15 +1,11 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { humanize, manuals, toCapitalize } from "../../utils/helper_functions";
-import { GLButton } from "../../../components/GlowLEDsComponents";
+import { GLButton } from "../../shared/GlowLEDsComponents";
 
 const ManualPage = props => {
   const pathname = props.match.params.pathname;
-
-  const productList = useSelector(state => state.productList);
-  const { products, loading, error } = productList;
 
   return (
     <div className="main_container">

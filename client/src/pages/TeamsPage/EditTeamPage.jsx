@@ -1,13 +1,13 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { saveTeam, detailsTeam } from "../../../actions/teamActions";
+import { saveTeam, detailsTeam } from "../../actions/teamActions";
 import { useHistory } from "react-router-dom";
-import { ImageDisplay, Loading } from "../../../components/SharedComponents";
+import { ImageDisplay, Loading } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
-import { listAffiliates } from "../../../actions/affiliateActions";
+import { listAffiliates } from "../../actions/affiliateActions";
 import { snake_case } from "../../utils/helper_functions";
-import { listPromos } from "../../../actions/promoActions";
-import { GLButton } from "../../../components/GlowLEDsComponents";
+import { listPromos } from "../../actions/promoActions";
+import { GLButton } from "../../shared/GlowLEDsComponents";
 
 const EditTeamPage = props => {
   const [id, set_id] = useState("");

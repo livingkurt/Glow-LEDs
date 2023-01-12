@@ -2,10 +2,10 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import { detailsFeature } from "../../../actions/featureActions";
+import { detailsFeature } from "../../actions/featureActions";
 import { humanize } from "../../utils/helper_functions";
 import { useHistory } from "react-router-dom";
-import { GLButton } from "../../../components/GlowLEDsComponents";
+import { GLButton } from "../../shared/GlowLEDsComponents";
 import { isAdmin } from "../../utils/helpers/user_helpers";
 
 const FeaturedPage = props => {

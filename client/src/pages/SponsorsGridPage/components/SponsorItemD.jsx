@@ -1,8 +1,7 @@
 // React
 import React from "react";
 import { Link } from "react-router-dom";
-import { LazyImage } from "../../../../components/SharedComponents";
-// import Resizer from 'react-image-file-resizer';
+import { LazyImage } from "../../../shared/SharedComponents";
 
 const Sponsor = props => {
   return (

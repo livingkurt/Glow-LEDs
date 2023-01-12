@@ -1,5 +1,5 @@
 import React from "react";
-import { GLButton } from "../../../components/GlowLEDsComponents";
+import { GLButton } from "../../../shared/GlowLEDsComponents";
 
 const OrderStatusButtons = ({ order, update_order_payment_state, update_order_state, send_order_email, send_refund_email }) => {
   return (

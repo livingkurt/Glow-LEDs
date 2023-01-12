@@ -1,15 +1,15 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { savePromo, detailsPromo } from "../../../actions/promoActions";
+import { savePromo, detailsPromo } from "../../actions/promoActions";
 import { useHistory } from "react-router-dom";
-import { DropdownDisplay, Loading } from "../../../components/SharedComponents";
+import { DropdownDisplay, Loading } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
-import { listUsers } from "../../../actions/userActions";
-import { listAffiliates } from "../../../actions/affiliateActions";
-import { listProducts } from "../../../actions/productActions";
+import { listUsers } from "../../actions/userActions";
+import { listAffiliates } from "../../actions/affiliateActions";
+import { listProducts } from "../../actions/productActions";
 import { API_Products } from "../../utils";
 import { format_date, unformat_date } from "../../utils/helper_functions";
-import { GLButton } from "../../../components/GlowLEDsComponents";
+import { GLButton } from "../../shared/GlowLEDsComponents";
 
 const EditPromoPage = props => {
   const [id, set_id] = useState("");

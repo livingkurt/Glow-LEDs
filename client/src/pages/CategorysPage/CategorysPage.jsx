@@ -1,14 +1,14 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { listCategorys, deleteCategory, saveCategory } from "../../../actions/categoryActions";
+import { listCategorys, deleteCategory, saveCategory } from "../../actions/categoryActions";
 import { Link } from "react-router-dom";
-import { Loading, Notification } from "../../../components/SharedComponents";
+import { Loading, Notification } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
-import { API_Products } from "../../utils";
 import { categories, snake_case, subcategories } from "../../utils/helper_functions";
-import { GLButton } from "../../../components/GlowLEDsComponents";
-import Search from "../../components/GlowLEDsComponents/GLTable/Search";
-import Sort from "../../components/GlowLEDsComponents/GLTable/Sort";
+import { GLButton } from "../../shared/GlowLEDsComponents";
+import Search from "../../shared/GlowLEDsComponents/GLTable/Search";
+import Sort from "../../shared/GlowLEDsComponents/GLTable/Sort";
+
 const fetch = require("node-fetch");
 
 const CategorysPage = props => {

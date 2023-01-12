@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { state_names } from "../../../utils/helper_functions";
-import { Loading } from "../../../components/SharedComponents";
+import { Loading } from "../../../shared/SharedComponents";
 import { ShippingChoice } from ".";
 // import { usePlacesWidget } from "react-google-autocomplete";
 // import Autocomplete from "react-google-autocomplete";
@@ -9,12 +9,12 @@ import { API_Shipping } from "../../../utils";
 import { validate_shipping } from "../../../utils/validations";
 import { savePayment, saveShipping } from "../../../actions/cartActions";
 import { update } from "../../../actions/userActions";
-import useWindowDimensions from "../../../components/Hooks/windowDimensions";
+import useWindowDimensions from "../../../shared/Hooks/windowDimensions";
 import { isMobile } from "react-device-detect";
 import Autocomplete from "./AddressAutocomplete";
-import { GLButton } from "../../../components/GlowLEDsComponents";
-import GLModal from "../../../components/GlowLEDsComponents/GLModal/GLModal";
-import GLCheckbox from "../../../components/GlowLEDsComponents/GLCheckbox/GLCheckbox";
+import { GLButton } from "../../../shared/GlowLEDsComponents";
+import GLModal from "../../../shared/GlowLEDsComponents/GLModal/GLModal";
+import GLCheckbox from "../../../shared/GlowLEDsComponents/GLCheckbox/GLCheckbox";
 import { isAdmin } from "../../../utils/helpers/user_helpers";
 
 const ShippingStep = ({

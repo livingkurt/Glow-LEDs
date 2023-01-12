@@ -1,14 +1,10 @@
 import React from "react";
-// import { Carousel } from 'react-responsive-carousel';
-
-// import 'react-responsive-carousel/lib/styles/carousel.min.css';
-
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
 import { Link } from "react-router-dom";
 import { mobile_check } from "../../utils/react_helper_functions";
-import { GLButton } from "../../../components/GlowLEDsComponents";
+import { GLButton } from "../../shared/GlowLEDsComponents";
 
 const HomeSlideshow = ({ slideshow }) => {
   // left: 37, up: 38, right: 39, down: 40,

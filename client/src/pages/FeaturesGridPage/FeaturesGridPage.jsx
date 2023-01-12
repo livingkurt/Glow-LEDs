@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
-import { Loading } from "../../../components/SharedComponents";
+import { Loading } from "../../shared/SharedComponents";
 import { humanize } from "../../utils/helper_functions";
 import { Helmet } from "react-helmet";
-import { listFeatures } from "../../../actions/featureActions";
-import { GLButton } from "../../../components/GlowLEDsComponents";
+import { listFeatures } from "../../actions/featureActions";
 import { FeatureItemD, FeatureItemM } from "./components";
-import Search from "../../components/GlowLEDsComponents/GLTable/Search";
+import Search from "../../shared/GlowLEDsComponents/GLTable/Search";
 
 const FeaturesGridPage = props => {
   const history = useHistory();

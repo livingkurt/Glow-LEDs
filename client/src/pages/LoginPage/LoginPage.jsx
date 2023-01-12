@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { login } from "../../../actions/userActions";
+import { login } from "../../actions/userActions";
 import { validate_login } from "../../utils/validations";
 import { Helmet } from "react-helmet";
-import { Loading } from "../../../components/SharedComponents";
-import { GLButton } from "../../../components/GlowLEDsComponents";
-import GLInput from "../../components/GlowLEDsComponents/GLInput/GLInput";
+import { Loading } from "../../shared/SharedComponents";
+import { GLButton } from "../../shared/GlowLEDsComponents";
+import GLInput from "../../shared/GlowLEDsComponents/GLInput/GLInput";
 
 const LoginPage = props => {
   const [email, setEmail] = useState("");

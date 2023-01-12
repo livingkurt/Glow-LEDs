@@ -1,7 +1,7 @@
 // React
 import React from "react";
 import { Link } from "react-router-dom";
-import { GLButton } from "../../../components/GlowLEDsComponents";
+import { GLButton } from "../../../shared/GlowLEDsComponents";
 
 const ProductFacts = ({ facts, category, subcategory, pathname, name }) => {
   const determine_alt_skin_pathname = (subcategory, pathname) => {

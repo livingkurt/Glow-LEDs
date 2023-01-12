@@ -1,16 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
-
 import { Link, useHistory } from "react-router-dom";
-
-// import { Chart, CategoryScale } from 'chart.js';
-import { Bar, Pie } from "react-chartjs-2";
-import { dates_in_year, hslToHex, toCapitalize } from "../../utils/helper_functions";
+import { Bar } from "react-chartjs-2";
+import { hslToHex } from "../../utils/helper_functions";
 import { API_Orders } from "../../utils";
 import { Helmet } from "react-helmet";
-import { Loading } from "../../../components/SharedComponents";
+import { Loading } from "../../shared/SharedComponents";
 import Overflow from "react-overflow-indicator";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
-import { GLButton } from "../../../components/GlowLEDsComponents";
+import { GLButton } from "../../shared/GlowLEDsComponents";
 
 const ControlPanelPage = props => {
   const this_year = props.match.params.year;

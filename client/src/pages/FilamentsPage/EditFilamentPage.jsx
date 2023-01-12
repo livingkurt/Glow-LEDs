@@ -1,27 +1,11 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { saveFilament, detailsFilament } from "../../../actions/filamentActions";
+import { saveFilament, detailsFilament } from "../../actions/filamentActions";
 import { useHistory, Link } from "react-router-dom";
-import { DropdownDisplay, Loading } from "../../../components/SharedComponents";
+import { Loading } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
-import { humanize } from "../../utils/helper_functions";
-import {
-  AlphaPicker,
-  BlockPicker,
-  ChromePicker,
-  CirclePicker,
-  CompactPicker,
-  GithubPicker,
-  HuePicker,
-  MaterialPicker,
-  PhotoshopPicker,
-  SketchPicker,
-  SliderPicker,
-  SwatchesPicker,
-  TwitterPicker
-} from "react-color";
-import { listChips } from "../../../actions/chipActions";
-import { GLButton } from "../../../components/GlowLEDsComponents";
+import { listChips } from "../../actions/chipActions";
+import { GLButton } from "../../shared/GlowLEDsComponents";
 
 const EditFilamentPage = props => {
   const [id, set_id] = useState("");

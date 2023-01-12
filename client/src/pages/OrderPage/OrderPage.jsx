@@ -1,22 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { addToCart, removeFromCart } from "../../../actions/cartActions";
+import { addToCart, removeFromCart } from "../../actions/cartActions";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
-import { createOrder, detailsOrder, payOrder, saveOrder } from "../../../actions/orderActions";
+import { createOrder, detailsOrder, payOrder, saveOrder } from "../../actions/orderActions";
 import { determine_tracking_number, format_date, toCapitalize } from "../../utils/helper_functions";
 import { Helmet } from "react-helmet";
-import { Loading, LoadingPayments } from "../../../components/SharedComponents";
-import { deleteOrder, listOrders, update_order, update_payment, refundOrder } from "../../../actions/orderActions";
+import { Loading, LoadingPayments } from "../../shared/SharedComponents";
+import { deleteOrder, listOrders, update_order, update_payment, refundOrder } from "../../actions/orderActions";
 import { API_Emails, API_Orders, API_Shipping } from "../../utils";
 import useClipboard from "react-hook-clipboard";
-import useWindowDimensions from "../../../components/Hooks/windowDimensions";
+import useWindowDimensions from "../../shared/Hooks/windowDimensions";
 import { determine_color } from "../../utils/helpers/order_helpers";
-import { GLButton } from "../../../components/GlowLEDsComponents";
 import { isAdmin } from "../../utils/helpers/user_helpers";
-import CartItem from "../../components/SharedComponents/CartItem";
-import CheckoutSteps from "../../components/SharedComponents/CheckoutSteps";
-import { Stripe } from "../../components/SharedComponents/Stripe";
+import CartItem from "../../shared/SharedComponents/CartItem";
+import CheckoutSteps from "../../shared/SharedComponents/CheckoutSteps";
+import { Stripe } from "../../shared/SharedComponents/Stripe";
 import { OrderStatusButtons } from "./components";
+import { GLButton } from "../../shared/GlowLEDsComponents";
 
 require("dotenv").config();
 

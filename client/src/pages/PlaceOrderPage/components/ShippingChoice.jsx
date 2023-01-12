@@ -1,6 +1,6 @@
 // React
 import React from "react";
-import { GLButton } from "../../../components/GlowLEDsComponents";
+import { GLButton } from "../../../shared/GlowLEDsComponents";
 import ShippingSpeed from "./ShippingSpeed";
 
 const ShippingChoice = ({ rates, hide_pay_button, shipping, current_shipping_speed, choose_shipping_rate, re_choose_shipping_rate }) => {

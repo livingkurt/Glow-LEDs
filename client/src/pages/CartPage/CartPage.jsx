@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import CartItem from "../../components/SharedComponents/CartItem";
+import CartItem from "../../shared/SharedComponents/CartItem";
 import { Helmet } from "react-helmet";
 import { decide_warning, determine_total } from "../../utils/helper_functions";
-import RelatedProductsSlideshow from "../ProductPage/components/RelatedProductsSlideshow";
-import { GLButton } from "../../../components/GlowLEDsComponents";
+
+import { GLButton } from "../../shared/GlowLEDsComponents";
 import { API_Products } from "../../utils";
 import { isAdmin } from "../../utils/helpers/user_helpers";
+import RelatedProductsSlideshow from "../../shared/GlowLEDsComponents/GLCarousel/RelatedProductsSlideshow";
 
 const CartPage = props => {
   const cart = useSelector(state => state.cart);

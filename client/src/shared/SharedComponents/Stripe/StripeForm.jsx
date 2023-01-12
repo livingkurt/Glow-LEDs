@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { isMobile } from "react-device-detect";
-import { GLButton } from "../GlowLEDsComponents";
+import { GLButton } from "../../GlowLEDsComponents";
 
 const StripeForm = ({ pay_order, loading_payment, set_loading_payment, guest, date_1, date_2, stripePromise }) => {
   const stripe = useStripe();
@@ -80,7 +80,7 @@ export default StripeForm;
 // import React, { useState } from "react";
 // import { CardElement, Elements, useStripe, useElements } from "@stripe/react-stripe-js";
 // import { PromosPage } from "../../pages";
-// import { decide_warning } from "../../utils/helper_functions";
+// import { decide_warning } from "../../../utils/helper_functions";
 // import { isMobile } from "react-device-detect";
 // import { GLButton } from "../GlowLEDsComponents";
 // import { loadStripe } from "@stripe/stripe-js";

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { listProducts } from "../../../actions/productActions";
-import { Loading, Notification } from "../../../components/SharedComponents";
+import { Loading, Notification } from "../../../shared/SharedComponents";
 import {
   description_determination,
   getUrlParameter,
@@ -11,16 +11,16 @@ import {
   shuffle,
   sort_options,
   update_products_url
-} from "../../utils/helper_functions";
+} from "../../../utils/helper_functions";
 import { Helmet } from "react-helmet";
-import { API_Chips, API_Products } from "../../utils";
+import { API_Chips, API_Products } from "../../../utils";
 import { listChips } from "../../../actions/chipActions";
-import { userWindowDimensions } from "../../../components/Hooks";
+import { userWindowDimensions } from "../../../shared/Hooks";
 import ProductItemD from "./ProductItemD";
 import ProductItemM from "./ProductItemM";
-import Pagination from "../../../components/GlowLEDsComponents/GLTable/Pagination";
-import Sort from "../../../components/GlowLEDsComponents/GLTable/Sort";
-import Filter from "../../../components/GlowLEDsComponents/GLTable/Filter";
+import Pagination from "../../../shared/GlowLEDsComponents/GLTable/Pagination";
+import Sort from "../../../shared/GlowLEDsComponents/GLTable/Sort";
+import Filter from "../../../shared/GlowLEDsComponents/GLTable/Filter";
 
 const AllProductsByChipPage = props => {
   const history = useHistory();

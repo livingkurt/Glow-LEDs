@@ -1,16 +1,13 @@
 // React
 import React from "react";
 import { Link } from "react-router-dom";
-import { humanize } from "../../utils/helper_functions";
-import { LazyImage } from "../UtilityComponents";
+import { LazyImage } from "../../../shared/SharedComponents";
+import { humanize } from "../../../utils/helper_functions";
 
 const FeatureSmallScreen = props => {
   return (
     <li key={props.feature._id} className=" w-100per" style={props.style}>
-      <Link
-        to={`/collections/all/features/category/${props.category.toLowerCase()}/${props
-          .feature.pathname}`}
-      >
+      <Link to={`/collections/all/features/category/${props.category.toLowerCase()}/${props.feature.pathname}`}>
         <div className="small_screen_product row">
           <div className="">
             <LazyImage
@@ -20,12 +17,9 @@ const FeatureSmallScreen = props => {
               effect="blur"
               size={{ height: "auto", width: "100%" }}
               src={
-                props.category.toLowerCase() === "glovers" ? (
-                  `http://img.youtube.com/vi/${props.feature
-                    .video}/hqdefault.jpg`
-                ) : (
-                  props.feature.logo
-                )
+                props.category.toLowerCase() === "glovers"
+                  ? `http://img.youtube.com/vi/${props.feature.video}/hqdefault.jpg`
+                  : props.feature.logo
               }
             />
           </div>
@@ -33,9 +27,7 @@ const FeatureSmallScreen = props => {
             <div className="product_text" style={{ fontSize: "1.6rem" }}>
               {props.feature.artist_name}
             </div>
-            <label style={{ fontSize: "1.3rem" }}>
-              {props.feature.product && humanize(props.feature.product)}
-            </label>
+            <label style={{ fontSize: "1.3rem" }}>{props.feature.product && humanize(props.feature.product)}</label>
           </div>
         </div>
       </Link>

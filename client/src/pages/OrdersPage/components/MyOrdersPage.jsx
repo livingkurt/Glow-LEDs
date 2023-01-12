@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { listMyOrders } from "../../../actions/orderActions";
 import { useDispatch, useSelector } from "react-redux";
-import { Loading } from "../../../components/SharedComponents";
+import { Loading } from "../../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
-import { GLButton } from "../../../components/GlowLEDsComponents";
+import { GLButton } from "../../../shared/GlowLEDsComponents";
 import OrderListItem from "./OrderListItem";
 import { OrderItemD, OrderItemM } from ".";
 

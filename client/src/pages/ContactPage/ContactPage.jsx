@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { contact } from "../../../actions/userActions";
+import { contact } from "../../actions/userActions";
 import { validate_contact } from "../../utils/validations";
-import { Loading, Notification } from "../../../components/SharedComponents";
+import { Loading, Notification } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { humanize } from "../../utils/helper_functions";
-import { saveFeature } from "../../../actions/featureActions";
-import { Link } from "react-router-dom";
-import { GLButton } from "../../../components/GlowLEDsComponents";
 require("dotenv").config();
 
 const ContactPage = props => {

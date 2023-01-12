@@ -1,13 +1,14 @@
 // React
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import Rating from "../../components/SpecialtyComponents/Rating";
-import { format_date } from "../../utils/helper_functions";
+
+import { format_date } from "../../../utils/helper_functions";
 import { useSelector, useDispatch } from "react-redux";
 import { saveProductReview, detailsProduct } from "../../../actions/productActions";
-import { PRODUCT_REVIEW_SAVE_RESET } from "../../constants/productConstants";
-import { GLButton } from "../../../components/GlowLEDsComponents";
-import { isAdmin } from "../../utils/helpers/user_helpers";
+import { PRODUCT_REVIEW_SAVE_RESET } from "../../../constants/productConstants";
+import { GLButton } from "../../../shared/GlowLEDsComponents";
+import { isAdmin } from "../../../utils/helpers/user_helpers";
+import Rating from "../../../shared/GlowLEDsComponents/GLRating/Rating";
 // Components
 
 const Review = props => {

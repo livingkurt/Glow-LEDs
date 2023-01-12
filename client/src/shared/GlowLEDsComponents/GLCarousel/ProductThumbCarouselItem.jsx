@@ -2,25 +2,22 @@
 import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import Rating from "./Rating";
-import { sale_price_switch } from "../../utils/react_helper_functions";
-import { LazyImage } from "../UtilityComponents";
+import { sale_price_switch } from "../../../utils/react_helper_functions";
+import { LazyImage } from "../../SharedComponents";
 
 const ProductThumbCarouselItem = props => {
-  const [ product, set_product ] = useState(props.product);
-  const [ loading, set_loading ] = useState(true);
+  const [product, set_product] = useState(props.product);
+  const [loading, set_loading] = useState(true);
 
   const history = useHistory();
 
-  useEffect(
-    () => {
-      let clean = true;
-      if (clean) {
-        set_loading(false);
-      }
-      return () => (clean = false);
-    },
-    [ props.product ]
-  );
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      set_loading(false);
+    }
+    return () => (clean = false);
+  }, [props.product]);
 
   return (
     <div>
@@ -28,9 +25,8 @@ const ProductThumbCarouselItem = props => {
         <li key={props.product && product.pathname} style={props.style}>
           <Link
             to={{
-              pathname:
-                product && "/collections/all/products/" + product.pathname,
-              previous_path: history.location.pathname,
+              pathname: product && "/collections/all/products/" + product.pathname,
+              previous_path: history.location.pathname
             }}
           >
             <div className="product">
@@ -48,7 +44,7 @@ const ProductThumbCarouselItem = props => {
 								title="Product Image"
 								style={{ height: props.size, width: props.size }}
 								effect="blur"
-								src={product.images && product.images[0]} 
+								src={product.images && product.images[0]}
 							/> */}
 
               {/* <label className="title_font" style={{ fontSize: '1.3rem' }}>
@@ -62,19 +58,11 @@ const ProductThumbCarouselItem = props => {
                   $549.99 - $<i className="fas fa-arrow-up" />
                 </label>
               ) : (
-                <label className="product-price">
-                  {sale_price_switch(
-                    props.product,
-                    props.product.product_options
-                  )}
-                </label>
+                <label className="product-price">{sale_price_switch(props.product, props.product.product_options)}</label>
               )}
 
               {product.rating ? (
-                <Rating
-                  rating={product.rating}
-                  numReviews={product.numReviews}
-                />
+                <Rating rating={product.rating} numReviews={product.numReviews} />
               ) : (
                 <span className="rating vis-hid ta-c">No Reviews</span>
               )}

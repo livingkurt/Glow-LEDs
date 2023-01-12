@@ -1,8 +1,9 @@
 import React from "react";
 import { isAdmin } from "../../../utils/helpers/user_helpers";
-import { GLButton } from "../../../components/GlowLEDsComponents";
-import useWindowDimensions from "../../../components/Hooks/windowDimensions";
-import Stripe from "../Stripe";
+import { GLButton } from "../../../shared/GlowLEDsComponents";
+import useWindowDimensions from "../../../shared/Hooks/windowDimensions";
+import { Stripe } from "../../../shared/SharedComponents/Stripe";
+
 const PaymentStep = ({
   payment_completed,
   show_payment,

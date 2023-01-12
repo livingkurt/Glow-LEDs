@@ -1,11 +1,9 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { listPaychecks, deletePaycheck, savePaycheck } from "../../../actions/paycheckActions";
+import { listPaychecks, deletePaycheck, savePaycheck } from "../../actions/paycheckActions";
 import { Link, useHistory } from "react-router-dom";
-import { Loading, Notification } from "../../../components/SharedComponents";
+import { Loading, Notification } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
-import Search from "../../components/GlowLEDsComponents/GLTable/Search";
-import Sort from "../../components/GlowLEDsComponents/GLTable/Sort";
 import * as API from "../../api/affiliateApi";
 import {
   dates_in_year,
@@ -16,18 +14,10 @@ import {
   update_products_url
 } from "../../utils/helper_functions";
 import { API_Orders, API_Paychecks, API_Promos } from "../../utils";
-import {
-  affiliate_revenue_upload,
-  promoter_revenue_upload,
-  sponsor_revenue_upload,
-  team_revenue_upload,
-  top_code_usage_upload,
-  top_earner_upload
-} from "../../utils/google_sheets_upload";
-import { listTeams } from "../../../actions/teamActions";
-import { listOrders } from "../../../actions/orderActions";
-import { GLButton } from "../../../components/GlowLEDsComponents";
-import GLTable from "../../components/GlowLEDsComponents/GLTable/GLTable";
+import { listTeams } from "../../actions/teamActions";
+import { listOrders } from "../../actions/orderActions";
+import { GLButton } from "../../shared/GlowLEDsComponents";
+import GLTable from "../../shared/GlowLEDsComponents/GLTable/GLTable";
 
 const PaychecksPage = props => {
   const history = useHistory();

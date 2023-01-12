@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { saveFeature, detailsFeature } from "../../../actions/featureActions";
+import { saveFeature, detailsFeature } from "../../actions/featureActions";
 import { useHistory } from "react-router-dom";
-import { Loading } from "../../../components/SharedComponents";
+import { Loading } from "../../shared/SharedComponents";
 import { format_date, unformat_date } from "../../utils/helper_functions";
 import { Helmet } from "react-helmet";
-import { listProducts } from "../../../actions/productActions";
-import { listUsers } from "../../../actions/userActions";
-import { GLButton } from "../../../components/GlowLEDsComponents";
+import { listProducts } from "../../actions/productActions";
+import { listUsers } from "../../actions/userActions";
+import { GLButton } from "../../shared/GlowLEDsComponents";
 
 const EditFeaturePage = props => {
   const [id, set_id] = useState("");

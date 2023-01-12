@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { API_External } from "../../utils";
-import { useDispatch, useSelector } from "react-redux";
-import { Loading } from "../../../components/SharedComponents";
+import { useSelector } from "react-redux";
+import { Loading } from "../../shared/SharedComponents";
 import { daysBetween, format_date } from "../../utils/helper_functions";
-import { GLButton } from "../../../components/GlowLEDsComponents";
+import { GLButton } from "../../shared/GlowLEDsComponents";
 import { isAdmin } from "../../utils/helpers/user_helpers";
 
 const EventsPage = props => {

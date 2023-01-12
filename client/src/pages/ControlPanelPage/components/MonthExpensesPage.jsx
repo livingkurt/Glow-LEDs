@@ -6,10 +6,10 @@ import { hslToHex, humanize, toCapitalize, categories, dates_in_year } from "../
 import { API_Orders } from "../../../utils";
 import { useSelector, useDispatch } from "react-redux";
 import { Helmet } from "react-helmet";
-import { Loading } from "../../../components/SharedComponents";
+import { Loading } from "../../../shared/SharedComponents";
 import Overflow from "react-overflow-indicator";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
-import { GLButton } from "../../../components/GlowLEDsComponents";
+import { GLButton } from "../../../shared/GlowLEDsComponents";
 
 const MonthExpensesPage = props => {
   const this_year = props.match.params.year;

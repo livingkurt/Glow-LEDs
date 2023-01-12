@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { detailsProduct } from "../../../actions/productActions";
-import { Loading } from "../../../components/SharedComponents";
+import { detailsProduct } from "../../actions/productActions";
+import { Loading } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
-import { addToCart } from "../../../actions/cartActions";
-import useWindowDimensions from "../../../components/Hooks/windowDimensions";
+import { addToCart } from "../../actions/cartActions";
+import useWindowDimensions from "../../shared/Hooks/windowDimensions";
 import { getUrlParameter, manuals } from "../../utils/helper_functions";
 import { ProductDetails, ProductFacts, ProductImages, ProductOptions, ProductSelection } from "./components";
-import { GLButton } from "../../../components/GlowLEDsComponents";
+import { GLButton } from "../../shared/GlowLEDsComponents";
 import { isAdmin } from "../../utils/helpers/user_helpers";
-import ProductSlideshow from "../../components/GlowLEDsComponents/GLCarousel/ProductSlideshow copy";
+import ProductSlideshow from "../../shared/GlowLEDsComponents/GLCarousel/ProductSlideshow copy";
 import PictureChooser from "./components/PictureChooser";
-import RelatedProductsSlideshow from "../../components/GlowLEDsComponents/GLCarousel/RelatedProductsSlideshow";
+import RelatedProductsSlideshow from "../../shared/GlowLEDsComponents/GLCarousel/RelatedProductsSlideshow";
 
 const ProductPage = props => {
   const userLogin = useSelector(state => state.userLogin);

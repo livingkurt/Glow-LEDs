@@ -1,7 +1,7 @@
 // React
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Loading } from "../../../components/SharedComponents";
+import { Loading } from "../../SharedComponents";
 import { ProductItemD } from "../../../pages/ProductsGridPage/components";
 
 const SuggestedProducts = props => {

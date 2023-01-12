@@ -2,7 +2,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { humanize } from "../../../utils/helper_functions";
-import { LazyImage } from "../../../components/SharedComponents";
+import { LazyImage } from "../../../shared/SharedComponents";
 // import Resizer from 'react-image-file-resizer';
 
 const Feature = props => {

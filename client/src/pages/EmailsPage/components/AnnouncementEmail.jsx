@@ -4,11 +4,11 @@ import { Link } from "react-router-dom";
 
 import { useHistory } from "react-router-dom";
 import { detailsEmail, listEmails } from "../../../actions/emailActions";
-import { API_Emails } from "../../utils";
-import { accurate_date, format_date, format_time, unformat_date_and_time } from "../../utils/helper_functions";
-import { Notification } from "../../../components/SharedComponents";
+import { API_Emails } from "../../../utils";
+import { accurate_date, format_date, format_time, unformat_date_and_time } from "../../../utils/helper_functions";
+import { Notification } from "../../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
-import { GLButton } from "../../../components/GlowLEDsComponents";
+import { GLButton } from "../../../shared/GlowLEDsComponents";
 const HtmlToReactParser = require("html-to-react").Parser;
 
 const AnnouncementEmail = props => {

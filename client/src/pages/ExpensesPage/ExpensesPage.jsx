@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { listExpenses, deleteExpense } from "../../../actions/expenseActions";
+import { listExpenses, deleteExpense } from "../../actions/expenseActions";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { Loading, Notification } from "../../../components/SharedComponents";
-import Search from "../../components/GlowLEDsComponents/GLTable/Search";
-import Sort from "../../components/GlowLEDsComponents/GLTable/Sort";
+import { Loading, Notification } from "../../shared/SharedComponents";
+import Search from "../../shared/GlowLEDsComponents/GLTable/Search";
+import Sort from "../../shared/GlowLEDsComponents/GLTable/Sort";
 import { Helmet } from "react-helmet";
-import { format_date, unformat_date } from "../../utils/helper_functions";
+import { format_date } from "../../utils/helper_functions";
 import { API_Revenue } from "../../utils";
-import { GLButton } from "../../../components/GlowLEDsComponents";
+import { GLButton } from "../../shared/GlowLEDsComponents";
 import CSVReader from "react-csv-reader";
-// import CSVReader from 'react-csv-reader';
 
 const ExpensesPage = props => {
   const [search, set_search] = useState("");

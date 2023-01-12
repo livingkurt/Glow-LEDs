@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { saveShipping, savePayment } from "../../../actions/cartActions";
 
-import { validate_shipping } from "../../utils/validations";
+import { validate_shipping } from "../../../utils/validations";
 import { Helmet } from "react-helmet";
-import { GLButton } from "../../../components/GlowLEDsComponents";
+import { GLButton } from "../../../shared/GlowLEDsComponents";
 import CheckoutSteps from "../../PlaceOrderPage/components/GuestCheckoutSteps";
 
 const ShippingPage = props => {

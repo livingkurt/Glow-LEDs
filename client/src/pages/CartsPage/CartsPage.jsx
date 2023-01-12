@@ -1,12 +1,11 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { listCarts, deleteCart } from "../../../actions/cartActions";
+import { listCarts } from "../../actions/cartActions";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import Search from "../../components/GlowLEDsComponents/GLTable/Search";
-import Sort from "../../components/GlowLEDsComponents/GLTable/Sort";
-import { Notification } from "../../../components/SharedComponents";
-import { GLButton } from "../../../components/GlowLEDsComponents";
+import Search from "../../shared/GlowLEDsComponents/GLTable/Search";
+import Sort from "../../shared/GlowLEDsComponents/GLTable/Sort";
+import { GLButton } from "../../shared/GlowLEDsComponents";
 
 const CartsPage = props => {
   const [search, set_search] = useState("");

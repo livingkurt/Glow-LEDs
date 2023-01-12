@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { listProducts } from "../../../actions/productActions";
+import { listProducts } from "../../actions/productActions";
 import { API_Products } from "../../utils";
 import { Link, useHistory } from "react-router-dom";
-import { Loading, Notification } from "../../../components/SharedComponents";
+import { Loading, Notification } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { facebook_catalog_upload, google_catalog_upload, current_products_upload } from "../../utils/google_sheets_upload";
 import { mutliDragAwareReorder, multiSelectTo as multiSelect, update_products_url, getUrlParameter } from "../../utils/helper_functions";
 import memoizeOne from "memoize-one";
-import { GLButton } from "../../../components/GlowLEDsComponents";
-import Search from "../../components/GlowLEDsComponents/GLTable/Search";
-import Sort from "../../components/GlowLEDsComponents/GLTable/Sort";
-import Pagination from "../../components/GlowLEDsComponents/GLTable/Pagination";
+import Search from "../../shared/GlowLEDsComponents/GLTable/Search";
+import Sort from "../../shared/GlowLEDsComponents/GLTable/Sort";
+import Pagination from "../../shared/GlowLEDsComponents/GLTable/Pagination";
 import { ProductListItem } from "./components";
+import { GLButton } from "../../shared/GlowLEDsComponents";
 
 function ProductPage(props) {
   const history = useHistory();

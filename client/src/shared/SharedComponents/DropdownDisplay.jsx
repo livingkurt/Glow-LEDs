@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { deleteProduct } from "../../../actions/productActions";
+import { deleteProduct } from "../../actions/productActions";
 import { snake_case } from "../../utils/helper_functions";
 import { GLButton } from "../GlowLEDsComponents";
 

@@ -2,15 +2,15 @@ import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { saveAffiliate, detailsAffiliate } from "../../../actions/affiliateActions";
 import { Link, useHistory } from "react-router-dom";
-import { DropdownDisplay, Loading } from "../../../components/SharedComponents";
+import { DropdownDisplay, Loading } from "../../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { listUsers } from "../../../actions/userActions";
-import { snake_case } from "../../utils/helper_functions";
+import { snake_case } from "../../../utils/helper_functions";
 import { listProducts } from "../../../actions/productActions";
 import { listChips } from "../../../actions/chipActions";
-import { option_list } from "../../utils/react_helper_functions";
-import useWindowDimensions from "../../../components/Hooks/windowDimensions";
-import { GLButton } from "../../../components/GlowLEDsComponents";
+import { option_list } from "../../../utils/react_helper_functions";
+import useWindowDimensions from "../../../shared/Hooks/windowDimensions";
+import { GLButton } from "../../../shared/GlowLEDsComponents";
 
 const EditUserAffiliatePage = props => {
   const [id, set_id] = useState("");

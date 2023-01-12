@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { GLButton } from "../../../components/GlowLEDsComponents";
+import { GLButton } from "../../../shared/GlowLEDsComponents";
 import { Link } from "react-router-dom";
 import Survey from "./Survey";
 import { Helmet } from "react-helmet";

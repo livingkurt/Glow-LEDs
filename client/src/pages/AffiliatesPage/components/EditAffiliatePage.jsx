@@ -1,19 +1,19 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { Loading, Notification } from "../../../components/SharedComponents";
+import { Loading, Notification } from "../../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { listUsers } from "../../../actions/userActions";
 import { listProducts } from "../../../actions/productActions";
 import { listChips } from "../../../actions/chipActions";
 import { snake_case } from "../../../utils/helper_functions";
 import { listPromos } from "../../../actions/promoActions";
-import { GLAutocomplete, GLButton, GLCheckboxV2, GLText, GLTextField } from "../../../components/GlowLEDsComponents";
+import { GLAutocomplete, GLButton, GLCheckboxV2, GLText, GLTextField } from "../../../shared/GlowLEDsComponents";
 import { set_affiliate } from "../../../slices/affiliateSlice";
 import * as API from "../../../api/affiliateApi";
 import { makeStyles } from "@mui/styles";
 import { Container, Paper, Stack, TextField } from "@mui/material";
-import GLButtonV2 from "../../../components/GlowLEDsComponents/GLButtonV2/GLButton";
+import GLButtonV2 from "../../../shared/GlowLEDsComponents/GLButtonV2/GLButton";
 
 const useStyles = makeStyles(() => ({
   textField: {

@@ -1,5 +1,5 @@
 import React from "react";
-import CartItem from "../../../components/SharedComponents/CartItem";
+import CartItem from "../../../shared/SharedComponents/CartItem";
 const OrderSummaryStep = ({
   show_message,
   loading,

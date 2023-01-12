@@ -4,14 +4,14 @@ import { listProducts } from "../../../actions/productActions";
 import { Link } from "react-router-dom";
 import { listExpenses } from "../../../actions/expenseActions";
 import { listUsers } from "../../../actions/userActions";
-import { hslToHex, toCapitalize } from "../../utils/helper_functions";
+import { hslToHex, toCapitalize } from "../../../utils/helper_functions";
 import { API_Revenue, API_Products, API_Orders } from "../../utils";
 import { listAffiliates } from "../../../actions/affiliateActions";
 import { listPromos } from "../../../actions/promoActions";
 import { Helmet } from "react-helmet";
 import { Bar } from "react-chartjs-2";
-import { Loading } from "../../../components/SharedComponents";
-import { GLButton } from "../../../components/GlowLEDsComponents";
+import { Loading } from "../../../shared/SharedComponents";
+import { GLButton } from "../../../shared/GlowLEDsComponents";
 
 const ControlPanelPage = props => {
   const dispatch = useDispatch();

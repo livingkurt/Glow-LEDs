@@ -2,14 +2,16 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { listProducts } from "../../../actions/productActions";
-import { Filter, Search, Sort } from "../../components/SharedComponents/index";
-import { Loading, Notification } from "../../../components/SharedComponents";
-import { humanize } from "../../utils/helper_functions";
+import { Loading, Notification } from "../../../shared/SharedComponents";
+import { humanize } from "../../../utils/helper_functions";
 import { Helmet } from "react-helmet";
-import { API_Products } from "../../utils";
+import { API_Products } from "../../../utils";
 import { listChips } from "../../../actions/chipActions";
 import ProductItemD from "./ProductItemD";
 import ProductItemM from "./ProductItemM";
+import Search from "../../../shared/GlowLEDsComponents/GLTable/Search";
+import Sort from "../../../shared/GlowLEDsComponents/GLTable/Sort";
+import Filter from "../../../shared/GlowLEDsComponents/GLTable/Filter";
 
 const AllProductsPage = props => {
   const history = useHistory();

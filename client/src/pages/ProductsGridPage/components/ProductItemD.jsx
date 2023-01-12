@@ -2,9 +2,9 @@
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { determine_product_name_display, sale_price_switch } from "../../../utils/react_helper_functions";
-import { GLButton } from "../../../components/GlowLEDsComponents";
-import { LazyImage } from "../../../components/SharedComponents";
-import Rating from "../../../components/GlowLEDsComponents/GLRating/Rating";
+import { GLButton } from "../../../shared/GlowLEDsComponents";
+import { LazyImage } from "../../../shared/SharedComponents";
+import Rating from "../../../shared/GlowLEDsComponents/GLRating/Rating";
 
 // import Resizer from 'react-image-file-resizer';
 

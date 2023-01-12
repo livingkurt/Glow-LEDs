@@ -11,7 +11,7 @@ import reportWebVitals from "./reportWebVitals";
 // ES module-style import
 import Bugsnag from "@bugsnag/js";
 import BugsnagPluginReact from "@bugsnag/plugin-react";
-import { ErrorView } from "./components/SharedComponents";
+import { ErrorView } from "./shared/SharedComponents";
 import Links from "./Links";
 require("dotenv").config();
 
