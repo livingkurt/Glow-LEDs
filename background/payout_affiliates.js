@@ -16,27 +16,24 @@ module.exports = {
               affiliate.sponsor
             }`
           );
-          let payout = {};
+
           if (affiliate.user.stripe_connect_id) {
-            const { data } = await axios.post(`${domainUrl}/api/payments/payout_transfer`, {
-              amount: affiliate.earnings,
+            await axios.post(`${domainUrl}/api/payments/payout_transfer`, {
+              amount: promo_code_usage.earnings,
               stripe_connect_id: affiliate.user.stripe_connect_id,
-              description: `Monthly Payout for ${affiliate.first_name} ${affiliate.last_name}`
-            });
-            payout = data;
-          }
-          if (promo_code_usage.earnings) {
-            await axios.post(`${domainUrl}/api/paychecks`, {
-              affiliate: affiliate._id,
-              amount: affiliate.earnings,
-              revenue: promo_code_usage.revenue,
-              promo_code: affiliate.public_code.promo_code,
-              uses: promo_code_usage,
-              venmo: affiliate.venmo,
-              paid: payout ? true : false,
-              paid_at: new Date()
+              description: `Monthly Payout for ${affiliate.user.first_name} ${affiliate.user.last_name}`
             });
           }
+          await axios.post(`${domainUrl}/api/paychecks`, {
+            affiliate: affiliate._id,
+            user: affiliate.user._id,
+            amount: promo_code_usage.earnings,
+            revenue: promo_code_usage.revenue,
+            promo_code: affiliate.public_code._id,
+            uses: promo_code_usage.number_of_uses,
+            paid: affiliate.user.stripe_connect_id ? true : false,
+            paid_at: new Date()
+          });
         })
       );
     } catch (error) {
