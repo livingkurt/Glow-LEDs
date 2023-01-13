@@ -8,7 +8,7 @@ module.exports = {
 
       const { start_date, end_date } = get_date_range();
       // Get promo code usage for the previous month
-      const { data: affiliates } = await axios.get(`${domainUrl}/api/affiliates?active=true`);
+      const { data: affiliates } = await axios.get(`${domainUrl}/api/affiliates?active=true&rave_mob=false`);
       await Promise.all(
         affiliates.affiliates.map(async affiliate => {
           const { data: promo_code_usage } = await axios.get(
@@ -16,13 +16,16 @@ module.exports = {
               affiliate.sponsor
             }`
           );
-
-          const { data } = await axios.post(`${domainUrl}/api/payments/payout_transfer`, {
-            amount: affiliate.earnings,
-            stripe_connect_id: affiliate.user.stripe_connect_id,
-            description: `Monthly Payout for ${affiliate.first_name} ${affiliate.last_name}`
-          });
-          if (promo_code_usage.earnings && data) {
+          let payout = {};
+          if (affiliate.user.stripe_connect_id) {
+            const { data } = await axios.post(`${domainUrl}/api/payments/payout_transfer`, {
+              amount: affiliate.earnings,
+              stripe_connect_id: affiliate.user.stripe_connect_id,
+              description: `Monthly Payout for ${affiliate.first_name} ${affiliate.last_name}`
+            });
+            payout = data;
+          }
+          if (promo_code_usage.earnings) {
             await axios.post(`${domainUrl}/api/paychecks`, {
               affiliate: affiliate._id,
               amount: affiliate.earnings,
@@ -30,7 +33,7 @@ module.exports = {
               promo_code: affiliate.public_code.promo_code,
               uses: promo_code_usage,
               venmo: affiliate.venmo,
-              paid: true,
+              paid: payout ? true : false,
               paid_at: new Date()
             });
           }
