@@ -55,7 +55,7 @@ const ImageUploader = () => {
     for (let image of images) {
       formData.append("images", image);
     }
-    formData.append("album_title", albumTitle);
+    // formData.append("album_title", albumTitle);
     API_Products.image_upload_products_a(formData);
   };
 

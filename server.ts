@@ -117,17 +117,21 @@ app.post("/api/gcode", async (req: any, res: any) => {
   } catch (err) {}
 });
 
-const upload = multer({
-  storage: multer.memoryStorage(),
-  fileFilter: function (req: any, file: any, cb: any) {
-    cb(null, true);
-  },
-  fields: [{ name: "images", maxCount: 8 }, { name: "album_title" }]
-});
-app.post("/api/image_upload", upload.fields([]) async (req: any, res: any) => {
+// const upload = multer({
+//   storage: multer.memoryStorage(),
+//   fileFilter: function (req: any, file: any, cb: any) {
+//     cb(null, true);
+//   },
+//   fields: [{ name: "images" }, { name: "album_title" }]
+// });
+
+const upload = multer();
+
+// const cpUpload = upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'gallery', maxCount: 8 }])
+app.post("/api/image_upload", upload.fields([{ name: "images" }]), async (req: any, res: any) => {
   try {
     // or you can use
-    console.log({ req: req });
+    console.log({ req: req.body });
     // const formData = new FormData(req);
     // console.log({ req: req.body, formData });
     // const { images, album_title } = body;
