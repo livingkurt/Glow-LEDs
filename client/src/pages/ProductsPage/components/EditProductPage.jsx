@@ -33,6 +33,7 @@ import {
 import { listUsers } from "../../../actions/userActions";
 import { listFilaments } from "../../../actions/filamentActions";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
+import ImageUploader from "../../../shared/SharedComponents/ImageUploader";
 
 const EditProductPage = props => {
   // const [modalVisible, setModalVisible] = useState(false);
@@ -803,6 +804,7 @@ const EditProductPage = props => {
       <h1 style={{ textAlign: "center" }}>{props.match.params.pathname ? "Edit Product" : "Create Product"}</h1>
       <Loading loading={loading_options} />
       <Notification message={message} />
+
       <div className="form">
         <form onSubmit={submitHandler} className="w-100per">
           <Loading loading={loadingSave} error={errorSave} />
@@ -877,6 +879,7 @@ const EditProductPage = props => {
                       </GLButton>
                     </div>
                   </div>
+                  <ImageUploader />
                   <li>
                     <div className="ai-c h-25px mb-15px jc-c">
                       <div className="custom-select">

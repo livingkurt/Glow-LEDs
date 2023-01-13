@@ -11,6 +11,11 @@ const product_routes = {
   compress_images: (images: any) => {
     return axios.post("/api/products/compress_images", { images });
   },
+  image_upload_products_a: (formData: any) => {
+    return axios.post("/api/image_upload", formData, {
+      headers: { "Content-Type": "multipart/form-data" }
+    });
+  },
   findByPathname_products_a: (pathname: any) => {
     return axios.get("/api/products/" + pathname);
   },

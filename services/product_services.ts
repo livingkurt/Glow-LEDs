@@ -1,6 +1,12 @@
 import { product_db } from "../db";
 import { dimminish_batteries_stock, dimminish_refresh_stock, dimminish_supremes_stock } from "../helpers/product_helpers";
 import { categories, determine_filter, snake_case, subcategories } from "../util";
+const multer = require("multer");
+const request = require("request");
+
+const upload = multer({ dest: "uploads/" });
+const apiKey = "YOUR_API_KEY";
+const imgbox = require("imgbox-js");
 
 // const sharp = require("sharp");
 
@@ -299,6 +305,30 @@ export default {
         throw new Error(error.message);
       }
     }
+  },
+  image_upload_products_s: async (req: any) => {
+    // or you can use
+    const formData = new FormData(req);
+    console.log({ req: req.body, formData });
+    // const { images, album_title } = body;
+    // try {
+    //   const options = {
+    //     auth_cookie: process.env.IMGBOX_AUTH_COOKIE,
+    //     album_title: album_title,
+    //     content_type: "safe",
+    //     thumbnail_size: "800r",
+    //     comments_enabled: false,
+    //     logger: true
+    //   };
+
+    //   const send = await imgbox(images, options);
+    //   console.log(send);
+    // } catch (error) {
+    //   if (error instanceof Error) {
+    //     throw new Error(error.message);
+    //   }
+    // }
+    return "Success";
   }
   // compress_images_products_s: async (body: any) => {
   //   try {

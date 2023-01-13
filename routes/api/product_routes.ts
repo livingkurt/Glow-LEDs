@@ -27,5 +27,6 @@ router
   .delete(isAuth, isAdmin, product_controller.remove_products_c);
 
 router.route("/").get(product_controller.findAll_products_c).post(product_controller.create_products_c);
+router.route("/image_upload").post(product_controller.image_upload_products_c);
 
 export default router;

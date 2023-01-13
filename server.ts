@@ -7,6 +7,7 @@ import mongoose from "mongoose";
 import routes from "./routes";
 import template_routes from "./email_templates/template_routes";
 import { order_db } from "./db";
+import { AnyARecord } from "dns";
 const config = require("./config");
 const cors = require("cors");
 require("dotenv").config();
@@ -17,6 +18,13 @@ const requestIp = require("request-ip");
 const EasyPost = require("@easypost/api");
 const bodyParser = require("body-parser");
 const easy_post_api = require("@easypost/api");
+
+const multer = require("multer");
+const request = require("request");
+
+const apiKey = "YOUR_API_KEY";
+const imgbox = require("imgbox-js");
+
 // const scout = require("@scout_apm/scout-apm");
 // const express = require("express");
 const fs = require("fs");
@@ -106,6 +114,41 @@ app.post("/api/gcode", async (req: any, res: any) => {
 
       res.send("Gcode Continous File Created");
     });
+  } catch (err) {}
+});
+
+const upload = multer({
+  storage: multer.memoryStorage(),
+  fileFilter: function (req: any, file: any, cb: any) {
+    cb(null, true);
+  },
+  fields: [{ name: "images", maxCount: 8 }, { name: "album_title" }]
+});
+app.post("/api/image_upload", upload.fields([]) async (req: any, res: any) => {
+  try {
+    // or you can use
+    console.log({ req: req });
+    // const formData = new FormData(req);
+    // console.log({ req: req.body, formData });
+    // const { images, album_title } = body;
+    // try {
+    //   const options = {
+    //     auth_cookie: process.env.IMGBOX_AUTH_COOKIE,
+    //     album_title: album_title,
+    //     content_type: "safe",
+    //     thumbnail_size: "800r",
+    //     comments_enabled: false,
+    //     logger: true
+    //   };
+
+    //   const send = await imgbox(images, options);
+    //   console.log(send);
+    // } catch (error) {
+    //   if (error instanceof Error) {
+    //     throw new Error(error.message);
+    //   }
+    // }
+    return "Success";
   } catch (err) {}
 });
 
