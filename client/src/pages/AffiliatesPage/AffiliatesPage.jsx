@@ -203,7 +203,12 @@ const AffiliatesPage = props => {
         update_page={update_page}
         action_row={affiliate => (
           <div className="jc-b">
-            <Link to={"/secure/glow/editaffiliate/" + affiliate.pathname}>
+            <Link
+              to={{
+                pathname: "/secure/glow/editaffiliate/" + affiliate.pathname,
+                previous_path: history.location.pathname + history.location.search
+              }}
+            >
               <GLButton variant="icon" aria-label="Edit">
                 <i className="fas fa-edit" />
               </GLButton>

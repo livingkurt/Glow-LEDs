@@ -98,10 +98,10 @@ const EditAffiliatePage = props => {
 
   useEffect(() => {
     if (success) {
-      history.push("/secure/glow/affiliates?page=1?limit=10");
+      history.push(props.location.previous_path || "/secure/glow/affiliates?page=1?limit=10");
       dispatch(set_success(false));
     }
-  }, [dispatch, history, success]);
+  }, [dispatch, history, props.location.previous_path, success]);
 
   const classes = useStyles();
   return (

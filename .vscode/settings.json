@@ -41,6 +41,7 @@
   "[python]": {
     "editor.defaultFormatter": "geecode.geecode-python"
   },
-  "exportall.config.folderListener": ["/client/src/pages/CompletePage"]
+  "exportall.config.folderListener": ["/client/src/pages/CompletePage"],
+  "exportall.config.relExclusion": ["/client/src/pages/CompletePage"]
   // "prettier.printWidth": false
 }
