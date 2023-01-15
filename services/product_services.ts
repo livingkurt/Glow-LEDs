@@ -1,12 +1,6 @@
 import { product_db } from "../db";
 import { dimminish_batteries_stock, dimminish_refresh_stock, dimminish_supremes_stock } from "../helpers/product_helpers";
 import { categories, determine_filter, snake_case, subcategories } from "../util";
-const multer = require("multer");
-const request = require("request");
-
-const upload = multer({ dest: "uploads/" });
-const apiKey = "YOUR_API_KEY";
-const imgbox = require("imgbox-js");
 
 // const sharp = require("sharp");
 

@@ -6,8 +6,6 @@ import path from "path";
 import mongoose from "mongoose";
 import routes from "./routes";
 import template_routes from "./email_templates/template_routes";
-import { order_db } from "./db";
-import { AnyARecord } from "dns";
 const config = require("./config");
 const cors = require("cors");
 require("dotenv").config();
@@ -20,10 +18,7 @@ const bodyParser = require("body-parser");
 const easy_post_api = require("@easypost/api");
 
 const multer = require("multer");
-const request = require("request");
-
-const apiKey = "YOUR_API_KEY";
-const imgbox = require("imgbox-js");
+import { imgbox } from "node_modules/imgbox-js/lib/index";
 
 // const scout = require("@scout_apm/scout-apm");
 // const express = require("express");
@@ -124,36 +119,42 @@ app.post("/api/gcode", async (req: any, res: any) => {
 //   },
 //   fields: [{ name: "images" }, { name: "album_title" }]
 // });
+// const cpUpload = upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'gallery', maxCount: 8 }])
 
 const upload = multer();
 
-// const cpUpload = upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'gallery', maxCount: 8 }])
-app.post("/api/image_upload", upload.fields([{ name: "images" }]), async (req: any, res: any) => {
+app.post("/api/image_upload", upload.fields([{ name: "images" }, { name: "album_title" }]), async (req: any, res: any) => {
   try {
-    // or you can use
-    console.log({ req: req.body });
-    // const formData = new FormData(req);
-    // console.log({ req: req.body, formData });
-    // const { images, album_title } = body;
-    // try {
-    //   const options = {
-    //     auth_cookie: process.env.IMGBOX_AUTH_COOKIE,
-    //     album_title: album_title,
-    //     content_type: "safe",
-    //     thumbnail_size: "800r",
-    //     comments_enabled: false,
-    //     logger: true
-    //   };
+    const { images } = req.files;
+    const { album_title } = req.body;
+    console.log({ images, album_title });
 
-    //   const send = await imgbox(images, options);
-    //   console.log(send);
-    // } catch (error) {
-    //   if (error instanceof Error) {
-    //     throw new Error(error.message);
-    //   }
-    // }
-    return "Success";
-  } catch (err) {}
+    const imageArray: Array<unknown> = [];
+    req.files.images.forEach((image: any) => {
+      imageArray.push(image.buffer);
+    });
+    console.log({ imageArray });
+    const options = {
+      auth_cookie: process.env.IMGBOX_AUTH_COOKIE,
+      album_title: album_title,
+      content_type: "safe",
+      thumbnail_size: "800r",
+      comments_enabled: false,
+      logger: true
+    };
+
+    const send = await imgbox(images, options);
+    console.log({ send });
+    if (send) {
+      res.send("Image Uploaded Correctly");
+    } else {
+      res.send("Image Failed Upload");
+    }
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+  }
 });
 
 //   // Start express
