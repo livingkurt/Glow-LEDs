@@ -468,7 +468,7 @@ const HomePage = props => {
               }}
             >
               Some of our most popular inventions include EXO Diffusers, Decals, Diffuser Caps and Glowskinz! We've even put our own spin on
-              whites and batteries! Plus we're one of the few places where you can order Custom gloving accessories.
+              gloves and batteries! Plus we're one of the few places where you can order Custom gloving accessories.
             </p>
 
             <div style={{ borderBottom: "1px white solid" }} className="m-auto max-w-800px" />

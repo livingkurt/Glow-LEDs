@@ -632,7 +632,7 @@ const ProductPage = props => {
       set_count_in_stock(option.count_in_stock);
     }
 
-    if (option.subcategory !== "whites") {
+    if (option.subcategory !== "gloves") {
       if (option.images && option.images[0]) {
         set_images(option.images);
         set_image(option.images[0]);

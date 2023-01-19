@@ -170,7 +170,7 @@ export const navigation = [
         link: "/collections/all/products/category/our_picks",
         sub_menu: [
           {
-            title: "Supreme Whites",
+            title: "Supreme Gloves",
             link: "/collections/all/products/category/glowskinz",
             sub_menu: []
           },

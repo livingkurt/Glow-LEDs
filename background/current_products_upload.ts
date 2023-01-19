@@ -14,7 +14,7 @@ const current_products_upload = async () => {
       .filter((product: any) => product.category !== "options")
       .map((product: any, i: number) => {
         const id = product._id;
-        const title = product.name === "Supremes" ? "GL Whites" : product.name;
+        const title = product.name === "Supremes" ? "GL Gloves" : product.name;
         const description = product.description;
         const availability = "In Stock";
         const condition = "New";

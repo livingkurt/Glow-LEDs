@@ -364,7 +364,7 @@ export const determine_sponsor_code_tier = (code_usage: number) => {
   }
 };
 
-export const categories = ["whites", "batteries", "decals", "diffuser_caps", "diffusers", "exo_diffusers", "glowstringz", "glowskinz"];
+export const categories = ["gloves", "batteries", "decals", "diffuser_caps", "diffusers", "exo_diffusers", "glowstringz", "glowskinz"];
 export const subcategories = [
   "singles",
   "refresh",
@@ -704,7 +704,7 @@ const secondary_color = (item: any) => {
 };
 const secondary_color_name = (item: any) => {
   const secondary_color_name = item.secondary_color_group_name ? item.secondary_color_group_name.split(" ")[0] + "s" : "";
-  if (item.category === "whites") {
+  if (item.category === "gloves") {
     return secondary_color_name;
   }
   if (item.category === "glowskinz") {
@@ -733,7 +733,7 @@ const secondary_product = (item: any) => {
 };
 
 const first_dash = (item: any) => {
-  if (item.category === "whites") {
+  if (item.category === "gloves") {
     return "-";
   }
   if (item.category === "glowskinz") {

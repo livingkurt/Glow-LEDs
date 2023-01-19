@@ -24,6 +24,23 @@ const ProductFacts = ({ facts, category, subcategory, pathname, name }) => {
       return "CLOZD " + empty_name;
     }
   };
+  const determine_sampler_pack_name = name => {
+    if (name.includes("Supreme Gloves V1")) {
+      return "Sizing Sampler Pack V1";
+    }
+    if (name.includes("Supreme Gloves V2")) {
+      return "Sizing Sampler Pack V2";
+    }
+  };
+  const determine_sampler_pack_pathname = name => {
+    if (name.includes("Supreme Gloves V1") || name.includes("Refresh Pack V1 (6 Pairs Supreme Gloves V1 + 120 Batteries)")) {
+      return "supremes_gloves_v1_sizing_sampler_pack";
+    }
+    if (name.includes("Supreme Gloves V2") || name.includes("Refresh Pack V1 (6 Pairs Supreme Gloves V1 + 120 Batteries)")) {
+      return "supremes_gloves_v2_sizing_sampler_pack";
+    }
+  };
+
   return (
     <div className="mt-1rem">
       <div className="h-100per paragraph_font">
@@ -50,14 +67,15 @@ const ProductFacts = ({ facts, category, subcategory, pathname, name }) => {
               </Link>
             </div>
           )}
-        {category === "whites" && (
-          <div className="w-100per">
-            <h3>Know your size before you buy with our:</h3>
-            <Link to={`/collections/all/products/supremes_sizing_sampler_pack`}>
-              <GLButton variant="primary">Supremes Sizing Sampler Pack</GLButton>
-            </Link>
-          </div>
-        )}
+        {category === "gloves" &&
+          !(name.includes("Supreme Gloves V1 Sizing Sampler Pack") || name.includes("Supreme Gloves V2 Sizing Sampler Pack")) && (
+            <div className="w-100per">
+              <h3>Know your size before you buy with our:</h3>
+              <Link to={`/collections/all/products/${determine_sampler_pack_pathname(name)}`}>
+                <GLButton variant="primary">{determine_sampler_pack_name(name)}</GLButton>
+              </Link>
+            </div>
+          )}
       </div>
     </div>
   );

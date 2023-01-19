@@ -6,9 +6,9 @@ const router = require("./sitemap-routes").default;
 const Sitemap = require("react-router-sitemap").default;
 const fetch = require("node-fetch");
 const API = "http://localhost:8080";
-const categories = ["whites", "batteries", "decals", "diffuser_caps", "diffusers", "exo_diffusers", "glowstringz", "glowskinz"];
+const categories = ["gloves", "batteries", "decals", "diffuser_caps", "diffusers", "exo_diffusers", "glowstringz", "glowskinz"];
 const subcategories = [
-  "whites",
+  "gloves",
   "refresh",
   "battery_storage",
   "batteries",

@@ -797,10 +797,10 @@ export default {
 
     res.send(products);
   },
-  processing_time_whites: async (req: any, res: any) => {
+  processing_time_gloves: async (req: any, res: any) => {
     const products = await Product.find({
       deleted: false,
-      category: { $in: ["whites"] }
+      category: { $in: ["gloves"] }
     });
 
     products.forEach(async (product: any) => {

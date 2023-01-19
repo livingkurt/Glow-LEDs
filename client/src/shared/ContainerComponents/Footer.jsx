@@ -158,7 +158,7 @@ const Footer = () => {
               </h2>
               <ul className="lst-none">
                 <li className="ta-l mv-2rem">
-                  <Link to="/collections/all/products/supremes">Supreme Whites</Link>
+                  <Link to="/collections/all/products/supremes">Supreme Gloves</Link>
                 </li>
                 <li className="ta-l mv-2rem">
                   <Link to="/collections/all/products/refresh_pack">Refresh Packs</Link>

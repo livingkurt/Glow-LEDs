@@ -138,7 +138,7 @@ const ControlPanelPage = props => {
                     borderRadius: "10px 10px 0px 0px"
                   }}
                 >
-                  All Time Whites
+                  All Time Gloves
                 </Tab>
                 <Tab
                   style={{
@@ -154,7 +154,7 @@ const ControlPanelPage = props => {
                     borderRadius: "10px 10px 0px 0px"
                   }}
                 >
-                  All Time All Whites
+                  All Time All Gloves
                 </Tab>
                 <Tab
                   style={{
@@ -204,7 +204,7 @@ const ControlPanelPage = props => {
             </div>
           </TabPanel>
           <TabPanel>
-            <h2 className="ta-c w-100per jc-c">All Time Whites</h2>
+            <h2 className="ta-c w-100per jc-c">All Time Gloves</h2>
             <table className="styled-table">
               <thead>
                 <tr>
@@ -221,14 +221,14 @@ const ControlPanelPage = props => {
                   }}
                   className=""
                 >
-                  <th>${all_time_income.whites.total_income ? all_time_income.whites.total_income.toFixed(2) : "0.00"}</th>
-                  <th>${all_time_income.whites.total_expenses ? all_time_income.whites.total_expenses.toFixed(2) : "0.00"}</th>
+                  <th>${all_time_income.gloves.total_income ? all_time_income.gloves.total_income.toFixed(2) : "0.00"}</th>
+                  <th>${all_time_income.gloves.total_expenses ? all_time_income.gloves.total_expenses.toFixed(2) : "0.00"}</th>
 
-                  <th>${all_time_income.whites.total_profit ? all_time_income.whites.total_profit.toFixed(2) : "0.00"}</th>
+                  <th>${all_time_income.gloves.total_profit ? all_time_income.gloves.total_profit.toFixed(2) : "0.00"}</th>
                 </tr>
               </tbody>
             </table>
-            <h2 className="ta-c w-100per jc-c">All Time Whites Income By Size</h2>
+            <h2 className="ta-c w-100per jc-c">All Time Gloves Income By Size</h2>
             <table className="styled-table">
               <thead>
                 <tr>
@@ -247,15 +247,15 @@ const ControlPanelPage = props => {
                   }}
                   className=""
                 >
-                  <th>${all_time_income.whites.s_total_income ? all_time_income.whites.s_total_income.toFixed(2) : "0.00"}</th>
-                  <th>${all_time_income.whites.m_total_income ? all_time_income.whites.m_total_income.toFixed(2) : "0.00"}</th>
-                  <th>${all_time_income.whites.l_total_income ? all_time_income.whites.l_total_income.toFixed(2) : "0.00"}</th>
-                  <th>${all_time_income.whites.xl_total_income ? all_time_income.whites.xl_total_income.toFixed(2) : "0.00"}</th>
-                  <th>${all_time_income.whites.total_income ? all_time_income.whites.total_income.toFixed(2) : "0.00"}</th>
+                  <th>${all_time_income.gloves.s_total_income ? all_time_income.gloves.s_total_income.toFixed(2) : "0.00"}</th>
+                  <th>${all_time_income.gloves.m_total_income ? all_time_income.gloves.m_total_income.toFixed(2) : "0.00"}</th>
+                  <th>${all_time_income.gloves.l_total_income ? all_time_income.gloves.l_total_income.toFixed(2) : "0.00"}</th>
+                  <th>${all_time_income.gloves.xl_total_income ? all_time_income.gloves.xl_total_income.toFixed(2) : "0.00"}</th>
+                  <th>${all_time_income.gloves.total_income ? all_time_income.gloves.total_income.toFixed(2) : "0.00"}</th>
                 </tr>
               </tbody>
             </table>
-            <h2 className="ta-c w-100per jc-c">All Time Whites</h2>
+            <h2 className="ta-c w-100per jc-c">All Time Gloves</h2>
             <table className="styled-table">
               <thead>
                 <tr>
@@ -274,11 +274,11 @@ const ControlPanelPage = props => {
                   }}
                   className=""
                 >
-                  <th>{all_time_income.whites.s_qty_sold ? all_time_income.whites.s_qty_sold : "0"}</th>
-                  <th>{all_time_income.whites.m_qty_sold ? all_time_income.whites.m_qty_sold : "0"}</th>
-                  <th>{all_time_income.whites.l_qty_sold ? all_time_income.whites.l_qty_sold : "0"}</th>
-                  <th>{all_time_income.whites.xl_qty_sold ? all_time_income.whites.xl_qty_sold : "0"}</th>
-                  <th>{all_time_income.whites.total_qty_sold ? all_time_income.whites.total_qty_sold : "0"}</th>
+                  <th>{all_time_income.gloves.s_qty_sold ? all_time_income.gloves.s_qty_sold : "0"}</th>
+                  <th>{all_time_income.gloves.m_qty_sold ? all_time_income.gloves.m_qty_sold : "0"}</th>
+                  <th>{all_time_income.gloves.l_qty_sold ? all_time_income.gloves.l_qty_sold : "0"}</th>
+                  <th>{all_time_income.gloves.xl_qty_sold ? all_time_income.gloves.xl_qty_sold : "0"}</th>
+                  <th>{all_time_income.gloves.total_qty_sold ? all_time_income.gloves.total_qty_sold : "0"}</th>
                 </tr>
               </tbody>
             </table>
@@ -374,7 +374,7 @@ const ControlPanelPage = props => {
             </table>
           </TabPanel>
           <TabPanel>
-            <h2 className="ta-c w-100per jc-c">All Time All Whites</h2>
+            <h2 className="ta-c w-100per jc-c">All Time All Gloves</h2>
             <table className="styled-table">
               <thead>
                 <tr>
@@ -391,14 +391,14 @@ const ControlPanelPage = props => {
                   }}
                   className=""
                 >
-                  <th>${all_time_income.total_whites.total_income ? all_time_income.total_whites.total_income.toFixed(2) : "0.00"}</th>
-                  <th>${all_time_income.total_whites.total_expenses ? all_time_income.total_whites.total_expenses.toFixed(2) : "0.00"}</th>
+                  <th>${all_time_income.total_gloves.total_income ? all_time_income.total_gloves.total_income.toFixed(2) : "0.00"}</th>
+                  <th>${all_time_income.total_gloves.total_expenses ? all_time_income.total_gloves.total_expenses.toFixed(2) : "0.00"}</th>
 
-                  <th>${all_time_income.total_whites.total_profit ? all_time_income.total_whites.total_profit.toFixed(2) : "0.00"}</th>
+                  <th>${all_time_income.total_gloves.total_profit ? all_time_income.total_gloves.total_profit.toFixed(2) : "0.00"}</th>
                 </tr>
               </tbody>
             </table>
-            <h2 className="ta-c w-100per jc-c">All Time Whites Income By Size</h2>
+            <h2 className="ta-c w-100per jc-c">All Time Gloves Income By Size</h2>
             <table className="styled-table">
               <thead>
                 <tr>
@@ -417,17 +417,17 @@ const ControlPanelPage = props => {
                   }}
                   className=""
                 >
-                  <th>${all_time_income.total_whites.s_total_income ? all_time_income.total_whites.s_total_income.toFixed(2) : "0.00"}</th>
-                  <th>${all_time_income.total_whites.m_total_income ? all_time_income.total_whites.m_total_income.toFixed(2) : "0.00"}</th>
-                  <th>${all_time_income.total_whites.l_total_income ? all_time_income.total_whites.l_total_income.toFixed(2) : "0.00"}</th>
+                  <th>${all_time_income.total_gloves.s_total_income ? all_time_income.total_gloves.s_total_income.toFixed(2) : "0.00"}</th>
+                  <th>${all_time_income.total_gloves.m_total_income ? all_time_income.total_gloves.m_total_income.toFixed(2) : "0.00"}</th>
+                  <th>${all_time_income.total_gloves.l_total_income ? all_time_income.total_gloves.l_total_income.toFixed(2) : "0.00"}</th>
                   <th>
-                    ${all_time_income.total_whites.xl_total_income ? all_time_income.total_whites.xl_total_income.toFixed(2) : "0.00"}
+                    ${all_time_income.total_gloves.xl_total_income ? all_time_income.total_gloves.xl_total_income.toFixed(2) : "0.00"}
                   </th>
-                  <th>${all_time_income.total_whites.total_income ? all_time_income.total_whites.total_income.toFixed(2) : "0.00"}</th>
+                  <th>${all_time_income.total_gloves.total_income ? all_time_income.total_gloves.total_income.toFixed(2) : "0.00"}</th>
                 </tr>
               </tbody>
             </table>
-            <h2 className="ta-c w-100per jc-c">All Time Whites</h2>
+            <h2 className="ta-c w-100per jc-c">All Time Gloves</h2>
             <table className="styled-table">
               <thead>
                 <tr>
@@ -446,11 +446,11 @@ const ControlPanelPage = props => {
                   }}
                   className=""
                 >
-                  <th>{all_time_income.total_whites.s_qty_sold ? all_time_income.total_whites.s_qty_sold : "0"}</th>
-                  <th>{all_time_income.total_whites.m_qty_sold ? all_time_income.total_whites.m_qty_sold : "0"}</th>
-                  <th>{all_time_income.total_whites.l_qty_sold ? all_time_income.total_whites.l_qty_sold : "0"}</th>
-                  <th>{all_time_income.total_whites.xl_qty_sold ? all_time_income.total_whites.xl_qty_sold : "0"}</th>
-                  <th>{all_time_income.total_whites.total_qty_sold ? all_time_income.total_whites.total_qty_sold : "0"}</th>
+                  <th>{all_time_income.total_gloves.s_qty_sold ? all_time_income.total_gloves.s_qty_sold : "0"}</th>
+                  <th>{all_time_income.total_gloves.m_qty_sold ? all_time_income.total_gloves.m_qty_sold : "0"}</th>
+                  <th>{all_time_income.total_gloves.l_qty_sold ? all_time_income.total_gloves.l_qty_sold : "0"}</th>
+                  <th>{all_time_income.total_gloves.xl_qty_sold ? all_time_income.total_gloves.xl_qty_sold : "0"}</th>
+                  <th>{all_time_income.total_gloves.total_qty_sold ? all_time_income.total_gloves.total_qty_sold : "0"}</th>
                 </tr>
               </tbody>
             </table>

@@ -334,9 +334,9 @@ const MonthlyExpensesPage = props => {
             <Overflow.Content>
               <TabList>
                 <Tab style={{ padding: "10px", borderRadius: "10px 10px 0px 0px" }}>{year} Monthly Expenses</Tab>
-                <Tab style={{ padding: "10px", borderRadius: "10px 10px 0px 0px" }}>{year} Whites</Tab>
+                <Tab style={{ padding: "10px", borderRadius: "10px 10px 0px 0px" }}>{year} Gloves</Tab>
                 <Tab style={{ padding: "10px", borderRadius: "10px 10px 0px 0px" }}>{year} Refresh Packs</Tab>
-                <Tab style={{ padding: "10px", borderRadius: "10px 10px 0px 0px" }}>{year} All Whites</Tab>
+                <Tab style={{ padding: "10px", borderRadius: "10px 10px 0px 0px" }}>{year} All Gloves</Tab>
                 <Tab style={{ padding: "10px", borderRadius: "10px 10px 0px 0px" }}>{year} Batteries</Tab>
                 <Tab style={{ padding: "10px", borderRadius: "10px 10px 0px 0px" }}>{year} Decals</Tab>
                 <Tab style={{ padding: "10px", borderRadius: "10px 10px 0px 0px" }}>{year} Monthly Income/Expenses/Profit</Tab>
@@ -385,7 +385,7 @@ const MonthlyExpensesPage = props => {
             </table>
           </TabPanel>
           <TabPanel>
-            <h2 className="ta-c w-100per jc-c">{year} Whites</h2>
+            <h2 className="ta-c w-100per jc-c">{year} Gloves</h2>
             <table className="styled-table">
               <thead>
                 <tr>
@@ -404,10 +404,10 @@ const MonthlyExpensesPage = props => {
                     className=""
                   >
                     <th>{month.month}</th>
-                    <th>${month.whites.total_income ? month.whites.total_income.toFixed(2) : "0.00"}</th>
-                    <th>${month.whites.total_expenses ? month.whites.total_expenses.toFixed(2) : "0.00"}</th>
+                    <th>${month.gloves.total_income ? month.gloves.total_income.toFixed(2) : "0.00"}</th>
+                    <th>${month.gloves.total_expenses ? month.gloves.total_expenses.toFixed(2) : "0.00"}</th>
 
-                    <th>${month.whites.total_profit ? month.whites.total_profit.toFixed(2) : "0.00"}</th>
+                    <th>${month.gloves.total_profit ? month.gloves.total_profit.toFixed(2) : "0.00"}</th>
                   </tr>
                 ))}
               </tbody>
@@ -416,15 +416,15 @@ const MonthlyExpensesPage = props => {
                 <tfoot>
                   <tr>
                     <th>Total</th>
-                    <th>${yearly_income.whites.total_income ? yearly_income.whites.total_income.toFixed(2) : "0.00"}</th>
-                    <th>${yearly_income.whites.total_expenses ? yearly_income.whites.total_expenses.toFixed(2) : "0.00"}</th>
+                    <th>${yearly_income.gloves.total_income ? yearly_income.gloves.total_income.toFixed(2) : "0.00"}</th>
+                    <th>${yearly_income.gloves.total_expenses ? yearly_income.gloves.total_expenses.toFixed(2) : "0.00"}</th>
 
-                    <th>${yearly_income.whites.total_profit ? yearly_income.whites.total_profit.toFixed(2) : "0.00"}</th>
+                    <th>${yearly_income.gloves.total_profit ? yearly_income.gloves.total_profit.toFixed(2) : "0.00"}</th>
                   </tr>
                 </tfoot>
               )}
             </table>
-            <h2 className="ta-c w-100per jc-c">{year} Whites Income By Size</h2>
+            <h2 className="ta-c w-100per jc-c">{year} Gloves Income By Size</h2>
             <table className="styled-table">
               <thead>
                 <tr>
@@ -445,11 +445,11 @@ const MonthlyExpensesPage = props => {
                     className=""
                   >
                     <th>{month.month}</th>
-                    <th>${month.whites.s_total_income ? month.whites.s_total_income.toFixed(2) : "0.00"}</th>
-                    <th>${month.whites.m_total_income ? month.whites.m_total_income.toFixed(2) : "0.00"}</th>
-                    <th>${month.whites.l_total_income ? month.whites.l_total_income.toFixed(2) : "0.00"}</th>
-                    <th>${month.whites.xl_total_income ? month.whites.xl_total_income.toFixed(2) : "0.00"}</th>
-                    <th>${month.whites.total_income ? month.whites.total_income.toFixed(2) : "0.00"}</th>
+                    <th>${month.gloves.s_total_income ? month.gloves.s_total_income.toFixed(2) : "0.00"}</th>
+                    <th>${month.gloves.m_total_income ? month.gloves.m_total_income.toFixed(2) : "0.00"}</th>
+                    <th>${month.gloves.l_total_income ? month.gloves.l_total_income.toFixed(2) : "0.00"}</th>
+                    <th>${month.gloves.xl_total_income ? month.gloves.xl_total_income.toFixed(2) : "0.00"}</th>
+                    <th>${month.gloves.total_income ? month.gloves.total_income.toFixed(2) : "0.00"}</th>
                   </tr>
                 ))}
               </tbody>
@@ -457,11 +457,11 @@ const MonthlyExpensesPage = props => {
                 <tfoot>
                   <tr>
                     <th>Profit</th>
-                    <th>${yearly_income.whites.s_total_profit ? yearly_income.whites.s_total_profit.toFixed(2) : "0.00"}</th>
-                    <th>${yearly_income.whites.m_total_profit ? yearly_income.whites.m_total_profit.toFixed(2) : "0.00"}</th>
-                    <th>${yearly_income.whites.l_total_profit ? yearly_income.whites.l_total_profit.toFixed(2) : "0.00"}</th>
-                    <th>${yearly_income.whites.xl_total_profit ? yearly_income.whites.xl_total_profit.toFixed(2) : "0.00"}</th>
-                    <th>${yearly_income.whites.total_profit ? yearly_income.whites.total_profit.toFixed(2) : "0.00"}</th>
+                    <th>${yearly_income.gloves.s_total_profit ? yearly_income.gloves.s_total_profit.toFixed(2) : "0.00"}</th>
+                    <th>${yearly_income.gloves.m_total_profit ? yearly_income.gloves.m_total_profit.toFixed(2) : "0.00"}</th>
+                    <th>${yearly_income.gloves.l_total_profit ? yearly_income.gloves.l_total_profit.toFixed(2) : "0.00"}</th>
+                    <th>${yearly_income.gloves.xl_total_profit ? yearly_income.gloves.xl_total_profit.toFixed(2) : "0.00"}</th>
+                    <th>${yearly_income.gloves.total_profit ? yearly_income.gloves.total_profit.toFixed(2) : "0.00"}</th>
                   </tr>
                 </tfoot>
               )}
@@ -469,11 +469,11 @@ const MonthlyExpensesPage = props => {
                 <tfoot>
                   <tr>
                     <th>Total</th>
-                    <th>${yearly_income.whites.s_total_income ? yearly_income.whites.s_total_income.toFixed(2) : "0.00"}</th>
-                    <th>${yearly_income.whites.m_total_income ? yearly_income.whites.m_total_income.toFixed(2) : "0.00"}</th>
-                    <th>${yearly_income.whites.l_total_income ? yearly_income.whites.l_total_income.toFixed(2) : "0.00"}</th>
-                    <th>${yearly_income.whites.xl_total_income ? yearly_income.whites.xl_total_income.toFixed(2) : "0.00"}</th>
-                    <th>${yearly_income.whites.total_income ? yearly_income.whites.total_income.toFixed(2) : "0.00"}</th>
+                    <th>${yearly_income.gloves.s_total_income ? yearly_income.gloves.s_total_income.toFixed(2) : "0.00"}</th>
+                    <th>${yearly_income.gloves.m_total_income ? yearly_income.gloves.m_total_income.toFixed(2) : "0.00"}</th>
+                    <th>${yearly_income.gloves.l_total_income ? yearly_income.gloves.l_total_income.toFixed(2) : "0.00"}</th>
+                    <th>${yearly_income.gloves.xl_total_income ? yearly_income.gloves.xl_total_income.toFixed(2) : "0.00"}</th>
+                    <th>${yearly_income.gloves.total_income ? yearly_income.gloves.total_income.toFixed(2) : "0.00"}</th>
                   </tr>
                 </tfoot>
               )}
@@ -481,16 +481,16 @@ const MonthlyExpensesPage = props => {
                 <tfoot>
                   <tr>
                     <th>Expenses</th>
-                    <th>${yearly_income.whites.s_total_expenses ? yearly_income.whites.s_total_expenses.toFixed(2) : "0.00"}</th>
-                    <th>${yearly_income.whites.m_total_expenses ? yearly_income.whites.m_total_expenses.toFixed(2) : "0.00"}</th>
-                    <th>${yearly_income.whites.l_total_expenses ? yearly_income.whites.l_total_expenses.toFixed(2) : "0.00"}</th>
-                    <th>${yearly_income.whites.xl_total_expenses ? yearly_income.whites.xl_total_expenses.toFixed(2) : "0.00"}</th>
-                    <th>${yearly_income.whites.total_expenses ? yearly_income.whites.total_expenses.toFixed(2) : "0.00"}</th>
+                    <th>${yearly_income.gloves.s_total_expenses ? yearly_income.gloves.s_total_expenses.toFixed(2) : "0.00"}</th>
+                    <th>${yearly_income.gloves.m_total_expenses ? yearly_income.gloves.m_total_expenses.toFixed(2) : "0.00"}</th>
+                    <th>${yearly_income.gloves.l_total_expenses ? yearly_income.gloves.l_total_expenses.toFixed(2) : "0.00"}</th>
+                    <th>${yearly_income.gloves.xl_total_expenses ? yearly_income.gloves.xl_total_expenses.toFixed(2) : "0.00"}</th>
+                    <th>${yearly_income.gloves.total_expenses ? yearly_income.gloves.total_expenses.toFixed(2) : "0.00"}</th>
                   </tr>
                 </tfoot>
               )}
             </table>
-            <h2 className="ta-c w-100per jc-c">{year} Whites</h2>
+            <h2 className="ta-c w-100per jc-c">{year} Gloves</h2>
             <table className="styled-table">
               <thead>
                 <tr>
@@ -511,11 +511,11 @@ const MonthlyExpensesPage = props => {
                     className=""
                   >
                     <th>{month.month}</th>
-                    <th>{month.whites.s_qty_sold ? month.whites.s_qty_sold : "0"}</th>
-                    <th>{month.whites.m_qty_sold ? month.whites.m_qty_sold : "0"}</th>
-                    <th>{month.whites.l_qty_sold ? month.whites.l_qty_sold : "0"}</th>
-                    <th>{month.whites.xl_qty_sold ? month.whites.xl_qty_sold : "0"}</th>
-                    <th>{month.whites.total_qty_sold ? month.whites.total_qty_sold : "0"}</th>
+                    <th>{month.gloves.s_qty_sold ? month.gloves.s_qty_sold : "0"}</th>
+                    <th>{month.gloves.m_qty_sold ? month.gloves.m_qty_sold : "0"}</th>
+                    <th>{month.gloves.l_qty_sold ? month.gloves.l_qty_sold : "0"}</th>
+                    <th>{month.gloves.xl_qty_sold ? month.gloves.xl_qty_sold : "0"}</th>
+                    <th>{month.gloves.total_qty_sold ? month.gloves.total_qty_sold : "0"}</th>
                   </tr>
                 ))}
               </tbody>
@@ -523,11 +523,11 @@ const MonthlyExpensesPage = props => {
                 <tfoot>
                   <tr>
                     <th>Total</th>
-                    <th>{yearly_income.whites.s_qty_sold ? yearly_income.whites.s_qty_sold : "0"}</th>
-                    <th>{yearly_income.whites.m_qty_sold ? yearly_income.whites.m_qty_sold : "0"}</th>
-                    <th>{yearly_income.whites.l_qty_sold ? yearly_income.whites.l_qty_sold : "0"}</th>
-                    <th>{yearly_income.whites.xl_qty_sold ? yearly_income.whites.xl_qty_sold : "0"}</th>
-                    <th>{yearly_income.whites.total_qty_sold ? yearly_income.whites.total_qty_sold : "0"}</th>
+                    <th>{yearly_income.gloves.s_qty_sold ? yearly_income.gloves.s_qty_sold : "0"}</th>
+                    <th>{yearly_income.gloves.m_qty_sold ? yearly_income.gloves.m_qty_sold : "0"}</th>
+                    <th>{yearly_income.gloves.l_qty_sold ? yearly_income.gloves.l_qty_sold : "0"}</th>
+                    <th>{yearly_income.gloves.xl_qty_sold ? yearly_income.gloves.xl_qty_sold : "0"}</th>
+                    <th>{yearly_income.gloves.total_qty_sold ? yearly_income.gloves.total_qty_sold : "0"}</th>
                   </tr>
                 </tfoot>
               )}
@@ -695,7 +695,7 @@ const MonthlyExpensesPage = props => {
             </table>
           </TabPanel>
           <TabPanel>
-            <h2 className="ta-c w-100per jc-c">{year} All Whites</h2>
+            <h2 className="ta-c w-100per jc-c">{year} All Gloves</h2>
             <table className="styled-table">
               <thead>
                 <tr>
@@ -714,10 +714,10 @@ const MonthlyExpensesPage = props => {
                     className=""
                   >
                     <th>{month.month}</th>
-                    <th>${month.total_whites.total_income ? month.total_whites.total_income.toFixed(2) : "0.00"}</th>
-                    <th>${month.total_whites.total_expenses ? month.total_whites.total_expenses.toFixed(2) : "0.00"}</th>
+                    <th>${month.total_gloves.total_income ? month.total_gloves.total_income.toFixed(2) : "0.00"}</th>
+                    <th>${month.total_gloves.total_expenses ? month.total_gloves.total_expenses.toFixed(2) : "0.00"}</th>
 
-                    <th>${month.total_whites.total_profit ? month.total_whites.total_profit.toFixed(2) : "0.00"}</th>
+                    <th>${month.total_gloves.total_profit ? month.total_gloves.total_profit.toFixed(2) : "0.00"}</th>
                   </tr>
                 ))}
               </tbody>
@@ -726,15 +726,15 @@ const MonthlyExpensesPage = props => {
                 <tfoot>
                   <tr>
                     <th>Total</th>
-                    <th>${yearly_income.total_whites.total_income ? yearly_income.total_whites.total_income.toFixed(2) : "0.00"}</th>
-                    <th>${yearly_income.total_whites.total_expenses ? yearly_income.total_whites.total_expenses.toFixed(2) : "0.00"}</th>
+                    <th>${yearly_income.total_gloves.total_income ? yearly_income.total_gloves.total_income.toFixed(2) : "0.00"}</th>
+                    <th>${yearly_income.total_gloves.total_expenses ? yearly_income.total_gloves.total_expenses.toFixed(2) : "0.00"}</th>
 
-                    <th>${yearly_income.total_whites.total_profit ? yearly_income.total_whites.total_profit.toFixed(2) : "0.00"}</th>
+                    <th>${yearly_income.total_gloves.total_profit ? yearly_income.total_gloves.total_profit.toFixed(2) : "0.00"}</th>
                   </tr>
                 </tfoot>
               )}
             </table>
-            <h2 className="ta-c w-100per jc-c">{year} Whites Income By Size</h2>
+            <h2 className="ta-c w-100per jc-c">{year} Gloves Income By Size</h2>
             <table className="styled-table">
               <thead>
                 <tr>
@@ -755,11 +755,11 @@ const MonthlyExpensesPage = props => {
                     className=""
                   >
                     <th>{month.month}</th>
-                    <th>${month.total_whites.s_total_income ? month.total_whites.s_total_income.toFixed(2) : "0.00"}</th>
-                    <th>${month.total_whites.m_total_income ? month.total_whites.m_total_income.toFixed(2) : "0.00"}</th>
-                    <th>${month.total_whites.l_total_income ? month.total_whites.l_total_income.toFixed(2) : "0.00"}</th>
-                    <th>${month.total_whites.xl_total_income ? month.total_whites.xl_total_income.toFixed(2) : "0.00"}</th>
-                    <th>${month.total_whites.total_income ? month.total_whites.total_income.toFixed(2) : "0.00"}</th>
+                    <th>${month.total_gloves.s_total_income ? month.total_gloves.s_total_income.toFixed(2) : "0.00"}</th>
+                    <th>${month.total_gloves.m_total_income ? month.total_gloves.m_total_income.toFixed(2) : "0.00"}</th>
+                    <th>${month.total_gloves.l_total_income ? month.total_gloves.l_total_income.toFixed(2) : "0.00"}</th>
+                    <th>${month.total_gloves.xl_total_income ? month.total_gloves.xl_total_income.toFixed(2) : "0.00"}</th>
+                    <th>${month.total_gloves.total_income ? month.total_gloves.total_income.toFixed(2) : "0.00"}</th>
                   </tr>
                 ))}
               </tbody>
@@ -767,11 +767,11 @@ const MonthlyExpensesPage = props => {
                 <tfoot>
                   <tr>
                     <th>Profit</th>
-                    <th>${yearly_income.total_whites.s_total_profit ? yearly_income.total_whites.s_total_profit.toFixed(2) : "0.00"}</th>
-                    <th>${yearly_income.total_whites.m_total_profit ? yearly_income.total_whites.m_total_profit.toFixed(2) : "0.00"}</th>
-                    <th>${yearly_income.total_whites.l_total_profit ? yearly_income.total_whites.l_total_profit.toFixed(2) : "0.00"}</th>
-                    <th>${yearly_income.total_whites.xl_total_profit ? yearly_income.total_whites.xl_total_profit.toFixed(2) : "0.00"}</th>
-                    <th>${yearly_income.total_whites.total_profit ? yearly_income.total_whites.total_profit.toFixed(2) : "0.00"}</th>
+                    <th>${yearly_income.total_gloves.s_total_profit ? yearly_income.total_gloves.s_total_profit.toFixed(2) : "0.00"}</th>
+                    <th>${yearly_income.total_gloves.m_total_profit ? yearly_income.total_gloves.m_total_profit.toFixed(2) : "0.00"}</th>
+                    <th>${yearly_income.total_gloves.l_total_profit ? yearly_income.total_gloves.l_total_profit.toFixed(2) : "0.00"}</th>
+                    <th>${yearly_income.total_gloves.xl_total_profit ? yearly_income.total_gloves.xl_total_profit.toFixed(2) : "0.00"}</th>
+                    <th>${yearly_income.total_gloves.total_profit ? yearly_income.total_gloves.total_profit.toFixed(2) : "0.00"}</th>
                   </tr>
                 </tfoot>
               )}
@@ -779,11 +779,11 @@ const MonthlyExpensesPage = props => {
                 <tfoot>
                   <tr>
                     <th>Total</th>
-                    <th>${yearly_income.total_whites.s_total_income ? yearly_income.total_whites.s_total_income.toFixed(2) : "0.00"}</th>
-                    <th>${yearly_income.total_whites.m_total_income ? yearly_income.total_whites.m_total_income.toFixed(2) : "0.00"}</th>
-                    <th>${yearly_income.total_whites.l_total_income ? yearly_income.total_whites.l_total_income.toFixed(2) : "0.00"}</th>
-                    <th>${yearly_income.total_whites.xl_total_income ? yearly_income.total_whites.xl_total_income.toFixed(2) : "0.00"}</th>
-                    <th>${yearly_income.total_whites.total_income ? yearly_income.total_whites.total_income.toFixed(2) : "0.00"}</th>
+                    <th>${yearly_income.total_gloves.s_total_income ? yearly_income.total_gloves.s_total_income.toFixed(2) : "0.00"}</th>
+                    <th>${yearly_income.total_gloves.m_total_income ? yearly_income.total_gloves.m_total_income.toFixed(2) : "0.00"}</th>
+                    <th>${yearly_income.total_gloves.l_total_income ? yearly_income.total_gloves.l_total_income.toFixed(2) : "0.00"}</th>
+                    <th>${yearly_income.total_gloves.xl_total_income ? yearly_income.total_gloves.xl_total_income.toFixed(2) : "0.00"}</th>
+                    <th>${yearly_income.total_gloves.total_income ? yearly_income.total_gloves.total_income.toFixed(2) : "0.00"}</th>
                   </tr>
                 </tfoot>
               )}
@@ -792,23 +792,23 @@ const MonthlyExpensesPage = props => {
                   <tr>
                     <th>Expenses</th>
                     <th>
-                      ${yearly_income.total_whites.s_total_expenses ? yearly_income.total_whites.s_total_expenses.toFixed(2) : "0.00"}
+                      ${yearly_income.total_gloves.s_total_expenses ? yearly_income.total_gloves.s_total_expenses.toFixed(2) : "0.00"}
                     </th>
                     <th>
-                      ${yearly_income.total_whites.m_total_expenses ? yearly_income.total_whites.m_total_expenses.toFixed(2) : "0.00"}
+                      ${yearly_income.total_gloves.m_total_expenses ? yearly_income.total_gloves.m_total_expenses.toFixed(2) : "0.00"}
                     </th>
                     <th>
-                      ${yearly_income.total_whites.l_total_expenses ? yearly_income.total_whites.l_total_expenses.toFixed(2) : "0.00"}
+                      ${yearly_income.total_gloves.l_total_expenses ? yearly_income.total_gloves.l_total_expenses.toFixed(2) : "0.00"}
                     </th>
                     <th>
-                      ${yearly_income.total_whites.xl_total_expenses ? yearly_income.total_whites.xl_total_expenses.toFixed(2) : "0.00"}
+                      ${yearly_income.total_gloves.xl_total_expenses ? yearly_income.total_gloves.xl_total_expenses.toFixed(2) : "0.00"}
                     </th>
-                    <th>${yearly_income.total_whites.total_expenses ? yearly_income.total_whites.total_expenses.toFixed(2) : "0.00"}</th>
+                    <th>${yearly_income.total_gloves.total_expenses ? yearly_income.total_gloves.total_expenses.toFixed(2) : "0.00"}</th>
                   </tr>
                 </tfoot>
               )}
             </table>
-            <h2 className="ta-c w-100per jc-c">{year} Whites</h2>
+            <h2 className="ta-c w-100per jc-c">{year} Gloves</h2>
             <table className="styled-table">
               <thead>
                 <tr>
@@ -829,11 +829,11 @@ const MonthlyExpensesPage = props => {
                     className=""
                   >
                     <th>{month.month}</th>
-                    <th>{month.total_whites.s_qty_sold ? month.total_whites.s_qty_sold : "0"}</th>
-                    <th>{month.total_whites.m_qty_sold ? month.total_whites.m_qty_sold : "0"}</th>
-                    <th>{month.total_whites.l_qty_sold ? month.total_whites.l_qty_sold : "0"}</th>
-                    <th>{month.total_whites.xl_qty_sold ? month.total_whites.xl_qty_sold : "0"}</th>
-                    <th>{month.total_whites.total_qty_sold ? month.total_whites.total_qty_sold : "0"}</th>
+                    <th>{month.total_gloves.s_qty_sold ? month.total_gloves.s_qty_sold : "0"}</th>
+                    <th>{month.total_gloves.m_qty_sold ? month.total_gloves.m_qty_sold : "0"}</th>
+                    <th>{month.total_gloves.l_qty_sold ? month.total_gloves.l_qty_sold : "0"}</th>
+                    <th>{month.total_gloves.xl_qty_sold ? month.total_gloves.xl_qty_sold : "0"}</th>
+                    <th>{month.total_gloves.total_qty_sold ? month.total_gloves.total_qty_sold : "0"}</th>
                   </tr>
                 ))}
               </tbody>
@@ -841,11 +841,11 @@ const MonthlyExpensesPage = props => {
                 <tfoot>
                   <tr>
                     <th>Total</th>
-                    <th>{yearly_income.total_whites.s_qty_sold ? yearly_income.total_whites.s_qty_sold : "0"}</th>
-                    <th>{yearly_income.total_whites.m_qty_sold ? yearly_income.total_whites.m_qty_sold : "0"}</th>
-                    <th>{yearly_income.total_whites.l_qty_sold ? yearly_income.total_whites.l_qty_sold : "0"}</th>
-                    <th>{yearly_income.total_whites.xl_qty_sold ? yearly_income.total_whites.xl_qty_sold : "0"}</th>
-                    <th>{yearly_income.total_whites.total_qty_sold ? yearly_income.total_whites.total_qty_sold : "0"}</th>
+                    <th>{yearly_income.total_gloves.s_qty_sold ? yearly_income.total_gloves.s_qty_sold : "0"}</th>
+                    <th>{yearly_income.total_gloves.m_qty_sold ? yearly_income.total_gloves.m_qty_sold : "0"}</th>
+                    <th>{yearly_income.total_gloves.l_qty_sold ? yearly_income.total_gloves.l_qty_sold : "0"}</th>
+                    <th>{yearly_income.total_gloves.xl_qty_sold ? yearly_income.total_gloves.xl_qty_sold : "0"}</th>
+                    <th>{yearly_income.total_gloves.total_qty_sold ? yearly_income.total_gloves.total_qty_sold : "0"}</th>
                   </tr>
                 </tfoot>
               )}

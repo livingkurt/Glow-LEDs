@@ -280,7 +280,7 @@ const secondary_color = item => {
 };
 const secondary_color_name = item => {
   const secondary_color_name = item.secondary_color_group_name ? item.secondary_color_group_name.split(" ")[0] + "s" : "";
-  if (item.category === "whites") {
+  if (item.category === "gloves") {
     return secondary_color_name;
   }
   if (item.category === "glowskinz") {
@@ -309,7 +309,7 @@ const secondary_product = item => {
 };
 
 const first_dash = item => {
-  if (item.category === "whites") {
+  if (item.category === "gloves") {
     return "-";
   }
   if (item.category === "glowskinz") {

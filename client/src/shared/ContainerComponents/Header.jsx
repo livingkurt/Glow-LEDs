@@ -659,40 +659,24 @@ const Header = props => {
                           </GLButton>
                         </Link>
                         <hr className="w-95per m-0px" />
-                        <Link to="/collections/all/products/category/whites/subcategory/singles">
+                        <Link to="/collections/all/products/category/gloves/subcategory/singles">
                           <GLButton variant="nav" fullWidth className="ta-l">
-                            Supreme Whites
+                            Supreme Gloves
                           </GLButton>
                         </Link>
-                        <Link to="/collections/all/products/category/whites/subcategory/refresh">
+                        <Link to="/collections/all/products/category/gloves/subcategory/refresh">
                           <GLButton variant="nav" fullWidth className="ta-l">
                             Refresh Packs
                           </GLButton>
                         </Link>
-                        <Link to="/collections/all/products/category/whites/subcategory/sampler">
+                        <Link to="/collections/all/products/category/gloves/subcategory/sampler">
                           <GLButton variant="nav" fullWidth className="ta-l">
                             Sizing Samplers
                           </GLButton>
                         </Link>
-
-                        <Link to="/collections/all/products/1225_batteries">
+                        <Link to="/collections/all/products/category/batteries/subcategory/coin">
                           <GLButton variant="nav" fullWidth className="ta-l">
-                            1225 Batteries
-                          </GLButton>
-                        </Link>
-                        <Link to="/collections/all/products/1616_batteries">
-                          <GLButton variant="nav" fullWidth className="ta-l">
-                            1616 Batteries
-                          </GLButton>
-                        </Link>
-                        <Link to="/collections/all/products/1620_batteries">
-                          <GLButton variant="nav" fullWidth className="ta-l">
-                            1620 Batteries
-                          </GLButton>
-                        </Link>
-                        <Link to="/collections/all/products/2016_batteries">
-                          <GLButton variant="nav" fullWidth className="ta-l">
-                            2016 Batteries
+                            Coin Batteries
                           </GLButton>
                         </Link>
                         <Link to="/collections/all/products/category/batteries/subcategory/storage">

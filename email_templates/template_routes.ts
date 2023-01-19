@@ -407,7 +407,7 @@ router.get("/order", async (req: { body: any }, res: { send: (arg0: string) => v
           package_volume: 31.5,
           pathname: "supremes",
           subcategory: "singles",
-          category: "whites",
+          category: "gloves",
           qty: 1,
           createdAt: "2021-12-10T18:10:35.464Z",
           updatedAt: "2021-12-10T18:10:35.464Z"
@@ -443,7 +443,7 @@ router.get("/order", async (req: { body: any }, res: { send: (arg0: string) => v
           package_volume: 31.5,
           pathname: "supremes",
           subcategory: "singles",
-          category: "whites",
+          category: "gloves",
           qty: 1,
           createdAt: "2021-12-10T18:10:35.464Z",
           updatedAt: "2021-12-10T18:10:35.464Z"
@@ -823,7 +823,7 @@ router.get("/invoice", async (req: { body: any }, res: { send: (arg0: string) =>
           package_volume: 31.5,
           pathname: "supremes",
           subcategory: "singles",
-          category: "whites",
+          category: "gloves",
           qty: 3,
           createdAt: "2022-01-25T03:55:28.733Z",
           updatedAt: "2022-01-25T03:55:28.733Z"
@@ -859,7 +859,7 @@ router.get("/invoice", async (req: { body: any }, res: { send: (arg0: string) =>
           package_volume: 31.5,
           pathname: "supremes",
           subcategory: "singles",
-          category: "whites",
+          category: "gloves",
           qty: 1,
           createdAt: "2022-01-25T03:55:28.733Z",
           updatedAt: "2022-01-25T03:55:28.733Z"
@@ -1324,7 +1324,7 @@ router.get("/order_status", async (req: { body: any }, res: { send: (arg0: strin
           package_volume: 31.5,
           pathname: "supremes",
           subcategory: "singles",
-          category: "whites",
+          category: "gloves",
           qty: 1,
           createdAt: "2021-12-10T18:10:35.464Z",
           updatedAt: "2021-12-10T18:10:35.464Z"
@@ -1360,7 +1360,7 @@ router.get("/order_status", async (req: { body: any }, res: { send: (arg0: strin
           package_volume: 31.5,
           pathname: "supremes",
           subcategory: "singles",
-          category: "whites",
+          category: "gloves",
           qty: 1,
           createdAt: "2021-12-10T18:10:35.464Z",
           updatedAt: "2021-12-10T18:10:35.464Z"
@@ -1685,7 +1685,7 @@ router.get("/shipping_status", async (req: { body: any }, res: { send: (arg0: st
           package_volume: 31.5,
           pathname: "supremes",
           subcategory: "singles",
-          category: "whites",
+          category: "gloves",
           qty: 1,
           createdAt: "2021-12-10T18:10:35.464Z",
           updatedAt: "2021-12-10T18:10:35.464Z"
@@ -1721,7 +1721,7 @@ router.get("/shipping_status", async (req: { body: any }, res: { send: (arg0: st
           package_volume: 31.5,
           pathname: "supremes",
           subcategory: "singles",
-          category: "whites",
+          category: "gloves",
           qty: 1,
           createdAt: "2021-12-10T18:10:35.464Z",
           updatedAt: "2021-12-10T18:10:35.464Z"
@@ -2357,7 +2357,7 @@ router.get("/custom_contact", (req: any, res: { send: (arg0: string) => void }) 
           package_volume: 31.5,
           pathname: "supremes",
           subcategory: "singles",
-          category: "whites",
+          category: "gloves",
           qty: 1,
           createdAt: "2021-12-10T18:10:35.464Z",
           updatedAt: "2021-12-10T18:10:35.464Z"
@@ -2393,7 +2393,7 @@ router.get("/custom_contact", (req: any, res: { send: (arg0: string) => void }) 
           package_volume: 31.5,
           pathname: "supremes",
           subcategory: "singles",
-          category: "whites",
+          category: "gloves",
           qty: 1,
           createdAt: "2021-12-10T18:10:35.464Z",
           updatedAt: "2021-12-10T18:10:35.464Z"

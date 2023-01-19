@@ -876,23 +876,23 @@ export default {
         .flat(1)
         .filter((item: any) => item.category === "decals")
         .reduce((a: any, c: any) => parseFloat(a) + parseFloat(c.price), 0);
-      const whites = orders_data
+      const gloves = orders_data
         .map((order: any) => order.orderItems)
         .flat(1)
         .filter((item: any) => item.subcategory === "singles");
-      const s_whites = orders_data
+      const s_gloves = orders_data
         .map((order: any) => order.orderItems)
         .flat(1)
         .filter((item: any) => item.subcategory === "singles" && item.option_product_name === "Supreme Gloves - S");
-      const m_whites = orders_data
+      const m_gloves = orders_data
         .map((order: any) => order.orderItems)
         .flat(1)
         .filter((item: any) => item.subcategory === "singles" && item.option_product_name === "Supreme Gloves - M");
-      const l_whites = orders_data
+      const l_gloves = orders_data
         .map((order: any) => order.orderItems)
         .flat(1)
         .filter((item: any) => item.subcategory === "singles" && item.option_product_name === "Supreme Gloves - L");
-      const xl_whites = orders_data
+      const xl_gloves = orders_data
         .map((order: any) => order.orderItems)
         .flat(1)
         .filter((item: any) => item.subcategory === "singles" && item.option_product_name === "Supreme Gloves - XL");
@@ -916,10 +916,10 @@ export default {
         .map((order: any) => order.orderItems)
         .flat(1)
         .filter((item: any) => item.subcategory === "refresh" && item.option_product_name === "Supreme Gloves - XL");
-      const whites_total = orders_data
+      const gloves_total = orders_data
         .map((order: any) => order.orderItems)
         .flat(1)
-        .filter((item: any) => item.category === "whites")
+        .filter((item: any) => item.category === "gloves")
         .reduce((a: any, c: any) => parseFloat(a) + parseFloat(c.price), 0);
       const singles_total = orders_data
         .map((order: any) => order.orderItems)
@@ -1019,28 +1019,28 @@ export default {
           sets: decals.length,
           total_income: decals_total
         },
-        whites: {
-          singles_qty_sold: whites.length,
-          s_qty_sold: s_whites.length,
-          m_qty_sold: m_whites.length,
-          l_qty_sold: l_whites.length,
-          xl_qty_sold: xl_whites.length,
+        gloves: {
+          singles_qty_sold: gloves.length,
+          s_qty_sold: s_gloves.length,
+          m_qty_sold: m_gloves.length,
+          l_qty_sold: l_gloves.length,
+          xl_qty_sold: xl_gloves.length,
           s_total_income: s_singles_total,
           m_total_income: m_singles_total,
           l_total_income: l_singles_total,
           xl_total_income: xl_singles_total,
-          s_total_expenses: -s_whites.length * 0.7,
-          m_total_expenses: -m_whites.length * 0.7,
-          l_total_expenses: -l_whites.length * 0.7,
-          xl_total_expenses: -xl_whites.length * 0.7,
-          s_total_profit: s_whites.length * 3.95 - s_whites.length * 0.7,
-          m_total_profit: m_whites.length * 3.95 - m_whites.length * 0.7,
-          l_total_profit: l_whites.length * 3.95 - l_whites.length * 0.7,
-          xl_total_profit: xl_whites.length * 3.95 - xl_whites.length * 0.7,
+          s_total_expenses: -s_gloves.length * 0.7,
+          m_total_expenses: -m_gloves.length * 0.7,
+          l_total_expenses: -l_gloves.length * 0.7,
+          xl_total_expenses: -xl_gloves.length * 0.7,
+          s_total_profit: s_gloves.length * 3.95 - s_gloves.length * 0.7,
+          m_total_profit: m_gloves.length * 3.95 - m_gloves.length * 0.7,
+          l_total_profit: l_gloves.length * 3.95 - l_gloves.length * 0.7,
+          xl_total_profit: xl_gloves.length * 3.95 - xl_gloves.length * 0.7,
           refresh_qty_sold: refresh.length,
-          total_expenses: -whites.length * 0.7,
-          total_profit: singles_total - whites.length * 0.7,
-          total_qty_sold: whites.length,
+          total_expenses: -gloves.length * 0.7,
+          total_profit: singles_total - gloves.length * 0.7,
+          total_qty_sold: gloves.length,
           total_income: singles_total
         },
         refresh_packs: {
@@ -1066,29 +1066,29 @@ export default {
           total_qty_sold: refresh.length * 6,
           total_income: refresh_total
         },
-        total_whites: {
-          singles_qty_sold: whites.length,
-          s_qty_sold: s_whites.length + s_refresh.length * 6,
-          m_qty_sold: m_whites.length + m_refresh.length * 6,
-          l_qty_sold: l_whites.length + l_refresh.length * 6,
-          xl_qty_sold: xl_whites.length + xl_refresh.length * 6,
+        total_gloves: {
+          singles_qty_sold: gloves.length,
+          s_qty_sold: s_gloves.length + s_refresh.length * 6,
+          m_qty_sold: m_gloves.length + m_refresh.length * 6,
+          l_qty_sold: l_gloves.length + l_refresh.length * 6,
+          xl_qty_sold: xl_gloves.length + xl_refresh.length * 6,
           s_total_income: s_singles_total + s_refresh_total,
           m_total_income: m_singles_total + m_refresh_total,
           l_total_income: l_singles_total + l_refresh_total,
           xl_total_income: xl_singles_total + xl_refresh_total,
-          s_total_expenses: -(s_whites.length + s_refresh.length * 6) * 0.7,
-          m_total_expenses: -(m_whites.length + m_refresh.length * 6) * 0.7,
-          l_total_expenses: -(l_whites.length + l_refresh.length * 6) * 0.7,
-          xl_total_expenses: -(xl_whites.length + xl_refresh.length * 6) * 0.7,
-          s_total_profit: (s_whites.length + s_refresh.length * 6) * 3.95 - (s_whites.length + s_refresh.length * 6) * 0.7,
-          m_total_profit: (m_whites.length + m_refresh.length * 6) * 3.95 - (m_whites.length + m_refresh.length * 6) * 0.7,
-          l_total_profit: (l_whites.length + l_refresh.length * 6) * 3.95 - (l_whites.length + l_refresh.length * 6) * 0.7,
-          xl_total_profit: (xl_whites.length + xl_refresh.length * 6) * 3.95 - (xl_whites.length + xl_refresh.length * 6) * 0.7,
+          s_total_expenses: -(s_gloves.length + s_refresh.length * 6) * 0.7,
+          m_total_expenses: -(m_gloves.length + m_refresh.length * 6) * 0.7,
+          l_total_expenses: -(l_gloves.length + l_refresh.length * 6) * 0.7,
+          xl_total_expenses: -(xl_gloves.length + xl_refresh.length * 6) * 0.7,
+          s_total_profit: (s_gloves.length + s_refresh.length * 6) * 3.95 - (s_gloves.length + s_refresh.length * 6) * 0.7,
+          m_total_profit: (m_gloves.length + m_refresh.length * 6) * 3.95 - (m_gloves.length + m_refresh.length * 6) * 0.7,
+          l_total_profit: (l_gloves.length + l_refresh.length * 6) * 3.95 - (l_gloves.length + l_refresh.length * 6) * 0.7,
+          xl_total_profit: (xl_gloves.length + xl_refresh.length * 6) * 3.95 - (xl_gloves.length + xl_refresh.length * 6) * 0.7,
           refresh_qty_sold: refresh.length,
-          total_expenses: -(whites.length + refresh.length * 6) * 0.7,
-          total_profit: whites_total - (whites.length + refresh.length * 6) * 0.7,
-          total_qty_sold: whites.length + refresh.length * 6,
-          total_income: whites_total
+          total_expenses: -(gloves.length + refresh.length * 6) * 0.7,
+          total_profit: gloves_total - (gloves.length + refresh.length * 6) * 0.7,
+          total_qty_sold: gloves.length + refresh.length * 6,
+          total_income: gloves_total
         }
       };
 

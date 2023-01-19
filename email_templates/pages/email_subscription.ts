@@ -7,18 +7,18 @@ export default (props: any) => {
     <tbody>
       <tr style="font-size:16px">
         <td>
-          
+
           <h1
             style="text-align:center;font-family:helvetica;width:100%;margin:0; margin-top: 10px;line-height:50px;color:#333333;font-size: 30px;">
             Thank you for Signing Up!</h1>
-  
+
         </td>
       </tr>
 
     </tbody>
   </table>
 
-  
+
   <table
   style="max-width:800px;width:100%;text-align:left;border-spacing:0;margin:0 auto;   background-color: #585858; border-radius: 20px; padding:15px; margin: 10px auto;">
   <tbody>
@@ -41,7 +41,7 @@ export default (props: any) => {
           style="font-size:16px;line-height:30px;max-width:800px;width:100%;margin:0px;color:white; text-align: center;">
           Some of our most popular inventions include EXO
           Diffusers, Decals, Diffuser Caps and Glowskinz! We've even put our own spin on
-          whites and batteries! Plus we're one of the few places where you can order Custom gloving accessories.
+          gloves and batteries! Plus we're one of the few places where you can order Custom gloving accessories.
         </p>
         <table
         style="max-width:560px;width:100%;text-align:left;border-spacing:0;margin:15px auto;color:white">
@@ -77,7 +77,7 @@ export default (props: any) => {
     <tbody>
       <tr style="font-size:16px">
         <td>
-          
+
           <h1
             style="text-align:center;font-family:helvetica;width:100%;margin:0; margin-bottom: 10px;line-height:50px;color:#333333;font-size:30px;">
             ⬇️ Scroll Down for Promo Code ⬇️ </h1>
@@ -86,7 +86,7 @@ export default (props: any) => {
 
     </tbody>
   </table>
- 
+
   <table style="width:100%;border-spacing:0">
     <tbody>
       <tr>

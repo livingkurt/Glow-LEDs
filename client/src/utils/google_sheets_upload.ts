@@ -280,7 +280,7 @@ export const facebook_catalog_upload = async (products: any) => {
 
     const new_rows = products.map((product: any, i: number) => {
       const id = product._id;
-      const title = product.name === "Supremes" ? "GL Whites" : product.name;
+      const title = product.name === "Supremes" ? "GL Gloves" : product.name;
       const description = product.description;
       const availability = "In Stock";
       const condition = "New";
@@ -394,7 +394,7 @@ export const current_products_upload = async (products: any) => {
 
     const new_rows = products.map((product: any, i: number) => {
       const id = product._id;
-      const title = product.name === "Supremes" ? "GL Whites" : product.name;
+      const title = product.name === "Supremes" ? "GL Gloves" : product.name;
       const description = product.description;
       const availability = "In Stock";
       const condition = "New";
@@ -584,7 +584,7 @@ export const orders_upload = async (orders: any) => {
       "items prices",
       "item quantitys",
       "item color",
-      "item size (whites)"
+      "item size (gloves)"
     ]);
 
     // const { data } = await axios.get('https://www.glow-leds.com/api/orders/shown');
@@ -627,7 +627,7 @@ export const orders_upload = async (orders: any) => {
         "items prices": item_prices,
         "item quantitys": item_quantities,
         "item color": item_color,
-        "item size (whites)": item_size
+        "item size (gloves)": item_size
       };
     });
 

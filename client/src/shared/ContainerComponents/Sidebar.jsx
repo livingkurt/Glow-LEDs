@@ -476,39 +476,24 @@ const Sidebar = props => {
               </GLButton>
             </div>
             <ul className="sidebar_dropdown_secondary_container" id="glowskinz_dropdown_6">
-              <Link to="/collections/all/products/category/whites/subcategory/singles">
+              <Link to="/collections/all/products/category/gloves/subcategory/singles">
                 <GLButton className="sidebar-btn nested" onClick={closeMenu}>
-                  Supreme Whites
+                  Supreme Gloves
                 </GLButton>
               </Link>
-              <Link to="/collections/all/products/category/whites/subcategory/refresh">
+              <Link to="/collections/all/products/category/gloves/subcategory/refresh">
                 <GLButton className="sidebar-btn nested" onClick={closeMenu}>
                   Refresh Packs
                 </GLButton>
               </Link>
-              <Link to="/collections/all/products/category/whites/subcategory/sampler">
+              <Link to="/collections/all/products/category/gloves/subcategory/sampler">
                 <GLButton className="sidebar-btn nested" onClick={closeMenu}>
                   Sizing Samplers
                 </GLButton>
               </Link>
-              <Link to="/collections/all/products/1225_batteries">
+              <Link to="/collections/all/products/category/batteries/subcategory/coin">
                 <GLButton className="sidebar-btn nested" onClick={closeMenu}>
-                  1225 Batteries
-                </GLButton>
-              </Link>
-              <Link to="/collections/all/products/1616_batteries">
-                <GLButton className="sidebar-btn nested" onClick={closeMenu}>
-                  1616 Batteries
-                </GLButton>
-              </Link>
-              <Link to="/collections/all/products/1620_batteries">
-                <GLButton className="sidebar-btn nested" onClick={closeMenu}>
-                  1620 Batteries
-                </GLButton>
-              </Link>
-              <Link to="/collections/all/products/2016_batteries">
-                <GLButton className="sidebar-btn nested" onClick={closeMenu}>
-                  2016 Batteries
+                  Coin Batteries
                 </GLButton>
               </Link>
               <Link to="/collections/all/products/category/batteries/subcategory/storage">
