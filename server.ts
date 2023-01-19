@@ -18,7 +18,7 @@ const bodyParser = require("body-parser");
 const easy_post_api = require("@easypost/api");
 
 const multer = require("multer");
-import { imgbox } from "node_modules/imgbox-js/lib/index";
+// import { imgbox } from "node_modules/imgbox-js/lib/index";
 
 // const scout = require("@scout_apm/scout-apm");
 // const express = require("express");
@@ -143,13 +143,13 @@ app.post("/api/image_upload", upload.fields([{ name: "images" }, { name: "album_
       logger: true
     };
 
-    const send = await imgbox(images, options);
-    console.log({ send });
-    if (send) {
-      res.send("Image Uploaded Correctly");
-    } else {
-      res.send("Image Failed Upload");
-    }
+    // const send = await imgbox(images, options);
+    // console.log({ send });
+    // if (send) {
+    //   res.send("Image Uploaded Correctly");
+    // } else {
+    //   res.send("Image Failed Upload");
+    // }
   } catch (error) {
     if (error instanceof Error) {
       throw new Error(error.message);
