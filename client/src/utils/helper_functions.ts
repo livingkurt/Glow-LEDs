@@ -1,10 +1,4 @@
-import isEmpty from "is-empty";
-import Validator from "validator";
-import axios, { AxiosResponse } from "axios";
-import invariant from "tiny-invariant";
-import { API_Products } from ".";
 import { determine_secondary_product_name } from "./react_helper_functions";
-import { getTracking } from "ts-tracking-number";
 
 interface errors {
   email: string;
@@ -182,22 +176,25 @@ export const determnine_link = (item: any) => {
 // 	return str.replace(/\W+/g, ' ').split(/ |\B(?=[A-Z])/).map((word) => word.toLowerCase()).join('_');
 // };
 
-export const determine_tracking_number = (tracking_number: string) => {
-  if (tracking_number) {
-    const tracking: any = getTracking(tracking_number);
-    if (tracking.name.includes("USPS")) {
-      return "https://tools.usps.com/go/TrackConfirmAction_input?qtc_tLabels1=" + tracking_number;
-    }
-    if (tracking.name.includes("UPS")) {
-      return (
-        "https://wwwapps.ups.com/WebTracking/processInputRequest?AgreeToTermsAndConditions=yes&loc=en_US&tracknum=" +
-        tracking_number +
-        "&requester=ST/trackdetails"
-      );
-    }
-    if (tracking.name.includes("FedEx")) {
-      return "https://www.fedex.com/fedextrack/?trknbr=" + tracking_number + "&trkqual=2459474000~" + tracking_number + "~FX";
-    }
+export const determine_tracking_link = (tracking_number: string) => {
+  if (tracking_number.startsWith("1Z")) {
+    return `https://www.ups.com/track?tracknum=${tracking_number}`;
+  } else if (tracking_number.startsWith("9")) {
+    return `https://www.fedex.com/apps/fedextrack/?tracknumbers=${tracking_number}`;
+  } else if (tracking_number.startsWith("927")) {
+    return `https://www.dhl.com/en/express/tracking.html?tracking_number=${tracking_number}`;
+  } else if (tracking_number.length === 22) {
+    return `https://tools.usps.com/go/TrackConfirmAction?tLabels=${tracking_number}`;
+  } else if (tracking_number.startsWith("LX")) {
+    return `https://www.ups.com/track?loc=en_us&tracknum=${tracking_number}`;
+  } else if (tracking_number.startsWith("C")) {
+    return `https://www.fedex.com/apps/fedextrack/?tracknumbers=${tracking_number}`;
+  } else if (tracking_number.startsWith("S")) {
+    return `https://www.dhl.com/en/express/tracking.html?tracking_number=${tracking_number}`;
+  } else if (tracking_number.startsWith("CJ")) {
+    return `https://tools.usps.com/go/TrackConfirmAction?tLabels=${tracking_number}`;
+  } else {
+    return `https://tools.usps.com/go/TrackConfirmAction?tLabels=${tracking_number}`;
   }
 };
 

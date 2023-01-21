@@ -3,7 +3,7 @@ import { addToCart, removeFromCart } from "../../actions/cartActions";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { createOrder, detailsOrder, payOrder, saveOrder } from "../../actions/orderActions";
-import { determine_tracking_number, format_date, toCapitalize } from "../../utils/helper_functions";
+import { determine_tracking_link, format_date, toCapitalize } from "../../utils/helper_functions";
 import { Helmet } from "react-helmet";
 import { Loading, LoadingPayments } from "../../shared/SharedComponents";
 import { deleteOrder, listOrders, update_order, update_payment, refundOrder } from "../../actions/orderActions";
@@ -672,7 +672,7 @@ const OrderPage = props => {
                   <div>
                     Tracking #:{" "}
                     <a
-                      href={determine_tracking_number(order.tracking_number)}
+                      href={determine_tracking_link(order.tracking_number)}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="mv-2rem"
@@ -691,7 +691,7 @@ const OrderPage = props => {
                     <label>
                       Return Tracking #:{" "}
                       <a
-                        href={determine_tracking_number(order.return_tracking_number)}
+                        href={determine_tracking_link(order.return_tracking_number)}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="mv-2rem"

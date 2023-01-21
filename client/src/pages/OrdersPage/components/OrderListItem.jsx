@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { determine_tracking_number, determnine_link, format_date, getUrlParameter, toCapitalize } from "../../../utils/helper_functions";
+import { determine_tracking_link, determnine_link, format_date, getUrlParameter, toCapitalize } from "../../../utils/helper_functions";
 import { createOrder, deleteOrder, detailsOrder, listOrders, saveOrder, update_order, update_payment } from "../../../actions/orderActions";
 import { LazyImage, Loading } from "../../../shared/SharedComponents";
 import { determine_product_name, determine_product_name_string } from "../../../utils/react_helper_functions";
@@ -317,7 +317,7 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
               )
             )}
           </div>
-
+          {console.log({ determine_tracking_link: determine_tracking_link(order.tracking_number), tracking_number: order.tracking_number })}
           <div className="w-40per jc-fe">
             <div className="">
               <div className="fs-16px">
@@ -331,7 +331,7 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
                     <div className="mt-0px">
                       {" "}
                       <a
-                        href={determine_tracking_number(order.tracking_number)}
+                        href={determine_tracking_link(order.tracking_number)}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="mv-2rem"
@@ -568,7 +568,7 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
               <li className="row">
                 <label className="phrase_font">Tracking Number: </label>
                 <a
-                  href={determine_tracking_number(order.tracking_number)}
+                  href={determine_tracking_link(order.tracking_number)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="mv-2rem ml-1rem"
@@ -585,7 +585,7 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
                   <label className="phrase_font">Return Tracking Number: </label>
 
                   <a
-                    href={determine_tracking_number(order.return_tracking_number)}
+                    href={determine_tracking_link(order.return_tracking_number)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="mv-2rem ml-1rem"
