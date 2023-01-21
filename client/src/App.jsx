@@ -15,7 +15,7 @@ import Headroom from "react-headroom";
 
 import { createTheme, ThemeProvider } from "@mui/material";
 import glow_leds_theme from "./theme";
-import { EditOrderPage, LabelCreatorPage, MyOrdersPage, OrderCombinerPage, TrackOrderPage } from "./pages/OrdersPage/components";
+import { EditOrderPage, LabelCreatorPage, OrderCombinerPage, TrackOrderPage } from "./pages/OrdersPage/components";
 import { OrderPage } from "./pages/OrderPage";
 import { PlaceOrderPage } from "./pages/PlaceOrderPage";
 import {
@@ -283,9 +283,8 @@ const App = props => {
             <ScrollToTop>
               <Switch>
                 {/* Private Routes */}
-                <PrivateRoute path="/secure/account/profile/:id" component={ProfilePage} />
+                <PrivateRoute path="/secure/account/profile/:id?" component={ProfilePage} />
                 <PrivateRoute path="/secure/account/editprofile/:id" component={EditUserPage} />
-                <PrivateRoute path="/secure/account/orders" component={MyOrdersPage} />
                 <PrivateRoute path="/secure/account/order/:id" component={OrderPage} />
                 <PrivateRoute path="/secure/checkout/placeorder" component={PlaceOrderPage} />
 
@@ -308,7 +307,6 @@ const App = props => {
                 <AdminRoute path="/secure/glow/parcels" component={ParcelsPage} />
                 <AdminRoute path="/secure/glow/palettes" component={PalettesPage} />
                 <AdminRoute path="/secure/glow/filaments" component={FilamentsPage} />
-                <AdminRoute path="/secure/glow/userorders/:id" component={MyOrdersPage} />
                 <AdminRoute path="/secure/glow/userprofile/:id" component={ProfilePage} />
                 <AdminRoute path="/secure/glow/edituser/:id?" component={EditUserPage} />
                 <AdminRoute path="/secure/glow/editorder/:id?" component={EditOrderPage} />

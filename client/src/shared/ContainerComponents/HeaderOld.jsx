@@ -923,9 +923,6 @@ const Header = props => {
                         Profile
                       </GLButton>
                     </Link>
-                    <Link to="/secure/account/orders">
-                      <GLButton variant="nav">Orders</GLButton>
-                    </Link>
                     <GLButton variant="nav" className="mr-auto" onClick={handleLogout}>
                       {" "}
                       Logout

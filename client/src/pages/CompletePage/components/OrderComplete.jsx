@@ -79,7 +79,7 @@ const OrderComplete = ({ userInfo, order_id }) => {
             </GLButton>
           </Link>
           {userInfo && userInfo.hasOwnProperty("first_name") && (
-            <Link to="/secure/account/orders">
+            <Link to="/secure/account/profile">
               <GLButton variant="primary" className="mh-10px">
                 Your Orders
               </GLButton>

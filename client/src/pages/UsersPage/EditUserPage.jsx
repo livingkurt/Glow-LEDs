@@ -220,171 +220,170 @@ const EditUserPage = props => {
                       <li>
                         <h2 style={{ textAlign: "center" }}>Shipping</h2>
                       </li>
-                      {shipping && (
-                        <div>
-                          <li>
-                            <label htmlFor="first_name">First Name</label>
-                            <input
-                              defaultValue={shipping.first_name}
-                              type="first_name"
-                              name="first_name"
-                              id="first_name"
-                              onChange={e =>
-                                set_shipping({
-                                  ...shipping,
-                                  first_name: e.target.value
-                                })
-                              }
-                            />
-                          </li>
-                          {/* <label className="validation_text" style={{ fontSize: 16, justifyContent: 'center' }}>
+
+                      <div>
+                        <li>
+                          <label htmlFor="first_name">First Name</label>
+                          <input
+                            defaultValue={shipping.first_name}
+                            type="first_name"
+                            name="first_name"
+                            id="first_name"
+                            onChange={e =>
+                              set_shipping({
+                                ...shipping,
+                                first_name: e.target.value
+                              })
+                            }
+                          />
+                        </li>
+                        {/* <label className="validation_text" style={{ fontSize: 16, justifyContent: 'center' }}>
 								{first_name_validations}
 							</label> */}
-                          <li>
-                            <label htmlFor="last_name">Last Name</label>
-                            <input
-                              defaultValue={shipping.last_name}
-                              type="last_name"
-                              name="last_name"
-                              id="last_name"
-                              onChange={e =>
-                                set_shipping({
-                                  ...shipping,
-                                  last_name: e.target.value
-                                })
-                              }
-                            />
-                          </li>
-                          {/* <label className="validation_text" style={{ fontSize: 16, justifyContent: 'center' }}>
+                        <li>
+                          <label htmlFor="last_name">Last Name</label>
+                          <input
+                            defaultValue={shipping.last_name}
+                            type="last_name"
+                            name="last_name"
+                            id="last_name"
+                            onChange={e =>
+                              set_shipping({
+                                ...shipping,
+                                last_name: e.target.value
+                              })
+                            }
+                          />
+                        </li>
+                        {/* <label className="validation_text" style={{ fontSize: 16, justifyContent: 'center' }}>
 								{last_name_validations}
 							</label> */}
-                          <li>
-                            <label htmlFor="address_1">Address</label>
-                            <input
-                              type="text"
-                              value={shipping.address_1}
-                              name="address_1"
-                              id="address_1"
-                              onChange={e =>
-                                set_shipping({
-                                  ...shipping,
-                                  address_1: e.target.value
-                                })
-                              }
-                            />
-                          </li>
-                          <li>
-                            <label htmlFor="address_2">Apt/Suite</label>
-                            <input
-                              type="text"
-                              value={shipping.address_2}
-                              name="address_2"
-                              id="address_2"
-                              onChange={e =>
-                                set_shipping({
-                                  ...shipping,
-                                  address_2: e.target.value
-                                })
-                              }
-                            />
-                          </li>
-                          {/* <label className="validation_text" style={{ justifyContent: 'center' }}>
+                        <li>
+                          <label htmlFor="address_1">Address</label>
+                          <input
+                            type="text"
+                            value={shipping.address_1}
+                            name="address_1"
+                            id="address_1"
+                            onChange={e =>
+                              set_shipping({
+                                ...shipping,
+                                address_1: e.target.value
+                              })
+                            }
+                          />
+                        </li>
+                        <li>
+                          <label htmlFor="address_2">Apt/Suite</label>
+                          <input
+                            type="text"
+                            value={shipping.address_2}
+                            name="address_2"
+                            id="address_2"
+                            onChange={e =>
+                              set_shipping({
+                                ...shipping,
+                                address_2: e.target.value
+                              })
+                            }
+                          />
+                        </li>
+                        {/* <label className="validation_text" style={{ justifyContent: 'center' }}>
 							{address_validations
 						</label> */}
-                          <li>
-                            <label htmlFor="city">City</label>
-                            <input
-                              type="text"
-                              value={shipping.city}
-                              name="city"
-                              id="city"
-                              onChange={e =>
-                                set_shipping({
-                                  ...shipping,
-                                  city: e.target.value
-                                })
-                              }
-                            />
-                          </li>
-                          {/* <label className="validation_text" style={{ justifyContent: 'center' }}>
+                        <li>
+                          <label htmlFor="city">City</label>
+                          <input
+                            type="text"
+                            value={shipping.city}
+                            name="city"
+                            id="city"
+                            onChange={e =>
+                              set_shipping({
+                                ...shipping,
+                                city: e.target.value
+                              })
+                            }
+                          />
+                        </li>
+                        {/* <label className="validation_text" style={{ justifyContent: 'center' }}>
 							{city_validations}
 						</label> */}
-                          <li>
-                            <label htmlFor="state">State</label>
-                            <input
-                              type="text"
-                              value={shipping.state}
-                              name="state"
-                              id="state"
-                              onChange={e =>
-                                set_shipping({
-                                  ...shipping,
-                                  state: e.target.value
-                                })
-                              }
-                            />
-                          </li>
-                          {/* <label className="validation_text" style={{ justifyContent: 'center' }}>
+                        <li>
+                          <label htmlFor="state">State</label>
+                          <input
+                            type="text"
+                            value={shipping.state}
+                            name="state"
+                            id="state"
+                            onChange={e =>
+                              set_shipping({
+                                ...shipping,
+                                state: e.target.value
+                              })
+                            }
+                          />
+                        </li>
+                        {/* <label className="validation_text" style={{ justifyContent: 'center' }}>
 							{state_validations}
 						</label> */}
-                          <li>
-                            <label htmlFor="postalCode">Postal Code</label>
-                            <input
-                              type="text"
-                              value={shipping.postalCode}
-                              name="postalCode"
-                              id="postalCode"
-                              onChange={e =>
-                                set_shipping({
-                                  ...shipping,
-                                  postalCode: e.target.value
-                                })
-                              }
-                            />
-                          </li>
-                          {/* <label className="validation_text" style={{ justifyContent: 'center' }}>
+                        <li>
+                          <label htmlFor="postalCode">Postal Code</label>
+                          <input
+                            type="text"
+                            value={shipping.postalCode}
+                            name="postalCode"
+                            id="postalCode"
+                            onChange={e =>
+                              set_shipping({
+                                ...shipping,
+                                postalCode: e.target.value
+                              })
+                            }
+                          />
+                        </li>
+                        {/* <label className="validation_text" style={{ justifyContent: 'center' }}>
 							{postal_code_validations}
 						</label> */}
-                          {loading ? (
-                            <div>Loading...</div>
-                          ) : (
-                            <div>
+                        {loading ? (
+                          <div>Loading...</div>
+                        ) : (
+                          <div>
+                            <li>
+                              <label htmlFor="international">International</label>
+                              <input
+                                type="checkbox"
+                                name="international"
+                                // defaultChecked={international ? 'checked' : 'unchecked'}
+                                defaultValue={international}
+                                defaultChecked={international}
+                                value={shipping.international}
+                                id="international"
+                                onChange={e => {
+                                  setInternational(e.target.checked);
+                                }}
+                              />
+                            </li>
+                            {international && (
                               <li>
-                                <label htmlFor="international">International</label>
+                                <label htmlFor="country">Country</label>
                                 <input
-                                  type="checkbox"
-                                  name="international"
-                                  // defaultChecked={international ? 'checked' : 'unchecked'}
-                                  defaultValue={international}
-                                  defaultChecked={international}
-                                  value={shipping.international}
-                                  id="international"
-                                  onChange={e => {
-                                    setInternational(e.target.checked);
-                                  }}
+                                  type="text"
+                                  value={shipping.country}
+                                  name="country"
+                                  id="country"
+                                  onChange={e =>
+                                    set_shipping({
+                                      ...shipping,
+                                      country: e.target.value
+                                    })
+                                  }
                                 />
                               </li>
-                              {international && (
-                                <li>
-                                  <label htmlFor="country">Country</label>
-                                  <input
-                                    type="text"
-                                    value={shipping.country}
-                                    name="country"
-                                    id="country"
-                                    onChange={e =>
-                                      set_shipping({
-                                        ...shipping,
-                                        country: e.target.value
-                                      })
-                                    }
-                                  />
-                                </li>
-                              )}
-                            </div>
-                          )}
-                        </div>
-                      )}
+                            )}
+                          </div>
+                        )}
+                      </div>
                       {loading_checkboxes ? (
                         <div>Loading...</div>
                       ) : (

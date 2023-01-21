@@ -183,11 +183,6 @@ const Sidebar = props => {
                   Profile
                 </GLButton>
               </Link>
-              <Link to="/secure/account/orders">
-                <GLButton className=" sidebar-btn secondary" onClick={closeMenu}>
-                  Orders
-                </GLButton>
-              </Link>
               <GLButton onClick={handleLogout} className=" sidebar-btn secondary">
                 {" "}
                 Logout

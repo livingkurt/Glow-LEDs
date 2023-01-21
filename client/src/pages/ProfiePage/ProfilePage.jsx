@@ -11,6 +11,8 @@ import { listPromos } from "../../actions/promoActions";
 import { format_date } from "../../utils/helper_functions";
 import { detailsAffiliate } from "../../actions/affiliateActions";
 import { isAdmin } from "../../utils/helpers/user_helpers";
+import { OrderListItem } from "../OrdersPage/components";
+import { listMyOrders } from "../../actions/orderActions";
 
 const ProfilePage = props => {
   const history = useHistory();
@@ -30,6 +32,12 @@ const ProfilePage = props => {
   const promoList = useSelector(state => state.promoList);
   const { promos, error: promo_errors, message: promo_message } = promoList;
 
+  const myOrderList = useSelector(state => state.myOrderList);
+  const { orders } = myOrderList;
+
+  const [user_orders, set_user_orders] = useState(false);
+
+  const [id, set_id] = useState(props.match.params.id || "");
   const [first_name, set_first_name] = useState("");
   const [last_name, set_last_name] = useState("");
   const [email, setEmail] = useState("");
@@ -53,10 +61,19 @@ const ProfilePage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(detailsUser(props.match.params.id));
+      if (props.match.params.id) {
+        set_id(props.match.params.id);
+        set_user_orders(props.match.params.id ? true : false);
+        dispatch(detailsUser(props.match.params.id));
+        dispatch(listMyOrders(props.match.params.id));
+      } else {
+        set_id(userInfo._id);
+        dispatch(detailsUser(userInfo._id));
+        dispatch(listMyOrders(userInfo._id));
+      }
     }
     return () => (clean = false);
-  }, [dispatch]);
+  }, [dispatch, props.match.params.id, userInfo._id]);
 
   useEffect(() => {
     let clean = true;
@@ -160,6 +177,38 @@ const ProfilePage = props => {
     return result;
   };
 
+  const order_colors = [
+    { name: "Not Paid", color: "#6d3e3e" },
+    { name: "Paid", color: "#3e4c6d" },
+    { name: "Manufactured", color: "#4b7188" },
+    { name: "Packaged", color: "#6f5f7d" },
+    { name: "Shipped", color: "#636363" },
+    { name: "Delivered", color: "#333333" }
+  ];
+
+  const determine_order_color = order => {
+    let result = "";
+    if (!order.isPaid) {
+      result = order_colors[0].color;
+    }
+    if (order.isPaid) {
+      result = order_colors[1].color;
+    }
+    if (order.isManufactured) {
+      result = order_colors[2].color;
+    }
+    if (order.isPackaged) {
+      result = order_colors[3].color;
+    }
+    if (order.isShipped) {
+      result = order_colors[4].color;
+    }
+    if (order.isDelivered) {
+      result = order_colors[5].color;
+    }
+    return result;
+  };
+
   const send_not_verified_email = async () => {
     const request = await API_Emails.not_verified_email(user);
   };
@@ -176,7 +225,9 @@ const ProfilePage = props => {
       )}
 
       <div className="row">
-        <h1 style={{ textAlign: "center", width: "100%" }}>{first_name}'s Profile</h1>
+        <h1 style={{ textAlign: "center", width: "100%" }}>
+          {userInfo.first_name === first_name ? "My Profile" : `${first_name}'s Profile`}
+        </h1>
       </div>
       <Loading loading={loading} error={error}>
         {user && (
@@ -198,9 +249,9 @@ const ProfilePage = props => {
                 <h3>Password</h3>
                 <label>**********</label>
               </div>
-              <div className="label">
-                <h3>Shipping Address</h3>
-                {shipping && (
+              {shipping && shipping.first_name && shipping.last_name && (
+                <div className="label">
+                  <h3>Shipping Address</h3>
                   <div>
                     <div>
                       {shipping.first_name} {shipping.last_name}
@@ -214,8 +265,8 @@ const ProfilePage = props => {
                     <div>{shipping.international && "International"}</div>
                     <div>{shipping.email}</div>
                   </div>
-                )}
-              </div>
+                </div>
+              )}
               <div className="mb-20px">
                 <h3>Promotional Emails</h3>
                 <label>{email_subscription ? "Subscribed" : "Not Subscribed"}</label>
@@ -232,7 +283,7 @@ const ProfilePage = props => {
             <div>
               <div className="row">
                 <div style={{ height: 50 }}>
-                  <Link to={"/secure/glow/edituser/" + props.match.params.id}>
+                  <Link to={"/secure/glow/edituser/" + id}>
                     <GLButton style={{ marginRight: "10px", maxWidth: "225px" }} variant="primary">
                       Edit Profile
                     </GLButton>
@@ -240,7 +291,7 @@ const ProfilePage = props => {
                 </div>
                 {isAdmin(userInfo) ? (
                   <div style={{ height: 50 }}>
-                    <Link to={"/secure/glow/change_password/" + props.match.params.id}>
+                    <Link to={"/secure/glow/change_password/" + id}>
                       <GLButton style={{ marginRight: "10px", maxWidth: "210px" }} variant="primary">
                         Change Password
                       </GLButton>
@@ -256,7 +307,7 @@ const ProfilePage = props => {
                   </div>
                 )}
                 <div style={{ height: 50 }}>
-                  <Link to={"/secure/glow/userorders/" + props.match.params.id}>
+                  <Link to={"/secure/glow/userorders/" + id}>
                     <GLButton style={{ maxWidth: "225px", marginRight: "10px" }} variant="primary">
                       View Orders
                     </GLButton>
@@ -264,11 +315,9 @@ const ProfilePage = props => {
                 </div>
                 {userInfo.is_affiliated && userInfo.affiliate && (
                   <div style={{ height: 50 }}>
-                    {/* <Link to={'/secure/account/orders'}> */}
                     <GLButton style={{ maxWidth: "225px" }} onClick={send_not_verified_email} variant="primary">
                       Still Not Verified
                     </GLButton>
-                    {/* </Link> */}
                   </div>
                 )}
                 <div className="ml-10px">
@@ -480,6 +529,16 @@ const ProfilePage = props => {
           </div>
         )}
       </Loading>
+      <h2
+        style={{
+          textAlign: "center",
+          width: "100%",
+          justifyContent: "center"
+        }}
+      >
+        {userInfo.first_name === first_name ? "My Orders" : `${first_name}'s Orders`}
+      </h2>
+      {orders && orders.map((order, index) => <OrderListItem key={index} determine_color={determine_order_color} order={order} />)}
       {user && user.is_affiliated && user.affiliate && affiliate && (affiliate.promoter || affiliate.sponsor) && (
         <div>
           <div className="jc-c">
