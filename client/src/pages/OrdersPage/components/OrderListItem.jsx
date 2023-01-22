@@ -256,7 +256,15 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
   };
 
   return (
-    <div className="container" style={{ backgroundColor: determine_color(order) }}>
+    <div
+      style={{
+        backgroundColor: determine_color(order),
+        boxShadow: "0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%)",
+        borderRadius: "2rem",
+        padding: "1.5rem",
+        marginBottom: "25px"
+      }}
+    >
       <Loading loading={loading_label} />
       <ReactTooltip className="br-10px" />
       <div style={{ borderBottom: "1px solid white" }}>
@@ -324,7 +332,7 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
                   <h3 className="mr-10px">Order Number: </h3>
                   <div>{order._id}</div>
                 </div>
-                {order.tracking_number && (
+                {order.tracking_number && order.tracking_number.length > 0 && determine_tracking_link(order.tracking_number) && (
                   <div className="row ai-c mb-2rem">
                     <h3 className="mr-10px  mv-0px">Tracking Number: </h3>
                     <div className="mt-0px">

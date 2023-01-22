@@ -288,14 +288,46 @@ export default {
     res.send("Done");
   },
   find_duplicate_emails: async (req: any, res: any) => {
+    // get all users with email
     const users = await User.find({ email: { $exists: true } });
-    const valueArr = users.map((item: any) => item.email).sort();
-
-    const isDuplicate = valueArr.some((item: any, idx: any) => {
-      return valueArr.indexOf(item) != idx;
+    // find all emails that are not lowercase
+    const not_lowercase = users.filter((user: any) => user.email !== user.email.toLowerCase());
+    // find all emails that have duplicates to the lowercase version
+    const duplicates = not_lowercase.filter((user: any) => {
+      const lowercase = user.email.toLowerCase();
+      const same_email = users.filter((user: any) => user.email === lowercase);
+      return same_email.length > 1;
+    });
+    // delete all uppercase email users and update all records that are associated with that user id to the lowercase version email user id
+    duplicates.forEach(async (user: any) => {
+      const lowercase = user.email.toLowerCase();
+      const same_email = users.filter((user: any) => user.email === lowercase);
+      const lowercase_user = same_email[0];
+      const orders: any = await Order.find({ user: user._id });
+      orders.forEach(async (order: any) => {
+        const updated_order: any = new Order(order);
+        updated_order.shipping.email = lowercase_user.email;
+        updated_order.user = lowercase_user._id;
+        updated_order.save();
+      });
+      user.deleted = true;
+      await user.save();
     });
 
-    res.send(valueArr);
+    // Update all paychecks to have the lowercase email user id
+
+    res.send(duplicates);
+
+    // delete all uppercase email users and update all records that are associated with that user id to the lowercase version email user id
+
+    // const users = await User.find({ email: { $exists: true } });
+    // const valueArr = users.map((item: any) => item.email).sort();
+
+    // const isDuplicate = valueArr.some((item: any, idx: any) => {
+    //   return valueArr.indexOf(item) != idx;
+    // });
+
+    // res.send(valueArr);
   },
   update_order_items: async (req: any, res: any) => {
     const order = await Order.updateMany(
