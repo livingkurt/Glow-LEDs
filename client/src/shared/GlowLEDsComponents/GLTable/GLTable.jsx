@@ -82,7 +82,7 @@ const GLTable = ({
                       </td>
                     );
                   })}
-                  <td className="p-10px">{action_row(row)}</td>
+                  <td className="p-10px">{action_row && action_row(row)}</td>
                 </tr>
               ))}
             </tbody>

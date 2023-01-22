@@ -93,7 +93,7 @@ const ProfilePage = props => {
         if (user && user.is_affiliated && user.affiliate) {
           dispatch(detailsAffiliate({ id: user.affiliate._id }));
           // dispatch(listMyPaychecks(user.affiliate._id));
-          dispatch(listPaychecks({ limit, page }));
+          dispatch(listPaychecks({ limit, page, affiliate: user.affiliate._id }));
           dispatch(listPromos({ affiliate: user.affiliate._id, active: true }));
         }
       }
@@ -239,7 +239,7 @@ const ProfilePage = props => {
 
   const sortHandler = e => {
     set_sort(e.target.value);
-    dispatch(listPaychecks({ search, sort: e.target.value, affiliate: affiliate._id }));
+    dispatch(listPaychecks({ search, sort: e.target.value, affiliate: user.affiliate._id }));
   };
 
   const [page, set_page] = useState(1);
@@ -257,7 +257,7 @@ const ProfilePage = props => {
     set_page(page);
     update_products_url(history, search, "", "", page, limit);
 
-    dispatch(listPaychecks({ limit, page, search, affiliate: affiliate._id }));
+    dispatch(listPaychecks({ limit, page, search, affiliate: user.affiliate._id }));
   };
 
   const sort_options = ["Newest", "Artist Name", "Facebook Name", "Instagram Handle", "Sponsor", "Promoter"];
