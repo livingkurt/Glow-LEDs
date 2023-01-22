@@ -48,8 +48,8 @@ const ShippingChoice = ({ rates, hide_pay_button, shipping, current_shipping_spe
           {shipping && !shipping.international && (
             <div>
               <ShippingSpeed rates={rates} service={"First"} name={"Standard"} choose_shipping_rate={choose_shipping_rate} />
-              <ShippingSpeed rates={rates} service={"Priority"} name={"Priority"} choose_shipping_rate={choose_shipping_rate} />
-              <ShippingSpeed rates={rates} service={"Express"} name={"Express"} choose_shipping_rate={choose_shipping_rate} />
+              {/* <ShippingSpeed rates={rates} service={"Priority"} name={"Priority"} choose_shipping_rate={choose_shipping_rate} />
+              <ShippingSpeed rates={rates} service={"Express"} name={"Express"} choose_shipping_rate={choose_shipping_rate} /> */}
             </div>
           )}
         </div>
