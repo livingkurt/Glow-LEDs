@@ -6,6 +6,7 @@ import { Loading } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { listAffiliates } from "../../actions/affiliateActions";
 import { GLButton } from "../../shared/GlowLEDsComponents";
+import { isAdmin } from "../../utils/helpers/user_helpers";
 
 const EditUserPage = props => {
   const [id, set_id] = useState("");
@@ -16,7 +17,7 @@ const EditUserPage = props => {
   const [is_affiliated, set_is_affiliated] = useState(false);
   const [is_employee, set_is_employee] = useState(false);
   const [isVerified, set_isVerified] = useState(false);
-  const [isAdmin, set_isAdmin] = useState(false);
+  const [is_admin, set_is_admin] = useState(false);
   const [loading_checkboxes, set_loading_checkboxes] = useState(true);
   const [shipping, set_shipping] = useState({
     first_name: "",
@@ -53,7 +54,7 @@ const EditUserPage = props => {
     set_is_employee(user.is_employee);
     set_affiliate(user.affiliate && user.affiliate._id);
     set_isVerified(user.isVerified);
-    set_isAdmin(user.isAdmin);
+    set_is_admin(user.isAdmin);
     set_shipping(user.shipping);
     set_email_subscription(user.email_subscription);
     setInternational(user.international);
@@ -69,7 +70,7 @@ const EditUserPage = props => {
     set_is_employee("");
     set_affiliate("");
     set_isVerified("");
-    set_isAdmin("");
+    set_is_admin("");
     set_shipping({});
     set_email_subscription("");
     setInternational("");
@@ -119,7 +120,7 @@ const EditUserPage = props => {
         is_affiliated,
         is_employee,
         isVerified,
-        isAdmin,
+        isAdmin: is_admin,
         email_subscription,
         shipping,
         stripe_connect_id,
@@ -172,60 +173,64 @@ const EditUserPage = props => {
                         <label htmlFor="email">Email</label>
                         <input type="text" name="email" value={email} id="email" onChange={e => set_email(e.target.value)} />
                       </li>
-
-                      <li>
-                        <label htmlFor="affiliate">Affiliate</label>
-                        <input
-                          type="text"
-                          name="affiliate"
-                          value={affiliate}
-                          id="affiliate"
-                          onChange={e => set_affiliate(e.target.value)}
-                        />
-                      </li>
-                      <li>
-                        <label htmlFor="stripe_connect_id">Stripe Connect ID</label>
-                        <input
-                          type="text"
-                          name="stripe_connect_id"
-                          value={stripe_connect_id}
-                          id="stripe_connect_id"
-                          onChange={e => set_stripe_connect_id(e.target.value)}
-                        />
-                      </li>
-                      <li>
-                        <label htmlFor="weekly_wage">Weekly Wage</label>
-                        <input
-                          type="text"
-                          name="weekly_wage"
-                          value={weekly_wage}
-                          id="weekly_wage"
-                          onChange={e => set_weekly_wage(e.target.value)}
-                        />
-                      </li>
-                      {affiliates && (
-                        <div className="ai-c h-25px mv-10px mb-30px jc-c">
-                          <div className="custom-select w-100per">
-                            <select
-                              className="qty_select_dropdown w-100per"
-                              // defaultValue={{
-                              // 	label: user.first_name + ' ' + user.last_name,
-                              // 	value: user._id
-                              // }}
+                      {isAdmin(user) && (
+                        <>
+                          <li>
+                            <label htmlFor="affiliate">Affiliate</label>
+                            <input
+                              type="text"
+                              name="affiliate"
+                              value={affiliate}
+                              id="affiliate"
                               onChange={e => set_affiliate(e.target.value)}
-                            >
-                              <option key={1} defaultValue="">
-                                ---Choose Affiliate---
-                              </option>
-                              {affiliates.map((affiliate, index) => (
-                                <option key={index} value={affiliate._id}>
-                                  {affiliate.artist_name}
-                                </option>
-                              ))}
-                            </select>
-                            <span className="custom-arrow" />
-                          </div>
-                        </div>
+                            />
+                          </li>
+                          <li>
+                            <label htmlFor="stripe_connect_id">Stripe Connect ID</label>
+                            <input
+                              type="text"
+                              name="stripe_connect_id"
+                              value={stripe_connect_id}
+                              id="stripe_connect_id"
+                              onChange={e => set_stripe_connect_id(e.target.value)}
+                            />
+                          </li>
+                          <li>
+                            <label htmlFor="weekly_wage">Weekly Wage</label>
+                            <input
+                              type="text"
+                              name="weekly_wage"
+                              value={weekly_wage}
+                              id="weekly_wage"
+                              onChange={e => set_weekly_wage(e.target.value)}
+                            />
+                          </li>
+
+                          {affiliates && (
+                            <div className="ai-c h-25px mv-10px mb-30px jc-c">
+                              <div className="custom-select w-100per">
+                                <select
+                                  className="qty_select_dropdown w-100per"
+                                  // defaultValue={{
+                                  // 	label: user.first_name + ' ' + user.last_name,
+                                  // 	value: user._id
+                                  // }}
+                                  onChange={e => set_affiliate(e.target.value)}
+                                >
+                                  <option key={1} defaultValue="">
+                                    ---Choose Affiliate---
+                                  </option>
+                                  {affiliates.map((affiliate, index) => (
+                                    <option key={index} value={affiliate._id}>
+                                      {affiliate.artist_name}
+                                    </option>
+                                  ))}
+                                </select>
+                                <span className="custom-arrow" />
+                              </div>
+                            </div>
+                          )}
+                        </>
                       )}
 
                       <li>
@@ -393,69 +398,74 @@ const EditUserPage = props => {
                           />
                         </li>
                       )}
-                      {loading_checkboxes ? (
-                        <div>Loading...</div>
-                      ) : (
-                        <li>
-                          <label htmlFor="is_affiliated">Affiliated</label>
-                          <input
-                            type="checkbox"
-                            name="is_affiliated"
-                            defaultChecked={is_affiliated}
-                            id="is_affiliated"
-                            onChange={e => {
-                              set_is_affiliated(e.target.checked);
-                            }}
-                          />
-                        </li>
-                      )}
-                      {loading_checkboxes ? (
-                        <div>Loading...</div>
-                      ) : (
-                        <li>
-                          <label htmlFor="is_employee">Employee</label>
-                          <input
-                            type="checkbox"
-                            name="is_employee"
-                            defaultChecked={is_employee}
-                            id="is_employee"
-                            onChange={e => {
-                              set_is_employee(e.target.checked);
-                            }}
-                          />
-                        </li>
-                      )}
-                      {loading_checkboxes ? (
-                        <div>Loading...</div>
-                      ) : (
-                        <li>
-                          <label htmlFor="isVerified">Verified</label>
-                          <input
-                            type="checkbox"
-                            name="isVerified"
-                            defaultChecked={isVerified}
-                            id="isVerified"
-                            onChange={e => {
-                              set_isVerified(e.target.checked);
-                            }}
-                          />
-                        </li>
-                      )}
-                      {loading_checkboxes ? (
-                        <div>Loading...</div>
-                      ) : (
-                        <li>
-                          <label htmlFor="isAdmin">Admin</label>
-                          <input
-                            type="checkbox"
-                            name="isAdmin"
-                            defaultChecked={isAdmin}
-                            id="isAdmin"
-                            onChange={e => {
-                              set_isAdmin(e.target.checked);
-                            }}
-                          />
-                        </li>
+
+                      {isAdmin(user) && (
+                        <>
+                          {loading_checkboxes ? (
+                            <div>Loading...</div>
+                          ) : (
+                            <li>
+                              <label htmlFor="is_affiliated">Affiliated</label>
+                              <input
+                                type="checkbox"
+                                name="is_affiliated"
+                                defaultChecked={is_affiliated}
+                                id="is_affiliated"
+                                onChange={e => {
+                                  set_is_affiliated(e.target.checked);
+                                }}
+                              />
+                            </li>
+                          )}
+                          {loading_checkboxes ? (
+                            <div>Loading...</div>
+                          ) : (
+                            <li>
+                              <label htmlFor="is_employee">Employee</label>
+                              <input
+                                type="checkbox"
+                                name="is_employee"
+                                defaultChecked={is_employee}
+                                id="is_employee"
+                                onChange={e => {
+                                  set_is_employee(e.target.checked);
+                                }}
+                              />
+                            </li>
+                          )}
+                          {loading_checkboxes ? (
+                            <div>Loading...</div>
+                          ) : (
+                            <li>
+                              <label htmlFor="isVerified">Verified</label>
+                              <input
+                                type="checkbox"
+                                name="isVerified"
+                                defaultChecked={isVerified}
+                                id="isVerified"
+                                onChange={e => {
+                                  set_isVerified(e.target.checked);
+                                }}
+                              />
+                            </li>
+                          )}
+                          {loading_checkboxes ? (
+                            <div>Loading...</div>
+                          ) : (
+                            <li>
+                              <label htmlFor="isAdmin">Admin</label>
+                              <input
+                                type="checkbox"
+                                name="isAdmin"
+                                defaultChecked={isAdmin}
+                                id="isAdmin"
+                                onChange={e => {
+                                  set_is_admin(e.target.checked);
+                                }}
+                              />
+                            </li>
+                          )}
+                        </>
                       )}
                     </div>
                   </div>
