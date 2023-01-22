@@ -13,9 +13,6 @@ router
   .put(isAuth, isAdmin, paycheck_controller.update_paychecks_c)
   .delete(isAuth, isAdmin, paycheck_controller.remove_paychecks_c);
 
-router
-  .route("/")
-  .get(isAuth, isAdmin, paycheck_controller.findAll_paychecks_c)
-  .post(isAuth, isAdmin, paycheck_controller.create_paychecks_c);
+router.route("/").get(isAuth, paycheck_controller.findAll_paychecks_c).post(isAuth, isAdmin, paycheck_controller.create_paychecks_c);
 
 export default router;

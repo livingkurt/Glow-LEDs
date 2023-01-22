@@ -19,7 +19,7 @@ const ProfilePage = props => {
   const submitHandler = e => {
     e.preventDefault();
     dispatch(update({ userId: userInfo._id, email, name, password }));
-    history.push(`/secure/account/profile/${userInfo._id}` + userInfo._id);
+    history.push(`/secure/account/profile`);
   };
 
   useEffect(() => {
@@ -74,7 +74,7 @@ const ProfilePage = props => {
                 </GLButton>
               </li>
               <li>
-                <Link to={`/secure/account/profile/${userInfo._id}` + userInfo._id}>
+                <Link to={`/secure/account/profile`}>
                   <GLButton type="button" variant="secondary" className="w-100per">
                     Cancel
                   </GLButton>

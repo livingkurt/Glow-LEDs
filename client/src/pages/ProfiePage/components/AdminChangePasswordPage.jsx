@@ -85,7 +85,7 @@ const AdminChangePasswordPage = props => {
                 </GLButton>
               </li>
               <li>
-                <Link to={`/secure/account/profile/${userInfo._id}`}>
+                <Link to={`/secure/account/profile`}>
                   <GLButton type="button" variant="secondary" className="w-100per">
                     Cancel
                   </GLButton>

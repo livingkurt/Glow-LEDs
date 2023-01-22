@@ -918,7 +918,7 @@ const Header = props => {
                     {first_name}
                   </GLButton>
                   <ul className="dropdown-content hover_fade_in w-110px">
-                    <Link to={`/secure/account/profile/${userInfo._id}`}>
+                    <Link to={`/secure/account/profile`}>
                       <GLButton variant="nav" className="">
                         Profile
                       </GLButton>

@@ -38,7 +38,7 @@ const ChangePasswordPage = props => {
 
     if (request.isValid) {
       dispatch(password_reset(userInfo._id, password, rePassword));
-      history.push(`/secure/account/profile/${userInfo._id}` + userInfo._id);
+      history.push(`/secure/account/profile`);
     }
   };
 
@@ -119,7 +119,7 @@ const ChangePasswordPage = props => {
                 </GLButton>
               </li>
               <li>
-                <Link to={`/secure/account/profile/${userInfo._id}` + userInfo._id}>
+                <Link to={`/secure/account/profile`}>
                   <GLButton type="button" variant="secondary" className="w-100per">
                     Cancel
                   </GLButton>

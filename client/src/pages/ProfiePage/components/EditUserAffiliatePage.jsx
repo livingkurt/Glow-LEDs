@@ -199,7 +199,7 @@ const EditUserAffiliatePage = props => {
     let clean = true;
     if (clean) {
       if (userInfo && !userInfo.is_affiliated) {
-        history.push("/secure/account/profile/" + userInfo._id);
+        history.push("/secure/account/profile/");
       }
     }
     return () => (clean = false);
@@ -404,7 +404,7 @@ const EditUserAffiliatePage = props => {
                   </li>
                   <li>
                     <GLButton variant="secondary">
-                      <Link to={`/secure/account/profile/${userInfo._id}`}>Back to Profile</Link>
+                      <Link to={`/secure/account/profile`}>Back to Profile</Link>
                     </GLButton>
                   </li>
                 </ul>

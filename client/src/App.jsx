@@ -283,7 +283,7 @@ const App = props => {
             <ScrollToTop>
               <Switch>
                 {/* Private Routes */}
-                <PrivateRoute path="/secure/account/profile/:id?" component={ProfilePage} />
+                <PrivateRoute path="/secure/account/profile" component={ProfilePage} />
                 <PrivateRoute path="/secure/account/editprofile/:id" component={EditUserPage} />
                 <PrivateRoute path="/secure/account/order/:id" component={OrderPage} />
                 <PrivateRoute path="/secure/checkout/placeorder" component={PlaceOrderPage} />

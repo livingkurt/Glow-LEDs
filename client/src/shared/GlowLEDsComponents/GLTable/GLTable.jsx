@@ -49,12 +49,12 @@ const GLTable = ({
         <h1 style={{ textAlign: "center" }}>{title}</h1>
       </div>
       <div className="search_and_sort row jc-c ai-c" style={{ overflowX: "scroll" }}>
-        <GLSearch search={search} set_search={set_search} submitHandler={submitHandler} />
-        <Sort sortHandler={sortHandler} sort_options={sort_options} />
+        {search && set_search && submitHandler && <GLSearch search={search} set_search={set_search} submitHandler={submitHandler} />}
+        {sort_options && sortHandler && <Sort sortHandler={sortHandler} sort_options={sort_options} />}
       </div>
 
       <div style={{ overflowX: "auto" }} className="w-100per">
-        {rows && (
+        {rows ? (
           <table className="gl-table">
             <thead>
               <tr>
@@ -87,6 +87,10 @@ const GLTable = ({
               ))}
             </tbody>
           </table>
+        ) : (
+          <div className="jc-c">
+            <h1>No Content Found</h1>
+          </div>
         )}
       </div>
       <div className="jc-c">

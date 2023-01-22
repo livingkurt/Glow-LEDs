@@ -211,7 +211,7 @@ const Footer = () => {
               </h2>
               <ul className="lst-none">
                 <li className="ta-l mv-2rem">
-                  <Link to={`/secure/account/profile/${userInfo && userInfo._id}`}>My Account</Link>
+                  <Link to={`/secure/account/profile`}>My Account</Link>
                 </li>
                 <li className="ta-l mv-2rem">
                   <Link to="/pages/track_your_order">Track Your Order</Link>
