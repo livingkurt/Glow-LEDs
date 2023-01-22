@@ -326,19 +326,23 @@ const ProfilePage = props => {
                 <h3>Promotional Emails</h3>
                 <label>{email_subscription ? "Subscribed" : "Not Subscribed"}</label>
               </div>
-              <div className="" style={container_styles}>
-                <h3>Verified</h3>
-                <label>{verified === true ? "Verified" : "Not Verified"}</label>
-              </div>
-              <div className="" style={container_styles}>
-                <h3>Admin</h3>
-                <label>{admin === true ? "Admin" : "Not Admin"}</label>
-              </div>
+              {isAdmin(userInfo) && (
+                <>
+                  <div className="" style={container_styles}>
+                    <h3>Verified</h3>
+                    <label>{verified === true ? "Verified" : "Not Verified"}</label>
+                  </div>
+                  <div className="" style={container_styles}>
+                    <h3>Admin</h3>
+                    <label>{admin === true ? "Admin" : "Not Admin"}</label>
+                  </div>
+                </>
+              )}
             </div>
             <div>
               <div className="row">
                 <div style={{ height: 50 }}>
-                  <Link to={"/secure/glow/edituser/" + id}>
+                  <Link to={isAdmin(userInfo) ? "/secure/glow/edituser/" + id : "/secure/account/editprofile/" + id}>
                     <GLButton style={{ marginRight: "10px", maxWidth: "225px" }} variant="primary">
                       Edit Profile
                     </GLButton>
