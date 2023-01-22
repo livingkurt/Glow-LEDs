@@ -45,6 +45,15 @@ const EmailStep = ({
 
   const { width } = useWindowDimensions();
 
+  const validate_email = e => {
+    const request = validate_login({ email });
+    setEmailValidations(request.errors.email);
+    if (!request.errors.email) {
+      next_step("shipping");
+      setEmailValidations("");
+    }
+  };
+
   return (
     <div>
       <div className="jc-b">
@@ -80,7 +89,7 @@ const EmailStep = ({
             <ul className={`shipping-container mv-0px pv-0px ${width > 400 ? "ph-2rem" : "p-0px"}`}>
               <li>
                 <label htmlFor="email">Email</label>
-                <input type="text" value={email} name="email" id="email" onChange={e => set_email(e.target.value)} />
+                <input type="text" value={email} name="email" id="email" onChange={e => set_email(e.target.value.toLowerCase())} />
               </li>
               <label
                 className="validation_text"
@@ -102,7 +111,7 @@ const EmailStep = ({
                 </GLButton>
               </pre>
 
-              <GLButton variant="primary" className="bob" onClick={() => next_step("shipping")}>
+              <GLButton variant="primary" className="bob" onClick={e => validate_email(e)}>
                 Continue
               </GLButton>
             </ul>
@@ -110,7 +119,7 @@ const EmailStep = ({
             <ul className={`shipping-container mv-0px pv-0px ${width > 400 ? "ph-2rem" : "p-0px"}`}>
               <li>
                 <label htmlFor="email">Email</label>
-                <input type="text" value={email} name="email" id="email" onChange={e => set_email(e.target.value)} />
+                <input type="text" value={email} name="email" id="email" onChange={e => set_email(e.target.value.toLowerCase())} />
               </li>
               <li>
                 <label htmlFor="password">Password</label>
@@ -137,7 +146,7 @@ const EmailStep = ({
       ) : (
         <div className="wrap jc-b w-100per">
           <div className="paragraph_font lh-25px">
-            <div>{email}</div>
+            <div>{email.toLowerCase()}</div>
           </div>
         </div>
       )}

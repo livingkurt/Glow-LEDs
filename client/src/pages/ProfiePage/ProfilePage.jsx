@@ -6,13 +6,14 @@ import { Loading, Notification } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { API_Emails, API_Orders } from "../../utils";
 import { GLButton } from "../../shared/GlowLEDsComponents";
-import { listMyPaychecks } from "../../actions/paycheckActions";
+import { listMyPaychecks, listPaychecks } from "../../actions/paycheckActions";
 import { listPromos } from "../../actions/promoActions";
-import { format_date } from "../../utils/helper_functions";
+import { format_date, update_products_url } from "../../utils/helper_functions";
 import { detailsAffiliate } from "../../actions/affiliateActions";
 import { isAdmin } from "../../utils/helpers/user_helpers";
 import { OrderListItem } from "../OrdersPage/components";
 import { listMyOrders } from "../../actions/orderActions";
+import GLTable from "../../shared/GlowLEDsComponents/GLTable/GLTable";
 
 const ProfilePage = props => {
   const history = useHistory();
@@ -26,8 +27,11 @@ const ProfilePage = props => {
   const affiliateDetails = useSelector(state => state.affiliateDetails);
   const { affiliate } = affiliateDetails;
 
-  const myPaycheckList = useSelector(state => state.myPaycheckList);
-  const { loading: loading_paychecks, paychecks, error: error_paychecks } = myPaycheckList;
+  // const myPaycheckList = useSelector(state => state.myPaycheckList);
+  // const { loading: loading_paychecks, paychecks, error: error_paychecks } = myPaycheckList;
+
+  const paycheckList = useSelector(state => state.paycheckList);
+  const { paychecks, totalPages } = paycheckList;
 
   const promoList = useSelector(state => state.promoList);
   const { promos, error: promo_errors, message: promo_message } = promoList;
@@ -88,7 +92,8 @@ const ProfilePage = props => {
         set_email_subscription(user.email_subscription);
         if (user && user.is_affiliated && user.affiliate) {
           dispatch(detailsAffiliate({ id: user.affiliate._id }));
-          dispatch(listMyPaychecks(user.affiliate._id));
+          // dispatch(listMyPaychecks(user.affiliate._id));
+          dispatch(listPaychecks({ limit, page }));
           dispatch(listPromos({ affiliate: user.affiliate._id, active: true }));
         }
       }
@@ -209,9 +214,53 @@ const ProfilePage = props => {
     return result;
   };
 
+  const column_defs = [
+    { title: "Date Paid", display: paycheck => paycheck.paid_at && format_date(paycheck.paid_at) },
+    { title: "Paid", display: paycheck => (paycheck.paid ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />) },
+    {
+      title: "Affiliate",
+      display: paycheck => (paycheck.affiliate ? paycheck.affiliate.artist_name : paycheck.team && paycheck.team.team_name)
+    },
+    { title: "Amount", display: paycheck => `$${paycheck.amount.toFixed(2)}` },
+    { title: "Venmo", display: "venmo" }
+  ];
+
   const send_not_verified_email = async () => {
     const request = await API_Emails.not_verified_email(user);
   };
+
+  const [search, set_search] = useState("");
+  const [sort, set_sort] = useState("");
+
+  const submitHandler = e => {
+    e.preventDefault();
+    dispatch(listPaychecks({ search, sort, affiliate: user.affiliate._id }));
+  };
+
+  const sortHandler = e => {
+    set_sort(e.target.value);
+    dispatch(listPaychecks({ search, sort: e.target.value, affiliate: affiliate._id }));
+  };
+
+  const [page, set_page] = useState(1);
+  const [limit, set_limit] = useState(10);
+
+  const update_page = (e, new_page) => {
+    let search = "";
+    let sort = "";
+    let filter = "";
+    let limit = 10;
+    let option = false;
+
+    e.preventDefault();
+    const page = parseInt(new_page);
+    set_page(page);
+    update_products_url(history, search, "", "", page, limit);
+
+    dispatch(listPaychecks({ limit, page, search, affiliate: affiliate._id }));
+  };
+
+  const sort_options = ["Newest", "Artist Name", "Facebook Name", "Instagram Handle", "Sponsor", "Promoter"];
   return (
     <div className="p-20px inner_content">
       <Helmet>
@@ -540,69 +589,86 @@ const ProfilePage = props => {
       </h2>
       {orders && orders.map((order, index) => <OrderListItem key={index} determine_color={determine_order_color} order={order} />)}
       {user && user.is_affiliated && user.affiliate && affiliate && (affiliate.promoter || affiliate.sponsor) && (
-        <div>
-          <div className="jc-c">
-            <h1 style={{ textAlign: "center" }}>Paychecks</h1>
-          </div>
-          <div className="wrap mv-1rem">
-            {colors.map((color, index) => {
-              return (
-                <div className="wrap  mr-1rem" key={index}>
-                  <label style={{ marginRight: "1rem" }}>{color.name}</label>
-                  <div
-                    style={{
-                      backgroundColor: color.color,
-                      height: "20px",
-                      width: "60px",
-                      borderRadius: "5px"
-                    }}
-                  />
-                </div>
-              );
-            })}
-          </div>
-          <div className="mb-1rem">Total Payout ${paychecks && paychecks.reduce((a, paycheck) => a + paycheck.amount, 0).toFixed(2)}</div>
-          <Loading loading={loading_paychecks} error={error_paychecks}>
-            {paychecks && (
-              <div className="paycheck-list responsive_table">
-                <table className="table">
-                  <thead>
-                    <tr>
-                      <th>Paid</th>
-                      <th>Date Paid</th>
-                      <th>Affiliate</th>
-                      <th>Amount</th>
-                      <th>Venmo</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {paychecks.map((paycheck, index) => (
-                      <tr
-                        key={index}
-                        style={{
-                          backgroundColor: determine_color(paycheck),
-                          fontSize: "1.4rem"
-                        }}
-                      >
-                        <td className="p-10px">
-                          {paycheck.paid ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
-                        </td>
-                        <td className="p-10px" style={{ minWidth: "15rem" }}>
-                          {paycheck.paid_at && format_date(paycheck.paid_at)}
-                        </td>
-                        <td className="p-10px">
-                          {paycheck.affiliate ? paycheck.affiliate.artist_name : paycheck.team && paycheck.team.team_name}
-                        </td>
-                        <td className="p-10px">${paycheck.amount}</td>
-                        <td className="p-10px">{paycheck.venmo}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            )}
-          </Loading>
-        </div>
+        // <div>
+        //   <div className="jc-c">
+        //     <h1 style={{ textAlign: "center" }}>Paychecks</h1>
+        //   </div>
+        //   <div className="wrap mv-1rem">
+        //     {colors.map((color, index) => {
+        //       return (
+        //         <div className="wrap  mr-1rem" key={index}>
+        //           <label style={{ marginRight: "1rem" }}>{color.name}</label>
+        //           <div
+        //             style={{
+        //               backgroundColor: color.color,
+        //               height: "20px",
+        //               width: "60px",
+        //               borderRadius: "5px"
+        //             }}
+        //           />
+        //         </div>
+        //       );
+        //     })}
+        //   </div>
+        //   <div className="mb-1rem">Total Payout ${paychecks && paychecks.reduce((a, paycheck) => a + paycheck.amount, 0).toFixed(2)}</div>
+        //   <Loading loading={loading_paychecks} error={error_paychecks}>
+        //     {paychecks && (
+        //       <div className="paycheck-list responsive_table">
+        //         <table className="table">
+        //           <thead>
+        //             <tr>
+        //               <th>Paid</th>
+        //               <th>Date Paid</th>
+        //               <th>Affiliate</th>
+        //               <th>Amount</th>
+        //               <th>Venmo</th>
+        //             </tr>
+        //           </thead>
+        //           <tbody>
+        //             {paychecks.map((paycheck, index) => (
+        //               <tr
+        //                 key={index}
+        //                 style={{
+        //                   backgroundColor: determine_color(paycheck),
+        //                   fontSize: "1.4rem"
+        //                 }}
+        //               >
+        //                 <td className="p-10px">
+        //                   {paycheck.paid ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
+        //                 </td>
+        //                 <td className="p-10px" style={{ minWidth: "15rem" }}>
+        //                   {paycheck.paid_at && format_date(paycheck.paid_at)}
+        //                 </td>
+        //                 <td className="p-10px">
+        //                   {paycheck.affiliate ? paycheck.affiliate.artist_name : paycheck.team && paycheck.team.team_name}
+        //                 </td>
+        //                 <td className="p-10px">${paycheck.amount}</td>
+        //                 <td className="p-10px">{paycheck.venmo}</td>
+        //               </tr>
+        //             ))}
+        //           </tbody>
+        //         </table>
+        //       </div>
+        //     )}
+        //   </Loading>
+        // </div>
+
+        <GLTable
+          title="Paychecks"
+          rows={paychecks}
+          column_defs={column_defs}
+          determine_color={determine_color}
+          colors={colors}
+          search={search}
+          sort_options={sort_options}
+          set_search={set_search}
+          submitHandler={submitHandler}
+          sortHandler={sortHandler}
+          totalPages={totalPages}
+          page={page}
+          limit={limit}
+          update_page={update_page}
+        />
       )}
     </div>
   );

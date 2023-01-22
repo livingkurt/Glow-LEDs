@@ -12,6 +12,7 @@ const paycheck_schema = new mongoose.Schema(
     earned: { type: Number },
     uses: { type: Number },
     venmo: { type: String },
+    stripe_connect_id: { type: String },
     paid: { type: Boolean },
     paid_at: { type: Date },
     reciept: { type: String },
