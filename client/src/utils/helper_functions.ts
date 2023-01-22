@@ -181,12 +181,10 @@ export const determine_tracking_link = (tracking_number: string) => {
   if (tracking_number) {
     if (tracking_number.startsWith("1Z")) {
       return `https://www.ups.com/track?tracknum=${tracking_number}`;
-    } else if (tracking_number.startsWith("9")) {
-      return `https://www.fedex.com/apps/fedextrack/?tracknumbers=${tracking_number}`;
-    } else if (tracking_number.startsWith("927")) {
-      return `https://www.dhl.com/en/express/tracking.html?tracking_number=${tracking_number}`;
     } else if (tracking_number.length === 22) {
       return `https://tools.usps.com/go/TrackConfirmAction?tLabels=${tracking_number}`;
+    } else if (tracking_number.startsWith("927")) {
+      return `https://www.dhl.com/en/express/tracking.html?tracking_number=${tracking_number}`;
     } else if (tracking_number.startsWith("LX")) {
       return `https://www.ups.com/track?loc=en_us&tracknum=${tracking_number}`;
     } else if (tracking_number.startsWith("C")) {
@@ -195,6 +193,8 @@ export const determine_tracking_link = (tracking_number: string) => {
       return `https://www.dhl.com/en/express/tracking.html?tracking_number=${tracking_number}`;
     } else if (tracking_number.startsWith("CJ")) {
       return `https://tools.usps.com/go/TrackConfirmAction?tLabels=${tracking_number}`;
+    } else if (tracking_number.startsWith("9")) {
+      return `https://www.fedex.com/apps/fedextrack/?tracknumbers=${tracking_number}`;
     } else {
       return `https://tools.usps.com/go/TrackConfirmAction?tLabels=${tracking_number}`;
     }

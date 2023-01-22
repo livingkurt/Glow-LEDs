@@ -2,15 +2,15 @@ import mongoose from "mongoose";
 export {};
 
 const shippingSchema = {
-  first_name: { type: String },
-  last_name: { type: String },
-  address_1: { type: String },
-  address_2: { type: String },
-  city: { type: String },
-  state: { type: String },
-  postalCode: { type: String },
-  international: { type: Boolean },
-  country: { type: String }
+  first_name: { type: String, default: "" },
+  last_name: { type: String, default: "" },
+  address_1: { type: String, default: "" },
+  address_2: { type: String, default: "" },
+  city: { type: String, default: "" },
+  state: { type: String, default: "" },
+  postalCode: { type: String, default: "" },
+  international: { type: Boolean, default: false },
+  country: { type: String, default: "" }
 };
 
 const userSchema = new mongoose.Schema(

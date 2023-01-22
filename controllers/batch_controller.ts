@@ -1328,6 +1328,31 @@ export default {
     const color_product_ids = _.flatten(products.map((product: any) => product.option_products));
 
     res.send(color_product_ids);
+  },
+  add_shipping: async (req: any, res: any) => {
+    // Get all users that arent deleted and have no shipping attri
+    const users = await User.find({ deleted: false, shipping: { $exists: false } });
+    // Set default values for shipping
+    const shipping = {
+      first_name: "",
+      last_name: "",
+      address_1: "",
+      address_2: "",
+      city: "",
+      state: "",
+      postalCode: "",
+      international: false,
+      country: ""
+    };
+    // Loop through users and add shipping
+    users.forEach(async (user: any) => {
+      const u: any = await User.findOne({ _id: user._id });
+      const updated_user: any = new User(u);
+      updated_user.shipping = shipping;
+      await updated_user.save();
+    });
+
+    res.send(users);
   }
   // all_no_reference: async (req: any, res: any) => {
   //   const products = await Product.find({ deleted: false, option: true });
