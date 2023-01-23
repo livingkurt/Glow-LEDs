@@ -518,14 +518,6 @@ export default {
           order.save();
         };
 
-        if (tracker.status === "delivered") {
-          updateOrder("isDelivered", "deliveredAt");
-        } else if (tracker.status === "out_for_delivery") {
-          updateOrder("isOutForDelivery", "outForDeliveryAt");
-        } else if (tracker.status === "in_transit") {
-          updateOrder("isShipped", "shippedAt");
-        }
-
         const body = {
           email: {},
           title: determine_status(tracker.status),
@@ -549,6 +541,13 @@ export default {
           (tracker.status === "in_transit" && order.isShipped === false)
         ) {
           sendEmail(mailOptions, res, "info", "Order Status Email Sent to " + order.shipping.email);
+        }
+        if (tracker.status === "delivered") {
+          updateOrder("isDelivered", "deliveredAt");
+        } else if (tracker.status === "out_for_delivery") {
+          updateOrder("isOutForDelivery", "outForDeliveryAt");
+        } else if (tracker.status === "in_transit") {
+          updateOrder("isShipped", "shippedAt");
         }
       } else {
         res.status(200).send("Not a Tracker event, so nothing to do here for now...");
