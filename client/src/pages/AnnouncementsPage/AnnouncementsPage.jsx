@@ -104,19 +104,7 @@ const AnnouncementsPage = props => {
                 >
                   {email.h2}
                 </h4>
-                {/* <p
-									style={{
-										fontSize: '16px',
-										lineHeight: '30px',
-										maxWidth: '800px',
-										textAlign: 'center',
-										width: '100%',
-										margin: '20px auto',
-										color: 'white'
-									}}
-								>
-									{email.p}
-								</p> */}
+
                 <pre
                   style={{
                     fontFamily: "helvetica",
