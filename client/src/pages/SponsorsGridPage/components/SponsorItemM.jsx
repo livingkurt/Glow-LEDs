@@ -3,31 +3,31 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { LazyImage } from "../../../shared/SharedComponents";
 
-const AffiliateSmallScreen = props => {
+const SponsorItemM = ({ affiliate, style }) => {
   return (
-    <li key={props.affiliate._id} className=" w-100per" style={props.style}>
-      <Link to={`/collections/all/sponsors/${props.affiliate && props.affiliate.pathname}`}>
+    <li key={affiliate._id} className=" w-100per" style={style}>
+      <Link to={`/collections/all/sponsors/${affiliate && affiliate.pathname}`}>
         <div className="small_screen_product row">
           <div className="">
             <LazyImage
               className="sponsor-image max-w-400px max-h-400px w-100per h-auto br-10px pr-1rem"
-              alt={props.affiliate.artist_name}
+              alt={affiliate.artist_name}
               title="Affiliate Image"
               effect="blur"
               size={{ height: "auto", width: "100%" }}
-              src={props.affiliate.picture}
+              src={affiliate.picture}
             />
           </div>
           <div className="column jc-b w-200px">
             <label style={{ fontSize: "2rem", WebkitTextStroke: "1.5px white" }} className="pv-1rem">
-              {props.affiliate.artist_name}
+              {affiliate.artist_name}
             </label>
             <div className="column jc-b ">
               <label style={{ fontSize: "1.6rem" }} className="pv-10px">
-                {props.affiliate.user && props.affiliate.user.first_name} {props.affiliate.user && props.affiliate.user.last_name}
+                {affiliate.user && affiliate.user.first_name} {affiliate.user && affiliate.user.last_name}
               </label>
 
-              <label style={{ fontSize: "1.6rem" }}>{props.affiliate.location}</label>
+              <label style={{ fontSize: "1.6rem" }}>{affiliate.location}</label>
             </div>
           </div>
         </div>
@@ -36,4 +36,4 @@ const AffiliateSmallScreen = props => {
   );
 };
 
-export default AffiliateSmallScreen;
+export default SponsorItemM;

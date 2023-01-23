@@ -13,6 +13,7 @@ export const listUsers = createAsyncThunk("users/listUsers", async (query: any, 
         Authorization: "Bearer " + userInfo.access_token
       }
     });
+    console.log({ data });
     return data;
   } catch (error) {}
 });

@@ -81,7 +81,8 @@ const userSlice = createSlice({
     },
     [API.listUsers.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.users = payload.users;
+      state.users = payload;
+      // state.users = payload.users;
       state.totalPages = payload.totalPages;
       state.page = payload.currentPage;
       state.message = "Users Found";

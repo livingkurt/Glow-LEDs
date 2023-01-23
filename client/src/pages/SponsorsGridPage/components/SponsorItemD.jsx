@@ -3,34 +3,34 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { LazyImage } from "../../../shared/SharedComponents";
 
-const Sponsor = props => {
+const SponsorItemD = ({ affiliate, style, size }) => {
   return (
-    <li key={props.affiliate._id} style={{ ...props.style, textDecoration: "none" }}>
-      <Link to={`/collections/all/sponsors/${props.affiliate && props.affiliate.pathname}`}>
+    <li key={affiliate._id} style={{ ...style, textDecoration: "none" }}>
+      <Link to={`/collections/all/sponsors/${affiliate && affiliate.pathname}`}>
         <div className="tooltip">
           <div className="tooltipoverlay">
             <div className="sponsor">
               <LazyImage
                 className="product-image"
-                alt={props.affiliate.name}
+                alt={affiliate.name}
                 title="Sponsor Image"
-                size={{ height: props.size, width: "auto" }}
+                size={{ height: size, width: "auto" }}
                 effect="blur"
-                src={props.affiliate.picture}
+                src={affiliate.picture}
               />
 
               <label style={{ fontSize: "2rem", WebkitTextStroke: "1.5px white" }} className="pv-1rem">
-                {props.affiliate.artist_name}
+                {affiliate.artist_name}
               </label>
               <div className="jc-b">
                 <label style={{ fontSize: "1.6rem" }}>
-                  {props.affiliate.user && props.affiliate.user.first_name} {props.affiliate.user && props.affiliate.user.last_name}
+                  {affiliate.user && affiliate.user.first_name} {affiliate.user && affiliate.user.last_name}
                 </label>
 
-                <label style={{ fontSize: "1.6rem" }}>{props.affiliate.location}</label>
+                <label style={{ fontSize: "1.6rem" }}>{affiliate.location}</label>
               </div>
-              <Link to={`/collections/all/sponsors/${props.affiliate && props.affiliate.pathname}`}>
-                <label style={{ fontSize: "1.6rem" }}>{props.affiliate.name}</label>
+              <Link to={`/collections/all/sponsors/${affiliate && affiliate.pathname}`}>
+                <label style={{ fontSize: "1.6rem" }}>{affiliate.name}</label>
               </Link>
             </div>
           </div>
@@ -40,4 +40,4 @@ const Sponsor = props => {
   );
 };
 
-export default Sponsor;
+export default SponsorItemD;
