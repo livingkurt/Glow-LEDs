@@ -645,7 +645,7 @@ const PlaceOrderPage = props => {
 
       set_shipping_completed(false);
       set_payment_completed(false);
-      re_choose_shipping_rate();
+      // re_choose_shipping_rate();
     }
     if (step === "shipping") {
       set_show_shipping(true);
@@ -654,7 +654,7 @@ const PlaceOrderPage = props => {
 
       // set_shipping_completed(false);
       set_payment_completed(false);
-      re_choose_shipping_rate();
+      // re_choose_shipping_rate();
     }
     if (step === "payment") {
       set_show_payment(true);
@@ -663,7 +663,7 @@ const PlaceOrderPage = props => {
 
       set_shipping_completed(false);
       set_payment_completed(false);
-      re_choose_shipping_rate();
+      // re_choose_shipping_rate();
     }
     if (step === "review") {
       set_show_payment(false);
@@ -688,7 +688,7 @@ const PlaceOrderPage = props => {
 
         set_email_completed(true);
         set_shipping_completed(true);
-        re_choose_shipping_rate();
+        // re_choose_shipping_rate();
         setEmailValidations("");
       } else {
         setEmailValidations("Email Field Empty");

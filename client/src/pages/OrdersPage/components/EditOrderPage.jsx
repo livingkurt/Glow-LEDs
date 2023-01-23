@@ -991,6 +991,28 @@ const EditOrderPage = props => {
                                   />
                                 </li>
                                 <li>
+                                  <label htmlFor="color">Color</label>
+                                  <input
+                                    type="text"
+                                    name="color"
+                                    defaultValue={item.color}
+                                    value={item.color}
+                                    id="color"
+                                    onChange={e => update_order_item_property(e.target.value, e.target.name, index)}
+                                  />
+                                </li>
+                                <li>
+                                  <label htmlFor="color_code">Color Code</label>
+                                  <input
+                                    type="text"
+                                    name="color_code"
+                                    defaultValue={item.color_code}
+                                    value={item.color_code}
+                                    id="color_code"
+                                    onChange={e => update_order_item_property(e.target.value, e.target.name, index)}
+                                  />
+                                </li>
+                                <li>
                                   <label htmlFor="category">Category</label>
                                   <input
                                     type="text"
