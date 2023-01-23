@@ -3,7 +3,7 @@ import { addToCart, removeFromCart } from "../../actions/cartActions";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { createOrder, detailsOrder, payOrder, saveOrder } from "../../actions/orderActions";
-import { determine_tracking_link, format_date, toCapitalize } from "../../utils/helper_functions";
+import { determine_total, determine_tracking_link, format_date, toCapitalize } from "../../utils/helper_functions";
 import { Helmet } from "react-helmet";
 import { Loading, LoadingPayments } from "../../shared/SharedComponents";
 import { deleteOrder, listOrders, update_order, update_payment, refundOrder } from "../../actions/orderActions";
@@ -17,6 +17,8 @@ import CheckoutSteps from "../../shared/SharedComponents/CheckoutSteps";
 import { Stripe } from "../../shared/SharedComponents/Stripe";
 import { OrderStatusButtons } from "./components";
 import { GLButton } from "../../shared/GlowLEDsComponents";
+import { validate_promo_code } from "../../utils/validations";
+import { listPromos } from "../../actions/promoActions";
 
 require("dotenv").config();
 
@@ -96,6 +98,7 @@ const OrderPage = props => {
     let clean = true;
     if (clean) {
       dispatch(detailsOrder(props.match.params.id));
+      dispatch(listPromos({}));
     }
     return () => (clean = false);
   }, [props.match.params.id]);
@@ -525,6 +528,124 @@ const OrderPage = props => {
         orderItems: [...new_order_items]
       })
     );
+  };
+
+  const [promo_code, set_promo_code] = useState("");
+  const promoList = useSelector(state => state.promoList);
+  const { promos } = promoList;
+
+  const [promo_code_validations, set_promo_code_validations] = useState("");
+  const items_price = determine_total(order_items);
+  const [show_message, set_show_message] = useState("");
+  const [itemsPrice, setItemsPrice] = useState(items_price);
+  const [tax_rate, set_tax_rate] = useState(0);
+  const [taxPrice, setTaxPrice] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [shippingPrice, setShippingPrice] = useState(0);
+  const [free_shipping_message, set_free_shipping_message] = useState("------");
+  const [show_promo_code_input_box, set_show_promo_code_input_box] = useState(true);
+
+  const check_code = e => {
+    e.preventDefault();
+
+    const data = {
+      promo_code: promo_code,
+      promos,
+      userInfo,
+      items_price,
+      cartItems
+    };
+    //
+    const request = validate_promo_code(data);
+
+    set_promo_code_validations(request.errors.promo_code);
+
+    if (request.isValid) {
+      activate_promo_code(promo_code.toLowerCase());
+    } else {
+      set_promo_code("");
+    }
+  };
+
+  const activate_promo_code = code => {
+    const promo = promos.find(promo => promo.promo_code === code.toLowerCase());
+
+    let promo_excluded = 0;
+
+    let promo_included = 0;
+    // setPreviousShippingPrice(shippingPrice);
+    if (promo) {
+      // if (promo.exclude) {
+      //   const category_cart_items = cartItems
+      //     .filter(item => promo.excluded_categories.includes(item.category))
+      //     .reduce((a, item) => a + item.price, 0);
+      //   const product_cart_items = cartItems
+      //     .filter(item => promo.excluded_products.includes(item._id))
+      //     .reduce((a, item) => a + item.price, 0);
+      //   promo_excluded = category_cart_items + product_cart_items;
+      // }
+      // if (promo.include) {
+      //   const category_cart_items = cartItems.filter(item => promo.included_categories.includes(item.category));
+
+      //   const product_cart_items = cartItems.filter(item => promo.included_products.includes(item.product));
+
+      //   promo_included = category_cart_items.length > 0 || product_cart_items.length > 0;
+      //   if (promo_included) {
+      //     update_promo();
+      //   } else {
+      //     set_promo_code_validations("Promo Code Not Valid");
+      //     set_show_promo_code_input_box(true);
+      //   }
+      // }
+
+      if (show_message) {
+        set_promo_code_validations("Can only use one promo code at a time");
+      } else {
+        // if (!promo.include) {
+        update_promo(promo, promo_excluded);
+        // }
+      }
+    }
+  };
+
+  const update_promo = (promo, promo_excluded) => {
+    if (promo.percentage_off) {
+      if (items_price === promo_excluded) {
+        set_promo_code_validations("All Items Excluded from Promo");
+        return;
+      }
+      setItemsPrice(items_price - (items_price - promo_excluded) * (promo.percentage_off / 100));
+      setTaxPrice(tax_rate * (items_price - (items_price - promo_excluded) * (promo.percentage_off / 100)));
+    } else if (promo.amount_off) {
+      if (promo.amount_off > items_price) {
+        setItemsPrice(0);
+        setTaxPrice(0);
+      } else {
+        setItemsPrice(items_price - promo.amount_off);
+        setTaxPrice(tax_rate * (items_price - promo.amount_off));
+      }
+      // setItemsPrice(items_price - (items_price - promo_excluded) - promo.amount_off);
+      // setTaxPrice(tax_rate * (items_price - (items_price - promo_excluded) - promo.amount_off));
+    }
+    if (promo.free_shipping) {
+      setShippingPrice(0);
+      set_free_shipping_message("Free");
+      set_show_message(`${promo.promo_code.toUpperCase()} Free Shipping`);
+    }
+    if (promo.percentage_off) {
+      set_show_message(`${promo.promo_code.toUpperCase()} ${promo.percentage_off}% Off`);
+    } else if (promo.amount_off) {
+      set_show_message(`${promo.promo_code.toUpperCase()} $${promo.amount_off} Off`);
+    }
+    // else  {
+    // 	set_show_message(`${promo.promo_code.toUpperCase()} $${previousShippingPrice.toFixed(2)} Off`);
+    // }
+    // set_show_message(
+    // 	`${promo.promo_code.toUpperCase()} ${promo.percentage_off > 0
+    // 		? `${promo.percentage_off}% Off`
+    // 		: `$${promo.amount_off} Off`}`
+    // );
+    set_show_promo_code_input_box(false);
   };
 
   return (
@@ -1117,6 +1238,34 @@ ${order.shipping.email}`)
 									</GLButton> */}
                     </div>
                   </div>
+                  {/* {isAdmin(userInfo) && (
+                    <div className="mv-10px">
+                      <label htmlFor="promo_code">Promo Code</label>
+                      <form onSubmit={e => check_code(e)} className="row">
+                        <input
+                          type="text"
+                          name="promo_code"
+                          id="promo_code"
+                          className="w-100per"
+                          style={{
+                            textTransform: "uppercase"
+                          }}
+                          onChange={e => {
+                            set_promo_code(e.target.value.toUpperCase());
+                          }}
+                        />
+                        <GLButton
+                          type="submit"
+                          variant="primary"
+                          style={{
+                            curser: "pointer"
+                          }}
+                        >
+                          Apply
+                        </GLButton>
+                      </form>
+                    </div>
+                  )} */}
                   <div className="mv-10px">
                     <label htmlFor="refund_amount">Refund Amount</label>
                     <div className="row">
