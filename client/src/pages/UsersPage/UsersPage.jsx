@@ -71,11 +71,11 @@ const UsersPage = props => {
     if (user.isVerified) {
       result = colors[1].color;
     }
-    if (user.is_affiliated) {
-      result = colors[3].color;
-    }
     if (user.guest) {
       result = colors[4].color;
+    }
+    if (user.is_affiliated) {
+      result = colors[3].color;
     }
     if (user.is_employee) {
       result = colors[5].color;
