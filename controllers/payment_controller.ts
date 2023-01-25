@@ -17,7 +17,8 @@ export default {
           line2: order.shipping.address_2,
           postal_code: order.shipping.postalCode,
           state: order.shipping.state
-        }
+        },
+        payment_method: req.body.paymentMethod.id
       };
       const paymentInformation = {
         amount: (order.totalPrice * 100).toFixed(0),
@@ -29,7 +30,8 @@ export default {
         {
           name: userInformation.name,
           email: userInformation.email,
-          address: userInformation.address
+          address: userInformation.address,
+          payment_method: userInformation.payment_method
         },
         (err: any, customer: any) => {
           if (err) {
@@ -45,7 +47,9 @@ export default {
                     existingCustomer.id,
                     {
                       name: userInformation.name,
-                      address: userInformation.address
+                      email: userInformation.email,
+                      address: userInformation.address,
+                      payment_method: userInformation.payment_method
                     },
                     (err: any, updatedCustomer: any) => {
                       if (err) {
