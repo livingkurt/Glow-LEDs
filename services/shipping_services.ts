@@ -39,7 +39,6 @@ export default {
         });
         toAddress.save().then((addr: any) => {
           error_message = addr.verifications.delivery.errors.map((error: any) => error.message).join(" - ");
-          // throw new Error(error_message);
         });
       } else {
         toAddress = new EasyPost.Address({
@@ -52,14 +51,6 @@ export default {
           country: order.shipping.country
         });
       }
-
-      // .catch((error: any) => {
-      //
-      //   error_message = error.error.error.errors
-      //     .map((error: any) => error.message)
-      //     .join(" - ");
-      //   // throw new Error(error[0].message);
-      // });
       const fromAddress = new EasyPost.Address({
         street1: process.env.RETURN_ADDRESS,
         city: process.env.RETURN_CITY,
@@ -86,13 +77,6 @@ export default {
           weight += item.weight_ounces;
         }
       });
-
-      // const parcel = new EasyPost.Parcel({
-      // 	length: cube_root_volume,
-      // 	width: cube_root_volume,
-      // 	height: cube_root_volume,
-      // 	weight
-      // });
       const parcel_size = determine_parcel(order.orderItems, parcels);
       const parcel = new EasyPost.Parcel({
         length: parcel_size.length,
@@ -132,15 +116,6 @@ export default {
       });
 
       const saved_shipment = await shipment.save();
-      // return { shipment: saved_shipment, parcel: parcel_size };
-
-      // const saved_shipment = await shipment.save().catch((error: any) => {
-      //
-      //   error_message = error.error.error.errors
-      //     .map((error: any) => error.message)
-      //     .join(" - ");
-      //   // throw new Error(error[0].message);
-      // });
       if (!error_message) {
         return { shipment: saved_shipment, parcel: parcel_size };
       } else {
@@ -150,15 +125,6 @@ export default {
           error: error_message
         };
       }
-      // if (saved_shipment.rates.length > 0) {
-      //   return { shipment: saved_shipment, parcel: parcel_size };
-      // } else {
-      //   return {
-      //     message: "Shipping Failed",
-      //     solution:
-      //       "Please double check your shipping address for incorrect formatting",
-      //   };
-      // }
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error_message || error.message);

@@ -220,7 +220,7 @@ const Footer = () => {
                   <Link to="/pages/about">About</Link>
                 </li>
                 <li className="ta-l mv-2rem">
-                  <Link to="/pages/events">About</Link>
+                  <Link to="/pages/events">Events</Link>
                 </li>
                 <li className="ta-l mv-2rem">
                   <Link to="/pages/faq">FAQ</Link>
