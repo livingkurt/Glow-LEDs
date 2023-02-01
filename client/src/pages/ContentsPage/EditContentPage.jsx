@@ -419,7 +419,7 @@ const EditContentPage = props => {
                         <input
                           type="text"
                           name="image"
-                          value={content.home_page?.banner_image}
+                          value={home_page && home_page.banner_image}
                           id="image"
                           onChange={e => {
                             set_home_page({
