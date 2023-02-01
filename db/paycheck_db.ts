@@ -35,6 +35,7 @@ export default {
     }
   },
   create_paychecks_db: async (body: any) => {
+    console.log({ body });
     try {
       return await Paycheck.create(body);
     } catch (error) {

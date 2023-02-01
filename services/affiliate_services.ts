@@ -96,7 +96,7 @@ export default {
       used_once: false,
       excluded_categories: [],
       excluded_products: [],
-      percentage_off: 20,
+      percentage_off: 10,
       free_shipping: false,
       time_limit: false,
       start_date: "2021-01-01",
