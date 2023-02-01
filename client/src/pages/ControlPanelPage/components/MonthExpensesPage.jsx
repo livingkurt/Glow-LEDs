@@ -239,6 +239,7 @@ const MonthExpensesPage = props => {
                 <option value="2020">2020</option>
                 <option value="2021">2021</option>
                 <option value="2022">2022</option>
+                <option value="2022">2023</option>
               </select>
               <span className="custom-arrow" />
             </div>
