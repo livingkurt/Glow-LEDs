@@ -16,14 +16,31 @@ module.exports = {
               affiliate.sponsor
             }`
           );
+          // console.log({ promo_code_usage });
 
-          if (affiliate.user.stripe_connect_id) {
+          if (affiliate && affiliate.user && affiliate.user.stripe_connect_id) {
+            console.log({
+              amount: promo_code_usage.earnings,
+              stripe_connect_id: affiliate.user.stripe_connect_id,
+              description: `Monthly Payout for ${affiliate.user.first_name} ${affiliate.user.last_name}`
+            });
             await axios.post(`${domainUrl}/api/payments/payout_transfer`, {
               amount: promo_code_usage.earnings,
               stripe_connect_id: affiliate.user.stripe_connect_id,
               description: `Monthly Payout for ${affiliate.user.first_name} ${affiliate.user.last_name}`
             });
           }
+          console.log({
+            affiliate: affiliate?._id,
+            user: affiliate?.user?._id,
+            amount: promo_code_usage.earnings,
+            revenue: promo_code_usage.revenue,
+            promo_code: affiliate?.public_code?._id,
+            uses: promo_code_usage.number_of_uses,
+            stripe_connect_id: affiliate?.user?.stripe_connect_id || null,
+            paid: affiliate?.user?.stripe_connect_id ? true : false,
+            paid_at: new Date()
+          });
           await axios.post(`${domainUrl}/api/paychecks`, {
             affiliate: affiliate._id,
             user: affiliate.user._id,
