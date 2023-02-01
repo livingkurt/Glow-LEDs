@@ -161,16 +161,18 @@ const HomePage = props => {
       </Helmet>
       <Loading loading={slideshow.length === 0} />
       {contents &&
-        contents.filter(content => content.active === true)[0] &&
-        contents.filter(content => content.active === true)[0]?.home_page?.banner_image && (
-          <img
-            style={{ borderRadius: "20px", width: "100%" }}
-            src={contents.filter(content => content.active === true)[0]?.home_page?.banner_image}
-            className="jc-c mb-20px"
-            alt="Promo"
-            title="Promo Image"
-          />
-        )}
+      contents.filter(content => content.active === true)[0] &&
+      contents.filter(content => content.active === true)[0]?.home_page?.banner_image ? (
+        <img
+          style={{ borderRadius: "20px", width: "100%" }}
+          src={contents.filter(content => content.active === true)[0]?.home_page?.banner_image}
+          className="jc-c mb-20px"
+          alt="Promo"
+          title="Promo Image"
+        />
+      ) : (
+        <div></div>
+      )}
 
       <div>
         {width > 1019 && (
