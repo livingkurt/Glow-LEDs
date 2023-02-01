@@ -18,7 +18,7 @@ module.exports = {
           );
           // console.log({ promo_code_usage });
 
-          if (affiliate && affiliate.user && affiliate.user.stripe_connect_id) {
+          if (affiliate && affiliate.user && affiliate.user.stripe_connect_id && promo_code_usage.earnings >= 1) {
             console.log({
               amount: promo_code_usage.earnings,
               stripe_connect_id: affiliate.user.stripe_connect_id,
