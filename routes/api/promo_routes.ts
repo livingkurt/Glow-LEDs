@@ -15,7 +15,7 @@ router.route("/").get(promo_controller.findAll_promos_c).post(isAuth, isAdmin, p
 router
   .route("/:id")
   .get(promo_controller.findById_promos_c)
-  .put(isAuth, isAdmin, promo_controller.update_promos_c)
+  .put(promo_controller.update_promos_c)
   .delete(isAuth, isAdmin, promo_controller.remove_promos_c);
 
 export default router;

@@ -1,5 +1,11 @@
 const axios = require("axios");
-const { domain, get_date_range, determine_promoter_code_tier, determine_sponsor_code_tier } = require("./worker_helpers");
+const {
+  domain,
+  get_date_range,
+  determine_promoter_code_tier,
+  determine_sponsor_code_tier,
+  determine_code_tier
+} = require("./worker_helpers");
 
 module.exports = {
   payout_affiliates: async () => {
@@ -52,12 +58,11 @@ module.exports = {
             paid: affiliate?.user?.stripe_connect_id ? true : false,
             paid_at: new Date()
           });
-          const percentage_off =
-            !affiliate.team && affiliate.promoter
-              ? determine_promoter_code_tier(promo_code_usage.number_of_uses)
-              : determine_sponsor_code_tier(promo_code_usage.number_of_uses);
-
-          await axios.put(`${domainUrl}/api/promos/${affiliate.private_code._id}`, { percentage_off });
+          const percentage_off = determine_code_tier(affiliate, promo_code_usage.number_of_uses);
+          await axios.put(`${domainUrl}/api/promos/${affiliate.private_code._id}`, {
+            ...affiliate.private_code,
+            percentage_off
+          });
         })
       );
     } catch (error) {
