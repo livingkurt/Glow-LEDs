@@ -8,6 +8,7 @@ import { listAffiliates } from "../../actions/affiliateActions";
 import { snake_case } from "../../utils/helper_functions";
 import { listPromos } from "../../actions/promoActions";
 import { GLButton } from "../../shared/GlowLEDsComponents";
+import { listUsers } from "../../actions/userActions";
 
 const EditTeamPage = props => {
   const [id, set_id] = useState("");
@@ -18,6 +19,7 @@ const EditTeamPage = props => {
   const [facebook_name, set_facebook_name] = useState("");
   const [percentage_off, set_percentage_off] = useState("");
   const [promo_code, set_promo_code] = useState("");
+  const [captain, set_captain] = useState("");
   const [sponsor, set_sponsor] = useState("");
   const [promoter, set_promoter] = useState("");
   const [rave_mob, set_rave_mob] = useState("");
@@ -44,6 +46,9 @@ const EditTeamPage = props => {
   const teamDetails = useSelector(state => state.teamDetails);
   const { team, loading, error } = teamDetails;
 
+  const userList = useSelector(state => state.userList);
+  const { users } = userList;
+
   const promoList = useSelector(state => state.promoList);
   const { promos: promos_list } = promoList;
 
@@ -54,6 +59,7 @@ const EditTeamPage = props => {
     set_facebook_name(team.facebook_name);
     set_percentage_off(team.percentage_off);
     set_promo_code(team.promo_code);
+    set_captain(team.captain);
     set_promoter(team.promoter);
     set_rave_mob(team.rave_mob);
     set_sponsor(team.sponsor);
@@ -77,6 +83,7 @@ const EditTeamPage = props => {
     set_facebook_name("");
     set_percentage_off("");
     set_promo_code("");
+    set_captain("");
     set_promoter("");
     set_rave_mob("");
     set_sponsor("");
@@ -108,6 +115,7 @@ const EditTeamPage = props => {
       }
       dispatch(listAffiliates({}));
       dispatch(listPromos({}));
+      dispatch(listUsers({}));
     }
     return () => (clean = false);
   }, [props.match.params.pathname]);
@@ -140,6 +148,7 @@ const EditTeamPage = props => {
         images,
         sponsor,
         map,
+        captain,
         promoter,
         rave_mob,
         active,
@@ -306,6 +315,31 @@ const EditTeamPage = props => {
                           id="team_name"
                           onChange={e => set_team_name(e.target.value)}
                         />
+                      </li>
+                      <li>
+                        <label aria-label="Sort" htmlFor="sort" className="select-label mb-15px">
+                          Users
+                        </label>
+                        <div className="ai-c h-25px mb-15px">
+                          <div className="custom-select">
+                            <select defaultValue={users} className="qty_select_dropdown" onChange={e => set_captain(e.target.value)}>
+                              <option key={1} defaultValue="">
+                                ---Choose User---
+                              </option>
+                              {users &&
+                                users.map((user, index) => (
+                                  <option key={index} value={user._id}>
+                                    {user.first_name} {user.last_name}
+                                  </option>
+                                ))}
+                            </select>
+                            <span className="custom-arrow" />
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <label htmlFor="captain">Team Captain</label>
+                        <input type="text" name="captain" value={captain} id="captain" onChange={e => set_captain(e.target.value)} />
                       </li>
 
                       <li>

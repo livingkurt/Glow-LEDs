@@ -95,8 +95,8 @@ const EditPaycheckPage = props => {
     dispatch(
       savePaycheck({
         _id: id,
-        affiliate: affiliate && affiliate._id,
-        team: team && team._id,
+        affiliate: affiliate?._id,
+        team: team?._id,
         amount,
         venmo,
         paid,
@@ -106,15 +106,18 @@ const EditPaycheckPage = props => {
     );
     e.target.reset();
     unset_state();
-    history.push("/secure/glow/paychecks");
+    history.push("/secure/glow/paychecks?page=1?limit=10");
   };
 
-  const update_fields = e => {
+  const update_affiliate = e => {
     e.preventDefault();
     const data = JSON.parse(e.target.value);
     set_affiliate(data);
-    // set_team(data);
-    set_venmo(data.venmo);
+  };
+  const update_team = e => {
+    e.preventDefault();
+    const data = JSON.parse(e.target.value);
+    set_team(data);
   };
   const date = new Date();
 
@@ -147,7 +150,7 @@ const EditPaycheckPage = props => {
                             // 	label: user.first_name + ' ' + user.last_name,
                             // 	value: user._id
                             // }}
-                            onChange={e => update_fields(e)}
+                            onChange={e => update_affiliate(e)}
                           >
                             <option key={1} defaultValue="">
                               ---Choose Affiliate---
@@ -162,6 +165,16 @@ const EditPaycheckPage = props => {
                         </div>
                       </div>
                     )}
+                    <li>
+                      <label htmlFor="affiliate">Affiliate</label>
+                      <input
+                        type="text"
+                        name="affiliate"
+                        value={affiliate?._id}
+                        id="affiliate"
+                        onChange={e => set_affiliate(e.target.value)}
+                      />
+                    </li>
                     {teams && (
                       <div className="ai-c h-25px mv-10px mb-30px jc-c">
                         <div className="custom-select w-100per">
@@ -171,7 +184,7 @@ const EditPaycheckPage = props => {
                             // 	label: user.first_name + ' ' + user.last_name,
                             // 	value: user._id
                             // }}
-                            onChange={e => update_fields(e)}
+                            onChange={e => update_team(e)}
                           >
                             <option key={1} defaultValue="">
                               ---Choose Team---
@@ -186,7 +199,10 @@ const EditPaycheckPage = props => {
                         </div>
                       </div>
                     )}
-
+                    <li>
+                      <label htmlFor="team">Team</label>
+                      <input type="text" name="team" value={team?._id} id="team" onChange={e => set_team(e.target.value)} />
+                    </li>
                     <li>
                       <label htmlFor="amount">Amount</label>
                       <input type="text" name="amount" value={amount} id="amount" onChange={e => set_amount(e.target.value)} />
@@ -234,7 +250,7 @@ const EditPaycheckPage = props => {
                 </li>
                 <li>
                   <GLButton variant="secondary" onClick={e => e.preventDefault()}>
-                    <Link to="/secure/glow/paychecks">Back to Paychecks</Link>
+                    <Link to="/secure/glow/paychecks?page=1?limit=10">Back to Paychecks</Link>
                   </GLButton>
                 </li>
               </ul>

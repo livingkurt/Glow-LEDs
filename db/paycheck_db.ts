@@ -7,6 +7,7 @@ export default {
         .sort(sort)
         .populate("user")
         .populate("affiliate")
+        .populate("team")
         .limit(parseInt(limit))
         .skip((page - 1) * limit)
         .exec();
@@ -18,7 +19,7 @@ export default {
   },
   findById_paychecks_db: async (id: string) => {
     try {
-      return await Paycheck.findOne({ _id: id }).populate("user").populate("affiliate");
+      return await Paycheck.findOne({ _id: id }).populate("user").populate("affiliate").populate("team");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -27,7 +28,7 @@ export default {
   },
   findMy_paychecks_db: async (affiliate_id: string) => {
     try {
-      return await Paycheck.find({ deleted: false, affiliate: affiliate_id }).sort({ _id: -1 }).populate("affiliate");
+      return await Paycheck.find({ deleted: false, affiliate: affiliate_id }).sort({ _id: -1 }).populate("affiliate").populate("team");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

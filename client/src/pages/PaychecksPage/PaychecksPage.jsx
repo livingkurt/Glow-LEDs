@@ -211,8 +211,12 @@ const PaychecksPage = props => {
       title: "Affiliate",
       display: paycheck => (paycheck.affiliate ? paycheck.affiliate.artist_name : paycheck.team && paycheck.team.team_name)
     },
+
     { title: "Amount", display: paycheck => `$${paycheck.amount.toFixed(2)}` },
-    { title: "Venmo", display: "venmo" }
+    {
+      title: "Team",
+      display: paycheck => (paycheck.team ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />)
+    }
   ];
 
   const colors = [
