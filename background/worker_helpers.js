@@ -29,7 +29,7 @@ module.exports = {
     return { start_date, end_date };
   },
   determine_code_tier: (affiliate, code_usage) => {
-    if (!affiliate.team && affiliate.promoter) {
+    if (affiliate.promoter) {
       if (code_usage === 0 || code_usage === 1) {
         return 10;
       } else if (code_usage >= 2 && code_usage <= 5) {
@@ -45,7 +45,7 @@ module.exports = {
       } else if (code_usage >= 22) {
         return 50;
       }
-    } else if (!affiliate.team && affiliate.sponsor) {
+    } else if (affiliate.sponsor) {
       if (code_usage === 0 || code_usage === 1) {
         return 30;
       } else if (code_usage >= 2 && code_usage <= 5) {

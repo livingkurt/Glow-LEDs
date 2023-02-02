@@ -14,7 +14,7 @@ module.exports = {
 
       const { start_date, end_date } = get_date_range();
       // Get promo code usage for the previous month
-      const { data: affiliates } = await axios.get(`${domainUrl}/api/affiliates?active=true&rave_mob=false&team=false`);
+      const { data: affiliates } = await axios.get(`${domainUrl}/api/affiliates?active=true&rave_mob=false`);
       await Promise.all(
         affiliates.affiliates.map(async affiliate => {
           const { data: promo_code_usage } = await axios.get(
@@ -22,7 +22,6 @@ module.exports = {
               affiliate.sponsor
             }`
           );
-          console.log({ promo_code_usage });
 
           if (affiliate?.user?.stripe_connect_id && promo_code_usage.earnings >= 1) {
             console.log({
