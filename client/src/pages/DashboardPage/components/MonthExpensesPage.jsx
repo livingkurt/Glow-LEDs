@@ -155,14 +155,14 @@ const MonthExpensesPage = props => {
   const switch_month = e => {
     e.preventDefault();
     set_month(e.target.value);
-    history.push("/secure/glow/controlpanel/monthly_expenes/" + year + "/" + e.target.value);
+    history.push("/secure/glow/dashboard/monthly_expenes/" + year + "/" + e.target.value);
     // calculate_expenses(e.target.value.toLowerCase());
     get_monthly_income(year, e.target.value.toLowerCase());
   };
   const switch_year = e => {
     e.preventDefault();
     set_year(e.target.value);
-    history.push("/secure/glow/controlpanel/monthly_expenes/" + e.target.value + "/" + month);
+    history.push("/secure/glow/dashboard/monthly_expenes/" + e.target.value + "/" + month);
     // calculate_expenses(month);
     get_monthly_income(year, month);
   };
@@ -213,10 +213,10 @@ const MonthExpensesPage = props => {
       {/* <Notification message={message} /> */}
       <Loading loading={loading} />
       <div className="">
-        <Link to="/secure/glow/controlpanel">
-          <GLButton variant="primary">Back to Control Panel</GLButton>
+        <Link to="/secure/glow/dashboard">
+          <GLButton variant="primary">Back to Dashboard</GLButton>
         </Link>
-        <Link to={"/secure/glow/controlpanel/monthly_expenes/" + year}>
+        <Link to={"/secure/glow/dashboard/monthly_expenes/" + year}>
           <GLButton variant="primary">Back to {year} Monthly Expenses</GLButton>
         </Link>
       </div>
@@ -243,7 +243,7 @@ const MonthExpensesPage = props => {
               </select>
               <span className="custom-arrow" />
             </div>
-            {/* <Link to={'/secure/glow/controlpanel/monthly_expenes/' + year + '/' + month}>
+            {/* <Link to={'/secure/glow/dashboard/monthly_expenes/' + year + '/' + month}>
 							<GLButton variant="primary">Go</GLButton>
 						</Link> */}
           </div>
@@ -267,7 +267,7 @@ const MonthExpensesPage = props => {
               </select>
               <span className="custom-arrow" />
             </div>
-            {/* <Link to={'/secure/glow/controlpanel/monthly_expenes/' + year + '/' + month}>
+            {/* <Link to={'/secure/glow/dashboard/monthly_expenes/' + year + '/' + month}>
 							<GLButton variant="primary">Go</GLButton>
 						</Link> */}
           </div>

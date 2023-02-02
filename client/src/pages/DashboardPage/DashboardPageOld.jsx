@@ -9,7 +9,7 @@ import Overflow from "react-overflow-indicator";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 
-const ControlPanelPage = props => {
+const DashboardPage = props => {
   const this_year = props.match.params.year;
 
   const all_time_income_chart_ref = useRef();
@@ -81,17 +81,17 @@ const ControlPanelPage = props => {
   const switch_year = e => {
     e.preventDefault();
     set_year(e.target.value);
-    history.push("/secure/glow/controlpanel/monthly_expenes/" + e.target.value);
+    history.push("/secure/glow/dashboard/monthly_expenes/" + e.target.value);
   };
 
   return (
     <div className="main_container p-20px">
       <Helmet>
-        <title>Control Panel | Glow LEDs</title>
+        <title>Dashboard | Glow LEDs</title>
       </Helmet>
       <div className="">
-        <Link to="/secure/glow/controlpanel">
-          <GLButton variant="primary">Back to Control Panel</GLButton>
+        <Link to="/secure/glow/dashboard">
+          <GLButton variant="primary">Back to Dashboard</GLButton>
         </Link>
       </div>
       <div className="row">
@@ -559,4 +559,4 @@ const ControlPanelPage = props => {
     </div>
   );
 };
-export default ControlPanelPage;
+export default DashboardPage;

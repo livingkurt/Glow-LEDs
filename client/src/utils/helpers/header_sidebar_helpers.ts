@@ -345,8 +345,8 @@ export const navigation = [
     title: "Admin",
     sub_menu: [
       {
-        title: "Control Panel",
-        link: "/secure/glow/controlpanel"
+        title: "Dashboard",
+        link: "/secure/glow/dashboard"
       },
       {
         title: "Orders",

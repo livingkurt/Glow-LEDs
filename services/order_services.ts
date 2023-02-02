@@ -1098,5 +1098,104 @@ export default {
         throw new Error(error.message);
       }
     }
+  },
+  get_product_quantities_orders_s: async () => {
+    try {
+      return await order_db.get_product_quantities_orders_db();
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  get_all_shipping_orders_s: async () => {
+    try {
+      return await order_db.get_all_shipping_orders_db();
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  get_all_time_revenue_orders_s: async () => {
+    try {
+      return await order_db.get_all_time_revenue_orders_db();
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  get_product_all_time_revenue_orders_s: async (params: { id: string }) => {
+    try {
+      return await order_db.get_product_all_time_revenue_orders_db(params.id);
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  get_product_range_revenue_orders_s: async (params: { id: string }, query: { start_date: string; end_date: string }) => {
+    try {
+      return await order_db.get_product_range_revenue_orders_db(params.id, query.start_date, query.end_date);
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  get_range_revenue_orders_s: async (query: { start_date: string; end_date: string }) => {
+    try {
+      return await order_db.get_range_revenue_orders_db(query.start_date, query.end_date);
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  get_monthly_revenue_orders_s: async () => {
+    try {
+      return await order_db.get_monthly_revenue_orders_db();
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  get_range_category_revenue_orders_s: async (query: { start_date: string; end_date: string }) => {
+    try {
+      return await order_db.get_range_category_revenue_orders_db(query.start_date, query.end_date);
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  get_all_time_category_revenue_orders_s: async () => {
+    try {
+      return await order_db.get_all_time_category_revenue_orders_db();
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  get_range_category_quantities_orders_s: async (query: { start_date: string; end_date: string }) => {
+    try {
+      return await order_db.get_range_category_quantities_orders_db(query.start_date, query.end_date);
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  get_all_time_category_quantities_orders_s: async () => {
+    try {
+      return await order_db.get_all_time_category_quantities_orders_db();
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
   }
 };

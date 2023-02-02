@@ -32,7 +32,17 @@ router.route("/secure/:id").get(isAuth, order_controller.findById_orders_c);
 // router.route("/get_product_quantities").put(order_controller.get_product_quantities);
 // router.route("/get_category_quantities").put(order_controller.get_category_quantities);
 
-// router.route('/income/:year').get(order_controller.yearly_income_orders_c);
+router.route("/get_product_quantities_orders").get(order_controller.get_product_quantities_orders_c);
+router.route("/get_all_shipping_orders").get(order_controller.get_all_shipping_orders_c);
+router.route("/get_all_time_revenue_orders").get(order_controller.get_all_time_revenue_orders_c);
+router.route("/get_product_all_time_revenue_orders/:id").get(order_controller.get_product_all_time_revenue_orders_c);
+router.route("/get_product_range_revenue_orders/:id").get(order_controller.get_product_range_revenue_orders_c);
+router.route("/get_range_revenue_orders").get(order_controller.get_range_revenue_orders_c);
+router.route("/get_monthly_revenue_orders").get(order_controller.get_monthly_revenue_orders_c);
+router.route("/get_range_category_revenue_orders").get(order_controller.get_range_category_revenue_orders_c);
+router.route("/get_all_time_category_revenue_orders").get(order_controller.get_all_time_category_revenue_orders_c);
+router.route("/get_range_category_quantities_orders").get(order_controller.get_range_category_quantities_orders_c);
+router.route("/get_all_time_category_quantities_orders").get(order_controller.get_all_time_category_quantities_orders_c);
 
 router
   .route("/glow/:id")

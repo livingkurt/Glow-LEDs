@@ -244,7 +244,7 @@ const MonthlyExpensesPage = props => {
     e.preventDefault();
     set_year(e.target.value);
     get_monthly_income(e.target.value);
-    history.push("/secure/glow/controlpanel/monthly_expenes/" + e.target.value);
+    history.push("/secure/glow/dashboard/monthly_expenes/" + e.target.value);
   };
 
   return (
@@ -253,8 +253,8 @@ const MonthlyExpensesPage = props => {
         <title>Admin {year} Monthly Income | Glow LEDs</title>
       </Helmet>
       <div className="">
-        <Link to="/secure/glow/controlpanel">
-          <GLButton variant="primary">Back to Control Panel</GLButton>
+        <Link to="/secure/glow/dashboard">
+          <GLButton variant="primary">Back to Dashboard</GLButton>
         </Link>
       </div>
       <div className="row">
@@ -277,7 +277,7 @@ const MonthlyExpensesPage = props => {
               </select>
               <span className="custom-arrow" />
             </div>
-            {/* <Link to={'/secure/glow/controlpanel/monthly_expenes/' + year}>
+            {/* <Link to={'/secure/glow/dashboard/monthly_expenes/' + year}>
 						<GLButton variant="primary">
 							Go
 						</GLButton>
@@ -303,7 +303,7 @@ const MonthlyExpensesPage = props => {
               </select>
               <span className="custom-arrow" />
             </div>
-            <Link to={"/secure/glow/controlpanel/monthly_expenes/" + year + "/" + month}>
+            <Link to={"/secure/glow/dashboard/monthly_expenes/" + year + "/" + month}>
               <GLButton variant="primary">Go</GLButton>
             </Link>
           </div>

@@ -764,9 +764,9 @@ const Sidebar = props => {
               </GLButton>
             </div>
             <ul className="sidebar_dropdown_container" id="admin_dropdown">
-              <Link to="/secure/glow/controlpanel">
+              <Link to="/secure/glow/dashboard">
                 <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
-                  Control Panel
+                  Dashboard
                 </GLButton>
               </Link>
               <Link to="/secure/glow/orders?page=1?limit=10">

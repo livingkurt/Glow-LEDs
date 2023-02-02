@@ -930,9 +930,9 @@ const Header = props => {
                     Admin
                   </GLButton>
                   <ul className="dropdown-content hover_fade_in w-175px">
-                    <Link to="/secure/glow/controlpanel">
+                    <Link to="/secure/glow/dashboard">
                       <GLButton variant="nav" fullWidth className="ta-l">
-                        Control Panel
+                        Dashboard
                       </GLButton>
                     </Link>
                     <Link to="/secure/glow/orders?page=1?limit=10">

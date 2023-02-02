@@ -183,8 +183,8 @@ const OrdersPage = props => {
       </Helmet>
       <Notification message={message} />
       <div className="wrap jc-b">
-        <Link to="/secure/glow/controlpanel">
-          <GLButton variant="primary">Back to Control Panel</GLButton>
+        <Link to="/secure/glow/dashboard">
+          <GLButton variant="primary">Back to Dashboard</GLButton>
         </Link>
         <Link to="/secure/glow/create_label">
           <GLButton variant="primary">Create Label</GLButton>
