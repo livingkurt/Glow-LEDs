@@ -74,8 +74,6 @@ router.route("/get_all_referenced_options").put(batch_controller.get_all_referen
 router.route("/all_options").put(batch_controller.all_options);
 router.route("/all_products").put(batch_controller.all_products);
 router.route("/add_shipping").put(batch_controller.add_shipping);
-router.route("/get_product_quantities").put(batch_controller.get_product_quantities);
-router.route("/get_category_quantities").put(batch_controller.get_category_quantities);
 
 // router.route('/create_categories').post();
 

@@ -1353,82 +1353,8 @@ export default {
     });
 
     res.send(users);
-  },
-  get_product_quantities: async (req: any, res: any) => {
-    const products = await Order.aggregate([
-      {
-        $match: { deleted: false }
-      },
-      {
-        $unwind: "$orderItems"
-      },
-      {
-        $group: {
-          _id: "$orderItems.product",
-          quantity: { $sum: "$orderItems.qty" }
-        }
-      }
-    ]);
-
-    // Loop through products and get the name
-    const products_with_names = await Promise.all(
-      products.map(async (product: any) => {
-        // Get the product
-        const p = await Product.findOne({ _id: product._id });
-        // Return the product with the name
-        return {
-          name: p ? p.name : "No Name",
-          category: p ? p.category : "No Category",
-          quantity: product.quantity
-        };
-      })
-    );
-
-    res.send(products_with_names);
-  },
-  get_category_quantities: async (req: any, res: any) => {
-    const products = await Order.aggregate([
-      {
-        $match: { deleted: false }
-      },
-      {
-        $unwind: "$orderItems"
-      },
-      {
-        $lookup: {
-          from: "products",
-          localField: "orderItems.product",
-          foreignField: "_id",
-          as: "product"
-        }
-      },
-      {
-        $unwind: "$product"
-      },
-      {
-        $group: {
-          _id: "$product.category",
-          quantity: { $sum: "$orderItems.qty" }
-        }
-      }
-    ]);
-
-    // // Loop through products and get the name
-    // const products_with_names = await Promise.all(
-    //   products.map(async (product: any) => {
-    //     // Get the product
-    //     const p = await Product.findOne({ _id: product._id });
-    //     // Return the product with the name
-    //     return {
-    //       name: p ? p.name : "No Name",
-    //       category: p ? p.category : "No Category",
-    //       quantity: product.quantity
-    //     };
-    //   })
-    // );
-
-    res.send(products);
   }
+
   // all_no_reference: async (req: any, res: any) => {
   //   const products = await Product.find({ deleted: false, option: true });
   //   //

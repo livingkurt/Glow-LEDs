@@ -1,3 +1,4 @@
+import { Product } from "../models";
 import Order from "../models/order";
 
 export default {
@@ -79,5 +80,322 @@ export default {
         throw new Error(error.message);
       }
     }
+  },
+  get_product_quantities: async () => {
+    const products = await Order.aggregate([
+      {
+        $match: { deleted: false }
+      },
+      {
+        $unwind: "$orderItems"
+      },
+      {
+        $group: {
+          _id: "$orderItems.product",
+          quantity: { $sum: "$orderItems.qty" }
+        }
+      }
+    ]);
+
+    // Loop through products and get the name
+    const products_with_names = await Promise.all(
+      products.map(async (product: any) => {
+        // Get the product
+        const p = await Product.findOne({ _id: product._id });
+        // Return the product with the name
+        return {
+          name: p ? p.name : "No Name",
+          category: p ? p.category : "No Category",
+          quantity: product.quantity
+        };
+      })
+    );
+
+    return products_with_names;
+  },
+  get_all_shipping: async () => {
+    try {
+      const dedupedShippingAddresses = await Order.aggregate([
+        {
+          $group: {
+            _id: "$shipping",
+            count: { $sum: 1 }
+          }
+        },
+        {
+          $match: {
+            count: { $gt: 1 }
+          }
+        }
+      ]);
+      return dedupedShippingAddresses;
+    } catch (error) {
+      console.error(error);
+    }
+  },
+  get_all_time_revenue: async () => {
+    try {
+      const result = await Order.aggregate([
+        {
+          $match: {
+            deleted: false,
+            isPaid: true
+          }
+        },
+        {
+          $group: {
+            _id: null,
+            total: { $sum: "$totalPrice" }
+          }
+        }
+      ]);
+      return result[0].total;
+    } catch (error) {
+      console.error(error);
+    }
+  },
+  get_product_all_time_revenue: async () => {
+    try {
+      const result = await Order.aggregate([
+        { $match: { deleted: false, isPaid: true, "orderItems.product": "product_id" } },
+        {
+          $group: {
+            _id: "$orderItems.product",
+            totalRevenue: { $sum: { $multiply: ["$orderItems.price", "$orderItems.quantity"] } }
+          }
+        }
+      ]).exec();
+      return result;
+    } catch (error) {
+      console.error(error);
+    }
+  },
+  get_product_range_revenue: async (startDate: string, endDate: string) => {
+    try {
+      const result = await Order.aggregate([
+        {
+          $match: {
+            deleted: false,
+            isPaid: true,
+            createdAt: {
+              $gte: new Date(startDate),
+              $lt: new Date(endDate)
+            },
+            "orderItems.product": "product_id"
+          }
+        },
+        {
+          $group: {
+            _id: "$orderItems.product",
+            totalRevenue: { $sum: { $multiply: ["$orderItems.price", "$orderItems.quantity"] } }
+          }
+        }
+      ]).exec();
+      return result;
+    } catch (error) {
+      console.error(error);
+    }
+  },
+  get_range_revenue: async (startDate: string, endDate: string) => {
+    try {
+      const totalPrice = await Order.aggregate([
+        {
+          $match: {
+            deleted: false,
+            isPaid: true,
+            createdAt: {
+              $gte: new Date(startDate),
+              $lt: new Date(endDate)
+            }
+          }
+        },
+        {
+          $group: {
+            _id: null,
+            totalPrice: {
+              $sum: "$totalPrice"
+            }
+          }
+        }
+      ]).exec();
+      return totalPrice;
+    } catch (error) {
+      console.error(error);
+    }
+  },
+  get_monthly_revenue: async (startDate: string, endDate: string) => {
+    try {
+      const totalPrice = await Order.aggregate([
+        {
+          $group: {
+            _id: { month: { $month: "$date" } },
+            revenue: { $sum: "$totalPrice" }
+          }
+        },
+        {
+          $project: {
+            _id: 0,
+            month: {
+              $switch: {
+                branches: [
+                  { case: { $eq: ["$_id.month", 1] }, then: "January" },
+                  { case: { $eq: ["$_id.month", 2] }, then: "February" },
+                  { case: { $eq: ["$_id.month", 2] }, then: "March" },
+                  { case: { $eq: ["$_id.month", 2] }, then: "April" },
+                  { case: { $eq: ["$_id.month", 2] }, then: "May" },
+                  { case: { $eq: ["$_id.month", 2] }, then: "June" },
+                  { case: { $eq: ["$_id.month", 2] }, then: "July" },
+                  { case: { $eq: ["$_id.month", 2] }, then: "August" },
+                  { case: { $eq: ["$_id.month", 2] }, then: "September" },
+                  { case: { $eq: ["$_id.month", 2] }, then: "October" },
+                  { case: { $eq: ["$_id.month", 2] }, then: "November" },
+                  { case: { $eq: ["$_id.month", 12] }, then: "December" }
+                ],
+                default: "Unknown"
+              }
+            },
+            revenue: 1
+          }
+        }
+      ]).exec();
+
+      return totalPrice;
+    } catch (error) {
+      console.error(error);
+    }
+  },
+  get_range_category_revenue: async (startDate: string, endDate: string) => {
+    try {
+      const category_totals = await Order.aggregate([
+        {
+          $match: {
+            deleted: false,
+            isPaid: true,
+            createdAt: {
+              $gte: new Date(startDate),
+              $lt: new Date(endDate)
+            }
+          }
+        },
+        {
+          $unwind: "$orderItems"
+        },
+        {
+          $lookup: {
+            from: "products",
+            localField: "orderItems.product",
+            foreignField: "_id",
+            as: "product"
+          }
+        },
+        {
+          $unwind: "$product"
+        },
+        {
+          $group: {
+            _id: "$product.category",
+            revenue: { $sum: { $multiply: ["$orderItems.qty", "$product.price"] } }
+          }
+        }
+      ]);
+      return category_totals;
+    } catch (error) {
+      console.error(error);
+    }
+  },
+  get_all_time_category_revenue: async (startDate: string, endDate: string) => {
+    try {
+      const category_totals = await Order.aggregate([
+        {
+          $match: { deleted: false, isPaid: true }
+        },
+        {
+          $unwind: "$orderItems"
+        },
+        {
+          $lookup: {
+            from: "products",
+            localField: "orderItems.product",
+            foreignField: "_id",
+            as: "product"
+          }
+        },
+        {
+          $unwind: "$product"
+        },
+        {
+          $group: {
+            _id: "$product.category",
+            revenue: { $sum: { $multiply: ["$orderItems.qty", "$product.price"] } }
+          }
+        }
+      ]);
+      return category_totals;
+    } catch (error) {
+      console.error(error);
+    }
+  },
+  get_range_category_quantities: async (startDate: string, endDate: string) => {
+    const products = await Order.aggregate([
+      {
+        $match: {
+          deleted: false,
+          isPaid: true,
+          createdAt: {
+            $gte: new Date(startDate),
+            $lt: new Date(endDate)
+          }
+        }
+      },
+      {
+        $unwind: "$orderItems"
+      },
+      {
+        $lookup: {
+          from: "products",
+          localField: "orderItems.product",
+          foreignField: "_id",
+          as: "product"
+        }
+      },
+      {
+        $unwind: "$product"
+      },
+      {
+        $group: {
+          _id: "$product.category",
+          quantity: { $sum: "$orderItems.qty" }
+        }
+      }
+    ]);
+    return products;
+  },
+  get_all_time_category_quantities: async (req: any, res: any) => {
+    const products = await Order.aggregate([
+      {
+        $match: { deleted: false, isPaid: true }
+      },
+      {
+        $unwind: "$orderItems"
+      },
+      {
+        $lookup: {
+          from: "products",
+          localField: "orderItems.product",
+          foreignField: "_id",
+          as: "product"
+        }
+      },
+      {
+        $unwind: "$product"
+      },
+      {
+        $group: {
+          _id: "$product.category",
+          quantity: { $sum: "$orderItems.qty" }
+        }
+      }
+    ]);
+    res.send(products);
   }
 };
