@@ -78,7 +78,7 @@ module.exports = {
           );
           console.log({ promo_code_usage });
 
-          if (team?.captainr?.stripe_connect_id && promo_code_usage.earnings >= 1) {
+          if (team?.captain?.stripe_connect_id && promo_code_usage.earnings >= 1) {
             console.log({
               amount: promo_code_usage.earnings,
               stripe_connect_id: team.captain.stripe_connect_id,

@@ -6,7 +6,7 @@ import { createFalse } from "typescript";
 export default {
   findAll_teams_db: async (filter: any, sort: any) => {
     try {
-      return await Team.find(filter).populate("affiliates").populate("public_code").populate("private_code").sort(sort);
+      return await Team.find(filter).populate("affiliates").populate("public_code").populate("private_code").populate("captain").sort(sort);
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -15,7 +15,7 @@ export default {
   },
   findByPathname_teams_db: async (pathname: string) => {
     try {
-      return await Team.findOne({ pathname }).populate("affiliates").populate("public_code").populate("private_code");
+      return await Team.findOne({ pathname }).populate("affiliates").populate("public_code").populate("private_code").populate("captain");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -27,7 +27,8 @@ export default {
       return await Team.find({ affiliates: { $in: [affiliate_id] } })
         .populate("affiliates")
         .populate("public_code")
-        .populate("private_code");
+        .populate("private_code")
+        .populate("captain");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
