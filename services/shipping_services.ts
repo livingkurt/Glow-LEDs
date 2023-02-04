@@ -146,14 +146,19 @@ export default {
     }
   },
   tracking_number_shipping_s: async (body: any) => {
+    const { order, tracking_number, label } = body;
     try {
-      const order = await order_db.findById_orders_db(body.order._id);
+      const update_order = await order_db.findById_orders_db(order._id);
 
-      if (order) {
-        order.shipping.shipment_tracking = body.tracker;
-        order.tracking_number = body.tracking_number;
-        order.shipping.shipping_label = body.label;
-        const updated = await order_db.update_orders_db(body.order._id, order);
+      if (update_order) {
+        const EasyPost = new easy_post_api(process.env.EASY_POST);
+        const tracker = await EasyPost.Tracker.retrieve(label.tracker.id);
+        console.log({ tracker });
+        update_order.shipping.shipment_tracker = label.tracker.id;
+        update_order.tracking_number = tracking_number;
+        update_order.tracking_url = tracker.public_url;
+        update_order.shipping.shipping_label = label;
+        const updated = await order_db.update_orders_db(update_order._id, update_order);
         if (updated) {
           return updated;
         } else {

@@ -159,6 +159,7 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
     if (data) {
       set_loading_label(false);
     }
+    console.log({ data });
     await API_Shipping.add_tracking_number(order, data.tracking_code, data);
     set_hide_label_button(false);
     const query = getUrlParameter(history.location);
@@ -336,7 +337,7 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
                     <div className="mt-0px">
                       {" "}
                       <a
-                        href={determine_tracking_link(order.tracking_number)}
+                        href={order.tracking_url ? order.tracking_url : determine_tracking_link(order.tracking_number)}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="mv-2rem"
