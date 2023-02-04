@@ -73,7 +73,6 @@ export default {
     }
   },
   update_promos_db: async (id: string, body: any) => {
-    console.log({ _id: id }, body);
     try {
       const promo: any = await Promo.findOne({ _id: id });
       if (promo) {

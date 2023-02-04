@@ -1,11 +1,5 @@
 const axios = require("axios");
-const {
-  domain,
-  get_date_range,
-  determine_promoter_code_tier,
-  determine_sponsor_code_tier,
-  determine_code_tier
-} = require("./worker_helpers");
+const { domain, get_date_range, determine_code_tier } = require("./worker_helpers");
 
 module.exports = {
   payout_affiliates: async () => {
@@ -118,6 +112,15 @@ module.exports = {
           });
         })
       );
+    } catch (error) {
+      console.log("error", error);
+    }
+  },
+  refresh_sponsor_codes: async () => {
+    try {
+      const domainUrl = domain();
+
+      await axios.put(`${domainUrl}/api/promos/refresh_sponsor_codes`);
     } catch (error) {
       console.log("error", error);
     }

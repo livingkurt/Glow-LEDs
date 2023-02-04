@@ -397,9 +397,9 @@ const PaychecksPage = props => {
         </div>
 
         <div className="row g-10px">
-          <GLButton variant="primary" className="h-40px" onClick={create_affiliate_paychecks}>
+          {/* <GLButton variant="primary" className="h-40px" onClick={create_affiliate_paychecks}>
             Create Affiliate Paychecks
-          </GLButton>
+          </GLButton> */}
           <Link to="/secure/glow/editpaycheck">
             <GLButton variant="primary">Create Paycheck</GLButton>
           </Link>

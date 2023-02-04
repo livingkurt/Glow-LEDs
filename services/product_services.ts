@@ -303,7 +303,6 @@ export default {
   image_upload_products_s: async (req: any) => {
     // or you can use
     const formData = new FormData(req);
-    console.log({ req: req.body, formData });
     // const { images, album_title } = body;
     // try {
     //   const options = {
@@ -316,7 +315,6 @@ export default {
     //   };
 
     //   const send = await imgbox(images, options);
-    //   console.log(send);
     // } catch (error) {
     //   if (error instanceof Error) {
     //     throw new Error(error.message);

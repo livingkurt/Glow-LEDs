@@ -301,7 +301,6 @@ export default {
       return same_email.length > 1;
     });
 
-    console.log({ duplicates });
     // // delete all uppercase email users and update all records that are associated with that user id to the lowercase version email user id
     // duplicates.forEach(async (user: any) => {
     //   const lowercase = user.email.toLowerCase();

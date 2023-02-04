@@ -177,7 +177,6 @@ export const determnine_link = (item: any) => {
 // };
 
 export const determine_tracking_link = (tracking_number: string) => {
-  console.log({ tracking_number });
   if (tracking_number) {
     if (tracking_number.startsWith("1Z")) {
       return `https://www.ups.com/track?tracknum=${tracking_number}`;

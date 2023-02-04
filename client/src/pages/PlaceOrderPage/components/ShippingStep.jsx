@@ -592,7 +592,6 @@ const ShippingStep = ({
                   </h3>
                 </GLCheckbox>
               </GLModal> */}
-              {console.log({ show_shipping_complete })}
               {show_shipping_complete && (
                 <GLButton
                   type="submit"

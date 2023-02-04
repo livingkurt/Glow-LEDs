@@ -144,10 +144,11 @@ const PromosPage = props => {
     dispatch(listPromos({}));
   };
 
-  const create_sponsor_codes = async () => {
-    await API_Promos.create_sponsor_codes();
+  const refresh_sponsor_codes = async () => {
+    await API_Promos.refresh_sponsor_codes();
     dispatch(listPromos({}));
   };
+
   const send_code_used_email = async () => {
     await API_Emails.send_code_used_emails_a("cosmo");
   };
@@ -181,7 +182,7 @@ const PromosPage = props => {
             Create Promo
           </GLButton>
         </Link>
-        <GLButton variant="primary" className="h-40px" onClick={create_sponsor_codes}>
+        <GLButton variant="primary" className="h-40px" onClick={refresh_sponsor_codes}>
           Create Sponsor Codes
         </GLButton>
         <GLButton variant="primary" className="h-40px" onClick={send_code_used_email}>

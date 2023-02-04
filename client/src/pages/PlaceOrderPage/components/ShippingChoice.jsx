@@ -54,7 +54,6 @@ const ShippingChoice = ({ rates, hide_pay_button, shipping, current_shipping_spe
           )}
         </div>
       )}
-      {console.log({ current_shipping_speed })}
       {!hide_pay_button && current_shipping_speed && (
         <div className=" mv-1rem jc-b ai-c w-100per">
           <div className="shipping_rates jc-b w-100per ">

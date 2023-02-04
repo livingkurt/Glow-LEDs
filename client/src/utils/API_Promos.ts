@@ -13,8 +13,8 @@ const promo_routes = {
   create_one_time_use_code: () => {
     return axios.put("/api/promos/create_one_time_use_code");
   },
-  create_sponsor_codes: () => {
-    return axios.put(`/api/promos/create_sponsor_codes`);
+  refresh_sponsor_codes: () => {
+    return axios.put(`/api/promos/refresh_sponsor_codes`);
   },
   promo_code_used: (promo_code: any) => {
     return axios.put("/api/promos/code/" + promo_code);

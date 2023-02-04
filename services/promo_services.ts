@@ -84,7 +84,7 @@ export default {
       }
     }
   },
-  create_sponsor_codes_promos_s: async (body: any) => {
+  refresh_sponsor_codes_promos_s: async (body: any) => {
     const a_filter: any = { deleted: false, active: true, sponsor: true };
     const affiliates = await affiliate_db.findAll_affiliates_db(a_filter, {}, 0, 1);
     const start_date = new Date();

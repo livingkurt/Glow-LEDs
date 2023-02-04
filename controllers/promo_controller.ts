@@ -61,10 +61,10 @@ export default {
       res.status(500).send({ error, message: "Error Creating Promo" });
     }
   },
-  create_sponsor_codes_promos_c: async (req: any, res: any) => {
+  refresh_sponsor_codes_promos_c: async (req: any, res: any) => {
     const { body } = req;
     try {
-      const promo = await promo_services.create_sponsor_codes_promos_s(body);
+      const promo = await promo_services.refresh_sponsor_codes_promos_s(body);
       if (promo) {
         return res.status(201).send(promo);
       }

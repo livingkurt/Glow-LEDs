@@ -1,4 +1,4 @@
-const { payout_affiliates, payout_teams } = require("./payout_affiliates");
+const { payout_affiliates, payout_teams, refresh_sponsor_codes } = require("./payout_affiliates");
 
 const monthly_worker = () => {
   // Get the current date
@@ -8,6 +8,7 @@ const monthly_worker = () => {
     // Run the code that you only want to run once a week
     payout_affiliates();
     payout_teams();
+    refresh_sponsor_codes();
   }
 };
 

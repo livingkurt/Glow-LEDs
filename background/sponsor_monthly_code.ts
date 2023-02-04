@@ -288,7 +288,7 @@ const sponsor_monthly_code = async () => {
     //   // await axios.put(
     //   //   `${domain()}/api/promos/update_discount/${year}${months[last_month].toLowerCase() ? "/" + months[last_month].toLowerCase() : ""}`
     //   // );
-    //   await axios.put(`${domain()}/api/promos/create_sponsor_codes`);
+    //   await axios.put(`${domain()}/api/promos/refresh_sponsor_codes`);
     // }
   } catch (error) {}
 };

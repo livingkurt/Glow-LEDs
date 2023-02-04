@@ -375,6 +375,7 @@ const PlaceOrderPage = props => {
     set_loading_payment(false);
     empty_cart();
     dimminish_stock();
+    send_used_code_email();
     promo_code_used();
     props.history.push("/secure/glow/orders?page=1?limit=10");
     sessionStorage.removeItem("shippingAddress");
@@ -450,6 +451,7 @@ const PlaceOrderPage = props => {
           empty_cart();
           promo_code_used();
           dimminish_stock();
+          send_used_code_email();
           sessionStorage.removeItem("shippingAddress");
           dispatch(removeOrderState());
         }, 2000);
@@ -465,6 +467,12 @@ const PlaceOrderPage = props => {
     }
   };
 
+  const send_used_code_email = async () => {
+    if (promo_code) {
+      await API_Emails.send_code_used_emails_a(promo_code.toLowerCase());
+    }
+  };
+
   useEffect(() => {
     let clean = true;
     if (clean) {
@@ -476,9 +484,7 @@ const PlaceOrderPage = props => {
         dimminish_stock();
         sessionStorage.removeItem("shippingAddress");
         dispatch(removeOrderState());
-        if (promo_code) {
-          API_Emails.send_code_used_emails_a(promo_code);
-        }
+        send_used_code_email();
       } else if (error_pay) {
       }
     }

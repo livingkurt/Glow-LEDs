@@ -149,9 +149,7 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
   const buy_label = async () => {
     set_loading_label(true);
     const { data: invoice } = await API_Orders.get_invoice(order);
-    console.log({ shipment_id: order.shipping.shipment_id, shipping_rate: order.shipping.shipping_rate });
     const { data } = await API_Shipping.buy_label(order.shipping.shipment_id, order.shipping.shipping_rate);
-    // console.log({ data });
     setTimeout(() => {
       print_invoice(invoice);
     }, 1500);

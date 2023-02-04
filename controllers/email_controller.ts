@@ -75,7 +75,9 @@ const createTransporter = async (type: string) => {
     });
 
     return transporter;
-  } catch (error) {}
+  } catch (error) {
+    return "Error Creating Transporter";
+  }
 };
 
 const sendEmail = async (emailOptions: any, res: any, type: string, name: string) => {
@@ -309,34 +311,36 @@ export default {
   },
   send_code_used_emails_c: async (req: any, res: any) => {
     const { promo_code } = req.params;
-    const date = new Date();
-    const monthNumber = date.getMonth();
-    const year = date.getFullYear();
+    const today = new Date();
+    const first_of_month = new Date(today.getFullYear(), today.getMonth(), 1);
     const promo = await promo_db.findBy_promos_db({ promo_code });
     const affiliate = await affiliate_db.findBy_affiliates_db({ public_code: promo._id });
-    const user = await user_db.findByAffiliateId_users_db(affiliate._id);
-    const stats: any = await order_services.affiliate_code_usage_orders_s(
-      { promo_code },
-      {
-        month: months[monthNumber].toLowerCase(),
-        year: year
-      }
-    );
-    const mailOptions = {
-      from: process.env.DISPLAY_INFO_EMAIL,
-      to: user.email,
-      subject: `You're code was just used!`,
-      html: App({
-        body: code_used({
-          affiliate,
-          number_of_uses: stats.number_of_uses,
-          earnings: affiliate.sponsor ? stats.revenue * 0.15 : stats.revenue * 0.1
-        }),
-        unsubscribe: false
-      })
-    };
+    if (affiliate) {
+      const user = await user_db.findByAffiliateId_users_db(affiliate._id);
+      const stats: any = await order_services.code_usage_orders_s(
+        { promo_code },
+        {
+          start_date: first_of_month,
+          end_date: today,
+          sponsor: affiliate.artist_name
+        }
+      );
+      const mailOptions = {
+        from: process.env.DISPLAY_INFO_EMAIL,
+        to: user.email,
+        subject: `You're code was just used!`,
+        html: App({
+          body: code_used({
+            affiliate,
+            number_of_uses: stats.number_of_uses,
+            earnings: affiliate.sponsor ? stats.revenue * 0.15 : stats.revenue * 0.1
+          }),
+          unsubscribe: false
+        })
+      };
 
-    sendEmail(mailOptions, res, "info", "Code Used Email sent to " + user.email);
+      sendEmail(mailOptions, res, "info", "Code Used Email sent to " + user.email);
+    }
   },
   send_password_reset_emails_c: async (req: any, res: any) => {
     const mailOptions = {

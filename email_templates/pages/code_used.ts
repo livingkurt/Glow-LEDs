@@ -43,9 +43,9 @@ export default (props: any) => {
 									</tr>
 									<tr>
 									<td style="font-size:30px;height:30px;width: 50%; text-align: center;">${number_of_uses}</td>
-									<td style="font-size:30px;height:30px; width: 50%;text-align: center;">${earnings}</td>
+									<td style="font-size:30px;height:30px; width: 50%;text-align: center;">$${earnings?.toFixed(2)}</td>
 									</tr>
-								
+
 								</tbody>
 							</table>
 

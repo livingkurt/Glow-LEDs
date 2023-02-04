@@ -265,10 +265,8 @@ export default {
     try {
       const EasyPost = new easy_post_api(process.env.EASY_POST);
       const created_shipment = await EasyPost.Shipment.retrieve(shipment_id);
-      // console.log({ created_shipment });
 
       const label = await created_shipment.buy(shipping_rate, 0);
-      // console.log({ label });
       return label;
     } catch (error) {
       if (error instanceof Error) {
