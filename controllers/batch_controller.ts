@@ -1352,6 +1352,42 @@ export default {
     });
 
     res.send(users);
+  },
+  add_public_url: async (req: any, res: any) => {
+    // Get all users that arent deleted and have no shipping attri
+    const users = await User.find({ deleted: false, shipping: { $exists: false } });
+    // Set default values for shipping
+    const shipping = {
+      first_name: "",
+      last_name: "",
+      address_1: "",
+      address_2: "",
+      city: "",
+      state: "",
+      postalCode: "",
+      international: false,
+      country: ""
+    };
+    // Loop through users and add shipping
+    users.forEach(async (user: any) => {
+      const u: any = await User.findOne({ _id: user._id });
+      const updated_user: any = new User(u);
+      updated_user.shipping = shipping;
+      await updated_user.save();
+    });
+
+    res.send(users);
+  },
+  update_all_orders_easy_post_tracking_url: async (req: any, res: any) => {
+    // Get all orders that arent deleted
+    const orders = await Order.find({ deleted: false });
+    // Loop through orders and update easy_post_tracking_url
+    orders.forEach(async (order: any) => {
+      const o: any = await Order.findOne({ _id: order._id });
+      const updated_order: any = new Order(o);
+      updated_order.easy_post_tracking_url = order.easy_post_tracking_url;
+      await updated_order.save();
+    });
   }
 
   // all_no_reference: async (req: any, res: any) => {
