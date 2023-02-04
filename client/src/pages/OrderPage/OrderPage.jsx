@@ -789,11 +789,11 @@ const OrderPage = props => {
                 }}
               >
                 <div className="mb-1rem">Order #: {order._id}</div>
-                {order.tracking_number && (
+                {order.tracking_number && order.tracking_number.length > 0 && determine_tracking_link(order.tracking_number) && (
                   <div>
                     Tracking #:{" "}
                     <a
-                      href={determine_tracking_link(order.tracking_number)}
+                      href={order.tracking_url ? order.tracking_url : determine_tracking_link(order.tracking_number)}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="mv-2rem"

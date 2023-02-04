@@ -91,7 +91,9 @@ export default ({ email, order, status, title, tracker }: any) => {
                         <strong>${tracker.carrier} Tracking #:</strong>
                         <a
                       style="color:#333333; padding: 15px 0px;border:none; font-family:helvetica;"
-                      href="${determine_tracking_link(order.tracking_number)}" target="_blank">${order.tracking_number}</a><br />
+                      href="${order.tracking_url ? order.tracking_url : determine_tracking_link(order.tracking_number)}" target="_blank">${
+    order.tracking_number
+  }</a><br />
                       </td>
                     </tr>
                   </tbody>
