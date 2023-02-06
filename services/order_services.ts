@@ -1137,7 +1137,8 @@ export default {
   },
   get_product_range_revenue_orders_s: async (params: { id: string }, query: { start_date: string; end_date: string }) => {
     try {
-      return await order_db.get_product_range_revenue_orders_db(params.id, query.start_date, query.end_date);
+      const { start_date, end_date } = query;
+      return await order_db.get_product_range_revenue_orders_db(params.id, start_date, end_date);
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -1146,7 +1147,8 @@ export default {
   },
   get_range_revenue_orders_s: async (query: { start_date: string; end_date: string }) => {
     try {
-      return await order_db.get_range_revenue_orders_db(query.start_date, query.end_date);
+      const { start_date, end_date } = query;
+      return await order_db.get_range_revenue_orders_db(start_date, end_date);
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -1164,7 +1166,8 @@ export default {
   },
   get_range_category_revenue_orders_s: async (query: { start_date: string; end_date: string }) => {
     try {
-      return await order_db.get_range_category_revenue_orders_db(query.start_date, query.end_date);
+      const { start_date, end_date } = query;
+      return await order_db.get_range_category_revenue_orders_db(start_date, end_date);
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -1182,7 +1185,8 @@ export default {
   },
   get_range_category_quantities_orders_s: async (query: { start_date: string; end_date: string }) => {
     try {
-      return await order_db.get_range_category_quantities_orders_db(query.start_date, query.end_date);
+      const { start_date, end_date } = query;
+      return await order_db.get_range_category_quantities_orders_db(start_date, end_date);
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -1192,6 +1196,16 @@ export default {
   get_all_time_category_quantities_orders_s: async () => {
     try {
       return await order_db.get_all_time_category_quantities_orders_db();
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  get_range_tips_orders_s: async (query: { start_date: string; end_date: string }) => {
+    try {
+      const { start_date, end_date } = query;
+      return await order_db.get_range_tips_orders_db(start_date, end_date);
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

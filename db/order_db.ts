@@ -239,6 +239,36 @@ export default {
       }
     }
   },
+  get_range_tips_orders_db: async (startDate: string, endDate: string) => {
+    try {
+      const total_tips = await Order.aggregate([
+        {
+          $match: {
+            deleted: false,
+            isPaid: true,
+            createdAt: {
+              $gte: new Date(startDate),
+              $lt: new Date(endDate)
+            }
+          }
+        },
+        {
+          $group: {
+            _id: null,
+            total_tips: {
+              $sum: "$tip"
+            }
+          }
+        }
+      ]).exec();
+      console.log({ total_tips });
+      return total_tips;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
   get_monthly_revenue_orders_db: async () => {
     try {
       const totalPrice = await Order.aggregate([
