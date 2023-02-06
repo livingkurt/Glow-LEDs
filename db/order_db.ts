@@ -261,7 +261,6 @@ export default {
           }
         }
       ]).exec();
-      console.log({ total_tips });
       return total_tips;
     } catch (error) {
       if (error instanceof Error) {
