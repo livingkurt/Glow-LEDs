@@ -1,4 +1,4 @@
-import { format_date, months } from "../../util";
+import { determine_code_tier, format_date, months } from "../../util";
 
 export default (props: any) => {
   const { affiliate, number_of_uses, earnings } = props;
@@ -44,6 +44,15 @@ export default (props: any) => {
 									<tr>
 									<td style="font-size:30px;height:30px;width: 50%; text-align: center;">${number_of_uses}</td>
 									<td style="font-size:30px;height:30px; width: 50%;text-align: center;">$${earnings?.toFixed(2)}</td>
+									</tr>
+									<tr>
+									<td style="font-size:30px;height:30px;  width: 100%; padding-top: 20px;text-align: center;" colspan="2"><h4 style="margin-bottom: 10px;" >Projected Discount: </h4></td>
+									</tr>
+									<tr>
+									<td style="font-size:30px;height:30px;width: 100%;text-align: center;" colspan="2">${determine_code_tier(
+                    affiliate,
+                    number_of_uses
+                  )}% Off</td>
 									</tr>
 
 								</tbody>
