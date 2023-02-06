@@ -1,6 +1,8 @@
+import { order_db } from "../db";
 import { User, Expense, Product, Feature, Order, Email, Affiliate, Content, Paycheck, Parcel, Chip } from "../models";
 import { onlyUnique, snake_case } from "../util";
 const _ = require("lodash");
+const stripe = require("stripe")(process.env.STRIPE_KEY);
 
 export default {
   find_all_users: async (req: any, res: any) => {
@@ -1385,9 +1387,58 @@ export default {
     orders.forEach(async (order: any) => {
       const o: any = await Order.findOne({ _id: order._id });
       const updated_order: any = new Order(o);
-      updated_order.easy_post_tracking_url = order.easy_post_tracking_url;
+      updated_order.tracking_url = order.easy_post_tracking_url;
       await updated_order.save();
     });
+  },
+  update_refund_price: async (req: any, res: any) => {
+    try {
+      const refunds = await stripe.refunds.list({});
+      console.log({ refunds: refunds.data });
+
+      refunds.data.forEach(async (refund: any) => {
+        const charge = await stripe.charges.retrieve(refund.charge);
+        // update the refundPrice
+        const order = await Order.find({ "payment.charge.id": charge.id });
+        order.refundTotal = refund.amount / 100 + (order.refundTotal ? order.refundTotal : 0);
+
+        console.log({ order: order.refundTotal });
+        // save the order document
+        await order_db.update_orders_db(order._id, order);
+      });
+
+      // // find all orders with isRefunded: true
+      // const orders = await Order.find({ isRefunded: true });
+      // // console.log({ orders });
+
+      // // // loop through the orders and update the refundPrice
+      // for (const order of orders) {
+      //   let refundAmount = 0;
+      //   // console.log({ order: order.payment.charge?.refunds });
+
+      //   // if (order.payment.charge?.refunds?.data?.length === 0) {
+      //   // // loop through the payment.refunds array and add the amounts
+
+      //   order.payment.charge?.refunds?.data?.forEach((refund: any) => {
+      //     refundAmount += refund.amount;
+      //     console.log({ refundAmount });
+      //   });
+      //   // for (const refund of order.payment.charge?.refunds?.data?) {
+      //   //   refundAmount += refund.amount;
+      //   //   console.log({ refundAmount });
+      //   // }
+      //   // }
+
+      //   // update the refundPrice
+      //   order.refundTotal = refundAmount;
+
+      //   // save the order document
+      //   await order.save();
+      // }
+      res.send(refunds);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   // all_no_reference: async (req: any, res: any) => {

@@ -128,6 +128,7 @@ const orderSchema = new mongoose.Schema(
     taxPrice: { type: Number },
     shippingPrice: { type: Number },
     totalPrice: { type: Number },
+    refundTotal: { type: Number },
     guest: { type: Boolean, default: false },
     isPaid: { type: Boolean, default: false },
     paidAt: { type: Date },

@@ -143,7 +143,7 @@ export default {
   },
   get_all_time_revenue_orders_db: async () => {
     try {
-      const result = await Order.aggregate([
+      const totalPrice = await Order.aggregate([
         {
           $match: {
             deleted: false,
@@ -153,11 +153,32 @@ export default {
         {
           $group: {
             _id: null,
-            total: { $sum: "$totalPrice" }
+            totalPrice: {
+              $sum: "$totalPrice"
+            },
+            refundPrice: {
+              $sum: "$refundPrice"
+            }
+          }
+        },
+        {
+          $group: {
+            _id: null,
+            totalPrice: {
+              $sum: "$totalPrice"
+            },
+            refundPrice: {
+              $sum: "$refundPrice"
+            },
+            netTotalPrice: {
+              $sum: {
+                $subtract: ["$totalPrice", "$refundPrice"]
+              }
+            }
           }
         }
-      ]);
-      return result[0].total;
+      ]).exec();
+      return totalPrice;
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -228,6 +249,25 @@ export default {
             _id: null,
             totalPrice: {
               $sum: "$totalPrice"
+            },
+            refundPrice: {
+              $sum: "$refundPrice"
+            }
+          }
+        },
+        {
+          $group: {
+            _id: null,
+            totalPrice: {
+              $sum: "$totalPrice"
+            },
+            refundPrice: {
+              $sum: "$refundPrice"
+            },
+            netTotalPrice: {
+              $sum: {
+                $subtract: ["$totalPrice", "$refundPrice"]
+              }
             }
           }
         }
