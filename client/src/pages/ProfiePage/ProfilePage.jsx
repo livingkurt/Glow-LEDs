@@ -221,8 +221,7 @@ const ProfilePage = props => {
       title: "Affiliate",
       display: paycheck => (paycheck.affiliate ? paycheck.affiliate.artist_name : paycheck.team && paycheck.team.team_name)
     },
-    { title: "Amount", display: paycheck => `$${paycheck.amount.toFixed(2)}` },
-    { title: "Venmo", display: "venmo" }
+    { title: "Amount", display: paycheck => `$${paycheck.amount.toFixed(2)}` }
   ];
 
   const send_not_verified_email = async () => {

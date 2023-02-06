@@ -61,7 +61,7 @@ const GLTable = ({
                 {column_defs.map(column => (
                   <th className={gl_table_th}>{column.title}</th>
                 ))}
-                <th className={gl_table_th}>Actions</th>
+                {action_row && <th className={gl_table_th}>Actions</th>}
               </tr>
             </thead>
             <tbody>
@@ -82,7 +82,7 @@ const GLTable = ({
                       </td>
                     );
                   })}
-                  <td className="p-10px">{action_row && action_row(row)}</td>
+                  {action_row && <td className="p-10px">{action_row(row)}</td>}
                 </tr>
               ))}
             </tbody>
