@@ -14,6 +14,7 @@ import { isAdmin } from "../../utils/helpers/user_helpers";
 import { OrderListItem } from "../OrdersPage/components";
 import { listMyOrders } from "../../actions/orderActions";
 import GLTable from "../../shared/GlowLEDsComponents/GLTable/GLTable";
+import { determine_code_tier } from "../../utils/helpers/affiliate_helpers";
 
 const ProfilePage = props => {
   const history = useHistory();
@@ -406,6 +407,10 @@ const ProfilePage = props => {
                     <div className="mb-20px">
                       <h3>Private Code</h3>
                       <label>{affiliate && affiliate.private_code.promo_code.toUpperCase()}</label>
+                    </div>
+                    <div className="mb-20px">
+                      <h3>Projected Private Code Discount</h3>
+                      <label>{!loading_current_month && determine_code_tier(affiliate, current_month_number_of_uses)}% Off</label>
                     </div>
                     {affiliate.sponsor && (
                       <>
