@@ -139,10 +139,9 @@ const PaymentStep = ({
                 />
               </div>
             </li>
-            <li>
-              {loading_checkboxes ? (
-                <div>Loading...</div>
-              ) : (
+            {console.log({ userInfo: userInfo.hasOwnProperty("first_name") })}
+            {!userInfo.hasOwnProperty("first_name") && (
+              <li>
                 <div className="mv-2rem">
                   <input
                     type="checkbox"
@@ -159,8 +158,8 @@ const PaymentStep = ({
                   />
                   <label htmlFor="create_account mb-20px">Create an account for faster checkout</label>
                 </div>
-              )}
-            </li>
+              </li>
+            )}
             {userInfo && !userInfo.first_name && create_account && (
               <li className="column mb-2rem">
                 <label htmlFor="password">Password</label>
