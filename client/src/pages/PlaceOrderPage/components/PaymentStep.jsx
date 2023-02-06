@@ -123,9 +123,9 @@ const PaymentStep = ({
             )}
             <li>
               <div className="w-100per mb-1rem">
-                <div htmlFor="tip" className="fs-16px">
-                  Leave a Tip 💙
-                </div>
+                <label htmlFor="tip" className="fs-16px">
+                  Leave a tip for our production team 💙
+                </label>
                 <input
                   type="number"
                   min="0.01"
