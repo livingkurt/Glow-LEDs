@@ -13,6 +13,13 @@ module.exports = {
             stripe_connect_id: employee.stripe_connect_id,
             description: `Weekly Payout for ${employee.first_name} ${employee.last_name}`
           });
+          await axios.post(`${domainUrl}/api/paychecks`, {
+            user: employee?._id,
+            amount: employee.weekly_wage,
+            stripe_connect_id: employee?.stripe_connect_id || null,
+            paid: true,
+            paid_at: new Date()
+          });
         }
       });
     } catch (error) {
