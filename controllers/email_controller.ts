@@ -1,5 +1,5 @@
 import { email_services, order_services } from "../services";
-const nodemailer = require("nodemailer");
+
 import App from "../email_templates/App";
 import {
   account_created,
@@ -21,80 +21,11 @@ import email_subscription from "../email_templates/pages/email_subscription";
 import { affiliate_db, content_db, email_db, order_db, promo_db, user_db } from "../db";
 import { format_date, months, toCapitalize } from "../util";
 import { determine_status } from "../interactors/email_interactors";
+import { sendEmail, send_multiple_emails } from "../helpers/email_helper";
 const cron = require("node-cron");
 const schedule = require("node-schedule");
-const { google } = require("googleapis");
 
 const easy_post_api = require("@easypost/api");
-
-const createTransporter = async (type: string) => {
-  try {
-    const OAuth2 = google.auth.OAuth2;
-    let credentials: any = {};
-    if (type === "contact") {
-      credentials = {
-        user: process.env.CONTACT_EMAIL,
-        client_id: process.env.GOOGLE_CONTACT_OAUTH_ID,
-        client_secret: process.env.GOOGLE_CONTACT_OAUTH_SECRET,
-        refresh_token: process.env.GOOGLE_CONTACT_OAUTH_REFRESH_TOKEN
-      };
-    } else {
-      credentials = {
-        user: process.env.INFO_EMAIL,
-        client_id: process.env.GOOGLE_INFO_OAUTH_ID,
-        client_secret: process.env.GOOGLE_INFO_OAUTH_SECRET,
-        refresh_token: process.env.GOOGLE_INFO_OAUTH_REFRESH_TOKEN
-      };
-    }
-
-    const oauth2Client = new OAuth2(credentials.client_id, credentials.client_secret, "https://developers.google.com/oauthplayground");
-    oauth2Client.setCredentials({
-      refresh_token: credentials.refresh_token
-    });
-
-    const accessToken = await new Promise((resolve, reject) => {
-      oauth2Client.getAccessToken((err: any, token: any) => {
-        if (err) {
-          reject();
-        }
-        resolve(token);
-      });
-    });
-
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      pool: true,
-      auth: {
-        type: "OAuth2",
-        user: credentials.user,
-        accessToken,
-        clientId: credentials.client_id,
-        clientSecret: credentials.client_secret,
-        refreshToken: credentials.refresh_token
-      }
-    });
-
-    return transporter;
-  } catch (error) {
-    return "Error Creating Transporter";
-  }
-};
-
-const sendEmail = async (emailOptions: any, res: any, type: string, name: string) => {
-  const emailTransporter = await createTransporter(type);
-
-  if (emailTransporter) {
-    await emailTransporter.sendMail(emailOptions, (err: any, data: any) => {
-      if (err) {
-        res.status(500).send({ error: err, message: "Error Sending Email" });
-      } else {
-        res.status(200).send({ message: "Email Successfully Sent" });
-      }
-    });
-  } else {
-    res.status(500).send({ message: "Error Sending Email" });
-  }
-};
 
 export default {
   findAll_emails_c: async (req: any, res: any) => {
@@ -380,48 +311,35 @@ export default {
 
   send_announcement_emails_c: async (req: any, res: any) => {
     const { template, subject, test, time } = req.body;
-    const users = await user_db.findAll_users_db({ deleted: false, email_subscription: true }, {});
+    const subscribed_users = await user_db.findAll_users_db({ deleted: false, email_subscription: true }, {});
     const email = await email_db.findById_emails_db(template._id);
-    const all_emails = users
-      .filter((user: any) => user.deleted === false)
-      .filter((user: any) => user.email_subscription === true)
-      .map((user: any) => user.email);
+    // const all_emails = subscribed_users.map((user: any) => user.email);
 
-    const test_emails = ["lavacquek@icloud.com", "lavacquek@gmail.com", "destanyesalinas@gmail.com"];
-    const emails: any = test ? test_emails : all_emails;
+    // Set the number of emails to send per iteration
+    const emailsPerIteration = 100;
 
-    const mailOptions = {
-      to: process.env.INFO_EMAIL,
-      from: process.env.DISPLAY_INFO_EMAIL,
-      subject: subject,
-      html: App({
-        body: announcement(template),
-        unsubscribe: true,
-        header_footer_color: template.header_footer_color
-      }),
-      bcc: emails
-    };
+    // Calculate the number of iterations required
+    const iterations = Math.ceil(subscribed_users.length / emailsPerIteration);
 
-    const date = new Date(time);
-    email.subject = subject;
-    if (time.length > 0) {
-      email.status = "scheduled";
-      email.scheduled_at = time;
-      email.save();
-      cron.schedule(
-        `${date.getSeconds()} ${date.getMinutes()} ${date.getHours()} ${date.getDate()} ${date.getMonth() + 1} *`,
-        () => {
-          sendEmail(mailOptions, res, "info", "Email " + subject + " to everyone");
-          email.status = "sent";
-          email.save();
-        },
-        {
-          scheduled: true,
-          timezone: "America/Rainy_River"
-        }
-      );
+    // Set the time to wait between iterations (in milliseconds)
+    const waitTime = 10000;
+    if (test) {
+      // // const test_emails = ["lavacquek@icloud.com", "lavacquek@gmail.com", "destanyesalinas@gmail.com", "kachaubusiness@gmail.com"];
+      const test_emails = ["lavacquek@icloud.com", "lavacquek@gmail.com"];
+      send_multiple_emails(test_emails, time, email, template, subject, res);
     } else {
-      sendEmail(mailOptions, res, "info", "Email " + subject + " to everyone");
+      for (let i = 0; i < iterations; i++) {
+        // Get the start and end indices for the current iteration
+        const startIndex = i * emailsPerIteration;
+        const endIndex = startIndex + emailsPerIteration;
+
+        // Create an array of email addresses for the current iteration
+        const emailAddresses = subscribed_users.slice(startIndex, endIndex).map((user: any) => user.email);
+
+        send_multiple_emails(emailAddresses, time, email, template, subject, res);
+        console.log(`${i + 1} Sending emails to ${emailAddresses.length} users`);
+        await new Promise(resolve => setTimeout(resolve, waitTime));
+      }
     }
   },
   view_announcement_emails_c: async (req: any, res: any) => {
