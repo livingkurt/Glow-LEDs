@@ -11,7 +11,7 @@ import { GLButton } from "../../../shared/GlowLEDsComponents";
 import ReactTooltip from "react-tooltip";
 import GLTooltip from "../../../shared/GlowLEDsComponents/GLTooltip/GLTooltip";
 import Rating from "../../../shared/GlowLEDsComponents/GLRating/Rating";
-import { determine_sampler_pack_name, determine_sampler_pack_pathname } from "../productHelpers";
+import { determine_sampler_pack_name, determine_sampler_pack_pathname, determine_sizing_quick_look } from "../productHelpers";
 
 const ProductOptions = ({
   product,
@@ -336,7 +336,7 @@ const ProductOptions = ({
               </div>
             </li>
           )}
-        {product?.name?.includes("Supreme") && (
+        {determine_sizing_quick_look(product?.name) && (
           <ul className="mb-10px">
             <hr />
             <h3 className="title_font jc-c fs-20px"> {sizes_conversion(size)}</h3>{" "}
