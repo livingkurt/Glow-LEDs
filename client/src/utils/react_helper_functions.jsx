@@ -334,7 +334,10 @@ const first_dash = item => {
 };
 
 const second_dash = item => {
-  if (item.name === "Refresh Pack (6 Supreme Pairs + 120 Batteries)") {
+  if (
+    item.name === "Refresh Pack V1 (6 Pairs Supreme Gloves V1 + 120 Batteries)" ||
+    item.name === "Refresh Pack V2 (6 Pairs Supreme Gloves V2 + 120 Batteries)"
+  ) {
     return "-";
   }
   if (item.category === "glowskinz") {

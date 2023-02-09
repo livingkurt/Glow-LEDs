@@ -33,10 +33,10 @@ const ProductFacts = ({ facts, category, subcategory, pathname, name }) => {
     }
   };
   const determine_sampler_pack_pathname = name => {
-    if (name.includes("Supreme Gloves V1") || name.includes("Refresh Pack V1 (6 Pairs Supreme Gloves V1 + 120 Batteries)")) {
+    if (name.includes("Supreme Gloves V1")) {
       return "supremes_gloves_v1_sizing_sampler_pack";
     }
-    if (name.includes("Supreme Gloves V2") || name.includes("Refresh Pack V1 (6 Pairs Supreme Gloves V1 + 120 Batteries)")) {
+    if (name.includes("Supreme Gloves V2")) {
       return "supremes_gloves_v2_sizing_sampler_pack";
     }
   };

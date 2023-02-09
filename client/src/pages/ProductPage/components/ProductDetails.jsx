@@ -38,9 +38,7 @@ const ProductDetails = ({ product, manuals, description, included_items, pathnam
           <Overflow.Content>
             <TabList>
               <Tab style={{ padding: "10px", borderRadius: "10px 10px 0px 0px" }}>Description</Tab>
-              {(product.name === "Supremes" || product.name === "Refresh Pack (6 Supreme Pairs + 120 Batteries)") && (
-                <Tab style={{ padding: "10px", borderRadius: "10px 10px 0px 0px" }}>Sizing</Tab>
-              )}
+              {product?.name?.includes("Supreme") && <Tab style={{ padding: "10px", borderRadius: "10px 10px 0px 0px" }}>Sizing</Tab>}
               {product.chips && product.chips.length > 0 && (
                 <Tab style={{ padding: "10px", borderRadius: "10px 10px 0px 0px" }}>Compatible Chips</Tab>
               )}
@@ -63,7 +61,7 @@ const ProductDetails = ({ product, manuals, description, included_items, pathnam
             {description}
           </ReadMore>
         </TabPanel>
-        {(product.name === "Supremes" || product.name === "Refresh Pack (6 Supreme Pairs + 120 Batteries)") && (
+        {product?.name?.includes("Supreme") && (
           <TabPanel style={{ borderRadius: "0px 10px 10px 10px" }}>
             <div className="order-list responsive_table">
               <h2 className="ta-c w-100per jc-c">Supreme Sizing</h2>
@@ -88,7 +86,7 @@ const ProductDetails = ({ product, manuals, description, included_items, pathnam
                   </tr>
                 </thead>
                 <tbody>
-                  {sizes(width).map(size => (
+                  {sizes(width, product.name).map(size => (
                     <tr
                       style={{
                         backgroundColor: "#d1d1d1",
@@ -100,8 +98,8 @@ const ProductDetails = ({ product, manuals, description, included_items, pathnam
                       className=""
                     >
                       <th style={{ width: "10px" }}>{size.size}</th>
-                      <th style={{ width: "10px" }}>{size.hand_length}</th>
-                      <th style={{ width: "10px" }}>{size.hand_width}</th>
+                      <th style={{ width: "10px" }}>{size.hand_length}"</th>
+                      <th style={{ width: "10px" }}>{size.hand_width}"</th>
                     </tr>
                   ))}
                 </tbody>

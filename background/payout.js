@@ -1,5 +1,4 @@
 const axios = require("axios");
-const { CommonActionsControllerApi } = require("mailslurp-client");
 const { domain, get_date_range, determine_code_tier } = require("./worker_helpers");
 
 module.exports = {

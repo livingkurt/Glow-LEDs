@@ -759,7 +759,7 @@ const first_dash = (item: any) => {
 };
 
 const second_dash = (item: any) => {
-  if (item.name === "Refresh Pack (6 Supreme Pairs + 120 Batteries)") {
+  if (item.name.includes("Refresh")) {
     return "-";
   }
   if (item.category === "glowskinz") {

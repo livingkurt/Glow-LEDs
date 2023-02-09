@@ -58,64 +58,52 @@ export const shuffle = (array: any) => {
   return array;
 };
 
-export const sizes = (width: number) => {
-  return [
-    {
-      size: width > 500 ? "Small" : "S",
-      hand_length: "4 - 5",
-      hand_width: "2.8 - 3.1"
-    },
-    {
-      size: width > 500 ? "Medium" : "M",
-      hand_length: "4.5 - 5.5",
-      hand_width: "2.9 - 3.2"
-    },
-    {
-      size: width > 500 ? "Large" : "L",
-      hand_length: "5.5 - 6",
-      hand_width: "3.2 - 3.5"
-    },
-    {
-      size: width > 500 ? "X-Large" : "XL",
-      hand_length: "6 - 6.5",
-      hand_width: "3.5 - 3.7"
-    },
-    {
-      size: width > 500 ? "XX-Large (Coming Soon)" : "XXL",
-      hand_length: "7.5 - 8",
-      hand_width: "3.7 - 4"
-    }
+const getSizeObject = (width: number, size: string, hand_length: string, hand_width: string) => ({
+  size: width > 500 ? size : size === "X-Large" ? "XL" : size === "XX-Large" ? "XXL" : size[0],
+  hand_length,
+  hand_width
+});
+
+export const sizes = (width: number, product_name: string) => {
+  const supremes_v1 = [
+    getSizeObject(width, "Small", "4.5", "3.8"),
+    getSizeObject(width, "Medium", "6.3", "3.2"),
+    getSizeObject(width, "Large", "7", "3.5"),
+    getSizeObject(width, "X-Large", "7.5", "4"),
+    getSizeObject(width, "XX-Large", "9", "4.8")
   ];
+  const supremes_v2 = [
+    getSizeObject(width, "Small", "6.5", "3.2"),
+    getSizeObject(width, "Medium", "7", "3.5"),
+    getSizeObject(width, "Large", "7.5", "4"),
+    getSizeObject(width, "X-Large", "8", "4.5")
+  ];
+  if (product_name?.includes("V1")) {
+    return supremes_v1;
+  } else if (product_name?.includes("V2")) {
+    return supremes_v2;
+  }
 };
 
-export const sizes_short = (width: number) => {
-  return {
-    S: {
-      size: width > 500 ? "Small" : "S",
-      hand_length: "4 - 5",
-      hand_width: "2.8 - 3.1"
-    },
-    M: {
-      size: width > 500 ? "Medium" : "M",
-      hand_length: "4.5 - 5.5",
-      hand_width: "2.9 - 3.2"
-    },
-    L: {
-      size: width > 500 ? "Large" : "L",
-      hand_length: "5.5 - 6",
-      hand_width: "3.2 - 3.5"
-    },
-    XL: {
-      size: width > 500 ? "X-Large" : "XL",
-      hand_length: "6 - 6.5",
-      hand_width: "3.5 - 3.7"
-    },
-    XXL: {
-      size: width > 500 ? "XX-Large (Coming Soon)" : "XXL",
-      hand_length: "7.5 - 8",
-      hand_width: "3.7 - 4"
-    }
+export const sizes_short = (width: number, product_name: string) => {
+  const supremes_v1 = {
+    S: getSizeObject(width, "Small", "4.5", "3.8"),
+    M: getSizeObject(width, "Medium", "6.3", "3.2"),
+    L: getSizeObject(width, "Large", "7", "3.5"),
+    XL: getSizeObject(width, "X-Large", "7.5", "4"),
+    XXL: getSizeObject(width, "XX-Large", "9", "4.8")
   };
+  const supremes_v2 = {
+    S: getSizeObject(width, "Small", "6.5", "3.2"),
+    M: getSizeObject(width, "Medium", "7", "3.5"),
+    L: getSizeObject(width, "Large", "7.5", "4"),
+    XL: getSizeObject(width, "X-Large", "8", "4.5")
+  };
+  if (product_name?.includes("V1")) {
+    return supremes_v1;
+  } else if (product_name?.includes("V2")) {
+    return supremes_v2;
+  }
 };
 
 export const sizes_conversion = (size: string) => {

@@ -90,7 +90,8 @@ const ProductOptions = ({
   };
   const names_hide_add_to_cart = [
     "Diffuser Caps + Adapters Starter Kit V4",
-    "Refresh Pack (6 Supreme Pairs + 120 Batteries)",
+    "Refresh Pack V2 (6 Pairs Supreme Gloves V2 + 120 Batteries)",
+    "Refresh Pack V1 (6 Pairs Supreme Gloves V1 + 120 Batteries)",
     "CLOZD Batman Decals",
     "CLOZD Outline + Slim Batman Decals",
     "OPYN Batman Decals",
@@ -99,7 +100,8 @@ const ProductOptions = ({
     "CLOZD Alt Novaskinz",
     "OPYN Nanoskinz V2",
     "CLOZD Novaskinz",
-    "Supreme Sizing Sampler Pack",
+    "Supreme Gloves V1 Sizing Sampler Pack",
+    "Supreme Gloves V2 Sizing Sampler Pack",
     "Capez",
     "CLOZD Omniskinz",
     "CLOZD Omniskinz Sleds",
@@ -138,7 +140,7 @@ const ProductOptions = ({
     if (categories_hide_add_to_cart.includes(product.category) && !secondary_product) {
       variant = "disabled";
     }
-    if (product.name === "Refresh Pack (6 Supreme Pairs + 120 Batteries)") {
+    if (product?.name?.includes("Refresh")) {
       if (option_product_object && option_product_object.hasOwnProperty("count_in_stock")) {
         if (option_product_object.count_in_stock > 6) {
           text = "Add To Cart";
@@ -333,18 +335,18 @@ const ProductOptions = ({
               </div>
             </li>
           )}
-        {(product.name === "Supremes" || product.name === "Refresh Pack (6 Supreme Pairs + 120 Batteries)") && (
+        {product?.name?.includes("Supreme") && (
           <ul className="mb-10px">
             <hr />
             <h3 className="title_font jc-c fs-20px"> {sizes_conversion(size)}</h3>{" "}
             <li className="jc-c ta-c w-100oer lh-30px">We recommend getting a size up compared to other company's gloves</li>
             <li className="mb-10px jc-b w-100per">
               <div className="title_font"> Hand Length:</div>{" "}
-              <div className="title_font">{size && sizes_short(width)[size].hand_length} inches</div>
+              <div className="title_font">{size && sizes_short(width, product.name)[size].hand_length} inches</div>
             </li>
             <li className="jc-b w-100per mb-10px">
               <div className="title_font"> Hand Width:</div>{" "}
-              <div className="title_font">{size && sizes_short(width)[size].hand_width} inches</div>
+              <div className="title_font">{size && sizes_short(width, product.name)[size].hand_width} inches</div>
             </li>
             {/* <hr className="w-50per jc-c " /> */}
             <li className="jc-c ta-c w-100oer mt-20px lh-30px">Worried about the fit? We've got your back with our:</li>
@@ -395,7 +397,7 @@ const ProductOptions = ({
         return "Out of Stock";
       }
     };
-    if (product.name === "Refresh Pack (6 Supreme Pairs + 120 Batteries)") {
+    if (product?.name?.includes("Refresh")) {
       return choice(6);
     } else {
       return choice(0);

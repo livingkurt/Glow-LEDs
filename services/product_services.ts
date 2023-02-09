@@ -135,8 +135,9 @@ export default {
   get_our_picks_products_s: async (params: any, body: any) => {
     try {
       const names = [
-        "Refresh Pack (6 Supreme Pairs + 120 Batteries)",
-        "Supreme Sizing Sampler Pack",
+        "Refresh Pack V2 (6 Pairs Supreme Gloves V2 + 120 Batteries)",
+        "Supreme Gloves V2 Sizing Sampler Pack",
+        "Supreme Gloves V2",
         "Bulk CR1225 Batteries",
         "Bulk CR1616 Batteries",
         "Bulk CR1620 Batteries",
