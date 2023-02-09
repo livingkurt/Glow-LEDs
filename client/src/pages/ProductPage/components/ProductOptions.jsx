@@ -11,6 +11,7 @@ import { GLButton } from "../../../shared/GlowLEDsComponents";
 import ReactTooltip from "react-tooltip";
 import GLTooltip from "../../../shared/GlowLEDsComponents/GLTooltip/GLTooltip";
 import Rating from "../../../shared/GlowLEDsComponents/GLRating/Rating";
+import { determine_sampler_pack_name, determine_sampler_pack_pathname } from "../productHelpers";
 
 const ProductOptions = ({
   product,
@@ -339,7 +340,11 @@ const ProductOptions = ({
           <ul className="mb-10px">
             <hr />
             <h3 className="title_font jc-c fs-20px"> {sizes_conversion(size)}</h3>{" "}
-            <li className="jc-c ta-c w-100oer lh-30px">We recommend getting a size up compared to other company's gloves</li>
+            <li className="jc-c ta-c w-100oer lh-30px">
+              {product?.name?.includes("V1")
+                ? 'We recommend getting a size up compared to other company"s gloves'
+                : "We recommend getting the same size you usually get from other companies"}
+            </li>
             <li className="mb-10px jc-b w-100per">
               <div className="title_font"> Hand Length:</div>{" "}
               <div className="title_font">{size && sizes_short(width, product.name)[size].hand_length} inches</div>
@@ -351,9 +356,17 @@ const ProductOptions = ({
             {/* <hr className="w-50per jc-c " /> */}
             <li className="jc-c ta-c w-100oer mt-20px lh-30px">Worried about the fit? We've got your back with our:</li>
             <li>
-              <Link to={`/collections/all/products/supremes_sizing_sampler_pack`} className="jc-c">
-                <GLButton variant="primary">Supremes Sizing Sampler Pack</GLButton>
-              </Link>
+              {product.category === "gloves" &&
+                !(
+                  product.name.includes("Supreme Gloves V1 Sizing Sampler Pack") ||
+                  product.name.includes("Supreme Gloves V2 Sizing Sampler Pack")
+                ) && (
+                  <div className="w-100per jc-c">
+                    <Link to={`/collections/all/products/${determine_sampler_pack_pathname(product.name)}`}>
+                      <GLButton variant="primary">{determine_sampler_pack_name(product.name)}</GLButton>
+                    </Link>
+                  </div>
+                )}
             </li>
             <hr />
           </ul>
