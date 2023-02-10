@@ -1,15 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
-import { Bar } from "react-chartjs-2";
-import { hslToHex } from "../../utils/helper_functions";
-import { API_Orders } from "../../utils";
+import { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import { Loading } from "../../shared/SharedComponents";
-import Overflow from "react-overflow-indicator";
-import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
-import { GLAutocomplete, GLButton } from "../../shared/GlowLEDsComponents";
+import { GLAutocomplete } from "../../shared/GlowLEDsComponents";
 import { makeStyles } from "@mui/styles";
-import { Autocomplete, Grid, TextField } from "@mui/material";
+import { Grid } from "@mui/material";
 import useChangedEffect from "../../shared/Hooks/useChangedEffect";
 import { create_query } from "../../utils/helper_functions";
 
@@ -86,7 +80,9 @@ const DashboardPage = props => {
             />
           </Grid>
         </Grid>
-        <h3 className="ta-c w-100per jc-c fs-25px">All Time Sales</h3>
+        <h3 className="ta-c w-100per jc-c fs-25px">
+          {year && month ? `${year} ${month}` : year ? year : month ? month : "All Time"} Sales
+        </h3>
       </div>
     </div>
   );

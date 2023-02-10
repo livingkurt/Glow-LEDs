@@ -173,7 +173,9 @@ export default ({ email, order, status, title, tracker }: any) => {
                     <tr style="font-family:helvetica;line-height:0em;  padding-top: 10px;">
                       <td style="font-family:helvetica;border-radius:10px; margin-right:10px;    padding: 10px;border-spacing: 2px;" colspan="3" align="center" bgcolor="#6a6c80">
                         <a style="font-size:20px;text-decoration:none;display:block;color:white; padding: 15px 0px;border:none; font-family:helvetica; font-weight: 800;"
-                        href="${determine_tracking_link(order.tracking_number)}">TRACK YOUR ORDER</a></td>
+                        href="${
+                          order.tracking_url ? order.tracking_url : determine_tracking_link(order.tracking_number)
+                        }" target="_blank">${order.tracking_number}">TRACK YOUR ORDER</a></td>
                     </tr>
                   </tbody>
                 </table>
