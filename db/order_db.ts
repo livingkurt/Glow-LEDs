@@ -442,7 +442,8 @@ export default {
         {
           $group: {
             _id: "$product.category",
-            revenue: { $sum: { $multiply: ["$orderItems.qty", "$product.price"] } }
+            revenue: { $sum: { $multiply: ["$orderItems.qty", "$product.price"] } },
+            quantity: { $sum: "$orderItems.qty" }
           }
         }
       ]);
@@ -457,7 +458,10 @@ export default {
     try {
       const category_totals = await Order.aggregate([
         {
-          $match: { deleted: false, isPaid: true }
+          $match: {
+            deleted: false,
+            isPaid: true
+          }
         },
         {
           $unwind: "$orderItems"
@@ -476,86 +480,12 @@ export default {
         {
           $group: {
             _id: "$product.category",
-            revenue: { $sum: { $multiply: ["$orderItems.qty", "$product.price"] } }
+            revenue: { $sum: { $multiply: ["$orderItems.qty", "$product.price"] } },
+            quantity: { $sum: "$orderItems.qty" }
           }
         }
       ]);
       return category_totals;
-    } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(error.message);
-      }
-    }
-  },
-  get_range_category_quantities_orders_db: async (start_date: string, end_date: string) => {
-    try {
-      const products = await Order.aggregate([
-        {
-          $match: {
-            deleted: false,
-            isPaid: true,
-            createdAt: {
-              $gte: new Date(start_date),
-              $lt: new Date(end_date)
-            }
-          }
-        },
-        {
-          $unwind: "$orderItems"
-        },
-        {
-          $lookup: {
-            from: "products",
-            localField: "orderItems.product",
-            foreignField: "_id",
-            as: "product"
-          }
-        },
-        {
-          $unwind: "$product"
-        },
-        {
-          $group: {
-            _id: "$product.category",
-            quantity: { $sum: "$orderItems.qty" }
-          }
-        }
-      ]);
-      return products;
-    } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(error.message);
-      }
-    }
-  },
-  get_all_time_category_quantities_orders_db: async () => {
-    try {
-      const products = await Order.aggregate([
-        {
-          $match: { deleted: false, isPaid: true }
-        },
-        {
-          $unwind: "$orderItems"
-        },
-        {
-          $lookup: {
-            from: "products",
-            localField: "orderItems.product",
-            foreignField: "_id",
-            as: "product"
-          }
-        },
-        {
-          $unwind: "$product"
-        },
-        {
-          $group: {
-            _id: "$product.category",
-            quantity: { $sum: "$orderItems.qty" }
-          }
-        }
-      ]);
-      return products;
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

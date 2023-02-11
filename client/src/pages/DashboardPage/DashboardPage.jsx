@@ -40,7 +40,6 @@ const DashboardPage = props => {
     if (!year && !month && start_date && end_date) {
       query = create_query({ start_date: dates.start_date, end_date: dates.end_date });
     }
-
     history.push(`/secure/glow/dashboard?${query}`);
     return () => {};
   }, [year, month]);
@@ -61,6 +60,15 @@ const DashboardPage = props => {
             <h3 className="fs-30px jc-c">
               ${!all_time_revenue.isLoading && all_time_revenue.data[0] ? all_time_revenue.data[0]?.totalPrice.toFixed(2) : "0.00"}
             </h3>
+            <Grid container spacing={3}>
+              <Grid item xs={12} sm={6}>
+                <span className="title_font">Year</span>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <span className="title_font">Revenue</span>
+              </Grid>
+            </Grid>
+            <hr />
             <div>
               {!yearly_revenue.isLoading &&
                 yearly_revenue?.data[0]?.data &&
@@ -82,7 +90,23 @@ const DashboardPage = props => {
                     );
                   })}
             </div>
-            <h3 className="fs-30px jc-c">Category Sales</h3>
+            <h3 className="fs-25px jc-c">Category Sales</h3>
+            <Grid container spacing={3}>
+              <Grid item xs={12}>
+                <Grid container spacing={3}>
+                  <Grid item xs={12} sm={4}>
+                    <span className="title_font">Category</span>
+                  </Grid>
+                  <Grid item xs={12} sm={4}>
+                    <span className="title_font">Revenue</span>
+                  </Grid>
+                  <Grid item xs={12} sm={4}>
+                    <span className="title_font">Quantity Sold</span>
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Grid>
+            <hr />
             <div>
               {!category_all_time_revenue.isLoading &&
                 category_all_time_revenue?.data &&
@@ -93,11 +117,18 @@ const DashboardPage = props => {
                     return (
                       <div key={index}>
                         <Grid container spacing={3}>
-                          <Grid item xs={12} sm={6}>
-                            <span className="">{humanize(category._id)}</span>
-                          </Grid>
-                          <Grid item xs={12} sm={6}>
-                            <span>${category.revenue.toFixed(2)}</span>
+                          <Grid item xs={12}>
+                            <Grid container spacing={3}>
+                              <Grid item xs={12} sm={4}>
+                                <span className="">{humanize(category._id)}</span>
+                              </Grid>
+                              <Grid item xs={12} sm={4}>
+                                <span>${category.revenue.toFixed(2)}</span>
+                              </Grid>
+                              <Grid item xs={12} sm={4}>
+                                <span>${category.quantity}</span>
+                              </Grid>
+                            </Grid>
                           </Grid>
                         </Grid>
                         <hr />
@@ -119,6 +150,15 @@ const DashboardPage = props => {
             <h3 className="fs-30px jc-c">
               ${!range_revenue.isLoading && range_revenue.data[0] ? range_revenue.data[0]?.totalPrice.toFixed(2) : "0.00"}
             </h3>
+            <Grid container spacing={3}>
+              <Grid item xs={12} sm={6}>
+                <span className="title_font">Year</span>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <span className="title_font">Revenue</span>
+              </Grid>
+            </Grid>
+            <hr />
             <div>
               {!monthy_revenue.isLoading &&
                 monthy_revenue?.data[0]?.data &&
@@ -144,7 +184,23 @@ const DashboardPage = props => {
         )}
         {year && (
           <>
-            <h3 className="fs-30px jc-c">Category Sales</h3>
+            <h3 className="fs-25px jc-c">Category Sales</h3>
+            <Grid container spacing={3}>
+              <Grid item xs={12}>
+                <Grid container spacing={3}>
+                  <Grid item xs={12} sm={4}>
+                    <span className="title_font">Category</span>
+                  </Grid>
+                  <Grid item xs={12} sm={4}>
+                    <span className="title_font">Revenue</span>
+                  </Grid>
+                  <Grid item xs={12} sm={4}>
+                    <span className="title_font">Quantity Sold</span>
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Grid>
+            <hr />
             <div>
               {!category_range_revenue.isLoading &&
                 category_range_revenue?.data &&
@@ -155,11 +211,18 @@ const DashboardPage = props => {
                     return (
                       <div key={index}>
                         <Grid container spacing={3}>
-                          <Grid item xs={12} sm={6}>
-                            <span className="">{humanize(category._id)}</span>
-                          </Grid>
-                          <Grid item xs={12} sm={6}>
-                            <span>${category.revenue.toFixed(2)}</span>
+                          <Grid item xs={12}>
+                            <Grid container spacing={3}>
+                              <Grid item xs={12} sm={4}>
+                                <span className="">{humanize(category._id)}</span>
+                              </Grid>
+                              <Grid item xs={12} sm={4}>
+                                <span>${category.revenue.toFixed(2)}</span>
+                              </Grid>
+                              <Grid item xs={12} sm={4}>
+                                <span>{category.quantity}</span>
+                              </Grid>
+                            </Grid>
                           </Grid>
                         </Grid>
                         <hr />

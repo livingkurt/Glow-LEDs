@@ -36,13 +36,6 @@ export const dashboardApi = createApi({
     }),
     getAllTimeCategoryRevenueOrders: builder.query({
       query: () => "/get_all_time_category_revenue_orders"
-    }),
-    getRangeCategoryQuantitiesOrders: builder.query({
-      query: ({ start_date, end_date }: { start_date: string; end_date: string }) =>
-        `/get_range_category_quantities_orders?start_date=${start_date}&end_date=${end_date}`
-    }),
-    getAllTimeCategoryQuantitiesOrders: builder.query({
-      query: () => "/get_all_time_category_quantities_orders"
     })
   })
 });
@@ -57,7 +50,5 @@ export const {
   useGetMonthlyRevenueOrdersQuery,
   useGetYearlyRevenueOrdersQuery,
   useGetRangeCategoryRevenueOrdersQuery,
-  useGetAllTimeCategoryRevenueOrdersQuery,
-  useGetRangeCategoryQuantitiesOrdersQuery,
-  useGetAllTimeCategoryQuantitiesOrdersQuery
+  useGetAllTimeCategoryRevenueOrdersQuery
 } = dashboardApi;
