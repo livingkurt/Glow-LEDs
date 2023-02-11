@@ -309,6 +309,7 @@ export default {
   },
   get_range_revenue_orders_c: async (req: any, res: any) => {
     const { query } = req;
+    console.log({ query });
     try {
       const orders = await order_services.get_range_revenue_orders_s(query);
       if (orders) {

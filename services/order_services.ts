@@ -1148,6 +1148,7 @@ export default {
   get_range_revenue_orders_s: async (query: { start_date: string; end_date: string }) => {
     try {
       const { start_date, end_date } = query;
+      console.log({ start_date, end_date });
       return await order_db.get_range_revenue_orders_db(start_date, end_date);
     } catch (error) {
       if (error instanceof Error) {

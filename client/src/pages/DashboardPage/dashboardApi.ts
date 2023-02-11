@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-export const orderApi = createApi({
-  reducerPath: "orderApi",
+export const dashboardApi = createApi({
+  reducerPath: "dashboardApi",
   baseQuery: fetchBaseQuery({ baseUrl: "/api/orders" }),
   endpoints: builder => ({
     getProductQuantitiesOrders: builder.query({
@@ -17,22 +17,28 @@ export const orderApi = createApi({
       query: id => `/get_product_all_time_revenue_orders/${id},`
     }),
     getProductRangeRevenueOrders: builder.query({
-      query: id => `/get_product_range_revenue_orders/${id}`
+      query: ({ id, start_date, end_date }: { id: string; start_date: string; end_date: string }) =>
+        `/get_product_range_revenue_orders/${id}?start_date=${start_date}&end_date=${end_date}`
     }),
     getRangeRevenueOrders: builder.query({
-      query: () => "/get_range_revenue_orders"
+      query: ({ start_date, end_date }: { start_date: string; end_date: string }) => {
+        console.log({ start_date, end_date });
+        return `/get_range_revenue_orders?start_date=${start_date}&end_date=${end_date}`;
+      }
     }),
     getMonthlyRevenueOrders: builder.query({
       query: () => "/get_monthly_revenue_orders"
     }),
     getRangeCategoryRevenueOrders: builder.query({
-      query: () => "/get_range_category_revenue_orders"
+      query: ({ start_date, end_date }: { start_date: string; end_date: string }) =>
+        `/get_range_category_revenue_orders?start_date=${start_date}&end_date=${end_date}`
     }),
     getAllTimeCategoryRevenueOrders: builder.query({
       query: () => "/get_all_time_category_revenue_orders"
     }),
     getRangeCategoryQuantitiesOrders: builder.query({
-      query: () => "/get_range_category_quantities_orders"
+      query: ({ start_date, end_date }: { start_date: string; end_date: string }) =>
+        `/get_range_category_quantities_orders?start_date=${start_date}&end_date=${end_date}`
     }),
     getAllTimeCategoryQuantitiesOrders: builder.query({
       query: () => "/get_all_time_category_quantities_orders"
@@ -52,4 +58,4 @@ export const {
   useGetAllTimeCategoryRevenueOrdersQuery,
   useGetRangeCategoryQuantitiesOrdersQuery,
   useGetAllTimeCategoryQuantitiesOrdersQuery
-} = orderApi;
+} = dashboardApi;

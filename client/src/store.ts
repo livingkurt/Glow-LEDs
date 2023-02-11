@@ -1,4 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { dashboardApi } from "./pages/DashboardPage/dashboardApi";
 import reducer from "./reducer";
 
 let cartItems: any;
@@ -27,7 +28,7 @@ const initialState: object = {
 
 const store = configureStore({
   reducer: reducer,
-  middleware: getDefaultMiddleware => getDefaultMiddleware({ serializableCheck: false }),
+  middleware: getDefaultMiddleware => getDefaultMiddleware({ serializableCheck: false }).concat([dashboardApi.middleware]),
   preloadedState: initialState
 });
 

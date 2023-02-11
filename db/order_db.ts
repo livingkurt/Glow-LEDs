@@ -203,7 +203,7 @@ export default {
       }
     }
   },
-  get_product_range_revenue_orders_db: async (id: string, startDate: string, endDate: string) => {
+  get_product_range_revenue_orders_db: async (id: string, start_date: string, end_date: string) => {
     try {
       const result = await Order.aggregate([
         {
@@ -211,8 +211,8 @@ export default {
             deleted: false,
             isPaid: true,
             createdAt: {
-              $gte: new Date(startDate),
-              $lt: new Date(endDate)
+              $gte: new Date(start_date),
+              $lt: new Date(end_date)
             },
             "orderItems.product": id
           }
@@ -231,7 +231,7 @@ export default {
       }
     }
   },
-  get_range_revenue_orders_db: async (startDate: string, endDate: string) => {
+  get_range_revenue_orders_db: async (start_date: string, end_date: string) => {
     try {
       const totalPrice = await Order.aggregate([
         {
@@ -239,8 +239,8 @@ export default {
             deleted: false,
             isPaid: true,
             createdAt: {
-              $gte: new Date(startDate),
-              $lt: new Date(endDate)
+              $gte: new Date(start_date),
+              $lt: new Date(end_date)
             }
           }
         },
@@ -272,6 +272,7 @@ export default {
           }
         }
       ]).exec();
+      console.log({ totalPrice });
       return totalPrice;
     } catch (error) {
       if (error instanceof Error) {
@@ -279,7 +280,7 @@ export default {
       }
     }
   },
-  get_range_tips_orders_db: async (startDate: string, endDate: string) => {
+  get_range_tips_orders_db: async (start_date: string, end_date: string) => {
     try {
       const total_tips = await Order.aggregate([
         {
@@ -287,8 +288,8 @@ export default {
             deleted: false,
             isPaid: true,
             createdAt: {
-              $gte: new Date(startDate),
-              $lt: new Date(endDate)
+              $gte: new Date(start_date),
+              $lt: new Date(end_date)
             }
           }
         },
@@ -351,7 +352,7 @@ export default {
       }
     }
   },
-  get_range_category_revenue_orders_db: async (startDate: string, endDate: string) => {
+  get_range_category_revenue_orders_db: async (start_date: string, end_date: string) => {
     try {
       const category_totals = await Order.aggregate([
         {
@@ -359,8 +360,8 @@ export default {
             deleted: false,
             isPaid: true,
             createdAt: {
-              $gte: new Date(startDate),
-              $lt: new Date(endDate)
+              $gte: new Date(start_date),
+              $lt: new Date(end_date)
             }
           }
         },
@@ -426,7 +427,7 @@ export default {
       }
     }
   },
-  get_range_category_quantities_orders_db: async (startDate: string, endDate: string) => {
+  get_range_category_quantities_orders_db: async (start_date: string, end_date: string) => {
     try {
       const products = await Order.aggregate([
         {
@@ -434,8 +435,8 @@ export default {
             deleted: false,
             isPaid: true,
             createdAt: {
-              $gte: new Date(startDate),
-              $lt: new Date(endDate)
+              $gte: new Date(start_date),
+              $lt: new Date(end_date)
             }
           }
         },

@@ -94,7 +94,6 @@ const GLTextField = ({ loading, size, value, type, margin, name, label, variant,
           }}
           classes={classes.textField}
           size={size}
-          loading={!loading}
           value={value}
           type={type}
           margin={margin}
@@ -109,6 +108,30 @@ const GLTextField = ({ loading, size, value, type, margin, name, label, variant,
       )}
     </div>
   );
+};
+PropTypes.GLTextField = {
+  loading: PropTypes.bool,
+  size: PropTypes.string,
+  value: PropTypes.string,
+  type: PropTypes.string,
+  margin: PropTypes.string,
+  name: PropTypes.string,
+  label: PropTypes.string,
+  variant: PropTypes.string,
+  onChange: PropTypes.func,
+  fullWidth: PropTypes.bool
+};
+GLTextField.defaultProps = {
+  size: "medium",
+  value: "",
+  type: "text",
+  margin: "normal",
+  name: "",
+  label: "",
+  variant: "outlined",
+  onChange: () => {},
+  fullWidth: true,
+  loading: true
 };
 
 export default GLTextField;
