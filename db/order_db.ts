@@ -233,6 +233,55 @@ export default {
       }
     }
   },
+  get_daily_revenue_orders_db: async (start_date: string, end_date: string) => {
+    try {
+      console.log({ start_date, end_date });
+      const totalPriceByDay = await Order.aggregate([
+        {
+          $match: {
+            deleted: false,
+            isPaid: true,
+            createdAt: {
+              $gte: new Date(start_date),
+              $lt: new Date(end_date)
+            }
+          }
+        },
+        {
+          $group: {
+            _id: {
+              $dateToString: {
+                format: "%Y-%m-%d",
+                date: "$createdAt"
+              }
+            },
+            totalPrice: {
+              $sum: "$totalPrice"
+            }
+          }
+        },
+        {
+          $project: {
+            _id: 0,
+            day: "$_id",
+            totalPrice: "$totalPrice"
+          }
+        },
+        {
+          $sort: {
+            day: 1
+          }
+        }
+      ]);
+
+      return totalPriceByDay;
+    } catch (error) {
+      console.log({ error });
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
   get_monthly_revenue_orders_db: async (year: string) => {
     try {
       const totalPriceByMonth = await Order.aggregate([
@@ -286,7 +335,7 @@ export default {
       }
     }
   },
-  get_yearly_revenue_orders_db: async (year: string) => {
+  get_yearly_revenue_orders_db: async () => {
     try {
       const totalPriceByYear = await Order.aggregate([
         {

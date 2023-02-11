@@ -319,6 +319,18 @@ export default {
       res.status(500).send({ error, message: "Error get_range_revenue_orders_c" });
     }
   },
+  get_daily_revenue_orders_c: async (req: any, res: any) => {
+    const { query } = req;
+    try {
+      const orders = await order_services.get_daily_revenue_orders_s(query);
+      if (orders) {
+        return res.status(200).send(orders);
+      }
+      return res.status(500).send({ message: "Error get_daily_revenue_orders_c" });
+    } catch (error) {
+      res.status(500).send({ error, message: "Error get_daily_revenue_orders_c" });
+    }
+  },
   get_monthly_revenue_orders_c: async (req: any, res: any) => {
     const { query } = req;
     try {
@@ -332,9 +344,8 @@ export default {
     }
   },
   get_yearly_revenue_orders_c: async (req: any, res: any) => {
-    const { query } = req;
     try {
-      const orders = await order_services.get_yearly_revenue_orders_s(query);
+      const orders = await order_services.get_yearly_revenue_orders_s();
       if (orders) {
         return res.status(200).send(orders);
       }

@@ -38,6 +38,7 @@ router.route("/get_all_time_revenue_orders").get(order_controller.get_all_time_r
 router.route("/get_product_all_time_revenue_orders/:id").get(order_controller.get_product_all_time_revenue_orders_c);
 router.route("/get_product_range_revenue_orders/:id").get(order_controller.get_product_range_revenue_orders_c);
 router.route("/get_range_revenue_orders").get(order_controller.get_range_revenue_orders_c);
+router.route("/get_daily_revenue_orders").get(order_controller.get_daily_revenue_orders_c);
 router.route("/get_monthly_revenue_orders").get(order_controller.get_monthly_revenue_orders_c);
 router.route("/get_yearly_revenue_orders").get(order_controller.get_yearly_revenue_orders_c);
 router.route("/get_range_category_revenue_orders").get(order_controller.get_range_category_revenue_orders_c);
