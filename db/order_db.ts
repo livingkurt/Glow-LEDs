@@ -279,10 +279,57 @@ export default {
           }
         }
       ]).exec();
-      console.log({ totalPriceByMonth });
       return totalPriceByMonth;
     } catch (error) {
-      console.log({ error });
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  get_yearly_revenue_orders_db: async (year: string) => {
+    try {
+      const totalPriceByYear = await Order.aggregate([
+        {
+          $match: {
+            deleted: false,
+            isPaid: true
+          }
+        },
+        {
+          $group: {
+            _id: {
+              year: { $year: "$createdAt" }
+            },
+            totalPrice: {
+              $sum: "$totalPrice"
+            },
+            refundPrice: {
+              $sum: "$refundPrice"
+            }
+          }
+        },
+        {
+          $group: {
+            _id: null,
+            data: {
+              $push: {
+                year: "$_id.year",
+                totalPrice: {
+                  $sum: "$totalPrice"
+                }
+              }
+            }
+          }
+        },
+        {
+          $project: {
+            _id: 0,
+            data: 1
+          }
+        }
+      ]).exec();
+      return totalPriceByYear;
+    } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }

@@ -153,7 +153,6 @@ export default {
       if (update_order) {
         const EasyPost = new easy_post_api(process.env.EASY_POST);
         const tracker = await EasyPost.Tracker.retrieve(label.tracker.id);
-        console.log({ tracker });
         update_order.shipping.shipment_tracker = label.tracker.id;
         update_order.tracking_number = tracking_number;
         update_order.tracking_url = tracker.public_url;

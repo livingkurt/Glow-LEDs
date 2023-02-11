@@ -5,7 +5,12 @@ import { makeStyles } from "@mui/styles";
 import { Grid } from "@mui/material";
 import useChangedEffect from "../../shared/Hooks/useChangedEffect";
 import { create_query } from "../../utils/helper_functions";
-import { useGetAllTimeRevenueOrdersQuery, useGetMonthlyRevenueOrdersQuery, useGetRangeRevenueOrdersQuery } from "./dashboardApi";
+import {
+  useGetAllTimeRevenueOrdersQuery,
+  useGetMonthlyRevenueOrdersQuery,
+  useGetRangeRevenueOrdersQuery,
+  useGetYearlyRevenueOrdersQuery
+} from "./dashboardApi";
 import { getMonthStartEndDates, months, years } from "./dashboardHelpers";
 import { useDispatch, useSelector } from "react-redux";
 import { set_end_date, set_month, set_start_date, set_start_end_date, set_year } from "./dashboardSlice";
@@ -33,10 +38,10 @@ const DashboardPage = props => {
   const current_month = new Date().getMonth();
 
   const all_time_revenue = useGetAllTimeRevenueOrdersQuery();
-
   const range_revenue = useGetRangeRevenueOrdersQuery({ start_date, end_date });
-
-  const month_revenue = useGetMonthlyRevenueOrdersQuery({ year });
+  const monthy_revenue = useGetMonthlyRevenueOrdersQuery({ year });
+  const yearly_revenue = useGetYearlyRevenueOrdersQuery();
+  console.log({ yearly_revenue });
 
   useChangedEffect(() => {
     const dates = getMonthStartEndDates(month, parseInt(year) || parseInt(current_year));
@@ -127,6 +132,28 @@ const DashboardPage = props => {
             <h3 className="fs-30px jc-c">
               ${!all_time_revenue.isLoading && all_time_revenue.data[0] ? all_time_revenue.data[0]?.totalPrice.toFixed(2) : "0.00"}
             </h3>
+            <div>
+              {console.log({ yearly_revenue: yearly_revenue?.data[0]?.data })}
+              {!yearly_revenue.isLoading &&
+                yearly_revenue?.data[0]?.data &&
+                [...yearly_revenue.data[0].data]
+                  .sort((a, b) => a.year - b.year)
+                  .map((revenue, index) => {
+                    return (
+                      <div key={index}>
+                        <Grid container spacing={3}>
+                          <Grid item xs={12} sm={6}>
+                            <span className="">{revenue.year}</span>
+                          </Grid>
+                          <Grid item xs={12} sm={6}>
+                            <span>${revenue.totalPrice.toFixed(2)}</span>
+                          </Grid>
+                        </Grid>
+                        <hr />
+                      </div>
+                    );
+                  })}
+            </div>
           </div>
         )}
         {month && year && (
@@ -138,10 +165,12 @@ const DashboardPage = props => {
         )}
         {!month && year && (
           <div>
-            {console.log({ month_revenue: month_revenue?.data[0]?.data })}
-            {!month_revenue.isLoading &&
-              month_revenue?.data[0]?.data &&
-              [...month_revenue.data[0].data]
+            <h3 className="fs-30px jc-c">
+              ${!range_revenue.isLoading && range_revenue.data[0] ? range_revenue.data[0]?.totalPrice.toFixed(2) : "0.00"}
+            </h3>
+            {!monthy_revenue.isLoading &&
+              monthy_revenue?.data[0]?.data &&
+              [...monthy_revenue.data[0].data]
                 .sort((a, b) => a.month - b.month)
                 .map((revenue, index) => {
                   return (

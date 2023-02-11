@@ -139,7 +139,6 @@ const PaymentStep = ({
                 />
               </div>
             </li>
-            {console.log({ userInfo: userInfo.hasOwnProperty("first_name") })}
             {!userInfo.hasOwnProperty("first_name") && (
               <li>
                 <div className="mv-2rem">

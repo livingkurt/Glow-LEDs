@@ -13,6 +13,9 @@ export const dashboardApi = createApi({
     getAllTimeRevenueOrders: builder.query({
       query: () => "/get_all_time_revenue_orders"
     }),
+    getYearlyRevenueOrders: builder.query({
+      query: () => "/get_yearly_revenue_orders"
+    }),
     getProductAllTimeRevenueOrders: builder.query({
       query: id => `/get_product_all_time_revenue_orders/${id},`
     }),
@@ -52,6 +55,7 @@ export const {
   useGetProductRangeRevenueOrdersQuery,
   useGetRangeRevenueOrdersQuery,
   useGetMonthlyRevenueOrdersQuery,
+  useGetYearlyRevenueOrdersQuery,
   useGetRangeCategoryRevenueOrdersQuery,
   useGetAllTimeCategoryRevenueOrdersQuery,
   useGetRangeCategoryQuantitiesOrdersQuery,
