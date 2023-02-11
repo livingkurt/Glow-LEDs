@@ -412,6 +412,7 @@ export default {
   },
 
   get_range_category_revenue_orders_db: async (start_date: string, end_date: string) => {
+    console.log({ start_date, end_date });
     try {
       const category_totals = await Order.aggregate([
         {
