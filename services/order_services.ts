@@ -1156,9 +1156,10 @@ export default {
       }
     }
   },
-  get_monthly_revenue_orders_s: async () => {
+  get_monthly_revenue_orders_s: async (query: { year: string }) => {
+    const { year } = query;
     try {
-      return await order_db.get_monthly_revenue_orders_db();
+      return await order_db.get_monthly_revenue_orders_db(year);
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

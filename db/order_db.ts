@@ -185,6 +185,109 @@ export default {
       }
     }
   },
+  get_range_revenue_orders_db: async (start_date: string, end_date: string) => {
+    try {
+      const totalPrice = await Order.aggregate([
+        {
+          $match: {
+            deleted: false,
+            isPaid: true,
+            createdAt: {
+              $gte: new Date(start_date),
+              $lt: new Date(end_date)
+            }
+          }
+        },
+        {
+          $group: {
+            _id: null,
+            totalPrice: {
+              $sum: "$totalPrice"
+            },
+            refundPrice: {
+              $sum: "$refundPrice"
+            }
+          }
+        },
+        {
+          $group: {
+            _id: null,
+            totalPrice: {
+              $sum: "$totalPrice"
+            },
+            refundPrice: {
+              $sum: "$refundPrice"
+            },
+            netTotalPrice: {
+              $sum: {
+                $subtract: ["$totalPrice", "$refundPrice"]
+              }
+            }
+          }
+        }
+      ]).exec();
+      return totalPrice;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  get_monthly_revenue_orders_db: async (year: string) => {
+    try {
+      const totalPriceByMonth = await Order.aggregate([
+        {
+          $match: {
+            deleted: false,
+            isPaid: true,
+            createdAt: {
+              $gte: new Date(`${year}-01-01T00:00:00.000Z`),
+              $lt: new Date(`${parseInt(year) + 1}-01-01T00:00:00.000Z`)
+            }
+          }
+        },
+        {
+          $group: {
+            _id: {
+              month: { $month: "$createdAt" }
+            },
+            totalPrice: {
+              $sum: "$totalPrice"
+            },
+            refundPrice: {
+              $sum: "$refundPrice"
+            }
+          }
+        },
+        {
+          $group: {
+            _id: null,
+            data: {
+              $push: {
+                month: "$_id.month",
+                totalPrice: {
+                  $sum: "$totalPrice"
+                }
+              }
+            }
+          }
+        },
+        {
+          $project: {
+            _id: 0,
+            data: 1
+          }
+        }
+      ]).exec();
+      console.log({ totalPriceByMonth });
+      return totalPriceByMonth;
+    } catch (error) {
+      console.log({ error });
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
   get_product_all_time_revenue_orders_db: async (id: string) => {
     try {
       const result = await Order.aggregate([
@@ -231,55 +334,6 @@ export default {
       }
     }
   },
-  get_range_revenue_orders_db: async (start_date: string, end_date: string) => {
-    try {
-      const totalPrice = await Order.aggregate([
-        {
-          $match: {
-            deleted: false,
-            isPaid: true,
-            createdAt: {
-              $gte: new Date(start_date),
-              $lt: new Date(end_date)
-            }
-          }
-        },
-        {
-          $group: {
-            _id: null,
-            totalPrice: {
-              $sum: "$totalPrice"
-            },
-            refundPrice: {
-              $sum: "$refundPrice"
-            }
-          }
-        },
-        {
-          $group: {
-            _id: null,
-            totalPrice: {
-              $sum: "$totalPrice"
-            },
-            refundPrice: {
-              $sum: "$refundPrice"
-            },
-            netTotalPrice: {
-              $sum: {
-                $subtract: ["$totalPrice", "$refundPrice"]
-              }
-            }
-          }
-        }
-      ]).exec();
-      console.log({ totalPrice });
-      return totalPrice;
-    } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(error.message);
-      }
-    }
-  },
   get_range_tips_orders_db: async (start_date: string, end_date: string) => {
     try {
       const total_tips = await Order.aggregate([
@@ -309,49 +363,7 @@ export default {
       }
     }
   },
-  get_monthly_revenue_orders_db: async () => {
-    try {
-      const totalPrice = await Order.aggregate([
-        {
-          $group: {
-            _id: { month: { $month: "$date" } },
-            revenue: { $sum: "$totalPrice" }
-          }
-        },
-        {
-          $project: {
-            _id: 0,
-            month: {
-              $switch: {
-                branches: [
-                  { case: { $eq: ["$_id.month", 1] }, then: "January" },
-                  { case: { $eq: ["$_id.month", 2] }, then: "February" },
-                  { case: { $eq: ["$_id.month", 2] }, then: "March" },
-                  { case: { $eq: ["$_id.month", 2] }, then: "April" },
-                  { case: { $eq: ["$_id.month", 2] }, then: "May" },
-                  { case: { $eq: ["$_id.month", 2] }, then: "June" },
-                  { case: { $eq: ["$_id.month", 2] }, then: "July" },
-                  { case: { $eq: ["$_id.month", 2] }, then: "August" },
-                  { case: { $eq: ["$_id.month", 2] }, then: "September" },
-                  { case: { $eq: ["$_id.month", 2] }, then: "October" },
-                  { case: { $eq: ["$_id.month", 2] }, then: "November" },
-                  { case: { $eq: ["$_id.month", 12] }, then: "December" }
-                ],
-                default: "Unknown"
-              }
-            },
-            revenue: 1
-          }
-        }
-      ]).exec();
 
-      return totalPrice;
-    } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(error.message);
-      }
-    }
-  },
   get_range_category_revenue_orders_db: async (start_date: string, end_date: string) => {
     try {
       const category_totals = await Order.aggregate([

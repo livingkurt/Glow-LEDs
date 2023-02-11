@@ -21,13 +21,11 @@ export const dashboardApi = createApi({
         `/get_product_range_revenue_orders/${id}?start_date=${start_date}&end_date=${end_date}`
     }),
     getRangeRevenueOrders: builder.query({
-      query: ({ start_date, end_date }: { start_date: string; end_date: string }) => {
-        console.log({ start_date, end_date });
-        return `/get_range_revenue_orders?start_date=${start_date}&end_date=${end_date}`;
-      }
+      query: ({ start_date, end_date }: { start_date: string; end_date: string }) =>
+        `/get_range_revenue_orders?start_date=${start_date}&end_date=${end_date}`
     }),
     getMonthlyRevenueOrders: builder.query({
-      query: () => "/get_monthly_revenue_orders"
+      query: ({ year }: { year: string }) => `/get_monthly_revenue_orders?year=${year}`
     }),
     getRangeCategoryRevenueOrders: builder.query({
       query: ({ start_date, end_date }: { start_date: string; end_date: string }) =>

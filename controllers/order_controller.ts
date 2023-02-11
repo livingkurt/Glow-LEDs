@@ -309,7 +309,6 @@ export default {
   },
   get_range_revenue_orders_c: async (req: any, res: any) => {
     const { query } = req;
-    console.log({ query });
     try {
       const orders = await order_services.get_range_revenue_orders_s(query);
       if (orders) {
@@ -321,8 +320,9 @@ export default {
     }
   },
   get_monthly_revenue_orders_c: async (req: any, res: any) => {
+    const { query } = req;
     try {
-      const orders = await order_services.get_monthly_revenue_orders_s();
+      const orders = await order_services.get_monthly_revenue_orders_s(query);
       if (orders) {
         return res.status(200).send(orders);
       }
