@@ -372,7 +372,7 @@ const ProfilePage = props => {
                     </GLButton>
                   </Link>
                 </div>
-                {userInfo.is_affiliated && userInfo.affiliate && (
+                {user.is_affiliated && affiliate && (
                   <div style={{ height: 50 }}>
                     <GLButton style={{ maxWidth: "225px" }} onClick={send_not_verified_email} variant="primary">
                       Still Not Verified
@@ -380,14 +380,14 @@ const ProfilePage = props => {
                   </div>
                 )}
                 <div className="ml-10px">
-                  {userInfo.is_affiliated && affiliate && affiliate.pathname && (
+                  {user.is_affiliated && affiliate && affiliate.pathname && (
                     <div>
                       <Link to={"/secure/account/edit_affiliate/" + affiliate.pathname}>
                         <GLButton variant="primary">Edit Affiliate Profile</GLButton>
                       </Link>
                     </div>
                   )}{" "}
-                  {userInfo.is_affiliated && !userInfo.affiliate && (
+                  {user.is_affiliated && !affiliate && (
                     <div>
                       <Link to={"/secure/account/edit_affiliate"}>
                         <GLButton variant="primary">Affiliate Sign Up</GLButton>
