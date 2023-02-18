@@ -42,7 +42,7 @@ const OrdersPage = props => {
         dispatch(
           listOrders({
             category,
-            search,
+            search: query.search,
             sort,
             page: query.page,
             limit: query.limit
@@ -65,6 +65,9 @@ const OrdersPage = props => {
 
   const submitHandler = e => {
     e.preventDefault();
+    history.push({
+      search: `?page=${page}?limit=${limit}${search ? "?search=" + search : ""}`
+    });
     dispatch(listOrders({ category, search, sort, page, limit }));
   };
 
@@ -97,7 +100,7 @@ const OrdersPage = props => {
     e.preventDefault();
     const page = parseInt(new_page);
     history.push({
-      search: "?page=" + page + "?limit=" + limit
+      search: `?page=${page}?limit=${limit}${search ? "?search=" + search : ""}`
     });
 
     dispatch(listOrders({ category, search, sort, page: new_page, limit }));
@@ -110,6 +113,16 @@ const OrdersPage = props => {
     }
     return () => (clean = false);
   }, [orders]);
+
+  // useEffect(() => {
+  //   let clean = true;
+  //   if (clean) {
+  //     history.push({
+  //       search: `?page=${page}&limit=${limit}${search ? "&search=" + search : ""}`
+  //     });
+  //   }
+  //   return () => (clean = false);
+  // }, [page, limit, search]);
 
   const [not_shipped, set_not_shipped] = useState([]);
 
