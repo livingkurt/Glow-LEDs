@@ -13,6 +13,7 @@ import ReactTooltip from "react-tooltip";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import { isAdmin } from "../../../utils/helpers/user_helpers";
 import { OrderStatusButtons } from "../../OrderPage/components";
+import useWindowDimensions from "../../../shared/Hooks/windowDimensions";
 
 const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_email, listOrdersFilters }) => {
   const history = useHistory();
@@ -254,6 +255,7 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
     set_loading_email(false);
   };
 
+  const { width } = useWindowDimensions();
   return (
     <div
       style={{
@@ -300,7 +302,7 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
                 </div>
               )}
             </div>
-            {admin && (
+            {admin && width > 800 && (
               <div className="fs-16px">
                 <h3>Since Order</h3>
                 {daysBetween(today, order.createdAt) > 1
@@ -314,7 +316,7 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
                 {order.shipping.first_name} {order.shipping.last_name}
               </Link>
             </div>
-            {admin && order.isPaused ? (
+            {admin && width > 800 && order.isPaused ? (
               <p className="title_font ai-c fs-30px">{order.isPaused && "PAUSED"}</p>
             ) : (
               order.shipping.shipping_rate && (
@@ -326,33 +328,35 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
           </div>
           <div className="w-40per jc-fe">
             <div className="">
-              <div className="fs-16px">
-                <div className="row ai-c">
-                  <h3 className="mr-10px">Order Number: </h3>
-                  <div>{order._id}</div>
-                </div>
-                {order.tracking_number && order.tracking_number.length > 0 && determine_tracking_link(order.tracking_number) && (
-                  <div className="row ai-c mb-2rem">
-                    <h3 className="mr-10px  mv-0px">Tracking Number: </h3>
-                    <div className="mt-0px">
-                      {" "}
-                      <a
-                        href={order.tracking_url ? order.tracking_url : determine_tracking_link(order.tracking_number)}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="mv-2rem"
-                        style={{
-                          textDecoration: "underline",
-                          color: "white"
-                        }}
-                      >
-                        {order.tracking_number}
-                      </a>
-                    </div>
+              {width > 800 && (
+                <div className="fs-16px">
+                  <div className="row ai-c">
+                    <h3 className="mr-10px">Order Number: </h3>
+                    <div>{order._id}</div>
                   </div>
-                )}
-              </div>
-              <div className={`fs-16px jc-fe ai-c`}>
+                  {order.tracking_number && order.tracking_number.length > 0 && determine_tracking_link(order.tracking_number) && (
+                    <div className="row ai-c mb-2rem">
+                      <h3 className="mr-10px  mv-0px">Tracking Number: </h3>
+                      <div className="mt-0px">
+                        {" "}
+                        <a
+                          href={order.tracking_url ? order.tracking_url : determine_tracking_link(order.tracking_number)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="mv-2rem"
+                          style={{
+                            textDecoration: "underline",
+                            color: "white"
+                          }}
+                        >
+                          {order.tracking_number}
+                        </a>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+              <div className={`fs-16px jc-fe ai-c ${width > 600 && "mt-10px"}`}>
                 <Link
                   to={{
                     pathname: "/secure/account/order/" + order._id,
@@ -365,7 +369,7 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
             </div>
           </div>
         </div>
-        {admin && (
+        {admin && width > 800 && (
           <div>
             {order.order_note && (
               <li className="row mv-2rem">
@@ -438,7 +442,7 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
                         <div className="mt-3px ml-2px">{item.qty}</div>
                       </div>
                     )}
-                    {admin && (
+                    {/* {admin && (
                       <div>
                         {loading_checkboxes ? (
                           <div>Loading...</div>
@@ -460,7 +464,7 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
                           </div>
                         )}
                       </div>
-                    )}
+                    )} */}
                   </div>
                 </div>
               );
@@ -474,7 +478,7 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
             })}
           </div>
         </div>
-        {order.orderItems.length > 0 && (
+        {order.orderItems.length > 0 && width > 800 && (
           <Link to={"/collections/all/products/" + order.orderItems[0].category} className="ai-c ml-1rem">
             <GLButton variant="primary">Buy Again</GLButton>
           </Link>

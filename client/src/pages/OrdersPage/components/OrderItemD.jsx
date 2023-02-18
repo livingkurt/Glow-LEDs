@@ -9,7 +9,7 @@ import { refundOrder } from "../../../actions/orderActions";
 import { LazyImage } from "../../../shared/SharedComponents";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 
-const Order = props => {
+const OrderItemD = props => {
   const dispatch = useDispatch();
   const [clipboard, copyToClipboard] = useClipboard();
   const history = useHistory();
@@ -392,4 +392,4 @@ ${props.order.shipping.email}`)
   );
 };
 
-export default Order;
+export default OrderItemD;

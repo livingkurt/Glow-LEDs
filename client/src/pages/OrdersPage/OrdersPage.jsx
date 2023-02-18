@@ -275,27 +275,27 @@ const OrdersPage = props => {
           )}
         </div>
         <Loading loading={loading} error={error}>
-          <div className="product_big_screen">
-            {orders &&
-              orders.map((order, index) => (
-                <OrderListItem
-                  key={index}
-                  determine_color={determine_color}
-                  set_payment_method={set_payment_method}
-                  admin={true}
-                  order={order}
-                  order_state={order_state}
-                  set_order_state={set_order_state}
-                  send_paid_email={send_paid_email}
-                  send_email={send_email}
-                  listOrdersFilters={{ category, search, sort, page, limit }}
-                />
-              ))}
-          </div>
-          <div className="product_small_screen none column">
+          {/* <div className="product_big_screen"> */}
+          {orders &&
+            orders.map((order, index) => (
+              <OrderListItem
+                key={index}
+                determine_color={determine_color}
+                set_payment_method={set_payment_method}
+                admin={true}
+                order={order}
+                order_state={order_state}
+                set_order_state={set_order_state}
+                send_paid_email={send_paid_email}
+                send_email={send_email}
+                listOrdersFilters={{ category, search, sort, page, limit }}
+              />
+            ))}
+          {/* </div> */}
+          {/* <div className="product_small_screen none column">
             {orders &&
               orders.map((order, index) => <OrderItemM determine_color={determine_color} key={index} order={order} admin={true} />)}
-          </div>
+          </div> */}
         </Loading>
         <div className="jc-c">
           {totalPages && (
