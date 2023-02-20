@@ -13,6 +13,7 @@ import useWindowDimensions from "../../../shared/Hooks/windowDimensions";
 import { isMobile } from "react-device-detect";
 import Autocomplete from "./AddressAutocomplete";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
+import GLTooltip from "../../../shared/GlowLEDsComponents/GLTooltip/GLTooltip";
 import GLModal from "../../../shared/GlowLEDsComponents/GLModal/GLModal";
 import GLCheckbox from "../../../shared/GlowLEDsComponents/GLCheckbox/GLCheckbox";
 import { isAdmin } from "../../../utils/helpers/user_helpers";
@@ -39,7 +40,8 @@ const ShippingStep = ({
   cartItems,
   set_verify_shipping,
   verify_shipping,
-  error_happened
+  error_happened,
+  show_payment
 }) => {
   const [first_name, set_first_name] = useState("");
   const [last_name, set_last_name] = useState("");
@@ -592,19 +594,21 @@ const ShippingStep = ({
                   </h3>
                 </GLCheckbox>
               </GLModal> */}
-              {show_shipping_complete && (
-                <GLButton
-                  type="submit"
-                  variant="primary"
-                  id="open-modal"
-                  className="w-100per bob mt-1rem"
-                  onClick={() => {
-                    // set_show_modal(true);
-                    next_step("payment");
-                  }}
-                >
-                  Continue
-                </GLButton>
+              {!show_payment && (
+                <GLTooltip tooltip={!show_shipping_complete && "You must select shipping speed before continuing"} className="w-100per">
+                  <GLButton
+                    type="submit"
+                    variant={!show_shipping_complete ? "disabled" : "primary"}
+                    id="open-modal"
+                    className={`${show_shipping_complete ? "bob" : "disabled"} mt-10px w-100per`}
+                    onClick={() => {
+                      // set_show_modal(true);
+                      next_step("payment");
+                    }}
+                  >
+                    Continue
+                  </GLButton>
+                </GLTooltip>
               )}
             </div>
           )}

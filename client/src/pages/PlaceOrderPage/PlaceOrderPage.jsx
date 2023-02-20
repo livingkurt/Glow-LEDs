@@ -814,6 +814,7 @@ const PlaceOrderPage = props => {
               verify_shipping={verify_shipping}
               set_verify_shipping={set_verify_shipping}
               error_happened={error_happened}
+              show_payment={show_payment}
             />
             <PaymentStep
               payment_completed={payment_completed}
