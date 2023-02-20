@@ -83,6 +83,7 @@ import teamSlice from "./slices/teamSlice";
 import userSlice from "./slices/userSlice";
 import { dashboardApi } from "./pages/DashboardPage/dashboardApi";
 import dashboardSlice from "./pages/DashboardPage/dashboardSlice";
+import { placeOrderApi } from "./pages/PlaceOrderPage/placeOrderApi";
 
 export default combineReducers({
   affiliateSlice: affiliateSlice,
@@ -105,6 +106,7 @@ export default combineReducers({
   teamSlice: teamSlice,
   userSlice: userSlice,
   [dashboardApi.reducerPath]: dashboardApi.reducer,
+  [placeOrderApi.reducerPath]: placeOrderApi.reducer,
   dashboardSlice: dashboardSlice,
 
   productList: productListReducer,

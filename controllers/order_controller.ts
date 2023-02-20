@@ -264,6 +264,7 @@ export default {
   get_all_shipping_orders_c: async (req: any, res: any) => {
     try {
       const orders = await order_services.get_all_shipping_orders_s();
+      console.log(orders);
       if (orders) {
         return res.status(200).send(orders);
       }
@@ -377,10 +378,21 @@ export default {
       res.status(500).send({ error, message: "Error get_all_time_category_revenue_orders_c" });
     }
   },
-  get_range_tips_orders_c: async (req: any, res: any) => {
+  get_range_tips_revenue_orders_c: async (req: any, res: any) => {
     const { query } = req;
     try {
-      const orders = await order_services.get_range_tips_orders_s(query);
+      const orders = await order_services.get_range_tips_reveune_orders_s(query);
+      if (orders) {
+        return res.status(200).send(orders);
+      }
+      return res.status(500).send({ message: "Error get_range_tips_orders_c" });
+    } catch (error) {
+      res.status(500).send({ error, message: "Error get_range_tips_orders_c" });
+    }
+  },
+  get_all_time_tips_revenue_orders_c: async (req: any, res: any) => {
+    try {
+      const orders = await order_services.get_all_time_tips_revenue_orders_s();
       if (orders) {
         return res.status(200).send(orders);
       }

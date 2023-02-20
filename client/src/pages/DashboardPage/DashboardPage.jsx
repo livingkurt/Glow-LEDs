@@ -7,9 +7,11 @@ import { create_query, humanize } from "../../utils/helper_functions";
 import {
   useGetAllTimeCategoryRevenueOrdersQuery,
   useGetAllTimeRevenueOrdersQuery,
+  useGetAllTimeTipsRevenueOrdersQuery,
   useGetMonthlyRevenueOrdersQuery,
   useGetRangeCategoryRevenueOrdersQuery,
   useGetRangeRevenueOrdersQuery,
+  useGetRangeTipsRevenueOrdersQuery,
   useGetYearlyRevenueOrdersQuery
 } from "./dashboardApi";
 import { getMonthStartEndDates, months, years } from "./dashboardHelpers";
@@ -24,11 +26,15 @@ const DashboardPage = props => {
   const { year, month, start_date, end_date, start_end_date } = dashboardSlice;
   const history = useHistory();
   const current_year = new Date().getFullYear();
+  // const business_start_date = new Date("2020-08-01");
 
   const all_time_revenue = useGetAllTimeRevenueOrdersQuery();
   const range_revenue = useGetRangeRevenueOrdersQuery({ start_date, end_date });
-  const category_range_revenue = useGetRangeCategoryRevenueOrdersQuery({ start_date, end_date });
   const category_all_time_revenue = useGetAllTimeCategoryRevenueOrdersQuery();
+  const category_range_revenue = useGetRangeCategoryRevenueOrdersQuery({ start_date, end_date });
+  const tips_all_time_revenue = useGetAllTimeTipsRevenueOrdersQuery();
+  const tips_range_revenue = useGetRangeTipsRevenueOrdersQuery({ start_date, end_date });
+  console.log({ tips_all_time_revenue, tips_range_revenue });
   // const daily_revenue = useGetMonthlyRevenueOrdersQuery({ start_date, end_date });
   const monthy_revenue = useGetMonthlyRevenueOrdersQuery({ year });
   const yearly_revenue = useGetYearlyRevenueOrdersQuery();
@@ -57,10 +63,20 @@ const DashboardPage = props => {
         <h3 className="ta-c w-100per jc-c fs-25px">
           {year && month ? `${year} ${month}` : year ? year : month ? month : "All Time"} Sales
         </h3>
+
         {!month && !year && (
           <div>
             <h3 className="fs-30px jc-c">
               ${!all_time_revenue.isLoading && all_time_revenue.data[0] ? all_time_revenue.data[0]?.totalPrice.toFixed(2) : "0.00"}
+            </h3>
+            <h3 className="ta-c w-100per jc-c fs-25px">
+              {year && month ? `${year} ${month}` : year ? year : month ? month : "All Time"} Tips
+            </h3>
+            <h3 className="fs-30px jc-c">
+              $
+              {!tips_all_time_revenue.isLoading && tips_all_time_revenue.data[0]
+                ? tips_all_time_revenue.data[0]?.total_tips.toFixed(2)
+                : "0.00"}
             </h3>
             <Grid container spacing={3}>
               <Grid item xs={12} sm={6}>
@@ -145,12 +161,24 @@ const DashboardPage = props => {
             <h3 className="fs-30px jc-c">
               ${!range_revenue.isLoading && range_revenue.data[0] ? range_revenue.data[0]?.totalPrice.toFixed(2) : "0.00"}
             </h3>
+            <h3 className="ta-c w-100per jc-c fs-25px">
+              {year && month ? `${year} ${month}` : year ? year : month ? month : "All Time"} Tips
+            </h3>
+            <h3 className="fs-30px jc-c">
+              ${!tips_range_revenue.isLoading && tips_range_revenue.data[0] ? tips_range_revenue.data[0]?.total_tips.toFixed(2) : "0.00"}
+            </h3>
           </div>
         )}
         {!month && year && (
           <div>
             <h3 className="fs-30px jc-c">
               ${!range_revenue.isLoading && range_revenue.data[0] ? range_revenue.data[0]?.totalPrice.toFixed(2) : "0.00"}
+            </h3>
+            <h3 className="ta-c w-100per jc-c fs-25px">
+              {year && month ? `${year} ${month}` : year ? year : month ? month : "All Time"} Tips
+            </h3>
+            <h3 className="fs-30px jc-c">
+              ${!tips_range_revenue.isLoading && tips_range_revenue.data[0] ? tips_range_revenue.data[0]?.total_tips.toFixed(2) : "0.00"}
             </h3>
             <Grid container spacing={3}>
               <Grid item xs={12} sm={6}>

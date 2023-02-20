@@ -2,7 +2,7 @@ import { Product } from "../models";
 import Order from "../models/order";
 
 export default {
-  findAll_orders_db: async (filter: any, sort: any, limit = 10, page = 1) => {
+  findAll_orders_db: async (filter: unknown, sort: unknown, limit = 10, page = 1) => {
     try {
       return await Order.find(filter)
         .sort(sort)
@@ -30,7 +30,7 @@ export default {
     }
   },
 
-  findBy_orders_db: async (params: any) => {
+  findBy_orders_db: async (params: unknown) => {
     try {
       return await Order.findOne(params).populate("user").populate("orderItems.product").populate("orderItems.secondary_product");
     } catch (error) {
@@ -39,7 +39,7 @@ export default {
       }
     }
   },
-  create_orders_db: async (body: any) => {
+  create_orders_db: async (body: unknown) => {
     try {
       return await Order.create(body);
     } catch (error) {
@@ -48,7 +48,7 @@ export default {
       }
     }
   },
-  update_orders_db: async (id: string, body: any) => {
+  update_orders_db: async (id: string, body: unknown) => {
     try {
       const order: any = await Order.findOne({ _id: id });
       if (order) {
@@ -72,7 +72,7 @@ export default {
       }
     }
   },
-  count_orders_db: async (filter: any) => {
+  count_orders_db: async (filter: unknown) => {
     try {
       return await Order.countDocuments(filter);
     } catch (error) {
@@ -124,16 +124,39 @@ export default {
       const dedupedShippingAddresses = await Order.aggregate([
         {
           $group: {
-            _id: "$shipping",
-            count: { $sum: 1 }
+            _id: {
+              first_name: "$shipping.first_name",
+              last_name: "$shipping.last_name",
+              email: "$shipping.email",
+              address: "$shipping.address",
+              address_1: "$shipping.address_1",
+              address_2: "$shipping.address_2",
+              city: "$shipping.city",
+              state: "$shipping.state",
+              postalCode: "$shipping.postalCode",
+              international: "$shipping.international",
+              country: "$shipping.country"
+            }
           }
         },
         {
-          $match: {
-            count: { $gt: 1 }
+          $project: {
+            _id: 0,
+            first_name: "$_id.first_name",
+            last_name: "$_id.last_name",
+            email: "$_id.email",
+            address: "$_id.address",
+            address_1: "$_id.address_1",
+            address_2: "$_id.address_2",
+            city: "$_id.city",
+            state: "$_id.state",
+            postalCode: "$_id.postalCode",
+            international: "$_id.international",
+            country: "$_id.country"
           }
         }
       ]);
+      // console.log({ dedupedShippingAddresses });
       return dedupedShippingAddresses;
     } catch (error) {
       if (error instanceof Error) {
@@ -430,7 +453,32 @@ export default {
       }
     }
   },
-  get_range_tips_orders_db: async (start_date: string, end_date: string) => {
+  get_all_time_tips_revenue_orders_db: async () => {
+    try {
+      const total_tips = await Order.aggregate([
+        {
+          $match: {
+            deleted: false,
+            isPaid: true
+          }
+        },
+        {
+          $group: {
+            _id: null,
+            total_tips: {
+              $sum: "$tip"
+            }
+          }
+        }
+      ]).exec();
+      return total_tips;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  get_range_tips_revenue_orders_db: async (start_date: string, end_date: string) => {
     try {
       const total_tips = await Order.aggregate([
         {
@@ -461,7 +509,6 @@ export default {
   },
 
   get_range_category_revenue_orders_db: async (start_date: string, end_date: string) => {
-    console.log({ start_date, end_date });
     try {
       const category_totals = await Order.aggregate([
         {

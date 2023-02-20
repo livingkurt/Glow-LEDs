@@ -17,6 +17,7 @@ import GLTooltip from "../../../shared/GlowLEDsComponents/GLTooltip/GLTooltip";
 import GLModal from "../../../shared/GlowLEDsComponents/GLModal/GLModal";
 import GLCheckbox from "../../../shared/GlowLEDsComponents/GLCheckbox/GLCheckbox";
 import { isAdmin } from "../../../utils/helpers/user_helpers";
+import { useGetAllShippingOrdersQuery } from "../placeOrderApi";
 
 const ShippingStep = ({
   shipping_completed,
@@ -43,6 +44,8 @@ const ShippingStep = ({
   error_happened,
   show_payment
 }) => {
+  const all_shipping = useGetAllShippingOrdersQuery();
+  console.log({ all_shipping });
   const [first_name, set_first_name] = useState("");
   const [last_name, set_last_name] = useState("");
   const [address_1, set_address_1] = useState("");
@@ -52,7 +55,7 @@ const ShippingStep = ({
   const [postalCode, setPostalCode] = useState("");
   const [country, setCountry] = useState("United States");
   const [international, setInternational] = useState(false);
-  const [all_shipping, set_all_shipping] = useState([]);
+  // const [all_shipping, set_all_shipping] = useState([]);
   const [save_shipping, set_save_shipping] = useState(false);
   const [loading_checkboxes, set_loading_checkboxes] = useState(true);
   const [show_modal, set_show_modal] = useState(false);
@@ -88,20 +91,20 @@ const ShippingStep = ({
     set_loading_checkboxes(false);
   }, 500);
 
-  useEffect(() => {
-    let clean = true;
-    if (clean) {
-      if (isAdmin(userInfo)) {
-        get_all_shipping();
-      }
-    }
-    return () => (clean = false);
-  }, []);
+  // useEffect(() => {
+  //   let clean = true;
+  //   if (clean) {
+  //     if (isAdmin(userInfo)) {
+  //       get_all_shipping();
+  //     }
+  //   }
+  //   return () => (clean = false);
+  // }, []);
 
-  const get_all_shipping = async () => {
-    const { data } = await API_Shipping.get_all_shipping();
-    set_all_shipping(data);
-  };
+  // const get_all_shipping = async () => {
+  //   const { data } = await API_Shipping.get_all_shipping();
+  //   set_all_shipping(data);
+  // };
 
   // const [ email_validations, set_email_validations ] = useState('');
   const [first_name_validations, set_first_name_validations] = useState("");
@@ -282,8 +285,8 @@ const ShippingStep = ({
                           <option key={1} defaultValue="">
                             ---Choose Shipping for Order---
                           </option>
-                          {all_shipping &&
-                            all_shipping.map((shipping, index) => (
+                          {!all_shipping.isLoading &&
+                            all_shipping.data.map((shipping, index) => (
                               <option key={index} value={JSON.stringify(shipping)}>
                                 {shipping.first_name} {shipping.last_name}
                               </option>

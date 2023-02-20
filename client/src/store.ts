@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { dashboardApi } from "./pages/DashboardPage/dashboardApi";
+import { placeOrderApi } from "./pages/PlaceOrderPage/placeOrderApi";
 import reducer from "./reducer";
 
 let cartItems: any;
@@ -28,7 +29,8 @@ const initialState: object = {
 
 const store = configureStore({
   reducer: reducer,
-  middleware: getDefaultMiddleware => getDefaultMiddleware({ serializableCheck: false }).concat([dashboardApi.middleware]),
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({ serializableCheck: false }).concat([dashboardApi.middleware, placeOrderApi.middleware]),
   preloadedState: initialState
 });
 
