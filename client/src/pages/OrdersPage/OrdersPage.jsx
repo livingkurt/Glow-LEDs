@@ -42,7 +42,7 @@ const OrdersPage = props => {
         dispatch(
           listOrders({
             category,
-            search,
+            search: query.search,
             sort,
             page: query.page,
             limit: query.limit
@@ -65,6 +65,9 @@ const OrdersPage = props => {
 
   const submitHandler = e => {
     e.preventDefault();
+    history.push({
+      search: `?page=${page}?limit=${limit}${search ? "?search=" + search : ""}`
+    });
     dispatch(listOrders({ category, search, sort, page, limit }));
   };
 
@@ -97,7 +100,7 @@ const OrdersPage = props => {
     e.preventDefault();
     const page = parseInt(new_page);
     history.push({
-      search: "?page=" + page + "?limit=" + limit
+      search: `?page=${page}?limit=${limit}${search ? "?search=" + search : ""}`
     });
 
     dispatch(listOrders({ category, search, sort, page: new_page, limit }));
@@ -110,6 +113,16 @@ const OrdersPage = props => {
     }
     return () => (clean = false);
   }, [orders]);
+
+  // useEffect(() => {
+  //   let clean = true;
+  //   if (clean) {
+  //     history.push({
+  //       search: `?page=${page}&limit=${limit}${search ? "&search=" + search : ""}`
+  //     });
+  //   }
+  //   return () => (clean = false);
+  // }, [page, limit, search]);
 
   const [not_shipped, set_not_shipped] = useState([]);
 
@@ -262,27 +275,27 @@ const OrdersPage = props => {
           )}
         </div>
         <Loading loading={loading} error={error}>
-          <div className="product_big_screen">
-            {orders &&
-              orders.map((order, index) => (
-                <OrderListItem
-                  key={index}
-                  determine_color={determine_color}
-                  set_payment_method={set_payment_method}
-                  admin={true}
-                  order={order}
-                  order_state={order_state}
-                  set_order_state={set_order_state}
-                  send_paid_email={send_paid_email}
-                  send_email={send_email}
-                  listOrdersFilters={{ category, search, sort, page, limit }}
-                />
-              ))}
-          </div>
-          <div className="product_small_screen none column">
+          {/* <div className="product_big_screen"> */}
+          {orders &&
+            orders.map((order, index) => (
+              <OrderListItem
+                key={index}
+                determine_color={determine_color}
+                set_payment_method={set_payment_method}
+                admin={true}
+                order={order}
+                order_state={order_state}
+                set_order_state={set_order_state}
+                send_paid_email={send_paid_email}
+                send_email={send_email}
+                listOrdersFilters={{ category, search, sort, page, limit }}
+              />
+            ))}
+          {/* </div> */}
+          {/* <div className="product_small_screen none column">
             {orders &&
               orders.map((order, index) => <OrderItemM determine_color={determine_color} key={index} order={order} admin={true} />)}
-          </div>
+          </div> */}
         </Loading>
         <div className="jc-c">
           {totalPages && (

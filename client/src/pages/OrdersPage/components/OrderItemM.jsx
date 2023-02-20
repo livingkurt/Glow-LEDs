@@ -1,12 +1,12 @@
 // React
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
+import { GLButton } from "../../../shared/GlowLEDsComponents";
 import { LazyImage } from "../../../shared/SharedComponents";
 
 import { format_date } from "../../../utils/helper_functions";
-import { GLButton } from "../GlowLEDsComponents";
 
-const OrderSmallScreen = props => {
+const OrderItemM = props => {
   const history = useHistory();
   return (
     <div className="container p-15px " style={{ backgroundColor: props.determine_color(props.order) }}>
@@ -96,4 +96,4 @@ const OrderSmallScreen = props => {
   );
 };
 
-export default OrderSmallScreen;
+export default OrderItemM;
