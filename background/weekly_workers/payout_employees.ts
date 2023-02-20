@@ -1,10 +1,6 @@
 import axios from "axios";
 import { IUser } from "../../types/userTypes";
 import { domain, get_todays_date, save_paycheck_to_expenses } from "../worker_helpers";
-import Airtable from "airtable";
-// const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY }).base("app9vDOYXFhhQr529");
-const baseId = "app1s1rBexc8nLb9s";
-const tableIdOrName = "tblsCcVphzBosLDmU";
 import dotenv from "dotenv";
 dotenv.config();
 
