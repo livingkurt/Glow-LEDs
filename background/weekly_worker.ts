@@ -1,4 +1,4 @@
-const { payout_employees } = require("./weekly_workers");
+import { payout_employees } from "./weekly_workers/payout_employees";
 
 const weekly_worker = () => {
   // Get the current date

@@ -1,6 +1,5 @@
-const { payout_affiliates } = require("./payout_affiliates");
-const axios = require("axios");
-const { domain } = require("./worker_helpers");
+import axios from "axios";
+import { domain } from "./worker_helpers";
 
 const two_week_worker = async () => {
   const domainUrl = domain();

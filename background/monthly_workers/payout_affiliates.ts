@@ -1,7 +1,8 @@
-const axios = require("axios");
-const { domain, get_date_range, determine_code_tier } = require("../worker_helpers");
+import axios from "axios";
+import { IAffiliate } from "../../types/affiliateTypes";
+import { domain, get_date_range, determine_code_tier } from "../worker_helpers";
 
-const payout_affiliates = async () => {
+export const payout_affiliates = async (): Promise<void> => {
   try {
     const domainUrl = domain();
 
@@ -9,9 +10,9 @@ const payout_affiliates = async () => {
     // Get promo code usage for the previous month
     const { data: affiliates } = await axios.get(`${domainUrl}/api/affiliates?active=true&rave_mob=false`);
     await Promise.all(
-      affiliates.affiliates.map(async affiliate => {
+      affiliates.affiliates.map(async (affiliate: IAffiliate) => {
         const { data: promo_code_usage } = await axios.get(
-          `${domain()}/api/orders/code_usage/${affiliate.public_code.promo_code}?start_date=${start_date}&end_date=${end_date}&sponsor=${
+          `${domain()}/api/orders/code_usage/${affiliate?.public_code?.promo_code}?start_date=${start_date}&end_date=${end_date}&sponsor=${
             affiliate.sponsor
           }`
         );
@@ -51,7 +52,7 @@ const payout_affiliates = async () => {
           paid_at: new Date()
         });
         const percentage_off = determine_code_tier(affiliate, promo_code_usage.number_of_uses);
-        await axios.put(`${domainUrl}/api/promos/${affiliate.private_code._id}`, {
+        await axios.put(`${domainUrl}/api/promos/${affiliate?.private_code?._id}`, {
           ...affiliate.private_code,
           percentage_off
         });
@@ -61,5 +62,3 @@ const payout_affiliates = async () => {
     console.log("error", error);
   }
 };
-
-module.exports.payout_affiliates = payout_affiliates;

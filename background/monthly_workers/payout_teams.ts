@@ -1,17 +1,18 @@
-const axios = require("axios");
-const { domain, get_date_range } = require("../worker_helpers");
+import axios from "axios";
+import { domain, get_date_range } from "../worker_helpers";
+import { ITeam } from "../../types/teamTypes";
 
-const payout_teams = async () => {
+export const payout_teams = async (): Promise<void> => {
   try {
-    const domainUrl = domain();
+    const domainUrl: string = domain();
 
     const { start_date, end_date } = get_date_range();
     // Get promo code usage for the previous month
     const { data: teams } = await axios.get(`${domainUrl}/api/teams?active=true&rave_mob=false`);
     await Promise.all(
-      teams.map(async team => {
+      teams.map(async (team: ITeam) => {
         const { data: promo_code_usage } = await axios.get(
-          `${domain()}/api/orders/code_usage/${team.public_code.promo_code}?start_date=${start_date}&end_date=${end_date}`
+          `${domainUrl}/api/orders/code_usage/${team?.public_code?.promo_code}?start_date=${start_date}&end_date=${end_date}`
         );
         console.log({ promo_code_usage });
 
@@ -55,5 +56,3 @@ const payout_teams = async () => {
     console.log("error", error);
   }
 };
-
-module.exports.payout_teams = payout_teams;

@@ -1,14 +1,18 @@
 import { IAffiliate } from "./affiliateTypes";
+import { IPromo } from "./promoTypes";
+import { IUser } from "./userTypes";
 
 export interface ITeam {
   affiliates?: IAffiliate[];
+  captain?: IUser;
   team_name?: string;
   instagram_handle?: string;
+  _id?: string;
   facebook_name?: string;
   percentage_off?: number;
   promo_code?: string;
-  public_code?: string;
-  private_code?: string;
+  public_code?: IPromo;
+  private_code?: IPromo;
   years?: string;
   bio?: string;
   picture?: string;

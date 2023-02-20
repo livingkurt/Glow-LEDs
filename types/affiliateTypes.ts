@@ -5,6 +5,7 @@ import { IUser } from "./userTypes";
 
 export interface IAffiliate {
   user?: IUser;
+  _id?: string;
   products?: IProduct[];
   chips?: IChip[];
   artist_name?: string;
