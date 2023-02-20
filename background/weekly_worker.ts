@@ -7,6 +7,8 @@ const weekly_worker = () => {
   if (today.getDay() === 5) {
     // Run the code that you only want to run once a week
     payout_employees();
+  } else {
+    console.log("Not Friday");
   }
 };
 

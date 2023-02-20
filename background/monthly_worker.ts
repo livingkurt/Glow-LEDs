@@ -13,6 +13,8 @@ const monthly_worker = () => {
     payout_teams();
     refresh_sponsor_codes();
     payout_tips();
+  } else {
+    console.log("Not the first of the month");
   }
 };
 
