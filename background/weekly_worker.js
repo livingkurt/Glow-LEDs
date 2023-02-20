@@ -1,4 +1,4 @@
-const { payout_employees } = require("./payout_employees");
+const { payout_employees } = require("./weekly_workers");
 
 const weekly_worker = () => {
   // Get the current date
