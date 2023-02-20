@@ -1399,7 +1399,7 @@ export default {
 
       const refunds = orders.map((order: any) => {
         // Update refundPrice with the refund amount
-        const totalRefunds = order.payment?.refund.reduce((acc: any, curr: any) => {
+        const totalRefunds = order.payment?.refund.reduce((acc: number, curr: { amount: number }) => {
           return acc + curr.amount;
         }, 0);
         order.refundTotal = totalRefunds / 100;

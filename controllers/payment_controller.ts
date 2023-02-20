@@ -191,6 +191,10 @@ export default {
       });
 
       if (refund) {
+        const all_refunds = [...order.payment.refund, refund];
+        const refundTotal = all_refunds.reduce((acc: number, curr: { amount: number }) => {
+          return acc + curr.amount;
+        }, 0);
         order.isRefunded = true;
         order.refundedAt = Date.now();
         order.payment = {
@@ -199,6 +203,7 @@ export default {
           refund: [...order.payment.refund, refund],
           refund_reason: [...order.payment.refund_reason, req.body.refund_reason]
         };
+        order.refundTotal = refundTotal;
         const updated = await Order.updateOne({ _id: req.params.id }, order);
 
         if (updated) {
