@@ -156,8 +156,8 @@ export default {
             totalPrice: {
               $sum: "$totalPrice"
             },
-            refundPrice: {
-              $sum: "$refundPrice"
+            refundTotal: {
+              $sum: "$refundTotal"
             }
           }
         },
@@ -167,12 +167,12 @@ export default {
             totalPrice: {
               $sum: "$totalPrice"
             },
-            refundPrice: {
-              $sum: "$refundPrice"
+            refundTotal: {
+              $sum: "$refundTotal"
             },
             netTotalPrice: {
               $sum: {
-                $subtract: ["$totalPrice", "$refundPrice"]
+                $subtract: ["$totalPrice", "$refundTotal"]
               }
             }
           }
@@ -204,8 +204,8 @@ export default {
             totalPrice: {
               $sum: "$totalPrice"
             },
-            refundPrice: {
-              $sum: "$refundPrice"
+            refundTotal: {
+              $sum: "$refundTotal"
             }
           }
         },
@@ -215,12 +215,12 @@ export default {
             totalPrice: {
               $sum: "$totalPrice"
             },
-            refundPrice: {
-              $sum: "$refundPrice"
+            refundTotal: {
+              $sum: "$refundTotal"
             },
             netTotalPrice: {
               $sum: {
-                $subtract: ["$totalPrice", "$refundPrice"]
+                $subtract: ["$totalPrice", "$refundTotal"]
               }
             }
           }
@@ -303,8 +303,8 @@ export default {
             totalPrice: {
               $sum: "$totalPrice"
             },
-            refundPrice: {
-              $sum: "$refundPrice"
+            refundTotal: {
+              $sum: "$refundTotal"
             }
           }
         },
@@ -352,8 +352,8 @@ export default {
             totalPrice: {
               $sum: "$totalPrice"
             },
-            refundPrice: {
-              $sum: "$refundPrice"
+            refundTotal: {
+              $sum: "$refundTotal"
             }
           }
         },
