@@ -1,5 +1,5 @@
 import axios from "axios";
-import { domain, get_date_range } from "../worker_helpers";
+import { domain, get_date_range, get_todays_date, save_paycheck_to_expenses } from "../worker_helpers";
 import { ITeam } from "../../types/teamTypes";
 
 export const payout_teams = async (): Promise<void> => {
@@ -27,6 +27,15 @@ export const payout_teams = async (): Promise<void> => {
             stripe_connect_id: team.captain.stripe_connect_id,
             description: `Monthly Payout for ${team.team_name}`
           });
+          const data = {
+            Expense: `${team.team_name} Affiliate Earnings`,
+            Date: get_todays_date(),
+            Amount: promo_code_usage.earnings || 0, // ensure that Amount is a number and not undefined
+            "Place of Purchase": "Stripe",
+            Card: "Stripe",
+            Category: ["Employee Paycheck"]
+          };
+          save_paycheck_to_expenses(data);
         }
         console.log({
           team: team?._id,

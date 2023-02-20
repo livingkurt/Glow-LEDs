@@ -1,6 +1,6 @@
 import axios from "axios";
 import { IAffiliate } from "../../types/affiliateTypes";
-import { domain, get_date_range, determine_code_tier } from "../worker_helpers";
+import { domain, get_date_range, determine_code_tier, get_todays_date, save_paycheck_to_expenses } from "../worker_helpers";
 
 export const payout_affiliates = async (): Promise<void> => {
   try {
@@ -28,6 +28,15 @@ export const payout_affiliates = async (): Promise<void> => {
             stripe_connect_id: affiliate.user.stripe_connect_id,
             description: `Monthly Payout for ${affiliate.user.first_name} ${affiliate.user.last_name}`
           });
+          const data = {
+            Expense: `${affiliate.artist_name} Affiliate Earnings`,
+            Date: get_todays_date(),
+            Amount: promo_code_usage.earnings,
+            "Place of Purchase": "Stripe",
+            Card: "Stripe",
+            Category: ["Employee Paycheck"]
+          };
+          save_paycheck_to_expenses(data);
         }
         console.log({
           affiliate: affiliate?._id,

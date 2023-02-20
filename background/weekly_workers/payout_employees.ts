@@ -1,6 +1,12 @@
 import axios from "axios";
 import { IUser } from "../../types/userTypes";
-import { domain } from "../worker_helpers";
+import { domain, get_todays_date, save_paycheck_to_expenses } from "../worker_helpers";
+import Airtable from "airtable";
+// const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY }).base("app9vDOYXFhhQr529");
+const baseId = "app1s1rBexc8nLb9s";
+const tableIdOrName = "tblsCcVphzBosLDmU";
+import dotenv from "dotenv";
+dotenv.config();
 
 export const payout_employees = async (): Promise<void> => {
   try {
@@ -33,6 +39,15 @@ export const payout_employees = async (): Promise<void> => {
           paid_at: new Date()
         });
       }
+      const data = {
+        Expense: `${employee.first_name} ${employee.last_name} Paycheck`,
+        Date: get_todays_date(),
+        Amount: employee?.weekly_wage || 0, // ensure that Amount is a number and not undefined
+        "Place of Purchase": "Stripe",
+        Card: "Stripe",
+        Category: ["Employee Paycheck"]
+      };
+      save_paycheck_to_expenses(data);
     });
   } catch (error) {
     console.log("error", error);

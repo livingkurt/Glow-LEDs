@@ -1,5 +1,5 @@
 import axios from "axios";
-import { domain, get_date_range } from "../worker_helpers";
+import { domain, get_date_range, get_todays_date, save_paycheck_to_expenses } from "../worker_helpers";
 
 export const payout_tips = async (): Promise<void> => {
   try {
@@ -36,6 +36,15 @@ export const payout_tips = async (): Promise<void> => {
       paid: true,
       paid_at: new Date()
     });
+    const data = {
+      Expense: `${user.first_name} ${user.last_name} Paycheck`,
+      Date: get_todays_date(),
+      Amount: tips[0].total_tips || 0, // ensure that Amount is a number and not undefined
+      "Place of Purchase": "Stripe",
+      Card: "Stripe",
+      Category: ["Employee Paycheck"]
+    };
+    save_paycheck_to_expenses(data);
   } catch (error) {
     console.log("error", error);
   }

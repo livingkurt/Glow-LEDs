@@ -1,5 +1,8 @@
-import dotenv from "dotenv";
+import axios from "axios";
 import { IAffiliate } from "../types/affiliateTypes";
+const baseId = "app1s1rBexc8nLb9s";
+const tableIdOrName = "tblsCcVphzBosLDmU";
+import dotenv from "dotenv";
 dotenv.config();
 
 export const domain = (): string => {
@@ -61,5 +64,37 @@ export const determine_code_tier = (affiliate: IAffiliate, code_usage: number): 
     } else if (code_usage >= 20) {
       return 75;
     }
+  }
+};
+
+// Get todays date in YYYY-MM-DD format
+export const get_todays_date = (): string => {
+  const date = new Date();
+  const isoDate = date.toISOString();
+  const todaysDate = isoDate.split("T")[0];
+  return todaysDate;
+};
+
+export const save_paycheck_to_expenses = async (data: any): Promise<void> => {
+  try {
+    const response = await axios.post(
+      `https://api.airtable.com/v0/${baseId}/${tableIdOrName}`,
+      {
+        records: [
+          {
+            fields: data
+          }
+        ]
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.AIRTABLE_ACCESS_TOKEN}`,
+          "Content-Type": "application/json"
+        }
+      }
+    );
+    console.log(response.data);
+  } catch (error) {
+    console.log(error);
   }
 };
