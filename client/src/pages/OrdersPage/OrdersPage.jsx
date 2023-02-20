@@ -42,7 +42,7 @@ const OrdersPage = props => {
         dispatch(
           listOrders({
             category,
-            search: query.search,
+            search: query.search || "",
             sort,
             page: query.page,
             limit: query.limit
