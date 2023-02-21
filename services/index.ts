@@ -1,11 +1,11 @@
-export { default as order_services } from "./order_services";
+export { default as order_services } from "../api/orders/order_services";
 export { default as product_services } from "./product_services";
 export { default as user_services } from "./user_services";
 export { default as email_services } from "./email_services";
 export { default as batch_services } from "./batch_services";
 export { default as expense_services } from "./expense_services";
 export { default as feature_services } from "./feature_services";
-export { default as affiliate_services } from "./affiliate_services";
+export { default as affiliate_services } from "../api/affiliates/affiliate_services";
 export { default as promo_services } from "./promo_services";
 export { default as cart_services } from "./cart_services";
 export { default as content_services } from "./content_services";
