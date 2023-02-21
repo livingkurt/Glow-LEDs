@@ -2,7 +2,7 @@ import express from "express";
 import promo_routes from "./promo_routes";
 import cart_routes from "./cart_routes";
 import content_routes from "./content_routes";
-import affiliate_routes from "./affiliate_routes";
+import affiliate_routes from "../../api/affiliates/affiliate_routes";
 import expense_routes from "./expense_routes";
 import feature_routes from "./feature_routes";
 import user_routes from "./user_routes";
