@@ -5,6 +5,7 @@ import { Grid } from "@mui/material";
 import useChangedEffect from "../../shared/Hooks/useChangedEffect";
 import { create_query, humanize } from "../../utils/helper_functions";
 import {
+  // get_airtable_expenses,
   useGetAllTimeCategoryRevenueOrdersQuery,
   useGetAllTimeRevenueOrdersQuery,
   useGetAllTimeTipsRevenueOrdersQuery,
@@ -18,6 +19,7 @@ import { getMonthStartEndDates, months, years } from "./dashboardHelpers";
 import { useDispatch, useSelector } from "react-redux";
 import { set_end_date, set_start_date } from "./dashboardSlice";
 import { DatePicker } from "./components";
+import { useEffect } from "react";
 
 const DashboardPage = props => {
   const dispatch = useDispatch();
@@ -34,7 +36,6 @@ const DashboardPage = props => {
   const category_range_revenue = useGetRangeCategoryRevenueOrdersQuery({ start_date, end_date });
   const tips_all_time_revenue = useGetAllTimeTipsRevenueOrdersQuery();
   const tips_range_revenue = useGetRangeTipsRevenueOrdersQuery({ start_date, end_date });
-  console.log({ tips_all_time_revenue, tips_range_revenue });
   // const daily_revenue = useGetMonthlyRevenueOrdersQuery({ start_date, end_date });
   const monthy_revenue = useGetMonthlyRevenueOrdersQuery({ year });
   const yearly_revenue = useGetYearlyRevenueOrdersQuery();
@@ -51,6 +52,11 @@ const DashboardPage = props => {
     history.push(`/secure/glow/dashboard?${query}`);
     return () => {};
   }, [year, month]);
+
+  // useEffect(() => {
+  // get_airtable_expenses(2023);
+  //   return () => {};
+  // }, []);
 
   return (
     <div className="main_container p-20px">
