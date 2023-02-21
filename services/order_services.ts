@@ -58,6 +58,7 @@ export default {
           : {};
       }
       const sort_query = query.sort && query.sort.toLowerCase();
+      console.log({ sort_query });
       let sort: any = { createdAt: -1 };
       let filter: any = { deleted: false };
       if (sort_query === "lowest") {
@@ -110,6 +111,11 @@ export default {
           isPackaged: true,
           isShipped: true,
           isDelivered: true
+        };
+      } else if (sort_query === "international") {
+        filter = {
+          deleted: false,
+          "shipping.international": true
         };
       }
       const orders = await order_db.findAll_orders_db({ ...filter, ...search }, sort, parseInt(limit), parseInt(page));
