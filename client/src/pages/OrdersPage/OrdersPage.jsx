@@ -76,7 +76,7 @@ const OrdersPage = props => {
     dispatch(listOrders({ category, search, sort: e.target.value, page, limit }));
   };
 
-  const sort_options = ["Date", "Paid", "Manufactured", "Packaged", "Shipped", "Delivered", "Newest", "Lowest", "Highest"];
+  const sort_options = ["Date", "Paid", "Manufactured", "Packaged", "Shipped", "Delivered", "International", "Newest", "Lowest", "Highest"];
 
   const send_paid_email = async order_id => {
     const { data: order } = await API_Orders.findById_orders_a(order_id);
