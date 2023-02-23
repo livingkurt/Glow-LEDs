@@ -21,15 +21,16 @@ import {
   shipping_status
 } from "./pages";
 import express from "express";
-import { Header, Footer } from "./components";
-import { affiliate_db, content_db, email_db, order_db, promo_db, user_db } from "../db";
 import invoice from "./pages/invoice";
-import { order_services } from "../services";
+import { order_db, order_services } from "../api/orders";
+import { content_db } from "../api/contents";
+import { affiliate_db } from "../api/affiliates";
+import { promo_db } from "../api/promos";
 import { months } from "../util";
-import { determine_status } from "../interactors/email_interactors";
+import { user_db } from "../api/users";
+import { determine_status } from "../api/emails/email_interactors";
+import { email_db } from "../api/emails";
 const router = express.Router();
-
-// App({header: Header({title: 'Glow LEDs Reset Password'}), footer: Footer()})
 
 router.get("/email_subscription", async (req: { body: any }, res: { send: (arg0: string) => void }) => {
   const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 }, 0);

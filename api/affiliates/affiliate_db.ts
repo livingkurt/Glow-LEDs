@@ -1,6 +1,5 @@
-import Affiliate from "../models/affiliate";
-import { Promo } from "../models";
-import { make_private_code } from "../util";
+import { Promo } from "../promos";
+import { Affiliate } from "../affiliates";
 
 export default {
   findAll_affiliates_db: async (filter: any, sort: any, limit: any, page: any) => {

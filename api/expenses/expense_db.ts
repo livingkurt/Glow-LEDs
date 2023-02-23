@@ -1,4 +1,4 @@
-import Expense from "../../models/expense";
+import { Expense } from "../expenses";
 
 export default {
   findAll_expenses_db: async (filter: any, sort: any) => {

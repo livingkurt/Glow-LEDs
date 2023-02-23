@@ -1,4 +1,4 @@
-import { Email, User } from "../models";
+import { Email } from "../emails";
 
 export default {
   findAll_emails_db: async (filter: any, sort: any, limit = 0) => {

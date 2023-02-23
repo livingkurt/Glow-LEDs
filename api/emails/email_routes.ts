@@ -1,5 +1,5 @@
 import express from "express";
-import { email_controller } from "../../controllers";
+import { email_controller } from "../emails";
 const { isAuth, isAdmin } = require("../../util");
 const router = express.Router();
 const cors = require("cors");

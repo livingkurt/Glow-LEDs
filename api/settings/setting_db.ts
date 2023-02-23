@@ -1,4 +1,4 @@
-import Setting from "../models/setting";
+import { Setting } from "../settings";
 
 export default {
   findAll_settings_db: async (filter: any, sort: any) => {

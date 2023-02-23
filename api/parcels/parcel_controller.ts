@@ -1,4 +1,4 @@
-import { parcel_services } from "../../services";
+import { parcel_services } from "../parcels";
 
 export default {
   findAll_parcels_c: async (req: any, res: any) => {

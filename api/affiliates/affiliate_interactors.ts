@@ -1,6 +1,12 @@
 const stripe = require("stripe")("your_stripe_secret_key");
 
-export const handlePayment = (userInformation: any, paymentInformation: any, order: any, req: any, res: any) => {
+export const handlePayment = (
+  userInformation: { name: string; email: string; phone: string; address: string },
+  paymentInformation: { amount: number },
+  order: unknown,
+  req: unknown,
+  res: unknown
+): void => {
   stripe.customers.create(
     {
       name: userInformation.name,

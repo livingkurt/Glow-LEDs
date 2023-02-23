@@ -1,5 +1,5 @@
 import express from "express";
-import { content_controller } from "../../controllers";
+import { content_controller } from "../contents";
 const { isAuth, isAdmin } = require("../../util");
 const router = express.Router();
 

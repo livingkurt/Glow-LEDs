@@ -1,4 +1,4 @@
-import { palette_services } from "../../services";
+import { palette_services } from "../palettes";
 
 export default {
   findAll_palettes_c: async (req: any, res: any) => {

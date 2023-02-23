@@ -1,4 +1,4 @@
-import Palette from "../models/palette";
+import { Palette } from "../palettes";
 
 export default {
   findAll_palettes_db: async (filter: any, sort: any) => {

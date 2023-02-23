@@ -1,4 +1,4 @@
-import { expense_services } from "../../services";
+import { expense_services } from "../expenses";
 
 export default {
   findAll_expenses_c: async (req: any, res: any) => {

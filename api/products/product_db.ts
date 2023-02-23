@@ -1,4 +1,4 @@
-import Product from "../../models/product";
+import Product from "./product";
 import Airtable from "airtable";
 const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY }).base("app9vDOYXFhhQr529");
 const CurrentProducts = base("Current Products");

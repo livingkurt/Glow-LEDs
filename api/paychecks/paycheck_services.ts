@@ -1,5 +1,8 @@
-import { affiliate_db, order_db, paycheck_db, team_db } from "../db";
-import { determine_filter, month_dates } from "../util";
+import { determine_filter, month_dates } from "../../util";
+import { affiliate_db } from "../affiliates";
+import { order_db } from "../orders";
+import { paycheck_db } from "../paychecks";
+import { team_db } from "../teams";
 
 export default {
   findAll_paychecks_s: async (query: any) => {

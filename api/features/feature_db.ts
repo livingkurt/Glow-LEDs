@@ -1,4 +1,4 @@
-import Feature from "../models/feature";
+import { Feature } from "../features";
 
 export default {
   findAll_features_db: async (filter: any, sort: any) => {

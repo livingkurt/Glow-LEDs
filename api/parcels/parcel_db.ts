@@ -1,4 +1,4 @@
-import Parcel from "../models/parcel";
+import { Parcel } from "../parcels";
 
 export default {
   findAll_parcels_db: async (filter: any, sort: any) => {

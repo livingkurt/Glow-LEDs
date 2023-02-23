@@ -1,4 +1,4 @@
-import Cart from "../models/cart";
+import { Cart } from "../carts";
 
 export default {
   findAll_carts_db: async (filter: any, sort: any) => {

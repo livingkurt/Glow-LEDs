@@ -1,4 +1,4 @@
-import { filament_services } from "../services";
+import { filament_services } from "../filaments";
 
 export default {
   findAll_filaments_c: async (req: any, res: any) => {

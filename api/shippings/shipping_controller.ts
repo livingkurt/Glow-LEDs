@@ -1,4 +1,4 @@
-import { shipping_services } from "../../services";
+import { shipping_services } from "../shippings";
 
 export default {
   all_shipping_shipping_c: async (req: any, res: any) => {

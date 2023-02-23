@@ -4,7 +4,7 @@ import sslRedirect from "heroku-ssl-redirect";
 import express from "express";
 import path from "path";
 import mongoose from "mongoose";
-import routes from "./routes";
+import routes from "./api";
 import template_routes from "./email_templates/template_routes";
 const config = require("./config");
 const cors = require("cors");

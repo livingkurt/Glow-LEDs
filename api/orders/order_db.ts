@@ -1,8 +1,8 @@
-import { Product } from "../models";
-import Order from "../models/order";
+import { Product } from "../products";
+import { Order } from "../orders";
 
 export default {
-  findAll_orders_db: async (filter: unknown, sort: unknown, limit = 10, page = 1) => {
+  findAll_orders_db: async (filter: any, sort: unknown, limit = 10, page = 1) => {
     try {
       return await Order.find(filter)
         .sort(sort)
@@ -30,7 +30,7 @@ export default {
     }
   },
 
-  findBy_orders_db: async (params: unknown) => {
+  findBy_orders_db: async (params: any) => {
     try {
       return await Order.findOne(params).populate("user").populate("orderItems.product").populate("orderItems.secondary_product");
     } catch (error) {
@@ -39,7 +39,7 @@ export default {
       }
     }
   },
-  create_orders_db: async (body: unknown) => {
+  create_orders_db: async (body: any) => {
     try {
       return await Order.create(body);
     } catch (error) {
@@ -48,7 +48,7 @@ export default {
       }
     }
   },
-  update_orders_db: async (id: string, body: unknown) => {
+  update_orders_db: async (id: string, body: any) => {
     try {
       const order: any = await Order.findOne({ _id: id });
       if (order) {
@@ -72,7 +72,7 @@ export default {
       }
     }
   },
-  count_orders_db: async (filter: unknown) => {
+  count_orders_db: async (filter: any) => {
     try {
       return await Order.countDocuments(filter);
     } catch (error) {

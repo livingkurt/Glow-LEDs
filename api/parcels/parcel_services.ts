@@ -1,5 +1,5 @@
-import { parcel_db } from "../db";
-import { determine_filter } from "../util";
+import { parcel_db } from "../parcels";
+import { determine_filter } from "../../util";
 
 export default {
   findAll_parcels_s: async (query: any) => {

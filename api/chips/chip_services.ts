@@ -1,5 +1,5 @@
-import { chip_db } from "../db";
-import { determine_filter } from "../util";
+import { determine_filter } from "../../util";
+import { chip_db } from "../chips";
 
 export default {
   findAll_chips_s: async (query: any) => {

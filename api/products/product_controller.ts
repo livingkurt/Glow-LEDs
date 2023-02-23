@@ -1,6 +1,4 @@
-import { product_services } from "../../services";
-import { Product } from "../../models";
-import { categories, determine_filter, snake_case, subcategories } from "../../util";
+import { product_services } from "../products";
 
 export default {
   findAll_products_c: async (req: any, res: any) => {

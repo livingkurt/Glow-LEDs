@@ -1,5 +1,6 @@
-import { email_db, user_db } from "../db";
-import { determine_filter } from "../util";
+import { determine_filter } from "../../util";
+import { user_db } from "../users";
+import { email_db } from "../emails";
 require("dotenv").config();
 
 export default {

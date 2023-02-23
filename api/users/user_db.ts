@@ -1,5 +1,6 @@
-import { User, Token } from "../models";
-import { prnt } from "../util";
+import User from "../users/user";
+import { prnt } from "../../util";
+// import Token from "../tokens/token";
 require("dotenv");
 
 export default {
@@ -97,7 +98,8 @@ export default {
   create_token_users_db: async (token: any) => {
     prnt({ create_users_db: token });
     try {
-      return await Token.create(token);
+      // return await Token.create(token);
+      return "";
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

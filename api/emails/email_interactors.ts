@@ -1,4 +1,4 @@
-export const determine_status = (status: string) => {
+export const determine_status = (status: string): string => {
   switch (status) {
     case "delivered":
       return "Your Package has Arrived!";
@@ -14,10 +14,11 @@ export const determine_status = (status: string) => {
       return "Your Package has Failed to Deliver.";
 
     default:
+      return "";
   }
 };
 
-export const humanize = (str: string) => {
+export const humanize = (str: string): string => {
   const frags = str.split("_");
   for (let i = 0; i < frags.length; i++) {
     frags[i] = frags[i].charAt(0).toUpperCase() + frags[i].slice(1);

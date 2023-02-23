@@ -1,5 +1,5 @@
-import { setting_db } from "../db";
-import { determine_filter } from "../util";
+import { setting_db } from "../settings";
+import { determine_filter } from "../../util";
 
 export default {
   findAll_settings_s: async (query: any) => {

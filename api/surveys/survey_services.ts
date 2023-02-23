@@ -1,5 +1,5 @@
-import { survey_db } from "../db";
-import { determine_filter } from "../util";
+import { determine_filter } from "../../util";
+import { survey_db } from "../surveys";
 
 export default {
   findAll_surveys_s: async (query: any) => {

@@ -1,5 +1,8 @@
-import { affiliate_db, expense_db, order_db, promo_db, user_db } from "../../db";
-import invoice from "../../email_templates/pages/invoice";
+import { affiliate_db } from "../affiliates";
+import { expense_db } from "../expenses";
+import { order_db } from "../orders";
+import { promo_db } from "../promos";
+import { user_db } from "../users";
 import {
   categories,
   dates_in_year,

@@ -1,4 +1,4 @@
-import { promo_services } from "../../services";
+import { promo_services } from "../promos";
 
 export default {
   findAll_promos_c: async (req: any, res: any) => {

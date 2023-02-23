@@ -1,4 +1,4 @@
-import { order_db } from "../db";
+import { order_db } from "../orders";
 require("dotenv").config();
 const stripe = require("stripe")(process.env.STRIPE_KEY);
 

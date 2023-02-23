@@ -1,4 +1,4 @@
-import { feature_services } from "../../services";
+import { feature_services } from "../features";
 
 export default {
   findAll_features_c: async (req: any, res: any) => {

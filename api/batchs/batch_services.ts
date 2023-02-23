@@ -1,4 +1,14 @@
-import { User, Expense, Product, Feature, Order, Email, Affiliate, Content, Paycheck, Parcel, Chip } from "../models";
+import { User } from "../users";
+import { Expense } from "../expenses";
+import { Product } from "../products";
+import { Feature } from "../features";
+import { Order } from "../orders";
+import { Email } from "../emails";
+import { Affiliate } from "../affiliates";
+import { Content } from "../contents";
+import { Paycheck } from "../paychecks";
+import { Parcel } from "../parcels";
+import Chip from "../chips/chip";
 
 export default {
   find_all_users: async (req: any, res: any) => {
@@ -19,7 +29,11 @@ export default {
 
         res.send(users);
       }
-    } catch (error) {}
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
   },
   find_all_expenses: async (req: any, res: any) => {
     try {
@@ -39,7 +53,11 @@ export default {
 
         res.send(expenses);
       }
-    } catch (error) {}
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
   },
   find_all_products: async (req: any, res: any) => {
     try {
@@ -59,7 +77,11 @@ export default {
 
         res.send(products);
       }
-    } catch (error) {}
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
   },
   find_all_features: async (req: any, res: any) => {
     try {
@@ -79,7 +101,11 @@ export default {
 
         res.send(features);
       }
-    } catch (error) {}
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
   },
   find_all_orders: async (req: any, res: any) => {
     try {
@@ -99,7 +125,11 @@ export default {
 
         res.send(orders);
       }
-    } catch (error) {}
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
   },
   find_all_emails: async (req: any, res: any) => {
     try {
@@ -119,7 +149,11 @@ export default {
 
         res.send(emails);
       }
-    } catch (error) {}
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
   },
   find_all_affiliates: async (req: any, res: any) => {
     try {
@@ -139,7 +173,11 @@ export default {
 
         res.send(affiliates);
       }
-    } catch (error) {}
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
   },
   find_all_contents: async (req: any, res: any) => {
     try {
@@ -159,7 +197,11 @@ export default {
 
         res.send(contents);
       }
-    } catch (error) {}
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
   },
   find_all_paychecks: async (req: any, res: any) => {
     try {
@@ -179,7 +221,11 @@ export default {
 
         res.send(paychecks);
       }
-    } catch (error) {}
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
   },
   find_all_parcels: async (req: any, res: any) => {
     try {
@@ -199,7 +245,11 @@ export default {
 
         res.send(parcels);
       }
-    } catch (error) {}
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
   },
   find_all_chips: async (req: any, res: any) => {
     try {
@@ -220,7 +270,11 @@ export default {
         //
         res.send(chips);
       }
-    } catch (error) {}
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
   },
   update_product_sale_price: async (req: any, res: any) => {
     // const orders = await Order.find({ 'orderItems.name': 'Diffuser Caps + Adapters Starter Kit' });
@@ -270,13 +324,21 @@ export default {
               product.product_options.forEach((option: any) => (option.sale_price = cleared_sale_price));
             }
             const result = await product.save();
-          } catch (error) {}
+          } catch (error) {
+            if (error instanceof Error) {
+              throw new Error(error.message);
+            }
+          }
 
           //
         });
       //
       res.send(products);
-    } catch (error) {}
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
   },
   make_emails_lowercase: async (req: any, res: any) => {
     const users = await User.find({ email: { $exists: true } });

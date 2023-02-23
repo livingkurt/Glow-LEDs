@@ -1,9 +1,3 @@
-import express from 'express';
-import apiRoutes from './api';
-
-const router = express.Router();
-
-// API Routes
-router.use('/api', apiRoutes);
-
-export default router;
+export { default as template_controller } from "./template_controller";
+export { default as template_services } from "./template_services";
+export { default as template_db } from "./template_db";

@@ -1,5 +1,7 @@
-import { affiliate_db, order_db, promo_db } from "../api/products";
-import { determine_filter, determine_promoter_code_tier, determine_sponsor_code_tier, make_private_code, month_dates } from "../util";
+import { determine_filter, determine_promoter_code_tier, determine_sponsor_code_tier, make_private_code, month_dates } from "../../util";
+import { affiliate_db } from "../affiliates";
+import { order_db } from "../orders";
+import { promo_db } from "../promos";
 
 export default {
   findAll_promos_s: async (query: any) => {

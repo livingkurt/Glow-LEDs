@@ -1,4 +1,4 @@
-import Promo from "../models/promo";
+import { Promo } from "../promos";
 
 export default {
   findAll_promos_db: async (filter: any, sort: any, limit: number) => {

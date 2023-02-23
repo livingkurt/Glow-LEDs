@@ -1,5 +1,5 @@
 import express from "express";
-import { promo_controller } from "../../controllers";
+import { promo_controller } from "../promos";
 const { isAuth, isAdmin } = require("../../util");
 
 const router = express.Router();

@@ -1,4 +1,4 @@
-import { setting_services } from "../../services";
+import { setting_services } from "../settings";
 
 export default {
   findAll_settings_c: async (req: any, res: any) => {

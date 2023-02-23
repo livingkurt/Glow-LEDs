@@ -1,13 +1,10 @@
 import express from "express";
-import { filament_controller } from "../../controllers";
+import { filament_controller } from "../filaments";
 const { isAuth, isAdmin } = require("../../util");
 
 const router = express.Router();
 
-router
-  .route("/")
-  .get(filament_controller.findAll_filaments_c)
-  .post(filament_controller.create_filaments_c);
+router.route("/").get(filament_controller.findAll_filaments_c).post(filament_controller.create_filaments_c);
 
 router
   .route("/:id")

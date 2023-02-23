@@ -1,4 +1,4 @@
-import { email_services, order_services } from "../../services";
+import email_services from "./email_services";
 
 import App from "../../email_templates/App";
 import {
@@ -18,14 +18,15 @@ import {
   shipping_status
 } from "../../email_templates/pages/index";
 import email_subscription from "../../email_templates/pages/email_subscription";
-import { affiliate_db, content_db, email_db, order_db, promo_db, user_db } from "../../db";
-import { format_date, months, toCapitalize } from "../../util";
-import { determine_status } from "../interactors/email_interactors";
-import { sendEmail, send_multiple_emails } from "../../helpers/email_helper";
-const cron = require("node-cron");
-const schedule = require("node-schedule");
-
-const easy_post_api = require("@easypost/api");
+import { order_db, order_services } from "../orders";
+import { content_db } from "../contents";
+import { affiliate_db } from "../affiliates";
+import { promo_db } from "../promos";
+import { user_db } from "../users";
+import { determine_status } from "../emails/email_interactors";
+import { format_date, toCapitalize } from "../../util";
+import { sendEmail, send_multiple_emails } from "./email_helper";
+import email_db from "./email_db";
 
 export default {
   findAll_emails_c: async (req: any, res: any) => {

@@ -1,5 +1,4 @@
-import { handlePayment } from "../affiliates/affiliate_interactors";
-import { Order } from "../../models";
+import { Order } from "../orders";
 require("dotenv").config();
 const stripe = require("stripe")(process.env.STRIPE_KEY);
 

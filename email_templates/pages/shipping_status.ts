@@ -1,5 +1,4 @@
 import { format_date, determine_product_name, determine_tracking_link, shipping_status_steps } from "../../util";
-import { determine_status } from "../../interactors/email_interactors";
 
 const determine_emoji = (status: string) => {
   switch (status) {
@@ -58,7 +57,7 @@ const determine_message = (status: string) => {
   }
 };
 
-export default ({ email, order, status, title, tracker }: any) => {
+export default ({ order, status, title, tracker }: { order: any; status: string; title: string; tracker: any }): string => {
   return `<table style="width:100%;border-spacing:0;padding:10px">
   <tr>
     <td style="font-family:helvetica;border:0">

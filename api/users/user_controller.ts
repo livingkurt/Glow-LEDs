@@ -1,10 +1,9 @@
-import { user_db } from "../../db";
-import { Token } from "../../models";
-import { user_services } from "../../services";
-import { getAccessToken, getRefreshToken, prnt } from "../../util";
+import { user_db, user_services } from "../users";
+import { getAccessToken, getRefreshToken } from "../../util";
+// import Token from "../tokens/token";
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const config = require("../config");
+const config = require("../../config");
 require("dotenv");
 
 export default {
@@ -291,7 +290,7 @@ export default {
         // if (!tokenDoc) {
         // 	return res.status(401).json({ error: 'Token expired!' });
         // } else {
-        await Token.findOneAndDelete({ token: refresh_token });
+        // await Token.findOneAndDelete({ token: refresh_token });
         //extract payload from refresh token and generate a new access token and send it
         const payload = jwt.verify(refresh_token, config.REFRESH_TOKEN_SECRET);
 
@@ -316,7 +315,7 @@ export default {
       //delete the refresh token saved in database:
       const { refresh_token } = req.body;
       //
-      await Token.findOneAndDelete({ token: refresh_token });
+      // await Token.findOneAndDelete({ token: refresh_token });
       return res.status(200).json({ success: "User logged out!" });
     } catch (error) {
       console.error(error);

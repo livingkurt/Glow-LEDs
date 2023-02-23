@@ -1,9 +1,51 @@
-import express from 'express';
-import apiRoutes from './api';
+import express from "express";
+import promo_routes from "./promos/promo_routes";
+import cart_routes from "./carts/cart_routes";
+import content_routes from "./contents/content_routes";
+import affiliate_routes from "./affiliates/affiliate_routes";
+import expense_routes from "./expenses/expense_routes";
+import feature_routes from "./features/feature_routes";
+import user_routes from "./users/user_routes";
+import chip_routes from "./chips/chip_routes";
+import product_routes from "./products/product_routes";
+import order_routes from "./orders/order_routes";
+import email_routes from "./emails/email_routes";
+import team_routes from "./teams/team_routes";
+import batch_routes from "./batchs/batch_routes";
+import shipping_routes from "./shippings/shipping_routes";
+import payment_routes from "./payments/payment_routes";
+import paycheck_routes from "./paychecks/paycheck_routes";
+import survey_routes from "./surveys/survey_routes";
+import parcel_routes from "./parcels/parcel_routes";
+import category_routes from "./categorys/category_routes";
+import setting_routes from "./settings/setting_routes";
+import palette_routes from "./palettes/palette_routes";
+import filament_routes from "./filaments/filament_routes";
 
 const router = express.Router();
 
-// API Routes
-router.use('/api', apiRoutes);
+// Book routes
+router.use("/api/promos", promo_routes);
+router.use("/api/carts", cart_routes);
+router.use("/api/contents", content_routes);
+router.use("/api/affiliates", affiliate_routes);
+router.use("/api/expenses", expense_routes);
+router.use("/api/features", feature_routes);
+router.use("/api/users", user_routes);
+router.use("/api/chips", chip_routes);
+router.use("/api/products", product_routes);
+router.use("/api/orders", order_routes);
+router.use("/api/emails", email_routes);
+router.use("/api/teams", team_routes);
+router.use("/api/all", batch_routes);
+router.use("/api/shipping", shipping_routes);
+router.use("/api/payments", payment_routes);
+router.use("/api/paychecks", paycheck_routes);
+router.use("/api/surveys", survey_routes);
+router.use("/api/parcels", parcel_routes);
+router.use("/api/categorys", category_routes);
+router.use("/api/settings", setting_routes);
+router.use("/api/palettes", palette_routes);
+router.use("/api/filaments", filament_routes);
 
 export default router;

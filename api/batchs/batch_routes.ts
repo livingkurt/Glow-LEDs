@@ -1,6 +1,6 @@
 import express from "express";
-import { batch_controller } from "../../controllers";
-// const batch_controller = require("../../controllers/batch_controller");
+import { batch_controller } from "../batchs";
+// const batch_controller = require("..//batch_controller");
 const { isAuth, isAdmin } = require("../../util");
 
 const router = express.Router();

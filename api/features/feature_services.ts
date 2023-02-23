@@ -1,5 +1,5 @@
-import { feature_db } from "../db";
-import { determine_filter } from "../util";
+import { feature_db } from "../features";
+import { determine_filter } from "../../util";
 
 export default {
   findAll_features_s: async (query: any) => {

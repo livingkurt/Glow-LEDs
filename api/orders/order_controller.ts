@@ -1,5 +1,5 @@
-import invoice from "../email_templates/pages/invoice";
-import { order_services } from "../services";
+import invoice from "../../email_templates/pages/invoice";
+import { order_services } from "../orders";
 
 export default {
   findAll_orders_c: async (req: any, res: any) => {

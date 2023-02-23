@@ -1,10 +1,10 @@
-import { user_controller } from '../../controllers';
+import { user_controller } from "../";
 // test continued
-import { MailSlurp } from "mailslurp-client"
-const api = new MailSlurp({ apiKey: "test" })
+import { MailSlurp } from "mailslurp-client";
+const api = new MailSlurp({ apiKey: "test" });
 
 async function generateNewEmailAddress() {
-  return await api.createInbox()
+  return await api.createInbox();
 }
 
 describe("test user sign up", () => {
@@ -13,6 +13,6 @@ describe("test user sign up", () => {
     const inbox = await generateNewEmailAddress();
     await page.type('input[name="password"]', password);
     await page.type('input[name="email"]', inbox.email);
-    await page.$eval('input[name="submit"]', (btn) => btn.click());
+    await page.$eval('input[name="submit"]', btn => btn.click());
   });
 });

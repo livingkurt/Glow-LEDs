@@ -1,5 +1,5 @@
 import express from "express";
-import { payment_controller } from "../../controllers";
+import { payment_controller } from "../payments";
 const { isAuth, isAdmin } = require("../../util");
 
 const router = express.Router();

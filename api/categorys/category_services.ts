@@ -1,5 +1,5 @@
-import { category_db } from "../db";
-import { determine_filter } from "../util";
+import { category_db } from "../categorys";
+import { determine_filter } from "../../util";
 
 export default {
   findAll_categorys_s: async (query: any) => {

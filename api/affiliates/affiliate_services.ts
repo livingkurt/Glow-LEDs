@@ -1,11 +1,9 @@
-import Affiliate from "../../models/affiliate";
-import { Promo } from "../../models";
 import { determine_filter, make_private_code, snake_case } from "../../util";
-import { affiliate_db, user_db } from "../../db";
 import dotenv from "dotenv";
-import { user_controller } from "../../controllers";
 import { IAffiliate } from "../../types/affiliateTypes";
 import { IUser } from "../../types/userTypes";
+import affiliate_db from "./affiliate_db";
+import { user_db } from "../users";
 const bcrypt = require("bcryptjs");
 dotenv.config();
 const stripe = require("stripe")(process.env.STRIPE_KEY);

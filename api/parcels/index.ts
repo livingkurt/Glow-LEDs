@@ -1,9 +1,5 @@
-import express from 'express';
-import apiRoutes from './api';
-
-const router = express.Router();
-
-// API Routes
-router.use('/api', apiRoutes);
-
-export default router;
+export { default as parcel_controller } from "./parcel_controller";
+export { default as parcel_services } from "./parcel_services";
+export { default as parcel_routes } from "./parcel_routes";
+export { default as parcel_db } from "./parcel_db";
+export { default as Parcel } from "./parcel";

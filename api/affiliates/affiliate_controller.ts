@@ -1,4 +1,4 @@
-import { affiliate_services } from "../services";
+import { affiliate_services } from "../affiliates";
 
 export default {
   findAll_affiliates_c: async (req: any, res: any) => {

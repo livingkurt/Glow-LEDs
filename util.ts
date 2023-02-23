@@ -2,9 +2,6 @@ export {};
 import jwt from "jsonwebtoken";
 const config = require("./config");
 import { Request } from "express";
-import { Token } from "./models";
-
-import { getTracking } from "ts-tracking-number";
 import { IAffiliate } from "./types/affiliateTypes";
 export interface IGetUserAuthInfoRequest extends Request {
   user: any; // or any other type

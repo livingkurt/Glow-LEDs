@@ -1,4 +1,4 @@
-import Filament from "../../models/filament";
+import { Filament } from "../filaments";
 
 export default {
   findAll_filaments_db: async (filter: any, sort: any) => {

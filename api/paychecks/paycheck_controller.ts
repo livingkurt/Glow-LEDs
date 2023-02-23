@@ -1,4 +1,4 @@
-import { paycheck_services } from "../../services";
+import { paycheck_services } from "../paychecks";
 
 export default {
   findAll_paychecks_c: async (req: any, res: any) => {

@@ -1,9 +1,5 @@
-import express from 'express';
-import apiRoutes from './api';
-
-const router = express.Router();
-
-// API Routes
-router.use('/api', apiRoutes);
-
-export default router;
+export { default as product_controller } from "./product_controller";
+export { default as product_services } from "./product_services";
+export { default as product_routes } from "./product_routes";
+export { default as product_db } from "./product_db";
+export { default as Product } from "./product";

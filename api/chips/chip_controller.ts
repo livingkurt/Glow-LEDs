@@ -1,4 +1,4 @@
-import { chip_services } from "../../services";
+import chip_services from "./chip_services";
 
 export default {
   findAll_chips_c: async (req: any, res: any) => {

@@ -1,4 +1,4 @@
-import { cart_services } from "../../services";
+import { cart_services } from "../carts";
 
 export default {
   findAll_carts_c: async (req: any, res: any) => {

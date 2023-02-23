@@ -1,4 +1,4 @@
-import { survey_services } from "../../services";
+import { survey_services } from "../surveys";
 
 export default {
   findAll_surveys_c: async (req: any, res: any) => {

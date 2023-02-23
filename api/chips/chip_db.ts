@@ -1,6 +1,4 @@
-import Chip from "../models/chip";
-import { Promo } from "../models";
-import { make_private_code } from "../util";
+import Chip from "./chip";
 
 export default {
   findAll_chips_db: async (filter: any, sort: any) => {

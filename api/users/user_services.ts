@@ -1,10 +1,6 @@
-import { isConstructorDeclaration } from "typescript";
-import { user_db } from "../db";
-import { determine_filter, getAccessToken, getRefreshToken, prnt } from "../util";
+import { user_db } from "../users";
+import { determine_filter, getAccessToken, getRefreshToken } from "../../util";
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const config = require("../config");
-const passport = require("passport");
 require("dotenv");
 
 export default {

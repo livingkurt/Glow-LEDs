@@ -1,4 +1,4 @@
-import Category from "../models/category";
+import { Category } from "../categorys";
 
 export default {
   findAll_categorys_db: async (filter: any, sort: any) => {

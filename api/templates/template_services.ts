@@ -1,5 +1,3 @@
-import { Content } from "../../models";
-
 export default {
   findAll: async (req: any, res: any) => {},
   findById: async (req: any, res: any) => {},

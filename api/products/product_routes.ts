@@ -1,5 +1,5 @@
 import express from "express";
-import { product_controller } from "../../controllers";
+import { product_controller } from "../products";
 const { isAuth, isAdmin } = require("../../util");
 
 const router = express.Router();

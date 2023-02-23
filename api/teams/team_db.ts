@@ -1,7 +1,4 @@
-import Team from "../models/team";
-import { Promo } from "../models";
-import { make_private_code } from "../util";
-import { createFalse } from "typescript";
+import { Team } from "../teams";
 
 export default {
   findAll_teams_db: async (filter: any, sort: any) => {

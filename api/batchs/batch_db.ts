@@ -1,4 +1,14 @@
-import { User, Expense, Product, Feature, Order, Email, Affiliate, Content, Paycheck, Parcel, Chip } from "../models";
+import { User } from "../users";
+import { Expense } from "../expenses";
+import { Product } from "../products";
+import { Feature } from "../features";
+import { Order } from "../orders";
+import { Email } from "../emails";
+import { Affiliate } from "../affiliates";
+import { Content } from "../contents";
+import { Paycheck } from "../paychecks";
+import { Parcel } from "../parcels";
+import Chip from "../chips/chip";
 
 export default {
   find_all_users: async (req: any, res: any) => {

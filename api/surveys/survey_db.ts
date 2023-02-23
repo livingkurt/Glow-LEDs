@@ -1,4 +1,4 @@
-import Survey from "../models/survey";
+import { Survey } from "../surveys";
 
 export default {
   findAll_surveys_db: async (filter: any, sort: any) => {

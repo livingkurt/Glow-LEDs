@@ -1,4 +1,4 @@
-import { content_services } from "../../services";
+import content_services from "./content_services";
 
 export default {
   findAll_contents_c: async (req: any, res: any) => {

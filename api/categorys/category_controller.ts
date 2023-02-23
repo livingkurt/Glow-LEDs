@@ -1,4 +1,4 @@
-import { category_services } from "../../services";
+import { category_services } from "../categorys";
 
 export default {
   findAll_categorys_c: async (req: any, res: any) => {

@@ -1,8 +1,8 @@
 import express from "express";
-import { order_controller } from "../../controllers";
+import { order_controller } from "../orders";
 // import { isAuth } from '../../util';
 const { isAuth, isAdmin } = require("../../util");
-// const order_controller = require("../../controllers/order_controller");
+// const order_controller = require("..//order_controller");
 
 const router = express.Router();
 

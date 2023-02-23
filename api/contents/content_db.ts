@@ -1,4 +1,4 @@
-import Content from "../models/content";
+import { Content } from "../contents";
 
 export default {
   findAll_contents_db: async (filter: any, sort: any, limit: any) => {
