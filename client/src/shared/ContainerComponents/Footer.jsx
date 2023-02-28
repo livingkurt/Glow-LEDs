@@ -72,7 +72,7 @@ const Footer = () => {
           <div className="jc-a w-100per">
             <div>
               <h2 className="ta-l">
-                <Link to="/collections/all/products">Products</Link>
+                <Link to="/collections/all/products">Featured</Link>
               </h2>
               <ul className="lst-none">
                 <li className="ta-l mv-2rem">

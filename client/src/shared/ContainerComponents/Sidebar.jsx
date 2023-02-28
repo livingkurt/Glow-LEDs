@@ -197,9 +197,6 @@ const Sidebar = props => {
           </Link>
         )}
         <div className="sidebar_dropdown">
-          {/* <GLButton  className="sidebar-btn primary" onClick={closeMenu}>
-						<Link to="/collections/all/products">Products</Link>
-					</GLButton> */}
           <div className="sidebar-btn-container">
             <GLButton className="sidebar-btn primary">
               <Link to="/collections/all/products?page=1?limit=21" onClick={closeMenu}>

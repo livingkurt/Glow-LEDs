@@ -284,7 +284,7 @@ const Header = props => {
                       <div className="nav-column">
                         <Link to="/collections/all/products?page=1?limit=21">
                           <GLButton variant="nav" className="ta-l fs-18px title_font">
-                            Products
+                            Featured
                           </GLButton>
                         </Link>
                         <hr className="w-95per m-0px" />
