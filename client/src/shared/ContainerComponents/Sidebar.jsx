@@ -203,7 +203,7 @@ const Sidebar = props => {
           <div className="sidebar-btn-container">
             <GLButton className="sidebar-btn primary">
               <Link to="/collections/all/products?page=1?limit=21" onClick={closeMenu}>
-                Products{" "}
+                Shop
               </Link>
             </GLButton>
             <GLButton className="sidebar-btn-dropdown" onClick={() => show_hide("products_dropdown")} aria-label="Show">
@@ -570,64 +570,53 @@ const Sidebar = props => {
         </div>
 
         <div className="sidebar_dropdown">
-          {/* <GLButton  className="sidebar-btn primary" onClick={closeMenu}>
-						<Link to="/pages/menu/featured">Featured</Link>
-					</GLButton> */}
           <div className="sidebar-btn-container">
             <GLButton className="sidebar-btn primary" onClick={closeMenu}>
-              <Link to="/pages/menu/featured">Featured</Link>
+              <Link to="/pages/menu/featured">Our Team</Link>
             </GLButton>
-            <GLButton className="sidebar-btn-dropdown" onClick={() => show_hide("featured_dropdown")} aria-label="Show">
+            <GLButton className="sidebar-btn-dropdown" onClick={() => show_hide("our_team_dropdown")} aria-label="Show">
               <i className="fas fa-sort-up" />
             </GLButton>
           </div>
-          <ul className="sidebar_dropdown_container" id="featured_dropdown">
+          <ul className="sidebar_dropdown_container" id="our_team_dropdown">
             <div className="sidebar_dropdown_nested">
-              {/* <GLButton  className="sidebar-btn secondary">Sponsored Artists</GLButton> */}
+              <Link to="/collections/all/sponsors">
+                <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
+                  Sponsored Glovers
+                </GLButton>
+              </Link>
+              <Link to="/collections/all/teams">
+                <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
+                  Sponsored Teams
+                </GLButton>
+              </Link>
               <Link to="/collections/all/teams/category/rave_mob">
                 <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
                   Rave Mob
                 </GLButton>
               </Link>
-              <div className="sidebar-btn-container">
-                <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
-                  Sponsored Artists
-                </GLButton>
-                <GLButton className="sidebar-btn-dropdown" onClick={() => show_hide("nested_sponsor_dropdown")} aria-label="Show">
-                  <i className="fas fa-sort-up" />
-                </GLButton>
-              </div>
-              <ul className="sidebar_dropdown_secondary_container" id="nested_sponsor_dropdown">
-                <Link to="/collections/all/sponsors">
-                  <GLButton className="sidebar-btn nested" onClick={closeMenu}>
-                    Sponsored Glovers
-                  </GLButton>
-                </Link>
-                <Link to="/collections/all/teams">
-                  <GLButton className="sidebar-btn nested" onClick={closeMenu}>
-                    Sponsored Teams
-                  </GLButton>
-                </Link>
-              </ul>
-              {/* <GLButton
-								className="sidebar-btn icon trans-neg-180 pos-abs right-10px top-4px "
-								onClick={() => show_hide('nested_sponsor_dropdown')}
-								aria-label="Show"
-							>
-								<i className="fas fa-sort-up" />
-							</GLButton> */}
             </div>
-            <Link to="/collections/all/features/category/artists">
-              <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
-                Artists
-              </GLButton>
-            </Link>
+          </ul>
+
+          <div className="sidebar-btn-container">
+            <GLButton className="sidebar-btn primary" onClick={closeMenu}>
+              <Link to="/pages/menu/featured">Community</Link>
+            </GLButton>
+            <GLButton className="sidebar-btn-dropdown" onClick={() => show_hide("community_dropdown")} aria-label="Show">
+              <i className="fas fa-sort-up" />
+            </GLButton>
+          </div>
+          <ul className="sidebar_dropdown_container" id="community_dropdown">
             <Link to="/collections/all/features/category/glovers">
               <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
                 Glovers
               </GLButton>
             </Link>
-
+            <Link to="/collections/all/features/category/artists">
+              <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
+                Artists
+              </GLButton>
+            </Link>
             <Link to="/collections/all/features/category/producers">
               <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
                 Producers
@@ -638,19 +627,7 @@ const Sidebar = props => {
                 VFX
               </GLButton>
             </Link>
-            {/* <Link to="/account/login?redirect=/account/submit_feature">
-              <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
-                Submit Feature
-              </GLButton>
-            </Link> */}
           </ul>
-          {/* <GLButton
-						className="sidebar-btn icon trans-neg-180 pos-abs right-10px top-4px "
-						onClick={() => show_hide('featured_dropdown')}
-						aria-label="Show"
-					>
-						<i className="fas fa-sort-up" />
-					</GLButton> */}
         </div>
         <div className="sidebar_dropdown">
           {/* <GLButton  className="sidebar-btn primary" onClick={closeMenu}>
@@ -665,26 +642,6 @@ const Sidebar = props => {
             </GLButton>
           </div>
           <ul className="sidebar_dropdown_container" id="support_dropdown">
-            <Link to="/pages/track_your_order">
-              <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
-                Track Your Order
-              </GLButton>
-            </Link>
-            <Link to="/pages/about">
-              <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
-                About
-              </GLButton>
-            </Link>
-            <Link to="/pages/events">
-              <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
-                Events
-              </GLButton>
-            </Link>
-            <Link to="/pages/menu/manuals">
-              <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
-                Manuals
-              </GLButton>
-            </Link>
             <div className="sidebar_dropdown_secondary">
               <div className="sidebar-btn-container">
                 <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
@@ -726,19 +683,34 @@ const Sidebar = props => {
                   </GLButton>
                 </HashLink>
               </ul>
-              {/* <i className="trans-neg-180 pos-abs right-10px top-8px fas fa-sort-up" /> */}
-              {/* <GLButton
-								className="sidebar-btn icon trans-neg-180 pos-abs right-10px top-4px "
-								onClick={() => show_hide('nested_faq_dropdown')}
-							>
-								<i className="fas fa-sort-up" />
-							</GLButton> */}
             </div>
+
             <Link to="/pages/contact">
               <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
                 Contact
               </GLButton>
             </Link>
+            <Link to="/pages/track_your_order">
+              <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
+                Track Your Order
+              </GLButton>
+            </Link>
+            <Link to="/pages/about">
+              <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
+                About
+              </GLButton>
+            </Link>
+            {/* <Link to="/pages/events">
+              <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
+                Events
+              </GLButton>
+            </Link> */}
+            {/* <Link to="/pages/menu/manuals">
+              <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
+                Manuals
+              </GLButton>
+            </Link> */}
+
             <Link to="/pages/terms">
               <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
                 Terms and Conditions

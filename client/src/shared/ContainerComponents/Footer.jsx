@@ -167,13 +167,7 @@ const Footer = () => {
                   <Link to="/collections/all/products/supremes_sizing_sampler_pack">Sizing Sampler</Link>
                 </li>
                 <li className="ta-l mv-2rem">
-                  <Link to="/collections/all/products/1225_batteries">1225 Batteries</Link>
-                </li>
-                <li className="ta-l mv-2rem">
-                  <Link to="/collections/all/products/1616_batteries">1616 Batteries</Link>
-                </li>
-                <li className="ta-l mv-2rem">
-                  <Link to="/collections/all/products/1620_batteries">1620 Batteries</Link>
+                  <Link to="/collections/all/products/category/batteries/subcategory/coin">Coin Batteries</Link>
                 </li>
                 <li className="ta-l mv-2rem">
                   <Link to="/collections/all/products/category/batteries/subcategory/storage">Battery Storage</Link>
@@ -182,15 +176,25 @@ const Footer = () => {
             </div>
             <div style={{ display: width < 950 ? "none" : "block" }}>
               <h2 className="ta-l">
-                <Link to="/pages/featured">Featured</Link>
+                <Link to="/pages/featured">Our Team</Link>
               </h2>
               <ul className="lst-none">
                 <li className="ta-l mv-2rem">
-                  <Link to="/collections/all/teams/category/rave_mob">Rave Mob</Link>
+                  <Link to="/collections/all/sponsors">Sponsored Glovers</Link>
                 </li>
                 <li className="ta-l mv-2rem">
-                  <Link to="/pages/menu/sponsored_artists">Sponsored Artists</Link>
+                  <Link to="/collections/all/teams">Sponsored Teams</Link>
                 </li>
+                <li className="ta-l mv-2rem">
+                  <Link to="/collections/all/teams/category/rave_mob">Rave Mob</Link>
+                </li>
+              </ul>
+            </div>
+            {/* <div style={{ display: width < 950 ? "none" : "block" }}>
+              <h2 className="ta-l">
+                <Link to="/pages/featured">Commmunity</Link>
+              </h2>
+              <ul className="lst-none">
                 <li className="ta-l mv-2rem">
                   <Link to="/collections/all/features/artists">Artists</Link>
                 </li>
@@ -204,7 +208,7 @@ const Footer = () => {
                   <Link to="/collections/all/features/vfx">VFX</Link>
                 </li>
               </ul>
-            </div>
+            </div> */}
             <div style={{ display: width < 550 ? "none" : "block" }}>
               <h2 className="ta-l">
                 <Link to="/collections/all/products">Support</Link>

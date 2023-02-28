@@ -276,7 +276,7 @@ const Header = props => {
                 <div className="dropdown-nav">
                   <Link to="/collections/all/products?page=1?limit=21">
                     <GLButton variant="nav" className="title_font">
-                      Products
+                      Shop
                     </GLButton>
                   </Link>
                   <div className="hover_fade_in nav-dropdown">
@@ -691,7 +691,7 @@ const Header = props => {
                 <div className="dropdown-nav">
                   <Link to="/pages/menu/featured">
                     <GLButton variant="nav" className="title_font">
-                      Features
+                      Our Team
                     </GLButton>
                   </Link>
                   <div className="hover_fade_in nav-dropdown">
@@ -699,54 +699,7 @@ const Header = props => {
                       <div className="w-100per max-w-300px">
                         <Link to="/pages/menu/featured">
                           <GLButton variant="nav" fullWidth className="ta-l fs-18px title_font">
-                            Featured
-                          </GLButton>
-                        </Link>
-                        <hr className="w-95per m-0px" />
-                        <Link to="/collections/all/teams/category/rave_mob">
-                          <GLButton variant="nav" fullWidth className="ta-l">
-                            Rave Mob
-                          </GLButton>
-                        </Link>
-                        <div className="nav-btn-container">
-                          <Link to="/pages/menu/sponsored_artists" className="w-100per">
-                            <GLButton className="nav-btn-link w-100per ">Sponsored Artists</GLButton>
-                          </Link>
-                          <GLButton className="nav-btn-dropdown" onClick={() => show_hide("sponsored_artists_dropdown")} aria-label="Show">
-                            <i className="fas fa-sort-up" />
-                          </GLButton>
-                        </div>
-                        <Link to="/collections/all/features/category/artists">
-                          <GLButton variant="nav" fullWidth className="ta-l">
-                            Artists
-                          </GLButton>
-                        </Link>
-                        <Link to="/collections/all/features/category/glovers">
-                          <GLButton variant="nav" fullWidth className="ta-l jc-b">
-                            Glovers
-                          </GLButton>
-                        </Link>
-                        <Link to="/collections/all/features/category/producers">
-                          <GLButton variant="nav" fullWidth className="ta-l">
-                            Producers
-                          </GLButton>
-                        </Link>
-                        <Link to="/collections/all/features/category/vfx">
-                          <GLButton variant="nav" fullWidth className="ta-l">
-                            VFX
-                          </GLButton>
-                        </Link>
-                        {/* <Link to="/collections/all/features/category/submit_feature">
-                          <GLButton variant="nav" fullWidth className="ta-l">
-                            Submit Feature
-                          </GLButton>
-                        </Link> */}
-                      </div>
-
-                      <div className="nav-dropdown-subcategory-content hover_fade_in" id="sponsored_artists_dropdown">
-                        <Link to="/pages/menu/sponsored_artists">
-                          <GLButton variant="nav" fullWidth className="block ta-l fs-20px title_font">
-                            Sponsored Artists
+                            Our Team
                           </GLButton>
                         </Link>
                         <hr className="w-95per m-0px" />
@@ -758,6 +711,52 @@ const Header = props => {
                         <Link to="/collections/all/teams">
                           <GLButton variant="nav" fullWidth className="block ta-l">
                             Sponsored Teams
+                          </GLButton>
+                        </Link>
+
+                        <Link to="/collections/all/teams/category/rave_mob">
+                          <GLButton variant="nav" fullWidth className="ta-l">
+                            Rave Mob
+                          </GLButton>
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="dropdown-nav">
+                  <Link to="/pages/menu/featured">
+                    <GLButton variant="nav" className="title_font">
+                      Community
+                    </GLButton>
+                  </Link>
+                  <div className="hover_fade_in nav-dropdown">
+                    <div className="jc-c">
+                      <div className="w-100per max-w-300px">
+                        <Link to="/pages/menu/featured">
+                          <GLButton variant="nav" fullWidth className="ta-l fs-18px title_font">
+                            Community
+                          </GLButton>
+                        </Link>
+                        <hr className="w-95per m-0px" />
+                        <Link to="/collections/all/features/category/glovers">
+                          <GLButton variant="nav" fullWidth className="ta-l jc-b">
+                            Glovers
+                          </GLButton>
+                        </Link>
+                        <Link to="/collections/all/features/category/artists">
+                          <GLButton variant="nav" fullWidth className="ta-l">
+                            Artists
+                          </GLButton>
+                        </Link>
+
+                        <Link to="/collections/all/features/category/producers">
+                          <GLButton variant="nav" fullWidth className="ta-l">
+                            Producers
+                          </GLButton>
+                        </Link>
+                        <Link to="/collections/all/features/category/vfx">
+                          <GLButton variant="nav" fullWidth className="ta-l">
+                            VFX
                           </GLButton>
                         </Link>
                       </div>
@@ -780,9 +779,22 @@ const Header = props => {
                           </GLButton>
                         </Link>
                         <hr className="w-95per m-0px" />
+                        <div className="nav-btn-container">
+                          <Link to="/pages/faq" className="w-80per">
+                            <GLButton className="nav-btn-link w-100per ta-l">FAQ</GLButton>
+                          </Link>
+                          <GLButton className="nav-btn-dropdown" onClick={() => show_hide("faq_dropdown")} aria-label="Show">
+                            <i className="fas fa-sort-up" />
+                          </GLButton>
+                        </div>
                         <Link to="/pages/track_your_order">
                           <GLButton variant="nav" fullWidth className="ta-l">
                             Track Your Order
+                          </GLButton>
+                        </Link>
+                        <Link to="/pages/contact">
+                          <GLButton variant="nav" fullWidth className="ta-l">
+                            Contact
                           </GLButton>
                         </Link>
                         {/* <Link to="/pages/color_palettes">
@@ -795,34 +807,22 @@ const Header = props => {
                             About
                           </GLButton>
                         </Link>
-                        <Link to="/pages/events">
+                        {/* <Link to="/pages/events">
                           <GLButton variant="nav" fullWidth className="ta-l jc-b">
                             Events
                           </GLButton>
-                        </Link>
-                        <Link to="/pages/menu/manuals">
+                        </Link> */}
+                        {/* <Link to="/pages/menu/manuals">
                           <GLButton variant="nav" fullWidth className="ta-l jc-b">
                             Manuals
                           </GLButton>
-                        </Link>
+                        </Link> */}
                         <Link to="/pages/announcements">
                           <GLButton variant="nav" fullWidth className="ta-l">
                             Announcements
                           </GLButton>
                         </Link>
-                        <div className="nav-btn-container">
-                          <Link to="/pages/faq" className="w-80per">
-                            <GLButton className="nav-btn-link w-100per ta-l">FAQ</GLButton>
-                          </Link>
-                          <GLButton className="nav-btn-dropdown" onClick={() => show_hide("faq_dropdown")} aria-label="Show">
-                            <i className="fas fa-sort-up" />
-                          </GLButton>
-                        </div>
-                        <Link to="/pages/contact">
-                          <GLButton variant="nav" fullWidth className="ta-l">
-                            Contact
-                          </GLButton>
-                        </Link>
+
                         <Link to="/pages/terms">
                           <GLButton variant="nav" fullWidth className="ta-l">
                             Term and Conditions
