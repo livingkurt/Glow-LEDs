@@ -103,12 +103,12 @@ const ProductItemD = props => {
                       </div>
                     </div>
                   )}
-                  {[...Array(30).keys()].map(
-                    (x, index) =>
-                      props.product_occurrences &&
-                      props.product_occurrences[index] &&
-                      props.product_occurrences[index].name === props.product.name && (
-                        <div className="pos-abs br-10px w-2rem h-2rem  ai-c ta-c jc-c top-0px left-5px" key={props.product.name}>
+                  {Array.from({ length: 60 }).map((_, index) => {
+                    const productOccurrence = props?.product_occurrences[index];
+
+                    if (productOccurrence?.name === props.product.name) {
+                      return (
+                        <div className="pos-abs br-10px w-2rem h-2rem  ai-c ta-c jc-c top-0px left-5px" key={props.product._id}>
                           <img
                             className=" mt-3px ml-2px h-100px w-100px"
                             alt={props.product.name}
@@ -116,8 +116,11 @@ const ProductItemD = props => {
                             src="https://images2.imgbox.com/37/cb/FOp4J3VP_o.png"
                           />
                         </div>
-                      )
-                  )}
+                      );
+                    }
+
+                    return null;
+                  })}
                 </div>
               </div>
             </Link>

@@ -184,7 +184,6 @@ const AllProductsPage = props => {
     set_product_occurrences(occurrences);
     if (occurrences && category === "best_sellers") {
       const { data } = await API_Products.get_best_sellers(occurrences);
-
       set_products(data);
     } else if (occurrences && category === "our_picks") {
       const { data } = await API_Products.get_our_picks();
@@ -192,7 +191,6 @@ const AllProductsPage = props => {
       set_products(data);
     } else if (occurrences && category === "new_releases") {
       const { data } = await API_Products.get_new_releases();
-      console.log({ data });
 
       set_products(shuffle(data));
     } else {

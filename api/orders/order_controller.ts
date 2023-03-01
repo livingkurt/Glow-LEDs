@@ -76,9 +76,8 @@ export default {
     }
   },
   occurrences_orders_c: async (req: any, res: any) => {
-    const { params } = req;
     try {
-      const orders = await order_services.occurrences_orders_s(params);
+      const orders = await order_services.occurrences_orders_s();
       if (orders) {
         return res.status(200).send(orders);
       }

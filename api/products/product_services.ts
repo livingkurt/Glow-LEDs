@@ -122,10 +122,18 @@ export default {
       const names = occurences.map((item: any) => item.name);
 
       const sort = {};
-      const filter = { name: { $in: names }, hidden: false };
+      const filter = { name: { $in: names }, deleted: false, hidden: false };
       const limit = 0;
       const page = 1;
-      return await product_db.findAll_products_db(filter, sort, limit, page);
+      const products = await product_db.findAll_products_db(filter, sort, limit, page);
+      const compareFn = (a: any, b: any) => {
+        const aIndex = occurences.findIndex((x: any) => x.name === a.name);
+        const bIndex = occurences.findIndex((x: any) => x.name === b.name);
+        return aIndex - bIndex;
+      };
+      const sortedProducts = products.sort(compareFn);
+      console.log({ sortedProducts: sortedProducts.map((x: any) => x.name) });
+      return sortedProducts;
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -161,7 +169,7 @@ export default {
       ];
 
       const sort = { _id: -1 };
-      const filter = { name: { $in: names }, hidden: false };
+      const filter = { name: { $in: names }, deleted: false, hidden: false };
       const limit = 0;
       const page = 1;
       return await product_db.findAll_products_db(filter, sort, limit, page);

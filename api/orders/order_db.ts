@@ -587,5 +587,35 @@ export default {
         throw new Error(error.message);
       }
     }
+  },
+  get_occurances_products_db: async () => {
+    const final_result = await Order.aggregate([
+      {
+        $match: { deleted: false }
+      },
+      {
+        $unwind: "$orderItems"
+      },
+      {
+        $group: {
+          _id: "$orderItems.product",
+          name: { $first: "$orderItems.name" },
+          occurrence: { $sum: 1 }
+        }
+      },
+      {
+        $project: {
+          _id: 0,
+          id: "$_id",
+          name: 1,
+          occurrence: 1
+        }
+      },
+      {
+        $sort: { occurrence: -1 }
+      }
+    ]);
+    console.log({ final_result });
+    return final_result;
   }
 };

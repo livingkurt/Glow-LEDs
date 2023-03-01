@@ -178,43 +178,9 @@ export default {
       }
     }
   },
-  occurrences_orders_s: async (params: any) => {
+  occurrences_orders_s: async () => {
     try {
-      const sort = {};
-      const filter = { deleted: false, user: params._id };
-      const limit = 50;
-      const page = 1;
-      const orders = await order_db.findAll_orders_db(filter, sort, limit, page);
-      const products: any = [];
-      const ids: any = [];
-      orders.forEach((order: any) => {
-        order.orderItems.map((item: any) => {
-          products.push(item.name);
-          ids.push(item.product);
-          if (item.secondary_product) {
-            products.push(item.secondary_product.name);
-            ids.push(item.secondary_product._id);
-          }
-        });
-      });
-      // //
-      const result: any = {};
-      const ids_result: any = {};
-      for (let i = 0; i < products.length; ++i) {
-        if (!result[products[i]]) {
-          result[products[i]] = 0;
-          ids_result[ids[i]] = 0;
-        }
-        ++result[products[i]];
-        ++ids_result[ids[i]];
-      }
-      const final_result = [];
-      for (const i in result) {
-        const entry = { name: i, occurrence: result[i], id: ids_result[i] };
-        final_result.push(entry);
-      }
-      final_result.sort((a, b) => (a.occurrence > b.occurrence ? -1 : 1));
-      return final_result;
+      return await order_db.get_occurances_products_db();
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
