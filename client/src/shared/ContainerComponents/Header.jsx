@@ -689,7 +689,7 @@ const Header = props => {
                   </div>
                 </div>
                 <div className="dropdown-nav">
-                  <Link to="/pages/menu/featured">
+                  <Link to="/collections/all/sponsors">
                     <GLButton variant="nav" className="title_font">
                       Our Team
                     </GLButton>
@@ -697,7 +697,7 @@ const Header = props => {
                   <div className="hover_fade_in nav-dropdown">
                     <div className="jc-c">
                       <div className="w-100per max-w-300px">
-                        <Link to="/pages/menu/featured">
+                        <Link to="/collections/all/sponsors">
                           <GLButton variant="nav" fullWidth className="ta-l fs-18px title_font">
                             Our Team
                           </GLButton>

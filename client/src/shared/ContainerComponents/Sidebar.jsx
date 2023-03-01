@@ -569,7 +569,7 @@ const Sidebar = props => {
         <div className="sidebar_dropdown">
           <div className="sidebar-btn-container">
             <GLButton className="sidebar-btn primary" onClick={closeMenu}>
-              <Link to="/pages/menu/featured">Our Team</Link>
+              <Link to="/collections/all/sponsors">Our Team</Link>
             </GLButton>
             <GLButton className="sidebar-btn-dropdown" onClick={() => show_hide("our_team_dropdown")} aria-label="Show">
               <i className="fas fa-sort-up" />
