@@ -230,17 +230,8 @@ const MenuPage = props => {
         />
       </Helmet>
       <Loading loading={loading_pictures} />
-      {/* {pathname === "featured" && (
-        <div className="jc-fe">
-          <Link to="/account/login?redirect=/account/submit_feature">
-            <GLButton variant="secondary" className="">
-              Submit Feature
-            </GLButton>
-          </Link>
-        </div>
-      )} */}
       <div className="jc-c">
-        <h1> {humanize(pathname)}</h1>
+        <h1> {pathname === "gloving" ? "All Gloving" : humanize(pathname)}</h1>
       </div>
       <div className="product_big_screen">
         <div className="jc-c">

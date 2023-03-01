@@ -19,13 +19,6 @@ const ProductItemM = props => {
           <div className="small_screen_product row">
             <div className="row">
               <div className="column ai-c pos-rel">
-                {/* <LazyLoadImage
-									className="product-image w-200px h-200px "
-									alt={props.product.name}
-									title="Product Image"
-									effect="blur"
-									src={props.product.images && props.product.images[0]}
-								/> */}
                 <LazyImage
                   className="product-image w-200px h-200px "
                   alt={props.product.name}

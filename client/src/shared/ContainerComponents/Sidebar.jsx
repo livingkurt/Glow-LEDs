@@ -199,7 +199,7 @@ const Sidebar = props => {
         <div className="sidebar_dropdown">
           <div className="sidebar-btn-container">
             <GLButton className="sidebar-btn primary">
-              <Link to="/collections/all/products?page=1?limit=21" onClick={closeMenu}>
+              <Link to="/pages/menu/gloving" onClick={closeMenu}>
                 Shop
               </Link>
             </GLButton>

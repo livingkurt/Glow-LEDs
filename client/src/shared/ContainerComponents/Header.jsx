@@ -274,7 +274,7 @@ const Header = props => {
                   </GLButton>
                 </Link>
                 <div className="dropdown-nav">
-                  <Link to="/collections/all/products?page=1?limit=21">
+                  <Link to="/pages/menu/gloving">
                     <GLButton variant="nav" className="title_font">
                       Shop
                     </GLButton>
@@ -282,7 +282,7 @@ const Header = props => {
                   <div className="hover_fade_in nav-dropdown">
                     <div className="jc-c">
                       <div className="nav-column">
-                        <Link to="/collections/all/products?page=1?limit=21">
+                        <Link to="/collections/all/products/category/our_picks">
                           <GLButton variant="nav" className="ta-l fs-18px title_font">
                             Featured
                           </GLButton>
