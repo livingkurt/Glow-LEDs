@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Loading } from "../../SharedComponents";
 import { gl_table_th, gl_table, gl_table_tr } from "./GLTable.module.scss";
 import "./gl_table.scss";
@@ -24,8 +24,26 @@ const GLTable = ({
   totalPages,
   page,
   limit,
-  update_page
+  update_page,
+  setSelectedRows,
+  selectedRows = [],
+  showCheckboxes = true // new prop to show/hide checkboxes
 }) => {
+  const handleRowSelect = (event, row) => {
+    if (event.target.checked) {
+      setSelectedRows(prevSelectedRows => [...prevSelectedRows, row]);
+    } else {
+      setSelectedRows(prevSelectedRows => prevSelectedRows.filter(selectedRow => selectedRow !== row));
+    }
+  };
+
+  const handleSelectAllRows = event => {
+    if (event.target.checked) {
+      setSelectedRows(rows);
+    } else {
+      setSelectedRows([]);
+    }
+  };
   return (
     <Loading loading={loading} error={error}>
       <div className="row wrap">
@@ -58,6 +76,11 @@ const GLTable = ({
           <table className="gl-table">
             <thead>
               <tr>
+                {showCheckboxes && (
+                  <th className={gl_table_th}>
+                    <input type="checkbox" checked={selectedRows.length === rows.length} onChange={handleSelectAllRows} />
+                  </th>
+                )}
                 {column_defs.map(column => (
                   <th className={gl_table_th}>{column.title}</th>
                 ))}
@@ -74,6 +97,12 @@ const GLTable = ({
                     fontSize: "16px"
                   }}
                 >
+                  {showCheckboxes && (
+                    <td className="p-10px">
+                      <input type="checkbox" checked={selectedRows.includes(row)} onChange={e => handleRowSelect(e, row)} />
+                    </td>
+                  )}
+
                   {column_defs.map(column => {
                     const value = typeof column.display === "function" ? column.display(row) : row[column.display];
                     return (

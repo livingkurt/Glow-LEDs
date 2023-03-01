@@ -18,6 +18,7 @@ import { listTeams } from "../../actions/teamActions";
 import { listOrders } from "../../actions/orderActions";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import GLTable from "../../shared/GlowLEDsComponents/GLTable/GLTable";
+import axios from "axios";
 
 const PaychecksPage = props => {
   const history = useHistory();
@@ -31,6 +32,7 @@ const PaychecksPage = props => {
   const [update_discount_code, set_update_discount_code] = useState(false);
   const [page, set_page] = useState(1);
   const [limit, set_limit] = useState(10);
+  const [selectedRows, setSelectedRows] = useState([]);
 
   const category = props.match.params.category ? props.match.params.category : "";
   const paycheckList = useSelector(state => state.paycheckList);
@@ -56,20 +58,16 @@ const PaychecksPage = props => {
   // const [previous_month, set_previous_month] = useState(months[previous_month_number]);
   const [year, set_year] = useState(date.getFullYear());
 
+  const delete_multiple_paychecks = () => {
+    set_loading_checkboxes(true);
+    const response = API_Paychecks.delete_multiple_paychecks(selectedRows.map(row => row._id));
+    setSelectedRows([]);
+    dispatch(listPaychecks({ category, search, sort }));
+  };
+
   setTimeout(() => {
     set_loading_checkboxes(false);
   }, 500);
-
-  // useEffect(() => {
-  // 	let clean = true;
-  // 	if (clean) {
-  // 		const month = months[date.getMonth()];
-  // 		const year = months[date.getFullYear()];
-  // 		set_month(month);
-  // 		set_month(year);
-  // 	}
-  // 	return () => {};
-  // }, []);
 
   useEffect(() => {
     let clean = true;
@@ -101,13 +99,6 @@ const PaychecksPage = props => {
     dispatch(listPaychecks({ category, search, sort: e.target.value }));
   };
 
-  // useEffect(() => {
-  //   let clean = true;
-  //   if (clean) {
-  //     dispatch(listPaychecks({ category, search, sort }));
-  //   }
-  //   return () => (clean = false);
-  // }, [dispatch, category, search, sort]);
   const deleteHandler = paycheck => {
     dispatch(deletePaycheck(paycheck._id));
   };
@@ -140,67 +131,6 @@ const PaychecksPage = props => {
   };
 
   const sort_options = ["Newest", "Artist Name", "Facebook Name", "Instagram Handle", "Sponsor", "Promoter"];
-
-  const create_affiliate_paychecks = async () => {
-    set_loading_paychecks(true);
-
-    if (create_paychecks) {
-      await API_Paychecks.create_affiliate_paychecks_a("promoter", year, month.toLowerCase());
-      await API_Paychecks.create_affiliate_paychecks_a("sponsor", year, month.toLowerCase());
-      await API_Paychecks.create_affiliate_paychecks_a("team", year, month.toLowerCase());
-    }
-    if (update_google_sheets) {
-      get_affiliate_data();
-      // set_message_note("paychecks");
-      // await affiliate_revenue_upload("promoter", year, month.toLowerCase(), "1vy1OKH0P96cDkjuq-_yBT56CA1yQRMY3XZ2kgN95Spg");
-      // set_message_note("promoter");
-      // await affiliate_revenue_upload("sponsor", year, month.toLowerCase(), "1nxYhdgGqme0tSvOrYeb6oU9RIOLeA2aik3-K4H1dRpA");
-      // set_message_note("sponsor");
-      // await affiliate_revenue_upload("team", year, month.toLowerCase(), "1OmtRqSVEBCZCamz1qPceXW8CPfuwvWwGxIiu1YzMtMI");
-      // set_message_note("team");
-      // await top_earner_upload(year, month.toLowerCase());
-      // set_message_note("top_earner_upload");
-      // await top_code_usage_upload(year, month.toLowerCase());
-      // set_message_note("top_code_usage_upload");
-    }
-
-    if (update_discount_code) {
-      await API_Promos.update_discount(year, month.toLowerCase());
-      set_message_note("update_discount");
-    }
-    dispatch(listPaychecks({ limit, page }));
-    set_loading_paychecks(false);
-  };
-
-  const get_affiliate_data = async () => {
-    set_loading_paychecks(true);
-    const { data: last_months_rows } = await API_Orders.all_affiliate_code_usage_orders_a({
-      year,
-      month: month.toLowerCase(),
-      position: ""
-    });
-    // const { data: total_rows } = await API_Orders.all_affiliate_code_usage_orders_a({
-    //   year: "",
-    //   month: month.toLowerCase(),
-    //   position: ""
-    // });
-
-    // const sorted_total_rows = total_rows.affiliates.sort((a, b) => (parseFloat(a.Uses) > parseFloat(b.Uses) ? -1 : 1));
-
-    // const formated_total = removeDuplicates(sorted_total_rows, "Promo Code").map(affiliate => {
-    //   return { ...affiliate, Revenue: `$${affiliate.Revenue}` };
-    // });
-
-    const sorted_last_months_rows = last_months_rows.affiliates.sort((a, b) => (parseFloat(a.Uses) > parseFloat(b.Uses) ? -1 : 1));
-    const formated_last_month = removeDuplicates(sorted_last_months_rows, "Promo Code").map(affiliate => {
-      return { ...affiliate, Revenue: `$${affiliate.Revenue}` };
-    });
-    set_loading_paychecks(false);
-  };
-
-  // const pay_employee = async () => {
-  //   await API_Paychecks.pay_employee({ employee_id, amount });
-  // };
 
   const years = ["2025", "2024", "2023", "2022", "2021", "2020"];
 
@@ -397,12 +327,12 @@ const PaychecksPage = props => {
         </div>
 
         <div className="row g-10px">
-          {/* <GLButton variant="primary" className="h-40px" onClick={create_affiliate_paychecks}>
-            Create Affiliate Paychecks
-          </GLButton> */}
           <Link to="/secure/glow/editpaycheck">
             <GLButton variant="primary">Create Paycheck</GLButton>
           </Link>
+          <GLButton variant="primary" onClick={() => delete_multiple_paychecks()}>
+            Delete Multiple
+          </GLButton>
         </div>
       </div>
       <GLTable
@@ -420,6 +350,8 @@ const PaychecksPage = props => {
         page={page}
         limit={limit}
         update_page={update_page}
+        setSelectedRows={setSelectedRows}
+        selectedRows={selectedRows}
         action_row={paycheck => (
           <div className="jc-b">
             <Link to={"/secure/glow/editpaycheck/" + paycheck._id}>

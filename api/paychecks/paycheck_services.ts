@@ -215,5 +215,14 @@ export default {
         throw new Error(error.message);
       }
     }
+  },
+  remove_multiple_paychecks_s: async (body: any) => {
+    try {
+      return await paycheck_db.remove_multiple_paychecks_db(body.ids);
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
   }
 };

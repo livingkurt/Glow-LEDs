@@ -68,6 +68,16 @@ export default {
       }
     }
   },
+  remove_multiple_paychecks_db: async (ids: string[]) => {
+    try {
+      console.log({ ids });
+      return await Paycheck.deleteMany({ _id: { $in: ids } });
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
   count_paychecks_db: async (filter: any) => {
     try {
       return await Paycheck.countDocuments(filter);

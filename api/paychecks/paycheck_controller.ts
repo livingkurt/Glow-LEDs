@@ -86,5 +86,18 @@ export default {
     } catch (error) {
       res.status(500).send({ error, message: "Error Deleting Paycheck" });
     }
+  },
+  remove_multiple_paychecks_c: async (req: any, res: any) => {
+    const { body } = req;
+    console.log({ body });
+    try {
+      const paycheck = await paycheck_services.remove_multiple_paychecks_s(body);
+      if (paycheck) {
+        return res.status(204).send({ message: "Paycheck Deleted" });
+      }
+      return res.status(500).send({ message: "Error Deleting Paycheck" });
+    } catch (error) {
+      res.status(500).send({ error, message: "Error Deleting Paycheck" });
+    }
   }
 };
