@@ -76,20 +76,36 @@ export default {
   },
   aggregateAll_products_db: async () => {
     try {
-      return await Product.aggregate([
+      const response = await Product.aggregate([
         {
           $match: { deleted: false, hidden: false }
         },
-
         {
           $group: {
             _id: "$category",
             data: {
-              $last: "$$ROOT"
+              $push: "$$ROOT"
             }
+          }
+        },
+        {
+          $project: {
+            data: {
+              $slice: ["$data", -4]
+            }
+          }
+        },
+        {
+          $unwind: "$data"
+        },
+        {
+          $replaceRoot: {
+            newRoot: "$data"
           }
         }
       ]).sort({ _id: 1 });
+      console.log({ response });
+      return response;
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

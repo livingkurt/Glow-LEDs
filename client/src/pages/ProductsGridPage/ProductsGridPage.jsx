@@ -192,6 +192,7 @@ const AllProductsPage = props => {
       set_products(data);
     } else if (occurrences && category === "new_releases") {
       const { data } = await API_Products.get_new_releases();
+      console.log({ data });
 
       set_products(shuffle(data));
     } else {

@@ -173,9 +173,7 @@ export default {
   },
   get_new_releases_products_s: async (params: any, body: any) => {
     try {
-      const products = await product_db.aggregateAll_products_db();
-
-      return products.map((product: any) => product.data);
+      return await product_db.aggregateAll_products_db();
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
