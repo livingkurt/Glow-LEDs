@@ -84,6 +84,7 @@ import userSlice from "./slices/userSlice";
 import { dashboardApi } from "./pages/DashboardPage/dashboardApi";
 import dashboardSlice from "./pages/DashboardPage/dashboardSlice";
 import { placeOrderApi } from "./pages/PlaceOrderPage/placeOrderApi";
+import { allRecordsApi } from "./api/allRecordsApi";
 
 export default combineReducers({
   affiliateSlice: affiliateSlice,
@@ -105,6 +106,7 @@ export default combineReducers({
   surveySlice: surveySlice,
   teamSlice: teamSlice,
   userSlice: userSlice,
+  [allRecordsApi.reducerPath]: allRecordsApi.reducer,
   [dashboardApi.reducerPath]: dashboardApi.reducer,
   [placeOrderApi.reducerPath]: placeOrderApi.reducer,
   dashboardSlice: dashboardSlice,
