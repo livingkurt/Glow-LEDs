@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { register } from "../../actions/userActions";
 import { validate_registration } from "../../utils/validations";
 import { Helmet } from "react-helmet";
 import { Loading } from "../../shared/SharedComponents";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import GLInput from "../../shared/GlowLEDsComponents/GLInput/GLInput";
+import * as API from "../../api";
+import { set_success } from "../../slices/userSlice";
 
 const RegisterPage = props => {
   const [first_name, set_first_name] = useState("");
@@ -21,8 +22,8 @@ const RegisterPage = props => {
   const [password_validations, setPasswordValidations] = useState("");
   const [re_password_validations, setRePasswordValidations] = useState("");
 
-  const userRegister = useSelector(state => state.userRegister);
-  const { loading, current_user, error } = userRegister;
+  const userSlice = useSelector(state => state.userSlice);
+  const { loading, current_user, error, success } = userSlice;
 
   const dispatch = useDispatch();
 
@@ -41,7 +42,7 @@ const RegisterPage = props => {
 
     if (request.isValid) {
       dispatch(
-        register({
+        API.registerUser({
           first_name,
           last_name,
           email: email.toLowerCase(),
@@ -57,12 +58,13 @@ const RegisterPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      if (current_user && current_user.hasOwnProperty("first_name")) {
+      if (success) {
         props.history.push("/account/login");
+        dispatch(set_success(false));
       }
     }
     return () => (clean = false);
-  }, [current_user]);
+  }, [success]);
 
   return (
     <div className="form">

@@ -14,6 +14,7 @@ const userSlice = createSlice({
     user: {},
     current_user: {},
     message: "",
+    success: false,
     error: {},
     search: "",
     sort: "",
@@ -58,6 +59,9 @@ const userSlice = createSlice({
       localStorage.removeItem("accessToken");
       setAuthToken(false);
       state.current_user = {};
+    },
+    set_success: (state, { payload }) => {
+      state.success = payload;
     }
   },
   extraReducers: {
@@ -139,9 +143,9 @@ const userSlice = createSlice({
     },
     [API.registerUser.fulfilled]: (state: any, { payload }: any) => {
       state.access_token = "";
-      state.current_user = {};
+      // state.current_user = payload;
       state.loading = false;
-      state.message = "User Password Reset Success";
+      state.message = "User Registered";
       state.success = true;
     },
     [API.registerUser.rejected]: (state: any, { payload }: any) => {
@@ -172,5 +176,6 @@ const userSlice = createSlice({
   }
 });
 
-export const { set_search, set_sort, set_page, set_limit, set_loading, set_user, set_current_user, logout_user } = userSlice.actions;
+export const { set_search, set_sort, set_page, set_limit, set_loading, set_user, set_current_user, logout_user, set_success } =
+  userSlice.actions;
 export default userSlice.reducer;

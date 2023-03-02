@@ -16,9 +16,6 @@ const UsersPage = props => {
   const userSlice = useSelector(state => state.userSlice);
   const { loading, users, message, error, success } = userSlice;
 
-  const userDelete = useSelector(state => state.userDelete);
-  const { loading: loadingDelete, success: successDelete, error: errorDelete } = userDelete;
-
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -27,7 +24,7 @@ const UsersPage = props => {
       dispatch(API.listUsers({}));
     }
     return () => (clean = false);
-  }, [successDelete]);
+  }, [success]);
 
   const deleteHandler = user => {
     dispatch(API.deleteUser(user._id));
