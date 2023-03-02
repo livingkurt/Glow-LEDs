@@ -12,8 +12,8 @@ const FeaturedPage = props => {
   const history = useHistory();
   const featureDetails = useSelector(state => state.featureDetails);
   const { feature } = featureDetails;
-  const userLogin = useSelector(state => state.userLogin);
-  const { userInfo } = userLogin;
+  const userSlice = useSelector(state => state.userSlice);
+  const { userInfo } = userSlice;
 
   const dispatch = useDispatch();
 

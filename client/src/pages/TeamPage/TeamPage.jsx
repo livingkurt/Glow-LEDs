@@ -13,8 +13,8 @@ const TeamPage = props => {
   const history = useHistory();
   const teamDetails = useSelector(state => state.teamDetails);
   const { team } = teamDetails;
-  const userLogin = useSelector(state => state.userLogin);
-  const { userInfo } = userLogin;
+  const userSlice = useSelector(state => state.userSlice);
+  const { userInfo } = userSlice;
 
   const dispatch = useDispatch();
 

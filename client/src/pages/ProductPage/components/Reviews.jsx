@@ -16,9 +16,9 @@ const Review = props => {
   //
   const dispatch = useDispatch();
 
-  const userLogin = useSelector(state => state.userLogin);
+  const userSlice = useSelector(state => state.userSlice);
 
-  let { userInfo } = userLogin;
+  let { userInfo } = userSlice;
   const productReviewSave = useSelector(state => state.productReviewSave);
   const { success: productSaveSuccess } = productReviewSave;
 

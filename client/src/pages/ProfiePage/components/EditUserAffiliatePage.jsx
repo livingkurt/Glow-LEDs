@@ -42,9 +42,6 @@ const EditUserAffiliatePage = props => {
 
   const { height, width } = useWindowDimensions();
 
-  const userSlice = useSelector(state => state.userSlice);
-  const { users } = userSlice;
-
   const productSlice = useSelector(state => state.productSlice);
   const { products: products_list } = productSlice;
 
@@ -61,8 +58,8 @@ const EditUserAffiliatePage = props => {
   const affiliateSave = useSelector(state => state.affiliateSave);
   const { affiliate: affiliate_saved, loading: loading_saved, success } = affiliateSave;
 
-  const userLogin = useSelector(state => state.userLogin);
-  const { userInfo } = userLogin;
+  const userSlice = useSelector(state => state.userSlice);
+  const { userInfo } = userSlice;
 
   const set_state = () => {
     set_id(affiliate._id);

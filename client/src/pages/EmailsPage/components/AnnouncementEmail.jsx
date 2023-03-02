@@ -22,8 +22,8 @@ const AnnouncementEmail = props => {
 
   const [template, set_template] = useState("");
 
-  const userLogin = useSelector(state => state.userLogin);
-  const { userInfo } = userLogin;
+  const userSlice = useSelector(state => state.userSlice);
+  const { userInfo } = userSlice;
 
   const emailSlice = useSelector(state => state.emailSlice);
   const { emails } = emailSlice;

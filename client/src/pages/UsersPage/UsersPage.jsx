@@ -19,9 +19,6 @@ const UsersPage = props => {
   const userDelete = useSelector(state => state.userDelete);
   const { loading: loadingDelete, success: successDelete, error: errorDelete } = userDelete;
 
-  const userLogin = useSelector(state => state.userLogin);
-  const { userInfo } = userLogin;
-
   const dispatch = useDispatch();
 
   useEffect(() => {

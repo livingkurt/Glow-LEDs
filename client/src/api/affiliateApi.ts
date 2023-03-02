@@ -4,8 +4,8 @@ import axios from "axios";
 import { create_query } from "../utils/helper_functions";
 import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
-import { setCurrentUser } from "../actions/userActions";
 import { DetailsAffiliate } from "../actions/affiliateActions";
+import { set_current_user } from "../slices/userSlice";
 // import { createApi } from "@reduxjs/toolkit/query/react";
 
 export const listAffiliates = createAsyncThunk("affiliates/listAffiliates", async (query: any, thunkApi: any) => {
@@ -75,7 +75,7 @@ export const createAffiliate = createAsyncThunk("affiliates/createAffiliate", as
     // Set current user
     localStorage.setItem("accessToken", access_token);
     localStorage.setItem("refreshToken", refresh_token);
-    thunkApi.dispatch(setCurrentUser(decoded));
+    thunkApi.dispatch(set_current_user(decoded));
 
     return data;
   } catch (error) {}

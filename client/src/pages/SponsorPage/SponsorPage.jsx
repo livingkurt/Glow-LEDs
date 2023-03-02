@@ -16,8 +16,8 @@ const SponsorPage = props => {
   const history = useHistory();
   const affiliateDetails = useSelector(state => state.affiliateDetails);
   const { affiliate } = affiliateDetails;
-  const userLogin = useSelector(state => state.userLogin);
-  const { userInfo } = userLogin;
+  const userSlice = useSelector(state => state.userSlice);
+  const { userInfo } = userSlice;
 
   const dispatch = useDispatch();
 

@@ -9,8 +9,8 @@ require("dotenv").config();
 
 const ContactPage = props => {
   const dispatch = useDispatch();
-  const userLogin = useSelector(state => state.userLogin);
-  const { userInfo } = userLogin;
+  const userSlice = useSelector(state => state.userSlice);
+  const { userInfo } = userSlice;
 
   const [first_name, set_first_name] = useState(userInfo ? userInfo.first_name : "");
   const [last_name, set_last_name] = useState(userInfo ? userInfo.last_name : "");

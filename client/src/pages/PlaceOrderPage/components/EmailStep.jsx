@@ -23,8 +23,8 @@ const EmailStep = ({
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const userLogin = useSelector(state => state.userLogin);
-  const { userInfo } = userLogin;
+  const userSlice = useSelector(state => state.userSlice);
+  const { userInfo } = userSlice;
 
   const submit_login = e => {
     e.preventDefault();

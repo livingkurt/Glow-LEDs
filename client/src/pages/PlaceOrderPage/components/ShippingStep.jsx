@@ -62,8 +62,8 @@ const ShippingStep = ({
 
   const dispatch = useDispatch();
 
-  const userLogin = useSelector(state => state.userLogin);
-  const { userInfo } = userLogin;
+  const userSlice = useSelector(state => state.userSlice);
+  const { userInfo } = userSlice;
 
   useEffect(() => {
     let clean = true;

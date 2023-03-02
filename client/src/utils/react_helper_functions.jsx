@@ -1,11 +1,12 @@
 import React from "react";
 
-import { setCurrentUser, logout, check_refresh_token } from "../actions/userActions";
+import { logout, check_refresh_token } from "../actions/userActions";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "../utils/setAuthToken";
 import { API_Users } from ".";
 import store from "../store";
 import { GLButton } from "../shared/GlowLEDsComponents";
+import { set_current_user } from "../slices/userSlice";
 
 const delay = 2000; // anti-rebound for 500ms
 let lastExecution = 0;
@@ -26,7 +27,7 @@ export const check_authentication = () => {
 
     // userInfo = decoded_access_token.userInfo;
     // Set user and isAuthenticated
-    store.dispatch(setCurrentUser(decoded_access_token));
+    store.dispatch(set_current_user(decoded_access_token));
     // Check for expired access_token
     const currentTime = Date.now() / 1000; // to get in milliseconds
     if (decoded_access_token.exp < currentTime) {
@@ -42,7 +43,7 @@ export const check_authentication = () => {
               // Decode token and get user info and exp
               const decoded = jwt_decode(token);
 
-              store.dispatch(setCurrentUser(decoded));
+              store.dispatch(set_current_user(decoded));
             })
             .catch(error => {
               // Logout user

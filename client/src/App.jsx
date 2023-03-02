@@ -96,7 +96,6 @@ const App = props => {
   const { height, width } = useWindowDimensions();
 
   const [message, set_message] = useState("");
-  // const userLogin = useSelector((state) => state.userLogin);
 
   check_authentication();
 

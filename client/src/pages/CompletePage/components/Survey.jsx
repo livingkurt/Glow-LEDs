@@ -34,10 +34,7 @@ const Survey = props => {
     set_loading_checkboxes(false);
   }, 500);
   const userSlice = useSelector(state => state.userSlice);
-  const { users } = userSlice;
-
-  const userLogin = useSelector(state => state.userLogin);
-  const { userInfo } = userLogin;
+  const { users, userInfo } = userSlice;
 
   const history = useHistory();
 

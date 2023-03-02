@@ -10,12 +10,12 @@ import { isAdmin } from "../../utils/helpers/user_helpers";
 import RelatedProductsSlideshow from "../../shared/GlowLEDsComponents/GLCarousel/RelatedProductsSlideshow";
 
 const CartPage = props => {
-  const cart = useSelector(state => state.cart);
+  const cartSlice = useSelector(state => state.cartSlice);
 
-  const { cartItems } = cart;
+  const { cartItems } = cartSlice;
 
-  const userLogin = useSelector(state => state.userLogin);
-  const { userInfo } = userLogin;
+  const userSlice = useSelector(state => state.userSlice);
+  const { userInfo } = userSlice;
   const [no_items_in_cart, set_no_items_in_cart] = useState("");
 
   const checkoutHandler = () => {

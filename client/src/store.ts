@@ -23,8 +23,8 @@ if (shipping_string) {
 }
 
 const initialState: object = {
-  cart: { cartItems, shipping: shippingAddress, payment: {} },
-  userLogin: { userInfo: {} },
+  cartSlice: { cartItems, shipping: shippingAddress, payment: {} },
+  userSlice: { userInfo: {} },
   showHideSearchBar: { show: true }
 };
 

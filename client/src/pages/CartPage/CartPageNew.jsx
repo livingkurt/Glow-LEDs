@@ -11,8 +11,8 @@ import { Helmet } from "react-helmet";
 import { determine_total } from "../../../utils/helper_functions";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 const CartPage = props => {
-  const userLogin = useSelector(state => state.userLogin);
-  const { userInfo } = userLogin;
+  const userSlice = useSelector(state => state.userSlice);
+  const { userInfo } = userSlice;
 
   const pathname = props.match.params.pathname;
   const qty = parseInt(

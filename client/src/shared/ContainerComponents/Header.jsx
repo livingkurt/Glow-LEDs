@@ -36,8 +36,8 @@ const Header = props => {
       window.removeEventListener("mousedown", handleClickOutside);
     };
   });
-  const userLogin = useSelector(state => state.userLogin);
-  const { userInfo } = userLogin;
+  const userSlice = useSelector(state => state.userSlice);
+  const { userInfo } = userSlice;
 
   useEffect(() => {
     let clean = true;
@@ -49,9 +49,9 @@ const Header = props => {
     return () => (clean = false);
   }, [userInfo]);
 
-  const cart = useSelector(state => state.cart);
+  const cartSlice = useSelector(state => state.cartSlice);
 
-  const { cartItems } = cart;
+  const { cartItems } = cartSlice;
 
   const open_sidebar = () => {
     const sidebar = document.querySelector(".sidebar");

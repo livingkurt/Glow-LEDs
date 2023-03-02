@@ -16,10 +16,10 @@ import RelatedProductsSlideshow from "../../shared/GlowLEDsComponents/GLCarousel
 import * as API from "../../api";
 
 const ProductPage = props => {
-  const userLogin = useSelector(state => state.userLogin);
-  let { userInfo } = userLogin;
-  const cart = useSelector(state => state.cart);
-  let { cartItems } = cart;
+  const userSlice = useSelector(state => state.userSlice);
+  let { userInfo } = userSlice;
+  const cartSlice = useSelector(state => state.cartSlice);
+  let { cartItems } = cartSlice;
 
   const [name, set_name] = useState("");
   const [description, set_description] = useState("");

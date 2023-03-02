@@ -13,8 +13,8 @@ import { isAdmin } from "../../utils/helpers/user_helpers";
 const CompletePage = props => {
   const [data, set_data] = useState();
 
-  const userLogin = useSelector(state => state.userLogin);
-  const { userInfo } = userLogin;
+  const userSlice = useSelector(state => state.userSlice);
+  const { userInfo } = userSlice;
 
   useEffect(() => {
     let clean = true;

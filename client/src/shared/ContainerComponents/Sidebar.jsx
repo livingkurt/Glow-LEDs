@@ -54,8 +54,8 @@ const Sidebar = props => {
   };
 
   const [first_name, set_first_name] = useState("");
-  const userLogin = useSelector(state => state.userLogin);
-  const { userInfo } = userLogin;
+  const userSlice = useSelector(state => state.userSlice);
+  const { userInfo } = userSlice;
 
   useEffect(() => {
     let clean = true;

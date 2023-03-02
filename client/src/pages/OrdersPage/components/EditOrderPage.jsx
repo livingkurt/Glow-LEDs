@@ -53,11 +53,8 @@ const EditOrderPage = props => {
 
   const orderDetails = useSelector(state => state.orderDetails);
   const { order, loading, error } = orderDetails;
-  const userLogin = useSelector(state => state.userLogin);
-  const { userInfo } = userLogin;
-
   const userSlice = useSelector(state => state.userSlice);
-  const { users } = userSlice;
+  const { userInfo, users } = userSlice;
 
   const productSlice = useSelector(state => state.productSlice);
   const { products } = productSlice;

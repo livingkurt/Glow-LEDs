@@ -15,8 +15,8 @@ import * as API from "../../api";
 const ProfilePage = props => {
   const history = useHistory();
 
-  const userLogin = useSelector(state => state.userLogin);
-  const { userInfo } = userLogin;
+  const userSlice = useSelector(state => state.userSlice);
+  const { userInfo } = userSlice;
 
   const userDetails = useSelector(state => state.userDetails);
   const { loading, user, message, error, success } = userDetails;

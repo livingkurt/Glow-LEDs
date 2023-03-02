@@ -4,8 +4,8 @@ import { useSelector } from "react-redux";
 // import { isLogin } from '../utils';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-  const userLogin = useSelector(state => state.userLogin);
-  const { userInfo } = userLogin;
+  const userSlice = useSelector(state => state.userSlice);
+  const { userInfo } = userSlice;
 
   return (
     // Show the component only when the user is logged in

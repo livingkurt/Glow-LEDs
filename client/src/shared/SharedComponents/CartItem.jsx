@@ -17,8 +17,8 @@ const CartItem = ({ index, item, check_item_as_manufactured }) => {
   };
   const dispatch = useDispatch();
 
-  const userLogin = useSelector(state => state.userLogin);
-  const { userInfo } = userLogin;
+  const userSlice = useSelector(state => state.userSlice);
+  const { userInfo } = userSlice;
 
   setTimeout(() => {
     set_loading_checkboxes(false);

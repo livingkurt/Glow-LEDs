@@ -1,14 +1,10 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import useWindowDimensions from "../Hooks/windowDimensions";
 
 const Footer = () => {
-  const { height, width } = useWindowDimensions();
+  const { width } = useWindowDimensions();
 
-  const userLogin = useSelector(state => state.userLogin);
-
-  const { userInfo } = userLogin;
   return (
     <footer className="ta-c w-100per mt-5rem h-450px">
       <div className="footer-image">

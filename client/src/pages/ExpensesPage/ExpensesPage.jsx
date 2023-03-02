@@ -20,8 +20,8 @@ const ExpensesPage = props => {
 
   const category = props.match.params.category ? props.match.params.category : "";
 
-  const userLogin = useSelector(state => state.userLogin);
-  const { userInfo } = userLogin;
+  const userSlice = useSelector(state => state.userSlice);
+  const { userInfo } = userSlice;
 
   const expenseSlice = useSelector(state => state.expenseSlice);
   const { loading, expenses, message, error, success } = expenseSlice;

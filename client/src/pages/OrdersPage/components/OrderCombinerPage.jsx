@@ -10,8 +10,8 @@ import { isAdmin } from "../../../utils/helpers/user_helpers";
 import * as API from "../../../api";
 
 const OrderCombinerPage = props => {
-  const userLogin = useSelector(state => state.userLogin);
-  const { userInfo } = userLogin;
+  const userSlice = useSelector(state => state.userSlice);
+  const { userInfo } = userSlice;
 
   const history = useHistory();
   const parcelSlice = useSelector(state => state.parcelSlice);

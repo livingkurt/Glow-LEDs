@@ -19,8 +19,8 @@ const ChangePasswordPage = props => {
   const [password_validations, setPasswordValidations] = useState("");
   const [re_password_validations, setRePasswordValidations] = useState("");
 
-  const userLogin = useSelector(state => state.userLogin);
-  const { userInfo } = userLogin;
+  const userSlice = useSelector(state => state.userSlice);
+  const { userInfo } = userSlice;
 
   const submitHandler = async e => {
     e.preventDefault();

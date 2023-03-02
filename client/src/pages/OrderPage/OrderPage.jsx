@@ -24,10 +24,10 @@ require("dotenv").config();
 const OrderPage = props => {
   const { height, width } = useWindowDimensions();
 
-  const userLogin = useSelector(state => state.userLogin);
-  const { userInfo } = userLogin;
-  const cart = useSelector(state => state.cart);
-  const { cartItems } = cart;
+  const userSlice = useSelector(state => state.userSlice);
+  const { userInfo } = userSlice;
+  const cartSlice = useSelector(state => state.cartSlice);
+  const { cartItems } = cartSlice;
 
   const orderPay = useSelector(state => state.orderPay);
   const { success: successPay, error: errorPay } = orderPay;

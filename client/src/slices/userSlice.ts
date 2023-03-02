@@ -48,6 +48,9 @@ const userSlice = createSlice({
     },
     set_limit: (state, { payload }) => {
       state.limit = payload;
+    },
+    set_current_user: (state, { payload }) => {
+      state.limit = payload;
     }
   },
   extraReducers: {
@@ -162,5 +165,5 @@ const userSlice = createSlice({
   }
 });
 
-export const { set_search, set_sort, set_page, set_limit, set_loading, set_user } = userSlice.actions;
+export const { set_search, set_sort, set_page, set_limit, set_loading, set_user, set_current_user } = userSlice.actions;
 export default userSlice.reducer;

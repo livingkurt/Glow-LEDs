@@ -8,11 +8,11 @@ import { GLButton } from "../../../shared/GlowLEDsComponents";
 import CheckoutSteps from "../../PlaceOrderPage/components/GuestCheckoutSteps";
 
 const ShippingPage = props => {
-  const userLogin = useSelector(state => state.userLogin);
-  const { userInfo } = userLogin;
+  const userSlice = useSelector(state => state.userSlice);
+  const { userInfo } = userSlice;
 
-  const cart = useSelector(state => state.cart);
-  const { cartItems, shipping, payment } = cart;
+  const cartSlice = useSelector(state => state.cartSlice);
+  const { cartItems, shipping, payment } = cartSlice;
 
   const [email, set_email] = useState("");
   const [first_name, set_first_name] = useState("");

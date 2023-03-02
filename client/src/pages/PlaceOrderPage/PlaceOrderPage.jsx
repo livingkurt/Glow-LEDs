@@ -18,11 +18,8 @@ import { removeFromCart, savePayment, saveShipping } from "../../actions/cartAct
 import { createOrderGuest, createPayOrder, createPayOrderGuest, removeOrderState } from "../../actions/orderActions";
 
 const PlaceOrderPage = props => {
-  const userLogin = useSelector(state => state.userLogin);
-  const { userInfo, loading: user_loading, success: user_success } = userLogin;
-
-  const cart = useSelector(state => state.cart);
-  const { cartItems, shipping, payment } = cart;
+  const cartSlice = useSelector(state => state.cartSlice);
+  const { cartItems, shipping, payment } = cartSlice;
   const orderCreate = useSelector(state => state.orderCreate);
   const { order, error: error_order, success: success_order } = orderCreate;
 
@@ -30,7 +27,7 @@ const PlaceOrderPage = props => {
   const { success: successPay, error: error_pay } = orderPay;
 
   const userSlice = useSelector(state => state.userSlice);
-  const { users } = userSlice;
+  const { users, userInfo, loading: user_loading, success: user_success } = userSlice;
 
   const promoSlice = useSelector(state => state.promoSlice);
   const { promos } = promoSlice;

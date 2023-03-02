@@ -13,8 +13,8 @@ const EventsPage = props => {
   const [going, set_going] = useState(false);
   const [loading_checkboxes, set_loading_checkboxes] = useState(true);
 
-  const userLogin = useSelector(state => state.userLogin);
-  const { userInfo } = userLogin;
+  const userSlice = useSelector(state => state.userSlice);
+  const { userInfo } = userSlice;
   setTimeout(() => {
     set_loading_checkboxes(false);
   }, 500);
