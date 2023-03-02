@@ -6,6 +6,7 @@ import { Loading } from "../../shared/SharedComponents";
 import { format_date, unformat_date } from "../../utils/helper_functions";
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../shared/GlowLEDsComponents";
+import { createExpense, updateExpense } from "../../api";
 
 const EditExpensePage = props => {
   const [id, set_id] = useState("");
@@ -77,20 +78,22 @@ const EditExpensePage = props => {
   const submitHandler = e => {
     e.preventDefault();
 
-    //
-    dispatch(
-      saveExpense({
-        _id: id,
-        expense_name,
-        application,
-        url,
-        place_of_purchase,
-        date_of_purchase: unformat_date(date_of_purchase),
-        category,
-        card,
-        amount
-      })
-    );
+    const data = {
+      _id: id,
+      expense_name,
+      application,
+      url,
+      place_of_purchase,
+      date_of_purchase: unformat_date(date_of_purchase),
+      category,
+      card,
+      amount
+    };
+    if (id) {
+      dispatch(updateExpense(data));
+    } else {
+      dispatch(createExpense(data));
+    }
     e.target.reset();
     unset_state();
     history.push("/secure/glow/expenses");

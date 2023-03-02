@@ -166,7 +166,7 @@ const AffiliatesPage = props => {
         set_search={e => {
           dispatch(set_search(e.target.value));
         }}
-        submitHandler={e => {
+        handleListItems={e => {
           e.preventDefault();
           dispatch(API.listAffiliates({ active: true, category, search, sort, limit, page: 1 }));
         }}

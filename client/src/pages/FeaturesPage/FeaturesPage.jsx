@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { listFeatures, deleteFeature } from "../../actions/featureActions";
 import { Link } from "react-router-dom";
 import { Loading, Notification } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
@@ -8,13 +7,14 @@ import { format_date } from "../../utils/helper_functions";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import Search from "../../shared/GlowLEDsComponents/GLTable/Search";
 import Sort from "../../shared/GlowLEDsComponents/GLTable/Sort";
+import { deleteFeature, listFeatures } from "../../api";
 
 const FeaturesPage = props => {
   const [search, set_search] = useState("");
   const [sort, setSortOrder] = useState("");
   const category = props.match.params.category ? props.match.params.category : "";
-  const featureList = useSelector(state => state.featureList);
-  const { loading, features, message, error } = featureList;
+  const featureSlice = useSelector(state => state.featureSlice);
+  const { loading, features, message, error } = featureSlice;
 
   const featureSave = useSelector(state => state.featureSave);
   const { success: successSave } = featureSave;
@@ -30,7 +30,7 @@ const FeaturesPage = props => {
     }
     return () => (clean = false);
   }, [successSave, successDelete, dispatch]);
-  const submitHandler = e => {
+  const handleListItems = e => {
     e.preventDefault();
     dispatch(listFeatures({ category, search, sort }));
   };
@@ -116,7 +116,7 @@ const FeaturesPage = props => {
         <h1 style={{ textAlign: "center" }}>Features</h1>
       </div>
       <div className="search_and_sort row jc-c ai-c" style={{ overflowX: "scroll" }}>
-        <Search search={search} set_search={set_search} submitHandler={submitHandler} category={category} />
+        <Search search={search} set_search={set_search} handleListItems={handleListItems} category={category} />
         <Sort sortHandler={sortHandler} sort_options={sort_options} />
       </div>
       <Loading loading={loading} error={error}>

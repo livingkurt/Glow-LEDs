@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { listCarts } from "../../actions/cartActions";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import Search from "../../shared/GlowLEDsComponents/GLTable/Search";
 import Sort from "../../shared/GlowLEDsComponents/GLTable/Sort";
 import { GLButton } from "../../shared/GlowLEDsComponents";
+import { listCarts } from "../../api";
 
 const CartsPage = props => {
   const [search, set_search] = useState("");
@@ -13,8 +13,8 @@ const CartsPage = props => {
   const category = props.match.params.category ? props.match.params.category : "";
   const dispatch = useDispatch();
 
-  // const cartList = useSelector((state) => state.cartList);
-  // const { loading, carts, message, error } = cartList;
+  // const cartSlice = useSelector((state) => state.cartSlice);
+  // const { loading, carts, message, error } = cartSlice;
 
   // const cartSave = useSelector((state) => state.cartSave);
   // const { success: successSave } = cartSave;
@@ -43,7 +43,7 @@ const CartsPage = props => {
   // 	[ successSave, successDelete  ]
   // );
 
-  const submitHandler = e => {
+  const handleListItems = e => {
     e.preventDefault();
     dispatch(listCarts({ category, search, sort }));
   };
@@ -125,7 +125,7 @@ const CartsPage = props => {
         <h1 style={{ textAlign: "center" }}>Carts</h1>
       </div>
       <div className="search_and_sort row jc-c ai-c" style={{ overflowX: "scroll" }}>
-        <Search search={search} set_search={set_search} submitHandler={submitHandler} category={category} />
+        <Search search={search} set_search={set_search} handleListItems={handleListItems} category={category} />
         <Sort sortHandler={sortHandler} sort_options={sort_options} />
       </div>
     </div>

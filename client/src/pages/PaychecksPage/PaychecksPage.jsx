@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { listPaychecks, deletePaycheck, savePaycheck } from "../../actions/paycheckActions";
 import { Link, useHistory } from "react-router-dom";
 import { Loading, Notification } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
@@ -14,11 +13,10 @@ import {
   update_products_url
 } from "../../utils/helper_functions";
 import { API_Orders, API_Paychecks, API_Promos } from "../../utils";
-import { listTeams } from "../../actions/teamActions";
-import { listOrders } from "../../actions/orderActions";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import GLTable from "../../shared/GlowLEDsComponents/GLTable/GLTable";
 import axios from "axios";
+import { createPaycheck, deletePaycheck, listOrders, listPaychecks, listTeams, updatePaycheck } from "../../api";
 
 const PaychecksPage = props => {
   const history = useHistory();
@@ -35,8 +33,8 @@ const PaychecksPage = props => {
   const [selectedRows, setSelectedRows] = useState([]);
 
   const category = props.match.params.category ? props.match.params.category : "";
-  const paycheckList = useSelector(state => state.paycheckList);
-  const { loading, paychecks, message, error, totalPages } = paycheckList;
+  const paycheckSlice = useSelector(state => state.paycheckSlice);
+  const { loading, paychecks, message, error, totalPages } = paycheckSlice;
 
   const paycheckSave = useSelector(state => state.paycheckSave);
   const { success: successSave } = paycheckSave;
@@ -45,11 +43,11 @@ const PaychecksPage = props => {
   const { success: successDelete } = paycheckDelete;
   const dispatch = useDispatch();
 
-  const affiliateList = useSelector(state => state.affiliateList);
-  const { affiliates } = affiliateList;
+  const affiliateSlice = useSelector(state => state.affiliateSlice);
+  const { affiliates } = affiliateSlice;
 
-  const teamList = useSelector(state => state.teamList);
-  const { teams } = teamList;
+  const teamSlice = useSelector(state => state.teamSlice);
+  const { teams } = teamSlice;
   const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
   const date = new Date();
@@ -107,7 +105,7 @@ const PaychecksPage = props => {
 
   const mark_paid = paycheck => {
     dispatch(
-      savePaycheck({
+      updatePaycheck({
         ...paycheck,
         paid: true,
         paid_at: format_date(today)
@@ -117,7 +115,7 @@ const PaychecksPage = props => {
   };
   const duplicate_paycheck = paycheck => {
     dispatch(
-      savePaycheck({
+      createPaycheck({
         amount: paycheck.amount,
         affiliate: paycheck.affiliate,
         team: paycheck.team,
@@ -343,7 +341,7 @@ const PaychecksPage = props => {
         colors={colors}
         search={search}
         set_search={set_search}
-        submitHandler={submitHandler}
+        handleListItems={submitHandler}
         sortHandler={sortHandler}
         sort_options={sort_options}
         totalPages={totalPages}

@@ -1,15 +1,14 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { saveEmail, detailsEmail, listEmails } from "../../../actions/emailActions";
 import { useHistory, Link } from "react-router-dom";
 import { ImageDisplay, Loading, Notification } from "../../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
-import { detailsContent, listContents } from "../../../actions/contentActions";
 import { API_Emails } from "../../../utils";
 import { SketchPicker } from "react-color";
 import reactCSS from "reactcss";
 import { accurate_date, format_date, format_time, unformat_date_and_time } from "../../../utils/helper_functions";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
+import { createEmail, detailsEmail, listContents, listEmails, updateEmail } from "../../../api";
 const ReactDOMServer = require("react-dom/server");
 const HtmlToReactParser = require("html-to-react").Parser;
 
@@ -50,14 +49,14 @@ const EditEmailPage = props => {
   const emailSave = useSelector(state => state.emailSave);
   const { message } = emailSave;
 
-  const emailList = useSelector(state => state.emailList);
-  const { emails } = emailList;
+  const emailSlice = useSelector(state => state.emailSlice);
+  const { emails } = emailSlice;
 
   // const contentDetails = useSelector((state) => state.contentDetails);
   // const { content, loading: loading_content, error: error_content } = contentDetails;
 
-  const contentList = useSelector(state => state.contentList);
-  const { contents } = contentList;
+  const contentSlice = useSelector(state => state.contentSlice);
+  const { contents } = contentSlice;
 
   const dispatch = useDispatch();
 
@@ -219,28 +218,31 @@ const EditEmailPage = props => {
 
   const submitHandler = e => {
     e.preventDefault();
-    dispatch(
-      saveEmail({
-        _id: id ? id : null,
-        email_type: "Announcements",
-        h1: email_h1,
-        image: email_image,
-        images,
-        h2: email_h2,
-        p: email_p,
-        button: email_button,
-        link: email_link,
-        status,
-        header_footer_color,
-        background_color,
-        module_color,
-        button_color,
-        text_color,
-        title_color,
-        scheduled_at: date && time ? unformat_date_and_time(date, time) : null,
-        active: email_active
-      })
-    );
+    const data = {
+      _id: id ? id : null,
+      email_type: "Announcements",
+      h1: email_h1,
+      image: email_image,
+      images,
+      h2: email_h2,
+      p: email_p,
+      button: email_button,
+      link: email_link,
+      status,
+      header_footer_color,
+      background_color,
+      module_color,
+      button_color,
+      text_color,
+      title_color,
+      scheduled_at: date && time ? unformat_date_and_time(date, time) : null,
+      active: email_active
+    };
+    if (id) {
+      dispatch(updateEmail(data));
+    } else {
+      dispatch(createEmail(data));
+    }
     e.target.reset();
     // unset_state();
     // history.push('/secure/glow/emails');

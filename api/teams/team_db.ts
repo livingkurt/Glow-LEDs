@@ -1,7 +1,7 @@
 import { Team } from "../teams";
 
 export default {
-  findAll_teams_db: async (filter: any, sort: unknown, limit: number, page: number) => {
+  findAll_teams_db: async (filter: any, sort: unknown, limit: string, page: string) => {
     try {
       return await Team.find(filter)
         .populate("affiliates")
@@ -9,8 +9,8 @@ export default {
         .populate("private_code")
         .populate("captain")
         .sort(sort)
-        .limit(limit)
-        .skip((page - 1) * limit)
+        .limit(parseInt(limit))
+        .skip((parseInt(page) - 1) * parseInt(limit))
         .exec();
     } catch (error) {
       if (error instanceof Error) {

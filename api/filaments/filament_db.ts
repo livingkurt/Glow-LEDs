@@ -1,12 +1,12 @@
 import { Filament } from "../filaments";
 
 export default {
-  findAll_filaments_db: async (filter: any, sort: unknown, limit: number, page: number) => {
+  findAll_filaments_db: async (filter: any, sort: unknown, limit: string, page: string) => {
     try {
       return await Filament.find(filter)
         .sort(sort)
-        .limit(limit)
-        .skip((page - 1) * limit)
+        .limit(parseInt(limit))
+        .skip((parseInt(page) - 1) * parseInt(limit))
         .exec();
     } catch (error) {
       if (error instanceof Error) {

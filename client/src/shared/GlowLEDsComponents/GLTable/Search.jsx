@@ -4,7 +4,7 @@ import { GLButton } from "..";
 
 const Search = props => {
   return (
-    <form onSubmit={props.submitHandler} className={"jc-c w-100per " + props.className}>
+    <form onSubmit={props.handleListItems} className={"jc-c w-100per " + props.className}>
       <div className="jc-b ai-c search_container w-100per">
         <label aria-label="Search" htmlFor="search" />
         <input

@@ -1,14 +1,14 @@
 import { Expense } from "../expenses";
 
 export default {
-  findAll_expenses_db: async (filter: any, sort: unknown, limit: number, page: number) => {
+  findAll_expenses_db: async (filter: any, sort: unknown, limit: string, page: string) => {
     try {
       return await Expense.find({ ...filter })
         .sort(sort)
         .populate("user")
         .populate("affiliate")
-        .limit(limit)
-        .skip((page - 1) * limit)
+        .limit(parseInt(limit))
+        .skip((parseInt(page) - 1) * parseInt(limit))
         .exec();
     } catch (error) {
       if (error instanceof Error) {

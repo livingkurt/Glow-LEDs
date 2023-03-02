@@ -17,7 +17,7 @@ const GLTable = ({
   title,
   search,
   set_search,
-  submitHandler,
+  handleListItems,
   category,
   sortHandler,
   sort_options,
@@ -67,7 +67,7 @@ const GLTable = ({
         <h1 style={{ textAlign: "center" }}>{title}</h1>
       </div>
       <div className="search_and_sort row jc-c ai-c" style={{ overflowX: "scroll" }}>
-        {search && set_search && submitHandler && <GLSearch search={search} set_search={set_search} submitHandler={submitHandler} />}
+        {search && set_search && handleListItems && <GLSearch search={search} set_search={set_search} handleListItems={handleListItems} />}
         {sort_options && sortHandler && <Sort sortHandler={sortHandler} sort_options={sort_options} />}
       </div>
 

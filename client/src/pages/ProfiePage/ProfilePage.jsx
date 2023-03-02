@@ -1,20 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { detailsUser } from "../../actions/userActions";
 import { Loading, Notification } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { API_Emails, API_Orders } from "../../utils";
 import { GLButton } from "../../shared/GlowLEDsComponents";
-import { listMyPaychecks, listPaychecks } from "../../actions/paycheckActions";
-import { listPromos } from "../../actions/promoActions";
 import { format_date, update_products_url } from "../../utils/helper_functions";
-import { detailsAffiliate } from "../../actions/affiliateActions";
 import { isAdmin } from "../../utils/helpers/user_helpers";
 import { OrderListItem } from "../OrdersPage/components";
-import { listMyOrders } from "../../actions/orderActions";
 import GLTable from "../../shared/GlowLEDsComponents/GLTable/GLTable";
 import { determine_code_tier } from "../../utils/helpers/affiliate_helpers";
+import { detailsAffiliate, detailsUser, listPaychecks, listPromos } from "../../api";
+import { listMyOrders } from "../../actions/orderActions";
 
 const ProfilePage = props => {
   const history = useHistory();
@@ -28,17 +25,14 @@ const ProfilePage = props => {
   const affiliateDetails = useSelector(state => state.affiliateDetails);
   const { affiliate } = affiliateDetails;
 
-  // const myPaycheckList = useSelector(state => state.myPaycheckList);
-  // const { loading: loading_paychecks, paychecks, error: error_paychecks } = myPaycheckList;
+  const paycheckSlice = useSelector(state => state.paycheckSlice);
+  const { paychecks, totalPages } = paycheckSlice;
 
-  const paycheckList = useSelector(state => state.paycheckList);
-  const { paychecks, totalPages } = paycheckList;
+  const promoSlice = useSelector(state => state.promoSlice);
+  const { promos, error: promo_errors, message: promo_message } = promoSlice;
 
-  const promoList = useSelector(state => state.promoList);
-  const { promos, error: promo_errors, message: promo_message } = promoList;
-
-  const myOrderList = useSelector(state => state.myOrderList);
-  const { orders } = myOrderList;
+  const myOrderSlice = useSelector(state => state.myOrderSlice);
+  const { orders } = myOrderSlice;
 
   const [user_orders, set_user_orders] = useState(false);
 
@@ -232,7 +226,7 @@ const ProfilePage = props => {
   const [search, set_search] = useState("");
   const [sort, set_sort] = useState("");
 
-  const submitHandler = e => {
+  const handleListItems = e => {
     e.preventDefault();
     dispatch(listPaychecks({ search, sort, affiliate: user.affiliate._id }));
   };
@@ -606,7 +600,7 @@ const ProfilePage = props => {
           // search={search}
           // sort_options={sort_options}
           // set_search={set_search}
-          // submitHandler={submitHandler}
+          // handleListItems={handleListItems}
           // sortHandler={sortHandler}
           totalPages={totalPages}
           page={page}

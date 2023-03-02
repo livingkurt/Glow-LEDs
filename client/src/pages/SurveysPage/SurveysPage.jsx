@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { listSurveys, deleteSurvey } from "../../actions/surveyActions";
 import { Link } from "react-router-dom";
 import { Loading, Notification } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { format_date } from "../../utils/helper_functions";
 import { listTeams } from "../../actions/teamActions";
-import { listOrders } from "../../actions/orderActions";
 import * as API from "../../api/affiliateApi";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import Search from "../../shared/GlowLEDsComponents/GLTable/Search";
 import Sort from "../../shared/GlowLEDsComponents/GLTable/Sort";
+import { deleteSurvey, listOrders, listSurveys } from "../../api";
 
 const SurveysPage = props => {
   const [search, set_search] = useState("");
@@ -18,8 +17,8 @@ const SurveysPage = props => {
 
   const [loading_surveys, set_loading_surveys] = useState(false);
   const category = props.match.params.category ? props.match.params.category : "";
-  const surveyList = useSelector(state => state.surveyList);
-  const { loading, surveys, message, error } = surveyList;
+  const surveySlice = useSelector(state => state.surveySlice);
+  const { loading, surveys, message, error } = surveySlice;
 
   const surveySave = useSelector(state => state.surveySave);
   const { success: successSave } = surveySave;
@@ -38,7 +37,7 @@ const SurveysPage = props => {
     }
     return () => (clean = false);
   }, [successSave, successDelete, dispatch]);
-  const submitHandler = e => {
+  const handleListItems = e => {
     e.preventDefault();
     dispatch(listSurveys({ category, search, sort }));
   };
@@ -131,7 +130,7 @@ const SurveysPage = props => {
         <h1 style={{ textAlign: "center" }}>Surveys</h1>
       </div>
       <div className="search_and_sort row jc-c ai-c" style={{ overflowX: "scroll" }}>
-        <Search search={search} set_search={set_search} submitHandler={submitHandler} category={category} />
+        <Search search={search} set_search={set_search} handleListItems={handleListItems} category={category} />
         <Sort sortHandler={sortHandler} sort_options={sort_options} />
       </div>
       <Loading loading={loading} error={error}>

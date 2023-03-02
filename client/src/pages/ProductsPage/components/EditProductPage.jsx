@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { saveProduct, detailsProduct, listProducts } from "../../../actions/productActions";
 import { useHistory, Link } from "react-router-dom";
 import { DropdownDisplay, ImageDisplay, Loading, Notification } from "../../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
@@ -21,7 +20,6 @@ import {
 } from "../../../utils/helpers/product_helpers";
 import { listChips } from "../../../actions/chipActions";
 import { API_Products } from "../../../utils";
-import { listCategorys } from "../../../actions/categoryActions";
 import { list_display, option_list } from "../../../utils/react_helper_functions";
 import useClipboard from "react-hook-clipboard";
 import {
@@ -30,10 +28,9 @@ import {
   determine_option_modifier,
   determine_secondary_modifier
 } from "../../../utils/helpers/product_helpers";
-import { listUsers } from "../../../actions/userActions";
-import { listFilaments } from "../../../actions/filamentActions";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import ImageUploader from "../../../shared/SharedComponents/ImageUploader";
+import { createProduct, detailsProduct, listCategorys, listFilaments, listUsers, updateProduct } from "../../../api";
 
 const EditProductPage = props => {
   // const [modalVisible, setModalVisible] = useState(false);
@@ -154,20 +151,20 @@ const EditProductPage = props => {
   const productSave = useSelector(state => state.productSave);
   const { loading: loadingSave, success: successSave, error: errorSave, message } = productSave;
 
-  // const productList = useSelector((state) => state.productList);
+  // const productSlice = useSelector((state) => state.productSlice);
   // const { products: all_products } = productList;
 
-  const chipList = useSelector(state => state.chipList);
-  const { chips: chips_list } = chipList;
+  const chipSlice = useSelector(state => state.chipSlice);
+  const { chips: chips_list } = chipSlice;
 
-  const filamentList = useSelector(state => state.filamentList);
-  const { filaments: filaments_list } = filamentList;
+  const filamentSlice = useSelector(state => state.filamentSlice);
+  const { filaments: filaments_list } = filamentSlice;
 
-  const userList = useSelector(state => state.userList);
-  const { users } = userList;
+  const userSlice = useSelector(state => state.userSlice);
+  const { users } = userSlice;
 
-  const categoryList = useSelector(state => state.categoryList);
-  const { categorys: categorys_list } = categoryList;
+  const categorySlice = useSelector(state => state.categorySlice);
+  const { categorys: categorys_list } = categorySlice;
 
   const productReviewDelete = useSelector(state => state.productReviewDelete);
   const { success: productDeleteSuccess } = productReviewDelete;
@@ -498,86 +495,90 @@ const EditProductPage = props => {
   const save_product = async () => {
     const start_date = new Date(unformat_date_and_time(sale_start_date, sale_start_time));
     const end_date = new Date(unformat_date_and_time(sale_end_date, sale_end_time));
-    dispatch(
-      saveProduct({
-        _id: props.match.params.pathname && props.match.params.template === "false" ? product._id : null,
-        // _id: props.match.params.pathname && !props.match.params.template === 'true' ? id : null,
-        name,
-        price,
-        // display_image,
-        images,
-        color_images,
-        secondary_color_images,
-        option_images,
-        secondary_images,
-        chips: chips.map(chip => chip._id),
-        categorys: categorys.map(category => category._id),
-        subcategorys: subcategorys.map(subcategory => subcategory._id),
-        video,
-        brand,
-        category,
-        product_collection,
-        quantity,
-        count_in_stock,
-        facts,
-        included_items: included_items.length === 0 ? "" : included_items,
-        description,
-        hidden,
-        sale_price,
-        sale_start_date: accurate_date(start_date),
-        sale_end_date: accurate_date(end_date),
-        package_volume: package_length * package_width * package_height,
-        subcategory,
-        meta_title: `${name} | Glow LEDs`,
-        meta_description,
-        meta_keywords,
-        package_length,
-        package_width,
-        package_height,
-        product_length,
-        product_width,
-        product_height,
-        weight_pounds,
-        weight_ounces,
-        preorder,
-        contributers: contributers.length === 0 ? [] : contributers,
-        pathname: pathname ? pathname : snake_case(name),
-        order,
-        product_options,
-        finite_stock,
-        products: products.map(chip => chip._id),
-        group_product,
-        material_cost,
-        filament_used,
-        printing_time,
-        assembly_time,
-        processing_time,
-        group_name,
-        color_product_group,
-        color_group_name,
-        color_products,
-        secondary_color_product_group,
-        secondary_color_group_name,
-        secondary_color_products,
-        secondary_product_group,
-        secondary_group_name,
-        secondary_products,
-        option_product_group,
-        option_group_name,
-        option_products,
-        color,
-        color_code,
-        size,
-        default_option,
-        option,
-        macro_product,
-        extra_cost,
-        item_group_id: props.match.params.item_group_id || item_group_id,
-        previous_price,
-        has_add_on,
-        filament: filament ? filament._id : null
-      })
-    );
+
+    const data = {
+      _id: props.match.params.pathname && props.match.params.template === "false" ? product._id : null,
+      // _id: props.match.params.pathname && !props.match.params.template === 'true' ? id : null,
+      name,
+      price,
+      // display_image,
+      images,
+      color_images,
+      secondary_color_images,
+      option_images,
+      secondary_images,
+      chips: chips.map(chip => chip._id),
+      categorys: categorys.map(category => category._id),
+      subcategorys: subcategorys.map(subcategory => subcategory._id),
+      video,
+      brand,
+      category,
+      product_collection,
+      quantity,
+      count_in_stock,
+      facts,
+      included_items: included_items.length === 0 ? "" : included_items,
+      description,
+      hidden,
+      sale_price,
+      sale_start_date: accurate_date(start_date),
+      sale_end_date: accurate_date(end_date),
+      package_volume: package_length * package_width * package_height,
+      subcategory,
+      meta_title: `${name} | Glow LEDs`,
+      meta_description,
+      meta_keywords,
+      package_length,
+      package_width,
+      package_height,
+      product_length,
+      product_width,
+      product_height,
+      weight_pounds,
+      weight_ounces,
+      preorder,
+      contributers: contributers.length === 0 ? [] : contributers,
+      pathname: pathname ? pathname : snake_case(name),
+      order,
+      product_options,
+      finite_stock,
+      products: products.map(chip => chip._id),
+      group_product,
+      material_cost,
+      filament_used,
+      printing_time,
+      assembly_time,
+      processing_time,
+      group_name,
+      color_product_group,
+      color_group_name,
+      color_products,
+      secondary_color_product_group,
+      secondary_color_group_name,
+      secondary_color_products,
+      secondary_product_group,
+      secondary_group_name,
+      secondary_products,
+      option_product_group,
+      option_group_name,
+      option_products,
+      color,
+      color_code,
+      size,
+      default_option,
+      option,
+      macro_product,
+      extra_cost,
+      item_group_id: props.match.params.item_group_id || item_group_id,
+      previous_price,
+      has_add_on,
+      filament: filament ? filament._id : null
+    };
+    if (props.match.params.pathname && props.match.params.template === "false") {
+      dispatch(updateProduct(data));
+    } else {
+      dispatch(createProduct(data));
+    }
     // if (props.match.params.product_option && props.match.params.item_group_id) {
     //   const {
     //     data: option_product,
@@ -702,7 +703,7 @@ const EditProductPage = props => {
         default:
           break;
       }
-      dispatch(saveProduct(saved_data));
+      // dispatch(saveProduct(saved_data));
       // if (successSave){
 
       // }

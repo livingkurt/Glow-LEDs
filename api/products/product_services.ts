@@ -5,10 +5,10 @@ import { categories, determine_filter, snake_case, subcategories } from "../../u
 // const sharp = require("sharp");
 
 export default {
-  findAll_products_s: async (query: { page: number; search: string; sort: string; limit: number }) => {
+  findAll_products_s: async (query: { page: string; search: string; sort: string; limit: string }) => {
     try {
-      const page: number = query.page ? query.page : 1;
-      const limit: number = query.limit ? query.limit : 0;
+      const page: string = query.page ? query.page : "1";
+      const limit: string = query.limit ? query.limit : "0";
 
       let search = {};
       if (categories.includes(snake_case(query.search))) {
@@ -59,7 +59,7 @@ export default {
       const count = await product_db.count_products_db(filter);
       return {
         products,
-        totalPages: Math.ceil(count / limit),
+        totalPages: Math.ceil(count / parseInt(limit)),
         currentPage: page
       };
     } catch (error) {
@@ -123,8 +123,8 @@ export default {
 
       const sort = {};
       const filter = { name: { $in: names }, deleted: false, hidden: false };
-      const limit = 0;
-      const page = 1;
+      const limit = "0";
+      const page = "1";
       const products = await product_db.findAll_products_db(filter, sort, limit, page);
       const compareFn = (a: any, b: any) => {
         const aIndex = occurences.findIndex((x: any) => x.name === a.name);
@@ -170,8 +170,8 @@ export default {
 
       const sort = { _id: -1 };
       const filter = { name: { $in: names }, deleted: false, hidden: false };
-      const limit = 0;
-      const page = 1;
+      const limit = "0";
+      const page = "1";
       return await product_db.findAll_products_db(filter, sort, limit, page);
     } catch (error) {
       if (error instanceof Error) {

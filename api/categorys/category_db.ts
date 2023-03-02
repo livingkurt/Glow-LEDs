@@ -1,13 +1,13 @@
 import { Category } from "../categorys";
 
 export default {
-  findAll_categorys_db: async (filter: any, sort: unknown, limit: number, page: number) => {
+  findAll_categorys_db: async (filter: any, sort: unknown, limit: string, page: string) => {
     try {
       return await Category.find(filter)
         .sort(sort)
         .populate("subcategorys")
-        .limit(limit)
-        .skip((page - 1) * limit)
+        .limit(parseInt(limit))
+        .skip((parseInt(page) - 1) * parseInt(limit))
         .exec();
     } catch (error) {
       if (error instanceof Error) {

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { listCategorys, deleteCategory, saveCategory } from "../../actions/categoryActions";
 import { Link } from "react-router-dom";
 import { Loading, Notification } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
@@ -8,6 +7,7 @@ import { categories, snake_case, subcategories } from "../../utils/helper_functi
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import Search from "../../shared/GlowLEDsComponents/GLTable/Search";
 import Sort from "../../shared/GlowLEDsComponents/GLTable/Sort";
+import { createCategory, deleteCategory, listCategorys } from "../../api";
 
 const fetch = require("node-fetch");
 
@@ -17,8 +17,8 @@ const CategorysPage = props => {
   const [loading_checkboxes, set_loading_checkboxes] = useState(false);
   const [loading_categorys, set_loading_categorys] = useState(false);
   const category = props.match.params.category ? props.match.params.category : "";
-  const categoryList = useSelector(state => state.categoryList);
-  const { loading, categorys, message, error } = categoryList;
+  const categorySlice = useSelector(state => state.categorySlice);
+  const { loading, categorys, message, error } = categorySlice;
 
   const categorySave = useSelector(state => state.categorySave);
   const { success: successSave } = categorySave;
@@ -27,11 +27,11 @@ const CategorysPage = props => {
   const { success: successDelete } = categoryDelete;
   const dispatch = useDispatch();
 
-  const affiliateList = useSelector(state => state.affiliateList);
-  const { affiliates } = affiliateList;
+  const affiliateSlice = useSelector(state => state.affiliateSlice);
+  const { affiliates } = affiliateSlice;
 
-  const teamList = useSelector(state => state.teamList);
-  const { teams } = teamList;
+  const teamSlice = useSelector(state => state.teamSlice);
+  const { teams } = teamSlice;
 
   setTimeout(() => {
     set_loading_checkboxes(false);
@@ -45,7 +45,7 @@ const CategorysPage = props => {
     return () => (clean = false);
   }, [successSave, successDelete, dispatch]);
 
-  const submitHandler = e => {
+  const handleListItems = e => {
     e.preventDefault();
     dispatch(listCategorys({ category, search, sort }));
   };
@@ -103,7 +103,7 @@ const CategorysPage = props => {
       .filter(category => category !== null)
       .forEach(category => {
         dispatch(
-          saveCategory({
+          createCategory({
             name: category,
             pathname: snake_case(category),
             nest_level: 1,
@@ -120,7 +120,7 @@ const CategorysPage = props => {
       .filter(category => category !== null)
       .forEach(category => {
         dispatch(
-          saveCategory({
+          createCategory({
             name: category,
             pathname: snake_case(category),
             nest_level: 1,
@@ -172,7 +172,7 @@ const CategorysPage = props => {
         <h1 style={{ textAlign: "center" }}>Categorys</h1>
       </div>
       <div className="search_and_sort row jc-c ai-c" style={{ overflowX: "scroll" }}>
-        <Search search={search} set_search={set_search} submitHandler={submitHandler} category={category} />
+        <Search search={search} set_search={set_search} handleListItems={handleListItems} category={category} />
         <Sort sortHandler={sortHandler} sort_options={sort_options} />
       </div>
       <Loading loading={loading} error={error}>

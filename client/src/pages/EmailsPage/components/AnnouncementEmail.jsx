@@ -3,12 +3,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
 import { useHistory } from "react-router-dom";
-import { detailsEmail, listEmails } from "../../../actions/emailActions";
 import { API_Emails } from "../../../utils";
 import { accurate_date, format_date, format_time, unformat_date_and_time } from "../../../utils/helper_functions";
 import { Notification } from "../../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
+import { detailsEmail } from "../../../api";
 const HtmlToReactParser = require("html-to-react").Parser;
 
 const AnnouncementEmail = props => {
@@ -25,8 +25,8 @@ const AnnouncementEmail = props => {
   const userLogin = useSelector(state => state.userLogin);
   const { userInfo } = userLogin;
 
-  const emailList = useSelector(state => state.emailList);
-  const { emails } = emailList;
+  const emailSlice = useSelector(state => state.emailSlice);
+  const { emails } = emailSlice;
 
   const emailDetails = useSelector(state => state.emailDetails);
   const { email } = emailDetails;

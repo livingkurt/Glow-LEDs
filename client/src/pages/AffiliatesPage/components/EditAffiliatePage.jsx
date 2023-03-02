@@ -2,17 +2,14 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import { listUsers } from "../../../actions/userActions";
-import { listProducts } from "../../../actions/productActions";
-import { listChips } from "../../../actions/chipActions";
-import { snake_case } from "../../../utils/helper_functions";
-import { listPromos } from "../../../actions/promoActions";
 import { GLAutocomplete, GLCheckboxV2, GLTextField } from "../../../shared/GlowLEDsComponents";
 import { clear_affiliate, set_affiliate, set_success } from "../../../slices/affiliateSlice";
 import * as API from "../../../api/affiliateApi";
 import { makeStyles } from "@mui/styles";
 import { Container, Paper, Stack } from "@mui/material";
 import GLButtonV2 from "../../../shared/GlowLEDsComponents/GLButtonV2/GLButton";
+import { listChips, listProducts, listPromos, listUsers } from "../../../api";
+import { snake_case } from "../../../utils/helper_functions";
 
 const useStyles = makeStyles(() => ({
   textField: {
@@ -26,8 +23,8 @@ const useStyles = makeStyles(() => ({
 }));
 
 const EditAffiliatePage = props => {
-  const userList = useSelector(state => state.userList);
-  const { users, loading: loading_users } = userList;
+  const userSlice = useSelector(state => state.userSlice);
+  const { users, loading: loading_users } = userSlice;
 
   const history = useHistory();
 
@@ -61,14 +58,14 @@ const EditAffiliatePage = props => {
     private_code
   } = affiliate;
 
-  const productList = useSelector(state => state.productList);
-  const { products: products_list, loading: loading_products } = productList;
+  const productSlice = useSelector(state => state.productSlice);
+  const { products: products_list, loading: loading_products } = productSlice;
 
-  const chipList = useSelector(state => state.chipList);
-  const { chips: chips_list, loading: loading_chips } = chipList;
+  const chipClice = useSelector(state => state.chipClice);
+  const { chips: chips_list, loading: loading_chips } = chipClice;
 
-  const promoList = useSelector(state => state.promoList);
-  const { promos: promos_list, loading: loading_promos } = promoList;
+  const promoSlice = useSelector(state => state.promoSlice);
+  const { promos: promos_list, loading: loading_promos } = promoSlice;
 
   const dispatch = useDispatch();
 
@@ -80,7 +77,6 @@ const EditAffiliatePage = props => {
       }
       dispatch(listUsers({}));
       dispatch(listProducts({ option: false, hidden: false }));
-      dispatch(listPromos({}));
       dispatch(listPromos({}));
       dispatch(listChips({}));
     }

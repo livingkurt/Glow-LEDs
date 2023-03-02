@@ -1,16 +1,12 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { saveAffiliate, detailsAffiliate } from "../../../actions/affiliateActions";
 import { Link, useHistory } from "react-router-dom";
 import { DropdownDisplay, Loading } from "../../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
-import { listUsers } from "../../../actions/userActions";
 import { snake_case } from "../../../utils/helper_functions";
-import { listProducts } from "../../../actions/productActions";
-import { listChips } from "../../../actions/chipActions";
-import { option_list } from "../../../utils/react_helper_functions";
 import useWindowDimensions from "../../../shared/Hooks/windowDimensions";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
+import { createAffiliate, detailsAffiliate, listChips, listProducts, listUsers, updateAffiliate } from "../../../api";
 
 const EditUserAffiliatePage = props => {
   const [id, set_id] = useState("");
@@ -46,17 +42,17 @@ const EditUserAffiliatePage = props => {
 
   const { height, width } = useWindowDimensions();
 
-  const userList = useSelector(state => state.userList);
-  const { users } = userList;
+  const userSlice = useSelector(state => state.userSlice);
+  const { users } = userSlice;
 
-  const productList = useSelector(state => state.productList);
-  const { products: products_list } = productList;
+  const productSlice = useSelector(state => state.productSlice);
+  const { products: products_list } = productSlice;
 
-  const chipList = useSelector(state => state.chipList);
-  const { chips: chips_list } = chipList;
+  const chipSlice = useSelector(state => state.chipSlice);
+  const { chips: chips_list } = chipSlice;
 
-  const promoList = useSelector(state => state.promoList);
-  const { promos: promos_list } = promoList;
+  const promoSlice = useSelector(state => state.promoSlice);
+  const { promos: promos_list } = promoSlice;
   const history = useHistory();
 
   const affiliateDetails = useSelector(state => state.affiliateDetails);
@@ -157,29 +153,32 @@ const EditUserAffiliatePage = props => {
 
   const submitHandler = e => {
     e.preventDefault();
-    dispatch(
-      saveAffiliate({
-        _id: id,
-        user: userInfo._id,
-        artist_name,
-        instagram_handle,
-        facebook_name,
-        tiktok,
-        active,
-        bio,
-        link,
-        location,
-        years,
-        style,
-        venmo,
-        percentage_off: 20,
-        inspiration,
-        pathname: pathname ? pathname : artist_name && snake_case(artist_name),
-        products,
-        chips: chips && chips.map(chip => chip._id),
-        answers: answer_1 && answer_2 && answer_3 && !props.match.params.id && [answer_1, answer_2, answer_3]
-      })
-    );
+    const data = {
+      _id: id,
+      user: userInfo._id,
+      artist_name,
+      instagram_handle,
+      facebook_name,
+      tiktok,
+      active,
+      bio,
+      link,
+      location,
+      years,
+      style,
+      venmo,
+      percentage_off: 20,
+      inspiration,
+      pathname: pathname ? pathname : artist_name && snake_case(artist_name),
+      products,
+      chips: chips && chips.map(chip => chip._id),
+      answers: answer_1 && answer_2 && answer_3 && !props.match.params.id && [answer_1, answer_2, answer_3]
+    };
+    if (id) {
+      dispatch(updateAffiliate(data));
+    } else {
+      dispatch(createAffiliate(data));
+    }
 
     e.target.reset();
     unset_state();

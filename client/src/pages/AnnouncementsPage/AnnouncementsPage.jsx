@@ -4,8 +4,8 @@ import { Helmet } from "react-helmet";
 import { detailsEmail, listEmails } from "../../api";
 
 const AnnouncementsPage = props => {
-  const emailList = useSelector(state => state.emailList);
-  const { emails } = emailList;
+  const emailSlice = useSelector(state => state.emailSlice);
+  const { emails } = emailSlice;
 
   const dispatch = useDispatch();
 

@@ -7,8 +7,8 @@ import { ProductItemD } from "../../../pages/ProductsGridPage/components";
 const SuggestedProducts = props => {
   const dispatch = useDispatch();
 
-  const productList = useSelector(state => state.productList);
-  const { products, loading, error } = productList;
+  const productSlice = useSelector(state => state.productSlice);
+  const { products, loading, error } = productSlice;
 
   return (
     <div className="mh-10px">

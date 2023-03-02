@@ -6,9 +6,9 @@ import { useHistory } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 import { sale_price_switch } from "../../../utils/react_helper_functions";
 import { LazyImage } from "../../SharedComponents";
-import { detailsProduct } from "../../../actions/productActions";
 import { addToCart } from "../../../actions/cartActions";
 import { GLButton } from "..";
+import { detailsProduct } from "../../../api";
 
 const CarouselItem = props => {
   const [product, set_product] = useState(props.product);

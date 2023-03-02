@@ -4,7 +4,7 @@ import { prnt } from "../../util";
 require("dotenv");
 
 export default {
-  findAll_users_db: async (filter: any, sort: unknown, limit: number, page: number) => {
+  findAll_users_db: async (filter: any, sort: unknown, limit: string, page: string) => {
     try {
       return await User.find(filter)
         .sort(sort)
@@ -20,8 +20,8 @@ export default {
           ]
         })
         .populate("products")
-        .limit(limit)
-        .skip((page - 1) * limit);
+        .limit(parseInt(limit))
+        .skip((parseInt(page) - 1) * parseInt(limit));
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

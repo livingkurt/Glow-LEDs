@@ -1,12 +1,10 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { saveSurvey, detailsSurvey } from "../../actions/surveyActions";
 import { useHistory, Link } from "react-router-dom";
 import { Loading } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
-import { listUsers } from "../../actions/userActions";
-import { listOrders } from "../../actions/orderActions";
 import { GLButton } from "../../shared/GlowLEDsComponents";
+import { createSurvey, detailsSurvey, listOrders, listUsers, updateSurvey } from "../../api";
 
 const EditSurveyPage = props => {
   const [id, set_id] = useState("");
@@ -34,11 +32,11 @@ const EditSurveyPage = props => {
   const surveyDetails = useSelector(state => state.surveyDetails);
   const { survey, loading, error } = surveyDetails;
 
-  const userList = useSelector(state => state.userList);
-  const { loading: loading_users, users, error: error_users } = userList;
+  const userSlice = useSelector(state => state.userSlice);
+  const { loading: loading_users, users, error: error_users } = userSlice;
 
-  const orderList = useSelector(state => state.orderList);
-  const { orders, loading: loading_orders, error: error_orders } = orderList;
+  const orderSlice = useSelector(state => state.orderSlice);
+  const { orders, loading: loading_orders, error: error_orders } = orderSlice;
 
   const set_state = () => {
     set_id(survey._id);
@@ -113,26 +111,29 @@ const EditSurveyPage = props => {
 
   const submitHandler = e => {
     e.preventDefault();
-    dispatch(
-      saveSurvey({
-        _id: id,
-        question_1,
-        question_2,
-        question_3,
-        question_4,
-        question_5,
-        answer_1,
-        answer_2,
-        answer_3,
-        answer_4,
-        answer_5,
-        user,
-        order,
-        rating,
-        is_survey,
-        active
-      })
-    );
+    const data = {
+      _id: id,
+      question_1,
+      question_2,
+      question_3,
+      question_4,
+      question_5,
+      answer_1,
+      answer_2,
+      answer_3,
+      answer_4,
+      answer_5,
+      user,
+      order,
+      rating,
+      is_survey,
+      active
+    };
+    if (id) {
+      dispatch(updateSurvey(data));
+    } else {
+      dispatch(createSurvey(data));
+    }
     e.target.reset();
     unset_state();
     history.push("/secure/glow/surveys");

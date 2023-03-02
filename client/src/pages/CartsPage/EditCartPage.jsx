@@ -6,6 +6,7 @@ import { Loading } from "../../shared/SharedComponents";
 import { format_date, unformat_date } from "../../utils/helper_functions";
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../shared/GlowLEDsComponents";
+import { createCart, updateCart } from "../../api";
 
 const EditCartPage = props => {
   const [id, set_id] = useState("");
@@ -79,24 +80,27 @@ const EditCartPage = props => {
 
   const submitHandler = e => {
     e.preventDefault();
-    dispatch(
-      saveCart({
-        _id: id,
-        user,
-        artist_name,
-        instagram_handle,
-        facebook_name,
-        product,
-        song_id,
-        video,
-        picture,
-        release_date: unformat_date(release_date)
-      })
-    );
+
+    const data = {
+      _id: id,
+      user,
+      artist_name,
+      instagram_handle,
+      facebook_name,
+      product,
+      song_id,
+      video,
+      picture,
+      release_date: unformat_date(release_date)
+    };
+    if (id) {
+      dispatch(updateCart(data));
+    } else {
+      dispatch(createCart(data));
+    }
     e.target.reset();
     unset_state();
     history.push("/secure/glow/carts");
-    // }
   };
 
   return (

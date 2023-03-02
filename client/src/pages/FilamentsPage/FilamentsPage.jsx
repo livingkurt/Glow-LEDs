@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { listFilaments, deleteFilament, saveFilament } from "../../actions/filamentActions";
 import { Link } from "react-router-dom";
 import { Loading, Notification } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 
 import { GLButton } from "../../shared/GlowLEDsComponents";
+import { createFilament, deleteFilament, listFilaments, updateFilament } from "../../api";
 
 const FilamentsPage = props => {
   const [search, set_search] = useState("");
@@ -16,8 +16,8 @@ const FilamentsPage = props => {
   const [loading_checkboxes, set_loading_checkboxes] = useState(false);
   const [create_filaments, set_create_filaments] = useState(true);
   const category = props.match.params.category ? props.match.params.category : "";
-  const filamentList = useSelector(state => state.filamentList);
-  const { loading, filaments, message, error } = filamentList;
+  const filamentSlice = useSelector(state => state.filamentSlice);
+  const { loading, filaments, message, error } = filamentSlice;
 
   const filamentSave = useSelector(state => state.filamentSave);
   const { success: successSave } = filamentSave;
@@ -102,7 +102,7 @@ const FilamentsPage = props => {
 
   const change_filament_status = filament => {
     dispatch(
-      saveFilament({
+      updateFilament({
         ...filament,
         active: filament.active ? false : true
       })
@@ -147,7 +147,7 @@ const FilamentsPage = props => {
         {/* <Search
           search={search}
           set_search={set_search}
-          submitHandler={submitHandler}
+          handleListItems={handleListItems}
           category={category}
         /> */}
         {/* <Sort sortHandler={sortHandler} sort_options={sort_options} /> */}

@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { saveTeam, detailsTeam } from "../../actions/teamActions";
 import { useHistory } from "react-router-dom";
 import { ImageDisplay, Loading } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
-import { listAffiliates } from "../../actions/affiliateActions";
 import { snake_case } from "../../utils/helper_functions";
-import { listPromos } from "../../actions/promoActions";
 import { GLButton } from "../../shared/GlowLEDsComponents";
-import { listUsers } from "../../actions/userActions";
+import { createTeam, detailsTeam, listAffiliates, listPromos, listUsers, updateTeam } from "../../api";
 
 const EditTeamPage = props => {
   const [id, set_id] = useState("");
@@ -38,19 +35,19 @@ const EditTeamPage = props => {
 
   const [loading_checkboxes, set_loading_checkboxes] = useState(true);
 
-  const affiliateList = useSelector(state => state.affiliateList);
-  const { affiliates: affiliates_list } = affiliateList;
+  const affiliateSlice = useSelector(state => state.affiliateSlice);
+  const { affiliates: affiliates_list } = affiliateSlice;
 
   const history = useHistory();
 
   const teamDetails = useSelector(state => state.teamDetails);
   const { team, loading, error } = teamDetails;
 
-  const userList = useSelector(state => state.userList);
-  const { users } = userList;
+  const userSlice = useSelector(state => state.userSlice);
+  const { users } = userSlice;
 
-  const promoList = useSelector(state => state.promoList);
-  const { promos: promos_list } = promoList;
+  const promoSlice = useSelector(state => state.promoSlice);
+  const { promos: promos_list } = promoSlice;
 
   const set_state = () => {
     set_id(team._id);
@@ -138,31 +135,35 @@ const EditTeamPage = props => {
 
   const submitHandler = e => {
     e.preventDefault();
-    dispatch(
-      saveTeam({
-        _id: id,
-        team_name,
-        instagram_handle,
-        facebook_name,
-        percentage_off,
-        images,
-        sponsor,
-        map,
-        captain,
-        promoter,
-        rave_mob,
-        active,
-        bio,
-        link,
-        video,
-        picture,
-        venmo,
-        public_code: public_code && public_code._id,
-        private_code: private_code && private_code._id,
-        pathname: pathname ? pathname : snake_case(team_name),
-        affiliates: affiliates && affiliates.map(affiliate => affiliate._id)
-      })
-    );
+
+    const data = {
+      _id: id,
+      team_name,
+      instagram_handle,
+      facebook_name,
+      percentage_off,
+      images,
+      sponsor,
+      map,
+      captain,
+      promoter,
+      rave_mob,
+      active,
+      bio,
+      link,
+      video,
+      picture,
+      venmo,
+      public_code: public_code && public_code._id,
+      private_code: private_code && private_code._id,
+      pathname: pathname ? pathname : snake_case(team_name),
+      affiliates: affiliates && affiliates.map(affiliate => affiliate._id)
+    };
+    if (id) {
+      dispatch(updateTeam(data));
+    } else {
+      dispatch(createTeam(data));
+    }
     e.target.reset();
     unset_state();
     history.push("/secure/glow/teams");

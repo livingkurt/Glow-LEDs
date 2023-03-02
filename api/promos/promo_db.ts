@@ -1,7 +1,7 @@
 import { Promo } from "../promos";
 
 export default {
-  findAll_promos_db: async (filter: any, sort: unknown, limit: number, page: number) => {
+  findAll_promos_db: async (filter: any, sort: unknown, limit: string, page: string) => {
     try {
       return await Promo.find(filter)
         .sort(sort)
@@ -11,8 +11,8 @@ export default {
         .populate("included_categories")
         .populate("excluded_products")
         .populate("included_products")
-        .limit(limit)
-        .skip((page - 1) * limit)
+        .limit(parseInt(limit))
+        .skip((parseInt(page) - 1) * parseInt(limit))
         .exec();
     } catch (error) {
       if (error instanceof Error) {

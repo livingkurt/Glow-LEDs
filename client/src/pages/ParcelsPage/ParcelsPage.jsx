@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { listParcels, deleteParcel } from "../../actions/parcelActions";
 import { Link } from "react-router-dom";
 import { Loading, Notification } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import Search from "../../shared/GlowLEDsComponents/GLTable/Search";
 import Sort from "../../shared/GlowLEDsComponents/GLTable/Sort";
+import { deleteParcel, listParcels } from "../../api";
 
 const ParcelsPage = props => {
   const [search, set_search] = useState("");
   const [sort, setSortOrder] = useState("");
   const [loading_parcels, set_loading_parcels] = useState(false);
   const category = props.match.params.category ? props.match.params.category : "";
-  const parcelList = useSelector(state => state.parcelList);
-  const { loading, parcels, message, error } = parcelList;
+  const parcelSlice = useSelector(state => state.parcelSlice);
+  const { loading, parcels, message, error } = parcelSlice;
 
   const parcelSave = useSelector(state => state.parcelSave);
   const { success: successSave } = parcelSave;
@@ -106,7 +106,7 @@ const ParcelsPage = props => {
         <h1 style={{ textAlign: "center" }}>Parcels</h1>
       </div>
       <div className="search_and_sort row jc-c ai-c" style={{ overflowX: "scroll" }}>
-        <Search search={search} set_search={set_search} submitHandler={submitHandler} category={category} />
+        <Search search={search} set_search={set_search} handleListItems={submitHandler} category={category} />
         <Sort sortHandler={sortHandler} sort_options={sort_options} />
       </div>
       <Loading loading={loading} error={error}>

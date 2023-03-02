@@ -20,10 +20,10 @@ const scraper = require("table-scraper");
 const today = new Date();
 
 export default {
-  findAll_orders_s: async (query: { page: number; search: string; sort: string; limit: number }) => {
+  findAll_orders_s: async (query: { page: string; search: string; sort: string; limit: string }) => {
     try {
-      const page: number = query.page ? query.page : 1;
-      const limit: number = query.limit ? query.limit : 10;
+      const page: string = query.page ? query.page : "1";
+      const limit: string = query.limit ? query.limit : "10";
       let search: any;
       if (query.search && query.search.match(/^[0-9a-fA-F]{24}$/)) {
         search = query.search ? { _id: query.search } : {};
@@ -120,7 +120,7 @@ export default {
       // const count = await Product.countDocuments(filter);
       return {
         orders,
-        totalPages: Math.ceil(count / limit),
+        totalPages: Math.ceil(count / parseInt(limit)),
         currentPage: page
       };
     } catch (error) {
@@ -133,8 +133,8 @@ export default {
     try {
       const sort = { _id: -1 };
       const filter = { deleted: false, user: params.id };
-      const limit = 0;
-      const page = 1;
+      const limit = "0";
+      const page = "1";
       return await order_db.findAll_orders_db(filter, sort, limit, page);
     } catch (error) {
       if (error instanceof Error) {
@@ -189,10 +189,10 @@ export default {
   },
   top_customers_orders_s: async (params: any) => {
     try {
-      const users = await user_db.findAll_users_db({ deleted: false }, { _id: -1 }, 0, 1);
+      const users = await user_db.findAll_users_db({ deleted: false }, { _id: -1 }, "0", "1");
       const orders = await Promise.all(
         users.map(async (user: any) => {
-          const orders = await order_db.findAll_orders_db({ deleted: false, user: user._id }, { _id: -1 });
+          const orders = await order_db.findAll_orders_db({ deleted: false, user: user._id }, { _id: -1 }, "0", "1");
           const amount = orders.reduce((total: any, c: any) => parseFloat(total) + parseFloat(c.totalPrice), 0);
           return {
             user: user,
@@ -222,8 +222,8 @@ export default {
     try {
       const sort = {};
       const filter = { deleted: false, user: params._id };
-      const limit = 50;
-      const page = 1;
+      const limit = "50";
+      const page = "1";
       const orders = await order_db.findAll_orders_db(filter, sort, limit, page);
       const products: any = [];
       const ids: any = [];
@@ -278,8 +278,8 @@ export default {
         promo_code: new RegExp(promo_code, "i")
       };
 
-      const limit = 0;
-      const page = 1;
+      const limit = "0";
+      const page = "1";
 
       const orders = await order_db.findAll_orders_db(filter, sort, limit, page);
 
@@ -349,8 +349,8 @@ export default {
         filter = { deleted: false, promo_code: params.promo_code, isPaid: true };
       }
 
-      const limit = 0;
-      const page = 1;
+      const limit = "0";
+      const page = "1";
 
       const orders = await order_db.findAll_orders_db(filter, sort, limit, page);
 
@@ -436,11 +436,11 @@ export default {
       }
 
       // const o_filter = determine_o_filter(query, {});
-      const limit = 0;
-      const page = 1;
+      const limit = "0";
+      const page = "1";
 
       const orders = await order_db.findAll_orders_db(o_filter, sort, limit, page);
-      let affiliates = await affiliate_db.findAll_affiliates_db(a_filter, {}, 0, 1);
+      let affiliates = await affiliate_db.findAll_affiliates_db(a_filter, {}, "0", "1");
       if (!query.position) {
         affiliates = [...affiliates, { public_code: { promo_code: "inkybois" } }];
       }
@@ -588,10 +588,10 @@ export default {
 
       const p_filter = determine_filter(query, {});
 
-      const limit = 0;
-      const page = 1;
+      const limit = "0";
+      const page = "1";
       const orders = await order_db.findAll_orders_db(o_filter, sort, limit, page);
-      const promos = await promo_db.findAll_promos_db(p_filter, {}, 0, 1);
+      const promos = await promo_db.findAll_promos_db(p_filter, {}, "0", "1");
       //
       const promos_earnings: any = promos.map((code: any) => {
         return {
@@ -636,8 +636,8 @@ export default {
           $lt: new Date(<any>new Date(date).setHours(23, 59, 59))
         }
       };
-      const limit = 50;
-      const page = 1;
+      const limit = "50";
+      const page = "1";
       return await order_db.findAll_orders_db(filter, sort, limit, page);
     } catch (error) {
       if (error instanceof Error) {
@@ -660,8 +660,8 @@ export default {
           $lt: new Date(<any>new Date(end_date).setHours(23, 59, 59))
         }
       };
-      const limit = 50;
-      const page = 1;
+      const limit = "50";
+      const page = "1";
       return await order_db.findAll_orders_db(filter, sort, limit, page);
     } catch (error) {
       if (error instanceof Error) {
@@ -678,8 +678,8 @@ export default {
           $gte: new Date(<any>new Date() - params.days * 60 * 60 * 24 * 1000)
         }
       };
-      const limit = 50;
-      const page = 1;
+      const limit = "50";
+      const page = "1";
       return await order_db.findAll_orders_db(filter, sort, limit, page);
     } catch (error) {
       if (error instanceof Error) {
@@ -697,8 +697,8 @@ export default {
         isShipped: false,
         isDelivered: false
       };
-      const limit = 0;
-      const page = 1;
+      const limit = "0";
+      const page = "1";
       return await order_db.findAll_orders_db(filter, sort, limit, page);
     } catch (error) {
       if (error instanceof Error) {
@@ -713,8 +713,8 @@ export default {
         deleted: false,
         ...body
       };
-      const limit = 0;
-      const page = 1;
+      const limit = "0";
+      const page = "1";
       return await order_db.findAll_orders_db(filter, sort, limit, page);
     } catch (error) {
       if (error instanceof Error) {
@@ -751,11 +751,11 @@ export default {
     try {
       const sort = {};
 
-      const limit = 0;
-      const page = 1;
+      const limit = "0";
+      const page = "1";
 
       const orders_data = await order_db.findAll_orders_db(o_filter, sort, limit, page);
-      const expenses_data = await expense_db.findAll_expenses_db(e_filter, sort, 0, 1);
+      const expenses_data = await expense_db.findAll_expenses_db(e_filter, sort, "0", "1");
       const income = orders_data.reduce(
         (a: any, c: any) =>
           a + c.totalPrice - c.taxPrice - (c.refundAmmount ? c.refundAmmount.reduce((a: any, c: any) => a + c, 0) / 100 : 0),

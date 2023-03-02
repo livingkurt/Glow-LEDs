@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { listContents, deleteContent, saveContent } from "../../actions/contentActions";
 import { Link } from "react-router-dom";
 import { Loading, Notification } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import Search from "../../shared/GlowLEDsComponents/GLTable/Search";
 import { GLButton } from "../../shared/GlowLEDsComponents";
+import { createContent, deleteContent, listContents, updateContent } from "../../api";
 
 const ContentsPage = props => {
   const [search, set_search] = useState("");
   const category = props.match.params.category ? props.match.params.category : "";
-  const contentList = useSelector(state => state.contentList);
-  const { loading, contents, message, error } = contentList;
+  const contentSlice = useSelector(state => state.contentSlice);
+  const { loading, contents, message, error } = contentSlice;
 
   const contentSave = useSelector(state => state.contentSave);
   const { success: successSave } = contentSave;
@@ -27,7 +27,7 @@ const ContentsPage = props => {
     }
     return () => (clean = false);
   }, [successSave, successDelete, dispatch]);
-  const submitHandler = e => {
+  const handleListItems = e => {
     e.preventDefault();
     dispatch(listContents({ category, search }));
   };
@@ -38,7 +38,7 @@ const ContentsPage = props => {
 
   const change_content_status = content => {
     dispatch(
-      saveContent({
+      updateContent({
         ...content,
         active: content.active ? false : true
       })
@@ -70,7 +70,7 @@ const ContentsPage = props => {
         <h1 style={{ textAlign: "center" }}>Contents</h1>
       </div>
       <div className="search_and_sort row jc-c ai-c" style={{ overflowX: "scroll" }}>
-        <Search search={search} set_search={set_search} submitHandler={submitHandler} category={category} />
+        <Search search={search} set_search={set_search} handleListItems={handleListItems} category={category} />
       </div>
       <Loading loading={loading} error={error}>
         {contents && (

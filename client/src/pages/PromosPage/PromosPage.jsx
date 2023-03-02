@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { listPromos, deletePromo, savePromo } from "../../actions/promoActions";
 import { Link } from "react-router-dom";
 import { Loading, Notification } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
@@ -9,13 +8,14 @@ import Sort from "../../shared/GlowLEDsComponents/GLTable/Sort";
 import { format_date } from "../../utils/helper_functions";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import { API_Emails, API_Promos } from "../../utils";
+import { deletePromo, listPromos, updatePromo } from "../../api";
 
 const PromosPage = props => {
   const [search, set_search] = useState("");
   const [sort, setSortOrder] = useState("");
   const category = props.match.params.category ? props.match.params.category : "";
-  const promoList = useSelector(state => state.promoList);
-  const { loading, promos, message, error } = promoList;
+  const promoSlice = useSelector(state => state.promoSlice);
+  const { loading, promos, message, error } = promoSlice;
 
   const promoSave = useSelector(state => state.promoSave);
   const { success: successSave } = promoSave;
@@ -135,7 +135,7 @@ const PromosPage = props => {
 
   const change_promo_status = promo => {
     dispatch(
-      savePromo({
+      updatePromo({
         ...promo,
         active: promo.active ? false : true
       })
@@ -194,7 +194,7 @@ const PromosPage = props => {
         <h1 style={{ textAlign: "center" }}>Promos</h1>
       </div>
       <div className="search_and_sort row jc-c ai-c" style={{ overflowX: "scroll" }}>
-        <Search search={search} set_search={set_search} submitHandler={submitHandler} category={category} />
+        <Search search={search} set_search={set_search} handleListItems={submitHandler} category={category} />
         <Sort sortHandler={sortHandler} sort_options={sort_options} />
       </div>
       <Loading loading={loading} error={error}>

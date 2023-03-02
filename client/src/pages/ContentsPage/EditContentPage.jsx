@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { saveContent, detailsContent } from "../../actions/contentActions";
 import { useHistory } from "react-router-dom";
 import { ImageDisplay, Loading } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { listEmails, saveEmail } from "../../actions/emailActions";
 import { API_Emails } from "../../utils";
 import { GLButton } from "../../shared/GlowLEDsComponents";
+import { createContent, createEmail, detailsContent, updateContent, updateEmail } from "../../api";
 
 const EditContentPage = props => {
   const [id, set_id] = useState("");
@@ -29,14 +29,14 @@ const EditContentPage = props => {
   const contentDetails = useSelector(state => state.contentDetails);
   const { content, loading, error } = contentDetails;
 
-  const contentList = useSelector(state => state.contentList);
-  const { contents } = contentList;
+  const contentSlice = useSelector(state => state.contentSlice);
+  const { contents } = contentSlice;
 
   // const emailDetails = useSelector((state) => state.emailDetails);
   // const { email, loading: loading_email, error: error_email } = emailDetails;
 
-  const emailList = useSelector(state => state.emailList);
-  const { emails } = emailList;
+  const emailSlice = useSelector(state => state.emailSlice);
+  const { emails } = emailSlice;
 
   const dispatch = useDispatch();
 
@@ -125,29 +125,35 @@ const EditContentPage = props => {
   const submitHandler = e => {
     e.preventDefault();
 
-    dispatch(
-      saveContent({
-        _id: using_template ? null : id,
-        home_page: { ...home_page, images, slideshow },
-        banner,
-        links,
-        active
-      })
-    );
+    const data = {
+      _id: using_template ? null : id,
+      home_page: { ...home_page, images, slideshow },
+      banner,
+      links,
+      active
+    };
+    if (using_template) {
+      dispatch(updateContent(data));
+    } else {
+      dispatch(createContent(data));
+    }
     if (create_email && (using_template || id)) {
-      dispatch(
-        saveEmail({
-          _id: using_template ? null : id,
-          email_type: "Announcements",
-          h1: home_page.h1,
-          images,
-          h2: home_page.h2,
-          p: home_page.p,
-          button: home_page.button,
-          link: `https://www.glow-leds.com${home_page.link}`,
-          active: home_page.active
-        })
-      );
+      const data = {
+        _id: using_template ? null : id,
+        email_type: "Announcements",
+        h1: home_page.h1,
+        images,
+        h2: home_page.h2,
+        p: home_page.p,
+        button: home_page.button,
+        link: `https://www.glow-leds.com${home_page.link}`,
+        active: home_page.active
+      };
+      if (using_template) {
+        dispatch(updateEmail(data));
+      } else {
+        dispatch(createEmail(data));
+      }
     }
     e.target.reset();
     unset_state();

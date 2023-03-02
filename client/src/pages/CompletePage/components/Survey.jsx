@@ -1,14 +1,12 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { saveSurvey, detailsSurvey, listSurveys } from "../../../actions/surveyActions";
 import { useHistory } from "react-router-dom";
 import { Loading } from "../../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
-import { listUsers } from "../../../actions/userActions";
 import "react-medium-image-zoom/dist/styles.css";
-import { detailsOrder } from "../../../actions/orderActions";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import StarRating from "../../../shared/GlowLEDsComponents/GLRating/StarRating";
+import { createSurvey, detailsOrder, detailsSurvey, listSurveys, listUsers } from "../../../api";
 
 const Survey = props => {
   const [question_1, set_question_1] = useState("");
@@ -35,8 +33,8 @@ const Survey = props => {
   setTimeout(() => {
     set_loading_checkboxes(false);
   }, 500);
-  const userList = useSelector(state => state.userList);
-  const { users } = userList;
+  const userSlice = useSelector(state => state.userSlice);
+  const { users } = userSlice;
 
   const userLogin = useSelector(state => state.userLogin);
   const { userInfo } = userLogin;
@@ -52,8 +50,8 @@ const Survey = props => {
   const surveySave = useSelector(state => state.surveySave);
   const { survey: survey_saved, loading: loading_saved, success } = surveySave;
 
-  const surveyList = useSelector(state => state.surveyList);
-  const { surveys } = surveyList;
+  const surveySlice = useSelector(state => state.surveySlice);
+  const { surveys } = surveySlice;
 
   const dispatch = useDispatch();
 
@@ -140,7 +138,7 @@ const Survey = props => {
       user = null;
     }
     dispatch(
-      saveSurvey({
+      createSurvey({
         user: user,
         question_1,
         question_2,

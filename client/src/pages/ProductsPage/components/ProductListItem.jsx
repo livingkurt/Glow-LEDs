@@ -7,6 +7,7 @@ import { sale_price_switch } from "../../../utils/react_helper_functions";
 import { deleteProduct, listProducts, saveProduct } from "../../../actions/productActions";
 import styled from "styled-components";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
+import { updateProduct } from "../../../api";
 
 const grid = 8;
 const size = 30;
@@ -156,7 +157,7 @@ const ProductListItem = props => {
 
   const show_hide_product = product => {
     dispatch(
-      saveProduct({
+      updateProduct({
         ...product,
         hidden: product.hidden ? false : true
       })

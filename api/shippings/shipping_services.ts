@@ -7,7 +7,7 @@ const easy_post_api = require("@easypost/api");
 export default {
   all_shipping_shipping_s: async () => {
     try {
-      const orders = await order_db.findAll_orders_db({ deleted: false }, {}, 0, 1);
+      const orders = await order_db.findAll_orders_db({ deleted: false }, {}, "0", "1");
       let all_shipping: any = [];
       orders.forEach((order: any) => {
         all_shipping = [order.shipping, ...all_shipping];
@@ -67,7 +67,7 @@ export default {
       const package_height = order.orderItems.reduce((a: any, c: { package_height: any }) => a + c.package_height, 0);
 
       const cube_root_volume = Math.cbrt(package_length * package_width * package_height);
-      const parcels = await parcel_db.findAll_parcels_db({ deleted: false }, {}, 0, 1);
+      const parcels = await parcel_db.findAll_parcels_db({ deleted: false }, {}, "0", "1");
       //
 
       let weight = 0;
@@ -207,7 +207,7 @@ export default {
           weight += item.weight_ounces;
         }
       });
-      const parcels = await parcel_db.findAll_parcels_db({ deleted: false }, {}, 0, 1);
+      const parcels = await parcel_db.findAll_parcels_db({ deleted: false }, {}, "0", "1");
       const parcel_size = determine_parcel(order.orderItems, parcels);
       const parcel = new EasyPost.Parcel({
         length: parcel_size.length,
@@ -374,7 +374,7 @@ export default {
           weight += item.weight_ounces;
         }
       });
-      const parcels = await parcel_db.findAll_parcels_db({ deleted: false }, {}, 0, 1);
+      const parcels = await parcel_db.findAll_parcels_db({ deleted: false }, {}, "0", "1");
       const parcel_size = determine_parcel(order.orderItems, parcels);
       const parcel = new EasyPost.Parcel({
         length: parcel_size.length,

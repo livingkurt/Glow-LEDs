@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { saveFeature, detailsFeature } from "../../actions/featureActions";
 import { useHistory } from "react-router-dom";
 import { Loading } from "../../shared/SharedComponents";
 import { format_date, unformat_date } from "../../utils/helper_functions";
@@ -8,6 +7,7 @@ import { Helmet } from "react-helmet";
 import { listProducts } from "../../actions/productActions";
 import { listUsers } from "../../actions/userActions";
 import { GLButton } from "../../shared/GlowLEDsComponents";
+import { createFeature, detailsFeature, updateFeature } from "../../api";
 
 const EditFeaturePage = props => {
   const [id, set_id] = useState("");
@@ -27,16 +27,16 @@ const EditFeaturePage = props => {
   const [description, set_description] = useState("");
   const [release_date, set_release_date] = useState("");
 
-  const userList = useSelector(state => state.userList);
-  const { users } = userList;
+  const userSlice = useSelector(state => state.userSlice);
+  const { users } = userSlice;
 
   const history = useHistory();
 
   const featureDetails = useSelector(state => state.featureDetails);
   const { feature, loading, error } = featureDetails;
 
-  const productList = useSelector(state => state.productList);
-  const { products } = productList;
+  const productSlice = useSelector(state => state.productSlice);
+  const { products } = productSlice;
 
   const dispatch = useDispatch();
 
@@ -109,25 +109,28 @@ const EditFeaturePage = props => {
 
   const submitHandler = e => {
     e.preventDefault();
-    dispatch(
-      saveFeature({
-        _id: id,
-        user,
-        artist_name,
-        instagram_handle,
-        facebook_name,
-        product,
-        song_id,
-        link,
-        logo,
-        video,
-        images,
-        description,
-        pathname,
-        category,
-        release_date: unformat_date(release_date)
-      })
-    );
+    const data = {
+      _id: id,
+      user,
+      artist_name,
+      instagram_handle,
+      facebook_name,
+      product,
+      song_id,
+      link,
+      logo,
+      video,
+      images,
+      description,
+      pathname,
+      category,
+      release_date: unformat_date(release_date)
+    };
+    if (id) {
+      dispatch(updateFeature(data));
+    } else {
+      dispatch(createFeature(data));
+    }
     e.target.reset();
     unset_state();
     history.push("/secure/glow/features");

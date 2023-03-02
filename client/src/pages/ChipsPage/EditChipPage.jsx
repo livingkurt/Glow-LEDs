@@ -6,6 +6,7 @@ import { Loading, Notification } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { snake_case } from "../../utils/helper_functions";
 import { GLButton } from "../../shared/GlowLEDsComponents";
+import { createChip, updateChip } from "../../api";
 
 const EditChipPage = props => {
   const [id, set_id] = useState("");
@@ -91,22 +92,25 @@ const EditChipPage = props => {
 
   const submitHandler = e => {
     e.preventDefault();
-    dispatch(
-      saveChip({
-        _id: id,
-        name,
-        company,
-        category,
-        programmmable,
-        number_of_modes,
-        characteristics,
-        colors_per_mode,
-        image,
-        colors,
-        dimensions,
-        pathname: pathname ? pathname : snake_case(name)
-      })
-    );
+    const data = {
+      _id: id,
+      name,
+      company,
+      category,
+      programmmable,
+      number_of_modes,
+      characteristics,
+      colors_per_mode,
+      image,
+      colors,
+      dimensions,
+      pathname: pathname ? pathname : snake_case(name)
+    };
+    if (id) {
+      dispatch(updateChip(data));
+    } else {
+      dispatch(createChip(data));
+    }
     e.target.reset();
     unset_state();
     history.push("/secure/glow/chips");

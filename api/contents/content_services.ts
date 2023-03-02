@@ -4,10 +4,10 @@ import { parse } from "node-html-parser";
 import { determine_filter } from "../../util";
 
 export default {
-  findAll_contents_s: async (query: { page: number; search: string; sort: string; limit: number }) => {
+  findAll_contents_s: async (query: { page: string; search: string; sort: string; limit: string }) => {
     try {
-      const page: number = query.page ? query.page : 1;
-      const limit: number = query.limit ? query.limit : 0;
+      const page: string = query.page ? query.page : "1";
+      const limit: string = query.limit ? query.limit : "0";
       const search = query.search
         ? {
             p: {
@@ -23,7 +23,7 @@ export default {
       const count = await content_db.count_contents_db(filter);
       return {
         contents,
-        totalPages: Math.ceil(count / limit),
+        totalPages: Math.ceil(count / parseInt(limit)),
         currentPage: page
       };
     } catch (error) {
@@ -32,10 +32,10 @@ export default {
       }
     }
   },
-  findDisplay_contents_s: async (query: { page: number; search: string; sort: string; limit: number }) => {
+  findDisplay_contents_s: async (query: { page: string; search: string; sort: string; limit: string }) => {
     try {
-      const page: number = query.page ? query.page : 1;
-      const limit: number = query.limit ? query.limit : 1;
+      const page: string = query.page ? query.page : "1";
+      const limit: string = query.limit ? query.limit : "1";
       const sort = { _id: -1 };
       const filter = { deleted: false, active: true };
       return await content_db.findAll_contents_db(filter, sort, limit, page);
@@ -45,7 +45,7 @@ export default {
       }
     }
   },
-  findAllEvents_contents_s: async (query: { page: number; search: string; sort: string; limit: number }) => {
+  findAllEvents_contents_s: async (query: { page: string; search: string; sort: string; limit: string }) => {
     const url = "https://electronicmidwest.com/edm-event-calendar/us-festivals/";
     try {
       const { data } = await axios.get(url);
@@ -84,7 +84,7 @@ export default {
       }
     }
   },
-  findAllYoutube_contents_s: async (query: { page: number; search: string; sort: string; limit: number }) => {
+  findAllYoutube_contents_s: async (query: { page: string; search: string; sort: string; limit: string }) => {
     const url = "https://electronicmidwest.com/edm-event-calendar/us-festivals/";
     try {
       const { data } = await axios.get(url);

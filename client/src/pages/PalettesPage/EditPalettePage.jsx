@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { savePalette, detailsPalette } from "../../actions/paletteActions";
 import { useHistory } from "react-router-dom";
 import { SketchPicker } from "react-color";
-import { listChips } from "../../actions/chipActions";
+import { detailsPalette, listChips, updatePalette } from "../../api";
+import createPalette from "@mui/material/styles/createPalette";
 
 const EditPalettePage = props => {
   const [id, set_id] = useState("");
@@ -18,8 +18,8 @@ const EditPalettePage = props => {
   const [preset_colors, set_preset_colors] = useState(["red", "green", "blue"]);
   // const [ chip_object, set_chip_object ] = useState({});
 
-  const chipList = useSelector(state => state.chipList);
-  const { chips: chips_list } = chipList;
+  const chipSlice = useSelector(state => state.chipSlice);
+  const { chips: chips_list } = chipSlice;
 
   const [loading_checkboxes, set_loading_checkboxes] = useState(true);
 
@@ -93,17 +93,20 @@ const EditPalettePage = props => {
 
   const submitHandler = e => {
     e.preventDefault();
-    dispatch(
-      savePalette({
-        _id: id,
-        type,
-        name,
-        chip,
-        colors_per_mode,
-        colors: name * chip * colors_per_mode,
-        quantity_state
-      })
-    );
+    const data = {
+      _id: id,
+      type,
+      name,
+      chip,
+      colors_per_mode,
+      colors: name * chip * colors_per_mode,
+      quantity_state
+    };
+    if (id) {
+      dispatch(updatePalette(data));
+    } else {
+      dispatch(createPalette(data));
+    }
     e.target.reset();
     unset_state();
     history.push("/secure/glow/palettes");

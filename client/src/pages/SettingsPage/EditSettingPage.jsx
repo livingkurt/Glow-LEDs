@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { saveSetting, detailsSetting, listSettings } from "../../actions/settingActions";
 import { useHistory, Link } from "react-router-dom";
 import { Loading } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../shared/GlowLEDsComponents";
+import { createSetting, detailsSetting, listSettings, updateSetting } from "../../api";
 
 const EditSettingPage = props => {
   const [id, set_id] = useState("");
@@ -18,11 +18,11 @@ const EditSettingPage = props => {
   const settingDetails = useSelector(state => state.settingDetails);
   const { setting, loading, error } = settingDetails;
 
-  const settingList = useSelector(state => state.settingList);
-  const { settings: settings_list } = settingList;
+  const settingSlice = useSelector(state => state.settingSlice);
+  const { settings: settings_list } = settingSlice;
 
-  const teamList = useSelector(state => state.teamList);
-  const { teams } = teamList;
+  const teamSlice = useSelector(state => state.teamSlice);
+  const { teams } = teamSlice;
 
   const set_state = () => {
     set_id(setting._id);
@@ -70,13 +70,16 @@ const EditSettingPage = props => {
   const submitHandler = e => {
     e.preventDefault();
 
-    dispatch(
-      saveSetting({
-        _id: id,
-        settings,
-        active
-      })
-    );
+    const data = {
+      _id: id,
+      settings,
+      active
+    };
+    if (id) {
+      dispatch(updateSetting(data));
+    } else {
+      dispatch(createSetting(data));
+    }
     e.target.reset();
     unset_state();
     history.push("/secure/glow/settings");

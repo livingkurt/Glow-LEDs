@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { listEmails, deleteEmail, saveEmail } from "../../actions/emailActions";
 import { Link } from "react-router-dom";
 import { Loading, Notification } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
@@ -8,14 +7,15 @@ import Search from "../../shared/GlowLEDsComponents/GLTable/Search";
 import Sort from "../../shared/GlowLEDsComponents/GLTable/Sort";
 import { humanize } from "../../utils/helper_functions";
 import { GLButton } from "../../shared/GlowLEDsComponents";
+import { createEmail, deleteEmail, listEmails, updateEmail } from "../../api";
 
 const EmailsPage = props => {
   const [search, set_search] = useState("");
   const [sort, setSortOrder] = useState("");
 
   const category = props.match.params.category ? props.match.params.category : "";
-  const emailList = useSelector(state => state.emailList);
-  const { loading, emails, message, error } = emailList;
+  const emailSlice = useSelector(state => state.emailSlice);
+  const { loading, emails, message, error } = emailSlice;
 
   const emailSave = useSelector(state => state.emailSave);
   const { success: successSave } = emailSave;
@@ -32,7 +32,7 @@ const EmailsPage = props => {
     return () => (clean = false);
   }, [successSave, successDelete, dispatch]);
 
-  const submitHandler = e => {
+  const handleListItems = e => {
     e.preventDefault();
     dispatch(listEmails({ category, search, sort }));
   };
@@ -73,7 +73,7 @@ const EmailsPage = props => {
 
   const change_email_status = email => {
     dispatch(
-      saveEmail({
+      updateEmail({
         ...email,
         active: email.active ? false : true
       })
@@ -169,7 +169,7 @@ const EmailsPage = props => {
         <h1 style={{ textAlign: "center" }}>Emails</h1>
       </div>
       <div className="search_and_sort row jc-c ai-c" style={{ overflowX: "scroll" }}>
-        <Search search={search} set_search={set_search} submitHandler={submitHandler} category={category} />
+        <Search search={search} set_search={set_search} handleListItems={handleListItems} category={category} />
         <Sort sortHandler={sortHandler} sort_options={sort_options} />
       </div>
       <Loading loading={loading} error={error}>

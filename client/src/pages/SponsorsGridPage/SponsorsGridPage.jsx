@@ -3,13 +3,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { Loading } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
-import { listAffiliates } from "../../actions/affiliateActions";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import { SponsorItemD, SponsorItemM } from "./components";
+import { listAffiliates } from "../../api";
 
 const AllSponsorsPage = props => {
-  const affiliateList = useSelector(state => state.affiliateList);
-  const { affiliates, loading, error } = affiliateList;
+  const affiliateSlice = useSelector(state => state.affiliateSlice);
+  const { affiliates, loading, error } = affiliateSlice;
   const dispatch = useDispatch();
 
   useEffect(() => {

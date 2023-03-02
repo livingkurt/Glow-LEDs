@@ -33,7 +33,7 @@ import { email_db } from "../api/emails";
 const router = express.Router();
 
 router.get("/email_subscription", async (req: { body: any }, res: { send: (arg0: string) => void }) => {
-  const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 }, 0, 1);
+  const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 }, "0", "1");
   const body = {
     email: process.env.CONTACT_EMAIL,
     promo_code: "xoteag",
@@ -1952,7 +1952,7 @@ router.get("/shipping_status", async (req: { body: any }, res: { send: (arg0: st
   res.send(App({ body: shipping_status(body), unsubscribe: false }));
 });
 router.get("/review", async (req: { body: any }, res: { send: (arg0: string) => void }) => {
-  const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 }, 0, 1);
+  const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 }, "0", "1");
   const body = {
     email: process.env.CONTACT_EMAIL,
     promo_code: "xoteag",
@@ -2073,7 +2073,7 @@ router.get("/feature", async (req: { body: any }, res: { send: (arg0: string) =>
   res.send(App({ body: feature(body), title: "Thank you for sending us your art!" }));
 });
 router.get("/announcement", async (req: { body: any }, res: { send: (arg0: string) => void }) => {
-  const email = await email_db.findAll_emails_db({ deleted: false, active: true }, { _id: -1 }, 1, 1);
+  const email = await email_db.findAll_emails_db({ deleted: false, active: true }, { _id: -1 }, "1", "1");
 
   res.send(
     App({
@@ -2540,7 +2540,7 @@ router.get("/password_reset", async (req: { body: any }, res: { send: (arg0: str
 // );
 router.get("/account_created", async (req: { body: any }, res: { send: (arg0: string) => void }) => {
   const user = await user_db.findById_users_db("5f2d7c0e9005a57059801ce8");
-  const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 }, 0, 1);
+  const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 }, "0", "1");
   const body = {
     user,
     categories: contents && contents[0].home_page.slideshow

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { listOrders, update_order } from "../../actions/orderActions";
 import { Loading, Notification } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { API_Emails, API_Orders } from "../../utils";
@@ -14,6 +13,7 @@ import Search from "../../shared/GlowLEDsComponents/GLTable/Search";
 import Pagination from "../../shared/GlowLEDsComponents/GLTable/Pagination";
 import { OrderItemM, OrderListItem } from "./components";
 import Sort from "../../shared/GlowLEDsComponents/GLTable/Sort";
+import { listOrders, updateOrder } from "../../api";
 
 const OrdersPage = props => {
   const [search, set_search] = useState("");
@@ -24,8 +24,8 @@ const OrdersPage = props => {
   const [loading_email, set_loading_email] = useState("");
 
   const category = props.match.params.category ? props.match.params.category : "";
-  const orderList = useSelector(state => state.orderList);
-  const { loading, orders, totalPages, message, currentPage, error } = orderList;
+  const orderSlice = useSelector(state => state.orderSlice);
+  const { loading, orders, totalPages, message, currentPage, error } = orderSlice;
 
   const dispatch = useDispatch();
 
@@ -63,7 +63,7 @@ const OrdersPage = props => {
     return () => (clean = false);
   }, [currentPage]);
 
-  const submitHandler = e => {
+  const handleListItems = e => {
     e.preventDefault();
     history.push({
       search: `?page=${page}?limit=${limit}${search ? "?search=" + search : ""}`
@@ -151,7 +151,7 @@ const OrdersPage = props => {
   const mark_as_shipped = async () => {
     const { data: orders } = await API_Orders.mark_as_shipped();
     orders.forEach(async order => {
-      await dispatch(update_order(order, true, "isShipped", "shippedAt"));
+      await dispatch(updateOrder(order, true, "isShipped", "shippedAt"));
       await send_email(order, "shipped");
     });
     setTimeout(() => {
@@ -257,7 +257,7 @@ const OrdersPage = props => {
           <Search
             search={search}
             set_search={set_search}
-            submitHandler={submitHandler}
+            handleListItems={handleListItems}
             category={category}
             // className="max-w-50rem"
           />

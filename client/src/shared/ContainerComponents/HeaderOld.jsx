@@ -11,7 +11,6 @@ import useWindowDimensions from "../Hooks/windowDimensions";
 import { API_Products } from "../../utils";
 import { categories, humanize, subcategories, update_products_url } from "../../../utils/helper_functions";
 import { DirectLink, Element, Events, animateScroll as scroll, scrollSpy, scroller } from "react-scroll";
-import { hide_search_bar, show_search_bar } from "../../../actions/settingActions";
 import { Filter } from "../SharedComponents";
 import { GLButton } from "../GlowLEDsComponents";
 import { isAdmin } from "../../../utils/helpers/user_helpers";

@@ -1,19 +1,19 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { listTeams, deleteTeam } from "../../actions/teamActions";
 import { Link } from "react-router-dom";
 import { Loading, Notification } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import Search from "../../shared/GlowLEDsComponents/GLTable/Search";
 import Sort from "../../shared/GlowLEDsComponents/GLTable/Sort";
 import { GLButton } from "../../shared/GlowLEDsComponents";
+import { deleteTeam, listTeams } from "../../api";
 
 const TeamsPage = props => {
   const [search, set_search] = useState("");
   const [sort, setSortOrder] = useState("");
   const category = props.match.params.category ? props.match.params.category : "";
-  const teamList = useSelector(state => state.teamList);
-  const { loading, teams, message, error } = teamList;
+  const teamSlice = useSelector(state => state.teamSlice);
+  const { loading, teams, message, error } = teamSlice;
 
   const teamSave = useSelector(state => state.teamSave);
   const { success: successSave } = teamSave;
@@ -29,7 +29,7 @@ const TeamsPage = props => {
     }
     return () => (clean = false);
   }, [successSave, successDelete, dispatch]);
-  const submitHandler = e => {
+  const handleListItems = e => {
     e.preventDefault();
     dispatch(listTeams({ category, search, sort }));
   };
@@ -103,7 +103,7 @@ const TeamsPage = props => {
         <h1 style={{ textAlign: "center" }}>Teams</h1>
       </div>
       <div className="search_and_sort row jc-c ai-c" style={{ overflowX: "scroll" }}>
-        <Search search={search} set_search={set_search} submitHandler={submitHandler} category={category} />
+        <Search search={search} set_search={set_search} handleListItems={handleListItems} category={category} />
         <Sort sortHandler={sortHandler} sort_options={sort_options} />
       </div>
       <Loading loading={loading} error={error}>

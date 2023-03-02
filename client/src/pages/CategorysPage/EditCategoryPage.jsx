@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { saveCategory, detailsCategory, listCategorys } from "../../actions/categoryActions";
 import { useHistory } from "react-router-dom";
 import { DropdownDisplay, Loading } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../shared/GlowLEDsComponents";
+import { createCategory, detailsCategory, listCategorys, updateCategory } from "../../api";
 
 const EditCategoryPage = props => {
   const [id, set_id] = useState("");
@@ -26,8 +26,8 @@ const EditCategoryPage = props => {
   const categoryDetails = useSelector(state => state.categoryDetails);
   const { category, loading, error } = categoryDetails;
 
-  const categoryList = useSelector(state => state.categoryList);
-  const { categorys: subcategorys_list } = categoryList;
+  const categorySlice = useSelector(state => state.categorySlice);
+  const { categorys: subcategorys_list } = categorySlice;
 
   const dispatch = useDispatch();
 
@@ -90,23 +90,24 @@ const EditCategoryPage = props => {
 
   const submitHandler = e => {
     e.preventDefault();
-    //
-    //
-    dispatch(
-      saveCategory({
-        _id: id,
-        name,
-        pathname,
-        nest_level,
-        display_order,
-        display,
-        meta_title,
-        meta_description,
-        meta_keywords,
-        masthead,
-        subcategorys: subcategorys && subcategorys.map(category => category._id)
-      })
-    );
+    const data = {
+      _id: id,
+      name,
+      pathname,
+      nest_level,
+      display_order,
+      display,
+      meta_title,
+      meta_description,
+      meta_keywords,
+      masthead,
+      subcategorys: subcategorys && subcategorys.map(category => category._id)
+    };
+    if (id) {
+      dispatch(updateCategory(data));
+    } else {
+      dispatch(createCategory(data));
+    }
     e.target.reset();
     unset_state();
     history.push("/secure/glow/categorys");

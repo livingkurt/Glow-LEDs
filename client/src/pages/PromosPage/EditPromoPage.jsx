@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { savePromo, detailsPromo } from "../../actions/promoActions";
 import { useHistory } from "react-router-dom";
 import { DropdownDisplay, Loading } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
-import { listUsers } from "../../actions/userActions";
-import { listAffiliates } from "../../actions/affiliateActions";
-import { listProducts } from "../../actions/productActions";
 import { API_Products } from "../../utils";
 import { format_date, unformat_date } from "../../utils/helper_functions";
 import { GLButton } from "../../shared/GlowLEDsComponents";
+import { createPromo, detailsPromo, listAffiliates, listProducts, listUsers, updatePromo } from "../../api";
 
 const EditPromoPage = props => {
   const [id, set_id] = useState("");
@@ -43,14 +40,14 @@ const EditPromoPage = props => {
   const promoDetails = useSelector(state => state.promoDetails);
   const { promo, loading, error } = promoDetails;
 
-  const userList = useSelector(state => state.userList);
-  const { users } = userList;
+  const userSlice = useSelector(state => state.userSlice);
+  const { users } = userSlice;
 
-  const affiliateList = useSelector(state => state.affiliateList);
-  const { affiliates } = affiliateList;
+  const affiliateSlice = useSelector(state => state.affiliateSlice);
+  const { affiliates } = affiliateSlice;
 
-  const productList = useSelector(state => state.productList);
-  const { products } = productList;
+  const productSlice = useSelector(state => state.productSlice);
+  const { products } = productSlice;
 
   const dispatch = useDispatch();
 
@@ -154,33 +151,36 @@ const EditPromoPage = props => {
 
   const submitHandler = e => {
     e.preventDefault();
-    dispatch(
-      savePromo({
-        _id: id,
-        affiliate,
-        user,
-        promo_code,
-        admin_only,
-        affiliate_only,
-        sponsor_only,
-        single_use,
-        used_once,
-        exclude,
-        excluded_categories,
-        excluded_products,
-        include,
-        included_categories,
-        included_products,
-        percentage_off,
-        amount_off,
-        minimum_total,
-        free_shipping,
-        time_limit,
-        start_date: unformat_date(start_date),
-        end_date: unformat_date(end_date),
-        active
-      })
-    );
+    const data = {
+      _id: id,
+      affiliate,
+      user,
+      promo_code,
+      admin_only,
+      affiliate_only,
+      sponsor_only,
+      single_use,
+      used_once,
+      exclude,
+      excluded_categories,
+      excluded_products,
+      include,
+      included_categories,
+      included_products,
+      percentage_off,
+      amount_off,
+      minimum_total,
+      free_shipping,
+      time_limit,
+      start_date: unformat_date(start_date),
+      end_date: unformat_date(end_date),
+      active
+    };
+    if (id) {
+      dispatch(updatePromo(data));
+    } else {
+      dispatch(createPromo(data));
+    }
     e.target.reset();
     unset_state();
     history.push("/secure/glow/promos");

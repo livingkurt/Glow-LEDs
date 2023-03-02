@@ -1,17 +1,15 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { saveOrder, detailsOrder } from "../../../actions/orderActions";
 import { Link, useHistory } from "react-router-dom";
 import { Loading } from "../../../shared/SharedComponents";
 import { format_date, unformat_date } from "../../../utils/helper_functions";
 import { Helmet } from "react-helmet";
-import { listProducts } from "../../../actions/productActions";
-import { listUsers } from "../../../actions/userActions";
 import { API_External, API_Products } from "../../../utils";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import Overflow from "react-overflow-indicator";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import { isAdmin } from "../../../utils/helpers/user_helpers";
+import { createOrder, detailsOrder, listProducts, listUsers, updateOrder } from "../../../api";
 
 const EditOrderPage = props => {
   const [id, set_id] = useState("");
@@ -58,11 +56,11 @@ const EditOrderPage = props => {
   const userLogin = useSelector(state => state.userLogin);
   const { userInfo } = userLogin;
 
-  const userList = useSelector(state => state.userList);
-  const { users } = userList;
+  const userSlice = useSelector(state => state.userSlice);
+  const { users } = userSlice;
 
-  const productList = useSelector(state => state.productList);
-  const { products } = productList;
+  const productSlice = useSelector(state => state.productSlice);
+  const { products } = productSlice;
 
   const dispatch = useDispatch();
 
@@ -177,37 +175,40 @@ const EditOrderPage = props => {
 
   const submitHandler = e => {
     e.preventDefault();
-    dispatch(
-      saveOrder({
-        _id: id,
-        user,
-        orderItems,
-        shipping,
-        payment,
-        itemsPrice,
-        taxPrice,
-        shippingPrice,
-        totalPrice,
-        isPaid,
-        paidAt,
-        isManufactured,
-        manufacturedAt: manufacturedAt && unformat_date(manufacturedAt),
-        isPackaged,
-        packagedAt: packagedAt && unformat_date(packagedAt),
-        isShipped,
-        shippedAt: shippedAt && unformat_date(shippedAt),
-        isDelivered,
-        deliveredAt: deliveredAt && unformat_date(deliveredAt),
-        isRefunded,
-        refundedAt: refundedAt && unformat_date(refundedAt),
-        createdAt: createdAt && unformat_date(createdAt),
-        order_note,
-        production_note,
-        promo_code,
-        tracking_number
-        // product_option
-      })
-    );
+    const data = {
+      _id: id,
+      user,
+      orderItems,
+      shipping,
+      payment,
+      itemsPrice,
+      taxPrice,
+      shippingPrice,
+      totalPrice,
+      isPaid,
+      paidAt,
+      isManufactured,
+      manufacturedAt: manufacturedAt && unformat_date(manufacturedAt),
+      isPackaged,
+      packagedAt: packagedAt && unformat_date(packagedAt),
+      isShipped,
+      shippedAt: shippedAt && unformat_date(shippedAt),
+      isDelivered,
+      deliveredAt: deliveredAt && unformat_date(deliveredAt),
+      isRefunded,
+      refundedAt: refundedAt && unformat_date(refundedAt),
+      createdAt: createdAt && unformat_date(createdAt),
+      order_note,
+      production_note,
+      promo_code,
+      tracking_number
+      // product_option
+    };
+    if (id) {
+      dispatch(updateOrder(data));
+    } else {
+      dispatch(createOrder(data));
+    }
     e.target.reset();
     unset_state();
     history.push(props.location.previous_path || "/secure/glow/orders?page=1?limit=10");

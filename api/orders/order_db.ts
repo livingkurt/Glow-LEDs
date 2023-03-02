@@ -2,7 +2,7 @@ import { Product } from "../products";
 import { Order } from "../orders";
 
 export default {
-  findAll_orders_db: async (filter: any, sort: unknown, limit = 10, page = 1) => {
+  findAll_orders_db: async (filter: any, sort: unknown, limit: string, page: string) => {
     try {
       return await Order.find(filter)
         .sort(sort)
@@ -10,8 +10,8 @@ export default {
         .populate("orderItems.product")
         .populate("orderItems.secondary_product")
         .sort(sort)
-        .limit(limit)
-        .skip((page - 1) * limit)
+        .limit(parseInt(limit))
+        .skip((parseInt(page) - 1) * parseInt(limit))
         .exec();
     } catch (error) {
       if (error instanceof Error) {

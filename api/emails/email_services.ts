@@ -4,10 +4,10 @@ import { email_db } from "../emails";
 require("dotenv").config();
 
 export default {
-  findAll_emails_s: async (query: { page: number; search: string; sort: string; limit: number }) => {
+  findAll_emails_s: async (query: { page: string; search: string; sort: string; limit: string }) => {
     try {
-      const page: number = query.page ? query.page : 1;
-      const limit: number = query.limit ? query.limit : 0;
+      const page: string = query.page ? query.page : "1";
+      const limit: string = query.limit ? query.limit : "0";
       const search = query.search
         ? {
             email_type: {
@@ -29,7 +29,7 @@ export default {
       const count = await email_db.count_emails_db(filter);
       return {
         emails,
-        totalPages: Math.ceil(count / limit),
+        totalPages: Math.ceil(count / parseInt(limit)),
         currentPage: page
       };
     } catch (error) {
@@ -87,7 +87,7 @@ export default {
   },
   send_all_emails_s: async (body: any) => {
     // const users = await User.find({ deleted: false, email_subscription: true });
-    const users = await user_db.findAll_users_db({ deleted: false, email_subscription: true }, {}, 0, 1);
+    const users = await user_db.findAll_users_db({ deleted: false, email_subscription: true }, {}, "0", "1");
     const all_emails = users
       .filter((user: any) => user.deleted === false)
       .filter((user: any) => user.email_subscription === true)

@@ -3,20 +3,19 @@ import PaymentStep from "./components/PaymentStep";
 import EmailStep from "./components/EmailStep";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { createPayOrder, createOrder, createOrderGuest, createPayOrderGuest, removeOrderState } from "../../actions/orderActions";
 import CheckoutSteps from "../../shared/SharedComponents/CheckoutSteps";
 import { Helmet } from "react-helmet";
-import { removeFromCart, saveShipping, savePayment } from "../../actions/cartActions";
-import { listPromos } from "../../actions/promoActions";
 import { Loading, LoadingPayments, LoadingShipping } from "../../shared/SharedComponents";
 import { validate_promo_code } from "../../utils/validations";
-import { listUsers } from "../../actions/userActions";
 import { API_Emails, API_External, API_Products, API_Promos, API_Shipping } from "../../utils";
 import { determine_total, state_names } from "../../utils/helper_functions";
 import { check_authentication } from "../../utils/react_helper_functions";
 import useWindowDimensions from "../../shared/Hooks/windowDimensions";
 import { isMobile } from "react-device-detect";
 import { OrderSummaryStep, ShippingStep } from "./components";
+import { createOrder, listPromos, listUsers } from "../../api";
+import { removeFromCart, savePayment, saveShipping } from "../../actions/cartActions";
+import { createOrderGuest, createPayOrder, createPayOrderGuest, removeOrderState } from "../../actions/orderActions";
 
 const PlaceOrderPage = props => {
   const userLogin = useSelector(state => state.userLogin);
@@ -30,11 +29,11 @@ const PlaceOrderPage = props => {
   const orderPay = useSelector(state => state.orderPay);
   const { success: successPay, error: error_pay } = orderPay;
 
-  const userList = useSelector(state => state.userList);
-  const { users } = userList;
+  const userSlice = useSelector(state => state.userSlice);
+  const { users } = userSlice;
 
-  const promoList = useSelector(state => state.promoList);
-  const { promos } = promoList;
+  const promoSlice = useSelector(state => state.promoSlice);
+  const { promos } = promoSlice;
   const items_price = determine_total(cartItems);
 
   const [shipping_rates, set_shipping_rates] = useState({});

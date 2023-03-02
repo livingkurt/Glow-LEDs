@@ -3,13 +3,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { Loading } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
-import { listTeams } from "../../actions/teamActions";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import { TeamItemD, TeamItemM } from "./components";
+import { listTeams } from "../../api";
 
 const AllTeamsPage = props => {
-  const teamList = useSelector(state => state.teamList);
-  const { teams, loading, error } = teamList;
+  const teamSlice = useSelector(state => state.teamSlice);
+  const { teams, loading, error } = teamSlice;
   const dispatch = useDispatch();
   const category = props.match.params.category ? props.match.params.category : "";
 

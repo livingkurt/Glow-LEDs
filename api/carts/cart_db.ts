@@ -1,13 +1,13 @@
 import { Cart } from "../carts";
 
 export default {
-  findAll_carts_db: async (filter: any, sort: unknown, limit: number, page: number) => {
+  findAll_carts_db: async (filter: any, sort: unknown, limit: string, page: string) => {
     try {
       return await Cart.find(filter)
         .sort(sort)
         .populate("user")
-        .limit(limit)
-        .skip((page - 1) * limit)
+        .limit(parseInt(limit))
+        .skip((parseInt(page) - 1) * parseInt(limit))
         .exec();
     } catch (error) {
       if (error instanceof Error) {

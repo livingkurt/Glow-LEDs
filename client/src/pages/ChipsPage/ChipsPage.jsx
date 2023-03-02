@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { listChips, deleteChip } from "../../actions/chipActions";
 import { Link } from "react-router-dom";
 import { Loading, Notification } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import Search from "../../shared/GlowLEDsComponents/GLTable/Search";
 import Sort from "../../shared/GlowLEDsComponents/GLTable/Sort";
 import { GLButton } from "../../shared/GlowLEDsComponents";
+import { deleteChip, listChips } from "../../api";
 
 const ChipsPage = props => {
   const [search, set_search] = useState("");
   const [sort, setSortOrder] = useState("");
   const category = props.match.params.category ? props.match.params.category : "";
-  const chipList = useSelector(state => state.chipList);
-  const { loading, chips, message, error } = chipList;
+  const chipSlice = useSelector(state => state.chipSlice);
+  const { loading, chips, message, error } = chipSlice;
 
   const chipSave = useSelector(state => state.chipSave);
   const { success: successSave } = chipSave;
@@ -29,7 +29,7 @@ const ChipsPage = props => {
     }
     return () => (clean = false);
   }, [successSave, successDelete, dispatch]);
-  const submitHandler = e => {
+  const handleListItems = e => {
     e.preventDefault();
     dispatch(listChips({ category, search, sort }));
   };
@@ -134,7 +134,7 @@ const ChipsPage = props => {
         <h1 style={{ textAlign: "center" }}>Chips</h1>
       </div>
       <div className="search_and_sort row jc-c ai-c" style={{ overflowX: "scroll" }}>
-        <Search search={search} set_search={set_search} submitHandler={submitHandler} category={category} />
+        <Search search={search} set_search={set_search} handleListItems={handleListItems} category={category} />
         <Sort sortHandler={sortHandler} sort_options={sort_options} />
       </div>
       <Notification message={message} />

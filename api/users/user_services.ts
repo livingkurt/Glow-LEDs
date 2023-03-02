@@ -4,10 +4,10 @@ const bcrypt = require("bcryptjs");
 require("dotenv");
 
 export default {
-  findAll_users_s: async (query: { page: number; search: string; sort: string; limit: number }) => {
+  findAll_users_s: async (query: { page: string; search: string; sort: string; limit: string }) => {
     try {
-      const page: number = query.page ? query.page : 1;
-      const limit: number = query.limit ? query.limit : 0;
+      const page: string = query.page ? query.page : "1";
+      const limit: string = query.limit ? query.limit : "0";
       const search = query.search
         ? {
             first_name: {
@@ -30,7 +30,7 @@ export default {
       const count = await user_db.count_users_db(filter);
       return {
         users,
-        totalPages: Math.ceil(count / limit),
+        totalPages: Math.ceil(count / parseInt(limit)),
         currentPage: page
       };
     } catch (error) {

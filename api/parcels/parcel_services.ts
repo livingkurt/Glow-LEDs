@@ -2,10 +2,10 @@ import { parcel_db } from "../parcels";
 import { determine_filter } from "../../util";
 
 export default {
-  findAll_parcels_s: async (query: { page: number; search: string; sort: string; limit: number }) => {
+  findAll_parcels_s: async (query: { page: string; search: string; sort: string; limit: string }) => {
     try {
-      const page: number = query.page ? query.page : 1;
-      const limit: number = query.limit ? query.limit : 0;
+      const page: string = query.page ? query.page : "1";
+      const limit: string = query.limit ? query.limit : "0";
       const search = query.search
         ? {
             facebook_name: {
@@ -28,7 +28,7 @@ export default {
       const count = await parcel_db.count_parcels_db(filter);
       return {
         parcels,
-        totalPages: Math.ceil(count / limit),
+        totalPages: Math.ceil(count / parseInt(limit)),
         currentPage: page
       };
     } catch (error) {

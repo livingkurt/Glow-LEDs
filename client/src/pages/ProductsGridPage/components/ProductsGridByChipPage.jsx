@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { listProducts } from "../../../actions/productActions";
 import { Loading, Notification } from "../../../shared/SharedComponents";
 import {
   description_determination,
@@ -20,7 +19,7 @@ import ProductItemM from "./ProductItemM";
 import Pagination from "../../../shared/GlowLEDsComponents/GLTable/Pagination";
 import Sort from "../../../shared/GlowLEDsComponents/GLTable/Sort";
 import Filter from "../../../shared/GlowLEDsComponents/GLTable/Filter";
-import { listChips } from "../../../api";
+import { listChips, listProducts } from "../../../api";
 
 const AllProductsByChipPage = props => {
   const history = useHistory();
@@ -54,8 +53,8 @@ const AllProductsByChipPage = props => {
   const [sort, set_sort] = useState("");
   const [filter, set_filter] = useState("");
 
-  const productList = useSelector(state => state.productList);
-  const { products: main_products, totalPages, currentPage, loading, error } = productList;
+  const productSlice = useSelector(state => state.productSlice);
+  const { products: main_products, totalPages, currentPage, loading, error } = productSlice;
 
   const chipSlice = useSelector(state => state.chipSlice);
   const { chips: chips_list } = chipSlice;

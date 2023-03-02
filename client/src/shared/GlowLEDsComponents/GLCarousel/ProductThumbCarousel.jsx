@@ -9,8 +9,8 @@ import { Loading } from "../../SharedComponents";
 const ProductThumbCarousel = props => {
   const dispatch = useDispatch();
 
-  const productList = useSelector(state => state.productList);
-  const { products, loading, error } = productList;
+  const productSlice = useSelector(state => state.productSlice);
+  const { products, loading, error } = productSlice;
   const { height, width } = useWindowDimensions();
 
   const [product_number, set_product_number] = useState(0);

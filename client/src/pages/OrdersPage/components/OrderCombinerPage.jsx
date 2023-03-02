@@ -4,18 +4,18 @@ import { state_names } from "../../../utils/helper_functions";
 import { Helmet } from "react-helmet";
 import { API_Orders, API_Shipping } from "../../../utils";
 import { useHistory } from "react-router-dom";
-import { listParcels } from "../../../actions/parcelActions";
 import { Loading } from "../../../shared/SharedComponents";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import { isAdmin } from "../../../utils/helpers/user_helpers";
+import { listParcels } from "../../../api";
 
 const OrderCombinerPage = props => {
   const userLogin = useSelector(state => state.userLogin);
   const { userInfo } = userLogin;
 
   const history = useHistory();
-  const parcelList = useSelector(state => state.parcelList);
-  const { parcels } = parcelList;
+  const parcelSlice = useSelector(state => state.parcelSlice);
+  const { parcels } = parcelSlice;
 
   const [orders, set_orders] = useState([]);
   const [loading, set_loading] = useState(true);

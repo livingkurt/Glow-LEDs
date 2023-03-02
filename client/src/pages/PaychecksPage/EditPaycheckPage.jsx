@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { savePaycheck, detailsPaycheck } from "../../actions/paycheckActions";
 import { useHistory, Link } from "react-router-dom";
 import { Loading } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
-import { listTeams } from "../../actions/teamActions";
 import { GLButton } from "../../shared/GlowLEDsComponents";
-import { listAffiliates } from "../../actions/affiliateActions";
 import { format_date } from "../../utils/helper_functions";
+import { createPaycheck, detailsPaycheck, listAffiliates, listTeams, updatePaycheck } from "../../api";
 
 const EditPaycheckPage = props => {
   const [id, set_id] = useState("");
@@ -26,11 +24,11 @@ const EditPaycheckPage = props => {
   const paycheckDetails = useSelector(state => state.paycheckDetails);
   const { paycheck, loading, error } = paycheckDetails;
 
-  const affiliateList = useSelector(state => state.affiliateList);
-  const { affiliates } = affiliateList;
+  const affiliateSlice = useSelector(state => state.affiliateSlice);
+  const { affiliates } = affiliateSlice;
 
-  const teamList = useSelector(state => state.teamList);
-  const { teams } = teamList;
+  const teamSlice = useSelector(state => state.teamSlice);
+  const { teams } = teamSlice;
 
   const set_state = () => {
     set_id(paycheck._id);
@@ -92,18 +90,21 @@ const EditPaycheckPage = props => {
   const submitHandler = e => {
     e.preventDefault();
 
-    dispatch(
-      savePaycheck({
-        _id: id,
-        affiliate: affiliate?._id,
-        team: team?._id,
-        amount,
-        venmo,
-        paid,
-        reciept,
-        paid_at: paid_at ? paid_at : paid && format_date(today)
-      })
-    );
+    const data = {
+      _id: id,
+      affiliate: affiliate?._id,
+      team: team?._id,
+      amount,
+      venmo,
+      paid,
+      reciept,
+      paid_at: paid_at ? paid_at : paid && format_date(today)
+    };
+    if (id) {
+      dispatch(updatePaycheck(data));
+    } else {
+      dispatch(createPaycheck(data));
+    }
     e.target.reset();
     unset_state();
     history.push("/secure/glow/paychecks?page=1?limit=10");

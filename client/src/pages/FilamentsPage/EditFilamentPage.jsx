@@ -6,6 +6,7 @@ import { Loading } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { listChips } from "../../actions/chipActions";
 import { GLButton } from "../../shared/GlowLEDsComponents";
+import { createFilament, updateFilament } from "../../api";
 
 const EditFilamentPage = props => {
   const [id, set_id] = useState("");
@@ -70,15 +71,18 @@ const EditFilamentPage = props => {
 
   const submitHandler = e => {
     e.preventDefault();
-    dispatch(
-      saveFilament({
-        _id: id,
-        type,
-        color,
-        color_code,
-        active
-      })
-    );
+    const data = {
+      _id: id,
+      type,
+      color,
+      color_code,
+      active
+    };
+    if (id) {
+      dispatch(updateFilament(data));
+    } else {
+      dispatch(createFilament(data));
+    }
     e.target.reset();
     unset_state();
     history.push("/secure/glow/filaments");

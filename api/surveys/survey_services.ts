@@ -2,10 +2,10 @@ import { determine_filter } from "../../util";
 import { survey_db } from "../surveys";
 
 export default {
-  findAll_surveys_s: async (query: { page: number; search: string; sort: string; limit: number }) => {
+  findAll_surveys_s: async (query: { page: string; search: string; sort: string; limit: string }) => {
     try {
-      const page: number = query.page ? query.page : 1;
-      const limit: number = query.limit ? query.limit : 0;
+      const page: string = query.page ? query.page : "1";
+      const limit: string = query.limit ? query.limit : "0";
       const search = query.search
         ? {
             facebook_name: {
@@ -28,7 +28,7 @@ export default {
       const count = await survey_db.count_surveys_db(filter);
       return {
         surveys,
-        totalPages: Math.ceil(count / limit),
+        totalPages: Math.ceil(count / parseInt(limit)),
         currentPage: page
       };
     } catch (error) {

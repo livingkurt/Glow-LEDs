@@ -14,6 +14,7 @@ import { GLButton } from "../../../shared/GlowLEDsComponents";
 import { isAdmin } from "../../../utils/helpers/user_helpers";
 import { OrderStatusButtons } from "../../OrderPage/components";
 import useWindowDimensions from "../../../shared/Hooks/windowDimensions";
+import { updateOrder } from "../../../api";
 
 const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_email, listOrdersFilters }) => {
   const history = useHistory();
@@ -214,7 +215,7 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
       orderItems: [...new_order_items]
     });
     dispatch(
-      saveOrder({
+      updateOrder({
         ...order,
         orderItems: [...new_order_items]
       })

@@ -3,18 +3,18 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { format_date } from "../../utils/helper_functions";
 import { Loading, Notification } from "../../shared/SharedComponents";
-import { listUsers, deleteUser } from "../../actions/userActions";
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import Search from "../../shared/GlowLEDsComponents/GLTable/Search";
 import Sort from "../../shared/GlowLEDsComponents/GLTable/Sort";
+import { deleteUser, listUsers } from "../../api";
 
 const UsersPage = props => {
   const [search, set_search] = useState("");
   const [sort, setSortOrder] = useState("");
   const category = props.match.params.category ? props.match.params.category : "";
-  const userList = useSelector(state => state.userList);
-  const { loading, users, message, error } = userList;
+  const userSlice = useSelector(state => state.userSlice);
+  const { loading, users, message, error } = userSlice;
 
   const userDelete = useSelector(state => state.userDelete);
   const { loading: loadingDelete, success: successDelete, error: errorDelete } = userDelete;
@@ -131,7 +131,7 @@ const UsersPage = props => {
       </div>
 
       <div className="search_and_sort row jc-c ai-c" style={{ overflowX: "scroll" }}>
-        <Search search={search} set_search={set_search} submitHandler={submitHandler} category={category} />
+        <Search search={search} set_search={set_search} handleListItems={submitHandler} category={category} />
         <Sort sortHandler={sortHandler} sort_options={sort_options} />
       </div>
       <Loading loading={loading} error={error}>

@@ -15,8 +15,8 @@ const FeaturesGridPage = props => {
   const category = props.match.params.category ? props.match.params.category : "";
   const subcategory = props.match.params.subcategory ? props.match.params.subcategory : "";
 
-  const featureList = useSelector(state => state.featureList);
-  const { features, loading, error } = featureList;
+  const featureSlice = useSelector(state => state.featureSlice);
+  const { features, loading, error } = featureSlice;
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -48,7 +48,7 @@ const FeaturesGridPage = props => {
     return () => (clean = false);
   }, [sort]);
 
-  const submitHandler = e => {
+  const handleListItems = e => {
     e.preventDefault();
     // history.push(
     // 	'/collections/all/features/category' + category + '/' + subcategory + '?search=' + search
@@ -86,7 +86,7 @@ const FeaturesGridPage = props => {
       </div>
 
       <div className="search_and_sort row jc-c ai-c" style={{ overflowX: "scroll" }}>
-        <Search search={search} set_search={set_search} submitHandler={submitHandler} category={category} />
+        <Search search={search} set_search={set_search} handleListItems={handleListItems} category={category} />
       </div>
       <Loading loading={loading} error={error}>
         <div>

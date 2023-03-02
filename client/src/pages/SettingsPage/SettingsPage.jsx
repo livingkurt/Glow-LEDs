@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { listSettings, deleteSetting } from "../../actions/settingActions";
 import { Link } from "react-router-dom";
 import { Loading, Notification } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import * as API from "../../api/affiliateApi";
-import { listTeams } from "../../actions/teamActions";
-import { listOrders } from "../../actions/orderActions";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import Search from "../../shared/GlowLEDsComponents/GLTable/Search";
 import Sort from "../../shared/GlowLEDsComponents/GLTable/Sort";
+import { deleteSetting, listOrders, listSettings, listTeams } from "../../api";
 
 const SettingsPage = props => {
   const [search, set_search] = useState("");
@@ -18,8 +16,8 @@ const SettingsPage = props => {
   const [loading_checkboxes, set_loading_checkboxes] = useState(false);
   const category = props.match.params.category ? props.match.params.category : "";
 
-  const settingList = useSelector(state => state.settingList);
-  const { loading, settings, message, error } = settingList;
+  const settingSlice = useSelector(state => state.settingSlice);
+  const { loading, settings, message, error } = settingSlice;
 
   const settingSave = useSelector(state => state.settingSave);
   const { success: successSave } = settingSave;
@@ -115,7 +113,7 @@ const SettingsPage = props => {
         <h1 style={{ textAlign: "center" }}>Settings</h1>
       </div>
       <div className="search_and_sort row jc-c ai-c" style={{ overflowX: "scroll" }}>
-        <Search search={search} set_search={set_search} submitHandler={submitHandler} category={category} />
+        <Search search={search} set_search={set_search} handleListItems={submitHandler} category={category} />
         <Sort sortHandler={sortHandler} sort_options={sort_options} />
       </div>
       <Loading loading={loading} error={error}>

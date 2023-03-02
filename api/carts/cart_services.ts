@@ -2,10 +2,10 @@ import { cart_db } from "../carts";
 import { deepEqual, determine_filter } from "../../util";
 
 export default {
-  findAll_carts_s: async (query: { page: number; search: string; sort: string; limit: number }) => {
+  findAll_carts_s: async (query: { page: string; search: string; sort: string; limit: string }) => {
     try {
-      const page: number = query.page ? query.page : 1;
-      const limit: number = query.limit ? query.limit : 0;
+      const page: string = query.page ? query.page : "1";
+      const limit: string = query.limit ? query.limit : "0";
       const search = query.search
         ? {
             facebook_name: {
@@ -21,7 +21,7 @@ export default {
       const count = await cart_db.count_carts_db(filter);
       return {
         carts,
-        totalPages: Math.ceil(count / limit),
+        totalPages: Math.ceil(count / parseInt(limit)),
         currentPage: page
       };
     } catch (error) {

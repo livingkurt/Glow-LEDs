@@ -6,6 +6,7 @@ import { Loading } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { humanize } from "../../utils/helper_functions";
 import { GLButton } from "../../shared/GlowLEDsComponents";
+import { createParcel, updateParcel } from "../../api";
 
 const EditParcelPage = props => {
   const [id, set_id] = useState("");
@@ -76,17 +77,20 @@ const EditParcelPage = props => {
 
   const submitHandler = e => {
     e.preventDefault();
-    dispatch(
-      saveParcel({
-        _id: id,
-        type,
-        length,
-        width,
-        height,
-        volume: length * width * height,
-        quantity_state
-      })
-    );
+    const data = {
+      _id: id,
+      type,
+      length,
+      width,
+      height,
+      volume: length * width * height,
+      quantity_state
+    };
+    if (id) {
+      dispatch(updateParcel(data));
+    } else {
+      dispatch(createParcel(data));
+    }
     e.target.reset();
     unset_state();
     history.push("/secure/glow/parcels");

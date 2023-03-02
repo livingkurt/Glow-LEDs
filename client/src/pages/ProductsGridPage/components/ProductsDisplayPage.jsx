@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { listProducts } from "../../../actions/productActions";
 import { Loading, Notification } from "../../../shared/SharedComponents";
 import { humanize } from "../../../utils/helper_functions";
 import { Helmet } from "react-helmet";
@@ -11,7 +10,7 @@ import ProductItemM from "./ProductItemM";
 import Search from "../../../shared/GlowLEDsComponents/GLTable/Search";
 import Sort from "../../../shared/GlowLEDsComponents/GLTable/Sort";
 import Filter from "../../../shared/GlowLEDsComponents/GLTable/Filter";
-import { listChips } from "../../../api";
+import { listChips, listProducts } from "../../../api";
 
 const AllProductsPage = props => {
   const history = useHistory();
@@ -29,8 +28,8 @@ const AllProductsPage = props => {
   const collection = props.match.params.collection ? props.match.params.collection : "";
   const promo_code = props.match.params.promo_code ? props.match.params.promo_code : "";
 
-  const productList = useSelector(state => state.productList);
-  const { products: main_products, loading, error } = productList;
+  const productSlice = useSelector(state => state.productSlice);
+  const { products: main_products, loading, error } = productSlice;
 
   const chipSlice = useSelector(state => state.chipSlice);
   const { chips: chips_list } = chipSlice;
@@ -130,7 +129,7 @@ const AllProductsPage = props => {
     set_loading_products(false);
   };
 
-  const submitHandler = e => {
+  const handleListItems = e => {
     e.preventDefault();
     history.push({
       search: "?search=" + search
@@ -226,7 +225,7 @@ const AllProductsPage = props => {
       </div>
 
       <div className="jc-c ai-c wrap m-auto pb-1rem" style={{ overflowX: "scroll" }}>
-        <Search search={search} set_search={set_search} submitHandler={submitHandler} category={category} />
+        <Search search={search} set_search={set_search} handleListItems={handleListItems} category={category} />
         <Sort sortHandler={sortHandler} sort_options={sort_options} />
         {/* {category === 'glowskinz' && <Filter filterHandler={filterHandler} filter_options={chips_list} />} */}
         <Filter filterHandler={filterHandler} filter_options={chips_list} />

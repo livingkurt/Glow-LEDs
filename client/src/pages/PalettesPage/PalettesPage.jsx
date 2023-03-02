@@ -1,17 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { listPalettes, deletePalette, savePalette } from "../../actions/paletteActions";
 import { Link } from "react-router-dom";
 import { Loading, Notification } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { format_date } from "../../utils/helper_functions";
-import { listAffiliates } from "../../actions/affiliateActions";
 import { API_Orders } from "../../utils";
-import { listTeams } from "../../actions/teamActions";
-import { listOrders } from "../../actions/orderActions";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import Search from "../../shared/GlowLEDsComponents/GLTable/Search";
 import Sort from "../../shared/GlowLEDsComponents/GLTable/Sort";
+import { deletePalette, listAffiliates, listOrders, listPalettes, listTeams, updatePalette } from "../../api";
 
 const PalettesPage = props => {
   const [search, set_search] = useState("");
@@ -22,8 +19,8 @@ const PalettesPage = props => {
   const [loading_checkboxes, set_loading_checkboxes] = useState(false);
   const [create_palettes, set_create_palettes] = useState(true);
   const category = props.match.params.category ? props.match.params.category : "";
-  const paletteList = useSelector(state => state.paletteList);
-  const { loading, palettes, message, error } = paletteList;
+  const paletteSlice = useSelector(state => state.paletteSlice);
+  const { loading, palettes, message, error } = paletteSlice;
 
   const paletteSave = useSelector(state => state.paletteSave);
   const { success: successSave } = paletteSave;
@@ -32,11 +29,11 @@ const PalettesPage = props => {
   const { success: successDelete } = paletteDelete;
   const dispatch = useDispatch();
 
-  const affiliateList = useSelector(state => state.affiliateList);
-  const { affiliates } = affiliateList;
+  const affiliateSlice = useSelector(state => state.affiliateSlice);
+  const { affiliates } = affiliateSlice;
 
-  const teamList = useSelector(state => state.teamList);
-  const { teams } = teamList;
+  const teamSlice = useSelector(state => state.teamSlice);
+  const { teams } = teamSlice;
 
   setTimeout(() => {
     set_loading_checkboxes(false);
@@ -65,7 +62,7 @@ const PalettesPage = props => {
 
     set_total_orders(data);
   };
-  const submitHandler = e => {
+  const handleListItems = e => {
     e.preventDefault();
     dispatch(listPalettes({ category, search, sort }));
   };
@@ -92,7 +89,7 @@ const PalettesPage = props => {
 
   const mark_paid = palette => {
     dispatch(
-      savePalette({
+      updatePalette({
         ...palette,
         paid: true,
         paid_at: format_date(today)
@@ -152,7 +149,7 @@ const PalettesPage = props => {
         <h1 style={{ textAlign: "center" }}>Palettes</h1>
       </div>
       <div className="search_and_sort row jc-c ai-c" style={{ overflowX: "scroll" }}>
-        <Search search={search} set_search={set_search} submitHandler={submitHandler} category={category} />
+        <Search search={search} set_search={set_search} handleListItems={handleListItems} category={category} />
         <Sort sortHandler={sortHandler} sort_options={sort_options} />
       </div>
       <Loading loading={loading} error={error}>

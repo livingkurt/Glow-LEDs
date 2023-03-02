@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { listProducts } from "../../actions/productActions";
 import { API_Products } from "../../utils";
 import { Link, useHistory } from "react-router-dom";
 import { Loading, Notification } from "../../shared/SharedComponents";
@@ -14,6 +13,7 @@ import Sort from "../../shared/GlowLEDsComponents/GLTable/Sort";
 import Pagination from "../../shared/GlowLEDsComponents/GLTable/Pagination";
 import { ProductListItem } from "./components";
 import { GLButton } from "../../shared/GlowLEDsComponents";
+import { listProducts } from "../../api";
 
 function ProductPage(props) {
   const history = useHistory();
@@ -30,8 +30,8 @@ function ProductPage(props) {
   const dispatch = useDispatch();
   const [products_list, updateProducts] = useState([]);
 
-  const productList = useSelector(state => state.productList);
-  const { loading, products: items, totalPages, message, currentPage, error } = productList;
+  const productSlice = useSelector(state => state.productSlice);
+  const { loading, products: items, totalPages, message, currentPage, error } = productSlice;
 
   useEffect(() => {
     let clean = true;
@@ -96,7 +96,7 @@ function ProductPage(props) {
     }
   };
 
-  const submitHandler = e => {
+  const handleListItems = e => {
     e.preventDefault();
     dispatch(
       listProducts({
@@ -582,7 +582,7 @@ function ProductPage(props) {
         <GLButton variant="primary" style={{ whiteSpace: "nowrap" }} onClick={show_hidden_products}>
           {!show_hidden ? "Show" : "Hide"} Hidden Products
         </GLButton>
-        <Search search={search} set_search={set_search} submitHandler={submitHandler} category={category} />
+        <Search search={search} set_search={set_search} handleListItems={handleListItems} category={category} />
         <Sort sortHandler={sortHandler} sort_options={sort_options} />
       </div>
       <div className="jc-c">

@@ -4,10 +4,10 @@ import { order_db } from "../orders";
 import { promo_db } from "../promos";
 
 export default {
-  findAll_promos_s: async (query: { page: number; search: string; sort: string; limit: number }) => {
+  findAll_promos_s: async (query: { page: string; search: string; sort: string; limit: string }) => {
     try {
-      const page: number = query.page ? query.page : 1;
-      const limit: number = query.limit ? query.limit : 0;
+      const page: string = query.page ? query.page : "1";
+      const limit: string = query.limit ? query.limit : "0";
       const search = query.search
         ? {
             facebook_name: {
@@ -33,7 +33,7 @@ export default {
       const count = await promo_db.count_promos_db(filter);
       return {
         promos,
-        totalPages: Math.ceil(count / limit),
+        totalPages: Math.ceil(count / parseInt(limit)),
         currentPage: page
       };
     } catch (error) {
@@ -96,7 +96,7 @@ export default {
   },
   refresh_sponsor_codes_promos_s: async (body: any) => {
     const a_filter: any = { deleted: false, active: true, sponsor: true };
-    const affiliates = await affiliate_db.findAll_affiliates_db(a_filter, {}, 0, 1);
+    const affiliates = await affiliate_db.findAll_affiliates_db(a_filter, {}, "0", "1");
     const start_date = new Date();
     const next_date = new Date();
     const end_date = new Date(next_date.setMonth(next_date.getMonth() + 1));
@@ -104,7 +104,7 @@ export default {
     try {
       const sponsor_codes = await Promise.all(
         affiliates.map(async (affiliate: any) => {
-          const old_codes = await promo_db.findAll_promos_db({ affiliate: affiliate._id, active: true }, {}, 2, 1);
+          const old_codes = await promo_db.findAll_promos_db({ affiliate: affiliate._id, active: true }, {}, "2", "1");
           await Promise.all(
             old_codes.map(async (code: any) => {
               await promo_db.update_promos_db(code.id, { active: false });
@@ -201,10 +201,10 @@ export default {
         a_filter = { deleted: false, active: true, sponsor: true };
       }
 
-      const limit = 0;
-      const page = 1;
+      const limit = "0";
+      const page = "1";
       const orders = await order_db.findAll_orders_db(o_filter, {}, limit, page);
-      const affiliates = await affiliate_db.findAll_affiliates_db(a_filter, {}, 0, 1);
+      const affiliates = await affiliate_db.findAll_affiliates_db(a_filter, {}, "0", "1");
 
       affiliates
         .filter((affiliate: any) => !affiliate.deleted)

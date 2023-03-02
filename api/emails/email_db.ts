@@ -1,12 +1,12 @@
 import { Email } from "../emails";
 
 export default {
-  findAll_emails_db: async (filter: any, sort: any, limit = 0, page: number) => {
+  findAll_emails_db: async (filter: any, sort: any, limit: string, page: string) => {
     try {
       return await Email.find(filter)
         .sort(sort)
-        .limit(limit)
-        .skip((page - 1) * limit)
+        .limit(parseInt(limit))
+        .skip((parseInt(page) - 1) * parseInt(limit))
         .exec();
     } catch (error) {
       if (error instanceof Error) {

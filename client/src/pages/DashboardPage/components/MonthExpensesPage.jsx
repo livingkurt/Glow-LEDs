@@ -18,13 +18,6 @@ const MonthExpensesPage = props => {
   const monthly_income_chart_ref = useRef();
 
   const [canScroll, setCanScroll] = useState(false);
-  const affiliateList = useSelector(state => state.affiliateList);
-  // const { affiliates, loading: loading_affiliates, error_affiliates } = affiliateList;
-  // const promoList = useSelector((state) => state.promoList);
-  // const { promos, loading: loading_promos, error_promos } = promoList;
-
-  // const [ expenses, set_expenses ] = useState([]);
-  // const [ orders, set_orders ] = useState([]);
   const [monthly_income, set_monthly_income] = useState([]);
   const [affiliate_earnings, set_affiliate_earnings] = useState([]);
   const [promo_earnings, set_promo_earnings] = useState([]);

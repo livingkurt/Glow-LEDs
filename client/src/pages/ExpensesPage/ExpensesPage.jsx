@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { listExpenses, deleteExpense } from "../../actions/expenseActions";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Loading, Notification } from "../../shared/SharedComponents";
@@ -11,6 +10,7 @@ import { format_date } from "../../utils/helper_functions";
 import { API_Revenue } from "../../utils";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import CSVReader from "react-csv-reader";
+import { deleteExpense, listExpenses } from "../../api";
 
 const ExpensesPage = props => {
   const [search, set_search] = useState("");
@@ -23,8 +23,8 @@ const ExpensesPage = props => {
   const userLogin = useSelector(state => state.userLogin);
   const { userInfo } = userLogin;
 
-  const expenseList = useSelector(state => state.expenseList);
-  const { loading, expenses, message, error } = expenseList;
+  const expenseSlice = useSelector(state => state.expenseSlice);
+  const { loading, expenses, message, error } = expenseSlice;
 
   const expenseSave = useSelector(state => state.expenseSave);
   const { success: successSave } = expenseSave;
@@ -41,7 +41,7 @@ const ExpensesPage = props => {
     return () => (clean = false);
   }, [sort]);
 
-  const submitHandler = e => {
+  const handleListItems = e => {
     e.preventDefault();
     dispatch(listExpenses({ category, search, sort }));
   };
@@ -224,7 +224,7 @@ const ExpensesPage = props => {
         <h1 style={{ textAlign: "center" }}>Expenses</h1>
       </div>
       <div className="search_and_sort row jc-c ai-c" style={{ overflowX: "scroll" }}>
-        <Search search={search} set_search={set_search} submitHandler={submitHandler} category={category} />
+        <Search search={search} set_search={set_search} handleListItems={handleListItems} category={category} />
         <Sort sortHandler={sortHandler} sort_options={sort_options} />
       </div>
       <Loading loading={loading} error={error}>

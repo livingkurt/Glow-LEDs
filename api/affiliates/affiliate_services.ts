@@ -9,10 +9,10 @@ dotenv.config();
 const stripe = require("stripe")(process.env.STRIPE_KEY);
 
 export default {
-  findAll_affiliates_s: async (query: { search: string; sort: string; page: number; limit: number }) => {
+  findAll_affiliates_s: async (query: { search: string; sort: string; page: string; limit: string }) => {
     try {
-      const page: number = query.page ? query.page : 1;
-      const limit: number = query.limit ? query.limit : 0;
+      const page: string = query.page ? query.page : "1";
+      const limit: string = query.limit ? query.limit : "0";
       const search = query.search
         ? {
             facebook_name: {
@@ -43,7 +43,7 @@ export default {
       const count = await affiliate_db.count_affiliates_db(filter);
       return {
         affiliates,
-        totalPages: Math.ceil(count / limit),
+        totalPages: Math.ceil(count / parseInt(limit)),
         currentPage: page
       };
     } catch (error) {

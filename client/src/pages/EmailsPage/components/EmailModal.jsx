@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
-import { saveUser } from "../../../actions/userActions";
 import { API_Emails, API_Promos } from "../../../utils";
 import { validate_email } from "../../../utils/validations";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import useWindowDimensions from "../../../shared/Hooks/windowDimensions";
+import { createUser } from "../../../api";
 
 const EmailModal = props => {
   const [email, set_email] = useState("");
@@ -25,7 +24,7 @@ const EmailModal = props => {
     setEmailValidations(request.errors.email);
     if (request.isValid) {
       dispatch(
-        saveUser({
+        createUser({
           _id: null,
           first_name: "",
           last_name: "",

@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { addToCart, removeFromCart } from "../../actions/cartActions";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
-import { createOrder, detailsOrder, payOrder, saveOrder } from "../../actions/orderActions";
 import { determine_total, determine_tracking_link, format_date, toCapitalize } from "../../utils/helper_functions";
 import { Helmet } from "react-helmet";
 import { Loading, LoadingPayments } from "../../shared/SharedComponents";
-import { deleteOrder, listOrders, update_order, update_payment, refundOrder } from "../../actions/orderActions";
 import { API_Emails, API_Orders, API_Shipping } from "../../utils";
 import useClipboard from "react-hook-clipboard";
 import useWindowDimensions from "../../shared/Hooks/windowDimensions";
@@ -18,7 +15,9 @@ import { Stripe } from "../../shared/SharedComponents/Stripe";
 import { OrderStatusButtons } from "./components";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import { validate_promo_code } from "../../utils/validations";
-import { listPromos } from "../../actions/promoActions";
+import { createOrder, deleteOrder, detailsOrder, listOrders, listPromos, updateOrder } from "../../api";
+import { payOrder, refundOrder, update_payment } from "../../actions/orderActions";
+import { addToCart, removeFromCart } from "../../actions/cartActions";
 
 require("dotenv").config();
 
@@ -63,14 +62,14 @@ const OrderPage = props => {
 
   const [message_to_user, set_message_to_user] = useState("");
 
-  const parcelList = useSelector(state => state.parcelList);
-  const { parcels } = parcelList;
+  const parcelSlice = useSelector(state => state.parcelSlice);
+  const { parcels } = parcelSlice;
 
   const orderRefund = useSelector(state => state.orderRefund);
   const { order: refund } = orderRefund;
 
-  const orderList = useSelector(state => state.orderList);
-  const { orders } = orderList;
+  const orderSlice = useSelector(state => state.orderSlice);
+  const { orders } = orderSlice;
 
   const update_refund_state = amount => {
     set_loading_label(true);
@@ -168,10 +167,10 @@ const OrderPage = props => {
     set_loading_email(true);
     if (state) {
       set_order_state({ ...order_state, [is_action]: false });
-      dispatch(update_order(order, false, is_action, action_at));
+      dispatch(updateOrder(order, false, is_action, action_at));
     } else {
       set_order_state({ ...order_state, [is_action]: true });
-      dispatch(update_order(order, true, is_action, action_at));
+      dispatch(updateOrder(order, true, is_action, action_at));
       send_email(action_at.slice(0, -2));
     }
     setTimeout(() => {
@@ -442,7 +441,7 @@ const OrderPage = props => {
       set_loading_label(false);
     }
     dispatch(
-      saveOrder({
+      updateOrder({
         ...order,
         shipping: { ...order.shipping, shipment_id, shipping_rate }
       })
@@ -523,7 +522,7 @@ const OrderPage = props => {
     };
     set_order_items(new_order_items);
     dispatch(
-      saveOrder({
+      updateOrder({
         ...order,
         orderItems: [...new_order_items]
       })
@@ -531,8 +530,8 @@ const OrderPage = props => {
   };
 
   const [promo_code, set_promo_code] = useState("");
-  const promoList = useSelector(state => state.promoList);
-  const { promos } = promoList;
+  const promoSlice = useSelector(state => state.promoSlice);
+  const { promos } = promoSlice;
 
   const [promo_code_validations, set_promo_code_validations] = useState("");
   const items_price = determine_total(order_items);
