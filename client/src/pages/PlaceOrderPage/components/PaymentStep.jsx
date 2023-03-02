@@ -23,7 +23,7 @@ const PaymentStep = ({
   loading_checkboxes,
   create_account,
   set_create_account,
-  userInfo,
+  current_user,
   set_new_password,
   password_validations,
   loading,
@@ -61,7 +61,7 @@ const PaymentStep = ({
               <div htmlFor="order_note">Add a note</div>
               <input type="text" name="order_note" id="order_note" className="w-100per" onChange={e => set_order_note(e.target.value)} />
             </div>
-            {isAdmin(userInfo) && (
+            {isAdmin(current_user) && (
               <div className="w-100per mt-10px">
                 <div htmlFor="production_note">Add a production note</div>
                 <input
@@ -139,7 +139,7 @@ const PaymentStep = ({
                 />
               </div>
             </li>
-            {!userInfo.hasOwnProperty("first_name") && (
+            {!current_user.hasOwnProperty("first_name") && (
               <li>
                 <div className="mv-2rem">
                   <input
@@ -159,7 +159,7 @@ const PaymentStep = ({
                 </div>
               </li>
             )}
-            {userInfo && !userInfo.first_name && create_account && (
+            {current_user && !current_user.first_name && create_account && (
               <li className="column mb-2rem">
                 <label htmlFor="password">Password</label>
                 <input // className="form_input"
@@ -192,9 +192,9 @@ const PaymentStep = ({
                 </>
               )}
             </li>
-            {isAdmin(userInfo) && (
+            {isAdmin(current_user) && (
               <div className="mt-2rem">
-                {isAdmin(userInfo) && users && (
+                {isAdmin(current_user) && users && (
                   <div>
                     {loading_checkboxes ? (
                       <div>Loading...</div>
@@ -248,7 +248,7 @@ const PaymentStep = ({
                       <div className="custom-select w-100per">
                         <select
                           className="qty_select_dropdown w-100per"
-                          defaultValue={userInfo.first_name}
+                          defaultValue={current_user.first_name}
                           onChange={e => set_user(JSON.parse(e.target.value))}
                         >
                           <option key={1} defaultValue="">
@@ -268,7 +268,7 @@ const PaymentStep = ({
                     </GLButton>
                   </div>
                 )}
-                {isAdmin(userInfo) && users && (
+                {isAdmin(current_user) && users && (
                   <GLButton onClick={create_order_without_user} variant="secondary" className="w-100per mb-12px">
                     Create Order Without User
                   </GLButton>

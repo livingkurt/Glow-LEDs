@@ -11,11 +11,11 @@ import { set_current_user } from "../slices/userSlice";
 export const listAffiliates = createAsyncThunk("affiliates/listAffiliates", async (query: any, thunkApi: any) => {
   try {
     const {
-      userLogin: { userInfo }
+      userSlice: { current_user }
     } = thunkApi.getState();
     const { data } = await axios.get("/api/affiliates?" + create_query(query), {
       headers: {
-        Authorization: "Bearer " + userInfo.access_token
+        Authorization: "Bearer " + current_user.access_token
       }
     });
     return data;
@@ -25,11 +25,11 @@ export const listAffiliates = createAsyncThunk("affiliates/listAffiliates", asyn
 export const updateAffiliate = createAsyncThunk("affiliates/updateAffiliate", async (affiliate: any, thunkApi: any) => {
   try {
     const {
-      userLogin: { userInfo }
+      userSlice: { current_user }
     } = thunkApi.getState();
     const { data } = await axios.put("/api/affiliates/" + affiliate.pathname, affiliate, {
       headers: {
-        Authorization: "Bearer " + userInfo.access_token
+        Authorization: "Bearer " + current_user.access_token
       }
     });
     return data;
@@ -39,32 +39,32 @@ export const updateAffiliate = createAsyncThunk("affiliates/updateAffiliate", as
 export const createAffiliate = createAsyncThunk("affiliates/createAffiliate", async (affiliate: any, thunkApi: any) => {
   try {
     const {
-      userLogin: { userInfo }
+      userSlice: { current_user }
     } = thunkApi.getState();
     const { data } = await axios.post("/api/affiliates", affiliate, {
       headers: {
-        Authorization: "Bearer " + userInfo.access_token
+        Authorization: "Bearer " + current_user.access_token
       }
     });
     const { data: user } = await axios.put(
-      "/api/users/update/" + userInfo._id,
+      "/api/users/update/" + current_user._id,
       {
-        first_name: userInfo.first_name,
-        last_name: userInfo.last_name,
-        email: userInfo.email,
-        password: userInfo.password,
+        first_name: current_user.first_name,
+        last_name: current_user.last_name,
+        email: current_user.email,
+        password: current_user.password,
         is_affiliated: true,
-        email_subscription: userInfo.email_subscription,
+        email_subscription: current_user.email_subscription,
         affiliate: data._id,
-        shipping: userInfo.shipping,
-        isVerified: userInfo.isVerified,
-        isAdmin: userInfo.isAdmin,
-        access_token: userInfo.access_token,
-        refresh_token: userInfo.refresh_token
+        shipping: current_user.shipping,
+        isVerified: current_user.isVerified,
+        isAdmin: current_user.isAdmin,
+        access_token: current_user.access_token,
+        refresh_token: current_user.refresh_token
       },
       {
         headers: {
-          Authorization: "Bearer " + userInfo.access_token
+          Authorization: "Bearer " + current_user.access_token
         }
       }
     );
@@ -86,7 +86,7 @@ export const detailsAffiliate = createAsyncThunk(
   async ({ pathname, id }: DetailsAffiliate, thunkApi: any) => {
     try {
       const {
-        userLogin: { userInfo }
+        userSlice: { current_user }
       } = thunkApi.getState();
       let response: any = {};
       if (id) {
@@ -102,11 +102,11 @@ export const detailsAffiliate = createAsyncThunk(
 export const deleteAffiliate = createAsyncThunk("affiliates/deleteAffiliate", async (pathname, thunkApi: any) => {
   try {
     const {
-      userLogin: { userInfo }
+      userSlice: { current_user }
     } = thunkApi.getState();
     const { data } = await axios.delete("/api/affiliates/" + pathname, {
       headers: {
-        Authorization: "Bearer " + userInfo.access_token
+        Authorization: "Bearer " + current_user.access_token
       }
     });
     return data;
@@ -116,14 +116,14 @@ export const deleteAffiliate = createAsyncThunk("affiliates/deleteAffiliate", as
 export const create_rave_mob_affiliates = createAsyncThunk("affiliates/create_rave_mob_affiliates", async (csv, thunkApi: any) => {
   try {
     const {
-      userLogin: { userInfo }
+      userSlice: { current_user }
     } = thunkApi.getState();
     const { data } = await axios.put(
       "/api/affiliates/create_rave_mob_affiliates",
       { csv },
       {
         headers: {
-          Authorization: "Bearer " + userInfo.access_token
+          Authorization: "Bearer " + current_user.access_token
         }
       }
     );

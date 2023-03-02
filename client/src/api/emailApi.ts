@@ -6,11 +6,11 @@ import { create_query } from "../utils/helper_functions";
 export const listEmails = createAsyncThunk("emails/listEmails", async (query: any, thunkApi: any) => {
   try {
     const {
-      userLogin: { userInfo }
+      userSlice: { current_user }
     } = thunkApi.getState();
     const { data } = await axios.get("/api/emails?" + create_query(query), {
       headers: {
-        Authorization: "Bearer " + userInfo.access_token
+        Authorization: "Bearer " + current_user.access_token
       }
     });
     return data;
@@ -20,11 +20,11 @@ export const listEmails = createAsyncThunk("emails/listEmails", async (query: an
 export const updateEmail = createAsyncThunk("emails/updateEmail", async (email: any, thunkApi: any) => {
   try {
     const {
-      userLogin: { userInfo }
+      userSlice: { current_user }
     } = thunkApi.getState();
     const { data } = await axios.put("/api/emails/" + email.pathname, email, {
       headers: {
-        Authorization: "Bearer " + userInfo.access_token
+        Authorization: "Bearer " + current_user.access_token
       }
     });
     return data;
@@ -34,11 +34,11 @@ export const updateEmail = createAsyncThunk("emails/updateEmail", async (email: 
 export const createEmail = createAsyncThunk("emails/createEmail", async (email: any, thunkApi: any) => {
   try {
     const {
-      userLogin: { userInfo }
+      userSlice: { current_user }
     } = thunkApi.getState();
     const { data } = await axios.post("/api/emails", email, {
       headers: {
-        Authorization: "Bearer " + userInfo.access_token
+        Authorization: "Bearer " + current_user.access_token
       }
     });
     return data;
@@ -48,11 +48,11 @@ export const createEmail = createAsyncThunk("emails/createEmail", async (email: 
 export const detailsEmail = createAsyncThunk("emails/detailsEmail", async ({ id }: any, thunkApi: any) => {
   try {
     const {
-      userLogin: { userInfo }
+      userSlice: { current_user }
     } = thunkApi.getState();
     const { data } = await axios.get(`/api/emails/${id}`, {
       headers: {
-        Authorization: "Bearer " + userInfo.access_token
+        Authorization: "Bearer " + current_user.access_token
       }
     });
     return data;
@@ -62,11 +62,11 @@ export const detailsEmail = createAsyncThunk("emails/detailsEmail", async ({ id 
 export const deleteEmail = createAsyncThunk("emails/deleteEmail", async (pathname, thunkApi: any) => {
   try {
     const {
-      userLogin: { userInfo }
+      userSlice: { current_user }
     } = thunkApi.getState();
     const { data } = await axios.delete("/api/emails/" + pathname, {
       headers: {
-        Authorization: "Bearer " + userInfo.access_token
+        Authorization: "Bearer " + current_user.access_token
       }
     });
     return data;

@@ -23,7 +23,7 @@ const shipping_routes = {
       { data },
       {
         headers: {
-          Authorization: "Bearer " + data.userInfo.access_token
+          Authorization: "Bearer " + data.current_user.access_token
         }
       }
     );
@@ -34,7 +34,7 @@ const shipping_routes = {
       { data },
       {
         headers: {
-          Authorization: "Bearer " + data.userInfo.access_token
+          Authorization: "Bearer " + data.current_user.access_token
         }
       }
     );
@@ -45,7 +45,7 @@ const shipping_routes = {
   // 		{ data },
   // 		{
   // 			headers: {
-  // 				Authorization: 'Bearer ' + data.userInfo.access_token
+  // 				Authorization: 'Bearer ' + data.current_user.access_token
   // 			}
   // 		}
   // 	);

@@ -54,7 +54,7 @@ const EditOrderPage = props => {
   const orderDetails = useSelector(state => state.orderDetails);
   const { order, loading, error } = orderDetails;
   const userSlice = useSelector(state => state.userSlice);
-  const { userInfo, users } = userSlice;
+  const { current_user, users } = userSlice;
 
   const productSlice = useSelector(state => state.productSlice);
   const { products } = productSlice;
@@ -627,7 +627,7 @@ const EditOrderPage = props => {
                         />
                       </li>
                       <h2>Other Info</h2>
-                      {isAdmin(userInfo) && (
+                      {isAdmin(current_user) && (
                         <li>
                           <label htmlFor="production_note">Production Note</label>
                           <input

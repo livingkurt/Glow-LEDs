@@ -24,7 +24,7 @@ const EmailStep = ({
   const history = useHistory();
 
   const userSlice = useSelector(state => state.userSlice);
-  const { userInfo } = userSlice;
+  const { current_user } = userSlice;
 
   const submit_login = e => {
     e.preventDefault();
@@ -39,7 +39,7 @@ const EmailStep = ({
   };
   const submit_logout = e => {
     e.preventDefault();
-    dispatch(logout(userInfo.refresh_token));
+    dispatch(logout(current_user.refresh_token));
     history.push("/checkout/placeorder");
   };
 
@@ -66,12 +66,12 @@ const EmailStep = ({
       </div>
       {show_email ? (
         <div className="w-100per">
-          {userInfo && userInfo.hasOwnProperty("first_name") ? (
+          {current_user && current_user.hasOwnProperty("first_name") ? (
             <div>
               <ul className={`shipping-container mv-0px pv-0px ${width > 400 ? "ph-2rem" : "p-0px"}`}>
                 <li>
                   <pre className={`phrase_font fs-14px mv-0px mt-10px ${width < 400 ? "ta-c" : ""}`}>
-                    Signed in with {userInfo.email} {"\n"}
+                    Signed in with {current_user.email} {"\n"}
                     {"\n"}Not you?
                     <GLButton variant="primary" className="title_font m-10px" onClick={e => submit_logout(e)}>
                       Logout

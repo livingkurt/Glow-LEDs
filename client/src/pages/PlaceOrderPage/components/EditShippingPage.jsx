@@ -13,27 +13,27 @@ const ProfilePage = props => {
   const dispatch = useDispatch();
 
   const userSlice = useSelector(state => state.userSlice);
-  const { userInfo } = userSlice;
+  const { current_user } = userSlice;
 
   const submitHandler = e => {
     e.preventDefault();
-    dispatch(API.updateUser({ userId: userInfo._id, email, name, password }));
+    dispatch(API.updateUser({ userId: current_user._id, email, name, password }));
     history.push(`/secure/account/profile`);
   };
 
   useEffect(() => {
     let clean = true;
     if (clean) {
-      if (userInfo) {
-        setEmail(userInfo.email);
-        setName(userInfo.name);
+      if (current_user) {
+        setEmail(current_user.email);
+        setName(current_user.name);
 
-        setPassword(userInfo.password);
+        setPassword(current_user.password);
       }
-      dispatch(API.listOrders({ user: userInfo._id }));
+      dispatch(API.listOrders({ user: current_user._id }));
     }
     return () => (clean = false);
-  }, [userInfo]);
+  }, [current_user]);
 
   return (
     <div className="profile_container wrap p-20px">

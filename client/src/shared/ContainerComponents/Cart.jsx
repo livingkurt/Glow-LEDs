@@ -42,7 +42,7 @@ const Cart = props => {
   const dispatch = useDispatch();
 
   const userSlice = useSelector(state => state.userSlice);
-  const { userInfo } = userSlice;
+  const { current_user } = userSlice;
 
   useEffect(() => {
     let clean = true;
@@ -77,7 +77,7 @@ const Cart = props => {
       if (cartItems.length === 0) {
         set_no_items_in_cart("Cannot proceed to checkout without any items in cart");
       } else {
-        if (userInfo.hasOwnProperty("first_name")) {
+        if (current_user.hasOwnProperty("first_name")) {
           history.push("/account/login?redirect=/secure/checkout/placeorder");
         } else {
           history.push("/checkout/placeorder");

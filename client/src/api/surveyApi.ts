@@ -6,11 +6,11 @@ import { create_query } from "../utils/helper_functions";
 export const listSurveys = createAsyncThunk("surveys/listSurveys", async (query: any, thunkApi: any) => {
   try {
     const {
-      userLogin: { userInfo }
+      userSlice: { current_user }
     } = thunkApi.getState();
     const { data } = await axios.get("/api/surveys?" + create_query(query), {
       headers: {
-        Authorization: "Bearer " + userInfo.access_token
+        Authorization: "Bearer " + current_user.access_token
       }
     });
     return data;
@@ -20,11 +20,11 @@ export const listSurveys = createAsyncThunk("surveys/listSurveys", async (query:
 export const updateSurvey = createAsyncThunk("surveys/updateSurvey", async (survey: any, thunkApi: any) => {
   try {
     const {
-      userLogin: { userInfo }
+      userSlice: { current_user }
     } = thunkApi.getState();
     const { data } = await axios.put("/api/surveys/" + survey.pathname, survey, {
       headers: {
-        Authorization: "Bearer " + userInfo.access_token
+        Authorization: "Bearer " + current_user.access_token
       }
     });
     return data;
@@ -34,11 +34,11 @@ export const updateSurvey = createAsyncThunk("surveys/updateSurvey", async (surv
 export const createSurvey = createAsyncThunk("surveys/createSurvey", async (survey: any, thunkApi: any) => {
   try {
     const {
-      userLogin: { userInfo }
+      userSlice: { current_user }
     } = thunkApi.getState();
     const { data } = await axios.post("/api/surveys", survey, {
       headers: {
-        Authorization: "Bearer " + userInfo.access_token
+        Authorization: "Bearer " + current_user.access_token
       }
     });
     return data;
@@ -48,11 +48,11 @@ export const createSurvey = createAsyncThunk("surveys/createSurvey", async (surv
 export const detailsSurvey = createAsyncThunk("surveys/detailsSurvey", async ({ id }: any, thunkApi: any) => {
   try {
     const {
-      userLogin: { userInfo }
+      userSlice: { current_user }
     } = thunkApi.getState();
     const { data } = await axios.get(`/api/surveys/${id}`, {
       headers: {
-        Authorization: "Bearer " + userInfo.access_token
+        Authorization: "Bearer " + current_user.access_token
       }
     });
     return data;
@@ -62,11 +62,11 @@ export const detailsSurvey = createAsyncThunk("surveys/detailsSurvey", async ({ 
 export const deleteSurvey = createAsyncThunk("surveys/deleteSurvey", async (pathname, thunkApi: any) => {
   try {
     const {
-      userLogin: { userInfo }
+      userSlice: { current_user }
     } = thunkApi.getState();
     const { data } = await axios.delete("/api/surveys/" + pathname, {
       headers: {
-        Authorization: "Bearer " + userInfo.access_token
+        Authorization: "Bearer " + current_user.access_token
       }
     });
     return data;

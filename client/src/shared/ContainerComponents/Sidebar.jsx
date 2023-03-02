@@ -48,24 +48,24 @@ const Sidebar = props => {
   const dispatch = useDispatch();
 
   const handleLogout = () => {
-    dispatch(logout(userInfo.refresh_token));
+    dispatch(logout(current_user.refresh_token));
     closeMenu();
     history.push("/account/login");
   };
 
   const [first_name, set_first_name] = useState("");
   const userSlice = useSelector(state => state.userSlice);
-  const { userInfo } = userSlice;
+  const { current_user } = userSlice;
 
   useEffect(() => {
     let clean = true;
     if (clean) {
-      if (userInfo) {
-        set_first_name(userInfo.first_name);
+      if (current_user) {
+        set_first_name(current_user.first_name);
       }
     }
     return () => (clean = false);
-  }, [userInfo]);
+  }, [current_user]);
 
   const show_hide = id => {
     const current_menu = document.getElementById(id);
@@ -168,7 +168,7 @@ const Sidebar = props => {
             Home
           </GLButton>
         </Link>
-        {userInfo && userInfo.hasOwnProperty("first_name") ? (
+        {current_user && current_user.hasOwnProperty("first_name") ? (
           <div className="sidebar_dropdown">
             <div className="sidebar-btn-container">
               <GLButton className="sidebar-btn primary">{first_name}</GLButton>
@@ -720,7 +720,7 @@ const Sidebar = props => {
 						<i className="fas fa-sort-up" />
 					</GLButton> */}
         </div>
-        {isAdmin(userInfo) && (
+        {isAdmin(current_user) && (
           <div className="sidebar_dropdown">
             {/* <GLButton  className="sidebar-btn primary">Admin</GLButton> */}
             <div className="sidebar-btn-container">

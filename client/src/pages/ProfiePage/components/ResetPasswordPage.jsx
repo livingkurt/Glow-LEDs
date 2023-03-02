@@ -8,7 +8,7 @@ const ResetPasswordPage = props => {
   const [password, setPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
   // const userRegister = useSelector((state) => state.userRegister);
-  // const { loading, userInfo, error } = userRegister;
+  // const { loading, current_user, error } = userRegister;
   const dispatch = useDispatch();
 
   // const redirect = props.location.search ? props.location.search.split('=')[1] : '/';

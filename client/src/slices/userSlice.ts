@@ -10,7 +10,7 @@ const userSlice = createSlice({
     loading: false,
     users: [],
     user: {},
-    userInfo: {},
+    current_user: {},
     message: "",
     error: {},
     search: "",
@@ -131,10 +131,9 @@ const userSlice = createSlice({
       state.loading = true;
     },
     [API.registerUser.fulfilled]: (state: any, { payload }: any) => {
-      state.auth_token = false;
+      state.access_token = "";
       state.current_user = {};
       state.loading = false;
-      state.userInfo = payload;
       state.message = "User Password Reset Success";
       state.success = true;
     },
@@ -150,10 +149,9 @@ const userSlice = createSlice({
       const { access_token, refresh_token } = payload;
       localStorage.setItem("accessToken", access_token);
       const decoded = jwt_decode(access_token);
-      state.auth_token = access_token;
-      state.current_user = decoded;
+      state.access_token = access_token;
       state.loading = false;
-      state.userInfo = payload;
+      state.current_user = decoded;
       state.message = "User Login Success";
       state.success = true;
     },

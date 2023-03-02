@@ -6,11 +6,11 @@ import { create_query } from "../utils/helper_functions";
 export const listChips = createAsyncThunk("chips/listChips", async (query: any, thunkApi: any) => {
   try {
     const {
-      userLogin: { userInfo }
+      userSlice: { current_user }
     } = thunkApi.getState();
     const { data } = await axios.get("/api/chips?" + create_query(query), {
       headers: {
-        Authorization: "Bearer " + userInfo.access_token
+        Authorization: "Bearer " + current_user.access_token
       }
     });
     return data;
@@ -20,11 +20,11 @@ export const listChips = createAsyncThunk("chips/listChips", async (query: any, 
 export const updateChip = createAsyncThunk("chips/updateChip", async (chip: any, thunkApi: any) => {
   try {
     const {
-      userLogin: { userInfo }
+      userSlice: { current_user }
     } = thunkApi.getState();
     const { data } = await axios.put("/api/chips/" + chip.pathname, chip, {
       headers: {
-        Authorization: "Bearer " + userInfo.access_token
+        Authorization: "Bearer " + current_user.access_token
       }
     });
     return data;
@@ -34,11 +34,11 @@ export const updateChip = createAsyncThunk("chips/updateChip", async (chip: any,
 export const createChip = createAsyncThunk("chips/createChip", async (chip: any, thunkApi: any) => {
   try {
     const {
-      userLogin: { userInfo }
+      userSlice: { current_user }
     } = thunkApi.getState();
     const { data } = await axios.post("/api/chips", chip, {
       headers: {
-        Authorization: "Bearer " + userInfo.access_token
+        Authorization: "Bearer " + current_user.access_token
       }
     });
     return data;
@@ -48,11 +48,11 @@ export const createChip = createAsyncThunk("chips/createChip", async (chip: any,
 export const detailsChip = createAsyncThunk("chips/detailsChip", async ({ id }: any, thunkApi: any) => {
   try {
     const {
-      userLogin: { userInfo }
+      userSlice: { current_user }
     } = thunkApi.getState();
     const { data } = await axios.get(`/api/chips/${id}`, {
       headers: {
-        Authorization: "Bearer " + userInfo.access_token
+        Authorization: "Bearer " + current_user.access_token
       }
     });
     return data;
@@ -62,11 +62,11 @@ export const detailsChip = createAsyncThunk("chips/detailsChip", async ({ id }: 
 export const deleteChip = createAsyncThunk("chips/deleteChip", async (pathname, thunkApi: any) => {
   try {
     const {
-      userLogin: { userInfo }
+      userSlice: { current_user }
     } = thunkApi.getState();
     const { data } = await axios.delete("/api/chips/" + pathname, {
       headers: {
-        Authorization: "Bearer " + userInfo.access_token
+        Authorization: "Bearer " + current_user.access_token
       }
     });
     return data;

@@ -9,7 +9,7 @@ import CheckoutSteps from "../../PlaceOrderPage/components/GuestCheckoutSteps";
 
 const ShippingPage = props => {
   const userSlice = useSelector(state => state.userSlice);
-  const { userInfo } = userSlice;
+  const { current_user } = userSlice;
 
   const cartSlice = useSelector(state => state.cartSlice);
   const { cartItems, shipping, payment } = cartSlice;

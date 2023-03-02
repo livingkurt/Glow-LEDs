@@ -59,7 +59,7 @@ const EditUserAffiliatePage = props => {
   const { affiliate: affiliate_saved, loading: loading_saved, success } = affiliateSave;
 
   const userSlice = useSelector(state => state.userSlice);
-  const { userInfo } = userSlice;
+  const { current_user } = userSlice;
 
   const set_state = () => {
     set_id(affiliate._id);
@@ -152,7 +152,7 @@ const EditUserAffiliatePage = props => {
     e.preventDefault();
     const data = {
       _id: id,
-      user: userInfo._id,
+      user: current_user._id,
       artist_name,
       instagram_handle,
       facebook_name,
@@ -194,12 +194,12 @@ const EditUserAffiliatePage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      if (userInfo && !userInfo.is_affiliated) {
+      if (current_user && !current_user.is_affiliated) {
         history.push("/secure/account/profile/");
       }
     }
     return () => (clean = false);
-  }, [userInfo]);
+  }, [current_user]);
 
   return (
     <div className="main_container p-20px">

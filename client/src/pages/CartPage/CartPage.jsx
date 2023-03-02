@@ -15,7 +15,7 @@ const CartPage = props => {
   const { cartItems } = cartSlice;
 
   const userSlice = useSelector(state => state.userSlice);
-  const { userInfo } = userSlice;
+  const { current_user } = userSlice;
   const [no_items_in_cart, set_no_items_in_cart] = useState("");
 
   const checkoutHandler = () => {
@@ -23,7 +23,7 @@ const CartPage = props => {
       if (cartItems.length === 0) {
         set_no_items_in_cart("Cannot proceed to checkout without any items in cart");
       } else {
-        if (userInfo.hasOwnProperty("first_name")) {
+        if (current_user.hasOwnProperty("first_name")) {
           props.history.push("/account/login?redirect=/secure/checkout/placeorder");
         } else {
           props.history.push("/checkout/placeorder");
@@ -74,7 +74,7 @@ const CartPage = props => {
             <GLButton onClick={() => checkoutHandler()} variant="primary" className="w-100per bob">
               Proceed to Checkout
             </GLButton>
-            {isAdmin(userInfo) && (
+            {isAdmin(current_user) && (
               <GLButton onClick={() => dimminish_stock()} variant="primary" className="w-100per bob">
                 Dimmish Stock
               </GLButton>

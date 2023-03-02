@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 
 const AdminRoute = ({ component: Component, ...rest }) => {
   const userSlice = useSelector(state => state.userSlice);
-  const { userInfo } = userSlice;
+  const { current_user } = userSlice;
 
   return (
     // Show the component only when the user is logged in
@@ -12,7 +12,7 @@ const AdminRoute = ({ component: Component, ...rest }) => {
     <Route
       {...rest}
       render={props =>
-        userInfo.isAdmin ? <Component {...props} /> : <Redirect to={"/account/login?redirect=" + props.location.pathname} />
+        current_user.isAdmin ? <Component {...props} /> : <Redirect to={"/account/login?redirect=" + props.location.pathname} />
       }
     />
   );

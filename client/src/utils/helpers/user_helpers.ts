@@ -1,7 +1,7 @@
-export const isAdmin = (userInfo: any) => {
-  return userInfo && userInfo.isAdmin;
+export const isAdmin = (current_user: any) => {
+  return current_user && current_user.isAdmin;
 };
 
-export const isLoggedIn = (userInfo: any) => {
-  return userInfo;
+export const isLoggedIn = (current_user: any) => {
+  return current_user;
 };

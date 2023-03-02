@@ -22,17 +22,17 @@ export const validate_promo_code = (data: any) => {
   if (isEmpty2(data.promo_code)) {
     errors.promo_code = "Promo Code Field Empty";
   }
-  if (data.userInfo) {
-    if (promo && promo.admin_only && isAdmin(data.userInfo) === false) {
+  if (data.current_user) {
+    if (promo && promo.admin_only && isAdmin(data.current_user) === false) {
       errors.promo_code = "Promo Code Not Active";
-    } else if (promo && promo.affiliate_only && data.userInfo.is_affiliated === false) {
+    } else if (promo && promo.affiliate_only && data.current_user.is_affiliated === false) {
       errors.promo_code = "Promo Code Not Active";
     }
-    // else if (promo && promo.sponsor_only && data.userInfo.affiliate.sponsor === false) {
+    // else if (promo && promo.sponsor_only && data.current_user.affiliate.sponsor === false) {
     //   errors.promo_code = "Promo Code Not Active";
     // }
   }
-  if (!data.userInfo.hasOwnProperty("first_name")) {
+  if (!data.current_user.hasOwnProperty("first_name")) {
     if (promo && promo.admin_only) {
       errors.promo_code = "Promo Code Not Active";
     } else if (promo && promo.affiliate_only) {

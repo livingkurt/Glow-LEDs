@@ -34,7 +34,7 @@ const Survey = props => {
     set_loading_checkboxes(false);
   }, 500);
   const userSlice = useSelector(state => state.userSlice);
-  const { users, userInfo } = userSlice;
+  const { users, current_user } = userSlice;
 
   const history = useHistory();
 
@@ -129,8 +129,8 @@ const Survey = props => {
     let user = "";
     if (user_order && user_order.user) {
       user = user_order.user._id;
-    } else if (userInfo) {
-      user = userInfo._id;
+    } else if (current_user) {
+      user = current_user._id;
     } else {
       user = null;
     }

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import Survey from "./Survey";
 import { Helmet } from "react-helmet";
 
-const OrderComplete = ({ userInfo, order_id }) => {
+const OrderComplete = ({ current_user, order_id }) => {
   const [show_modal, set_show_modal] = useState(false);
 
   useEffect(() => {
@@ -72,13 +72,17 @@ const OrderComplete = ({ userInfo, order_id }) => {
       <div>
         <div className="jc-c m-auto wrap">
           <Link
-            to={userInfo && userInfo.hasOwnProperty("first_name") ? "/secure/account/order/" + order_id : "/checkout/order/" + order_id}
+            to={
+              current_user && current_user.hasOwnProperty("first_name")
+                ? "/secure/account/order/" + order_id
+                : "/checkout/order/" + order_id
+            }
           >
             <GLButton variant="primary" className="mh-10px">
               View Order
             </GLButton>
           </Link>
-          {userInfo && userInfo.hasOwnProperty("first_name") && (
+          {current_user && current_user.hasOwnProperty("first_name") && (
             <Link to="/secure/account/profile">
               <GLButton variant="primary" className="mh-10px">
                 Your Orders

@@ -11,7 +11,7 @@ import * as API from "../../../api";
 
 const OrderCombinerPage = props => {
   const userSlice = useSelector(state => state.userSlice);
-  const { userInfo } = userSlice;
+  const { current_user } = userSlice;
 
   const history = useHistory();
   const parcelSlice = useSelector(state => state.parcelSlice);
@@ -33,7 +33,7 @@ const OrderCombinerPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      if (isAdmin(userInfo)) {
+      if (isAdmin(current_user)) {
         get_orders();
       }
       dispatch(API.listParcels({}));
@@ -55,7 +55,7 @@ const OrderCombinerPage = props => {
     // 	to_shipping,
     // 	from_shipping,
     // 	package_dimensions,
-    // 	userInfo,
+    // 	current_user,
     // 	shipping_rate
     // });
     //
@@ -127,7 +127,7 @@ const OrderCombinerPage = props => {
       to_shipping,
       from_shipping,
       package_dimensions,
-      userInfo
+      current_user
     });
 
     set_shipping_rates(data.shipment.rates);
@@ -244,7 +244,7 @@ const OrderCombinerPage = props => {
                     To Glow LEDs
                   </GLButton>
                 </li>
-                {isAdmin(userInfo) && (
+                {isAdmin(current_user) && (
                   <li>
                     <div className="ai-c h-25px mv-10px mb-30px jc-c">
                       <div className="custom-select w-100per">
@@ -514,7 +514,7 @@ const OrderCombinerPage = props => {
                     From Glow LEDs
                   </GLButton>
                 </li>
-                {isAdmin(userInfo) && (
+                {isAdmin(current_user) && (
                   <li>
                     <div className="ai-c h-25px mv-10px mb-30px jc-c">
                       <div className="custom-select w-100per">
@@ -781,7 +781,7 @@ const OrderCombinerPage = props => {
             </div>
             <div className="w-35rem m-10px">
               <h3>Package Dimmensions</h3>
-              {isAdmin(userInfo) && (
+              {isAdmin(current_user) && (
                 <li>
                   <div className="ai-c h-25px mv-10px mb-30px jc-c">
                     <div className="custom-select w-100per">

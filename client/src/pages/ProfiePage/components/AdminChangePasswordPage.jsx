@@ -19,7 +19,7 @@ const AdminChangePasswordPage = props => {
   const [re_password_validations, setRePasswordValidations] = useState("");
 
   const userSlice = useSelector(state => state.userSlice);
-  const { userInfo } = userSlice;
+  const { current_user } = userSlice;
 
   const submitHandler = async e => {
     e.preventDefault();
@@ -30,13 +30,13 @@ const AdminChangePasswordPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      if (userInfo) {
-        setPassword(userInfo.password);
+      if (current_user) {
+        setPassword(current_user.password);
       }
-      dispatch(API.listOrders({ user: userInfo._id }));
+      dispatch(API.listOrders({ user: current_user._id }));
     }
     return () => (clean = false);
-  }, [userInfo, dispatch]);
+  }, [current_user, dispatch]);
 
   return (
     <div className="profile_container column p-20px">

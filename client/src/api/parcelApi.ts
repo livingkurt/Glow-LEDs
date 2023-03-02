@@ -6,11 +6,11 @@ import { create_query } from "../utils/helper_functions";
 export const listParcels = createAsyncThunk("parcels/listParcels", async (query: any, thunkApi: any) => {
   try {
     const {
-      userLogin: { userInfo }
+      userSlice: { current_user }
     } = thunkApi.getState();
     const { data } = await axios.get("/api/parcels?" + create_query(query), {
       headers: {
-        Authorization: "Bearer " + userInfo.access_token
+        Authorization: "Bearer " + current_user.access_token
       }
     });
     return data;
@@ -20,11 +20,11 @@ export const listParcels = createAsyncThunk("parcels/listParcels", async (query:
 export const updateParcel = createAsyncThunk("parcels/updateParcel", async (parcel: any, thunkApi: any) => {
   try {
     const {
-      userLogin: { userInfo }
+      userSlice: { current_user }
     } = thunkApi.getState();
     const { data } = await axios.put("/api/parcels/" + parcel.pathname, parcel, {
       headers: {
-        Authorization: "Bearer " + userInfo.access_token
+        Authorization: "Bearer " + current_user.access_token
       }
     });
     return data;
@@ -34,11 +34,11 @@ export const updateParcel = createAsyncThunk("parcels/updateParcel", async (parc
 export const createParcel = createAsyncThunk("parcels/createParcel", async (parcel: any, thunkApi: any) => {
   try {
     const {
-      userLogin: { userInfo }
+      userSlice: { current_user }
     } = thunkApi.getState();
     const { data } = await axios.post("/api/parcels", parcel, {
       headers: {
-        Authorization: "Bearer " + userInfo.access_token
+        Authorization: "Bearer " + current_user.access_token
       }
     });
     return data;
@@ -48,11 +48,11 @@ export const createParcel = createAsyncThunk("parcels/createParcel", async (parc
 export const detailsParcel = createAsyncThunk("parcels/detailsParcel", async ({ id }: any, thunkApi: any) => {
   try {
     const {
-      userLogin: { userInfo }
+      userSlice: { current_user }
     } = thunkApi.getState();
     const { data } = await axios.get(`/api/parcels/${id}`, {
       headers: {
-        Authorization: "Bearer " + userInfo.access_token
+        Authorization: "Bearer " + current_user.access_token
       }
     });
     return data;
@@ -62,11 +62,11 @@ export const detailsParcel = createAsyncThunk("parcels/detailsParcel", async ({ 
 export const deleteParcel = createAsyncThunk("parcels/deleteParcel", async (pathname, thunkApi: any) => {
   try {
     const {
-      userLogin: { userInfo }
+      userSlice: { current_user }
     } = thunkApi.getState();
     const { data } = await axios.delete("/api/parcels/" + pathname, {
       headers: {
-        Authorization: "Bearer " + userInfo.access_token
+        Authorization: "Bearer " + current_user.access_token
       }
     });
     return data;

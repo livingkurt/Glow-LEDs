@@ -37,17 +37,17 @@ const Header = props => {
     };
   });
   const userSlice = useSelector(state => state.userSlice);
-  const { userInfo } = userSlice;
+  const { current_user } = userSlice;
 
   useEffect(() => {
     let clean = true;
     if (clean) {
-      if (userInfo) {
-        set_first_name(userInfo.first_name);
+      if (current_user) {
+        set_first_name(current_user.first_name);
       }
     }
     return () => (clean = false);
-  }, [userInfo]);
+  }, [current_user]);
 
   const cartSlice = useSelector(state => state.cartSlice);
 
@@ -82,7 +82,7 @@ const Header = props => {
   const dispatch = useDispatch();
 
   const handleLogout = () => {
-    dispatch(logout(userInfo.refresh_token));
+    dispatch(logout(current_user.refresh_token));
     history.push("/account/login");
   };
   const [last_id, set_last_id] = useState("");
@@ -899,7 +899,7 @@ const Header = props => {
                 <i className="fas fa-shopping-cart" /> {cartItems.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)}{" "}
               </GLButton>
               {/* </Link> */}
-              {userInfo && userInfo.hasOwnProperty("first_name") ? (
+              {current_user && current_user.hasOwnProperty("first_name") ? (
                 <div className="dropdown">
                   <GLButton variant="nav" className="title_font">
                     {first_name}
@@ -924,7 +924,7 @@ const Header = props => {
                   </Link>
                 </div>
               )}
-              {isAdmin(userInfo) && (
+              {isAdmin(current_user) && (
                 <div className="dropdown ">
                   <GLButton variant="nav" className="title_font">
                     Admin

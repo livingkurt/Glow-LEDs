@@ -25,7 +25,7 @@ export const check_authentication = () => {
     // Decode access_token and get user info and exp
     const decoded_access_token = jwt_decode(access_token);
 
-    // userInfo = decoded_access_token.userInfo;
+    // current_user = decoded_access_token.current_user;
     // Set user and isAuthenticated
     store.dispatch(set_current_user(decoded_access_token));
     // Check for expired access_token

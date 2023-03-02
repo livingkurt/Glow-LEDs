@@ -6,7 +6,7 @@ export default {
   secure_pay_payments_c: async (req: any, res: any) => {
     try {
       const order = await Order.findById(req.params.id).populate("user");
-      const userInformation = {
+      const current_userrmation = {
         name: order.shipping.first_name + " " + order.shipping.last_name,
         email: order.shipping.email,
         address: {
@@ -27,10 +27,10 @@ export default {
 
       stripe.customers.create(
         {
-          name: userInformation.name,
-          email: userInformation.email,
-          address: userInformation.address,
-          payment_method: userInformation.payment_method
+          name: current_userrmation.name,
+          email: current_userrmation.email,
+          address: current_userrmation.address,
+          payment_method: current_userrmation.payment_method
         },
         (err: any, customer: any) => {
           if (err) {
@@ -45,10 +45,10 @@ export default {
                   stripe.customers.update(
                     existingCustomer.id,
                     {
-                      name: userInformation.name,
-                      email: userInformation.email,
-                      address: userInformation.address,
-                      payment_method: userInformation.payment_method
+                      name: current_userrmation.name,
+                      email: current_userrmation.email,
+                      address: current_userrmation.address,
+                      payment_method: current_userrmation.payment_method
                     },
                     (err: any, updatedCustomer: any) => {
                       if (err) {

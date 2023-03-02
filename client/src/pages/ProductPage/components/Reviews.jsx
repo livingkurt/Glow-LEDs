@@ -18,7 +18,7 @@ const Review = props => {
 
   const userSlice = useSelector(state => state.userSlice);
 
-  let { userInfo } = userSlice;
+  let { current_user } = userSlice;
   const productReviewSave = useSelector(state => state.productReviewSave);
   const { success: productSaveSuccess } = productReviewSave;
 
@@ -37,8 +37,8 @@ const Review = props => {
     e.preventDefault();
     dispatch(
       saveProductReview(props.pathname, {
-        first_name: userInfo.first_name,
-        last_name: userInfo.last_name,
+        first_name: current_user.first_name,
+        last_name: current_user.last_name,
         rating: rating,
         comment: comment
       })
@@ -77,7 +77,7 @@ const Review = props => {
               <div>{format_date(review.createdAt.substring(0, 10))}</div>
               <div>{review.comment}</div>
             </div>
-            {isAdmin(userInfo) && (
+            {isAdmin(current_user) && (
               <div className="ta-r">
                 <GLButton variant="icon" onClick={() => remove_review(review._id)} aria-label="Delete">
                   <i className="fas fa-trash-alt" />
@@ -102,7 +102,7 @@ const Review = props => {
         >
           Write a Review
         </h2>
-        {userInfo ? (
+        {current_user ? (
           <form>
             <div className="form-container">
               <li style={{ marginBottom: 0 }}>

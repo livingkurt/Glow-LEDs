@@ -1,7 +1,7 @@
 import React from "react";
 import { Helmet } from "react-helmet";
 
-const AffiliateComplete = ({ userInfo, order_id }) => {
+const AffiliateComplete = ({ current_user, order_id }) => {
   return (
     <div className="column jc-c">
       <Helmet>

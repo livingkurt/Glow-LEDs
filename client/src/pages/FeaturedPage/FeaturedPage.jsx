@@ -13,7 +13,7 @@ const FeaturedPage = props => {
   const featureDetails = useSelector(state => state.featureDetails);
   const { feature } = featureDetails;
   const userSlice = useSelector(state => state.userSlice);
-  const { userInfo } = userSlice;
+  const { current_user } = userSlice;
 
   const dispatch = useDispatch();
 
@@ -56,7 +56,7 @@ const FeaturedPage = props => {
             <GLButton variant="secondary" onClick={() => history.goBack()}>
               Back to Features
             </GLButton>
-            {isAdmin(userInfo) && (
+            {isAdmin(current_user) && (
               <Link to={"/secure/glow/editfeature/" + props.match.params.pathname}>
                 <GLButton variant="secondary" style={{ width: "156px" }}>
                   Edit Feature

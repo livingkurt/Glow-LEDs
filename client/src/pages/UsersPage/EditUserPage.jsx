@@ -41,7 +41,7 @@ const EditUserPage = props => {
   const { user, loading, error } = userDetails;
 
   const userSlice = useSelector(state => state.userSlice);
-  const { userInfo } = userSlice;
+  const { current_user } = userSlice;
 
   const affiliateSlice = useSelector(state => state.affiliateSlice);
   const { affiliates } = affiliateSlice;
@@ -179,7 +179,7 @@ const EditUserPage = props => {
                         <label htmlFor="email">Email</label>
                         <input type="text" name="email" value={email} id="email" onChange={e => set_email(e.target.value)} />
                       </li>
-                      {isAdmin(userInfo) && (
+                      {isAdmin(current_user) && (
                         <>
                           <li>
                             <label htmlFor="affiliate">Affiliate</label>
@@ -405,7 +405,7 @@ const EditUserPage = props => {
                         </li>
                       )}
 
-                      {isAdmin(userInfo) && (
+                      {isAdmin(current_user) && (
                         <>
                           {loading_checkboxes ? (
                             <div>Loading...</div>

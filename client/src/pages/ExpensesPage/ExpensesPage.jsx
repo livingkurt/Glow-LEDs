@@ -21,7 +21,7 @@ const ExpensesPage = props => {
   const category = props.match.params.category ? props.match.params.category : "";
 
   const userSlice = useSelector(state => state.userSlice);
-  const { userInfo } = userSlice;
+  const { current_user } = userSlice;
 
   const expenseSlice = useSelector(state => state.expenseSlice);
   const { loading, expenses, message, error, success } = expenseSlice;
@@ -93,7 +93,7 @@ const ExpensesPage = props => {
   const sort_options = ["Date", "Category", "Application", "Newest", "Lowest", "Highest"];
 
   const handle_csv_expenses = async (data, fileInfo, properties, card) => {
-    const create_all_expenses_s = await API_Revenue.create_all_expenses_s(data, userInfo, card, properties);
+    const create_all_expenses_s = await API_Revenue.create_all_expenses_s(data, current_user, card, properties);
 
     dispatch(API.listExpenses({ category, search, sort }));
   };

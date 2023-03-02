@@ -17,7 +17,7 @@ import * as API from "../../api";
 
 const ProductPage = props => {
   const userSlice = useSelector(state => state.userSlice);
-  let { userInfo } = userSlice;
+  let { current_user } = userSlice;
   const cartSlice = useSelector(state => state.cartSlice);
   let { cartItems } = cartSlice;
 
@@ -500,7 +500,7 @@ const ProductPage = props => {
     } else {
       dispatch(addToCart(cart_item));
     }
-    // if (userInfo) {
+    // if (current_user) {
     // 	dispatch(saveCart(cart_item));
     // }
 
@@ -719,7 +719,7 @@ const ProductPage = props => {
               <GLButton variant="secondary">Back to Products</GLButton>
             </Link>
           </div>
-          {isAdmin(userInfo) && (
+          {isAdmin(current_user) && (
             <div className=" pos-rel z-pos-1 br-10px">
               <GLButton variant="secondary" className=" w-300px" onClick={e => set_show_product_options(show => (show ? false : true))}>
                 Edit Product

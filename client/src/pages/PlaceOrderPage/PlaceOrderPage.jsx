@@ -27,7 +27,7 @@ const PlaceOrderPage = props => {
   const { success: successPay, error: error_pay } = orderPay;
 
   const userSlice = useSelector(state => state.userSlice);
-  const { users, userInfo, loading: user_loading, success: user_success } = userSlice;
+  const { users, current_user, loading: user_loading, success: user_success } = userSlice;
 
   const promoSlice = useSelector(state => state.promoSlice);
   const { promos } = promoSlice;
@@ -66,7 +66,7 @@ const PlaceOrderPage = props => {
   const [taxPrice, setTaxPrice] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
   const [show_message, set_show_message] = useState("");
-  const [user, set_user] = useState(userInfo);
+  const [user, set_user] = useState(current_user);
   const [free_shipping_message, set_free_shipping_message] = useState("------");
   const [loading, set_loading] = useState(false);
   const [show_promo_code, set_show_promo_code] = useState(false);
@@ -184,7 +184,7 @@ const PlaceOrderPage = props => {
         shippingPrice,
         taxPrice,
         totalPrice,
-        userInfo,
+        current_user,
         tip,
         order_note,
         production_note,
@@ -268,7 +268,7 @@ const PlaceOrderPage = props => {
   const placeOrderHandler = async paymentMethod => {
     check_authentication();
     if (cartItems.length > 0) {
-      if (userInfo && userInfo.first_name) {
+      if (current_user && current_user.first_name) {
         dispatch(
           createPayOrder(
             {
@@ -285,7 +285,7 @@ const PlaceOrderPage = props => {
               shippingPrice,
               taxPrice,
               totalPrice,
-              userInfo,
+              current_user,
               order_note,
               production_note,
               tip,
@@ -522,7 +522,7 @@ const PlaceOrderPage = props => {
     const data = {
       promo_code: promo_code,
       promos,
-      userInfo,
+      current_user,
       items_price,
       cartItems
     };
@@ -719,16 +719,16 @@ const PlaceOrderPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      if (userInfo && userInfo.hasOwnProperty("first_name")) {
-        set_email(userInfo.email);
+      if (current_user && current_user.hasOwnProperty("first_name")) {
+        set_email(current_user.email);
       }
     }
     return () => (clean = false);
-  }, [userInfo]);
+  }, [current_user]);
   useEffect(() => {
     let clean = true;
     if (clean) {
-      if (userInfo && userInfo.hasOwnProperty("first_name") && user_success) {
+      if (current_user && current_user.hasOwnProperty("first_name") && user_success) {
         history.push("/secure/checkout/placeorder");
       }
     }
@@ -832,7 +832,7 @@ const PlaceOrderPage = props => {
               loading_checkboxes={loading_checkboxes}
               create_account={create_account}
               set_create_account={set_create_account}
-              userInfo={userInfo}
+              current_user={current_user}
               set_new_password={set_new_password}
               password_validations={password_validations}
               loading={loading}

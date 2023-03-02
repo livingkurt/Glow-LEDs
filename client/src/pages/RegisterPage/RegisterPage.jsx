@@ -22,7 +22,7 @@ const RegisterPage = props => {
   const [re_password_validations, setRePasswordValidations] = useState("");
 
   const userRegister = useSelector(state => state.userRegister);
-  const { loading, userInfo, error } = userRegister;
+  const { loading, current_user, error } = userRegister;
 
   const dispatch = useDispatch();
 
@@ -57,12 +57,12 @@ const RegisterPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      if (userInfo && userInfo.hasOwnProperty("first_name")) {
+      if (current_user && current_user.hasOwnProperty("first_name")) {
         props.history.push("/account/login");
       }
     }
     return () => (clean = false);
-  }, [userInfo]);
+  }, [current_user]);
 
   return (
     <div className="form">

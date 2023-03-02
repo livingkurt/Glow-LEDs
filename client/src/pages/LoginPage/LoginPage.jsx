@@ -18,11 +18,11 @@ const LoginPage = props => {
   const [loading, set_loading] = useState(false);
 
   const userSlice = useSelector(state => state.userSlice);
-  const { loading: user_loading, userInfo, error } = userSlice;
+  const { loading: user_loading, current_user, error } = userSlice;
   // const errors = useSelector((state) => state.errors);
   //
 
-  // const { loading, userInfo, error } = errors;
+  // const { loading, current_user, error } = errors;
   //
   const dispatch = useDispatch();
   const redirect = props.location.search ? props.location.search.split("=")[1] : "/";
@@ -30,12 +30,12 @@ const LoginPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      if (userInfo && userInfo.hasOwnProperty("first_name")) {
+      if (current_user && current_user.hasOwnProperty("first_name")) {
         props.history.push(redirect);
       }
     }
     return () => (clean = false);
-  }, [userInfo, props.history, redirect]);
+  }, [current_user, props.history, redirect]);
 
   setTimeout(() => {
     set_loading(false);

@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const userSlice = useSelector(state => state.userSlice);
-  const { userInfo } = userSlice;
+  const { current_user } = userSlice;
 
   return (
     // Show the component only when the user is logged in
@@ -14,7 +14,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
       {...rest}
       render={props => {
         //
-        return userInfo.hasOwnProperty("first_name") ? (
+        return current_user.hasOwnProperty("first_name") ? (
           <Component {...props} />
         ) : (
           <Redirect to={"/account/login?redirect=" + props.location.pathname} />

@@ -13,7 +13,7 @@ import { featureListReducer, featureDetailsReducer, featureSaveReducer, featureD
 
 import { cartDeleteReducer, cartDetailsReducer, cartListReducer, cartReducer, cartSaveReducer } from "./reducers/cartReducers";
 import {
-  userLoginReducer,
+  userSliceReducer,
   userRegisterReducer,
   userUpdateReducer,
   userContactReducer,
@@ -119,7 +119,7 @@ export default combineReducers({
   // cartDetails: cartDetailsReducer,
   // cartSave: cartSaveReducer,
   // cartDelete: cartDeleteReducer,
-  // userLogin: userLoginReducer,
+  // userSlice: userSliceReducer,
   // userRegister: userRegisterReducer,
   // // errors: errorReducer,
   // productSave: productSaveReducer,

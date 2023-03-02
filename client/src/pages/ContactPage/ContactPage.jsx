@@ -10,12 +10,12 @@ require("dotenv").config();
 const ContactPage = props => {
   const dispatch = useDispatch();
   const userSlice = useSelector(state => state.userSlice);
-  const { userInfo } = userSlice;
+  const { current_user } = userSlice;
 
-  const [first_name, set_first_name] = useState(userInfo ? userInfo.first_name : "");
-  const [last_name, set_last_name] = useState(userInfo ? userInfo.last_name : "");
-  const [email, set_email] = useState(userInfo ? userInfo.email : "");
-  const [order_number, set_order_number] = useState(userInfo ? userInfo.order_number : "");
+  const [first_name, set_first_name] = useState(current_user ? current_user.first_name : "");
+  const [last_name, set_last_name] = useState(current_user ? current_user.last_name : "");
+  const [email, set_email] = useState(current_user ? current_user.email : "");
+  const [order_number, set_order_number] = useState(current_user ? current_user.order_number : "");
   const [reason_for_contact, set_reason_for_contact] = useState(props.match.params.reason ? props.match.params.reason : "");
   const [message, set_message] = useState("");
   const [song_id, set_song_id] = useState("");
@@ -95,7 +95,7 @@ const ContactPage = props => {
       // if (reason_for_contact === "submit_content_to_be_featured") {
       //   dispatch(
       //     saveFeature({
-      //       user: userInfo,
+      //       user: current_user,
       //       artist_name,
       //       instagram_handle,
       //       facebook_name,

@@ -8,7 +8,7 @@ const ViewOrder = props => {
   const [order_number, set_order_number] = useState("");
 
   const userSlice = useSelector(state => state.userSlice);
-  const { userInfo } = userSlice;
+  const { current_user } = userSlice;
   return (
     <div className="form">
       <Helmet>
@@ -34,7 +34,9 @@ const ViewOrder = props => {
             <input type="order_number" id="order_number" name="order_number" onChange={e => set_order_number(e.target.value.trim())} />
           </li>
           <li>
-            <Link to={userInfo && userInfo.first_name ? "/secure/account/order/" + order_number : "/checkout/order/" + order_number}>
+            <Link
+              to={current_user && current_user.first_name ? "/secure/account/order/" + order_number : "/checkout/order/" + order_number}
+            >
               <GLButton variant="primary" className="w-100per">
                 View Order
               </GLButton>

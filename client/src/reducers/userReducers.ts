@@ -52,7 +52,7 @@ export const errorReducer = (state = {}, action: IAction) => {
   }
 };
 
-export const userLoginReducer = (state = {}, action: IAction) => {
+export const userSliceReducer = (state = {}, action: IAction) => {
   switch (action.type) {
     case USER_LOGIN_REQUEST:
       return { loading: true };
@@ -60,7 +60,7 @@ export const userLoginReducer = (state = {}, action: IAction) => {
       return {
         ...state,
         // isAuthenticated: !isEmpty(action.payload),
-        userInfo: action.payload,
+        current_user: action.payload,
         message: "User Login Success",
         success: true,
         loading: false
@@ -81,7 +81,7 @@ export const userPasswordResetReducer = (state = {}, action: IAction) => {
     case USER_PASSWORD_RESET_SUCCESS:
       return {
         loading: false,
-        userInfo: action.payload,
+        current_user: action.payload,
         message: "User Password Reset Success",
         success: true
       };
@@ -103,7 +103,7 @@ export const userResetPasswordReducer = (state = {}, action: IAction) => {
     case USER_RESET_PASSWORD_SUCCESS:
       return {
         loading: false,
-        userInfo: action.payload,
+        current_user: action.payload,
         message: "User Reset Password Success",
         success: true
       };
@@ -125,7 +125,7 @@ export const userVerifyReducer = (state = {}, action: IAction) => {
     case USER_VERIFY_SUCCESS:
       return {
         loading: false,
-        userInfo: action.payload,
+        current_user: action.payload,
         message: "User Verifed",
         success: true
       };
@@ -147,7 +147,7 @@ export const userUpdateReducer = (state = {}, action: IAction) => {
     case USER_UPDATE_SUCCESS:
       return {
         loading: false,
-        userInfo: action.payload,
+        current_user: action.payload,
         message: "User Updated"
       };
     case USER_UPDATE_FAIL:
@@ -190,7 +190,7 @@ export const userUpdateUserReducer = (state = {}, action: IAction) => {
     case USER_UPDATE_USER_SUCCESS:
       return {
         loading: false,
-        userInfo: action.payload,
+        current_user: action.payload,
         message: "User Updated"
       };
     case USER_UPDATE_USER_FAIL:
@@ -211,7 +211,7 @@ export const userRegisterReducer = (state = {}, action: IAction) => {
     case USER_REGISTER_SUCCESS:
       return {
         loading: false,
-        userInfo: action.payload,
+        current_user: action.payload,
         message: "User Registered"
       };
     case USER_REGISTER_FAIL:

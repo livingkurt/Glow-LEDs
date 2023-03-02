@@ -18,7 +18,7 @@ const CartItem = ({ index, item, check_item_as_manufactured }) => {
   const dispatch = useDispatch();
 
   const userSlice = useSelector(state => state.userSlice);
-  const { userInfo } = userSlice;
+  const { current_user } = userSlice;
 
   setTimeout(() => {
     set_loading_checkboxes(false);
@@ -27,7 +27,7 @@ const CartItem = ({ index, item, check_item_as_manufactured }) => {
   return (
     <li key={index} className="">
       <div className="cart-image m-auto ai-c">
-        {check_item_as_manufactured && isAdmin(userInfo) && (
+        {check_item_as_manufactured && isAdmin(current_user) && (
           <div>
             {loading_checkboxes ? (
               <div>Loading...</div>
@@ -87,7 +87,7 @@ const CartItem = ({ index, item, check_item_as_manufactured }) => {
           <Link to={"/collections/all/products/" + item.pathname} className="m-0px">
             <label className="paragraph_font lh-0px mv-0px fs-18px">{item.name}</label>
           </Link>
-          {isAdmin(userInfo) && (
+          {isAdmin(current_user) && (
             <div className="ai-c">
               <GLButton variant="icon" onClick={() => removeFromCartHandler(item)} aria-label="Delete">
                 <i className="fas fa-trash-alt" />

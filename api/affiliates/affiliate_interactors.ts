@@ -1,7 +1,7 @@
 const stripe = require("stripe")("your_stripe_secret_key");
 
 export const handlePayment = (
-  userInformation: { name: string; email: string; phone: string; address: string },
+  current_userrmation: { name: string; email: string; phone: string; address: string },
   paymentInformation: { amount: number },
   order: unknown,
   req: unknown,
@@ -9,10 +9,10 @@ export const handlePayment = (
 ): void => {
   stripe.customers.create(
     {
-      name: userInformation.name,
-      email: userInformation.email,
-      phone: userInformation.phone,
-      address: userInformation.address
+      name: current_userrmation.name,
+      email: current_userrmation.email,
+      phone: current_userrmation.phone,
+      address: current_userrmation.address
     },
     (err: any, customer: any) => {
       if (err) {
@@ -27,9 +27,9 @@ export const handlePayment = (
               stripe.customers.update(
                 existingCustomer.id,
                 {
-                  name: userInformation.name,
-                  phone: userInformation.phone,
-                  address: userInformation.address
+                  name: current_userrmation.name,
+                  phone: current_userrmation.phone,
+                  address: current_userrmation.address
                 },
                 (err: any, updatedCustomer: any) => {
                   if (err) {

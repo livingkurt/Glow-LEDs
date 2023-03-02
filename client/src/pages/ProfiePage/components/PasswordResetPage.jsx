@@ -8,7 +8,7 @@ import { GLButton } from "../../../shared/GlowLEDsComponents";
 const PasswordResetPublicPage = props => {
   const [email, setEmail] = useState("");
   const userPasswordReset = useSelector(state => state.userPasswordReset);
-  const { loading, userInfo, error } = userPasswordReset;
+  const { loading, current_user, error } = userPasswordReset;
   const dispatch = useDispatch();
 
   const [words, setWords] = useState("");

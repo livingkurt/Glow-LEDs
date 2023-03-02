@@ -14,7 +14,7 @@ const CompletePage = props => {
   const [data, set_data] = useState();
 
   const userSlice = useSelector(state => state.userSlice);
-  const { userInfo } = userSlice;
+  const { current_user } = userSlice;
 
   useEffect(() => {
     let clean = true;
@@ -116,7 +116,7 @@ const CompletePage = props => {
             <link rel="canonical" href={data.link} />
             <meta property="og:url" content={data.link} />
           </Helmet>
-          {isAdmin(userInfo) && (
+          {isAdmin(current_user) && (
             <div className="jc-b mb-1rem">
               <Link to="/secure/glow/emails">
                 <GLButton variant="primary" className="mh-10px">
@@ -135,10 +135,10 @@ const CompletePage = props => {
             </div>
           )}
 
-          {props.match.params.type === "order" && <OrderComplete userInfo={userInfo} order_id={props.match.params.id} />}
-          {props.match.params.type === "affiliate" && <AffiliateComplete userInfo={userInfo} />}
-          {props.match.params.type === "email" && <EmailComplete userInfo={userInfo} />}
-          {props.match.params.type === "feature" && <FeatureComplete userInfo={userInfo} />}
+          {props.match.params.type === "order" && <OrderComplete current_user={current_user} order_id={props.match.params.id} />}
+          {props.match.params.type === "affiliate" && <AffiliateComplete current_user={current_user} />}
+          {props.match.params.type === "email" && <EmailComplete current_user={current_user} />}
+          {props.match.params.type === "feature" && <FeatureComplete current_user={current_user} />}
         </div>
       )}
     </div>

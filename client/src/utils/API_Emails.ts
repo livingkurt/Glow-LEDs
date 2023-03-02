@@ -73,9 +73,9 @@ const email_routes = {
       }
     });
   },
-  // not_verified_email: (userInfo: any) => {
+  // not_verified_email: (current_user: any) => {
   //
-  // 	return axios.post('/api/emails/notverified', userInfo);
+  // 	return axios.post('/api/emails/notverified', current_user);
   // },
   print_invoice: (order: any) => {
     //

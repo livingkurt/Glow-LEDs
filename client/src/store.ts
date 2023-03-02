@@ -24,7 +24,7 @@ if (shipping_string) {
 
 const initialState: object = {
   cartSlice: { cartItems, shipping: shippingAddress, payment: {} },
-  userSlice: { userInfo: {} },
+  userSlice: { current_user: {} },
   showHideSearchBar: { show: true }
 };
 

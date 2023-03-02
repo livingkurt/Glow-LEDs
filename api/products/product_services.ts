@@ -283,9 +283,9 @@ export default {
         product.reviews = [
           ...product.reviews,
           {
-            user: body.userInfo._id,
-            first_name: body.userInfo.first_name,
-            last_name: body.userInfo.last_name,
+            user: body.current_user._id,
+            first_name: body.current_user.first_name,
+            last_name: body.current_user.last_name,
             rating: Number(body.review.rating),
             comment: body.review.comment
           }

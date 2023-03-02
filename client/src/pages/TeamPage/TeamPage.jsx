@@ -14,7 +14,7 @@ const TeamPage = props => {
   const teamDetails = useSelector(state => state.teamDetails);
   const { team } = teamDetails;
   const userSlice = useSelector(state => state.userSlice);
-  const { userInfo } = userSlice;
+  const { current_user } = userSlice;
 
   const dispatch = useDispatch();
 
@@ -57,7 +57,7 @@ const TeamPage = props => {
             {/* <Link to="/collections/all/teams">
 							<GLButton variant="secondary">Back to Teams</GLButton>
 						</Link> */}
-            {isAdmin(userInfo) && (
+            {isAdmin(current_user) && (
               <Link to={"/secure/glow/editteam/" + props.match.params.pathname}>
                 <GLButton variant="secondary" style={{ width: "156px" }}>
                   Edit Team

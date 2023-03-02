@@ -7,7 +7,7 @@ export interface IDispatch {
 }
 
 export interface IGetState {
-  userLogin?: { userInfo?: IUser };
+  userSlice?: { current_user?: IUser };
 }
 
 export interface IAction {

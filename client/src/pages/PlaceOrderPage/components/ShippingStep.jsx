@@ -63,7 +63,7 @@ const ShippingStep = ({
   const dispatch = useDispatch();
 
   const userSlice = useSelector(state => state.userSlice);
-  const { userInfo } = userSlice;
+  const { current_user } = userSlice;
 
   useEffect(() => {
     let clean = true;
@@ -94,7 +94,7 @@ const ShippingStep = ({
   // useEffect(() => {
   //   let clean = true;
   //   if (clean) {
-  //     if (isAdmin(userInfo)) {
+  //     if (isAdmin(current_user)) {
   //       get_all_shipping();
   //     }
   //   }
@@ -121,7 +121,7 @@ const ShippingStep = ({
   const submitHandler = e => {
     e.preventDefault();
     const data = {
-      email: email ? email : userInfo.email,
+      email: email ? email : current_user.email,
       first_name,
       last_name,
       address_1,
@@ -149,7 +149,7 @@ const ShippingStep = ({
         saveShipping({
           first_name,
           last_name,
-          email: email ? email : userInfo.email,
+          email: email ? email : current_user.email,
           address_1,
           address_2,
           city,
@@ -175,11 +175,11 @@ const ShippingStep = ({
     if (save_shipping) {
       dispatch(
         update({
-          ...userInfo,
+          ...current_user,
           shipping: {
             first_name,
             last_name,
-            email: userInfo.email,
+            email: current_user.email,
             address_1,
             address_2,
             city,
@@ -264,14 +264,14 @@ const ShippingStep = ({
           {show_shipping ? (
             <form onSubmit={submitHandler}>
               <ul className={`shipping-container mv-0px pv-0px ${width > 400 ? "ph-2rem" : "p-0px"}`}>
-                {userInfo && userInfo.shipping && userInfo.shipping.hasOwnProperty("first_name") && (
+                {current_user && current_user.shipping && current_user.shipping.hasOwnProperty("first_name") && (
                   <li>
-                    <GLButton onClick={e => use_saved_shipping(e, userInfo.shipping, userInfo)} variant="primary">
+                    <GLButton onClick={e => use_saved_shipping(e, current_user.shipping, current_user)} variant="primary">
                       Use Saved Shipping
                     </GLButton>
                   </li>
                 )}
-                {isAdmin(userInfo) && (
+                {isAdmin(current_user) && (
                   <li className="w-100per">
                     <div className="ai-c h-25px mv-10px mb-30px jc-c w-100per">
                       <div className="custom-select w-100per">
@@ -297,7 +297,7 @@ const ShippingStep = ({
                     </div>
                   </li>
                 )}
-                {isAdmin(userInfo) &&
+                {isAdmin(current_user) &&
                   (loading_checkboxes ? (
                     <div>Loading...</div>
                   ) : (
@@ -505,7 +505,7 @@ const ShippingStep = ({
                   </GLButton>
                 </li>
 
-                {userInfo && userInfo.first_name && (
+                {current_user && current_user.first_name && (
                   <div>
                     {loading_checkboxes ? (
                       <div>Loading...</div>

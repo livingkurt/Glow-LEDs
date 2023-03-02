@@ -16,7 +16,7 @@ const ProfilePage = props => {
   const history = useHistory();
 
   const userSlice = useSelector(state => state.userSlice);
-  const { userInfo } = userSlice;
+  const { current_user } = userSlice;
 
   const userDetails = useSelector(state => state.userDetails);
   const { loading, user, message, error, success } = userDetails;
@@ -65,13 +65,13 @@ const ProfilePage = props => {
         dispatch(API.detailsUser(props.match.params.id));
         dispatch(API.listOrders({ user: props.match.params.id }));
       } else {
-        set_id(userInfo._id);
-        dispatch(API.detailsUser(userInfo._id));
-        dispatch(API.listOrders({ user: userInfo._id }));
+        set_id(current_user._id);
+        dispatch(API.detailsUser(current_user._id));
+        dispatch(API.listOrders({ user: current_user._id }));
       }
     }
     return () => (clean = false);
-  }, [dispatch, props.match.params.id, userInfo._id]);
+  }, [dispatch, props.match.params.id, current_user._id]);
 
   useEffect(() => {
     let clean = true;
@@ -260,7 +260,7 @@ const ProfilePage = props => {
         <title>Admin User Profile | Glow LEDs</title>
       </Helmet>
       <Notification message={message} />
-      {user && userInfo && userInfo._id && user._id && userInfo._id !== user._id && (
+      {user && current_user && current_user._id && user._id && current_user._id !== user._id && (
         <GLButton variant="icon" onClick={() => history.goBack()}>
           <i class="fas fa-chevron-left"></i>
         </GLButton>
@@ -268,14 +268,14 @@ const ProfilePage = props => {
 
       <div className="row">
         <h1 style={{ textAlign: "center", width: "100%" }}>
-          {userInfo.first_name === first_name ? "My Profile" : `${first_name}'s Profile`}
+          {current_user.first_name === first_name ? "My Profile" : `${first_name}'s Profile`}
         </h1>
       </div>
       <Loading loading={loading} error={error}>
         {user && (
           <div className="profile_container row jc-b wrap">
             <div className="">
-              {isAdmin(userInfo) && (
+              {isAdmin(current_user) && (
                 <div className="" style={container_styles}>
                   <h3>ID</h3>
                   <label>{id}</label>
@@ -319,7 +319,7 @@ const ProfilePage = props => {
                 <h3>Promotional Emails</h3>
                 <label>{email_subscription ? "Subscribed" : "Not Subscribed"}</label>
               </div>
-              {isAdmin(userInfo) && (
+              {isAdmin(current_user) && (
                 <>
                   <div className="" style={container_styles}>
                     <h3>Verified</h3>
@@ -335,13 +335,13 @@ const ProfilePage = props => {
             <div>
               <div className="row">
                 <div style={{ height: 50 }}>
-                  <Link to={isAdmin(userInfo) ? "/secure/glow/edituser/" + id : "/secure/account/editprofile/" + id}>
+                  <Link to={isAdmin(current_user) ? "/secure/glow/edituser/" + id : "/secure/account/editprofile/" + id}>
                     <GLButton style={{ marginRight: "10px", maxWidth: "225px" }} variant="primary">
                       Edit Profile
                     </GLButton>
                   </Link>
                 </div>
-                {isAdmin(userInfo) ? (
+                {isAdmin(current_user) ? (
                   <div style={{ height: 50 }}>
                     <Link to={"/secure/glow/change_password/" + id}>
                       <GLButton style={{ marginRight: "10px", maxWidth: "210px" }} variant="primary">
@@ -614,11 +614,11 @@ const ProfilePage = props => {
           justifyContent: "center"
         }}
       >
-        {userInfo.first_name === first_name ? "My Orders" : `${first_name}'s Orders`}
+        {current_user.first_name === first_name ? "My Orders" : `${first_name}'s Orders`}
       </h1>
       {orders && orders.length > 0 ? (
         orders.map((order, index) => (
-          <OrderListItem key={index} determine_color={determine_order_color} order={order} admin={isAdmin(userInfo)} />
+          <OrderListItem key={index} determine_color={determine_order_color} order={order} admin={isAdmin(current_user)} />
         ))
       ) : (
         <div style={{ textAlign: "center" }}>
