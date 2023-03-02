@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import { DropdownDisplay, Loading } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../shared/GlowLEDsComponents";
-import { createCategory, detailsCategory, listCategorys, updateCategory } from "../../api";
+import * as API from "../../api";
 
 const EditCategoryPage = props => {
   const [id, set_id] = useState("");
@@ -39,12 +39,12 @@ const EditCategoryPage = props => {
     let clean = true;
     if (clean) {
       if (props.match.params.id) {
-        dispatch(detailsCategory(props.match.params.id));
-        dispatch(detailsCategory(props.match.params.id));
+        dispatch(API.detailsCategory(props.match.params.id));
+        dispatch(API.detailsCategory(props.match.params.id));
       } else {
-        dispatch(detailsCategory(""));
+        dispatch(API.detailsCategory(""));
       }
-      dispatch(listCategorys({}));
+      dispatch(API.listCategorys({}));
       set_state();
     }
     return () => (clean = false);
@@ -104,9 +104,9 @@ const EditCategoryPage = props => {
       subcategorys: subcategorys && subcategorys.map(category => category._id)
     };
     if (id) {
-      dispatch(updateCategory(data));
+      dispatch(API.updateCategory(data));
     } else {
-      dispatch(createCategory(data));
+      dispatch(API.createCategory(data));
     }
     e.target.reset();
     unset_state();

@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { Loading, Notification } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
-import * as API from "../../api/affiliateApi";
+import * as API from "../../api";
 import {
   dates_in_year,
   format_date,
@@ -16,7 +16,6 @@ import { API_Orders, API_Paychecks, API_Promos } from "../../utils";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import GLTable from "../../shared/GlowLEDsComponents/GLTable/GLTable";
 import axios from "axios";
-import { createPaycheck, deletePaycheck, listOrders, listPaychecks, listTeams, updatePaycheck } from "../../api";
 
 const PaychecksPage = props => {
   const history = useHistory();
@@ -55,7 +54,7 @@ const PaychecksPage = props => {
     set_loading_checkboxes(true);
     const response = API_Paychecks.delete_multiple_paychecks(selectedRows.map(row => row._id));
     setSelectedRows([]);
-    dispatch(listPaychecks({ category, search, sort }));
+    dispatch(API.listPaychecks({ category, search, sort }));
   };
 
   setTimeout(() => {
@@ -66,8 +65,8 @@ const PaychecksPage = props => {
     let clean = true;
     if (clean) {
       dispatch(API.listAffiliates({ active: true }));
-      dispatch(listTeams({}));
-      dispatch(listOrders({}));
+      dispatch(API.listTeams({}));
+      dispatch(API.listOrders({}));
     }
     return () => (clean = false);
   }, [success, dispatch]);
@@ -84,33 +83,33 @@ const PaychecksPage = props => {
 
   const submitHandler = e => {
     e.preventDefault();
-    dispatch(listPaychecks({ category, search, sort }));
+    dispatch(API.listPaychecks({ category, search, sort }));
   };
 
   const sortHandler = e => {
     set_sort(e.target.value);
-    dispatch(listPaychecks({ category, search, sort: e.target.value }));
+    dispatch(API.listPaychecks({ category, search, sort: e.target.value }));
   };
 
   const deleteHandler = paycheck => {
-    dispatch(deletePaycheck(paycheck._id));
+    dispatch(API.deletePaycheck(paycheck._id));
   };
 
   const today = date.toISOString();
 
   const mark_paid = paycheck => {
     dispatch(
-      updatePaycheck({
+      API.updatePaycheck({
         ...paycheck,
         paid: true,
         paid_at: format_date(today)
       })
     );
-    dispatch(listPaychecks({ limit, page }));
+    dispatch(API.listPaychecks({ limit, page }));
   };
   const duplicate_paycheck = paycheck => {
     dispatch(
-      createPaycheck({
+      API.createPaycheck({
         amount: paycheck.amount,
         affiliate: paycheck.affiliate,
         team: paycheck.team,
@@ -120,7 +119,7 @@ const PaychecksPage = props => {
         paid_at: format_date(today)
       })
     );
-    dispatch(listPaychecks({ limit, page }));
+    dispatch(API.listPaychecks({ limit, page }));
   };
 
   const sort_options = ["Newest", "Artist Name", "Facebook Name", "Instagram Handle", "Sponsor", "Promoter"];
@@ -170,7 +169,7 @@ const PaychecksPage = props => {
     set_page(page);
     update_products_url(history, search, "", "", page, limit);
 
-    dispatch(listPaychecks({ limit, page }));
+    dispatch(API.listPaychecks({ limit, page }));
   };
 
   useEffect(() => {
@@ -213,7 +212,7 @@ const PaychecksPage = props => {
       }
 
       dispatch(
-        listPaychecks({
+        API.listPaychecks({
           filter,
           search,
           sort,

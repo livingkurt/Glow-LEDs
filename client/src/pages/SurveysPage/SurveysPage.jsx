@@ -5,11 +5,10 @@ import { Loading, Notification } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { format_date } from "../../utils/helper_functions";
 import { listTeams } from "../../actions/teamActions";
-import * as API from "../../api/affiliateApi";
+import * as API from "../../api";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import Search from "../../shared/GlowLEDsComponents/GLTable/Search";
 import Sort from "../../shared/GlowLEDsComponents/GLTable/Sort";
-import { deleteSurvey, listOrders, listSurveys } from "../../api";
 
 const SurveysPage = props => {
   const [search, set_search] = useState("");
@@ -25,32 +24,32 @@ const SurveysPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(listSurveys({}));
+      dispatch(API.listSurveys({}));
       dispatch(API.listAffiliates({ active: true }));
-      dispatch(listTeams({}));
-      dispatch(listOrders({}));
+      dispatch(API.listTeams({}));
+      dispatch(API.listOrders({}));
     }
     return () => (clean = false);
   }, [success, dispatch]);
   const handleListItems = e => {
     e.preventDefault();
-    dispatch(listSurveys({ category, search, sort }));
+    dispatch(API.listSurveys({ category, search, sort }));
   };
 
   const sortHandler = e => {
     setSortOrder(e.target.value);
-    dispatch(listSurveys({ category, search, sort: e.target.value }));
+    dispatch(API.listSurveys({ category, search, sort: e.target.value }));
   };
 
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(listSurveys({ category, search, sort }));
+      dispatch(API.listSurveys({ category, search, sort }));
     }
     return () => (clean = false);
   }, [dispatch, category, search, sort]);
   const deleteHandler = survey => {
-    dispatch(deleteSurvey(survey._id));
+    dispatch(API.deleteSurvey(survey._id));
   };
 
   const sort_options = ["Newest", "Artist Name", "Facebook Name", "Instagram Handle", "Sponsor", "Promoter"];

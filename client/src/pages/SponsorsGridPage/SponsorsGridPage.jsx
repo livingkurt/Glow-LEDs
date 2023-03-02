@@ -5,7 +5,7 @@ import { Loading } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import { SponsorItemD, SponsorItemM } from "./components";
-import { listAffiliates } from "../../api";
+import * as API from "../../api";
 
 const AllSponsorsPage = props => {
   const affiliateSlice = useSelector(state => state.affiliateSlice);
@@ -15,7 +15,7 @@ const AllSponsorsPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(listAffiliates({ sponsor: true }));
+      dispatch(API.listAffiliates({ sponsor: true }));
     }
     return () => (clean = false);
   }, [dispatch]);

@@ -4,7 +4,7 @@ import { useHistory, Link } from "react-router-dom";
 import { Loading } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../shared/GlowLEDsComponents";
-import { createSetting, detailsSetting, listSettings, updateSetting } from "../../api";
+import * as API from "../../api";
 
 const EditSettingPage = props => {
   const [id, set_id] = useState("");
@@ -41,12 +41,12 @@ const EditSettingPage = props => {
     let clean = true;
     if (clean) {
       if (props.match.params.id) {
-        dispatch(detailsSetting(props.match.params.id));
-        dispatch(detailsSetting(props.match.params.id));
+        dispatch(API.detailsSetting(props.match.params.id));
+        dispatch(API.detailsSetting(props.match.params.id));
       } else {
-        dispatch(detailsSetting(""));
+        dispatch(API.detailsSetting(""));
       }
-      dispatch(listSettings(""));
+      dispatch(API.listSettings(""));
       set_state();
     }
     return () => (clean = false);
@@ -76,9 +76,9 @@ const EditSettingPage = props => {
       active
     };
     if (id) {
-      dispatch(updateSetting(data));
+      dispatch(API.updateSetting(data));
     } else {
-      dispatch(createSetting(data));
+      dispatch(API.createSetting(data));
     }
     e.target.reset();
     unset_state();

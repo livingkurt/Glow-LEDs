@@ -5,7 +5,7 @@ import { ImageDisplay, Loading } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { snake_case } from "../../utils/helper_functions";
 import { GLButton } from "../../shared/GlowLEDsComponents";
-import { createTeam, detailsTeam, listAffiliates, listPromos, listUsers, updateTeam } from "../../api";
+import * as API from "../../api";
 
 const EditTeamPage = props => {
   const [id, set_id] = useState("");
@@ -103,16 +103,16 @@ const EditTeamPage = props => {
     let clean = true;
     if (clean) {
       if (props.match.params.pathname) {
-        dispatch(detailsTeam(props.match.params.pathname));
-        // dispatch(detailsTeam(props.match.params.pathname));
+        dispatch(API.detailsTeam(props.match.params.pathname));
+        // dispatch(API.detailsTeam(props.match.params.pathname));
         // set_state();
       } else {
         unset_state();
-        dispatch(detailsTeam(""));
+        dispatch(API.detailsTeam(""));
       }
-      dispatch(listAffiliates({}));
-      dispatch(listPromos({}));
-      dispatch(listUsers({}));
+      dispatch(API.listAffiliates({}));
+      dispatch(API.listPromos({}));
+      dispatch(API.listUsers({}));
     }
     return () => (clean = false);
   }, [props.match.params.pathname]);
@@ -160,9 +160,9 @@ const EditTeamPage = props => {
       affiliates: affiliates && affiliates.map(affiliate => affiliate._id)
     };
     if (id) {
-      dispatch(updateTeam(data));
+      dispatch(API.updateTeam(data));
     } else {
-      dispatch(createTeam(data));
+      dispatch(API.createTeam(data));
     }
     e.target.reset();
     unset_state();

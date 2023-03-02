@@ -7,7 +7,7 @@ import Search from "../../shared/GlowLEDsComponents/GLTable/Search";
 import Sort from "../../shared/GlowLEDsComponents/GLTable/Sort";
 import { humanize } from "../../utils/helper_functions";
 import { GLButton } from "../../shared/GlowLEDsComponents";
-import { createEmail, deleteEmail, listEmails, updateEmail } from "../../api";
+import * as API from "../../api";
 
 const EmailsPage = props => {
   const [search, set_search] = useState("");
@@ -22,30 +22,30 @@ const EmailsPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(listEmails({}));
+      dispatch(API.listEmails({}));
     }
     return () => (clean = false);
   }, [success, dispatch]);
 
   const handleListItems = e => {
     e.preventDefault();
-    dispatch(listEmails({ category, search, sort }));
+    dispatch(API.listEmails({ category, search, sort }));
   };
 
   const sortHandler = e => {
     setSortOrder(e.target.value);
-    dispatch(listEmails({ category, search, sort: e.target.value }));
+    dispatch(API.listEmails({ category, search, sort: e.target.value }));
   };
 
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(listEmails({ category, search, sort }));
+      dispatch(API.listEmails({ category, search, sort }));
     }
     return () => (clean = false);
   }, [dispatch, category, search, sort]);
   const deleteHandler = email => {
-    dispatch(deleteEmail(email._id));
+    dispatch(API.deleteEmail(email._id));
   };
   const colors = [
     { name: "Draft", color: "#7d5555" },
@@ -68,13 +68,13 @@ const EmailsPage = props => {
 
   const change_email_status = email => {
     dispatch(
-      updateEmail({
+      API.updateEmail({
         ...email,
         active: email.active ? false : true
       })
     );
-    dispatch(listEmails({}));
-    dispatch(listEmails({}));
+    dispatch(API.listEmails({}));
+    dispatch(API.listEmails({}));
   };
 
   const sort_options = ["Email Type"];

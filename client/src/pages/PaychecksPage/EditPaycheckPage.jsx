@@ -5,7 +5,7 @@ import { Loading } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import { format_date } from "../../utils/helper_functions";
-import { createPaycheck, detailsPaycheck, listAffiliates, listTeams, updatePaycheck } from "../../api";
+import * as API from "../../api";
 
 const EditPaycheckPage = props => {
   const [id, set_id] = useState("");
@@ -59,13 +59,13 @@ const EditPaycheckPage = props => {
     let clean = true;
     if (clean) {
       if (props.match.params.id) {
-        dispatch(detailsPaycheck(props.match.params.id));
-        dispatch(detailsPaycheck(props.match.params.id));
+        dispatch(API.detailsPaycheck(props.match.params.id));
+        dispatch(API.detailsPaycheck(props.match.params.id));
       } else {
-        dispatch(detailsPaycheck(""));
+        dispatch(API.detailsPaycheck(""));
       }
-      dispatch(listAffiliates({}));
-      dispatch(listTeams({}));
+      dispatch(API.listAffiliates({}));
+      dispatch(API.listTeams({}));
       set_state();
     }
     return () => (clean = false);
@@ -101,9 +101,9 @@ const EditPaycheckPage = props => {
       paid_at: paid_at ? paid_at : paid && format_date(today)
     };
     if (id) {
-      dispatch(updatePaycheck(data));
+      dispatch(API.updatePaycheck(data));
     } else {
-      dispatch(createPaycheck(data));
+      dispatch(API.createPaycheck(data));
     }
     e.target.reset();
     unset_state();

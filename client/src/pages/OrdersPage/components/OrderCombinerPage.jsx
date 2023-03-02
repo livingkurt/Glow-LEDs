@@ -7,7 +7,7 @@ import { useHistory } from "react-router-dom";
 import { Loading } from "../../../shared/SharedComponents";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import { isAdmin } from "../../../utils/helpers/user_helpers";
-import { listParcels } from "../../../api";
+import * as API from "../../../api";
 
 const OrderCombinerPage = props => {
   const userLogin = useSelector(state => state.userLogin);
@@ -36,7 +36,7 @@ const OrderCombinerPage = props => {
       if (isAdmin(userInfo)) {
         get_orders();
       }
-      dispatch(listParcels({}));
+      dispatch(API.listParcels({}));
     }
     return () => (clean = false);
   }, []);

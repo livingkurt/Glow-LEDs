@@ -7,6 +7,7 @@ import { useHistory } from "react-router-dom";
 import { LazyImage } from "../../shared/SharedComponents";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import { isAdmin } from "../../utils/helpers/user_helpers";
+import * as API from "../../api";
 
 const TeamPage = props => {
   const history = useHistory();
@@ -20,7 +21,7 @@ const TeamPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(detailsTeam(props.match.params.pathname));
+      dispatch(API.detailsTeam(props.match.params.pathname));
     }
     return () => (clean = false);
   }, []);

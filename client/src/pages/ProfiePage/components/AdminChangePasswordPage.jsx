@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { password_reset } from "../../../actions/userActions";
-import { listMyOrders } from "../../../actions/orderActions";
 import { useDispatch, useSelector } from "react-redux";
 import { validate_password_change } from "../../../utils/validations";
 import { Loading } from "../../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
+import * as API from "../../../api";
 
 const AdminChangePasswordPage = props => {
   const history = useHistory();
@@ -33,7 +33,7 @@ const AdminChangePasswordPage = props => {
       if (userInfo) {
         setPassword(userInfo.password);
       }
-      dispatch(listMyOrders());
+      dispatch(API.listOrders({ user: userInfo._id }));
     }
     return () => (clean = false);
   }, [userInfo, dispatch]);

@@ -10,7 +10,7 @@ import { GLButton } from "../../shared/GlowLEDsComponents";
 import HomeSlideshow from "./HomeSlideshow";
 import ReadMore from "../../shared/GlowLEDsComponents/GLReadMore/ReadMore";
 import { show_search_bar } from "../../actions/settingActions";
-import { listContents, listFeatures } from "../../api";
+import * as API from "../../api";
 
 const HomePage = props => {
   const history = useHistory();
@@ -70,8 +70,8 @@ const HomePage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(listContents({ limit: 3 }));
-      dispatch(listFeatures({}));
+      dispatch(API.listContents({ limit: 3 }));
+      dispatch(API.listFeatures({}));
       findAll_products_a();
       get_display_content();
     }

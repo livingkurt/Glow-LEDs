@@ -22,7 +22,7 @@ const FeaturesGridPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(listFeatures({ category, subcategory, search }));
+      dispatch(API.listFeatures({ category, subcategory, search }));
     }
     return () => (clean = false);
   }, [search]);
@@ -36,14 +36,14 @@ const FeaturesGridPage = props => {
         });
       }
 
-      dispatch(listFeatures({ category, subcategory, search }));
+      dispatch(API.listFeatures({ category, subcategory, search }));
     }
     return () => (clean = false);
   }, [category, subcategory, search]);
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(listFeatures({ category, subcategory, search, sort }));
+      dispatch(API.listFeatures({ category, subcategory, search, sort }));
     }
     return () => (clean = false);
   }, [sort]);
@@ -56,7 +56,7 @@ const FeaturesGridPage = props => {
     history.push({
       search: "?search=" + search
     });
-    dispatch(listFeatures({ category, subcategory, search, sort }));
+    dispatch(API.listFeatures({ category, subcategory, search, sort }));
   };
 
   const date = new Date();

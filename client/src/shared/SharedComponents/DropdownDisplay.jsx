@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { deleteProduct } from "../../actions/productActions";
 import { snake_case } from "../../utils/helper_functions";
 import { GLButton } from "../GlowLEDsComponents";
+import * as API from "../../api";
 
 const DropdownDisplay = ({ item_list, list_items, set_items, list_name, placement, display_key, item_group_id }) => {
   const dispatch = useDispatch();
@@ -23,7 +23,7 @@ const DropdownDisplay = ({ item_list, list_items, set_items, list_name, placemen
         return item_index !== index;
       })
     );
-    dispatch(deleteProduct(product_id));
+    dispatch(API.deleteProduct(product_id));
   };
 
   const add_item = e => {

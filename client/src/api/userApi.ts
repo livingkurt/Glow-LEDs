@@ -72,3 +72,18 @@ export const deleteUser = createAsyncThunk("users/deleteUser", async (pathname, 
     return data;
   } catch (error) {}
 });
+
+export const registerUser = createAsyncThunk("users/registerUser", async (userData: any, thunkApi: any) => {
+  try {
+    const { data } = await axios.post("/api/users/register", userData);
+    axios.post("/api/emails/account_created", data);
+    return data;
+  } catch (error) {}
+});
+
+export const loginUser = createAsyncThunk("users/loginUser", async (userData: any, thunkApi: any) => {
+  try {
+    const { data } = await axios.post("/api/users/login", userData);
+    return data;
+  } catch (error) {}
+});

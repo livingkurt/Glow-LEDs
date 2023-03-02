@@ -7,6 +7,7 @@ import { Helmet } from "react-helmet";
 import { Loading } from "../../shared/SharedComponents";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import GLInput from "../../shared/GlowLEDsComponents/GLInput/GLInput";
+import * as API from "../../api";
 
 const LoginPage = props => {
   const [email, setEmail] = useState("");
@@ -16,8 +17,8 @@ const LoginPage = props => {
   const [password_validations, setPasswordValidations] = useState("");
   const [loading, set_loading] = useState(false);
 
-  const userLogin = useSelector(state => state.userLogin);
-  const { loading: user_loading, userInfo, error } = userLogin;
+  const userSlice = useSelector(state => state.userSlice);
+  const { loading: user_loading, userInfo, error } = userSlice;
   // const errors = useSelector((state) => state.errors);
   //
 
@@ -49,7 +50,7 @@ const LoginPage = props => {
     setPasswordValidations(request.errors.password);
 
     if (request.isValid) {
-      dispatch(login({ email: email.toLowerCase(), password }));
+      dispatch(API.loginUser({ email: email.toLowerCase(), password }));
       //
       set_loading(user_loading);
       // dispatch(loginUser(email, password));

@@ -14,7 +14,7 @@ import { GLButton } from "../../../shared/GlowLEDsComponents";
 import { isAdmin } from "../../../utils/helpers/user_helpers";
 import { OrderStatusButtons } from "../../OrderPage/components";
 import useWindowDimensions from "../../../shared/Hooks/windowDimensions";
-import { updateOrder } from "../../../api";
+import * as API from "../../../api";
 
 const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_email, listOrdersFilters }) => {
   const history = useHistory();
@@ -54,7 +54,7 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
   const create_duplicate_order = () => {
     //
     dispatch(
-      createOrder({
+      API.createOrder({
         orderItems: order.orderItems,
         shipping: {
           ...order.shipping,
@@ -71,14 +71,14 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
         production_note: order.production_note
       })
     );
-    dispatch(listOrders({}));
+    dispatch(API.listOrders({}));
   };
 
   const delete_order = () => {
     const confirm = window.confirm("Are you sure you want to DELETE this order?");
     if (confirm) {
-      dispatch(deleteOrder(order._id));
-      dispatch(listOrders({ limit: 10, page: 1 }));
+      dispatch(API.deleteOrder(order._id));
+      dispatch(API.listOrders({ limit: 10, page: 1 }));
     }
   };
 
@@ -165,7 +165,7 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
     await API_Shipping.add_tracking_number(order, data.tracking_code, data);
     set_hide_label_button(false);
     const query = getUrlParameter(history.location);
-    dispatch(listOrders({ page: query.page, limit: query.limit }));
+    dispatch(API.listOrders({ page: query.page, limit: query.limit }));
   };
 
   const create_label = async speed => {
@@ -184,7 +184,7 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
     await API_Shipping.add_tracking_number(order, data.tracking_code, data);
     set_hide_label_button(false);
     const query = getUrlParameter(history.location);
-    dispatch(listOrders({ page: query.page, limit: query.limit }));
+    dispatch(API.listOrders({ page: query.page, limit: query.limit }));
   };
 
   const send_order_email = async () => {
@@ -215,7 +215,7 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
       orderItems: [...new_order_items]
     });
     dispatch(
-      updateOrder({
+      API.updateOrder({
         ...order,
         orderItems: [...new_order_items]
       })
@@ -226,16 +226,16 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
     set_loading_email(true);
     if (state) {
       set_order_state({ ...order_state, [is_action]: false });
-      dispatch(update_order(order_state, false, is_action, action_at));
+      dispatch(API.updateOrder(order_state, false, is_action, action_at));
     } else {
       set_order_state({ ...order_state, [is_action]: true });
-      dispatch(update_order(order_state, true, is_action, action_at));
+      dispatch(API.updateOrder(order_state, true, is_action, action_at));
       if (is_action !== "isPaused") {
         send_email(order_state, action_at.slice(0, -2));
       }
     }
     setTimeout(() => {
-      dispatch(listOrders(listOrdersFilters));
+      dispatch(API.listOrders(listOrdersFilters));
     }, 300);
     set_loading_email(false);
   };
@@ -244,14 +244,14 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
     set_loading_email(true);
     if (state) {
       set_order_state({ ...order_state, [is_action]: false });
-      dispatch(update_payment(order, false, is_action, "venmo"));
+      dispatch(API.updateOrder(order, false, is_action, "venmo"));
     } else {
       set_order_state({ ...order_state, [is_action]: true });
-      dispatch(update_payment(order, true, is_action, "venmo"));
+      dispatch(API.updateOrder(order, true, is_action, "venmo"));
       send_paid_email(order._id);
     }
     setTimeout(() => {
-      dispatch(listOrders(listOrdersFilters));
+      dispatch(API.listOrders(listOrdersFilters));
     }, 1000);
     set_loading_email(false);
   };

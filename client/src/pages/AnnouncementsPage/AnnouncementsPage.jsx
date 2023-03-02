@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Helmet } from "react-helmet";
-import { detailsEmail, listEmails } from "../../api";
+import * as API from "../../api";
 
 const AnnouncementsPage = props => {
   const emailSlice = useSelector(state => state.emailSlice);
@@ -12,7 +12,7 @@ const AnnouncementsPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(listEmails({ email_type: "Announcements", active: true, limit: 1 }));
+      dispatch(API.listEmails({ email_type: "Announcements", active: true, limit: 1 }));
     }
     return () => (clean = false);
   }, [dispatch]);
@@ -22,7 +22,7 @@ const AnnouncementsPage = props => {
     if (clean) {
       const active_email = emails.find(email => email.active === true);
       if (active_email) {
-        dispatch(detailsEmail(active_email._id));
+        dispatch(API.detailsEmail(active_email._id));
       }
     }
     return () => (clean = false);

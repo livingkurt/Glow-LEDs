@@ -7,8 +7,7 @@ import { update_products_url } from "../../utils/helper_functions";
 import { GLButton } from "../GlowLEDsComponents";
 import { isAdmin } from "../../utils/helpers/user_helpers";
 import Filter from "../GlowLEDsComponents/GLTable/Filter";
-import { listProducts } from "../../api/productApi";
-import { listChips } from "../../api";
+import * as API from "../../api";
 
 const Sidebar = props => {
   const history = useHistory();
@@ -77,7 +76,7 @@ const Sidebar = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(listChips({}));
+      dispatch(API.listChips({}));
     }
     return () => (clean = false);
   }, []);
@@ -104,7 +103,7 @@ const Sidebar = props => {
     const chip_selected = JSON.parse(e.target.value);
     update_products_url(history, "", "", chip_selected.name, "", "0", "/collections/all/products");
     dispatch(
-      listProducts({
+      API.listProducts({
         chip: chip_selected._id,
         hidden: false
       })

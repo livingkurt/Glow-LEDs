@@ -4,7 +4,7 @@ import { useHistory, Link } from "react-router-dom";
 import { Loading } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../shared/GlowLEDsComponents";
-import { createSurvey, detailsSurvey, listOrders, listUsers, updateSurvey } from "../../api";
+import * as API from "../../api";
 
 const EditSurveyPage = props => {
   const [id, set_id] = useState("");
@@ -82,13 +82,13 @@ const EditSurveyPage = props => {
     let clean = true;
     if (clean) {
       if (props.match.params.id) {
-        dispatch(detailsSurvey(props.match.params.id));
-        dispatch(detailsSurvey(props.match.params.id));
+        dispatch(API.detailsSurvey(props.match.params.id));
+        dispatch(API.detailsSurvey(props.match.params.id));
       } else {
-        dispatch(detailsSurvey(""));
+        dispatch(API.detailsSurvey(""));
       }
-      dispatch(listUsers({}));
-      dispatch(listOrders({}));
+      dispatch(API.listUsers({}));
+      dispatch(API.listOrders({}));
       stable_set_state();
     }
     return () => (clean = false);
@@ -130,9 +130,9 @@ const EditSurveyPage = props => {
       active
     };
     if (id) {
-      dispatch(updateSurvey(data));
+      dispatch(API.updateSurvey(data));
     } else {
-      dispatch(createSurvey(data));
+      dispatch(API.createSurvey(data));
     }
     e.target.reset();
     unset_state();

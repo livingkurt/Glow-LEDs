@@ -6,7 +6,7 @@ import { Loading } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { listChips } from "../../actions/chipActions";
 import { GLButton } from "../../shared/GlowLEDsComponents";
-import { createFilament, updateFilament } from "../../api";
+import * as API from "../../api";
 
 const EditFilamentPage = props => {
   const [id, set_id] = useState("");
@@ -43,10 +43,10 @@ const EditFilamentPage = props => {
     let clean = true;
     if (clean) {
       if (props.match.params.id) {
-        dispatch(detailsFilament(props.match.params.id));
-        dispatch(detailsFilament(props.match.params.id));
+        dispatch(API.detailsFilament(props.match.params.id));
+        dispatch(API.detailsFilament(props.match.params.id));
       } else {
-        dispatch(listChips({}));
+        dispatch(API.listChips({}));
       }
       set_state();
     }
@@ -79,9 +79,9 @@ const EditFilamentPage = props => {
       active
     };
     if (id) {
-      dispatch(updateFilament(data));
+      dispatch(API.updateFilament(data));
     } else {
-      dispatch(createFilament(data));
+      dispatch(API.createFilament(data));
     }
     e.target.reset();
     unset_state();

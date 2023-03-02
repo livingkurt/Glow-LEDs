@@ -7,7 +7,7 @@ import { categories, snake_case, subcategories } from "../../utils/helper_functi
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import Search from "../../shared/GlowLEDsComponents/GLTable/Search";
 import Sort from "../../shared/GlowLEDsComponents/GLTable/Sort";
-import { createCategory, deleteCategory, listCategorys } from "../../api";
+import * as API from "../../api";
 
 const fetch = require("node-fetch");
 
@@ -35,31 +35,31 @@ const CategorysPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(listCategorys({}));
+      dispatch(API.listCategorys({}));
     }
     return () => (clean = false);
   }, [success, dispatch]);
 
   const handleListItems = e => {
     e.preventDefault();
-    dispatch(listCategorys({ category, search, sort }));
+    dispatch(API.listCategorys({ category, search, sort }));
   };
 
   const sortHandler = e => {
     setSortOrder(e.target.value);
-    dispatch(listCategorys({ category, search, sort: e.target.value }));
+    dispatch(API.listCategorys({ category, search, sort: e.target.value }));
   };
 
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(listCategorys({ category, search, sort }));
+      dispatch(API.listCategorys({ category, search, sort }));
     }
     return () => (clean = false);
   }, [dispatch, category, search, sort]);
   const deleteHandler = category => {
-    dispatch(deleteCategory(category._id));
-    dispatch(listCategorys({ category, search, sort }));
+    dispatch(API.deleteCategory(category._id));
+    dispatch(API.listCategorys({ category, search, sort }));
   };
 
   const sort_options = ["Newest", "Artist Name", "Facebook Name", "Instagram Handle", "Sponsor", "Promoter"];
@@ -98,7 +98,7 @@ const CategorysPage = props => {
       .filter(category => category !== null)
       .forEach(category => {
         dispatch(
-          createCategory({
+          API.createCategory({
             name: category,
             pathname: snake_case(category),
             nest_level: 1,
@@ -107,7 +107,7 @@ const CategorysPage = props => {
           })
         );
       });
-    dispatch(listCategorys({}));
+    dispatch(API.listCategorys({}));
   };
 
   const create_subcategories = async () => {
@@ -115,7 +115,7 @@ const CategorysPage = props => {
       .filter(category => category !== null)
       .forEach(category => {
         dispatch(
-          createCategory({
+          API.createCategory({
             name: category,
             pathname: snake_case(category),
             nest_level: 1,
@@ -124,7 +124,7 @@ const CategorysPage = props => {
           })
         );
       });
-    dispatch(listCategorys({}));
+    dispatch(API.listCategorys({}));
   };
 
   return (

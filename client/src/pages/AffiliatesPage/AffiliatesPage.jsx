@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { Notification } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
-import * as API from "../../api/affiliateApi";
+import * as API from "../../api";
 import { getUrlParameter, months, update_products_url } from "../../utils/helper_functions";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import CSVReader from "react-csv-reader";

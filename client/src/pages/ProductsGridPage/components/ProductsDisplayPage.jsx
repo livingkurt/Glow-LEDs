@@ -10,7 +10,7 @@ import ProductItemM from "./ProductItemM";
 import Search from "../../../shared/GlowLEDsComponents/GLTable/Search";
 import Sort from "../../../shared/GlowLEDsComponents/GLTable/Sort";
 import Filter from "../../../shared/GlowLEDsComponents/GLTable/Filter";
-import { listChips, listProducts } from "../../../api";
+import * as API from "../../../api";
 
 const AllProductsPage = props => {
   const history = useHistory();
@@ -73,8 +73,8 @@ const AllProductsPage = props => {
         history.push({
           search: "?search=" + search
         });
-        dispatch(listProducts({ search, collection, option: false }));
-        dispatch(listChips({}));
+        dispatch(API.listProducts({ search, collection, option: false }));
+        dispatch(API.listChips({}));
       }
     }
     return () => (clean = false);
@@ -92,10 +92,10 @@ const AllProductsPage = props => {
           get_occurrences();
         }
         if (category !== "our_picks" || category === "discounted" || category === "best_sellers") {
-          dispatch(listProducts({ category, subcategory, search, collection, option: false }));
+          dispatch(API.listProducts({ category, subcategory, search, collection, option: false }));
         }
       }
-      dispatch(listChips({}));
+      dispatch(API.listChips({}));
     }
     return () => (clean = false);
   }, [category]);
@@ -137,12 +137,12 @@ const AllProductsPage = props => {
     // history.push({
     // 	search: '?search=' + search + chip && '?filter=' + chip
     // });
-    dispatch(listProducts({ search, sort, collection, option: false }));
+    dispatch(API.listProducts({ search, sort, collection, option: false }));
   };
 
   const sortHandler = e => {
     setSortOrder(e.target.value);
-    dispatch(listProducts({ category, subcategory, search, sort: e.target.value, collection, option: false }));
+    dispatch(API.listProducts({ category, subcategory, search, sort: e.target.value, collection, option: false }));
   };
   const filterHandler = e => {
     const chip_selected = JSON.parse(e.target.value);
@@ -152,7 +152,7 @@ const AllProductsPage = props => {
     history.push({
       search: "?search=" + search + "?filter=" + chip_selected.name
     });
-    dispatch(listProducts({ category, subcategory, search, sort, chip: chip_selected._id, collection, option: false }));
+    dispatch(API.listProducts({ category, subcategory, search, sort, chip: chip_selected._id, collection, option: false }));
   };
 
   const descriptions = {

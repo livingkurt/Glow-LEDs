@@ -8,7 +8,7 @@ import { sale_price_switch } from "../../../utils/react_helper_functions";
 import { LazyImage } from "../../SharedComponents";
 import { addToCart } from "../../../actions/cartActions";
 import { GLButton } from "..";
-import { detailsProduct } from "../../../api";
+import * as API from "../../../api";
 
 const CarouselItem = props => {
   const [product, set_product] = useState(props.product);
@@ -183,7 +183,7 @@ const CarouselItem = props => {
                 pathname: product && "/collections/all/products/" + product.pathname,
                 previous_path: history.location.pathname
               }}
-              onClick={() => dispatch(detailsProduct(product.pathname))}
+              onClick={() => dispatch(API.detailsProduct(product.pathname))}
             >
               <div className="product">
                 <LazyImage

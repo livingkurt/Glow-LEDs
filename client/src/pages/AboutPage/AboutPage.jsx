@@ -7,7 +7,7 @@ import useWindowDimensions from "../../shared/Hooks/windowDimensions";
 import ReadMore from "../../shared/GlowLEDsComponents/GLReadMore/ReadMore";
 import { SponsorItemD, SponsorItemM } from "../SponsorsGridPage/components";
 import { TeamItemD, TeamItemM } from "../TeamsGridPage/components";
-import { listAffiliates, listTeams, listUsers } from "../../api";
+import * as API from "../../api";
 import { EmployeeItemD, EmployeeItemM } from "./components";
 
 const AboutPage = () => {
@@ -29,9 +29,9 @@ const AboutPage = () => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(listAffiliates({ active: true, sponsor: true }));
-      dispatch(listUsers({ is_employee: true, guest: false }));
-      dispatch(listTeams({ rave_mob: false }));
+      dispatch(API.listAffiliates({ active: true, sponsor: true }));
+      dispatch(API.listUsers({ is_employee: true, guest: false }));
+      dispatch(API.listTeams({ rave_mob: false }));
     }
     return () => (clean = false);
   }, [dispatch]);

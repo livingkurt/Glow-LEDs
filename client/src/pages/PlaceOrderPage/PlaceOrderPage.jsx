@@ -13,7 +13,7 @@ import { check_authentication } from "../../utils/react_helper_functions";
 import useWindowDimensions from "../../shared/Hooks/windowDimensions";
 import { isMobile } from "react-device-detect";
 import { OrderSummaryStep, ShippingStep } from "./components";
-import { createOrder, listPromos, listUsers } from "../../api";
+import * as API from "../../api";
 import { removeFromCart, savePayment, saveShipping } from "../../actions/cartActions";
 import { createOrderGuest, createPayOrder, createPayOrderGuest, removeOrderState } from "../../actions/orderActions";
 
@@ -97,8 +97,8 @@ const PlaceOrderPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(listPromos({}));
-      dispatch(listUsers({}));
+      dispatch(API.listPromos({}));
+      dispatch(API.listUsers({}));
     }
     return () => (clean = false);
   }, [dispatch]);
@@ -347,7 +347,7 @@ const PlaceOrderPage = props => {
     const order_paid = isPaid ? isPaid : paid ? paid : false;
 
     dispatch(
-      createOrder({
+      API.createOrder({
         orderItems: cartItems,
         shipping: {
           ...shipping,
@@ -383,7 +383,7 @@ const PlaceOrderPage = props => {
   const create_no_payment_order = async ({ isPaid }) => {
     set_loading_payment(true);
     dispatch(
-      createOrder({
+      API.createOrder({
         orderItems: cartItems,
         shipping: {
           ...shipping,

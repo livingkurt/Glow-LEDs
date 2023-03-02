@@ -6,7 +6,7 @@ import { Helmet } from "react-helmet";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import Search from "../../shared/GlowLEDsComponents/GLTable/Search";
 import Sort from "../../shared/GlowLEDsComponents/GLTable/Sort";
-import { deleteParcel, listParcels } from "../../api";
+import * as API from "../../api";
 
 const ParcelsPage = props => {
   const [search, set_search] = useState("");
@@ -23,31 +23,31 @@ const ParcelsPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(listParcels({}));
+      dispatch(API.listParcels({}));
     }
     return () => (clean = false);
   }, [success, dispatch]);
 
   const submitHandler = e => {
     e.preventDefault();
-    dispatch(listParcels({ category, search, sort }));
+    dispatch(API.listParcels({ category, search, sort }));
   };
 
   const sortHandler = e => {
     setSortOrder(e.target.value);
-    dispatch(listParcels({ category, search, sort: e.target.value }));
+    dispatch(API.listParcels({ category, search, sort: e.target.value }));
   };
 
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(listParcels({ category, search, sort }));
+      dispatch(API.listParcels({ category, search, sort }));
     }
     return () => (clean = false);
   }, [dispatch, category, search, sort]);
 
   const deleteHandler = parcel => {
-    dispatch(deleteParcel(parcel._id));
+    dispatch(API.deleteParcel(parcel._id));
   };
 
   const date = new Date();

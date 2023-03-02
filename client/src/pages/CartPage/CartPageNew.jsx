@@ -31,7 +31,7 @@ const CartPage = props => {
     () => {
       let clean = true;
       if (clean) {
-        dispatch(detailsCart(userInfo.cart));
+        dispatch(API.detailsCart(userInfo.cart));
       }
       return () => (clean = false);
     },

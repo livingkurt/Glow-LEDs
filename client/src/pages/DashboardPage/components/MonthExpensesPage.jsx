@@ -53,7 +53,7 @@ const MonthExpensesPage = props => {
       });
       promo_code_usage(year, props.match.params.month, { sponsor_only: true });
       promo_code_usage(year, props.match.params.month, { admin_only: true });
-      // dispatch(listPromos({}));
+      // dispatch(API.listPromos({}));
     }
     return () => (clean = false);
   }, []);

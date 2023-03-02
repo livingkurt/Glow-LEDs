@@ -3,11 +3,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { Loading, Notification } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
-import * as API from "../../api/affiliateApi";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import Search from "../../shared/GlowLEDsComponents/GLTable/Search";
 import Sort from "../../shared/GlowLEDsComponents/GLTable/Sort";
-import { deleteSetting, listOrders, listSettings, listTeams } from "../../api";
+import * as API from "../../api";
 
 const SettingsPage = props => {
   const [search, set_search] = useState("");
@@ -28,33 +27,33 @@ const SettingsPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(listSettings({}));
+      dispatch(API.listSettings({}));
       dispatch(API.listAffiliates({ active: true }));
-      dispatch(listTeams({}));
-      dispatch(listOrders({}));
+      dispatch(API.listTeams({}));
+      dispatch(API.listOrders({}));
     }
     return () => (clean = false);
   }, [success, dispatch]);
 
   const submitHandler = e => {
     e.preventDefault();
-    dispatch(listSettings({ category, search, sort }));
+    dispatch(API.listSettings({ category, search, sort }));
   };
 
   const sortHandler = e => {
     setSortOrder(e.target.value);
-    dispatch(listSettings({ category, search, sort: e.target.value }));
+    dispatch(API.listSettings({ category, search, sort: e.target.value }));
   };
 
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(listSettings({ category, search, sort }));
+      dispatch(API.listSettings({ category, search, sort }));
     }
     return () => (clean = false);
   }, [dispatch, category, search, sort]);
   const deleteHandler = setting => {
-    dispatch(deleteSetting(setting._id));
+    dispatch(API.deleteSetting(setting._id));
   };
 
   const sort_options = ["Newest", "Artist Name", "Facebook Name", "Instagram Handle", "Sponsor", "Promoter"];

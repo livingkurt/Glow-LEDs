@@ -6,7 +6,7 @@ import { Helmet } from "react-helmet";
 import Search from "../../shared/GlowLEDsComponents/GLTable/Search";
 import Sort from "../../shared/GlowLEDsComponents/GLTable/Sort";
 import { GLButton } from "../../shared/GlowLEDsComponents";
-import { deleteTeam, listTeams } from "../../api";
+import * as API from "../../api";
 
 const TeamsPage = props => {
   const [search, set_search] = useState("");
@@ -20,29 +20,29 @@ const TeamsPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(listTeams({}));
+      dispatch(API.listTeams({}));
     }
     return () => (clean = false);
   }, [success, dispatch]);
   const handleListItems = e => {
     e.preventDefault();
-    dispatch(listTeams({ category, search, sort }));
+    dispatch(API.listTeams({ category, search, sort }));
   };
 
   const sortHandler = e => {
     setSortOrder(e.target.value);
-    dispatch(listTeams({ category, search, sort: e.target.value }));
+    dispatch(API.listTeams({ category, search, sort: e.target.value }));
   };
 
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(listTeams({ category, search, sort }));
+      dispatch(API.listTeams({ category, search, sort }));
     }
     return () => (clean = false);
   }, [dispatch, category, search, sort]);
   const deleteHandler = team => {
-    dispatch(deleteTeam(team._id));
+    dispatch(API.deleteTeam(team._id));
   };
 
   const sort_options = ["Newest", "Artist Name", "Facebook Name", "Instagram Handle", "Sponsor", "Promoter"];

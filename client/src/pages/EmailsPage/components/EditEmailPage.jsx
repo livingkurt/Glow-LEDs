@@ -8,7 +8,7 @@ import { SketchPicker } from "react-color";
 import reactCSS from "reactcss";
 import { accurate_date, format_date, format_time, unformat_date_and_time } from "../../../utils/helper_functions";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
-import { createEmail, detailsEmail, listContents, listEmails, updateEmail } from "../../../api";
+import * as API from "../../../api";
 const ReactDOMServer = require("react-dom/server");
 const HtmlToReactParser = require("html-to-react").Parser;
 
@@ -123,21 +123,21 @@ const EditEmailPage = props => {
     set_status("");
     set_scheduled_at("");
     set_subject("");
-    // dispatch(detailsEmail(''));
-    // dispatch(detailsContent(''));
+    // dispatch(API.detailsEmail(''));
+    // dispatch(API.detailsContent(''));
   };
 
   useEffect(() => {
     let clean = true;
     if (clean) {
       if (props.match.params.id) {
-        dispatch(detailsEmail(props.match.params.id));
-        dispatch(detailsEmail(props.match.params.id));
+        dispatch(API.detailsEmail(props.match.params.id));
+        dispatch(API.detailsEmail(props.match.params.id));
       } else {
-        dispatch(detailsEmail(""));
+        dispatch(API.detailsEmail(""));
       }
-      dispatch(listEmails({}));
-      dispatch(listContents({}));
+      dispatch(API.listEmails({}));
+      dispatch(API.listContents({}));
 
       set_email_state();
     }
@@ -145,10 +145,10 @@ const EditEmailPage = props => {
   }, [dispatch, props.match.params.id]);
 
   const use_template = e => {
-    dispatch(detailsEmail(e.target.value));
+    dispatch(API.detailsEmail(e.target.value));
   };
   const use_content_template = async e => {
-    // dispatch(detailsContent(e.target.value));
+    // dispatch(API.detailsContent(e.target.value));
     const { data } = await API_Emails.get_content(e.target.value);
     // set_content(data);
 
@@ -160,7 +160,7 @@ const EditEmailPage = props => {
     });
   };
   const view_announcement_email = async () => {
-    // dispatch(detailsContent(e.target.value));
+    // dispatch(API.detailsContent(e.target.value));
 
     const { data } = await API_Emails.view_announcement_email({
       _id: id ? id : null,
@@ -239,9 +239,9 @@ const EditEmailPage = props => {
       active: email_active
     };
     if (id) {
-      dispatch(updateEmail(data));
+      dispatch(API.updateEmail(data));
     } else {
-      dispatch(createEmail(data));
+      dispatch(API.createEmail(data));
     }
     e.target.reset();
     // unset_state();

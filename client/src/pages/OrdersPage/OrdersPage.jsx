@@ -13,7 +13,7 @@ import Search from "../../shared/GlowLEDsComponents/GLTable/Search";
 import Pagination from "../../shared/GlowLEDsComponents/GLTable/Pagination";
 import { OrderItemM, OrderListItem } from "./components";
 import Sort from "../../shared/GlowLEDsComponents/GLTable/Sort";
-import { listOrders, updateOrder } from "../../api";
+import * as API from "../../api";
 
 const OrdersPage = props => {
   const [search, set_search] = useState("");
@@ -40,7 +40,7 @@ const OrdersPage = props => {
         set_page(query.page);
         set_limit(query.limit);
         dispatch(
-          listOrders({
+          API.listOrders({
             category,
             search: query.search || "",
             sort,
@@ -68,12 +68,12 @@ const OrdersPage = props => {
     history.push({
       search: `?page=${page}?limit=${limit}${search ? "?search=" + search : ""}`
     });
-    dispatch(listOrders({ category, search, sort, page, limit }));
+    dispatch(API.listOrders({ category, search, sort, page, limit }));
   };
 
   const sortHandler = e => {
     setSortOrder(e.target.value);
-    dispatch(listOrders({ category, search, sort: e.target.value, page, limit }));
+    dispatch(API.listOrders({ category, search, sort: e.target.value, page, limit }));
   };
 
   const sort_options = ["Date", "Paid", "Manufactured", "Packaged", "Shipped", "Delivered", "International", "Newest", "Lowest", "Highest"];
@@ -88,7 +88,7 @@ const OrdersPage = props => {
     if (clean) {
       if (error) {
         check_authentication();
-        dispatch(listOrders({ category, search, sort, page, limit }));
+        dispatch(API.listOrders({ category, search, sort, page, limit }));
       }
     }
     return () => (clean = false);
@@ -103,7 +103,7 @@ const OrdersPage = props => {
       search: `?page=${page}?limit=${limit}${search ? "?search=" + search : ""}`
     });
 
-    dispatch(listOrders({ category, search, sort, page: new_page, limit }));
+    dispatch(API.listOrders({ category, search, sort, page: new_page, limit }));
   };
 
   useEffect(() => {
@@ -136,14 +136,14 @@ const OrdersPage = props => {
   // 	set_loading_email(true);
   // 	if (state) {
   // 		set_order_state({ ...order_state, [is_action]: false });
-  // 		dispatch(update_order(order, false, is_action, action_at));
+  // 		dispatch(API.update_order(order, false, is_action, action_at));
   // 	} else {
   // 		set_order_state({ ...order_state, [is_action]: true });
-  // 		dispatch(update_order(order, true, is_action, action_at));
+  // 		dispatch(API.update_order(order, true, is_action, action_at));
   // 		send_email(order, action_at.slice(0, -2));
   // 	}
   // 	setTimeout(() => {
-  // 		dispatch(detailsOrder(props.match.params.id));
+  // 		dispatch(API.detailsOrder(props.match.params.id));
   // 	}, 200);
   // 	set_loading_email(false);
   // };
@@ -151,11 +151,11 @@ const OrdersPage = props => {
   const mark_as_shipped = async () => {
     const { data: orders } = await API_Orders.mark_as_shipped();
     orders.forEach(async order => {
-      await dispatch(updateOrder(order, true, "isShipped", "shippedAt"));
+      await dispatch(API.updateOrder(order, true, "isShipped", "shippedAt"));
       await send_email(order, "shipped");
     });
     setTimeout(() => {
-      dispatch(listOrders({ category, search, sort, page, limit }));
+      dispatch(API.listOrders({ category, search, sort, page, limit }));
     }, 200);
   };
 

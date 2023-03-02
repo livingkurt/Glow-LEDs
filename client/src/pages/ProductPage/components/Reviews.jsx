@@ -9,6 +9,7 @@ import { PRODUCT_REVIEW_SAVE_RESET } from "../../../constants/productConstants";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import { isAdmin } from "../../../utils/helpers/user_helpers";
 import Rating from "../../../shared/GlowLEDsComponents/GLRating/Rating";
+import * as API from "../../../api";
 // Components
 
 const Review = props => {
@@ -45,7 +46,7 @@ const Review = props => {
     setRating(0);
     setComment("");
     dispatch({ type: PRODUCT_REVIEW_SAVE_RESET });
-    dispatch(detailsProduct(props.pathname));
+    dispatch(API.detailsProduct(props.pathname));
     setReviewModal("none");
   };
 

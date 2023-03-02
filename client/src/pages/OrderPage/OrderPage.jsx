@@ -15,7 +15,7 @@ import { Stripe } from "../../shared/SharedComponents/Stripe";
 import { OrderStatusButtons } from "./components";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import { validate_promo_code } from "../../utils/validations";
-import { createOrder, deleteOrder, detailsOrder, listOrders, listPromos, updateOrder } from "../../api";
+import * as API from "../../api";
 import { payOrder, refundOrder, update_payment } from "../../actions/orderActions";
 import { addToCart, removeFromCart } from "../../actions/cartActions";
 
@@ -87,7 +87,7 @@ const OrderPage = props => {
     if (clean) {
       if (refund) {
         set_refund_state(refund.isRefunded);
-        dispatch(detailsOrder(props.match.params.id));
+        dispatch(API.detailsOrder(props.match.params.id));
       }
     }
     return () => (clean = false);
@@ -96,8 +96,8 @@ const OrderPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(detailsOrder(props.match.params.id));
-      dispatch(listPromos({}));
+      dispatch(API.detailsOrder(props.match.params.id));
+      dispatch(API.listPromos({}));
     }
     return () => (clean = false);
   }, [props.match.params.id]);
@@ -140,7 +140,7 @@ const OrderPage = props => {
       if (successPay && order) {
         // history.push('/secure/checkout/paymentcomplete/' + order._id);
         history.push("/secure/checkout/order/receipt/" + order._id + "/order/true");
-        dispatch(detailsOrder(props.match.params.id));
+        dispatch(API.detailsOrder(props.match.params.id));
         set_payment_loading(false);
         empty_cart();
       } else if (errorPay) {
@@ -167,14 +167,14 @@ const OrderPage = props => {
     set_loading_email(true);
     if (state) {
       set_order_state({ ...order_state, [is_action]: false });
-      dispatch(updateOrder(order, false, is_action, action_at));
+      dispatch(API.updateOrder(order, false, is_action, action_at));
     } else {
       set_order_state({ ...order_state, [is_action]: true });
-      dispatch(updateOrder(order, true, is_action, action_at));
+      dispatch(API.updateOrder(order, true, is_action, action_at));
       send_email(action_at.slice(0, -2));
     }
     setTimeout(() => {
-      dispatch(detailsOrder(props.match.params.id));
+      dispatch(API.detailsOrder(props.match.params.id));
     }, 200);
     set_loading_email(false);
   };
@@ -206,14 +206,14 @@ const OrderPage = props => {
   const update_order_payment_state = (order, state, is_action) => {
     if (state) {
       set_order_state({ ...order_state, [is_action]: false });
-      dispatch(update_payment(order, false, payment_method));
+      dispatch(API.updateOrder(order, false, payment_method));
     } else {
       set_order_state({ ...order_state, [is_action]: true });
-      dispatch(update_payment(order, true, payment_method));
+      dispatch(API.updateOrder(order, true, payment_method));
       send_paid_email();
     }
     setTimeout(() => {
-      dispatch(detailsOrder(props.match.params.id));
+      dispatch(API.detailsOrder(props.match.params.id));
     }, 200);
   };
 
@@ -234,7 +234,7 @@ const OrderPage = props => {
 
     const request = await API_Shipping.add_tracking_number(order, data.tracking_code, data);
 
-    dispatch(detailsOrder(props.match.params.id));
+    dispatch(API.detailsOrder(props.match.params.id));
   };
 
   const create_return_label = async () => {
@@ -248,7 +248,7 @@ const OrderPage = props => {
 
     const request = await API_Shipping.add_return_tracking_number(order, data.tracking_code, data);
 
-    dispatch(detailsOrder(props.match.params.id));
+    dispatch(API.detailsOrder(props.match.params.id));
   };
 
   const buy_label = async () => {
@@ -270,7 +270,7 @@ const OrderPage = props => {
 
     const request = await API_Shipping.add_(order, data.tracking_code, data);
 
-    dispatch(detailsOrder(props.match.params.id));
+    dispatch(API.detailsOrder(props.match.params.id));
     // history.push('/secure/glow/emails/invoice/' + order._id);
     // history.push({
     // 	pathname: '/secure/glow/emails/invoice/' + order._id,
@@ -374,7 +374,7 @@ const OrderPage = props => {
 
   const create_duplicate_order = () => {
     dispatch(
-      createOrder({
+      API.createOrder({
         orderItems: order.orderItems,
         shipping: {
           ...order.shipping,
@@ -391,7 +391,7 @@ const OrderPage = props => {
         production_note: order.production_note
       })
     );
-    dispatch(listOrders({}));
+    dispatch(API.listOrders({}));
   };
 
   const move_left = e => {
@@ -441,13 +441,13 @@ const OrderPage = props => {
       set_loading_label(false);
     }
     dispatch(
-      updateOrder({
+      API.updateOrder({
         ...order,
         shipping: { ...order.shipping, shipment_id, shipping_rate }
       })
     );
     const request = await API_Shipping.add_tracking_number(order, data.tracking_code, data);
-    dispatch(detailsOrder(props.match.params.id));
+    dispatch(API.detailsOrder(props.match.params.id));
     history.push("/secure/glow/emails/invoice/" + order._id);
   };
 
@@ -522,7 +522,7 @@ const OrderPage = props => {
     };
     set_order_items(new_order_items);
     dispatch(
-      updateOrder({
+      API.updateOrder({
         ...order,
         orderItems: [...new_order_items]
       })
@@ -1101,7 +1101,7 @@ ${order.shipping.email}`)
                       <GLButton variant="secondary" className="mv-5px">
                         <Link to={"/secure/glow/editorder/" + order._id}>Edit Order</Link>
                       </GLButton>
-                      <GLButton variant="secondary" className="mv-5px" onClick={() => dispatch(deleteOrder(order._id))}>
+                      <GLButton variant="secondary" className="mv-5px" onClick={() => dispatch(API.deleteOrder(order._id))}>
                         Delete Order
                       </GLButton>
                       {hide_label_button && (

@@ -30,7 +30,7 @@ import {
 } from "../../../utils/helpers/product_helpers";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import ImageUploader from "../../../shared/SharedComponents/ImageUploader";
-import { createProduct, detailsProduct, listCategorys, listFilaments, listUsers, updateProduct } from "../../../api";
+import * as API from "../../../api";
 
 const EditProductPage = props => {
   // const [modalVisible, setModalVisible] = useState(false);
@@ -174,11 +174,11 @@ const EditProductPage = props => {
       if (props.match.params.pathname) {
         // if (props.match.params.template) {
 
-        dispatch(detailsProduct(props.match.params.pathname));
-        dispatch(detailsProduct(props.match.params.pathname));
+        dispatch(API.detailsProduct(props.match.params.pathname));
+        dispatch(API.detailsProduct(props.match.params.pathname));
         // }
       } else {
-        dispatch(detailsProduct(""));
+        dispatch(API.detailsProduct(""));
       }
       get_all_options();
       findAll_products_a();
@@ -196,11 +196,11 @@ const EditProductPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(listCategorys({}));
-      dispatch(listUsers({}));
-      // dispatch(listProducts({ limit: 300 }));
-      dispatch(listChips({}));
-      dispatch(listFilaments({}));
+      dispatch(API.listCategorys({}));
+      dispatch(API.listUsers({}));
+      // dispatch(API.listProducts({ limit: 300 }));
+      dispatch(API.listChips({}));
+      dispatch(API.listFilaments({}));
     }
     return () => (clean = false);
   }, []);
@@ -235,7 +235,7 @@ const EditProductPage = props => {
   };
 
   const use_template = e => {
-    dispatch(detailsProduct(e.target.value));
+    dispatch(API.detailsProduct(e.target.value));
   };
   const use_product_options_template = async e => {
     const { data } = await API_Products.get_product(e.target.value);
@@ -554,9 +554,9 @@ const EditProductPage = props => {
       filament: filament ? filament._id : null
     };
     if (props.match.params.pathname && props.match.params.template === "false") {
-      dispatch(updateProduct(data));
+      dispatch(API.updateProduct(data));
     } else {
-      dispatch(createProduct(data));
+      dispatch(API.createProduct(data));
     }
     // if (props.match.params.product_option && props.match.params.item_group_id) {
     //   const {

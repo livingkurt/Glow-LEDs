@@ -11,7 +11,7 @@ import { categories, humanize, subcategories, update_products_url } from "../../
 import { GLButton } from "../GlowLEDsComponents";
 import { isAdmin } from "../../utils/helpers/user_helpers";
 import Filter from "../GlowLEDsComponents/GLTable/Filter";
-import { listChips } from "../../api";
+import * as API from "../../api";
 
 const Header = props => {
   const history = useHistory();
@@ -151,7 +151,7 @@ const Header = props => {
     let clean = true;
     if (clean) {
       findAll_products_a();
-      dispatch(listChips({}));
+      dispatch(API.listChips({}));
     }
     return () => (clean = false);
   }, []);

@@ -20,7 +20,7 @@ const FeaturedPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(detailsFeature(props.match.params.pathname));
+      dispatch(API.detailsFeature(props.match.params.pathname));
     }
     return () => (clean = false);
   }, []);

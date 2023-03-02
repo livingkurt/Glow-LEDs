@@ -14,7 +14,7 @@ import { DirectLink, Element, Events, animateScroll as scroll, scrollSpy, scroll
 import { Filter } from "../SharedComponents";
 import { GLButton } from "../GlowLEDsComponents";
 import { isAdmin } from "../../../utils/helpers/user_helpers";
-import { listChips } from "../../api";
+import * as API from "../../api";
 
 const Header = props => {
   const history = useHistory();
@@ -154,7 +154,7 @@ const Header = props => {
     let clean = true;
     if (clean) {
       findAll_products_a();
-      dispatch(listChips({}));
+      dispatch(API.listChips({}));
     }
     return () => (clean = false);
   }, []);

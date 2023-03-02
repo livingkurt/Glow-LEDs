@@ -6,7 +6,7 @@ import { Helmet } from "react-helmet";
 import "react-medium-image-zoom/dist/styles.css";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import StarRating from "../../../shared/GlowLEDsComponents/GLRating/StarRating";
-import { createSurvey, detailsOrder, detailsSurvey, listSurveys, listUsers } from "../../../api";
+import * as API from "../../../api";
 
 const Survey = props => {
   const [question_1, set_question_1] = useState("");
@@ -60,10 +60,10 @@ const Survey = props => {
     if (clean) {
       const active_survey = surveys.find(survey => survey.is_survey === true && survey.active === true);
       if (active_survey) {
-        dispatch(detailsSurvey(active_survey._id));
+        dispatch(API.detailsSurvey(active_survey._id));
         set_survey_questions(active_survey._id);
       }
-      dispatch(detailsOrder(props.order_id));
+      dispatch(API.detailsOrder(props.order_id));
     }
     return () => (clean = false);
   }, [surveys, dispatch]);
@@ -71,8 +71,8 @@ const Survey = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(listSurveys({}));
-      dispatch(listUsers({}));
+      dispatch(API.listSurveys({}));
+      dispatch(API.listUsers({}));
 
       set_state();
     }
@@ -138,7 +138,7 @@ const Survey = props => {
       user = null;
     }
     dispatch(
-      createSurvey({
+      API.createSurvey({
         user: user,
         question_1,
         question_2,

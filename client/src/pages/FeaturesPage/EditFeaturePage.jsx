@@ -7,7 +7,7 @@ import { Helmet } from "react-helmet";
 import { listProducts } from "../../actions/productActions";
 import { listUsers } from "../../actions/userActions";
 import { GLButton } from "../../shared/GlowLEDsComponents";
-import { createFeature, detailsFeature, updateFeature } from "../../api";
+import * as API from "../../api";
 
 const EditFeaturePage = props => {
   const [id, set_id] = useState("");
@@ -44,13 +44,13 @@ const EditFeaturePage = props => {
     let clean = true;
     if (clean) {
       if (props.match.params.pathname) {
-        dispatch(detailsFeature(props.match.params.pathname));
-        dispatch(detailsFeature(props.match.params.pathname));
+        dispatch(API.detailsFeature(props.match.params.pathname));
+        dispatch(API.detailsFeature(props.match.params.pathname));
       } else {
-        dispatch(detailsFeature({}));
+        dispatch(API.detailsFeature({}));
       }
-      dispatch(listProducts({ option: false, hidden: false }));
-      dispatch(listUsers({}));
+      dispatch(API.listProducts({ option: false, hidden: false }));
+      dispatch(API.listUsers({}));
 
       set_state();
     }
@@ -127,9 +127,9 @@ const EditFeaturePage = props => {
       release_date: unformat_date(release_date)
     };
     if (id) {
-      dispatch(updateFeature(data));
+      dispatch(API.updateFeature(data));
     } else {
-      dispatch(createFeature(data));
+      dispatch(API.createFeature(data));
     }
     e.target.reset();
     unset_state();

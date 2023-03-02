@@ -1,7 +1,7 @@
 /* eslint-disable max-lines-per-function */
 /* eslint-disable no-param-reassign */
 import { createSlice } from "@reduxjs/toolkit";
-import * as API from "../api/productApi";
+import * as API from "../api";
 
 const productSlice = createSlice({
   name: "products",

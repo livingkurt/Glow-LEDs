@@ -6,7 +6,7 @@ import { Loading, Notification } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { snake_case } from "../../utils/helper_functions";
 import { GLButton } from "../../shared/GlowLEDsComponents";
-import { createChip, updateChip } from "../../api";
+import * as API from "../../api";
 
 const EditChipPage = props => {
   const [id, set_id] = useState("");
@@ -65,10 +65,10 @@ const EditChipPage = props => {
     let clean = true;
     if (clean) {
       if (props.match.params.id) {
-        dispatch(detailsChip(props.match.params.id));
-        dispatch(detailsChip(props.match.params.id));
+        dispatch(API.detailsChip(props.match.params.id));
+        dispatch(API.detailsChip(props.match.params.id));
       } else {
-        dispatch(detailsChip(""));
+        dispatch(API.detailsChip(""));
       }
       set_state();
     }
@@ -107,9 +107,9 @@ const EditChipPage = props => {
       pathname: pathname ? pathname : snake_case(name)
     };
     if (id) {
-      dispatch(updateChip(data));
+      dispatch(API.updateChip(data));
     } else {
-      dispatch(createChip(data));
+      dispatch(API.createChip(data));
     }
     e.target.reset();
     unset_state();

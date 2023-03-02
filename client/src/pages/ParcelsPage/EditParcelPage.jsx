@@ -6,7 +6,7 @@ import { Loading } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { humanize } from "../../utils/helper_functions";
 import { GLButton } from "../../shared/GlowLEDsComponents";
-import { createParcel, updateParcel } from "../../api";
+import * as API from "../../api";
 
 const EditParcelPage = props => {
   const [id, set_id] = useState("");
@@ -49,10 +49,10 @@ const EditParcelPage = props => {
     let clean = true;
     if (clean) {
       if (props.match.params.id) {
-        dispatch(detailsParcel(props.match.params.id));
-        dispatch(detailsParcel(props.match.params.id));
+        dispatch(API.detailsParcel(props.match.params.id));
+        dispatch(API.detailsParcel(props.match.params.id));
       } else {
-        dispatch(detailsParcel(""));
+        dispatch(API.detailsParcel(""));
       }
       set_state();
     }
@@ -87,9 +87,9 @@ const EditParcelPage = props => {
       quantity_state
     };
     if (id) {
-      dispatch(updateParcel(data));
+      dispatch(API.updateParcel(data));
     } else {
-      dispatch(createParcel(data));
+      dispatch(API.createParcel(data));
     }
     e.target.reset();
     unset_state();

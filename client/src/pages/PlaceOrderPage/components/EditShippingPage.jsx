@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { update } from "../../../actions/userActions";
-import { listMyOrders } from "../../../actions/orderActions";
 import { useDispatch, useSelector } from "react-redux";
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
+import * as API from "../../../api";
 
 const ProfilePage = props => {
   const history = useHistory();
@@ -18,7 +17,7 @@ const ProfilePage = props => {
 
   const submitHandler = e => {
     e.preventDefault();
-    dispatch(update({ userId: userInfo._id, email, name, password }));
+    dispatch(API.updateUser({ userId: userInfo._id, email, name, password }));
     history.push(`/secure/account/profile`);
   };
 
@@ -31,7 +30,7 @@ const ProfilePage = props => {
 
         setPassword(userInfo.password);
       }
-      dispatch(listMyOrders());
+      dispatch(API.listOrders({ user: userInfo._id }));
     }
     return () => (clean = false);
   }, [userInfo]);

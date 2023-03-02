@@ -10,7 +10,7 @@ import { format_date } from "../../utils/helper_functions";
 import { API_Revenue } from "../../utils";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import CSVReader from "react-csv-reader";
-import { deleteExpense, listExpenses } from "../../api";
+import * as API from "../../api";
 
 const ExpensesPage = props => {
   const [search, set_search] = useState("");
@@ -31,30 +31,30 @@ const ExpensesPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(listExpenses({ category, search, sort }));
+      dispatch(API.listExpenses({ category, search, sort }));
     }
     return () => (clean = false);
   }, [sort]);
 
   const handleListItems = e => {
     e.preventDefault();
-    dispatch(listExpenses({ category, search, sort }));
+    dispatch(API.listExpenses({ category, search, sort }));
   };
 
   const sortHandler = e => {
     setSortOrder(e.target.value);
-    dispatch(listExpenses({ category, search, sort: e.target.value }));
+    dispatch(API.listExpenses({ category, search, sort: e.target.value }));
   };
 
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(listExpenses({}));
+      dispatch(API.listExpenses({}));
     }
     return () => (clean = false);
   }, [success]);
   const deleteHandler = expense => {
-    dispatch(deleteExpense(expense._id));
+    dispatch(API.deleteExpense(expense._id));
   };
 
   const colors = [
@@ -95,7 +95,7 @@ const ExpensesPage = props => {
   const handle_csv_expenses = async (data, fileInfo, properties, card) => {
     const create_all_expenses_s = await API_Revenue.create_all_expenses_s(data, userInfo, card, properties);
 
-    dispatch(listExpenses({ category, search, sort }));
+    dispatch(API.listExpenses({ category, search, sort }));
   };
 
   const card_types = ["FID", "GL AMEX", "AMZNK"];

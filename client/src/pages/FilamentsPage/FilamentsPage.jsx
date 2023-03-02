@@ -5,7 +5,7 @@ import { Loading, Notification } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 
 import { GLButton } from "../../shared/GlowLEDsComponents";
-import { createFilament, deleteFilament, listFilaments, updateFilament } from "../../api";
+import * as API from "../../api";
 
 const FilamentsPage = props => {
   const [search, set_search] = useState("");
@@ -28,31 +28,31 @@ const FilamentsPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(listFilaments({}));
+      dispatch(API.listFilaments({}));
     }
     return () => (clean = false);
   }, [success, dispatch]);
 
   // const submitHandler = e => {
   //   e.preventDefault();
-  //   dispatch(listFilaments({ category, search, sort }));
+  //   dispatch(API.listFilaments({ category, search, sort }));
   // };
 
   // const sortHandler = e => {
   //   setSortOrder(e.target.value);
-  //   dispatch(listFilaments({ category, search, sort: e.target.value }));
+  //   dispatch(API.listFilaments({ category, search, sort: e.target.value }));
   // };
 
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(listFilaments({ category, search, sort }));
+      dispatch(API.listFilaments({ category, search, sort }));
     }
     return () => (clean = false);
   }, [dispatch, category, search, sort]);
 
   const deleteHandler = filament => {
-    dispatch(deleteFilament(filament._id));
+    dispatch(API.deleteFilament(filament._id));
   };
 
   const date = new Date();
@@ -67,7 +67,7 @@ const FilamentsPage = props => {
   //       paid_at: format_date(today),
   //     })
   //   );
-  //   dispatch(listFilaments({}));
+  //   dispatch(API.listFilaments({}));
   // };
 
   // const sort_options = [
@@ -97,13 +97,13 @@ const FilamentsPage = props => {
 
   const change_filament_status = filament => {
     dispatch(
-      updateFilament({
+      API.updateFilament({
         ...filament,
         active: filament.active ? false : true
       })
     );
-    dispatch(listFilaments({}));
-    dispatch(listFilaments({}));
+    dispatch(API.listFilaments({}));
+    dispatch(API.listFilaments({}));
   };
 
   return (

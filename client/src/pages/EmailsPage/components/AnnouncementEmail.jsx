@@ -8,7 +8,7 @@ import { accurate_date, format_date, format_time, unformat_date_and_time } from 
 import { Notification } from "../../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
-import { detailsEmail } from "../../../api";
+import * as API from "../../../api";
 const HtmlToReactParser = require("html-to-react").Parser;
 
 const AnnouncementEmail = props => {
@@ -39,7 +39,7 @@ const AnnouncementEmail = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(detailsEmail(props.match.params.id));
+      dispatch(API.detailsEmail(props.match.params.id));
     }
     return () => (clean = false);
   }, []);

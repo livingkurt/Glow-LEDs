@@ -4,7 +4,7 @@ import { API_Emails, API_Promos } from "../../../utils";
 import { validate_email } from "../../../utils/validations";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import useWindowDimensions from "../../../shared/Hooks/windowDimensions";
-import { createUser } from "../../../api";
+import * as API from "../../../api";
 
 const EmailModal = props => {
   const [email, set_email] = useState("");
@@ -24,7 +24,7 @@ const EmailModal = props => {
     setEmailValidations(request.errors.email);
     if (request.isValid) {
       dispatch(
-        createUser({
+        API.createUser({
           _id: null,
           first_name: "",
           last_name: "",

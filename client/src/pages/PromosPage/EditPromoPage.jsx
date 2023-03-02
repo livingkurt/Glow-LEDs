@@ -6,7 +6,7 @@ import { Helmet } from "react-helmet";
 import { API_Products } from "../../utils";
 import { format_date, unformat_date } from "../../utils/helper_functions";
 import { GLButton } from "../../shared/GlowLEDsComponents";
-import { createPromo, detailsPromo, listAffiliates, listProducts, listUsers, updatePromo } from "../../api";
+import * as API from "../../api";
 
 const EditPromoPage = props => {
   const [id, set_id] = useState("");
@@ -55,15 +55,15 @@ const EditPromoPage = props => {
     let clean = true;
     if (clean) {
       if (props.match.params.id) {
-        dispatch(detailsPromo(props.match.params.id));
-        dispatch(detailsPromo(props.match.params.id));
+        dispatch(API.detailsPromo(props.match.params.id));
+        dispatch(API.detailsPromo(props.match.params.id));
       } else {
-        dispatch(detailsPromo(""));
+        dispatch(API.detailsPromo(""));
       }
-      dispatch(listProducts({ option: false, hidden: false }));
+      dispatch(API.listProducts({ option: false, hidden: false }));
       get_categories();
-      dispatch(listUsers({}));
-      dispatch(listAffiliates({}));
+      dispatch(API.listUsers({}));
+      dispatch(API.listAffiliates({}));
       set_state();
     }
     return () => (clean = false);
@@ -177,9 +177,9 @@ const EditPromoPage = props => {
       active
     };
     if (id) {
-      dispatch(updatePromo(data));
+      dispatch(API.updatePromo(data));
     } else {
-      dispatch(createPromo(data));
+      dispatch(API.createPromo(data));
     }
     e.target.reset();
     unset_state();

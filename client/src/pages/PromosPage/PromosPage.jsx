@@ -8,7 +8,7 @@ import Sort from "../../shared/GlowLEDsComponents/GLTable/Sort";
 import { format_date } from "../../utils/helper_functions";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import { API_Emails, API_Promos } from "../../utils";
-import { deletePromo, listPromos, updatePromo } from "../../api";
+import * as API from "../../api";
 
 const PromosPage = props => {
   const [search, set_search] = useState("");
@@ -22,29 +22,29 @@ const PromosPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(listPromos({}));
+      dispatch(API.listPromos({}));
     }
     return () => (clean = false);
   }, [success, dispatch]);
   const submitHandler = e => {
     e.preventDefault();
-    dispatch(listPromos({ category, search, sort }));
+    dispatch(API.listPromos({ category, search, sort }));
   };
 
   const sortHandler = e => {
     setSortOrder(e.target.value);
-    dispatch(listPromos({ category, search, sort: e.target.value }));
+    dispatch(API.listPromos({ category, search, sort: e.target.value }));
   };
 
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(listPromos({ category, search, sort }));
+      dispatch(API.listPromos({ category, search, sort }));
     }
     return () => (clean = false);
   }, [dispatch, category, search, sort]);
   const deleteHandler = promo => {
-    dispatch(deletePromo(promo._id));
+    dispatch(API.deletePromo(promo._id));
   };
 
   const colors = [
@@ -130,18 +130,18 @@ const PromosPage = props => {
 
   const change_promo_status = promo => {
     dispatch(
-      updatePromo({
+      API.updatePromo({
         ...promo,
         active: promo.active ? false : true
       })
     );
-    dispatch(listPromos({}));
-    dispatch(listPromos({}));
+    dispatch(API.listPromos({}));
+    dispatch(API.listPromos({}));
   };
 
   const refresh_sponsor_codes = async () => {
     await API_Promos.refresh_sponsor_codes();
-    dispatch(listPromos({}));
+    dispatch(API.listPromos({}));
   };
 
   const send_code_used_email = async () => {

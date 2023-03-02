@@ -19,7 +19,7 @@ import ProductItemM from "./ProductItemM";
 import Pagination from "../../../shared/GlowLEDsComponents/GLTable/Pagination";
 import Sort from "../../../shared/GlowLEDsComponents/GLTable/Sort";
 import Filter from "../../../shared/GlowLEDsComponents/GLTable/Filter";
-import { listChips, listProducts } from "../../../api";
+import * as API from "../../../api";
 
 const AllProductsByChipPage = props => {
   const history = useHistory();
@@ -93,7 +93,7 @@ const AllProductsByChipPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(listChips({}));
+      dispatch(API.listChips({}));
       determine_products();
       get_occurrences(props.match.params.category);
     }
@@ -147,7 +147,7 @@ const AllProductsByChipPage = props => {
       }
 
       dispatch(
-        listProducts({
+        API.listProducts({
           category,
           subcategory,
           chip: filter,
@@ -206,7 +206,7 @@ const AllProductsByChipPage = props => {
     set_sort(e.target.value);
     update_products_url(history, search, e.target.value, filter, limit);
     dispatch(
-      listProducts({
+      API.listProducts({
         category,
         subcategory,
         search,
@@ -228,7 +228,7 @@ const AllProductsByChipPage = props => {
     //
     update_products_url(history, "", sort, chip_selected.name, limit);
     dispatch(
-      listProducts({
+      API.listProducts({
         category,
         subcategory,
         chip: chip_selected._id,
@@ -250,7 +250,7 @@ const AllProductsByChipPage = props => {
 
     //
     dispatch(
-      listProducts({
+      API.listProducts({
         category,
         subcategory,
         chip: filter,

@@ -7,7 +7,7 @@ import { format_date } from "../../utils/helper_functions";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import Search from "../../shared/GlowLEDsComponents/GLTable/Search";
 import Sort from "../../shared/GlowLEDsComponents/GLTable/Sort";
-import { deleteFeature, listFeatures } from "../../api";
+import * as API from "../../api";
 
 const FeaturesPage = props => {
   const [search, set_search] = useState("");
@@ -21,29 +21,29 @@ const FeaturesPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(listFeatures({}));
+      dispatch(API.listFeatures({}));
     }
     return () => (clean = false);
   }, [success, dispatch]);
   const handleListItems = e => {
     e.preventDefault();
-    dispatch(listFeatures({ category, search, sort }));
+    dispatch(API.listFeatures({ category, search, sort }));
   };
 
   const sortHandler = e => {
     setSortOrder(e.target.value);
-    dispatch(listFeatures({ category, search, sort: e.target.value }));
+    dispatch(API.listFeatures({ category, search, sort: e.target.value }));
   };
 
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(listFeatures({ category, search, sort }));
+      dispatch(API.listFeatures({ category, search, sort }));
     }
     return () => (clean = false);
   }, [category, search, sort, dispatch]);
   const deleteHandler = feature => {
-    dispatch(deleteFeature(feature._id));
+    dispatch(API.deleteFeature(feature._id));
   };
 
   const sort_options = ["Release Date", "Glover Name", "Facebook Name", "Instagram Handle", "Product", "Song ID", "Newest"];

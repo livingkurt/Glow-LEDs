@@ -1,7 +1,7 @@
 /* eslint-disable max-lines-per-function */
 /* eslint-disable no-param-reassign */
 import { createSlice } from "@reduxjs/toolkit";
-import * as API from "../api/cartApi";
+import * as API from "../api";
 
 const cartSlice = createSlice({
   name: "carts",
@@ -11,10 +11,22 @@ const cartSlice = createSlice({
     cart: {},
     message: "",
     error: {},
+    shipping: {
+      first_name: "",
+      last_name: "",
+      address_1: "",
+      address_2: "",
+      city: "",
+      state: "",
+      postalCode: "",
+      international: false,
+      country: ""
+    },
     search: "",
     sort: "",
     page: 1,
     limit: 10,
+    paymentMethod: "",
     sort_options: ["Newest", "Artist Name", "Facebook Name", "Instagram Handle", "Sponsor", "Promoter"],
     colors: [
       { name: "Sponsor", color: "#3e4c6d" },
@@ -46,6 +58,18 @@ const cartSlice = createSlice({
     },
     set_limit: (state, { payload }) => {
       state.limit = payload;
+    },
+    save_payment_method: (state, { payload }) => {
+      state.paymentMethod = payload;
+    },
+    save_shipping: (state, { payload }) => {
+      state.shipping = payload;
+    },
+    remove_from_cart: (state, { payload }) => {
+      state.shipping = payload;
+    },
+    add_to_cart: (state, { payload }) => {
+      state.cart = payload;
     }
   },
   extraReducers: {

@@ -6,7 +6,7 @@ import { Helmet } from "react-helmet";
 import { snake_case } from "../../../utils/helper_functions";
 import useWindowDimensions from "../../../shared/Hooks/windowDimensions";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
-import { createAffiliate, detailsAffiliate, listChips, listProducts, listUsers, updateAffiliate } from "../../../api";
+import * as API from "../../../api";
 
 const EditUserAffiliatePage = props => {
   const [id, set_id] = useState("");
@@ -123,14 +123,14 @@ const EditUserAffiliatePage = props => {
     let clean = true;
     if (clean) {
       if (props.match.params.id) {
-        dispatch(detailsAffiliate({ pathname: props.match.params.id }));
-        dispatch(detailsAffiliate({ pathname: props.match.params.id }));
+        dispatch(API.detailsAffiliate({ pathname: props.match.params.id }));
+        dispatch(API.detailsAffiliate({ pathname: props.match.params.id }));
       } else {
-        dispatch(detailsAffiliate(""));
+        dispatch(API.detailsAffiliate(""));
       }
-      dispatch(listUsers({}));
-      dispatch(listProducts({ option: false, hidden: false }));
-      dispatch(listChips({}));
+      dispatch(API.listUsers({}));
+      dispatch(API.listProducts({ option: false, hidden: false }));
+      dispatch(API.listChips({}));
       set_state();
     }
     return () => (clean = false);
@@ -175,9 +175,9 @@ const EditUserAffiliatePage = props => {
       answers: answer_1 && answer_2 && answer_3 && !props.match.params.id && [answer_1, answer_2, answer_3]
     };
     if (id) {
-      dispatch(updateAffiliate(data));
+      dispatch(API.updateAffiliate(data));
     } else {
-      dispatch(createAffiliate(data));
+      dispatch(API.createAffiliate(data));
     }
 
     e.target.reset();

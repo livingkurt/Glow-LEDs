@@ -8,7 +8,7 @@ import { API_Orders } from "../../utils";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import Search from "../../shared/GlowLEDsComponents/GLTable/Search";
 import Sort from "../../shared/GlowLEDsComponents/GLTable/Sort";
-import { deletePalette, listAffiliates, listOrders, listPalettes, listTeams, updatePalette } from "../../api";
+import * as API from "../../api";
 
 const PalettesPage = props => {
   const [search, set_search] = useState("");
@@ -37,10 +37,10 @@ const PalettesPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(listPalettes({}));
-      dispatch(listAffiliates({}));
-      dispatch(listTeams({}));
-      dispatch(listOrders({}));
+      dispatch(API.listPalettes({}));
+      dispatch(API.listAffiliates({}));
+      dispatch(API.listTeams({}));
+      dispatch(API.listOrders({}));
       get_last_months_orders();
       get_total_orders();
     }
@@ -59,23 +59,23 @@ const PalettesPage = props => {
   };
   const handleListItems = e => {
     e.preventDefault();
-    dispatch(listPalettes({ category, search, sort }));
+    dispatch(API.listPalettes({ category, search, sort }));
   };
 
   const sortHandler = e => {
     setSortOrder(e.target.value);
-    dispatch(listPalettes({ category, search, sort: e.target.value }));
+    dispatch(API.listPalettes({ category, search, sort: e.target.value }));
   };
 
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(listPalettes({ category, search, sort }));
+      dispatch(API.listPalettes({ category, search, sort }));
     }
     return () => (clean = false);
   }, [dispatch, category, search, sort]);
   const deleteHandler = palette => {
-    dispatch(deletePalette(palette._id));
+    dispatch(API.deletePalette(palette._id));
   };
 
   const date = new Date();
@@ -84,13 +84,13 @@ const PalettesPage = props => {
 
   const mark_paid = palette => {
     dispatch(
-      updatePalette({
+      API.updatePalette({
         ...palette,
         paid: true,
         paid_at: format_date(today)
       })
     );
-    dispatch(listPalettes({}));
+    dispatch(API.listPalettes({}));
   };
 
   const sort_options = ["Newest", "Artist Name", "Facebook Name", "Instagram Handle", "Sponsor", "Promoter"];

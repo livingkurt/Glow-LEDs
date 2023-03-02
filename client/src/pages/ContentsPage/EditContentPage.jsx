@@ -6,7 +6,7 @@ import { Helmet } from "react-helmet";
 import { listEmails, saveEmail } from "../../actions/emailActions";
 import { API_Emails } from "../../utils";
 import { GLButton } from "../../shared/GlowLEDsComponents";
-import { createContent, createEmail, detailsContent, updateContent, updateEmail } from "../../api";
+import * as API from "../../api";
 
 const EditContentPage = props => {
   const [id, set_id] = useState("");
@@ -74,12 +74,12 @@ const EditContentPage = props => {
     let clean = true;
     if (clean) {
       if (props.match.params.id) {
-        dispatch(detailsContent(props.match.params.id));
-        dispatch(detailsContent(props.match.params.id));
+        dispatch(API.detailsContent(props.match.params.id));
+        dispatch(API.detailsContent(props.match.params.id));
       } else {
-        dispatch(detailsContent(""));
+        dispatch(API.detailsContent(""));
       }
-      dispatch(listEmails({}));
+      dispatch(API.listEmails({}));
 
       // set_loading_data(false);
       set_state();
@@ -88,17 +88,17 @@ const EditContentPage = props => {
   }, [dispatch]);
 
   const use_template = e => {
-    dispatch(detailsContent(e.target.value));
+    dispatch(API.detailsContent(e.target.value));
     set_using_template(true);
   };
 
   // const use_email_template = (e) => {
-  // 	dispatch(detailsEmail(e.target.value));
+  // 	dispatch(API.detailsEmail(e.target.value));
   // 	set_using_template(true);
   // };
 
   const use_email_template = async e => {
-    // dispatch(detailsContent(e.target.value));
+    // dispatch(API.detailsContent(e.target.value));
     const { data } = await API_Emails.get_email(e.target.value);
     set_email(data);
     const formatted_link = data.link && data.link.replace("https://www.glow-leds.com", "");
@@ -133,9 +133,9 @@ const EditContentPage = props => {
       active
     };
     if (using_template) {
-      dispatch(updateContent(data));
+      dispatch(API.updateContent(data));
     } else {
-      dispatch(createContent(data));
+      dispatch(API.createContent(data));
     }
     if (create_email && (using_template || id)) {
       const data = {
@@ -150,9 +150,9 @@ const EditContentPage = props => {
         active: home_page.active
       };
       if (using_template) {
-        dispatch(updateEmail(data));
+        dispatch(API.updateEmail(data));
       } else {
-        dispatch(createEmail(data));
+        dispatch(API.createEmail(data));
       }
     }
     e.target.reset();

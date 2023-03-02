@@ -7,7 +7,7 @@ import { Helmet } from "react-helmet";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import Search from "../../shared/GlowLEDsComponents/GLTable/Search";
 import Sort from "../../shared/GlowLEDsComponents/GLTable/Sort";
-import { deleteUser, listUsers } from "../../api";
+import * as API from "../../api";
 
 const UsersPage = props => {
   const [search, set_search] = useState("");
@@ -27,29 +27,29 @@ const UsersPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(listUsers({}));
+      dispatch(API.listUsers({}));
     }
     return () => (clean = false);
   }, [successDelete]);
 
   const deleteHandler = user => {
-    dispatch(deleteUser(user._id));
+    dispatch(API.deleteUser(user._id));
   };
 
   const submitHandler = e => {
     e.preventDefault();
-    dispatch(listUsers({ category, search, sort }));
+    dispatch(API.listUsers({ category, search, sort }));
   };
 
   const sortHandler = e => {
     setSortOrder(e.target.value);
-    dispatch(listUsers({ category, search, sort: e.target.value }));
+    dispatch(API.listUsers({ category, search, sort: e.target.value }));
   };
 
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(listUsers({ category, search, sort }));
+      dispatch(API.listUsers({ category, search, sort }));
     }
     return () => (clean = false);
   }, [sort]);

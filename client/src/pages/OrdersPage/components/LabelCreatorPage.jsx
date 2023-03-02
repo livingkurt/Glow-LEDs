@@ -8,7 +8,7 @@ import { Loading } from "../../../shared/SharedComponents";
 import Autocomplete from "react-google-autocomplete";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import { isAdmin } from "../../../utils/helpers/user_helpers";
-import { listParcels } from "../../../api";
+import * as API from "../../../api";
 
 const LabelCreatorPage = props => {
   const userLogin = useSelector(state => state.userLogin);
@@ -38,7 +38,7 @@ const LabelCreatorPage = props => {
       if (isAdmin(userInfo)) {
         get_all_shipping();
       }
-      dispatch(listParcels({}));
+      dispatch(API.listParcels({}));
     }
     return () => (clean = false);
   }, []);

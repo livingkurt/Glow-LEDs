@@ -6,7 +6,7 @@ import { Loading } from "../../shared/SharedComponents";
 import { format_date, unformat_date } from "../../utils/helper_functions";
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../shared/GlowLEDsComponents";
-import { createExpense, updateExpense } from "../../api";
+import * as API from "../../api";
 
 const EditExpensePage = props => {
   const [id, set_id] = useState("");
@@ -30,10 +30,10 @@ const EditExpensePage = props => {
     let clean = true;
     if (clean) {
       if (props.match.params.id) {
-        dispatch(detailsExpense(props.match.params.id));
-        dispatch(detailsExpense(props.match.params.id));
+        dispatch(API.detailsExpense(props.match.params.id));
+        dispatch(API.detailsExpense(props.match.params.id));
       } else {
-        dispatch(detailsExpense(""));
+        dispatch(API.detailsExpense(""));
       }
       set_state();
     }
@@ -90,9 +90,9 @@ const EditExpensePage = props => {
       amount
     };
     if (id) {
-      dispatch(updateExpense(data));
+      dispatch(API.updateExpense(data));
     } else {
-      dispatch(createExpense(data));
+      dispatch(API.createExpense(data));
     }
     e.target.reset();
     unset_state();

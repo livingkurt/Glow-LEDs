@@ -5,7 +5,7 @@ import { Loading, Notification } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import Search from "../../shared/GlowLEDsComponents/GLTable/Search";
 import { GLButton } from "../../shared/GlowLEDsComponents";
-import { createContent, deleteContent, listContents, updateContent } from "../../api";
+import * as API from "../../api";
 
 const ContentsPage = props => {
   const [search, set_search] = useState("");
@@ -18,28 +18,28 @@ const ContentsPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(listContents({}));
+      dispatch(API.listContents({}));
     }
     return () => (clean = false);
   }, [success, dispatch]);
   const handleListItems = e => {
     e.preventDefault();
-    dispatch(listContents({ category, search }));
+    dispatch(API.listContents({ category, search }));
   };
 
   const deleteHandler = content => {
-    dispatch(deleteContent(content._id));
+    dispatch(API.deleteContent(content._id));
   };
 
   const change_content_status = content => {
     dispatch(
-      updateContent({
+      API.updateContent({
         ...content,
         active: content.active ? false : true
       })
     );
-    dispatch(listContents({}));
-    dispatch(listContents({}));
+    dispatch(API.listContents({}));
+    dispatch(API.listContents({}));
   };
 
   return (

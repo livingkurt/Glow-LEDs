@@ -5,7 +5,7 @@ import { Loading } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import { TeamItemD, TeamItemM } from "./components";
-import { listTeams } from "../../api";
+import * as API from "../../api";
 
 const AllTeamsPage = props => {
   const teamSlice = useSelector(state => state.teamSlice);
@@ -17,9 +17,9 @@ const AllTeamsPage = props => {
     let clean = true;
     if (clean) {
       if (category === "rave_mob") {
-        dispatch(listTeams({ rave_mob: true }));
+        dispatch(API.listTeams({ rave_mob: true }));
       } else {
-        dispatch(listTeams({}));
+        dispatch(API.listTeams({}));
       }
     }
     return () => (clean = false);

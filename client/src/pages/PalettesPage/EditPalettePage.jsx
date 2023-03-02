@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { SketchPicker } from "react-color";
-import { detailsPalette, listChips, updatePalette } from "../../api";
+import * as API from "../../api";
 import createPalette from "@mui/material/styles/createPalette";
 
 const EditPalettePage = props => {
@@ -51,10 +51,10 @@ const EditPalettePage = props => {
     let clean = true;
     if (clean) {
       if (props.match.params.id) {
-        dispatch(detailsPalette(props.match.params.id));
-        dispatch(detailsPalette(props.match.params.id));
+        dispatch(API.detailsPalette(props.match.params.id));
+        dispatch(API.detailsPalette(props.match.params.id));
       } else {
-        dispatch(listChips({}));
+        dispatch(API.listChips({}));
       }
       set_state();
     }
@@ -103,9 +103,9 @@ const EditPalettePage = props => {
       quantity_state
     };
     if (id) {
-      dispatch(updatePalette(data));
+      dispatch(API.updatePalette(data));
     } else {
-      dispatch(createPalette(data));
+      dispatch(API.createPalette(data));
     }
     e.target.reset();
     unset_state();

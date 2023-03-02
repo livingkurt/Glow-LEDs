@@ -6,7 +6,7 @@ import { Helmet } from "react-helmet";
 import Search from "../../shared/GlowLEDsComponents/GLTable/Search";
 import Sort from "../../shared/GlowLEDsComponents/GLTable/Sort";
 import { GLButton } from "../../shared/GlowLEDsComponents";
-import { deleteChip, listChips } from "../../api";
+import * as API from "../../api";
 
 const ChipsPage = props => {
   const [search, set_search] = useState("");
@@ -20,29 +20,29 @@ const ChipsPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(listChips({}));
+      dispatch(API.listChips({}));
     }
     return () => (clean = false);
   }, [success, dispatch]);
   const handleListItems = e => {
     e.preventDefault();
-    dispatch(listChips({ category, search, sort }));
+    dispatch(API.listChips({ category, search, sort }));
   };
 
   const sortHandler = e => {
     setSortOrder(e.target.value);
-    dispatch(listChips({ category, search, sort: e.target.value }));
+    dispatch(API.listChips({ category, search, sort: e.target.value }));
   };
 
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(listChips({ category, search, sort }));
+      dispatch(API.listChips({ category, search, sort }));
     }
     return () => (clean = false);
   }, [dispatch, category, search, sort]);
   const deleteHandler = chip => {
-    dispatch(deleteChip(chip._id));
+    dispatch(API.deleteChip(chip._id));
   };
 
   const sort_options = ["Newest", "Artist Name", "Facebook Name", "Instagram Handle", "Sponsor", "Promoter"];

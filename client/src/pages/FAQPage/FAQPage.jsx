@@ -8,7 +8,7 @@ import { listProducts } from "../../actions/productActions";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import QuickButtons from "./QuickButtons";
 import Filter from "../../shared/GlowLEDsComponents/GLTable/Filter";
-import { listChips } from "../../api";
+import * as API from "../../api";
 
 const FAQPage = () => {
   const history = useHistory();
@@ -21,7 +21,7 @@ const FAQPage = () => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(listChips({}));
+      dispatch(API.listChips({}));
     }
     return () => (clean = false);
   }, []);

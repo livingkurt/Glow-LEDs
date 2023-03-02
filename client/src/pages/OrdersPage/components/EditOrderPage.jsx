@@ -9,7 +9,7 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import Overflow from "react-overflow-indicator";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import { isAdmin } from "../../../utils/helpers/user_helpers";
-import { createOrder, detailsOrder, listProducts, listUsers, updateOrder } from "../../../api";
+import * as API from "../../../api";
 
 const EditOrderPage = props => {
   const [id, set_id] = useState("");
@@ -147,12 +147,12 @@ const EditOrderPage = props => {
     let clean = true;
     if (clean) {
       if (props.match.params.id) {
-        dispatch(detailsOrder(props.match.params.id));
-        dispatch(detailsOrder(props.match.params.id));
-        dispatch(listProducts({ limit: 0, option: false }));
-        dispatch(listUsers({}));
+        dispatch(API.detailsOrder(props.match.params.id));
+        dispatch(API.detailsOrder(props.match.params.id));
+        dispatch(API.listProducts({ limit: 0, option: false }));
+        dispatch(API.listUsers({}));
       } else {
-        dispatch(detailsOrder(""));
+        dispatch(API.detailsOrder(""));
       }
       set_state();
     }
@@ -205,9 +205,9 @@ const EditOrderPage = props => {
       // product_option
     };
     if (id) {
-      dispatch(updateOrder(data));
+      dispatch(API.updateOrder(data));
     } else {
-      dispatch(createOrder(data));
+      dispatch(API.createOrder(data));
     }
     e.target.reset();
     unset_state();

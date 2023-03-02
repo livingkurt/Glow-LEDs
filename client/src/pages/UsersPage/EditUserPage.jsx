@@ -6,7 +6,7 @@ import { Helmet } from "react-helmet";
 import { listAffiliates } from "../../actions/affiliateActions";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import { isAdmin } from "../../utils/helpers/user_helpers";
-import { createUser, detailsUser, updateUser } from "../../api";
+import * as API from "../../api";
 
 const EditUserPage = props => {
   const [id, set_id] = useState("");
@@ -83,12 +83,12 @@ const EditUserPage = props => {
     let clean = true;
     if (clean) {
       if (props.match.params.id) {
-        dispatch(detailsUser(props.match.params.id));
-        dispatch(detailsUser(props.match.params.id));
+        dispatch(API.detailsUser(props.match.params.id));
+        dispatch(API.detailsUser(props.match.params.id));
       } else {
-        dispatch(detailsUser(""));
+        dispatch(API.detailsUser(""));
       }
-      dispatch(listAffiliates({}));
+      dispatch(API.listAffiliates({}));
       set_state();
     }
     return () => (clean = false);
@@ -129,9 +129,9 @@ const EditUserPage = props => {
       weekly_wage
     };
     if (id) {
-      dispatch(updateUser(data));
+      dispatch(API.updateUser(data));
     } else {
-      dispatch(createUser(data));
+      dispatch(API.createUser(data));
     }
     e.target.reset();
     unset_state();

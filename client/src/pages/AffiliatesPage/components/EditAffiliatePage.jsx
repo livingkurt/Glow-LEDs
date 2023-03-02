@@ -4,11 +4,10 @@ import { useHistory } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { GLAutocomplete, GLCheckboxV2, GLTextField } from "../../../shared/GlowLEDsComponents";
 import { clear_affiliate, set_affiliate, set_success } from "../../../slices/affiliateSlice";
-import * as API from "../../../api/affiliateApi";
+import * as API from "../../../api";
 import { makeStyles } from "@mui/styles";
 import { Container, Paper, Stack } from "@mui/material";
 import GLButtonV2 from "../../../shared/GlowLEDsComponents/GLButtonV2/GLButton";
-import { listChips, listProducts, listPromos, listUsers } from "../../../api";
 import { snake_case } from "../../../utils/helper_functions";
 
 const useStyles = makeStyles(() => ({
@@ -75,10 +74,10 @@ const EditAffiliatePage = props => {
       if (props.match.params.pathname) {
         dispatch(API.detailsAffiliate({ pathname: props.match.params.pathname }));
       }
-      dispatch(listUsers({}));
-      dispatch(listProducts({ option: false, hidden: false }));
-      dispatch(listPromos({}));
-      dispatch(listChips({}));
+      dispatch(API.listUsers({}));
+      dispatch(API.listProducts({ option: false, hidden: false }));
+      dispatch(API.listPromos({}));
+      dispatch(API.listChips({}));
     }
     return () => (clean = false);
   }, [dispatch, props.match.params.pathname]);

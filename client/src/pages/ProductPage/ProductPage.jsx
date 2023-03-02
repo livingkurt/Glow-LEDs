@@ -13,6 +13,7 @@ import { isAdmin } from "../../utils/helpers/user_helpers";
 import ProductSlideshow from "../../shared/GlowLEDsComponents/GLCarousel/ProductSlideshow copy";
 import PictureChooser from "./components/PictureChooser";
 import RelatedProductsSlideshow from "../../shared/GlowLEDsComponents/GLCarousel/RelatedProductsSlideshow";
+import * as API from "../../api";
 
 const ProductPage = props => {
   const userLogin = useSelector(state => state.userLogin);
@@ -96,7 +97,7 @@ const ProductPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(detailsProduct(props.match.params.pathname));
+      dispatch(API.detailsProduct(props.match.params.pathname));
       const video = document.getElementsByClassName("product_video");
       video.muted = true;
       video.autoplay = true;
@@ -108,7 +109,7 @@ const ProductPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(detailsProduct(props.match.params.pathname));
+      dispatch(API.detailsProduct(props.match.params.pathname));
     }
     return () => (clean = false);
   }, [props.match.params.pathname]);

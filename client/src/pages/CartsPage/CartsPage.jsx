@@ -5,7 +5,7 @@ import { Helmet } from "react-helmet";
 import Search from "../../shared/GlowLEDsComponents/GLTable/Search";
 import Sort from "../../shared/GlowLEDsComponents/GLTable/Sort";
 import { GLButton } from "../../shared/GlowLEDsComponents";
-import { listCarts } from "../../api";
+import * as API from "../../api";
 
 const CartsPage = props => {
   const [search, set_search] = useState("");
@@ -18,7 +18,7 @@ const CartsPage = props => {
 
   // useEffect(
   // 	() => {
-  // 		dispatch(listCarts());
+  // 		dispatch(API.listCarts());
   // 		return () => {
   // 			//
   // 		};
@@ -30,7 +30,7 @@ const CartsPage = props => {
   // 	() => {
   // 		let clean = true;
   // 		if (clean) {
-  // 			dispatch(listCarts());
+  // 			dispatch(API.listCarts());
   // 		}
   // 		return () => (clean = false);
   // 	},
@@ -39,18 +39,18 @@ const CartsPage = props => {
 
   const handleListItems = e => {
     e.preventDefault();
-    dispatch(listCarts({ category, search, sort }));
+    dispatch(API.listCarts({ category, search, sort }));
   };
 
   const sortHandler = e => {
     setSortOrder(e.target.value);
-    dispatch(listCarts({ category, search, sort: e.target.value }));
+    dispatch(API.listCarts({ category, search, sort: e.target.value }));
   };
 
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(listCarts({ category, search, sort }));
+      dispatch(API.listCarts({ category, search, sort }));
     }
     return () => (clean = false);
   }, [sort, dispatch, category, search]);

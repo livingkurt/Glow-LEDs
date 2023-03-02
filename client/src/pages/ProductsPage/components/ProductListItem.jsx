@@ -7,7 +7,7 @@ import { sale_price_switch } from "../../../utils/react_helper_functions";
 import { deleteProduct, listProducts, saveProduct } from "../../../actions/productActions";
 import styled from "styled-components";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
-import { updateProduct } from "../../../api";
+import * as API from "../../../api";
 
 const grid = 8;
 const size = 30;
@@ -66,7 +66,7 @@ const ProductListItem = props => {
     row.classList.toggle("hide-row");
   };
   const deleteHandler = product => {
-    dispatch(deleteProduct(product._id));
+    dispatch(API.deleteProduct(product._id));
   };
 
   const onKeyDown = (event, provided, snapshot) => {
@@ -157,12 +157,12 @@ const ProductListItem = props => {
 
   const show_hide_product = product => {
     dispatch(
-      updateProduct({
+      API.updateProduct({
         ...product,
         hidden: product.hidden ? false : true
       })
     );
-    dispatch(listProducts({ option: false }));
+    dispatch(API.listProducts({ option: false }));
   };
 
   return (

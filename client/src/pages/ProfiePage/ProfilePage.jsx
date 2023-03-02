@@ -10,8 +10,7 @@ import { isAdmin } from "../../utils/helpers/user_helpers";
 import { OrderListItem } from "../OrdersPage/components";
 import GLTable from "../../shared/GlowLEDsComponents/GLTable/GLTable";
 import { determine_code_tier } from "../../utils/helpers/affiliate_helpers";
-import { detailsAffiliate, detailsUser, listPaychecks, listPromos } from "../../api";
-import { listMyOrders } from "../../actions/orderActions";
+import * as API from "../../api";
 
 const ProfilePage = props => {
   const history = useHistory();
@@ -63,12 +62,12 @@ const ProfilePage = props => {
       if (props.match.params.id) {
         set_id(props.match.params.id);
         set_user_orders(props.match.params.id ? true : false);
-        dispatch(detailsUser(props.match.params.id));
-        dispatch(listMyOrders(props.match.params.id));
+        dispatch(API.detailsUser(props.match.params.id));
+        dispatch(API.listOrders({ user: props.match.params.id }));
       } else {
         set_id(userInfo._id);
-        dispatch(detailsUser(userInfo._id));
-        dispatch(listMyOrders(userInfo._id));
+        dispatch(API.detailsUser(userInfo._id));
+        dispatch(API.listOrders({ user: userInfo._id }));
       }
     }
     return () => (clean = false);
@@ -86,10 +85,10 @@ const ProfilePage = props => {
         set_shipping(user.shipping);
         set_email_subscription(user.email_subscription);
         if (user && user.is_affiliated && user.affiliate) {
-          dispatch(detailsAffiliate({ id: user.affiliate._id }));
-          // dispatch(listMyPaychecks(user.affiliate._id));
-          dispatch(listPaychecks({ limit, page, affiliate: user.affiliate._id }));
-          dispatch(listPromos({ affiliate: user.affiliate._id, active: true }));
+          dispatch(API.detailsAffiliate({ id: user.affiliate._id }));
+          // dispatch(API.listMyPaychecks(user.affiliate._id));
+          dispatch(API.listPaychecks({ limit, page, affiliate: user.affiliate._id }));
+          dispatch(API.listPromos({ affiliate: user.affiliate._id, active: true }));
         }
       }
     }
@@ -111,7 +110,7 @@ const ProfilePage = props => {
   //   if (clean) {
   //     if (error_paychecks) {
   //       setTimeout(() => {
-  //         dispatch(listMyPaychecks(user.affiliate));
+  //         dispatch(API.listMyPaychecks(user.affiliate));
   //       }, 1000);
   //     }
   //   }
@@ -228,12 +227,12 @@ const ProfilePage = props => {
 
   const handleListItems = e => {
     e.preventDefault();
-    dispatch(listPaychecks({ search, sort, affiliate: user.affiliate._id }));
+    dispatch(API.listPaychecks({ search, sort, affiliate: user.affiliate._id }));
   };
 
   const sortHandler = e => {
     set_sort(e.target.value);
-    dispatch(listPaychecks({ search, sort: e.target.value, affiliate: user.affiliate._id }));
+    dispatch(API.listPaychecks({ search, sort: e.target.value, affiliate: user.affiliate._id }));
   };
 
   const [page, set_page] = useState(1);
@@ -251,7 +250,7 @@ const ProfilePage = props => {
     set_page(page);
     update_products_url(history, search, "", "", page, limit);
 
-    dispatch(listPaychecks({ limit, page, search, affiliate: user.affiliate._id }));
+    dispatch(API.listPaychecks({ limit, page, search, affiliate: user.affiliate._id }));
   };
 
   const sort_options = ["Newest", "Artist Name", "Facebook Name", "Instagram Handle", "Sponsor", "Promoter"];

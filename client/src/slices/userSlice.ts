@@ -1,7 +1,8 @@
 /* eslint-disable max-lines-per-function */
 /* eslint-disable no-param-reassign */
 import { createSlice } from "@reduxjs/toolkit";
-import * as API from "../api/userApi";
+import * as API from "../api";
+import jwt_decode from "jwt-decode";
 
 const userSlice = createSlice({
   name: "users",
@@ -9,6 +10,7 @@ const userSlice = createSlice({
     loading: false,
     users: [],
     user: {},
+    userInfo: {},
     message: "",
     error: {},
     search: "",
@@ -59,6 +61,7 @@ const userSlice = createSlice({
       state.totalPages = payload.totalPages;
       state.page = payload.currentPage;
       state.message = "Users Found";
+      state.loading = false;
     },
     [API.listUsers.rejected]: (state: any, { payload }: any) => {
       state.loading = false;
@@ -72,6 +75,7 @@ const userSlice = createSlice({
       state.loading = false;
       state.user = payload.user;
       state.message = "User Saved";
+      state.loading = false;
     },
     [API.createUser.rejected]: (state: any, { payload }: any) => {
       state.loading = false;
@@ -85,6 +89,7 @@ const userSlice = createSlice({
       state.loading = false;
       state.user = payload.user;
       state.message = "User Saved";
+      state.loading = false;
     },
     [API.updateUser.rejected]: (state: any, { payload }: any) => {
       state.loading = false;
@@ -98,6 +103,7 @@ const userSlice = createSlice({
       state.loading = false;
       state.user = payload;
       state.message = "User Found";
+      state.loading = false;
     },
     [API.detailsUser.rejected]: (state: any, { payload }: any) => {
       state.loading = false;
@@ -113,6 +119,42 @@ const userSlice = createSlice({
       state.message = "User Deleted";
     },
     [API.deleteUser.rejected]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.error = payload.error;
+      state.message = payload.message;
+      state.loading = false;
+    },
+    [API.registerUser.pending]: (state: any, { payload }: any) => {
+      state.loading = true;
+    },
+    [API.registerUser.fulfilled]: (state: any, { payload }: any) => {
+      state.auth_token = false;
+      state.current_user = {};
+      state.loading = false;
+      state.userInfo = payload;
+      state.message = "User Password Reset Success";
+      state.success = true;
+    },
+    [API.registerUser.rejected]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.error = payload.error;
+      state.message = payload.message;
+    },
+    [API.loginUser.pending]: (state: any, { payload }: any) => {
+      state.loading = true;
+    },
+    [API.loginUser.fulfilled]: (state: any, { payload }: any) => {
+      const { access_token, refresh_token } = payload;
+      localStorage.setItem("accessToken", access_token);
+      const decoded = jwt_decode(access_token);
+      state.auth_token = access_token;
+      state.current_user = decoded;
+      state.loading = false;
+      state.userInfo = payload;
+      state.message = "User Login Success";
+      state.success = true;
+    },
+    [API.loginUser.rejected]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;

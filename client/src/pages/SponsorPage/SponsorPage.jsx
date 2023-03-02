@@ -9,6 +9,7 @@ import { API_Users } from "../../utils";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import { isAdmin } from "../../utils/helpers/user_helpers";
 import { ProductSimpleItemD, ProductSimpleItemM } from "../ProductsGridPage/components";
+import * as API from "../../api";
 
 const SponsorPage = props => {
   const [teams, set_teams] = useState([]);
@@ -23,7 +24,7 @@ const SponsorPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(detailsAffiliate({ pathname: props.match.params.promo_code }));
+      dispatch(API.detailsAffiliate({ pathname: props.match.params.promo_code }));
     }
     return () => (clean = false);
   }, []);
