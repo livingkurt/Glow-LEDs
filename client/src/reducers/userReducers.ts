@@ -52,7 +52,7 @@ export const errorReducer = (state = {}, action: IAction) => {
   }
 };
 
-export const userSliceReducer = (state = {}, action: IAction) => {
+export const userLoginReducer = (state = {}, action: IAction) => {
   switch (action.type) {
     case USER_LOGIN_REQUEST:
       return { loading: true };

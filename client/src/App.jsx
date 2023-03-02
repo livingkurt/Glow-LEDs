@@ -97,6 +97,10 @@ const App = props => {
 
   const [message, set_message] = useState("");
 
+  useEffect(() => {
+    check_authentication();
+  }, []);
+
   check_authentication();
 
   const frame = document.getElementsByTagName("body");

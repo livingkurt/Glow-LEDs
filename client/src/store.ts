@@ -3,10 +3,11 @@ import { allRecordsApi } from "./api/allRecordsApi";
 import { dashboardApi } from "./pages/DashboardPage/dashboardApi";
 import { placeOrderApi } from "./pages/PlaceOrderPage/placeOrderApi";
 import reducer from "./reducer";
+import { check_authentication } from "./utils/react_helper_functions";
 
 let cartItems: any;
 const cart_string: any = localStorage.getItem("cartItems");
-//
+
 if (cart_string) {
   cartItems = JSON.parse(cart_string);
 } else {
@@ -15,7 +16,7 @@ if (cart_string) {
 
 let shippingAddress: any;
 const shipping_string: any = sessionStorage.getItem("shippingAddress");
-//
+
 if (shipping_string) {
   shippingAddress = JSON.parse(shipping_string);
 } else {
