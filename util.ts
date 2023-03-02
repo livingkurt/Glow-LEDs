@@ -20,7 +20,8 @@ export const getAccessToken = (user: any) => {
       affiliate: user.affiliate,
       email_subscription: user.email_subscription,
       shipping: user.shipping,
-      is_affiliated: user.is_affiliated
+      is_affiliated: user.is_affiliated,
+      cart: user.cart
     },
     config.ACCESS_TOKEN_SECRET,
     {
@@ -42,7 +43,8 @@ export const getRefreshToken = (user: any) => {
         affiliate: user.affiliate,
         email_subscription: user.email_subscription,
         shipping: user.shipping,
-        is_affiliated: user.is_affiliated
+        is_affiliated: user.is_affiliated,
+        cart: user.cart
       },
       config.REFRESH_TOKEN_SECRET,
       {

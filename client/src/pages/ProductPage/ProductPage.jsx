@@ -17,7 +17,8 @@ import * as API from "../../api";
 
 const ProductPage = props => {
   const userSlice = useSelector(state => state.userSlice);
-  let { current_user } = userSlice;
+  let { current_user, cart_id } = userSlice;
+
   const cartSlice = useSelector(state => state.cartSlice);
   let { cartItems } = cartSlice;
 
@@ -72,8 +73,8 @@ const ProductPage = props => {
   // const [ option_group_name, set_option_group_name ] = useState('');
   // const [ secondary_group_name, set_secondary_group_name ] = useState('');
 
-  const productDetails = useSelector(state => state.productDetails);
-  const { product, loading, error } = productDetails;
+  const productSlice = useSelector(state => state.productSlice);
+  const { product, loading, error } = productSlice;
 
   // const productDetails = useSelector((state) => state.productDetails);
   // const { product, loading, error } = productDetails;
@@ -405,15 +406,15 @@ const ProductPage = props => {
     });
   };
 
-  useEffect(() => {
-    let clean = true;
-    if (clean) {
-      if (error) {
-        props.history.push("/collections/all/products");
-      }
-    }
-    return () => (clean = false);
-  }, [error]);
+  // useEffect(() => {
+  //   let clean = true;
+  //   if (clean) {
+  //     if (error) {
+  //       props.history.push("/collections/all/products");
+  //     }
+  //   }
+  //   return () => (clean = false);
+  // }, [error]);
 
   useEffect(() => {
     let clean = true;
@@ -435,6 +436,14 @@ const ProductPage = props => {
     }
     return () => (clean = false);
   }, []);
+
+  const add_to_cart = cart_item => {
+    if (cartItems.length === 0) {
+      dispatch(API.createCart(cart_item));
+    } else {
+      dispatch(API.updateCart(cart_id, cart_item));
+    }
+  };
 
   const determine_addon_color = () => {
     if (has_add_on && show_add_on && secondary_color) {
@@ -495,10 +504,10 @@ const ProductPage = props => {
         `${name} are out of stock in your selected size.\n\nBy clicking OK you agree that you are preordering ${name} which will not ship within the usual time.\n\nIt is HIGHLY RECOMMENDED that you order ${name} separately from any in-stock items so we can ship you your in-stock products without needing to wait for your out-of-stock products.\n\nThank you for your support!\n\nYou will be notified when ${name} are restocked. We anticipate they will be restocked by the end of January.`
       );
       if (confirm) {
-        dispatch(addToCart(cart_item));
+        add_to_cart(cart_item);
       }
     } else {
-      dispatch(addToCart(cart_item));
+      add_to_cart(cart_item);
     }
     // if (current_user) {
     // 	dispatch(saveCart(cart_item));
@@ -711,215 +720,170 @@ const ProductPage = props => {
   const [show_product_options, set_show_product_options] = useState();
 
   return (
-    <div className="">
-      <div className="p-1rem">
-        <div className="jc-b">
-          <div className="mb-10px">
-            <Link to={props.location.previous_path || "/collections/all/products"} className="m-auto">
-              <GLButton variant="secondary">Back to Products</GLButton>
-            </Link>
-          </div>
-          {isAdmin(current_user) && (
-            <div className=" pos-rel z-pos-1 br-10px">
-              <GLButton variant="secondary" className=" w-300px" onClick={e => set_show_product_options(show => (show ? false : true))}>
-                Edit Product
-              </GLButton>
-              {show_product_options && (
-                <div className="pos-abs bg-secondary br-10px">
-                  <div className="column bg-secondary br-10px">
-                    <Link
-                      to={"/secure/glow/editproduct/" + props.match.params.pathname + "/false"}
-                      className="btn nav p-10px w-100per  br-10px"
-                    >
-                      Edit Macro
-                    </Link>
-
-                    {product &&
-                      product.option_products.map(option => (
-                        <Link to={"/secure/glow/editproduct/" + option.pathname + "/false"} className="btn nav p-10px w-100per  br-10px">
-                          Edit {option.name}
-                        </Link>
-                      ))}
-                  </div>
-                </div>
-              )}
+    !loading &&
+    product?.hasOwnProperty("name") && (
+      <div className="">
+        <div className="p-1rem">
+          <div className="jc-b">
+            <div className="mb-10px">
+              <Link to={props.location.previous_path || "/collections/all/products"} className="m-auto">
+                <GLButton variant="secondary">Back to Products</GLButton>
+              </Link>
             </div>
-          )}
+            {isAdmin(current_user) && (
+              <div className=" pos-rel z-pos-1 br-10px">
+                <GLButton variant="secondary" className=" w-300px" onClick={e => set_show_product_options(show => (show ? false : true))}>
+                  Edit Product
+                </GLButton>
+                {show_product_options && (
+                  <div className="pos-abs bg-secondary br-10px">
+                    <div className="column bg-secondary br-10px">
+                      <Link
+                        to={"/secure/glow/editproduct/" + props.match.params.pathname + "/false"}
+                        className="btn nav p-10px w-100per  br-10px"
+                      >
+                        Edit Macro
+                      </Link>
+
+                      {product &&
+                        product.option_products.map(option => (
+                          <Link to={"/secure/glow/editproduct/" + option.pathname + "/false"} className="btn nav p-10px w-100per  br-10px">
+                            Edit {option.name}
+                          </Link>
+                        ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
         </div>
-      </div>
 
-      <Loading loading={loading} error={error}>
-        {product && (
-          <div className="">
-            <Helmet>
-              <title>{product.meta_title + " | Glow LEDs"}</title>
-              <meta property="og:title" content={product.meta_title} />
-              <meta name="twitter:title" content={product.meta_title} />
-              <link rel="canonical" href={`https://www.glow-leds.com/collections/all/products/${product.pathname}`} />
-              <meta property="og:url" content={`https://www.glow-leds.com/collections/all/products/${product.pathname}`} />
-              {product.images && (
+        <Loading loading={loading} error={error}>
+          {product && (
+            <div className="">
+              <Helmet>
+                <title>{product.meta_title + " | Glow LEDs"}</title>
+                <meta property="og:title" content={product.meta_title} />
+                <meta name="twitter:title" content={product.meta_title} />
+                <link rel="canonical" href={`https://www.glow-leds.com/collections/all/products/${product.pathname}`} />
+                <meta property="og:url" content={`https://www.glow-leds.com/collections/all/products/${product.pathname}`} />
+                {product.images && (
+                  <div>
+                    <meta property="og:image" content={"https://www.glow-leds.com/" + product.images[0]} />
+
+                    <meta property="og:image:secure_url" content={"https://www.glow-leds.com/" + product.images[0]} />
+                    <meta name="twitter:image" content={"https://www.glow-leds.com/" + product.images[0]} />
+                  </div>
+                )}
+                <meta
+                  name="description"
+                  content={
+                    product.meta_description
+                      ? product.meta_description
+                      : "Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Glowskinz, and Glowstringz."
+                  }
+                />
+
+                <meta
+                  property="og:description"
+                  content={
+                    product.meta_description
+                      ? product.meta_description
+                      : "Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Glowskinz, and Glowstringz."
+                  }
+                />
+
+                <meta
+                  name="twitter:description"
+                  content={
+                    product.meta_description
+                      ? product.meta_description
+                      : "Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Glowskinz, and Glowstringz."
+                  }
+                />
+              </Helmet>
+              {!secondary_image && width <= 819 && (
                 <div>
-                  <meta property="og:image" content={"https://www.glow-leds.com/" + product.images[0]} />
-
-                  <meta property="og:image:secure_url" content={"https://www.glow-leds.com/" + product.images[0]} />
-                  <meta name="twitter:image" content={"https://www.glow-leds.com/" + product.images[0]} />
-                </div>
-              )}
-              <meta
-                name="description"
-                content={
-                  product.meta_description
-                    ? product.meta_description
-                    : "Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Glowskinz, and Glowstringz."
-                }
-              />
-
-              <meta
-                property="og:description"
-                content={
-                  product.meta_description
-                    ? product.meta_description
-                    : "Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Glowskinz, and Glowstringz."
-                }
-              />
-
-              <meta
-                name="twitter:description"
-                content={
-                  product.meta_description
-                    ? product.meta_description
-                    : "Shop Glow LEDs for Gloving, Rave and Trippy Music Festival Accessories including Diffusers, Diffuser Caps, as well as Glowskinz, and Glowstringz."
-                }
-              />
-            </Helmet>
-            {!secondary_image && width <= 819 && (
-              <div>
-                <h1 className="product_title_side ta-c lh-50px fs-25px mv-0px">{name}</h1>
-                <div className=" w-100per h-auto m-auto br-20px pos-rel" style={{ overflowX: "hidden" }}>
-                  {images && (
-                    <ProductSlideshow
-                      product={product}
-                      images={images}
-                      secondary_images={secondary_images}
-                      className=""
-                      set_image={set_image}
-                      interval={6000}
-                      transitionTime={200}
-                    />
-                  )}
-                  {/* {images.length > 4 &&
+                  <h1 className="product_title_side ta-c lh-50px fs-25px mv-0px">{name}</h1>
+                  <div className=" w-100per h-auto m-auto br-20px pos-rel" style={{ overflowX: "hidden" }}>
+                    {images && (
+                      <ProductSlideshow
+                        product={product}
+                        images={images}
+                        secondary_images={secondary_images}
+                        className=""
+                        set_image={set_image}
+                        interval={6000}
+                        transitionTime={200}
+                      />
+                    )}
+                    {/* {images.length > 4 &&
 									width < 1000 && (
 										<div className="tab_indicator pos-abs bottom-21px bob br-5px ta-c bg-primary h-30px w-30px p-4px box-s-d b-1px">
 											{'>'}
 										</div>
 									)} */}
+                  </div>
                 </div>
-              </div>
-            )}
-            <div className="details">
-              <div className="">
-                {(secondary_image || width > 819) && (
-                  <div>
-                    <label
-                      className="product_title_top fs-25px title_font mb-2rem ta-c lh-50px"
-                      style={{ display: width < 819 ? "block" : "none" }}
-                    >
-                      {name}
-                    </label>
-                    <div className="details-image">
-                      <ProductImages secondary_image={secondary_image} name={name} image={image} />
-                      {!secondary_image && width > 819 && (
-                        <div>
-                          <PictureChooser
-                            product={product}
-                            images={images}
-                            secondary_images={secondary_images}
-                            className="w-100per jc-c max-w-400px m-auto"
-                            set_image={set_image}
-                          />
-                        </div>
-                      )}
+              )}
+              <div className="details">
+                <div className="">
+                  {(secondary_image || width > 819) && (
+                    <div>
+                      <label
+                        className="product_title_top fs-25px title_font mb-2rem ta-c lh-50px"
+                        style={{ display: width < 819 ? "block" : "none" }}
+                      >
+                        {name}
+                      </label>
+                      <div className="details-image">
+                        <ProductImages secondary_image={secondary_image} name={name} image={image} />
+                        {!secondary_image && width > 819 && (
+                          <div>
+                            <PictureChooser
+                              product={product}
+                              images={images}
+                              secondary_images={secondary_images}
+                              className="w-100per jc-c max-w-400px m-auto"
+                              set_image={set_image}
+                            />
+                          </div>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                )}
-              </div>
+                  )}
+                </div>
 
-              {width < 500 &&
-                product &&
-                (product.category === "diffusers" || product.category === "diffuser_caps" || product.category === "exo_diffusers") && (
-                  <div className=" w-100per m-auto">
-                    <RelatedProductsSlideshow
-                      product_category={"glowskinz"}
-                      product_subcategory={"opyn"}
-                      product={product}
-                      random={false}
-                      className=""
-                      product_pathname={product.pathname}
-                      title="Pairs great with OPYN Glowskinz"
-                      category="opyn"
-                    />
-                  </div>
-                )}
-              <div className="details-info desktop_product_view" style={{ display: width > 819 ? "block" : "none" }}>
-                <ProductSelection
-                  product={product}
-                  name={name}
-                  price={price}
-                  sale_price={sale_price}
-                  previous_price={previous_price}
-                  facts={facts}
-                />
-              </div>
-              <div className="details-action desktop_product_view" style={{ display: width > 819 ? "block" : "none" }}>
-                <ProductOptions
-                  product={product}
-                  price={price}
-                  sale_price={sale_price}
-                  previous_price={previous_price}
-                  update_secondary={update_secondary}
-                  secondary_product_object={secondary_product_object}
-                  size={size}
-                  color_products={color_products}
-                  color_code={color_code}
-                  update_color={update_color}
-                  color_product_object={color_product_object}
-                  secondary_color_products={secondary_color_products}
-                  secondary_color_code={secondary_color_code}
-                  update_secondary_color={update_secondary_color}
-                  secondary_color_product_object={secondary_color_product_object}
-                  option_products={option_products}
-                  update_option={update_option}
-                  option_product_object={option_product_object}
-                  qty={qty}
-                  setQty={setQty}
-                  quantity={quantity}
-                  secondary_product={secondary_product}
-                  count_in_stock={count_in_stock}
-                  handleAddToCart={handleAddToCart}
-                  out_of_stock={out_of_stock}
-                  set_out_of_stock={set_out_of_stock}
-                  preorder={preorder}
-                  set_preorder={set_preorder}
-                  show_add_on={show_add_on}
-                  set_show_add_on={set_show_add_on}
-                  set_price={set_price}
-                  set_add_on_price={set_add_on_price}
-                  set_secondary_color_product_object={set_secondary_color_product_object}
-                  set_secondary_color_product={set_secondary_color_product}
-                  set_secondary_color_products={set_secondary_color_products}
-                  set_secondary_color={set_secondary_color}
-                  set_secondary_color_code={set_secondary_color_code}
-                  set_secondary_image={set_secondary_image}
-                  has_add_on={has_add_on}
-                  set_sale_price={set_sale_price}
-                />
-              </div>
-
-              <div className="w-100per">
-                <div className="details-action mobile_product_view" style={{ display: width <= 819 ? "block" : "none" }}>
+                {width < 500 &&
+                  product &&
+                  (product.category === "diffusers" || product.category === "diffuser_caps" || product.category === "exo_diffusers") && (
+                    <div className=" w-100per m-auto">
+                      <RelatedProductsSlideshow
+                        product_category={"glowskinz"}
+                        product_subcategory={"opyn"}
+                        product={product}
+                        random={false}
+                        className=""
+                        product_pathname={product.pathname}
+                        title="Pairs great with OPYN Glowskinz"
+                        category="opyn"
+                      />
+                    </div>
+                  )}
+                <div className="details-info desktop_product_view" style={{ display: width > 819 ? "block" : "none" }}>
+                  <ProductSelection
+                    product={product}
+                    name={name}
+                    price={price}
+                    sale_price={sale_price}
+                    previous_price={previous_price}
+                    facts={facts}
+                  />
+                </div>
+                <div className="details-action desktop_product_view" style={{ display: width > 819 ? "block" : "none" }}>
                   <ProductOptions
                     product={product}
-                    width={width}
                     price={price}
                     sale_price={sale_price}
                     previous_price={previous_price}
@@ -945,6 +909,8 @@ const ProductPage = props => {
                     handleAddToCart={handleAddToCart}
                     out_of_stock={out_of_stock}
                     set_out_of_stock={set_out_of_stock}
+                    preorder={preorder}
+                    set_preorder={set_preorder}
                     show_add_on={show_add_on}
                     set_show_add_on={set_show_add_on}
                     set_price={set_price}
@@ -959,79 +925,125 @@ const ProductPage = props => {
                     set_sale_price={set_sale_price}
                   />
                 </div>
-                <div className="details-info mobile_product_view" style={{ display: width <= 819 ? "block" : "none" }}>
-                  <ProductFacts
-                    facts={facts}
-                    category={product.category}
-                    subcategory={product.subcategory}
-                    pathname={product.pathname}
-                    name={product.name}
-                  />
+
+                <div className="w-100per">
+                  <div className="details-action mobile_product_view" style={{ display: width <= 819 ? "block" : "none" }}>
+                    <ProductOptions
+                      product={product}
+                      width={width}
+                      price={price}
+                      sale_price={sale_price}
+                      previous_price={previous_price}
+                      update_secondary={update_secondary}
+                      secondary_product_object={secondary_product_object}
+                      size={size}
+                      color_products={color_products}
+                      color_code={color_code}
+                      update_color={update_color}
+                      color_product_object={color_product_object}
+                      secondary_color_products={secondary_color_products}
+                      secondary_color_code={secondary_color_code}
+                      update_secondary_color={update_secondary_color}
+                      secondary_color_product_object={secondary_color_product_object}
+                      option_products={option_products}
+                      update_option={update_option}
+                      option_product_object={option_product_object}
+                      qty={qty}
+                      setQty={setQty}
+                      quantity={quantity}
+                      secondary_product={secondary_product}
+                      count_in_stock={count_in_stock}
+                      handleAddToCart={handleAddToCart}
+                      out_of_stock={out_of_stock}
+                      set_out_of_stock={set_out_of_stock}
+                      show_add_on={show_add_on}
+                      set_show_add_on={set_show_add_on}
+                      set_price={set_price}
+                      set_add_on_price={set_add_on_price}
+                      set_secondary_color_product_object={set_secondary_color_product_object}
+                      set_secondary_color_product={set_secondary_color_product}
+                      set_secondary_color_products={set_secondary_color_products}
+                      set_secondary_color={set_secondary_color}
+                      set_secondary_color_code={set_secondary_color_code}
+                      set_secondary_image={set_secondary_image}
+                      has_add_on={has_add_on}
+                      set_sale_price={set_sale_price}
+                    />
+                  </div>
+                  <div className="details-info mobile_product_view" style={{ display: width <= 819 ? "block" : "none" }}>
+                    <ProductFacts
+                      facts={facts}
+                      category={product.category}
+                      subcategory={product.subcategory}
+                      pathname={product.pathname}
+                      name={product.name}
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <ProductDetails
+              <ProductDetails
+                product={product}
+                manuals={manuals}
+                description={description}
+                included_items={included_items}
+                pathname={props.match.params.pathname}
+              />
+            </div>
+          )}
+        </Loading>
+        {product && product.name !== "Glowstringz V2" && product.name !== "Nova Clip" && (
+          <div className=" w-100per m-auto">
+            <RelatedProductsSlideshow
+              product_category={product.category}
               product={product}
-              manuals={manuals}
-              description={description}
-              included_items={included_items}
-              pathname={props.match.params.pathname}
+              random={false}
+              className=""
+              product_pathname={props.match.params.pathname}
+              title="Fits the Same Microlight"
+              category="chips"
             />
           </div>
         )}
-      </Loading>
-      {product && product.name !== "Glowstringz V2" && product.name !== "Nova Clip" && (
-        <div className=" w-100per m-auto">
-          <RelatedProductsSlideshow
-            product_category={product.category}
-            product={product}
-            random={false}
-            className=""
-            product_pathname={props.match.params.pathname}
-            title="Fits the Same Microlight"
-            category="chips"
-          />
-        </div>
-      )}
-      {product && product.name !== "Glowstringz V2" && product.name !== "Nova Clip" && (
-        <div className=" w-100per m-auto">
-          <RelatedProductsSlideshow
-            product_category={product.category}
-            random={false}
-            className=""
-            product_pathname={props.match.params.pathname}
-            title="Related Products"
-            category="related"
-          />
-        </div>
-      )}
-      {product && product.category !== "batteries" && product.name !== "Glowstringz V2" && product.name !== "Nova Clip" && (
-        <div className=" w-100per m-auto">
-          <RelatedProductsSlideshow
-            product_category={product.category}
-            random={false}
-            className=""
-            product_pathname={props.match.params.pathname}
-            title="Accessories You May Need"
-            category="batteries"
-          />
-        </div>
-      )}
+        {product && product.name !== "Glowstringz V2" && product.name !== "Nova Clip" && (
+          <div className=" w-100per m-auto">
+            <RelatedProductsSlideshow
+              product_category={product.category}
+              random={false}
+              className=""
+              product_pathname={props.match.params.pathname}
+              title="Related Products"
+              category="related"
+            />
+          </div>
+        )}
+        {product && product.category !== "batteries" && product.name !== "Glowstringz V2" && product.name !== "Nova Clip" && (
+          <div className=" w-100per m-auto">
+            <RelatedProductsSlideshow
+              product_category={product.category}
+              random={false}
+              className=""
+              product_pathname={props.match.params.pathname}
+              title="Accessories You May Need"
+              category="batteries"
+            />
+          </div>
+        )}
 
-      {product && (
-        <div className=" w-100per m-auto">
-          <RelatedProductsSlideshow
-            product_category={product.category}
-            random={true}
-            className=""
-            product_pathname={props.match.params.pathname}
-            title="Suggested Products"
-            category="all"
-          />
-        </div>
-      )}
-    </div>
+        {product && (
+          <div className=" w-100per m-auto">
+            <RelatedProductsSlideshow
+              product_category={product.category}
+              random={true}
+              className=""
+              product_pathname={props.match.params.pathname}
+              title="Suggested Products"
+              category="all"
+            />
+          </div>
+        )}
+      </div>
+    )
   );
 };
 export default ProductPage;

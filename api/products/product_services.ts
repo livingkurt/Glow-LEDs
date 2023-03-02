@@ -77,15 +77,6 @@ export default {
       }
     }
   },
-  findByPathname_products_s: async (params: any) => {
-    try {
-      return await product_db.findById_products_db(params.pathname);
-    } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(error.message);
-      }
-    }
-  },
   create_products_s: async (body: any) => {
     try {
       return await product_db.create_products_db(body);

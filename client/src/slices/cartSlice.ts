@@ -8,6 +8,7 @@ const cartSlice = createSlice({
   initialState: {
     loading: false,
     carts: [],
+    cartItems: [],
     cart: {},
     message: "",
     error: {},
@@ -69,7 +70,7 @@ const cartSlice = createSlice({
       state.shipping = payload;
     },
     add_to_cart: (state, { payload }) => {
-      state.cart = payload;
+      state.cartItems = payload;
     }
   },
   extraReducers: {

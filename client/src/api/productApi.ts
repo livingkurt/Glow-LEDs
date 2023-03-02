@@ -45,12 +45,12 @@ export const createProduct = createAsyncThunk("products/createProduct", async (p
   } catch (error) {}
 });
 
-export const detailsProduct = createAsyncThunk("products/detailsProduct", async ({ id }: any, thunkApi: any) => {
+export const detailsProduct = createAsyncThunk("products/detailsProduct", async (pathname: any, thunkApi: any) => {
   try {
     const {
       userSlice: { current_user }
     } = thunkApi.getState();
-    const { data } = await axios.get(`/api/products/${id}`, {
+    const { data } = await axios.get(`/api/products/${pathname}`, {
       headers: {
         Authorization: "Bearer " + current_user.access_token
       }
