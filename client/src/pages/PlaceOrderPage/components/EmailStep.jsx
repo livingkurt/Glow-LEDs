@@ -1,10 +1,11 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { login, logout } from "../../../actions/userActions";
 import { validate_login } from "../../../utils/validations";
 import useWindowDimensions from "../../../shared/Hooks/windowDimensions";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
+import { logout_user } from "../../../slices/userSlice";
+import * as API from "../../../api";
 const EmailStep = ({
   email_completed,
   show_email,
@@ -34,12 +35,12 @@ const EmailStep = ({
     setEmailValidations(request.errors.email);
     setPasswordValidations(request.errors.password);
     if (request.isValid) {
-      dispatch(login({ email: email.toLowerCase(), password }));
+      dispatch(API.loginUser({ email: email.toLowerCase(), password }));
     }
   };
   const submit_logout = e => {
     e.preventDefault();
-    dispatch(logout(current_user.refresh_token));
+    dispatch(logout_user(current_user.refresh_token));
     history.push("/checkout/placeorder");
   };
 

@@ -1,12 +1,12 @@
 import React from "react";
 
-import { logout, check_refresh_token } from "../actions/userActions";
+import { check_refresh_token } from "../actions/userActions";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "../utils/setAuthToken";
 import { API_Users } from ".";
 import store from "../store";
 import { GLButton } from "../shared/GlowLEDsComponents";
-import { set_current_user } from "../slices/userSlice";
+import { logout_user, set_current_user } from "../slices/userSlice";
 
 const delay = 2000; // anti-rebound for 500ms
 let lastExecution = 0;
@@ -47,7 +47,7 @@ export const check_authentication = () => {
             })
             .catch(error => {
               // Logout user
-              store.dispatch(logout(decoded_access_token.refresh_token));
+              store.dispatch(logout_user(decoded_access_token.refresh_token));
               // Redirect to login
               window.location.href = "/account/login?redirect=" + window.location.pathname;
             });
@@ -55,7 +55,7 @@ export const check_authentication = () => {
         }
       } else {
         // Logout user
-        store.dispatch(logout(decoded_access_token.refresh_token));
+        store.dispatch(logout_user(decoded_access_token.refresh_token));
         // Redirect to login
         window.location.href = "/account/login?redirect=" + window.location.pathname;
       }

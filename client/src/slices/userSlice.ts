@@ -53,6 +53,11 @@ const userSlice = createSlice({
     },
     set_current_user: (state, { payload }) => {
       state.current_user = payload;
+    },
+    logout_user: (state, { payload }) => {
+      localStorage.removeItem("accessToken");
+      setAuthToken(false);
+      state.current_user = {};
     }
   },
   extraReducers: {
@@ -167,5 +172,5 @@ const userSlice = createSlice({
   }
 });
 
-export const { set_search, set_sort, set_page, set_limit, set_loading, set_user, set_current_user } = userSlice.actions;
+export const { set_search, set_sort, set_page, set_limit, set_loading, set_user, set_current_user, logout_user } = userSlice.actions;
 export default userSlice.reducer;

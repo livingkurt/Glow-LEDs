@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../../actions/userActions";
 import { listProducts } from "../../actions/productActions";
 import Banner from "./Banner";
 import { HashLink } from "react-router-hash-link";
@@ -12,6 +11,7 @@ import { GLButton } from "../GlowLEDsComponents";
 import { isAdmin } from "../../utils/helpers/user_helpers";
 import Filter from "../GlowLEDsComponents/GLTable/Filter";
 import * as API from "../../api";
+import { logout_user } from "../../slices/userSlice";
 
 const Header = props => {
   const history = useHistory();
@@ -82,7 +82,7 @@ const Header = props => {
   const dispatch = useDispatch();
 
   const handleLogout = () => {
-    dispatch(logout(current_user.refresh_token));
+    dispatch(logout_user(current_user.refresh_token));
     history.push("/account/login");
   };
   const [last_id, set_last_id] = useState("");
