@@ -34,13 +34,8 @@ const PaychecksPage = props => {
 
   const category = props.match.params.category ? props.match.params.category : "";
   const paycheckSlice = useSelector(state => state.paycheckSlice);
-  const { loading, paychecks, message, error, totalPages } = paycheckSlice;
+  const { loading, paychecks, message, error, totalPages, success } = paycheckSlice;
 
-  const paycheckSave = useSelector(state => state.paycheckSave);
-  const { success: successSave } = paycheckSave;
-
-  const paycheckDelete = useSelector(state => state.paycheckDelete);
-  const { success: successDelete } = paycheckDelete;
   const dispatch = useDispatch();
 
   const affiliateSlice = useSelector(state => state.affiliateSlice);
@@ -75,7 +70,7 @@ const PaychecksPage = props => {
       dispatch(listOrders({}));
     }
     return () => (clean = false);
-  }, [successSave, successDelete, dispatch]);
+  }, [success, dispatch]);
 
   useEffect(() => {
     let clean = true;

@@ -18,13 +18,8 @@ const SurveysPage = props => {
   const [loading_surveys, set_loading_surveys] = useState(false);
   const category = props.match.params.category ? props.match.params.category : "";
   const surveySlice = useSelector(state => state.surveySlice);
-  const { loading, surveys, message, error } = surveySlice;
+  const { loading, surveys, message, error, success } = surveySlice;
 
-  const surveySave = useSelector(state => state.surveySave);
-  const { success: successSave } = surveySave;
-
-  const surveyDelete = useSelector(state => state.surveyDelete);
-  const { success: successDelete } = surveyDelete;
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -36,7 +31,7 @@ const SurveysPage = props => {
       dispatch(listOrders({}));
     }
     return () => (clean = false);
-  }, [successSave, successDelete, dispatch]);
+  }, [success, dispatch]);
   const handleListItems = e => {
     e.preventDefault();
     dispatch(listSurveys({ category, search, sort }));

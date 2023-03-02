@@ -20,7 +20,7 @@ const ProfilePage = props => {
   const { userInfo } = userLogin;
 
   const userDetails = useSelector(state => state.userDetails);
-  const { loading, user, message, error } = userDetails;
+  const { loading, user, message, error, success } = userDetails;
 
   const affiliateDetails = useSelector(state => state.affiliateDetails);
   const { affiliate } = affiliateDetails;

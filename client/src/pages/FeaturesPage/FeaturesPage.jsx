@@ -14,13 +14,8 @@ const FeaturesPage = props => {
   const [sort, setSortOrder] = useState("");
   const category = props.match.params.category ? props.match.params.category : "";
   const featureSlice = useSelector(state => state.featureSlice);
-  const { loading, features, message, error } = featureSlice;
+  const { loading, features, message, error, success } = featureSlice;
 
-  const featureSave = useSelector(state => state.featureSave);
-  const { success: successSave } = featureSave;
-
-  const featureDelete = useSelector(state => state.featureDelete);
-  const { success: successDelete } = featureDelete;
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -29,7 +24,7 @@ const FeaturesPage = props => {
       dispatch(listFeatures({}));
     }
     return () => (clean = false);
-  }, [successSave, successDelete, dispatch]);
+  }, [success, dispatch]);
   const handleListItems = e => {
     e.preventDefault();
     dispatch(listFeatures({ category, search, sort }));

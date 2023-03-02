@@ -14,7 +14,7 @@ const UsersPage = props => {
   const [sort, setSortOrder] = useState("");
   const category = props.match.params.category ? props.match.params.category : "";
   const userSlice = useSelector(state => state.userSlice);
-  const { loading, users, message, error } = userSlice;
+  const { loading, users, message, error, success } = userSlice;
 
   const userDelete = useSelector(state => state.userDelete);
   const { loading: loadingDelete, success: successDelete, error: errorDelete } = userDelete;

@@ -24,13 +24,8 @@ const ExpensesPage = props => {
   const { userInfo } = userLogin;
 
   const expenseSlice = useSelector(state => state.expenseSlice);
-  const { loading, expenses, message, error } = expenseSlice;
+  const { loading, expenses, message, error, success } = expenseSlice;
 
-  const expenseSave = useSelector(state => state.expenseSave);
-  const { success: successSave } = expenseSave;
-
-  const expenseDelete = useSelector(state => state.expenseDelete);
-  const { success: successDelete } = expenseDelete;
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -57,7 +52,7 @@ const ExpensesPage = props => {
       dispatch(listExpenses({}));
     }
     return () => (clean = false);
-  }, [successSave, successDelete]);
+  }, [success]);
   const deleteHandler = expense => {
     dispatch(deleteExpense(expense._id));
   };

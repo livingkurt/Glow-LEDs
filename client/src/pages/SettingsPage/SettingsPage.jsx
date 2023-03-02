@@ -17,13 +17,8 @@ const SettingsPage = props => {
   const category = props.match.params.category ? props.match.params.category : "";
 
   const settingSlice = useSelector(state => state.settingSlice);
-  const { loading, settings, message, error } = settingSlice;
+  const { loading, settings, message, error, success } = settingSlice;
 
-  const settingSave = useSelector(state => state.settingSave);
-  const { success: successSave } = settingSave;
-
-  const settingDelete = useSelector(state => state.settingDelete);
-  const { success: successDelete } = settingDelete;
   const dispatch = useDispatch();
 
   setTimeout(() => {
@@ -39,7 +34,7 @@ const SettingsPage = props => {
       dispatch(listOrders({}));
     }
     return () => (clean = false);
-  }, [successSave, successDelete, dispatch]);
+  }, [success, dispatch]);
 
   const submitHandler = e => {
     e.preventDefault();

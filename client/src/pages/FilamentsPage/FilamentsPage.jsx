@@ -17,13 +17,8 @@ const FilamentsPage = props => {
   const [create_filaments, set_create_filaments] = useState(true);
   const category = props.match.params.category ? props.match.params.category : "";
   const filamentSlice = useSelector(state => state.filamentSlice);
-  const { loading, filaments, message, error } = filamentSlice;
+  const { loading, filaments, message, error, success } = filamentSlice;
 
-  const filamentSave = useSelector(state => state.filamentSave);
-  const { success: successSave } = filamentSave;
-
-  const filamentDelete = useSelector(state => state.filamentDelete);
-  const { success: successDelete } = filamentDelete;
   const dispatch = useDispatch();
 
   setTimeout(() => {
@@ -36,7 +31,7 @@ const FilamentsPage = props => {
       dispatch(listFilaments({}));
     }
     return () => (clean = false);
-  }, [successSave, successDelete, dispatch]);
+  }, [success, dispatch]);
 
   // const submitHandler = e => {
   //   e.preventDefault();

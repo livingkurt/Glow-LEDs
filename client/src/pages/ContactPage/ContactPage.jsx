@@ -32,7 +32,7 @@ const ContactPage = props => {
   const [message_validations, set_message_validations] = useState("");
 
   const userContact = useSelector(state => state.userContact);
-  const { loading, completed, message: completed_message, error } = userContact;
+  const { loading, completed, message: completed_message, error, success } = userContact;
 
   useEffect(() => {
     let clean = true;

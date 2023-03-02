@@ -149,7 +149,7 @@ const EditProductPage = props => {
   const { product, loading, error } = productDetails;
 
   const productSave = useSelector(state => state.productSave);
-  const { loading: loadingSave, success: successSave, error: errorSave, message } = productSave;
+  const { loading: loadingSave, success, error: errorSave, message } = productSave;
 
   // const productSlice = useSelector((state) => state.productSlice);
   // const { products: all_products } = productList;
@@ -165,9 +165,6 @@ const EditProductPage = props => {
 
   const categorySlice = useSelector(state => state.categorySlice);
   const { categorys: categorys_list } = categorySlice;
-
-  const productReviewDelete = useSelector(state => state.productReviewDelete);
-  const { success: productDeleteSuccess } = productReviewDelete;
 
   const dispatch = useDispatch();
 
@@ -266,24 +263,6 @@ const EditProductPage = props => {
     set_item_group_id(data.tem_group_id);
   };
 
-  // useEffect(
-  // 	() => {
-  // 		let clean = true;
-  // 		if (clean) {
-  // 			if (successSave && filtered_products.length > 0) {
-  // 				history.push('/secure/glow/products');
-  // 			}
-  // 			// if (successSave && filtered_products.length > 0) {
-  // 			// 	if (filtered_products.map((item) => item.pathname).indexOf(product.pathname) !== -1) {
-  // 			// 		history.push('/secure/glow/editproduct/' + filtered_products[new_index].pathname);
-  // 			// 	}
-  // 			// }
-  // 		}
-  // 		return () => (clean = false);
-  // 	},
-  // 	[ successSave ]
-  // );
-
   useEffect(() => {
     let clean = true;
     if (clean) {
@@ -304,7 +283,7 @@ const EditProductPage = props => {
       }
     }
     return () => (clean = false);
-  }, [product, productDeleteSuccess]);
+  }, [product, success]);
 
   setTimeout(() => {
     set_loading_checkboxes(false);
@@ -633,7 +612,7 @@ const EditProductPage = props => {
     //       break;
     //   }
     //   dispatch(saveProduct(saved_data));
-    //   // if (successSave){
+    //   // if (success){
 
     //   // }
     //   // history.push(
@@ -651,21 +630,6 @@ const EditProductPage = props => {
   };
 
   let num = 0;
-  useEffect(() => {
-    let clean = true;
-    if (clean) {
-      if (props.match.params.product_option && props.match.params.item_group_id) {
-        // if (successSave && num === 0) {
-        //   save_second_product();
-        //   num++;
-        // } else if (successSave && num === 1)
-        //   history.push(
-        //     `/secure/glow/editproduct/${macro_product.pathname}/false`
-        //   );
-      }
-    }
-    return () => (clean = false);
-  }, [successSave]);
 
   const save_second_product = async () => {
     if (props.match.params.product_option && props.match.params.item_group_id) {
@@ -703,13 +667,6 @@ const EditProductPage = props => {
         default:
           break;
       }
-      // dispatch(saveProduct(saved_data));
-      // if (successSave){
-
-      // }
-      // history.push(
-      //   `/secure/glow/editproduct/${macro_product.pathname}/false`
-      // );
     }
   };
 

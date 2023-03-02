@@ -15,13 +15,8 @@ const EmailsPage = props => {
 
   const category = props.match.params.category ? props.match.params.category : "";
   const emailSlice = useSelector(state => state.emailSlice);
-  const { loading, emails, message, error } = emailSlice;
+  const { loading, emails, message, error, success } = emailSlice;
 
-  const emailSave = useSelector(state => state.emailSave);
-  const { success: successSave } = emailSave;
-
-  const emailDelete = useSelector(state => state.emailDelete);
-  const { success: successDelete } = emailDelete;
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -30,7 +25,7 @@ const EmailsPage = props => {
       dispatch(listEmails({}));
     }
     return () => (clean = false);
-  }, [successSave, successDelete, dispatch]);
+  }, [success, dispatch]);
 
   const handleListItems = e => {
     e.preventDefault();

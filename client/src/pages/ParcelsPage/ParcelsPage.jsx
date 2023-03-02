@@ -14,13 +14,10 @@ const ParcelsPage = props => {
   const [loading_parcels, set_loading_parcels] = useState(false);
   const category = props.match.params.category ? props.match.params.category : "";
   const parcelSlice = useSelector(state => state.parcelSlice);
-  const { loading, parcels, message, error } = parcelSlice;
+  const { loading, parcels, message, error, success } = parcelSlice;
 
   const parcelSave = useSelector(state => state.parcelSave);
-  const { success: successSave } = parcelSave;
 
-  const parcelDelete = useSelector(state => state.parcelDelete);
-  const { success: successDelete } = parcelDelete;
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -29,7 +26,7 @@ const ParcelsPage = props => {
       dispatch(listParcels({}));
     }
     return () => (clean = false);
-  }, [successSave, successDelete, dispatch]);
+  }, [success, dispatch]);
 
   const submitHandler = e => {
     e.preventDefault();

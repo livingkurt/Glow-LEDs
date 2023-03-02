@@ -13,13 +13,8 @@ const TeamsPage = props => {
   const [sort, setSortOrder] = useState("");
   const category = props.match.params.category ? props.match.params.category : "";
   const teamSlice = useSelector(state => state.teamSlice);
-  const { loading, teams, message, error } = teamSlice;
+  const { loading, teams, message, error, success } = teamSlice;
 
-  const teamSave = useSelector(state => state.teamSave);
-  const { success: successSave } = teamSave;
-
-  const teamDelete = useSelector(state => state.teamDelete);
-  const { success: successDelete } = teamDelete;
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -28,7 +23,7 @@ const TeamsPage = props => {
       dispatch(listTeams({}));
     }
     return () => (clean = false);
-  }, [successSave, successDelete, dispatch]);
+  }, [success, dispatch]);
   const handleListItems = e => {
     e.preventDefault();
     dispatch(listTeams({ category, search, sort }));

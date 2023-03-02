@@ -20,13 +20,8 @@ const PalettesPage = props => {
   const [create_palettes, set_create_palettes] = useState(true);
   const category = props.match.params.category ? props.match.params.category : "";
   const paletteSlice = useSelector(state => state.paletteSlice);
-  const { loading, palettes, message, error } = paletteSlice;
+  const { loading, palettes, message, error, success } = paletteSlice;
 
-  const paletteSave = useSelector(state => state.paletteSave);
-  const { success: successSave } = paletteSave;
-
-  const paletteDelete = useSelector(state => state.paletteDelete);
-  const { success: successDelete } = paletteDelete;
   const dispatch = useDispatch();
 
   const affiliateSlice = useSelector(state => state.affiliateSlice);
@@ -50,7 +45,7 @@ const PalettesPage = props => {
       get_total_orders();
     }
     return () => (clean = false);
-  }, [successSave, successDelete, dispatch]);
+  }, [success, dispatch]);
 
   const get_last_months_orders = async () => {
     const { data } = await API_Orders.last_months_orders();

@@ -18,13 +18,8 @@ const CategorysPage = props => {
   const [loading_categorys, set_loading_categorys] = useState(false);
   const category = props.match.params.category ? props.match.params.category : "";
   const categorySlice = useSelector(state => state.categorySlice);
-  const { loading, categorys, message, error } = categorySlice;
+  const { loading, categorys, message, error, success } = categorySlice;
 
-  const categorySave = useSelector(state => state.categorySave);
-  const { success: successSave } = categorySave;
-
-  const categoryDelete = useSelector(state => state.categoryDelete);
-  const { success: successDelete } = categoryDelete;
   const dispatch = useDispatch();
 
   const affiliateSlice = useSelector(state => state.affiliateSlice);
@@ -43,7 +38,7 @@ const CategorysPage = props => {
       dispatch(listCategorys({}));
     }
     return () => (clean = false);
-  }, [successSave, successDelete, dispatch]);
+  }, [success, dispatch]);
 
   const handleListItems = e => {
     e.preventDefault();

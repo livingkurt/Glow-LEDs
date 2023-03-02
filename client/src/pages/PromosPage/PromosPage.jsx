@@ -15,13 +15,8 @@ const PromosPage = props => {
   const [sort, setSortOrder] = useState("");
   const category = props.match.params.category ? props.match.params.category : "";
   const promoSlice = useSelector(state => state.promoSlice);
-  const { loading, promos, message, error } = promoSlice;
+  const { loading, promos, message, error, success } = promoSlice;
 
-  const promoSave = useSelector(state => state.promoSave);
-  const { success: successSave } = promoSave;
-
-  const promoDelete = useSelector(state => state.promoDelete);
-  const { success: successDelete } = promoDelete;
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -30,7 +25,7 @@ const PromosPage = props => {
       dispatch(listPromos({}));
     }
     return () => (clean = false);
-  }, [successSave, successDelete, dispatch]);
+  }, [success, dispatch]);
   const submitHandler = e => {
     e.preventDefault();
     dispatch(listPromos({ category, search, sort }));

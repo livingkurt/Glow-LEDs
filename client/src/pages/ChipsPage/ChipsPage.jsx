@@ -13,13 +13,8 @@ const ChipsPage = props => {
   const [sort, setSortOrder] = useState("");
   const category = props.match.params.category ? props.match.params.category : "";
   const chipSlice = useSelector(state => state.chipSlice);
-  const { loading, chips, message, error } = chipSlice;
+  const { loading, chips, message, error, success } = chipSlice;
 
-  const chipSave = useSelector(state => state.chipSave);
-  const { success: successSave } = chipSave;
-
-  const chipDelete = useSelector(state => state.chipDelete);
-  const { success: successDelete } = chipDelete;
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -28,7 +23,7 @@ const ChipsPage = props => {
       dispatch(listChips({}));
     }
     return () => (clean = false);
-  }, [successSave, successDelete, dispatch]);
+  }, [success, dispatch]);
   const handleListItems = e => {
     e.preventDefault();
     dispatch(listChips({ category, search, sort }));

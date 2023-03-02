@@ -11,13 +11,8 @@ const ContentsPage = props => {
   const [search, set_search] = useState("");
   const category = props.match.params.category ? props.match.params.category : "";
   const contentSlice = useSelector(state => state.contentSlice);
-  const { loading, contents, message, error } = contentSlice;
+  const { loading, contents, message, error, success } = contentSlice;
 
-  const contentSave = useSelector(state => state.contentSave);
-  const { success: successSave } = contentSave;
-
-  const contentDelete = useSelector(state => state.contentDelete);
-  const { success: successDelete } = contentDelete;
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -26,7 +21,7 @@ const ContentsPage = props => {
       dispatch(listContents({}));
     }
     return () => (clean = false);
-  }, [successSave, successDelete, dispatch]);
+  }, [success, dispatch]);
   const handleListItems = e => {
     e.preventDefault();
     dispatch(listContents({ category, search }));

@@ -14,13 +14,7 @@ const CartsPage = props => {
   const dispatch = useDispatch();
 
   // const cartSlice = useSelector((state) => state.cartSlice);
-  // const { loading, carts, message, error } = cartSlice;
-
-  // const cartSave = useSelector((state) => state.cartSave);
-  // const { success: successSave } = cartSave;
-
-  // const cartDelete = useSelector((state) => state.cartDelete);
-  // const { success: successDelete } = cartDelete;
+  // const { loading, carts, message, error, success } = cartSlice;
 
   // useEffect(
   // 	() => {
@@ -29,7 +23,7 @@ const CartsPage = props => {
   // 			//
   // 		};
   // 	},
-  // 	[ successSave, successDelete ]
+  // 	[ success ]
   // );
 
   // useEffect(
@@ -40,7 +34,7 @@ const CartsPage = props => {
   // 		}
   // 		return () => (clean = false);
   // 	},
-  // 	[ successSave, successDelete  ]
+  // 	[ success  ]
   // );
 
   const handleListItems = e => {
