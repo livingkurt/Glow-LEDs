@@ -1,14 +1,14 @@
 import { Paycheck } from "../paychecks";
 
 export default {
-  findAll_paychecks_db: async (filter: any, sort: any, limit: any, page: any) => {
+  findAll_paychecks_db: async (filter: any, sort: unknown, limit: number, page: number) => {
     try {
       return await Paycheck.find(filter)
         .sort(sort)
         .populate("user")
         .populate("affiliate")
         .populate("team")
-        .limit(parseInt(limit))
+        .limit(limit)
         .skip((page - 1) * limit)
         .exec();
     } catch (error) {

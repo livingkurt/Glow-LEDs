@@ -2,8 +2,10 @@ import { palette_db } from "../palettes";
 import { determine_filter } from "../../util";
 
 export default {
-  findAll_palettes_s: async (query: any) => {
+  findAll_palettes_s: async (query: { page: number; search: string; sort: string; limit: number }) => {
     try {
+      const page: number = query.page ? query.page : 1;
+      const limit: number = query.limit ? query.limit : 0;
       const search = query.search
         ? {
             facebook_name: {
@@ -23,7 +25,13 @@ export default {
         sort = { name: 1 };
       }
 
-      return await palette_db.findAll_palettes_db(filter, sort);
+      const palettes = await palette_db.findAll_palettes_db(filter, sort, limit, page);
+      const count = await palette_db.count_palettes_db(filter);
+      return {
+        palettes,
+        totalPages: Math.ceil(count / limit),
+        currentPage: page
+      };
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

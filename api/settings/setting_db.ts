@@ -1,9 +1,16 @@
 import { Setting } from "../settings";
 
 export default {
-  findAll_settings_db: async (filter: any, sort: any) => {
+  findAll_settings_db: async (filter: any, sort: unknown, limit: number, page: number) => {
     try {
-      return await Setting.find(filter).sort(sort).populate("user").populate("affiliate").populate("team");
+      return await Setting.find(filter)
+        .sort(sort)
+        .populate("user")
+        .populate("affiliate")
+        .populate("team")
+        .limit(limit)
+        .skip((page - 1) * limit)
+        .exec();
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -46,6 +53,15 @@ export default {
       if (setting) {
         return await Setting.updateOne({ _id: id }, { deleted: true });
       }
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  count_settings_db: async (filter: any) => {
+    try {
+      return await Setting.countDocuments(filter);
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

@@ -1,9 +1,14 @@
 import { Palette } from "../palettes";
 
 export default {
-  findAll_palettes_db: async (filter: any, sort: any) => {
+  findAll_palettes_db: async (filter: any, sort: unknown, limit: number, page: number) => {
     try {
-      return await Palette.find(filter).sort(sort).populate("user");
+      return await Palette.find(filter)
+        .sort(sort)
+        .populate("user")
+        .limit(limit)
+        .skip((page - 1) * limit)
+        .exec();
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -55,6 +60,15 @@ export default {
       if (palette) {
         return await Palette.updateOne({ _id: id }, { deleted: true });
       }
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  count_palettes_db: async (filter: any) => {
+    try {
+      return await Palette.countDocuments(filter);
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

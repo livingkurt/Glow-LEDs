@@ -1,9 +1,13 @@
 import Chip from "./chip";
 
 export default {
-  findAll_chips_db: async (filter: any, sort: any) => {
+  findAll_chips_db: async (filter: any, sort: unknown, limit: number, page: number) => {
     try {
-      return await Chip.find(filter).sort(sort);
+      return await Chip.find(filter)
+        .sort(sort)
+        .limit(limit)
+        .skip((page - 1) * limit)
+        .exec();
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -55,6 +59,15 @@ export default {
       if (chip) {
         return await Chip.updateOne({ _id: id }, { deleted: true });
       }
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  count_chips_db: async (filter: any) => {
+    try {
+      return await Chip.countDocuments(filter);
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

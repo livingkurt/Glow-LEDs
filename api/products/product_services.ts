@@ -5,10 +5,10 @@ import { categories, determine_filter, snake_case, subcategories } from "../../u
 // const sharp = require("sharp");
 
 export default {
-  findAll_products_s: async (query: any) => {
+  findAll_products_s: async (query: { page: number; search: string; sort: string; limit: number }) => {
     try {
-      const page: any = query.page ? query.page : 1;
-      const limit: any = query.limit ? query.limit : 0;
+      const page: number = query.page ? query.page : 1;
+      const limit: number = query.limit ? query.limit : 0;
 
       let search = {};
       if (categories.includes(snake_case(query.search))) {
@@ -60,7 +60,7 @@ export default {
       return {
         products,
         totalPages: Math.ceil(count / limit),
-        currentPage: parseInt(page)
+        currentPage: page
       };
     } catch (error) {
       if (error instanceof Error) {

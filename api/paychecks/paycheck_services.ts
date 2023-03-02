@@ -5,10 +5,10 @@ import { paycheck_db } from "../paychecks";
 import { team_db } from "../teams";
 
 export default {
-  findAll_paychecks_s: async (query: any) => {
+  findAll_paychecks_s: async (query: { page: number; search: string; sort: string; limit: number }) => {
     try {
-      const page: any = query.page ? query.page : 1;
-      const limit: any = query.limit ? query.limit : 0;
+      const page: number = query.page ? query.page : 1;
+      const limit: number = query.limit ? query.limit : 0;
       const search = query.search
         ? {
             facebook_name: {
@@ -32,7 +32,7 @@ export default {
       return {
         paychecks,
         totalPages: Math.ceil(count / limit),
-        currentPage: parseInt(page)
+        currentPage: page
       };
     } catch (error) {
       if (error instanceof Error) {
@@ -114,7 +114,7 @@ export default {
       if (params.position !== "team") {
         affiliates = await affiliate_db.findAll_affiliates_db(a_filter, {}, 0, 1);
       } else {
-        teams = await team_db.findAll_teams_db(t_filter, {});
+        teams = await team_db.findAll_teams_db(t_filter, {}, 0, 1);
       }
       const orders = await order_db.findAll_orders_db(o_filter, {}, 0, 1);
 

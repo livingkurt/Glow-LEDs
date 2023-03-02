@@ -4,8 +4,10 @@ import { order_db } from "../orders";
 import { promo_db } from "../promos";
 
 export default {
-  findAll_promos_s: async (query: any) => {
+  findAll_promos_s: async (query: { page: number; search: string; sort: string; limit: number }) => {
     try {
+      const page: number = query.page ? query.page : 1;
+      const limit: number = query.limit ? query.limit : 0;
       const search = query.search
         ? {
             facebook_name: {
@@ -27,7 +29,13 @@ export default {
       } else if (sort_query === "newest") {
         sort = { _id: -1 };
       }
-      return await promo_db.findAll_promos_db(filter, sort, 0);
+      const promos = await promo_db.findAll_promos_db(filter, sort, limit, page);
+      const count = await promo_db.count_promos_db(filter);
+      return {
+        promos,
+        totalPages: Math.ceil(count / limit),
+        currentPage: page
+      };
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -96,7 +104,7 @@ export default {
     try {
       const sponsor_codes = await Promise.all(
         affiliates.map(async (affiliate: any) => {
-          const old_codes = await promo_db.findAll_promos_db({ affiliate: affiliate._id, active: true }, {}, 2);
+          const old_codes = await promo_db.findAll_promos_db({ affiliate: affiliate._id, active: true }, {}, 2, 1);
           await Promise.all(
             old_codes.map(async (code: any) => {
               await promo_db.update_promos_db(code.id, { active: false });

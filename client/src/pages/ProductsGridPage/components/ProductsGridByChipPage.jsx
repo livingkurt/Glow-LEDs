@@ -14,13 +14,13 @@ import {
 } from "../../../utils/helper_functions";
 import { Helmet } from "react-helmet";
 import { API_Chips, API_Products } from "../../../utils";
-import { listChips } from "../../../actions/chipActions";
 import { userWindowDimensions } from "../../../shared/Hooks";
 import ProductItemD from "./ProductItemD";
 import ProductItemM from "./ProductItemM";
 import Pagination from "../../../shared/GlowLEDsComponents/GLTable/Pagination";
 import Sort from "../../../shared/GlowLEDsComponents/GLTable/Sort";
 import Filter from "../../../shared/GlowLEDsComponents/GLTable/Filter";
+import { listChips } from "../../../api";
 
 const AllProductsByChipPage = props => {
   const history = useHistory();
@@ -57,8 +57,8 @@ const AllProductsByChipPage = props => {
   const productList = useSelector(state => state.productList);
   const { products: main_products, totalPages, currentPage, loading, error } = productList;
 
-  const chipList = useSelector(state => state.chipList);
-  const { chips: chips_list } = chipList;
+  const chipSlice = useSelector(state => state.chipSlice);
+  const { chips: chips_list } = chipSlice;
 
   const dispatch = useDispatch();
 

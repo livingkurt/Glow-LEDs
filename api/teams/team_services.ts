@@ -2,9 +2,10 @@ import { team_db } from "../teams";
 import { determine_filter } from "../../util";
 
 export default {
-  findAll_teams_s: async (query: any) => {
+  findAll_teams_s: async (query: { page: number; search: string; sort: string; limit: number }) => {
     try {
-      const promoter = query.category === "rave_mob" ? { rave_mob: true } : {};
+      const page: number = query.page ? query.page : 1;
+      const limit: number = query.limit ? query.limit : 0;
       const search = query.search
         ? {
             team_name: {
@@ -29,7 +30,13 @@ export default {
       } else if (sort_query === "newest") {
         sort = { _id: -1 };
       }
-      return await team_db.findAll_teams_db(filter, sort);
+      const teams = await team_db.findAll_teams_db(filter, sort, limit, page);
+      const count = await team_db.count_teams_db(filter);
+      return {
+        teams,
+        totalPages: Math.ceil(count / limit),
+        currentPage: page
+      };
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

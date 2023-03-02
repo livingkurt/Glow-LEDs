@@ -6,12 +6,12 @@ import { Loading, Notification } from "../../../shared/SharedComponents";
 import { humanize } from "../../../utils/helper_functions";
 import { Helmet } from "react-helmet";
 import { API_Products } from "../../../utils";
-import { listChips } from "../../../actions/chipActions";
 import ProductItemD from "./ProductItemD";
 import ProductItemM from "./ProductItemM";
 import Search from "../../../shared/GlowLEDsComponents/GLTable/Search";
 import Sort from "../../../shared/GlowLEDsComponents/GLTable/Sort";
 import Filter from "../../../shared/GlowLEDsComponents/GLTable/Filter";
+import { listChips } from "../../../api";
 
 const AllProductsPage = props => {
   const history = useHistory();
@@ -32,8 +32,8 @@ const AllProductsPage = props => {
   const productList = useSelector(state => state.productList);
   const { products: main_products, loading, error } = productList;
 
-  const chipList = useSelector(state => state.chipList);
-  const { chips: chips_list } = chipList;
+  const chipSlice = useSelector(state => state.chipSlice);
+  const { chips: chips_list } = chipSlice;
 
   const dispatch = useDispatch();
   useEffect(() => {

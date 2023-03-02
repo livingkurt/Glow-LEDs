@@ -2,8 +2,10 @@ import { expense_db } from "../expenses";
 import { determine_category, determine_application, determine_filter, determine_place, unformat_date } from "../../util";
 
 export default {
-  findAll_expenses_s: async (query: any) => {
+  findAll_expenses_s: async (query: { page: number; search: string; sort: string; limit: number }) => {
     try {
+      const page: number = query.page ? query.page : 1;
+      const limit: number = query.limit ? query.limit : 0;
       const search = query.search
         ? {
             expense_name: {
@@ -29,7 +31,13 @@ export default {
         sort = { application: 1, createdAt: -1 };
       }
 
-      return await expense_db.findAll_expenses_db(filter, sort);
+      const expenses = await expense_db.findAll_expenses_db(filter, sort, limit, page);
+      const count = await expense_db.count_expenses_db(filter);
+      return {
+        expenses,
+        totalPages: Math.ceil(count / limit),
+        currentPage: page
+      };
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -47,7 +55,7 @@ export default {
       };
       const sort = { date_of_purchase: 1 };
 
-      return await expense_db.findAll_expenses_db(filter, sort);
+      return await expense_db.findAll_expenses_db(filter, sort, 0, 1);
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

@@ -1,9 +1,14 @@
 import { Category } from "../categorys";
 
 export default {
-  findAll_categorys_db: async (filter: any, sort: any) => {
+  findAll_categorys_db: async (filter: any, sort: unknown, limit: number, page: number) => {
     try {
-      return await Category.find(filter).sort(sort).populate("subcategorys");
+      return await Category.find(filter)
+        .sort(sort)
+        .populate("subcategorys")
+        .limit(limit)
+        .skip((page - 1) * limit)
+        .exec();
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -46,6 +51,15 @@ export default {
       if (category) {
         return await Category.updateOne({ _id: id }, { deleted: true });
       }
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  count_categorys_db: async (filter: any) => {
+    try {
+      return await Category.countDocuments(filter);
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

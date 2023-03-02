@@ -2,7 +2,6 @@
 import React from "react";
 
 const Filter = ({ filterHandler, filter_options, state, title, width }) => {
-  //
   return (
     <div className="ai-c ml-1rem mh-1rem">
       <div className={`custom-select ${width && "w-100per"}`}>
@@ -13,12 +12,7 @@ const Filter = ({ filterHandler, filter_options, state, title, width }) => {
           defaultValue={JSON.stringify(state)}
           value={JSON.stringify(state)}
         >
-          <option
-            className="grey_option"
-            // disabled="disabled"
-            selected="selected"
-            value={""}
-          >
+          <option className="grey_option" selected="selected" value={""}>
             {title || "Filter By Chip"}
           </option>
           {filter_options.map((option, index) => {

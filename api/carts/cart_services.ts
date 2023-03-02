@@ -2,8 +2,10 @@ import { cart_db } from "../carts";
 import { deepEqual, determine_filter } from "../../util";
 
 export default {
-  findAll_carts_s: async (query: any) => {
+  findAll_carts_s: async (query: { page: number; search: string; sort: string; limit: number }) => {
     try {
+      const page: number = query.page ? query.page : 1;
+      const limit: number = query.limit ? query.limit : 0;
       const search = query.search
         ? {
             facebook_name: {
@@ -15,7 +17,13 @@ export default {
       const filter = determine_filter(query, search);
       const sort = {};
 
-      return await cart_db.findAll_carts_db(filter, sort);
+      const carts = await cart_db.findAll_carts_db(filter, sort, limit, page);
+      const count = await cart_db.count_carts_db(filter);
+      return {
+        carts,
+        totalPages: Math.ceil(count / limit),
+        currentPage: page
+      };
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

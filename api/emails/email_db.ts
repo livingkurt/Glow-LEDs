@@ -1,9 +1,13 @@
 import { Email } from "../emails";
 
 export default {
-  findAll_emails_db: async (filter: any, sort: any, limit = 0) => {
+  findAll_emails_db: async (filter: any, sort: any, limit = 0, page: number) => {
     try {
-      return await Email.find(filter).sort(sort).limit(limit);
+      return await Email.find(filter)
+        .sort(sort)
+        .limit(limit)
+        .skip((page - 1) * limit)
+        .exec();
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -46,6 +50,15 @@ export default {
       if (email) {
         return await Email.updateOne({ _id: id }, { deleted: true });
       }
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  count_emails_db: async (filter: any) => {
+    try {
+      return await Email.countDocuments(filter);
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

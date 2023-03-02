@@ -8,33 +8,7 @@ const userSlice = createSlice({
   initialState: {
     loading: false,
     users: [],
-    user: {
-      id: "",
-      user: undefined,
-      artist_name: "",
-      instagram_handle: "",
-      facebook_name: "",
-      percentage_off: "",
-      sponsor: "",
-      promoter: "",
-      rave_mob: "",
-      active: "",
-      style: "",
-      inspiration: "",
-      bio: "",
-      link: "",
-      picture: "",
-      location: "",
-      years: "",
-      team: "",
-      video: "",
-      venmo: "",
-      products: [],
-      chips: [],
-      pathname: "",
-      public_code: undefined,
-      private_code: undefined
-    },
+    user: {},
     message: "",
     error: {},
     search: "",
@@ -81,8 +55,7 @@ const userSlice = createSlice({
     },
     [API.listUsers.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.users = payload;
-      // state.users = payload.users;
+      state.users = payload.users;
       state.totalPages = payload.totalPages;
       state.page = payload.currentPage;
       state.message = "Users Found";

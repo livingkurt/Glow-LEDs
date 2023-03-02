@@ -1,7 +1,7 @@
 import { Promo } from "../promos";
 
 export default {
-  findAll_promos_db: async (filter: any, sort: any, limit: number) => {
+  findAll_promos_db: async (filter: any, sort: unknown, limit: number, page: number) => {
     try {
       return await Promo.find(filter)
         .sort(sort)
@@ -11,7 +11,9 @@ export default {
         .populate("included_categories")
         .populate("excluded_products")
         .populate("included_products")
-        .limit(limit);
+        .limit(limit)
+        .skip((page - 1) * limit)
+        .exec();
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -90,6 +92,15 @@ export default {
       if (promo) {
         return await Promo.updateOne({ _id: id }, { deleted: true });
       }
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  count_promos_db: async (filter: any) => {
+    try {
+      return await Promo.countDocuments(filter);
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

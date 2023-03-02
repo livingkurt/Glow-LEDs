@@ -2,8 +2,10 @@ import { setting_db } from "../settings";
 import { determine_filter } from "../../util";
 
 export default {
-  findAll_settings_s: async (query: any) => {
+  findAll_settings_s: async (query: { page: number; search: string; sort: string; limit: number }) => {
     try {
+      const page: number = query.page ? query.page : 1;
+      const limit: number = query.limit ? query.limit : 0;
       const search = query.search
         ? {
             facebook_name: {
@@ -23,7 +25,13 @@ export default {
         sort = { name: 1 };
       }
 
-      return await setting_db.findAll_settings_db(filter, sort);
+      const settings = await setting_db.findAll_settings_db(filter, sort, limit, page);
+      const count = await setting_db.count_settings_db(filter);
+      return {
+        settings,
+        totalPages: Math.ceil(count / limit),
+        currentPage: page
+      };
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

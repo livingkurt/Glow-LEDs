@@ -93,7 +93,7 @@ const GLTable = ({
                   key={index}
                   className={gl_table_tr}
                   style={{
-                    backgroundColor: determine_color(row),
+                    backgroundColor: determine_color(row, colors),
                     fontSize: "16px"
                   }}
                 >

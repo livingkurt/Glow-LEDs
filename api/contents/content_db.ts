@@ -1,9 +1,13 @@
 import { Content } from "../contents";
 
 export default {
-  findAll_contents_db: async (filter: any, sort: any, limit: any) => {
+  findAll_contents_db: async (filter: any, sort: unknown, limit: number, page: number) => {
     try {
-      return await Content.find(filter).sort(sort).limit(parseInt(limit));
+      return await Content.find(filter)
+        .sort(sort)
+        .limit(limit)
+        .skip((page - 1) * limit)
+        .exec();
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -46,6 +50,15 @@ export default {
       if (content) {
         return await Content.updateOne({ _id: id }, { deleted: true });
       }
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  count_contents_db: async (filter: any) => {
+    try {
+      return await Content.countDocuments(filter);
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

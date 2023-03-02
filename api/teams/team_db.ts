@@ -1,9 +1,17 @@
 import { Team } from "../teams";
 
 export default {
-  findAll_teams_db: async (filter: any, sort: any) => {
+  findAll_teams_db: async (filter: any, sort: unknown, limit: number, page: number) => {
     try {
-      return await Team.find(filter).populate("affiliates").populate("public_code").populate("private_code").populate("captain").sort(sort);
+      return await Team.find(filter)
+        .populate("affiliates")
+        .populate("public_code")
+        .populate("private_code")
+        .populate("captain")
+        .sort(sort)
+        .limit(limit)
+        .skip((page - 1) * limit)
+        .exec();
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -59,6 +67,15 @@ export default {
       if (team) {
         return await Team.updateOne({ _id: id }, { deleted: true });
       }
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  count_teams_db: async (filter: any) => {
+    try {
+      return await Team.countDocuments(filter);
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

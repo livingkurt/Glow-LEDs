@@ -2,7 +2,7 @@ import { Promo } from "../promos";
 import { Affiliate } from "../affiliates";
 
 export default {
-  findAll_affiliates_db: async (filter: any, sort: any, limit: any, page: any) => {
+  findAll_affiliates_db: async (filter: any, sort: unknown, limit: number, page: number) => {
     try {
       return await Affiliate.find(filter)
         .sort(sort)
@@ -11,7 +11,7 @@ export default {
         .populate("public_code")
         .populate("private_code")
         .populate("chips")
-        .limit(parseInt(limit))
+        .limit(limit)
         .skip((page - 1) * limit)
         .exec();
     } catch (error) {

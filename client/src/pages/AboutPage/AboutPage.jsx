@@ -1,14 +1,13 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Helmet } from "react-helmet";
-import { listAffiliates } from "../../actions/affiliateActions";
+
 import { Loading } from "../../shared/SharedComponents";
-import { listTeams } from "../../actions/teamActions";
 import useWindowDimensions from "../../shared/Hooks/windowDimensions";
 import ReadMore from "../../shared/GlowLEDsComponents/GLReadMore/ReadMore";
 import { SponsorItemD, SponsorItemM } from "../SponsorsGridPage/components";
 import { TeamItemD, TeamItemM } from "../TeamsGridPage/components";
-import { listUsers } from "../../api";
+import { listAffiliates, listTeams, listUsers } from "../../api";
 import { EmployeeItemD, EmployeeItemM } from "./components";
 
 const AboutPage = () => {
@@ -16,19 +15,21 @@ const AboutPage = () => {
 
   const dispatch = useDispatch();
 
-  const affiliateList = useSelector(state => state.affiliateList);
-  const { affiliates, loading: loading_sponsors, error } = affiliateList;
+  const affiliateSlice = useSelector(state => state.affiliateSlice);
+  const { affiliates, loading: loading_sponsors, error } = affiliateSlice;
 
-  const teamList = useSelector(state => state.teamList);
-  const { teams, loading: loading_team, error: error_team } = teamList;
+  const teamSlice = useSelector(state => state.teamSlice);
+  const { teams, loading: loading_team, error: error_team } = teamSlice;
 
   const userSlice = useSelector(state => state.userSlice);
   const { users, loading_users } = userSlice;
 
+  console.log({ affiliates, teams, users });
+
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(listAffiliates({ sponsor: true }));
+      dispatch(listAffiliates({ active: true, sponsor: true }));
       dispatch(listUsers({ is_employee: true, guest: false }));
       dispatch(listTeams({ rave_mob: false }));
     }
@@ -223,7 +224,7 @@ const AboutPage = () => {
               <div className="product_big_screen">
                 {users && (
                   <ul className="products" style={{ marginTop: 0, textDecoration: "none" }}>
-                    {users.map((user, index) => (
+                    {users?.map((user, index) => (
                       <EmployeeItemD size="300px" key={index} user={user} />
                     ))}
                   </ul>
@@ -233,14 +234,14 @@ const AboutPage = () => {
               <div className="product_small_screen none">
                 {users && (
                   <ul className="products" style={{ marginTop: 0, textDecoration: "none" }}>
-                    {users.map((user, index) => (
+                    {users?.map((user, index) => (
                       <EmployeeItemM size="300px" key={index} user={user} />
                     ))}
                   </ul>
                 )}
               </div>
             </div>
-            {affiliates.length === 0 && <h2 style={{ textAlign: "center" }}>Sorry we can't find anything with that name</h2>}
+            {affiliates?.length === 0 && <h2 style={{ textAlign: "center" }}>Sorry we can't find anything with that name</h2>}
           </Loading>
 
           <h2 className="about_names" style={{ marginTop: 0, marginBottom: "25px" }}>
@@ -252,7 +253,7 @@ const AboutPage = () => {
               <div className="product_big_screen">
                 {affiliates && (
                   <ul className="products" style={{ marginTop: 0, textDecoration: "none" }}>
-                    {affiliates.map(
+                    {affiliates?.map(
                       (affiliate, index) => !affiliate.hidden && <SponsorItemD size="300px" key={index} affiliate={affiliate} />
                     )}
                   </ul>
@@ -262,14 +263,14 @@ const AboutPage = () => {
               <div className="product_small_screen none">
                 {affiliates && (
                   <ul className="products" style={{ marginTop: 0, textDecoration: "none" }}>
-                    {affiliates.map(
+                    {affiliates?.map(
                       (affiliate, index) => !affiliate.hidden && <SponsorItemM size="300px" key={index} affiliate={affiliate} />
                     )}
                   </ul>
                 )}
               </div>
             </div>
-            {affiliates.length === 0 && <h2 style={{ textAlign: "center" }}>Sorry we can't find anything with that name</h2>}
+            {affiliates?.length === 0 && <h2 style={{ textAlign: "center" }}>Sorry we can't find anything with that name</h2>}
           </Loading>
           <h2 className="about_names" style={{ marginTop: 0, marginBottom: "25px" }}>
             Sponsored Teams
@@ -280,7 +281,7 @@ const AboutPage = () => {
               <div className="product_big_screen">
                 {teams && (
                   <ul className="products" style={{ marginTop: 0, textDecoration: "none" }}>
-                    {teams.map((team, index) => !team.hidden && <TeamItemD size="300px" key={index} team={team} />)}
+                    {teams?.map((team, index) => !team.hidden && <TeamItemD size="300px" key={index} team={team} />)}
                   </ul>
                 )}
               </div>
@@ -288,12 +289,12 @@ const AboutPage = () => {
               <div className="product_small_screen none">
                 {teams && (
                   <ul className="products" style={{ marginTop: 0, textDecoration: "none" }}>
-                    {teams.map((team, index) => !team.hidden && <TeamItemM size="300px" key={index} team={team} />)}
+                    {teams?.map((team, index) => !team.hidden && <TeamItemM size="300px" key={index} team={team} />)}
                   </ul>
                 )}
               </div>
             </div>
-            {teams.length === 0 && <h2 style={{ textAlign: "center" }}>Sorry we can't find anything with that name</h2>}
+            {teams?.length === 0 && <h2 style={{ textAlign: "center" }}>Sorry we can't find anything with that name</h2>}
           </Loading>
         </div>
       </div>

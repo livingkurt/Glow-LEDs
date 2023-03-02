@@ -13,9 +13,9 @@ import { categories, humanize, subcategories, update_products_url } from "../../
 import { DirectLink, Element, Events, animateScroll as scroll, scrollSpy, scroller } from "react-scroll";
 import { hide_search_bar, show_search_bar } from "../../../actions/settingActions";
 import { Filter } from "../SharedComponents";
-import { listChips } from "../../../actions/chipActions";
 import { GLButton } from "../GlowLEDsComponents";
 import { isAdmin } from "../../../utils/helpers/user_helpers";
+import { listChips } from "../../api";
 
 const Header = props => {
   const history = useHistory();
@@ -184,8 +184,8 @@ const Header = props => {
   // 	btn.classList.toggle('not-active');
   // });
 
-  const chipList = useSelector(state => state.chipList);
-  const { chips: chips_list } = chipList;
+  const chipSlice = useSelector(state => state.chipSlice);
+  const { chips: chips_list } = chipSlice;
 
   const [chip_name, set_chip_name] = useState();
 

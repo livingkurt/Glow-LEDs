@@ -10,6 +10,7 @@ import CSVReader from "react-csv-reader";
 import GLTable from "../../shared/GlowLEDsComponents/GLTable/GLTable";
 import { set_limit, set_loading, set_page, set_search, set_sort } from "../../slices/affiliateSlice";
 import { API_Promos } from "../../utils";
+import { determine_color } from "./affiliateHelpers";
 
 const AffiliatesPage = props => {
   const history = useHistory();
@@ -19,29 +20,6 @@ const AffiliatesPage = props => {
   const { affiliates, message, totalPages, page, limit, sort, colors, search, sort_options } = affiliatesSlice;
 
   const dispatch = useDispatch();
-
-  const deleteHandler = pathname => {
-    dispatch(API.deleteAffiliate(pathname));
-  };
-
-  const determine_color = affiliate => {
-    if (affiliate.sponsor) {
-      return colors[0].color;
-    }
-    if (affiliate.team) {
-      return colors[2].color;
-    }
-    if (affiliate.rave_mob) {
-      return colors[4].color;
-    }
-    if (affiliate.promoter) {
-      return colors[1].color;
-    }
-    if (!affiliate.active) {
-      return colors[3].color;
-    }
-    return "";
-  };
 
   const update_page = (e, new_page) => {
     let search = "";
@@ -213,7 +191,7 @@ const AffiliatesPage = props => {
                 <i className="fas fa-edit" />
               </GLButton>
             </Link>
-            <GLButton variant="icon" onClick={() => deleteHandler(affiliate.pathname)} aria-label="Delete">
+            <GLButton variant="icon" onClick={() => dispatch(API.deleteAffiliate(affiliate.pathname))} aria-label="Delete">
               <i className="fas fa-trash-alt" />
             </GLButton>
           </div>

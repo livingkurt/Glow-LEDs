@@ -1,9 +1,14 @@
 import { Cart } from "../carts";
 
 export default {
-  findAll_carts_db: async (filter: any, sort: any) => {
+  findAll_carts_db: async (filter: any, sort: unknown, limit: number, page: number) => {
     try {
-      return await Cart.find(filter).sort(sort).populate("user");
+      return await Cart.find(filter)
+        .sort(sort)
+        .populate("user")
+        .limit(limit)
+        .skip((page - 1) * limit)
+        .exec();
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -56,6 +61,15 @@ export default {
       if (cart) {
         return await Cart.updateOne({ _id: id }, { deleted: true });
       }
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  count_carts_db: async (filter: any) => {
+    try {
+      return await Cart.countDocuments(filter);
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

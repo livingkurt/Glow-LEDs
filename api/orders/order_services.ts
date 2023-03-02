@@ -20,10 +20,10 @@ const scraper = require("table-scraper");
 const today = new Date();
 
 export default {
-  findAll_orders_s: async (query: any) => {
+  findAll_orders_s: async (query: { page: number; search: string; sort: string; limit: number }) => {
     try {
-      const page: any = query.page ? query.page : 1;
-      const limit: any = query.limit ? query.limit : 10;
+      const page: number = query.page ? query.page : 1;
+      const limit: number = query.limit ? query.limit : 10;
       let search: any;
       if (query.search && query.search.match(/^[0-9a-fA-F]{24}$/)) {
         search = query.search ? { _id: query.search } : {};
@@ -115,13 +115,13 @@ export default {
           isDelivered: true
         };
       }
-      const orders = await order_db.findAll_orders_db({ ...filter, ...search }, sort, parseInt(limit), parseInt(page));
+      const orders = await order_db.findAll_orders_db({ ...filter, ...search }, sort, limit, page);
       const count = await order_db.count_orders_db({ ...filter, ...search });
       // const count = await Product.countDocuments(filter);
       return {
         orders,
         totalPages: Math.ceil(count / limit),
-        currentPage: parseInt(page)
+        currentPage: page
       };
     } catch (error) {
       if (error instanceof Error) {
@@ -189,7 +189,7 @@ export default {
   },
   top_customers_orders_s: async (params: any) => {
     try {
-      const users = await user_db.findAll_users_db({ deleted: false }, { _id: -1 });
+      const users = await user_db.findAll_users_db({ deleted: false }, { _id: -1 }, 0, 1);
       const orders = await Promise.all(
         users.map(async (user: any) => {
           const orders = await order_db.findAll_orders_db({ deleted: false, user: user._id }, { _id: -1 });
@@ -591,7 +591,7 @@ export default {
       const limit = 0;
       const page = 1;
       const orders = await order_db.findAll_orders_db(o_filter, sort, limit, page);
-      const promos = await promo_db.findAll_promos_db(p_filter, {}, 0);
+      const promos = await promo_db.findAll_promos_db(p_filter, {}, 0, 1);
       //
       const promos_earnings: any = promos.map((code: any) => {
         return {
@@ -755,7 +755,7 @@ export default {
       const page = 1;
 
       const orders_data = await order_db.findAll_orders_db(o_filter, sort, limit, page);
-      const expenses_data = await expense_db.findAll_expenses_db(e_filter, sort);
+      const expenses_data = await expense_db.findAll_expenses_db(e_filter, sort, 0, 1);
       const income = orders_data.reduce(
         (a: any, c: any) =>
           a + c.totalPrice - c.taxPrice - (c.refundAmmount ? c.refundAmmount.reduce((a: any, c: any) => a + c, 0) / 100 : 0),

@@ -4,8 +4,10 @@ import { email_db } from "../emails";
 require("dotenv").config();
 
 export default {
-  findAll_emails_s: async (query: any) => {
+  findAll_emails_s: async (query: { page: number; search: string; sort: string; limit: number }) => {
     try {
+      const page: number = query.page ? query.page : 1;
+      const limit: number = query.limit ? query.limit : 0;
       const search = query.search
         ? {
             email_type: {
@@ -23,7 +25,13 @@ export default {
         sort = { _id: -1 };
       }
 
-      return await email_db.findAll_emails_db(filter, sort);
+      const emails = await email_db.findAll_emails_db(filter, sort, limit, page);
+      const count = await email_db.count_emails_db(filter);
+      return {
+        emails,
+        totalPages: Math.ceil(count / limit),
+        currentPage: page
+      };
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -79,7 +87,7 @@ export default {
   },
   send_all_emails_s: async (body: any) => {
     // const users = await User.find({ deleted: false, email_subscription: true });
-    const users = await user_db.findAll_users_db({ deleted: false, email_subscription: true }, {});
+    const users = await user_db.findAll_users_db({ deleted: false, email_subscription: true }, {}, 0, 1);
     const all_emails = users
       .filter((user: any) => user.deleted === false)
       .filter((user: any) => user.email_subscription === true)

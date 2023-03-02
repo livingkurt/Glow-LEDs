@@ -4,11 +4,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../actions/userActions";
 import { HashLink } from "react-router-hash-link";
 import { update_products_url } from "../../utils/helper_functions";
-import { listChips } from "../../actions/chipActions";
 import { GLButton } from "../GlowLEDsComponents";
 import { isAdmin } from "../../utils/helpers/user_helpers";
 import Filter from "../GlowLEDsComponents/GLTable/Filter";
 import { listProducts } from "../../api/productApi";
+import { listChips } from "../../api";
 
 const Sidebar = props => {
   const history = useHistory();
@@ -95,8 +95,8 @@ const Sidebar = props => {
   // 	btn.classList.toggle('not-active');
   // });
 
-  const chipList = useSelector(state => state.chipList);
-  const { chips: chips_list } = chipList;
+  const chipSlice = useSelector(state => state.chipSlice);
+  const { chips: chips_list } = chipSlice;
 
   const [chip_name, set_chip_name] = useState();
 

@@ -1,9 +1,15 @@
 import { Feature } from "../features";
 
 export default {
-  findAll_features_db: async (filter: any, sort: any) => {
+  findAll_features_db: async (filter: any, sort: unknown, limit: number, page: number) => {
     try {
-      return await Feature.find(filter).sort(sort).populate("user").populate("affiliate");
+      return await Feature.find(filter)
+        .sort(sort)
+        .populate("user")
+        .populate("affiliate")
+        .limit(limit)
+        .skip((page - 1) * limit)
+        .exec();
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -46,6 +52,15 @@ export default {
       if (feature) {
         return await Feature.updateOne({ _id: id }, { deleted: true });
       }
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  count_features_db: async (filter: any) => {
+    try {
+      return await Feature.countDocuments(filter);
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

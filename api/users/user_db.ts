@@ -4,7 +4,7 @@ import { prnt } from "../../util";
 require("dotenv");
 
 export default {
-  findAll_users_db: async (filter: any, sort: any) => {
+  findAll_users_db: async (filter: any, sort: unknown, limit: number, page: number) => {
     try {
       return await User.find(filter)
         .sort(sort)
@@ -19,7 +19,9 @@ export default {
             }
           ]
         })
-        .populate("products");
+        .populate("products")
+        .limit(limit)
+        .skip((page - 1) * limit);
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -125,6 +127,15 @@ export default {
       if (user) {
         return await User.updateOne({ _id: id }, { deleted: true });
       }
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  count_users_db: async (filter: any) => {
+    try {
+      return await User.countDocuments(filter);
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

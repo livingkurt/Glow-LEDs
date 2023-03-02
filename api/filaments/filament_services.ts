@@ -2,8 +2,10 @@ import { filament_db } from "../filaments";
 import { determine_filter } from "../../util";
 
 export default {
-  findAll_filaments_s: async (query: any) => {
+  findAll_filaments_s: async (query: { page: number; search: string; sort: string; limit: number }) => {
     try {
+      const page: number = query.page ? query.page : 1;
+      const limit: number = query.limit ? query.limit : 0;
       const search = query.search
         ? {
             facebook_name: {
@@ -16,7 +18,13 @@ export default {
       const sort_query = query.sort && query.sort.toLowerCase();
       const sort: any = { name: 1 };
 
-      return await filament_db.findAll_filaments_db(filter, sort);
+      const filaments = await filament_db.findAll_filaments_db(filter, sort, limit, page);
+      const count = await filament_db.count_filaments_db(filter);
+      return {
+        filaments,
+        totalPages: Math.ceil(count / limit),
+        currentPage: page
+      };
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

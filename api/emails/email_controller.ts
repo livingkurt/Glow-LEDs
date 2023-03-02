@@ -290,7 +290,7 @@ export default {
     sendEmail(mailOptions, res, "info", "Password Reset Email Sent to " + req.body.data.first_name);
   },
   send_review_emails_c: async (req: any, res: any) => {
-    const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 }, 0);
+    const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 }, 0, 1);
 
     const mailOptions = {
       from: process.env.DISPLAY_INFO_EMAIL,
@@ -312,7 +312,7 @@ export default {
 
   send_announcement_emails_c: async (req: any, res: any) => {
     const { template, subject, test, time } = req.body;
-    const subscribed_users = await user_db.findAll_users_db({ deleted: false, email_subscription: true }, {});
+    const subscribed_users = await user_db.findAll_users_db({ deleted: false, email_subscription: true }, {}, 0, 1);
     const email = await email_db.findById_emails_db(template._id);
     // const all_emails = subscribed_users.map((user: any) => user.email);
 
@@ -357,7 +357,7 @@ export default {
     }
   },
   send_email_subscription_emails_c: async (req: any, res: any) => {
-    const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 }, 0);
+    const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 }, 0, 1);
 
     const mailOptions = {
       from: process.env.DISPLAY_INFO_EMAIL,
@@ -392,7 +392,7 @@ export default {
     sendEmail(mailOptions, res, "info", "Reset Password Email Sent to " + req.body.first_name);
   },
   send_account_created_emails_c: async (req: any, res: any) => {
-    const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 }, 0);
+    const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 }, 0, 1);
 
     const mailOptions = {
       from: process.env.DISPLAY_INFO_EMAIL,

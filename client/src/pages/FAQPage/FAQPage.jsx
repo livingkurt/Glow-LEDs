@@ -2,20 +2,21 @@ import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Helmet } from "react-helmet";
-import { listChips } from "../../actions/chipActions";
+
 import { update_products_url } from "../../utils/helper_functions";
 import { listProducts } from "../../actions/productActions";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import QuickButtons from "./QuickButtons";
 import Filter from "../../shared/GlowLEDsComponents/GLTable/Filter";
+import { listChips } from "../../api";
 
 const FAQPage = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const [chip_name, set_chip_name] = useState();
 
-  const chipList = useSelector(state => state.chipList);
-  const { chips: chips_list } = chipList;
+  const chipSlice = useSelector(state => state.chipSlice);
+  const { chips: chips_list } = chipSlice;
 
   useEffect(() => {
     let clean = true;

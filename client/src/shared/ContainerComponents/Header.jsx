@@ -8,10 +8,10 @@ import { HashLink } from "react-router-hash-link";
 import useWindowDimensions from "../Hooks/windowDimensions";
 import { API_Products } from "../../utils";
 import { categories, humanize, subcategories, update_products_url } from "../../utils/helper_functions";
-import { listChips } from "../../actions/chipActions";
 import { GLButton } from "../GlowLEDsComponents";
 import { isAdmin } from "../../utils/helpers/user_helpers";
 import Filter from "../GlowLEDsComponents/GLTable/Filter";
+import { listChips } from "../../api";
 
 const Header = props => {
   const history = useHistory();
@@ -180,8 +180,8 @@ const Header = props => {
   // 	btn.classList.toggle('not-active');
   // });
 
-  const chipList = useSelector(state => state.chipList);
-  const { chips: chips_list } = chipList;
+  const chipSlice = useSelector(state => state.chipSlice);
+  const { chips: chips_list } = chipSlice;
 
   const [chip_name, set_chip_name] = useState();
 

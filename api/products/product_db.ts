@@ -5,7 +5,7 @@ const CurrentProducts = base("Current Products");
 import mongoose from "mongoose";
 
 export default {
-  findAll_products_db: async (filter: any, sort: any, limit: any, page: any) => {
+  findAll_products_db: async (filter: any, sort: unknown, limit: number, page: number) => {
     try {
       return await Product.find(filter)
         .sort(sort)
@@ -65,7 +65,7 @@ export default {
         .populate("categorys")
         .populate("subcategorys")
         .populate("contributers")
-        .limit(parseInt(limit))
+        .limit(limit)
         .skip((page - 1) * limit)
         .exec();
     } catch (error) {

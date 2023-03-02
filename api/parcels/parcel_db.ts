@@ -1,9 +1,15 @@
 import { Parcel } from "../parcels";
 
 export default {
-  findAll_parcels_db: async (filter: any, sort: any) => {
+  findAll_parcels_db: async (filter: any, sort: unknown, limit: number, page: number) => {
     try {
-      return await Parcel.find(filter).sort(sort).populate("user").populate("affiliate");
+      return await Parcel.find(filter)
+        .sort(sort)
+        .populate("user")
+        .populate("affiliate")
+        .limit(limit)
+        .skip((page - 1) * limit)
+        .exec();
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -46,6 +52,15 @@ export default {
       if (parcel) {
         return await Parcel.updateOne({ _id: id }, { deleted: true });
       }
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  count_parcels_db: async (filter: any) => {
+    try {
+      return await Parcel.countDocuments(filter);
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
