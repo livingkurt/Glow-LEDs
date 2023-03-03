@@ -10,7 +10,8 @@ const dashboardsSlice = createSlice({
     month: "",
     start_date: "",
     end_date: "",
-    start_end_date: false
+    start_end_date: false,
+    loading: false
   },
   reducers: {
     set_year: (state, { payload }) => {
@@ -27,25 +28,12 @@ const dashboardsSlice = createSlice({
     },
     set_start_end_date: (state, { payload }) => {
       state.start_end_date = payload;
+    },
+    set_loading: (state, { payload }) => {
+      state.loading = payload;
     }
   }
 });
 
-export const { set_year, set_month, set_start_date, set_end_date, set_start_end_date } = dashboardsSlice.actions;
+export const { set_year, set_month, set_start_date, set_end_date, set_start_end_date, set_loading } = dashboardsSlice.actions;
 export default dashboardsSlice.reducer;
-// [{
-//   month: "january",
-//   totalPrice: 0.00,
-// },{month: "february", totalPrice: 0.00,},
-// {month: "march", totalPrice: 0.00,},
-// {month: "april", totalPrice: 0.00,},
-// {month: "may", totalPrice: 0.00,},
-// {month: "june", totalPrice: 0.00,},
-// {month: "july", totalPrice: 0.00,},
-// {month: "august", totalPrice: 0.00,},
-// {month: "september", totalPrice: 0.00,},
-// {month: "october", totalPrice: 0.00,},
-// {month: "november", totalPrice: 0.00,},
-// {month: "december", totalPrice: 0.00,}
-
-// ]

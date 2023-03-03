@@ -8,7 +8,7 @@ module.exports = {
   ACCESS_TOKEN_SECRET: process.env.ACCESS_TOKEN_SECRET,
   REFRESH_TOKEN_SECRET: process.env.REFRESH_TOKEN_SECRET,
   PAYPAL_CLIENT_ID: process.env.PAYPAL_CLIENT_ID,
-  GOOGLE_SHEETS_PRIVATE: process.env.GOOGLE_SHEETS_PRIVATE
+  REACT_APP_GOOGLE_SHEETS_PRIVATE: process.env.REACT_APP_GOOGLE_SHEETS_PRIVATE
   // MONGODB_URL: process.env.MONGODB_URI || 'mongodb://livingkurt:07QXtrAS7vN7gp4G@ds217349.mlab.com:17349/heroku_vljhv1ts',
 };
 
