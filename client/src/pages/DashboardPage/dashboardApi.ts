@@ -96,7 +96,7 @@ export const {
 //   const base = airtable[`expenses_${year}`].base;
 //   const table_id = airtable[`expenses_${year}`].table;
 //   const headers = {
-//     Authorization: `Bearer ${process.env.REACT_APP_AIRTABLE_ACCESS_TOKEN}`,
+//     Authorization: `Bearer ${process.env.REACT_APP_REACT_APP_AIRTABLE_ACCESS_TOKEN}`,
 //     params: {
 //       maxRecords: 100, // Maximum number of records to retrieve (up to 100)
 //       view: "All" // Name of the view to use (optional)
@@ -106,7 +106,7 @@ export const {
 //   try {
 //     // const response = await axios.get(`https://api.airtable.com/v0/${base}/${table_id}/listRecords?maxRecords=100`, {
 //     //   headers: {
-//     //     Authorization: `Bearer ${process.env.REACT_APP_AIRTABLE_ACCESS_TOKEN}`,
+//     //     Authorization: `Bearer ${process.env.REACT_APP_REACT_APP_AIRTABLE_ACCESS_TOKEN}`,
 //     //     "Content-Type": "application/json"
 //     //   }
 //     // });

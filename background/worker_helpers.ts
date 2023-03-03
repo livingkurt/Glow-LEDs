@@ -88,7 +88,7 @@ export const save_paycheck_to_expenses = async (data: any): Promise<void> => {
       },
       {
         headers: {
-          Authorization: `Bearer ${process.env.AIRTABLE_ACCESS_TOKEN}`,
+          Authorization: `Bearer ${process.env.REACT_APP_AIRTABLE_ACCESS_TOKEN}`,
           "Content-Type": "application/json"
         }
       }
