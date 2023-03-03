@@ -1,7 +1,7 @@
 import axios from "axios";
-import { domain } from "./worker_helpers";
+import { domain } from "../worker_helpers";
 
-const two_week_worker = async () => {
+export const review_checker = async () => {
   const domainUrl = domain();
   // Replace `db` with your database connection object
   // const orders = await db.collection("orders").find({
@@ -32,5 +32,3 @@ const two_week_worker = async () => {
     });
   }
 };
-
-two_week_worker();

@@ -1,8 +1,8 @@
 import axios from "axios";
-import { IAffiliate } from "../types/affiliateTypes";
+import { IAffiliate } from "../../../types/affiliateTypes";
+import dotenv from "dotenv";
 const baseId = "app1s1rBexc8nLb9s";
 const tableIdOrName = "tblsCcVphzBosLDmU";
-import dotenv from "dotenv";
 dotenv.config();
 
 export const domain = (): string => {
@@ -88,7 +88,7 @@ export const save_paycheck_to_expenses = async (data: any): Promise<void> => {
       },
       {
         headers: {
-          Authorization: `Bearer ${process.env.AIRTABLE_ACCESS_TOKEN}`,
+          Authorization: `Bearer ${process.env.REACT_APP_AIRTABLE_ACCESS_TOKEN}`,
           "Content-Type": "application/json"
         }
       }

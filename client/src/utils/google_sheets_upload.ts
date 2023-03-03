@@ -15,7 +15,7 @@ const day_num = parseInt(day);
 //
 
 export const top_code_usage_upload = async (year: number, month: string) => {
-  // google_sheets_json.private_key = process.env.REACT_APP_GOOGLE_SHEETS_PRIVATE;
+  // google_sheets_json.private_key = process.env.REACT_APP_REACT_APP_GOOGLE_SHEETS_PRIVATE;
 
   try {
     const { GoogleSpreadsheet } = require("google-spreadsheet");
@@ -85,7 +85,7 @@ export const top_code_usage_upload = async (year: number, month: string) => {
 };
 
 export const top_earner_upload = async (year: number, month: string) => {
-  // google_sheets_json.private_key = process.env.REACT_APP_GOOGLE_SHEETS_PRIVATE;
+  // google_sheets_json.private_key = process.env.REACT_APP_REACT_APP_GOOGLE_SHEETS_PRIVATE;
 
   try {
     const { GoogleSpreadsheet } = require("google-spreadsheet");
@@ -155,7 +155,7 @@ export const top_earner_upload = async (year: number, month: string) => {
 };
 
 export const affiliate_revenue_upload = async (position: any, year: number, month: string, google_sheet: string) => {
-  // google_sheets_json.private_key = process.env.REACT_APP_GOOGLE_SHEETS_PRIVATE;
+  // google_sheets_json.private_key = process.env.REACT_APP_REACT_APP_GOOGLE_SHEETS_PRIVATE;
 
   try {
     const { GoogleSpreadsheet } = require("google-spreadsheet");
@@ -224,7 +224,7 @@ export const affiliate_revenue_upload = async (position: any, year: number, mont
 };
 
 export const facebook_catalog_upload = async (products: any) => {
-  // google_sheets_json.private_key = process.env.REACT_APP_GOOGLE_SHEETS_PRIVATE;
+  // google_sheets_json.private_key = process.env.REACT_APP_REACT_APP_GOOGLE_SHEETS_PRIVATE;
 
   try {
     const { GoogleSpreadsheet } = require("google-spreadsheet");
@@ -336,7 +336,7 @@ export const facebook_catalog_upload = async (products: any) => {
   } catch (error) {}
 };
 export const current_products_upload = async (products: any) => {
-  // google_sheets_json.private_key = process.env.REACT_APP_GOOGLE_SHEETS_PRIVATE;
+  // google_sheets_json.private_key = process.env.REACT_APP_REACT_APP_GOOGLE_SHEETS_PRIVATE;
 
   try {
     const { GoogleSpreadsheet } = require("google-spreadsheet");
@@ -452,7 +452,7 @@ export const current_products_upload = async (products: any) => {
 };
 
 export const google_catalog_upload = async (products: any) => {
-  // google_sheets_json.private_key = process.env.REACT_APP_GOOGLE_SHEETS_PRIVATE;
+  // google_sheets_json.private_key = process.env.REACT_APP_REACT_APP_GOOGLE_SHEETS_PRIVATE;
   try {
     const { GoogleSpreadsheet } = require("google-spreadsheet");
 
@@ -537,7 +537,7 @@ export const google_catalog_upload = async (products: any) => {
 };
 
 export const orders_upload = async (orders: any) => {
-  // google_sheets_json.private_key = process.env.REACT_APP_GOOGLE_SHEETS_PRIVATE;
+  // google_sheets_json.private_key = process.env.REACT_APP_REACT_APP_GOOGLE_SHEETS_PRIVATE;
 
   try {
     const { GoogleSpreadsheet } = require("google-spreadsheet");

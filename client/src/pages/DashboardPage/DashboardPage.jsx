@@ -4,6 +4,13 @@ import { makeStyles } from "@mui/styles";
 import { Grid } from "@mui/material";
 import useChangedEffect from "../../shared/Hooks/useChangedEffect";
 import { create_query, humanize } from "../../utils/helper_functions";
+import { payout_employees } from "./background/weekly_workers/payout_employees";
+import { payout_affiliates } from "./background/monthly_workers/payout_affiliates";
+import { payout_teams } from "./background/monthly_workers/payout_teams";
+import { payout_tips } from "./background/monthly_workers/payout_tips";
+import { refresh_sponsor_codes } from "./background/monthly_workers/refresh_sponsor_codes";
+import { facebook_catalog_upload } from "./background/daily_workers/facebook_catalog_upload";
+import { google_catalog_upload } from "./background/daily_workers/google_catalog_upload";
 import {
   // get_airtable_expenses,
   useGetAllTimeCategoryRevenueOrdersQuery,
@@ -17,15 +24,17 @@ import {
 } from "./dashboardApi";
 import { getMonthStartEndDates, months, years } from "./dashboardHelpers";
 import { useDispatch, useSelector } from "react-redux";
-import { set_end_date, set_start_date } from "./dashboardSlice";
+import { set_end_date, set_loading, set_start_date } from "./dashboardSlice";
 import { DatePicker } from "./components";
 import { useEffect } from "react";
+import { GLButton } from "../../shared/GlowLEDsComponents";
+import { Loading } from "../../shared/SharedComponents";
 
 const DashboardPage = props => {
   const dispatch = useDispatch();
   const dashboardSlice = useSelector(state => state.dashboardSlice);
 
-  const { year, month, start_date, end_date, start_end_date } = dashboardSlice;
+  const { year, month, start_date, end_date, start_end_date, loading } = dashboardSlice;
   const history = useHistory();
   const current_year = new Date().getFullYear();
   // const business_start_date = new Date("2020-08-01");
@@ -57,6 +66,35 @@ const DashboardPage = props => {
   // get_airtable_expenses(2023);
   //   return () => {};
   // }, []);
+  const run_daily_workers = () => {
+    const confirm = window.confirm("Are you sure you want to run the daily worker?");
+    if (confirm) {
+      dispatch(set_loading(true));
+      facebook_catalog_upload();
+      google_catalog_upload();
+      dispatch(set_loading(false));
+    }
+  };
+
+  const run_weekly_workers = () => {
+    const confirm = window.confirm("Are you sure you want to run the weekly worker?");
+    if (confirm) {
+      dispatch(set_loading(true));
+      payout_employees();
+      dispatch(set_loading(false));
+    }
+  };
+  const run_monthly_workers = () => {
+    const confirm = window.confirm("Are you sure you want to run the monthly worker?");
+    if (confirm) {
+      dispatch(set_loading(true));
+      payout_affiliates();
+      payout_teams();
+      payout_tips();
+      refresh_sponsor_codes();
+      dispatch(set_loading(false));
+    }
+  };
 
   return (
     <div className="main_container p-20px">
@@ -64,6 +102,18 @@ const DashboardPage = props => {
         <title>Dashboard | Glow LEDs</title>
       </Helmet>
       <h2 className="ta-c w-100per jc-c fs-30px">Glow LEDs Dashboard</h2>
+      <div className="jc-b w-100per">
+        <GLButton variant="primary" onClick={() => run_daily_workers()}>
+          Run Daily Workers
+        </GLButton>
+        <GLButton variant="primary" onClick={() => run_weekly_workers()}>
+          Run Weekly Workers
+        </GLButton>
+        <GLButton variant="primary" onClick={() => run_monthly_workers()}>
+          Run Monthly Workers
+        </GLButton>
+      </div>
+      <Loading loading={loading} />
       <div className="m-auto w-100per max-w-800px">
         <DatePicker year={year} month={month} start_date={start_date} end_date={end_date} start_end_date={start_end_date} />
         <h3 className="ta-c w-100per jc-c fs-25px">

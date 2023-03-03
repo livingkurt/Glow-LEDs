@@ -5,6 +5,7 @@ import { IUser } from "./userTypes";
 
 export interface IAffiliate {
   user?: IUser;
+  _id?: string;
   products?: IProduct[];
   chips?: IChip[];
   artist_name?: string;
@@ -43,7 +44,7 @@ export interface IListAffiliate {
 }
 
 export interface ISaveAffiliate {
-  _id?: string;
+  _id: string;
   user?: string;
   artist_name?: string;
   instagram_handle?: string;
@@ -65,7 +66,7 @@ export interface ISaveAffiliate {
   venmo?: string;
   public_code?: string;
   private_code?: string;
-  pathname?: string;
+  pathname: string;
   products?: IProduct[];
   chips?: string[];
   tiktok?: string;

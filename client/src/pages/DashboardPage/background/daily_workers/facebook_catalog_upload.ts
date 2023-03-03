@@ -3,14 +3,19 @@ import axios from "axios";
 import dotenv from "dotenv";
 import { domain } from "../worker_helpers";
 dotenv.config();
-const google_sheets_json = require("./glow-leds-f0566f7a7ebe.json");
+const google_sheets_json = require("./google_sheet_credentials.json");
 
 export const facebook_catalog_upload = async () => {
-  google_sheets_json.private_key = process.env.GOOGLE_SHEETS_PRIVATE;
+  google_sheets_json.web.client_secret = process.env.REACT_APP_GOOGLE_SHEETS_PRIVATE;
+  console.log({ google_sheets_json });
   try {
     const { GoogleSpreadsheet } = require("google-spreadsheet");
+    console.log({ client_email: process.env.REACT_APP_INFO_EMAIL, private_key: process.env.REACT_APP_GOOGLE_SHEETS_PRIVATE });
     const doc = new GoogleSpreadsheet("1NqPY49Q-58oCVuslOw576zNyBUnyAAaOmGdzCrVT4g8");
-    await doc.useServiceAccountAuth(google_sheets_json);
+    await doc.useServiceAccountAuth({
+      client_email: process.env.REACT_APP_INFO_EMAIL,
+      private_key: process.env.REACT_APP_GOOGLE_SHEETS_PRIVATE
+    });
     await doc.loadInfo();
     const sheet = doc.sheetsByIndex[0];
     await sheet.clear();
