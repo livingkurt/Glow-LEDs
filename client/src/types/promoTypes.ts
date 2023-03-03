@@ -4,6 +4,7 @@ import { IUser } from "./userTypes";
 export interface IPromo {
   affiliate?: IAffiliate;
   user?: IUser;
+  _id?: string;
   promo_code?: string;
   admin_only?: boolean;
   affiliate_only?: boolean;

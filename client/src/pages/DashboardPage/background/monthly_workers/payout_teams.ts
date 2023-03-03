@@ -1,6 +1,6 @@
 import axios from "axios";
+import { ITeam } from "../../../../types/teamTypes";
 import { domain, get_date_range, get_todays_date, save_paycheck_to_expenses } from "../worker_helpers";
-import { ITeam } from "../../types/teamTypes";
 
 export const payout_teams = async (): Promise<void> => {
   try {

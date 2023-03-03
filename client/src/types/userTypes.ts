@@ -22,8 +22,10 @@ export interface IUser {
   is_affiliated?: boolean;
   is_employee?: boolean;
   palettes?: string[];
+  weekly_wage?: number;
   cart?: string;
   affiliate?: string;
+  stripe_connect_id?: string;
   email_subscription?: boolean;
   guest?: boolean;
   deleted?: boolean;

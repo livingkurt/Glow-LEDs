@@ -1,7 +1,7 @@
-import { payout_affiliates } from "./monthly_workers/payout_affiliates";
-import { payout_teams } from "./monthly_workers/payout_teams";
-import { payout_tips } from "./monthly_workers/payout_tips";
-import { refresh_sponsor_codes } from "./monthly_workers/refresh_sponsor_codes";
+import { payout_affiliates } from "../client/src/pages/DashboardPage/background/monthly_workers/payout_affiliates";
+import { payout_teams } from "../client/src/pages/DashboardPage/background/monthly_workers/payout_teams";
+import { payout_tips } from "../client/src/pages/DashboardPage/background/monthly_workers/payout_tips";
+import { refresh_sponsor_codes } from "../client/src/pages/DashboardPage/background/monthly_workers/refresh_sponsor_codes";
 
 const monthly_worker = () => {
   // Get the current date

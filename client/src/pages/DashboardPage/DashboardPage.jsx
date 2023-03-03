@@ -67,24 +67,33 @@ const DashboardPage = props => {
   //   return () => {};
   // }, []);
   const run_daily_workers = () => {
-    dispatch(set_loading(true));
-    facebook_catalog_upload();
-    google_catalog_upload();
-    dispatch(set_loading(false));
+    const confirm = window.confirm("Are you sure you want to run the daily worker?");
+    if (confirm) {
+      dispatch(set_loading(true));
+      facebook_catalog_upload();
+      google_catalog_upload();
+      dispatch(set_loading(false));
+    }
   };
 
   const run_weekly_workers = () => {
-    dispatch(set_loading(true));
-    payout_employees();
-    dispatch(set_loading(false));
+    const confirm = window.confirm("Are you sure you want to run the weekly worker?");
+    if (confirm) {
+      dispatch(set_loading(true));
+      payout_employees();
+      dispatch(set_loading(false));
+    }
   };
   const run_monthly_workers = () => {
-    dispatch(set_loading(true));
-    payout_affiliates();
-    payout_teams();
-    payout_tips();
-    refresh_sponsor_codes();
-    dispatch(set_loading(false));
+    const confirm = window.confirm("Are you sure you want to run the monthly worker?");
+    if (confirm) {
+      dispatch(set_loading(true));
+      payout_affiliates();
+      payout_teams();
+      payout_tips();
+      refresh_sponsor_codes();
+      dispatch(set_loading(false));
+    }
   };
 
   return (

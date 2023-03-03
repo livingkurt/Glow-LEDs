@@ -1,4 +1,4 @@
-import { payout_employees } from "./weekly_workers/payout_employees";
+import { payout_employees } from "../client/src/pages/DashboardPage/background/weekly_workers/payout_employees";
 
 const weekly_worker = () => {
   // Get the current date
