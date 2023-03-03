@@ -11,8 +11,8 @@ import { Helmet } from "react-helmet";
 import { determine_total } from "../../../utils/helper_functions";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 const CartPage = props => {
-  const userSlice = useSelector(state => state.userSlice);
-  const { current_user } = userSlice;
+  const userLogin = useSelector(state => state.userLogin);
+  const { userInfo } = userLogin;
 
   const pathname = props.match.params.pathname;
   const qty = parseInt(
@@ -31,7 +31,7 @@ const CartPage = props => {
     () => {
       let clean = true;
       if (clean) {
-        dispatch(API.detailsCart(current_user.cart));
+        dispatch(detailsCart(userInfo.cart));
       }
       return () => (clean = false);
     },

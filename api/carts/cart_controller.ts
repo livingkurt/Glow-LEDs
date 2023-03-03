@@ -40,6 +40,7 @@ export default {
   },
   create_carts_c: async (req: any, res: any) => {
     const { body } = req;
+    console.log({ body });
     try {
       const cart = await cart_services.create_carts_s(body);
       if (cart) {

@@ -438,11 +438,11 @@ const ProductPage = props => {
   }, []);
 
   const add_to_cart = cart_item => {
-    if (cartItems.length === 0) {
-      dispatch(API.createCart(cart_item));
-    } else {
-      dispatch(API.updateCart(cart_id, cart_item));
-    }
+    // if (cartItems.length === 0) {
+    dispatch(API.createCart(cart_item));
+    // } else {
+    //   dispatch(API.updateCart(cart_id, cart_item));
+    // }
   };
 
   const determine_addon_color = () => {
@@ -512,7 +512,8 @@ const ProductPage = props => {
     // if (current_user) {
     // 	dispatch(saveCart(cart_item));
     // }
-
+    add_to_cart(cart_item);
+    dispatch(API.createCart(cart_item));
     open_cart();
   };
 

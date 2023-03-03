@@ -95,7 +95,7 @@ const cartSlice = createSlice({
     },
     [API.createCart.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.cart = payload.cart;
+      state.cart = payload;
       state.message = "Cart Saved";
     },
     [API.createCart.rejected]: (state: any, { payload }: any) => {

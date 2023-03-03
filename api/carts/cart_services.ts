@@ -49,21 +49,25 @@ export default {
     }
   },
   create_carts_s: async (body: any) => {
-    const { cartItems, cartItem, current_user } = body;
+    const { cart_item, current_user } = body;
+    // const { cart_item, current_user } = headers;
+    console.log({ cart_item, current_user });
     try {
-      const item = cartItem;
-      const item_exists: any = cartItems.find((x: any) => JSON.stringify({ ...x, qty: null }) === JSON.stringify({ ...item, qty: null }));
-
-      if (item_exists) {
-        return await cart_db.create_carts_db({
-          user: current_user._id,
-          cartItems: cartItems.map((x: any) =>
-            JSON.stringify({ ...x, qty: null }) === JSON.stringify({ ...item_exists, qty: null }) ? item : x
-          )
-        });
-      } else {
-        return await cart_db.create_carts_db({ user: current_user._id, cartItems: [...cartItems, item] });
-      }
+      const response = cart_db.create_carts_db({ user: current_user._id, cartItems: [...cart_item] });
+      console.log({ response });
+      return response;
+      // const item = cart_item;
+      // const item_exists: any = cartItems.find((x: any) => JSON.stringify({ ...x, qty: null }) === JSON.stringify({ ...item, qty: null }));
+      // if (item_exists) {
+      //   return await cart_db.create_carts_db({
+      //     user: current_user._id,
+      //     cartItems: cartItems.map((x: any) =>
+      //       JSON.stringify({ ...x, qty: null }) === JSON.stringify({ ...item_exists, qty: null }) ? item : x
+      //     )
+      //   });
+      // } else {
+      //   return await cart_db.create_carts_db({ user: current_user._id, cartItems: [...cartItems, item] });
+      // }
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
