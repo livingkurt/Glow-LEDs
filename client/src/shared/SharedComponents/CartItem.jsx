@@ -6,15 +6,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { determnine_link } from "../../utils/helper_functions";
 import { LazyImage } from ".";
 import { cart_item_name, sale_price_switch } from "../../utils/react_helper_functions";
-import { removeFromCart } from "../../actions/cartActions";
 import { GLButton } from "../GlowLEDsComponents";
 import { isAdmin } from "../../utils/helpers/user_helpers";
+import { deleteCartItem } from "../../api";
 
 const CartItem = ({ index, item, check_item_as_manufactured }) => {
   const [loading_checkboxes, set_loading_checkboxes] = useState(true);
-  const removeFromCartHandler = product => {
-    dispatch(removeFromCart(product));
-  };
   const dispatch = useDispatch();
 
   const userSlice = useSelector(state => state.userSlice);
@@ -89,7 +86,11 @@ const CartItem = ({ index, item, check_item_as_manufactured }) => {
           </Link>
           {isAdmin(current_user) && (
             <div className="ai-c">
-              <GLButton variant="icon" onClick={() => removeFromCartHandler(item)} aria-label="Delete">
+              <GLButton
+                variant="icon"
+                onClick={() => dispatch(deleteCartItem({ item_index: index, type: "add_to_cart" }))}
+                aria-label="Delete"
+              >
                 <i className="fas fa-trash-alt" />
               </GLButton>
             </div>

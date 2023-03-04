@@ -18,6 +18,7 @@ import { validate_promo_code } from "../../utils/validations";
 import * as API from "../../api";
 import { payOrder, refundOrder, update_payment } from "../../actions/orderActions";
 import { addToCart, removeFromCart } from "../../actions/cartActions";
+import { deleteCartItem } from "../../api";
 
 require("dotenv").config();
 
@@ -125,11 +126,10 @@ const OrderPage = props => {
   }, [product_object]);
 
   const empty_cart = () => {
-    for (let item of cartItems) {
-      dispatch(removeFromCart(item));
-    }
+    cartItems.forEach((item, index) => {
+      deleteCartItem({ item_index: index, type: "add_to_cart" });
+    });
   };
-
   const pay_order = paymentMethod => {
     set_payment_loading(true);
     dispatch(payOrder(order, paymentMethod));

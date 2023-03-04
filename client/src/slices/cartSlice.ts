@@ -159,6 +159,28 @@ const cartSlice = createSlice({
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
+    },
+    [API.deleteCartItem.pending]: (state: any, { payload }: any) => {
+      state.loading = true;
+    },
+    [API.deleteCartItem.fulfilled]: (state: any, { payload }: any) => {
+      const { data, type } = payload;
+      state.loading = false;
+      if (data.message === "Cart Deleted") {
+        state.my_cart = { cartItems: [] };
+        localStorage.removeItem("my_cart");
+      } else if (type === "add_to_cart") {
+        state.my_cart = data;
+        localStorage.setItem("my_cart", JSON.stringify(data));
+      } else if (type === "edit_cart") {
+        state.cart = data;
+      }
+      state.message = "Cart Deleted";
+    },
+    [API.deleteCartItem.rejected]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.error = payload.error;
+      state.message = payload.message;
     }
   }
 });

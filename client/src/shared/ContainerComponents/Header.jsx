@@ -876,7 +876,6 @@ const Header = props => {
               </nav>
             </div>
             {/* <Link to="/checkout/cart"> */}
-            {console.log({ cartItems })}
             <GLButton variant="mobile nav" className="cart_icon none" onClick={open_cart}>
               <i className="fas fa-shopping-cart" /> {cartItems?.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)}{" "}
             </GLButton>

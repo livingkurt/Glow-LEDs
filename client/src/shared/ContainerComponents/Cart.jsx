@@ -1,13 +1,13 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { removeFromCart } from "../../actions/cartActions";
 import { sale_price_switch, determine_product_name } from "../../utils/react_helper_functions";
 import { mobile_check } from "../../utils/react_helper_functions";
 import { API_Content } from "../../utils";
 import { LazyImage, Loading } from "../SharedComponents";
 import { determine_total, humanize, decide_warning, shuffle } from "../../utils/helper_functions";
 import { GLButton } from "../GlowLEDsComponents";
+import { deleteCartItem } from "../../api";
 
 const Cart = props => {
   const history = useHistory();
@@ -68,10 +68,6 @@ const Cart = props => {
   const { cartItems } = my_cart;
 
   const [no_items_in_cart, set_no_items_in_cart] = useState("");
-
-  const removeFromCartHandler = product => {
-    dispatch(removeFromCart(product));
-  };
 
   const checkoutHandler = () => {
     if (decide_warning(props.date_1, props.date_2)) {
@@ -266,7 +262,11 @@ const Cart = props => {
                           <Link to={`/collections/all/products/${item.pathname}`}>{determine_product_name(item, true)}</Link>
                         </div>
                         <div className="mb-10px">
-                          <GLButton variant="icon" onClick={() => removeFromCartHandler(item)} aria-label="Delete">
+                          <GLButton
+                            variant="icon"
+                            onClick={() => dispatch(deleteCartItem({ item_index: index, type: "add_to_cart" }))}
+                            aria-label="Delete"
+                          >
                             <i className="fas fa-trash-alt" />
                           </GLButton>
                         </div>

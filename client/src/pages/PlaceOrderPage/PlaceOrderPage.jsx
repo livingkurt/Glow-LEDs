@@ -14,8 +14,9 @@ import useWindowDimensions from "../../shared/Hooks/windowDimensions";
 import { isMobile } from "react-device-detect";
 import { OrderSummaryStep, ShippingStep } from "./components";
 import * as API from "../../api";
-import { removeFromCart, savePayment, saveShipping } from "../../actions/cartActions";
+import { savePayment, saveShipping } from "../../actions/cartActions";
 import { createOrderGuest, createPayOrder, createPayOrderGuest, removeOrderState } from "../../actions/orderActions";
+import { deleteCartItem } from "../../api";
 
 const PlaceOrderPage = props => {
   const cartSlice = useSelector(state => state.cartSlice);
@@ -459,9 +460,9 @@ const PlaceOrderPage = props => {
   }, [success_order]);
 
   const empty_cart = () => {
-    for (let item of cartItems) {
-      dispatch(removeFromCart(item));
-    }
+    cartItems.forEach((item, index) => {
+      deleteCartItem({ item_index: index, type: "add_to_cart" });
+    });
   };
 
   const send_used_code_email = async () => {

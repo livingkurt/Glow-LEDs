@@ -11,7 +11,7 @@ const cart_string: any = localStorage.getItem("my_cart");
 if (cart_string) {
   my_cart = JSON.parse(cart_string);
 } else {
-  my_cart = [];
+  my_cart = { cartItems: [] };
 }
 
 let shippingAddress: any;

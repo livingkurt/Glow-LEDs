@@ -17,11 +17,12 @@ export const listCarts = createAsyncThunk("carts/listCarts", async (query: any, 
 export const updateCart = createAsyncThunk(
   "carts/updateCart",
   async ({ cart, cart_item, type }: { cart: any; cart_item: any; type: string }, thunkApi: any) => {
+    console.log({ cart, cart_item });
     try {
       const {
         userSlice: { current_user }
       } = thunkApi.getState();
-      const { data } = await axios.put("/api/carts/" + cart._id, { cart, cart_item }, headers(current_user));
+      const { data } = await axios.put("/api/carts/" + cart._id, { cart_item }, headers(current_user));
       return { data, type };
     } catch (error) {}
   }
@@ -42,7 +43,7 @@ export const createCart = createAsyncThunk(
   }
 );
 
-export const detailsCart = createAsyncThunk("carts/detailsCart", async ({ id }: any, thunkApi: any) => {
+export const detailsCart = createAsyncThunk("carts/detailsCart", async ({ id }: { id: string }, thunkApi: any) => {
   try {
     const {
       userSlice: { current_user }
@@ -61,3 +62,19 @@ export const deleteCart = createAsyncThunk("carts/deleteCart", async (pathname, 
     return data;
   } catch (error) {}
 });
+
+export const deleteCartItem = createAsyncThunk(
+  "carts/deleteCartItem",
+  async ({ item_index, type }: { cart: any; item_index: any; type: string }, thunkApi: any) => {
+    console.log({ item_index });
+    try {
+      const {
+        userSlice: { current_user },
+        cartSlice: { my_cart }
+      } = thunkApi.getState();
+      const { data } = await axios.put(`/api/carts/${my_cart._id}/cart_item/${item_index}`, headers(current_user));
+      console.log({ data });
+      return { data, type };
+    } catch (error) {}
+  }
+);
