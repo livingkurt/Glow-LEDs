@@ -51,7 +51,8 @@ const Header = props => {
 
   const cartSlice = useSelector(state => state.cartSlice);
 
-  const { cartItems } = cartSlice;
+  const { my_cart } = cartSlice;
+  const { cartItems } = my_cart;
 
   const open_sidebar = () => {
     const sidebar = document.querySelector(".sidebar");
@@ -875,8 +876,9 @@ const Header = props => {
               </nav>
             </div>
             {/* <Link to="/checkout/cart"> */}
+            {console.log({ cartItems })}
             <GLButton variant="mobile nav" className="cart_icon none" onClick={open_cart}>
-              <i className="fas fa-shopping-cart" /> {cartItems.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)}{" "}
+              <i className="fas fa-shopping-cart" /> {cartItems?.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)}{" "}
             </GLButton>
             {/* </Link> */}
             <div className="nav_bar w-233px jc-fe ai-c">
@@ -887,7 +889,7 @@ const Header = props => {
                 onClick={open_cart}
               >
                 Cart <i className="fas fa-shopping-cart ml-5px mb-5px" />
-                <div className="ml-5px">{cartItems.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)} </div>
+                <div className="ml-5px">{cartItems?.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)} </div>
               </GLButton>
               {/* </Link> */}
               {/* <Link to="/checkout/cart"> */}
@@ -896,7 +898,7 @@ const Header = props => {
                 className={`cart_icon title_font none ${cartItems.length > 0 ? "bob box-s-d bg-primary" : ""}`}
                 onClick={open_cart}
               >
-                <i className="fas fa-shopping-cart" /> {cartItems.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)}{" "}
+                <i className="fas fa-shopping-cart" /> {cartItems?.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)}{" "}
               </GLButton>
               {/* </Link> */}
               {current_user && current_user.hasOwnProperty("first_name") ? (

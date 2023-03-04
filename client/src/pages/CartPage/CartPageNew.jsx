@@ -200,7 +200,7 @@ const CartPage = props => {
           <div className="cart-action">
             <h3 className="fs-17px">
               Subtotal ({" "}
-              {cart.cartItems.reduce(
+              {cart.cartItems?.reduce(
                 (a, c) => parseInt(a) + parseInt(c.qty),
                 0
               )}{" "}

@@ -64,7 +64,8 @@ const Cart = props => {
 
   const cartSlice = useSelector(state => state.cartSlice);
 
-  const { cartItems } = cartSlice;
+  const { my_cart } = cartSlice;
+  const { cartItems } = my_cart;
 
   const [no_items_in_cart, set_no_items_in_cart] = useState("");
 
@@ -316,7 +317,7 @@ const Cart = props => {
 
       <div className="column w-100per pos-fix add_to_cart ph-1rem br-20px" style={{ bottom: cartItems.length === 0 ? "-10px" : "0px" }}>
         <label className="fs-17px title_font mv-1rem">
-          Subtotal ( {cartItems && cartItems.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)} items ) : ${" "}
+          Subtotal ( {cartItems && cartItems?.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)} items ) : ${" "}
           {determine_total(cartItems).toFixed(2)}
         </label>
         <Link to="/checkout/cart" className="w-100per">

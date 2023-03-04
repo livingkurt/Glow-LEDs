@@ -1,6 +1,7 @@
 /* eslint-disable consistent-return */
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { headers } from "../utils/helpers/user_helpers";
 import { create_query } from "../utils/helper_functions";
 
 export const listPalettes = createAsyncThunk("palettes/listPalettes", async (query: any, thunkApi: any) => {
@@ -8,11 +9,7 @@ export const listPalettes = createAsyncThunk("palettes/listPalettes", async (que
     const {
       userSlice: { current_user }
     } = thunkApi.getState();
-    const { data } = await axios.get("/api/palettes?" + create_query(query), {
-      headers: {
-        Authorization: "Bearer " + current_user.access_token
-      }
-    });
+    const { data } = await axios.get(`/api/palettes?${create_query(query)}`, headers(current_user));
     return data;
   } catch (error) {}
 });
@@ -22,11 +19,7 @@ export const updatePalette = createAsyncThunk("palettes/updatePalette", async (p
     const {
       userSlice: { current_user }
     } = thunkApi.getState();
-    const { data } = await axios.put("/api/palettes/" + palette.pathname, palette, {
-      headers: {
-        Authorization: "Bearer " + current_user.access_token
-      }
-    });
+    const { data } = await axios.put("/api/palettes/" + palette.pathname, palette, headers(current_user));
     return data;
   } catch (error) {}
 });
@@ -36,11 +29,7 @@ export const createPalette = createAsyncThunk("palettes/createPalette", async (p
     const {
       userSlice: { current_user }
     } = thunkApi.getState();
-    const { data } = await axios.post("/api/palettes", palette, {
-      headers: {
-        Authorization: "Bearer " + current_user.access_token
-      }
-    });
+    const { data } = await axios.post("/api/palettes", palette, headers(current_user));
     return data;
   } catch (error) {}
 });
@@ -50,11 +39,7 @@ export const detailsPalette = createAsyncThunk("palettes/detailsPalette", async 
     const {
       userSlice: { current_user }
     } = thunkApi.getState();
-    const { data } = await axios.get(`/api/palettes/${id}`, {
-      headers: {
-        Authorization: "Bearer " + current_user.access_token
-      }
-    });
+    const { data } = await axios.get(`/api/palettes/${id}`, headers(current_user));
     return data;
   } catch (error) {}
 });
@@ -64,11 +49,7 @@ export const deletePalette = createAsyncThunk("palettes/deletePalette", async (p
     const {
       userSlice: { current_user }
     } = thunkApi.getState();
-    const { data } = await axios.delete("/api/palettes/" + pathname, {
-      headers: {
-        Authorization: "Bearer " + current_user.access_token
-      }
-    });
+    const { data } = await axios.delete("/api/palettes/" + pathname, headers(current_user));
     return data;
   } catch (error) {}
 });

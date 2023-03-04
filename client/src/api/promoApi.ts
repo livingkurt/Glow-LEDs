@@ -1,6 +1,7 @@
 /* eslint-disable consistent-return */
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { headers } from "../utils/helpers/user_helpers";
 import { create_query } from "../utils/helper_functions";
 
 export const listPromos = createAsyncThunk("promos/listPromos", async (query: any, thunkApi: any) => {
@@ -8,11 +9,7 @@ export const listPromos = createAsyncThunk("promos/listPromos", async (query: an
     const {
       userSlice: { current_user }
     } = thunkApi.getState();
-    const { data } = await axios.get("/api/promos?" + create_query(query), {
-      headers: {
-        Authorization: "Bearer " + current_user.access_token
-      }
-    });
+    const { data } = await axios.get(`/api/promos?${create_query(query)}`, headers(current_user));
     return data;
   } catch (error) {}
 });
@@ -22,11 +19,7 @@ export const updatePromo = createAsyncThunk("promos/updatePromo", async (promo: 
     const {
       userSlice: { current_user }
     } = thunkApi.getState();
-    const { data } = await axios.put("/api/promos/" + promo.pathname, promo, {
-      headers: {
-        Authorization: "Bearer " + current_user.access_token
-      }
-    });
+    const { data } = await axios.put("/api/promos/" + promo.pathname, promo, headers(current_user));
     return data;
   } catch (error) {}
 });
@@ -36,11 +29,7 @@ export const createPromo = createAsyncThunk("promos/createPromo", async (promo: 
     const {
       userSlice: { current_user }
     } = thunkApi.getState();
-    const { data } = await axios.post("/api/promos", promo, {
-      headers: {
-        Authorization: "Bearer " + current_user.access_token
-      }
-    });
+    const { data } = await axios.post("/api/promos", promo, headers(current_user));
     return data;
   } catch (error) {}
 });
@@ -50,11 +39,7 @@ export const detailsPromo = createAsyncThunk("promos/detailsPromo", async ({ id 
     const {
       userSlice: { current_user }
     } = thunkApi.getState();
-    const { data } = await axios.get(`/api/promos/${id}`, {
-      headers: {
-        Authorization: "Bearer " + current_user.access_token
-      }
-    });
+    const { data } = await axios.get(`/api/promos/${id}`, headers(current_user));
     return data;
   } catch (error) {}
 });
@@ -64,11 +49,7 @@ export const deletePromo = createAsyncThunk("promos/deletePromo", async (pathnam
     const {
       userSlice: { current_user }
     } = thunkApi.getState();
-    const { data } = await axios.delete("/api/promos/" + pathname, {
-      headers: {
-        Authorization: "Bearer " + current_user.access_token
-      }
-    });
+    const { data } = await axios.delete("/api/promos/" + pathname, headers(current_user));
     return data;
   } catch (error) {}
 });

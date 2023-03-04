@@ -19,7 +19,8 @@ import { createOrderGuest, createPayOrder, createPayOrderGuest, removeOrderState
 
 const PlaceOrderPage = props => {
   const cartSlice = useSelector(state => state.cartSlice);
-  const { cartItems, shipping, payment } = cartSlice;
+  const { my_cart, shipping, payment } = cartSlice;
+  const { cartItems } = my_cart;
   const orderCreate = useSelector(state => state.orderCreate);
   const { order, error: error_order, success: success_order } = orderCreate;
 
@@ -141,7 +142,7 @@ const PlaceOrderPage = props => {
     if (clean) {
       if (shipping && Object.keys(shipping).length > 0) {
         set_loading_shipping(true);
-        const package_volume = cartItems.reduce((a, c) => a + c.package_volume, 0);
+        const package_volume = cartItems?.reduce((a, c) => a + c.package_volume, 0);
 
         if (!package_volume) {
           set_loading(false);

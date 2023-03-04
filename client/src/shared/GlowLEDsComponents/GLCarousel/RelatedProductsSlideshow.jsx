@@ -16,6 +16,7 @@ import useWindowDimensions from "../../Hooks/windowDimensions";
 import { LazyImage } from "../../SharedComponents";
 import { GLButton } from "..";
 import Rating from "../GLRating/Rating";
+import * as API from "../../../api";
 
 const RelatedProductsSlideshow = ({
   product_category,
@@ -30,6 +31,9 @@ const RelatedProductsSlideshow = ({
   const { height, width } = useWindowDimensions();
   const dispatch = useDispatch();
   const history = useHistory();
+  const cartSlice = useSelector(state => state.cartSlice);
+  const { my_cart } = cartSlice;
+  const { cartItems } = my_cart;
 
   const [products, set_products] = useState([]);
   const [loading, set_loading] = useState(false);
@@ -119,6 +123,14 @@ const RelatedProductsSlideshow = ({
   // 	set_size(option.size);
   // };
 
+  const add_item_to_cart = cart_item => {
+    if (cartItems.length === 0) {
+      dispatch(API.createCart({ cart_item, type: "add_to_cart" }));
+    } else {
+      dispatch(API.updateCart({ cart: my_cart, cart_item, type: "add_to_cart" }));
+    }
+  };
+
   const handleAddToCart = (e, product) => {
     e.preventDefault();
 
@@ -126,46 +138,45 @@ const RelatedProductsSlideshow = ({
     const secondary_color =
       product.secondary_color_products && product.secondary_color_products.find(secondary_color => secondary_color.default_option === true);
     const option = product.option_products && product.option_products.find(option => option.default_option === true);
-    dispatch(
-      addToCart({
-        product: product._id,
-        color_product: color && color,
-        color_code: color && color.color_code,
-        secondary_color_code: secondary_color && secondary_color.color_code,
-        secondary_color_product: secondary_color && secondary_color,
-        color_group_name: product.color_group_name,
-        secondary_color_group_name: product.secondary_color_group_name,
-        option_group_name: product.option_group_name,
-        secondary_group_name: product.secondary_group_name,
-        option_product: option && option,
-        // option_product_name:,
-        // secondary_product,
-        // secondary_product_name,
-        name: product.name,
-        size: size ? size : option.size,
-        color: color && color.color,
-        secondary_color: secondary_color && secondary_color.secondary_color,
-        display_image: product.images[0],
-        price: product.price,
-        sale_price: product.sale_price,
-        sale_start_date: product.sale_start_date,
-        sale_end_date: product.sale_end_date,
-        quantity: product.quantity,
-        weight_pounds: product.weight_pounds,
-        weight_ounces: product.weight_ounces,
-        package_length: product.package_length,
-        package_width: product.package_width,
-        package_height: product.package_height,
-        package_volume: product.package_volume,
-        pathname: product.pathname,
-        category: product.category,
-        subcategory: product.subcategory,
-        qty,
-        finite_stock: product.category
-        // // determine_default_color(color),
-        // diffuser_cap: diffuser_cap,
-      })
-    );
+    const cart_item = {
+      product: product._id,
+      color_product: color && color,
+      color_code: color && color.color_code,
+      secondary_color_code: secondary_color && secondary_color.color_code,
+      secondary_color_product: secondary_color && secondary_color,
+      color_group_name: product.color_group_name,
+      secondary_color_group_name: product.secondary_color_group_name,
+      option_group_name: product.option_group_name,
+      secondary_group_name: product.secondary_group_name,
+      option_product: option && option,
+      // option_product_name:,
+      // secondary_product,
+      // secondary_product_name,
+      name: product.name,
+      size: size ? size : option.size,
+      color: color && color.color,
+      secondary_color: secondary_color && secondary_color.secondary_color,
+      display_image: product.images[0],
+      price: product.price,
+      sale_price: product.sale_price,
+      sale_start_date: product.sale_start_date,
+      sale_end_date: product.sale_end_date,
+      quantity: product.quantity,
+      weight_pounds: product.weight_pounds,
+      weight_ounces: product.weight_ounces,
+      package_length: product.package_length,
+      package_width: product.package_width,
+      package_height: product.package_height,
+      package_volume: product.package_volume,
+      pathname: product.pathname,
+      category: product.category,
+      subcategory: product.subcategory,
+      qty,
+      finite_stock: product.category
+      // // determine_default_color(color),
+      // diffuser_cap: diffuser_cap,
+    };
+    add_item_to_cart(cart_item);
   };
 
   const determine_option_styles = (option_product_object, option) => {

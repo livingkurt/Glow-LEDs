@@ -4,9 +4,9 @@ import { useHistory } from "react-router-dom";
 import { Loading } from "../../shared/SharedComponents";
 import { humanize } from "../../utils/helper_functions";
 import { Helmet } from "react-helmet";
-import { listFeatures } from "../../actions/featureActions";
 import { FeatureItemD, FeatureItemM } from "./components";
 import Search from "../../shared/GlowLEDsComponents/GLTable/Search";
+import * as API from "../../api";
 
 const FeaturesGridPage = props => {
   const history = useHistory();

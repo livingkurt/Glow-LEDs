@@ -1,6 +1,7 @@
 /* eslint-disable consistent-return */
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { headers } from "../utils/helpers/user_helpers";
 import { create_query } from "../utils/helper_functions";
 
 export const listProducts = createAsyncThunk("products/listProducts", async (query: any, thunkApi: any) => {
@@ -8,11 +9,7 @@ export const listProducts = createAsyncThunk("products/listProducts", async (que
     const {
       userSlice: { current_user }
     } = thunkApi.getState();
-    const { data } = await axios.get("/api/products?" + create_query(query), {
-      headers: {
-        Authorization: "Bearer " + current_user.access_token
-      }
-    });
+    const { data } = await axios.get(`/api/products?${create_query(query)}`, headers(current_user));
     return data;
   } catch (error) {}
 });
@@ -22,11 +19,7 @@ export const updateProduct = createAsyncThunk("products/updateProduct", async (p
     const {
       userSlice: { current_user }
     } = thunkApi.getState();
-    const { data } = await axios.put("/api/products/" + product.pathname, product, {
-      headers: {
-        Authorization: "Bearer " + current_user.access_token
-      }
-    });
+    const { data } = await axios.put("/api/products/" + product.pathname, product, headers(current_user));
     return data;
   } catch (error) {}
 });
@@ -36,11 +29,7 @@ export const createProduct = createAsyncThunk("products/createProduct", async (p
     const {
       userSlice: { current_user }
     } = thunkApi.getState();
-    const { data } = await axios.post("/api/products", product, {
-      headers: {
-        Authorization: "Bearer " + current_user.access_token
-      }
-    });
+    const { data } = await axios.post("/api/products", product, headers(current_user));
     return data;
   } catch (error) {}
 });
@@ -50,11 +39,7 @@ export const detailsProduct = createAsyncThunk("products/detailsProduct", async 
     const {
       userSlice: { current_user }
     } = thunkApi.getState();
-    const { data } = await axios.get(`/api/products/${pathname}`, {
-      headers: {
-        Authorization: "Bearer " + current_user.access_token
-      }
-    });
+    const { data } = await axios.get(`/api/products/${pathname}`, headers(current_user));
     return data;
   } catch (error) {}
 });
@@ -64,11 +49,7 @@ export const deleteProduct = createAsyncThunk("products/deleteProduct", async (p
     const {
       userSlice: { current_user }
     } = thunkApi.getState();
-    const { data } = await axios.delete("/api/products/" + pathname, {
-      headers: {
-        Authorization: "Bearer " + current_user.access_token
-      }
-    });
+    const { data } = await axios.delete("/api/products/" + pathname, headers(current_user));
     return data;
   } catch (error) {}
 });

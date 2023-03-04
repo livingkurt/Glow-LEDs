@@ -12,7 +12,8 @@ import RelatedProductsSlideshow from "../../shared/GlowLEDsComponents/GLCarousel
 const CartPage = props => {
   const cartSlice = useSelector(state => state.cartSlice);
 
-  const { cartItems } = cartSlice;
+  const { my_cart } = cartSlice;
+  const { cartItems } = my_cart;
 
   const userSlice = useSelector(state => state.userSlice);
   const { current_user } = userSlice;
@@ -69,7 +70,7 @@ const CartPage = props => {
         <div className="cart-action-container jc-c">
           <div className="cart-action">
             <h3 className="fs-17px">
-              Subtotal ( {cartItems.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)} items ) : $ {determine_total(cartItems).toFixed(2)}
+              Subtotal ( {cartItems?.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)} items ) : $ {determine_total(cartItems).toFixed(2)}
             </h3>
             <GLButton onClick={() => checkoutHandler()} variant="primary" className="w-100per bob">
               Proceed to Checkout

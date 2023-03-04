@@ -5,13 +5,13 @@ import { placeOrderApi } from "./pages/PlaceOrderPage/placeOrderApi";
 import reducer from "./reducer";
 import { check_authentication } from "./utils/react_helper_functions";
 
-let cartItems: any;
-const cart_string: any = localStorage.getItem("cartItems");
+let my_cart: any;
+const cart_string: any = localStorage.getItem("my_cart");
 
 if (cart_string) {
-  cartItems = JSON.parse(cart_string);
+  my_cart = JSON.parse(cart_string);
 } else {
-  cartItems = [];
+  my_cart = [];
 }
 
 let shippingAddress: any;
@@ -24,7 +24,7 @@ if (shipping_string) {
 }
 
 const initialState: object = {
-  cartSlice: { cartItems, shipping: shippingAddress, payment: {} },
+  cartSlice: { my_cart, shipping: shippingAddress },
   userSlice: { current_user: {} },
   showHideSearchBar: { show: true }
 };

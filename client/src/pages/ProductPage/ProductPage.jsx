@@ -20,7 +20,8 @@ const ProductPage = props => {
   let { current_user, cart_id } = userSlice;
 
   const cartSlice = useSelector(state => state.cartSlice);
-  let { cartItems } = cartSlice;
+  const { my_cart } = cartSlice;
+  const { cartItems } = my_cart;
 
   const [name, set_name] = useState("");
   const [description, set_description] = useState("");
@@ -438,11 +439,11 @@ const ProductPage = props => {
   }, []);
 
   const add_to_cart = cart_item => {
-    // if (cartItems.length === 0) {
-    dispatch(API.createCart(cart_item));
-    // } else {
-    //   dispatch(API.updateCart(cart_id, cart_item));
-    // }
+    if (cartItems.length === 0) {
+      dispatch(API.createCart({ cart_item, type: "add_to_cart" }));
+    } else {
+      dispatch(API.updateCart({ cart: my_cart, cart_item, type: "add_to_cart" }));
+    }
   };
 
   const determine_addon_color = () => {
@@ -512,8 +513,6 @@ const ProductPage = props => {
     // if (current_user) {
     // 	dispatch(saveCart(cart_item));
     // }
-    add_to_cart(cart_item);
-    dispatch(API.createCart(cart_item));
     open_cart();
   };
 

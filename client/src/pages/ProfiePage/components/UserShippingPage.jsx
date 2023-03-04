@@ -12,7 +12,7 @@ const ShippingPage = props => {
   const { current_user } = userSlice;
 
   const cartSlice = useSelector(state => state.cartSlice);
-  const { cartItems, shipping, payment } = cartSlice;
+  const { shipping } = cartSlice;
 
   const [email, set_email] = useState("");
   const [first_name, set_first_name] = useState("");

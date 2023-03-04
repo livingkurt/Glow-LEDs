@@ -6,6 +6,7 @@ import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
 import { DetailsAffiliate } from "../actions/affiliateActions";
 import { set_current_user } from "../slices/userSlice";
+import { headers } from "../utils/helpers/user_helpers";
 // import { createApi } from "@reduxjs/toolkit/query/react";
 
 export const listAffiliates = createAsyncThunk("affiliates/listAffiliates", async (query: any, thunkApi: any) => {
@@ -13,11 +14,7 @@ export const listAffiliates = createAsyncThunk("affiliates/listAffiliates", asyn
     const {
       userSlice: { current_user }
     } = thunkApi.getState();
-    const { data } = await axios.get("/api/affiliates?" + create_query(query), {
-      headers: {
-        Authorization: "Bearer " + current_user.access_token
-      }
-    });
+    const { data } = await axios.get(`/api/affiliates?${create_query(query)}`, headers(current_user));
     return data;
   } catch (error) {}
 });
@@ -27,11 +24,7 @@ export const updateAffiliate = createAsyncThunk("affiliates/updateAffiliate", as
     const {
       userSlice: { current_user }
     } = thunkApi.getState();
-    const { data } = await axios.put("/api/affiliates/" + affiliate.pathname, affiliate, {
-      headers: {
-        Authorization: "Bearer " + current_user.access_token
-      }
-    });
+    const { data } = await axios.put("/api/affiliates/" + affiliate.pathname, affiliate, headers(current_user));
     return data;
   } catch (error) {}
 });
@@ -41,11 +34,7 @@ export const createAffiliate = createAsyncThunk("affiliates/createAffiliate", as
     const {
       userSlice: { current_user }
     } = thunkApi.getState();
-    const { data } = await axios.post("/api/affiliates", affiliate, {
-      headers: {
-        Authorization: "Bearer " + current_user.access_token
-      }
-    });
+    const { data } = await axios.post("/api/affiliates", affiliate, headers(current_user));
     const { data: user } = await axios.put(
       "/api/users/update/" + current_user._id,
       {
@@ -62,11 +51,7 @@ export const createAffiliate = createAsyncThunk("affiliates/createAffiliate", as
         access_token: current_user.access_token,
         refresh_token: current_user.refresh_token
       },
-      {
-        headers: {
-          Authorization: "Bearer " + current_user.access_token
-        }
-      }
+      headers(current_user)
     );
     const { access_token, refresh_token } = user;
     setAuthToken(access_token);
@@ -104,11 +89,7 @@ export const deleteAffiliate = createAsyncThunk("affiliates/deleteAffiliate", as
     const {
       userSlice: { current_user }
     } = thunkApi.getState();
-    const { data } = await axios.delete("/api/affiliates/" + pathname, {
-      headers: {
-        Authorization: "Bearer " + current_user.access_token
-      }
-    });
+    const { data } = await axios.delete("/api/affiliates/" + pathname, headers(current_user));
     return data;
   } catch (error) {}
 });
@@ -118,15 +99,7 @@ export const create_rave_mob_affiliates = createAsyncThunk("affiliates/create_ra
     const {
       userSlice: { current_user }
     } = thunkApi.getState();
-    const { data } = await axios.put(
-      "/api/affiliates/create_rave_mob_affiliates",
-      { csv },
-      {
-        headers: {
-          Authorization: "Bearer " + current_user.access_token
-        }
-      }
-    );
+    const { data } = await axios.put("/api/affiliates/create_rave_mob_affiliates", { csv }, headers(current_user));
     return data;
   } catch (error) {}
 });

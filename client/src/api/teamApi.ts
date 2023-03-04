@@ -1,6 +1,7 @@
 /* eslint-disable consistent-return */
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { headers } from "../utils/helpers/user_helpers";
 import { create_query } from "../utils/helper_functions";
 
 export const listTeams = createAsyncThunk("teams/listTeams", async (query: any, thunkApi: any) => {
@@ -8,11 +9,7 @@ export const listTeams = createAsyncThunk("teams/listTeams", async (query: any, 
     const {
       userSlice: { current_user }
     } = thunkApi.getState();
-    const { data } = await axios.get("/api/teams?" + create_query(query), {
-      headers: {
-        Authorization: "Bearer " + current_user.access_token
-      }
-    });
+    const { data } = await axios.get(`/api/teams?${create_query(query)}`, headers(current_user));
     return data;
   } catch (error) {}
 });
@@ -22,11 +19,7 @@ export const updateTeam = createAsyncThunk("teams/updateTeam", async (team: any,
     const {
       userSlice: { current_user }
     } = thunkApi.getState();
-    const { data } = await axios.put("/api/teams/" + team.pathname, team, {
-      headers: {
-        Authorization: "Bearer " + current_user.access_token
-      }
-    });
+    const { data } = await axios.put("/api/teams/" + team.pathname, team, headers(current_user));
     return data;
   } catch (error) {}
 });
@@ -36,11 +29,7 @@ export const createTeam = createAsyncThunk("teams/createTeam", async (team: any,
     const {
       userSlice: { current_user }
     } = thunkApi.getState();
-    const { data } = await axios.post("/api/teams", team, {
-      headers: {
-        Authorization: "Bearer " + current_user.access_token
-      }
-    });
+    const { data } = await axios.post("/api/teams", team, headers(current_user));
     return data;
   } catch (error) {}
 });
@@ -50,11 +39,7 @@ export const detailsTeam = createAsyncThunk("teams/detailsTeam", async ({ id }: 
     const {
       userSlice: { current_user }
     } = thunkApi.getState();
-    const { data } = await axios.get(`/api/teams/${id}`, {
-      headers: {
-        Authorization: "Bearer " + current_user.access_token
-      }
-    });
+    const { data } = await axios.get(`/api/teams/${id}`, headers(current_user));
     return data;
   } catch (error) {}
 });
@@ -64,11 +49,7 @@ export const deleteTeam = createAsyncThunk("teams/deleteTeam", async (pathname, 
     const {
       userSlice: { current_user }
     } = thunkApi.getState();
-    const { data } = await axios.delete("/api/teams/" + pathname, {
-      headers: {
-        Authorization: "Bearer " + current_user.access_token
-      }
-    });
+    const { data } = await axios.delete("/api/teams/" + pathname, headers(current_user));
     return data;
   } catch (error) {}
 });

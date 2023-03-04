@@ -27,7 +27,8 @@ const OrderPage = props => {
   const userSlice = useSelector(state => state.userSlice);
   const { current_user } = userSlice;
   const cartSlice = useSelector(state => state.cartSlice);
-  const { cartItems } = cartSlice;
+  const { my_cart } = cartSlice;
+  const { cartItems } = my_cart;
 
   const orderPay = useSelector(state => state.orderPay);
   const { success: successPay, error: errorPay } = orderPay;
