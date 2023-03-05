@@ -5,12 +5,14 @@ import { validate_contact } from "../../utils/validations";
 import { Loading, Notification } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { humanize } from "../../utils/helper_functions";
+import { sendContactEmail } from "../../api";
+import { GLButton } from "../../shared/GlowLEDsComponents";
 require("dotenv").config();
 
 const ContactPage = props => {
   const dispatch = useDispatch();
   const userSlice = useSelector(state => state.userSlice);
-  const { current_user } = userSlice;
+  const { current_user, loading, completed, message: completed_message, error, success } = userSlice;
 
   const [first_name, set_first_name] = useState(current_user ? current_user.first_name : "");
   const [last_name, set_last_name] = useState(current_user ? current_user.last_name : "");
@@ -30,9 +32,6 @@ const ContactPage = props => {
   const [order_number_validations, set_order_number_validations] = useState("");
   const [reason_for_contact_validations, set_reason_for_contact_validations] = useState("");
   const [message_validations, set_message_validations] = useState("");
-
-  const userContact = useSelector(state => state.userContact);
-  const { loading, completed, message: completed_message, error, success } = userContact;
 
   useEffect(() => {
     let clean = true;
@@ -78,7 +77,7 @@ const ContactPage = props => {
     if (request.isValid) {
       const reason = humanize(reason_for_contact);
       dispatch(
-        contact(
+        sendContactEmail({
           first_name,
           last_name,
           email,
@@ -90,7 +89,7 @@ const ContactPage = props => {
           instagram_handle,
           facebook_name,
           song_id
-        )
+        })
       );
       // if (reason_for_contact === "submit_content_to_be_featured") {
       //   dispatch(
@@ -178,8 +177,19 @@ const ContactPage = props => {
         />
         <label className="validation_text">{email_validations}</label>
 
+        <label className="validation_text">{reason_for_contact_validations}</label>
+        <label>Order Number</label>
+        <input
+          onChange={e => set_order_number(e.target.value)}
+          defaultValue={order_number}
+          className="zoom_f form_input w-100per"
+          type="text"
+          name="order_number"
+          placeholder="Order Number"
+        />
+
+        <label className="validation_text">{order_number_validations}</label>
         <label>Reason for Contact</label>
-        {/* <input onChange={(e) => set_}defaultValue={} className="zoom_f form_input" type="text" name="order_number" placeholder="Order Number" /> */}
 
         <div className="custom-select mt-8px mb-15px">
           <select
@@ -224,7 +234,18 @@ const ContactPage = props => {
           </select>
           <span className="custom-arrow" />
         </div>
-        <label className="validation_text">{reason_for_contact_validations}</label>
+        <label>Message</label>
+        <textarea
+          onChange={e => set_message(e.target.value)}
+          defaultValue={message}
+          className="zoom_f form_input"
+          name="message"
+          style={{ fontFamily: "Helvetica" }}
+          placeholder="Enter Message Here"
+        />
+        <GLButton variant="primary" className="zoom_b mt-10px w-100per" id="button" onClick={e => sendEmail(e)}>
+          Send
+        </GLButton>
         {/* {
         {["order_issues", "returns", "technical_support"].includes(reason_for_contact) && (
           <div className="100per">

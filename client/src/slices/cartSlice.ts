@@ -31,7 +31,7 @@ const cartSlice = createSlice({
     sort: "",
     page: 1,
     limit: 10,
-    paymentMethod: "",
+    paymentMethod: "stripe",
     sort_options: ["Newest", "Artist Name", "Facebook Name", "Instagram Handle", "Sponsor", "Promoter"],
     colors: [
       { name: "Sponsor", color: "#3e4c6d" },
@@ -68,13 +68,11 @@ const cartSlice = createSlice({
       state.paymentMethod = payload;
     },
     save_shipping: (state, { payload }) => {
+      console.log("payload", payload);
       state.shipping = payload;
     },
     remove_from_cart: (state, { payload }) => {
       state.shipping = payload;
-    },
-    add_to_cart: (state, { payload }) => {
-      state.cartItems = payload;
     }
   },
   extraReducers: {
@@ -185,5 +183,5 @@ const cartSlice = createSlice({
   }
 });
 
-export const { set_search, set_sort, set_page, set_limit, set_loading, set_cart } = cartSlice.actions;
+export const { set_search, set_sort, set_page, set_limit, set_loading, set_cart, save_shipping, save_payment_method } = cartSlice.actions;
 export default cartSlice.reducer;

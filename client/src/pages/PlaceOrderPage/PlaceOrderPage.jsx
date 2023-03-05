@@ -14,19 +14,22 @@ import useWindowDimensions from "../../shared/Hooks/windowDimensions";
 import { isMobile } from "react-device-detect";
 import { OrderSummaryStep, ShippingStep } from "./components";
 import * as API from "../../api";
-import { savePayment, saveShipping } from "../../actions/cartActions";
 import { createOrderGuest, createPayOrder, createPayOrderGuest, removeOrderState } from "../../actions/orderActions";
 import { deleteCartItem } from "../../api";
+import { save_shipping } from "../../slices/cartSlice";
 
 const PlaceOrderPage = props => {
   const cartSlice = useSelector(state => state.cartSlice);
   const { my_cart, shipping, payment } = cartSlice;
   const { cartItems } = my_cart;
-  const orderCreate = useSelector(state => state.orderCreate);
-  const { order, error: error_order, success: success_order } = orderCreate;
+  const orderSlice = useSelector(state => state.orderSlice);
+  const { order, error: error_order, success_order, success_pay: successPay, error_pay } = orderSlice;
 
-  const orderPay = useSelector(state => state.orderPay);
-  const { success: successPay, error: error_pay } = orderPay;
+  // const orderCreate = useSelector(state => state.orderCreate);
+  // const { order, error: error_order, success: success_order } = orderCreate;
+
+  // const orderPay = useSelector(state => state.orderPay);
+  // const { success: successPay, error: error_pay } = orderPay;
 
   const userSlice = useSelector(state => state.userSlice);
   const { users, current_user, loading: user_loading, success: user_success } = userSlice;
@@ -102,13 +105,13 @@ const PlaceOrderPage = props => {
     return () => (clean = false);
   }, [dispatch]);
 
-  useEffect(() => {
-    let clean = true;
-    if (clean) {
-      dispatch(savePayment({ paymentMethod }));
-    }
-    return () => (clean = false);
-  }, [paymentMethod]);
+  // useEffect(() => {
+  //   let clean = true;
+  //   if (clean) {
+  //     dispatch(savePayment({ paymentMethod }));
+  //   }
+  //   return () => (clean = false);
+  // }, [paymentMethod]);
 
   useEffect(() => {
     let clean = true;
@@ -116,10 +119,10 @@ const PlaceOrderPage = props => {
       const shipping_storage = sessionStorage.getItem("shippingAddress");
 
       if (shipping_storage) {
-        dispatch(saveShipping(JSON.parse(shipping_storage)));
+        dispatch(save_shipping(JSON.parse(shipping_storage)));
       }
 
-      dispatch(savePayment({ paymentMethod }));
+      // dispatch(savePayment({ paymentMethod }));
       stable_setItemsPrice(determine_total(cartItems));
       // if (!show_message && promo_code) {
       // 	activate_promo_code(promo_code.toLowerCase());

@@ -59,7 +59,8 @@ export default {
     try {
       const cart: any = await Cart.findOne({ _id: id });
       if (cart) {
-        return await Cart.updateOne({ _id: id }, { deleted: true });
+        return await Cart.deleteOne({ _id: id });
+        // return await Cart.deleteOne({ _id: id }, { deleted: true });
       }
     } catch (error) {
       if (error instanceof Error) {

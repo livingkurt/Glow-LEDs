@@ -10,7 +10,7 @@ const orderSlice = createSlice({
     orders: [],
     order: {},
     message: "",
-    error: {},
+    // error: {},
     search: "",
     sort: "",
     page: 1,
@@ -74,6 +74,19 @@ const orderSlice = createSlice({
       state.message = "Order Saved";
     },
     [API.createOrder.rejected]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.error = payload.error;
+      state.message = payload.message;
+    },
+    [API.createOrderPayment.pending]: (state: any, { payload }: any) => {
+      state.loading = true;
+    },
+    [API.createOrderPayment.fulfilled]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.order = payload.order;
+      state.message = "Order Saved";
+    },
+    [API.createOrderPayment.rejected]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;

@@ -18,6 +18,8 @@ import GLModal from "../../../shared/GlowLEDsComponents/GLModal/GLModal";
 import GLCheckbox from "../../../shared/GlowLEDsComponents/GLCheckbox/GLCheckbox";
 import { isAdmin } from "../../../utils/helpers/user_helpers";
 import { useGetAllShippingOrdersQuery } from "../placeOrderApi";
+import { save_payment_method, save_shipping } from "../../../slices/cartSlice";
+import * as API from "../../../api";
 
 const ShippingStep = ({
   shipping_completed,
@@ -56,7 +58,7 @@ const ShippingStep = ({
   const [country, setCountry] = useState("United States");
   const [international, setInternational] = useState(false);
   // const [all_shipping, set_all_shipping] = useState([]);
-  const [save_shipping, set_save_shipping] = useState(false);
+  const [save_user_shipping, set_save_user_shipping] = useState(false);
   const [loading_checkboxes, set_loading_checkboxes] = useState(true);
   const [show_modal, set_show_modal] = useState(false);
 
@@ -146,7 +148,7 @@ const ShippingStep = ({
 
     if (request.isValid) {
       dispatch(
-        saveShipping({
+        save_shipping({
           first_name,
           last_name,
           email: email ? email : current_user.email,
@@ -159,9 +161,7 @@ const ShippingStep = ({
           international
         })
       );
-      const paymentMethod = "stripe";
-      dispatch(savePayment({ paymentMethod }));
-      save_shipping_to_user();
+      save_user_shipping_to_user();
       set_show_shipping(false);
       set_shipping_completed(true);
       isMobile && window.scrollTo({ top: 340, behavior: "smooth" });
@@ -171,10 +171,10 @@ const ShippingStep = ({
     set_loading(false);
   }, 500);
 
-  const save_shipping_to_user = () => {
-    if (save_shipping) {
+  const save_user_shipping_to_user = () => {
+    if (save_user_shipping) {
       dispatch(
-        update({
+        API.updateUser({
           ...current_user,
           shipping: {
             first_name,
@@ -513,18 +513,18 @@ const ShippingStep = ({
                       <div className="mv-2rem">
                         <input
                           type="checkbox"
-                          name="save_shipping"
-                          defaultChecked={save_shipping}
+                          name="save_user_shipping"
+                          defaultChecked={save_user_shipping}
                           style={{
                             transform: "scale(1.5)"
                           }}
                           className="mr-1rem"
-                          id="save_shipping"
+                          id="save_user_shipping"
                           onChange={e => {
-                            set_save_shipping(e.target.checked);
+                            set_save_user_shipping(e.target.checked);
                           }}
                         />
-                        <label htmlFor="save_shipping mb-20px">Save Shipping</label>
+                        <label htmlFor="save_user_shipping mb-20px">Save Shipping</label>
                       </div>
                     )}
                   </div>

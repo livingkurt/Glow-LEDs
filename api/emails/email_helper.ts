@@ -94,22 +94,25 @@ const createTransporter = async (type: string) => {
 
     return transporter;
   } catch (error) {
+    console.log({ error });
     return "Error Creating Transporter";
   }
 };
 
 export const sendEmail = async (emailOptions: any, res: any, type: string, name: string) => {
-  const emailTransporter = await createTransporter(type);
+  try {
+    const emailTransporter = await createTransporter(type);
 
-  if (emailTransporter) {
-    await emailTransporter.sendMail(emailOptions, (err: any, data: any) => {
-      if (err) {
-        res.status(500).send({ error: err, message: "Error Sending Email" });
-      } else {
-        res.status(200).send({ message: "Email Successfully Sent" });
-      }
-    });
-  } else {
-    res.status(500).send({ message: "Error Sending Email" });
+    if (emailTransporter) {
+      await emailTransporter.sendMail(emailOptions, (err: any, data: any) => {
+        if (err) {
+          res.status(500).send({ error: err, message: "Error Sending Email" });
+        }
+      });
+    } else {
+      return res.status(500).send({ message: "Error Sending Email" });
+    }
+  } catch (error) {
+    console.log({ error });
   }
 };

@@ -53,3 +53,32 @@ export const deleteEmail = createAsyncThunk("emails/deleteEmail", async (pathnam
     return data;
   } catch (error) {}
 });
+
+export const sendContactEmail = createAsyncThunk(
+  "emails/sendContactEmail",
+  async (
+    contact_info: {
+      first_name: string;
+      last_name: string;
+      email: string;
+      order_number: string;
+      reason_for_contact: string;
+      message: string;
+      inspirational_pictures: string;
+      artist_name: string;
+      instagram_handle: string;
+      facebook_name: string;
+      song_id: string;
+      quote: string;
+    },
+    thunkApi: any
+  ) => {
+    try {
+      const {
+        userSlice: { current_user }
+      } = thunkApi.getState();
+      const { data } = await axios.post("/api/emails/contact", { contact_info }, headers(current_user));
+      return data;
+    } catch (error) {}
+  }
+);

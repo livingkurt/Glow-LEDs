@@ -34,6 +34,16 @@ export const createOrder = createAsyncThunk("orders/createOrder", async (order: 
   } catch (error) {}
 });
 
+export const createOrderPayment = createAsyncThunk("orders/createOrder", async (order: any, thunkApi: any) => {
+  try {
+    const {
+      userSlice: { current_user }
+    } = thunkApi.getState();
+    const { data } = await axios.post(`/api/orders/${order.id}/pay`, order, headers(current_user));
+    return data;
+  } catch (error) {}
+});
+
 export const detailsOrder = createAsyncThunk("orders/detailsOrder", async ({ id }: any, thunkApi: any) => {
   try {
     const {

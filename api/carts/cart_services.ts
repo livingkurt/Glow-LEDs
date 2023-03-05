@@ -1,5 +1,6 @@
 import { cart_db } from "../carts";
 import { deepEqual, determine_filter } from "../../util";
+import { user_db } from "../users";
 
 export default {
   findAll_carts_s: async (query: { page: string; search: string; sort: string; limit: string }) => {
@@ -50,24 +51,11 @@ export default {
   },
   create_carts_s: async (body: any) => {
     const { cart_item, current_user } = body;
-    // const { cart_item, current_user } = headers;
-    console.log({ cart_item, current_user });
     try {
-      const response = cart_db.create_carts_db({ user: current_user._id, cartItems: [...cart_item] });
-      console.log({ response });
-      return response;
-      // const item = cart_item;
-      // const item_exists: any = cartItems.find((x: any) => JSON.stringify({ ...x, qty: null }) === JSON.stringify({ ...item, qty: null }));
-      // if (item_exists) {
-      //   return await cart_db.create_carts_db({
-      //     user: current_user._id,
-      //     cartItems: cartItems.map((x: any) =>
-      //       JSON.stringify({ ...x, qty: null }) === JSON.stringify({ ...item_exists, qty: null }) ? item : x
-      //     )
-      //   });
-      // } else {
-      //   return await cart_db.create_carts_db({ user: current_user._id, cartItems: [...cartItems, item] });
-      // }
+      const data: any = await cart_db.create_carts_db({ user: current_user._id, cartItems: [...cart_item] });
+
+      await user_db.update_users_db(current_user._id, { cart: data._id });
+      return data;
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -75,22 +63,23 @@ export default {
     }
   },
   update_carts_s: async (params: any, body: any) => {
-    const { cartItems, cartItem, current_user } = body;
+    const { cart_item } = body;
+    const { id } = params;
     try {
-      const item = cartItem;
-      const item_exists: any = cartItems.find((x: any) => deepEqual({ ...x, qty: null }, { ...cartItem, qty: null }));
-
+      const data = await cart_db.findById_carts_db(id);
+      const cartItems = data.cartItems;
+      let new_cart_items = [];
+      const item_exists: any = cartItems.find((x: any) => deepEqual({ ...x, qty: null }, { ...cart_item, qty: null }));
       if (item_exists) {
-        return await cart_db.update_carts_db(params.id, {
-          user: current_user._id,
-          cartItems: cartItems.map((x: any) => (deepEqual({ ...x, qty: null }, { ...cartItem, qty: null }) ? item : x))
-        });
+        new_cart_items = cartItems.map((x: any) => (deepEqual({ ...x, qty: null }, { ...cart_item, qty: null }) ? cart_item : x));
       } else {
-        return await cart_db.update_carts_db(params.id, {
-          user: current_user._id,
-          cartItems: [...cartItems, item]
-        });
+        new_cart_items = [...cartItems, cart_item];
       }
+      await cart_db.update_carts_db(id, {
+        cartItems: new_cart_items
+      });
+      const new_cart = await cart_db.findById_carts_db(id);
+      return new_cart;
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -106,17 +95,25 @@ export default {
       }
     }
   },
-  remove_cartitem_carts_s: async (params: any, body: any) => {
-    const { cartItems, cartItem, current_user } = body;
-    //
+  remove_cart_item_carts_s: async (params: any) => {
+    const { cart_id, item_index } = params;
 
     try {
-      const new_cart_items = cartItems.filter((x: any) => JSON.stringify(x) !== JSON.stringify(cartItem));
+      const data = await cart_db.findById_carts_db(cart_id);
 
-      return await cart_db.update_carts_db(params.id, {
-        user: current_user._id,
-        cartItems: [...new_cart_items]
-      });
+      const cartItems = [...data.cartItems];
+      cartItems.splice(item_index, 1); // 2nd parameter means remove one item only
+      console.log({ length: cartItems.length, item_index });
+      if (cartItems.length === 0) {
+        await cart_db.remove_carts_db(cart_id);
+        return { message: "Cart Deleted" };
+      } else {
+        await cart_db.update_carts_db(cart_id, {
+          cartItems: cartItems
+        });
+        const new_cart = await cart_db.findById_carts_db(cart_id);
+        return new_cart;
+      }
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

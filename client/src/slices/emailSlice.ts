@@ -116,6 +116,19 @@ const emailSlice = createSlice({
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
+    },
+    [API.sendContactEmail.pending]: (state: any, { payload }: any) => {
+      state.loading = true;
+    },
+    [API.sendContactEmail.fulfilled]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.email = payload.email;
+      state.message = "Email Deleted";
+    },
+    [API.sendContactEmail.rejected]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.error = payload.error;
+      state.message = payload.message;
     }
   }
 });

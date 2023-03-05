@@ -31,13 +31,11 @@ export const updateCart = createAsyncThunk(
 export const createCart = createAsyncThunk(
   "carts/createCart",
   async ({ cart_item, type }: { cart_item: any; type: string }, thunkApi: any) => {
-    console.log({ cart_item });
     try {
       const {
         userSlice: { current_user }
       } = thunkApi.getState();
       const { data } = await axios.post("/api/carts", { cart_item, current_user });
-      console.log({ data });
       return { data, type };
     } catch (error) {}
   }
@@ -66,14 +64,12 @@ export const deleteCart = createAsyncThunk("carts/deleteCart", async (pathname, 
 export const deleteCartItem = createAsyncThunk(
   "carts/deleteCartItem",
   async ({ item_index, type }: { cart: any; item_index: any; type: string }, thunkApi: any) => {
-    console.log({ item_index });
     try {
       const {
         userSlice: { current_user },
         cartSlice: { my_cart }
       } = thunkApi.getState();
       const { data } = await axios.put(`/api/carts/${my_cart._id}/cart_item/${item_index}`, headers(current_user));
-      console.log({ data });
       return { data, type };
     } catch (error) {}
   }

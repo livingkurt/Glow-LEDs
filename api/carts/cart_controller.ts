@@ -40,7 +40,6 @@ export default {
   },
   create_carts_c: async (req: any, res: any) => {
     const { body } = req;
-    console.log({ body });
     try {
       const cart = await cart_services.create_carts_s(body);
       if (cart) {
@@ -75,12 +74,13 @@ export default {
       res.status(500).send({ error, message: "Error Deleting Cart" });
     }
   },
-  remove_cartitem_carts_c: async (req: any, res: any) => {
-    const { params, body } = req;
+  remove_cart_item_carts_c: async (req: any, res: any) => {
+    const { params } = req;
+    console.log({ params });
     try {
-      const cart = await cart_services.remove_cartitem_carts_s(params, body);
+      const cart = await cart_services.remove_cart_item_carts_s(params);
       if (cart) {
-        return res.status(204).send({ message: "Cart Item Deleted" });
+        return res.status(201).send(cart);
       }
       return res.status(500).send({ message: "Error Deleting Cart Item" });
     } catch (error) {
