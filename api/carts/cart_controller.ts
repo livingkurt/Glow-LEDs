@@ -76,7 +76,6 @@ export default {
   },
   remove_cart_item_carts_c: async (req: any, res: any) => {
     const { params } = req;
-    console.log({ params });
     try {
       const cart = await cart_services.remove_cart_item_carts_s(params);
       if (cart) {

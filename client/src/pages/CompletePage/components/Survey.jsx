@@ -38,29 +38,30 @@ const Survey = props => {
 
   const history = useHistory();
 
-  const orderDetails = useSelector(state => state.orderDetails);
-  const { order: user_order } = orderDetails;
-
-  const surveyDetails = useSelector(state => state.surveyDetails);
-  const { survey, loading, error } = surveyDetails;
-
-  const surveySave = useSelector(state => state.surveySave);
-  const { survey: survey_saved, loading: loading_saved, success } = surveySave;
+  const orderSlice = useSelector(state => state.orderSlice);
+  const { order: user_order } = orderSlice;
 
   const surveySlice = useSelector(state => state.surveySlice);
-  const { surveys } = surveySlice;
+  const { surveys, loading, error, success } = surveySlice;
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     let clean = true;
     if (clean) {
-      const active_survey = surveys.find(survey => survey.is_survey === true && survey.active === true);
-      if (active_survey) {
-        dispatch(API.detailsSurvey(active_survey._id));
-        set_survey_questions(active_survey._id);
+      if (surveys.length > 0) {
+        // const active_survey = surveys.find(survey => survey.is_survey === true && survey.active === true);
+        const active_survey = surveys[0];
+        console.log({ active_survey });
+        if (active_survey) {
+          // dispatch(API.detailsSurvey(active_survey._id));
+          set_survey_questions(active_survey._id);
+          set_state(active_survey);
+        } else {
+          unset_state();
+        }
+        dispatch(API.detailsOrder(props.order_id));
       }
-      dispatch(API.detailsOrder(props.order_id));
     }
     return () => (clean = false);
   }, [surveys, dispatch]);
@@ -68,7 +69,7 @@ const Survey = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(API.listSurveys({}));
+      dispatch(API.listSurveys({ active: true, is_survey: true, limit: 1 }));
       dispatch(API.listUsers({}));
 
       set_state();
@@ -76,34 +77,24 @@ const Survey = props => {
     return () => (clean = false);
   }, []);
 
-  useEffect(() => {
-    let clean = true;
-    if (clean) {
-      if (survey) {
-        set_state();
-      } else {
-        unset_state();
-      }
+  const set_state = active_survey => {
+    if (active_survey) {
+      set_question_1(active_survey.question_1);
+      set_question_2(active_survey.question_2);
+      set_question_3(active_survey.question_3);
+      set_question_4(active_survey.question_4);
+      set_question_5(active_survey.question_5);
+      set_answer_1(active_survey.answer_1);
+      set_answer_2(active_survey.answer_2);
+      set_answer_3(active_survey.answer_3);
+      set_answer_4(active_survey.answer_4);
+      set_answer_5(active_survey.answer_5);
+      set_user(active_survey.user);
+      set_order(active_survey.order);
+      set_is_survey(active_survey.is_survey);
+      set_active(active_survey.active);
+      set_rating(active_survey.rating);
     }
-    return () => (clean = false);
-  }, [survey]);
-
-  const set_state = () => {
-    set_question_1(survey.question_1);
-    set_question_2(survey.question_2);
-    set_question_3(survey.question_3);
-    set_question_4(survey.question_4);
-    set_question_5(survey.question_5);
-    set_answer_1(survey.answer_1);
-    set_answer_2(survey.answer_2);
-    set_answer_3(survey.answer_3);
-    set_answer_4(survey.answer_4);
-    set_answer_5(survey.answer_5);
-    set_user(survey.user);
-    set_order(survey.order);
-    set_is_survey(survey.is_survey);
-    set_active(survey.active);
-    set_rating(survey.rating);
   };
   const unset_state = () => {
     set_question_1("");
@@ -163,7 +154,7 @@ const Survey = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      if (success && survey_saved) {
+      if (success) {
         // history.push('/account/survey/receipt/' + survey_saved.data.pathname + '/survey/true');
         set_finished(true);
       }
@@ -195,13 +186,13 @@ const Survey = props => {
 
   return (
     <div className="main_container p-20px">
-      {survey && !finished && <h1 style={{ textAlign: "center" }}>{props.pathname ? "Edit Survey" : "Submit Survey"}</h1>}
+      {surveys[0] && !finished && <h1 style={{ textAlign: "center" }}>{props.pathname ? "Edit Survey" : "Submit Survey"}</h1>}
 
       <div className="form">
         <form style={{ width: "100%" }}>
           <Loading loading={loading} error={error}>
             <Loading loading={loading_submit} />
-            {survey && !finished ? (
+            {surveys[0] && !finished ? (
               <div>
                 <Helmet>
                   <title>Survey | Glow LEDs</title>

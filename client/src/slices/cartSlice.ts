@@ -150,8 +150,9 @@ const cartSlice = createSlice({
     },
     [API.deleteCart.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.cart = payload.cart;
+      state.my_cart = {};
       state.message = "Cart Deleted";
+      localStorage.removeItem("my_cart");
     },
     [API.deleteCart.rejected]: (state: any, { payload }: any) => {
       state.loading = false;
@@ -179,6 +180,9 @@ const cartSlice = createSlice({
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
+    },
+    [API.createPayOrder.fulfilled]: (state: any, { payload }: any) => {
+      state.cart = {};
     }
   }
 });

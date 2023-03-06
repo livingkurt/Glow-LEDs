@@ -14,22 +14,23 @@ import useWindowDimensions from "../../shared/Hooks/windowDimensions";
 import { isMobile } from "react-device-detect";
 import { OrderSummaryStep, ShippingStep } from "./components";
 import * as API from "../../api";
-import { createOrderGuest, createPayOrder, createPayOrderGuest, removeOrderState } from "../../actions/orderActions";
+import { createOrderGuest, removeOrderState } from "../../actions/orderActions";
 import { deleteCartItem } from "../../api";
 import { save_shipping } from "../../slices/cartSlice";
+import { set_loading } from "../../slices/orderSlice";
 
 const PlaceOrderPage = props => {
   const cartSlice = useSelector(state => state.cartSlice);
   const { my_cart, shipping, payment } = cartSlice;
   const { cartItems } = my_cart;
   const orderSlice = useSelector(state => state.orderSlice);
-  const { order, error: error_order, success_order, success_pay: successPay, error_pay } = orderSlice;
+  const { order, error: error_order, success_order, success, error_pay, loading, loading_payment } = orderSlice;
 
   // const orderCreate = useSelector(state => state.orderCreate);
   // const { order, error: error_order, success: success_order } = orderCreate;
 
   // const orderPay = useSelector(state => state.orderPay);
-  // const { success: successPay, error: error_pay } = orderPay;
+  // const { success: success, error: error_pay } = orderPay;
 
   const userSlice = useSelector(state => state.userSlice);
   const { users, current_user, loading: user_loading, success: user_success } = userSlice;
@@ -65,7 +66,6 @@ const PlaceOrderPage = props => {
   const [shippingPrice, setShippingPrice] = useState(0);
   const [previousShippingPrice, setPreviousShippingPrice] = useState(0);
   const [promo_code, set_promo_code] = useState("");
-  const [loading_payment, set_loading_payment] = useState(false);
   const [itemsPrice, setItemsPrice] = useState(items_price);
   const [tax_rate, set_tax_rate] = useState(0);
   const [taxPrice, setTaxPrice] = useState(0);
@@ -73,7 +73,6 @@ const PlaceOrderPage = props => {
   const [show_message, set_show_message] = useState("");
   const [user, set_user] = useState(current_user);
   const [free_shipping_message, set_free_shipping_message] = useState("------");
-  const [loading, set_loading] = useState(false);
   const [show_promo_code, set_show_promo_code] = useState(false);
   const [show_promo_code_input_box, set_show_promo_code_input_box] = useState(true);
   const [tip, set_tip] = useState(0);
@@ -94,7 +93,6 @@ const PlaceOrderPage = props => {
   }, 500);
 
   const stable_setItemsPrice = useCallback(setItemsPrice, []);
-  const stable_set_loading_payment = useCallback(set_loading_payment, []);
 
   useEffect(() => {
     let clean = true;
@@ -134,26 +132,26 @@ const PlaceOrderPage = props => {
     let clean = true;
     if (clean) {
       if (error_order) {
-        stable_set_loading_payment(false);
+        dispatch(set_loading(false));
         set_error(error_order);
       }
     }
     return () => (clean = false);
-  }, [error_order, stable_set_loading_payment]);
+  }, [error_order, dispatch]);
 
   useEffect(() => {
     let clean = true;
     if (clean) {
       if (shipping && Object.keys(shipping).length > 0) {
-        set_loading_shipping(true);
+        dispatch(set_loading(true));
         const package_volume = cartItems?.reduce((a, c) => a + c.package_volume, 0);
 
         if (!package_volume) {
-          set_loading(false);
+          dispatch(set_loading(false));
           set_hide_pay_button(false);
           setShippingPrice(0);
           set_free_shipping_message("Free");
-          set_loading_shipping(false);
+          dispatch(set_loading(false));
           set_show_shipping_complete(true);
         } else {
           if (shipping.hasOwnProperty("address_1") && shipping.address_1.length > 0 && shipping_completed) {
@@ -172,8 +170,6 @@ const PlaceOrderPage = props => {
     }
     return () => (clean = false);
   }, [shipping]);
-
-  const [loading_shipping, set_loading_shipping] = useState();
 
   //   39 Red Admiral Ct Apartment 39
   // Little Paxton, England PE19 6BU
@@ -201,12 +197,12 @@ const PlaceOrderPage = props => {
     if (request.data.message) {
       set_error_shipping(request.data);
       set_error_happened(true);
-      set_loading_shipping(false);
+      dispatch(set_loading(false));
     } else {
       set_shipping_rates(request.data.shipment);
       set_shipment_id(request.data.shipment.id);
       set_parcel(request.data.parcel._id);
-      set_loading_shipping(false);
+      dispatch(set_loading(false));
     }
   };
 
@@ -234,7 +230,7 @@ const PlaceOrderPage = props => {
 
   const get_tax_rates = async () => {
     setTaxPrice(0);
-    set_loading(true);
+    dispatch(set_loading(true));
     const { data } = await API_External.get_tax_rates();
     const result = state_names.find(obj => {
       return obj.short_name === shipping.state || obj.long_name === shipping.state;
@@ -248,7 +244,7 @@ const PlaceOrderPage = props => {
       }
       setTaxPrice(tax_rate * itemsPrice);
     }
-    set_loading(false);
+    dispatch(set_loading(false));
   };
 
   const get_promo_code = () => {
@@ -275,8 +271,8 @@ const PlaceOrderPage = props => {
     if (cartItems.length > 0) {
       if (current_user && current_user.first_name) {
         dispatch(
-          createPayOrder(
-            {
+          API.createPayOrder({
+            order: {
               orderItems: cartItems,
               shipping: shipment_id
                 ? {
@@ -298,11 +294,11 @@ const PlaceOrderPage = props => {
               parcel: parcel || null
             },
             paymentMethod
-          )
+          })
         );
       } else {
         dispatch(
-          createPayOrderGuest(
+          API.createPayOrderGuest(
             {
               orderItems: cartItems,
               shipping: shipment_id
@@ -373,7 +369,7 @@ const PlaceOrderPage = props => {
       })
     );
 
-    set_loading_payment(false);
+    dispatch(set_loading(false));
     empty_cart();
     dimminish_stock();
     send_used_code_email();
@@ -383,7 +379,7 @@ const PlaceOrderPage = props => {
   };
 
   const create_no_payment_order = async ({ isPaid }) => {
-    set_loading_payment(true);
+    dispatch(set_loading(true));
     dispatch(
       API.createOrder({
         orderItems: cartItems,
@@ -434,7 +430,7 @@ const PlaceOrderPage = props => {
       })
     );
 
-    set_loading_payment(false);
+    dispatch(set_loading(false));
     empty_cart();
     dimminish_stock();
     promo_code_used();
@@ -448,7 +444,7 @@ const PlaceOrderPage = props => {
       if (success_order && order && totalPrice === 0) {
         setTimeout(() => {
           props.history.push("/pages/complete/order/" + order._id);
-          set_loading_payment(false);
+          dispatch(set_loading(false));
           empty_cart();
           promo_code_used();
           dimminish_stock();
@@ -477,26 +473,25 @@ const PlaceOrderPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      if (successPay && order) {
+      if (success && order.hasOwnProperty("_id")) {
         props.history.push("/pages/complete/order/" + order._id);
-        set_loading_payment(false);
+        dispatch(set_loading(false));
         empty_cart();
         promo_code_used();
         dimminish_stock();
         sessionStorage.removeItem("shippingAddress");
         dispatch(removeOrderState());
         send_used_code_email();
-      } else if (error_pay) {
       }
     }
     return () => (clean = false);
-  }, [successPay]);
+  }, [success]);
 
   useEffect(() => {
     let clean = true;
     if (clean) {
       if (error_pay) {
-        set_loading_payment(false);
+        dispatch(set_loading(false));
 
         set_error(error_pay);
       }
@@ -741,7 +736,7 @@ const PlaceOrderPage = props => {
   }, [user_success]);
 
   const decide_steps = () => {
-    if (successPay) {
+    if (success) {
       return <CheckoutSteps step1 step2 step3 step4 />;
     } else if (show_payment) {
       return <CheckoutSteps step1 step2 step3 />;
@@ -768,12 +763,11 @@ const PlaceOrderPage = props => {
         error={error_shipping}
         set_error={set_error_shipping}
         get_shipping_rates={get_shipping_rates}
-        set_loading_shipping={set_loading_shipping}
-        loading_shipping={loading_shipping}
+        loading_shipping={loading}
         set_verify_shipping={set_verify_shipping}
       />
       {/* <Loading error={error} /> */}
-      <Loading loading={user_loading} />
+      <Loading loading={loading} />
       <div className="placeorder">
         <div className="w-100per" style={{ flex: width > 400 ? "1 0 34rem" : "unset" }}>
           <div className="placeorder-info">
@@ -803,7 +797,6 @@ const PlaceOrderPage = props => {
               email={email}
               set_email={set_email}
               shipping={shipping}
-              loading_shipping={loading_shipping}
               choose_shipping_rate={choose_shipping_rate}
               hide_pay_button={hide_pay_button}
               current_shipping_speed={current_shipping_speed}
@@ -822,6 +815,7 @@ const PlaceOrderPage = props => {
               show_payment={show_payment}
               cartItems={cartItems}
               show_hide_steps={show_hide_steps}
+              loading_payment={loading_payment}
               set_order_note={set_order_note}
               set_production_note={set_production_note}
               show_promo_code={show_promo_code}
@@ -843,8 +837,6 @@ const PlaceOrderPage = props => {
               loading={loading}
               hide_pay_button={hide_pay_button}
               placeOrderHandler={placeOrderHandler}
-              loading_payment={loading_payment}
-              set_loading_payment={set_loading_payment}
               users={users}
               set_paid={set_paid}
               paid={paid}

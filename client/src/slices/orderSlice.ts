@@ -7,6 +7,7 @@ const orderSlice = createSlice({
   name: "orders",
   initialState: {
     loading: false,
+    loading_payment: false,
     orders: [],
     order: {},
     message: "",
@@ -14,6 +15,7 @@ const orderSlice = createSlice({
     search: "",
     sort: "",
     page: 1,
+    success: false,
     limit: 10,
     sort_options: ["Newest", "Artist Name", "Facebook Name", "Instagram Handle", "Sponsor", "Promoter"],
     colors: [
@@ -35,6 +37,9 @@ const orderSlice = createSlice({
     set_loading: (state, { payload }) => {
       state.loading = payload;
     },
+    set_loading_payment: (state, { payload }) => {
+      state.loading_payment = payload;
+    },
     set_search: (state, { payload }) => {
       state.search = payload;
     },
@@ -46,6 +51,9 @@ const orderSlice = createSlice({
     },
     set_limit: (state, { payload }) => {
       state.limit = payload;
+    },
+    set_success: (state, { payload }) => {
+      state.success = payload;
     }
   },
   extraReducers: {
@@ -69,25 +77,42 @@ const orderSlice = createSlice({
       state.loading = true;
     },
     [API.createOrder.fulfilled]: (state: any, { payload }: any) => {
-      state.loading = false;
+      state.loading_payment = false;
+      state.success_order = true;
       state.order = payload.order;
-      state.message = "Order Saved";
+      state.message = "Order Created";
     },
     [API.createOrder.rejected]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.createOrderPayment.pending]: (state: any, { payload }: any) => {
-      state.loading = true;
+    [API.createPayOrder.pending]: (state: any, { payload }: any) => {
+      state.loading_payment = true;
     },
-    [API.createOrderPayment.fulfilled]: (state: any, { payload }: any) => {
-      state.loading = false;
+    [API.createPayOrder.fulfilled]: (state: any, { payload }: any) => {
+      console.log({ payload });
+      state.loading_payment = false;
+      state.success = true;
       state.order = payload.order;
-      state.message = "Order Saved";
+      state.message = "Order Created and Paid";
     },
-    [API.createOrderPayment.rejected]: (state: any, { payload }: any) => {
-      state.loading = false;
+    [API.createPayOrder.rejected]: (state: any, { payload }: any) => {
+      state.loading_payment = false;
+      state.error = payload.error;
+      state.message = payload.message;
+    },
+    [API.createPayOrderGuest.pending]: (state: any, { payload }: any) => {
+      state.loading_payment = true;
+    },
+    [API.createPayOrderGuest.fulfilled]: (state: any, { payload }: any) => {
+      state.loading_payment = false;
+      state.success = true;
+      state.order = payload.order;
+      state.message = "Guest Order Created and Paid";
+    },
+    [API.createPayOrderGuest.rejected]: (state: any, { payload }: any) => {
+      state.loading_payment = false;
       state.error = payload.error;
       state.message = payload.message;
     },
@@ -133,5 +158,5 @@ const orderSlice = createSlice({
   }
 });
 
-export const { set_search, set_sort, set_page, set_limit, set_loading, set_order } = orderSlice.actions;
+export const { set_search, set_sort, set_page, set_limit, set_loading, set_loading_payment, set_order } = orderSlice.actions;
 export default orderSlice.reducer;

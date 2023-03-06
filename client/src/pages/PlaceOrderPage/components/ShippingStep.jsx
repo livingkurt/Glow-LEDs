@@ -47,7 +47,6 @@ const ShippingStep = ({
   show_payment
 }) => {
   const all_shipping = useGetAllShippingOrdersQuery();
-  console.log({ all_shipping });
   const [first_name, set_first_name] = useState("");
   const [last_name, set_last_name] = useState("");
   const [address_1, set_address_1] = useState("");
@@ -57,7 +56,6 @@ const ShippingStep = ({
   const [postalCode, setPostalCode] = useState("");
   const [country, setCountry] = useState("United States");
   const [international, setInternational] = useState(false);
-  // const [all_shipping, set_all_shipping] = useState([]);
   const [save_user_shipping, set_save_user_shipping] = useState(false);
   const [loading_checkboxes, set_loading_checkboxes] = useState(true);
   const [show_modal, set_show_modal] = useState(false);
