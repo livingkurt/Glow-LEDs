@@ -40,6 +40,8 @@ const EditProductPage = props => {
   const [product_id, set_product_id] = useState("");
   const [name, setName] = useState("");
   const [price, setPrice] = useState();
+  const [wholesale_price, set_wholesale_price] = useState();
+  const [wholesale_product, set_wholesale_product] = useState();
   const [previous_price, set_previous_price] = useState();
   // const [ display_image, setDisplayImage ] = useState('');
   const [images, set_images] = useState([]);
@@ -318,6 +320,8 @@ const EditProductPage = props => {
     set_product_id(product._id);
     setName(product.name);
     setPrice(product.price);
+    set_wholesale_product(product.wholesale_product);
+    set_wholesale_price(product.wholesale_price);
     setDescription(product.description);
     setFacts(product.facts);
     setIncludedItems(product.included_items);
@@ -414,6 +418,8 @@ const EditProductPage = props => {
     set_product_id("");
     setName("");
     setPrice(0);
+    set_wholesale_price(0);
+    set_wholesale_product(0);
     set_previous_price();
     set_contributers();
     setDescription("");
@@ -504,6 +510,8 @@ const EditProductPage = props => {
         // _id: props.match.params.pathname && !props.match.params.template === 'true' ? id : null,
         name,
         price,
+        wholesale_product,
+        wholesale_price,
         // display_image,
         images,
         color_images,
@@ -947,6 +955,35 @@ const EditProductPage = props => {
                           onChange={e => set_previous_price(e.target.value)}
                         />
                       </li>
+                      {loading_checkboxes ? (
+                        <div>Loading...</div>
+                      ) : (
+                        <li>
+                          <label htmlFor="wholesale_product">Whole Sale Product</label>
+                          <input
+                            type="checkbox"
+                            name="wholesale_product"
+                            defaultChecked={wholesale_product}
+                            id="wholesale_product"
+                            onChange={e => {
+                              set_wholesale_product(e.target.checked);
+                            }}
+                          />
+                        </li>
+                      )}
+                      {wholesale_product && (
+                        <li>
+                          <label htmlFor="wholesale_price">Wholesale Price</label>
+                          <input
+                            type="text"
+                            name="wholesale_price"
+                            value={wholesale_price}
+                            id="wholesale_price"
+                            onChange={e => set_wholesale_price(e.target.value)}
+                          />
+                        </li>
+                      )}
+
                       <li>
                         <label htmlFor="sale_price">Sale Price</label>
                         <input

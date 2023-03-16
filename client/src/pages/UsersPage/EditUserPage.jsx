@@ -18,6 +18,8 @@ const EditUserPage = props => {
   const [is_employee, set_is_employee] = useState(false);
   const [isVerified, set_isVerified] = useState(false);
   const [is_admin, set_is_admin] = useState(false);
+  const [wholesaler, set_wholesaler] = useState(false);
+  const [guest, set_guest] = useState(false);
   const [loading_checkboxes, set_loading_checkboxes] = useState(true);
   const [shipping, set_shipping] = useState({
     first_name: "",
@@ -63,6 +65,8 @@ const EditUserPage = props => {
     setInternational(user.international);
     set_stripe_connect_id(user.stripe_connect_id);
     set_weekly_wage(user.weekly_wage);
+    set_wholesaler(user.wholesaler);
+    set_guest(user.guest);
   };
   const unset_state = () => {
     set_id("");
@@ -77,6 +81,8 @@ const EditUserPage = props => {
     set_shipping({});
     set_email_subscription("");
     setInternational("");
+    set_wholesaler("");
+    set_guest("");
   };
 
   useEffect(() => {
@@ -127,7 +133,9 @@ const EditUserPage = props => {
         email_subscription,
         shipping,
         stripe_connect_id,
-        weekly_wage
+        weekly_wage,
+        wholesaler,
+        guest
       })
     );
     e.target.reset();
@@ -448,6 +456,38 @@ const EditUserPage = props => {
                                 id="isVerified"
                                 onChange={e => {
                                   set_isVerified(e.target.checked);
+                                }}
+                              />
+                            </li>
+                          )}
+                          {loading_checkboxes ? (
+                            <div>Loading...</div>
+                          ) : (
+                            <li>
+                              <label htmlFor="wholesaler">Wholesaler</label>
+                              <input
+                                type="checkbox"
+                                name="wholesaler"
+                                defaultChecked={wholesaler}
+                                id="wholesaler"
+                                onChange={e => {
+                                  set_wholesaler(e.target.checked);
+                                }}
+                              />
+                            </li>
+                          )}
+                          {loading_checkboxes ? (
+                            <div>Loading...</div>
+                          ) : (
+                            <li>
+                              <label htmlFor="guest">Guest</label>
+                              <input
+                                type="checkbox"
+                                name="guest"
+                                defaultChecked={guest}
+                                id="guest"
+                                onChange={e => {
+                                  set_guest(e.target.checked);
                                 }}
                               />
                             </li>

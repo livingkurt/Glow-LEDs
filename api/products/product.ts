@@ -57,6 +57,8 @@ const productSchema = new mongoose.Schema(
     video: { type: String },
     brand: { type: String, required: true },
     price: { type: Number },
+    wholesale_price: { type: Number },
+    wholesale_product: { type: Boolean },
     previous_price: { type: Number },
     category: { type: String, required: true },
     product_collection: { type: String },
