@@ -35,6 +35,7 @@ const userSchema = new mongoose.Schema(
     email_subscription: { type: Boolean, default: true },
     guest: { type: Boolean },
     wholesaler: { type: Boolean },
+    minimum_order_amount: { type: Number },
     deleted: { type: Boolean, default: false }
   },
   {

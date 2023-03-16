@@ -19,6 +19,7 @@ const EditUserPage = props => {
   const [isVerified, set_isVerified] = useState(false);
   const [is_admin, set_is_admin] = useState(false);
   const [wholesaler, set_wholesaler] = useState(false);
+  const [minimum_order_amount, set_minimum_order_amount] = useState(false);
   const [guest, set_guest] = useState(false);
   const [loading_checkboxes, set_loading_checkboxes] = useState(true);
   const [shipping, set_shipping] = useState({
@@ -66,6 +67,7 @@ const EditUserPage = props => {
     set_stripe_connect_id(user.stripe_connect_id);
     set_weekly_wage(user.weekly_wage);
     set_wholesaler(user.wholesaler);
+    set_minimum_order_amount(user.minimum_order_amount);
     set_guest(user.guest);
   };
   const unset_state = () => {
@@ -82,6 +84,7 @@ const EditUserPage = props => {
     set_email_subscription("");
     setInternational("");
     set_wholesaler("");
+    set_minimum_order_amount("");
     set_guest("");
   };
 
@@ -135,6 +138,7 @@ const EditUserPage = props => {
         stripe_connect_id,
         weekly_wage,
         wholesaler,
+        minimum_order_amount,
         guest
       })
     );
@@ -476,6 +480,16 @@ const EditUserPage = props => {
                               />
                             </li>
                           )}
+                          <li>
+                            <label htmlFor="minimum_order_amount">Minimum Order Amount</label>
+                            <input
+                              type="text"
+                              name="minimum_order_amount"
+                              value={minimum_order_amount}
+                              id="minimum_order_amount"
+                              onChange={e => set_minimum_order_amount(e.target.value)}
+                            />
+                          </li>
                           {loading_checkboxes ? (
                             <div>Loading...</div>
                           ) : (
