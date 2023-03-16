@@ -21,6 +21,7 @@ import category_routes from "./categorys/category_routes";
 import setting_routes from "./settings/setting_routes";
 import palette_routes from "./palettes/palette_routes";
 import filament_routes from "./filaments/filament_routes";
+import wholesaler_routes from "./wholesalers/wholesaler_routes";
 
 const router = express.Router();
 
@@ -47,5 +48,6 @@ router.use("/api/categorys", category_routes);
 router.use("/api/settings", setting_routes);
 router.use("/api/palettes", palette_routes);
 router.use("/api/filaments", filament_routes);
+router.use("/api/wholesalers", wholesaler_routes);
 
 export default router;
