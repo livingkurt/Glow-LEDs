@@ -256,7 +256,7 @@ const EditUserPage = props => {
                         <li>
                           <label htmlFor="first_name">First Name</label>
                           <input
-                            value={shipping.first_name}
+                            value={shipping?.first_name}
                             type="first_name"
                             name="first_name"
                             id="first_name"
@@ -271,7 +271,7 @@ const EditUserPage = props => {
                         <li>
                           <label htmlFor="last_name">Last Name</label>
                           <input
-                            value={shipping.last_name}
+                            value={shipping?.last_name}
                             type="last_name"
                             name="last_name"
                             id="last_name"
@@ -287,7 +287,7 @@ const EditUserPage = props => {
                           <label htmlFor="address_1">Address</label>
                           <input
                             type="text"
-                            value={shipping.address_1}
+                            value={shipping?.address_1}
                             name="address_1"
                             id="address_1"
                             onChange={e =>
@@ -302,7 +302,7 @@ const EditUserPage = props => {
                           <label htmlFor="address_2">Apt/Suite</label>
                           <input
                             type="text"
-                            value={shipping.address_2}
+                            value={shipping?.address_2}
                             name="address_2"
                             id="address_2"
                             onChange={e =>
@@ -317,7 +317,7 @@ const EditUserPage = props => {
                           <label htmlFor="city">City</label>
                           <input
                             type="text"
-                            value={shipping.city}
+                            value={shipping?.city}
                             name="city"
                             id="city"
                             onChange={e =>
@@ -332,7 +332,7 @@ const EditUserPage = props => {
                           <label htmlFor="state">State</label>
                           <input
                             type="text"
-                            value={shipping.state}
+                            value={shipping?.state}
                             name="state"
                             id="state"
                             onChange={e =>
@@ -347,7 +347,7 @@ const EditUserPage = props => {
                           <label htmlFor="postalCode">Postal Code</label>
                           <input
                             type="text"
-                            value={shipping.postalCode}
+                            value={shipping?.postalCode}
                             name="postalCode"
                             id="postalCode"
                             onChange={e =>
@@ -370,7 +370,7 @@ const EditUserPage = props => {
                                 // defaultChecked={international ? 'checked' : 'unchecked'}
                                 defaultValue={international}
                                 defaultChecked={international}
-                                value={shipping.international}
+                                value={shipping?.international}
                                 id="international"
                                 onChange={e => {
                                   setInternational(e.target.checked);
@@ -382,7 +382,7 @@ const EditUserPage = props => {
                                 <label htmlFor="country">Country</label>
                                 <input
                                   type="text"
-                                  value={shipping.country}
+                                  value={shipping?.country}
                                   name="country"
                                   id="country"
                                   onChange={e =>
