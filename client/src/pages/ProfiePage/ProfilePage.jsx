@@ -380,20 +380,15 @@ const ProfilePage = props => {
                   </div>
                 )}
                 <div className="ml-10px">
-                  {user.is_affiliated && affiliate && affiliate.pathname && (
+                  {user.is_affiliated && (
                     <div>
-                      <Link to={"/secure/account/edit_affiliate/" + affiliate.pathname}>
+                      <Link
+                        to={affiliate?.pathname ? "/secure/account/edit_affiliate/" + affiliate.pathname : "/secure/account/edit_affiliate"}
+                      >
                         <GLButton variant="primary">Edit Affiliate Profile</GLButton>
                       </Link>
                     </div>
                   )}{" "}
-                  {user.is_affiliated && !affiliate && (
-                    <div>
-                      <Link to={"/secure/account/edit_affiliate"}>
-                        <GLButton variant="primary">Affiliate Sign Up</GLButton>
-                      </Link>
-                    </div>
-                  )}
                 </div>
               </div>
               <div className="group_item w-100per">
