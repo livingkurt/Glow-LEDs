@@ -5,14 +5,13 @@ import { create_query } from "../utils/helper_functions";
 import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
 import { setCurrentUser } from "../actions/userActions";
-import { DetailsAffiliate } from "../actions/affiliateActions";
 
-export const listAffiliates = createAsyncThunk("affiliates/listAffiliates", async (query: any, thunkApi: any) => {
+export const listWholesalers = createAsyncThunk("wholesalers/listWholesalers", async (query: any, thunkApi: any) => {
   try {
     const {
       userLogin: { userInfo }
     } = thunkApi.getState();
-    const { data } = await axios.get("/api/affiliates?" + create_query(query), {
+    const { data } = await axios.get("/api/wholesalers?" + create_query(query), {
       headers: {
         Authorization: "Bearer " + userInfo.access_token
       }
@@ -21,12 +20,12 @@ export const listAffiliates = createAsyncThunk("affiliates/listAffiliates", asyn
   } catch (error) {}
 });
 
-export const updateAffiliate = createAsyncThunk("affiliates/updateAffiliate", async (affiliate: any, thunkApi: any) => {
+export const updateWholesaler = createAsyncThunk("wholesalers/updateWholesaler", async (wholesaler: any, thunkApi: any) => {
   try {
     const {
       userLogin: { userInfo }
     } = thunkApi.getState();
-    const { data } = await axios.put("/api/affiliates/" + affiliate.pathname, affiliate, {
+    const { data } = await axios.put("/api/wholesalers/" + wholesaler.pathname, wholesaler, {
       headers: {
         Authorization: "Bearer " + userInfo.access_token
       }
@@ -35,12 +34,12 @@ export const updateAffiliate = createAsyncThunk("affiliates/updateAffiliate", as
   } catch (error) {}
 });
 
-export const createAffiliate = createAsyncThunk("affiliates/createAffiliate", async (affiliate: any, thunkApi: any) => {
+export const createWholesaler = createAsyncThunk("wholesalers/createWholesaler", async (wholesaler: any, thunkApi: any) => {
   try {
     const {
       userLogin: { userInfo }
     } = thunkApi.getState();
-    const { data } = await axios.post("/api/affiliates", affiliate, {
+    const { data } = await axios.post("/api/wholesalers", wholesaler, {
       headers: {
         Authorization: "Bearer " + userInfo.access_token
       }
@@ -52,9 +51,9 @@ export const createAffiliate = createAsyncThunk("affiliates/createAffiliate", as
         last_name: userInfo.last_name,
         email: userInfo.email,
         password: userInfo.password,
-        is_affiliated: true,
+        is_wholesalerd: true,
         email_subscription: userInfo.email_subscription,
-        affiliate: data._id,
+        wholesaler: data._id,
         shipping: userInfo.shipping,
         isVerified: userInfo.isVerified,
         isAdmin: userInfo.isAdmin,
@@ -80,30 +79,27 @@ export const createAffiliate = createAsyncThunk("affiliates/createAffiliate", as
   } catch (error) {}
 });
 
-export const detailsAffiliate = createAsyncThunk(
-  "affiliates/detailsAffiliate",
-  async ({ pathname, id }: DetailsAffiliate, thunkApi: any) => {
-    try {
-      const {
-        userLogin: { userInfo }
-      } = thunkApi.getState();
-      let response: any = {};
-      if (id) {
-        response = await axios.get(`/api/affiliates/${id}`);
-      } else if (pathname) {
-        response = await axios.get(`/api/affiliates/${pathname}/pathname`);
-      }
-      return response.data;
-    } catch (error) {}
-  }
-);
-
-export const deleteAffiliate = createAsyncThunk("affiliates/deleteAffiliate", async (pathname, thunkApi: any) => {
+export const detailsWholesaler = createAsyncThunk("wholesalers/detailsWholesaler", async ({ pathname, id }: any, thunkApi: any) => {
   try {
     const {
       userLogin: { userInfo }
     } = thunkApi.getState();
-    const { data } = await axios.delete("/api/affiliates/" + pathname, {
+    let response: any = {};
+    if (id) {
+      response = await axios.get(`/api/wholesalers/${id}`);
+    } else if (pathname) {
+      response = await axios.get(`/api/wholesalers/${pathname}/pathname`);
+    }
+    return response.data;
+  } catch (error) {}
+});
+
+export const deleteWholesaler = createAsyncThunk("wholesalers/deleteWholesaler", async (pathname, thunkApi: any) => {
+  try {
+    const {
+      userLogin: { userInfo }
+    } = thunkApi.getState();
+    const { data } = await axios.delete("/api/wholesalers/" + pathname, {
       headers: {
         Authorization: "Bearer " + userInfo.access_token
       }
@@ -112,13 +108,13 @@ export const deleteAffiliate = createAsyncThunk("affiliates/deleteAffiliate", as
   } catch (error) {}
 });
 
-export const create_rave_mob_affiliates = createAsyncThunk("affiliates/create_rave_mob_affiliates", async (csv, thunkApi: any) => {
+export const create_rave_mob_wholesalers = createAsyncThunk("wholesalers/create_rave_mob_wholesalers", async (csv, thunkApi: any) => {
   try {
     const {
       userLogin: { userInfo }
     } = thunkApi.getState();
     const { data } = await axios.put(
-      "/api/affiliates/create_rave_mob_affiliates",
+      "/api/wholesalers/create_rave_mob_wholesalers",
       { csv },
       {
         headers: {
@@ -129,16 +125,3 @@ export const create_rave_mob_affiliates = createAsyncThunk("affiliates/create_ra
     return data;
   } catch (error) {}
 });
-
-// export const employeeInfoApi = createApi({
-//   reducerPath: "affiliateApi",
-//   baseQuery: axiosBaseQuery({ baseUrl: "/api/v1" }),
-//   endpoints: builder => ({
-//     getUsers: builder.query({
-//       query: () => ({ url: "/titles", method: "get" }),
-//       transformResponse: response => response.titles
-//     })
-//   })
-// });
-
-// export const { useGetTitlesQuery, useGetShiftsQuery, useGetRolesQuery, useGetTagsQuery } = employeeInfoApi;
