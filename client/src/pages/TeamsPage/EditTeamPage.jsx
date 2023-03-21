@@ -135,35 +135,31 @@ const EditTeamPage = props => {
 
   const submitHandler = e => {
     e.preventDefault();
-
-    const data = {
-      _id: id,
-      team_name,
-      instagram_handle,
-      facebook_name,
-      percentage_off,
-      images,
-      sponsor,
-      map,
-      captain,
-      promoter,
-      rave_mob,
-      active,
-      bio,
-      link,
-      video,
-      picture,
-      venmo,
-      public_code: public_code && public_code._id,
-      private_code: private_code && private_code._id,
-      pathname: pathname ? pathname : snake_case(team_name),
-      affiliates: affiliates && affiliates.map(affiliate => affiliate._id)
-    };
-    if (id) {
-      dispatch(API.updateTeam(data));
-    } else {
-      dispatch(API.createTeam(data));
-    }
+    dispatch(
+      API.saveTeam({
+        _id: id,
+        team_name,
+        instagram_handle,
+        facebook_name,
+        percentage_off,
+        images,
+        sponsor,
+        map,
+        captain,
+        promoter,
+        rave_mob,
+        active,
+        bio,
+        link,
+        video,
+        picture,
+        venmo,
+        public_code: public_code && public_code._id,
+        private_code: private_code && private_code._id,
+        pathname: pathname ? pathname : snake_case(team_name),
+        affiliates: affiliates && affiliates.map(affiliate => affiliate._id)
+      })
+    );
     e.target.reset();
     unset_state();
     history.push("/secure/glow/teams");

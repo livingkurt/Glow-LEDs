@@ -111,29 +111,26 @@ const EditSurveyPage = props => {
 
   const submitHandler = e => {
     e.preventDefault();
-    const data = {
-      _id: id,
-      question_1,
-      question_2,
-      question_3,
-      question_4,
-      question_5,
-      answer_1,
-      answer_2,
-      answer_3,
-      answer_4,
-      answer_5,
-      user,
-      order,
-      rating,
-      is_survey,
-      active
-    };
-    if (id) {
-      dispatch(API.updateSurvey(data));
-    } else {
-      dispatch(API.createSurvey(data));
-    }
+    dispatch(
+      API.saveSurvey({
+        _id: id,
+        question_1,
+        question_2,
+        question_3,
+        question_4,
+        question_5,
+        answer_1,
+        answer_2,
+        answer_3,
+        answer_4,
+        answer_5,
+        user,
+        order,
+        rating,
+        is_survey,
+        active
+      })
+    );
     e.target.reset();
     unset_state();
     history.push("/secure/glow/surveys");

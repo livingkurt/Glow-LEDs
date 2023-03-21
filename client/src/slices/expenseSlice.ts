@@ -65,28 +65,15 @@ const expenseSlice = createSlice({
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.createExpense.pending]: (state: any, { payload }: any) => {
+    [API.saveExpense.pending]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.createExpense.fulfilled]: (state: any, { payload }: any) => {
+    [API.saveExpense.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
       state.expense = payload.expense;
       state.message = "Expense Saved";
     },
-    [API.createExpense.rejected]: (state: any, { payload }: any) => {
-      state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
-    },
-    [API.updateExpense.pending]: (state: any, { payload }: any) => {
-      state.loading = true;
-    },
-    [API.updateExpense.fulfilled]: (state: any, { payload }: any) => {
-      state.loading = false;
-      state.expense = payload.expense;
-      state.message = "Expense Saved";
-    },
-    [API.updateExpense.rejected]: (state: any, { payload }: any) => {
+    [API.saveExpense.rejected]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;

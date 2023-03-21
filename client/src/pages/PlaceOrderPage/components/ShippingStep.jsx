@@ -172,7 +172,7 @@ const ShippingStep = ({
   const save_user_shipping_to_user = () => {
     if (save_user_shipping) {
       dispatch(
-        API.updateUser({
+        API.saveUser({
           ...current_user,
           shipping: {
             first_name,

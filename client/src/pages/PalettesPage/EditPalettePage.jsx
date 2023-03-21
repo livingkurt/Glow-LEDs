@@ -93,20 +93,17 @@ const EditPalettePage = props => {
 
   const submitHandler = e => {
     e.preventDefault();
-    const data = {
-      _id: id,
-      type,
-      name,
-      chip,
-      colors_per_mode,
-      colors: name * chip * colors_per_mode,
-      quantity_state
-    };
-    if (id) {
-      dispatch(API.updatePalette(data));
-    } else {
-      dispatch(API.createPalette(data));
-    }
+    dispatch(
+      API.savePalette({
+        _id: id,
+        type,
+        name,
+        chip,
+        colors_per_mode,
+        colors: name * chip * colors_per_mode,
+        quantity_state
+      })
+    );
     e.target.reset();
     unset_state();
     history.push("/secure/glow/palettes");

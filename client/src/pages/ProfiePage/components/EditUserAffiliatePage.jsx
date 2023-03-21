@@ -150,32 +150,29 @@ const EditUserAffiliatePage = props => {
 
   const submitHandler = e => {
     e.preventDefault();
-    const data = {
-      _id: id,
-      user: current_user._id,
-      artist_name,
-      instagram_handle,
-      facebook_name,
-      tiktok,
-      active,
-      bio,
-      link,
-      location,
-      years,
-      style,
-      venmo,
-      percentage_off: 20,
-      inspiration,
-      pathname: pathname ? pathname : artist_name && snake_case(artist_name),
-      products,
-      chips: chips && chips.map(chip => chip._id),
-      answers: answer_1 && answer_2 && answer_3 && !props.match.params.id && [answer_1, answer_2, answer_3]
-    };
-    if (id) {
-      dispatch(API.updateAffiliate(data));
-    } else {
-      dispatch(API.createAffiliate(data));
-    }
+    dispatch(
+      API.saveAffiliate({
+        _id: id,
+        user: current_user._id,
+        artist_name,
+        instagram_handle,
+        facebook_name,
+        tiktok,
+        active,
+        bio,
+        link,
+        location,
+        years,
+        style,
+        venmo,
+        percentage_off: 20,
+        inspiration,
+        pathname: pathname ? pathname : artist_name && snake_case(artist_name),
+        products,
+        chips: chips && chips.map(chip => chip._id),
+        answers: answer_1 && answer_2 && answer_3 && !props.match.params.id && [answer_1, answer_2, answer_3]
+      })
+    );
 
     e.target.reset();
     unset_state();
@@ -191,15 +188,15 @@ const EditUserAffiliatePage = props => {
     return () => (clean = false);
   }, [success]);
 
-  useEffect(() => {
-    let clean = true;
-    if (clean) {
-      if (current_user && !current_user.is_affiliated) {
-        history.push("/secure/account/profile/");
-      }
-    }
-    return () => (clean = false);
-  }, [current_user]);
+  // useEffect(() => {
+  //   let clean = true;
+  //   if (clean) {
+  //     if (userInfo && !userInfo.is_affiliated) {
+  //       history.push("/secure/account/profile/");
+  //     }
+  //   }
+  //   return () => (clean = false);
+  // }, [userInfo]);
 
   return (
     <div className="main_container p-20px">

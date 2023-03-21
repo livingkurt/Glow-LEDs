@@ -65,28 +65,15 @@ const contentSlice = createSlice({
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.createContent.pending]: (state: any, { payload }: any) => {
+    [API.saveContent.pending]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.createContent.fulfilled]: (state: any, { payload }: any) => {
+    [API.saveContent.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
       state.content = payload.content;
       state.message = "Content Saved";
     },
-    [API.createContent.rejected]: (state: any, { payload }: any) => {
-      state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
-    },
-    [API.updateContent.pending]: (state: any, { payload }: any) => {
-      state.loading = true;
-    },
-    [API.updateContent.fulfilled]: (state: any, { payload }: any) => {
-      state.loading = false;
-      state.content = payload.content;
-      state.message = "Content Saved";
-    },
-    [API.updateContent.rejected]: (state: any, { payload }: any) => {
+    [API.saveContent.rejected]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;

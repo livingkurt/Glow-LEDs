@@ -157,7 +157,7 @@ const ProductListItem = props => {
 
   const show_hide_product = product => {
     dispatch(
-      API.updateProduct({
+      API.saveProduct({
         ...product,
         hidden: product.hidden ? false : true
       })

@@ -14,23 +14,19 @@ export const listParcels = createAsyncThunk("parcels/listParcels", async (query:
   } catch (error) {}
 });
 
-export const updateParcel = createAsyncThunk("parcels/updateParcel", async (parcel: any, thunkApi: any) => {
+export const saveParcel = createAsyncThunk("parcels/saveParcel", async (parcel: any, thunkApi: any) => {
   try {
     const {
       userSlice: { current_user }
     } = thunkApi.getState();
-    const { data } = await axios.put("/api/parcels/" + parcel.pathname, parcel, headers(current_user));
-    return data;
-  } catch (error) {}
-});
 
-export const createParcel = createAsyncThunk("parcels/createParcel", async (parcel: any, thunkApi: any) => {
-  try {
-    const {
-      userSlice: { current_user }
-    } = thunkApi.getState();
-    const { data } = await axios.post("/api/parcels", parcel, headers(current_user));
-    return data;
+    if (!parcel._id) {
+      const { data } = await axios.post("/api/parcels", parcel, headers(current_user));
+      return data;
+    } else {
+      const { data } = await axios.put("/api/parcels/" + parcel._id, parcel, headers(current_user));
+      return data;
+    }
   } catch (error) {}
 });
 

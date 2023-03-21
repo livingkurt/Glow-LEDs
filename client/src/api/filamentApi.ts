@@ -14,23 +14,19 @@ export const listFilaments = createAsyncThunk("filaments/listFilaments", async (
   } catch (error) {}
 });
 
-export const updateFilament = createAsyncThunk("filaments/updateFilament", async (filament: any, thunkApi: any) => {
+export const saveFilament = createAsyncThunk("filaments/saveFilament", async (filament: any, thunkApi: any) => {
   try {
     const {
       userSlice: { current_user }
     } = thunkApi.getState();
-    const { data } = await axios.put("/api/filaments/" + filament.pathname, filament, headers(current_user));
-    return data;
-  } catch (error) {}
-});
 
-export const createFilament = createAsyncThunk("filaments/createFilament", async (filament: any, thunkApi: any) => {
-  try {
-    const {
-      userSlice: { current_user }
-    } = thunkApi.getState();
-    const { data } = await axios.post("/api/filaments", filament, headers(current_user));
-    return data;
+    if (!filament._id) {
+      const { data } = await axios.post("/api/filaments", filament, headers(current_user));
+      return data;
+    } else {
+      const { data } = await axios.put("/api/filaments/" + filament._id, filament, headers(current_user));
+      return data;
+    }
   } catch (error) {}
 });
 

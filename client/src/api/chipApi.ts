@@ -14,23 +14,19 @@ export const listChips = createAsyncThunk("chips/listChips", async (query: any, 
   } catch (error) {}
 });
 
-export const updateChip = createAsyncThunk("chips/updateChip", async (chip: any, thunkApi: any) => {
+export const saveChip = createAsyncThunk("chips/saveChip", async (chip: any, thunkApi: any) => {
   try {
     const {
       userSlice: { current_user }
     } = thunkApi.getState();
-    const { data } = await axios.put("/api/chips/" + chip.pathname, chip, headers(current_user));
-    return data;
-  } catch (error) {}
-});
 
-export const createChip = createAsyncThunk("chips/createChip", async (chip: any, thunkApi: any) => {
-  try {
-    const {
-      userSlice: { current_user }
-    } = thunkApi.getState();
-    const { data } = await axios.post("/api/chips", chip, headers(current_user));
-    return data;
+    if (!chip._id) {
+      const { data } = await axios.post("/api/chips", chip, headers(current_user));
+      return data;
+    } else {
+      const { data } = await axios.put("/api/chips/" + chip._id, chip, headers(current_user));
+      return data;
+    }
   } catch (error) {}
 });
 

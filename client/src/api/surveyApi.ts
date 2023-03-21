@@ -14,23 +14,19 @@ export const listSurveys = createAsyncThunk("surveys/listSurveys", async (query:
   } catch (error) {}
 });
 
-export const updateSurvey = createAsyncThunk("surveys/updateSurvey", async (survey: any, thunkApi: any) => {
+export const saveSurvey = createAsyncThunk("surveys/saveSurvey", async (survey: any, thunkApi: any) => {
   try {
     const {
       userSlice: { current_user }
     } = thunkApi.getState();
-    const { data } = await axios.put("/api/surveys/" + survey.pathname, survey, headers(current_user));
-    return data;
-  } catch (error) {}
-});
 
-export const createSurvey = createAsyncThunk("surveys/createSurvey", async (survey: any, thunkApi: any) => {
-  try {
-    const {
-      userSlice: { current_user }
-    } = thunkApi.getState();
-    const { data } = await axios.post("/api/surveys", survey, headers(current_user));
-    return data;
+    if (!survey._id) {
+      const { data } = await axios.post("/api/surveys", survey, headers(current_user));
+      return data;
+    } else {
+      const { data } = await axios.put("/api/surveys/" + survey._id, survey, headers(current_user));
+      return data;
+    }
   } catch (error) {}
 });
 

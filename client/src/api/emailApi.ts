@@ -14,23 +14,19 @@ export const listEmails = createAsyncThunk("emails/listEmails", async (query: an
   } catch (error) {}
 });
 
-export const updateEmail = createAsyncThunk("emails/updateEmail", async (email: any, thunkApi: any) => {
+export const saveEmail = createAsyncThunk("emails/saveEmail", async (email: any, thunkApi: any) => {
   try {
     const {
       userSlice: { current_user }
     } = thunkApi.getState();
-    const { data } = await axios.put("/api/emails/" + email.pathname, email, headers(current_user));
-    return data;
-  } catch (error) {}
-});
 
-export const createEmail = createAsyncThunk("emails/createEmail", async (email: any, thunkApi: any) => {
-  try {
-    const {
-      userSlice: { current_user }
-    } = thunkApi.getState();
-    const { data } = await axios.post("/api/emails", email, headers(current_user));
-    return data;
+    if (!email._id) {
+      const { data } = await axios.post("/api/emails", email, headers(current_user));
+      return data;
+    } else {
+      const { data } = await axios.put("/api/emails/" + email._id, email, headers(current_user));
+      return data;
+    }
   } catch (error) {}
 });
 

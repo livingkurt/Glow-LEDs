@@ -95,51 +95,10 @@ const affiliatesSlice = createSlice({
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.createAffiliate.pending]: (state: any, { payload }: any) => {
+    [API.saveAffiliate.pending]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.createAffiliate.fulfilled]: (state: any, { payload }: any) => {
-      const affiliate = {
-        id: "",
-        user: undefined,
-        artist_name: "",
-        instagram_handle: "",
-        facebook_name: "",
-        percentage_off: "",
-        sponsor: "",
-        promoter: "",
-        rave_mob: "",
-        active: "",
-        style: "",
-        inspiration: "",
-        bio: "",
-        link: "",
-        picture: "",
-        location: "",
-        years: "",
-        team: "",
-        video: "",
-        venmo: "",
-        products: [],
-        chips: [],
-        pathname: "",
-        public_code: undefined,
-        private_code: undefined
-      };
-      state.loading = false;
-      state.affiliate = affiliate;
-      state.message = "Affiliate Saved";
-    },
-    [API.createAffiliate.rejected]: (state: any, { payload }: any) => {
-      state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
-    },
-    [API.updateAffiliate.pending]: (state: any, { payload }: any) => {
-      state.loading = true;
-      state.success = false;
-    },
-    [API.updateAffiliate.fulfilled]: (state: any, { payload }: any) => {
+    [API.saveAffiliate.fulfilled]: (state: any, { payload }: any) => {
       const affiliate = {
         id: "",
         user: undefined,
@@ -172,11 +131,10 @@ const affiliatesSlice = createSlice({
       state.affiliate = affiliate;
       state.message = "Affiliate Saved";
     },
-    [API.updateAffiliate.rejected]: (state: any, { payload }: any) => {
+    [API.saveAffiliate.rejected]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
-      state.success = false;
     },
     [API.detailsAffiliate.pending]: (state: any, { payload }: any) => {
       state.loading = true;

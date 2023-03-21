@@ -65,28 +65,15 @@ const surveySlice = createSlice({
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.createSurvey.pending]: (state: any, { payload }: any) => {
+    [API.saveSurvey.pending]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.createSurvey.fulfilled]: (state: any, { payload }: any) => {
+    [API.saveSurvey.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
       state.survey = payload.survey;
       state.message = "Survey Saved";
     },
-    [API.createSurvey.rejected]: (state: any, { payload }: any) => {
-      state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
-    },
-    [API.updateSurvey.pending]: (state: any, { payload }: any) => {
-      state.loading = true;
-    },
-    [API.updateSurvey.fulfilled]: (state: any, { payload }: any) => {
-      state.loading = false;
-      state.survey = payload.survey;
-      state.message = "Survey Saved";
-    },
-    [API.updateSurvey.rejected]: (state: any, { payload }: any) => {
+    [API.saveSurvey.rejected]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;

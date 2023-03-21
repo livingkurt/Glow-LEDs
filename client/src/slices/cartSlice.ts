@@ -92,10 +92,10 @@ const cartSlice = createSlice({
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.createCart.pending]: (state: any, { payload }: any) => {
+    [API.saveCart.pending]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.createCart.fulfilled]: (state: any, { payload }: any) => {
+    [API.saveCart.fulfilled]: (state: any, { payload }: any) => {
       const { data, type } = payload;
       if (type === "add_to_cart") {
         state.my_cart = data;
@@ -107,27 +107,7 @@ const cartSlice = createSlice({
       state.message = "Cart Created";
       state.loading = false;
     },
-    [API.createCart.rejected]: (state: any, { payload }: any) => {
-      state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
-    },
-    [API.updateCart.pending]: (state: any, { payload }: any) => {
-      state.loading = true;
-    },
-    [API.updateCart.fulfilled]: (state: any, { payload }: any) => {
-      const { data, type } = payload;
-      state.loading = false;
-      if (type === "add_to_cart") {
-        state.my_cart = data;
-        localStorage.setItem("my_cart", JSON.stringify(data));
-      }
-      if (type === "edit_cart") {
-        state.cart = data;
-      }
-      state.message = "Cart Updated";
-    },
-    [API.updateCart.rejected]: (state: any, { payload }: any) => {
+    [API.saveCart.rejected]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;

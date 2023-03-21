@@ -90,24 +90,21 @@ const EditCategoryPage = props => {
 
   const submitHandler = e => {
     e.preventDefault();
-    const data = {
-      _id: id,
-      name,
-      pathname,
-      nest_level,
-      display_order,
-      display,
-      meta_title,
-      meta_description,
-      meta_keywords,
-      masthead,
-      subcategorys: subcategorys && subcategorys.map(category => category._id)
-    };
-    if (id) {
-      dispatch(API.updateCategory(data));
-    } else {
-      dispatch(API.createCategory(data));
-    }
+    dispatch(
+      API.saveCategory({
+        _id: id,
+        name,
+        pathname,
+        nest_level,
+        display_order,
+        display,
+        meta_title,
+        meta_description,
+        meta_keywords,
+        masthead,
+        subcategorys: subcategorys && subcategorys.map(category => category._id)
+      })
+    );
     e.target.reset();
     unset_state();
     history.push("/secure/glow/categorys");

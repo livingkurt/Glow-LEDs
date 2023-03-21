@@ -99,7 +99,7 @@ const PaychecksPage = props => {
 
   const mark_paid = paycheck => {
     dispatch(
-      API.updatePaycheck({
+      API.savePaycheck({
         ...paycheck,
         paid: true,
         paid_at: format_date(today)
@@ -109,7 +109,7 @@ const PaychecksPage = props => {
   };
   const duplicate_paycheck = paycheck => {
     dispatch(
-      API.createPaycheck({
+      API.savePaycheck({
         amount: paycheck.amount,
         affiliate: paycheck.affiliate,
         team: paycheck.team,

@@ -116,15 +116,15 @@ const orderSlice = createSlice({
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.updateOrder.pending]: (state: any, { payload }: any) => {
+    [API.saveOrder.pending]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.updateOrder.fulfilled]: (state: any, { payload }: any) => {
+    [API.saveOrder.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
       state.order = payload.order;
       state.message = "Order Saved";
     },
-    [API.updateOrder.rejected]: (state: any, { payload }: any) => {
+    [API.saveOrder.rejected]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;

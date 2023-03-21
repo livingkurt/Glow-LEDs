@@ -84,7 +84,7 @@ const PalettesPage = props => {
 
   const mark_paid = palette => {
     dispatch(
-      API.updatePalette({
+      API.savePalette({
         ...palette,
         paid: true,
         paid_at: format_date(today)

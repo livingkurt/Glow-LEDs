@@ -71,18 +71,15 @@ const EditFilamentPage = props => {
 
   const submitHandler = e => {
     e.preventDefault();
-    const data = {
-      _id: id,
-      type,
-      color,
-      color_code,
-      active
-    };
-    if (id) {
-      dispatch(API.updateFilament(data));
-    } else {
-      dispatch(API.createFilament(data));
-    }
+    dispatch(
+      API.saveFilament({
+        _id: id,
+        type,
+        color,
+        color_code,
+        active
+      })
+    );
     e.target.reset();
     unset_state();
     history.push("/secure/glow/filaments");

@@ -90,21 +90,18 @@ const EditPaycheckPage = props => {
   const submitHandler = e => {
     e.preventDefault();
 
-    const data = {
-      _id: id,
-      affiliate: affiliate?._id,
-      team: team?._id,
-      amount,
-      venmo,
-      paid,
-      reciept,
-      paid_at: paid_at ? paid_at : paid && format_date(today)
-    };
-    if (id) {
-      dispatch(API.updatePaycheck(data));
-    } else {
-      dispatch(API.createPaycheck(data));
-    }
+    dispatch(
+      API.savePaycheck({
+        _id: id,
+        affiliate: affiliate?._id,
+        team: team?._id,
+        amount,
+        venmo,
+        paid,
+        reciept,
+        paid_at: paid_at ? paid_at : paid && format_date(today)
+      })
+    );
     e.target.reset();
     unset_state();
     history.push("/secure/glow/paychecks?page=1?limit=10");

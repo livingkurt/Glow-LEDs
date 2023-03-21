@@ -19,50 +19,46 @@ export const listAffiliates = createAsyncThunk("affiliates/listAffiliates", asyn
   } catch (error) {}
 });
 
-export const updateAffiliate = createAsyncThunk("affiliates/updateAffiliate", async (affiliate: any, thunkApi: any) => {
+export const saveAffiliate = createAsyncThunk("affiliates/saveAffiliate", async (affiliate: any, thunkApi: any) => {
   try {
     const {
       userSlice: { current_user }
     } = thunkApi.getState();
-    const { data } = await axios.put("/api/affiliates/" + affiliate.pathname, affiliate, headers(current_user));
-    return data;
-  } catch (error) {}
-});
 
-export const createAffiliate = createAsyncThunk("affiliates/createAffiliate", async (affiliate: any, thunkApi: any) => {
-  try {
-    const {
-      userSlice: { current_user }
-    } = thunkApi.getState();
-    const { data } = await axios.post("/api/affiliates", affiliate, headers(current_user));
-    const { data: user } = await axios.put(
-      "/api/users/update/" + current_user._id,
-      {
-        first_name: current_user.first_name,
-        last_name: current_user.last_name,
-        email: current_user.email,
-        password: current_user.password,
-        is_affiliated: true,
-        email_subscription: current_user.email_subscription,
-        affiliate: data._id,
-        shipping: current_user.shipping,
-        isVerified: current_user.isVerified,
-        isAdmin: current_user.isAdmin,
-        access_token: current_user.access_token,
-        refresh_token: current_user.refresh_token
-      },
-      headers(current_user)
-    );
-    const { access_token, refresh_token } = user;
-    setAuthToken(access_token);
-    const decoded = jwt_decode(access_token);
+    if (!affiliate._id) {
+      const { data } = await axios.post("/api/affiliates", affiliate, headers(current_user));
+      const { data: user } = await axios.put(
+        "/api/users/update/" + current_user._id,
+        {
+          first_name: current_user.first_name,
+          last_name: current_user.last_name,
+          email: current_user.email,
+          password: current_user.password,
+          is_affiliated: true,
+          email_subscription: current_user.email_subscription,
+          affiliate: data._id,
+          shipping: current_user.shipping,
+          isVerified: current_user.isVerified,
+          isAdmin: current_user.isAdmin,
+          access_token: current_user.access_token,
+          refresh_token: current_user.refresh_token
+        },
+        headers(current_user)
+      );
+      const { access_token, refresh_token } = user;
+      setAuthToken(access_token);
+      const decoded = jwt_decode(access_token);
 
-    // Set current user
-    localStorage.setItem("accessToken", access_token);
-    localStorage.setItem("refreshToken", refresh_token);
-    thunkApi.dispatch(set_current_user(decoded));
+      // Set current user
+      localStorage.setItem("accessToken", access_token);
+      localStorage.setItem("refreshToken", refresh_token);
+      thunkApi.dispatch(set_current_user(decoded));
 
-    return data;
+      return data;
+    } else {
+      const { data } = await axios.put(`/api/affiliates/${affiliate.pathname}`, affiliate, headers(current_user));
+      return data;
+    }
   } catch (error) {}
 });
 
@@ -103,16 +99,3 @@ export const create_rave_mob_affiliates = createAsyncThunk("affiliates/create_ra
     return data;
   } catch (error) {}
 });
-
-// export const employeeInfoApi = createApi({
-//   reducerPath: "affiliateApi",
-//   baseQuery: axiosBaseQuery({ baseUrl: "/api/v1" }),
-//   endpoints: builder => ({
-//     getUsers: builder.query({
-//       query: () => ({ url: "/titles", method: "get" }),
-//       transformResponse: response => response.titles
-//     })
-//   })
-// });
-
-// export const { useGetTitlesQuery, useGetShiftsQuery, useGetRolesQuery, useGetTagsQuery } = employeeInfoApi;

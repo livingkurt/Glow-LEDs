@@ -14,23 +14,19 @@ export const listPalettes = createAsyncThunk("palettes/listPalettes", async (que
   } catch (error) {}
 });
 
-export const updatePalette = createAsyncThunk("palettes/updatePalette", async (palette: any, thunkApi: any) => {
+export const savePalette = createAsyncThunk("palettes/savePalette", async (palette: any, thunkApi: any) => {
   try {
     const {
       userSlice: { current_user }
     } = thunkApi.getState();
-    const { data } = await axios.put("/api/palettes/" + palette.pathname, palette, headers(current_user));
-    return data;
-  } catch (error) {}
-});
 
-export const createPalette = createAsyncThunk("palettes/createPalette", async (palette: any, thunkApi: any) => {
-  try {
-    const {
-      userSlice: { current_user }
-    } = thunkApi.getState();
-    const { data } = await axios.post("/api/palettes", palette, headers(current_user));
-    return data;
+    if (!palette._id) {
+      const { data } = await axios.post("/api/palettes", palette, headers(current_user));
+      return data;
+    } else {
+      const { data } = await axios.put("/api/palettes/" + palette._id, palette, headers(current_user));
+      return data;
+    }
   } catch (error) {}
 });
 

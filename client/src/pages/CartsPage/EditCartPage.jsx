@@ -81,23 +81,20 @@ const EditCartPage = props => {
   const submitHandler = e => {
     e.preventDefault();
 
-    const data = {
-      _id: id,
-      user,
-      artist_name,
-      instagram_handle,
-      facebook_name,
-      product,
-      song_id,
-      video,
-      picture,
-      release_date: unformat_date(release_date)
-    };
-    if (id) {
-      dispatch(API.updateCart(data));
-    } else {
-      dispatch(API.createCart(data));
-    }
+    dispatch(
+      API.saveCart({
+        _id: id,
+        user,
+        artist_name,
+        instagram_handle,
+        facebook_name,
+        product,
+        song_id,
+        video,
+        picture,
+        release_date: unformat_date(release_date)
+      })
+    );
     e.target.reset();
     unset_state();
     history.push("/secure/glow/carts");

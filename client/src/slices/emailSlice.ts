@@ -65,28 +65,15 @@ const emailSlice = createSlice({
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.createEmail.pending]: (state: any, { payload }: any) => {
+    [API.saveEmail.pending]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.createEmail.fulfilled]: (state: any, { payload }: any) => {
+    [API.saveEmail.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
       state.email = payload.email;
       state.message = "Email Saved";
     },
-    [API.createEmail.rejected]: (state: any, { payload }: any) => {
-      state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
-    },
-    [API.updateEmail.pending]: (state: any, { payload }: any) => {
-      state.loading = true;
-    },
-    [API.updateEmail.fulfilled]: (state: any, { payload }: any) => {
-      state.loading = false;
-      state.email = payload.email;
-      state.message = "Email Saved";
-    },
-    [API.updateEmail.rejected]: (state: any, { payload }: any) => {
+    [API.saveEmail.rejected]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;

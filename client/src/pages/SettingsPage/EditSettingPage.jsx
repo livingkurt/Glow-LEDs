@@ -69,17 +69,13 @@ const EditSettingPage = props => {
 
   const submitHandler = e => {
     e.preventDefault();
-
-    const data = {
-      _id: id,
-      settings,
-      active
-    };
-    if (id) {
-      dispatch(API.updateSetting(data));
-    } else {
-      dispatch(API.createSetting(data));
-    }
+    dispatch(
+      API.saveSetting({
+        _id: id,
+        settings,
+        active
+      })
+    );
     e.target.reset();
     unset_state();
     history.push("/secure/glow/settings");

@@ -130,7 +130,7 @@ const PromosPage = props => {
 
   const change_promo_status = promo => {
     dispatch(
-      API.updatePromo({
+      API.savePromo({
         ...promo,
         active: promo.active ? false : true
       })

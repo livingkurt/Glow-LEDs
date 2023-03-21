@@ -78,22 +78,19 @@ const EditExpensePage = props => {
   const submitHandler = e => {
     e.preventDefault();
 
-    const data = {
-      _id: id,
-      expense_name,
-      application,
-      url,
-      place_of_purchase,
-      date_of_purchase: unformat_date(date_of_purchase),
-      category,
-      card,
-      amount
-    };
-    if (id) {
-      dispatch(API.updateExpense(data));
-    } else {
-      dispatch(API.createExpense(data));
-    }
+    dispatch(
+      API.saveExpense({
+        _id: id,
+        expense_name,
+        application,
+        url,
+        place_of_purchase,
+        date_of_purchase: unformat_date(date_of_purchase),
+        category,
+        card,
+        amount
+      })
+    );
     e.target.reset();
     unset_state();
     history.push("/secure/glow/expenses");

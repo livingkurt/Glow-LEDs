@@ -65,28 +65,15 @@ const categorySlice = createSlice({
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.createCategory.pending]: (state: any, { payload }: any) => {
+    [API.saveCategory.pending]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.createCategory.fulfilled]: (state: any, { payload }: any) => {
+    [API.saveCategory.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
       state.category = payload.category;
       state.message = "Category Saved";
     },
-    [API.createCategory.rejected]: (state: any, { payload }: any) => {
-      state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
-    },
-    [API.updateCategory.pending]: (state: any, { payload }: any) => {
-      state.loading = true;
-    },
-    [API.updateCategory.fulfilled]: (state: any, { payload }: any) => {
-      state.loading = false;
-      state.category = payload.category;
-      state.message = "Category Saved";
-    },
-    [API.updateCategory.rejected]: (state: any, { payload }: any) => {
+    [API.saveCategory.rejected]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;

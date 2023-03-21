@@ -92,25 +92,22 @@ const EditChipPage = props => {
 
   const submitHandler = e => {
     e.preventDefault();
-    const data = {
-      _id: id,
-      name,
-      company,
-      category,
-      programmmable,
-      number_of_modes,
-      characteristics,
-      colors_per_mode,
-      image,
-      colors,
-      dimensions,
-      pathname: pathname ? pathname : snake_case(name)
-    };
-    if (id) {
-      dispatch(API.updateChip(data));
-    } else {
-      dispatch(API.createChip(data));
-    }
+    dispatch(
+      API.saveChip({
+        _id: id,
+        name,
+        company,
+        category,
+        programmmable,
+        number_of_modes,
+        characteristics,
+        colors_per_mode,
+        image,
+        colors,
+        dimensions,
+        pathname: pathname ? pathname : snake_case(name)
+      })
+    );
     e.target.reset();
     unset_state();
     history.push("/secure/glow/chips");

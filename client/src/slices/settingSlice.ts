@@ -65,32 +65,20 @@ const settingSlice = createSlice({
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.createSetting.pending]: (state: any, { payload }: any) => {
+    [API.saveSetting.pending]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.createSetting.fulfilled]: (state: any, { payload }: any) => {
+    [API.saveSetting.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
       state.setting = payload.setting;
       state.message = "Setting Saved";
     },
-    [API.createSetting.rejected]: (state: any, { payload }: any) => {
+    [API.saveSetting.rejected]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.updateSetting.pending]: (state: any, { payload }: any) => {
-      state.loading = true;
-    },
-    [API.updateSetting.fulfilled]: (state: any, { payload }: any) => {
-      state.loading = false;
-      state.setting = payload.setting;
-      state.message = "Setting Saved";
-    },
-    [API.updateSetting.rejected]: (state: any, { payload }: any) => {
-      state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
-    },
+
     [API.detailsSetting.pending]: (state: any, { payload }: any) => {
       state.loading = true;
     },

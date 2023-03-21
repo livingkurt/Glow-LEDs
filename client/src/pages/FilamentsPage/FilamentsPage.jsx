@@ -97,7 +97,7 @@ const FilamentsPage = props => {
 
   const change_filament_status = filament => {
     dispatch(
-      API.updateFilament({
+      API.saveFilament({
         ...filament,
         active: filament.active ? false : true
       })

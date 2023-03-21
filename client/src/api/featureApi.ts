@@ -14,23 +14,19 @@ export const listFeatures = createAsyncThunk("features/listFeatures", async (que
   } catch (error) {}
 });
 
-export const updateFeature = createAsyncThunk("features/updateFeature", async (feature: any, thunkApi: any) => {
+export const saveFeature = createAsyncThunk("features/saveFeature", async (feature: any, thunkApi: any) => {
   try {
     const {
       userSlice: { current_user }
     } = thunkApi.getState();
-    const { data } = await axios.put("/api/features/" + feature.pathname, feature, headers(current_user));
-    return data;
-  } catch (error) {}
-});
 
-export const createFeature = createAsyncThunk("features/createFeature", async (feature: any, thunkApi: any) => {
-  try {
-    const {
-      userSlice: { current_user }
-    } = thunkApi.getState();
-    const { data } = await axios.post("/api/features", feature, headers(current_user));
-    return data;
+    if (!feature._id) {
+      const { data } = await axios.post("/api/features", feature, headers(current_user));
+      return data;
+    } else {
+      const { data } = await axios.put("/api/features/" + feature._id, feature, headers(current_user));
+      return data;
+    }
   } catch (error) {}
 });
 

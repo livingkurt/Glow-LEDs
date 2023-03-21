@@ -65,28 +65,15 @@ const productSlice = createSlice({
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.createProduct.pending]: (state: any, { payload }: any) => {
+    [API.saveProduct.pending]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.createProduct.fulfilled]: (state: any, { payload }: any) => {
+    [API.saveProduct.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
       state.product = payload.product;
       state.message = "Product Saved";
     },
-    [API.createProduct.rejected]: (state: any, { payload }: any) => {
-      state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
-    },
-    [API.updateProduct.pending]: (state: any, { payload }: any) => {
-      state.loading = true;
-    },
-    [API.updateProduct.fulfilled]: (state: any, { payload }: any) => {
-      state.loading = false;
-      state.product = payload.product;
-      state.message = "Product Saved";
-    },
-    [API.updateProduct.rejected]: (state: any, { payload }: any) => {
+    [API.saveProduct.rejected]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;

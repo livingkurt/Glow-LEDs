@@ -24,7 +24,7 @@ const EmailModal = props => {
     setEmailValidations(request.errors.email);
     if (request.isValid) {
       dispatch(
-        API.createUser({
+        API.saveUser({
           _id: null,
           first_name: "",
           last_name: "",

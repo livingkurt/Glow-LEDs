@@ -172,40 +172,37 @@ const EditOrderPage = props => {
 
   const submitHandler = e => {
     e.preventDefault();
-    const data = {
-      _id: id,
-      user,
-      orderItems,
-      shipping,
-      payment,
-      itemsPrice,
-      taxPrice,
-      shippingPrice,
-      totalPrice,
-      isPaid,
-      paidAt,
-      isManufactured,
-      manufacturedAt: manufacturedAt && unformat_date(manufacturedAt),
-      isPackaged,
-      packagedAt: packagedAt && unformat_date(packagedAt),
-      isShipped,
-      shippedAt: shippedAt && unformat_date(shippedAt),
-      isDelivered,
-      deliveredAt: deliveredAt && unformat_date(deliveredAt),
-      isRefunded,
-      refundedAt: refundedAt && unformat_date(refundedAt),
-      createdAt: createdAt && unformat_date(createdAt),
-      order_note,
-      production_note,
-      promo_code,
-      tracking_number
-      // product_option
-    };
-    if (id) {
-      dispatch(API.updateOrder(data));
-    } else {
-      dispatch(API.createOrder(data));
-    }
+    dispatch(
+      API.saveOrder({
+        _id: id,
+        user,
+        orderItems,
+        shipping,
+        payment,
+        itemsPrice,
+        taxPrice,
+        shippingPrice,
+        totalPrice,
+        isPaid,
+        paidAt,
+        isManufactured,
+        manufacturedAt: manufacturedAt && unformat_date(manufacturedAt),
+        isPackaged,
+        packagedAt: packagedAt && unformat_date(packagedAt),
+        isShipped,
+        shippedAt: shippedAt && unformat_date(shippedAt),
+        isDelivered,
+        deliveredAt: deliveredAt && unformat_date(deliveredAt),
+        isRefunded,
+        refundedAt: refundedAt && unformat_date(refundedAt),
+        createdAt: createdAt && unformat_date(createdAt),
+        order_note,
+        production_note,
+        promo_code,
+        tracking_number
+        // product_option
+      })
+    );
     e.target.reset();
     unset_state();
     history.push(props.location.previous_path || "/secure/glow/orders?page=1?limit=10");

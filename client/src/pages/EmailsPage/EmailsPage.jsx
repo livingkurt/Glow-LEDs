@@ -68,7 +68,7 @@ const EmailsPage = props => {
 
   const change_email_status = email => {
     dispatch(
-      API.updateEmail({
+      API.saveEmail({
         ...email,
         active: email.active ? false : true
       })

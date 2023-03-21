@@ -16,13 +16,10 @@ const ProfilePage = props => {
   const history = useHistory();
 
   const userSlice = useSelector(state => state.userSlice);
-  const { current_user } = userSlice;
+  const { current_user, loading, user, message, error, success } = userSlice;
 
-  const userDetails = useSelector(state => state.userDetails);
-  const { loading, user, message, error, success } = userDetails;
-
-  const affiliateDetails = useSelector(state => state.affiliateDetails);
-  const { affiliate } = affiliateDetails;
+  const affiliateSlice = useSelector(state => state.affiliateSlice);
+  const { affiliate } = affiliateSlice;
 
   const paycheckSlice = useSelector(state => state.paycheckSlice);
   const { paychecks, totalPages } = paycheckSlice;
@@ -30,8 +27,8 @@ const ProfilePage = props => {
   const promoSlice = useSelector(state => state.promoSlice);
   const { promos, error: promo_errors, message: promo_message } = promoSlice;
 
-  const myOrderSlice = useSelector(state => state.myOrderSlice);
-  const { orders } = myOrderSlice;
+  const orderSlice = useSelector(state => state.orderSlice);
+  const { orders } = orderSlice;
 
   const [user_orders, set_user_orders] = useState(false);
 
@@ -365,7 +362,7 @@ const ProfilePage = props => {
                     </GLButton>
                   </Link>
                 </div>
-                {user.is_affiliated && affiliate && (
+                {isAdmin(current_user) && (
                   <div style={{ height: 50 }}>
                     <GLButton style={{ maxWidth: "225px" }} onClick={send_not_verified_email} variant="primary">
                       Still Not Verified
@@ -373,20 +370,15 @@ const ProfilePage = props => {
                   </div>
                 )}
                 <div className="ml-10px">
-                  {user.is_affiliated && affiliate && affiliate.pathname && (
+                  {user.is_affiliated && (
                     <div>
-                      <Link to={"/secure/account/edit_affiliate/" + affiliate.pathname}>
+                      <Link
+                        to={affiliate?.pathname ? "/secure/account/edit_affiliate/" + affiliate.pathname : "/secure/account/edit_affiliate"}
+                      >
                         <GLButton variant="primary">Edit Affiliate Profile</GLButton>
                       </Link>
                     </div>
                   )}{" "}
-                  {user.is_affiliated && !affiliate && (
-                    <div>
-                      <Link to={"/secure/account/edit_affiliate"}>
-                        <GLButton variant="primary">Affiliate Sign Up</GLButton>
-                      </Link>
-                    </div>
-                  )}
                 </div>
               </div>
               <div className="group_item w-100per">

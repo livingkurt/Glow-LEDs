@@ -14,23 +14,19 @@ export const listTeams = createAsyncThunk("teams/listTeams", async (query: any, 
   } catch (error) {}
 });
 
-export const updateTeam = createAsyncThunk("teams/updateTeam", async (team: any, thunkApi: any) => {
+export const saveTeam = createAsyncThunk("teams/saveTeam", async (team: any, thunkApi: any) => {
   try {
     const {
       userSlice: { current_user }
     } = thunkApi.getState();
-    const { data } = await axios.put("/api/teams/" + team.pathname, team, headers(current_user));
-    return data;
-  } catch (error) {}
-});
 
-export const createTeam = createAsyncThunk("teams/createTeam", async (team: any, thunkApi: any) => {
-  try {
-    const {
-      userSlice: { current_user }
-    } = thunkApi.getState();
-    const { data } = await axios.post("/api/teams", team, headers(current_user));
-    return data;
+    if (!team._id) {
+      const { data } = await axios.post("/api/teams", team, headers(current_user));
+      return data;
+    } else {
+      const { data } = await axios.put("/api/teams/" + team._id, team, headers(current_user));
+      return data;
+    }
   } catch (error) {}
 });
 

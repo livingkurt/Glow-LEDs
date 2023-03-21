@@ -125,35 +125,29 @@ const EditContentPage = props => {
   const submitHandler = e => {
     e.preventDefault();
 
-    const data = {
-      _id: using_template ? null : id,
-      home_page: { ...home_page, images, slideshow },
-      banner,
-      links,
-      active
-    };
-    if (using_template) {
-      dispatch(API.updateContent(data));
-    } else {
-      dispatch(API.createContent(data));
-    }
-    if (create_email && (using_template || id)) {
-      const data = {
+    dispatch(
+      API.saveContent({
         _id: using_template ? null : id,
-        email_type: "Announcements",
-        h1: home_page.h1,
-        images,
-        h2: home_page.h2,
-        p: home_page.p,
-        button: home_page.button,
-        link: `https://www.glow-leds.com${home_page.link}`,
-        active: home_page.active
-      };
-      if (using_template) {
-        dispatch(API.updateEmail(data));
-      } else {
-        dispatch(API.createEmail(data));
-      }
+        home_page: { ...home_page, images, slideshow },
+        banner,
+        links,
+        active
+      })
+    );
+    if (create_email && (using_template || id)) {
+      dispatch(
+        API.saveEmail({
+          _id: using_template ? null : id,
+          email_type: "Announcements",
+          h1: home_page.h1,
+          images,
+          h2: home_page.h2,
+          p: home_page.p,
+          button: home_page.button,
+          link: `https://www.glow-leds.com${home_page.link}`,
+          active: home_page.active
+        })
+      );
     }
     e.target.reset();
     unset_state();

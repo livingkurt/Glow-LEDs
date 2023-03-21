@@ -14,23 +14,19 @@ export const listPaychecks = createAsyncThunk("paychecks/listPaychecks", async (
   } catch (error) {}
 });
 
-export const updatePaycheck = createAsyncThunk("paychecks/updatePaycheck", async (paycheck: any, thunkApi: any) => {
+export const savePaycheck = createAsyncThunk("paychecks/savePaycheck", async (paycheck: any, thunkApi: any) => {
   try {
     const {
       userSlice: { current_user }
     } = thunkApi.getState();
-    const { data } = await axios.put("/api/paychecks/" + paycheck.pathname, paycheck, headers(current_user));
-    return data;
-  } catch (error) {}
-});
 
-export const createPaycheck = createAsyncThunk("paychecks/createPaycheck", async (paycheck: any, thunkApi: any) => {
-  try {
-    const {
-      userSlice: { current_user }
-    } = thunkApi.getState();
-    const { data } = await axios.post("/api/paychecks", paycheck, headers(current_user));
-    return data;
+    if (!paycheck._id) {
+      const { data } = await axios.post("/api/paychecks", paycheck, headers(current_user));
+      return data;
+    } else {
+      const { data } = await axios.put("/api/paychecks/" + paycheck._id, paycheck, headers(current_user));
+      return data;
+    }
   } catch (error) {}
 });
 

@@ -34,6 +34,8 @@ const userSchema = new mongoose.Schema(
     affiliate: { type: mongoose.Schema.Types.ObjectId, ref: "Affiliate" },
     email_subscription: { type: Boolean, default: true },
     guest: { type: Boolean },
+    wholesaler: { type: Boolean },
+    minimum_order_amount: { type: Number },
     deleted: { type: Boolean, default: false }
   },
   {

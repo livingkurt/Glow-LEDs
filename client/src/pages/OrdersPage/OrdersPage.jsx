@@ -151,7 +151,7 @@ const OrdersPage = props => {
   const mark_as_shipped = async () => {
     const { data: orders } = await API_Orders.mark_as_shipped();
     orders.forEach(async order => {
-      await dispatch(API.updateOrder(order, true, "isShipped", "shippedAt"));
+      await dispatch(API.saveOrder(order, true, "isShipped", "shippedAt"));
       await send_email(order, "shipped");
     });
     setTimeout(() => {

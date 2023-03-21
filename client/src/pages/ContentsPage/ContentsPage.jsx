@@ -33,7 +33,7 @@ const ContentsPage = props => {
 
   const change_content_status = content => {
     dispatch(
-      API.updateContent({
+      API.saveContent({
         ...content,
         active: content.active ? false : true
       })

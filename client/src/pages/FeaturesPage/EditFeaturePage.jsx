@@ -109,28 +109,25 @@ const EditFeaturePage = props => {
 
   const submitHandler = e => {
     e.preventDefault();
-    const data = {
-      _id: id,
-      user,
-      artist_name,
-      instagram_handle,
-      facebook_name,
-      product,
-      song_id,
-      link,
-      logo,
-      video,
-      images,
-      description,
-      pathname,
-      category,
-      release_date: unformat_date(release_date)
-    };
-    if (id) {
-      dispatch(API.updateFeature(data));
-    } else {
-      dispatch(API.createFeature(data));
-    }
+    dispatch(
+      API.saveFeature({
+        _id: id,
+        user,
+        artist_name,
+        instagram_handle,
+        facebook_name,
+        product,
+        song_id,
+        link,
+        logo,
+        video,
+        images,
+        description,
+        pathname,
+        category,
+        release_date: unformat_date(release_date)
+      })
+    );
     e.target.reset();
     unset_state();
     history.push("/secure/glow/features");

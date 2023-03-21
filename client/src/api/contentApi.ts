@@ -14,23 +14,19 @@ export const listContents = createAsyncThunk("contents/listContents", async (que
   } catch (error) {}
 });
 
-export const updateContent = createAsyncThunk("contents/updateContent", async (content: any, thunkApi: any) => {
+export const saveContent = createAsyncThunk("contents/saveContent", async (content: any, thunkApi: any) => {
   try {
     const {
       userSlice: { current_user }
     } = thunkApi.getState();
-    const { data } = await axios.put("/api/contents/" + content.pathname, content, headers(current_user));
-    return data;
-  } catch (error) {}
-});
 
-export const createContent = createAsyncThunk("contents/createContent", async (content: any, thunkApi: any) => {
-  try {
-    const {
-      userSlice: { current_user }
-    } = thunkApi.getState();
-    const { data } = await axios.post("/api/contents", content, headers(current_user));
-    return data;
+    if (!content._id) {
+      const { data } = await axios.post("/api/contents", content, headers(current_user));
+      return data;
+    } else {
+      const { data } = await axios.put("/api/contents/" + content._id, content, headers(current_user));
+      return data;
+    }
   } catch (error) {}
 });
 

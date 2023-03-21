@@ -14,23 +14,19 @@ export const listProducts = createAsyncThunk("products/listProducts", async (que
   } catch (error) {}
 });
 
-export const updateProduct = createAsyncThunk("products/updateProduct", async (product: any, thunkApi: any) => {
+export const saveProduct = createAsyncThunk("products/saveProduct", async (product: any, thunkApi: any) => {
   try {
     const {
       userSlice: { current_user }
     } = thunkApi.getState();
-    const { data } = await axios.put("/api/products/" + product.pathname, product, headers(current_user));
-    return data;
-  } catch (error) {}
-});
 
-export const createProduct = createAsyncThunk("products/createProduct", async (product: any, thunkApi: any) => {
-  try {
-    const {
-      userSlice: { current_user }
-    } = thunkApi.getState();
-    const { data } = await axios.post("/api/products", product, headers(current_user));
-    return data;
+    if (!product._id) {
+      const { data } = await axios.post("/api/products", product, headers(current_user));
+      return data;
+    } else {
+      const { data } = await axios.put("/api/products/" + product._id, product, headers(current_user));
+      return data;
+    }
   } catch (error) {}
 });
 

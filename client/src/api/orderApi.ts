@@ -15,13 +15,19 @@ export const listOrders = createAsyncThunk("orders/listOrders", async (query: an
   } catch (error) {}
 });
 
-export const updateOrder = createAsyncThunk("orders/updateOrder", async (order: any, thunkApi: any) => {
+export const saveOrder = createAsyncThunk("orders/saveOrder", async (order: any, thunkApi: any) => {
   try {
     const {
       userSlice: { current_user }
     } = thunkApi.getState();
-    const { data } = await axios.put("/api/orders/" + order.pathname, order, headers(current_user));
-    return data;
+
+    if (!order._id) {
+      const { data } = await axios.post("/api/orders", order, headers(current_user));
+      return data;
+    } else {
+      const { data } = await axios.put("/api/orders/" + order._id, order, headers(current_user));
+      return data;
+    }
   } catch (error) {}
 });
 

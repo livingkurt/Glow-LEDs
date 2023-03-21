@@ -77,20 +77,17 @@ const EditParcelPage = props => {
 
   const submitHandler = e => {
     e.preventDefault();
-    const data = {
-      _id: id,
-      type,
-      length,
-      width,
-      height,
-      volume: length * width * height,
-      quantity_state
-    };
-    if (id) {
-      dispatch(API.updateParcel(data));
-    } else {
-      dispatch(API.createParcel(data));
-    }
+    dispatch(
+      API.saveParcel({
+        _id: id,
+        type,
+        length,
+        width,
+        height,
+        volume: length * width * height,
+        quantity_state
+      })
+    );
     e.target.reset();
     unset_state();
     history.push("/secure/glow/parcels");

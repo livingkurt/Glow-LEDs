@@ -65,28 +65,15 @@ const promoSlice = createSlice({
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.createPromo.pending]: (state: any, { payload }: any) => {
+    [API.savePromo.pending]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.createPromo.fulfilled]: (state: any, { payload }: any) => {
+    [API.savePromo.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
       state.promo = payload.promo;
       state.message = "Promo Saved";
     },
-    [API.createPromo.rejected]: (state: any, { payload }: any) => {
-      state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
-    },
-    [API.updatePromo.pending]: (state: any, { payload }: any) => {
-      state.loading = true;
-    },
-    [API.updatePromo.fulfilled]: (state: any, { payload }: any) => {
-      state.loading = false;
-      state.promo = payload.promo;
-      state.message = "Promo Saved";
-    },
-    [API.updatePromo.rejected]: (state: any, { payload }: any) => {
+    [API.savePromo.rejected]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;

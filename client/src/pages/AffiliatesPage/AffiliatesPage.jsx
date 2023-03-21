@@ -112,7 +112,7 @@ const AffiliatesPage = props => {
           variant="icon"
           onClick={() => {
             dispatch(
-              API.createAffiliate({
+              API.saveAffiliate({
                 ...affiliate,
                 active: affiliate.active ? false : true
               })

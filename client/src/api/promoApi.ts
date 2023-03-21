@@ -14,23 +14,19 @@ export const listPromos = createAsyncThunk("promos/listPromos", async (query: an
   } catch (error) {}
 });
 
-export const updatePromo = createAsyncThunk("promos/updatePromo", async (promo: any, thunkApi: any) => {
+export const savePromo = createAsyncThunk("promos/savePromo", async (promo: any, thunkApi: any) => {
   try {
     const {
       userSlice: { current_user }
     } = thunkApi.getState();
-    const { data } = await axios.put("/api/promos/" + promo.pathname, promo, headers(current_user));
-    return data;
-  } catch (error) {}
-});
 
-export const createPromo = createAsyncThunk("promos/createPromo", async (promo: any, thunkApi: any) => {
-  try {
-    const {
-      userSlice: { current_user }
-    } = thunkApi.getState();
-    const { data } = await axios.post("/api/promos", promo, headers(current_user));
-    return data;
+    if (!promo._id) {
+      const { data } = await axios.post("/api/promos", promo, headers(current_user));
+      return data;
+    } else {
+      const { data } = await axios.put("/api/promos/" + promo._id, promo, headers(current_user));
+      return data;
+    }
   } catch (error) {}
 });
 

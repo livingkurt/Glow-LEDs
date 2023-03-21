@@ -218,31 +218,28 @@ const EditEmailPage = props => {
 
   const submitHandler = e => {
     e.preventDefault();
-    const data = {
-      _id: id ? id : null,
-      email_type: "Announcements",
-      h1: email_h1,
-      image: email_image,
-      images,
-      h2: email_h2,
-      p: email_p,
-      button: email_button,
-      link: email_link,
-      status,
-      header_footer_color,
-      background_color,
-      module_color,
-      button_color,
-      text_color,
-      title_color,
-      scheduled_at: date && time ? unformat_date_and_time(date, time) : null,
-      active: email_active
-    };
-    if (id) {
-      dispatch(API.updateEmail(data));
-    } else {
-      dispatch(API.createEmail(data));
-    }
+    dispatch(
+      API.saveEmail({
+        _id: id ? id : null,
+        email_type: "Announcements",
+        h1: email_h1,
+        image: email_image,
+        images,
+        h2: email_h2,
+        p: email_p,
+        button: email_button,
+        link: email_link,
+        status,
+        header_footer_color,
+        background_color,
+        module_color,
+        button_color,
+        text_color,
+        title_color,
+        scheduled_at: date && time ? unformat_date_and_time(date, time) : null,
+        active: email_active
+      })
+    );
     e.target.reset();
     // unset_state();
     // history.push('/secure/glow/emails');

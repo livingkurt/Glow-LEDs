@@ -37,6 +37,8 @@ const EditProductPage = props => {
   const [product_id, set_product_id] = useState("");
   const [name, setName] = useState("");
   const [price, setPrice] = useState();
+  const [wholesale_price, set_wholesale_price] = useState();
+  const [wholesale_product, set_wholesale_product] = useState();
   const [previous_price, set_previous_price] = useState();
   // const [ display_image, setDisplayImage ] = useState('');
   const [images, set_images] = useState([]);
@@ -294,6 +296,8 @@ const EditProductPage = props => {
     set_product_id(product._id);
     setName(product.name);
     setPrice(product.price);
+    set_wholesale_product(product.wholesale_product);
+    set_wholesale_price(product.wholesale_price);
     setDescription(product.description);
     setFacts(product.facts);
     setIncludedItems(product.included_items);
@@ -390,6 +394,8 @@ const EditProductPage = props => {
     set_product_id("");
     setName("");
     setPrice(0);
+    set_wholesale_price(0);
+    set_wholesale_product(0);
     set_previous_price();
     set_contributers();
     setDescription("");
@@ -474,90 +480,88 @@ const EditProductPage = props => {
   const save_product = async () => {
     const start_date = new Date(unformat_date_and_time(sale_start_date, sale_start_time));
     const end_date = new Date(unformat_date_and_time(sale_end_date, sale_end_time));
-
-    const data = {
-      _id: props.match.params.pathname && props.match.params.template === "false" ? product._id : null,
-      // _id: props.match.params.pathname && !props.match.params.template === 'true' ? id : null,
-      name,
-      price,
-      // display_image,
-      images,
-      color_images,
-      secondary_color_images,
-      option_images,
-      secondary_images,
-      chips: chips.map(chip => chip._id),
-      categorys: categorys.map(category => category._id),
-      subcategorys: subcategorys.map(subcategory => subcategory._id),
-      video,
-      brand,
-      category,
-      product_collection,
-      quantity,
-      count_in_stock,
-      facts,
-      included_items: included_items.length === 0 ? "" : included_items,
-      description,
-      hidden,
-      sale_price,
-      sale_start_date: accurate_date(start_date),
-      sale_end_date: accurate_date(end_date),
-      package_volume: package_length * package_width * package_height,
-      subcategory,
-      meta_title: `${name} | Glow LEDs`,
-      meta_description,
-      meta_keywords,
-      package_length,
-      package_width,
-      package_height,
-      product_length,
-      product_width,
-      product_height,
-      weight_pounds,
-      weight_ounces,
-      preorder,
-      contributers: contributers.length === 0 ? [] : contributers,
-      pathname: pathname ? pathname : snake_case(name),
-      order,
-      product_options,
-      finite_stock,
-      products: products.map(chip => chip._id),
-      group_product,
-      material_cost,
-      filament_used,
-      printing_time,
-      assembly_time,
-      processing_time,
-      group_name,
-      color_product_group,
-      color_group_name,
-      color_products,
-      secondary_color_product_group,
-      secondary_color_group_name,
-      secondary_color_products,
-      secondary_product_group,
-      secondary_group_name,
-      secondary_products,
-      option_product_group,
-      option_group_name,
-      option_products,
-      color,
-      color_code,
-      size,
-      default_option,
-      option,
-      macro_product,
-      extra_cost,
-      item_group_id: props.match.params.item_group_id || item_group_id,
-      previous_price,
-      has_add_on,
-      filament: filament ? filament._id : null
-    };
-    if (props.match.params.pathname && props.match.params.template === "false") {
-      dispatch(API.updateProduct(data));
-    } else {
-      dispatch(API.createProduct(data));
-    }
+    dispatch(
+      API.saveProduct({
+        _id: props.match.params.pathname && props.match.params.template === "false" ? product._id : null,
+        // _id: props.match.params.pathname && !props.match.params.template === 'true' ? id : null,
+        name,
+        price,
+        wholesale_product,
+        wholesale_price,
+        // display_image,
+        images,
+        color_images,
+        secondary_color_images,
+        option_images,
+        secondary_images,
+        chips: chips.map(chip => chip._id),
+        categorys: categorys.map(category => category._id),
+        subcategorys: subcategorys.map(subcategory => subcategory._id),
+        video,
+        brand,
+        category,
+        product_collection,
+        quantity,
+        count_in_stock,
+        facts,
+        included_items: included_items.length === 0 ? "" : included_items,
+        description,
+        hidden,
+        sale_price,
+        sale_start_date: accurate_date(start_date),
+        sale_end_date: accurate_date(end_date),
+        package_volume: package_length * package_width * package_height,
+        subcategory,
+        meta_title: `${name} | Glow LEDs`,
+        meta_description,
+        meta_keywords,
+        package_length,
+        package_width,
+        package_height,
+        product_length,
+        product_width,
+        product_height,
+        weight_pounds,
+        weight_ounces,
+        preorder,
+        contributers: contributers.length === 0 ? [] : contributers,
+        pathname: pathname ? pathname : snake_case(name),
+        order,
+        product_options,
+        finite_stock,
+        products: products.map(chip => chip._id),
+        group_product,
+        material_cost,
+        filament_used,
+        printing_time,
+        assembly_time,
+        processing_time,
+        group_name,
+        color_product_group,
+        color_group_name,
+        color_products,
+        secondary_color_product_group,
+        secondary_color_group_name,
+        secondary_color_products,
+        secondary_product_group,
+        secondary_group_name,
+        secondary_products,
+        option_product_group,
+        option_group_name,
+        option_products,
+        color,
+        color_code,
+        size,
+        default_option,
+        option,
+        macro_product,
+        extra_cost,
+        item_group_id: props.match.params.item_group_id || item_group_id,
+        previous_price,
+        has_add_on,
+        filament: filament ? filament._id : null
+      })
+    );
     // if (props.match.params.product_option && props.match.params.item_group_id) {
     //   const {
     //     data: option_product,
@@ -905,6 +909,35 @@ const EditProductPage = props => {
                           onChange={e => set_previous_price(e.target.value)}
                         />
                       </li>
+                      {loading_checkboxes ? (
+                        <div>Loading...</div>
+                      ) : (
+                        <li>
+                          <label htmlFor="wholesale_product">Whole Sale Product</label>
+                          <input
+                            type="checkbox"
+                            name="wholesale_product"
+                            defaultChecked={wholesale_product}
+                            id="wholesale_product"
+                            onChange={e => {
+                              set_wholesale_product(e.target.checked);
+                            }}
+                          />
+                        </li>
+                      )}
+                      {wholesale_product && (
+                        <li>
+                          <label htmlFor="wholesale_price">Wholesale Price</label>
+                          <input
+                            type="text"
+                            name="wholesale_price"
+                            value={wholesale_price}
+                            id="wholesale_price"
+                            onChange={e => set_wholesale_price(e.target.value)}
+                          />
+                        </li>
+                      )}
+
                       <li>
                         <label htmlFor="sale_price">Sale Price</label>
                         <input

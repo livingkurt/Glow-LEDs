@@ -168,10 +168,10 @@ const OrderPage = props => {
     set_loading_email(true);
     if (state) {
       set_order_state({ ...order_state, [is_action]: false });
-      dispatch(API.updateOrder(order, false, is_action, action_at));
+      dispatch(API.saveOrder(order, false, is_action, action_at));
     } else {
       set_order_state({ ...order_state, [is_action]: true });
-      dispatch(API.updateOrder(order, true, is_action, action_at));
+      dispatch(API.saveOrder(order, true, is_action, action_at));
       send_email(action_at.slice(0, -2));
     }
     setTimeout(() => {
@@ -207,10 +207,10 @@ const OrderPage = props => {
   const update_order_payment_state = (order, state, is_action) => {
     if (state) {
       set_order_state({ ...order_state, [is_action]: false });
-      dispatch(API.updateOrder(order, false, payment_method));
+      dispatch(API.saveOrder(order, false, payment_method));
     } else {
       set_order_state({ ...order_state, [is_action]: true });
-      dispatch(API.updateOrder(order, true, payment_method));
+      dispatch(API.saveOrder(order, true, payment_method));
       send_paid_email();
     }
     setTimeout(() => {
@@ -442,7 +442,7 @@ const OrderPage = props => {
       set_loading_label(false);
     }
     dispatch(
-      API.updateOrder({
+      API.saveOrder({
         ...order,
         shipping: { ...order.shipping, shipment_id, shipping_rate }
       })
@@ -523,7 +523,7 @@ const OrderPage = props => {
     };
     set_order_items(new_order_items);
     dispatch(
-      API.updateOrder({
+      API.saveOrder({
         ...order,
         orderItems: [...new_order_items]
       })

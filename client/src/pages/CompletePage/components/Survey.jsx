@@ -126,7 +126,7 @@ const Survey = props => {
       user = null;
     }
     dispatch(
-      API.createSurvey({
+      API.saveSurvey({
         user: user,
         question_1,
         question_2,

@@ -14,23 +14,19 @@ export const listCategorys = createAsyncThunk("categorys/listCategorys", async (
   } catch (error) {}
 });
 
-export const updateCategory = createAsyncThunk("categorys/updateCategory", async (category: any, thunkApi: any) => {
+export const saveCategory = createAsyncThunk("categorys/saveCategory", async (category: any, thunkApi: any) => {
   try {
     const {
       userSlice: { current_user }
     } = thunkApi.getState();
-    const { data } = await axios.put("/api/categorys/" + category.pathname, category, headers(current_user));
-    return data;
-  } catch (error) {}
-});
 
-export const createCategory = createAsyncThunk("categorys/createCategory", async (category: any, thunkApi: any) => {
-  try {
-    const {
-      userSlice: { current_user }
-    } = thunkApi.getState();
-    const { data } = await axios.post("/api/categorys", category, headers(current_user));
-    return data;
+    if (!category._id) {
+      const { data } = await axios.post("/api/categorys", category, headers(current_user));
+      return data;
+    } else {
+      const { data } = await axios.put("/api/categorys/" + category._id, category, headers(current_user));
+      return data;
+    }
   } catch (error) {}
 });
 

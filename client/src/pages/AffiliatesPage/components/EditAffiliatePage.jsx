@@ -82,15 +82,6 @@ const EditAffiliatePage = props => {
     return () => (clean = false);
   }, [dispatch, props.match.params.pathname]);
 
-  const submitHandler = e => {
-    e.preventDefault();
-    if (props.match.params.pathname) {
-      dispatch(API.updateAffiliate(affiliate));
-    } else {
-      dispatch(API.createAffiliate(affiliate));
-    }
-  };
-
   useEffect(() => {
     if (success) {
       history.push(props.location.previous_path || "/secure/glow/affiliates?page=1?limit=10");
@@ -105,7 +96,13 @@ const EditAffiliatePage = props => {
         <title>Edit Affiliate | Glow LEDs</title>
       </Helmet>
       <h1 style={{ textAlign: "center" }}>{props.match.params.pathname ? "Edit Affiliate" : "Create Affiliate"}</h1>
-      <form onSubmit={submitHandler} style={{ width: "100%" }}>
+      <form
+        onSubmit={e => {
+          e.preventDefault();
+          dispatch(API.saveAffiliate(affiliate));
+        }}
+        style={{ width: "100%" }}
+      >
         {affiliate && (
           <Container maxWidth="md">
             <Paper elevation={3} style={{ backgroundColor: "#5a5a5a", borderRadius: "20px", padding: "20px" }}>

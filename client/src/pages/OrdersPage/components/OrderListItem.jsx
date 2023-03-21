@@ -215,7 +215,7 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
       orderItems: [...new_order_items]
     });
     dispatch(
-      API.updateOrder({
+      API.saveOrder({
         ...order,
         orderItems: [...new_order_items]
       })
@@ -226,10 +226,10 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
     set_loading_email(true);
     if (state) {
       set_order_state({ ...order_state, [is_action]: false });
-      dispatch(API.updateOrder(order_state, false, is_action, action_at));
+      dispatch(API.saveOrder(order_state, false, is_action, action_at));
     } else {
       set_order_state({ ...order_state, [is_action]: true });
-      dispatch(API.updateOrder(order_state, true, is_action, action_at));
+      dispatch(API.saveOrder(order_state, true, is_action, action_at));
       if (is_action !== "isPaused") {
         send_email(order_state, action_at.slice(0, -2));
       }
@@ -244,10 +244,10 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
     set_loading_email(true);
     if (state) {
       set_order_state({ ...order_state, [is_action]: false });
-      dispatch(API.updateOrder(order, false, is_action, "venmo"));
+      dispatch(API.saveOrder(order, false, is_action, "venmo"));
     } else {
       set_order_state({ ...order_state, [is_action]: true });
-      dispatch(API.updateOrder(order, true, is_action, "venmo"));
+      dispatch(API.saveOrder(order, true, is_action, "venmo"));
       send_paid_email(order._id);
     }
     setTimeout(() => {

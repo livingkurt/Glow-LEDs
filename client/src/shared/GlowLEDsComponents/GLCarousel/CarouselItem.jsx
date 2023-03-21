@@ -30,11 +30,7 @@ const CarouselItem = props => {
   }, [props.product]);
 
   const add_item_to_cart = cart_item => {
-    if (cartItems.length === 0) {
-      dispatch(API.createCart({ cart_item, type: "add_to_cart" }));
-    } else {
-      dispatch(API.updateCart({ cart: my_cart, cart_item, type: "add_to_cart" }));
-    }
+    dispatch(API.saveCart({ cart: my_cart, cart_item, type: "add_to_cart" }));
   };
 
   const handleAddToCart = e => {

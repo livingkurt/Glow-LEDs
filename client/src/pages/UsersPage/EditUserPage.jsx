@@ -18,6 +18,9 @@ const EditUserPage = props => {
   const [is_employee, set_is_employee] = useState(false);
   const [isVerified, set_isVerified] = useState(false);
   const [is_admin, set_is_admin] = useState(false);
+  const [wholesaler, set_wholesaler] = useState(false);
+  const [minimum_order_amount, set_minimum_order_amount] = useState(false);
+  const [guest, set_guest] = useState(false);
   const [loading_checkboxes, set_loading_checkboxes] = useState(true);
   const [shipping, set_shipping] = useState({
     first_name: "",
@@ -63,6 +66,9 @@ const EditUserPage = props => {
     setInternational(user.international);
     set_stripe_connect_id(user.stripe_connect_id);
     set_weekly_wage(user.weekly_wage);
+    set_wholesaler(user.wholesaler);
+    set_minimum_order_amount(user.minimum_order_amount);
+    set_guest(user.guest);
   };
   const unset_state = () => {
     set_id("");
@@ -77,6 +83,9 @@ const EditUserPage = props => {
     set_shipping({});
     set_email_subscription("");
     setInternational("");
+    set_wholesaler("");
+    set_minimum_order_amount("");
+    set_guest("");
   };
 
   useEffect(() => {
@@ -112,27 +121,26 @@ const EditUserPage = props => {
 
   const submitHandler = e => {
     e.preventDefault();
-
-    const data = {
-      _id: id,
-      first_name,
-      last_name,
-      email,
-      affiliate,
-      is_affiliated,
-      is_employee,
-      isVerified,
-      isAdmin: is_admin,
-      email_subscription,
-      shipping,
-      stripe_connect_id,
-      weekly_wage
-    };
-    if (id) {
-      dispatch(API.updateUser(data));
-    } else {
-      dispatch(API.createUser(data));
-    }
+    dispatch(
+      API.saveUser({
+        _id: id,
+        first_name,
+        last_name,
+        email,
+        affiliate,
+        is_affiliated,
+        is_employee,
+        isVerified,
+        isAdmin: is_admin,
+        email_subscription,
+        shipping,
+        stripe_connect_id,
+        weekly_wage,
+        wholesaler,
+        minimum_order_amount,
+        guest
+      })
+    );
     e.target.reset();
     unset_state();
     // history.push("/secure/glow/users");
@@ -247,7 +255,7 @@ const EditUserPage = props => {
                         <li>
                           <label htmlFor="first_name">First Name</label>
                           <input
-                            value={shipping.first_name}
+                            value={shipping?.first_name}
                             type="first_name"
                             name="first_name"
                             id="first_name"
@@ -262,7 +270,7 @@ const EditUserPage = props => {
                         <li>
                           <label htmlFor="last_name">Last Name</label>
                           <input
-                            value={shipping.last_name}
+                            value={shipping?.last_name}
                             type="last_name"
                             name="last_name"
                             id="last_name"
@@ -278,7 +286,7 @@ const EditUserPage = props => {
                           <label htmlFor="address_1">Address</label>
                           <input
                             type="text"
-                            value={shipping.address_1}
+                            value={shipping?.address_1}
                             name="address_1"
                             id="address_1"
                             onChange={e =>
@@ -293,7 +301,7 @@ const EditUserPage = props => {
                           <label htmlFor="address_2">Apt/Suite</label>
                           <input
                             type="text"
-                            value={shipping.address_2}
+                            value={shipping?.address_2}
                             name="address_2"
                             id="address_2"
                             onChange={e =>
@@ -308,7 +316,7 @@ const EditUserPage = props => {
                           <label htmlFor="city">City</label>
                           <input
                             type="text"
-                            value={shipping.city}
+                            value={shipping?.city}
                             name="city"
                             id="city"
                             onChange={e =>
@@ -323,7 +331,7 @@ const EditUserPage = props => {
                           <label htmlFor="state">State</label>
                           <input
                             type="text"
-                            value={shipping.state}
+                            value={shipping?.state}
                             name="state"
                             id="state"
                             onChange={e =>
@@ -338,7 +346,7 @@ const EditUserPage = props => {
                           <label htmlFor="postalCode">Postal Code</label>
                           <input
                             type="text"
-                            value={shipping.postalCode}
+                            value={shipping?.postalCode}
                             name="postalCode"
                             id="postalCode"
                             onChange={e =>
@@ -361,7 +369,7 @@ const EditUserPage = props => {
                                 // defaultChecked={international ? 'checked' : 'unchecked'}
                                 defaultValue={international}
                                 defaultChecked={international}
-                                value={shipping.international}
+                                value={shipping?.international}
                                 id="international"
                                 onChange={e => {
                                   setInternational(e.target.checked);
@@ -373,7 +381,7 @@ const EditUserPage = props => {
                                 <label htmlFor="country">Country</label>
                                 <input
                                   type="text"
-                                  value={shipping.country}
+                                  value={shipping?.country}
                                   name="country"
                                   id="country"
                                   onChange={e =>
@@ -451,6 +459,48 @@ const EditUserPage = props => {
                                 id="isVerified"
                                 onChange={e => {
                                   set_isVerified(e.target.checked);
+                                }}
+                              />
+                            </li>
+                          )}
+                          {loading_checkboxes ? (
+                            <div>Loading...</div>
+                          ) : (
+                            <li>
+                              <label htmlFor="wholesaler">Wholesaler</label>
+                              <input
+                                type="checkbox"
+                                name="wholesaler"
+                                defaultChecked={wholesaler}
+                                id="wholesaler"
+                                onChange={e => {
+                                  set_wholesaler(e.target.checked);
+                                }}
+                              />
+                            </li>
+                          )}
+                          <li>
+                            <label htmlFor="minimum_order_amount">Minimum Order Amount</label>
+                            <input
+                              type="text"
+                              name="minimum_order_amount"
+                              value={minimum_order_amount}
+                              id="minimum_order_amount"
+                              onChange={e => set_minimum_order_amount(e.target.value)}
+                            />
+                          </li>
+                          {loading_checkboxes ? (
+                            <div>Loading...</div>
+                          ) : (
+                            <li>
+                              <label htmlFor="guest">Guest</label>
+                              <input
+                                type="checkbox"
+                                name="guest"
+                                defaultChecked={guest}
+                                id="guest"
+                                onChange={e => {
+                                  set_guest(e.target.checked);
                                 }}
                               />
                             </li>

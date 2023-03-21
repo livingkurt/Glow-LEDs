@@ -14,23 +14,19 @@ export const listExpenses = createAsyncThunk("expenses/listExpenses", async (que
   } catch (error) {}
 });
 
-export const updateExpense = createAsyncThunk("expenses/updateExpense", async (expense: any, thunkApi: any) => {
+export const saveExpense = createAsyncThunk("expenses/saveExpense", async (expense: any, thunkApi: any) => {
   try {
     const {
       userSlice: { current_user }
     } = thunkApi.getState();
-    const { data } = await axios.put("/api/expenses/" + expense.pathname, expense, headers(current_user));
-    return data;
-  } catch (error) {}
-});
 
-export const createExpense = createAsyncThunk("expenses/createExpense", async (expense: any, thunkApi: any) => {
-  try {
-    const {
-      userSlice: { current_user }
-    } = thunkApi.getState();
-    const { data } = await axios.post("/api/expenses", expense, headers(current_user));
-    return data;
+    if (!expense._id) {
+      const { data } = await axios.post("/api/expenses", expense, headers(current_user));
+      return data;
+    } else {
+      const { data } = await axios.put("/api/expenses/" + expense._id, expense, headers(current_user));
+      return data;
+    }
   } catch (error) {}
 });
 

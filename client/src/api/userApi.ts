@@ -14,23 +14,19 @@ export const listUsers = createAsyncThunk("users/listUsers", async (query: any, 
   } catch (error) {}
 });
 
-export const updateUser = createAsyncThunk("users/updateUser", async (user: any, thunkApi: any) => {
+export const saveUser = createAsyncThunk("users/saveUser", async (user: any, thunkApi: any) => {
   try {
     const {
       userSlice: { current_user }
     } = thunkApi.getState();
-    const { data } = await axios.put("/api/users/" + user.pathname, user, headers(current_user));
-    return data;
-  } catch (error) {}
-});
 
-export const createUser = createAsyncThunk("users/createUser", async (user: any, thunkApi: any) => {
-  try {
-    const {
-      userSlice: { current_user }
-    } = thunkApi.getState();
-    const { data } = await axios.post("/api/users", user, headers(current_user));
-    return data;
+    if (!user._id) {
+      const { data } = await axios.post("/api/users", user, headers(current_user));
+      return data;
+    } else {
+      const { data } = await axios.put("/api/users/" + user._id, user, headers(current_user));
+      return data;
+    }
   } catch (error) {}
 });
 

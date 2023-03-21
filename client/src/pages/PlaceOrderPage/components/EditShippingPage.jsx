@@ -17,7 +17,7 @@ const ProfilePage = props => {
 
   const submitHandler = e => {
     e.preventDefault();
-    dispatch(API.updateUser({ userId: current_user._id, email, name, password }));
+    dispatch(API.saveUser({ userId: current_user._id, email, name, password }));
     history.push(`/secure/account/profile`);
   };
 

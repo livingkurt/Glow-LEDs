@@ -151,36 +151,33 @@ const EditPromoPage = props => {
 
   const submitHandler = e => {
     e.preventDefault();
-    const data = {
-      _id: id,
-      affiliate,
-      user,
-      promo_code,
-      admin_only,
-      affiliate_only,
-      sponsor_only,
-      single_use,
-      used_once,
-      exclude,
-      excluded_categories,
-      excluded_products,
-      include,
-      included_categories,
-      included_products,
-      percentage_off,
-      amount_off,
-      minimum_total,
-      free_shipping,
-      time_limit,
-      start_date: unformat_date(start_date),
-      end_date: unformat_date(end_date),
-      active
-    };
-    if (id) {
-      dispatch(API.updatePromo(data));
-    } else {
-      dispatch(API.createPromo(data));
-    }
+    dispatch(
+      API.savePromo({
+        _id: id,
+        affiliate,
+        user,
+        promo_code,
+        admin_only,
+        affiliate_only,
+        sponsor_only,
+        single_use,
+        used_once,
+        exclude,
+        excluded_categories,
+        excluded_products,
+        include,
+        included_categories,
+        included_products,
+        percentage_off,
+        amount_off,
+        minimum_total,
+        free_shipping,
+        time_limit,
+        start_date: unformat_date(start_date),
+        end_date: unformat_date(end_date),
+        active
+      })
+    );
     e.target.reset();
     unset_state();
     history.push("/secure/glow/promos");

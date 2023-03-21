@@ -14,23 +14,19 @@ export const listSettings = createAsyncThunk("settings/listSettings", async (que
   } catch (error) {}
 });
 
-export const updateSetting = createAsyncThunk("settings/updateSetting", async (setting: any, thunkApi: any) => {
+export const saveSetting = createAsyncThunk("settings/saveSetting", async (setting: any, thunkApi: any) => {
   try {
     const {
       userSlice: { current_user }
     } = thunkApi.getState();
-    const { data } = await axios.put("/api/settings/" + setting.pathname, setting, headers(current_user));
-    return data;
-  } catch (error) {}
-});
 
-export const createSetting = createAsyncThunk("settings/createSetting", async (setting: any, thunkApi: any) => {
-  try {
-    const {
-      userSlice: { current_user }
-    } = thunkApi.getState();
-    const { data } = await axios.post("/api/settings", setting, headers(current_user));
-    return data;
+    if (!setting._id) {
+      const { data } = await axios.post("/api/settings", setting, headers(current_user));
+      return data;
+    } else {
+      const { data } = await axios.put("/api/settings/" + setting._id, setting, headers(current_user));
+      return data;
+    }
   } catch (error) {}
 });
 

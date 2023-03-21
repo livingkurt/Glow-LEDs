@@ -98,7 +98,7 @@ const CategorysPage = props => {
       .filter(category => category !== null)
       .forEach(category => {
         dispatch(
-          API.createCategory({
+          API.saveCategory({
             name: category,
             pathname: snake_case(category),
             nest_level: 1,
@@ -115,7 +115,7 @@ const CategorysPage = props => {
       .filter(category => category !== null)
       .forEach(category => {
         dispatch(
-          API.createCategory({
+          API.saveCategory({
             name: category,
             pathname: snake_case(category),
             nest_level: 1,
