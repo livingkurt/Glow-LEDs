@@ -565,7 +565,7 @@ const Sidebar = props => {
 						<i className="fas fa-sort-up" />
 					</GLButton> */}
         </div>
-        <Link to="/">
+        <Link to="/collections/all/tutorials">
           <GLButton className="sidebar-btn primary" onClick={closeMenu}>
             Learn
           </GLButton>

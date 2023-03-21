@@ -82,6 +82,7 @@ import { EditUserPage, UsersPage } from "./pages/UsersPage";
 import { CheckEmailPage } from "./pages/LoginPage/components";
 import { AffiliateTermsPage } from "./pages/AffiliatesPage/components";
 import { Four04Page } from "./pages/Four04Page";
+import { LearnGridPage } from "./pages/LearnPage";
 
 const App = props => {
   const theme_colors = {
@@ -348,6 +349,7 @@ const App = props => {
 
                 {/* Public Routes */}
                 <Route path="/" exact={true} component={HomePage} />
+
                 {/* Account */}
                 <Route path="/account/login" component={LoginPage} />
                 <Route path="/account/verified/:id" component={VerifiedPage} />
@@ -356,6 +358,7 @@ const App = props => {
                 <Route path="/account/register" component={RegisterPage} />
                 <Route path="/account/passwordreset" component={PasswordResetPage} />
                 <Route path="/account/resetpassword/:id" component={ResetPasswordPage} />
+
                 {/* Checkout */}
                 <Route path="/checkout/placeorder" component={PlaceOrderPage} />
                 <Route path="/checkout/shipping" component={ShippingPage} />
@@ -374,17 +377,25 @@ const App = props => {
                 <Route path="/collections/all/products/category/:category/subcategory/:subcategory?" component={ProductsGridPage} />
                 <Route path="/collections/all/products/category/:category" component={ProductsGridPage} />
                 <Route path="/collections/all/products/:pathname" component={ProductPage} />
+
                 {/* Feature Collections */}
                 <Route path="/collections/all/features/category/:category?" exact={true} component={FeaturesGridPage} />
                 <Route path="/collections/all/features/category/:category/:pathname?" exact={true} component={FeaturedPage} />
+
                 {/* Sponsors Collections */}
                 <Route path="/collections/all/sponsors/category/:category?" exact={true} component={SponsorsGridPage} />
                 <Route path="/collections/all/sponsors" exact={true} component={SponsorsGridPage} />
                 <Route path="/collections/all/sponsors/:promo_code?" exact={true} component={SponsorPage} />
+
                 {/* Team Collections */}
                 <Route path="/collections/all/teams/category/:category?" exact={true} component={TeamsGridPage} />
                 <Route path="/collections/all/teams" exact={true} component={TeamsGridPage} />
                 <Route path="/collections/all/teams/:pathname?" exact={true} component={TeamPage} />
+
+                {/* Team Collections */}
+                <Route path="/collections/all/tutorials/category/:category?" exact={true} component={LearnGridPage} />
+                <Route path="/collections/all/tutorials" exact={true} component={LearnGridPage} />
+                {/* <Route path="/collections/all/tutorials/:pathname?" exact={true} component={TeamPage} /> */}
 
                 {/* Pages */}
                 <Route path="/pages/announcements" exact={true} component={AnnouncementsPage} />

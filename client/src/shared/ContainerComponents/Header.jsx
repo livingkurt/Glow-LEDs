@@ -688,7 +688,7 @@ const Header = props => {
                     </div>
                   </div>
                 </div>
-                <Link to="/" aria-label="Tutorials">
+                <Link to="/collections/all/tutorials" aria-label="Tutorials">
                   <GLButton variant="nav" className="title_font">
                     Learn
                   </GLButton>
