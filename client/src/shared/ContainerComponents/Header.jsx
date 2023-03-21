@@ -688,7 +688,12 @@ const Header = props => {
                     </div>
                   </div>
                 </div>
-                <div className="dropdown-nav">
+                <Link to="/" aria-label="Tutorials">
+                  <GLButton variant="nav" className="title_font">
+                    Learn
+                  </GLButton>
+                </Link>
+                {/* <div className="dropdown-nav">
                   <Link to="/collections/all/sponsors">
                     <GLButton variant="nav" className="title_font">
                       Our Team
@@ -756,6 +761,137 @@ const Header = props => {
                         </Link>
                         <Link to="/collections/all/features/category/vfx">
                           <GLButton variant="nav" fullWidth className="ta-l">
+                            VFX
+                          </GLButton>
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                </div> */}
+                <div className="dropdown-nav">
+                  <Link to="/pages/menu/support">
+                    <GLButton variant="nav" className="title_font">
+                      Community
+                    </GLButton>
+                  </Link>
+
+                  <div className="hover_fade_in nav-dropdown">
+                    <div className="jc-c">
+                      <div className="w-100per max-w-300px">
+                        <Link to="/pages/menu/featured">
+                          <GLButton variant="nav" fullWidth className="ta-l fs-18px title_font">
+                            Community
+                          </GLButton>
+                        </Link>
+                        <hr className="w-95per m-0px" />
+                        <Link to="/collections/all/sponsors">
+                          <GLButton variant="nav" fullWidth className="block ta-l">
+                            Sponsored Glovers
+                          </GLButton>
+                        </Link>
+                        <Link to="/collections/all/teams">
+                          <GLButton variant="nav" fullWidth className="block ta-l">
+                            Sponsored Teams
+                          </GLButton>
+                        </Link>
+
+                        <Link to="/collections/all/teams/category/rave_mob">
+                          <GLButton variant="nav" fullWidth className="ta-l">
+                            Rave Mob
+                          </GLButton>
+                        </Link>
+                        {/* <div className="nav-btn-container">
+                          <Link to="/pages/faq" className="w-80per">
+                            <GLButton className="nav-btn-link w-100per ta-l">Our Team</GLButton>
+                          </Link>
+                          <GLButton className="nav-btn-dropdown" onClick={() => show_hide("our_team_dropdown")} aria-label="Show">
+                            <i className="fas fa-sort-up" />
+                          </GLButton>
+                        </div> */}
+                        <div className="nav-btn-container">
+                          <Link to="/pages/menu/featured" className="w-80per">
+                            <GLButton className="nav-btn-link w-100per ta-l">Featured</GLButton>
+                          </Link>
+                          <GLButton className="nav-btn-dropdown" onClick={() => show_hide("featured_dropdown")} aria-label="Show">
+                            <i className="fas fa-sort-up" />
+                          </GLButton>
+                        </div>
+                      </div>
+
+                      {/* <div className="nav-dropdown-subcategory-content hover_fade_in" id="our_team_dropdown">
+                        <Link to="/collections/all/sponsors">
+                          <GLButton variant="nav" fullWidth className="ta-l fs-18px title_font">
+                            Our Team
+                          </GLButton>
+                        </Link>
+                        <hr className="w-95per m-0px" />
+                        <Link to="/collections/all/sponsors">
+                          <GLButton variant="nav" fullWidth className="block ta-l">
+                            Sponsored Glovers
+                          </GLButton>
+                        </Link>
+                        <Link to="/collections/all/teams">
+                          <GLButton variant="nav" fullWidth className="block ta-l">
+                            Sponsored Teams
+                          </GLButton>
+                        </Link>
+
+                        <Link to="/collections/all/teams/category/rave_mob">
+                          <GLButton variant="nav" fullWidth className="ta-l">
+                            Rave Mob
+                          </GLButton>
+                        </Link>
+                      </div> */}
+                      {/* <div className="nav-dropdown-subcategory-content hover_fade_in" id="featured_dropdown">
+                        <GLButton variant="nav" fullWidth className="ta-l fs-20px title_font">
+                          Featured
+                        </GLButton>
+                        <hr className="w-95per m-0px" />
+                        <Link to="/collections/all/features/category/glovers">
+                          <GLButton variant="nav" fullWidth className="ta-l jc-b">
+                            Glovers
+                          </GLButton>
+                        </Link>
+                        <Link to="/collections/all/features/category/artists">
+                          <GLButton variant="nav" fullWidth className="ta-l">
+                            Artists
+                          </GLButton>
+                        </Link>
+                        <Link to="/collections/all/features/category/producers">
+                          <GLButton variant="nav" fullWidth className="ta-l">
+                            Producers
+                          </GLButton>
+                        </Link>
+                        <Link to="/collections/all/features/category/vfx">
+                          <GLButton variant="nav" fullWidth className="ta-l">
+                            VFX
+                          </GLButton>
+                        </Link>
+                      </div> */}
+                      <div className="nav-dropdown-subcategory-content hover_fade_in" id="featured_dropdown">
+                        <Link to="/pages/menu/featured">
+                          <GLButton variant="nav" fullWidth className="ta-l fs-20px title_font">
+                            Featured
+                          </GLButton>
+                        </Link>
+                        <hr className="w-95per m-0px" />
+                        <Link to="/collections/all/sponsors">
+                          <GLButton variant="nav" fullWidth className="ta-l block">
+                            Glovers
+                          </GLButton>
+                        </Link>
+                        <Link to="/collections/all/sponsors">
+                          <GLButton variant="nav" fullWidth className="ta-l block">
+                            Artists
+                          </GLButton>
+                        </Link>
+                        <Link to="/collections/all/teams">
+                          <GLButton variant="nav" fullWidth className="ta-l block">
+                            Producers
+                          </GLButton>
+                        </Link>
+                        <Link to="/collections/all/teams/category/rave_mob">
+                          <GLButton variant="nav" fullWidth className="ta-l block">
                             VFX
                           </GLButton>
                         </Link>
