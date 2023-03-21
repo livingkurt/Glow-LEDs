@@ -372,7 +372,7 @@ const ProfilePage = props => {
                     </GLButton>
                   </Link>
                 </div>
-                {user.is_affiliated && affiliate && (
+                {isAdmin(userInfo) && (
                   <div style={{ height: 50 }}>
                     <GLButton style={{ maxWidth: "225px" }} onClick={send_not_verified_email} variant="primary">
                       Still Not Verified

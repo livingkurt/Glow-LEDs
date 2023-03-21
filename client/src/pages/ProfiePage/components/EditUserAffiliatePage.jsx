@@ -195,15 +195,15 @@ const EditUserAffiliatePage = props => {
     return () => (clean = false);
   }, [success]);
 
-  useEffect(() => {
-    let clean = true;
-    if (clean) {
-      if (userInfo && !userInfo.is_affiliated) {
-        history.push("/secure/account/profile/");
-      }
-    }
-    return () => (clean = false);
-  }, [userInfo]);
+  // useEffect(() => {
+  //   let clean = true;
+  //   if (clean) {
+  //     if (userInfo && !userInfo.is_affiliated) {
+  //       history.push("/secure/account/profile/");
+  //     }
+  //   }
+  //   return () => (clean = false);
+  // }, [userInfo]);
 
   return (
     <div className="main_container p-20px">
