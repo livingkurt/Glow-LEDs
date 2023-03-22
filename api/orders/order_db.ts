@@ -40,6 +40,7 @@ export default {
     }
   },
   create_orders_db: async (body: any) => {
+    console.log({ body });
     try {
       return await Order.create(body);
     } catch (error) {

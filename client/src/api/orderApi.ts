@@ -36,9 +36,9 @@ export const createOrder = createAsyncThunk("orders/createOrder", async (order: 
     const {
       userSlice: { current_user }
     } = thunkApi.getState();
-    const { data } = await axios.post("/api/orders/secure", order, headers(current_user));
+    const { data } = await axios.post("/api/orders", { ...order, user: current_user }, headers(current_user));
     sessionStorage.removeItem("shippingAddress");
-    return data;
+    return { order: data };
   } catch (error) {}
 });
 

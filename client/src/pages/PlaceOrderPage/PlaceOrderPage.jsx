@@ -15,9 +15,8 @@ import { isMobile } from "react-device-detect";
 import { OrderSummaryStep, ShippingStep } from "./components";
 import * as API from "../../api";
 import { createOrderGuest, removeOrderState } from "../../actions/orderActions";
-import { deleteCartItem } from "../../api";
 import { save_shipping } from "../../slices/cartSlice";
-import { set_loading } from "../../slices/orderSlice";
+import { clear_order_state, set_loading, set_loading_payment } from "../../slices/orderSlice";
 
 const PlaceOrderPage = props => {
   const cartSlice = useSelector(state => state.cartSlice);
@@ -343,6 +342,7 @@ const PlaceOrderPage = props => {
     // create an order
 
     const order_paid = isPaid ? isPaid : paid ? paid : false;
+    console.log("create_order_without_paying");
 
     dispatch(
       API.createOrder({
@@ -379,7 +379,7 @@ const PlaceOrderPage = props => {
   };
 
   const create_no_payment_order = async ({ isPaid }) => {
-    dispatch(set_loading(true));
+    // dispatch(set_loading(true));
     dispatch(
       API.createOrder({
         orderItems: cartItems,
@@ -444,13 +444,13 @@ const PlaceOrderPage = props => {
       if (success_order && order && totalPrice === 0) {
         setTimeout(() => {
           props.history.push("/pages/complete/order/" + order._id);
-          dispatch(set_loading(false));
+          dispatch(set_loading_payment(false));
           empty_cart();
           promo_code_used();
           dimminish_stock();
           send_used_code_email();
           sessionStorage.removeItem("shippingAddress");
-          dispatch(removeOrderState());
+          dispatch(clear_order_state());
         }, 2000);
       } else if (error_order) {
       }
@@ -460,7 +460,7 @@ const PlaceOrderPage = props => {
 
   const empty_cart = () => {
     cartItems.forEach((item, index) => {
-      deleteCartItem({ item_index: index, type: "add_to_cart" });
+      API.deleteCartItem({ item_index: index, type: "add_to_cart" });
     });
   };
 
@@ -480,7 +480,7 @@ const PlaceOrderPage = props => {
         promo_code_used();
         dimminish_stock();
         sessionStorage.removeItem("shippingAddress");
-        dispatch(removeOrderState());
+        dispatch(clear_order_state());
         send_used_code_email();
       }
     }

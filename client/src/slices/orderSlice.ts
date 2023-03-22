@@ -54,6 +54,9 @@ const orderSlice = createSlice({
     },
     set_success: (state, { payload }) => {
       state.success = payload;
+    },
+    clear_order_state: (state, { payload }) => {
+      state.order = {};
     }
   },
   extraReducers: {
@@ -74,16 +77,16 @@ const orderSlice = createSlice({
       state.message = payload.message;
     },
     [API.createOrder.pending]: (state: any, { payload }: any) => {
-      state.loading = true;
+      state.loading_payment = true;
     },
     [API.createOrder.fulfilled]: (state: any, { payload }: any) => {
-      state.loading_payment = false;
+      // state.loading_payment = false;
       state.success_order = true;
       state.order = payload.order;
       state.message = "Order Created";
     },
     [API.createOrder.rejected]: (state: any, { payload }: any) => {
-      state.loading = false;
+      state.loading_payment = false;
       state.error = payload.error;
       state.message = payload.message;
     },
@@ -91,7 +94,6 @@ const orderSlice = createSlice({
       state.loading_payment = true;
     },
     [API.createPayOrder.fulfilled]: (state: any, { payload }: any) => {
-      console.log({ payload });
       state.loading_payment = false;
       state.success = true;
       state.order = payload.order;
@@ -158,5 +160,6 @@ const orderSlice = createSlice({
   }
 });
 
-export const { set_search, set_sort, set_page, set_limit, set_loading, set_loading_payment, set_order } = orderSlice.actions;
+export const { set_search, set_sort, set_page, set_limit, set_loading, set_loading_payment, set_order, clear_order_state } =
+  orderSlice.actions;
 export default orderSlice.reducer;
