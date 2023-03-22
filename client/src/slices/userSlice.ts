@@ -144,7 +144,6 @@ const userSlice = createSlice({
     },
     [API.loginUser.fulfilled]: (state: any, { payload }: any) => {
       const { access_token, refresh_token } = payload;
-      console.log({ access_token });
       localStorage.setItem("accessToken", access_token);
       setAuthToken(access_token);
       const decoded = jwt_decode(access_token);

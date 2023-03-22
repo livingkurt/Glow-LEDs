@@ -47,7 +47,6 @@ import useImageUpload from "../Hooks/useImageUpload";
 
 const ImageUploader = () => {
   const { images, albumTitle, handleImageChange, handleAlbumTitleChange } = useImageUpload();
-  console.log({ images });
   const fileInputRef = useRef(null);
 
   const handleUpload = () => {

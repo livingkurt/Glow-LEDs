@@ -126,9 +126,12 @@ const OrderPage = props => {
   }, [product_object]);
 
   const empty_cart = () => {
-    cartItems.forEach((item, index) => {
-      dispatch(API.deleteCartItem({ item_index: index, type: "add_to_cart" }));
-    });
+    if (my_cart._id) {
+      dispatch(API.deleteCart(my_cart._id));
+    }
+    // cartItems.forEach((item, index) => {
+    //   dispatch(API.deleteCartItem({ item_index: index, type: "add_to_cart" }));
+    // });
   };
   const pay_order = paymentMethod => {
     set_payment_loading(true);

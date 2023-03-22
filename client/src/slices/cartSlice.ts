@@ -68,7 +68,6 @@ const cartSlice = createSlice({
       state.paymentMethod = payload;
     },
     save_shipping: (state, { payload }) => {
-      console.log("payload", payload);
       state.shipping = payload;
     },
     remove_from_cart: (state, { payload }) => {

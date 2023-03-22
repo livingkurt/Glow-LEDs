@@ -342,7 +342,6 @@ const PlaceOrderPage = props => {
     // create an order
 
     const order_paid = isPaid ? isPaid : paid ? paid : false;
-    console.log("create_order_without_paying");
 
     dispatch(
       API.createOrder({
