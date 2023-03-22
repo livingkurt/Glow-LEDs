@@ -178,8 +178,8 @@ const EditUserAffiliatePage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      if (success && affiliate_saved) {
-        props.history.push("/pages/complete/affiliate/" + affiliate_saved.pathname);
+      if (success && affiliate) {
+        props.history.push("/pages/complete/affiliate/" + affiliate.pathname);
       }
     }
     return () => (clean = false);
