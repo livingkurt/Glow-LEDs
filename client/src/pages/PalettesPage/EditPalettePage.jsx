@@ -25,8 +25,8 @@ const EditPalettePage = props => {
 
   const history = useHistory();
 
-  const paletteDetails = useSelector(state => state.paletteDetails);
-  const { palette, loading, error } = paletteDetails;
+  const paletteSlice = useSelector(state => state.paletteSlice);
+  const { palette, loading, error } = paletteSlice;
 
   const set_state = () => {
     set_id(palette._id);

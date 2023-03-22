@@ -15,11 +15,8 @@ const EditSettingPage = props => {
 
   const history = useHistory();
 
-  const settingDetails = useSelector(state => state.settingDetails);
-  const { setting, loading, error } = settingDetails;
-
   const settingSlice = useSelector(state => state.settingSlice);
-  const { settings: settings_list } = settingSlice;
+  const { settings: settings_list, setting, loading, error } = settingSlice;
 
   const teamSlice = useSelector(state => state.teamSlice);
   const { teams } = teamSlice;

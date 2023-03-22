@@ -43,17 +43,8 @@ const EditEmailPage = props => {
 
   const history = useHistory();
 
-  const emailDetails = useSelector(state => state.emailDetails);
-  const { email, loading, error } = emailDetails;
-
-  const emailSave = useSelector(state => state.emailSave);
-  const { message } = emailSave;
-
   const emailSlice = useSelector(state => state.emailSlice);
-  const { emails } = emailSlice;
-
-  // const contentDetails = useSelector((state) => state.contentDetails);
-  // const { content, loading: loading_content, error: error_content } = contentDetails;
+  const { emails, message, email, loading, error } = emailSlice;
 
   const contentSlice = useSelector(state => state.contentSlice);
   const { contents } = contentSlice;

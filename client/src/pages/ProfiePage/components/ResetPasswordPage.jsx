@@ -7,16 +7,11 @@ import { GLButton } from "../../../shared/GlowLEDsComponents";
 const ResetPasswordPage = props => {
   const [password, setPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
-  // const userRegister = useSelector((state) => state.userRegister);
-  // const { loading, current_user, error } = userRegister;
   const dispatch = useDispatch();
-
-  // const redirect = props.location.search ? props.location.search.split('=')[1] : '/';
 
   const submitHandler = e => {
     e.preventDefault();
     dispatch(password_reset(props.match.params.id, password, rePassword));
-    // dispatch(email_registration(name, email, password));
     props.history.push("/account/login");
   };
   return (

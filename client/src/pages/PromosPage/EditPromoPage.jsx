@@ -37,8 +37,8 @@ const EditPromoPage = props => {
 
   const history = useHistory();
 
-  const promoDetails = useSelector(state => state.promoDetails);
-  const { promo, loading, error } = promoDetails;
+  const promoSlice = useSelector(state => state.promoSlice);
+  const { promo, loading, error } = promoSlice;
 
   const userSlice = useSelector(state => state.userSlice);
   const { users } = userSlice;

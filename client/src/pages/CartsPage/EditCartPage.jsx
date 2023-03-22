@@ -22,8 +22,8 @@ const EditCartPage = props => {
 
   const history = useHistory();
 
-  const cartDetails = useSelector(state => state.cartDetails);
-  const { cart, loading, error } = cartDetails;
+  const cartSlice = useSelector(state => state.cartSlice);
+  const { cart, loading, error } = cartSlice;
 
   const dispatch = useDispatch();
 

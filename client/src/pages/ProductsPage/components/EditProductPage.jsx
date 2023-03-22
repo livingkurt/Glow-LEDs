@@ -147,14 +147,8 @@ const EditProductPage = props => {
 
   const history = useHistory();
 
-  const productDetails = useSelector(state => state.productDetails);
-  const { product, loading, error } = productDetails;
-
-  const productSave = useSelector(state => state.productSave);
-  const { loading: loadingSave, success, error: errorSave, message } = productSave;
-
-  // const productSlice = useSelector((state) => state.productSlice);
-  // const { products: all_products } = productList;
+  const productSlice = useSelector(state => state.productSlice);
+  const { product, loading, error, loadingSave, success, error: errorSave, message } = productSlice;
 
   const chipSlice = useSelector(state => state.chipSlice);
   const { chips: chips_list } = chipSlice;

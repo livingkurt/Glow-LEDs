@@ -19,11 +19,6 @@ const LoginPage = props => {
 
   const userSlice = useSelector(state => state.userSlice);
   const { loading: user_loading, current_user, error } = userSlice;
-  // const errors = useSelector((state) => state.errors);
-  //
-
-  // const { loading, current_user, error } = errors;
-  //
   const dispatch = useDispatch();
   const redirect = props.location.search ? props.location.search.split("=")[1] : "/";
 

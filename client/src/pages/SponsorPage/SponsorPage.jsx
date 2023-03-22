@@ -14,8 +14,8 @@ import * as API from "../../api";
 const SponsorPage = props => {
   const [teams, set_teams] = useState([]);
   const history = useHistory();
-  const affiliateDetails = useSelector(state => state.affiliateDetails);
-  const { affiliate } = affiliateDetails;
+  const affiliateSlice = useSelector(state => state.affiliateSlice);
+  const { affiliate } = affiliateSlice;
   const userSlice = useSelector(state => state.userSlice);
   const { current_user } = userSlice;
 

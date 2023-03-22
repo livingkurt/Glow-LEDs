@@ -10,8 +10,8 @@ import * as API from "../../api";
 
 const FeaturedPage = props => {
   const history = useHistory();
-  const featureDetails = useSelector(state => state.featureDetails);
-  const { feature } = featureDetails;
+  const featureSlice = useSelector(state => state.featureSlice);
+  const { feature } = featureSlice;
   const userSlice = useSelector(state => state.userSlice);
   const { current_user } = userSlice;
 

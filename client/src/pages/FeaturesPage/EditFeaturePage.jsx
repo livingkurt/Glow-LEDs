@@ -32,8 +32,8 @@ const EditFeaturePage = props => {
 
   const history = useHistory();
 
-  const featureDetails = useSelector(state => state.featureDetails);
-  const { feature, loading, error } = featureDetails;
+  const featureSlice = useSelector(state => state.featureSlice);
+  const { feature, loading, error } = featureSlice;
 
   const productSlice = useSelector(state => state.productSlice);
   const { products } = productSlice;

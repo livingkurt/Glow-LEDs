@@ -77,9 +77,6 @@ const ProductPage = props => {
   const productSlice = useSelector(state => state.productSlice);
   const { product, loading, error } = productSlice;
 
-  // const productDetails = useSelector((state) => state.productDetails);
-  // const { product, loading, error } = productDetails;
-
   const { width, height } = useWindowDimensions();
 
   const history = useHistory();

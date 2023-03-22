@@ -51,8 +51,8 @@ const EditOrderPage = props => {
 
   const history = useHistory();
 
-  const orderDetails = useSelector(state => state.orderDetails);
-  const { order, loading, error } = orderDetails;
+  const orderSlice = useSelector(state => state.orderSlice);
+  const { order, loading, error } = orderSlice;
   const userSlice = useSelector(state => state.userSlice);
   const { current_user, users } = userSlice;
 

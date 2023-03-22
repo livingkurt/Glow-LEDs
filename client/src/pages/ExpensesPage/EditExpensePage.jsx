@@ -21,8 +21,8 @@ const EditExpensePage = props => {
 
   const history = useHistory();
 
-  const expenseDetails = useSelector(state => state.expenseDetails);
-  const { expense, loading, error } = expenseDetails;
+  const expenseSlice = useSelector(state => state.expenseSlice);
+  const { expense, loading, error } = expenseSlice;
 
   const dispatch = useDispatch();
 

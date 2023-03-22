@@ -35,8 +35,8 @@ const OrderPage = props => {
   const { success: successPay, error: errorPay } = orderPay;
   const dispatch = useDispatch();
 
-  const orderDetails = useSelector(state => state.orderDetails);
-  const { loading, order, error } = orderDetails;
+  const orderSlice = useSelector(state => state.orderSlice);
+  const { loading, order, error, orders, refund } = orderSlice;
 
   const [loading_label, set_loading_label] = useState(false);
   const [product, set_product] = useState("");
@@ -66,12 +66,6 @@ const OrderPage = props => {
 
   const parcelSlice = useSelector(state => state.parcelSlice);
   const { parcels } = parcelSlice;
-
-  const orderRefund = useSelector(state => state.orderRefund);
-  const { order: refund } = orderRefund;
-
-  const orderSlice = useSelector(state => state.orderSlice);
-  const { orders } = orderSlice;
 
   const update_refund_state = amount => {
     set_loading_label(true);

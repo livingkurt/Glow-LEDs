@@ -63,7 +63,7 @@ const ProfilePage = props => {
         dispatch(API.listOrders({ user: props.match.params.id }));
       } else {
         set_id(current_user._id);
-        dispatch(API.detailsUser({ id: current_user._id }));
+        dispatch(API.detailsUser(current_user._id));
         dispatch(API.listOrders({ user: current_user._id }));
       }
     }

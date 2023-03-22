@@ -26,10 +26,7 @@ const AnnouncementEmail = props => {
   const { current_user } = userSlice;
 
   const emailSlice = useSelector(state => state.emailSlice);
-  const { emails } = emailSlice;
-
-  const emailDetails = useSelector(state => state.emailDetails);
-  const { email } = emailDetails;
+  const { email } = emailSlice;
 
   const [date, set_date] = useState(format_date(accurate_date(today)));
   const [time, set_time] = useState(format_time(accurate_date(today)));

@@ -21,8 +21,8 @@ const EditParcelPage = props => {
 
   const history = useHistory();
 
-  const parcelDetails = useSelector(state => state.parcelDetails);
-  const { parcel, loading, error } = parcelDetails;
+  const parcelSlice = useSelector(state => state.parcelSlice);
+  const { parcel, loading, error } = parcelSlice;
 
   const set_state = () => {
     set_id(parcel._id);

@@ -40,8 +40,8 @@ const EditTeamPage = props => {
 
   const history = useHistory();
 
-  const teamDetails = useSelector(state => state.teamDetails);
-  const { team, loading, error } = teamDetails;
+  const teamSlice = useSelector(state => state.teamSlice);
+  const { team, loading, error } = teamSlice;
 
   const userSlice = useSelector(state => state.userSlice);
   const { users } = userSlice;

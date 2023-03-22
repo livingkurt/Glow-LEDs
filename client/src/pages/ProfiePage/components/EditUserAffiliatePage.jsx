@@ -52,11 +52,8 @@ const EditUserAffiliatePage = props => {
   const { promos: promos_list } = promoSlice;
   const history = useHistory();
 
-  const affiliateDetails = useSelector(state => state.affiliateDetails);
-  const { affiliate, loading, error } = affiliateDetails;
-
-  const affiliateSave = useSelector(state => state.affiliateSave);
-  const { affiliate: affiliate_saved, loading: loading_saved, success } = affiliateSave;
+  const affiliateSlice = useSelector(state => state.affiliateSlice);
+  const { affiliate, loading, error, success } = affiliateSlice;
 
   const userSlice = useSelector(state => state.userSlice);
   const { current_user } = userSlice;

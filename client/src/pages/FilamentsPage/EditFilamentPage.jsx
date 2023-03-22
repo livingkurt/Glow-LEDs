@@ -19,8 +19,8 @@ const EditFilamentPage = props => {
 
   const history = useHistory();
 
-  const filamentDetails = useSelector(state => state.filamentDetails);
-  const { filament, loading, error } = filamentDetails;
+  const filamentSlice = useSelector(state => state.filamentSlice);
+  const { filament, loading, error } = filamentSlice;
 
   const set_state = () => {
     set_id(filament._id);

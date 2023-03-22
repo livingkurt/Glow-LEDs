@@ -21,8 +21,8 @@ const EditPaycheckPage = props => {
 
   const history = useHistory();
 
-  const paycheckDetails = useSelector(state => state.paycheckDetails);
-  const { paycheck, loading, error } = paycheckDetails;
+  const paycheckSlice = useSelector(state => state.paycheckSlice);
+  const { paycheck, loading, error } = paycheckSlice;
 
   const affiliateSlice = useSelector(state => state.affiliateSlice);
   const { affiliates } = affiliateSlice;

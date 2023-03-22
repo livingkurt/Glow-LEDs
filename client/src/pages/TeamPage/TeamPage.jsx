@@ -11,8 +11,8 @@ import * as API from "../../api";
 
 const TeamPage = props => {
   const history = useHistory();
-  const teamDetails = useSelector(state => state.teamDetails);
-  const { team } = teamDetails;
+  const teamSlice = useSelector(state => state.teamSlice);
+  const { team } = teamSlice;
   const userSlice = useSelector(state => state.userSlice);
   const { current_user } = userSlice;
 
