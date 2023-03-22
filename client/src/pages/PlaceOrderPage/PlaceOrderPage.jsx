@@ -459,9 +459,12 @@ const PlaceOrderPage = props => {
   }, [success_order]);
 
   const empty_cart = () => {
-    cartItems.forEach((item, index) => {
-      API.deleteCartItem({ item_index: index, type: "add_to_cart" });
-    });
+    if (my_cart._id) {
+      dispatch(API.deleteCart(my_cart._id));
+    }
+    // cartItems.forEach((item, index) => {
+    //   dispatch(API.deleteCartItem({ item_index: index, type: "add_to_cart" }));
+    // });
   };
 
   const send_used_code_email = async () => {

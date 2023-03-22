@@ -130,7 +130,7 @@ const cartSlice = createSlice({
     },
     [API.deleteCart.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.my_cart = {};
+      state.my_cart = { cartItems: [] };
       state.message = "Cart Deleted";
       localStorage.removeItem("my_cart");
     },

@@ -127,7 +127,7 @@ const OrderPage = props => {
 
   const empty_cart = () => {
     cartItems.forEach((item, index) => {
-      deleteCartItem({ item_index: index, type: "add_to_cart" });
+      dispatch(API.deleteCartItem({ item_index: index, type: "add_to_cart" }));
     });
   };
   const pay_order = paymentMethod => {
