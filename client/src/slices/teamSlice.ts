@@ -8,7 +8,32 @@ const teamSlice = createSlice({
   initialState: {
     loading: false,
     teams: [],
-    team: {},
+    team: {
+      _id: "",
+      affiliate: "",
+      affiliates: [],
+      team_name: "",
+      instagram_handle: "",
+      facebook_name: "",
+      percentage_off: "",
+      promo_code: "",
+      captain: "",
+      sponsor: "",
+      promoter: "",
+      rave_mob: "",
+      active: "",
+      bio: "",
+      map: "",
+      link: "",
+      pathname: "",
+      images: [],
+      image: "",
+      picture: "",
+      video: "",
+      public_code: "",
+      private_code: "",
+      venmo: ""
+    },
     message: "",
     error: {},
     search: "",
@@ -70,7 +95,7 @@ const teamSlice = createSlice({
     },
     [API.saveTeam.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.team = payload.team;
+      // state.team = payload.team;
       state.message = "Team Saved";
     },
     [API.saveTeam.rejected]: (state: any, { payload }: any) => {

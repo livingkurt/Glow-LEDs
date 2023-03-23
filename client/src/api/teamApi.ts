@@ -30,12 +30,12 @@ export const saveTeam = createAsyncThunk("teams/saveTeam", async (team: any, thu
   } catch (error) {}
 });
 
-export const detailsTeam = createAsyncThunk("teams/detailsTeam", async ({ id }: any, thunkApi: any) => {
+export const detailsTeam = createAsyncThunk("teams/detailsTeam", async (pathname: any, thunkApi: any) => {
   try {
     const {
       userSlice: { current_user }
     } = thunkApi.getState();
-    const { data } = await axios.get(`/api/teams/${id}`, headers(current_user));
+    const { data } = await axios.get(`/api/teams/${pathname}`, headers(current_user));
     return data;
   } catch (error) {}
 });

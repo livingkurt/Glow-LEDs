@@ -6,33 +6,9 @@ import { Helmet } from "react-helmet";
 import { snake_case } from "../../utils/helper_functions";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import * as API from "../../api";
+import { set_team } from "../../slices/teamSlice";
 
 const EditTeamPage = props => {
-  const [id, set_id] = useState("");
-  const [affiliate, set_affiliate] = useState("");
-  const [affiliates, set_affiliates] = useState([]);
-  const [team_name, set_team_name] = useState("");
-  const [instagram_handle, set_instagram_handle] = useState("");
-  const [facebook_name, set_facebook_name] = useState("");
-  const [percentage_off, set_percentage_off] = useState("");
-  const [promo_code, set_promo_code] = useState("");
-  const [captain, set_captain] = useState("");
-  const [sponsor, set_sponsor] = useState("");
-  const [promoter, set_promoter] = useState("");
-  const [rave_mob, set_rave_mob] = useState("");
-  const [active, set_active] = useState("");
-  const [bio, set_bio] = useState("");
-  const [map, set_map] = useState("");
-  const [link, set_link] = useState("");
-  const [pathname, set_pathname] = useState("");
-  const [images, set_images] = useState([]);
-  const [image, set_image] = useState("");
-  const [picture, set_picture] = useState("");
-  const [video, set_video] = useState("");
-  const [public_code, set_public_code] = useState("");
-  const [private_code, set_private_code] = useState("");
-  const [venmo, set_venmo] = useState("");
-
   const [loading_checkboxes, set_loading_checkboxes] = useState(true);
 
   const affiliateSlice = useSelector(state => state.affiliateSlice);
@@ -42,6 +18,30 @@ const EditTeamPage = props => {
 
   const teamSlice = useSelector(state => state.teamSlice);
   const { team, loading, error } = teamSlice;
+  const {
+    _id: id,
+    affiliates,
+    team_name,
+    instagram_handle,
+    facebook_name,
+    percentage_off,
+    captain,
+    sponsor,
+    promoter,
+    rave_mob,
+    active,
+    bio,
+    map,
+    link,
+    pathname,
+    images,
+    image,
+    picture,
+    video,
+    public_code,
+    private_code,
+    venmo
+  } = team;
 
   const userSlice = useSelector(state => state.userSlice);
   const { users } = userSlice;
@@ -49,85 +49,18 @@ const EditTeamPage = props => {
   const promoSlice = useSelector(state => state.promoSlice);
   const { promos: promos_list } = promoSlice;
 
-  const set_state = () => {
-    set_id(team._id);
-    set_team_name(team.team_name);
-    set_instagram_handle(team.instagram_handle);
-    set_facebook_name(team.facebook_name);
-    set_percentage_off(team.percentage_off);
-    set_promo_code(team.promo_code);
-    set_captain(team.captain);
-    set_promoter(team.promoter);
-    set_rave_mob(team.rave_mob);
-    set_sponsor(team.sponsor);
-    set_map(team.map);
-    set_images(team.images);
-    set_active(team.active);
-    set_bio(team.bio);
-    set_link(team.link);
-    set_pathname(team.pathname);
-    set_picture(team.picture);
-    set_affiliates(team.affiliates);
-    set_video(team.video);
-    set_public_code(team.public_code);
-    set_private_code(team.private_code);
-    set_venmo(team.venmo);
-  };
-  const unset_state = () => {
-    set_id("");
-    set_team_name("");
-    set_instagram_handle("");
-    set_facebook_name("");
-    set_percentage_off("");
-    set_promo_code("");
-    set_captain("");
-    set_promoter("");
-    set_rave_mob("");
-    set_sponsor("");
-    set_images("");
-    set_active("");
-    set_bio("");
-    set_link("");
-    set_pathname("");
-    set_video("");
-    set_picture("");
-    set_affiliates([]);
-    set_public_code("");
-    set_private_code("");
-    set_venmo("");
-  };
-
   const dispatch = useDispatch();
 
   useEffect(() => {
     let clean = true;
     if (clean) {
-      if (props.match.params.pathname) {
-        dispatch(API.detailsTeam(props.match.params.pathname));
-        // dispatch(API.detailsTeam(props.match.params.pathname));
-        // set_state();
-      } else {
-        unset_state();
-        dispatch(API.detailsTeam(""));
-      }
+      dispatch(API.detailsTeam(props.match.params.pathname));
       dispatch(API.listAffiliates({}));
       dispatch(API.listPromos({}));
       dispatch(API.listUsers({}));
     }
     return () => (clean = false);
   }, [props.match.params.pathname]);
-
-  useEffect(() => {
-    let clean = true;
-    if (clean) {
-      if (team) {
-        set_state();
-      } else {
-        unset_state();
-      }
-    }
-    return () => (clean = false);
-  }, [team]);
 
   setTimeout(() => {
     set_loading_checkboxes(false);
@@ -160,8 +93,6 @@ const EditTeamPage = props => {
         affiliates: affiliates && affiliates.map(affiliate => affiliate._id)
       })
     );
-    e.target.reset();
-    unset_state();
     history.push("/secure/glow/teams");
   };
 
@@ -176,19 +107,19 @@ const EditTeamPage = props => {
     // 	});
     // } else
     if (affiliates) {
-      set_affiliates(affiliates => [...affiliates, affiliate_object]);
+      dispatch(set_team({ affiliates: [...affiliates, affiliate_object] }));
     } else {
-      set_affiliates([affiliate_object]);
+      dispatch(set_team({ affiliates: [affiliate_object] }));
     }
-
-    set_affiliate("");
   };
 
   const remove_affiliate = (affiliate_index, e) => {
     e.preventDefault();
-    set_affiliates(affiliates =>
-      affiliates.filter((affiliate, index) => {
-        return affiliate_index !== index;
+    dispatch(
+      set_team({
+        affiliates: affiliates.filter((affiliate, index) => {
+          return affiliate_index !== index;
+        })
       })
     );
   };
@@ -229,18 +160,18 @@ const EditTeamPage = props => {
     // 	});
     // } else
     if (code_type === "public") {
-      set_public_code(promo_object);
+      dispatch(set_team({ public_code: promo_object }));
     } else if (code_type === "private") {
-      set_private_code(promo_object);
+      dispatch(set_team({ private_code: promo_object }));
     }
   };
 
   const remove_promo = (e, code_type) => {
     e.preventDefault();
     if (code_type === "public") {
-      set_public_code({});
+      dispatch(set_team({ public_code: {} }));
     } else if (code_type === "private") {
-      set_private_code({});
+      dispatch(set_team({ private_code: {} }));
     }
   };
   const promo_display = (promo, code_type) => {
@@ -310,7 +241,7 @@ const EditTeamPage = props => {
                           name="team_name"
                           value={team_name}
                           id="team_name"
-                          onChange={e => set_team_name(e.target.value)}
+                          onChange={e => dispatch(set_team({ [e.target.name]: e.target.value }))}
                         />
                       </li>
                       <li>
@@ -319,7 +250,11 @@ const EditTeamPage = props => {
                         </label>
                         <div className="ai-c h-25px mb-15px">
                           <div className="custom-select">
-                            <select defaultValue={users} className="qty_select_dropdown" onChange={e => set_captain(e.target.value)}>
+                            <select
+                              defaultValue={users}
+                              className="qty_select_dropdown"
+                              onChange={e => dispatch(set_team({ [e.target.name]: e.target.value }))}
+                            >
                               <option key={1} defaultValue="">
                                 ---Choose User---
                               </option>
@@ -336,7 +271,13 @@ const EditTeamPage = props => {
                       </li>
                       <li>
                         <label htmlFor="captain">Team Captain</label>
-                        <input type="text" name="captain" value={captain} id="captain" onChange={e => set_captain(e.target.value)} />
+                        <input
+                          type="text"
+                          name="captain"
+                          value={captain}
+                          id="captain"
+                          onChange={e => dispatch(set_team({ [e.target.name]: e.target.value }))}
+                        />
                       </li>
 
                       <li>
@@ -346,7 +287,7 @@ const EditTeamPage = props => {
                           name="instagram_handle"
                           value={instagram_handle}
                           id="instagram_handle"
-                          onChange={e => set_instagram_handle(e.target.value)}
+                          onChange={e => dispatch(set_team({ [e.target.name]: e.target.value }))}
                         />
                       </li>
                       <li>
@@ -356,20 +297,38 @@ const EditTeamPage = props => {
                           name="facebook_name"
                           value={facebook_name}
                           id="facebook_name"
-                          onChange={e => set_facebook_name(e.target.value)}
+                          onChange={e => dispatch(set_team({ [e.target.name]: e.target.value }))}
                         />
                       </li>
                       <li>
                         <label htmlFor="picture">Picture</label>
-                        <input type="text" name="picture" value={picture} id="picture" onChange={e => set_picture(e.target.value)} />
+                        <input
+                          type="text"
+                          name="picture"
+                          value={picture}
+                          id="picture"
+                          onChange={e => dispatch(set_team({ [e.target.name]: e.target.value }))}
+                        />
                       </li>
                       <li>
                         <label htmlFor="map">Map</label>
-                        <input type="text" name="map" value={map} id="map" onChange={e => set_map(e.target.value)} />
+                        <input
+                          type="text"
+                          name="map"
+                          value={map}
+                          id="map"
+                          onChange={e => dispatch(set_team({ [e.target.name]: e.target.value }))}
+                        />
                       </li>
                       <li>
                         <label htmlFor="video">Video</label>
-                        <input type="text" name="video" value={video} id="video" onChange={e => set_video(e.target.value)} />
+                        <input
+                          type="text"
+                          name="video"
+                          value={video}
+                          id="video"
+                          onChange={e => dispatch(set_team({ [e.target.name]: e.target.value }))}
+                        />
                       </li>
                       <li>
                         <label htmlFor="bio">Bio</label>
@@ -379,7 +338,7 @@ const EditTeamPage = props => {
                           placeholder="Write a little something to introduce yourself..."
                           defaultValue={bio}
                           id="bio"
-                          onChange={e => set_bio(e.target.value)}
+                          onChange={e => dispatch(set_team({ [e.target.name]: e.target.value }))}
                         />
                       </li>
                       <li>
@@ -392,7 +351,7 @@ const EditTeamPage = props => {
                           onFocus={() => this.placeholder("")}
                           onBlur={() => this.placeholder("https://www...")}
                           id="link"
-                          onChange={e => set_link(e.target.value)}
+                          onChange={e => dispatch(set_team({ [e.target.name]: e.target.value }))}
                         />
                       </li>
                       <li>
@@ -402,12 +361,18 @@ const EditTeamPage = props => {
                           name="pathname"
                           defaultValue={pathname ? pathname : team_name && snake_case(team_name)}
                           id="pathname"
-                          onChange={e => set_pathname(e.target.value)}
+                          onChange={e => dispatch(set_team({ [e.target.name]: e.target.value }))}
                         />
                       </li>
                       <li>
                         <label htmlFor="venmo">Venmo</label>
-                        <input type="text" name="venmo" value={venmo} id="venmo" onChange={e => set_venmo(e.target.value)} />
+                        <input
+                          type="text"
+                          name="venmo"
+                          value={venmo}
+                          id="venmo"
+                          onChange={e => dispatch(set_team({ [e.target.name]: e.target.value }))}
+                        />
                       </li>
                       <li>
                         <label htmlFor="percentage_off">Percentage Off</label>
@@ -416,10 +381,16 @@ const EditTeamPage = props => {
                           name="percentage_off"
                           value={percentage_off}
                           id="percentage_off"
-                          onChange={e => set_percentage_off(e.target.value)}
+                          onChange={e => dispatch(set_team({ [e.target.name]: e.target.value }))}
                         />
                       </li>
-                      <ImageDisplay images={images} set_images={set_images} image={image} set_image={set_image} name={"Images"} />
+                      <ImageDisplay
+                        images={images}
+                        set_images={value => dispatch(set_team({ images: value }))}
+                        image={image}
+                        set_image={value => dispatch(set_team({ image: value }))}
+                        name={"Images"}
+                      />
                       <li>
                         <label htmlFor="promo">Public Code</label>
                         <div className="ai-c h-25px mv-15px jc-c">
@@ -475,9 +446,7 @@ const EditTeamPage = props => {
                             name="sponsor"
                             defaultChecked={sponsor}
                             id="sponsor"
-                            onChange={e => {
-                              set_sponsor(e.target.checked);
-                            }}
+                            onChange={e => dispatch(set_team({ [e.target.name]: e.target.checked }))}
                           />
                         </li>
                       )}
@@ -491,9 +460,7 @@ const EditTeamPage = props => {
                             name="rave_mob"
                             defaultChecked={rave_mob}
                             id="rave_mob"
-                            onChange={e => {
-                              set_rave_mob(e.target.checked);
-                            }}
+                            onChange={e => dispatch(set_team({ [e.target.name]: e.target.checked }))}
                           />
                         </li>
                       )}
@@ -507,9 +474,7 @@ const EditTeamPage = props => {
                             name="promoter"
                             defaultChecked={promoter}
                             id="promoter"
-                            onChange={e => {
-                              set_promoter(e.target.checked);
-                            }}
+                            onChange={e => dispatch(set_team({ [e.target.name]: e.target.checked }))}
                           />
                         </li>
                       )}
@@ -523,9 +488,7 @@ const EditTeamPage = props => {
                             name="active"
                             defaultChecked={active}
                             id="active"
-                            onChange={e => {
-                              set_active(e.target.checked);
-                            }}
+                            onChange={e => dispatch(set_team({ [e.target.name]: e.target.checked }))}
                           />
                         </li>
                       )}
