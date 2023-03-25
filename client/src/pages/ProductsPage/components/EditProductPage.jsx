@@ -1,26 +1,16 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory, Link } from "react-router-dom";
 import { DropdownDisplay, ImageDisplay, Loading, Notification } from "../../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
-import {
-  accurate_date,
-  format_date,
-  format_time,
-  snake_case,
-  unformat_date,
-  unformat_date_and_time,
-  unformat_time
-} from "../../../utils/helper_functions";
+import { accurate_date, snake_case, unformat_date_and_time } from "../../../utils/helper_functions";
 import {
   create_color_products,
   create_secondary_color_products,
   create_option_products,
   create_secondary_products
 } from "../../../utils/helpers/product_helpers";
-import { listChips } from "../../../actions/chipActions";
 import { API_Products } from "../../../utils";
-import { list_display, option_list } from "../../../utils/react_helper_functions";
 import useClipboard from "react-hook-clipboard";
 import {
   determine_color_modifier,
@@ -40,10 +30,6 @@ import {
   set_option_modifier,
   set_option_products_list,
   set_product,
-  set_sale_end_date,
-  set_sale_end_time,
-  set_sale_start_date,
-  set_sale_start_time,
   set_secondary_color_modifier
 } from "../../../slices/productSlice";
 
@@ -285,18 +271,6 @@ const EditProductPage = props => {
       if (props.match.params.pathname && props.match.params.template === "true") {
         dispatch(set_product({ pathname: "" }));
       }
-      const start_date = new Date(product.sale_start_date);
-      const end_date = new Date(product.sale_end_date);
-      if (product.sale_start_date) {
-        dispatch(set_sale_start_date(format_date(accurate_date(start_date))));
-        dispatch(set_sale_start_time(format_time(accurate_date(start_date))));
-      }
-      if (product.sale_end_date) {
-        dispatch(set_sale_end_date(format_date(accurate_date(end_date))));
-        dispatch(set_sale_end_time(format_time(accurate_date(end_date))));
-      }
-      // dispatch(set_product({ sale_start_date: format_date("2021-01-01") }));
-      // dispatch(set_product({ sale_end_date: format_date("2021-01-01") }));
     }
     return () => (clean = false);
   }, [product, success]);

@@ -6,16 +6,19 @@ import { Helmet } from "react-helmet";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import { format_date } from "../../utils/helper_functions";
 import * as API from "../../api";
+import { set_affiliate } from "../../slices/affiliateSlice";
+import { set_team } from "../../slices/teamSlice";
+import { set_paycheck } from "../../slices/paycheckSlice";
 
 const EditPaycheckPage = props => {
-  const [id, set_id] = useState("");
-  const [affiliate, set_affiliate] = useState("");
-  const [team, set_team] = useState("");
-  const [amount, set_amount] = useState("");
-  const [venmo, set_venmo] = useState("");
-  const [paid, set_paid] = useState("");
-  const [reciept, set_reciept] = useState("");
-  const [paid_at, set_paid_at] = useState("");
+  // const [id, set_id] = useState("");
+  // const [affiliate, set_affiliate] = useState("");
+  // const [team, set_team] = useState("");
+  // const [amount, set_amount] = useState("");
+  // const [venmo, set_venmo] = useState("");
+  // const [paid, set_paid] = useState("");
+  // const [reciept, set_reciept] = useState("");
+  // const [paid_at, set_paid_at] = useState("");
 
   const [loading_checkboxes, set_loading_checkboxes] = useState(true);
 
@@ -24,64 +27,25 @@ const EditPaycheckPage = props => {
   const paycheckSlice = useSelector(state => state.paycheckSlice);
   const { paycheck, loading, error } = paycheckSlice;
 
+  const { id, affiliate, team, amount, venmo, paid, reciept, paid_at } = paycheck;
+
   const affiliateSlice = useSelector(state => state.affiliateSlice);
   const { affiliates } = affiliateSlice;
 
   const teamSlice = useSelector(state => state.teamSlice);
   const { teams } = teamSlice;
 
-  const set_state = () => {
-    set_id(paycheck._id);
-    set_affiliate(paycheck.affiliate);
-    set_team(paycheck.team);
-    set_amount(paycheck.amount);
-    set_venmo(paycheck.venmo);
-    set_paid(paycheck.paid);
-    set_reciept(paycheck.reciept);
-    if (paycheck.paid_at) {
-      set_paid_at(format_date(paycheck.paid_at));
-    }
-  };
-  const unset_state = () => {
-    set_id("");
-    set_affiliate("");
-    set_team("");
-    set_amount("");
-    set_venmo("");
-    set_paid("");
-    set_reciept("");
-    set_paid_at("");
-  };
-
   const dispatch = useDispatch();
 
   useEffect(() => {
     let clean = true;
     if (clean) {
-      if (props.match.params.id) {
-        dispatch(API.detailsPaycheck(props.match.params.id));
-        dispatch(API.detailsPaycheck(props.match.params.id));
-      } else {
-        dispatch(API.detailsPaycheck(""));
-      }
+      dispatch(API.detailsPaycheck(props.match.params.id));
       dispatch(API.listAffiliates({}));
       dispatch(API.listTeams({}));
-      set_state();
     }
     return () => (clean = false);
   }, [dispatch, props.match.params.id]);
-
-  useEffect(() => {
-    let clean = true;
-    if (clean) {
-      if (paycheck) {
-        set_state();
-      } else {
-        unset_state();
-      }
-    }
-    return () => (clean = false);
-  }, [paycheck]);
 
   setTimeout(() => {
     set_loading_checkboxes(false);
@@ -103,19 +67,18 @@ const EditPaycheckPage = props => {
       })
     );
     e.target.reset();
-    unset_state();
     history.push("/secure/glow/paychecks?page=1?limit=10");
   };
 
   const update_affiliate = e => {
     e.preventDefault();
     const data = JSON.parse(e.target.value);
-    set_affiliate(data);
+    dispatch(set_affiliate(data));
   };
   const update_team = e => {
     e.preventDefault();
     const data = JSON.parse(e.target.value);
-    set_team(data);
+    dispatch(set_team(data));
   };
   const date = new Date();
 
@@ -170,7 +133,7 @@ const EditPaycheckPage = props => {
                         name="affiliate"
                         value={affiliate?._id}
                         id="affiliate"
-                        onChange={e => set_affiliate(e.target.value)}
+                        onChange={e => dispatch(set_paycheck({ [e.target.name]: e.target.value }))}
                       />
                     </li>
                     {teams && (
@@ -199,15 +162,33 @@ const EditPaycheckPage = props => {
                     )}
                     <li>
                       <label htmlFor="team">Team</label>
-                      <input type="text" name="team" value={team?._id} id="team" onChange={e => set_team(e.target.value)} />
+                      <input
+                        type="text"
+                        name="team"
+                        value={team?._id}
+                        id="team"
+                        onChange={e => dispatch(set_paycheck({ [e.target.name]: e.target.value }))}
+                      />
                     </li>
                     <li>
                       <label htmlFor="amount">Amount</label>
-                      <input type="text" name="amount" value={amount} id="amount" onChange={e => set_amount(e.target.value)} />
+                      <input
+                        type="text"
+                        name="amount"
+                        value={amount}
+                        id="amount"
+                        onChange={e => dispatch(set_paycheck({ [e.target.name]: e.target.value }))}
+                      />
                     </li>
                     <li>
                       <label htmlFor="venmo">Venmo</label>
-                      <input type="text" name="venmo" value={venmo} id="venmo" onChange={e => set_venmo(e.target.value)} />
+                      <input
+                        type="text"
+                        name="venmo"
+                        value={venmo}
+                        id="venmo"
+                        onChange={e => dispatch(set_paycheck({ [e.target.name]: e.target.value }))}
+                      />
                     </li>
                     {loading_checkboxes ? (
                       <div>Loading...</div>
@@ -219,9 +200,7 @@ const EditPaycheckPage = props => {
                           name="paid"
                           defaultChecked={paid}
                           id="paid"
-                          onChange={e => {
-                            set_paid(e.target.checked);
-                          }}
+                          onChange={e => dispatch(set_paycheck({ [e.target.name]: e.target.checked }))}
                         />
                       </li>
                     )}
@@ -232,12 +211,18 @@ const EditPaycheckPage = props => {
                         name="paid_at"
                         value={paid_at ? paid_at : paid ? format_date(today) : ""}
                         id="paid_at"
-                        onChange={e => set_paid_at(e.target.value)}
+                        onChange={e => dispatch(set_paycheck({ [e.target.name]: e.target.value }))}
                       />
                     </li>
                     <li>
                       <label htmlFor="reciept">Receipt</label>
-                      <input type="text" name="reciept" defaultValue={reciept} id="reciept" onChange={e => set_reciept(e.target.value)} />
+                      <input
+                        type="text"
+                        name="reciept"
+                        defaultValue={reciept}
+                        id="reciept"
+                        onChange={e => dispatch(set_paycheck({ [e.target.name]: e.target.value }))}
+                      />
                     </li>
                   </div>
                 </div>

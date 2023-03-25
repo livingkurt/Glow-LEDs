@@ -60,7 +60,7 @@ export const saveCart = createAsyncThunk(
   }
 );
 
-export const detailsCart = createAsyncThunk("carts/detailsCart", async ({ id }: { id: string }, thunkApi: any) => {
+export const detailsCart = createAsyncThunk("carts/detailsCart", async (id: string, thunkApi: any) => {
   try {
     const {
       userSlice: { current_user }

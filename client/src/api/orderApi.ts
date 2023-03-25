@@ -57,9 +57,8 @@ export const createPayOrder = createAsyncThunk(
         { paymentMethod },
         headers(current_user)
       );
-      await deleteCart(my_cart._id);
+      thunkApi.dispatch(deleteCart(my_cart._id));
       sessionStorage.removeItem("shippingAddress");
-      console.log("order_created", order_created);
 
       return { order: order_created, payment_created };
     } catch (error) {}
@@ -72,7 +71,11 @@ export const createPayOrderGuest = createAsyncThunk(
     { order, paymentMethod, create_account, password }: { order: any; paymentMethod: any; create_account: boolean; password: string },
     thunkApi: any
   ) => {
+    const {
+      cartSlice: { my_cart }
+    } = thunkApi.getState();
     try {
+      console.log({ order, paymentMethod, create_account, password });
       let user_id = "";
       if (create_account) {
         const { data: create_user } = await axios.post("/api/users/register", {
@@ -84,7 +87,8 @@ export const createPayOrderGuest = createAsyncThunk(
         user_id = create_user._id;
         axios.post("/api/emails/account_created", create_user);
       } else if (!create_account) {
-        const { data: user } = await axios.get("/api/users/email/" + order.shipping.email);
+        const { data: user } = await axios.get("/api/users/email/" + order.shipping.email.toLowerCase());
+        console.log({ user });
         if (user && Object.keys(user).length > 0) {
           user_id = user._id;
         } else {
@@ -100,24 +104,29 @@ export const createPayOrderGuest = createAsyncThunk(
           user_id = new_user._id;
         }
       }
+      console.log("user_id");
 
       const { data: order_created } = await axios.post("/api/orders/guest", {
         ...order,
         user: user_id
       });
+      console.log({ order_created });
       const { data: payment_created } = await axios.put("/api/payments/guest/pay/" + order_created._id, {
         paymentMethod
       });
+      console.log({ payment_created });
       if (order_created.promo_code) {
         await axios.put("/api/emails/code_used/" + order_created.promo_code);
       }
       sessionStorage.removeItem("shippingAddress");
+      console.log({ order_created });
+      thunkApi.dispatch(deleteCart(my_cart._id));
       return { order: order_created, payment_created };
     } catch (error) {}
   }
 );
 
-export const detailsOrder = createAsyncThunk("orders/detailsOrder", async ({ id }: any, thunkApi: any) => {
+export const detailsOrder = createAsyncThunk("orders/detailsOrder", async (id: string, thunkApi: any) => {
   try {
     const {
       userSlice: { current_user }

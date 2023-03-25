@@ -157,7 +157,6 @@ export default {
           }
         }
       ]);
-      // console.log({ dedupedShippingAddresses });
       return dedupedShippingAddresses;
     } catch (error) {
       if (error instanceof Error) {
@@ -615,7 +614,6 @@ export default {
         $sort: { occurrence: -1 }
       }
     ]);
-    console.log({ final_result });
     return final_result;
   }
 };

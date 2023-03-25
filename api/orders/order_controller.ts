@@ -263,7 +263,6 @@ export default {
   get_all_shipping_orders_c: async (req: any, res: any) => {
     try {
       const orders = await order_services.get_all_shipping_orders_s();
-      console.log(orders);
       if (orders) {
         return res.status(200).send(orders);
       }

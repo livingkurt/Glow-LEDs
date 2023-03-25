@@ -30,7 +30,7 @@ export const saveChip = createAsyncThunk("chips/saveChip", async (chip: any, thu
   } catch (error) {}
 });
 
-export const detailsChip = createAsyncThunk("chips/detailsChip", async ({ id }: any, thunkApi: any) => {
+export const detailsChip = createAsyncThunk("chips/detailsChip", async (id: string, thunkApi: any) => {
   try {
     const {
       userSlice: { current_user }

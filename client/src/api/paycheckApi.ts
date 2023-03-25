@@ -30,7 +30,7 @@ export const savePaycheck = createAsyncThunk("paychecks/savePaycheck", async (pa
   } catch (error) {}
 });
 
-export const detailsPaycheck = createAsyncThunk("paychecks/detailsPaycheck", async ({ id }: any, thunkApi: any) => {
+export const detailsPaycheck = createAsyncThunk("paychecks/detailsPaycheck", async (id: string, thunkApi: any) => {
   try {
     const {
       userSlice: { current_user }

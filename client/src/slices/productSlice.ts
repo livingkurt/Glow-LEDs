@@ -2,6 +2,7 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from "@reduxjs/toolkit";
 import * as API from "../api";
+import { accurate_date, format_date, format_time } from "../utils/helper_functions";
 
 const productSlice = createSlice({
   name: "products",
@@ -223,6 +224,16 @@ const productSlice = createSlice({
       state.loading = true;
     },
     [API.detailsProduct.fulfilled]: (state: any, { payload }: any) => {
+      const start_date = new Date(payload.sale_start_date);
+      const end_date = new Date(payload.sale_end_date);
+      if (payload.sale_start_date) {
+        state.sale_start_date = format_date(accurate_date(start_date));
+        state.sale_start_time = format_time(accurate_date(start_date));
+      }
+      if (payload.sale_end_date) {
+        state.sale_end_date = format_date(accurate_date(end_date));
+        state.sale_end_time = format_time(accurate_date(end_date));
+      }
       state.loading = false;
       state.product = payload;
       state.message = "Product Found";

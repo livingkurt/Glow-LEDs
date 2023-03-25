@@ -2,13 +2,23 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from "@reduxjs/toolkit";
 import * as API from "../api";
+import { format_date } from "../utils/helper_functions";
 
 const paycheckSlice = createSlice({
   name: "paychecks",
   initialState: {
     loading: false,
     paychecks: [],
-    paycheck: {},
+    paycheck: {
+      id: "",
+      affiliate: "",
+      team: "",
+      amount: 0,
+      venmo: "",
+      paid: "",
+      reciept: "",
+      paid_at: ""
+    },
     message: "",
     error: {},
     search: "",
@@ -82,7 +92,7 @@ const paycheckSlice = createSlice({
     },
     [API.detailsPaycheck.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.paycheck = payload;
+      state.paycheck = { ...payload, paid_at: payload.paid_at ? format_date(payload.paid_at) : "" };
       state.message = "Paycheck Found";
     },
     [API.detailsPaycheck.rejected]: (state: any, { payload }: any) => {

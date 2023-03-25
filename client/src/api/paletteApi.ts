@@ -30,7 +30,7 @@ export const savePalette = createAsyncThunk("palettes/savePalette", async (palet
   } catch (error) {}
 });
 
-export const detailsPalette = createAsyncThunk("palettes/detailsPalette", async ({ id }: any, thunkApi: any) => {
+export const detailsPalette = createAsyncThunk("palettes/detailsPalette", async (id: string, thunkApi: any) => {
   try {
     const {
       userSlice: { current_user }

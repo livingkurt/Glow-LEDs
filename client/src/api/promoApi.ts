@@ -30,7 +30,7 @@ export const savePromo = createAsyncThunk("promos/savePromo", async (promo: any,
   } catch (error) {}
 });
 
-export const detailsPromo = createAsyncThunk("promos/detailsPromo", async ({ id }: any, thunkApi: any) => {
+export const detailsPromo = createAsyncThunk("promos/detailsPromo", async (id: string, thunkApi: any) => {
   try {
     const {
       userSlice: { current_user }

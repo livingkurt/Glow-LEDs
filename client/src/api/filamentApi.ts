@@ -30,7 +30,7 @@ export const saveFilament = createAsyncThunk("filaments/saveFilament", async (fi
   } catch (error) {}
 });
 
-export const detailsFilament = createAsyncThunk("filaments/detailsFilament", async ({ id }: any, thunkApi: any) => {
+export const detailsFilament = createAsyncThunk("filaments/detailsFilament", async (id: string, thunkApi: any) => {
   try {
     const {
       userSlice: { current_user }

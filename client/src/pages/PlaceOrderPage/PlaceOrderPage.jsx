@@ -297,8 +297,8 @@ const PlaceOrderPage = props => {
         );
       } else {
         dispatch(
-          API.createPayOrderGuest(
-            {
+          API.createPayOrderGuest({
+            order: {
               orderItems: cartItems,
               shipping: shipment_id
                 ? {
@@ -322,7 +322,7 @@ const PlaceOrderPage = props => {
             create_account,
             new_password,
             paymentMethod
-          )
+          })
         );
       }
     }
@@ -338,6 +338,7 @@ const PlaceOrderPage = props => {
   };
   // const data = new Date()
   const today = new Date();
+
   const create_order_without_paying = async ({ isPaid }) => {
     // create an order
 
