@@ -48,116 +48,7 @@ import {
 } from "../../../slices/productSlice";
 
 const EditProductPage = props => {
-  // // const [modalVisible, setModalVisible] = useState(false);
-  // const [product_id, set_product_id] = useState("");
-  // const [name, setName] = useState("");
-  // const [price, setPrice] = useState();
-  // const [wholesale_price, set_wholesale_price] = useState();
-  // const [wholesale_product, set_wholesale_product] = useState();
-  // const [previous_price, set_previous_price] = useState();
-  // // const [ display_image, setDisplayImage ] = useState('');
-  // const [images, set_images] = useState([]);
-  // // const [ product_options_images, set_product_options_images ] = useState([]);
-  // const [image, set_image] = useState("");
-  // const [video, setVideo] = useState("");
-  // const [brand, setBrand] = useState("");
-  // const [category, setCategory] = useState("");
-  // const [product_collection, set_product_collection] = useState("");
-  // const [quantity, set_quantity] = useState();
-  // const [count_in_stock, set_count_in_stock] = useState();
-  // const [description, setDescription] = useState("");
-  // const [facts, setFacts] = useState("");
-  // const [included_items, setIncludedItems] = useState();
-  // const [contributers, set_contributers] = useState();
-  // const [hidden, setHidden] = useState(false);
-  // const [sale_price, setSalePrice] = useState(0);
-  // const [sale_start_date, set_sale_start_date] = useState("");
-  // const [sale_end_date, set_sale_end_date] = useState("");
-  // const [sale_start_time, set_sale_start_time] = useState("");
-  // const [sale_end_time, set_sale_end_time] = useState("");
-
-  // const [package_volume, set_package_volume] = useState(0);
-  // // const [ subcategories, set_subcategories ] = useState('');
-  // const [subcategory, set_subcategory] = useState("");
-  // const [meta_title, set_meta_title] = useState();
-  // const [meta_description, set_meta_description] = useState();
-  // const [meta_keywords, set_meta_keywords] = useState();
-  // const [package_length, set_package_length] = useState(0);
-  // const [package_width, set_package_width] = useState(0);
-  // const [package_height, set_package_height] = useState(0);
-  // const [product_length, set_product_length] = useState(0);
-  // const [product_width, set_product_width] = useState(0);
-  // const [product_height, set_product_height] = useState(0);
-  // const [weight_pounds, set_weight_pounds] = useState(0);
-  // const [weight_ounces, set_weight_ounces] = useState(0);
-  // const [material_cost, set_material_cost] = useState();
-  // const [filament_used, set_filament_used] = useState();
-  // const [printing_time, set_printing_time] = useState();
-  // const [assembly_time, set_assembly_time] = useState([]);
-  // const [processing_time, set_processing_time] = useState([]);
-  // const [preorder, set_preorder] = useState();
-
-  // const [default_option, set_default_option] = useState(false);
-  // const [option, set_option] = useState();
-  // const [macro_product, set_macro_product] = useState();
-  // const [group_name, set_group_name] = useState("");
-  // const [color_product_group, set_color_product_group] = useState(false);
-  // const [color_group_name, set_color_group_name] = useState("");
-  // const [color_products, set_color_products] = useState(false);
-  // const [secondary_color_product_group, set_secondary_color_product_group] = useState(false);
-  // const [secondary_color_group_name, set_secondary_color_group_name] = useState("");
-  // const [secondary_color_products, set_secondary_color_products] = useState(false);
-  // const [secondary_product_group, set_secondary_product_group] = useState([]);
-  // const [secondary_group_name, set_secondary_group_name] = useState("");
-  // const [secondary_products, set_secondary_products] = useState([]);
-  // const [option_product_group, set_option_product_group] = useState(false);
-  // const [option_group_name, set_option_group_name] = useState("");
-  // const [option_products, set_option_products] = useState([]);
-  // const [color, set_color] = useState("");
-  // const [color_code, set_color_code] = useState("");
-  // const [pathname, setPathname] = useState();
-  // const [group_product, set_group_product] = useState([]);
-  // const [chips, set_chips] = useState([]);
-  // // const [ chip, set_chip ] = useState('');
-  // const [categorys, set_categorys] = useState([]);
-  // // const [ category, set_categorys ] = useState('');
-  // const [subcategorys, set_subcategorys] = useState([]);
-  // // const [ subcategory, set_subcategory ] = useState('');
-  // const [finite_stock, set_finite_stock] = useState(false);
-  // // const [ product, set_product ] = useState('');
-  // const [products, set_products] = useState([]);
-  // const [size, set_size] = useState(0);
-  // const [order, setOrder] = useState();
   const [loading_checkboxes, set_loading_checkboxes] = useState(true);
-  // // const [ shouldBlockNavigation, set_shouldBlockNavigation ] = useState(false);
-  // const [product_options, set_product_options] = useState([{}]);
-  // const [product_options_images, set_product_options_images] = useState([[]]);
-  // const [option_products_list, set_option_products_list] = useState([]);
-  // const [macro_products_list, set_macro_products_list] = useState([]);
-  // const [secondary_products_list, set_secondary_products_list] = useState([]);
-  // const [new_index, set_new_index] = useState();
-  // const [save, set_save] = useState(true);
-  // const [filtered_products, set_filtered_products] = useState([]);
-  // const [extra_cost, set_extra_cost] = useState();
-  // const [item_group_id, set_item_group_id] = useState("");
-  // const [loading_options, set_loading_options] = useState(false);
-  // const [color_modifier, set_color_modifier] = useState("");
-  // const [secondary_color_modifier, set_secondary_color_modifier] = useState("");
-  // const [option_modifier, set_option_modifier] = useState("");
-  // const [secondary_modifier, set_secondary_modifier] = useState("");
-
-  // const [color_images, set_color_images] = useState([]);
-  // const [color_image, set_color_image] = useState("");
-  // const [secondary_color_images, set_secondary_color_images] = useState([]);
-  // const [secondary_color_image, set_secondary_color_image] = useState("");
-  // const [option_images, set_option_images] = useState([]);
-  // const [option_image, set_option_image] = useState("");
-  // const [secondary_images, set_secondary_images] = useState([]);
-  // const [secondary_image, set_secondary_image] = useState("");
-  // const [has_add_on, set_has_add_on] = useState(false);
-  // const [secondary_color_ids, set_secondary_color_ids] = useState({});
-
-  // const [filament, set_filament] = useState({});
   const [clipboard, copyToClipboard] = useClipboard();
 
   const history = useHistory();
@@ -188,7 +79,9 @@ const EditProductPage = props => {
     secondary_color_image,
     secondary_color_ids,
     option_image,
-    secondary_image
+    secondary_image,
+    sale_start_date,
+    sale_end_date
   } = productSlice;
 
   const {
@@ -223,8 +116,6 @@ const EditProductPage = props => {
     reviews,
     hidden,
     sale_price,
-    sale_start_date,
-    sale_end_date,
     preorder,
     pathname,
     meta_title,

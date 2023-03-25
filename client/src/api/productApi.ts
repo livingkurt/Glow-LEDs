@@ -40,12 +40,12 @@ export const detailsProduct = createAsyncThunk("products/detailsProduct", async 
   } catch (error) {}
 });
 
-export const deleteProduct = createAsyncThunk("products/deleteProduct", async (pathname, thunkApi: any) => {
+export const deleteProduct = createAsyncThunk("products/deleteProduct", async (id: string, thunkApi: any) => {
   try {
     const {
       userSlice: { current_user }
     } = thunkApi.getState();
-    const { data } = await axios.delete("/api/products/" + pathname, headers(current_user));
+    const { data } = await axios.delete("/api/products/" + id, headers(current_user));
     return data;
   } catch (error) {}
 });
