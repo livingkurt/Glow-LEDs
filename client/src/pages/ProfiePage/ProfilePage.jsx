@@ -349,19 +349,13 @@ const ProfilePage = props => {
                 ) : (
                   <div>
                     <Link to={"/account/changepassword"}>
-                      <GLButton style={{ marginRight: "10px", maxWidth: "210px" }} variant="primary">
+                      <GLButton style={{ maxWidth: "210px" }} variant="primary">
                         Change Password
                       </GLButton>
                     </Link>
                   </div>
                 )}
-                <div style={{ height: 50 }}>
-                  <Link to={"/secure/glow/userorders/" + id}>
-                    <GLButton style={{ maxWidth: "225px", marginRight: "10px" }} variant="primary">
-                      View Orders
-                    </GLButton>
-                  </Link>
-                </div>
+
                 {isAdmin(current_user) && (
                   <div style={{ height: 50 }}>
                     <GLButton style={{ maxWidth: "225px" }} onClick={send_not_verified_email} variant="primary">

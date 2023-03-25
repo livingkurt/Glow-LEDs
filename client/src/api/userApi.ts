@@ -64,3 +64,30 @@ export const loginUser = createAsyncThunk("users/loginUser", async (userData: an
     return data;
   } catch (error) {}
 });
+
+export const passwordReset = createAsyncThunk(
+  "users/passwordReset",
+  async ({ user_id, password, rePassword }: { user_id: string; password: string; rePassword: string }, thunkApi: any) => {
+    try {
+      const { data } = await axios.put("/api/users/password_reset", {
+        user_id,
+        password,
+        rePassword
+      });
+
+      if (data && data.hasOwnProperty("first_name")) {
+        axios.post("/api/emails/password_reset", data);
+        return data;
+      }
+    } catch (error) {}
+  }
+);
+
+export const resetPassword = createAsyncThunk("users/resetPassword", async (email: string, thunkApi: any) => {
+  try {
+    const { data } = await axios.post("/api/users/reset_password", { email });
+
+    axios.post("/api/emails/reset_password", data);
+    return data;
+  } catch (error) {}
+});

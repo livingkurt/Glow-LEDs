@@ -151,6 +151,21 @@ const userSlice = createSlice({
       state.message = payload.message;
       state.loading = false;
     },
+    [API.passwordReset.pending]: (state: any, { payload }: any) => {
+      state.loading = true;
+    },
+    [API.passwordReset.fulfilled]: (state: any, { payload }: any) => {
+      state.access_token = "";
+      state.current_user = payload;
+      state.loading = false;
+      state.message = "Password Reset";
+      state.success = true;
+    },
+    [API.passwordReset.rejected]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.error = payload.error;
+      state.message = payload.message;
+    },
     [API.registerUser.pending]: (state: any, { payload }: any) => {
       state.loading = true;
     },

@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { password_reset } from "../../../actions/userActions";
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
+import * as API from "../../../api";
 
 const ResetPasswordPage = props => {
   const [password, setPassword] = useState("");
@@ -11,7 +12,7 @@ const ResetPasswordPage = props => {
 
   const submitHandler = e => {
     e.preventDefault();
-    dispatch(password_reset(props.match.params.id, password, rePassword));
+    dispatch(API.passwordReset({ user_id: props.match.params.id, password, rePassword }));
     props.history.push("/account/login");
   };
   return (

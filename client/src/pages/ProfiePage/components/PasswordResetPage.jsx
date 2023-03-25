@@ -4,18 +4,19 @@ import { reset_password } from "../../../actions/userActions";
 import { Loading } from "../../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
+import * as API from "../../../api";
 
 const PasswordResetPublicPage = props => {
   const [email, setEmail] = useState("");
-  const userPasswordReset = useSelector(state => state.userPasswordReset);
-  const { loading, current_user, error } = userPasswordReset;
+  const userSlice = useSelector(state => state.userSlice);
+  const { loading, current_user, error } = userSlice;
   const dispatch = useDispatch();
 
   const [words, setWords] = useState("");
 
   const submitHandler = e => {
     e.preventDefault();
-    dispatch(reset_password(email));
+    dispatch(API.resetPassword(email));
     setWords("Check your Email to Change your Password");
     // props.history.push(redirect);
   };
