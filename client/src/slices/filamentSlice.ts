@@ -70,7 +70,6 @@ const filamentSlice = createSlice({
     },
     [API.saveFilament.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.filament = payload.filament;
       state.message = "Filament Saved";
     },
     [API.saveFilament.rejected]: (state: any, { payload }: any) => {

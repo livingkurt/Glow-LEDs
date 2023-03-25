@@ -70,7 +70,6 @@ const paletteSlice = createSlice({
     },
     [API.savePalette.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.palette = payload.palette;
       state.message = "Palette Saved";
     },
     [API.savePalette.rejected]: (state: any, { payload }: any) => {

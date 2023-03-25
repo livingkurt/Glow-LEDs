@@ -8,7 +8,31 @@ const promoSlice = createSlice({
   initialState: {
     loading: false,
     promos: [],
-    promo: {},
+    promo: {
+      id: "",
+      affiliate: "",
+      user: "",
+      promo_code: "",
+      admin_only: "",
+      affiliate_only: "",
+      sponsor_only: "",
+      single_use: "",
+      used_once: "",
+      excluded_categories: [],
+      excluded_products: [],
+      included_categories: [],
+      included_products: [],
+      exclude: false,
+      include: false,
+      percentage_off: 0,
+      amount_off: 0,
+      minimum_total: 0,
+      free_shipping: false,
+      time_limit: false,
+      active: "",
+      start_date: "",
+      end_date: ""
+    },
     message: "",
     error: {},
     search: "",
@@ -70,7 +94,6 @@ const promoSlice = createSlice({
     },
     [API.savePromo.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.promo = payload.promo;
       state.message = "Promo Saved";
     },
     [API.savePromo.rejected]: (state: any, { payload }: any) => {

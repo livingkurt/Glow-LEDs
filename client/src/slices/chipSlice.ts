@@ -70,7 +70,6 @@ const chipSlice = createSlice({
     },
     [API.saveChip.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.chip = payload.chip;
       state.message = "Chip Saved";
     },
     [API.saveChip.rejected]: (state: any, { payload }: any) => {

@@ -70,7 +70,6 @@ const parcelSlice = createSlice({
     },
     [API.saveParcel.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.parcel = payload.parcel;
       state.message = "Parcel Saved";
     },
     [API.saveParcel.rejected]: (state: any, { payload }: any) => {

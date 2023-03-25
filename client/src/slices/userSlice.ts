@@ -115,7 +115,6 @@ const userSlice = createSlice({
     },
     [API.saveUser.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.user = payload.user;
       state.message = "User Saved";
       state.loading = false;
     },

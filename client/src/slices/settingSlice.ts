@@ -70,7 +70,6 @@ const settingSlice = createSlice({
     },
     [API.saveSetting.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.setting = payload.setting;
       state.message = "Setting Saved";
     },
     [API.saveSetting.rejected]: (state: any, { payload }: any) => {

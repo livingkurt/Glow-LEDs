@@ -70,7 +70,6 @@ const paycheckSlice = createSlice({
     },
     [API.savePaycheck.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.paycheck = payload.paycheck;
       state.message = "Paycheck Saved";
     },
     [API.savePaycheck.rejected]: (state: any, { payload }: any) => {

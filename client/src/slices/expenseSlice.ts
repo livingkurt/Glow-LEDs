@@ -70,7 +70,6 @@ const expenseSlice = createSlice({
     },
     [API.saveExpense.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.expense = payload.expense;
       state.message = "Expense Saved";
     },
     [API.saveExpense.rejected]: (state: any, { payload }: any) => {

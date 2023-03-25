@@ -123,7 +123,6 @@ const orderSlice = createSlice({
     },
     [API.saveOrder.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.order = payload.order;
       state.message = "Order Saved";
     },
     [API.saveOrder.rejected]: (state: any, { payload }: any) => {

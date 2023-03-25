@@ -99,36 +99,8 @@ const affiliatesSlice = createSlice({
       state.loading = true;
     },
     [API.saveAffiliate.fulfilled]: (state: any, { payload }: any) => {
-      const affiliate = {
-        id: "",
-        user: undefined,
-        artist_name: "",
-        instagram_handle: "",
-        facebook_name: "",
-        percentage_off: "",
-        sponsor: "",
-        promoter: "",
-        rave_mob: "",
-        active: "",
-        style: "",
-        inspiration: "",
-        bio: "",
-        link: "",
-        picture: "",
-        location: "",
-        years: "",
-        team: "",
-        video: "",
-        venmo: "",
-        products: [],
-        chips: [],
-        pathname: "",
-        public_code: undefined,
-        private_code: undefined
-      };
       state.loading = false;
       state.success = true;
-      state.affiliate = affiliate;
       state.message = "Affiliate Saved";
     },
     [API.saveAffiliate.rejected]: (state: any, { payload }: any) => {

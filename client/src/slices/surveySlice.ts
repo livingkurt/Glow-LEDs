@@ -8,7 +8,25 @@ const surveySlice = createSlice({
   initialState: {
     loading: false,
     surveys: [],
-    survey: {},
+    survey: {
+      id: "",
+      question_1: "",
+      question_2: "",
+      question_3: "",
+      question_4: "",
+      question_5: "",
+      answer_1: "",
+      answer_2: "",
+      answer_3: "",
+      answer_4: "",
+      answer_5: "",
+      user: "",
+      survey_questions: "",
+      order: "",
+      is_survey: "",
+      active: "",
+      rating: null
+    },
     message: "",
     error: {},
     search: "",
@@ -70,7 +88,6 @@ const surveySlice = createSlice({
     },
     [API.saveSurvey.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.survey = payload.survey;
       state.message = "Survey Saved";
     },
     [API.saveSurvey.rejected]: (state: any, { payload }: any) => {

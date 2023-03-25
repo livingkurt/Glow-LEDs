@@ -70,7 +70,6 @@ const contentSlice = createSlice({
     },
     [API.saveContent.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.content = payload.content;
       state.message = "Content Saved";
     },
     [API.saveContent.rejected]: (state: any, { payload }: any) => {

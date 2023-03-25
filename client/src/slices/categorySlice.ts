@@ -70,7 +70,6 @@ const categorySlice = createSlice({
     },
     [API.saveCategory.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.category = payload.category;
       state.message = "Category Saved";
     },
     [API.saveCategory.rejected]: (state: any, { payload }: any) => {

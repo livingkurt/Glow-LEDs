@@ -95,7 +95,6 @@ const teamSlice = createSlice({
     },
     [API.saveTeam.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
-      // state.team = payload.team;
       state.message = "Team Saved";
     },
     [API.saveTeam.rejected]: (state: any, { payload }: any) => {

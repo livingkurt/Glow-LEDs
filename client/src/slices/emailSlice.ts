@@ -70,7 +70,6 @@ const emailSlice = createSlice({
     },
     [API.saveEmail.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.email = payload.email;
       state.message = "Email Saved";
     },
     [API.saveEmail.rejected]: (state: any, { payload }: any) => {

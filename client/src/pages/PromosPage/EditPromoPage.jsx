@@ -7,38 +7,42 @@ import { API_Products } from "../../utils";
 import { format_date, unformat_date } from "../../utils/helper_functions";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import * as API from "../../api";
+import { set_promo } from "../../slices/promoSlice";
 
 const EditPromoPage = props => {
-  const [id, set_id] = useState("");
-  const [affiliate, set_affiliate] = useState("");
-  const [user, set_user] = useState("");
-  const [promo_code, set_promo_code] = useState("");
-  const [admin_only, set_admin_only] = useState("");
-  const [affiliate_only, set_affiliate_only] = useState("");
-  const [sponsor_only, set_sponsor_only] = useState("");
-  const [single_use, set_single_use] = useState("");
-  const [used_once, set_used_once] = useState("");
-  const [excluded_categories, set_excluded_categories] = useState([]);
-  const [excluded_products, set_excluded_products] = useState([]);
-  const [included_categories, set_included_categories] = useState([]);
-  const [included_products, set_included_products] = useState([]);
-  const [exclude, set_exclude] = useState(false);
-  const [include, set_include] = useState(false);
-  const [percentage_off, set_percentage_off] = useState(0);
-  const [amount_off, set_amount_off] = useState(0);
-  const [minimum_total, set_minimum_total] = useState(0);
-  const [free_shipping, set_free_shipping] = useState(false);
-  const [time_limit, set_time_limit] = useState(false);
-  const [active, set_active] = useState("");
-  const [start_date, set_start_date] = useState("");
-  const [end_date, set_end_date] = useState("");
-  const [loading_checkboxes, set_loading_checkboxes] = useState(true);
   const [categories, set_categories] = useState([]);
 
+  const [loading_checkboxes, set_loading_checkboxes] = useState(true);
   const history = useHistory();
 
   const promoSlice = useSelector(state => state.promoSlice);
   const { promo, loading, error } = promoSlice;
+
+  const {
+    id,
+    affiliate,
+    user,
+    promo_code,
+    admin_only,
+    affiliate_only,
+    sponsor_only,
+    single_use,
+    used_once,
+    excluded_categories,
+    excluded_products,
+    included_categories,
+    included_products,
+    exclude,
+    include,
+    percentage_off,
+    amount_off,
+    minimum_total,
+    free_shipping,
+    time_limit,
+    active,
+    start_date,
+    end_date
+  } = promo;
 
   const userSlice = useSelector(state => state.userSlice);
   const { users } = userSlice;
@@ -54,17 +58,11 @@ const EditPromoPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      if (props.match.params.id) {
-        dispatch(API.detailsPromo(props.match.params.id));
-        dispatch(API.detailsPromo(props.match.params.id));
-      } else {
-        dispatch(API.detailsPromo(""));
-      }
+      dispatch(API.detailsPromo(props.match.params.id));
       dispatch(API.listProducts({ option: false, hidden: false }));
       get_categories();
       dispatch(API.listUsers({}));
       dispatch(API.listAffiliates({}));
-      set_state();
     }
     return () => (clean = false);
   }, [dispatch, props.match.params.id]);
@@ -78,76 +76,9 @@ const EditPromoPage = props => {
     set_categories(data);
   };
 
-  useEffect(() => {
-    let clean = true;
-    if (clean) {
-      if (promo) {
-        set_state();
-      } else {
-        unset_state();
-      }
-    }
-    return () => (clean = false);
-  }, [promo]);
-
   setTimeout(() => {
     set_loading_checkboxes(false);
   }, 500);
-
-  const set_state = () => {
-    set_id(promo._id);
-    set_affiliate(promo.affiliate && promo.affiliate._id);
-    set_user(promo.user && promo.user._id);
-    set_promo_code(promo.promo_code);
-    set_affiliate_only(promo.affiliate_only);
-    set_sponsor_only(promo.sponsor_only);
-    set_admin_only(promo.admin_only);
-    set_single_use(promo.single_use);
-    set_used_once(promo.used_once);
-    set_excluded_categories(promo.excluded_categories);
-    set_excluded_products(promo.excluded_products);
-    set_included_categories(promo.included_categories);
-    set_included_products(promo.included_products);
-    set_include(promo.include);
-    set_exclude(promo.exclude);
-    set_percentage_off(promo.percentage_off);
-    set_amount_off(promo.amount_off);
-    set_minimum_total(promo.minimum_total);
-    set_free_shipping(promo.free_shipping);
-    set_time_limit(promo.time_limit);
-    set_active(promo.active);
-    if (promo.start_date) {
-      set_start_date(format_date(promo.start_date));
-    }
-    if (promo.end_date) {
-      set_end_date(format_date(promo.end_date));
-    }
-  };
-  const unset_state = () => {
-    set_id("");
-    set_affiliate("");
-    set_user("");
-    set_promo_code("");
-    set_affiliate_only("");
-    set_sponsor_only("");
-    set_admin_only("");
-    set_single_use("");
-    set_used_once("");
-    set_excluded_categories("");
-    set_excluded_products("");
-    set_included_categories("");
-    set_included_products("");
-    set_include("");
-    set_exclude("");
-    set_percentage_off("");
-    set_amount_off("");
-    set_minimum_total("");
-    set_free_shipping("");
-    set_time_limit("");
-    set_active("");
-    set_start_date(format_date("2021-01-01"));
-    set_end_date(format_date("2021-01-01"));
-  };
 
   const submitHandler = e => {
     e.preventDefault();
@@ -178,8 +109,6 @@ const EditPromoPage = props => {
         active
       })
     );
-    e.target.reset();
-    unset_state();
     history.push("/secure/glow/promos");
   };
 
@@ -206,13 +135,16 @@ const EditPromoPage = props => {
                           name="affiliate"
                           value={affiliate}
                           id="affiliate"
-                          onChange={e => set_affiliate(e.target.value)}
+                          Change={e => dispatch(set_promo({ [e.target.name]: e.target.value }))}
                         />
                       </li>
                       {affiliates && (
                         <div className="ai-c h-25px mv-10px mb-30px jc-c">
                           <div className="custom-select w-100per">
-                            <select className="qty_select_dropdown w-100per" onChange={e => set_affiliate(e.target.value)}>
+                            <select
+                              className="qty_select_dropdown w-100per"
+                              onChange={e => dispatch(set_promo({ [e.target.name]: e.target.value }))}
+                            >
                               <option key={1} defaultValue={""}>
                                 ---Choose Affiliate---
                               </option>
@@ -228,13 +160,22 @@ const EditPromoPage = props => {
                       )}
                       <li>
                         <label htmlFor="user">For User</label>
-                        <input type="text" name="user" value={user} id="user" onChange={e => set_user(e.target.value)} />
+                        <input
+                          type="text"
+                          name="user"
+                          value={user}
+                          id="user"
+                          onChange={e => dispatch(set_promo({ [e.target.name]: e.target.value }))}
+                        />
                       </li>
 
                       {users && (
                         <div className="ai-c h-25px mv-10px mb-30px jc-c">
                           <div className="custom-select w-100per">
-                            <select className="qty_select_dropdown w-100per" onChange={e => set_user(e.target.value)}>
+                            <select
+                              className="qty_select_dropdown w-100per"
+                              onChange={e => dispatch(set_promo({ [e.target.name]: e.target.value }))}
+                            >
                               <option key={1} defaultValue={""}>
                                 ---Choose User---
                               </option>
@@ -255,7 +196,7 @@ const EditPromoPage = props => {
                           name="promo_code"
                           value={promo_code}
                           id="promo_code"
-                          onChange={e => set_promo_code(e.target.value)}
+                          onChange={e => dispatch(set_promo({ [e.target.name]: e.target.value }))}
                         />
                       </li>
                       {loading_checkboxes ? (
@@ -268,9 +209,7 @@ const EditPromoPage = props => {
                             name="affiliate_only"
                             defaultChecked={affiliate_only}
                             id="affiliate_only"
-                            onChange={e => {
-                              set_affiliate_only(e.target.checked);
-                            }}
+                            onChange={e => dispatch(set_promo({ [e.target.name]: e.target.checked }))}
                           />
                         </li>
                       )}
@@ -284,9 +223,7 @@ const EditPromoPage = props => {
                             name="sponsor_only"
                             defaultChecked={sponsor_only}
                             id="sponsor_only"
-                            onChange={e => {
-                              set_sponsor_only(e.target.checked);
-                            }}
+                            onChange={e => dispatch(set_promo({ [e.target.name]: e.target.checked }))}
                           />
                         </li>
                       )}
@@ -300,9 +237,7 @@ const EditPromoPage = props => {
                             name="admin_only"
                             defaultChecked={admin_only}
                             id="admin_only"
-                            onChange={e => {
-                              set_admin_only(e.target.checked);
-                            }}
+                            onChange={e => dispatch(set_promo({ [e.target.name]: e.target.checked }))}
                           />
                         </li>
                       )}
@@ -316,9 +251,7 @@ const EditPromoPage = props => {
                             name="single_use"
                             defaultChecked={single_use}
                             id="single_use"
-                            onChange={e => {
-                              set_single_use(e.target.checked);
-                            }}
+                            onChange={e => dispatch(set_promo({ [e.target.name]: e.target.checked }))}
                           />
                         </li>
                       )}
@@ -333,9 +266,7 @@ const EditPromoPage = props => {
                             name="used_once"
                             defaultChecked={used_once}
                             id="used_once"
-                            onChange={e => {
-                              set_used_once(e.target.checked);
-                            }}
+                            onChange={e => dispatch(set_promo({ [e.target.name]: e.target.checked }))}
                           />
                         </li>
                       )}
@@ -349,9 +280,7 @@ const EditPromoPage = props => {
                             name="time_limit"
                             defaultChecked={time_limit}
                             id="time_limit"
-                            onChange={e => {
-                              set_time_limit(e.target.checked);
-                            }}
+                            onChange={e => dispatch(set_promo({ [e.target.name]: e.target.checked }))}
                           />
                         </li>
                       )}
@@ -366,7 +295,7 @@ const EditPromoPage = props => {
                                 name="start_date"
                                 value={start_date}
                                 id="start_date"
-                                onChange={e => set_start_date(e.target.value)}
+                                onChange={e => dispatch(set_promo({ [e.target.name]: e.target.value }))}
                               />
                             </div>
                             <div className="m-7px pt-22px">
@@ -380,7 +309,7 @@ const EditPromoPage = props => {
                                 name="end_date"
                                 value={end_date}
                                 id="end_date"
-                                onChange={e => set_end_date(e.target.value)}
+                                onChange={e => dispatch(set_promo({ [e.target.name]: e.target.value }))}
                               />
                             </div>
                           </div>
@@ -397,9 +326,7 @@ const EditPromoPage = props => {
                             defaultChecked={exclude}
                             checked={exclude}
                             id="exclude"
-                            onChange={e => {
-                              set_exclude(e.target.checked);
-                            }}
+                            onChange={e => dispatch(set_promo({ [e.target.name]: e.target.checked }))}
                           />
                         </li>
                       )}
@@ -416,7 +343,7 @@ const EditPromoPage = props => {
                               }))
                             }
                             list_items={excluded_categories}
-                            set_items={set_excluded_categories}
+                            set_items={value => dispatch(set_promo({ excluded_categories: value }))}
                             list_name={"Excluded Categorys"}
                           />
                         </li>
@@ -427,7 +354,7 @@ const EditPromoPage = props => {
                             display_key={"name"}
                             item_list={products}
                             list_items={excluded_products}
-                            set_items={set_excluded_products}
+                            set_items={value => dispatch(set_promo({ excluded_products: value }))}
                             list_name={"Excluded Products"}
                           />
                         </li>
@@ -443,9 +370,7 @@ const EditPromoPage = props => {
                             defaultChecked={include}
                             checked={include}
                             id="include"
-                            onChange={e => {
-                              set_include(e.target.checked);
-                            }}
+                            onChange={e => dispatch(set_promo({ [e.target.name]: e.target.checked }))}
                           />
                         </li>
                       )}
@@ -461,7 +386,7 @@ const EditPromoPage = props => {
                               }))
                             }
                             list_items={included_categories}
-                            set_items={set_included_categories}
+                            set_items={value => dispatch(set_promo({ included_categories: value }))}
                             list_name={"Included Categorys"}
                           />
                         </li>
@@ -472,7 +397,7 @@ const EditPromoPage = props => {
                             display_key={"name"}
                             item_list={products}
                             list_items={included_products}
-                            set_items={set_included_products}
+                            set_items={value => dispatch(set_promo({ included_products: value }))}
                             list_name={"Included Products"}
                           />
                         </li>
@@ -485,7 +410,7 @@ const EditPromoPage = props => {
                           name="percentage_off"
                           value={percentage_off}
                           id="percentage_off"
-                          onChange={e => set_percentage_off(e.target.value)}
+                          onChange={e => dispatch(set_promo({ [e.target.name]: e.target.value }))}
                         />
                       </li>
                       <li>
@@ -495,7 +420,7 @@ const EditPromoPage = props => {
                           name="amount_off"
                           value={amount_off}
                           id="amount_off"
-                          onChange={e => set_amount_off(e.target.value)}
+                          onChange={e => dispatch(set_promo({ [e.target.name]: e.target.value }))}
                         />
                       </li>
                       <li>
@@ -505,7 +430,7 @@ const EditPromoPage = props => {
                           name="minimum_total"
                           value={minimum_total}
                           id="minimum_total"
-                          onChange={e => set_minimum_total(e.target.value)}
+                          onChange={e => dispatch(set_promo({ [e.target.name]: e.target.value }))}
                         />
                       </li>
                       {loading_checkboxes ? (
@@ -518,9 +443,7 @@ const EditPromoPage = props => {
                             name="free_shipping"
                             defaultChecked={free_shipping}
                             id="free_shipping"
-                            onChange={e => {
-                              set_free_shipping(e.target.checked);
-                            }}
+                            onChange={e => dispatch(set_promo({ [e.target.name]: e.target.checked }))}
                           />
                         </li>
                       )}
@@ -534,9 +457,7 @@ const EditPromoPage = props => {
                             name="active"
                             defaultChecked={active}
                             id="active"
-                            onChange={e => {
-                              set_active(e.target.checked);
-                            }}
+                            onChange={e => dispatch(set_promo({ [e.target.name]: e.target.checked }))}
                           />
                         </li>
                       )}

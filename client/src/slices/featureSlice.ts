@@ -70,7 +70,6 @@ const featureSlice = createSlice({
     },
     [API.saveFeature.fulfilled]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.feature = payload.feature;
       state.message = "Feature Saved";
     },
     [API.saveFeature.rejected]: (state: any, { payload }: any) => {
