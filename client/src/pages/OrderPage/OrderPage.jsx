@@ -372,7 +372,7 @@ const OrderPage = props => {
 
   const create_duplicate_order = () => {
     dispatch(
-      API.createOrder({
+      API.saveOrder({
         orderItems: order.orderItems,
         shipping: {
           ...order.shipping,

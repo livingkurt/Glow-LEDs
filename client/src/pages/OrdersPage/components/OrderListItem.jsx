@@ -4,14 +4,12 @@ import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { determine_tracking_link, determnine_link, format_date, getUrlParameter, toCapitalize } from "../../../utils/helper_functions";
-import { createOrder, deleteOrder, detailsOrder, listOrders, saveOrder, update_order, update_payment } from "../../../actions/orderActions";
 import { LazyImage, Loading } from "../../../shared/SharedComponents";
 import { determine_product_name, determine_product_name_string } from "../../../utils/react_helper_functions";
 
 import { API_Emails, API_Orders, API_Shipping } from "../../../utils";
 import ReactTooltip from "react-tooltip";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
-import { isAdmin } from "../../../utils/helpers/user_helpers";
 import { OrderStatusButtons } from "../../OrderPage/components";
 import useWindowDimensions from "../../../shared/Hooks/windowDimensions";
 import * as API from "../../../api";
@@ -54,7 +52,7 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
   const create_duplicate_order = () => {
     //
     dispatch(
-      API.createOrder({
+      API.saveOrder({
         orderItems: order.orderItems,
         shipping: {
           ...order.shipping,

@@ -345,7 +345,7 @@ const PlaceOrderPage = props => {
     const order_paid = isPaid ? isPaid : paid ? paid : false;
 
     dispatch(
-      API.createOrder({
+      API.saveOrder({
         orderItems: cartItems,
         shipping: {
           ...shipping,
@@ -381,7 +381,7 @@ const PlaceOrderPage = props => {
   const create_no_payment_order = async ({ isPaid }) => {
     // dispatch(set_loading(true));
     dispatch(
-      API.createOrder({
+      API.saveOrder({
         orderItems: cartItems,
         shipping: {
           ...shipping,

@@ -148,10 +148,7 @@ const orderSchema = new mongoose.Schema(
     isRefunded: { type: Boolean, default: false },
     isPaused: { type: Boolean, default: false },
     pausedAt: { type: Date },
-    parcel: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Parcel"
-    },
+    parcel: { type: mongoose.Schema.Types.ObjectId, ref: "Parcel" },
     refundedAt: { type: Date },
     order_note: { type: String },
     production_note: { type: String },
