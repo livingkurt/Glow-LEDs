@@ -26,7 +26,7 @@ export const saveOrder = createAsyncThunk("orders/saveOrder", async (order: any,
       sessionStorage.removeItem("shippingAddress");
       return data;
     } else {
-      const { data } = await axios.put("/api/orders/" + order._id, order, headers(current_user));
+      const { data } = await axios.put("/api/orders/glow/" + order._id, order, headers(current_user));
       return data;
     }
   } catch (error) {}
