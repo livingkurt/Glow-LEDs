@@ -22,18 +22,12 @@ const ContactPage = props => {
   const [order_number, set_order_number] = useState("Test");
   const [reason_for_contact, set_reason_for_contact] = useState(props.match.params.reason ? props.match.params.reason : "");
   const [message, set_message] = useState("Test");
-  const [song_id, set_song_id] = useState("");
-  const [instagram_handle, set_instagram_handle] = useState("");
-  const [facebook_name, set_facebook_name] = useState("");
-  const [artist_name, set_artist_name] = useState("");
-  const [inspirational_pictures, set_inspirational_pictures] = useState([]);
 
   const [first_name_validations, set_first_name_Validations] = useState("");
   const [last_name_validations, set_last_name_Validations] = useState("");
   const [email_validations, set_email_validations] = useState("");
   const [order_number_validations, set_order_number_validations] = useState("");
   const [reason_for_contact_validations, set_reason_for_contact_validations] = useState("");
-  const [message_validations, set_message_validations] = useState("");
 
   useEffect(() => {
     let clean = true;
@@ -74,7 +68,6 @@ const ContactPage = props => {
     set_email_validations(request.errors.email);
     set_order_number_validations(request.errors.order_number);
     set_reason_for_contact_validations(request.errors.reason_for_contact);
-    set_message_validations(request.errors.message);
 
     if (request.isValid) {
       const reason = humanize(reason_for_contact);
@@ -85,30 +78,11 @@ const ContactPage = props => {
           email,
           order_number,
           reason_for_contact: reason,
-          message,
-          inspirational_pictures,
-          artist_name,
-          instagram_handle,
-          facebook_name,
-          song_id
+          message
         })
       );
-      // if (reason_for_contact === "submit_content_to_be_featured") {
-      //   dispatch(
-      //     saveFeature({
-      //       user: current_user,
-      //       artist_name,
-      //       instagram_handle,
-      //       facebook_name,
-      //       product: "",
-      //       song_id,
-      //       release_date: "2020-12-29"
-      //     })
-      //   );
-      // }
     }
   };
-
   return (
     <div className="main_container p-20px">
       <Helmet>
