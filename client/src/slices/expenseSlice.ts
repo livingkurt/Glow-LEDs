@@ -49,56 +49,56 @@ const expenseSlice = createSlice({
     }
   },
   extraReducers: {
-    [API.listExpenses.pending]: (state: any, { payload }: any) => {
+    [API.listExpenses.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
       state.expenses = [];
     },
-    [API.listExpenses.fulfilled]: (state: any, { payload }: any) => {
+    [API.listExpenses.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.expenses = payload.expenses;
       state.totalPages = payload.totalPages;
       state.page = payload.currentPage;
       state.message = "Expenses Found";
     },
-    [API.listExpenses.rejected]: (state: any, { payload }: any) => {
+    [API.listExpenses.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.saveExpense.pending]: (state: any, { payload }: any) => {
+    [API.saveExpense.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.saveExpense.fulfilled]: (state: any, { payload }: any) => {
+    [API.saveExpense.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.message = "Expense Saved";
     },
-    [API.saveExpense.rejected]: (state: any, { payload }: any) => {
+    [API.saveExpense.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.detailsExpense.pending]: (state: any, { payload }: any) => {
+    [API.detailsExpense.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.detailsExpense.fulfilled]: (state: any, { payload }: any) => {
+    [API.detailsExpense.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.expense = payload;
       state.message = "Expense Found";
     },
-    [API.detailsExpense.rejected]: (state: any, { payload }: any) => {
+    [API.detailsExpense.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.deleteExpense.pending]: (state: any, { payload }: any) => {
+    [API.deleteExpense.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.deleteExpense.fulfilled]: (state: any, { payload }: any) => {
+    [API.deleteExpense.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.expense = payload.expense;
       state.message = "Expense Deleted";
     },
-    [API.deleteExpense.rejected]: (state: any, { payload }: any) => {
+    [API.deleteExpense.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;

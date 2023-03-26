@@ -49,56 +49,56 @@ const parcelSlice = createSlice({
     }
   },
   extraReducers: {
-    [API.listParcels.pending]: (state: any, { payload }: any) => {
+    [API.listParcels.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
       state.parcels = [];
     },
-    [API.listParcels.fulfilled]: (state: any, { payload }: any) => {
+    [API.listParcels.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.parcels = payload.parcels;
       state.totalPages = payload.totalPages;
       state.page = payload.currentPage;
       state.message = "Parcels Found";
     },
-    [API.listParcels.rejected]: (state: any, { payload }: any) => {
+    [API.listParcels.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.saveParcel.pending]: (state: any, { payload }: any) => {
+    [API.saveParcel.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.saveParcel.fulfilled]: (state: any, { payload }: any) => {
+    [API.saveParcel.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.message = "Parcel Saved";
     },
-    [API.saveParcel.rejected]: (state: any, { payload }: any) => {
+    [API.saveParcel.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.detailsParcel.pending]: (state: any, { payload }: any) => {
+    [API.detailsParcel.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.detailsParcel.fulfilled]: (state: any, { payload }: any) => {
+    [API.detailsParcel.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.parcel = payload;
       state.message = "Parcel Found";
     },
-    [API.detailsParcel.rejected]: (state: any, { payload }: any) => {
+    [API.detailsParcel.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.deleteParcel.pending]: (state: any, { payload }: any) => {
+    [API.deleteParcel.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.deleteParcel.fulfilled]: (state: any, { payload }: any) => {
+    [API.deleteParcel.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.parcel = payload.parcel;
       state.message = "Parcel Deleted";
     },
-    [API.deleteParcel.rejected]: (state: any, { payload }: any) => {
+    [API.deleteParcel.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;

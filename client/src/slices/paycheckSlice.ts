@@ -59,56 +59,56 @@ const paycheckSlice = createSlice({
     }
   },
   extraReducers: {
-    [API.listPaychecks.pending]: (state: any, { payload }: any) => {
+    [API.listPaychecks.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
       state.paychecks = [];
     },
-    [API.listPaychecks.fulfilled]: (state: any, { payload }: any) => {
+    [API.listPaychecks.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.paychecks = payload.paychecks;
       state.totalPages = payload.totalPages;
       state.page = payload.currentPage;
       state.message = "Paychecks Found";
     },
-    [API.listPaychecks.rejected]: (state: any, { payload }: any) => {
+    [API.listPaychecks.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.savePaycheck.pending]: (state: any, { payload }: any) => {
+    [API.savePaycheck.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.savePaycheck.fulfilled]: (state: any, { payload }: any) => {
+    [API.savePaycheck.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.message = "Paycheck Saved";
     },
-    [API.savePaycheck.rejected]: (state: any, { payload }: any) => {
+    [API.savePaycheck.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.detailsPaycheck.pending]: (state: any, { payload }: any) => {
+    [API.detailsPaycheck.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.detailsPaycheck.fulfilled]: (state: any, { payload }: any) => {
+    [API.detailsPaycheck.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.paycheck = { ...payload, paid_at: payload.paid_at ? format_date(payload.paid_at) : "" };
       state.message = "Paycheck Found";
     },
-    [API.detailsPaycheck.rejected]: (state: any, { payload }: any) => {
+    [API.detailsPaycheck.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.deletePaycheck.pending]: (state: any, { payload }: any) => {
+    [API.deletePaycheck.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.deletePaycheck.fulfilled]: (state: any, { payload }: any) => {
+    [API.deletePaycheck.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.paycheck = payload.paycheck;
       state.message = "Paycheck Deleted";
     },
-    [API.deletePaycheck.rejected]: (state: any, { payload }: any) => {
+    [API.deletePaycheck.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;

@@ -49,56 +49,56 @@ const contentSlice = createSlice({
     }
   },
   extraReducers: {
-    [API.listContents.pending]: (state: any, { payload }: any) => {
+    [API.listContents.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
       state.contents = [];
     },
-    [API.listContents.fulfilled]: (state: any, { payload }: any) => {
+    [API.listContents.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.contents = payload.contents;
       state.totalPages = payload.totalPages;
       state.page = payload.currentPage;
       state.message = "Contents Found";
     },
-    [API.listContents.rejected]: (state: any, { payload }: any) => {
+    [API.listContents.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.saveContent.pending]: (state: any, { payload }: any) => {
+    [API.saveContent.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.saveContent.fulfilled]: (state: any, { payload }: any) => {
+    [API.saveContent.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.message = "Content Saved";
     },
-    [API.saveContent.rejected]: (state: any, { payload }: any) => {
+    [API.saveContent.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.detailsContent.pending]: (state: any, { payload }: any) => {
+    [API.detailsContent.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.detailsContent.fulfilled]: (state: any, { payload }: any) => {
+    [API.detailsContent.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.content = payload;
       state.message = "Content Found";
     },
-    [API.detailsContent.rejected]: (state: any, { payload }: any) => {
+    [API.detailsContent.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.deleteContent.pending]: (state: any, { payload }: any) => {
+    [API.deleteContent.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.deleteContent.fulfilled]: (state: any, { payload }: any) => {
+    [API.deleteContent.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.content = payload.content;
       state.message = "Content Deleted";
     },
-    [API.deleteContent.rejected]: (state: any, { payload }: any) => {
+    [API.deleteContent.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;

@@ -49,69 +49,69 @@ const emailSlice = createSlice({
     }
   },
   extraReducers: {
-    [API.listEmails.pending]: (state: any, { payload }: any) => {
+    [API.listEmails.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
       state.emails = [];
     },
-    [API.listEmails.fulfilled]: (state: any, { payload }: any) => {
+    [API.listEmails.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.emails = payload.emails;
       state.totalPages = payload.totalPages;
       state.page = payload.currentPage;
       state.message = "Emails Found";
     },
-    [API.listEmails.rejected]: (state: any, { payload }: any) => {
+    [API.listEmails.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.saveEmail.pending]: (state: any, { payload }: any) => {
+    [API.saveEmail.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.saveEmail.fulfilled]: (state: any, { payload }: any) => {
+    [API.saveEmail.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.message = "Email Saved";
     },
-    [API.saveEmail.rejected]: (state: any, { payload }: any) => {
+    [API.saveEmail.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.detailsEmail.pending]: (state: any, { payload }: any) => {
+    [API.detailsEmail.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.detailsEmail.fulfilled]: (state: any, { payload }: any) => {
+    [API.detailsEmail.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.email = payload;
       state.message = "Email Found";
     },
-    [API.detailsEmail.rejected]: (state: any, { payload }: any) => {
+    [API.detailsEmail.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.deleteEmail.pending]: (state: any, { payload }: any) => {
+    [API.deleteEmail.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.deleteEmail.fulfilled]: (state: any, { payload }: any) => {
+    [API.deleteEmail.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.email = payload.email;
       state.message = "Email Deleted";
     },
-    [API.deleteEmail.rejected]: (state: any, { payload }: any) => {
+    [API.deleteEmail.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.sendContactEmail.pending]: (state: any, { payload }: any) => {
+    [API.sendContactEmail.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.sendContactEmail.fulfilled]: (state: any, { payload }: any) => {
+    [API.sendContactEmail.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.email = payload.email;
       state.message = "Email Deleted";
     },
-    [API.sendContactEmail.rejected]: (state: any, { payload }: any) => {
+    [API.sendContactEmail.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;

@@ -75,26 +75,26 @@ const cartSlice = createSlice({
     }
   },
   extraReducers: {
-    [API.listCarts.pending]: (state: any, { payload }: any) => {
+    [API.listCarts.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
       state.carts = [];
     },
-    [API.listCarts.fulfilled]: (state: any, { payload }: any) => {
+    [API.listCarts.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.carts = payload.carts;
       state.totalPages = payload.totalPages;
       state.page = payload.currentPage;
       state.message = "Carts Found";
     },
-    [API.listCarts.rejected]: (state: any, { payload }: any) => {
+    [API.listCarts.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.saveCart.pending]: (state: any, { payload }: any) => {
+    [API.saveCart.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.saveCart.fulfilled]: (state: any, { payload }: any) => {
+    [API.saveCart.fulfilled as any]: (state: any, { payload }: any) => {
       const { data, type } = payload;
       if (type === "add_to_cart") {
         state.my_cart = data;
@@ -106,42 +106,42 @@ const cartSlice = createSlice({
       state.message = "Cart Created";
       state.loading = false;
     },
-    [API.saveCart.rejected]: (state: any, { payload }: any) => {
+    [API.saveCart.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.detailsCart.pending]: (state: any, { payload }: any) => {
+    [API.detailsCart.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.detailsCart.fulfilled]: (state: any, { payload }: any) => {
+    [API.detailsCart.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.cart = payload;
       state.message = "Cart Found";
     },
-    [API.detailsCart.rejected]: (state: any, { payload }: any) => {
+    [API.detailsCart.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.deleteCart.pending]: (state: any, { payload }: any) => {
+    [API.deleteCart.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.deleteCart.fulfilled]: (state: any, { payload }: any) => {
+    [API.deleteCart.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.my_cart = { cartItems: [] };
       state.message = "Cart Deleted";
       localStorage.removeItem("my_cart");
     },
-    [API.deleteCart.rejected]: (state: any, { payload }: any) => {
+    [API.deleteCart.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.deleteCartItem.pending]: (state: any, { payload }: any) => {
+    [API.deleteCartItem.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.deleteCartItem.fulfilled]: (state: any, { payload }: any) => {
+    [API.deleteCartItem.fulfilled as any]: (state: any, { payload }: any) => {
       const { data, type } = payload;
       state.loading = false;
       if (data.message === "Cart Deleted") {
@@ -155,12 +155,12 @@ const cartSlice = createSlice({
       }
       state.message = "Cart Deleted";
     },
-    [API.deleteCartItem.rejected]: (state: any, { payload }: any) => {
+    [API.deleteCartItem.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.createPayOrder.fulfilled]: (state: any, { payload }: any) => {
+    [API.createPayOrder.fulfilled as any]: (state: any, { payload }: any) => {
       state.cart = {};
     }
   }

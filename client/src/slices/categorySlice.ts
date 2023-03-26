@@ -49,56 +49,56 @@ const categorySlice = createSlice({
     }
   },
   extraReducers: {
-    [API.listCategorys.pending]: (state: any, { payload }: any) => {
+    [API.listCategorys.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
       state.categorys = [];
     },
-    [API.listCategorys.fulfilled]: (state: any, { payload }: any) => {
+    [API.listCategorys.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.categorys = payload.categorys;
       state.totalPages = payload.totalPages;
       state.page = payload.currentPage;
       state.message = "Categorys Found";
     },
-    [API.listCategorys.rejected]: (state: any, { payload }: any) => {
+    [API.listCategorys.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.saveCategory.pending]: (state: any, { payload }: any) => {
+    [API.saveCategory.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.saveCategory.fulfilled]: (state: any, { payload }: any) => {
+    [API.saveCategory.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.message = "Category Saved";
     },
-    [API.saveCategory.rejected]: (state: any, { payload }: any) => {
+    [API.saveCategory.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.detailsCategory.pending]: (state: any, { payload }: any) => {
+    [API.detailsCategory.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.detailsCategory.fulfilled]: (state: any, { payload }: any) => {
+    [API.detailsCategory.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.category = payload;
       state.message = "Category Found";
     },
-    [API.detailsCategory.rejected]: (state: any, { payload }: any) => {
+    [API.detailsCategory.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.deleteCategory.pending]: (state: any, { payload }: any) => {
+    [API.deleteCategory.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.deleteCategory.fulfilled]: (state: any, { payload }: any) => {
+    [API.deleteCategory.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.category = payload.category;
       state.message = "Category Deleted";
     },
-    [API.deleteCategory.rejected]: (state: any, { payload }: any) => {
+    [API.deleteCategory.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;

@@ -67,56 +67,56 @@ const surveySlice = createSlice({
     }
   },
   extraReducers: {
-    [API.listSurveys.pending]: (state: any, { payload }: any) => {
+    [API.listSurveys.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
       state.surveys = [];
     },
-    [API.listSurveys.fulfilled]: (state: any, { payload }: any) => {
+    [API.listSurveys.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.surveys = payload.surveys;
       state.totalPages = payload.totalPages;
       state.page = payload.currentPage;
       state.message = "Surveys Found";
     },
-    [API.listSurveys.rejected]: (state: any, { payload }: any) => {
+    [API.listSurveys.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.saveSurvey.pending]: (state: any, { payload }: any) => {
+    [API.saveSurvey.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.saveSurvey.fulfilled]: (state: any, { payload }: any) => {
+    [API.saveSurvey.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.message = "Survey Saved";
     },
-    [API.saveSurvey.rejected]: (state: any, { payload }: any) => {
+    [API.saveSurvey.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.detailsSurvey.pending]: (state: any, { payload }: any) => {
+    [API.detailsSurvey.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.detailsSurvey.fulfilled]: (state: any, { payload }: any) => {
+    [API.detailsSurvey.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.survey = payload;
       state.message = "Survey Found";
     },
-    [API.detailsSurvey.rejected]: (state: any, { payload }: any) => {
+    [API.detailsSurvey.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.deleteSurvey.pending]: (state: any, { payload }: any) => {
+    [API.deleteSurvey.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.deleteSurvey.fulfilled]: (state: any, { payload }: any) => {
+    [API.deleteSurvey.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.survey = payload.survey;
       state.message = "Survey Deleted";
     },
-    [API.deleteSurvey.rejected]: (state: any, { payload }: any) => {
+    [API.deleteSurvey.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;

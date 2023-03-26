@@ -148,86 +148,86 @@ const orderSlice = createSlice({
     }
   },
   extraReducers: {
-    [API.listOrders.pending]: (state: any, { payload }: any) => {
+    [API.listOrders.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
       state.orders = [];
     },
-    [API.listOrders.fulfilled]: (state: any, { payload }: any) => {
+    [API.listOrders.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.orders = payload.orders;
       state.totalPages = payload.totalPages;
       state.page = payload.currentPage;
       state.message = "Orders Found";
     },
-    [API.listOrders.rejected]: (state: any, { payload }: any) => {
+    [API.listOrders.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.createPayOrder.pending]: (state: any, { payload }: any) => {
+    [API.createPayOrder.pending as any]: (state: any, { payload }: any) => {
       state.loading_payment = true;
     },
-    [API.createPayOrder.fulfilled]: (state: any, { payload }: any) => {
+    [API.createPayOrder.fulfilled as any]: (state: any, { payload }: any) => {
       console.log({ payload });
       state.loading_payment = false;
       state.success = true;
       state.order = payload.order;
       state.message = "Order Created and Paid";
     },
-    [API.createPayOrder.rejected]: (state: any, { payload }: any) => {
+    [API.createPayOrder.rejected as any]: (state: any, { payload }: any) => {
       state.loading_payment = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.createPayOrderGuest.pending]: (state: any, { payload }: any) => {
+    [API.createPayOrderGuest.pending as any]: (state: any, { payload }: any) => {
       state.loading_payment = true;
     },
-    [API.createPayOrderGuest.fulfilled]: (state: any, { payload }: any) => {
+    [API.createPayOrderGuest.fulfilled as any]: (state: any, { payload }: any) => {
       console.log({ payload });
       state.loading_payment = false;
       state.success = true;
       state.order = payload.order;
       state.message = "Guest Order Created and Paid";
     },
-    [API.createPayOrderGuest.rejected]: (state: any, { payload }: any) => {
+    [API.createPayOrderGuest.rejected as any]: (state: any, { payload }: any) => {
       state.loading_payment = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.saveOrder.pending]: (state: any, { payload }: any) => {
+    [API.saveOrder.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.saveOrder.fulfilled]: (state: any, { payload }: any) => {
+    [API.saveOrder.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.message = "Order Saved";
     },
-    [API.saveOrder.rejected]: (state: any, { payload }: any) => {
+    [API.saveOrder.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.detailsOrder.pending]: (state: any, { payload }: any) => {
+    [API.detailsOrder.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.detailsOrder.fulfilled]: (state: any, { payload }: any) => {
+    [API.detailsOrder.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.order = payload;
       state.message = "Order Found";
     },
-    [API.detailsOrder.rejected]: (state: any, { payload }: any) => {
+    [API.detailsOrder.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.deleteOrder.pending]: (state: any, { payload }: any) => {
+    [API.deleteOrder.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.deleteOrder.fulfilled]: (state: any, { payload }: any) => {
+    [API.deleteOrder.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.order = payload.order;
       state.message = "Order Deleted";
     },
-    [API.deleteOrder.rejected]: (state: any, { payload }: any) => {
+    [API.deleteOrder.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;

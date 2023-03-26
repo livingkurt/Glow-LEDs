@@ -192,38 +192,38 @@ const productSlice = createSlice({
     }
   },
   extraReducers: {
-    [API.listProducts.pending]: (state: any, { payload }: any) => {
+    [API.listProducts.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
       state.products = [];
     },
-    [API.listProducts.fulfilled]: (state: any, { payload }: any) => {
+    [API.listProducts.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.products = payload.products;
       state.totalPages = payload.totalPages;
       state.page = payload.currentPage;
       state.message = "Products Found";
     },
-    [API.listProducts.rejected]: (state: any, { payload }: any) => {
+    [API.listProducts.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.saveProduct.pending]: (state: any, { payload }: any) => {
+    [API.saveProduct.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.saveProduct.fulfilled]: (state: any, { payload }: any) => {
+    [API.saveProduct.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.message = "Product Saved";
     },
-    [API.saveProduct.rejected]: (state: any, { payload }: any) => {
+    [API.saveProduct.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.detailsProduct.pending]: (state: any, { payload }: any) => {
+    [API.detailsProduct.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.detailsProduct.fulfilled]: (state: any, { payload }: any) => {
+    [API.detailsProduct.fulfilled as any]: (state: any, { payload }: any) => {
       const start_date = new Date(payload.sale_start_date);
       const end_date = new Date(payload.sale_end_date);
       if (payload.sale_start_date) {
@@ -238,20 +238,20 @@ const productSlice = createSlice({
       state.product = payload;
       state.message = "Product Found";
     },
-    [API.detailsProduct.rejected]: (state: any, { payload }: any) => {
+    [API.detailsProduct.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.deleteProduct.pending]: (state: any, { payload }: any) => {
+    [API.deleteProduct.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.deleteProduct.fulfilled]: (state: any, { payload }: any) => {
+    [API.deleteProduct.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.product = payload.product;
       state.message = "Product Deleted";
     },
-    [API.deleteProduct.rejected]: (state: any, { payload }: any) => {
+    [API.deleteProduct.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;

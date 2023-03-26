@@ -49,56 +49,56 @@ const chipSlice = createSlice({
     }
   },
   extraReducers: {
-    [API.listChips.pending]: (state: any, { payload }: any) => {
+    [API.listChips.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
       state.chips = [];
     },
-    [API.listChips.fulfilled]: (state: any, { payload }: any) => {
+    [API.listChips.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.chips = payload.chips;
       state.totalPages = payload.totalPages;
       state.page = payload.currentPage;
       state.message = "Chips Found";
     },
-    [API.listChips.rejected]: (state: any, { payload }: any) => {
+    [API.listChips.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.saveChip.pending]: (state: any, { payload }: any) => {
+    [API.saveChip.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.saveChip.fulfilled]: (state: any, { payload }: any) => {
+    [API.saveChip.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.message = "Chip Saved";
     },
-    [API.saveChip.rejected]: (state: any, { payload }: any) => {
+    [API.saveChip.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.detailsChip.pending]: (state: any, { payload }: any) => {
+    [API.detailsChip.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.detailsChip.fulfilled]: (state: any, { payload }: any) => {
+    [API.detailsChip.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.chip = payload;
       state.message = "Chip Found";
     },
-    [API.detailsChip.rejected]: (state: any, { payload }: any) => {
+    [API.detailsChip.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.deleteChip.pending]: (state: any, { payload }: any) => {
+    [API.deleteChip.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.deleteChip.fulfilled]: (state: any, { payload }: any) => {
+    [API.deleteChip.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.chip = payload.chip;
       state.message = "Chip Deleted";
     },
-    [API.deleteChip.rejected]: (state: any, { payload }: any) => {
+    [API.deleteChip.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;

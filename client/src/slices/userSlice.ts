@@ -93,11 +93,11 @@ const userSlice = createSlice({
     }
   },
   extraReducers: {
-    [API.listUsers.pending]: (state: any, { payload }: any) => {
+    [API.listUsers.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
       state.users = [];
     },
-    [API.listUsers.fulfilled]: (state: any, { payload }: any) => {
+    [API.listUsers.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.users = payload.users;
       state.totalPages = payload.totalPages;
@@ -105,86 +105,86 @@ const userSlice = createSlice({
       state.message = "Users Found";
       state.loading = false;
     },
-    [API.listUsers.rejected]: (state: any, { payload }: any) => {
+    [API.listUsers.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.saveUser.pending]: (state: any, { payload }: any) => {
+    [API.saveUser.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.saveUser.fulfilled]: (state: any, { payload }: any) => {
+    [API.saveUser.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.message = "User Saved";
       state.loading = false;
     },
-    [API.saveUser.rejected]: (state: any, { payload }: any) => {
+    [API.saveUser.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.detailsUser.pending]: (state: any, { payload }: any) => {
+    [API.detailsUser.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.detailsUser.fulfilled]: (state: any, { payload }: any) => {
+    [API.detailsUser.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.user = payload;
       state.message = "User Found";
       state.loading = false;
     },
-    [API.detailsUser.rejected]: (state: any, { payload }: any) => {
+    [API.detailsUser.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.deleteUser.pending]: (state: any, { payload }: any) => {
+    [API.deleteUser.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.deleteUser.fulfilled]: (state: any, { payload }: any) => {
+    [API.deleteUser.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.user = payload.user;
       state.message = "User Deleted";
     },
-    [API.deleteUser.rejected]: (state: any, { payload }: any) => {
+    [API.deleteUser.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
       state.loading = false;
     },
-    [API.passwordReset.pending]: (state: any, { payload }: any) => {
+    [API.passwordReset.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.passwordReset.fulfilled]: (state: any, { payload }: any) => {
+    [API.passwordReset.fulfilled as any]: (state: any, { payload }: any) => {
       state.access_token = "";
       state.current_user = payload;
       state.loading = false;
       state.message = "Password Reset";
       state.success = true;
     },
-    [API.passwordReset.rejected]: (state: any, { payload }: any) => {
+    [API.passwordReset.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.registerUser.pending]: (state: any, { payload }: any) => {
+    [API.registerUser.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.registerUser.fulfilled]: (state: any, { payload }: any) => {
+    [API.registerUser.fulfilled as any]: (state: any, { payload }: any) => {
       state.access_token = "";
       // state.current_user = payload;
       state.loading = false;
       state.message = "User Registered";
       state.success = true;
     },
-    [API.registerUser.rejected]: (state: any, { payload }: any) => {
+    [API.registerUser.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.loginUser.pending]: (state: any, { payload }: any) => {
+    [API.loginUser.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.loginUser.fulfilled]: (state: any, { payload }: any) => {
+    [API.loginUser.fulfilled as any]: (state: any, { payload }: any) => {
       const { access_token, refresh_token } = payload;
       localStorage.setItem("accessToken", access_token);
       setAuthToken(access_token);
@@ -195,7 +195,7 @@ const userSlice = createSlice({
       state.message = "User Login Success";
       state.success = true;
     },
-    [API.loginUser.rejected]: (state: any, { payload }: any) => {
+    [API.loginUser.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;

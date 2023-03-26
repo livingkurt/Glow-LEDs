@@ -79,57 +79,57 @@ const affiliatesSlice = createSlice({
     }
   },
   extraReducers: {
-    [API.listAffiliates.pending]: (state: any, { payload }: any) => {
+    [API.listAffiliates.pending as any as any]: (state: any, { payload }: any) => {
       state.loading = true;
       state.affiliates = [];
     },
-    [API.listAffiliates.fulfilled]: (state: any, { payload }: any) => {
+    [API.listAffiliates.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.affiliates = payload.affiliates;
       state.totalPages = payload.totalPages;
       state.page = payload.currentPage;
       state.message = "Affiliates Found";
     },
-    [API.listAffiliates.rejected]: (state: any, { payload }: any) => {
+    [API.listAffiliates.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.saveAffiliate.pending]: (state: any, { payload }: any) => {
+    [API.saveAffiliate.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.saveAffiliate.fulfilled]: (state: any, { payload }: any) => {
+    [API.saveAffiliate.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.success = true;
       state.message = "Affiliate Saved";
     },
-    [API.saveAffiliate.rejected]: (state: any, { payload }: any) => {
+    [API.saveAffiliate.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.detailsAffiliate.pending]: (state: any, { payload }: any) => {
+    [API.detailsAffiliate.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.detailsAffiliate.fulfilled]: (state: any, { payload }: any) => {
+    [API.detailsAffiliate.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.affiliate = payload;
       state.message = "Affiliate Found";
     },
-    [API.detailsAffiliate.rejected]: (state: any, { payload }: any) => {
+    [API.detailsAffiliate.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.deleteAffiliate.pending]: (state: any, { payload }: any) => {
+    [API.deleteAffiliate.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.deleteAffiliate.fulfilled]: (state: any, { payload }: any) => {
+    [API.deleteAffiliate.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.affiliate = payload.affiliate;
       state.message = "Affiliate Deleted";
     },
-    [API.deleteAffiliate.rejected]: (state: any, { payload }: any) => {
+    [API.deleteAffiliate.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;

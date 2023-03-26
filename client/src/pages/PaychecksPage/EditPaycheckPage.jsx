@@ -11,15 +11,6 @@ import { set_team } from "../../slices/teamSlice";
 import { set_paycheck } from "../../slices/paycheckSlice";
 
 const EditPaycheckPage = props => {
-  // const [id, set_id] = useState("");
-  // const [affiliate, set_affiliate] = useState("");
-  // const [team, set_team] = useState("");
-  // const [amount, set_amount] = useState("");
-  // const [venmo, set_venmo] = useState("");
-  // const [paid, set_paid] = useState("");
-  // const [reciept, set_reciept] = useState("");
-  // const [paid_at, set_paid_at] = useState("");
-
   const [loading_checkboxes, set_loading_checkboxes] = useState(true);
 
   const history = useHistory();

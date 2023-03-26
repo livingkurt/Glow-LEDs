@@ -49,57 +49,57 @@ const settingSlice = createSlice({
     }
   },
   extraReducers: {
-    [API.listSettings.pending]: (state: any, { payload }: any) => {
+    [API.listSettings.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
       state.settings = [];
     },
-    [API.listSettings.fulfilled]: (state: any, { payload }: any) => {
+    [API.listSettings.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.settings = payload.settings;
       state.totalPages = payload.totalPages;
       state.page = payload.currentPage;
       state.message = "Settings Found";
     },
-    [API.listSettings.rejected]: (state: any, { payload }: any) => {
+    [API.listSettings.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.saveSetting.pending]: (state: any, { payload }: any) => {
+    [API.saveSetting.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.saveSetting.fulfilled]: (state: any, { payload }: any) => {
+    [API.saveSetting.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.message = "Setting Saved";
     },
-    [API.saveSetting.rejected]: (state: any, { payload }: any) => {
+    [API.saveSetting.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
 
-    [API.detailsSetting.pending]: (state: any, { payload }: any) => {
+    [API.detailsSetting.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.detailsSetting.fulfilled]: (state: any, { payload }: any) => {
+    [API.detailsSetting.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.setting = payload;
       state.message = "Setting Found";
     },
-    [API.detailsSetting.rejected]: (state: any, { payload }: any) => {
+    [API.detailsSetting.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.deleteSetting.pending]: (state: any, { payload }: any) => {
+    [API.deleteSetting.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.deleteSetting.fulfilled]: (state: any, { payload }: any) => {
+    [API.deleteSetting.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.setting = payload.setting;
       state.message = "Setting Deleted";
     },
-    [API.deleteSetting.rejected]: (state: any, { payload }: any) => {
+    [API.deleteSetting.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;

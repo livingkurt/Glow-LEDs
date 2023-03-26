@@ -73,56 +73,56 @@ const promoSlice = createSlice({
     }
   },
   extraReducers: {
-    [API.listPromos.pending]: (state: any, { payload }: any) => {
+    [API.listPromos.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
       state.promos = [];
     },
-    [API.listPromos.fulfilled]: (state: any, { payload }: any) => {
+    [API.listPromos.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.promos = payload.promos;
       state.totalPages = payload.totalPages;
       state.page = payload.currentPage;
       state.message = "Promos Found";
     },
-    [API.listPromos.rejected]: (state: any, { payload }: any) => {
+    [API.listPromos.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.savePromo.pending]: (state: any, { payload }: any) => {
+    [API.savePromo.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.savePromo.fulfilled]: (state: any, { payload }: any) => {
+    [API.savePromo.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.message = "Promo Saved";
     },
-    [API.savePromo.rejected]: (state: any, { payload }: any) => {
+    [API.savePromo.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.detailsPromo.pending]: (state: any, { payload }: any) => {
+    [API.detailsPromo.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.detailsPromo.fulfilled]: (state: any, { payload }: any) => {
+    [API.detailsPromo.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.promo = payload;
       state.message = "Promo Found";
     },
-    [API.detailsPromo.rejected]: (state: any, { payload }: any) => {
+    [API.detailsPromo.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.deletePromo.pending]: (state: any, { payload }: any) => {
+    [API.deletePromo.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.deletePromo.fulfilled]: (state: any, { payload }: any) => {
+    [API.deletePromo.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.promo = payload.promo;
       state.message = "Promo Deleted";
     },
-    [API.deletePromo.rejected]: (state: any, { payload }: any) => {
+    [API.deletePromo.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
