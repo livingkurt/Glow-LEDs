@@ -1,26 +1,27 @@
-export default (props: {
+const contact = ({
+  message,
+  first_name,
+  last_name,
+  email,
+  order_number,
+  reason_for_contact
+}: {
   message: string;
   first_name: string;
   last_name: string;
   email: string;
   order_number: string;
   reason_for_contact: string;
-  inspirational_pictures: Array<string>;
-  artist_name: string;
-  instagram_handle: string;
-  facebook_name: string;
-  song_id: string;
-  quote: string;
-}) => {
+}): string => {
   return `
     <h1>
       Hello Kurt,
     </h1>
     <p>
-      ${props.message}
+      ${message}
     </p>
     ${
-      props.reason_for_contact === "Custom Orders"
+      reason_for_contact === "Custom Orders"
         ? `<h2
     className="title_font"
     style={{ textAlign: "center", marginBottom: "30px" }}
@@ -102,25 +103,16 @@ export default (props: {
     </h3>
     <p>
 
-      <div>Name: ${props.first_name} ${props.last_name}</div>
+      <div>Name: ${first_name} ${last_name}</div>
 
-      <div>Email: ${props.email}</div>
+      <div>Email: ${email}</div>
 
-      ${props.order_number ? `<div>Order Number: ${props.order_number}</div>` : `<div></div>`}
+      ${order_number ? `<div>Order Number: ${order_number}</div>` : `<div></div>`}
 
-      <div>Reason For Contact: ${props.reason_for_contact}</div>
+      <div>Reason For Contact: ${reason_for_contact}</div>
 
-     
-
-      ${props.artist_name ? `<div>Glover Name: ${props.artist_name}</div>` : `<div></div>`}
-
-      ${props.instagram_handle ? `<div>Instagram Handle: ${props.instagram_handle}</div>` : `<div></div>`}
-
-      ${props.facebook_name ? `<div>Facebook Name: ${props.facebook_name}</div>` : `<div></div>`}
-
-      ${props.song_id ? `<div>Song ID: ${props.song_id}</div>` : `<div></div>`}
-
-      ${props.quote ? `<div>Quote: ${props.quote}</div>` : `<div></div>`}
       </p>
 	`;
 };
+
+export default contact;

@@ -107,7 +107,6 @@ export default {
       html: App({ body: order(body), unsubscribe: false })
     };
     sendEmail(mailOptions, res, "info", "Invoice Email Sent to " + req.body.email);
-    res.status(200).send({ message: "Email Successfully Sent" });
   },
   send_order_emails_c: async (req: any, res: any) => {
     const body = {
@@ -125,7 +124,6 @@ export default {
       html: App({ body: order(body), unsubscribe: false })
     };
     sendEmail(mailOptions, res, "info", "Order Email Sent to " + req.body.email);
-    res.status(200).send({ message: "Email Successfully Sent" });
   },
   send_refund_emails_c: async (req: any, res: any) => {
     const { order: order_data, email } = req.body;
@@ -150,7 +148,6 @@ export default {
       html: App({ body: order(body), unsubscribe: false })
     };
     sendEmail(mailOptions, res, "info", "Refund Email Sent to " + req.body.email);
-    res.status(200).send({ message: "Email Successfully Sent" });
   },
   send_order_status_emails_c: async (req: any, res: any) => {
     const body = {
@@ -175,7 +172,6 @@ export default {
     };
 
     sendEmail(mailOptions, res, "info", "Order Status Email Sent to " + req.body.email);
-    res.status(200).send({ message: "Email Successfully Sent" });
   },
   send_affiliate_emails_c: async (req: any, res: any) => {
     const body = {
@@ -190,7 +186,6 @@ export default {
     };
 
     sendEmail(mailOptions, res, "info", "Affiliate Email Sent to " + req.body.email);
-    res.status(200).send({ message: "Email Successfully Sent" });
   },
   send_feature_emails_c: async (req: any, res: any) => {
     const body = {
@@ -208,7 +203,6 @@ export default {
     };
 
     sendEmail(mailOptions, res, "info", "Featured Email Sent to " + req.body.email);
-    res.status(200).send({ message: "Email Successfully Sent" });
   },
   send_external_contact_emails_c: async (req: any, res: any) => {
     const mailOptions = {
@@ -218,40 +212,60 @@ export default {
       html: req.body.message
     };
     sendEmail(mailOptions, res, "info", "Contact Email Sent to " + req.body.first_name);
-    res.status(200).send({ message: "Email Successfully Sent" });
   },
   send_user_contact_emails_c: async (req: any, res: any) => {
-    const { contact_info } = req.body;
-    try {
-      const mailOptions = {
-        to: process.env.DISPLAY_CONTACT_EMAIL,
-        from: contact_info.email,
-        subject: `New message from ${contact_info.first_name} - ${contact_info.reason_for_contact}`,
-        html: contact(contact_info)
-      };
-      sendEmail(mailOptions, res, "contact", "User Contact Email Sent to " + contact_info.first_name);
-      const adminsMailOptions = {
-        from: process.env.DISPLAY_CONTACT_EMAIL,
-        to: process.env.DISPLAY_CONTACT_EMAIL,
-        subject: `Thank you for Contacting Glow LEDs Support`,
-        html: contact_confirmation(req.body)
-      };
-      sendEmail(adminsMailOptions, res, "contact", "Admin Contact Email Sent to " + req.body.first_name);
-      // res.status(200).send({ message: "Email Successfully Sent" });
-    } catch (error) {
-      console.log({ error });
-    }
+    const { email, first_name, reason_for_contact } = req.body;
+    console.log({ body: req.body });
+    const mailOptions = {
+      to: process.env.DISPLAY_CONTACT_EMAIL,
+      from: email,
+      subject: `New message from ${first_name} - ${reason_for_contact}`,
+      html: contact(req.body)
+    };
+    sendEmail(mailOptions, res, "contact", "User Contact Email Sent to " + first_name);
   },
   send_admin_contact_emails_c: async (req: any, res: any) => {
+    const { email, first_name } = req.body;
+
+    console.log({ body: req.body });
     const mailOptions = {
       from: process.env.DISPLAY_CONTACT_EMAIL,
-      to: req.body.email,
+      to: email,
       subject: `Thank you for Contacting Glow LEDs Support`,
       html: contact_confirmation(req.body)
     };
-    sendEmail(mailOptions, res, "contact", "Admin Contact Email Sent to " + req.body.first_name);
-    res.status(200).send({ message: "Email Successfully Sent" });
+    sendEmail(mailOptions, res, "contact", "Admin Contact Email Sent to " + first_name);
   },
+  // send_user_contact_emails_c: async (req: any, res: any) => {
+  //   const { contact_info } = req.body;
+  //   try {
+  //     const mailOptions = {
+  //       to: process.env.DISPLAY_CONTACT_EMAIL,
+  //       from: contact_info.email,
+  //       subject: `New message from ${contact_info.first_name} - ${contact_info.reason_for_contact}`,
+  //       html: contact(contact_info)
+  //     };
+  //     sendEmail(mailOptions, res, "contact", "User Contact Email Sent to " + contact_info.first_name);
+  //     const adminsMailOptions = {
+  //       from: process.env.DISPLAY_CONTACT_EMAIL,
+  //       to: process.env.DISPLAY_CONTACT_EMAIL,
+  //       subject: `Thank you for Contacting Glow LEDs Support`,
+  //       html: contact_confirmation(req.body)
+  //     };
+  //     sendEmail(adminsMailOptions, res, "contact", "Admin Contact Email Sent to " + req.body.first_name);
+  //   } catch (error) {
+  //     console.log({ error });
+  //   }
+  // },
+  // send_admin_contact_emails_c: async (req: any, res: any) => {
+  //   const mailOptions = {
+  //     from: process.env.DISPLAY_CONTACT_EMAIL,
+  //     to: req.body.email,
+  //     subject: `Thank you for Contacting Glow LEDs Support`,
+  //     html: contact_confirmation(req.body)
+  //   };
+  //   sendEmail(mailOptions, res, "contact", "Admin Contact Email Sent to " + req.body.first_name);
+  // },
   send_custom_contact_emails_c: async (req: any, res: any) => {
     const { order, email } = req.body;
     const mailOptions = {
@@ -261,7 +275,6 @@ export default {
       html: custom_contact({ order })
     };
     sendEmail(mailOptions, res, "contact", "Custom Contact Email Sent to " + order.shipping.first_name);
-    res.status(200).send({ message: "Email Successfully Sent" });
   },
   send_code_used_emails_c: async (req: any, res: any) => {
     const { promo_code } = req.params;
@@ -294,7 +307,6 @@ export default {
       };
 
       sendEmail(mailOptions, res, "info", "Code Used Email sent to " + user.email);
-      res.status(200).send({ message: "Email Successfully Sent" });
     }
   },
   send_password_reset_emails_c: async (req: any, res: any) => {
@@ -311,7 +323,6 @@ export default {
       })
     };
     sendEmail(mailOptions, res, "info", "Password Reset Email Sent to " + req.body.data.first_name);
-    res.status(200).send({ message: "Email Successfully Sent" });
   },
   send_review_emails_c: async (req: any, res: any) => {
     const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 }, "0", "1");
@@ -332,7 +343,6 @@ export default {
     };
 
     sendEmail(mailOptions, res, "info", "Email Sent to " + req.body.email);
-    res.status(200).send({ message: "Email Successfully Sent" });
   },
 
   send_announcement_emails_c: async (req: any, res: any) => {
@@ -399,7 +409,6 @@ export default {
     };
 
     sendEmail(mailOptions, res, "info", "Email Sent to " + req.body.email);
-    res.status(200).send({ message: "Email Successfully Sent" });
   },
   send_reset_password_emails_c: async (req: any, res: any) => {
     const mailOptions = {
@@ -416,7 +425,6 @@ export default {
     };
 
     sendEmail(mailOptions, res, "info", "Reset Password Email Sent to " + req.body.first_name);
-    res.status(200).send({ message: "Email Successfully Sent" });
   },
   send_account_created_emails_c: async (req: any, res: any) => {
     const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 }, "0", "1");
@@ -437,7 +445,6 @@ export default {
     };
 
     sendEmail(mailOptions, res, "info", "Registration Email Sent to " + req.body.first_name);
-    res.status(200).send({ message: "Email Successfully Sent" });
   },
   send_verified_emails_c: async (req: any, res: any) => {
     const mailOptions = {
@@ -455,7 +462,6 @@ export default {
     };
 
     sendEmail(mailOptions, res, "info", "Registration Email Sent to " + req.body.first_name);
-    res.status(200).send({ message: "Email Successfully Sent" });
   },
   send_shipping_status_emails_c: async (req: any, res: any) => {
     try {
@@ -493,7 +499,6 @@ export default {
           (tracker.status === "in_transit" && order.isShipped === false)
         ) {
           sendEmail(mailOptions, res, "info", "Order Status Email Sent to " + order.shipping.email);
-          res.status(200).send({ message: "Email Successfully Sent" });
         }
         if (tracker.status === "delivered") {
           updateOrder("isDelivered", "deliveredAt");

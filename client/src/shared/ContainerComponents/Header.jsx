@@ -12,6 +12,7 @@ import { isAdmin } from "../../utils/helpers/user_helpers";
 import Filter from "../GlowLEDsComponents/GLTable/Filter";
 import * as API from "../../api";
 import { logout_user } from "../../slices/userSlice";
+import { clear_email_success } from "../../slices/emailSlice";
 
 const Header = props => {
   const history = useHistory();
@@ -930,7 +931,7 @@ const Header = props => {
                           </GLButton>
                         </Link>
                         <Link to="/pages/contact">
-                          <GLButton variant="nav" fullWidth className="ta-l">
+                          <GLButton variant="nav" fullWidth className="ta-l" onClick={() => dispatch(clear_email_success())}>
                             Contact
                           </GLButton>
                         </Link>

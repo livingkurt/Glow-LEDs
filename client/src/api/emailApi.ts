@@ -70,10 +70,8 @@ export const sendContactEmail = createAsyncThunk(
     thunkApi: any
   ) => {
     try {
-      const {
-        userSlice: { current_user }
-      } = thunkApi.getState();
-      const { data } = await axios.post("/api/emails/contact", { contact_info }, headers(current_user));
+      const { data } = await axios.post("/api/emails/contact", contact_info);
+      axios.post("/api/emails/contact_confirmation", contact_info);
       return data;
     } catch (error) {}
   }

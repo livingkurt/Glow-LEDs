@@ -10,6 +10,7 @@ const emailSlice = createSlice({
     emails: [],
     email: {},
     message: "",
+    success: false,
     error: {},
     search: "",
     sort: "",
@@ -46,6 +47,9 @@ const emailSlice = createSlice({
     },
     set_limit: (state, { payload }) => {
       state.limit = payload;
+    },
+    clear_email_success: (state, { payload }) => {
+      state.success = false;
     }
   },
   extraReducers: {
@@ -70,6 +74,7 @@ const emailSlice = createSlice({
     },
     [API.saveEmail.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
+      state.success = true;
       state.message = "Email Saved";
     },
     [API.saveEmail.rejected as any]: (state: any, { payload }: any) => {
@@ -109,7 +114,8 @@ const emailSlice = createSlice({
     [API.sendContactEmail.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.email = payload.email;
-      state.message = "Email Deleted";
+      state.success = true;
+      state.message = "Contact Email Sent";
     },
     [API.sendContactEmail.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
@@ -119,5 +125,5 @@ const emailSlice = createSlice({
   }
 });
 
-export const { set_search, set_sort, set_page, set_limit, set_loading, set_email } = emailSlice.actions;
+export const { set_search, set_sort, set_page, set_limit, set_loading, set_email, clear_email_success } = emailSlice.actions;
 export default emailSlice.reducer;

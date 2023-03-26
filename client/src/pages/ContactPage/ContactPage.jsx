@@ -12,14 +12,16 @@ require("dotenv").config();
 const ContactPage = props => {
   const dispatch = useDispatch();
   const userSlice = useSelector(state => state.userSlice);
-  const { current_user, loading, completed, message: completed_message, error, success } = userSlice;
+  const { current_user } = userSlice;
+  const emailSlice = useSelector(state => state.emailSlice);
+  const { loading, success, message: completed_message, error } = emailSlice;
 
   const [first_name, set_first_name] = useState(current_user ? current_user.first_name : "");
   const [last_name, set_last_name] = useState(current_user ? current_user.last_name : "");
   const [email, set_email] = useState(current_user ? current_user.email : "");
-  const [order_number, set_order_number] = useState(current_user ? current_user.order_number : "");
+  const [order_number, set_order_number] = useState("Test");
   const [reason_for_contact, set_reason_for_contact] = useState(props.match.params.reason ? props.match.params.reason : "");
-  const [message, set_message] = useState("");
+  const [message, set_message] = useState("Test");
   const [song_id, set_song_id] = useState("");
   const [instagram_handle, set_instagram_handle] = useState("");
   const [facebook_name, set_facebook_name] = useState("");
@@ -44,12 +46,12 @@ const ContactPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      if (completed) {
+      if (success) {
         props.history.push("/pages/complete/email");
       }
     }
     return () => (clean = false);
-  }, [completed]);
+  }, [props.history, success]);
 
   let request;
   const sendEmail = e => {
@@ -82,7 +84,7 @@ const ContactPage = props => {
           last_name,
           email,
           order_number,
-          reason,
+          reason_for_contact: reason,
           message,
           inspirational_pictures,
           artist_name,
