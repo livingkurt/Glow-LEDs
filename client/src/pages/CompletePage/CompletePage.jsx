@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import { API_Affiliates, API_Emails, API_Features, API_Orders } from "../../utils";
+import { API_Affiliates, API_Emails, API_Features } from "../../utils";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import OrderComplete from "./components/OrderComplete";
 import FeatureComplete from "./components/FeatureComplete";
@@ -15,6 +15,9 @@ const CompletePage = props => {
 
   const userSlice = useSelector(state => state.userSlice);
   const { current_user } = userSlice;
+
+  const orderSlice = useSelector(state => state.orderSlice);
+  const { order } = orderSlice;
 
   useEffect(() => {
     let clean = true;
@@ -81,7 +84,6 @@ const CompletePage = props => {
 
   const send_email = async () => {
     if (props.match.params.type === "order") {
-      const { data: order } = await API_Orders.findById_orders_a(props.match.params.id);
       await API_Emails.send_order_email(order, "Thank you for your Glow LEDs Order", order.shipping.email);
       await API_Emails.send_order_email(order, "New Order Created by " + order.shipping.first_name, process.env.REACT_APP_INFO_EMAIL);
 

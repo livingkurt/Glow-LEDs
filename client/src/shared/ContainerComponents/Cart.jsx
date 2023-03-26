@@ -8,6 +8,7 @@ import { LazyImage, Loading } from "../SharedComponents";
 import { determine_total, humanize, decide_warning, shuffle } from "../../utils/helper_functions";
 import { GLButton } from "../GlowLEDsComponents";
 import { deleteCartItem } from "../../api";
+import { clear_order_state } from "../../slices/orderSlice";
 
 const Cart = props => {
   const history = useHistory();
@@ -70,6 +71,7 @@ const Cart = props => {
   const [no_items_in_cart, set_no_items_in_cart] = useState("");
 
   const checkoutHandler = () => {
+    dispatch(clear_order_state());
     if (decide_warning(props.date_1, props.date_2)) {
       if (cartItems.length === 0) {
         set_no_items_in_cart("Cannot proceed to checkout without any items in cart");

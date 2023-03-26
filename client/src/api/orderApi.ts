@@ -23,22 +23,12 @@ export const saveOrder = createAsyncThunk("orders/saveOrder", async (order: any,
 
     if (!order._id) {
       const { data } = await axios.post("/api/orders", order, headers(current_user));
+      sessionStorage.removeItem("shippingAddress");
       return data;
     } else {
       const { data } = await axios.put("/api/orders/" + order._id, order, headers(current_user));
       return data;
     }
-  } catch (error) {}
-});
-
-export const createOrder = createAsyncThunk("orders/createOrder", async (order: any, thunkApi: any) => {
-  try {
-    const {
-      userSlice: { current_user }
-    } = thunkApi.getState();
-    const { data } = await axios.post("/api/orders", { ...order, user: current_user }, headers(current_user));
-    sessionStorage.removeItem("shippingAddress");
-    return { order: data };
   } catch (error) {}
 });
 
@@ -57,9 +47,9 @@ export const createPayOrder = createAsyncThunk(
         { paymentMethod },
         headers(current_user)
       );
-      thunkApi.dispatch(deleteCart(my_cart._id));
+      // thunkApi.dispatch(deleteCart(my_cart._id));
       sessionStorage.removeItem("shippingAddress");
-
+      console.log({ order_created });
       return { order: order_created, payment_created };
     } catch (error) {}
   }
@@ -75,7 +65,6 @@ export const createPayOrderGuest = createAsyncThunk(
       cartSlice: { my_cart }
     } = thunkApi.getState();
     try {
-      console.log({ order, paymentMethod, create_account, password });
       let user_id = "";
       if (create_account) {
         const { data: create_user } = await axios.post("/api/users/register", {
@@ -104,23 +93,20 @@ export const createPayOrderGuest = createAsyncThunk(
           user_id = new_user._id;
         }
       }
-      console.log("user_id");
 
       const { data: order_created } = await axios.post("/api/orders/guest", {
         ...order,
         user: user_id
       });
-      console.log({ order_created });
       const { data: payment_created } = await axios.put("/api/payments/guest/pay/" + order_created._id, {
         paymentMethod
       });
-      console.log({ payment_created });
       if (order_created.promo_code) {
         await axios.put("/api/emails/code_used/" + order_created.promo_code);
       }
       sessionStorage.removeItem("shippingAddress");
+      // thunkApi.dispatch(deleteCart(my_cart._id));
       console.log({ order_created });
-      thunkApi.dispatch(deleteCart(my_cart._id));
       return { order: order_created, payment_created };
     } catch (error) {}
   }

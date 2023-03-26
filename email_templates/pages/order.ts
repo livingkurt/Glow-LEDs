@@ -17,7 +17,7 @@ export default (props: any) => {
 						<td style="font-family:helvetica;color:white">
 							<h1
 								style="text-align:center;font-family:helvetica;width:100%;margin:10px auto;line-height:50px;color:#333333;font-size:50px; padding-bottom: 7px;">
-								${order.shipping.first_name.toUpperCase()}, </h1>
+								${order.shipping.first_name?.toUpperCase()}, </h1>
 							<h1
 								style="text-align:center;font-family:helvetica;width:100%;margin:0px;line-height:50px;color:#333333;font-size:30px; padding-bottom: 7px;">
 								${email.h1}</h1>
@@ -295,7 +295,7 @@ export default (props: any) => {
 																		style="font-size:16px;margin-left:5px"><img
 																			src="https://images2.imgbox.com/a1/63/ptqm33q2_o.png"
 																			style="height:16px;margin-right:10px" alt="tag_logo" /><span
-																			style="font-size:14px;line-height:1.1;margin-left:-4px">${order && order.promo_code ? order.promo_code.toUpperCase() : ""}</span></span>
+																			style="font-size:14px;line-height:1.1;margin-left:-4px">${order && order.promo_code ? order.promo_code?.toUpperCase() : ""}</span></span>
 																</p>
 															</td>
 															<td style="font-family:helvetica;padding:5px 0;text-align:right" align="righ=t">

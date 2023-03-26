@@ -73,7 +73,7 @@ const OrderComplete = ({ current_user, order_id }) => {
         <div className="jc-c m-auto wrap">
           <Link
             to={
-              current_user && current_user.hasOwnProperty("first_name")
+              current_user && current_user?.hasOwnProperty("first_name")
                 ? "/secure/account/order/" + order_id
                 : "/checkout/order/" + order_id
             }
@@ -82,7 +82,7 @@ const OrderComplete = ({ current_user, order_id }) => {
               View Order
             </GLButton>
           </Link>
-          {current_user && current_user.hasOwnProperty("first_name") && (
+          {current_user && current_user?.hasOwnProperty("first_name") && (
             <Link to="/secure/account/profile">
               <GLButton variant="primary" className="mh-10px">
                 Your Orders

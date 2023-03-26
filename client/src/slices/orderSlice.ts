@@ -100,7 +100,51 @@ const orderSlice = createSlice({
       state.success = payload;
     },
     clear_order_state: (state, { payload }) => {
-      state.order = {};
+      state.order = {
+        user: {},
+        orderItems: [],
+        messages: [],
+        shipping: {},
+        payment: {},
+        itemsPrice: 0,
+        taxPrice: 0,
+        shippingPrice: 0,
+        totalPrice: 0,
+        refundTotal: 0,
+        guest: false,
+        isPaid: false,
+        paidAt: "",
+        isReassured: false,
+        reassuredAt: "",
+        isManufactured: false,
+        manufacturedAt: "",
+        isPackaged: false,
+        packagedAt: "",
+        isShipped: false,
+        shippedAt: "",
+        isInTransit: false,
+        inTransitAt: "",
+        isOutForDelivery: false,
+        outForDeliveryAt: "",
+        isDelivered: false,
+        deliveredAt: "",
+        isRefunded: false,
+        isPaused: false,
+        pausedAt: "",
+        parcel: {},
+        refundedAt: "",
+        order_note: "",
+        production_note: "",
+        tip: 0,
+        promo_code: "",
+        tracking_number: "",
+        tracking_url: "",
+        return_tracking_number: "",
+        is_error: false,
+        error_at: "",
+        error: { type: Object },
+        deleted: false
+      };
     }
   },
   extraReducers: {
@@ -120,24 +164,11 @@ const orderSlice = createSlice({
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.createOrder.pending]: (state: any, { payload }: any) => {
-      state.loading_payment = true;
-    },
-    [API.createOrder.fulfilled]: (state: any, { payload }: any) => {
-      // state.loading_payment = false;
-      state.success_order = true;
-      state.order = payload.order;
-      state.message = "Order Created";
-    },
-    [API.createOrder.rejected]: (state: any, { payload }: any) => {
-      state.loading_payment = false;
-      state.error = payload.error;
-      state.message = payload.message;
-    },
     [API.createPayOrder.pending]: (state: any, { payload }: any) => {
       state.loading_payment = true;
     },
     [API.createPayOrder.fulfilled]: (state: any, { payload }: any) => {
+      console.log({ payload });
       state.loading_payment = false;
       state.success = true;
       state.order = payload.order;
@@ -152,6 +183,7 @@ const orderSlice = createSlice({
       state.loading_payment = true;
     },
     [API.createPayOrderGuest.fulfilled]: (state: any, { payload }: any) => {
+      console.log({ payload });
       state.loading_payment = false;
       state.success = true;
       state.order = payload.order;

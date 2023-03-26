@@ -21,7 +21,6 @@ const Survey = props => {
   const [answer_5, set_answer_5] = useState("");
   const [user, set_user] = useState("");
   const [survey_questions, set_survey_questions] = useState("");
-  const [order, set_order] = useState("");
   const [is_survey, set_is_survey] = useState("");
   const [active, set_active] = useState("");
 
@@ -39,7 +38,7 @@ const Survey = props => {
   const history = useHistory();
 
   const orderSlice = useSelector(state => state.orderSlice);
-  const { order: user_order } = orderSlice;
+  const { order } = orderSlice;
 
   const surveySlice = useSelector(state => state.surveySlice);
   const { surveys, loading, error, success } = surveySlice;
@@ -60,7 +59,7 @@ const Survey = props => {
         } else {
           unset_state();
         }
-        dispatch(API.detailsOrder(props.order_id));
+        // dispatch(API.detailsOrder(props.order_id));
       }
     }
     return () => (clean = false);
@@ -90,7 +89,6 @@ const Survey = props => {
       set_answer_4(active_survey.answer_4);
       set_answer_5(active_survey.answer_5);
       set_user(active_survey.user);
-      set_order(active_survey.order);
       set_is_survey(active_survey.is_survey);
       set_active(active_survey.active);
       set_rating(active_survey.rating);
@@ -108,7 +106,6 @@ const Survey = props => {
     set_answer_4("");
     set_answer_5("");
     set_user("");
-    set_order("");
     set_is_survey("");
     set_active("");
     set_rating("");
@@ -118,8 +115,8 @@ const Survey = props => {
     set_loading_submit(true);
     e.preventDefault();
     let user = "";
-    if (user_order && user_order.user) {
-      user = user_order.user._id;
+    if (order && order.user) {
+      user = order.user._id;
     } else if (current_user) {
       user = current_user._id;
     } else {
@@ -138,7 +135,7 @@ const Survey = props => {
         answer_3,
         answer_4,
         answer_5,
-        order: user_order && user_order._id,
+        order: order && order._id,
         survey: survey_questions,
         is_survey: false,
         active,

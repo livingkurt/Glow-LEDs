@@ -16,7 +16,7 @@ import { OrderSummaryStep, ShippingStep } from "./components";
 import * as API from "../../api";
 import { createOrderGuest, removeOrderState } from "../../actions/orderActions";
 import { save_shipping } from "../../slices/cartSlice";
-import { clear_order_state, set_loading, set_loading_payment } from "../../slices/orderSlice";
+import { set_loading, set_loading_payment } from "../../slices/orderSlice";
 
 const PlaceOrderPage = props => {
   const cartSlice = useSelector(state => state.cartSlice);
@@ -153,7 +153,7 @@ const PlaceOrderPage = props => {
           dispatch(set_loading(false));
           set_show_shipping_complete(true);
         } else {
-          if (shipping.hasOwnProperty("address_1") && shipping.address_1.length > 0 && shipping_completed) {
+          if (shipping?.hasOwnProperty("address_1") && shipping.address_1.length > 0 && shipping_completed) {
             get_shipping_rates(verify_shipping);
           }
         }
@@ -450,7 +450,6 @@ const PlaceOrderPage = props => {
           dimminish_stock();
           send_used_code_email();
           sessionStorage.removeItem("shippingAddress");
-          dispatch(clear_order_state());
         }, 2000);
       } else if (error_order) {
       }
@@ -476,14 +475,13 @@ const PlaceOrderPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      if (success && order.hasOwnProperty("_id")) {
+      if (success && order?.hasOwnProperty("_id")) {
         props.history.push("/pages/complete/order/" + order._id);
         dispatch(set_loading(false));
         empty_cart();
         promo_code_used();
         dimminish_stock();
         sessionStorage.removeItem("shippingAddress");
-        dispatch(clear_order_state());
         send_used_code_email();
       }
     }
@@ -722,7 +720,7 @@ const PlaceOrderPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      if (current_user && current_user.hasOwnProperty("first_name")) {
+      if (current_user && current_user?.hasOwnProperty("first_name")) {
         set_email(current_user.email);
       }
     }
@@ -731,7 +729,7 @@ const PlaceOrderPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      if (current_user && current_user.hasOwnProperty("first_name") && user_success) {
+      if (current_user && current_user?.hasOwnProperty("first_name") && user_success) {
         history.push("/secure/checkout/placeorder");
       }
     }
