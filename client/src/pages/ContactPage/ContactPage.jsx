@@ -5,8 +5,8 @@ import { validate_contact } from "../../utils/validations";
 import { Loading, Notification } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { humanize } from "../../utils/helper_functions";
-import { sendContactEmail } from "../../api";
 import { GLButton } from "../../shared/GlowLEDsComponents";
+import * as API from "../../api";
 require("dotenv").config();
 
 const ContactPage = props => {
@@ -77,7 +77,7 @@ const ContactPage = props => {
     if (request.isValid) {
       const reason = humanize(reason_for_contact);
       dispatch(
-        sendContactEmail({
+        API.sendContactEmail({
           first_name,
           last_name,
           email,
