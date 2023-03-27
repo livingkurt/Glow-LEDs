@@ -31,12 +31,10 @@ const OrderPage = props => {
   const { my_cart } = cartSlice;
   const { cartItems } = my_cart;
 
-  const orderPay = useSelector(state => state.orderPay);
-  const { success: successPay, error: errorPay } = orderPay;
   const dispatch = useDispatch();
 
   const orderSlice = useSelector(state => state.orderSlice);
-  const { loading, order, error, orders, refund } = orderSlice;
+  const { loading, order, error, orders, refund, success: successPay, error: errorPay } = orderSlice;
 
   const [loading_label, set_loading_label] = useState(false);
   const [product, set_product] = useState("");
@@ -71,7 +69,7 @@ const OrderPage = props => {
     set_loading_label(true);
     const confirm = window.confirm("Are you sure you want to Refund this Order?");
     if (confirm) {
-      dispatch(refundOrder(order, true, parseFloat(amount).toFixed(2), refund_reason));
+      dispatch(API.refundOrder({ order, refundResult: true, refund_amount: parseFloat(amount).toFixed(2), refund_reason }));
       set_refund_state(true);
     }
 
@@ -96,7 +94,7 @@ const OrderPage = props => {
       dispatch(API.listPromos({}));
     }
     return () => (clean = false);
-  }, [props.match.params.id]);
+  }, [dispatch, props.match.params.id]);
 
   useEffect(() => {
     let clean = true;
@@ -129,7 +127,11 @@ const OrderPage = props => {
   };
   const pay_order = paymentMethod => {
     set_payment_loading(true);
-    dispatch(payOrder(order, paymentMethod));
+    if (current_user) {
+      dispatch(API.payOrder({ order, paymentMethod }));
+    } else {
+      dispatch(API.payOrderGuest({ order, paymentMethod }));
+    }
   };
 
   useEffect(() => {

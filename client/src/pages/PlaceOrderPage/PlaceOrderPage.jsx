@@ -25,12 +25,6 @@ const PlaceOrderPage = props => {
   const orderSlice = useSelector(state => state.orderSlice);
   const { order, error: error_order, success_order, success, error_pay, loading, loading_payment } = orderSlice;
 
-  // const orderCreate = useSelector(state => state.orderCreate);
-  // const { order, error: error_order, success: success_order } = orderCreate;
-
-  // const orderPay = useSelector(state => state.orderPay);
-  // const { success: success, error: error_pay } = orderPay;
-
   const userSlice = useSelector(state => state.userSlice);
   const { users, current_user, loading: user_loading, success: user_success } = userSlice;
 

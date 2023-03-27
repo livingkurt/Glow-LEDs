@@ -8,6 +8,7 @@ import useClipboard from "react-hook-clipboard";
 import { refundOrder } from "../../../actions/orderActions";
 import { LazyImage } from "../../../shared/SharedComponents";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
+import * as API from "../../../api";
 
 const OrderItemD = props => {
   const dispatch = useDispatch();
@@ -23,7 +24,7 @@ const OrderItemD = props => {
 
   const update_refund_state = () => {
     set_refund_state(true);
-    dispatch(refundOrder(props.order, true, refund_amount, refund_reason));
+    dispatch(API.refundOrder({ order: props.order, refundResult: true, refund_amount: refund_amount, refund_reason }));
     // }
   };
   useEffect(() => {

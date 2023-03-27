@@ -208,6 +208,7 @@ const orderSlice = createSlice({
       state.loading = true;
     },
     [API.detailsOrder.fulfilled as any]: (state: any, { payload }: any) => {
+      console.log({ payload });
       state.loading = false;
       state.order = payload;
       state.message = "Order Found";

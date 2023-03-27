@@ -109,13 +109,18 @@ export const createPayOrderGuest = createAsyncThunk(
   }
 );
 
-export const detailsOrder = createAsyncThunk("orders/detailsOrder", async (id: string, thunkApi: any) => {
+export const detailsOrder = createAsyncThunk("orders/detailsOrder", async (order_id: string, thunkApi: any) => {
   try {
     const {
       userSlice: { current_user }
     } = thunkApi.getState();
-    const { data } = await axios.get(`/api/orders/${id}`, headers(current_user));
-    return data;
+    if (current_user && current_user.first_name) {
+      const { data } = await axios.get("/api/orders/secure/" + order_id, headers(current_user));
+      return data;
+    } else {
+      const { data } = await axios.get("/api/orders/guest/" + order_id);
+      return data;
+    }
   } catch (error) {}
 });
 
@@ -128,3 +133,55 @@ export const deleteOrder = createAsyncThunk("orders/deleteOrder", async (pathnam
     return data;
   } catch (error) {}
 });
+
+export const refundOrder = createAsyncThunk(
+  "orders/refundOrder",
+  async (
+    {
+      order,
+      refundResult,
+      refund_amount,
+      refund_reason
+    }: { order: { _id: string }; refundResult: boolean; refund_amount: number; refund_reason: string },
+    thunkApi: any
+  ) => {
+    try {
+      const {
+        userSlice: { current_user }
+      } = thunkApi.getState();
+      const { data } = await axios.put(
+        "/api/payments/secure/refund/" + order._id,
+        {
+          ...order,
+          refund_amount: refund_amount,
+          isRefunded: refundResult,
+          RefundedAt: refundResult ? Date.now() : "",
+          refund_reason: refund_reason
+        },
+        headers(current_user)
+      );
+      return data;
+    } catch (error) {}
+  }
+);
+export const payOrder = createAsyncThunk(
+  "orders/payOrder",
+  async ({ order, paymentMethod }: { order: any; paymentMethod: any }, thunkApi: any) => {
+    try {
+      const {
+        userSlice: { current_user }
+      } = thunkApi.getState();
+      const { data } = await axios.put("/api/payments/secure/pay/" + order._id, { paymentMethod }, headers(current_user));
+      return data;
+    } catch (error) {}
+  }
+);
+export const payOrderGuest = createAsyncThunk(
+  "orders/payOrderGuest",
+  async ({ order, paymentMethod }: { order: any; paymentMethod: any }, thunkApi: any) => {
+    try {
+      const { data } = await axios.put("/api/payments/guest/pay/" + order._id, { paymentMethod });
+      return data;
+    } catch (error) {}
+  }
+);
