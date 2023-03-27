@@ -16,25 +16,26 @@ import { OrderStatusButtons } from "./components";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import { validate_promo_code } from "../../utils/validations";
 import * as API from "../../api";
-import { payOrder, refundOrder, update_payment } from "../../actions/orderActions";
-import { addToCart, removeFromCart } from "../../actions/cartActions";
-import { deleteCartItem } from "../../api";
 
 require("dotenv").config();
 
 const OrderPage = props => {
   const { height, width } = useWindowDimensions();
 
+  const dispatch = useDispatch();
+
   const userSlice = useSelector(state => state.userSlice);
   const { current_user } = userSlice;
+
   const cartSlice = useSelector(state => state.cartSlice);
   const { my_cart } = cartSlice;
   const { cartItems } = my_cart;
 
-  const dispatch = useDispatch();
-
   const orderSlice = useSelector(state => state.orderSlice);
   const { loading, order, error, orders, refund, success: successPay, error: errorPay } = orderSlice;
+
+  const parcelSlice = useSelector(state => state.parcelSlice);
+  const { parcels } = parcelSlice;
 
   const [loading_label, set_loading_label] = useState(false);
   const [product, set_product] = useState("");
@@ -61,9 +62,6 @@ const OrderPage = props => {
   const [order_items, set_order_items] = useState([]);
 
   const [message_to_user, set_message_to_user] = useState("");
-
-  const parcelSlice = useSelector(state => state.parcelSlice);
-  const { parcels } = parcelSlice;
 
   const update_refund_state = amount => {
     set_loading_label(true);
@@ -495,7 +493,7 @@ const OrderPage = props => {
   };
 
   const add_items_to_cart = () => {
-    order.orderItems.map(item => dispatch(addToCart(item)));
+    order.orderItems.map(item => dispatch(API.saveCart({ cart: my_cart, cart_item: item, type: "add_to_cart" })));
   };
 
   const send_order_email = async () => {

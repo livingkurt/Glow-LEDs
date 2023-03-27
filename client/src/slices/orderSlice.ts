@@ -230,6 +230,45 @@ const orderSlice = createSlice({
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
+    },
+    [API.refundOrder.pending as any]: (state: any, { payload }: any) => {
+      state.loading = true;
+    },
+    [API.refundOrder.fulfilled as any]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.refund = true;
+      state.message = "Order Refunded";
+    },
+    [API.refundOrder.rejected as any]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.error = payload.error;
+      state.message = payload.message;
+    },
+    [API.payOrder.pending as any]: (state: any, { payload }: any) => {
+      state.loading = true;
+    },
+    [API.payOrder.fulfilled as any]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.success = true;
+      state.message = "Order Paied";
+    },
+    [API.payOrder.rejected as any]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.error = payload.error;
+      state.message = payload.message;
+    },
+    [API.payOrderGuest.pending as any]: (state: any, { payload }: any) => {
+      state.loading = true;
+    },
+    [API.payOrderGuest.fulfilled as any]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.success = true;
+      state.message = "Order Paid Guest";
+    },
+    [API.payOrderGuest.rejected as any]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.error = payload.error;
+      state.message = payload.message;
     }
   }
 });
