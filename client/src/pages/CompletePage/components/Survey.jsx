@@ -51,7 +51,6 @@ const Survey = props => {
       if (surveys.length > 0) {
         // const active_survey = surveys.find(survey => survey.is_survey === true && survey.active === true);
         const active_survey = surveys[0];
-        console.log({ active_survey });
         if (active_survey) {
           // dispatch(API.detailsSurvey(active_survey._id));
           set_survey_questions(active_survey._id);

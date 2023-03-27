@@ -17,7 +17,6 @@ export const listCarts = createAsyncThunk("carts/listCarts", async (query: any, 
 export const updateCart = createAsyncThunk(
   "carts/updateCart",
   async ({ cart, cart_item, type }: { cart: any; cart_item: any; type: string }, thunkApi: any) => {
-    console.log({ cart, cart_item });
     try {
       const {
         userSlice: { current_user }

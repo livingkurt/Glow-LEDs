@@ -40,7 +40,6 @@ export default {
     }
   },
   create_orders_db: async (body: any) => {
-    console.log({ body });
     try {
       return await Order.create(body);
     } catch (error) {
@@ -258,7 +257,6 @@ export default {
   },
   get_daily_revenue_orders_db: async (start_date: string, end_date: string) => {
     try {
-      console.log({ start_date, end_date });
       const totalPriceByDay = await Order.aggregate([
         {
           $match: {

@@ -159,7 +159,6 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
     if (data) {
       set_loading_label(false);
     }
-    console.log({ data });
     await API_Shipping.add_tracking_number(order, data.tracking_code, data);
     set_hide_label_button(false);
     const query = getUrlParameter(history.location);

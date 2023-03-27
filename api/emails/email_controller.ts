@@ -215,7 +215,6 @@ export default {
   },
   send_user_contact_emails_c: async (req: any, res: any) => {
     const { email, first_name, reason_for_contact } = req.body;
-    console.log({ body: req.body });
     const mailOptions = {
       to: process.env.DISPLAY_CONTACT_EMAIL,
       from: email,
@@ -227,7 +226,6 @@ export default {
   send_admin_contact_emails_c: async (req: any, res: any) => {
     const { email, first_name } = req.body;
 
-    console.log({ body: req.body });
     const mailOptions = {
       from: process.env.DISPLAY_CONTACT_EMAIL,
       to: email,
@@ -236,36 +234,6 @@ export default {
     };
     sendEmail(mailOptions, res, "contact", "Admin Contact Email Sent to " + first_name);
   },
-  // send_user_contact_emails_c: async (req: any, res: any) => {
-  //   const { contact_info } = req.body;
-  //   try {
-  //     const mailOptions = {
-  //       to: process.env.DISPLAY_CONTACT_EMAIL,
-  //       from: contact_info.email,
-  //       subject: `New message from ${contact_info.first_name} - ${contact_info.reason_for_contact}`,
-  //       html: contact(contact_info)
-  //     };
-  //     sendEmail(mailOptions, res, "contact", "User Contact Email Sent to " + contact_info.first_name);
-  //     const adminsMailOptions = {
-  //       from: process.env.DISPLAY_CONTACT_EMAIL,
-  //       to: process.env.DISPLAY_CONTACT_EMAIL,
-  //       subject: `Thank you for Contacting Glow LEDs Support`,
-  //       html: contact_confirmation(req.body)
-  //     };
-  //     sendEmail(adminsMailOptions, res, "contact", "Admin Contact Email Sent to " + req.body.first_name);
-  //   } catch (error) {
-  //     console.log({ error });
-  //   }
-  // },
-  // send_admin_contact_emails_c: async (req: any, res: any) => {
-  //   const mailOptions = {
-  //     from: process.env.DISPLAY_CONTACT_EMAIL,
-  //     to: req.body.email,
-  //     subject: `Thank you for Contacting Glow LEDs Support`,
-  //     html: contact_confirmation(req.body)
-  //   };
-  //   sendEmail(mailOptions, res, "contact", "Admin Contact Email Sent to " + req.body.first_name);
-  // },
   send_custom_contact_emails_c: async (req: any, res: any) => {
     const { order, email } = req.body;
     const mailOptions = {

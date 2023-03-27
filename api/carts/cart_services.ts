@@ -107,7 +107,6 @@ export default {
 
       const cartItems = [...data.cartItems];
       cartItems.splice(item_index, 1); // 2nd parameter means remove one item only
-      console.log({ length: cartItems.length, item_index });
       if (cartItems.length === 0) {
         await cart_db.remove_carts_db(cart_id);
         // await user_db.update_users_db(current_user._id, { cart: data._id });

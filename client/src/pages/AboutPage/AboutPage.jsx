@@ -24,8 +24,6 @@ const AboutPage = () => {
   const userSlice = useSelector(state => state.userSlice);
   const { users, loading_users } = userSlice;
 
-  console.log({ affiliates, teams, users });
-
   useEffect(() => {
     let clean = true;
     if (clean) {

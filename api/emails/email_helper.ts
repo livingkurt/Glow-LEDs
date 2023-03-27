@@ -94,7 +94,6 @@ const createTransporter = async (type: string) => {
 
     return transporter;
   } catch (error) {
-    console.log({ createTransporter: error });
     return "Error Creating Transporter";
   }
 };

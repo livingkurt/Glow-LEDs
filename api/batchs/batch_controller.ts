@@ -1447,7 +1447,6 @@ export default {
     try {
       // // find all orders with isRefunded: true
       const orders = await Order.find({ deleted: false, isRefunded: true });
-      console.log({ orders });
 
       const refunds = orders.map((order: any) => {
         // Update refundPrice with the refund amount
@@ -1455,7 +1454,6 @@ export default {
           return acc + curr.amount;
         }, 0);
         order.refundTotal = totalRefunds / 100;
-        console.log({ _id: order._id, refundTotal: order.refundTotal });
         order.save();
       });
       res.send(refunds.flat(2));

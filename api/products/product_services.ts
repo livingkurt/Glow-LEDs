@@ -123,7 +123,6 @@ export default {
         return aIndex - bIndex;
       };
       const sortedProducts = products.sort(compareFn);
-      console.log({ sortedProducts: sortedProducts.map((x: any) => x.name) });
       return sortedProducts;
     } catch (error) {
       if (error instanceof Error) {

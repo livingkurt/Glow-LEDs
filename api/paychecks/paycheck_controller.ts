@@ -89,7 +89,6 @@ export default {
   },
   remove_multiple_paychecks_c: async (req: any, res: any) => {
     const { body } = req;
-    console.log({ body });
     try {
       const paycheck = await paycheck_services.remove_multiple_paychecks_s(body);
       if (paycheck) {

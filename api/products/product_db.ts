@@ -104,7 +104,6 @@ export default {
           }
         }
       ]).sort({ _id: 1 });
-      console.log({ response });
       return response;
     } catch (error) {
       if (error instanceof Error) {
@@ -229,7 +228,6 @@ export default {
   },
 
   update_products_db: async (id: string, body: any) => {
-    // console.log({ id, body });
     let query = {};
     try {
       if (mongoose.isValidObjectId(id)) {
@@ -243,7 +241,6 @@ export default {
       //   query = { pathname: id };
       // }
       const product: any = await Product.findOne(query);
-      console.log({ product });
       // CurrentProducts.select({ filterByFormula: `id = "${product._id}"` }).firstPage((err: any, records: any) => {
       //   if (err) {
       //
@@ -303,11 +300,9 @@ export default {
       // });
       if (product) {
         const updated = await Product.updateOne(query, body);
-        console.log({ updated });
         return updated;
       }
     } catch (error) {
-      console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }

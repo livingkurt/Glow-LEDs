@@ -46,6 +46,6 @@ export const payout_employees = async (): Promise<void> => {
       }
     });
   } catch (error) {
-    console.log("error", error);
+    console.log({ error });
   }
 };

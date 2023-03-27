@@ -71,7 +71,6 @@ export default {
     }
   },
   findByEmail_users_db: async (email: string) => {
-    console.log({ email });
     try {
       return await User.findOne({ email });
       // .populate({

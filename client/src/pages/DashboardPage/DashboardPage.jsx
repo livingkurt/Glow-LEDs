@@ -48,7 +48,6 @@ const DashboardPage = props => {
   // const daily_revenue = useGetMonthlyRevenueOrdersQuery({ start_date, end_date });
   const monthy_revenue = useGetMonthlyRevenueOrdersQuery({ year });
   const yearly_revenue = useGetYearlyRevenueOrdersQuery();
-  // console.log({ daily_revenue });
 
   useChangedEffect(() => {
     const dates = getMonthStartEndDates(month, parseInt(year) || parseInt(current_year));

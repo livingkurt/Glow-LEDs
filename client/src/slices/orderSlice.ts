@@ -168,7 +168,6 @@ const orderSlice = createSlice({
       state.loading_payment = true;
     },
     [API.createPayOrder.fulfilled as any]: (state: any, { payload }: any) => {
-      console.log({ payload });
       state.loading_payment = false;
       state.success = true;
       state.order = payload.order;
@@ -183,7 +182,6 @@ const orderSlice = createSlice({
       state.loading_payment = true;
     },
     [API.createPayOrderGuest.fulfilled as any]: (state: any, { payload }: any) => {
-      console.log({ payload });
       state.loading_payment = false;
       state.success = true;
       state.order = payload.order;

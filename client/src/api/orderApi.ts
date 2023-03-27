@@ -49,7 +49,6 @@ export const createPayOrder = createAsyncThunk(
       );
       // thunkApi.dispatch(deleteCart(my_cart._id));
       sessionStorage.removeItem("shippingAddress");
-      console.log({ order_created });
       return { order: order_created, payment_created };
     } catch (error) {}
   }
@@ -77,7 +76,6 @@ export const createPayOrderGuest = createAsyncThunk(
         axios.post("/api/emails/account_created", create_user);
       } else if (!create_account) {
         const { data: user } = await axios.get("/api/users/email/" + order.shipping.email.toLowerCase());
-        console.log({ user });
         if (user && Object.keys(user).length > 0) {
           user_id = user._id;
         } else {
@@ -106,7 +104,6 @@ export const createPayOrderGuest = createAsyncThunk(
       }
       sessionStorage.removeItem("shippingAddress");
       // thunkApi.dispatch(deleteCart(my_cart._id));
-      console.log({ order_created });
       return { order: order_created, payment_created };
     } catch (error) {}
   }
