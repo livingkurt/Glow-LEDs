@@ -3,6 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { detailsProduct } from "../../actions/productActions";
 import { Loading } from "../../shared/SharedComponents";
+import useChangedEffect from "../../shared/Hooks/useChangedEffect";
 import { Helmet } from "react-helmet";
 import { addToCart } from "../../actions/cartActions";
 import useWindowDimensions from "../../shared/Hooks/windowDimensions";
@@ -20,7 +21,7 @@ const ProductPage = props => {
   let { current_user, cart_id } = userSlice;
 
   const cartSlice = useSelector(state => state.cartSlice);
-  const { my_cart } = cartSlice;
+  const { my_cart, success } = cartSlice;
   const { cartItems } = my_cart;
 
   const [name, set_name] = useState("");
@@ -435,10 +436,6 @@ const ProductPage = props => {
     return () => (clean = false);
   }, []);
 
-  const add_item_to_cart = cart_item => {
-    dispatch(API.saveCart({ cart: my_cart, cart_item, type: "add_to_cart" }));
-  };
-
   const determine_addon_color = () => {
     if (has_add_on && show_add_on && secondary_color) {
       return true;
@@ -498,16 +495,22 @@ const ProductPage = props => {
         `${name} are out of stock in your selected size.\n\nBy clicking OK you agree that you are preordering ${name} which will not ship within the usual time.\n\nIt is HIGHLY RECOMMENDED that you order ${name} separately from any in-stock items so we can ship you your in-stock products without needing to wait for your out-of-stock products.\n\nThank you for your support!\n\nYou will be notified when ${name} are restocked. We anticipate they will be restocked by the end of January.`
       );
       if (confirm) {
-        add_item_to_cart(cart_item);
+        dispatch(API.saveCart({ cart: my_cart, cart_item, type: "add_to_cart" }));
       }
     } else {
-      add_item_to_cart(cart_item);
+      dispatch(API.saveCart({ cart: my_cart, cart_item, type: "add_to_cart" }));
     }
     // if (current_user) {
     // 	dispatch(saveCart(cart_item));
     // }
-    open_cart();
+    // open_cart();
   };
+
+  useChangedEffect(() => {
+    if (success) {
+      open_cart();
+    }
+  }, [success]);
 
   // export const decide_warning = (preorder) => {
   // 	if (new Date() > new Date(date_1) && new Date() < new Date(date_2)) {

@@ -16,6 +16,7 @@ const cartSlice = createSlice({
     },
     message: "",
     error: {},
+    success: false,
     shipping: {
       first_name: "",
       last_name: "",
@@ -72,6 +73,9 @@ const cartSlice = createSlice({
     },
     remove_from_cart: (state, { payload }) => {
       state.shipping = payload;
+    },
+    set_success: (state, { payload }) => {
+      state.success = payload;
     }
   },
   extraReducers: {
@@ -103,6 +107,7 @@ const cartSlice = createSlice({
       if (type === "edit_cart") {
         state.cart = data;
       }
+      state.success = true;
       state.message = "Cart Created";
       state.loading = false;
     },
@@ -166,5 +171,6 @@ const cartSlice = createSlice({
   }
 });
 
-export const { set_search, set_sort, set_page, set_limit, set_loading, set_cart, save_shipping, save_payment_method } = cartSlice.actions;
+export const { set_search, set_sort, set_page, set_limit, set_loading, set_cart, save_shipping, save_payment_method, set_success } =
+  cartSlice.actions;
 export default cartSlice.reducer;

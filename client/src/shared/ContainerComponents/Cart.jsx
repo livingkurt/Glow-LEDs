@@ -9,9 +9,11 @@ import { determine_total, humanize, decide_warning, shuffle } from "../../utils/
 import { GLButton } from "../GlowLEDsComponents";
 import { deleteCartItem } from "../../api";
 import { clear_order_state } from "../../slices/orderSlice";
+import { set_success } from "../../slices/cartSlice";
 
 const Cart = props => {
   const history = useHistory();
+  const dispatch = useDispatch();
   const [loading_products, set_loading_products] = useState(false);
   const [loading_pictures, set_loading_pictures] = useState(false);
   const [category_items, set_category_items] = useState([]);
@@ -21,6 +23,7 @@ const Cart = props => {
       /** Alert if clicked on outside of element */
       function handleClickOutside(event) {
         if (ref.current && !ref.current.contains(event.target)) {
+          dispatch(set_success(false));
           // alert('You clicked outside of me!');
           document.querySelector(".cart_sidebar").classList.remove("open");
         }
@@ -40,7 +43,6 @@ const Cart = props => {
   const closeMenu = () => {
     document.querySelector(".cart_sidebar").classList.remove("open");
   };
-  const dispatch = useDispatch();
 
   const userSlice = useSelector(state => state.userSlice);
   const { current_user } = userSlice;
