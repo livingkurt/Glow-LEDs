@@ -112,22 +112,20 @@ export const saveProductReview =
       dispatch({ type: PRODUCT_REVIEW_SAVE_FAIL, payload: error });
     }
   };
-// export const deleteProductReview = (product_pathname: string, review_id: string) => async (
-// 	dispatch: (arg0: IDispatch) => void,
-// 	getState: () => IGetState
-// ) => {
-//
-// 	try {
-// 		const { userLogin: { userInfo } } = getState();
-// 		dispatch({ type: PRODUCT_REVIEW_DELETE_REQUEST, payload: { product_pathname, review_id } });
-// 		const { data } = await axios.delete(`/api/products/reviews/${product_pathname}/delete_one/${review_id}`, {
-// 			headers: {
-// 				Authorization: 'Bearer ' + userInfo.access_token
-// 			}
-// 		});
-// 		dispatch({ type: PRODUCT_REVIEW_DELETE_SUCCESS, payload: data });
-// 	} catch (error) {
-
-// 		dispatch({ type: PRODUCT_REVIEW_DELETE_FAIL, payload: error });
-// 	}
-// };
+export const deleteProductReview =
+  (product_pathname: string, review_id: string) => async (dispatch: (arg0: IDispatch) => void, getState: () => IGetState) => {
+    try {
+      const {
+        userLogin: { userInfo }
+      } = getState();
+      dispatch({ type: PRODUCT_REVIEW_DELETE_REQUEST, payload: { product_pathname, review_id } });
+      const { data } = await axios.delete(`/api/products/reviews/${product_pathname}/delete_one/${review_id}`, {
+        headers: {
+          Authorization: "Bearer " + userInfo.access_token
+        }
+      });
+      dispatch({ type: PRODUCT_REVIEW_DELETE_SUCCESS, payload: data });
+    } catch (error) {
+      dispatch({ type: PRODUCT_REVIEW_DELETE_FAIL, payload: error });
+    }
+  };

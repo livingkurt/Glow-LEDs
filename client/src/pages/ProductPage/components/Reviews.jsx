@@ -1,15 +1,16 @@
 // React
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { format_date } from "../../../utils/helper_functions";
 import { useSelector, useDispatch } from "react-redux";
-import { saveProductReview, detailsProduct } from "../../../actions/productActions";
 import { PRODUCT_REVIEW_SAVE_RESET } from "../../../constants/productConstants";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import { isAdmin } from "../../../utils/helpers/user_helpers";
 import Rating from "../../../shared/GlowLEDsComponents/GLRating/Rating";
 import * as API from "../../../api";
+import { Loading } from "../../../shared/SharedComponents";
+import { set_success } from "../../../slices/productSlice";
 // Components
 
 const Review = props => {
@@ -19,8 +20,8 @@ const Review = props => {
   const userSlice = useSelector(state => state.userSlice);
 
   let { current_user } = userSlice;
-  const productReviewSave = useSelector(state => state.productReviewSave);
-  const { success: productSaveSuccess } = productReviewSave;
+  const productSlice = useSelector(state => state.productSlice);
+  const { success, loading } = productSlice;
 
   const [review_modal, setReviewModal] = useState("none");
   const [rating, setRating] = useState(5);
@@ -36,26 +37,36 @@ const Review = props => {
   const submitHandler = e => {
     e.preventDefault();
     dispatch(
-      saveProductReview(props.pathname, {
-        first_name: current_user.first_name,
-        last_name: current_user.last_name,
-        rating: rating,
-        comment: comment
+      API.saveProductReview({
+        product_pathname: props.pathname,
+        review: {
+          first_name: current_user.first_name,
+          last_name: current_user.last_name,
+          rating: rating,
+          comment: comment
+        }
       })
     );
+
     setRating(0);
     setComment("");
-    dispatch({ type: PRODUCT_REVIEW_SAVE_RESET });
-    dispatch(API.detailsProduct(props.pathname));
-    setReviewModal("none");
   };
 
   const remove_review = review_id => {
-    dispatch(saveProductReview(props.pathname, review_id));
+    dispatch(API.deleteProductReview(props.pathname, review_id));
   };
+
+  useEffect(() => {
+    if (success) {
+      dispatch(API.detailsProduct(props.pathname));
+      setReviewModal("none");
+      dispatch(set_success(false));
+    }
+  }, [dispatch, props.pathname, success]);
 
   return (
     <div className="review" id="reviews">
+      <Loading loading={loading}></Loading>
       {props.product.reviews.map((review, index) => (
         <li
           key={index}
@@ -114,7 +125,7 @@ const Review = props => {
                     marginTop: "-35px"
                   }}
                 >
-                  {productSaveSuccess ? "Review Saved Successfully" : ""}
+                  {success ? "Review Saved Successfully" : ""}
                 </h3>
                 <div className="ai-c">
                   <h3 htmlFor="rating">Rating</h3>

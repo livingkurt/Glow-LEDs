@@ -45,7 +45,36 @@ export const deleteProduct = createAsyncThunk("products/deleteProduct", async (i
     const {
       userSlice: { current_user }
     } = thunkApi.getState();
-    const { data } = await axios.delete("/api/products/" + id, headers(current_user));
+    const { data } = await axios.delete(`/api/products/${id}`, headers(current_user));
     return data;
   } catch (error) {}
 });
+
+export const saveProductReview = createAsyncThunk(
+  "products/deleteProduct",
+  async (
+    { product_pathname, review }: { product_pathname: string; review: { name: string; rating: number; comment: string } },
+    thunkApi: any
+  ) => {
+    try {
+      const {
+        userSlice: { current_user }
+      } = thunkApi.getState();
+      const { data } = await axios.post(`/api/products/reviews/${product_pathname}`, { review, current_user }, headers(current_user));
+      return data;
+    } catch (error) {}
+  }
+);
+
+export const deleteProductReview = createAsyncThunk(
+  "products/deleteProduct",
+  async ({ product_pathname, review_id }: { product_pathname: string; review_id: string }, thunkApi: any) => {
+    try {
+      const {
+        userSlice: { current_user }
+      } = thunkApi.getState();
+      const { data } = await axios.delete(`/api/products/reviews/${product_pathname}/delete_one/${review_id}`, headers(current_user));
+      return data;
+    } catch (error) {}
+  }
+);

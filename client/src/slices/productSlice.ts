@@ -117,6 +117,7 @@ const productSlice = createSlice({
     secondary_image: "",
     new_index: 0,
     message: "",
+    success: false,
     error: {},
     search: "",
     sort: "",
@@ -153,6 +154,9 @@ const productSlice = createSlice({
     },
     set_limit: (state, { payload }) => {
       state.limit = payload;
+    },
+    set_success: (state, { payload }) => {
+      state.success = payload;
     },
     set_color_modifier: (state, { payload }) => {
       state.color_modifier = payload;
@@ -245,6 +249,7 @@ const productSlice = createSlice({
     },
     [API.deleteProduct.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
+      state.success = false;
     },
     [API.deleteProduct.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
@@ -252,6 +257,20 @@ const productSlice = createSlice({
       state.message = "Product Deleted";
     },
     [API.deleteProduct.rejected as any]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.error = payload.error;
+      state.message = payload.message;
+    },
+    [API.saveProductReview.pending as any]: (state: any, { payload }: any) => {
+      state.loading = true;
+      state.success = false;
+    },
+    [API.saveProductReview.fulfilled as any]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.success = true;
+      state.message = "Product Review Saved";
+    },
+    [API.saveProductReview.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
@@ -277,6 +296,7 @@ export const {
   set_sale_end_date,
   set_sale_end_time,
   set_loading_options,
-  set_new_index
+  set_new_index,
+  set_success
 } = productSlice.actions;
 export default productSlice.reducer;
