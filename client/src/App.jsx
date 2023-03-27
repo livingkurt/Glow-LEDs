@@ -83,6 +83,8 @@ import { CheckEmailPage } from "./pages/LoginPage/components";
 import { AffiliateTermsPage } from "./pages/AffiliatesPage/components";
 import { Four04Page } from "./pages/Four04Page";
 import { LearnGridPage } from "./pages/LearnPage";
+import { TutorialsPage } from "./pages/TutorialsPage";
+import { WholesalersPage } from "./pages/WholesalersPage";
 
 const App = props => {
   const theme_colors = {
@@ -349,6 +351,9 @@ const App = props => {
                 <AdminRoute path="/secure/glow/teams/category/:category" component={TeamsPage} />
                 <AdminRoute path="/secure/glow/chips" component={ChipsPage} />
                 <AdminRoute path="/secure/glow/product_display" component={ProductsDisplayPage} />
+
+                <AdminRoute path="/secure/glow/tutorials" component={TutorialsPage} />
+                <AdminRoute path="/secure/glow/wholesalers" component={WholesalersPage} />
 
                 {/* Public Routes */}
                 <Route path="/" exact={true} component={HomePage} />

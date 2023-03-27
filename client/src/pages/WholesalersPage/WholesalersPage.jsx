@@ -3,41 +3,41 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { Notification } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
-import * as API from "../../api/tutorialApi";
+import * as API from "../../api/wholesalerApi";
 import { getUrlParameter, months, update_products_url } from "../../utils/helper_functions";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import CSVReader from "react-csv-reader";
 import GLTable from "../../shared/GlowLEDsComponents/GLTable/GLTable";
-import { set_limit, set_loading, set_page, set_search, set_sort } from "../../slices/tutorialSlice";
+import { set_limit, set_loading, set_page, set_search, set_sort } from "../../slices/wholesalerSlice";
 import { API_Promos } from "../../utils";
 
-const TutorialsPage = props => {
+const WholesalersPage = props => {
   const history = useHistory();
   const category = props.match.params.category ? props.match.params.category : "";
 
-  const tutorialsSlice = useSelector(state => state.tutorialSlice);
-  const { tutorials, message, totalPages, page, limit, sort, colors, search, sort_options } = tutorialsSlice;
+  const wholesalersSlice = useSelector(state => state.wholesalerSlice);
+  const { wholesalers, message, totalPages, page, limit, sort, colors, search, sort_options } = wholesalersSlice;
 
   const dispatch = useDispatch();
 
   const deleteHandler = pathname => {
-    dispatch(API.deleteTutorial(pathname));
+    dispatch(API.deleteWholesaler(pathname));
   };
 
-  const determine_color = tutorial => {
-    if (tutorial.sponsor) {
+  const determine_color = wholesaler => {
+    if (wholesaler.sponsor) {
       return colors[0].color;
     }
-    if (tutorial.team) {
+    if (wholesaler.team) {
       return colors[2].color;
     }
-    if (tutorial.rave_mob) {
+    if (wholesaler.rave_mob) {
       return colors[4].color;
     }
-    if (tutorial.promoter) {
+    if (wholesaler.promoter) {
       return colors[1].color;
     }
-    if (!tutorial.active) {
+    if (!wholesaler.active) {
       return colors[3].color;
     }
     return "";
@@ -55,18 +55,18 @@ const TutorialsPage = props => {
     dispatch(set_page(page));
     update_products_url(history, search, "", "", page, limit);
 
-    dispatch(API.listTutorials({ active: true, limit, page, sort }));
+    dispatch(API.listWholesalers({ active: true, limit, page, sort }));
   };
 
   useEffect(() => {
     let clean = true;
     if (clean) {
-      determine_tutorials();
+      determine_wholesalers();
     }
     return () => (clean = false);
   }, []);
 
-  const determine_tutorials = () => {
+  const determine_wholesalers = () => {
     const query = getUrlParameter(props.location);
     let search = "";
     let sort = "";
@@ -97,7 +97,7 @@ const TutorialsPage = props => {
         limit = query.limit;
       }
       dispatch(
-        API.listTutorials({
+        API.listWholesalers({
           active: true,
           filter,
           search,
@@ -115,72 +115,60 @@ const TutorialsPage = props => {
     const date = new Date();
     const request = await API_Promos.update_discount(date.getFullYear(), months[date.getMonth()]);
     if (request) {
-      determine_tutorials();
+      determine_wholesalers();
     }
     dispatch(set_loading(false));
-  };
-
-  const create_rave_mob_tutorials = async csv => {
-    const { data } = dispatch(API.create_rave_mob_tutorials(csv));
-
-    determine_tutorials();
   };
 
   const column_defs = [
     {
       title: "Active",
-      display: tutorial => (
+      display: wholesaler => (
         <GLButton
           variant="icon"
           onClick={() => {
             dispatch(
-              API.saveTutorial({
-                ...tutorial,
-                active: tutorial.active ? false : true
+              API.saveWholesaler({
+                ...wholesaler,
+                active: wholesaler.active ? false : true
               })
             );
-            dispatch(API.listTutorials({ active: true, limit, page, sort }));
+            dispatch(API.listWholesalers({ active: true, limit, page, sort }));
           }}
-          aria-label={tutorial.active ? "deactivate" : "activate"}
+          aria-label={wholesaler.active ? "deactivate" : "activate"}
         >
-          {tutorial.active ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
+          {wholesaler.active ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
         </GLButton>
       )
     },
     { title: "Artist Name", display: "artist_name" },
     {
       title: "Percentage Off",
-      display: tutorial => `${tutorial.private_code && tutorial.private_code.percentage_off}%`
+      display: wholesaler => `${wholesaler.private_code && wholesaler.private_code.percentage_off}%`
     },
     { title: "Venmo", display: "venmo" },
-    { title: "Public Code", display: tutorial => tutorial.private_code && tutorial.public_code.promo_code },
-    { title: "Private Code", display: tutorial => tutorial.private_code && tutorial.private_code.promo_code }
+    { title: "Public Code", display: wholesaler => wholesaler.private_code && wholesaler.public_code.promo_code },
+    { title: "Private Code", display: wholesaler => wholesaler.private_code && wholesaler.private_code.promo_code }
   ];
 
   return (
     <div className="main_container p-20px">
       <Helmet>
-        <title>Admin Tutorials | Glow LEDs</title>
+        <title>Admin Wholesalers | Glow LEDs</title>
       </Helmet>
       <Notification message={message} />
       <div className="wrap jc-b">
-        <GLButton variant="primary" className="h-40px">
-          <CSVReader
-            onFileLoaded={(data, fileInfo, originalFile) => create_rave_mob_tutorials(data, fileInfo, originalFile)}
-            label="Create Rave Mob Tutorials"
-          />
-        </GLButton>
         <GLButton variant="primary" onChange={update_discount}>
           Update Discount
         </GLButton>
-        <Link to="/secure/glow/edittutorial">
-          <GLButton variant="primary">Create Tutorial</GLButton>
+        <Link to="/secure/glow/editwholesaler">
+          <GLButton variant="primary">Create Wholesaler</GLButton>
         </Link>
       </div>
       <Notification message={message} />
       <GLTable
-        title="Tutorials"
-        rows={tutorials}
+        title="Wholesalers"
+        rows={wholesalers}
         column_defs={column_defs}
         determine_color={determine_color}
         colors={colors}
@@ -190,22 +178,22 @@ const TutorialsPage = props => {
         }}
         submitHandler={e => {
           e.preventDefault();
-          dispatch(API.listTutorials({ active: true, category, search, sort, limit, page: 1 }));
+          dispatch(API.listWholesalers({ active: true, category, search, sort, limit, page: 1 }));
         }}
         sortHandler={e => {
           dispatch(set_sort(e.target.value));
-          dispatch(API.listTutorials({ active: true, category, search, sort: e.target.value, limit, page: 1 }));
+          dispatch(API.listWholesalers({ active: true, category, search, sort: e.target.value, limit, page: 1 }));
         }}
         sort_options={sort_options}
         totalPages={totalPages}
         page={page}
         limit={limit}
         update_page={update_page}
-        action_row={tutorial => (
+        action_row={wholesaler => (
           <div className="jc-b">
             <Link
               to={{
-                pathname: "/secure/glow/edittutorial/" + tutorial.pathname,
+                pathname: "/secure/glow/editwholesaler/" + wholesaler.pathname,
                 previous_path: history.location.pathname + history.location.search
               }}
             >
@@ -213,7 +201,7 @@ const TutorialsPage = props => {
                 <i className="fas fa-edit" />
               </GLButton>
             </Link>
-            <GLButton variant="icon" onClick={() => deleteHandler(tutorial.pathname)} aria-label="Delete">
+            <GLButton variant="icon" onClick={() => deleteHandler(wholesaler.pathname)} aria-label="Delete">
               <i className="fas fa-trash-alt" />
             </GLButton>
           </div>
@@ -222,4 +210,4 @@ const TutorialsPage = props => {
     </div>
   );
 };
-export default TutorialsPage;
+export default WholesalersPage;

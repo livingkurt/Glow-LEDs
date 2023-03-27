@@ -781,14 +781,19 @@ const Sidebar = props => {
                   Users
                 </GLButton>
               </Link>
-              <Link to="/secure/glow/expenses?page=1?limit=10">
+              <Link to="/secure/glow/affiliates?page=1?limit=10">
                 <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
-                  Expenses
+                  Affiliates
                 </GLButton>
               </Link>
-              <Link to="/secure/glow/features?page=1?limit=10">
+              <Link to="/secure/glow/wholesalers?page=1?limit=10">
                 <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
-                  Features
+                  Wholesalers
+                </GLButton>
+              </Link>
+              <Link to="/secure/glow/tutorials?page=1?limit=10">
+                <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
+                  Tutorials
                 </GLButton>
               </Link>
               <Link to="/secure/glow/paychecks?page=1?limit=10">
@@ -796,9 +801,9 @@ const Sidebar = props => {
                   Paychecks
                 </GLButton>
               </Link>
-              <Link to="/secure/glow/affiliates?page=1?limit=10">
+              <Link to="/secure/glow/promos?page=1?limit=10">
                 <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
-                  Affiliates
+                  Promos
                 </GLButton>
               </Link>
               <Link to="/secure/glow/teams?page=1?limit=10">
@@ -806,14 +811,19 @@ const Sidebar = props => {
                   Teams
                 </GLButton>
               </Link>
-              <Link to="/secure/glow/promos?page=1?limit=10">
-                <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
-                  Promos
-                </GLButton>
-              </Link>
               <Link to="/secure/glow/carts?page=1?limit=10">
                 <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
                   Carts
+                </GLButton>
+              </Link>
+              <Link to="/secure/glow/chips?page=1?limit=10">
+                <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
+                  Chips
+                </GLButton>
+              </Link>
+              <Link to="/secure/glow/surveys?page=1?limit=10">
+                <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
+                  Surveys
                 </GLButton>
               </Link>
               <Link to="/secure/glow/contents?page=1?limit=10">
@@ -826,19 +836,19 @@ const Sidebar = props => {
                   Emails
                 </GLButton>
               </Link>
+              <Link to="/secure/glow/expenses?page=1?limit=10">
+                <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
+                  Expenses
+                </GLButton>
+              </Link>
+              <Link to="/secure/glow/features?page=1?limit=10">
+                <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
+                  Features
+                </GLButton>
+              </Link>
               <Link to="/secure/glow/logs?page=1?limit=10">
                 <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
                   Logs
-                </GLButton>
-              </Link>
-              <Link to="/secure/glow/chips?page=1?limit=10">
-                <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
-                  Chips
-                </GLButton>
-              </Link>
-              <Link to="/secure/glow/surveys?page=1?limit=10">
-                <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
-                  Surveys
                 </GLButton>
               </Link>
               <Link to="/secure/glow/parcels?page=1?limit=10">

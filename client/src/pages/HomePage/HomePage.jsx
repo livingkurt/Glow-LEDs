@@ -9,8 +9,8 @@ import { Loading } from "../../shared/SharedComponents";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import HomeSlideshow from "./HomeSlideshow";
 import ReadMore from "../../shared/GlowLEDsComponents/GLReadMore/ReadMore";
-import { show_search_bar } from "../../actions/settingActions";
 import * as API from "../../api";
+import { set_show_search_bar } from "../../slices/settingSlice";
 
 const HomePage = props => {
   const history = useHistory();
@@ -34,9 +34,9 @@ const HomePage = props => {
   });
 
   useEffect(() => {
-    dispatch(show_search_bar(false));
+    dispatch(set_show_search_bar(false));
     return () => {
-      dispatch(show_search_bar(true));
+      dispatch(set_show_search_bar(true));
     };
   }, []);
 

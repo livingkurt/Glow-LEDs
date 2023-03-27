@@ -12,6 +12,7 @@ const settingSlice = createSlice({
     message: "",
     error: {},
     search: "",
+    show_search_bar: false,
     sort: "",
     page: 1,
     limit: 10,
@@ -46,6 +47,9 @@ const settingSlice = createSlice({
     },
     set_limit: (state, { payload }) => {
       state.limit = payload;
+    },
+    set_show_search_bar: (state, { payload }) => {
+      state.show_search_bar = payload;
     }
   },
   extraReducers: {
@@ -107,5 +111,5 @@ const settingSlice = createSlice({
   }
 });
 
-export const { set_search, set_sort, set_page, set_limit, set_loading, set_setting } = settingSlice.actions;
+export const { set_search, set_sort, set_page, set_limit, set_loading, set_setting, set_show_search_bar } = settingSlice.actions;
 export default settingSlice.reducer;

@@ -28,8 +28,8 @@ const Header = props => {
 
   const { height, width } = useWindowDimensions();
 
-  const showHideSearchBar = useSelector(state => state.showHideSearchBar);
-  const { show } = showHideSearchBar;
+  const settingSlice = useSelector(state => state.settingSlice);
+  const { show_search_bar } = settingSlice;
 
   useEffect(() => {
     window.addEventListener("mousedown", handleClickOutside);
@@ -1088,29 +1088,24 @@ const Header = props => {
                         Users
                       </GLButton>
                     </Link>
-                    <Link to="/secure/glow/expenses?page=1?limit=10">
-                      <GLButton variant="nav" fullWidth className="ta-l">
-                        Expenses
-                      </GLButton>
-                    </Link>
-                    <Link to="/secure/glow/features?page=1?limit=10">
-                      <GLButton variant="nav" fullWidth className="ta-l">
-                        Features
-                      </GLButton>
-                    </Link>
-                    <Link to="/secure/glow/paychecks?page=1?limit=10">
-                      <GLButton variant="nav" fullWidth className="ta-l">
-                        Paychecks
-                      </GLButton>
-                    </Link>
                     <Link to="/secure/glow/affiliates?page=1?limit=10">
                       <GLButton variant="nav" fullWidth className="ta-l">
                         Affiliates
                       </GLButton>
                     </Link>
-                    <Link to="/secure/glow/teams?page=1?limit=10">
+                    <Link to="/secure/glow/wholesalers?page=1?limit=10">
                       <GLButton variant="nav" fullWidth className="ta-l">
-                        Teams
+                        Wholesalers
+                      </GLButton>
+                    </Link>
+                    <Link to="/secure/glow/tutorials?page=1?limit=10">
+                      <GLButton variant="nav" fullWidth className="ta-l">
+                        Tutorials
+                      </GLButton>
+                    </Link>
+                    <Link to="/secure/glow/paychecks?page=1?limit=10">
+                      <GLButton variant="nav" fullWidth className="ta-l">
+                        Paychecks
                       </GLButton>
                     </Link>
                     <Link to="/secure/glow/promos?page=1?limit=10">
@@ -1123,6 +1118,21 @@ const Header = props => {
                         Carts
                       </GLButton>
                     </Link>
+                    <Link to="/secure/glow/chips?page=1?limit=10">
+                      <GLButton variant="nav" fullWidth className="ta-l">
+                        Chips
+                      </GLButton>
+                    </Link>
+                    <Link to="/secure/glow/surveys?page=1?limit=10">
+                      <GLButton variant="nav" fullWidth className="ta-l">
+                        Surveys
+                      </GLButton>
+                    </Link>
+                    <Link to="/secure/glow/teams?page=1?limit=10">
+                      <GLButton variant="nav" fullWidth className="ta-l">
+                        Teams
+                      </GLButton>
+                    </Link>
                     <Link to="/secure/glow/contents?page=1?limit=10">
                       <GLButton variant="nav" fullWidth className="ta-l">
                         Contents
@@ -1133,19 +1143,19 @@ const Header = props => {
                         Emails
                       </GLButton>
                     </Link>
+                    <Link to="/secure/glow/expenses?page=1?limit=10">
+                      <GLButton variant="nav" fullWidth className="ta-l">
+                        Expenses
+                      </GLButton>
+                    </Link>
+                    <Link to="/secure/glow/features?page=1?limit=10">
+                      <GLButton variant="nav" fullWidth className="ta-l">
+                        Features
+                      </GLButton>
+                    </Link>
                     <Link to="/secure/glow/logs?page=1?limit=10">
                       <GLButton variant="nav" fullWidth className="ta-l">
                         Logs
-                      </GLButton>
-                    </Link>
-                    <Link to="/secure/glow/chips?page=1?limit=10">
-                      <GLButton variant="nav" fullWidth className="ta-l">
-                        Chips
-                      </GLButton>
-                    </Link>
-                    <Link to="/secure/glow/surveys?page=1?limit=10">
-                      <GLButton variant="nav" fullWidth className="ta-l">
-                        Surveys
                       </GLButton>
                     </Link>
                     <Link to="/secure/glow/parcels?page=1?limit=10">
@@ -1193,7 +1203,7 @@ const Header = props => {
               )}
             </div>
           </div>
-          {show && (
+          {show_search_bar && (
             <form
               onSubmit={submitHandler}
               className={`max-w-900px m-auto p-10px ph-20px br-10px w-100per mt-${width < 1107 ? "15px" : "5px"} jc-c`}

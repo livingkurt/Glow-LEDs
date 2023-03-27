@@ -79,127 +79,59 @@ const wholesalersSlice = createSlice({
     }
   },
   extraReducers: {
-    [API.listWholesalers.pending]: (state: any, { payload }: any) => {
+    [API.listWholesalers.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
       state.wholesalers = [];
     },
-    [API.listWholesalers.fulfilled]: (state: any, { payload }: any) => {
+    [API.listWholesalers.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.wholesalers = payload.wholesalers;
       state.totalPages = payload.totalPages;
       state.page = payload.currentPage;
       state.message = "Wholesalers Found";
     },
-    [API.listWholesalers.rejected]: (state: any, { payload }: any) => {
+    [API.listWholesalers.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.createWholesaler.pending]: (state: any, { payload }: any) => {
-      state.loading = true;
-    },
-    [API.createWholesaler.fulfilled]: (state: any, { payload }: any) => {
-      const wholesaler = {
-        id: "",
-        user: undefined,
-        artist_name: "",
-        instagram_handle: "",
-        facebook_name: "",
-        percentage_off: "",
-        sponsor: "",
-        promoter: "",
-        rave_mob: "",
-        active: "",
-        style: "",
-        inspiration: "",
-        bio: "",
-        link: "",
-        picture: "",
-        location: "",
-        years: "",
-        team: "",
-        video: "",
-        venmo: "",
-        products: [],
-        chips: [],
-        pathname: "",
-        public_code: undefined,
-        private_code: undefined
-      };
-      state.loading = false;
-      state.wholesaler = wholesaler;
-      state.message = "Wholesaler Saved";
-    },
-    [API.createWholesaler.rejected]: (state: any, { payload }: any) => {
-      state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
-    },
-    [API.updateWholesaler.pending]: (state: any, { payload }: any) => {
+    [API.saveWholesaler.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
       state.success = false;
     },
-    [API.updateWholesaler.fulfilled]: (state: any, { payload }: any) => {
-      const wholesaler = {
-        id: "",
-        user: undefined,
-        artist_name: "",
-        instagram_handle: "",
-        facebook_name: "",
-        percentage_off: "",
-        sponsor: "",
-        promoter: "",
-        rave_mob: "",
-        active: "",
-        style: "",
-        inspiration: "",
-        bio: "",
-        link: "",
-        picture: "",
-        location: "",
-        years: "",
-        team: "",
-        video: "",
-        venmo: "",
-        products: [],
-        chips: [],
-        pathname: "",
-        public_code: undefined,
-        private_code: undefined
-      };
+    [API.saveWholesaler.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.success = true;
-      state.wholesaler = wholesaler;
       state.message = "Wholesaler Saved";
     },
-    [API.updateWholesaler.rejected]: (state: any, { payload }: any) => {
+    [API.saveWholesaler.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
       state.success = false;
     },
-    [API.detailsWholesaler.pending]: (state: any, { payload }: any) => {
+    [API.detailsWholesaler.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.detailsWholesaler.fulfilled]: (state: any, { payload }: any) => {
+    [API.detailsWholesaler.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.wholesaler = payload;
       state.message = "Wholesaler Found";
     },
-    [API.detailsWholesaler.rejected]: (state: any, { payload }: any) => {
+    [API.detailsWholesaler.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.deleteWholesaler.pending]: (state: any, { payload }: any) => {
+    [API.deleteWholesaler.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
     },
-    [API.deleteWholesaler.fulfilled]: (state: any, { payload }: any) => {
+    [API.deleteWholesaler.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.wholesaler = payload.wholesaler;
       state.message = "Wholesaler Deleted";
     },
-    [API.deleteWholesaler.rejected]: (state: any, { payload }: any) => {
+    [API.deleteWholesaler.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
