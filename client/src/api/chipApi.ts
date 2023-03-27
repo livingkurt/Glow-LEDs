@@ -24,7 +24,7 @@ export const saveChip = createAsyncThunk("chips/saveChip", async (chip: any, thu
       const { data } = await axios.post("/api/chips", chip, headers(current_user));
       return data;
     } else {
-      const { data } = await axios.put("/api/chips/" + chip._id, chip, headers(current_user));
+      const { data } = await axios.put(`/api/chips/${chip._id}`, chip, headers(current_user));
       return data;
     }
   } catch (error) {}

@@ -24,7 +24,7 @@ export const saveContent = createAsyncThunk("contents/saveContent", async (conte
       const { data } = await axios.post("/api/contents", content, headers(current_user));
       return data;
     } else {
-      const { data } = await axios.put("/api/contents/" + content._id, content, headers(current_user));
+      const { data } = await axios.put(`/api/contents/${content._id}`, content, headers(current_user));
       return data;
     }
   } catch (error) {}

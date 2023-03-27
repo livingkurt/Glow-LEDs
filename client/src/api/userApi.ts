@@ -24,7 +24,7 @@ export const saveUser = createAsyncThunk("users/saveUser", async (user: any, thu
       const { data } = await axios.post("/api/users", user, headers(current_user));
       return data;
     } else {
-      const { data } = await axios.put("/api/users/" + user._id, user, headers(current_user));
+      const { data } = await axios.put(`/api/users/${user._id}`, user, headers(current_user));
       return data;
     }
   } catch (error) {}
@@ -40,12 +40,12 @@ export const detailsUser = createAsyncThunk("users/detailsUser", async (id: any,
   } catch (error) {}
 });
 
-export const deleteUser = createAsyncThunk("users/deleteUser", async (pathname, thunkApi: any) => {
+export const deleteUser = createAsyncThunk("users/deleteUser", async (id: string, thunkApi: any) => {
   try {
     const {
       userSlice: { current_user }
     } = thunkApi.getState();
-    const { data } = await axios.delete("/api/users/" + pathname, headers(current_user));
+    const { data } = await axios.delete(`/api/users/${id}`, headers(current_user));
     return data;
   } catch (error) {}
 });

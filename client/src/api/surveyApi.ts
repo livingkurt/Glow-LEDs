@@ -24,7 +24,7 @@ export const saveSurvey = createAsyncThunk("surveys/saveSurvey", async (survey: 
       const { data } = await axios.post("/api/surveys", survey, headers(current_user));
       return data;
     } else {
-      const { data } = await axios.put("/api/surveys/" + survey._id, survey, headers(current_user));
+      const { data } = await axios.put(`/api/surveys/${survey._id}`, survey, headers(current_user));
       return data;
     }
   } catch (error) {}

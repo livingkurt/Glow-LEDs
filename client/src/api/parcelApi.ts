@@ -24,7 +24,7 @@ export const saveParcel = createAsyncThunk("parcels/saveParcel", async (parcel: 
       const { data } = await axios.post("/api/parcels", parcel, headers(current_user));
       return data;
     } else {
-      const { data } = await axios.put("/api/parcels/" + parcel._id, parcel, headers(current_user));
+      const { data } = await axios.put(`/api/parcels/${parcel._id}`, parcel, headers(current_user));
       return data;
     }
   } catch (error) {}

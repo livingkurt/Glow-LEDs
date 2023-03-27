@@ -24,7 +24,7 @@ export const saveSetting = createAsyncThunk("settings/saveSetting", async (setti
       const { data } = await axios.post("/api/settings", setting, headers(current_user));
       return data;
     } else {
-      const { data } = await axios.put("/api/settings/" + setting._id, setting, headers(current_user));
+      const { data } = await axios.put(`/api/settings/${setting._id}`, setting, headers(current_user));
       return data;
     }
   } catch (error) {}

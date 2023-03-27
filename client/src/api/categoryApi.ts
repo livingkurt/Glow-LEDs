@@ -24,7 +24,7 @@ export const saveCategory = createAsyncThunk("categorys/saveCategory", async (ca
       const { data } = await axios.post("/api/categorys", category, headers(current_user));
       return data;
     } else {
-      const { data } = await axios.put("/api/categorys/" + category._id, category, headers(current_user));
+      const { data } = await axios.put(`/api/categorys/${category._id}`, category, headers(current_user));
       return data;
     }
   } catch (error) {}

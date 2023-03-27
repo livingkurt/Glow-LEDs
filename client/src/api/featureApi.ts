@@ -24,7 +24,7 @@ export const saveFeature = createAsyncThunk("features/saveFeature", async (featu
       const { data } = await axios.post("/api/features", feature, headers(current_user));
       return data;
     } else {
-      const { data } = await axios.put("/api/features/" + feature._id, feature, headers(current_user));
+      const { data } = await axios.put(`/api/features/${feature._id}`, feature, headers(current_user));
       return data;
     }
   } catch (error) {}

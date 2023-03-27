@@ -24,7 +24,7 @@ export const saveExpense = createAsyncThunk("expenses/saveExpense", async (expen
       const { data } = await axios.post("/api/expenses", expense, headers(current_user));
       return data;
     } else {
-      const { data } = await axios.put("/api/expenses/" + expense._id, expense, headers(current_user));
+      const { data } = await axios.put(`/api/expenses/${expense._id}`, expense, headers(current_user));
       return data;
     }
   } catch (error) {}

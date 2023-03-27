@@ -85,7 +85,7 @@ export const deleteAffiliate = createAsyncThunk("affiliates/deleteAffiliate", as
     const {
       userSlice: { current_user }
     } = thunkApi.getState();
-    const { data } = await axios.delete("/api/affiliates/" + pathname, headers(current_user));
+    const { data } = await axios.delete(`/api/affiliates/${pathname}`, headers(current_user));
     return data;
   } catch (error) {}
 });

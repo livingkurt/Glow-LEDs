@@ -24,7 +24,7 @@ export const saveEmail = createAsyncThunk("emails/saveEmail", async (email: any,
       const { data } = await axios.post("/api/emails", email, headers(current_user));
       return data;
     } else {
-      const { data } = await axios.put("/api/emails/" + email._id, email, headers(current_user));
+      const { data } = await axios.put(`/api/emails/${email._id}`, email, headers(current_user));
       return data;
     }
   } catch (error) {}

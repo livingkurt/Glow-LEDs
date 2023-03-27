@@ -24,7 +24,7 @@ export const saveProduct = createAsyncThunk("products/saveProduct", async (produ
       const { data } = await axios.post("/api/products", product, headers(current_user));
       return data;
     } else {
-      const { data } = await axios.put("/api/products/" + product._id, product, headers(current_user));
+      const { data } = await axios.put(`/api/products/${product._id}`, product, headers(current_user));
       return data;
     }
   } catch (error) {}

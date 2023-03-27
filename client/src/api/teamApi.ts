@@ -24,7 +24,7 @@ export const saveTeam = createAsyncThunk("teams/saveTeam", async (team: any, thu
       const { data } = await axios.post("/api/teams", team, headers(current_user));
       return data;
     } else {
-      const { data } = await axios.put("/api/teams/" + team._id, team, headers(current_user));
+      const { data } = await axios.put(`/api/teams/${team._id}`, team, headers(current_user));
       return data;
     }
   } catch (error) {}

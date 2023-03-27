@@ -24,7 +24,7 @@ export const savePalette = createAsyncThunk("palettes/savePalette", async (palet
       const { data } = await axios.post("/api/palettes", palette, headers(current_user));
       return data;
     } else {
-      const { data } = await axios.put("/api/palettes/" + palette._id, palette, headers(current_user));
+      const { data } = await axios.put(`/api/palettes/${palette._id}`, palette, headers(current_user));
       return data;
     }
   } catch (error) {}

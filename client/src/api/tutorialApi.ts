@@ -2,9 +2,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { create_query } from "../utils/helper_functions";
-import setAuthToken from "../utils/setAuthToken";
-import jwt_decode from "jwt-decode";
-import { setCurrentUser } from "../actions/userActions";
 import { headers } from "../utils/helpers/user_helpers";
 
 export const listTutorials = createAsyncThunk("tutorials/listTutorials", async (query: any, thunkApi: any) => {
@@ -12,7 +9,7 @@ export const listTutorials = createAsyncThunk("tutorials/listTutorials", async (
     const {
       userSlice: { current_user }
     } = thunkApi.getState();
-    const { data } = await axios.get(`/api/tutorials?create_query(query)`, headers(current_user));
+    const { data } = await axios.get(`/api/tutorials?${create_query(query)}`, headers(current_user));
     return data;
   } catch (error) {}
 });
@@ -27,7 +24,7 @@ export const saveTutorial = createAsyncThunk("tutorials/saveTutorial", async (tu
       const { data } = await axios.post("/api/tutorials", tutorial, headers(current_user));
       return data;
     } else {
-      const { data } = await axios.put("/api/tutorials/" + tutorial._id, tutorial, headers(current_user));
+      const { data } = await axios.put(`/api/tutorials/${tutorial._id}`, tutorial, headers(current_user));
       return data;
     }
   } catch (error) {}

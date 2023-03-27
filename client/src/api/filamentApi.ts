@@ -24,7 +24,7 @@ export const saveFilament = createAsyncThunk("filaments/saveFilament", async (fi
       const { data } = await axios.post("/api/filaments", filament, headers(current_user));
       return data;
     } else {
-      const { data } = await axios.put("/api/filaments/" + filament._id, filament, headers(current_user));
+      const { data } = await axios.put(`/api/filaments/${filament._id}`, filament, headers(current_user));
       return data;
     }
   } catch (error) {}
