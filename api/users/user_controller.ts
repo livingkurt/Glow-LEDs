@@ -155,17 +155,7 @@ export default {
 
           if (updatedUser) {
             const payload = {
-              _id: updatedUser._id,
-              first_name: updatedUser.first_name,
-              last_name: updatedUser.last_name,
-              email: updatedUser.email,
-              affiliate: updatedUser.affiliate,
-              cart: updatedUser.cart,
-              email_subscription: updatedUser.email_subscription,
-              shipping: updatedUser.shipping,
-              is_affiliated: updatedUser.is_affiliated,
-              isVerified: updatedUser.isVerified,
-              isAdmin: updatedUser.isAdmin,
+              ...updatedUser,
               access_token: getAccessToken(updatedUser),
               refresh_token: getRefreshToken(updatedUser)
             };

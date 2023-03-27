@@ -10,7 +10,7 @@ import useWindowDimensions from "../../shared/Hooks/windowDimensions";
 import { getUrlParameter, manuals } from "../../utils/helper_functions";
 import { ProductDetails, ProductFacts, ProductImages, ProductOptions, ProductSelection } from "./components";
 import { GLButton } from "../../shared/GlowLEDsComponents";
-import { isAdmin } from "../../utils/helpers/user_helpers";
+import { isAdmin, isWholesaler } from "../../utils/helpers/user_helpers";
 import ProductSlideshow from "../../shared/GlowLEDsComponents/GLCarousel/ProductSlideshow copy";
 import PictureChooser from "./components/PictureChooser";
 import RelatedProductsSlideshow from "../../shared/GlowLEDsComponents/GLCarousel/RelatedProductsSlideshow";
@@ -121,7 +121,11 @@ const ProductPage = props => {
       set_images(item.images);
 
       if (item.price > 0) {
-        set_price(item.price);
+        if (isWholesaler(current_user)) {
+          set_price(item.wholesale_price);
+        } else {
+          set_price(item.price);
+        }
       }
       if (item.hasOwnProperty("previous_price") && item.previous_price > 0) {
         set_previous_price(item.previous_price);
@@ -306,8 +310,13 @@ const ProductPage = props => {
     if (option.secondary_color) {
       set_secondary_color(option.secondary_color);
     }
+    console.log({ isWholesaler: isWholesaler(current_user) });
     if (option.price > 0) {
-      set_price(option.price);
+      if (isWholesaler(current_user)) {
+        set_price(option.wholesale_price);
+      } else {
+        set_price(option.price);
+      }
     }
     if (option.sale_price > 0) {
       set_sale_price(option.sale_price);
@@ -623,10 +632,18 @@ const ProductPage = props => {
     }
     if (option.price > 0) {
       if (has_add_on && show_add_on) {
-        set_price(option.price + add_on_price);
+        if (isWholesaler(current_user)) {
+          set_price(option.wholesale_price);
+        } else {
+          set_price(option.price + add_on_price);
+        }
         set_sale_price(option.sale_price + add_on_price);
       } else {
-        set_price(option.price);
+        if (isWholesaler(current_user)) {
+          set_price(option.wholesale_price);
+        } else {
+          set_price(option.price);
+        }
         set_sale_price(option.sale_price);
       }
     }
@@ -703,7 +720,11 @@ const ProductPage = props => {
 
     // set_secondary_products(secondary.secondary_products);
     if (product.category === "glowstringz") {
-      set_price(secondary.price);
+      if (isWholesaler(current_user)) {
+        set_price(secondary.wholesale_price);
+      } else {
+        set_price(secondary.price);
+      }
       set_sale_price(secondary.sale_price);
     }
     set_secondary_product(secondary._id);

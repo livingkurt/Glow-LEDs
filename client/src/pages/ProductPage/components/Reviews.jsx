@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 
 import { format_date } from "../../../utils/helper_functions";
 import { useSelector, useDispatch } from "react-redux";
-import { PRODUCT_REVIEW_SAVE_RESET } from "../../../constants/productConstants";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import { isAdmin } from "../../../utils/helpers/user_helpers";
 import Rating from "../../../shared/GlowLEDsComponents/GLRating/Rating";

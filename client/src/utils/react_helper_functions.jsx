@@ -149,7 +149,11 @@ const determine_preorder = product => {
 export const sale_price_switch = (product, cartItem, background) => {
   const color = cartItem ? { color: "#7e7e7e" } : { color: "#c5c5c5" };
   if (product) {
-    if (product.sale_price !== 0 && today >= new Date(product.sale_start_date) && today <= new Date(product.sale_end_date)) {
+    if (product.hasOwnProperty("wholesale_price") && product.wholesale_price) {
+      return (
+        <label className="fs-18px">WSP: ${product.wholesale_price ? product.wholesale_price.toFixed(2) : product.wholesale_price}</label>
+      );
+    } else if (product.sale_price !== 0 && today >= new Date(product.sale_start_date) && today <= new Date(product.sale_end_date)) {
       return (
         <label className="fs-18px">
           {determine_preorder(product) ? "Preorder " : ""}

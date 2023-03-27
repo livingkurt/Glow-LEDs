@@ -164,6 +164,8 @@ const EditProductPage = props => {
   const filamentSlice = useSelector(state => state.filamentSlice);
   const { filaments: filaments_list } = filamentSlice;
 
+  console.log({ filaments_list });
+
   const userSlice = useSelector(state => state.userSlice);
   const { users } = userSlice;
 
@@ -428,11 +430,12 @@ const EditProductPage = props => {
   };
 
   const sort_filament = filaments_list => {
-    return filaments_list.sort(function (a, b) {
-      var textA = a.color.toUpperCase();
-      var textB = b.color.toUpperCase();
-      return textA < textB ? -1 : textA > textB ? 1 : 0;
-    });
+    return filaments_list;
+    // return filaments_list?.sort(function (a, b) {
+    //   var textA = a.color.toUpperCase();
+    //   var textB = b.color.toUpperCase();
+    //   return textA < textB ? -1 : textA > textB ? 1 : 0;
+    // });
   };
 
   let num = 0;

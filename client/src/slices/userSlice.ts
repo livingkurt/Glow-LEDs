@@ -86,7 +86,9 @@ const userSlice = createSlice({
     logout_user: (state, { payload }) => {
       localStorage.removeItem("accessToken");
       setAuthToken(false);
-      state.current_user = {};
+      return {
+        current_user: {}
+      };
     },
     set_success: (state, { payload }) => {
       state.success = payload;

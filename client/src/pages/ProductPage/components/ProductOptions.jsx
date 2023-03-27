@@ -12,6 +12,8 @@ import ReactTooltip from "react-tooltip";
 import GLTooltip from "../../../shared/GlowLEDsComponents/GLTooltip/GLTooltip";
 import Rating from "../../../shared/GlowLEDsComponents/GLRating/Rating";
 import { determine_sampler_pack_name, determine_sampler_pack_pathname, determine_sizing_quick_look } from "../productHelpers";
+import { isWholesaler } from "../../../utils/helpers/user_helpers";
+import { useSelector } from "react-redux";
 
 const ProductOptions = ({
   product,
@@ -57,6 +59,9 @@ const ProductOptions = ({
   set_sale_price
 }) => {
   const { width } = useWindowDimensions();
+
+  const userSlice = useSelector(state => state.userSlice);
+  const { current_user } = userSlice;
 
   const determine_option_styles = (option_product_object, option) => {
     const classes = "packs fs-13px flex-s-0 min-w-40px mr-1rem mb-1rem ";
