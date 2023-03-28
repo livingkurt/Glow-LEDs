@@ -37,6 +37,8 @@ const cartItemsSchema = {
   finite_stock: { type: Number },
   add_on_price: { type: Number },
   show_add_on: { type: Boolean },
+  wholesale_product: { type: Boolean },
+  wholesale_price: { type: Number },
   product: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Product",

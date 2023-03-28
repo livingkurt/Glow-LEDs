@@ -497,8 +497,11 @@ const ProductPage = props => {
       count_in_stock: product.count_in_stock,
       add_on_price,
       show_add_on,
-      has_add_on: product.has_add_on
+      has_add_on: product.has_add_on,
+      wholesale_product: product.wholesale_product,
+      wholesale_price: product.wholesale_price
     };
+    console.log({ cart_item });
     if (preorder) {
       const confirm = window.confirm(
         `${name} are out of stock in your selected size.\n\nBy clicking OK you agree that you are preordering ${name} which will not ship within the usual time.\n\nIt is HIGHLY RECOMMENDED that you order ${name} separately from any in-stock items so we can ship you your in-stock products without needing to wait for your out-of-stock products.\n\nThank you for your support!\n\nYou will be notified when ${name} are restocked. We anticipate they will be restocked by the end of January.`

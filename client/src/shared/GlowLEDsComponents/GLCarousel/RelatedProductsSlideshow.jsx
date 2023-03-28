@@ -17,6 +17,7 @@ import { LazyImage } from "../../SharedComponents";
 import { GLButton } from "..";
 import Rating from "../GLRating/Rating";
 import * as API from "../../../api";
+import { isWholesaler } from "../../../utils/helpers/user_helpers";
 
 const RelatedProductsSlideshow = ({
   product_category,
@@ -34,6 +35,8 @@ const RelatedProductsSlideshow = ({
   const cartSlice = useSelector(state => state.cartSlice);
   const { my_cart } = cartSlice;
   const { cartItems } = my_cart;
+  const userSlice = useSelector(state => state.userSlice);
+  const { current_user } = userSlice;
 
   const [products, set_products] = useState([]);
   const [loading, set_loading] = useState(false);
@@ -449,7 +452,9 @@ const RelatedProductsSlideshow = ({
                     <label style={{ fontSize: "1.6rem" }}>{determine_product_name_display(product, false)}</label>
                   </Link>
 
-                  <label className="product-price mv-3px">{sale_price_switch(product, false)}</label>
+                  <label className="product-price mv-3px">
+                    {sale_price_switch({ product, cartItem: false, wholesaler: isWholesaler(current_user) })}
+                  </label>
 
                   {product.rating ? (
                     <Rating rating={product.rating} numReviews={product.numReviews} />

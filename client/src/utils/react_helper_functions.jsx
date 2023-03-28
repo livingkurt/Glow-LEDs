@@ -151,10 +151,10 @@ const determine_preorder = product => {
     return false;
   }
 };
-export const sale_price_switch = (product, cartItem, background) => {
+export const sale_price_switch = ({ product, cartItem, background, wholesaler }) => {
   const color = cartItem ? { color: "#7e7e7e" } : { color: "#c5c5c5" };
   if (product) {
-    if (product.hasOwnProperty("wholesale_price") && product.wholesale_price) {
+    if (wholesaler && product.wholesale_price) {
       return (
         <label className="fs-18px">WSP: ${product.wholesale_price ? product.wholesale_price?.toFixed(2) : product.wholesale_price}</label>
       );

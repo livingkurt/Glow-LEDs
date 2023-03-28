@@ -4,9 +4,9 @@ import CartItem from "../../shared/SharedComponents/CartItem";
 import { Helmet } from "react-helmet";
 import { decide_warning, determine_total } from "../../utils/helper_functions";
 
-import { GLButton } from "../../shared/GlowLEDsComponents";
+import { GLButton, GLTooltip } from "../../shared/GlowLEDsComponents";
 import { API_Products } from "../../utils";
-import { isAdmin } from "../../utils/helpers/user_helpers";
+import { isAdmin, isWholesaler } from "../../utils/helpers/user_helpers";
 import RelatedProductsSlideshow from "../../shared/GlowLEDsComponents/GLCarousel/RelatedProductsSlideshow";
 
 const CartPage = props => {
@@ -35,6 +35,10 @@ const CartPage = props => {
 
   const dimminish_stock = async () => {
     const request = await API_Products.update_stock(cartItems);
+  };
+
+  const determine_wholesale_proceed = () => {
+    return isWholesaler(current_user) && determine_total(cartItems) > current_user.minimum_order_amount;
   };
 
   return (
@@ -72,9 +76,25 @@ const CartPage = props => {
             <h3 className="fs-17px">
               Subtotal ( {cartItems?.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)} items ) : $ {determine_total(cartItems).toFixed(2)}
             </h3>
-            <GLButton onClick={() => checkoutHandler()} variant="primary" className="w-100per bob">
-              Proceed to Checkout
-            </GLButton>
+
+            {isWholesaler(current_user) ? (
+              <GLTooltip
+                tooltip={!determine_wholesale_proceed() && "You must meet your minimum order requirment to continue"}
+                className="w-100per"
+              >
+                <GLButton
+                  onClick={() => checkoutHandler()}
+                  variant={!determine_wholesale_proceed() ? "disabled" : "primary"}
+                  className={`w-100per mb-1rem ${determine_wholesale_proceed() ? "bob" : "disabled"}`}
+                >
+                  Proceed to Checkout
+                </GLButton>
+              </GLTooltip>
+            ) : (
+              <GLButton onClick={() => checkoutHandler()} variant="primary" className="w-100per bob">
+                Proceed to Checkout
+              </GLButton>
+            )}
             {isAdmin(current_user) && (
               <GLButton onClick={() => dimminish_stock()} variant="primary" className="w-100per bob">
                 Dimmish Stock

@@ -1,13 +1,14 @@
 // React
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { LazyImage } from "../../../shared/SharedComponents";
 import { sale_price_switch } from "../../../utils/react_helper_functions";
 import { deleteProduct, listProducts, saveProduct } from "../../../actions/productActions";
 import styled from "styled-components";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import * as API from "../../../api";
+import { isWholesaler } from "../../../utils/helpers/user_helpers";
 
 const grid = 8;
 const size = 30;
@@ -33,6 +34,8 @@ const Container = styled.div`
 `;
 
 const ProductListItem = props => {
+  const userSlice = useSelector(state => state.userSlice);
+  const { current_user } = userSlice;
   const history = useHistory();
   const keyCodes = {
     enter: 13,
@@ -194,7 +197,13 @@ const ProductListItem = props => {
         </GLButton>
         <label className="w-200px">{product.category}</label>
         <label className="w-100px">{product.order}</label>
-        <label className="product-price w-500px">{sale_price_switch(product, product.product_options)}</label>
+        <label className="product-price w-500px">
+          {sale_price_switch({
+            product,
+            wholesaler: isWholesaler(current_user)
+          })}
+          }
+        </label>
         <Link className="w-500px" to={"/secure/glow/editproduct/" + product.pathname + "/" + true}>
           <GLButton variant="primary">Use as Template</GLButton>
         </Link>

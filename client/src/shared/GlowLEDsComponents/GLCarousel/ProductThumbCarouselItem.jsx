@@ -4,10 +4,15 @@ import { Link, useHistory } from "react-router-dom";
 import Rating from "./Rating";
 import { sale_price_switch } from "../../../utils/react_helper_functions";
 import { LazyImage } from "../../SharedComponents";
+import { isWholesaler } from "../../../utils/helpers/user_helpers";
+import { useSelector } from "react-redux";
 
 const ProductThumbCarouselItem = props => {
   const [product, set_product] = useState(props.product);
   const [loading, set_loading] = useState(true);
+
+  const userSlice = useSelector(state => state.userSlice);
+  const { current_user } = userSlice;
 
   const history = useHistory();
 
@@ -58,7 +63,13 @@ const ProductThumbCarouselItem = props => {
                   $549.99 - $<i className="fas fa-arrow-up" />
                 </label>
               ) : (
-                <label className="product-price">{sale_price_switch(props.product, props.product.product_options)}</label>
+                <label className="product-price">
+                  {sale_price_switch({
+                    product: props.product,
+                    cartItem: props.product.product_options,
+                    wholesaler: isWholesaler(current_user)
+                  })}
+                </label>
               )}
 
               {product.rating ? (

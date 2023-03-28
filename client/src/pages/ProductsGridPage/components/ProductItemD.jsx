@@ -5,6 +5,8 @@ import { determine_product_name_display, sale_price_switch } from "../../../util
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import { LazyImage } from "../../../shared/SharedComponents";
 import Rating from "../../../shared/GlowLEDsComponents/GLRating/Rating";
+import { isWholesaler } from "../../../utils/helpers/user_helpers";
+import { useSelector } from "react-redux";
 
 // import Resizer from 'react-image-file-resizer';
 
@@ -14,6 +16,9 @@ const ProductItemD = props => {
   const [number_of_items, set_number_of_items] = useState(5);
   const [image, set_image] = useState(props.product.name);
   const [images, set_images] = useState(props.product.images);
+
+  const userSlice = useSelector(state => state.userSlice);
+  const { current_user } = userSlice;
 
   const move_left = e => {
     e.preventDefault();
@@ -138,7 +143,13 @@ const ProductItemD = props => {
               <label style={{ fontSize: "1.6rem" }}>{determine_product_name_display(props.product, false)}</label>
             </Link>
 
-            <label className="product-price mv-3px">{sale_price_switch(props.product, false)}</label>
+            <label className="product-price mv-3px">
+              {sale_price_switch({
+                product: props.product,
+                cartItem: false,
+                wholesaler: isWholesaler(current_user)
+              })}
+            </label>
 
             {props.product.rating ? (
               <Rating rating={props.product.rating} numReviews={props.product.numReviews} />

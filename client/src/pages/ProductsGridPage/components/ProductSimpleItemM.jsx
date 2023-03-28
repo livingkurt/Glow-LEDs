@@ -4,8 +4,12 @@ import { Link, useHistory } from "react-router-dom";
 import { determine_product_name_display, sale_price_switch } from "../../../utils/react_helper_functions";
 import { LazyImage } from "../../../shared/SharedComponents";
 import Rating from "../../../shared/GlowLEDsComponents/GLRating/Rating";
+import { isWholesaler } from "../../../utils/helpers/user_helpers";
+import { useSelector } from "react-redux";
 
 const ProductSmallScreen = props => {
+  const userSlice = useSelector(state => state.userSlice);
+  const { current_user } = userSlice;
   const history = useHistory();
   return (
     <li key={props.product.pathname} className=" w-100per" style={props.style}>
@@ -45,7 +49,12 @@ const ProductSmallScreen = props => {
                   $549.99 - $<i className="fas fa-arrow-up" />
                 </div>
               ) : (
-                <div className="">{sale_price_switch(props.product, props.product.product_options)}</div>
+                <div className="">
+                  {sale_price_switch({
+                    product: props.product,
+                    wholesaler: isWholesaler(current_user)
+                  })}
+                </div>
               )}
             </div>
             {props.product.rating ? (

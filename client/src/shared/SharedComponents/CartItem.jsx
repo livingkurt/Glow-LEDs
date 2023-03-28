@@ -7,7 +7,7 @@ import { determnine_link } from "../../utils/helper_functions";
 import { LazyImage } from ".";
 import { cart_item_name, sale_price_switch } from "../../utils/react_helper_functions";
 import { GLButton } from "../GlowLEDsComponents";
-import { isAdmin } from "../../utils/helpers/user_helpers";
+import { isAdmin, isWholesaler } from "../../utils/helpers/user_helpers";
 import { deleteCartItem } from "../../api";
 
 const CartItem = ({ index, item, check_item_as_manufactured }) => {
@@ -130,7 +130,7 @@ const CartItem = ({ index, item, check_item_as_manufactured }) => {
 					) : (
 						<label>{item.qty}</label>
 					)} */}
-          <div className="cart-price fs-16px">{sale_price_switch(item)}</div>
+          <div className="cart-price fs-16px">{sale_price_switch({ product: item, wholesaler: isWholesaler(current_user) })}</div>
         </div>
       </div>
     </li>

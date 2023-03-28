@@ -6,10 +6,11 @@ import { mobile_check } from "../../utils/react_helper_functions";
 import { API_Content } from "../../utils";
 import { LazyImage, Loading } from "../SharedComponents";
 import { determine_total, humanize, decide_warning, shuffle } from "../../utils/helper_functions";
-import { GLButton } from "../GlowLEDsComponents";
+import { GLButton, GLTooltip } from "../GlowLEDsComponents";
 import { deleteCartItem } from "../../api";
 import { clear_order_state } from "../../slices/orderSlice";
 import { set_success } from "../../slices/cartSlice";
+import { isWholesaler } from "../../utils/helpers/user_helpers";
 
 const Cart = props => {
   const history = useHistory();
@@ -86,6 +87,10 @@ const Cart = props => {
       }
       closeMenu();
     }
+  };
+
+  const determine_wholesale_proceed = () => {
+    return isWholesaler(current_user) && determine_total(cartItems) > current_user.minimum_order_amount;
   };
 
   const top_categories_grid = () => {
@@ -304,7 +309,14 @@ const Cart = props => {
                           Qty:
                         </label>
                         <label>{item.qty}</label>
-                        <div className="cart_sidebar-price fs-16px">{sale_price_switch(item, true, "light")}</div>
+                        <div className="cart_sidebar-price fs-16px">
+                          {sale_price_switch({
+                            product: item,
+                            cartItem: true,
+                            background: "light",
+                            wholesaler: isWholesaler(current_user)
+                          })}
+                        </div>
                       </div>
                     </div>
                   </li>
@@ -329,10 +341,24 @@ const Cart = props => {
             View Cart
           </GLButton>
         </Link>
-
-        <GLButton onClick={() => checkoutHandler()} variant="primary" className="w-100per mb-1rem bob">
-          Proceed to Checkout
-        </GLButton>
+        {isWholesaler(current_user) ? (
+          <GLTooltip
+            tooltip={!determine_wholesale_proceed() && "You must meet your minimum order requirment to continue"}
+            className="w-100per"
+          >
+            <GLButton
+              onClick={() => checkoutHandler()}
+              variant={!determine_wholesale_proceed() ? "disabled" : "primary"}
+              className={`w-100per mb-1rem ${determine_wholesale_proceed() ? "bob" : "disabled"}`}
+            >
+              Proceed to Checkout
+            </GLButton>
+          </GLTooltip>
+        ) : (
+          <GLButton onClick={() => checkoutHandler()} variant="primary" className="w-100per bob">
+            Proceed to Checkout
+          </GLButton>
+        )}
       </div>
     </aside>
   );
