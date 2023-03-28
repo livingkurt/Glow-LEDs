@@ -118,6 +118,11 @@ const AllProductsPage = props => {
     let option = false;
     let collection = props.match.params.collection ? props.match.params.collection : "";
 
+    if (category === "wholesale") {
+      category = "";
+      collection = "wholesale";
+    }
+
     determine_page_name(category, subcategory, collection);
     // prnt({ query });
     if (category !== "our_picks" || category !== "best_sellers" || category !== "new_releases") {
@@ -165,11 +170,7 @@ const AllProductsPage = props => {
       );
     } else {
       if (category) {
-        if (category === "best_sellers") {
-          get_occurrences(category);
-        } else if (category === "our_picks") {
-          get_occurrences(category);
-        } else if (category === "new_releases") {
+        if (category === "our_picks" || category === "best_sellers" || category === "new_releases") {
           get_occurrences(category);
         }
       }

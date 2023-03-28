@@ -8,7 +8,7 @@ import useWindowDimensions from "../Hooks/windowDimensions";
 import { API_Products } from "../../utils";
 import { categories, humanize, subcategories, update_products_url } from "../../utils/helper_functions";
 import { GLButton } from "../GlowLEDsComponents";
-import { isAdmin } from "../../utils/helpers/user_helpers";
+import { isAdmin, isWholesaler } from "../../utils/helpers/user_helpers";
 import Filter from "../GlowLEDsComponents/GLTable/Filter";
 import * as API from "../../api";
 import { logout_user } from "../../slices/userSlice";
@@ -686,6 +686,13 @@ const Header = props => {
                             Battery Storage
                           </GLButton>
                         </Link>
+                        {isWholesaler(current_user) && (
+                          <Link to="/collections/all/products/category/wholesale">
+                            <GLButton variant="nav" fullWidth className="ta-l">
+                              Wholesale
+                            </GLButton>
+                          </Link>
+                        )}
                       </div>
                     </div>
                   </div>

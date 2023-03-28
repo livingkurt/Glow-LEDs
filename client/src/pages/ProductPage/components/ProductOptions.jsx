@@ -427,7 +427,16 @@ const ProductOptions = ({
       <li className="jc-b ai-c">
         <div className="ai-c mb-1rem">
           <h3 className="mv-0px mr-5px">Price: </h3>
-          {product_page_sale_price_switch(price, sale_price, previous_price, product.sale_start_date, product.sale_end_date, false, "dark")}
+          {product_page_sale_price_switch(
+            price,
+            sale_price,
+            previous_price,
+            product.sale_start_date,
+            product.sale_end_date,
+            false,
+            "dark",
+            isWholesaler(current_user)
+          )}
         </div>
         {width < 1150 && width > 482 && (
           <div className="mb-20px">

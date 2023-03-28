@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { HashLink } from "react-router-hash-link";
 import { update_products_url } from "../../utils/helper_functions";
 import { GLButton } from "../GlowLEDsComponents";
-import { isAdmin } from "../../utils/helpers/user_helpers";
+import { isAdmin, isWholesaler } from "../../utils/helpers/user_helpers";
 import Filter from "../GlowLEDsComponents/GLTable/Filter";
 import * as API from "../../api";
 import { logout_user } from "../../slices/userSlice";
@@ -492,6 +492,13 @@ const Sidebar = props => {
                   Battery Storage
                 </GLButton>
               </Link>
+              {isWholesaler(current_user) && (
+                <Link to="/collections/all/products/category/wholesale">
+                  <GLButton className="sidebar-btn nested" onClick={closeMenu}>
+                    Wholesale
+                  </GLButton>
+                </Link>
+              )}
             </ul>
             {/* <Link to="/collections/all/products/shop_by_chip">
               <GLButton

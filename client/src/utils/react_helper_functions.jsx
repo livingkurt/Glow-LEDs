@@ -97,7 +97,8 @@ export const product_page_sale_price_switch = (
   sale_start_date,
   sale_end_date,
   cartItem,
-  background
+  background,
+  wholesaler
 ) => {
   // const color = cartItem ? { color: '#7e7e7e' } : { color: '#bf4444' };
   const color = cartItem ? { color: "#7e7e7e" } : { color: "#c5c5c5" };
@@ -108,12 +109,12 @@ export const product_page_sale_price_switch = (
   if (previous_price) {
     return (
       <label className="fs-18px">
-        <label>${price ? price.toFixed(2) : price}</label>
+        <label>${price ? price?.toFixed(2) : price}</label>
         <label> ({(100 * (1 - price / previous_price)).toFixed(2)}% Off) </label>
         <label>
           <del style={color}>
             <label className="" style={color}>
-              ${previous_price ? previous_price.toFixed(2) : previous_price}
+              ${previous_price ? previous_price?.toFixed(2) : previous_price}
             </label>
           </del>{" "}
         </label>
@@ -123,19 +124,23 @@ export const product_page_sale_price_switch = (
     if (sale_price !== 0 && today >= new Date(sale_start_date) && today <= new Date(sale_end_date)) {
       return (
         <label className="fs-18px">
-          <label>${sale_price ? sale_price.toFixed(2) : sale_price}</label>
+          <label>${sale_price ? sale_price?.toFixed(2) : sale_price}</label>
           <label> ({100 * (1 - sale_price / price).toFixed(2)}% Off) </label>
           <label>
             <del style={color}>
               <label className="" style={color}>
-                ${price ? price.toFixed(2) : price}
+                ${price ? price?.toFixed(2) : price}
               </label>
             </del>{" "}
           </label>
         </label>
       );
     } else {
-      return <label className="fs-18px">${price ? price.toFixed(2) : price}</label>;
+      return (
+        <label className="fs-18px">
+          {wholesaler && "WSP: "} ${price ? price?.toFixed(2) : price}
+        </label>
+      );
     }
   }
 };
@@ -151,18 +156,18 @@ export const sale_price_switch = (product, cartItem, background) => {
   if (product) {
     if (product.hasOwnProperty("wholesale_price") && product.wholesale_price) {
       return (
-        <label className="fs-18px">WSP: ${product.wholesale_price ? product.wholesale_price.toFixed(2) : product.wholesale_price}</label>
+        <label className="fs-18px">WSP: ${product.wholesale_price ? product.wholesale_price?.toFixed(2) : product.wholesale_price}</label>
       );
     } else if (product.sale_price !== 0 && today >= new Date(product.sale_start_date) && today <= new Date(product.sale_end_date)) {
       return (
         <label className="fs-18px">
           {determine_preorder(product) ? "Preorder " : ""}
-          <label>${product.sale_price ? product.sale_price.toFixed(2) : product.sale_price}</label>
+          <label>${product.sale_price ? product.sale_price?.toFixed(2) : product.sale_price}</label>
           <label> ({(100 * (1 - product.sale_price / product.price)).toFixed(2)}% Off) </label>
           <label>
             <del style={color}>
               <label className="" style={color}>
-                ${product.price ? product.price.toFixed(2) : product.price}
+                ${product.price ? product.price?.toFixed(2) : product.price}
               </label>
             </del>{" "}
           </label>
@@ -172,12 +177,12 @@ export const sale_price_switch = (product, cartItem, background) => {
       return (
         <label className="fs-18px">
           {determine_preorder(product) ? "Preorder " : ""}
-          <label>${product.price ? product.price.toFixed(2) : product.price}</label>
+          <label>${product.price ? product.price?.toFixed(2) : product.price}</label>
           <label> ({(100 * (1 - product.price / product.previous_price)).toFixed(2)}% Off) </label>
           <label>
             <del style={color}>
               <label className="" style={color}>
-                ${product.previous_price ? product.previous_price.toFixed(2) : product.previous_price}
+                ${product.previous_price ? product.previous_price?.toFixed(2) : product.previous_price}
               </label>
             </del>{" "}
           </label>
@@ -186,7 +191,7 @@ export const sale_price_switch = (product, cartItem, background) => {
     } else {
       return (
         <label className="fs-18px">
-          {determine_preorder(product) ? "Preorder " : ""} ${product.price ? product.price.toFixed(2) : product.price}
+          {determine_preorder(product) ? "Preorder " : ""} ${product.price ? product.price?.toFixed(2) : product.price}
         </label>
       );
     }

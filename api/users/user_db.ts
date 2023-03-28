@@ -111,6 +111,7 @@ export default {
   update_users_db: async (id: string, body: any) => {
     try {
       const user: any = await User.findOne({ _id: id });
+      console.log({ body });
 
       if (user) {
         return await User.updateOne({ _id: id }, body);

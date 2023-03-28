@@ -365,7 +365,7 @@ const EditUserPage = props => {
                                 name="wholesaler"
                                 defaultChecked={wholesaler}
                                 id="wholesaler"
-                                onChange={e => dispatch(set_user({ shipping: { ...shipping, [e.target.name]: e.target.checked } }))}
+                                onChange={e => dispatch(set_user({ [e.target.name]: e.target.checked }))}
                               />
                             </li>
                           )}
@@ -376,7 +376,7 @@ const EditUserPage = props => {
                               name="minimum_order_amount"
                               value={minimum_order_amount}
                               id="minimum_order_amount"
-                              onChange={e => dispatch(set_user({ shipping: { ...shipping, [e.target.name]: e.target.value } }))}
+                              onChange={e => dispatch(set_user({ [e.target.name]: e.target.value }))}
                             />
                           </li>
                           {loading_checkboxes ? (

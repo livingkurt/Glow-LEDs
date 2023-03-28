@@ -210,6 +210,7 @@ export default {
 
   login_users_s: async (email: string, password: string) => {
     const user: any = await user_db.findByEmail_users_db(email);
+    console.log({ user });
 
     if (!user) {
       throw new Error("Email Not Found");
