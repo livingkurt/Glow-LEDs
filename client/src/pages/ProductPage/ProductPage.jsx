@@ -31,6 +31,7 @@ const ProductPage = props => {
   const [qty, setQty] = useState(1);
   const [images, set_images] = useState([]);
   const [price, set_price] = useState();
+  const [wholesale_price, set_wholesale_price] = useState();
 
   const [previous_price, set_previous_price] = useState(0);
   const [sale_price, set_sale_price] = useState(0);
@@ -122,10 +123,9 @@ const ProductPage = props => {
 
       if (item.price > 0) {
         if (isWholesaler(current_user)) {
-          set_price(item.wholesale_price);
-        } else {
-          set_price(item.price);
+          set_wholesale_price(item.wholesale_price);
         }
+        set_price(item.price);
       }
       if (item.hasOwnProperty("previous_price") && item.previous_price > 0) {
         set_previous_price(item.previous_price);
@@ -313,10 +313,9 @@ const ProductPage = props => {
     console.log({ isWholesaler: isWholesaler(current_user) });
     if (option.price > 0) {
       if (isWholesaler(current_user)) {
-        set_price(option.wholesale_price);
-      } else {
-        set_price(option.price);
+        set_wholesale_price(option.wholesale_price);
       }
+      set_price(option.price);
     }
     if (option.sale_price > 0) {
       set_sale_price(option.sale_price);
@@ -636,17 +635,15 @@ const ProductPage = props => {
     if (option.price > 0) {
       if (has_add_on && show_add_on) {
         if (isWholesaler(current_user)) {
-          set_price(option.wholesale_price);
-        } else {
-          set_price(option.price + add_on_price);
+          set_wholesale_price(option.wholesale_price);
         }
+        set_price(option.price + add_on_price);
         set_sale_price(option.sale_price + add_on_price);
       } else {
         if (isWholesaler(current_user)) {
-          set_price(option.wholesale_price);
-        } else {
-          set_price(option.price);
+          set_wholesale_price(option.wholesale_price);
         }
+        set_price(option.price);
         set_sale_price(option.sale_price);
       }
     }
@@ -724,10 +721,9 @@ const ProductPage = props => {
     // set_secondary_products(secondary.secondary_products);
     if (product.category === "glowstringz") {
       if (isWholesaler(current_user)) {
-        set_price(secondary.wholesale_price);
-      } else {
-        set_price(secondary.price);
+        set_wholesale_price(secondary.wholesale_price);
       }
+      set_price(secondary.price);
       set_sale_price(secondary.sale_price);
     }
     set_secondary_product(secondary._id);

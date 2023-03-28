@@ -8,7 +8,7 @@ import { API_Emails, API_Orders, API_Shipping } from "../../utils";
 import useClipboard from "react-hook-clipboard";
 import useWindowDimensions from "../../shared/Hooks/windowDimensions";
 import { determine_color } from "../../utils/helpers/order_helpers";
-import { isAdmin } from "../../utils/helpers/user_helpers";
+import { isAdmin, isWholesaler } from "../../utils/helpers/user_helpers";
 import CartItem from "../../shared/SharedComponents/CartItem";
 import CheckoutSteps from "../../shared/SharedComponents/CheckoutSteps";
 import { Stripe } from "../../shared/SharedComponents/Stripe";
@@ -532,7 +532,7 @@ const OrderPage = props => {
   const { promos } = promoSlice;
 
   const [promo_code_validations, set_promo_code_validations] = useState("");
-  const items_price = determine_total(order_items);
+  const items_price = determine_total(order_items, isWholesaler(current_user));
   const [show_message, set_show_message] = useState("");
   const [itemsPrice, setItemsPrice] = useState(items_price);
   const [tax_rate, set_tax_rate] = useState(0);

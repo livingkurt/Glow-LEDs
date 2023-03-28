@@ -90,7 +90,7 @@ const Cart = props => {
   };
 
   const determine_wholesale_proceed = () => {
-    return isWholesaler(current_user) && determine_total(cartItems) > current_user.minimum_order_amount;
+    return isWholesaler(current_user) && determine_total(cartItems, isWholesaler(current_user)) > current_user.minimum_order_amount;
   };
 
   const top_categories_grid = () => {
@@ -334,7 +334,7 @@ const Cart = props => {
       <div className="column w-100per pos-fix add_to_cart ph-1rem br-20px" style={{ bottom: cartItems.length === 0 ? "-10px" : "0px" }}>
         <label className="fs-17px title_font mv-1rem">
           Subtotal ( {cartItems && cartItems?.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)} items ) : ${" "}
-          {determine_total(cartItems).toFixed(2)}
+          {determine_total(cartItems, isWholesaler(current_user)).toFixed(2)}
         </label>
         <Link to="/checkout/cart" className="w-100per">
           <GLButton variant="secondary" className=" w-100per mb-2rem" onClick={closeMenu} aria-label="Delete">

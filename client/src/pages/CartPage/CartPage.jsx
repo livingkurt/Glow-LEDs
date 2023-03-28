@@ -38,7 +38,7 @@ const CartPage = props => {
   };
 
   const determine_wholesale_proceed = () => {
-    return isWholesaler(current_user) && determine_total(cartItems) > current_user.minimum_order_amount;
+    return isWholesaler(current_user) && determine_total(cartItems, isWholesaler(current_user)) > current_user.minimum_order_amount;
   };
 
   return (
@@ -74,7 +74,8 @@ const CartPage = props => {
         <div className="cart-action-container jc-c">
           <div className="cart-action">
             <h3 className="fs-17px">
-              Subtotal ( {cartItems?.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)} items ) : $ {determine_total(cartItems).toFixed(2)}
+              Subtotal ( {cartItems?.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)} items ) : ${" "}
+              {determine_total(cartItems, isWholesaler(current_user)).toFixed(2)}
             </h3>
 
             {isWholesaler(current_user) ? (
