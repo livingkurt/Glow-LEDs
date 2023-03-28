@@ -56,7 +56,8 @@ const ProductOptions = ({
   set_secondary_color_code,
   set_secondary_image,
   has_add_on,
-  set_sale_price
+  set_sale_price,
+  wholesale_price
 }) => {
   const { width } = useWindowDimensions();
 
@@ -435,7 +436,8 @@ const ProductOptions = ({
             product.sale_end_date,
             false,
             "dark",
-            isWholesaler(current_user)
+            isWholesaler(current_user),
+            wholesale_price
           )}
         </div>
         {width < 1150 && width > 482 && (

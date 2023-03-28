@@ -98,7 +98,8 @@ export const product_page_sale_price_switch = (
   sale_end_date,
   cartItem,
   background,
-  wholesaler
+  wholesaler,
+  wholesale_price
 ) => {
   // const color = cartItem ? { color: '#7e7e7e' } : { color: '#bf4444' };
   const color = cartItem ? { color: "#7e7e7e" } : { color: "#c5c5c5" };
@@ -106,6 +107,9 @@ export const product_page_sale_price_switch = (
   // 	? { color: '#7e7e7e' }
 
   // 	: background === 'light' ? { color: '#283166' } : { color: '#757b99' };
+  if (wholesaler) {
+    return <label className="fs-18px">WSP: ${wholesale_price ? wholesale_price?.toFixed(2) : wholesale_price}</label>;
+  }
   if (previous_price) {
     return (
       <label className="fs-18px">
@@ -136,11 +140,7 @@ export const product_page_sale_price_switch = (
         </label>
       );
     } else {
-      return (
-        <label className="fs-18px">
-          {wholesaler && "WSP: "} ${price ? price?.toFixed(2) : price}
-        </label>
-      );
+      return <label className="fs-18px">${price ? price?.toFixed(2) : price}</label>;
     }
   }
 };
@@ -198,8 +198,10 @@ export const sale_price_switch = ({ product, cartItem, background, wholesaler })
   }
 };
 
-export const email_sale_price_switch = (item, color) => {
-  if (item.sale_price !== 0) {
+export const email_sale_price_switch = (item, color, wholesaler) => {
+  if (wholesaler && item.wholesale_price) {
+    return <label className="fs-18px">WSP: ${item.wholesale_price ? item.wholesale_price?.toFixed(2) : item.wholesale_price}</label>;
+  } else if (item.sale_price !== 0) {
     return (
       <label>
         {determine_preorder(item) ? "Preorder " : ""}

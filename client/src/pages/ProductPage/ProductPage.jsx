@@ -310,7 +310,6 @@ const ProductPage = props => {
     if (option.secondary_color) {
       set_secondary_color(option.secondary_color);
     }
-    console.log({ isWholesaler: isWholesaler(current_user) });
     if (option.price > 0) {
       if (isWholesaler(current_user)) {
         set_wholesale_price(option.wholesale_price);
@@ -498,7 +497,7 @@ const ProductPage = props => {
       show_add_on,
       has_add_on: product.has_add_on,
       wholesale_product: product.wholesale_product,
-      wholesale_price: product.wholesale_price
+      wholesale_price: wholesale_price
     };
     console.log({ cart_item });
     if (preorder) {
@@ -895,6 +894,7 @@ const ProductPage = props => {
                     sale_price={sale_price}
                     previous_price={previous_price}
                     facts={facts}
+                    wholesale_price={wholesale_price}
                   />
                 </div>
                 <div className="details-action desktop_product_view" style={{ display: width > 819 ? "block" : "none" }}>
@@ -939,6 +939,7 @@ const ProductPage = props => {
                     set_secondary_image={set_secondary_image}
                     has_add_on={has_add_on}
                     set_sale_price={set_sale_price}
+                    wholesale_price={wholesale_price}
                   />
                 </div>
 
@@ -984,6 +985,7 @@ const ProductPage = props => {
                       set_secondary_image={set_secondary_image}
                       has_add_on={has_add_on}
                       set_sale_price={set_sale_price}
+                      wholesale_price={wholesale_price}
                     />
                   </div>
                   <div className="details-info mobile_product_view" style={{ display: width <= 819 ? "block" : "none" }}>

@@ -7,7 +7,7 @@ import Rating from "../../../shared/GlowLEDsComponents/GLRating/Rating";
 import { isWholesaler } from "../../../utils/helpers/user_helpers";
 import { useSelector } from "react-redux";
 
-const ProductSelection = ({ product, name, price, sale_price, previous_price, facts }) => {
+const ProductSelection = ({ product, name, price, sale_price, previous_price, facts, wholesale_price }) => {
   const user = useSelector(state => state.userSlice);
   const { current_user } = user;
   return (
@@ -29,7 +29,8 @@ const ProductSelection = ({ product, name, price, sale_price, previous_price, fa
           product.sale_end_date,
           false,
           "light",
-          isWholesaler(current_user)
+          isWholesaler(current_user),
+          wholesale_price
         )}
       </div>
       <ProductFacts

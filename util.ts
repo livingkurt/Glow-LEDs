@@ -660,8 +660,10 @@ const determine_preorder = (product: any) => {
   }
 };
 
-export const email_sale_price_switch = (item: any, color: any) => {
-  if (item.sale_price !== 0) {
+export const email_sale_price_switch = (item: any, color: any, wholesaler: boolean) => {
+  if (wholesaler && item.wholesale_price) {
+    return `<label>WSP: $${item.wholesale_price ? item.wholesale_price?.toFixed(2) : item.wholesale_price}</label>`;
+  } else if (item.sale_price !== 0) {
     return `<label>
 				${determine_preorder(item) ? "Preorder " : ""}
 				<del style='color: #a03131;'>
