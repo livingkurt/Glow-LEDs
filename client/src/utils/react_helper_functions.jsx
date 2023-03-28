@@ -107,7 +107,7 @@ export const product_page_sale_price_switch = (
   // 	? { color: '#7e7e7e' }
 
   // 	: background === 'light' ? { color: '#283166' } : { color: '#757b99' };
-  if (wholesaler) {
+  if (wholesaler && wholesale_price > 0) {
     return <label className="fs-18px">WSP: ${wholesale_price ? wholesale_price?.toFixed(2) : wholesale_price}</label>;
   }
   if (previous_price) {

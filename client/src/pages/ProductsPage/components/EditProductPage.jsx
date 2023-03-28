@@ -164,8 +164,6 @@ const EditProductPage = props => {
   const filamentSlice = useSelector(state => state.filamentSlice);
   const { filaments: filaments_list } = filamentSlice;
 
-  console.log({ filaments_list });
-
   const userSlice = useSelector(state => state.userSlice);
   const { users } = userSlice;
 
