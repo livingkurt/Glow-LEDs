@@ -1,83 +1,83 @@
 const typography = {
   htmlFontSize: 16,
-  fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+  fontFamily: '"title_font", "Roboto", "Helvetica", "Arial", sans-serif',
   fontSize: 14,
   fontWeightLight: 300,
   fontWeightRegular: 400,
   fontWeightMedium: 500,
   fontWeightBold: 700,
   h1: {
-    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+    fontFamily: '"title_font", "Roboto", "Helvetica", "Arial", sans-serif',
     fontWeight: 300,
     fontSize: "96px",
     lineHeight: 1,
     letterSpacing: "-0.66px"
   },
   h2: {
-    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+    fontFamily: '"title_font", "Roboto", "Helvetica", "Arial", sans-serif',
     fontWeight: 300,
     fontSize: "60px",
     lineHeight: 1,
     letterSpacing: "-0.5px"
   },
   h3: {
-    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+    fontFamily: '"title_font", "Roboto", "Helvetica", "Arial", sans-serif',
     fontWeight: 400,
     fontSize: "48px",
     lineHeight: 1.02,
     letterSpacing: "0px"
   },
   h4: {
-    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+    fontFamily: '"title_font", "Roboto", "Helvetica", "Arial", sans-serif',
     fontWeight: 400,
     fontSize: "34px",
     lineHeight: 1.15,
     letterSpacing: "0.07px"
   },
   h5: {
-    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+    fontFamily: '"title_font", "Roboto", "Helvetica", "Arial", sans-serif',
     fontWeight: 400,
     fontSize: "24px",
     lineHeight: 1.33,
     letterSpacing: "0px"
   },
   h6: {
-    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+    fontFamily: '"title_font", "Roboto", "Helvetica", "Arial", sans-serif',
     fontWeight: 500,
     fontSize: "20px",
     lineHeight: 1.6,
     letterSpacing: "0.07px"
   },
   subtitle1: {
-    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+    fontFamily: '"phrase_font", "Roboto", "Helvetica", "Arial", sans-serif',
     fontWeight: 400,
     fontSize: "16px",
     lineHeight: 1.75,
     letterSpacing: "0.09px"
   },
   subtitle2: {
-    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+    fontFamily: '"phrase_font", "Roboto", "Helvetica", "Arial", sans-serif',
     fontWeight: 500,
     fontSize: "14px",
     lineHeight: 1.57,
     letterSpacing: "0.07px"
   },
   body1: {
-    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+    fontFamily: '"paragraph_font", "Roboto", "Helvetica", "Arial", sans-serif',
     fontWeight: 400,
     fontSize: "16px",
     lineHeight: 1.5,
     letterSpacing: "0.09px"
   },
   body2: {
-    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+    fontFamily: '"paragraph_font", "Roboto", "Helvetica", "Arial", sans-serif',
     fontWeight: 400,
     fontSize: "14px",
     lineHeight: 1.43,
     letterSpacing: "0.1px"
   },
   button: {
-    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+    fontFamily: '"paragraph_font", "Roboto", "Helvetica", "Arial", sans-serif',
     fontWeight: 500,
     fontSize: "13px",
     lineHeight: 1.69,
@@ -85,14 +85,14 @@ const typography = {
     textTransform: "uppercase"
   },
   caption: {
-    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+    fontFamily: '"paragraph_font", "Roboto", "Helvetica", "Arial", sans-serif',
     fontWeight: 400,
     fontSize: "12px",
     lineHeight: 1.58,
     letterSpacing: "0.3px"
   },
   overline: {
-    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+    fontFamily: '"paragraph_font", "Roboto", "Helvetica", "Arial", sans-serif',
     fontWeight: 500,
     fontSize: "12px",
     lineHeight: 2.58,
@@ -283,7 +283,7 @@ const theme = {
     tooltip: 1500
   },
   nprogress: { color: "#000" },
-  themeName: "Covalent"
+  themeName: "Glow LEDs"
 };
 
 export default theme;

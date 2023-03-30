@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import GLModal from "../../../shared/GlowLEDsComponents/GLModal/GLModal";
 import { set_edit_tutorial_modal, set_tutorial } from "../../../slices/tutorialSlice";
 import * as API from "../../../api";
-import { GLAutocomplete, GLCheckboxV2, GLTextField } from "../../../shared/GlowLEDsComponents";
 import { Autocomplete, Checkbox, FormControlLabel, TextField } from "@mui/material";
 import { snake_case, toCapitalize } from "../../../utils/helper_functions";
 
