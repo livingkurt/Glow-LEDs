@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as API from "../../api";
 import { useHistory, useLocation } from "react-router-dom";
@@ -14,7 +14,7 @@ const TutorialsGridPage = () => {
   const history = useHistory();
   const location = useLocation();
   const tutorialSlice = useSelector(state => state.tutorialSlice);
-  const { tutorials, loading, error, tutorial_modal, tutorial } = tutorialSlice;
+  const { tutorials, loading, tutorial_modal, tutorial } = tutorialSlice;
 
   useEffect(() => {
     let clean = true;
