@@ -95,6 +95,7 @@ const GLAutocomplete = ({
   textFieldDataTest,
   margin,
   option_name,
+  customClasses,
   ...otherProps
 }) => {
   const default_classes = useStyles();

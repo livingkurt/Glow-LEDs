@@ -3,20 +3,31 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { Notification } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
-import * as API from "../../api/tutorialApi";
+
 import { getUrlParameter, months, update_products_url } from "../../utils/helper_functions";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import CSVReader from "react-csv-reader";
 import GLTable from "../../shared/GlowLEDsComponents/GLTable/GLTable";
-import { set_limit, set_loading, set_page, set_search, set_sort } from "../../slices/tutorialSlice";
+import {
+  open_edit_tutorial_modal,
+  set_edit_tutorial_modal,
+  set_limit,
+  set_loading,
+  set_page,
+  set_search,
+  set_sort,
+  set_tutorial
+} from "../../slices/tutorialSlice";
 import { API_Promos } from "../../utils";
+import { EditTutorialModal } from "./components";
+import * as API from "../../api";
 
 const TutorialsPage = props => {
   const history = useHistory();
   const category = props.match.params.category ? props.match.params.category : "";
 
   const tutorialsSlice = useSelector(state => state.tutorialSlice);
-  const { tutorials, message, totalPages, page, limit, sort, colors, search, sort_options } = tutorialsSlice;
+  const { tutorials, message, totalPages, page, limit, sort, colors, search, sort_options, success } = tutorialsSlice;
 
   const dispatch = useDispatch();
 
@@ -25,20 +36,20 @@ const TutorialsPage = props => {
   };
 
   const determine_color = tutorial => {
-    if (tutorial.sponsor) {
+    if (tutorial.active) {
       return colors[0].color;
     }
-    if (tutorial.team) {
-      return colors[2].color;
-    }
-    if (tutorial.rave_mob) {
-      return colors[4].color;
-    }
-    if (tutorial.promoter) {
+    if (tutorial.diffculty === "beginner") {
       return colors[1].color;
     }
-    if (!tutorial.active) {
+    if (tutorial.diffculty === "intermediate") {
+      return colors[2].color;
+    }
+    if (tutorial.diffculty === "advanced") {
       return colors[3].color;
+    }
+    if (!tutorial.active) {
+      return colors[4].color;
     }
     return "";
   };
@@ -64,7 +75,7 @@ const TutorialsPage = props => {
       determine_tutorials();
     }
     return () => (clean = false);
-  }, []);
+  }, [success]);
 
   const determine_tutorials = () => {
     const query = getUrlParameter(props.location);
@@ -109,23 +120,6 @@ const TutorialsPage = props => {
     }
   };
 
-  const update_discount = async e => {
-    e.preventDefault();
-    dispatch(set_loading(true));
-    const date = new Date();
-    const request = await API_Promos.update_discount(date.getFullYear(), months[date.getMonth()]);
-    if (request) {
-      determine_tutorials();
-    }
-    dispatch(set_loading(false));
-  };
-
-  const create_rave_mob_tutorials = async csv => {
-    const { data } = dispatch(API.create_rave_mob_tutorials(csv));
-
-    determine_tutorials();
-  };
-
   const column_defs = [
     {
       title: "Active",
@@ -147,14 +141,10 @@ const TutorialsPage = props => {
         </GLButton>
       )
     },
-    { title: "Artist Name", display: "artist_name" },
-    {
-      title: "Percentage Off",
-      display: tutorial => `${tutorial.private_code && tutorial.private_code.percentage_off}%`
-    },
-    { title: "Venmo", display: "venmo" },
-    { title: "Public Code", display: tutorial => tutorial.private_code && tutorial.public_code.promo_code },
-    { title: "Private Code", display: tutorial => tutorial.private_code && tutorial.private_code.promo_code }
+    { title: "Title", display: "title" },
+    { title: "Video", display: "video" },
+    { title: "Level", display: "level" },
+    { title: "Categorys", display: "categorys" }
   ];
 
   return (
@@ -164,19 +154,11 @@ const TutorialsPage = props => {
       </Helmet>
       <Notification message={message} />
       <div className="wrap jc-b">
-        <GLButton variant="primary" className="h-40px">
-          <CSVReader
-            onFileLoaded={(data, fileInfo, originalFile) => create_rave_mob_tutorials(data, fileInfo, originalFile)}
-            label="Create Rave Mob Tutorials"
-          />
+        <GLButton variant="primary" onClick={() => dispatch(open_edit_tutorial_modal())}>
+          Create Tutorial
         </GLButton>
-        <GLButton variant="primary" onChange={update_discount}>
-          Update Discount
-        </GLButton>
-        <Link to="/secure/glow/edittutorial">
-          <GLButton variant="primary">Create Tutorial</GLButton>
-        </Link>
       </div>
+      <EditTutorialModal />
       <Notification message={message} />
       <GLTable
         title="Tutorials"
@@ -203,16 +185,16 @@ const TutorialsPage = props => {
         update_page={update_page}
         action_row={tutorial => (
           <div className="jc-b">
-            <Link
-              to={{
-                pathname: "/secure/glow/edittutorial/" + tutorial.pathname,
-                previous_path: history.location.pathname + history.location.search
+            <GLButton
+              variant="icon"
+              aria-label="Edit"
+              onClick={() => {
+                dispatch(set_tutorial(tutorial));
+                dispatch(set_edit_tutorial_modal(true));
               }}
             >
-              <GLButton variant="icon" aria-label="Edit">
-                <i className="fas fa-edit" />
-              </GLButton>
-            </Link>
+              <i className="fas fa-edit" />
+            </GLButton>
             <GLButton variant="icon" onClick={() => deleteHandler(tutorial.pathname)} aria-label="Delete">
               <i className="fas fa-trash-alt" />
             </GLButton>

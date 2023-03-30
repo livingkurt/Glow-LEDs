@@ -1,13 +1,11 @@
-import { Promo } from "../promos";
-import { Tutorial } from ".";
+import Tutorial from "./tutorial";
 
 export default {
   findAll_tutorials_db: async (filter: any, sort: any, limit: any, page: any) => {
     try {
       return await Tutorial.find(filter)
         .sort(sort)
-        .populate("user")
-
+        .populate("affiliate")
         .limit(parseInt(limit))
         .skip((page - 1) * limit)
         .exec();
@@ -19,7 +17,7 @@ export default {
   },
   findBy_tutorials_db: async (params: any) => {
     try {
-      return await Tutorial.findOne(params).populate("user");
+      return await Tutorial.findOne(params).populate("affiliate");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -28,7 +26,7 @@ export default {
   },
   findByPathname_tutorials_db: async (pathname: string) => {
     try {
-      return await Tutorial.findOne({ pathname: pathname }).populate("user");
+      return await Tutorial.findOne({ pathname: pathname }).populate("affiliate");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -37,7 +35,7 @@ export default {
   },
   findById_tutorials_db: async (id: string) => {
     try {
-      return await Tutorial.findOne({ _id: id }).populate("user");
+      return await Tutorial.findOne({ _id: id }).populate("affiliate");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -54,10 +52,11 @@ export default {
     }
   },
   update_tutorials_db: async (params: any, body: any) => {
+    const { id } = params;
     try {
-      const tutorial: any = await Tutorial.findOne({ pathname: params.pathname });
+      const tutorial: any = await Tutorial.findOne({ _id: id });
       if (tutorial) {
-        return await Tutorial.updateOne({ pathname: params.pathname }, body);
+        return await Tutorial.updateOne({ _id: id }, body);
       }
     } catch (error) {
       if (error instanceof Error) {

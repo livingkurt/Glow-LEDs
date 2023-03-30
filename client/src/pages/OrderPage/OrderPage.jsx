@@ -132,20 +132,20 @@ const OrderPage = props => {
     }
   };
 
-  useEffect(() => {
-    let clean = true;
-    if (clean) {
-      if (successPay && order) {
-        // history.push('/secure/checkout/paymentcomplete/' + order._id);
-        history.push("/secure/checkout/order/receipt/" + order._id + "/order/true");
-        dispatch(API.detailsOrder(props.match.params.id));
-        set_payment_loading(false);
-        empty_cart();
-      } else if (errorPay) {
-      }
-    }
-    return () => (clean = false);
-  }, [successPay]);
+  // useEffect(() => {
+  //   let clean = true;
+  //   if (clean) {
+  //     if (successPay && order) {
+  //       // history.push('/secure/checkout/paymentcomplete/' + order._id);
+  //       history.push("/secure/checkout/order/receipt/" + order._id + "/order/true");
+  //       dispatch(API.detailsOrder(props.match.params.id));
+  //       set_payment_loading(false);
+  //       empty_cart();
+  //     } else if (errorPay) {
+  //     }
+  //   }
+  //   return () => (clean = false);
+  // }, [successPay]);
 
   useEffect(() => {
     let clean = true;

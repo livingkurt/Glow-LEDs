@@ -55,9 +55,9 @@ export default {
   },
   update_wholesalers_db: async (params: any, body: any) => {
     try {
-      const wholesaler: any = await Wholesaler.findOne({ pathname: params.pathname });
+      const wholesaler: any = await Wholesaler.findOne({ _id: params.id });
       if (wholesaler) {
-        return await Wholesaler.updateOne({ pathname: params.pathname }, body);
+        return await Wholesaler.updateOne({ _id: params.id }, body);
       }
     } catch (error) {
       if (error instanceof Error) {

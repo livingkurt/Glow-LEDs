@@ -92,11 +92,11 @@ export default (props: any) => {
 				</td>
 				<td valign="top" align="right"
 					style="padding: 5px; vertical-align: top; text-align: right; border-bottom: 1px solid black;"><label>
-						${email_sale_price_switch(item, "black")}</label></td>
+						${email_sale_price_switch(item, "black", order?.user?.wholesaler)}</label></td>
 			</tr>`
           )
           .join("")}
-       
+
       </tbody>
     </table>
 

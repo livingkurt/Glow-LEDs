@@ -7,13 +7,15 @@ const tutorialsSlice = createSlice({
     loading: false,
     tutorials: [],
     tutorial: {
-      id: "",
       affiliate: "",
+      title: "",
       video: "",
       description: "",
-      categories: "",
-      difficulty: ""
+      categorys: [],
+      level: "",
+      active: false
     },
+    edit_tutorial_modal: false,
     message: "",
     success: false,
     error: {},
@@ -33,6 +35,7 @@ const tutorialsSlice = createSlice({
   reducers: {
     set_tutorial: (state, { payload }) => {
       const updated_tutorial = payload;
+      console.log({ updated_tutorial });
       return {
         ...state,
         tutorial: { ...state.tutorial, ...updated_tutorial }
@@ -55,6 +58,21 @@ const tutorialsSlice = createSlice({
     },
     set_limit: (state, { payload }) => {
       state.limit = payload;
+    },
+    set_edit_tutorial_modal: (state, { payload }) => {
+      state.edit_tutorial_modal = payload;
+    },
+    open_edit_tutorial_modal: (state, { payload }) => {
+      state.edit_tutorial_modal = true;
+      state.tutorial = {
+        affiliate: "",
+        title: "",
+        video: "",
+        description: "",
+        categorys: [],
+        level: "",
+        active: false
+      };
     }
   },
   extraReducers: {
@@ -79,7 +97,8 @@ const tutorialsSlice = createSlice({
     },
     [API.saveTutorial.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.tutorial = payload.tutorial;
+      state.edit_tutorial_modal = false;
+      state.success = true;
       state.message = "Tutorial Saved";
     },
     [API.saveTutorial.rejected as any]: (state: any, { payload }: any) => {
@@ -116,5 +135,15 @@ const tutorialsSlice = createSlice({
   }
 });
 
-export const { set_search, set_sort, set_page, set_success, set_limit, set_loading, set_tutorial } = tutorialsSlice.actions;
+export const {
+  set_search,
+  set_sort,
+  set_page,
+  set_success,
+  set_limit,
+  set_loading,
+  set_tutorial,
+  set_edit_tutorial_modal,
+  open_edit_tutorial_modal
+} = tutorialsSlice.actions;
 export default tutorialsSlice.reducer;

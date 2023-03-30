@@ -82,9 +82,9 @@ import { EditUserPage, UsersPage } from "./pages/UsersPage";
 import { CheckEmailPage } from "./pages/LoginPage/components";
 import { AffiliateTermsPage } from "./pages/AffiliatesPage/components";
 import { Four04Page } from "./pages/Four04Page";
-import { LearnGridPage } from "./pages/LearnPage";
 import { TutorialsPage } from "./pages/TutorialsPage";
 import { WholesalersPage } from "./pages/WholesalersPage";
+import { TutorialsGridPage } from "./pages/TutorialsGridPage";
 
 const App = props => {
   const theme_colors = {
@@ -401,8 +401,8 @@ const App = props => {
                 <Route path="/collections/all/teams/:pathname?" exact={true} component={TeamPage} />
 
                 {/* Team Collections */}
-                <Route path="/collections/all/tutorials/category/:category?" exact={true} component={LearnGridPage} />
-                <Route path="/collections/all/tutorials" exact={true} component={LearnGridPage} />
+                <Route path="/collections/all/tutorials/category/:category?" exact={true} component={TutorialsGridPage} />
+                <Route path="/collections/all/tutorials" exact={true} component={TutorialsGridPage} />
                 {/* <Route path="/collections/all/tutorials/:pathname?" exact={true} component={TeamPage} /> */}
 
                 {/* Pages */}

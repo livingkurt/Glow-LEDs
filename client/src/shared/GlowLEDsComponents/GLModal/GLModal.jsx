@@ -1,119 +1,186 @@
+/* eslint-disable max-lines-per-function */
 import React from "react";
-import useWindowDimensions from "../../Hooks/windowDimensions";
-import GLButton from "../GLButton/GLButton";
-import GLCheckbox from "../GLCheckbox/GLCheckbox";
-import styles from "./GLModal.module.scss";
-import "./GLModal.scss";
+import PropTypes from "prop-types";
 
-const GLModal = ({
-  children,
-  id,
-  show_modal,
-  set_show_modal,
-  title,
-  onAction,
-  onConfirm,
-  onCancel,
-  onEnter,
-  actionLabel,
-  confirmLabel,
-  confirmDisabled,
-  confirmLoading,
-  cancelLabel,
-  dividers,
-  actionVariant,
-  cancelVariant,
-  actionColor,
-  cancelColor,
-  confirmColor,
-  confirmVariant,
-  maxWidth,
-  fullWidth,
-  dataTest,
-  dialogClasses,
-  titleClasses,
-  contentClasses,
-  actionClasses,
-  cancelDisabled,
-  actionDisabled,
-  disableEscapeKeyDown,
-  onClose,
-  showClose,
-  ...otherProps
-}) => {
+// import { themeColorShape, buttonVariantShape } from "../Utils/shapes";
+import styles from "./GLModal.module.scss";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
+
+const GLModal = props => {
+  const {
+    id,
+    isOpen,
+    title,
+    onAction,
+    onConfirm,
+    onCancel,
+    onEnter,
+    actionLabel,
+    confirmLabel,
+    confirmDisabled,
+    confirmLoading,
+    cancelLabel,
+    dividers,
+    actionVariant,
+    cancelVariant,
+    actionColor,
+    cancelColor,
+    confirmColor,
+    confirmVariant,
+    children,
+    maxWidth,
+    fullWidth,
+    dataTest,
+    dialogClasses,
+    titleClasses,
+    contentClasses,
+    actionClasses,
+    cancelDisabled,
+    actionDisabled,
+    disableEscapeKeyDown
+  } = props;
+
   return (
-    <div
-      id="gl-modal"
-      className="modal"
-      style={{
-        display: show_modal ? "block" : "none"
-      }}
-    >
-      <div className="gl-modal-content">
-        <div className="gl-modal-header">
-          {showClose && (
-            <span className="gl-close" onClick={onClose}>
-              &times;
-            </span>
-          )}
-          <h2 id={title}> {title}</h2>
-          <hr></hr>
-        </div>
-        <div className="gl-modal-body">{children}</div>
-        <div className="gl-modal-footer">
-          {actionLabel ? (
-            <div className={styles.actionButton}>
-              <GLButton
-                dataTest="modal-action-button"
-                customClassNames="actionButton"
-                onClick={onAction}
-                variant={actionVariant}
-                color={actionColor}
-                disabled={actionDisabled}
-                aria-label={actionLabel}
-              >
-                {actionLabel}
-              </GLButton>
+    <div data-test={dataTest}>
+      <Dialog
+        id={id}
+        TransitionProps={onEnter}
+        classes={dialogClasses}
+        open={isOpen}
+        onClose={onCancel}
+        aria-labelledby={title}
+        maxWidth={maxWidth}
+        fullWidth={fullWidth}
+        disableEnforceFocus
+        disableEscapeKeyDown={disableEscapeKeyDown}
+      >
+        {title && (
+          <DialogTitle classes={titleClasses} id={title}>
+            {title}
+          </DialogTitle>
+        )}
+        <DialogContent classes={contentClasses} dividers={dividers} tabIndex={-1}>
+          {children}
+        </DialogContent>
+        <DialogActions classes={actionClasses}>
+          <div className={`${styles.buttonContainer} modalButtonContainer`}>
+            {actionLabel && (
+              <div className={styles.actionButton}>
+                <Button
+                  dataTest="modal-action-button"
+                  customClassNames="actionButton"
+                  onClick={onAction}
+                  variant={actionVariant}
+                  color={actionColor}
+                  disabled={actionDisabled}
+                  aria-label={actionLabel}
+                >
+                  {actionLabel}
+                </Button>
+              </div>
+            )}
+            <div className={styles.dialogButtons}>
+              {cancelLabel && (
+                <Button
+                  id="modalCancelButton"
+                  dataTest="modal-cancel-button"
+                  customClassNames="cancelButton"
+                  onClick={onCancel}
+                  variant={cancelVariant}
+                  color={cancelColor}
+                  disabled={cancelDisabled}
+                  aria-label={cancelLabel}
+                >
+                  {cancelLabel}
+                </Button>
+              )}
+
+              {confirmLabel && (
+                <Button
+                  id="modalSubmitButton"
+                  dataTest="submit"
+                  customClassNames="submitButton"
+                  onClick={onConfirm}
+                  variant={confirmVariant}
+                  color={confirmColor}
+                  disabled={confirmDisabled}
+                  aria-label={confirmLabel}
+                  loadingOnly={confirmLoading}
+                  loading={confirmLoading}
+                >
+                  {confirmLabel}
+                </Button>
+              )}
             </div>
-          ) : (
-            <div />
-          )}
-          <div className={styles.dialogButtons}>
-            {cancelLabel && (
-              <GLButton
-                id="modalCancelButton"
-                dataTest="modal-cancel-button"
-                customClassNames="cancelButton"
-                onClick={onCancel}
-                variant={cancelVariant}
-                color={cancelColor}
-                disabled={cancelDisabled}
-                aria-label={cancelLabel}
-              >
-                {cancelLabel}
-              </GLButton>
-            )}
-            {confirmLabel && (
-              <GLButton
-                id="modalSubmitButton"
-                dataTest="submit"
-                customClassNames="submitButton"
-                onClick={onConfirm}
-                variant={confirmVariant}
-                color={confirmColor}
-                disabled={confirmDisabled}
-                aria-label={confirmLabel}
-                loadingOnly={confirmLoading}
-                loading={confirmLoading}
-              >
-                {confirmLabel}
-              </GLButton>
-            )}
           </div>
-        </div>
-      </div>
+        </DialogActions>
+      </Dialog>
     </div>
   );
+};
+
+GLModal.defaultProps = {
+  id: null,
+  isOpen: false,
+  dividers: true,
+  confirmDisabled: false,
+  cancelDisabled: false,
+  actionDisabled: false,
+  confirmLabel: null,
+  confirmLoading: false,
+  cancelLabel: null,
+  actionLabel: null,
+  title: null,
+  onAction: null,
+  onConfirm: null,
+  onCancel: null,
+  cancelVariant: "contained",
+  cancelColor: "primary",
+  confirmColor: "primary",
+  confirmVariant: "contained",
+  actionVariant: "contained",
+  actionColor: "primary",
+  maxWidth: "md",
+  fullWidth: true,
+  dataTest: "mui-dialog-container",
+  dialogClasses: null,
+  titleClasses: null,
+  contentClasses: null,
+  actionClasses: null,
+  onEnter: null,
+  disableEscapeKeyDown: false
+};
+
+GLModal.propTypes = {
+  id: PropTypes.string,
+  isOpen: PropTypes.bool,
+  dividers: PropTypes.bool,
+  disableEscapeKeyDown: PropTypes.bool,
+  confirmDisabled: PropTypes.bool,
+  cancelDisabled: PropTypes.bool,
+  actionDisabled: PropTypes.bool,
+  title: PropTypes.string,
+  onConfirm: PropTypes.func,
+  onCancel: PropTypes.func,
+  onAction: PropTypes.func,
+  onEnter: PropTypes.func,
+  actionLabel: PropTypes.string,
+  confirmLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  confirmLoading: PropTypes.bool,
+  cancelLabel: PropTypes.string,
+  // cancelVariant: buttonVariantShape,
+  // actionVariant: buttonVariantShape,
+  // cancelColor: themeColorShape,
+  // confirmColor: themeColorShape,
+  // actionColor: themeColorShape,
+  // confirmVariant: buttonVariantShape,
+  maxWidth: PropTypes.string,
+  fullWidth: PropTypes.bool,
+  dataTest: PropTypes.string,
+  dialogClasses: PropTypes.object,
+  titleClasses: PropTypes.object,
+  contentClasses: PropTypes.object,
+  actionClasses: PropTypes.object
 };
 
 export default GLModal;

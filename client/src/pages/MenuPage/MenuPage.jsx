@@ -156,6 +156,24 @@ const MenuPage = props => {
           link: "/collections/all/teams"
         }
       ];
+    } else if (pathname === "learn") {
+      return [
+        {
+          label: "Beginner",
+          image: "https://thumbs2.imgbox.com/f7/ca/Su3FEQr9_t.jpg",
+          link: "/collections/all/tutorials?level=beginner"
+        },
+        {
+          label: "Intermediate",
+          image: "https://thumbs2.imgbox.com/8c/7e/kjzjFzne_t.jpg",
+          link: "/collections/all/teams?level=intermediate"
+        },
+        {
+          label: "Advanced",
+          image: "https://thumbs2.imgbox.com/8c/7e/kjzjFzne_t.jpg",
+          link: "/collections/all/teams?level=advanced"
+        }
+      ];
     } else if (pathname === "collections") {
       return [
         {

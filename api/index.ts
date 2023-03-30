@@ -26,7 +26,6 @@ import tutorial_routes from "./tutorials/tutorial_routes";
 
 const router = express.Router();
 
-// Book routes
 router.use("/api/promos", promo_routes);
 router.use("/api/carts", cart_routes);
 router.use("/api/contents", content_routes);

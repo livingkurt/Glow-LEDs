@@ -42,22 +42,12 @@ export const detailsTutorial = createAsyncThunk("tutorials/detailsTutorial", asy
   } catch (error) {}
 });
 
-export const deleteTutorial = createAsyncThunk("tutorials/deleteTutorial", async (pathname, thunkApi: any) => {
+export const deleteTutorial = createAsyncThunk("tutorials/deleteTutorial", async (id: string, thunkApi: any) => {
   try {
     const {
       userSlice: { current_user }
     } = thunkApi.getState();
-    const { data } = await axios.delete("/api/tutorials/" + pathname, headers(current_user));
-    return data;
-  } catch (error) {}
-});
-
-export const create_rave_mob_tutorials = createAsyncThunk("tutorials/create_rave_mob_tutorials", async (csv, thunkApi: any) => {
-  try {
-    const {
-      userSlice: { current_user }
-    } = thunkApi.getState();
-    const { data } = await axios.put("/api/tutorials/create_rave_mob_tutorials", { csv }, headers(current_user));
+    const { data } = await axios.delete(`/api/tutorials/${id}`, headers(current_user));
     return data;
   } catch (error) {}
 });
