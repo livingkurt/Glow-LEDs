@@ -34,7 +34,7 @@ const TutorialsGridPage = () => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(API.listTutorials());
+      dispatch(API.listTutorials({ sort: "order" }));
     }
     return () => (clean = false);
   }, [dispatch]);
@@ -56,9 +56,9 @@ const TutorialsGridPage = () => {
       <h1 className="ta-c">Learn Gloving</h1>
       <h2 className="ta-c">You're Journey Starts Here</h2>
       <p>
-        Welcome to our our gloving dojo! Learn the art of gloving with our collection of videos, from the basics to melting serious face.
-        Our talented glovers will guide you step by step, providing tips and tricks to help you improve your skills and create your own
-        unique light shows. Get ready to leave your audiance speechless with your mesmorizing moves!
+        Welcome to our Gloving Training Arena! Learn the art of gloving with our collection of videos, from the basics to melting serious
+        face. Our talented glovers will guide you step by step, providing tips and tricks to help you improve your skills and create your
+        own unique light shows. Get ready to leave your audiance speechless with your mesmorizing moves!
       </p>
       <h2 className="ta-c">Beginner</h2>
       <Loading loading={loading}>
