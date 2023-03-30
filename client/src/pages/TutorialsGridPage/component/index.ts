@@ -1,2 +1,1 @@
-export { default as TutorialItemD } from "./TutorialItemD";
-export { default as TutorialItemM } from "./TutorialItemM";
+export { default as TutorialModal } from "./TutorialModal";

@@ -16,6 +16,7 @@ const tutorialsSlice = createSlice({
       active: false
     },
     edit_tutorial_modal: false,
+    tutorial_modal: false,
     message: "",
     success: false,
     error: {},
@@ -73,6 +74,22 @@ const tutorialsSlice = createSlice({
         level: "",
         active: false
       };
+    },
+    close_tutorial_modal: (state, { payload }) => {
+      state.tutorial_modal = false;
+      state.tutorial = {
+        affiliate: "",
+        title: "",
+        video: "",
+        description: "",
+        categorys: [],
+        level: "",
+        active: false
+      };
+    },
+    open_tutorial_modal: (state, { payload }) => {
+      state.tutorial_modal = true;
+      state.tutorial = payload;
     }
   },
   extraReducers: {
@@ -144,6 +161,8 @@ export const {
   set_loading,
   set_tutorial,
   set_edit_tutorial_modal,
-  open_edit_tutorial_modal
+  open_edit_tutorial_modal,
+  open_tutorial_modal,
+  close_tutorial_modal
 } = tutorialsSlice.actions;
 export default tutorialsSlice.reducer;

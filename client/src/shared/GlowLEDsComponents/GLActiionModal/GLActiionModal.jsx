@@ -3,10 +3,10 @@ import React from "react";
 import PropTypes from "prop-types";
 
 // import { themeColorShape, buttonVariantShape } from "../Utils/shapes";
-import styles from "./GLModal.module.scss";
+import styles from "./GLActiionModal.module.scss";
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
 
-const GLModal = props => {
+const GLActiionModal = props => {
   const {
     id,
     isOpen,
@@ -119,7 +119,7 @@ const GLModal = props => {
   );
 };
 
-GLModal.defaultProps = {
+GLActiionModal.defaultProps = {
   id: null,
   isOpen: false,
   dividers: true,
@@ -151,7 +151,7 @@ GLModal.defaultProps = {
   disableEscapeKeyDown: false
 };
 
-GLModal.propTypes = {
+GLActiionModal.propTypes = {
   id: PropTypes.string,
   isOpen: PropTypes.bool,
   dividers: PropTypes.bool,
@@ -183,4 +183,4 @@ GLModal.propTypes = {
   actionClasses: PropTypes.object
 };
 
-export default GLModal;
+export default GLActiionModal;

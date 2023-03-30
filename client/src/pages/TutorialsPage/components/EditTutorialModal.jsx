@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import GLModal from "../../../shared/GlowLEDsComponents/GLModal/GLModal";
+import GLModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiionModal";
 import { set_edit_tutorial_modal, set_tutorial } from "../../../slices/tutorialSlice";
 import * as API from "../../../api";
 import { Autocomplete, Checkbox, FormControlLabel, TextField } from "@mui/material";

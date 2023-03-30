@@ -1,5 +1,5 @@
 import React from "react";
-import GLModal from "../../../shared/GlowLEDsComponents/GLModal/GLModal";
+import GLModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiionModal";
 
 const EditWholesalerModal = () => {
   return (

@@ -14,7 +14,7 @@ import { isMobile } from "react-device-detect";
 import Autocomplete from "./AddressAutocomplete";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import GLTooltip from "../../../shared/GlowLEDsComponents/GLTooltip/GLTooltip";
-import GLModal from "../../../shared/GlowLEDsComponents/GLModal/GLModal";
+import GLModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiionModal";
 import GLCheckbox from "../../../shared/GlowLEDsComponents/GLCheckbox/GLCheckbox";
 import { isAdmin } from "../../../utils/helpers/user_helpers";
 import { useGetAllShippingOrdersQuery } from "../placeOrderApi";
