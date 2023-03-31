@@ -8,7 +8,7 @@ import { snake_case, toCapitalize } from "../../../utils/helper_functions";
 
 const EditTutorialModal = () => {
   const dispatch = useDispatch();
-  const tutorialsSlice = useSelector(state => state.tutorialSlice);
+  const tutorialsSlice = useSelector(state => state.tutorialSlice.tutorialPage);
   const { edit_tutorial_modal, tutorial, loading } = tutorialsSlice;
   const { affiliate, title, video, description, categorys, level, order, active, pathname } = tutorial;
 

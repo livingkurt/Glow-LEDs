@@ -13,7 +13,7 @@ const TutorialsGridPage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
-  const tutorialSlice = useSelector(state => state.tutorialSlice);
+  const tutorialSlice = useSelector(state => state.tutorialSlice.tutorialPage);
   const { tutorials, loading, tutorial_modal, tutorial } = tutorialSlice;
 
   useEffect(() => {

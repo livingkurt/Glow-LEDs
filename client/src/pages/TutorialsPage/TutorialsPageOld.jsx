@@ -27,7 +27,7 @@ const TutorialsPage = props => {
   const history = useHistory();
   const category = props.match.params.category ? props.match.params.category : "";
 
-  const tutorialsSlice = useSelector(state => state.tutorialSlice);
+  const tutorialsSlice = useSelector(state => state.tutorialSlice.tutorialPage);
   const { tutorials, message, totalPages, page, limit, sort, colors, search, sort_options, success } = tutorialsSlice;
 
   const dispatch = useDispatch();

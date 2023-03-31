@@ -27,6 +27,7 @@ import { placeOrderApi } from "./pages/PlaceOrderPage/placeOrderApi";
 import { allRecordsApi } from "./api/allRecordsApi";
 import glTableReducer from "./shared/GlowLEDsComponents/GLTableV2/reducers/glTableReducer";
 import dashboardSlice from "./pages/DashboardPage/dashboardSlice";
+import { combineReducers } from "redux";
 
 const reducers = {
   affiliateSlice: affiliateSlice,
@@ -53,12 +54,14 @@ const reducers = {
   [placeOrderApi.reducerPath]: placeOrderApi.reducer,
   dashboardSlice: dashboardSlice,
   wholesalerSlice: wholesalerSlice,
-  tutorialSlice: tutorialSlice,
-  tutorialTable: glTableReducer("tutorialTable", {
-    searchBy: (row: any, search: string) => {
-      const searchableText = row.title;
-      return searchableText.toLowerCase().includes(search.toLowerCase());
-    }
+  tutorialSlice: combineReducers({
+    tutorialPage: tutorialSlice,
+    tutorialTable: glTableReducer("tutorialTable", {
+      searchBy: (row: any, search: string) => {
+        const searchableText = row.title;
+        return searchableText.toLowerCase().includes(search.toLowerCase());
+      }
+    })
   })
 };
 

@@ -11,7 +11,7 @@ import { Button } from "@mui/material";
 import { getTutorials } from "../../api";
 
 const TutorialsPage = () => {
-  const tutorialsSlice = useSelector(state => state.tutorialSlice);
+  const tutorialsSlice = useSelector(state => state.tutorialSlice.tutorialPage);
   const { message, loading, remoteVersionRequirement } = tutorialsSlice;
 
   const dispatch = useDispatch();
@@ -77,6 +77,7 @@ const TutorialsPage = () => {
         remoteApi={remoteApi}
         remoteVersionRequirement={remoteVersionRequirement}
         tableName={"Tutorials"}
+        namespaceScope="tutorialSlice"
         namespace="tutorialTable"
         columnDefs={column_defs}
         loading={loading}
