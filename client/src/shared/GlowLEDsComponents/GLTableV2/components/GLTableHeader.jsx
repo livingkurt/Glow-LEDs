@@ -27,6 +27,7 @@ const GLTableHeader = ({ columns, order, orderBy, numSelected, rowCount, enableR
             data-test={`${namespace}-checkbox-all`}
           >
             <Checkbox
+              size="large"
               id="tableSelectAll"
               indeterminate={numSelected > 0 && numSelected < rowCount}
               checked={rowCount > 0 && numSelected === rowCount}

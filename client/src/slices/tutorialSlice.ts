@@ -17,6 +17,7 @@ const tutorialsSlice = createSlice({
       order: null,
       active: false
     },
+    remoteVersionRequirement: 0,
     edit_tutorial_modal: false,
     tutorial_modal: false,
     message: "",
@@ -103,6 +104,16 @@ const tutorialsSlice = createSlice({
     }
   },
   extraReducers: {
+    // [API.getTutorials.pending as any]: state => {
+    //   state.loading = true;
+    // },
+    // [API.getTutorials.fulfilled as any]: (state, { payload }) => {
+    //   state.tutorials = payload.data;
+    //   state.loading = false;
+    // },
+    // [API.getTutorials.rejected as any]: state => {
+    //   state.loading = false;
+    // },
     [API.listTutorials.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
       state.tutorials = [];

@@ -69,6 +69,7 @@ const GLTableRow = ({
         {enableRowSelect && (
           <TableCell padding="checkbox" key={row.id}>
             <Checkbox
+              size="large"
               color="primary"
               checked={enableRowSelect && isItemSelected}
               inputProps={{

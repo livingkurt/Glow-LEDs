@@ -3,7 +3,68 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { create_query } from "../utils/helper_functions";
 import { headers } from "../utils/helpers/user_helpers";
+import pickBy from "lodash/pickBy";
 
+export const getTutorials = async ({
+  search,
+  sorting,
+  filters,
+  page,
+  pageSize
+}: {
+  search: string;
+  sorting: any;
+  filters: any;
+  page: number;
+  pageSize: number;
+}) => {
+  try {
+    return axios.get(`/api/tutorials`, {
+      params: {
+        limit: pageSize,
+        page: page,
+        search: search
+        // sort: sorting,
+        // filters: pickBy(filters, (val: any) => val.length > 0)
+      }
+    });
+  } catch (error) {}
+};
+// export const getTutorials = createAsyncThunk(
+//   "tutorials/getTutorials",
+//   async (
+//     {
+//       search,
+//       sorting,
+//       filters,
+//       page,
+//       pageSize
+//     }: {
+//       search: string;
+//       sorting: any;
+//       filters: any;
+//       page: number;
+//       pageSize: number;
+//     },
+//     thunkApi: any
+//   ) => {
+//     try {
+//       const {
+//         userSlice: { current_user }
+//       } = thunkApi.getState();
+//       return axios.get(`/api/tutorials`, {
+//         ...headers(current_user),
+//         params: {
+//           take: pageSize,
+//           skip: page * pageSize,
+//           search_value: search,
+//           sorting,
+//           filters: pickBy(filters, (val: any) => val.length > 0)
+//         }
+//       });
+//     } catch (error) {}
+//   }
+// );
 export const listTutorials = createAsyncThunk("tutorials/listTutorials", async (query: any, thunkApi: any) => {
   try {
     const {

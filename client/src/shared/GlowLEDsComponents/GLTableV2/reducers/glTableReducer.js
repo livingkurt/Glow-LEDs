@@ -88,6 +88,7 @@ const reducer =
           },
           id
         } = action.payload;
+        console.log({ data, total_count, id });
         const idNumber = Number(id);
         const newRemotePageLoadingState = { ...state.remote.remotePageLoadingState, [id]: true };
         const lastRequestedPageId = Math.max(...Object.keys(newRemotePageLoadingState).map(x => Number(x)));
