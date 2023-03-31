@@ -25,7 +25,7 @@ import {
 import { dashboardApi } from "./pages/DashboardPage/dashboardApi";
 import { placeOrderApi } from "./pages/PlaceOrderPage/placeOrderApi";
 import { allRecordsApi } from "./api/allRecordsApi";
-// import glTableReducer from "./shared/GlowLEDsComponents/GLTableV2/reducers/glTableReducer";
+import glTableReducer from "./shared/GlowLEDsComponents/GLTableV2/reducers/glTableReducer";
 import dashboardSlice from "./pages/DashboardPage/dashboardSlice";
 
 const reducers = {
@@ -53,7 +53,13 @@ const reducers = {
   [placeOrderApi.reducerPath]: placeOrderApi.reducer,
   dashboardSlice: dashboardSlice,
   wholesalerSlice: wholesalerSlice,
-  tutorialSlice: tutorialSlice
+  tutorialSlice: tutorialSlice,
+  tutorialTable: glTableReducer("tutorialTable", {
+    searchBy: (row: any, search: string) => {
+      const searchableText = row.title;
+      return searchableText.toLowerCase().includes(search.toLowerCase());
+    }
+  })
 };
 
 export default reducers;
