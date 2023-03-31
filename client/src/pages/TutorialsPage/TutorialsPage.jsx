@@ -24,9 +24,6 @@ import { EditTutorialModal } from "./components";
 import * as API from "../../api";
 
 const TutorialsPage = props => {
-  const history = useHistory();
-  const category = props.match.params.category ? props.match.params.category : "";
-
   const tutorialsSlice = useSelector(state => state.tutorialSlice);
   const { tutorials, message, totalPages, page, limit, sort, colors, search, sort_options, success, loading } = tutorialsSlice;
 
@@ -64,7 +61,27 @@ const TutorialsPage = props => {
     { title: "Title", display: "title" },
     { title: "Video", display: "video" },
     { title: "Level", display: "level" },
-    { title: "Categorys", display: "categorys" }
+    { title: "Order", display: "order" },
+    { title: "Categorys", display: "categorys" },
+    {
+      title: "Actions",
+      display: tutorial => (
+        <div className="jc-b">
+          <GLButton
+            variant="icon"
+            aria-label="Edit"
+            onClick={() => {
+              dispatch(open_edit_tutorial_modal(tutorial));
+            }}
+          >
+            <i className="fas fa-edit" />
+          </GLButton>
+          <GLButton variant="icon" onClick={() => dispatch(API.deleteTutorial(tutorial.pathname))} aria-label="Delete">
+            <i className="fas fa-trash-alt" />
+          </GLButton>
+        </div>
+      )
+    }
   ];
 
   return (
