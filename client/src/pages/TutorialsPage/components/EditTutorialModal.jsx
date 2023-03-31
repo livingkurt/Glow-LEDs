@@ -10,7 +10,7 @@ const EditTutorialModal = () => {
   const dispatch = useDispatch();
   const tutorialsSlice = useSelector(state => state.tutorialSlice);
   const { edit_tutorial_modal, tutorial, loading } = tutorialsSlice;
-  const { affiliate, title, video, description, categorys, level, active, pathname } = tutorial;
+  const { affiliate, title, video, description, categorys, level, order, active, pathname } = tutorial;
 
   const affiliatesSlice = useSelector(state => state.affiliateSlice);
   const { affiliates, loading: loading_affiliates } = affiliatesSlice;
@@ -106,6 +106,19 @@ const EditTutorialModal = () => {
           getOptionSelected={(option, value) => option === value}
           renderInput={params => <TextField {...params} margin="normal" label="Difficulty" variant="outlined" />}
           onChange={(e, value) => dispatch(set_tutorial({ level: value }))}
+        />
+        <TextField
+          size="small"
+          loading={!loading}
+          value={order}
+          multiline={true}
+          fullWidth
+          type="text"
+          margin="normal"
+          name="order"
+          label="Order"
+          variant="outlined"
+          onChange={e => dispatch(set_tutorial({ [e.target.name]: e.target.value }))}
         />
         <TextField
           size="small"

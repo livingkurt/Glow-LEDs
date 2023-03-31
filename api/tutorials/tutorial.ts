@@ -10,6 +10,7 @@ const tutorial_schema = new mongoose.Schema(
     categorys: [{ type: mongoose.Schema.Types.ObjectId, ref: "Category" }],
     level: { type: String },
     pathname: { type: String },
+    order: { type: Number },
     active: { type: Boolean, default: true },
     deleted: { type: Boolean, default: false }
   },

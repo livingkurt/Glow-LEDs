@@ -1,5 +1,7 @@
-import { Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
+import { Box } from "@mui/system";
 import React from "react";
+import { Link } from "react-router-dom";
 import GLDisplayModal from "../../../shared/GlowLEDsComponents/GLDisplayModal/GLDisplayModal";
 
 const TutorialModal = ({ selectedTutorial, handleClose, open }) => {
@@ -18,9 +20,13 @@ const TutorialModal = ({ selectedTutorial, handleClose, open }) => {
         <Typography variant="body1" align="left" mt={2} color="inherit">
           {selectedTutorial?.description}
         </Typography>
-        <Typography variant="h5" align="center" mt={2} color="inherit">
-          Learn more about {selectedTutorial?.affiliate.artist_name}
-        </Typography>
+        <Box display="flex" justifyContent="center" alignItems="center" mt={2}>
+          <Link to={`/collections/all/sponsors/${selectedTutorial?.affiliate.pathname}`}>
+            <Button variant="contained" color="primary">
+              Learn more about {selectedTutorial?.affiliate.artist_name}
+            </Button>
+          </Link>
+        </Box>
       </GLDisplayModal>
     </div>
   );

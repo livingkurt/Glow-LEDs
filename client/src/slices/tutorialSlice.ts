@@ -13,6 +13,8 @@ const tutorialsSlice = createSlice({
       description: "",
       categorys: [],
       level: "",
+      pathname: "",
+      order: null,
       active: false
     },
     edit_tutorial_modal: false,
@@ -63,7 +65,7 @@ const tutorialsSlice = createSlice({
     set_edit_tutorial_modal: (state, { payload }) => {
       state.edit_tutorial_modal = payload;
     },
-    open_edit_tutorial_modal: (state, { payload }) => {
+    open_create_tutorial_modal: (state, { payload }) => {
       state.edit_tutorial_modal = true;
       state.tutorial = {
         affiliate: "",
@@ -72,8 +74,14 @@ const tutorialsSlice = createSlice({
         description: "",
         categorys: [],
         level: "",
+        pathname: "",
+        order: null,
         active: false
       };
+    },
+    open_edit_tutorial_modal: (state, { payload }) => {
+      state.edit_tutorial_modal = true;
+      state.tutorial = payload;
     },
     close_tutorial_modal: (state, { payload }) => {
       state.tutorial_modal = false;
@@ -84,6 +92,8 @@ const tutorialsSlice = createSlice({
         description: "",
         categorys: [],
         level: "",
+        pathname: "",
+        order: null,
         active: false
       };
     },
@@ -161,8 +171,9 @@ export const {
   set_loading,
   set_tutorial,
   set_edit_tutorial_modal,
-  open_edit_tutorial_modal,
+  open_create_tutorial_modal,
   open_tutorial_modal,
-  close_tutorial_modal
+  close_tutorial_modal,
+  open_edit_tutorial_modal
 } = tutorialsSlice.actions;
 export default tutorialsSlice.reducer;

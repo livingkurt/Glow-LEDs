@@ -77,7 +77,7 @@ const typography = {
     letterSpacing: "0.1px"
   },
   button: {
-    fontFamily: '"paragraph_font", "Roboto", "Helvetica", "Arial", sans-serif',
+    fontFamily: '"title_font", "Roboto", "Helvetica", "Arial", sans-serif',
     fontWeight: 500,
     fontSize: "13px",
     lineHeight: 1.69,
@@ -247,6 +247,13 @@ const theme = {
     MuiButton: {
       label: {
         fontFamily: '"Comic Sans", sans-serif'
+      },
+      borderRadius: "20px",
+      "&:hover": {
+        borderRadius: "30px"
+      },
+      "&:active": {
+        borderRadius: "30px"
       }
     }
   },

@@ -9,6 +9,7 @@ import { GLButton } from "../../shared/GlowLEDsComponents";
 import CSVReader from "react-csv-reader";
 import GLTable from "../../shared/GlowLEDsComponents/GLTable/GLTable";
 import {
+  open_create_tutorial_modal,
   open_edit_tutorial_modal,
   set_edit_tutorial_modal,
   set_limit,
@@ -154,7 +155,7 @@ const TutorialsPage = props => {
       </Helmet>
       <Notification message={message} />
       <div className="wrap jc-b">
-        <GLButton variant="primary" onClick={() => dispatch(open_edit_tutorial_modal())}>
+        <GLButton variant="primary" onClick={() => dispatch(open_create_tutorial_modal())}>
           Create Tutorial
         </GLButton>
       </div>
@@ -189,8 +190,7 @@ const TutorialsPage = props => {
               variant="icon"
               aria-label="Edit"
               onClick={() => {
-                dispatch(set_tutorial(tutorial));
-                dispatch(set_edit_tutorial_modal(true));
+                dispatch(open_edit_tutorial_modal(tutorial));
               }}
             >
               <i className="fas fa-edit" />
