@@ -54,7 +54,7 @@ const EditTutorialModal = () => {
           isOptionEqualToValue={(option, value) => option.artist_name === value.artist_name}
           name="affiliate"
           margin="normal"
-          value={affiliate}
+          value={affiliate || { artist_name: "" }}
           size="small"
           options={affiliates}
           renderInput={params => <TextField {...params} margin="normal" label="Affiliate" variant="outlined" />}
