@@ -22,7 +22,7 @@ const GLTableHeader = ({ columns, order, orderBy, numSelected, rowCount, enableR
       <TableRow>
         {enableRowSelect && (
           <TableCell
-            style={{ height: "56px", backgroundColor: "#f1f1f1" }}
+            // style={{ height: "56px", backgroundColor: "#333333" }}
             padding={enableRowSelect ? "checkbox" : "default"}
             data-test={`${namespace}-checkbox-all`}
           >
@@ -45,7 +45,7 @@ const GLTableHeader = ({ columns, order, orderBy, numSelected, rowCount, enableR
               style={{
                 padding: "0 10px",
                 height: "56px",
-                backgroundColor: "#f1f1f1",
+                // backgroundColor: "#333333",
                 minWidth: column.minwidth,
                 width: column.width
               }}
@@ -61,7 +61,7 @@ const GLTableHeader = ({ columns, order, orderBy, numSelected, rowCount, enableR
               style={{
                 padding: "0 10px",
                 height: "56px",
-                backgroundColor: "#f1f1f1",
+                // backgroundColor: "#333333",
                 minWidth: column.minwidth,
                 width: column.width
               }}

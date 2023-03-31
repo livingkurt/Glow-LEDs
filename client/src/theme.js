@@ -221,6 +221,70 @@ const shadows = [
   "0 24px 38px 3px rgba(0, 0, 0, 0.14), 0 9px 46px 8px rgba(0, 0, 0, 0.12), 0 11px 15px -7px rgba(0, 0, 0, 0.2)"
 ];
 
+// const table = {
+//   palette: {
+//     background: {
+//       default: "#4e5061"
+//     },
+//     text: {
+//       primary: "#ffffff"
+//     }
+//   },
+//   components: {
+//     MuiPaper: {
+//       styleOverrides: {
+//         root: {
+//           backgroundColor: "#4e5061"
+//         }
+//       }
+//     },
+//     MuiTableRow: {
+//       styleOverrides: {
+//         root: {
+//           backgroundColor: "#343540"
+//         }
+//       },
+//       head: {
+//         backgroundColor: "#343540 !important"
+//       }
+//     },
+//     MuiCheckbox: {
+//       styleOverrides: {
+//         root: {
+//           color: "#fff"
+//         }
+//       }
+//     },
+//     MuiTableCell: {
+//       styleOverrides: {
+//         root: {
+//           color: "#ffffff"
+//         }
+//       },
+//       head: {
+//         color: "white !important"
+//       }
+//     },
+//     MuiTypography: {
+//       styleOverrides: {
+//         root: {
+//           color: "#ffffff"
+//         }
+//       }
+//     },
+//     MuiTablePagination: {
+//       styleOverrides: {
+//         caption: {
+//           color: "#ffffff"
+//         },
+//         select: {
+//           color: "#ffffff"
+//         }
+//       }
+//     }
+//   }
+// };
+
 const theme = {
   breakpoints: {
     keys: ["xs", "sm", "md", "lg", "xl"],
@@ -261,6 +325,7 @@ const theme = {
   props: {},
   shadows,
   typography,
+  // ...table,
   shape: { borderRadius: 4 },
   // spacing: [0,4,8,16,32,64],
   transitions: {

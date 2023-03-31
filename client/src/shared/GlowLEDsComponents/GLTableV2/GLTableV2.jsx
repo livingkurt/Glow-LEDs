@@ -16,8 +16,73 @@ import {
   GLTableFilterChips
 } from "./components";
 import glTable from "./glTable.module.scss";
+import "./glTable.scss";
 import { isItemSelected, visibleSelected } from "./glTableHelpers";
 import { addRows, updatePage, updatePageSize, fetchTablePage, fetchTableFilters } from "./actions/actions";
+
+// const useStyles = makeStyles(() => ({
+//   palette: {
+//     background: {
+//       default: "#4e5061"
+//     },
+//     text: {
+//       primary: "#ffffff"
+//     }
+//   },
+//   components: {
+//     MuiPaper: {
+//       styleOverrides: {
+//         root: {
+//           backgroundColor: "#4e5061"
+//         }
+//       }
+//     },
+//     MuiTableRow: {
+//       styleOverrides: {
+//         root: {
+//           backgroundColor: "#343540"
+//         }
+//       },
+//       head: {
+//         backgroundColor: "#343540 !important"
+//       }
+//     },
+//     MuiCheckbox: {
+//       styleOverrides: {
+//         root: {
+//           color: "#fff"
+//         }
+//       }
+//     },
+//     MuiTableCell: {
+//       styleOverrides: {
+//         root: {
+//           color: "#ffffff"
+//         }
+//       },
+//       head: {
+//         color: "white !important"
+//       }
+//     },
+//     MuiTypography: {
+//       styleOverrides: {
+//         root: {
+//           color: "#ffffff"
+//         }
+//       }
+//     },
+//     MuiTablePagination: {
+//       styleOverrides: {
+//         caption: {
+//           color: "#ffffff"
+//         },
+//         select: {
+//           color: "#ffffff"
+//         }
+//       }
+//     }
+//   }
+// }));
 
 const GLTableV2 = ({
   remoteApi,
