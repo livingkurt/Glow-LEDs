@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { SketchPicker } from "react-color";
 import * as API from "../../api";
-import createPalette from "@mui/material/styles/createPalette";
 
 const EditPalettePage = props => {
   const [id, set_id] = useState("");
