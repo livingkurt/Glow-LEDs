@@ -14,13 +14,13 @@ const GLTableToolbar = ({ numSelected, hiddenSelected, tableName, rowCount, enab
           {enableRowSelect && numSelected > 0 ? (
             <div data-test="tableToolbarTitle">
               <Typography variant="h6" color="textPrimary" component="div">
-                {numSelected} selected
+                {tableName} ({numSelected} selected)
               </Typography>
               {hiddenSelected > 0 && <sup className={glTable.subtextWrapper}>{hiddenSelected} not shown on the current page</sup>}
             </div>
           ) : (
             <Typography variant="h6" data-test="tableToolbarTitle" id="tableTitle" component="div">
-              {`${tableName} (${rowCount})`}
+              {tableName} ({rowCount})
             </Typography>
           )}
         </div>

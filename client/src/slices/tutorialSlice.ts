@@ -104,16 +104,6 @@ const tutorialsSlice = createSlice({
     }
   },
   extraReducers: {
-    // [API.getTutorials.pending as any]: state => {
-    //   state.loading = true;
-    // },
-    // [API.getTutorials.fulfilled as any]: (state, { payload }) => {
-    //   state.tutorials = payload.data;
-    //   state.loading = false;
-    // },
-    // [API.getTutorials.rejected as any]: state => {
-    //   state.loading = false;
-    // },
     [API.listTutorials.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
       state.tutorials = [];
@@ -138,6 +128,7 @@ const tutorialsSlice = createSlice({
       state.edit_tutorial_modal = false;
       state.success = true;
       state.message = "Tutorial Saved";
+      state.remoteVersionRequirement = Date.now(); // refresh qualifications table
     },
     [API.saveTutorial.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
@@ -164,6 +155,7 @@ const tutorialsSlice = createSlice({
       state.loading = false;
       state.tutorial = payload.tutorial;
       state.message = "Tutorial Deleted";
+      state.remoteVersionRequirement = Date.now(); // refresh qualifications table
     },
     [API.deleteTutorial.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
