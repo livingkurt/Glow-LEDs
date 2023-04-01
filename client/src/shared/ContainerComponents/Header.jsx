@@ -50,7 +50,7 @@ const Header = props => {
     return () => (clean = false);
   }, [current_user]);
 
-  const cartSlice = useSelector(state => state.cartSlice);
+  const cartSlice = useSelector(state => state.cartSlice.cartPage);
 
   const { my_cart } = cartSlice;
   const { cartItems } = my_cart;

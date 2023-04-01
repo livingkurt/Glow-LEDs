@@ -20,7 +20,7 @@ import { set_loading, set_loading_payment } from "../../slices/orderSlice";
 import { isWholesaler } from "../../utils/helpers/user_helpers";
 
 const PlaceOrderPage = props => {
-  const cartSlice = useSelector(state => state.cartSlice);
+  const cartSlice = useSelector(state => state.cartSlice.cartPage);
   const { my_cart, shipping, payment } = cartSlice;
   const { cartItems } = my_cart;
   const orderSlice = useSelector(state => state.orderSlice);

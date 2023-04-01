@@ -6,7 +6,6 @@ import { useHistory } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 import { sale_price_switch } from "../../../utils/react_helper_functions";
 import { LazyImage } from "../../SharedComponents";
-import { addToCart } from "../../../actions/cartActions";
 import { GLButton } from "..";
 import * as API from "../../../api";
 import { isWholesaler } from "../../../utils/helpers/user_helpers";
@@ -20,7 +19,7 @@ const CarouselItem = props => {
   const history = useHistory();
   const userSlice = useSelector(state => state.userSlice);
   const { current_user } = userSlice;
-  const cartSlice = useSelector(state => state.cartSlice);
+  const cartSlice = useSelector(state => state.cartSlice.cartPage);
   const { my_cart } = cartSlice;
   const { cartItems } = my_cart;
 
@@ -33,7 +32,7 @@ const CarouselItem = props => {
   }, [props.product]);
 
   const add_item_to_cart = cart_item => {
-    dispatch(API.saveCart({ cart: my_cart, cart_item, type: "add_to_cart" }));
+    dispatch(API.addToCart({ cart: my_cart, cart_item, type: "add_to_cart" }));
   };
 
   const handleAddToCart = e => {

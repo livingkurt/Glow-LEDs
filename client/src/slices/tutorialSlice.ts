@@ -23,10 +23,6 @@ const tutorialsSlice = createSlice({
     message: "",
     success: false,
     error: {},
-    search: "",
-    sort: "",
-    page: 1,
-    limit: 10,
     sort_options: ["Newest", "Artist Name", "Facebook Name", "Instagram Handle", "Sponsor", "Promoter"],
     colors: [
       { name: "Sponsor", color: "#3e4c6d" },
@@ -39,7 +35,6 @@ const tutorialsSlice = createSlice({
   reducers: {
     set_tutorial: (state, { payload }) => {
       const updated_tutorial = payload;
-      console.log({ updated_tutorial });
       return {
         ...state,
         tutorial: { ...state.tutorial, ...updated_tutorial }
@@ -50,18 +45,6 @@ const tutorialsSlice = createSlice({
     },
     set_success: (state, { payload }) => {
       state.success = payload;
-    },
-    set_search: (state, { payload }) => {
-      state.search = payload;
-    },
-    set_sort: (state, { payload }) => {
-      state.sort = payload;
-    },
-    set_page: (state, { payload }) => {
-      state.page = payload;
-    },
-    set_limit: (state, { payload }) => {
-      state.limit = payload;
     },
     set_edit_tutorial_modal: (state, { payload }) => {
       state.edit_tutorial_modal = payload;

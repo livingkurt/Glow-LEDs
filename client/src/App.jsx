@@ -41,7 +41,7 @@ import { MonthExpensesPage, MonthlyExpensesPage } from "./pages/DashboardPage/co
 import { DashboardPage } from "./pages/DashboardPage";
 import { EditExpensePage, ExpensesPage } from "./pages/ExpensesPage";
 import { EditFeaturePage, FeaturesPage } from "./pages/FeaturesPage";
-import { CartsPage, EditCartPage } from "./pages/CartsPage";
+import { CartsPage } from "./pages/CartsPage";
 import { ContentsPage, EditContentPage } from "./pages/ContentsPage";
 import { ProductsDisplayPage } from "./pages/ProductsGridPage/components";
 import { AnnouncementEmail, EditEmailPage, EmailModal } from "./pages/EmailsPage/components";
@@ -330,7 +330,6 @@ const App = props => {
                 <AdminRoute path="/secure/glow/dashboard" component={DashboardPage} />
                 <AdminRoute path="/secure/glow/editexpense/:id?" component={EditExpensePage} />
                 <AdminRoute path="/secure/glow/editfeature/:pathname?" component={EditFeaturePage} />
-                <AdminRoute path="/secure/glow/editcart/:id?" component={EditCartPage} />
                 <AdminRoute path="/secure/glow/expenses" component={ExpensesPage} />
                 <AdminRoute path="/secure/glow/features" component={FeaturesPage} />
                 <AdminRoute path="/secure/glow/carts" component={CartsPage} />

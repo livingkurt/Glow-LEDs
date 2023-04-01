@@ -3,7 +3,6 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { Link, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { addToCart } from "../../../actions/cartActions";
 import { API_Products } from "../../../utils";
 import { humanize, prnt, shuffle } from "../../../utils/helper_functions";
 import {
@@ -32,7 +31,7 @@ const RelatedProductsSlideshow = ({
   const { height, width } = useWindowDimensions();
   const dispatch = useDispatch();
   const history = useHistory();
-  const cartSlice = useSelector(state => state.cartSlice);
+  const cartSlice = useSelector(state => state.cartSlice.cartPage);
   const { my_cart } = cartSlice;
   const { cartItems } = my_cart;
   const userSlice = useSelector(state => state.userSlice);
@@ -127,7 +126,7 @@ const RelatedProductsSlideshow = ({
   // };
 
   const add_item_to_cart = cart_item => {
-    dispatch(API.saveCart({ cart: my_cart, cart_item, type: "add_to_cart" }));
+    dispatch(API.addToCart({ cart: my_cart, cart_item, type: "add_to_cart" }));
   };
 
   const handleAddToCart = (e, product) => {

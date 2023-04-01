@@ -10,7 +10,7 @@ import { isAdmin, isWholesaler } from "../../utils/helpers/user_helpers";
 import RelatedProductsSlideshow from "../../shared/GlowLEDsComponents/GLCarousel/RelatedProductsSlideshow";
 
 const CartPage = props => {
-  const cartSlice = useSelector(state => state.cartSlice);
+  const cartSlice = useSelector(state => state.cartSlice.cartPage);
 
   const { my_cart } = cartSlice;
   const { cartItems } = my_cart;

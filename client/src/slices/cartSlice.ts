@@ -7,9 +7,7 @@ const cartSlice = createSlice({
   name: "carts",
   initialState: {
     loading: false,
-    my_cart: {
-      // cartItems: []
-    },
+    my_cart: { cartItems: [] },
     carts: [],
     cart: {
       cartItems: []
@@ -28,10 +26,9 @@ const cartSlice = createSlice({
       international: false,
       country: ""
     },
-    search: "",
-    sort: "",
-    page: 1,
-    limit: 10,
+    remoteVersionRequirement: 0,
+    edit_cart_modal: false,
+    cart_modal: false,
     paymentMethod: "stripe",
     sort_options: ["Newest", "Artist Name", "Facebook Name", "Instagram Handle", "Sponsor", "Promoter"],
     colors: [
@@ -45,6 +42,7 @@ const cartSlice = createSlice({
   reducers: {
     set_cart: (state, { payload }) => {
       const updated_cart = payload;
+      console.log({ updated_cart });
       return {
         ...state,
         cart: { ...state.cart, ...updated_cart }
@@ -52,18 +50,6 @@ const cartSlice = createSlice({
     },
     set_loading: (state, { payload }) => {
       state.loading = payload;
-    },
-    set_search: (state, { payload }) => {
-      state.search = payload;
-    },
-    set_sort: (state, { payload }) => {
-      state.sort = payload;
-    },
-    set_page: (state, { payload }) => {
-      state.page = payload;
-    },
-    set_limit: (state, { payload }) => {
-      state.limit = payload;
     },
     save_payment_method: (state, { payload }) => {
       state.paymentMethod = payload;
@@ -76,6 +62,29 @@ const cartSlice = createSlice({
     },
     set_success: (state, { payload }) => {
       state.success = payload;
+    },
+    set_edit_cart_modal: (state, { payload }) => {
+      state.edit_cart_modal = payload;
+    },
+    open_create_cart_modal: (state, { payload }) => {
+      state.edit_cart_modal = true;
+      state.cart = {
+        cartItems: []
+      };
+    },
+    open_edit_cart_modal: (state, { payload }) => {
+      state.edit_cart_modal = true;
+      state.cart = payload;
+    },
+    close_cart_modal: (state, { payload }) => {
+      state.cart_modal = false;
+      state.cart = {
+        cartItems: []
+      };
+    },
+    open_cart_modal: (state, { payload }) => {
+      state.cart_modal = true;
+      state.cart = payload;
     }
   },
   extraReducers: {
@@ -99,6 +108,21 @@ const cartSlice = createSlice({
       state.loading = true;
     },
     [API.saveCart.fulfilled as any]: (state: any, { payload }: any) => {
+      state.success = true;
+      state.message = "Cart Created";
+      state.edit_cart_modal = false;
+      state.remoteVersionRequirement = Date.now();
+      state.loading = false;
+    },
+    [API.saveCart.rejected as any]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.error = payload.error;
+      state.message = payload.message;
+    },
+    [API.addToCart.pending as any]: (state: any, { payload }: any) => {
+      state.loading = true;
+    },
+    [API.addToCart.fulfilled as any]: (state: any, { payload }: any) => {
       const { data, type } = payload;
       if (type === "add_to_cart") {
         state.my_cart = data;
@@ -109,9 +133,10 @@ const cartSlice = createSlice({
       }
       state.success = true;
       state.message = "Cart Created";
+      state.edit_cart_modal = false;
       state.loading = false;
     },
-    [API.saveCart.rejected as any]: (state: any, { payload }: any) => {
+    [API.addToCart.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
@@ -171,6 +196,16 @@ const cartSlice = createSlice({
   }
 });
 
-export const { set_search, set_sort, set_page, set_limit, set_loading, set_cart, save_shipping, save_payment_method, set_success } =
-  cartSlice.actions;
+export const {
+  set_loading,
+  set_cart,
+  save_shipping,
+  save_payment_method,
+  set_success,
+  set_edit_cart_modal,
+  open_create_cart_modal,
+  open_cart_modal,
+  close_cart_modal,
+  open_edit_cart_modal
+} = cartSlice.actions;
 export default cartSlice.reducer;

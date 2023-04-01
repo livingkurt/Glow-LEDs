@@ -62,7 +62,7 @@ const TutorialsPage = () => {
         )
       }
     ],
-    []
+    [dispatch]
   );
 
   const remoteApi = useCallback(options => getTutorials(options), []);

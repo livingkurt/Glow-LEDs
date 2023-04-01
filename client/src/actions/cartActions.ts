@@ -68,79 +68,79 @@ export interface CartItem {
   show_add_on: boolean;
 }
 
-export const addToCart =
-  (cart_item_1: CartItem) => async (dispatch: (arg0: IDispatch) => void, getState: () => { cart: { cartItems: any } }) => {
-    try {
-      let cart_data = cart_item_1;
+// export const addToCart =
+//   (cart_item_1: CartItem) => async (dispatch: (arg0: IDispatch) => void, getState: () => { cart: { cartItems: any } }) => {
+//     try {
+//       let cart_data = cart_item_1;
 
-      const {
-        cart: { cartItems }
-      } = getState();
-      if (!cart_item_1.product && cart_item_1.pathname && cart_item_1.qty) {
-        const same_item = cartItems.find((item: any) => item.pathname === cart_data.pathname);
-        cart_data = { ...same_item, qty: cart_item_1.qty };
-      }
+//       const {
+//         cart: { cartItems }
+//       } = getState();
+//       if (!cart_item_1.product && cart_item_1.pathname && cart_item_1.qty) {
+//         const same_item = cartItems.find((item: any) => item.pathname === cart_data.pathname);
+//         cart_data = { ...same_item, qty: cart_item_1.qty };
+//       }
 
-      let cartItem: any = {
-        product: cart_data.product,
+//       let cartItem: any = {
+//         product: cart_data.product,
 
-        color_product: cart_data.color_product,
-        color_product_name: cart_data.color_product_name,
-        color_group_name: cart_data.color_group_name,
+//         color_product: cart_data.color_product,
+//         color_product_name: cart_data.color_product_name,
+//         color_group_name: cart_data.color_group_name,
 
-        secondary_color_group_name: cart_data.secondary_color_group_name,
-        secondary_color_product: cart_data.secondary_color_product,
-        secondary_color_product_name: cart_data.secondary_color_product_name,
+//         secondary_color_group_name: cart_data.secondary_color_group_name,
+//         secondary_color_product: cart_data.secondary_color_product,
+//         secondary_color_product_name: cart_data.secondary_color_product_name,
 
-        option_group_name: cart_data.option_group_name,
-        option_product: cart_data.option_product,
-        option_product_name: cart_data.option_product_name,
+//         option_group_name: cart_data.option_group_name,
+//         option_product: cart_data.option_product,
+//         option_product_name: cart_data.option_product_name,
 
-        secondary_product: cart_data.secondary_product,
-        secondary_product_name: cart_data.secondary_product_name,
-        secondary_group_name: cart_data.secondary_group_name,
+//         secondary_product: cart_data.secondary_product,
+//         secondary_product_name: cart_data.secondary_product_name,
+//         secondary_group_name: cart_data.secondary_group_name,
 
-        name: cart_data.name,
-        size: cart_data.size,
+//         name: cart_data.name,
+//         size: cart_data.size,
 
-        color: cart_data.color,
-        color_code: cart_data.color_code,
+//         color: cart_data.color,
+//         color_code: cart_data.color_code,
 
-        secondary_color: cart_data.secondary_color,
-        secondary_color_code: cart_data.secondary_color_code,
+//         secondary_color: cart_data.secondary_color,
+//         secondary_color_code: cart_data.secondary_color_code,
 
-        display_image: cart_data.display_image,
-        secondary_image: cart_data.secondary_image,
-        price: cart_data.price,
-        preorder: cart_data.preorder,
-        sale_price: cart_data.sale_price,
-        sale_start_date: cart_data.sale_start_date,
-        sale_end_date: cart_data.sale_end_date,
-        count_in_stock: cart_data.count_in_stock,
-        weight_pounds: cart_data.weight_pounds,
-        weight_ounces: cart_data.weight_ounces,
-        package_length: cart_data.package_length,
-        package_width: cart_data.package_width,
-        package_height: cart_data.package_height,
-        package_volume: cart_data.package_volume,
-        processing_time: cart_data.processing_time,
-        pathname: cart_data.pathname,
-        collection: cart_data.product_collection,
-        subcategory: cart_data.subcategory,
-        category: cart_data.category,
-        qty: parseInt(cart_data.qty),
-        quantity: cart_data.quantity,
-        finite_stock: cart_data.finite_stock,
-        add_on_price: cart_data.add_on_price,
-        show_add_on: cart_data.show_add_on
-      };
+//         display_image: cart_data.display_image,
+//         secondary_image: cart_data.secondary_image,
+//         price: cart_data.price,
+//         preorder: cart_data.preorder,
+//         sale_price: cart_data.sale_price,
+//         sale_start_date: cart_data.sale_start_date,
+//         sale_end_date: cart_data.sale_end_date,
+//         count_in_stock: cart_data.count_in_stock,
+//         weight_pounds: cart_data.weight_pounds,
+//         weight_ounces: cart_data.weight_ounces,
+//         package_length: cart_data.package_length,
+//         package_width: cart_data.package_width,
+//         package_height: cart_data.package_height,
+//         package_volume: cart_data.package_volume,
+//         processing_time: cart_data.processing_time,
+//         pathname: cart_data.pathname,
+//         collection: cart_data.product_collection,
+//         subcategory: cart_data.subcategory,
+//         category: cart_data.category,
+//         qty: parseInt(cart_data.qty),
+//         quantity: cart_data.quantity,
+//         finite_stock: cart_data.finite_stock,
+//         add_on_price: cart_data.add_on_price,
+//         show_add_on: cart_data.show_add_on
+//       };
 
-      dispatch({
-        type: CART_ADD_ITEM,
-        payload: cartItem
-      });
-    } catch (error) {}
-  };
+//       dispatch({
+//         type: CART_ADD_ITEM,
+//         payload: cartItem
+//       });
+//     } catch (error) {}
+//   };
 
 export const removeFromCart =
   (product: string) =>
@@ -204,48 +204,48 @@ export const listCarts = (query: any) => async (dispatch: (arg0: IDispatch) => v
   }
 };
 
-export const saveCart =
-  (cartItem: any) =>
-  async (dispatch: (arg0: IDispatch) => void, getState: () => { cart: { cartItems: any }; userLogin: { userInfo: any } }) => {
-    try {
-      dispatch({ type: CART_SAVE_REQUEST, payload: cartItem });
-      const {
-        userLogin: { userInfo }
-      } = getState();
-      const {
-        cart: { cartItems }
-      } = getState();
-      if (userInfo && Object.keys(userInfo).length > 0) {
-        const { data } = await axios.get("/api/carts/user/" + userInfo._id);
-        if (Object.keys(data).length > 0) {
-          const { data: updated_cart } = await axios.put(
-            "/api/carts/" + data._id,
-            { cartItems, cartItem, userInfo },
-            {
-              headers: {
-                Authorization: "Bearer " + userInfo.access_token
-              }
-            }
-          );
-          dispatch({ type: CART_SAVE_SUCCESS, payload: updated_cart });
-        } else if (Object.keys(data).length === 0) {
-          const { data } = await axios.post(
-            "/api/carts",
-            { cartItem, userInfo, cartItems: [] },
-            {
-              headers: {
-                Authorization: "Bearer " + userInfo.access_token
-              }
-            }
-          );
-          dispatch({ type: CART_SAVE_SUCCESS, payload: data });
-        }
-      } else {
-      }
-    } catch (error) {
-      dispatch({ type: CART_SAVE_FAIL, payload: error });
-    }
-  };
+// export const addToCart =
+//   (cartItem: any) =>
+//   async (dispatch: (arg0: IDispatch) => void, getState: () => { cart: { cartItems: any }; userLogin: { userInfo: any } }) => {
+//     try {
+//       dispatch({ type: CART_SAVE_REQUEST, payload: cartItem });
+//       const {
+//         userLogin: { userInfo }
+//       } = getState();
+//       const {
+//         cart: { cartItems }
+//       } = getState();
+//       if (userInfo && Object.keys(userInfo).length > 0) {
+//         const { data } = await axios.get("/api/carts/user/" + userInfo._id);
+//         if (Object.keys(data).length > 0) {
+//           const { data: updated_cart } = await axios.put(
+//             "/api/carts/" + data._id,
+//             { cartItems, cartItem, userInfo },
+//             {
+//               headers: {
+//                 Authorization: "Bearer " + userInfo.access_token
+//               }
+//             }
+//           );
+//           dispatch({ type: CART_SAVE_SUCCESS, payload: updated_cart });
+//         } else if (Object.keys(data).length === 0) {
+//           const { data } = await axios.post(
+//             "/api/carts",
+//             { cartItem, userInfo, cartItems: [] },
+//             {
+//               headers: {
+//                 Authorization: "Bearer " + userInfo.access_token
+//               }
+//             }
+//           );
+//           dispatch({ type: CART_SAVE_SUCCESS, payload: data });
+//         }
+//       } else {
+//       }
+//     } catch (error) {
+//       dispatch({ type: CART_SAVE_FAIL, payload: error });
+//     }
+//   };
 
 export const detailsCart = (cart_id: string) => async (dispatch: (arg0: IDispatch) => void) => {
   try {

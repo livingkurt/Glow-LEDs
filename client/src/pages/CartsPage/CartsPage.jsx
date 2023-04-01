@@ -1,127 +1,72 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { useCallback, useMemo } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Notification } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
-import Search from "../../shared/GlowLEDsComponents/GLTable/Search";
-import Sort from "../../shared/GlowLEDsComponents/GLTable/Sort";
 import { GLButton } from "../../shared/GlowLEDsComponents";
+import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
+import { open_create_cart_modal, open_edit_cart_modal } from "../../slices/cartSlice";
+import { EditCartModal } from "./components";
 import * as API from "../../api";
+import { Button } from "@mui/material";
+import { getCarts } from "../../api";
 
-const CartsPage = props => {
-  const [search, set_search] = useState("");
-  const [sort, setSortOrder] = useState("");
-  const category = props.match.params.category ? props.match.params.category : "";
+const CartsPage = () => {
+  const cartSlice = useSelector(state => state.cartSlice.cartPage);
+  const { message, loading, remoteVersionRequirement } = cartSlice;
+
   const dispatch = useDispatch();
 
-  // const cartSlice = useSelector((state) => state.cartSlice);
-  // const { loading, carts, message, error, success } = cartSlice;
+  const column_defs = useMemo(
+    () => [
+      { title: "User", display: row => (row.user ? `${row.user.first_name} ${row.user.last_name}` : "Guest") },
+      { title: "Cart Items", display: row => row.cartItems.map(item => item.name).join(", ") },
+      {
+        title: "Actions",
+        display: cart => (
+          <div className="jc-b">
+            <GLButton
+              variant="icon"
+              aria-label="Edit"
+              onClick={() => {
+                dispatch(open_edit_cart_modal(cart));
+              }}
+            >
+              <i className="fas fa-edit" />
+            </GLButton>
+            <GLButton variant="icon" onClick={() => dispatch(API.deleteCart(cart._id))} aria-label="Delete">
+              <i className="fas fa-trash-alt" />
+            </GLButton>
+          </div>
+        )
+      }
+    ],
+    [dispatch]
+  );
 
-  // useEffect(
-  // 	() => {
-  // 		dispatch(API.listCarts());
-  // 		return () => {
-  // 			//
-  // 		};
-  // 	},
-  // 	[ success ]
-  // );
-
-  // useEffect(
-  // 	() => {
-  // 		let clean = true;
-  // 		if (clean) {
-  // 			dispatch(API.listCarts());
-  // 		}
-  // 		return () => (clean = false);
-  // 	},
-  // 	[ success  ]
-  // );
-
-  const handleListItems = e => {
-    e.preventDefault();
-    dispatch(API.listCarts({ category, search, sort }));
-  };
-
-  const sortHandler = e => {
-    setSortOrder(e.target.value);
-    dispatch(API.listCarts({ category, search, sort: e.target.value }));
-  };
-
-  useEffect(() => {
-    let clean = true;
-    if (clean) {
-      dispatch(API.listCarts({ category, search, sort }));
-    }
-    return () => (clean = false);
-  }, [sort, dispatch, category, search]);
-  const colors = [
-    { name: "Supplies", color: "#6d3e3e" },
-    { name: "Website", color: "#6d3e5c" },
-    { name: "Shipping", color: "#3e4c6d" },
-    { name: "Business", color: "#6d5a3e" },
-    { name: "Equipment", color: "#3f6561" }
-  ];
-
-  const determine_color = cart => {
-    let result = "";
-    if (cart.category === "Supplies") {
-      result = colors[0].color;
-    }
-    if (cart.category === "Website") {
-      result = colors[1].color;
-    }
-    if (cart.category === "Shipping") {
-      result = colors[2].color;
-    }
-    if (cart.category === "Business") {
-      result = colors[3].color;
-    }
-    if (cart.category === "Equipment") {
-      result = colors[4].color;
-    }
-
-    return result;
-  };
-  const sort_options = ["Release Date", "Glover Name", "Facebook Name", "Instagram Handle", "Product", "Song ID", "Newest"];
+  const remoteApi = useCallback(options => getCarts(options), []);
 
   return (
     <div className="main_container p-20px">
       <Helmet>
         <title>Admin Carts | Glow LEDs</title>
       </Helmet>
-      {/* <Notification message={message} /> */}
-      <div className="wrap jc-c">
-        <div className="wrap jc-c">
-          {colors.map((color, index) => {
-            return (
-              <div className="jc-c m-1rem w-16rem" key={index}>
-                <label style={{ marginRight: "1rem" }}>{color.name}</label>
-                <div
-                  style={{
-                    backgroundColor: color.color,
-                    height: "20px",
-                    width: "60px",
-                    borderRadius: "5px"
-                  }}
-                />
-              </div>
-            );
-          })}
-        </div>
-        <Link to="/secure/glow/editcart">
-          <GLButton variant="primary" style={{ width: "160px" }}>
+      <Notification message={message} />
+      <GLTableV2
+        remoteApi={remoteApi}
+        remoteVersionRequirement={remoteVersionRequirement}
+        tableName={"Carts"}
+        namespaceScope="cartSlice"
+        namespace="cartTable"
+        columnDefs={column_defs}
+        loading={loading}
+        enableRowSelect={true}
+        titleActions={
+          <Button color="primary" variant="primary" onClick={() => dispatch(open_create_cart_modal())}>
             Create Cart
-          </GLButton>
-        </Link>
-      </div>
-
-      <div className="jc-c">
-        <h1 style={{ textAlign: "center" }}>Carts</h1>
-      </div>
-      <div className="search_and_sort row jc-c ai-c" style={{ overflowX: "scroll" }}>
-        <Search search={search} set_search={set_search} handleListItems={handleListItems} category={category} />
-        <Sort sortHandler={sortHandler} sort_options={sort_options} />
-      </div>
+          </Button>
+        }
+      />
+      <EditCartModal />
     </div>
   );
 };

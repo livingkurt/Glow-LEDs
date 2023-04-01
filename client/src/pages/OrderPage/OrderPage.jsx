@@ -27,7 +27,7 @@ const OrderPage = props => {
   const userSlice = useSelector(state => state.userSlice);
   const { current_user } = userSlice;
 
-  const cartSlice = useSelector(state => state.cartSlice);
+  const cartSlice = useSelector(state => state.cartSlice.cartPage);
   const { my_cart } = cartSlice;
   const { cartItems } = my_cart;
 
@@ -493,7 +493,7 @@ const OrderPage = props => {
   };
 
   const add_items_to_cart = () => {
-    order.orderItems.map(item => dispatch(API.saveCart({ cart: my_cart, cart_item: item, type: "add_to_cart" })));
+    order.orderItems.map(item => dispatch(API.addToCart({ cart: my_cart, cart_item: item, type: "add_to_cart" })));
   };
 
   const send_order_email = async () => {
