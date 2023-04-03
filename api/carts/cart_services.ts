@@ -21,8 +21,8 @@ export default {
       const carts = await cart_db.findAll_carts_db(filter, sort, limit, page);
       const count = await cart_db.count_carts_db(filter);
       return {
-        carts,
-        totalPages: Math.ceil(count / parseInt(limit)),
+        data: carts,
+        total_count: Math.ceil(count / parseInt(limit)),
         currentPage: page
       };
     } catch (error) {
@@ -42,7 +42,8 @@ export default {
   },
   findByUser_carts_s: async (params: any) => {
     try {
-      return await cart_db.findByUser_carts_db(params.id);
+      const { id } = params;
+      return await cart_db.findByUser_carts_db(id);
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -50,6 +51,25 @@ export default {
     }
   },
   create_carts_s: async (body: any) => {
+    try {
+      return await cart_db.create_carts_db(body);
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  update_carts_s: async (params: any, body: any) => {
+    const { id } = params;
+    try {
+      return await cart_db.update_carts_db(id, body);
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  start_cart_carts_s: async (body: any) => {
     const { cart_item, current_user } = body;
     try {
       if (current_user._id) {
@@ -66,7 +86,7 @@ export default {
       }
     }
   },
-  update_carts_s: async (params: any, body: any) => {
+  add_to_cart_carts_s: async (params: any, body: any) => {
     const { cart_item } = body;
     const { id } = params;
     try {

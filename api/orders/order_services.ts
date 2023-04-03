@@ -1190,5 +1190,15 @@ export default {
         throw new Error(error.message);
       }
     }
+  },
+  get_range_affiliate_earnings_code_usage_orders_s: async (query: { start_date: string; end_date: string }) => {
+    try {
+      const { start_date, end_date } = query;
+      return await order_db.get_range_affiliate_earnings_code_usage_orders_db(start_date, end_date);
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
   }
 };

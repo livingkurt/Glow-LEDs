@@ -62,6 +62,30 @@ export default {
       res.status(500).send({ error, message: "Error Updating Cart" });
     }
   },
+  start_cart_carts_c: async (req: any, res: any) => {
+    const { body } = req;
+    try {
+      const cart = await cart_services.start_cart_carts_s(body);
+      if (cart) {
+        return res.status(201).send(cart);
+      }
+      return res.status(500).send({ message: "Error Creating Cart" });
+    } catch (error) {
+      res.status(500).send({ error, message: "Error Creating Cart" });
+    }
+  },
+  add_to_cart_carts_c: async (req: any, res: any) => {
+    const { params, body } = req;
+    try {
+      const cart = await cart_services.add_to_cart_carts_s(params, body);
+      if (cart) {
+        return res.status(200).send(cart);
+      }
+      return res.status(500).send({ message: "Error Updating Cart" });
+    } catch (error) {
+      res.status(500).send({ error, message: "Error Updating Cart" });
+    }
+  },
   remove_carts_c: async (req: any, res: any) => {
     const { params } = req;
     try {

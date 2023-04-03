@@ -50,6 +50,10 @@ export const dashboardApi = createApi({
     }),
     getAllTimeTipsRevenueOrders: builder.query({
       query: () => "/get_all_time_tips_revenue_orders"
+    }),
+    getRangeAffiliateEarningsCodeUsage: builder.query({
+      query: ({ start_date, end_date }: { start_date: string; end_date: string }) =>
+        `/get_range_affiliate_earnings_code_usage?start_date=${start_date}&end_date=${end_date}`
     })
   })
 });
@@ -66,7 +70,8 @@ export const {
   useGetRangeCategoryRevenueOrdersQuery,
   useGetAllTimeCategoryRevenueOrdersQuery,
   useGetAllTimeTipsRevenueOrdersQuery,
-  useGetRangeTipsRevenueOrdersQuery
+  useGetRangeTipsRevenueOrdersQuery,
+  useGetRangeAffiliateEarningsCodeUsageQuery
 } = dashboardApi;
 
 // export const get_airtable_expenses = async (year: number): Promise<void> => {

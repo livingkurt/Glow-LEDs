@@ -394,9 +394,21 @@ export default {
       if (orders) {
         return res.status(200).send(orders);
       }
-      return res.status(500).send({ message: "Error get_range_tips_orders_c" });
+      return res.status(500).send({ message: "Error get_all_time_tips_revenue_orders_c" });
     } catch (error) {
-      res.status(500).send({ error, message: "Error get_range_tips_orders_c" });
+      res.status(500).send({ error, message: "Error get_all_time_tips_revenue_orders_c" });
+    }
+  },
+  get_range_affiliate_earnings_code_usage_orders_c: async (req: any, res: any) => {
+    const { query } = req;
+    try {
+      const orders = await order_services.get_range_affiliate_earnings_code_usage_orders_s(query);
+      if (orders) {
+        return res.status(200).send(orders);
+      }
+      return res.status(500).send({ message: "Error get_range_affiliate_earnings_code_usage_orders_c" });
+    } catch (error) {
+      res.status(500).send({ error, message: "Error get_range_affiliate_earnings_code_usage_orders_c" });
     }
   }
 };

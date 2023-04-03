@@ -6,8 +6,13 @@ export default {
       return await Cart.find(filter)
         .sort(sort)
         .populate("user")
+        .populate("cartItems.product")
+        .populate("cartItems.color_product")
+        .populate("cartItems.secondary_color_product")
+        .populate("cartItems.option_product")
+        .populate("cartItems.secondary_product")
         .limit(parseInt(limit))
-        .skip((parseInt(page) - 1) * parseInt(limit))
+        .skip(Math.max(parseInt(page) - 1, 0) * parseInt(limit))
         .exec();
     } catch (error) {
       if (error instanceof Error) {

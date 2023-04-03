@@ -1,5 +1,6 @@
 import { Product } from "../products";
 import { Order } from "../orders";
+import { Affiliate } from "../affiliates";
 
 export default {
   findAll_orders_db: async (filter: any, sort: unknown, limit: string, page: string) => {
@@ -613,5 +614,86 @@ export default {
       }
     ]);
     return final_result;
+  },
+  get_range_affiliate_earnings_code_usage_orders_db: async (start_date: string, end_date: string) => {
+    console.log({ start_date, end_date });
+    try {
+      const affiliatesEarnings = await Affiliate.aggregate([
+        {
+          $match: { active: true, rave_mob: false }
+        },
+        {
+          $lookup: {
+            from: "promos",
+            localField: "public_code",
+            foreignField: "_id",
+            as: "public_code"
+          }
+        },
+        {
+          $unwind: "$public_code"
+        },
+        {
+          $lookup: {
+            from: "orders",
+            let: { affiliate_promo_code: "$public_code.promo_code" },
+            pipeline: [
+              {
+                $match: {
+                  $expr: {
+                    $and: [
+                      { $eq: ["$promo_code", "$$affiliate_promo_code"] },
+                      { $gte: ["$createdAt", new Date(start_date)] },
+                      { $lte: ["$createdAt", new Date(end_date)] }
+                    ]
+                  }
+                }
+              },
+              {
+                $group: {
+                  _id: null,
+                  number_of_uses: { $sum: 1 },
+                  total_revenue: { $sum: "$totalPrice" }
+                }
+              }
+            ],
+            as: "affiliate_orders"
+          }
+        },
+        {
+          $addFields: {
+            number_of_uses: { $arrayElemAt: ["$affiliate_orders.number_of_uses", 0] },
+            revenue: { $arrayElemAt: ["$affiliate_orders.total_revenue", 0] }
+          }
+        },
+        {
+          $addFields: {
+            earnings: {
+              $cond: {
+                if: { $eq: ["$sponsor", true] },
+                then: { $multiply: ["$revenue", 0.15] },
+                else: { $multiply: ["$revenue", 0.1] }
+              }
+            }
+          }
+        },
+        {
+          $project: {
+            _id: 0,
+            artist_name: 1,
+            number_of_uses: 1,
+            revenue: 1,
+            earnings: 1
+          }
+        }
+      ]);
+      console.log({ affiliatesEarnings });
+
+      return affiliatesEarnings;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
   }
 };

@@ -17,6 +17,7 @@ import {
   useGetAllTimeRevenueOrdersQuery,
   useGetAllTimeTipsRevenueOrdersQuery,
   useGetMonthlyRevenueOrdersQuery,
+  useGetRangeAffiliateEarningsCodeUsageQuery,
   useGetRangeCategoryRevenueOrdersQuery,
   useGetRangeRevenueOrdersQuery,
   useGetRangeTipsRevenueOrdersQuery,
@@ -26,15 +27,21 @@ import { getMonthStartEndDates, months, years } from "./dashboardHelpers";
 import { useDispatch, useSelector } from "react-redux";
 import { set_end_date, set_loading, set_start_date } from "./dashboardSlice";
 import { DatePicker } from "./components";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import { Loading } from "../../shared/SharedComponents";
+import { listAffiliates } from "../../api";
+import axios from "axios";
 
 const DashboardPage = props => {
   const dispatch = useDispatch();
   const dashboardSlice = useSelector(state => state.dashboardSlice);
 
   const { year, month, start_date, end_date, start_end_date, loading } = dashboardSlice;
+
+  const [earnings, set_earnings] = useState([]);
+  const affiliateSlice = useSelector(state => state.affiliateSlice);
+  const { affiliates } = affiliateSlice;
   const history = useHistory();
   const current_year = new Date().getFullYear();
   // const business_start_date = new Date("2020-08-01");
@@ -45,11 +52,15 @@ const DashboardPage = props => {
   const category_range_revenue = useGetRangeCategoryRevenueOrdersQuery({ start_date, end_date });
   const tips_all_time_revenue = useGetAllTimeTipsRevenueOrdersQuery();
   const tips_range_revenue = useGetRangeTipsRevenueOrdersQuery({ start_date, end_date });
+  const affiliate_earnings_code_usage = useGetRangeAffiliateEarningsCodeUsageQuery({ start_date, end_date });
   // const daily_revenue = useGetMonthlyRevenueOrdersQuery({ start_date, end_date });
   const monthy_revenue = useGetMonthlyRevenueOrdersQuery({ year });
   const yearly_revenue = useGetYearlyRevenueOrdersQuery();
 
+  console.log({ affiliate_earnings_code_usage });
+
   useChangedEffect(() => {
+    dispatch(listAffiliates({ active: true }));
     const dates = getMonthStartEndDates(month, parseInt(year) || parseInt(current_year));
     dispatch(set_start_date(dates.start_date));
     dispatch(set_end_date(dates.end_date));
@@ -60,6 +71,18 @@ const DashboardPage = props => {
     history.push(`/secure/glow/dashboard?${query}`);
     return () => {};
   }, [year, month]);
+
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (affiliates) {
+        affiliate_earnings();
+      }
+    }
+    return () => {
+      clean = false;
+    };
+  }, [affiliates]);
 
   // useEffect(() => {
   // get_airtable_expenses(2023);
@@ -93,6 +116,19 @@ const DashboardPage = props => {
       refresh_sponsor_codes();
       dispatch(set_loading(false));
     }
+  };
+
+  const affiliate_earnings = async () => {
+    const affiliate_earnings = await Promise.all(
+      affiliates.map(async affiliate => {
+        const { data: promo_code_usage } = await axios.get(
+          `/api/orders/code_usage/${affiliate?.public_code?.promo_code}?start_date=${start_date}&end_date=${end_date}&sponsor=${affiliate.sponsor}`
+        );
+        return { ...promo_code_usage, artist_name: affiliate.artist_name };
+      })
+    );
+    console.log({ affiliate_earnings });
+    set_earnings(affiliate_earnings);
   };
 
   return (
@@ -222,6 +258,78 @@ const DashboardPage = props => {
             <h3 className="fs-30px jc-c">
               ${!tips_range_revenue.isLoading && tips_range_revenue.data[0] ? tips_range_revenue.data[0]?.total_tips.toFixed(2) : "0.00"}
             </h3>
+            <h3 className="fs-25px jc-c">Affiliate Earnings Code Usage</h3>
+            <Grid container spacing={3}>
+              <Grid item xs={12}>
+                <Grid container spacing={3}>
+                  <Grid item xs={12} sm={3}>
+                    <span className="title_font">Affiliate</span>
+                  </Grid>
+                  <Grid item xs={12} sm={3}>
+                    <span className="title_font">Earnings</span>
+                  </Grid>
+                  <Grid item xs={12} sm={3}>
+                    <span className="title_font">Code Usage</span>
+                  </Grid>
+                  <Grid item xs={12} sm={3}>
+                    <span className="title_font">Revenue</span>
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Grid>
+            <hr />
+            <div>
+              {earnings
+                .sort((a, b) => b.earnings - a.earnings)
+                .map((affiliate, index) => {
+                  return (
+                    <div key={index}>
+                      <Grid container spacing={3}>
+                        <Grid item xs={12} sm={3}>
+                          <span className="">{affiliate?.artist_name}</span>
+                        </Grid>
+                        <Grid item xs={12} sm={3}>
+                          <span>{affiliate.number_of_uses ? affiliate?.number_of_uses : "0"}</span>
+                        </Grid>
+                        <Grid item xs={12} sm={3}>
+                          <span>${affiliate.earnings ? affiliate?.earnings?.toFixed(2) : "0:00"}</span>
+                        </Grid>
+                        <Grid item xs={12} sm={3}>
+                          <span className="">${affiliate?.revenue ? affiliate?.revenue?.toFixed(2) : "0:00"}</span>
+                        </Grid>
+                      </Grid>
+                      <hr />
+                    </div>
+                  );
+                })}
+            </div>
+            {/* <div>
+              {!affiliate_earnings_code_usage.isLoading &&
+                affiliate_earnings_code_usage?.data &&
+                [...affiliate_earnings_code_usage.data]
+                  .sort((a, b) => b.earnings - a.earnings)
+                  .map((affiliate, index) => {
+                    return (
+                      <div key={index}>
+                        <Grid container spacing={3}>
+                          <Grid item xs={12} sm={3}>
+                            <span className="">{affiliate?.artist_name}</span>
+                          </Grid>
+                          <Grid item xs={12} sm={3}>
+                            <span className="">${affiliate?.revenue ? affiliate?.revenue?.toFixed(2) : "0:00"}</span>
+                          </Grid>
+                          <Grid item xs={12} sm={3}>
+                            <span>${affiliate.earnings ? affiliate?.earnings?.toFixed(2) : "0:00"}</span>
+                          </Grid>
+                          <Grid item xs={12} sm={3}>
+                            <span>{affiliate.number_of_uses ? affiliate?.number_of_uses : "0"}</span>
+                          </Grid>
+                        </Grid>
+                        <hr />
+                      </div>
+                    );
+                  })}
+            </div> */}
           </div>
         )}
         {!month && year && (

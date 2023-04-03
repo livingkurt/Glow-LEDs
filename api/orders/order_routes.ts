@@ -32,6 +32,7 @@ router.route("/secure/:id").get(isAuth, order_controller.findById_orders_c);
 // router.route("/get_product_quantities").put(order_controller.get_product_quantities);
 // router.route("/get_category_quantities").put(order_controller.get_category_quantities);
 
+router.route("/get_range_affiliate_earnings_code_usage").get(order_controller.get_range_affiliate_earnings_code_usage_orders_c);
 router.route("/get_product_quantities_orders").get(order_controller.get_product_quantities_orders_c);
 router.route("/get_all_shipping_orders").get(order_controller.get_all_shipping_orders_c);
 router.route("/get_all_time_revenue_orders").get(order_controller.get_all_time_revenue_orders_c);

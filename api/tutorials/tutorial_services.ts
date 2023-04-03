@@ -5,12 +5,13 @@ dotenv.config();
 
 export default {
   findAll_tutorials_s: async (query: { search: string; sort: string; page: string; limit: string }) => {
+    console.log({ query });
     try {
       const page: any = query.page ? query.page : 1;
       const limit: any = query.limit ? query.limit : 0;
       const search = query.search
         ? {
-            facebook_name: {
+            title: {
               $regex: query.search,
               $options: "i"
             }
@@ -37,8 +38,8 @@ export default {
       const tutorials = await tutorial_db.findAll_tutorials_db(filter, sort, limit, page);
       const count = await tutorial_db.count_tutorials_db(filter);
       return {
-        tutorials,
-        totalPages: Math.ceil(count / limit),
+        data: tutorials,
+        total_count: count,
         currentPage: parseInt(page)
       };
     } catch (error) {
