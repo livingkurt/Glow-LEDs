@@ -47,7 +47,7 @@ const EditPromoPage = props => {
   const userSlice = useSelector(state => state.userSlice);
   const { users } = userSlice;
 
-  const affiliateSlice = useSelector(state => state.affiliateSlice);
+  const affiliateSlice = useSelector(state => state.affiliateSlice.affiliatePage);
   const { affiliates } = affiliateSlice;
 
   const productSlice = useSelector(state => state.productSlice);

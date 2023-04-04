@@ -11,7 +11,7 @@ import { set_team } from "../../slices/teamSlice";
 const EditTeamPage = props => {
   const [loading_checkboxes, set_loading_checkboxes] = useState(true);
 
-  const affiliateSlice = useSelector(state => state.affiliateSlice);
+  const affiliateSlice = useSelector(state => state.affiliateSlice.affiliatePage);
   const { affiliates: affiliates_list } = affiliateSlice;
 
   const history = useHistory();

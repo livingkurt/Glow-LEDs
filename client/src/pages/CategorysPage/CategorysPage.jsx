@@ -22,7 +22,7 @@ const CategorysPage = props => {
 
   const dispatch = useDispatch();
 
-  const affiliateSlice = useSelector(state => state.affiliateSlice);
+  const affiliateSlice = useSelector(state => state.affiliateSlice.affiliatePage);
   const { affiliates } = affiliateSlice;
 
   const teamSlice = useSelector(state => state.teamSlice);

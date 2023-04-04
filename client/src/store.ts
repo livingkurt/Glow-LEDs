@@ -26,7 +26,7 @@ if (shipping_string) {
 const initialState: object = {
   cartSlice: { my_cart, shipping: shippingAddress },
   userSlice: { current_user: {} },
-  showHideSearchBar: { show: true }
+  settingSlice: { show_search_bar: true }
 };
 
 const store = configureStore({

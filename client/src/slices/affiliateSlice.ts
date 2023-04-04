@@ -35,6 +35,9 @@ const affiliatesSlice = createSlice({
       public_code: undefined,
       private_code: undefined
     },
+    remoteVersionRequirement: 0,
+    edit_affiliate_modal: false,
+    affiliate_modal: false,
     message: "",
     success: false,
     error: {},
@@ -65,17 +68,76 @@ const affiliatesSlice = createSlice({
     set_success: (state, { payload }) => {
       state.success = payload;
     },
-    set_search: (state, { payload }) => {
-      state.search = payload;
+    set_edit_affiliate_modal: (state, { payload }) => {
+      state.edit_affiliate_modal = payload;
     },
-    set_sort: (state, { payload }) => {
-      state.sort = payload;
+    open_create_affiliate_modal: (state, { payload }) => {
+      state.edit_affiliate_modal = true;
+      state.affiliate = {
+        id: "",
+        user: undefined,
+        artist_name: "",
+        instagram_handle: "",
+        facebook_name: "",
+        percentage_off: "",
+        sponsor: "",
+        promoter: "",
+        rave_mob: "",
+        active: "",
+        style: "",
+        inspiration: "",
+        bio: "",
+        link: "",
+        picture: "",
+        location: "",
+        years: "",
+        team: "",
+        video: "",
+        venmo: "",
+        products: [],
+        chips: [],
+        pathname: "",
+        public_code: undefined,
+        private_code: undefined
+      };
     },
-    set_page: (state, { payload }) => {
-      state.page = payload;
+    open_edit_affiliate_modal: (state, { payload }) => {
+      state.edit_affiliate_modal = true;
+      state.affiliate = payload;
     },
-    set_limit: (state, { payload }) => {
-      state.limit = payload;
+    close_affiliate_modal: (state, { payload }) => {
+      state.affiliate_modal = false;
+      state.affiliate = {
+        id: "",
+        user: undefined,
+        artist_name: "",
+        instagram_handle: "",
+        facebook_name: "",
+        percentage_off: "",
+        sponsor: "",
+        promoter: "",
+        rave_mob: "",
+        active: "",
+        style: "",
+        inspiration: "",
+        bio: "",
+        link: "",
+        picture: "",
+        location: "",
+        years: "",
+        team: "",
+        video: "",
+        venmo: "",
+        products: [],
+        chips: [],
+        pathname: "",
+        public_code: undefined,
+        private_code: undefined
+      };
+    },
+    open_affiliate_modal: (state, { payload }) => {
+      state.affiliate_modal = true;
+      state.affiliate = payload;
     }
   },
   extraReducers: {
@@ -85,8 +147,8 @@ const affiliatesSlice = createSlice({
     },
     [API.listAffiliates.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.affiliates = payload.affiliates;
-      state.totalPages = payload.totalPages;
+      state.affiliates = payload.data;
+      state.totalPages = payload.total_count;
       state.page = payload.currentPage;
       state.message = "Affiliates Found";
     },
@@ -101,7 +163,9 @@ const affiliatesSlice = createSlice({
     [API.saveAffiliate.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.success = true;
+      state.edit_affiliate_modal = false;
       state.message = "Affiliate Saved";
+      state.remoteVersionRequirement = Date.now();
     },
     [API.saveAffiliate.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
@@ -128,6 +192,7 @@ const affiliatesSlice = createSlice({
       state.loading = false;
       state.affiliate = payload.affiliate;
       state.message = "Affiliate Deleted";
+      state.remoteVersionRequirement = Date.now();
     },
     [API.deleteAffiliate.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
@@ -137,5 +202,14 @@ const affiliatesSlice = createSlice({
   }
 });
 
-export const { set_search, set_sort, set_page, set_success, set_limit, set_loading, set_affiliate } = affiliatesSlice.actions;
+export const {
+  set_success,
+  set_loading,
+  set_affiliate,
+  open_create_affiliate_modal,
+  open_edit_affiliate_modal,
+  close_affiliate_modal,
+  open_affiliate_modal,
+  set_edit_affiliate_modal
+} = affiliatesSlice.actions;
 export default affiliatesSlice.reducer;

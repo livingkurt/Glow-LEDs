@@ -15,7 +15,7 @@ export default {
       const limit: string = query.limit ? query.limit : "0";
       const search = query.search
         ? {
-            facebook_name: {
+            artist_name: {
               $regex: query.search,
               $options: "i"
             }
@@ -38,12 +38,11 @@ export default {
       } else if (sort_query === "newest") {
         sort = { _id: -1 };
       }
-
       const affiliates = await affiliate_db.findAll_affiliates_db(filter, sort, limit, page);
       const count = await affiliate_db.count_affiliates_db(filter);
       return {
-        affiliates,
-        totalPages: Math.ceil(count / parseInt(limit)),
+        data: affiliates,
+        total_count: count,
         currentPage: page
       };
     } catch (error) {

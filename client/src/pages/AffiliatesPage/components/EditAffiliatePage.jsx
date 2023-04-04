@@ -27,7 +27,7 @@ const EditAffiliatePage = props => {
 
   const history = useHistory();
 
-  const affiliateSlice = useSelector(state => state.affiliateSlice);
+  const affiliateSlice = useSelector(state => state.affiliateSlice.affiliatePage);
   const affiliate = useSelector(state => state.affiliateSlice.affiliate);
   const { loading, success } = affiliateSlice;
   const {

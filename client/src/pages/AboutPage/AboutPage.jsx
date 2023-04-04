@@ -15,7 +15,7 @@ const AboutPage = () => {
 
   const dispatch = useDispatch();
 
-  const affiliateSlice = useSelector(state => state.affiliateSlice);
+  const affiliateSlice = useSelector(state => state.affiliateSlice.affiliatePage);
   const { affiliates, loading: loading_sponsors, error } = affiliateSlice;
 
   const teamSlice = useSelector(state => state.teamSlice);

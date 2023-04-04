@@ -7,7 +7,32 @@ import jwt_decode from "jwt-decode";
 import { DetailsAffiliate } from "../actions/affiliateActions";
 import { set_current_user } from "../slices/userSlice";
 import { headers } from "../utils/helpers/user_helpers";
-// import { createApi } from "@reduxjs/toolkit/query/react";
+
+export const getAffiliates = async ({
+  search,
+  sorting,
+  filters,
+  page,
+  pageSize
+}: {
+  search: string;
+  sorting: any;
+  filters: any;
+  page: number;
+  pageSize: number;
+}) => {
+  try {
+    return axios.get(`/api/affiliates`, {
+      params: {
+        limit: pageSize,
+        page: page,
+        search: search
+        // sort: sorting,
+        // filters: pickBy(filters, (val: any) => val.length > 0)
+      }
+    });
+  } catch (error) {}
+};
 
 export const listAffiliates = createAsyncThunk("affiliates/listAffiliates", async (query: any, thunkApi: any) => {
   try {

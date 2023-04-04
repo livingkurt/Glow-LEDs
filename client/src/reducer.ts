@@ -30,7 +30,15 @@ import dashboardSlice from "./pages/DashboardPage/dashboardSlice";
 import { combineReducers } from "redux";
 
 const reducers = {
-  affiliateSlice: affiliateSlice,
+  affiliateSlice: combineReducers({
+    affiliatePage: affiliateSlice,
+    affiliateTable: glTableReducer("affiliateTable", {
+      searchBy: (row: any, search: string) => {
+        const searchableText = `${row.first_name} ${row.last_name}}`;
+        return searchableText.toLowerCase().includes(search.toLowerCase());
+      }
+    })
+  }),
   cartSlice: combineReducers({
     cartPage: cartSlice,
     cartTable: glTableReducer("cartTable", {

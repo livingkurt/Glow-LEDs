@@ -40,7 +40,7 @@ const DashboardPage = props => {
   const { year, month, start_date, end_date, start_end_date, loading } = dashboardSlice;
 
   const [earnings, set_earnings] = useState([]);
-  const affiliateSlice = useSelector(state => state.affiliateSlice);
+  const affiliateSlice = useSelector(state => state.affiliateSlice.affiliatePage);
   const { affiliates } = affiliateSlice;
   const history = useHistory();
   const current_year = new Date().getFullYear();

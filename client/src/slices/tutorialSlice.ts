@@ -111,7 +111,7 @@ const tutorialsSlice = createSlice({
       state.edit_tutorial_modal = false;
       state.success = true;
       state.message = "Tutorial Saved";
-      state.remoteVersionRequirement = Date.now(); // refresh qualifications table
+      state.remoteVersionRequirement = Date.now();
     },
     [API.saveTutorial.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
@@ -138,7 +138,7 @@ const tutorialsSlice = createSlice({
       state.loading = false;
       state.tutorial = payload.tutorial;
       state.message = "Tutorial Deleted";
-      state.remoteVersionRequirement = Date.now(); // refresh qualifications table
+      state.remoteVersionRequirement = Date.now();
     },
     [API.deleteTutorial.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
@@ -149,11 +149,6 @@ const tutorialsSlice = createSlice({
 });
 
 export const {
-  set_search,
-  set_sort,
-  set_page,
-  set_success,
-  set_limit,
   set_loading,
   set_tutorial,
   set_edit_tutorial_modal,

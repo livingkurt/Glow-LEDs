@@ -114,7 +114,8 @@ const GLTableV2 = ({
   noContentMessage,
   containerClassNames,
   style,
-  remoteVersionRequirement
+  remoteVersionRequirement,
+  determine_color
 }) => {
   const isMounted = useRef(false);
   const dispatch = useDispatch();
@@ -305,6 +306,7 @@ const GLTableV2 = ({
                     onRowClick={onRowClick}
                     rowProps={rowProps}
                     cellProps={cellProps}
+                    determine_color={determine_color}
                   >
                     {enableDropdownRow && expandRow === row[rowName] && (
                       <GLTableRowDropdown
@@ -356,6 +358,7 @@ GLTableV2.defaultProps = {
   titleActions: null,
   enableRowClick: false,
   loading: false,
+  determine_color: x => x,
   onRowClick: x => x,
   rowProps: () => ({}),
   cellProps: () => ({}),
@@ -401,6 +404,7 @@ GLTableV2.propTypes = {
   enableRowSelect: PropTypes.bool,
   enableDropdownRow: PropTypes.bool,
   restrictSearchChars: PropTypes.func,
+  determine_color: PropTypes.func,
   searchPlaceholder: PropTypes.string,
   dropdownRowsName: PropTypes.string,
   rowName: PropTypes.string,

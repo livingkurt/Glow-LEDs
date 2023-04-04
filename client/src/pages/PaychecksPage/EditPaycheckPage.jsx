@@ -20,7 +20,7 @@ const EditPaycheckPage = props => {
 
   const { id, affiliate, team, amount, venmo, paid, reciept, paid_at } = paycheck;
 
-  const affiliateSlice = useSelector(state => state.affiliateSlice);
+  const affiliateSlice = useSelector(state => state.affiliateSlice.affiliatePage);
   const { affiliates } = affiliateSlice;
 
   const teamSlice = useSelector(state => state.teamSlice);

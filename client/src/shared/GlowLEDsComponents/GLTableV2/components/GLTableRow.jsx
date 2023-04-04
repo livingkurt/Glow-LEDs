@@ -6,6 +6,7 @@ import Checkbox from "@mui/material/Checkbox";
 import { useDispatch } from "react-redux";
 import { determineHover, rowCheckboxClicked } from "../glTableHelpers";
 import { onExpandRow, selectRow } from "../actions/actions";
+import { darken } from "@mui/material";
 
 const GLTableRow = ({
   row,
@@ -20,7 +21,8 @@ const GLTableRow = ({
   enableRowClick,
   onRowClick,
   rowProps,
-  cellProps
+  cellProps,
+  determine_color
 }) => {
   const dispatch = useDispatch();
 
@@ -59,6 +61,13 @@ const GLTableRow = ({
         role="checkbox"
         aria-checked={enableRowSelect && isItemSelected}
         tabIndex={-1}
+        sx={{
+          backgroundColor: determine_color(row), // Set background color based on attribute value
+          color: "white",
+          "&:hover": {
+            backgroundColor: determine_color && darken(determine_color(row), 0.1) // Darken color on hover
+          }
+        }}
         key={row.id}
         selected={enableRowSelect && isItemSelected}
         id={`${namespace}-row-${name}`}
@@ -71,6 +80,9 @@ const GLTableRow = ({
             <Checkbox
               size="large"
               color="primary"
+              sx={{
+                color: determine_color ? "white" : "black"
+              }}
               checked={enableRowSelect && isItemSelected}
               inputProps={{
                 "aria-labelledby": labelId,
@@ -91,6 +103,9 @@ const GLTableRow = ({
               colSpan={column.colSpan || 1}
               data-test={`${namespace}-cell`}
               onClick={column.nonSelectable ? () => {} : onCellClick}
+              sx={{
+                color: determine_color ? "white" : "black"
+              }}
             >
               {value}
             </TableCell>
@@ -104,6 +119,7 @@ const GLTableRow = ({
 GLTableRow.defaultProps = {
   enableRowClick: false,
   onRowClick: x => x,
+  determine_color: x => x,
   rowName: "id",
   enableRowSelect: true,
   enableDropdownRow: false,
@@ -123,6 +139,7 @@ GLTableRow.propTypes = {
   enableRowClick: PropTypes.bool,
   onRowClick: PropTypes.func,
   rowProps: PropTypes.func,
+  determine_color: PropTypes.func,
   cellProps: PropTypes.func
 };
 

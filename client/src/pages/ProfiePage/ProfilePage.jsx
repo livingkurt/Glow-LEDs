@@ -18,7 +18,7 @@ const ProfilePage = props => {
   const userSlice = useSelector(state => state.userSlice);
   const { current_user, loading, user, message, error, success } = userSlice;
 
-  const affiliateSlice = useSelector(state => state.affiliateSlice);
+  const affiliateSlice = useSelector(state => state.affiliateSlice.affiliatePage);
   const { affiliate } = affiliateSlice;
 
   const paycheckSlice = useSelector(state => state.paycheckSlice);

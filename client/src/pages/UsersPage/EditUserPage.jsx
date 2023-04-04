@@ -16,7 +16,7 @@ const EditUserPage = props => {
   const userSlice = useSelector(state => state.userSlice);
   const { current_user, user, loading, error } = userSlice;
 
-  const affiliateSlice = useSelector(state => state.affiliateSlice);
+  const affiliateSlice = useSelector(state => state.affiliateSlice.affiliatePage);
   const { affiliates } = affiliateSlice;
 
   const {
