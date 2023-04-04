@@ -90,19 +90,24 @@ export default {
     const { id } = params;
     try {
       const data = await cart_db.findById_carts_db(id);
-      const cartItems = data.cartItems;
-      let new_cart_items = [];
-      const item_exists: any = cartItems.find((x: any) => deepEqual({ ...x, qty: null }, { ...cart_item, qty: null }));
-      if (item_exists) {
-        new_cart_items = cartItems.map((x: any) => (deepEqual({ ...x, qty: null }, { ...cart_item, qty: null }) ? cart_item : x));
+      if (data) {
+        const cartItems = data.cartItems;
+        let new_cart_items = [];
+        const item_exists: any = cartItems.find((x: any) => deepEqual({ ...x, qty: null }, { ...cart_item, qty: null }));
+        if (item_exists) {
+          new_cart_items = cartItems.map((x: any) => (deepEqual({ ...x, qty: null }, { ...cart_item, qty: null }) ? cart_item : x));
+        } else {
+          new_cart_items = [...cartItems, cart_item];
+        }
+        await cart_db.update_carts_db(id, {
+          cartItems: new_cart_items
+        });
+        const new_cart = await cart_db.findById_carts_db(id);
+        return new_cart;
       } else {
-        new_cart_items = [...cartItems, cart_item];
+        const data: any = await cart_db.create_carts_db({ cartItems: [...cart_item] });
+        return data;
       }
-      await cart_db.update_carts_db(id, {
-        cartItems: new_cart_items
-      });
-      const new_cart = await cart_db.findById_carts_db(id);
-      return new_cart;
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

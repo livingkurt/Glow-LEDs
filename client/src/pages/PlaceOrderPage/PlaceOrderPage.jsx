@@ -379,7 +379,7 @@ const PlaceOrderPage = props => {
     );
 
     dispatch(set_loading(false));
-    dispatch(API.emptyCart());
+    dispatch(API.emptyCart(my_cart._id));
     dimminish_stock();
     send_used_code_email();
     promo_code_used();
@@ -440,7 +440,7 @@ const PlaceOrderPage = props => {
     );
 
     dispatch(set_loading(false));
-    dispatch(API.emptyCart());
+    dispatch(API.emptyCart(my_cart._id));
     dimminish_stock();
     promo_code_used();
     props.history.push("/secure/glow/orders?page=1?limit=10");
@@ -454,7 +454,7 @@ const PlaceOrderPage = props => {
         setTimeout(() => {
           props.history.push("/pages/complete/order/" + order._id);
           dispatch(set_loading_payment(false));
-          dispatch(API.emptyCart());
+          dispatch(API.emptyCart(my_cart._id));
           promo_code_used();
           dimminish_stock();
           send_used_code_email();
@@ -478,7 +478,7 @@ const PlaceOrderPage = props => {
       if (success && order?.hasOwnProperty("_id")) {
         props.history.push("/pages/complete/order/" + order._id);
         dispatch(set_loading(false));
-        dispatch(API.emptyCart());
+        dispatch(API.emptyCart(my_cart._id));
         promo_code_used();
         dimminish_stock();
         sessionStorage.removeItem("shippingAddress");

@@ -90,7 +90,7 @@ export const emptyCart = createAsyncThunk("carts/emptyCart", async (id: string, 
     const {
       userSlice: { current_user }
     } = thunkApi.getState();
-    const { data } = await axios.delete(`/api/carts/${id}/empty_cart`, headers(current_user));
+    const { data } = await axios.post(`/api/carts/${id}/empty_cart`, headers(current_user));
     return data;
   } catch (error) {}
 });

@@ -132,7 +132,7 @@ const OrderPage = props => {
   //       history.push("/secure/checkout/order/receipt/" + order._id + "/order/true");
   //       dispatch(API.detailsOrder(props.match.params.id));
   //       set_payment_loading(false);
-  //       dispatch(API.emptyCart());
+  //       dispatch(API.emptyCart(my_cart._id));
   //     } else if (errorPay) {
   //     }
   //   }
