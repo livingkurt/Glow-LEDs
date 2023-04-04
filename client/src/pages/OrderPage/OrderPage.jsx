@@ -115,14 +115,6 @@ const OrderPage = props => {
     return () => (clean = false);
   }, [product_object]);
 
-  const empty_cart = () => {
-    if (my_cart._id) {
-      dispatch(API.deleteCart(my_cart._id));
-    }
-    // cartItems.forEach((item, index) => {
-    //   dispatch(API.deleteCartItem({ item_index: index, type: "add_to_cart" }));
-    // });
-  };
   const pay_order = paymentMethod => {
     set_payment_loading(true);
     if (current_user) {
@@ -140,7 +132,7 @@ const OrderPage = props => {
   //       history.push("/secure/checkout/order/receipt/" + order._id + "/order/true");
   //       dispatch(API.detailsOrder(props.match.params.id));
   //       set_payment_loading(false);
-  //       empty_cart();
+  //       dispatch(empty_cart());
   //     } else if (errorPay) {
   //     }
   //   }

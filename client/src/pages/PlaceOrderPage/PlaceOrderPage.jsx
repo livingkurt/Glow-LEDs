@@ -14,7 +14,7 @@ import useWindowDimensions from "../../shared/Hooks/windowDimensions";
 import { isMobile } from "react-device-detect";
 import { OrderSummaryStep, ShippingStep } from "./components";
 import * as API from "../../api";
-import { save_shipping } from "../../slices/cartSlice";
+import { empty_cart, save_shipping } from "../../slices/cartSlice";
 import { set_loading, set_loading_payment } from "../../slices/orderSlice";
 import { isWholesaler } from "../../utils/helpers/user_helpers";
 
@@ -440,7 +440,7 @@ const PlaceOrderPage = props => {
     );
 
     dispatch(set_loading(false));
-    empty_cart();
+    dispatch(empty_cart());
     dimminish_stock();
     promo_code_used();
     props.history.push("/secure/glow/orders?page=1?limit=10");
@@ -454,7 +454,7 @@ const PlaceOrderPage = props => {
         setTimeout(() => {
           props.history.push("/pages/complete/order/" + order._id);
           dispatch(set_loading_payment(false));
-          empty_cart();
+          dispatch(empty_cart());
           promo_code_used();
           dimminish_stock();
           send_used_code_email();
@@ -465,15 +465,6 @@ const PlaceOrderPage = props => {
     }
     return () => (clean = false);
   }, [success_order]);
-
-  const empty_cart = () => {
-    if (my_cart._id) {
-      dispatch(API.deleteCart(my_cart._id));
-    }
-    // cartItems.forEach((item, index) => {
-    //   dispatch(API.deleteCartItem({ item_index: index, type: "add_to_cart" }));
-    // });
-  };
 
   const send_used_code_email = async () => {
     if (promo_code) {
@@ -487,7 +478,7 @@ const PlaceOrderPage = props => {
       if (success && order?.hasOwnProperty("_id")) {
         props.history.push("/pages/complete/order/" + order._id);
         dispatch(set_loading(false));
-        empty_cart();
+        dispatch(empty_cart());
         promo_code_used();
         dimminish_stock();
         sessionStorage.removeItem("shippingAddress");

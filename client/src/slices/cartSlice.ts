@@ -42,11 +42,14 @@ const cartSlice = createSlice({
   reducers: {
     set_cart: (state, { payload }) => {
       const updated_cart = payload;
-      console.log({ updated_cart });
       return {
         ...state,
         cart: { ...state.cart, ...updated_cart }
       };
+    },
+    empty_cart: (state, { payload }) => {
+      localStorage.removeItem("my_cart");
+      state.my_cart = { cartItems: [] };
     },
     set_loading: (state, { payload }) => {
       state.loading = payload;
@@ -206,6 +209,7 @@ export const {
   open_create_cart_modal,
   open_cart_modal,
   close_cart_modal,
-  open_edit_cart_modal
+  open_edit_cart_modal,
+  empty_cart
 } = cartSlice.actions;
 export default cartSlice.reducer;
