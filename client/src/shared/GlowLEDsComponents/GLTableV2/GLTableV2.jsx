@@ -358,7 +358,7 @@ GLTableV2.defaultProps = {
   titleActions: null,
   enableRowClick: false,
   loading: false,
-  determine_color: x => x,
+  determine_color: false,
   onRowClick: x => x,
   rowProps: () => ({}),
   cellProps: () => ({}),

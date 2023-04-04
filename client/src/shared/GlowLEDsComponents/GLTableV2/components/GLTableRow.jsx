@@ -24,6 +24,7 @@ const GLTableRow = ({
   cellProps,
   determine_color
 }) => {
+  console.log({ determine_color });
   const dispatch = useDispatch();
 
   const onCellClick = e => {
@@ -62,11 +63,7 @@ const GLTableRow = ({
         aria-checked={enableRowSelect && isItemSelected}
         tabIndex={-1}
         sx={{
-          backgroundColor: determine_color(row), // Set background color based on attribute value
-          color: "white",
-          "&:hover": {
-            backgroundColor: determine_color && darken(determine_color(row), 0.1) // Darken color on hover
-          }
+          backgroundColor: determine_color ? determine_color(row) : "white" // Set background color based on attribute value
         }}
         key={row.id}
         selected={enableRowSelect && isItemSelected}
@@ -81,7 +78,7 @@ const GLTableRow = ({
               size="large"
               color="primary"
               sx={{
-                color: determine_color ? "white" : "black"
+                color: determine_color ? "white" : ""
               }}
               checked={enableRowSelect && isItemSelected}
               inputProps={{
@@ -104,7 +101,7 @@ const GLTableRow = ({
               data-test={`${namespace}-cell`}
               onClick={column.nonSelectable ? () => {} : onCellClick}
               sx={{
-                color: determine_color ? "white" : "black"
+                color: determine_color ? "white" : ""
               }}
             >
               {value}
@@ -119,7 +116,7 @@ const GLTableRow = ({
 GLTableRow.defaultProps = {
   enableRowClick: false,
   onRowClick: x => x,
-  determine_color: x => x,
+  determine_color: false,
   rowName: "id",
   enableRowSelect: true,
   enableDropdownRow: false,
