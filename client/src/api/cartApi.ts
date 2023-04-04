@@ -52,7 +52,7 @@ export const addToCart = createAsyncThunk(
         const { data } = await axios.post("/api/carts/start_cart", { cart_item, current_user });
         return { data, type };
       } else {
-        const { data } = await axios.put(`/api/carts/${cart._id}/add_to_cart`, { cart_item });
+        const { data } = await axios.put(`/api/carts/${cart._id}/add_to_cart`, { cart_item, cartItems: cart.cartItems });
         return { data, type };
       }
     } catch (error) {}

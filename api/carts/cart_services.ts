@@ -86,7 +86,7 @@ export default {
     }
   },
   add_to_cart_carts_s: async (params: any, body: any) => {
-    const { cart_item } = body;
+    const { cart_item, cartItems: cart_items } = body;
     const { id } = params;
     try {
       const data = await cart_db.findById_carts_db(id);
@@ -105,7 +105,7 @@ export default {
         const new_cart = await cart_db.findById_carts_db(id);
         return new_cart;
       } else {
-        const data: any = await cart_db.create_carts_db({ cartItems: [...cart_item] });
+        const data: any = await cart_db.create_carts_db({ cartItems: [...cart_items, ...cart_item] });
         return data;
       }
     } catch (error) {
