@@ -109,6 +109,15 @@ export default {
       }
     }
   },
+  empty_carts_s: async (params: any) => {
+    try {
+      return await cart_db.update_carts_db(params.id, { active: false });
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
   remove_carts_s: async (params: any) => {
     try {
       return await cart_db.remove_carts_db(params.id);
@@ -119,20 +128,20 @@ export default {
     }
   },
   remove_cart_item_carts_s: async (params: any) => {
-    const { cart_id, item_index } = params;
+    const { id, item_index } = params;
 
     try {
-      const data = await cart_db.findById_carts_db(cart_id);
+      const data = await cart_db.findById_carts_db(id);
       const cartItems = [...data.cartItems];
       cartItems.splice(item_index, 1); // 2nd parameter means remove one item only
       if (cartItems.length === 0) {
-        await cart_db.remove_carts_db(cart_id);
+        await cart_db.remove_carts_db(id);
         return { message: "Cart Deleted" };
       } else {
-        await cart_db.update_carts_db(cart_id, {
+        await cart_db.update_carts_db(id, {
           cartItems: cartItems
         });
-        const new_cart = await cart_db.findById_carts_db(cart_id);
+        const new_cart = await cart_db.findById_carts_db(id);
 
         return new_cart;
       }

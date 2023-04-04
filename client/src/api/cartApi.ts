@@ -85,6 +85,16 @@ export const detailsCart = createAsyncThunk("carts/detailsCart", async (id: stri
   } catch (error) {}
 });
 
+export const emptyCart = createAsyncThunk("carts/emptyCart", async (id: string, thunkApi: any) => {
+  try {
+    const {
+      userSlice: { current_user }
+    } = thunkApi.getState();
+    const { data } = await axios.delete(`/api/carts/${id}/empty_cart`, headers(current_user));
+    return data;
+  } catch (error) {}
+});
+
 export const deleteCart = createAsyncThunk("carts/deleteCart", async (id: string, thunkApi: any) => {
   try {
     const {

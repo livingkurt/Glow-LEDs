@@ -22,7 +22,7 @@ export default {
   },
   findById_carts_db: async (id: string) => {
     try {
-      return await Cart.findOne({ _id: id }).populate("user");
+      return await Cart.findOne({ _id: id, active: true }).populate("user");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -31,7 +31,7 @@ export default {
   },
   findByUser_carts_db: async (user_id: string) => {
     try {
-      return await Cart.findOne({ user: user_id }).populate("user");
+      return await Cart.findOne({ user: user_id, active: true }).populate("user");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -50,7 +50,7 @@ export default {
   },
   update_carts_db: async (id: string, body: any) => {
     try {
-      const cart: any = await Cart.findOne({ _id: id });
+      const cart: any = await Cart.findOne({ _id: id, active: true });
       if (cart) {
         return await Cart.updateOne({ _id: id }, body);
       }
@@ -66,7 +66,6 @@ export default {
       const cart: any = await Cart.findOne({ _id: id });
       if (cart) {
         return await Cart.deleteOne({ _id: id });
-        // return await Cart.deleteOne({ _id: id }, { deleted: true });
       }
     } catch (error) {
       if (error instanceof Error) {

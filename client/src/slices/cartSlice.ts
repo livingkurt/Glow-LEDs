@@ -47,10 +47,6 @@ const cartSlice = createSlice({
         cart: { ...state.cart, ...updated_cart }
       };
     },
-    empty_cart: (state, { payload }) => {
-      localStorage.removeItem("my_cart");
-      state.my_cart = { cartItems: [] };
-    },
     set_loading: (state, { payload }) => {
       state.loading = payload;
     },
@@ -195,6 +191,10 @@ const cartSlice = createSlice({
     },
     [API.createPayOrder.fulfilled as any]: (state: any, { payload }: any) => {
       state.cart = {};
+    },
+    [API.emptyCart.fulfilled as any]: (state: any, { payload }: any) => {
+      localStorage.removeItem("my_cart");
+      state.my_cart = { cartItems: [] };
     }
   }
 });

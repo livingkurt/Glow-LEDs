@@ -16,7 +16,7 @@ import * as API from "../../api";
 
 const ProductPage = props => {
   const userSlice = useSelector(state => state.userSlice);
-  let { current_user, cart_id } = userSlice;
+  let { current_user } = userSlice;
 
   const cartSlice = useSelector(state => state.cartSlice.cartPage);
   const { my_cart, success } = cartSlice;

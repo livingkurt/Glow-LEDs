@@ -73,6 +73,7 @@ const cartSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User"
     },
+    active: { type: Boolean, default: true },
     deleted: { type: Boolean, default: false }
   },
   {

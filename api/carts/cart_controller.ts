@@ -109,5 +109,17 @@ export default {
     } catch (error) {
       res.status(500).send({ error, message: "Error Deleting Cart Item" });
     }
+  },
+  empty_carts_c: async (req: any, res: any) => {
+    const { params } = req;
+    try {
+      const cart = await cart_services.empty_carts_s(params);
+      if (cart) {
+        return res.status(201).send(cart);
+      }
+      return res.status(500).send({ message: "Error Deleting Cart Item" });
+    } catch (error) {
+      res.status(500).send({ error, message: "Error Deleting Cart Item" });
+    }
   }
 };
