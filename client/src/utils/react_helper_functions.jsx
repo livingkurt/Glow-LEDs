@@ -1,6 +1,4 @@
 import React from "react";
-
-import { check_refresh_token } from "../actions/userActions";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "../utils/setAuthToken";
 import { API_Users } from ".";

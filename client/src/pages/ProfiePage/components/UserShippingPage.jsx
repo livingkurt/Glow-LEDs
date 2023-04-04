@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { saveShipping, savePayment } from "../../../actions/cartActions";
 
 import { validate_shipping } from "../../../utils/validations";
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import CheckoutSteps from "../../PlaceOrderPage/components/GuestCheckoutSteps";
+import { save_payment_method, save_shipping } from "../../../slices/cartSlice";
 
 const ShippingPage = props => {
   const userSlice = useSelector(state => state.userSlice);
@@ -83,7 +83,7 @@ const ShippingPage = props => {
 
     if (request.isValid) {
       dispatch(
-        saveShipping({
+        save_shipping({
           first_name,
           last_name,
           email,
@@ -97,7 +97,7 @@ const ShippingPage = props => {
         })
       );
       const paymentMethod = "stripe";
-      dispatch(savePayment({ paymentMethod }));
+      dispatch(save_payment_method({ paymentMethod }));
       props.history.push("placeorder");
     }
   };

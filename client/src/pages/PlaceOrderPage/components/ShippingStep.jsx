@@ -2,23 +2,16 @@ import React, { useState, useEffect } from "react";
 import { state_names } from "../../../utils/helper_functions";
 import { Loading } from "../../../shared/SharedComponents";
 import { ShippingChoice } from ".";
-// import { usePlacesWidget } from "react-google-autocomplete";
-// import Autocomplete from "react-google-autocomplete";
 import { useDispatch, useSelector } from "react-redux";
-import { API_Shipping } from "../../../utils";
 import { validate_shipping } from "../../../utils/validations";
-import { savePayment, saveShipping } from "../../../actions/cartActions";
-import { update } from "../../../actions/userActions";
 import useWindowDimensions from "../../../shared/Hooks/windowDimensions";
 import { isMobile } from "react-device-detect";
 import Autocomplete from "./AddressAutocomplete";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import GLTooltip from "../../../shared/GlowLEDsComponents/GLTooltip/GLTooltip";
-import GLModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiionModal";
-import GLCheckbox from "../../../shared/GlowLEDsComponents/GLCheckbox/GLCheckbox";
 import { isAdmin } from "../../../utils/helpers/user_helpers";
 import { useGetAllShippingOrdersQuery } from "../placeOrderApi";
-import { save_payment_method, save_shipping } from "../../../slices/cartSlice";
+import { save_shipping } from "../../../slices/cartSlice";
 import * as API from "../../../api";
 
 const ShippingStep = ({

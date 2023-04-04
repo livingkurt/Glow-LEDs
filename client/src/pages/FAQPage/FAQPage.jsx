@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Helmet } from "react-helmet";
 
 import { update_products_url } from "../../utils/helper_functions";
-import { listProducts } from "../../actions/productActions";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import QuickButtons from "./QuickButtons";
 import Filter from "../../shared/GlowLEDsComponents/GLTable/Filter";
@@ -30,7 +29,7 @@ const FAQPage = () => {
     const chip_selected = JSON.parse(e.target.value);
     update_products_url(history, "", "", chip_selected.name, "", "0", "/collections/all/products");
     dispatch(
-      listProducts({
+      API.listProducts({
         chip: chip_selected._id,
         hidden: false
       })

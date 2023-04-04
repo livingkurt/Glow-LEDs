@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { ImageDisplay, Loading } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
-import { listEmails, saveEmail } from "../../actions/emailActions";
 import { API_Emails } from "../../utils";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import * as API from "../../api";

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { login } from "../../actions/userActions";
 import { validate_login } from "../../utils/validations";
 import { Helmet } from "react-helmet";
 import { Loading } from "../../shared/SharedComponents";

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import { detailsAffiliate } from "../../actions/affiliateActions";
 import { useHistory } from "react-router-dom";
 import { LazyImage } from "../../shared/SharedComponents";
 import { API_Users } from "../../utils";

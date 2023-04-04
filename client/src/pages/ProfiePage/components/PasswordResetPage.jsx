@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { reset_password } from "../../../actions/userActions";
 import { Loading } from "../../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../../shared/GlowLEDsComponents";

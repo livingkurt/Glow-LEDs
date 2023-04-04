@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { Loading, Notification } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { format_date } from "../../utils/helper_functions";
-import { listTeams } from "../../actions/teamActions";
 import * as API from "../../api";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import Search from "../../shared/GlowLEDsComponents/GLTable/Search";

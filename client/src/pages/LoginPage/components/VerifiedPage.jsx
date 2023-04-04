@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { verify } from "../../../actions/userActions";
 import { Loading } from "../../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 
@@ -8,16 +7,16 @@ const VerifiedPage = props => {
   const dispatch = useDispatch();
   const userSlice = useSelector(state => state.userSlice);
   const { loading, current_user, error } = userSlice;
-  useEffect(() => {
-    dispatch(verify(props.match.params.id));
-    if (!loading) {
-      setTimeout(function () {
-        props.history.push("/account/login");
-      }, 3000);
-    }
+  // useEffect(() => {
+  //   dispatch(verify(props.match.params.id));
+  //   if (!loading) {
+  //     setTimeout(function () {
+  //       props.history.push("/account/login");
+  //     }, 3000);
+  //   }
 
-    return () => {};
-  }, []);
+  //   return () => {};
+  // }, []);
 
   return (
     <div className="column jc-c">

@@ -4,8 +4,6 @@ import { useHistory } from "react-router-dom";
 import { Loading } from "../../shared/SharedComponents";
 import { format_date, unformat_date } from "../../utils/helper_functions";
 import { Helmet } from "react-helmet";
-import { listProducts } from "../../actions/productActions";
-import { listUsers } from "../../actions/userActions";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import * as API from "../../api";
 

@@ -14,7 +14,6 @@ import useWindowDimensions from "../../shared/Hooks/windowDimensions";
 import { isMobile } from "react-device-detect";
 import { OrderSummaryStep, ShippingStep } from "./components";
 import * as API from "../../api";
-import { createOrderGuest, removeOrderState } from "../../actions/orderActions";
 import { save_shipping } from "../../slices/cartSlice";
 import { set_loading, set_loading_payment } from "../../slices/orderSlice";
 import { isWholesaler } from "../../utils/helpers/user_helpers";
@@ -418,7 +417,7 @@ const PlaceOrderPage = props => {
 
   const create_order_without_user = async () => {
     dispatch(
-      createOrderGuest({
+      API.saveOrder({
         orderItems: cartItems,
         shipping: shipment_id
           ? {

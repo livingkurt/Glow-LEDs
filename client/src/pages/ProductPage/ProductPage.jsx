@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { detailsProduct } from "../../actions/productActions";
 import { Loading } from "../../shared/SharedComponents";
 import useChangedEffect from "../../shared/Hooks/useChangedEffect";
 import { Helmet } from "react-helmet";

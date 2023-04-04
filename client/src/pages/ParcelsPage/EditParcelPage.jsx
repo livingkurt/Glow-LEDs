@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { saveParcel, detailsParcel } from "../../actions/parcelActions";
 import { useHistory, Link } from "react-router-dom";
 import { Loading } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";

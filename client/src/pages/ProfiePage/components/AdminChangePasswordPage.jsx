@@ -1,9 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { password_reset } from "../../../actions/userActions";
 import { useDispatch, useSelector } from "react-redux";
-import { validate_password_change } from "../../../utils/validations";
-import { Loading } from "../../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import * as API from "../../../api";
@@ -23,7 +20,7 @@ const AdminChangePasswordPage = props => {
 
   const submitHandler = async e => {
     e.preventDefault();
-    dispatch(password_reset(props.match.params.id, password, rePassword));
+    dispatch(API.passwordReset(props.match.params.id, password, rePassword));
     history.push("/secure/glow/userprofile/" + props.match.params.id);
   };
 

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { contact } from "../../actions/userActions";
 import { validate_contact } from "../../utils/validations";
 import { Loading, Notification } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";

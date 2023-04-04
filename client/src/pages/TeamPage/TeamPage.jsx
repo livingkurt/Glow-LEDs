@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import { detailsTeam } from "../../actions/teamActions";
 import { useHistory } from "react-router-dom";
 import { LazyImage } from "../../shared/SharedComponents";
 import { GLButton } from "../../shared/GlowLEDsComponents";

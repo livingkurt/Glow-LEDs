@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { listProducts } from "../../actions/productActions";
 import Banner from "./Banner";
 import { HashLink } from "react-router-hash-link";
 import useWindowDimensions from "../Hooks/windowDimensions";
@@ -191,7 +190,7 @@ const Header = props => {
     const chip_selected = JSON.parse(e.target.value);
     update_products_url(history, "", "", chip_selected.name, "", "0", "/collections/all/products");
     dispatch(
-      listProducts({
+      API.listProducts({
         chip: chip_selected._id,
         hidden: false
       })
