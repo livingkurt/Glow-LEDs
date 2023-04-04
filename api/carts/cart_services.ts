@@ -74,7 +74,6 @@ export default {
     try {
       if (current_user._id) {
         const data: any = await cart_db.create_carts_db({ user: current_user._id, cartItems: [...cart_item] });
-        await user_db.update_users_db(current_user._id, { cart: data._id });
         return data;
       } else {
         const data: any = await cart_db.create_carts_db({ cartItems: [...cart_item] });
@@ -124,12 +123,10 @@ export default {
 
     try {
       const data = await cart_db.findById_carts_db(cart_id);
-
       const cartItems = [...data.cartItems];
       cartItems.splice(item_index, 1); // 2nd parameter means remove one item only
       if (cartItems.length === 0) {
         await cart_db.remove_carts_db(cart_id);
-        // await user_db.update_users_db(current_user._id, { cart: data._id });
         return { message: "Cart Deleted" };
       } else {
         await cart_db.update_carts_db(cart_id, {

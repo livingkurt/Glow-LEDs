@@ -7,7 +7,7 @@ import { API_Content } from "../../utils";
 import { LazyImage, Loading } from "../SharedComponents";
 import { determine_total, humanize, decide_warning, shuffle } from "../../utils/helper_functions";
 import { GLButton, GLTooltip } from "../GlowLEDsComponents";
-import { deleteCartItem } from "../../api";
+import * as API from "../../api";
 import { clear_order_state } from "../../slices/orderSlice";
 import { set_success } from "../../slices/cartSlice";
 import { isWholesaler } from "../../utils/helpers/user_helpers";
@@ -273,7 +273,7 @@ const Cart = props => {
                         <div className="mb-10px">
                           <GLButton
                             variant="icon"
-                            onClick={() => dispatch(deleteCartItem({ item_index: index, type: "add_to_cart" }))}
+                            onClick={() => dispatch(API.deleteCartItem({ item_index: index, type: "add_to_cart" }))}
                             aria-label="Delete"
                           >
                             <i className="fas fa-trash-alt" />

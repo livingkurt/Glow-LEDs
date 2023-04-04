@@ -38,7 +38,9 @@ export const createPayOrder = createAsyncThunk(
     try {
       const {
         userSlice: { current_user },
-        cartSlice: { my_cart }
+        cartSlice: {
+          cartPage: { my_cart }
+        }
       } = thunkApi.getState();
       const { data: order_created } = await axios.post(`/api/orders`, { ...order, user: current_user }, headers(current_user));
 
@@ -61,7 +63,9 @@ export const createPayOrderGuest = createAsyncThunk(
     thunkApi: any
   ) => {
     const {
-      cartSlice: { my_cart }
+      cartSlice: {
+        cartPage: { my_cart }
+      }
     } = thunkApi.getState();
     try {
       let user_id = "";

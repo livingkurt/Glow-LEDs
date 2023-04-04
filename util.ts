@@ -22,8 +22,7 @@ export const getAccessToken = (user: any) => {
       shipping: user.shipping,
       is_affiliated: user.is_affiliated,
       wholesaler: user.wholesaler,
-      minimum_order_amount: user.minimum_order_amount,
-      cart: user.cart
+      minimum_order_amount: user.minimum_order_amount
     },
     config.ACCESS_TOKEN_SECRET,
     {
@@ -47,8 +46,7 @@ export const getRefreshToken = (user: any) => {
         shipping: user.shipping,
         is_affiliated: user.is_affiliated,
         wholesaler: user.wholesaler,
-        minimum_order_amount: user.minimum_order_amount,
-        cart: user.cart
+        minimum_order_amount: user.minimum_order_amount
       },
       config.REFRESH_TOKEN_SECRET,
       {

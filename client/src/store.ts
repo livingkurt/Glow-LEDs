@@ -24,10 +24,11 @@ if (shipping_string) {
 }
 
 const initialState: object = {
-  cartSlice: { my_cart, shipping: shippingAddress },
+  cartSlice: { cartPage: { my_cart }, shipping: shippingAddress },
   userSlice: { current_user: {} },
   settingSlice: { show_search_bar: true }
 };
+console.log({ initialState });
 
 const store = configureStore({
   reducer: reducer,

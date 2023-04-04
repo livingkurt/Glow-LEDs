@@ -101,7 +101,9 @@ export const deleteCartItem = createAsyncThunk(
     try {
       const {
         userSlice: { current_user },
-        cartSlice: { my_cart }
+        cartSlice: {
+          cartPage: { my_cart }
+        }
       } = thunkApi.getState();
       const { data } = await axios.put(`/api/carts/${my_cart._id}/cart_item/${item_index}`, headers(current_user));
       return { data, type };

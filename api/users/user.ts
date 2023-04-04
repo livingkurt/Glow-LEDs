@@ -30,7 +30,6 @@ const userSchema = new mongoose.Schema(
     is_employee: { type: Boolean, required: true, default: false },
     weekly_wage: { type: Number },
     palettes: [{ type: mongoose.Schema.Types.ObjectId, ref: "Palette" }],
-    cart: { type: mongoose.Schema.Types.ObjectId, ref: "Cart" },
     affiliate: { type: mongoose.Schema.Types.ObjectId, ref: "Affiliate" },
     email_subscription: { type: Boolean, default: true },
     guest: { type: Boolean },
