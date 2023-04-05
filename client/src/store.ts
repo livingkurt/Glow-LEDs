@@ -28,7 +28,6 @@ const initialState: object = {
   userSlice: { current_user: {} },
   settingSlice: { show_search_bar: true }
 };
-console.log({ initialState });
 
 const store = configureStore({
   reducer: reducer,

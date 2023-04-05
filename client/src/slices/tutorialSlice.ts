@@ -93,8 +93,8 @@ const tutorialsSlice = createSlice({
     },
     [API.listTutorials.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.tutorials = payload.tutorials;
-      state.totalPages = payload.totalPages;
+      state.tutorials = payload.data;
+      state.totalPages = payload.total_count;
       state.page = payload.currentPage;
       state.message = "Tutorials Found";
     },

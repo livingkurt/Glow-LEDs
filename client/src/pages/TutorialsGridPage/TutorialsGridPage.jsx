@@ -34,7 +34,7 @@ const TutorialsGridPage = () => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(API.listTutorials({ sort: "order" }));
+      dispatch(API.listTutorials({ limit: 0, page: 0 }));
     }
     return () => (clean = false);
   }, [dispatch]);
@@ -63,7 +63,7 @@ const TutorialsGridPage = () => {
       <h2 className="ta-c">Beginner</h2>
       <Loading loading={loading}>
         <Grid container spacing={2}>
-          {tutorials.map(item => (
+          {tutorials?.map(item => (
             <Grid item xs={12} md={4} key={item.video}>
               <CardMedia
                 component="img"
