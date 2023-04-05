@@ -12,8 +12,8 @@ const EditTutorialModal = () => {
   const { edit_tutorial_modal, tutorial, loading } = tutorialsSlice;
   const { affiliate, title } = tutorial;
 
-  const affiliatesSlice = useSelector(state => state.affiliateSlice);
-  const { affiliates, loading: loading_affiliates } = affiliatesSlice;
+  const affiliateSlice = useSelector(state => state.affiliateSlice);
+  const { affiliates, loading: loading_affiliates } = affiliateSlice;
 
   useEffect(() => {
     let clean = true;
@@ -81,7 +81,12 @@ const EditTutorialModal = () => {
         cancelColor="secondary"
         disableEscapeKeyDown
       >
-        <GLForm formData={formFields} state={tutorial} onChange={value => dispatch(set_tutorial(value))} loading={loading} />
+        <GLForm
+          formData={formFields}
+          state={tutorial}
+          onChange={value => dispatch(set_tutorial(value))}
+          loading={loading && loading_affiliates}
+        />
       </GLModal>
     </div>
   );

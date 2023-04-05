@@ -64,7 +64,7 @@ const TutorialsGridPage = () => {
       <Loading loading={loading}>
         <Grid container spacing={2}>
           {tutorials?.map(item => (
-            <Grid item xs={12} md={4} key={item.video}>
+            <Grid item xs={12} sm={6} md={4} lg={3} key={item.video}>
               <CardMedia
                 component="img"
                 image={`http://img.youtube.com/vi/${item.video}/hqdefault.jpg`}

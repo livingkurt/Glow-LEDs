@@ -2,16 +2,13 @@ import Tutorial from "./tutorial";
 
 export default {
   findAll_tutorials_db: async (filter: any, sort: any, limit: any, page: any) => {
-    console.log({ filter, sort, limit, page });
     try {
-      const test = await Tutorial.find(filter)
+      return await Tutorial.find(filter)
         .sort(sort)
         .populate("affiliate")
         .limit(parseInt(limit))
         .skip(Math.max(parseInt(page) - 1, 0) * parseInt(limit))
         .exec();
-      console.log({ test });
-      return test;
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

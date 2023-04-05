@@ -25,7 +25,7 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
                   margin="normal"
                   size="small"
                   value={fieldState || ""}
-                  options={fieldData.options}
+                  options={fieldData.options || []}
                   getOptionLabel={option => (fieldData.getOptionLabel ? fieldData.getOptionLabel(option) : option[fieldData.labelProp])}
                   onChange={(event, value) => onChange({ [fieldName]: value })}
                   renderInput={params => <TextField {...params} margin="normal" label={fieldData.label} variant="outlined" />}
@@ -54,7 +54,7 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
                   margin="normal"
                   size="small"
                   value={fieldState || ""}
-                  options={fieldData.options}
+                  options={fieldData.options || []}
                   getOptionLabel={option => toCapitalize(option)}
                   onChange={(event, value) => onChange({ [fieldName]: value })}
                   renderInput={params => <TextField {...params} margin="normal" label={fieldData.label} variant="outlined" />}
