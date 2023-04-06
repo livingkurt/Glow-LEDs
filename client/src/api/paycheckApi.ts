@@ -7,7 +7,9 @@ import { create_query } from "../utils/helper_functions";
 export const listPaychecks = createAsyncThunk("paychecks/listPaychecks", async (query: any, thunkApi: any) => {
   try {
     const {
-      userSlice: { current_user }
+      userSlice: {
+        userPage: { current_user }
+      }
     } = thunkApi.getState();
     const { data } = await axios.get(`/api/paychecks?${create_query(query)}`, headers(current_user));
     return data;
@@ -17,7 +19,9 @@ export const listPaychecks = createAsyncThunk("paychecks/listPaychecks", async (
 export const savePaycheck = createAsyncThunk("paychecks/savePaycheck", async (paycheck: any, thunkApi: any) => {
   try {
     const {
-      userSlice: { current_user }
+      userSlice: {
+        userPage: { current_user }
+      }
     } = thunkApi.getState();
 
     if (!paycheck._id) {
@@ -33,7 +37,9 @@ export const savePaycheck = createAsyncThunk("paychecks/savePaycheck", async (pa
 export const detailsPaycheck = createAsyncThunk("paychecks/detailsPaycheck", async (id: string, thunkApi: any) => {
   try {
     const {
-      userSlice: { current_user }
+      userSlice: {
+        userPage: { current_user }
+      }
     } = thunkApi.getState();
     const { data } = await axios.get(`/api/paychecks/${id}`, headers(current_user));
     return data;
@@ -43,7 +49,9 @@ export const detailsPaycheck = createAsyncThunk("paychecks/detailsPaycheck", asy
 export const deletePaycheck = createAsyncThunk("paychecks/deletePaycheck", async (pathname, thunkApi: any) => {
   try {
     const {
-      userSlice: { current_user }
+      userSlice: {
+        userPage: { current_user }
+      }
     } = thunkApi.getState();
     const { data } = await axios.delete("/api/paychecks/" + pathname, headers(current_user));
     return data;

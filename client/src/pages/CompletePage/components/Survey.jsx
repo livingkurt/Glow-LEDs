@@ -32,7 +32,7 @@ const Survey = props => {
   setTimeout(() => {
     set_loading_checkboxes(false);
   }, 500);
-  const userSlice = useSelector(state => state.userSlice);
+  const userSlice = useSelector(state => state.userSlice.userPage);
   const { users, current_user } = userSlice;
 
   const history = useHistory();

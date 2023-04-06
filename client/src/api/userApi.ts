@@ -4,10 +4,38 @@ import axios from "axios";
 import { headers } from "../utils/helpers/user_helpers";
 import { create_query } from "../utils/helper_functions";
 
+export const getUsers = async ({
+  search,
+  sorting,
+  filters,
+  page,
+  pageSize
+}: {
+  search: string;
+  sorting: any;
+  filters: any;
+  page: number;
+  pageSize: number;
+}) => {
+  try {
+    return axios.get(`/api/users`, {
+      params: {
+        limit: pageSize,
+        page: page,
+        search: search
+        // sort: sorting,
+        // filters: pickBy(filters, (val: any) => val.length > 0)
+      }
+    });
+  } catch (error) {}
+};
+
 export const listUsers = createAsyncThunk("users/listUsers", async (query: any, thunkApi: any) => {
   try {
     const {
-      userSlice: { current_user }
+      userSlice: {
+        userPage: { current_user }
+      }
     } = thunkApi.getState();
     const { data } = await axios.get(`/api/users?${create_query(query)}`, headers(current_user));
     return data;
@@ -17,23 +45,32 @@ export const listUsers = createAsyncThunk("users/listUsers", async (query: any, 
 export const saveUser = createAsyncThunk("users/saveUser", async (user: any, thunkApi: any) => {
   try {
     const {
-      userSlice: { current_user }
+      userSlice: {
+        userPage: { current_user }
+      }
     } = thunkApi.getState();
+    console.log({ user, _id: user._id });
 
     if (!user._id) {
+      console.log("!user._id");
       const { data } = await axios.post("/api/users", user, headers(current_user));
       return data;
     } else {
+      console.log("user._id");
       const { data } = await axios.put(`/api/users/${user._id}`, user, headers(current_user));
       return data;
     }
-  } catch (error) {}
+  } catch (error) {
+    console.log({ error });
+  }
 });
 
 export const detailsUser = createAsyncThunk("users/detailsUser", async (id: any, thunkApi: any) => {
   try {
     const {
-      userSlice: { current_user }
+      userSlice: {
+        userPage: { current_user }
+      }
     } = thunkApi.getState();
     const { data } = await axios.get(`/api/users/${id}`, headers(current_user));
     return data;
@@ -43,7 +80,9 @@ export const detailsUser = createAsyncThunk("users/detailsUser", async (id: any,
 export const deleteUser = createAsyncThunk("users/deleteUser", async (id: string, thunkApi: any) => {
   try {
     const {
-      userSlice: { current_user }
+      userSlice: {
+        userPage: { current_user }
+      }
     } = thunkApi.getState();
     const { data } = await axios.delete(`/api/users/${id}`, headers(current_user));
     return data;

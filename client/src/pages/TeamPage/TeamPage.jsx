@@ -12,7 +12,7 @@ const TeamPage = props => {
   const history = useHistory();
   const teamSlice = useSelector(state => state.teamSlice);
   const { team } = teamSlice;
-  const userSlice = useSelector(state => state.userSlice);
+  const userSlice = useSelector(state => state.userSlice.userPage);
   const { current_user } = userSlice;
 
   const dispatch = useDispatch();

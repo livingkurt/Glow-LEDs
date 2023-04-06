@@ -13,14 +13,23 @@ const EditUserPage = props => {
 
   const history = useHistory();
 
-  const userSlice = useSelector(state => state.userSlice);
+  const userSlice = useSelector(state => state.userSlice.userPage);
   const { current_user, user, loading, error } = userSlice;
 
   const affiliateSlice = useSelector(state => state.affiliateSlice.affiliatePage);
   const { affiliates } = affiliateSlice;
 
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      dispatch(API.detailsUser(props.match.params.id));
+      dispatch(API.listAffiliates({}));
+    }
+    return () => (clean = false);
+  }, [dispatch, props.match.params.id]);
+
   const {
-    _id: id,
+    _id,
     first_name,
     last_name,
     email,
@@ -41,17 +50,6 @@ const EditUserPage = props => {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    let clean = true;
-    if (clean) {
-      if (props.match.params.id) {
-        dispatch(API.detailsUser(props.match.params.id));
-      }
-      dispatch(API.listAffiliates({}));
-    }
-    return () => (clean = false);
-  }, [dispatch, props.match.params.id]);
-
   setTimeout(() => {
     set_loading_checkboxes(false);
   }, 500);
@@ -60,7 +58,7 @@ const EditUserPage = props => {
     e.preventDefault();
     dispatch(
       API.saveUser({
-        _id: id,
+        _id,
         first_name,
         last_name,
         email,
@@ -413,7 +411,7 @@ const EditUserPage = props => {
                   </div>
                   <li>
                     <GLButton type="submit" variant="primary">
-                      {id ? "Update" : "Create"}
+                      {_id ? "Update" : "Create"}
                     </GLButton>
                   </li>
                   <li>

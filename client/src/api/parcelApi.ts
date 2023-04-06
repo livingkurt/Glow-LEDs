@@ -7,7 +7,9 @@ import { create_query } from "../utils/helper_functions";
 export const listParcels = createAsyncThunk("parcels/listParcels", async (query: any, thunkApi: any) => {
   try {
     const {
-      userSlice: { current_user }
+      userSlice: {
+        userPage: { current_user }
+      }
     } = thunkApi.getState();
     const { data } = await axios.get(`/api/parcels?${create_query(query)}`, headers(current_user));
     return data;
@@ -17,7 +19,9 @@ export const listParcels = createAsyncThunk("parcels/listParcels", async (query:
 export const saveParcel = createAsyncThunk("parcels/saveParcel", async (parcel: any, thunkApi: any) => {
   try {
     const {
-      userSlice: { current_user }
+      userSlice: {
+        userPage: { current_user }
+      }
     } = thunkApi.getState();
 
     if (!parcel._id) {
@@ -33,7 +37,9 @@ export const saveParcel = createAsyncThunk("parcels/saveParcel", async (parcel: 
 export const detailsParcel = createAsyncThunk("parcels/detailsParcel", async (id: string, thunkApi: any) => {
   try {
     const {
-      userSlice: { current_user }
+      userSlice: {
+        userPage: { current_user }
+      }
     } = thunkApi.getState();
     const { data } = await axios.get(`/api/parcels/${id}`, headers(current_user));
     return data;
@@ -43,7 +49,9 @@ export const detailsParcel = createAsyncThunk("parcels/detailsParcel", async (id
 export const deleteParcel = createAsyncThunk("parcels/deleteParcel", async (pathname, thunkApi: any) => {
   try {
     const {
-      userSlice: { current_user }
+      userSlice: {
+        userPage: { current_user }
+      }
     } = thunkApi.getState();
     const { data } = await axios.delete("/api/parcels/" + pathname, headers(current_user));
     return data;

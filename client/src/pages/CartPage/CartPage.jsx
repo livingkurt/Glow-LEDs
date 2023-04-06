@@ -15,7 +15,7 @@ const CartPage = props => {
   const { my_cart } = cartSlice;
   const { cartItems } = my_cart;
 
-  const userSlice = useSelector(state => state.userSlice);
+  const userSlice = useSelector(state => state.userSlice.userPage);
   const { current_user } = userSlice;
   const [no_items_in_cart, set_no_items_in_cart] = useState("");
 

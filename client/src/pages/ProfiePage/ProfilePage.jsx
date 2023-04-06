@@ -11,11 +11,13 @@ import { OrderListItem } from "../OrdersPage/components";
 import GLTable from "../../shared/GlowLEDsComponents/GLTable/GLTable";
 import { determine_code_tier } from "../../utils/helpers/affiliate_helpers";
 import * as API from "../../api";
+import { open_edit_user_modal } from "../../slices/userSlice";
+import { EditUserModal } from "../UsersPage/components";
 
 const ProfilePage = props => {
   const history = useHistory();
 
-  const userSlice = useSelector(state => state.userSlice);
+  const userSlice = useSelector(state => state.userSlice.userPage);
   const { current_user, loading, user, message, error, success } = userSlice;
 
   const affiliateSlice = useSelector(state => state.affiliateSlice.affiliatePage);
@@ -256,6 +258,7 @@ const ProfilePage = props => {
       <Helmet>
         <title>Admin User Profile | Glow LEDs</title>
       </Helmet>
+      <EditUserModal />
       <Notification message={message} />
       {user && current_user && current_user._id && user._id && current_user._id !== user._id && (
         <GLButton variant="icon" onClick={() => history.goBack()}>
@@ -332,11 +335,15 @@ const ProfilePage = props => {
             <div>
               <div className="row">
                 <div style={{ height: 50 }}>
-                  <Link to={isAdmin(current_user) ? "/secure/glow/edituser/" + id : "/secure/account/editprofile/" + id}>
-                    <GLButton style={{ marginRight: "10px", maxWidth: "225px" }} variant="primary">
-                      Edit Profile
-                    </GLButton>
-                  </Link>
+                  <GLButton
+                    style={{ marginRight: "10px", maxWidth: "225px" }}
+                    onClick={() => {
+                      dispatch(open_edit_user_modal(user));
+                    }}
+                    variant="primary"
+                  >
+                    Edit Profile
+                  </GLButton>
                 </div>
                 {isAdmin(current_user) ? (
                   <div style={{ height: 50 }}>

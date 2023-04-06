@@ -44,7 +44,7 @@ const EditPromoPage = props => {
     end_date
   } = promo;
 
-  const userSlice = useSelector(state => state.userSlice);
+  const userSlice = useSelector(state => state.userSlice.userPage);
   const { users } = userSlice;
 
   const affiliateSlice = useSelector(state => state.affiliateSlice.affiliatePage);

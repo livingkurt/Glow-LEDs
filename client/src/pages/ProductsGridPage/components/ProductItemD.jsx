@@ -17,7 +17,7 @@ const ProductItemD = props => {
   const [image, set_image] = useState(props.product.name);
   const [images, set_images] = useState(props.product.images);
 
-  const userSlice = useSelector(state => state.userSlice);
+  const userSlice = useSelector(state => state.userSlice.userPage);
   const { current_user } = userSlice;
 
   const move_left = e => {

@@ -11,7 +11,7 @@ const EditAffiliateModal = () => {
   const affiliateSlice = useSelector(state => state.affiliateSlice.affiliatePage);
   const { edit_affiliate_modal, affiliate, loading } = affiliateSlice;
 
-  const userSlice = useSelector(state => state.userSlice);
+  const userSlice = useSelector(state => state.userSlice.userPage);
   const { users, loading: loading_affiliates } = userSlice;
 
   const productSlice = useSelector(state => state.productSlice);
@@ -219,7 +219,7 @@ export default EditAffiliateModal;
 // }));
 
 // const EditAffiliateModal = props => {
-//   const userSlice = useSelector(state => state.userSlice);
+//   const userSlice = useSelector(state => state.userSlice.userPage);
 //   const { users, loading: loading_users } = userSlice;
 
 //   const history = useHistory();

@@ -7,7 +7,9 @@ import { create_query } from "../utils/helper_functions";
 export const listTeams = createAsyncThunk("teams/listTeams", async (query: any, thunkApi: any) => {
   try {
     const {
-      userSlice: { current_user }
+      userSlice: {
+        userPage: { current_user }
+      }
     } = thunkApi.getState();
     const { data } = await axios.get(`/api/teams?${create_query(query)}`, headers(current_user));
     return data;
@@ -17,7 +19,9 @@ export const listTeams = createAsyncThunk("teams/listTeams", async (query: any, 
 export const saveTeam = createAsyncThunk("teams/saveTeam", async (team: any, thunkApi: any) => {
   try {
     const {
-      userSlice: { current_user }
+      userSlice: {
+        userPage: { current_user }
+      }
     } = thunkApi.getState();
 
     if (!team._id) {
@@ -33,7 +37,9 @@ export const saveTeam = createAsyncThunk("teams/saveTeam", async (team: any, thu
 export const detailsTeam = createAsyncThunk("teams/detailsTeam", async (pathname: any, thunkApi: any) => {
   try {
     const {
-      userSlice: { current_user }
+      userSlice: {
+        userPage: { current_user }
+      }
     } = thunkApi.getState();
     const { data } = await axios.get(`/api/teams/${pathname}`, headers(current_user));
     return data;
@@ -43,7 +49,9 @@ export const detailsTeam = createAsyncThunk("teams/detailsTeam", async (pathname
 export const deleteTeam = createAsyncThunk("teams/deleteTeam", async (pathname, thunkApi: any) => {
   try {
     const {
-      userSlice: { current_user }
+      userSlice: {
+        userPage: { current_user }
+      }
     } = thunkApi.getState();
     const { data } = await axios.delete("/api/teams/" + pathname, headers(current_user));
     return data;

@@ -22,7 +22,7 @@ const RegisterPage = props => {
   const [password_validations, setPasswordValidations] = useState("");
   const [re_password_validations, setRePasswordValidations] = useState("");
 
-  const userSlice = useSelector(state => state.userSlice);
+  const userSlice = useSelector(state => state.userSlice.userPage);
   const { loading, current_user, error, success } = userSlice;
 
   const dispatch = useDispatch();

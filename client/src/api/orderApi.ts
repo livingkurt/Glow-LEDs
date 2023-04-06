@@ -8,7 +8,9 @@ import { deleteCart } from "./cartApi";
 export const listOrders = createAsyncThunk("orders/listOrders", async (query: any, thunkApi: any) => {
   try {
     const {
-      userSlice: { current_user }
+      userSlice: {
+        userPage: { current_user }
+      }
     } = thunkApi.getState();
     const { data } = await axios.get(`/api/orders?${create_query(query)}`, headers(current_user));
     return data;
@@ -18,7 +20,9 @@ export const listOrders = createAsyncThunk("orders/listOrders", async (query: an
 export const saveOrder = createAsyncThunk("orders/saveOrder", async (order: any, thunkApi: any) => {
   try {
     const {
-      userSlice: { current_user }
+      userSlice: {
+        userPage: { current_user }
+      }
     } = thunkApi.getState();
 
     if (!order._id) {
@@ -116,7 +120,9 @@ export const createPayOrderGuest = createAsyncThunk(
 export const detailsOrder = createAsyncThunk("orders/detailsOrder", async (order_id: string, thunkApi: any) => {
   try {
     const {
-      userSlice: { current_user }
+      userSlice: {
+        userPage: { current_user }
+      }
     } = thunkApi.getState();
     if (current_user && current_user.first_name) {
       const { data } = await axios.get("/api/orders/secure/" + order_id, headers(current_user));
@@ -131,7 +137,9 @@ export const detailsOrder = createAsyncThunk("orders/detailsOrder", async (order
 export const deleteOrder = createAsyncThunk("orders/deleteOrder", async (pathname, thunkApi: any) => {
   try {
     const {
-      userSlice: { current_user }
+      userSlice: {
+        userPage: { current_user }
+      }
     } = thunkApi.getState();
     const { data } = await axios.delete("/api/orders/" + pathname, headers(current_user));
     return data;

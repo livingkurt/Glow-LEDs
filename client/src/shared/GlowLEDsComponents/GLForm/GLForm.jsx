@@ -1,12 +1,37 @@
 import { Autocomplete, Checkbox, FormControlLabel, Skeleton, TextField } from "@mui/material";
+import { useSelector } from "react-redux";
+import { isAdmin } from "../../../utils/helpers/user_helpers";
 import { toCapitalize } from "../../../utils/helper_functions";
 
 const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
+  const userSlice = useSelector(state => state.userSlice.userPage);
+  const { current_user } = userSlice;
+
+  const determine_shown_fields = fieldData => {
+    let result = true;
+    if (fieldData.type !== "array_of_objects") {
+      result = false;
+    }
+    if (fieldData.type !== "objects") {
+      result = false;
+    }
+    if (fieldData.permissions) {
+      if (!isAdmin(current_user) && fieldData?.permissions?.includes("admin")) {
+        result = false;
+      }
+      if (isAdmin(current_user) && fieldData?.permissions?.includes("admin")) {
+        result = true;
+      }
+    } else {
+      result = true;
+    }
+    return result;
+  };
+
   return (
     <>
       {Object.keys(formData).map(fieldName => {
         const fieldData = formData[fieldName];
-        console.log({ state, fieldName });
         let fieldState = state[fieldName];
 
         if (loading) {
@@ -15,7 +40,7 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
           } else {
             return <Skeleton key={fieldName} variant="rectangular" height={40} style={{ marginTop: 22 }} />;
           }
-        } else if (fieldData.type !== "array_of_objects") {
+        } else if (determine_shown_fields(fieldData)) {
           switch (fieldData.type) {
             case "autocomplete":
               return (

@@ -11,8 +11,8 @@ import { Button } from "@mui/material";
 import { getTutorials } from "../../api";
 
 const TutorialsPage = () => {
-  const tutorialsSlice = useSelector(state => state.tutorialSlice.tutorialPage);
-  const { message, loading, remoteVersionRequirement } = tutorialsSlice;
+  const tutorialSlice = useSelector(state => state.tutorialSlice.tutorialPage);
+  const { message, loading, remoteVersionRequirement } = tutorialSlice;
 
   const dispatch = useDispatch();
 

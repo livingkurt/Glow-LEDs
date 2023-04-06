@@ -34,7 +34,7 @@ const RelatedProductsSlideshow = ({
   const cartSlice = useSelector(state => state.cartSlice.cartPage);
   const { my_cart } = cartSlice;
   const { cartItems } = my_cart;
-  const userSlice = useSelector(state => state.userSlice);
+  const userSlice = useSelector(state => state.userSlice.userPage);
   const { current_user } = userSlice;
 
   const [products, set_products] = useState([]);

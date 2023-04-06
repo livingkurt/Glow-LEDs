@@ -7,7 +7,9 @@ import { create_query } from "../utils/helper_functions";
 export const listPalettes = createAsyncThunk("palettes/listPalettes", async (query: any, thunkApi: any) => {
   try {
     const {
-      userSlice: { current_user }
+      userSlice: {
+        userPage: { current_user }
+      }
     } = thunkApi.getState();
     const { data } = await axios.get(`/api/palettes?${create_query(query)}`, headers(current_user));
     return data;
@@ -17,7 +19,9 @@ export const listPalettes = createAsyncThunk("palettes/listPalettes", async (que
 export const savePalette = createAsyncThunk("palettes/savePalette", async (palette: any, thunkApi: any) => {
   try {
     const {
-      userSlice: { current_user }
+      userSlice: {
+        userPage: { current_user }
+      }
     } = thunkApi.getState();
 
     if (!palette._id) {
@@ -33,7 +37,9 @@ export const savePalette = createAsyncThunk("palettes/savePalette", async (palet
 export const detailsPalette = createAsyncThunk("palettes/detailsPalette", async (id: string, thunkApi: any) => {
   try {
     const {
-      userSlice: { current_user }
+      userSlice: {
+        userPage: { current_user }
+      }
     } = thunkApi.getState();
     const { data } = await axios.get(`/api/palettes/${id}`, headers(current_user));
     return data;
@@ -43,7 +49,9 @@ export const detailsPalette = createAsyncThunk("palettes/detailsPalette", async 
 export const deletePalette = createAsyncThunk("palettes/deletePalette", async (pathname, thunkApi: any) => {
   try {
     const {
-      userSlice: { current_user }
+      userSlice: {
+        userPage: { current_user }
+      }
     } = thunkApi.getState();
     const { data } = await axios.delete("/api/palettes/" + pathname, headers(current_user));
     return data;

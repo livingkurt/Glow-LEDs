@@ -5,7 +5,7 @@ import { Helmet } from "react-helmet";
 
 const VerifiedPage = props => {
   const dispatch = useDispatch();
-  const userSlice = useSelector(state => state.userSlice);
+  const userSlice = useSelector(state => state.userSlice.userPage);
   const { loading, current_user, error } = userSlice;
   // useEffect(() => {
   //   dispatch(verify(props.match.params.id));

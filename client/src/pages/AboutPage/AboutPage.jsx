@@ -21,7 +21,7 @@ const AboutPage = () => {
   const teamSlice = useSelector(state => state.teamSlice);
   const { teams, loading: loading_team, error: error_team } = teamSlice;
 
-  const userSlice = useSelector(state => state.userSlice);
+  const userSlice = useSelector(state => state.userSlice.userPage);
   const { users, loading_users } = userSlice;
 
   useEffect(() => {

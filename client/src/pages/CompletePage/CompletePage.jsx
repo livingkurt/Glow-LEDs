@@ -13,7 +13,7 @@ import { isAdmin } from "../../utils/helpers/user_helpers";
 const CompletePage = props => {
   const [data, set_data] = useState();
 
-  const userSlice = useSelector(state => state.userSlice);
+  const userSlice = useSelector(state => state.userSlice.userPage);
   const { current_user } = userSlice;
 
   const orderSlice = useSelector(state => state.orderSlice);

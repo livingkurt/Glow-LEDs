@@ -22,7 +22,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 const EditAffiliatePage = props => {
-  const userSlice = useSelector(state => state.userSlice);
+  const userSlice = useSelector(state => state.userSlice.userPage);
   const { users, loading: loading_users } = userSlice;
 
   const history = useHistory();

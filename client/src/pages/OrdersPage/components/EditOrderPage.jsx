@@ -53,7 +53,7 @@ const EditOrderPage = props => {
 
   const orderSlice = useSelector(state => state.orderSlice);
   const { order, loading, error } = orderSlice;
-  const userSlice = useSelector(state => state.userSlice);
+  const userSlice = useSelector(state => state.userSlice.userPage);
   const { current_user, users } = userSlice;
 
   const productSlice = useSelector(state => state.productSlice);

@@ -16,7 +16,7 @@ const LoginPage = props => {
   const [password_validations, setPasswordValidations] = useState("");
   const [loading, set_loading] = useState(false);
 
-  const userSlice = useSelector(state => state.userSlice);
+  const userSlice = useSelector(state => state.userSlice.userPage);
   const { loading: user_loading, current_user, error } = userSlice;
   const dispatch = useDispatch();
   const redirect = props.location.search ? props.location.search.split("=")[1] : "/";

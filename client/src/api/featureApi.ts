@@ -7,7 +7,9 @@ import { create_query } from "../utils/helper_functions";
 export const listFeatures = createAsyncThunk("features/listFeatures", async (query: any, thunkApi: any) => {
   try {
     const {
-      userSlice: { current_user }
+      userSlice: {
+        userPage: { current_user }
+      }
     } = thunkApi.getState();
     const { data } = await axios.get(`/api/features?${create_query(query)}`, headers(current_user));
     return data;
@@ -17,7 +19,9 @@ export const listFeatures = createAsyncThunk("features/listFeatures", async (que
 export const saveFeature = createAsyncThunk("features/saveFeature", async (feature: any, thunkApi: any) => {
   try {
     const {
-      userSlice: { current_user }
+      userSlice: {
+        userPage: { current_user }
+      }
     } = thunkApi.getState();
 
     if (!feature._id) {
@@ -33,7 +37,9 @@ export const saveFeature = createAsyncThunk("features/saveFeature", async (featu
 export const detailsFeature = createAsyncThunk("features/detailsFeature", async (id: string, thunkApi: any) => {
   try {
     const {
-      userSlice: { current_user }
+      userSlice: {
+        userPage: { current_user }
+      }
     } = thunkApi.getState();
     const { data } = await axios.get(`/api/features/${id}`, headers(current_user));
     return data;
@@ -43,7 +49,9 @@ export const detailsFeature = createAsyncThunk("features/detailsFeature", async 
 export const deleteFeature = createAsyncThunk("features/deleteFeature", async (pathname, thunkApi: any) => {
   try {
     const {
-      userSlice: { current_user }
+      userSlice: {
+        userPage: { current_user }
+      }
     } = thunkApi.getState();
     const { data } = await axios.delete("/api/features/" + pathname, headers(current_user));
     return data;

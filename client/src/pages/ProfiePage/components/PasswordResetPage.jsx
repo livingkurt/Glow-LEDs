@@ -7,7 +7,7 @@ import * as API from "../../../api";
 
 const PasswordResetPublicPage = props => {
   const [email, setEmail] = useState("");
-  const userSlice = useSelector(state => state.userSlice);
+  const userSlice = useSelector(state => state.userSlice.userPage);
   const { loading, current_user, error } = userSlice;
   const dispatch = useDispatch();
 

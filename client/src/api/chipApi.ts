@@ -7,7 +7,9 @@ import { create_query } from "../utils/helper_functions";
 export const listChips = createAsyncThunk("chips/listChips", async (query: any, thunkApi: any) => {
   try {
     const {
-      userSlice: { current_user }
+      userSlice: {
+        userPage: { current_user }
+      }
     } = thunkApi.getState();
     const { data } = await axios.get(`/api/chips?${create_query(query)}`, headers(current_user));
     return data;
@@ -17,7 +19,9 @@ export const listChips = createAsyncThunk("chips/listChips", async (query: any, 
 export const saveChip = createAsyncThunk("chips/saveChip", async (chip: any, thunkApi: any) => {
   try {
     const {
-      userSlice: { current_user }
+      userSlice: {
+        userPage: { current_user }
+      }
     } = thunkApi.getState();
 
     if (!chip._id) {
@@ -33,7 +37,9 @@ export const saveChip = createAsyncThunk("chips/saveChip", async (chip: any, thu
 export const detailsChip = createAsyncThunk("chips/detailsChip", async (id: string, thunkApi: any) => {
   try {
     const {
-      userSlice: { current_user }
+      userSlice: {
+        userPage: { current_user }
+      }
     } = thunkApi.getState();
     const { data } = await axios.get(`/api/chips/${id}`, headers(current_user));
     return data;
@@ -43,7 +49,9 @@ export const detailsChip = createAsyncThunk("chips/detailsChip", async (id: stri
 export const deleteChip = createAsyncThunk("chips/deleteChip", async (pathname, thunkApi: any) => {
   try {
     const {
-      userSlice: { current_user }
+      userSlice: {
+        userPage: { current_user }
+      }
     } = thunkApi.getState();
     const { data } = await axios.delete("/api/chips/" + pathname, headers(current_user));
     return data;

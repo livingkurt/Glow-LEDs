@@ -33,7 +33,9 @@ export const getCarts = async ({
 export const listCarts = createAsyncThunk("carts/listCarts", async (query: any, thunkApi: any) => {
   try {
     const {
-      userSlice: { current_user }
+      userSlice: {
+        userPage: { current_user }
+      }
     } = thunkApi.getState();
     const { data } = await axios.get(`/api/carts?${create_query(query)}`, headers(current_user));
     return data;
@@ -62,7 +64,9 @@ export const addToCart = createAsyncThunk(
 export const saveCart = createAsyncThunk("carts/saveCart", async (cart: any, thunkApi: any) => {
   try {
     const {
-      userSlice: { current_user }
+      userSlice: {
+        userPage: { current_user }
+      }
     } = thunkApi.getState();
 
     if (!cart._id) {
@@ -78,7 +82,9 @@ export const saveCart = createAsyncThunk("carts/saveCart", async (cart: any, thu
 export const detailsCart = createAsyncThunk("carts/detailsCart", async (id: string, thunkApi: any) => {
   try {
     const {
-      userSlice: { current_user }
+      userSlice: {
+        userPage: { current_user }
+      }
     } = thunkApi.getState();
     const { data } = await axios.get(`/api/carts/${id}`, headers(current_user));
     return data;
@@ -88,7 +94,9 @@ export const detailsCart = createAsyncThunk("carts/detailsCart", async (id: stri
 export const emptyCart = createAsyncThunk("carts/emptyCart", async (id: string, thunkApi: any) => {
   try {
     const {
-      userSlice: { current_user }
+      userSlice: {
+        userPage: { current_user }
+      }
     } = thunkApi.getState();
     const { data } = await axios.post(`/api/carts/${id}/empty_cart`, headers(current_user));
     return data;
@@ -98,7 +106,9 @@ export const emptyCart = createAsyncThunk("carts/emptyCart", async (id: string, 
 export const deleteCart = createAsyncThunk("carts/deleteCart", async (id: string, thunkApi: any) => {
   try {
     const {
-      userSlice: { current_user }
+      userSlice: {
+        userPage: { current_user }
+      }
     } = thunkApi.getState();
     const { data } = await axios.delete(`/api/carts/${id}`, headers(current_user));
     return data;

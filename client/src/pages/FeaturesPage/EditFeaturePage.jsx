@@ -25,7 +25,7 @@ const EditFeaturePage = props => {
   const [description, set_description] = useState("");
   const [release_date, set_release_date] = useState("");
 
-  const userSlice = useSelector(state => state.userSlice);
+  const userSlice = useSelector(state => state.userSlice.userPage);
   const { users } = userSlice;
 
   const history = useHistory();

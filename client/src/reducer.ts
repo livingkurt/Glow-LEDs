@@ -64,7 +64,15 @@ const reducers = {
   settingSlice: settingSlice,
   surveySlice: surveySlice,
   teamSlice: teamSlice,
-  userSlice: userSlice,
+  userSlice: combineReducers({
+    userPage: userSlice,
+    userTable: glTableReducer("userTable", {
+      searchBy: (row: any, search: string) => {
+        const searchableText = `${row.first_name} ${row.last_name}}`;
+        return searchableText.toLowerCase().includes(search.toLowerCase());
+      }
+    })
+  }),
   [allRecordsApi.reducerPath]: allRecordsApi.reducer,
   [dashboardApi.reducerPath]: dashboardApi.reducer,
   [placeOrderApi.reducerPath]: placeOrderApi.reducer,

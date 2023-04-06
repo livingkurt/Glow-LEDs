@@ -7,7 +7,9 @@ import { create_query } from "../utils/helper_functions";
 export const listExpenses = createAsyncThunk("expenses/listExpenses", async (query: any, thunkApi: any) => {
   try {
     const {
-      userSlice: { current_user }
+      userSlice: {
+        userPage: { current_user }
+      }
     } = thunkApi.getState();
     const { data } = await axios.get(`/api/expenses?${create_query(query)}`, headers(current_user));
     return data;
@@ -17,7 +19,9 @@ export const listExpenses = createAsyncThunk("expenses/listExpenses", async (que
 export const saveExpense = createAsyncThunk("expenses/saveExpense", async (expense: any, thunkApi: any) => {
   try {
     const {
-      userSlice: { current_user }
+      userSlice: {
+        userPage: { current_user }
+      }
     } = thunkApi.getState();
 
     if (!expense._id) {
@@ -33,7 +37,9 @@ export const saveExpense = createAsyncThunk("expenses/saveExpense", async (expen
 export const detailsExpense = createAsyncThunk("expenses/detailsExpense", async (id: string, thunkApi: any) => {
   try {
     const {
-      userSlice: { current_user }
+      userSlice: {
+        userPage: { current_user }
+      }
     } = thunkApi.getState();
     const { data } = await axios.get(`/api/expenses/${id}`, headers(current_user));
     return data;
@@ -43,7 +49,9 @@ export const detailsExpense = createAsyncThunk("expenses/detailsExpense", async 
 export const deleteExpense = createAsyncThunk("expenses/deleteExpense", async (pathname, thunkApi: any) => {
   try {
     const {
-      userSlice: { current_user }
+      userSlice: {
+        userPage: { current_user }
+      }
     } = thunkApi.getState();
     const { data } = await axios.delete("/api/expenses/" + pathname, headers(current_user));
     return data;

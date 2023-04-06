@@ -12,7 +12,6 @@ const userSlice = createSlice({
     access_token: "",
     users: [],
     user: {
-      _id: "",
       first_name: "",
       last_name: "",
       email: "",
@@ -40,6 +39,9 @@ const userSlice = createSlice({
       guest: false,
       international: false
     },
+    remoteVersionRequirement: 0,
+    edit_user_modal: false,
+    user_modal: false,
     current_user: {},
     message: "",
     success: false,
@@ -60,6 +62,7 @@ const userSlice = createSlice({
   reducers: {
     set_user: (state, { payload }) => {
       const updated_user = payload;
+      console.log({ updated_user });
       return {
         ...state,
         user: { ...state.user, ...updated_user }
@@ -87,11 +90,85 @@ const userSlice = createSlice({
       localStorage.removeItem("accessToken");
       setAuthToken(false);
       return {
+        ...state,
         current_user: {}
       };
     },
     set_success: (state, { payload }) => {
       state.success = payload;
+    },
+    set_edit_user_modal: (state, { payload }) => {
+      state.edit_user_modal = payload;
+    },
+    open_create_user_modal: (state, { payload }) => {
+      state.edit_user_modal = true;
+      state.user = {
+        first_name: "",
+        last_name: "",
+        email: "",
+        is_affiliated: false,
+        is_employee: false,
+        affiliate: {},
+        isVerified: false,
+        is_admin: false,
+        shipping: {
+          first_name: "",
+          last_name: "",
+          address_1: "",
+          address_2: "",
+          city: "",
+          state: "",
+          postalCode: "",
+          international: false,
+          country: ""
+        },
+        email_subscription: false,
+        stripe_connect_id: "",
+        weekly_wage: 0,
+        wholesaler: false,
+        minimum_order_amount: "",
+        guest: false,
+        international: false
+      };
+    },
+    open_edit_user_modal: (state, { payload }) => {
+      state.edit_user_modal = true;
+      state.user = payload;
+    },
+    close_user_modal: (state, { payload }) => {
+      state.user_modal = false;
+      state.user = {
+        first_name: "",
+        last_name: "",
+        email: "",
+        is_affiliated: false,
+        is_employee: false,
+        affiliate: {},
+        isVerified: false,
+        is_admin: false,
+        shipping: {
+          first_name: "",
+          last_name: "",
+          address_1: "",
+          address_2: "",
+          city: "",
+          state: "",
+          postalCode: "",
+          international: false,
+          country: ""
+        },
+        email_subscription: false,
+        stripe_connect_id: "",
+        weekly_wage: 0,
+        wholesaler: false,
+        minimum_order_amount: "",
+        guest: false,
+        international: false
+      };
+    },
+    open_user_modal: (state, { payload }) => {
+      state.user_modal = true;
+      state.user = payload;
     }
   },
   extraReducers: {
@@ -119,6 +196,8 @@ const userSlice = createSlice({
       state.loading = false;
       state.message = "User Saved";
       state.loading = false;
+      state.remoteVersionRequirement = Date.now();
+      state.edit_user_modal = false;
     },
     [API.saveUser.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
@@ -144,8 +223,8 @@ const userSlice = createSlice({
     },
     [API.deleteUser.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.user = payload.user;
       state.message = "User Deleted";
+      state.remoteVersionRequirement = Date.now();
     },
     [API.deleteUser.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
@@ -205,6 +284,20 @@ const userSlice = createSlice({
   }
 });
 
-export const { set_search, set_sort, set_page, set_limit, set_loading, set_user, set_current_user, logout_user, set_success } =
-  userSlice.actions;
+export const {
+  set_search,
+  set_sort,
+  set_page,
+  set_limit,
+  set_loading,
+  set_user,
+  set_current_user,
+  logout_user,
+  set_success,
+  set_edit_user_modal,
+  open_create_user_modal,
+  open_user_modal,
+  close_user_modal,
+  open_edit_user_modal
+} = userSlice.actions;
 export default userSlice.reducer;

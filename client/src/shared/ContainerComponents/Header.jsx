@@ -36,7 +36,7 @@ const Header = props => {
       window.removeEventListener("mousedown", handleClickOutside);
     };
   });
-  const userSlice = useSelector(state => state.userSlice);
+  const userSlice = useSelector(state => state.userSlice.userPage);
   const { current_user } = userSlice;
 
   useEffect(() => {

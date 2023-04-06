@@ -54,7 +54,7 @@ const Sidebar = props => {
   };
 
   const [first_name, set_first_name] = useState("");
-  const userSlice = useSelector(state => state.userSlice);
+  const userSlice = useSelector(state => state.userSlice.userPage);
   const { current_user } = userSlice;
 
   useEffect(() => {

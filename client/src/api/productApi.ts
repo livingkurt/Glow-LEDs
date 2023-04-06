@@ -7,7 +7,9 @@ import { create_query } from "../utils/helper_functions";
 export const listProducts = createAsyncThunk("products/listProducts", async (query: any, thunkApi: any) => {
   try {
     const {
-      userSlice: { current_user }
+      userSlice: {
+        userPage: { current_user }
+      }
     } = thunkApi.getState();
     const { data } = await axios.get(`/api/products?${create_query(query)}`, headers(current_user));
     return data;
@@ -17,7 +19,9 @@ export const listProducts = createAsyncThunk("products/listProducts", async (que
 export const saveProduct = createAsyncThunk("products/saveProduct", async (product: any, thunkApi: any) => {
   try {
     const {
-      userSlice: { current_user }
+      userSlice: {
+        userPage: { current_user }
+      }
     } = thunkApi.getState();
 
     if (!product._id) {
@@ -33,7 +37,9 @@ export const saveProduct = createAsyncThunk("products/saveProduct", async (produ
 export const detailsProduct = createAsyncThunk("products/detailsProduct", async (pathname: any, thunkApi: any) => {
   try {
     const {
-      userSlice: { current_user }
+      userSlice: {
+        userPage: { current_user }
+      }
     } = thunkApi.getState();
     const { data } = await axios.get(`/api/products/${pathname}`, headers(current_user));
     return data;
@@ -43,7 +49,9 @@ export const detailsProduct = createAsyncThunk("products/detailsProduct", async 
 export const deleteProduct = createAsyncThunk("products/deleteProduct", async (id: string, thunkApi: any) => {
   try {
     const {
-      userSlice: { current_user }
+      userSlice: {
+        userPage: { current_user }
+      }
     } = thunkApi.getState();
     const { data } = await axios.delete(`/api/products/${id}`, headers(current_user));
     return data;

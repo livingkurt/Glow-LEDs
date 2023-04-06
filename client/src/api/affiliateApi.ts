@@ -37,7 +37,9 @@ export const getAffiliates = async ({
 export const listAffiliates = createAsyncThunk("affiliates/listAffiliates", async (query: any, thunkApi: any) => {
   try {
     const {
-      userSlice: { current_user }
+      userSlice: {
+        userPage: { current_user }
+      }
     } = thunkApi.getState();
     const { data } = await axios.get(`/api/affiliates?${create_query(query)}`, headers(current_user));
     return data;
@@ -47,7 +49,9 @@ export const listAffiliates = createAsyncThunk("affiliates/listAffiliates", asyn
 export const saveAffiliate = createAsyncThunk("affiliates/saveAffiliate", async (affiliate: any, thunkApi: any) => {
   try {
     const {
-      userSlice: { current_user }
+      userSlice: {
+        userPage: { current_user }
+      }
     } = thunkApi.getState();
 
     if (!affiliate._id) {
@@ -108,7 +112,9 @@ export const detailsAffiliate = createAsyncThunk(
 export const deleteAffiliate = createAsyncThunk("affiliates/deleteAffiliate", async (pathname, thunkApi: any) => {
   try {
     const {
-      userSlice: { current_user }
+      userSlice: {
+        userPage: { current_user }
+      }
     } = thunkApi.getState();
     const { data } = await axios.delete(`/api/affiliates/${pathname}`, headers(current_user));
     return data;
@@ -118,7 +124,9 @@ export const deleteAffiliate = createAsyncThunk("affiliates/deleteAffiliate", as
 export const create_rave_mob_affiliates = createAsyncThunk("affiliates/create_rave_mob_affiliates", async (csv, thunkApi: any) => {
   try {
     const {
-      userSlice: { current_user }
+      userSlice: {
+        userPage: { current_user }
+      }
     } = thunkApi.getState();
     const { data } = await axios.put("/api/affiliates/create_rave_mob_affiliates", { csv }, headers(current_user));
     return data;

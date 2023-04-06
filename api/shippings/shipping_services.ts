@@ -1,6 +1,6 @@
-import { determine_parcel } from "../../util";
 import { order_db } from "../orders";
 import { parcel_db } from "../parcels";
+import { determine_parcel } from "./shipping_helpers";
 
 const easy_post_api = require("@easypost/api");
 
@@ -62,13 +62,7 @@ export default {
         phone: "906-284-2208",
         email: process.env.INFO_EMAIL
       });
-      const package_length = order.orderItems.reduce((a: any, c: { package_length: any }) => a + c.package_length, 0);
-      const package_width = order.orderItems.reduce((a: any, c: { package_width: any }) => a + c.package_width, 0);
-      const package_height = order.orderItems.reduce((a: any, c: { package_height: any }) => a + c.package_height, 0);
-
-      const cube_root_volume = Math.cbrt(package_length * package_width * package_height);
       const parcels = await parcel_db.findAll_parcels_db({ deleted: false }, {}, "0", "1");
-      //
 
       let weight = 0;
       order.orderItems.forEach((item: any, index: number) => {
@@ -77,8 +71,13 @@ export default {
         } else {
           weight += item.weight_ounces;
         }
+        weight *= item.qty;
       });
+      // const parcel_size = packItems(parcels, order.orderItems);
+      // // Box size determined here and will output parcel_size that contains length, width and height
+
       const parcel_size = determine_parcel(order.orderItems, parcels);
+      console.log({ parcel_size });
       const parcel = new EasyPost.Parcel({
         length: parcel_size.length,
         width: parcel_size.width,
@@ -127,6 +126,7 @@ export default {
         };
       }
     } catch (error) {
+      console.log({ error: error.error.errors });
       if (error instanceof Error) {
         throw new Error(error_message || error.message);
       }

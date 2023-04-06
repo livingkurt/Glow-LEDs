@@ -7,7 +7,9 @@ import { create_query } from "../utils/helper_functions";
 export const listFilaments = createAsyncThunk("filaments/listFilaments", async (query: any, thunkApi: any) => {
   try {
     const {
-      userSlice: { current_user }
+      userSlice: {
+        userPage: { current_user }
+      }
     } = thunkApi.getState();
     const { data } = await axios.get(`/api/filaments?${create_query(query)}`, headers(current_user));
     return data;
@@ -17,7 +19,9 @@ export const listFilaments = createAsyncThunk("filaments/listFilaments", async (
 export const saveFilament = createAsyncThunk("filaments/saveFilament", async (filament: any, thunkApi: any) => {
   try {
     const {
-      userSlice: { current_user }
+      userSlice: {
+        userPage: { current_user }
+      }
     } = thunkApi.getState();
 
     if (!filament._id) {
@@ -33,7 +37,9 @@ export const saveFilament = createAsyncThunk("filaments/saveFilament", async (fi
 export const detailsFilament = createAsyncThunk("filaments/detailsFilament", async (id: string, thunkApi: any) => {
   try {
     const {
-      userSlice: { current_user }
+      userSlice: {
+        userPage: { current_user }
+      }
     } = thunkApi.getState();
     const { data } = await axios.get(`/api/filaments/${id}`, headers(current_user));
     return data;
@@ -43,7 +49,9 @@ export const detailsFilament = createAsyncThunk("filaments/detailsFilament", asy
 export const deleteFilament = createAsyncThunk("filaments/deleteFilament", async (pathname, thunkApi: any) => {
   try {
     const {
-      userSlice: { current_user }
+      userSlice: {
+        userPage: { current_user }
+      }
     } = thunkApi.getState();
     const { data } = await axios.delete("/api/filaments/" + pathname, headers(current_user));
     return data;

@@ -30,45 +30,13 @@ export const getTutorials = async ({
     });
   } catch (error) {}
 };
-// export const getTutorials = createAsyncThunk(
-//   "tutorials/getTutorials",
-//   async (
-//     {
-//       search,
-//       sorting,
-//       filters,
-//       page,
-//       pageSize
-//     }: {
-//       search: string;
-//       sorting: any;
-//       filters: any;
-//       page: number;
-//       pageSize: number;
-//     },
-//     thunkApi: any
-//   ) => {
-//     try {
-//       const {
-//         userSlice: { current_user }
-//       } = thunkApi.getState();
-//       return axios.get(`/api/tutorials`, {
-//         ...headers(current_user),
-//         params: {
-//           take: pageSize,
-//           skip: page * pageSize,
-//           search_value: search,
-//           sorting,
-//           filters: pickBy(filters, (val: any) => val.length > 0)
-//         }
-//       });
-//     } catch (error) {}
-//   }
-// );
+
 export const listTutorials = createAsyncThunk("tutorials/listTutorials", async (query: any, thunkApi: any) => {
   try {
     const {
-      userSlice: { current_user }
+      userSlice: {
+        userPage: { current_user }
+      }
     } = thunkApi.getState();
     const { data } = await axios.get(`/api/tutorials?${create_query(query)}`, headers(current_user));
     return data;
@@ -78,7 +46,9 @@ export const listTutorials = createAsyncThunk("tutorials/listTutorials", async (
 export const saveTutorial = createAsyncThunk("tutorials/saveTutorial", async (tutorial: any, thunkApi: any) => {
   try {
     const {
-      userSlice: { current_user }
+      userSlice: {
+        userPage: { current_user }
+      }
     } = thunkApi.getState();
 
     if (!tutorial._id) {
@@ -106,7 +76,9 @@ export const detailsTutorial = createAsyncThunk("tutorials/detailsTutorial", asy
 export const deleteTutorial = createAsyncThunk("tutorials/deleteTutorial", async (id: string, thunkApi: any) => {
   try {
     const {
-      userSlice: { current_user }
+      userSlice: {
+        userPage: { current_user }
+      }
     } = thunkApi.getState();
     const { data } = await axios.delete(`/api/tutorials/${id}`, headers(current_user));
     return data;

@@ -53,9 +53,9 @@ const LoadingShipment = ({
         <div className="error_message_payment jc-c column">
           <div>
             <h2 className="ta-c mv-5px">Error:</h2>
-            {error.error.split("-").map(error => (
+            {/* {error.error.split("-").map(error => (
               <p className="ta-c mv-5px">{error}</p>
-            ))}
+            ))} */}
             <h2 className="ta-c mt-20px">Solution:</h2>
             <p className="ta-c  mb-1px">Double check you entered your shipping address correctly</p>
             <hr></hr>

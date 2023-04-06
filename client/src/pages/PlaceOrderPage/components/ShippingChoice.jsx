@@ -1,55 +1,25 @@
 // React
 import React from "react";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
-import ShippingSpeed from "./ShippingSpeed";
+import ChooseShipping from "./ChooseShipping";
+import DomesticShippingSpeed from "./DomesticShippingSpeed";
+import InternationalShippingSpeed from "./InternationalShippingSpeed";
+import ShippingSpeed from "./InternationalShippingSpeed";
 
 const ShippingChoice = ({ rates, hide_pay_button, shipping, current_shipping_speed, choose_shipping_rate, re_choose_shipping_rate }) => {
+  console.log({ rates });
   return (
     <div className="w-100per">
       {hide_pay_button && rates && (
         <div className="w-100per">
           {shipping && shipping.international && (
             <div>
-              <ShippingSpeed
-                rates={rates}
-                service={"FirstClassPackageInternationalService"}
-                name={"Standard"}
-                time={"1-3+ Weeks"}
-                choose_shipping_rate={choose_shipping_rate}
-              />
-              <ShippingSpeed
-                rates={rates}
-                service={"PriorityMailInternational"}
-                name={"Prority"}
-                time={"6-10 Days"}
-                choose_shipping_rate={choose_shipping_rate}
-              />
-              <ShippingSpeed
-                rates={rates}
-                service={"ExpressMailInternational"}
-                name={"Express"}
-                time={"3-5 Days"}
-                choose_shipping_rate={choose_shipping_rate}
-              />
-              <ShippingSpeed
-                rates={rates}
-                service={"INTERNATIONAL_ECONOMY"}
-                name={"Fedex Economy"}
-                choose_shipping_rate={choose_shipping_rate}
-              />
-              <ShippingSpeed
-                rates={rates}
-                service={"INTERNATIONAL_PRIORITY"}
-                name={"Fedex Prioirty"}
-                choose_shipping_rate={choose_shipping_rate}
-              />
+              <InternationalShippingSpeed rates={rates} choose_shipping_rate={choose_shipping_rate} />
             </div>
           )}
           {shipping && !shipping.international && (
             <div>
-              <ShippingSpeed rates={rates} service={"First"} name={"Standard"} choose_shipping_rate={choose_shipping_rate} />
-              {/* <ShippingSpeed rates={rates} service={"Priority"} name={"Priority"} choose_shipping_rate={choose_shipping_rate} />
-              <ShippingSpeed rates={rates} service={"Express"} name={"Express"} choose_shipping_rate={choose_shipping_rate} /> */}
+              <DomesticShippingSpeed rates={rates} choose_shipping_rate={choose_shipping_rate} />
             </div>
           )}
         </div>
@@ -62,8 +32,7 @@ const ShippingChoice = ({ rates, hide_pay_button, shipping, current_shipping_spe
 
               <div>
                 {" "}
-                Estimated: {current_shipping_speed.rate.est_delivery_days}{" "}
-                {current_shipping_speed.rate.est_delivery_days === 1 ? "Day" : "Days"}
+                Est: {current_shipping_speed.rate.est_delivery_days} {current_shipping_speed.rate.est_delivery_days === 1 ? "Day" : "Days"}
               </div>
               <div>${parseFloat(current_shipping_speed.rate.retail_rate || current_shipping_speed.rate.rate).toFixed(2)}</div>
             </div>

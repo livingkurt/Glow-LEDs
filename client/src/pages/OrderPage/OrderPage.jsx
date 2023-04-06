@@ -24,7 +24,7 @@ const OrderPage = props => {
 
   const dispatch = useDispatch();
 
-  const userSlice = useSelector(state => state.userSlice);
+  const userSlice = useSelector(state => state.userSlice.userPage);
   const { current_user } = userSlice;
 
   const cartSlice = useSelector(state => state.cartSlice.cartPage);

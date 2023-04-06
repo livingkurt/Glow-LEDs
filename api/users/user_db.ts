@@ -21,7 +21,7 @@ export default {
         })
         .populate("products")
         .limit(parseInt(limit))
-        .skip((parseInt(page) - 1) * parseInt(limit));
+        .skip(Math.max(parseInt(page) - 1, 0) * parseInt(limit));
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -73,32 +73,20 @@ export default {
   findByEmail_users_db: async (email: string) => {
     try {
       return await User.findOne({ email });
-      // .populate({
-      //   path: "affiliate",
-      //   populate: [
-      //     {
-      //       path: "public_code"
-      //     },
-      //     {
-      //       path: "private_code"
-      //     }
-      //   ]
-      // })
-      // .populate("products");
     } catch (error) {}
   },
   create_users_db: async (user: any) => {
-    prnt({ create_users_db: user });
+    console.log({ user });
     try {
       return await User.create(user);
     } catch (error) {
+      console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }
     }
   },
   create_token_users_db: async (token: any) => {
-    prnt({ create_users_db: token });
     try {
       // return await Token.create(token);
       return "";
@@ -109,6 +97,7 @@ export default {
     }
   },
   update_users_db: async (id: string, body: any) => {
+    console.log({ id, body });
     try {
       const user: any = await User.findOne({ _id: id });
 

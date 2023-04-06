@@ -16,7 +16,7 @@ const Review = props => {
   //
   const dispatch = useDispatch();
 
-  const userSlice = useSelector(state => state.userSlice);
+  const userSlice = useSelector(state => state.userSlice.userPage);
 
   let { current_user } = userSlice;
   const productSlice = useSelector(state => state.productSlice);

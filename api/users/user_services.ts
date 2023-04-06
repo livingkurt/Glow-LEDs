@@ -29,8 +29,8 @@ export default {
       const users = await user_db.findAll_users_db(filter, sort, limit, page);
       const count = await user_db.count_users_db(filter);
       return {
-        users,
-        totalPages: Math.ceil(count / parseInt(limit)),
+        data: users,
+        total_count: count,
         currentPage: page
       };
     } catch (error) {

@@ -22,7 +22,7 @@ const AnnouncementEmail = props => {
 
   const [template, set_template] = useState("");
 
-  const userSlice = useSelector(state => state.userSlice);
+  const userSlice = useSelector(state => state.userSlice.userPage);
   const { current_user } = userSlice;
 
   const emailSlice = useSelector(state => state.emailSlice);

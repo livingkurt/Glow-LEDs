@@ -11,7 +11,7 @@ const ProductThumbCarouselItem = props => {
   const [product, set_product] = useState(props.product);
   const [loading, set_loading] = useState(true);
 
-  const userSlice = useSelector(state => state.userSlice);
+  const userSlice = useSelector(state => state.userSlice.userPage);
   const { current_user } = userSlice;
 
   const history = useHistory();

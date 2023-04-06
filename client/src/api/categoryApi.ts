@@ -7,7 +7,9 @@ import { create_query } from "../utils/helper_functions";
 export const listCategorys = createAsyncThunk("categorys/listCategorys", async (query: any, thunkApi: any) => {
   try {
     const {
-      userSlice: { current_user }
+      userSlice: {
+        userPage: { current_user }
+      }
     } = thunkApi.getState();
     const { data } = await axios.get(`/api/categorys?${create_query(query)}`, headers(current_user));
     return data;
@@ -17,7 +19,9 @@ export const listCategorys = createAsyncThunk("categorys/listCategorys", async (
 export const saveCategory = createAsyncThunk("categorys/saveCategory", async (category: any, thunkApi: any) => {
   try {
     const {
-      userSlice: { current_user }
+      userSlice: {
+        userPage: { current_user }
+      }
     } = thunkApi.getState();
 
     if (!category._id) {
@@ -33,7 +37,9 @@ export const saveCategory = createAsyncThunk("categorys/saveCategory", async (ca
 export const detailsCategory = createAsyncThunk("categorys/detailsCategory", async (id: string, thunkApi: any) => {
   try {
     const {
-      userSlice: { current_user }
+      userSlice: {
+        userPage: { current_user }
+      }
     } = thunkApi.getState();
     const { data } = await axios.get(`/api/categorys/${id}`, headers(current_user));
     return data;
@@ -43,7 +49,9 @@ export const detailsCategory = createAsyncThunk("categorys/detailsCategory", asy
 export const deleteCategory = createAsyncThunk("categorys/deleteCategory", async (pathname, thunkApi: any) => {
   try {
     const {
-      userSlice: { current_user }
+      userSlice: {
+        userPage: { current_user }
+      }
     } = thunkApi.getState();
     const { data } = await axios.delete("/api/categorys/" + pathname, headers(current_user));
     return data;

@@ -61,7 +61,7 @@ const ProductOptions = ({
 }) => {
   const { width } = useWindowDimensions();
 
-  const userSlice = useSelector(state => state.userSlice);
+  const userSlice = useSelector(state => state.userSlice.userPage);
   const { current_user } = userSlice;
 
   const determine_option_styles = (option_product_object, option) => {

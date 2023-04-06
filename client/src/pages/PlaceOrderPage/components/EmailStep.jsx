@@ -24,7 +24,7 @@ const EmailStep = ({
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const userSlice = useSelector(state => state.userSlice);
+  const userSlice = useSelector(state => state.userSlice.userPage);
   const { current_user } = userSlice;
 
   const submit_login = e => {

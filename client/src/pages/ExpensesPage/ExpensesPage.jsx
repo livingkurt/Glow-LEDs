@@ -20,7 +20,7 @@ const ExpensesPage = props => {
 
   const category = props.match.params.category ? props.match.params.category : "";
 
-  const userSlice = useSelector(state => state.userSlice);
+  const userSlice = useSelector(state => state.userSlice.userPage);
   const { current_user } = userSlice;
 
   const expenseSlice = useSelector(state => state.expenseSlice);

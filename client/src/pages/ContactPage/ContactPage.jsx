@@ -10,7 +10,7 @@ require("dotenv").config();
 
 const ContactPage = props => {
   const dispatch = useDispatch();
-  const userSlice = useSelector(state => state.userSlice);
+  const userSlice = useSelector(state => state.userSlice.userPage);
   const { current_user } = userSlice;
   const emailSlice = useSelector(state => state.emailSlice);
   const { loading, success, message: completed_message, error } = emailSlice;

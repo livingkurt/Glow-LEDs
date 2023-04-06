@@ -24,7 +24,6 @@ const GLTableRow = ({
   cellProps,
   determine_color
 }) => {
-  console.log({ determine_color });
   const dispatch = useDispatch();
 
   const onCellClick = e => {

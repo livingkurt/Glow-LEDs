@@ -43,7 +43,7 @@ const EditTeamPage = props => {
     venmo
   } = team;
 
-  const userSlice = useSelector(state => state.userSlice);
+  const userSlice = useSelector(state => state.userSlice.userPage);
   const { users } = userSlice;
 
   const promoSlice = useSelector(state => state.promoSlice);

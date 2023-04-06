@@ -17,7 +17,7 @@ const EditCartModal = () => {
   const { edit_cart_modal, cart, loading } = cartSlice;
   const { user } = cart;
 
-  const userSlice = useSelector(state => state.userSlice);
+  const userSlice = useSelector(state => state.userSlice.userPage);
   const { users, loading: loading_users } = userSlice;
 
   const productSlice = useSelector(state => state.productSlice);
