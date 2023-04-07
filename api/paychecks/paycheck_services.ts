@@ -30,8 +30,8 @@ export default {
       const paychecks = await paycheck_db.findAll_paychecks_db(filter, sort, limit, page);
       const count = await paycheck_db.count_paychecks_db(filter);
       return {
-        paychecks,
-        totalPages: Math.ceil(count / parseInt(limit)),
+        data: paychecks,
+        total_count: count,
         currentPage: page
       };
     } catch (error) {

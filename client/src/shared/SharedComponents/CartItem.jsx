@@ -7,7 +7,7 @@ import { determnine_link } from "../../utils/helper_functions";
 import { LazyImage } from ".";
 import { cart_item_name, sale_price_switch } from "../../utils/react_helper_functions";
 import { GLButton } from "../GlowLEDsComponents";
-import { isAdmin, isWholesaler } from "../../utils/helpers/user_helpers";
+import { is_admin, isWholesaler } from "../../utils/helpers/user_helpers";
 import { deleteCartItem } from "../../api";
 
 const CartItem = ({ index, item, check_item_as_manufactured }) => {
@@ -24,7 +24,7 @@ const CartItem = ({ index, item, check_item_as_manufactured }) => {
   return (
     <li key={index} className="">
       <div className="cart-image m-auto ai-c">
-        {check_item_as_manufactured && isAdmin(current_user) && (
+        {check_item_as_manufactured && is_admin(current_user) && (
           <div>
             {loading_checkboxes ? (
               <div>Loading...</div>
@@ -84,7 +84,7 @@ const CartItem = ({ index, item, check_item_as_manufactured }) => {
           <Link to={"/collections/all/products/" + item.pathname} className="m-0px">
             <label className="paragraph_font lh-0px mv-0px fs-18px">{item.name}</label>
           </Link>
-          {isAdmin(current_user) && (
+          {is_admin(current_user) && (
             <div className="ai-c">
               <GLButton
                 variant="icon"

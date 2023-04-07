@@ -109,7 +109,6 @@ export const toCapitalize = (string: string) => {
 
 export const isAuth = (req: any, res: any, next: () => void) => {
   const token = req.headers.authorization;
-  //
 
   if (token) {
     const onlyToken = token.slice(7, token.length);
@@ -127,8 +126,6 @@ export const isAuth = (req: any, res: any, next: () => void) => {
 };
 
 export const isAdmin = (req: any, res: any, next: () => any) => {
-  //
-  //
   if (req.user && req.user.isAdmin) {
     return next();
   }

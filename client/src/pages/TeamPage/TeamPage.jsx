@@ -5,7 +5,7 @@ import { Helmet } from "react-helmet";
 import { useHistory } from "react-router-dom";
 import { LazyImage } from "../../shared/SharedComponents";
 import { GLButton } from "../../shared/GlowLEDsComponents";
-import { isAdmin } from "../../utils/helpers/user_helpers";
+import { is_admin } from "../../utils/helpers/user_helpers";
 import * as API from "../../api";
 
 const TeamPage = props => {
@@ -56,7 +56,7 @@ const TeamPage = props => {
             {/* <Link to="/collections/all/teams">
 							<GLButton variant="secondary">Back to Teams</GLButton>
 						</Link> */}
-            {isAdmin(current_user) && (
+            {is_admin(current_user) && (
               <Link to={"/secure/glow/editteam/" + props.match.params.pathname}>
                 <GLButton variant="secondary" style={{ width: "156px" }}>
                   Edit Team

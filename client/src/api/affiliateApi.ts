@@ -132,3 +132,30 @@ export const create_rave_mob_affiliates = createAsyncThunk("affiliates/create_ra
     return data;
   } catch (error) {}
 });
+
+export const affiliateEarnings = createAsyncThunk(
+  "affiliates/affiliateEarnings",
+  async (
+    {
+      promo_code,
+      start_date,
+      end_date,
+      sponsor,
+      type
+    }: { promo_code: string; start_date: string; end_date: string; sponsor: boolean; type: string },
+    thunkApi: any
+  ) => {
+    try {
+      const {
+        userSlice: {
+          userPage: { current_user }
+        }
+      } = thunkApi.getState();
+      const { data } = await axios.get(
+        `/api/orders/code_usage/${promo_code}?start_date=${start_date}&end_date=${end_date}&sponsor=${sponsor}`,
+        headers(current_user)
+      );
+      return { data, type };
+    } catch (error) {}
+  }
+);

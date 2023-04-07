@@ -6,7 +6,7 @@ import { decide_warning, determine_total } from "../../utils/helper_functions";
 
 import { GLButton, GLTooltip } from "../../shared/GlowLEDsComponents";
 import { API_Products } from "../../utils";
-import { isAdmin, isWholesaler } from "../../utils/helpers/user_helpers";
+import { is_admin, isWholesaler } from "../../utils/helpers/user_helpers";
 import RelatedProductsSlideshow from "../../shared/GlowLEDsComponents/GLCarousel/RelatedProductsSlideshow";
 
 const CartPage = props => {
@@ -96,7 +96,7 @@ const CartPage = props => {
                 Proceed to Checkout
               </GLButton>
             )}
-            {isAdmin(current_user) && (
+            {is_admin(current_user) && (
               <GLButton onClick={() => dimminish_stock()} variant="primary" className="w-100per bob">
                 Dimmish Stock
               </GLButton>

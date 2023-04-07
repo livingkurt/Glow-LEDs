@@ -13,7 +13,7 @@ export const domain = (): string => {
   }
 };
 
-export const get_date_range = (): { start_date: string; end_date: string } => {
+export const last_month_date_range = (): { start_date: string; end_date: string } => {
   const currentYear = new Date().getFullYear();
   const currentMonth = new Date().getMonth();
 
@@ -30,6 +30,23 @@ export const get_date_range = (): { start_date: string; end_date: string } => {
   const endDate = new Date(prevYear, prevMonth, prevNumDays);
   const start_date = startDate.toISOString().split("T")[0];
   const end_date = endDate.toISOString().split("T")[0];
+  return { start_date, end_date };
+};
+export const this_month_date_range = (): { start_date: string; end_date: string } => {
+  const today = new Date(); // get current date
+  const year = today.getFullYear(); // get current year
+  const month = today.getMonth() + 1; // get current month (0-indexed)
+  const start_date = `${year}-${month.toString().padStart(2, "0")}-01`;
+  const lastDayOfMonth = new Date(year, month, 0).getDate();
+  const end_date = `${year}-${month.toString().padStart(2, "0")}-${lastDayOfMonth.toString().padStart(2, "0")}`;
+  return { start_date, end_date };
+};
+
+export const this_year_date_range = (): { start_date: string; end_date: string } => {
+  const today = new Date(); // get current date
+  const year = today.getFullYear(); // get current year
+  const start_date = `${year}-01-01`;
+  const end_date = `${year}-12-31`;
   return { start_date, end_date };
 };
 

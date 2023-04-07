@@ -9,7 +9,7 @@ import { isMobile } from "react-device-detect";
 import Autocomplete from "./AddressAutocomplete";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import GLTooltip from "../../../shared/GlowLEDsComponents/GLTooltip/GLTooltip";
-import { isAdmin } from "../../../utils/helpers/user_helpers";
+import { is_admin } from "../../../utils/helpers/user_helpers";
 import { useGetAllShippingOrdersQuery } from "../placeOrderApi";
 import { save_shipping } from "../../../slices/cartSlice";
 import * as API from "../../../api";
@@ -87,7 +87,7 @@ const ShippingStep = ({
   // useEffect(() => {
   //   let clean = true;
   //   if (clean) {
-  //     if (isAdmin(current_user)) {
+  //     if (is_admin(current_user)) {
   //       get_all_shipping();
   //     }
   //   }
@@ -262,7 +262,7 @@ const ShippingStep = ({
                     </GLButton>
                   </li>
                 )}
-                {isAdmin(current_user) && (
+                {is_admin(current_user) && (
                   <li className="w-100per">
                     <div className="ai-c h-25px mv-10px mb-30px jc-c w-100per">
                       <div className="custom-select w-100per">
@@ -288,7 +288,7 @@ const ShippingStep = ({
                     </div>
                   </li>
                 )}
-                {isAdmin(current_user) &&
+                {is_admin(current_user) &&
                   (loading_checkboxes ? (
                     <div>Loading...</div>
                   ) : (

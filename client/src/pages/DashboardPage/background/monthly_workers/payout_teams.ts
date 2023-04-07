@@ -1,12 +1,12 @@
 import axios from "axios";
 import { ITeam } from "../../../../types/teamTypes";
-import { domain, get_date_range, get_todays_date, save_paycheck_to_expenses } from "../worker_helpers";
+import { domain, last_month_date_range, get_todays_date, save_paycheck_to_expenses } from "../worker_helpers";
 
 export const payout_teams = async (): Promise<void> => {
   try {
     const domainUrl: string = domain();
 
-    const { start_date, end_date } = get_date_range();
+    const { start_date, end_date } = last_month_date_range();
     // Get promo code usage for the previous month
     const { data: teams } = await axios.get(`${domainUrl}/api/teams?active=true&rave_mob=false`);
     await Promise.all(

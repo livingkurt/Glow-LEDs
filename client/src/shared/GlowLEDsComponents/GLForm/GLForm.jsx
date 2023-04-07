@@ -1,6 +1,6 @@
 import { Autocomplete, Checkbox, FormControlLabel, Skeleton, TextField } from "@mui/material";
 import { useSelector } from "react-redux";
-import { isAdmin } from "../../../utils/helpers/user_helpers";
+import { is_admin } from "../../../utils/helpers/user_helpers";
 import { toCapitalize } from "../../../utils/helper_functions";
 
 const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
@@ -16,10 +16,10 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
       result = false;
     }
     if (fieldData.permissions) {
-      if (!isAdmin(current_user) && fieldData?.permissions?.includes("admin")) {
+      if (!is_admin(current_user) && fieldData?.permissions?.includes("admin")) {
         result = false;
       }
-      if (isAdmin(current_user) && fieldData?.permissions?.includes("admin")) {
+      if (is_admin(current_user) && fieldData?.permissions?.includes("admin")) {
         result = true;
       }
     } else {

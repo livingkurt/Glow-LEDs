@@ -49,20 +49,15 @@ export const saveUser = createAsyncThunk("users/saveUser", async (user: any, thu
         userPage: { current_user }
       }
     } = thunkApi.getState();
-    console.log({ user, _id: user._id });
 
     if (!user._id) {
-      console.log("!user._id");
       const { data } = await axios.post("/api/users", user, headers(current_user));
       return data;
     } else {
-      console.log("user._id");
       const { data } = await axios.put(`/api/users/${user._id}`, user, headers(current_user));
       return data;
     }
-  } catch (error) {
-    console.log({ error });
-  }
+  } catch (error) {}
 });
 
 export const detailsUser = createAsyncThunk("users/detailsUser", async (id: any, thunkApi: any) => {

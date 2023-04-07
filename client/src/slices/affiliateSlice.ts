@@ -199,6 +199,29 @@ const affiliatesSlice = createSlice({
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
+    },
+    [API.affiliateEarnings.pending as any]: (state: any, { payload }: any) => {
+      state.loading_year_earnings = true;
+      state.loading_month_earnings = true;
+    },
+    [API.affiliateEarnings.fulfilled as any]: (state: any, { payload }: any) => {
+      const { data, type } = payload;
+      if (type === "month") {
+        state.month_earnings = data;
+        state.loading_month_earnings = false;
+      } else if (type === "year") {
+        state.year_earnings = data;
+        state.loading_year_earnings = false;
+      }
+
+      state.message = "Affiliate Earnings Found";
+      state.remoteVersionRequirement = Date.now();
+    },
+    [API.affiliateEarnings.rejected as any]: (state: any, { payload }: any) => {
+      state.loading_month_earnings = false;
+      state.loading_year_earnings = false;
+      state.error = payload.error;
+      state.message = payload.message;
     }
   }
 });

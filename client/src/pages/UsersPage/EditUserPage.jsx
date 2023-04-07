@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import { Loading } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../shared/GlowLEDsComponents";
-import { isAdmin } from "../../utils/helpers/user_helpers";
+import { is_admin } from "../../utils/helpers/user_helpers";
 import * as API from "../../api";
 import { set_user } from "../../slices/userSlice";
 
@@ -127,7 +127,7 @@ const EditUserPage = props => {
                           onChange={e => dispatch(set_user({ [e.target.name]: e.target.value }))}
                         />
                       </li>
-                      {isAdmin(current_user) && (
+                      {is_admin(current_user) && (
                         <>
                           <li>
                             <label htmlFor="affiliate">Affiliate</label>
@@ -309,7 +309,7 @@ const EditUserPage = props => {
                         </li>
                       )}
 
-                      {isAdmin(current_user) && (
+                      {is_admin(current_user) && (
                         <>
                           {loading_checkboxes ? (
                             <div>Loading...</div>

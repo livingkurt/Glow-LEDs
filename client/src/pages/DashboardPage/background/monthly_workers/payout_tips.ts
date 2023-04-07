@@ -1,11 +1,11 @@
 import axios from "axios";
-import { domain, get_date_range, get_todays_date, save_paycheck_to_expenses } from "../worker_helpers";
+import { domain, last_month_date_range, get_todays_date, save_paycheck_to_expenses } from "../worker_helpers";
 
 export const payout_tips = async (): Promise<void> => {
   try {
     const domainUrl = domain();
 
-    const { start_date, end_date } = get_date_range();
+    const { start_date, end_date } = last_month_date_range();
     const { data: user } = await axios.get(`${domainUrl}/api/users/5f93cb1e7f9e40002a736df7`);
     const { data: tips } = await axios.get(`${domainUrl}/api/orders/get_range_tips_orders?start_date=${start_date}&end_date=${end_date}`);
 

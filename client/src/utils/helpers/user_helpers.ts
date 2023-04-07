@@ -1,4 +1,4 @@
-export const isAdmin = (current_user: any) => {
+export const is_admin = (current_user: any) => {
   return current_user && current_user.isAdmin;
 };
 

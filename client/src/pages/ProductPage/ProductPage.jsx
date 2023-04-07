@@ -8,7 +8,7 @@ import useWindowDimensions from "../../shared/Hooks/windowDimensions";
 import { getUrlParameter, manuals } from "../../utils/helper_functions";
 import { ProductDetails, ProductFacts, ProductImages, ProductOptions, ProductSelection } from "./components";
 import { GLButton } from "../../shared/GlowLEDsComponents";
-import { isAdmin, isWholesaler } from "../../utils/helpers/user_helpers";
+import { is_admin, isWholesaler } from "../../utils/helpers/user_helpers";
 import ProductSlideshow from "../../shared/GlowLEDsComponents/GLCarousel/ProductSlideshow copy";
 import PictureChooser from "./components/PictureChooser";
 import RelatedProductsSlideshow from "../../shared/GlowLEDsComponents/GLCarousel/RelatedProductsSlideshow";
@@ -742,7 +742,7 @@ const ProductPage = props => {
                 <GLButton variant="secondary">Back to Products</GLButton>
               </Link>
             </div>
-            {isAdmin(current_user) && (
+            {is_admin(current_user) && (
               <div className=" pos-rel z-pos-1 br-10px">
                 <GLButton variant="secondary" className=" w-300px" onClick={e => set_show_product_options(show => (show ? false : true))}>
                   Edit Product

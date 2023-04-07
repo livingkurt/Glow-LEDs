@@ -9,7 +9,7 @@ export default {
         .populate("affiliate")
         .populate("team")
         .limit(parseInt(limit))
-        .skip((parseInt(page) - 1) * parseInt(limit))
+        .skip(Math.max(parseInt(page) - 1, 0) * parseInt(limit))
         .exec();
     } catch (error) {
       if (error instanceof Error) {

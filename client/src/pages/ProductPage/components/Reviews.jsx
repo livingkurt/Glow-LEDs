@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { format_date } from "../../../utils/helper_functions";
 import { useSelector, useDispatch } from "react-redux";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
-import { isAdmin } from "../../../utils/helpers/user_helpers";
+import { is_admin } from "../../../utils/helpers/user_helpers";
 import Rating from "../../../shared/GlowLEDsComponents/GLRating/Rating";
 import * as API from "../../../api";
 import { Loading } from "../../../shared/SharedComponents";
@@ -87,7 +87,7 @@ const Review = props => {
               <div>{format_date(review.createdAt.substring(0, 10))}</div>
               <div>{review.comment}</div>
             </div>
-            {isAdmin(current_user) && (
+            {is_admin(current_user) && (
               <div className="ta-r">
                 <GLButton variant="icon" onClick={() => remove_review(review._id)} aria-label="Delete">
                   <i className="fas fa-trash-alt" />

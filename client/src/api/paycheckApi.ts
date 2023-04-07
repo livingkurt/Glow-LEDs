@@ -4,6 +4,32 @@ import axios from "axios";
 import { headers } from "../utils/helpers/user_helpers";
 import { create_query } from "../utils/helper_functions";
 
+export const getPaychecks = async ({
+  search,
+  sorting,
+  filters,
+  page,
+  pageSize
+}: {
+  search: string;
+  sorting: any;
+  filters: any;
+  page: number;
+  pageSize: number;
+}) => {
+  try {
+    return axios.get(`/api/paychecks`, {
+      params: {
+        limit: pageSize,
+        page: page,
+        search: search
+        // sort: sorting,
+        // filters: pickBy(filters, (val: any) => val.length > 0)
+      }
+    });
+  } catch (error) {}
+};
+
 export const listPaychecks = createAsyncThunk("paychecks/listPaychecks", async (query: any, thunkApi: any) => {
   try {
     const {

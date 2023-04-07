@@ -58,7 +58,15 @@ const reducers = {
   orderSlice: orderSlice,
   paletteSlice: paletteSlice,
   parcelSlice: parcelSlice,
-  paycheckSlice: paycheckSlice,
+  paycheckSlice: combineReducers({
+    paycheckPage: paycheckSlice,
+    paycheckTable: glTableReducer("paycheckTable", {
+      searchBy: (row: any, search: string) => {
+        const searchableText = `${row.artist} ${row.last_name}}`;
+        return searchableText.toLowerCase().includes(search.toLowerCase());
+      }
+    })
+  }),
   productSlice: productSlice,
   promoSlice: promoSlice,
   settingSlice: settingSlice,

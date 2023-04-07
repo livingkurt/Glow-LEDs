@@ -19,12 +19,11 @@ const paycheckSlice = createSlice({
       reciept: "",
       paid_at: ""
     },
+    remoteVersionRequirement: 0,
+    edit_paycheck_modal: false,
+    paycheck_modal: false,
     message: "",
     error: {},
-    search: "",
-    sort: "",
-    page: 1,
-    limit: 10,
     sort_options: ["Newest", "Artist Name", "Facebook Name", "Instagram Handle", "Sponsor", "Promoter"],
     colors: [
       { name: "Sponsor", color: "#3e4c6d" },
@@ -45,17 +44,42 @@ const paycheckSlice = createSlice({
     set_loading: (state, { payload }) => {
       state.loading = payload;
     },
-    set_search: (state, { payload }) => {
-      state.search = payload;
+    set_edit_paycheck_modal: (state, { payload }) => {
+      state.edit_paycheck_modal = payload;
     },
-    set_sort: (state, { payload }) => {
-      state.sort = payload;
+    open_create_paycheck_modal: (state, { payload }) => {
+      state.edit_paycheck_modal = true;
+      state.paycheck = {
+        id: "",
+        affiliate: "",
+        team: "",
+        amount: 0,
+        venmo: "",
+        paid: "",
+        reciept: "",
+        paid_at: ""
+      };
     },
-    set_page: (state, { payload }) => {
-      state.page = payload;
+    open_edit_paycheck_modal: (state, { payload }) => {
+      state.edit_paycheck_modal = true;
+      state.paycheck = payload;
     },
-    set_limit: (state, { payload }) => {
-      state.limit = payload;
+    close_paycheck_modal: (state, { payload }) => {
+      state.paycheck_modal = false;
+      state.paycheck = {
+        id: "",
+        affiliate: "",
+        team: "",
+        amount: 0,
+        venmo: "",
+        paid: "",
+        reciept: "",
+        paid_at: ""
+      };
+    },
+    open_paycheck_modal: (state, { payload }) => {
+      state.paycheck_modal = true;
+      state.paycheck = payload;
     }
   },
   extraReducers: {
@@ -116,5 +140,13 @@ const paycheckSlice = createSlice({
   }
 });
 
-export const { set_search, set_sort, set_page, set_limit, set_loading, set_paycheck } = paycheckSlice.actions;
+export const {
+  set_loading,
+  set_paycheck,
+  set_edit_paycheck_modal,
+  open_create_paycheck_modal,
+  open_paycheck_modal,
+  close_paycheck_modal,
+  open_edit_paycheck_modal
+} = paycheckSlice.actions;
 export default paycheckSlice.reducer;

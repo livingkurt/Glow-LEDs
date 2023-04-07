@@ -28,7 +28,7 @@ const Loading = ({ loading, error, children }) => {
           <p className="ta-c  fs-14px">Error: {error.message}</p>
         </div>
       ) : (
-        children
+        !loading && children
       )}
     </div>
   );

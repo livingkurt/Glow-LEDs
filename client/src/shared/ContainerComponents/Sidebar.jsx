@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { HashLink } from "react-router-hash-link";
 import { update_products_url } from "../../utils/helper_functions";
 import { GLButton } from "../GlowLEDsComponents";
-import { isAdmin, isWholesaler } from "../../utils/helpers/user_helpers";
+import { is_admin, isWholesaler } from "../../utils/helpers/user_helpers";
 import Filter from "../GlowLEDsComponents/GLTable/Filter";
 import * as API from "../../api";
 import { logout_user } from "../../slices/userSlice";
@@ -756,7 +756,7 @@ const Sidebar = props => {
 						<i className="fas fa-sort-up" />
 					</GLButton> */}
         </div>
-        {isAdmin(current_user) && (
+        {is_admin(current_user) && (
           <div className="sidebar_dropdown">
             {/* <GLButton  className="sidebar-btn primary">Admin</GLButton> */}
             <div className="sidebar-btn-container">

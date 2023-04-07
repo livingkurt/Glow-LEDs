@@ -1,13 +1,13 @@
 import axios from "axios";
 import { IAffiliate } from "../../../../types/affiliateTypes";
 
-import { domain, get_date_range, determine_code_tier, get_todays_date, save_paycheck_to_expenses } from "../worker_helpers";
+import { domain, last_month_date_range, determine_code_tier, get_todays_date, save_paycheck_to_expenses } from "../worker_helpers";
 
 export const payout_affiliates = async (): Promise<void> => {
   try {
     const domainUrl = domain();
 
-    const { start_date, end_date } = get_date_range();
+    const { start_date, end_date } = last_month_date_range();
     // Get promo code usage for the previous month
     const { data: affiliates } = await axios.get(`${domainUrl}/api/affiliates?active=true&rave_mob=false`);
     await Promise.all(
