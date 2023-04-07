@@ -34,7 +34,7 @@ const GLTableRow = ({
       dispatch(onExpandRow(namespace, name));
     } else if (enableRowClick) {
       if (enableRowSelect && rowCheckboxClicked(e.target)) {
-        dispatch(selectRow(namespace, row.id));
+        dispatch(selectRow(namespace, row._id));
         return;
       }
       onRowClick(e, row);
@@ -42,11 +42,11 @@ const GLTableRow = ({
       if (e.target.href) {
         return;
       }
-      dispatch(selectRow(namespace, row.id));
+      dispatch(selectRow(namespace, row._id));
     }
   };
 
-  const name = row[rowName] || row.id;
+  const name = row[rowName] || row._id;
 
   return (
     <>
@@ -67,7 +67,7 @@ const GLTableRow = ({
             backgroundColor: `${determine_color ? darken(determine_color(row), 0.3) : "white"} !important`
           }
         }}
-        key={row.id}
+        key={row._id}
         selected={enableRowSelect && isItemSelected}
         id={`${namespace}-row-${name}`}
         data-test={`${namespace}-row-${name}`.replace(/ +/g, "_")}
@@ -75,7 +75,7 @@ const GLTableRow = ({
         {...rowProps(row)}
       >
         {enableRowSelect && (
-          <TableCell padding="checkbox" key={row.id}>
+          <TableCell padding="checkbox" key={row._id}>
             <Checkbox
               size="large"
               color="primary"
@@ -97,7 +97,7 @@ const GLTableRow = ({
           return (
             <TableCell
               {...cellProps(row)}
-              key={`${column.title}-${row.id}`}
+              key={`${column.title}-${row._id}`}
               align={column.align}
               colSpan={column.colSpan || 1}
               data-test={`${namespace}-cell`}

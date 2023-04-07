@@ -292,10 +292,10 @@ const GLTableV2 = ({
                 visibleRows.map((row, index) => {
                   return (
                     <GLTableRow
-                      key={row.id}
+                      key={row._id}
                       row={row}
                       enableRowSelect={enableRowSelect}
-                      isItemSelected={isItemSelected(row.id, selectedRows)}
+                      isItemSelected={isItemSelected(row._id, selectedRows)}
                       labelId={`${tableName && tableName.toLowerCase()}-${index}`}
                       index={index}
                       columnDefs={columnDefs}
