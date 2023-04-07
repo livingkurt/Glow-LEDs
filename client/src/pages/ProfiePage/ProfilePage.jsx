@@ -38,6 +38,7 @@ const ProfilePage = () => {
   useEffect(() => {
     let cleanup = true;
     if (cleanup) {
+      console.log("Hello");
       dispatch(API.detailsUser(id || current_user._id));
       dispatch(API.listMyOrders(id || current_user._id));
       if (user?.affiliate) {
@@ -49,7 +50,7 @@ const ProfilePage = () => {
     return () => {
       cleanup = false;
     };
-  }, [current_user._id, dispatch, id, user?.affiliate]);
+  }, []);
 
   useEffect(() => {
     let cleanup = true;

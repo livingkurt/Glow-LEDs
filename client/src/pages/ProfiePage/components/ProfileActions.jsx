@@ -66,7 +66,7 @@ export const ProfileActions = () => {
         </div>
       )}
 
-      <div className="ml-10px">
+      <div className="ml-5px">
         {user.is_affiliated && (
           <div>
             <GLButton
