@@ -4,6 +4,8 @@ import { useParams, Link } from "react-router-dom";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import { open_edit_user_modal } from "../../../slices/userSlice";
 import { is_admin } from "../../../utils/helpers/user_helpers";
+import { open_edit_affiliate_modal } from "../../../slices/affiliateSlice";
+import { EditAffiliateModal } from "../../AffiliatesPage/components";
 
 export const ProfileActions = () => {
   let { id } = useParams();
@@ -67,14 +69,18 @@ export const ProfileActions = () => {
       <div className="ml-10px">
         {user.is_affiliated && (
           <div>
-            <Link
-              to={user.affiliate?.pathname ? "/secure/account/edit_affiliate/" + user.affiliate.pathname : "/secure/account/edit_affiliate"}
+            <GLButton
+              variant="primary"
+              onClick={() => {
+                dispatch(open_edit_affiliate_modal(user.affiliate));
+              }}
             >
-              <GLButton variant="primary">Edit Affiliate Profile</GLButton>
-            </Link>
+              Edit Affiliate Profile
+            </GLButton>
           </div>
         )}{" "}
       </div>
+      <EditAffiliateModal />
     </div>
   );
 };

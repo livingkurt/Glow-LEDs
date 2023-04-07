@@ -35,8 +35,6 @@ const ProfilePage = () => {
   const orderSlice = useSelector(state => state.orderSlice);
   const { orders } = orderSlice;
 
-  console.log({ orders });
-
   useEffect(() => {
     let cleanup = true;
     if (cleanup) {
