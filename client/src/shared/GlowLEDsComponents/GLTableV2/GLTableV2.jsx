@@ -204,134 +204,136 @@ const GLTableV2 = ({
   const rowCount = remoteCount || filteredRows.length;
   const hasFilters = availableFilters && Object.keys(availableFilters).length > 0;
   return (
-    <Paper className={containerClassNames} style={{ ...style, margin: "1px" }} data-test="glTable">
-      <GLTableToolbar
-        tableName={tableName}
-        numSelected={numSelected}
-        hiddenSelected={hiddenSelected}
-        rowCount={rowCount}
-        enableRowSelect={enableRowSelect}
-        titleActions={titleActions}
-        hasFilters={hasFilters}
-        filteredRowCount={filteredRows.length}
-      >
-        <div className={glTable.headerActions}>
-          {isLoadingFilters ||
-            (hasFilters && (
-              <div className={glTable.filterContainer}>
-                <GLTableFilterDropdown
-                  namespace={namespace}
-                  availableFilters={availableFilters}
-                  filters={filters}
-                  menuOpen={menuOpen}
-                  menuSelection={menuSelection}
-                  minItemsToShowFilter={minItemsToShowFilter}
-                  withCheckbox={withCheckbox}
-                  minFilterLength={minFilterLength}
-                  filterSearch={filterSearch}
-                  isLoading={isLoadingFilters}
-                />
-                <GLTableFilterChips namespace={namespace} filters={filters} menuOpen={menuOpen} maxChips={3} />
-              </div>
-            ))}
-          {!hasFilters && titleActions === null && (
-            <div>
-              {enableRowSelect && numSelected > 0 ? (
-                <div data-test="tableToolbarTitle">
-                  <Typography variant="h6" color="textPrimary" component="div">
-                    {numSelected} Selected
-                  </Typography>
-                  {hiddenSelected > 0 && <sup className={glTable.subtextWrapper}>{hiddenSelected} not shown on the current page</sup>}
+    <div style={{ overflowX: "scroll" }} className="w-100per">
+      <Paper className={containerClassNames} style={{ ...style, margin: "1px", width: "100%" }} data-test="glTable">
+        <GLTableToolbar
+          tableName={tableName}
+          numSelected={numSelected}
+          hiddenSelected={hiddenSelected}
+          rowCount={rowCount}
+          enableRowSelect={enableRowSelect}
+          titleActions={titleActions}
+          hasFilters={hasFilters}
+          filteredRowCount={filteredRows.length}
+        >
+          <div className={glTable.headerActions}>
+            {isLoadingFilters ||
+              (hasFilters && (
+                <div className={glTable.filterContainer}>
+                  <GLTableFilterDropdown
+                    namespace={namespace}
+                    availableFilters={availableFilters}
+                    filters={filters}
+                    menuOpen={menuOpen}
+                    menuSelection={menuSelection}
+                    minItemsToShowFilter={minItemsToShowFilter}
+                    withCheckbox={withCheckbox}
+                    minFilterLength={minFilterLength}
+                    filterSearch={filterSearch}
+                    isLoading={isLoadingFilters}
+                  />
+                  <GLTableFilterChips namespace={namespace} filters={filters} menuOpen={menuOpen} maxChips={3} />
                 </div>
-              ) : (
-                <Typography variant="h6" data-test="tableToolbarTitle" id="tableTitle" component="div">
-                  {`${tableName} (${rowCount})`}
-                </Typography>
+              ))}
+            {!hasFilters && titleActions === null && (
+              <div>
+                {enableRowSelect && numSelected > 0 ? (
+                  <div data-test="tableToolbarTitle">
+                    <Typography variant="h6" color="textPrimary" component="div">
+                      {numSelected} Selected
+                    </Typography>
+                    {hiddenSelected > 0 && <sup className={glTable.subtextWrapper}>{hiddenSelected} not shown on the current page</sup>}
+                  </div>
+                ) : (
+                  <Typography variant="h6" data-test="tableToolbarTitle" id="tableTitle" component="div">
+                    {`${tableName} (${rowCount})`}
+                  </Typography>
+                )}
+              </div>
+            )}
+            {!hasFilters && titleActions && <div />}
+            <div className={glTable.searchContainer}>
+              {enableSearch && (
+                <GLTableSearch
+                  autoFocus
+                  restrictSearchChars={restrictSearchChars}
+                  namespace={namespace}
+                  placeholder={searchPlaceholder}
+                  search={search}
+                />
               )}
             </div>
-          )}
-          {!hasFilters && titleActions && <div />}
-          <div className={glTable.searchContainer}>
-            {enableSearch && (
-              <GLTableSearch
-                autoFocus
-                restrictSearchChars={restrictSearchChars}
-                namespace={namespace}
-                placeholder={searchPlaceholder}
-                search={search}
-              />
-            )}
           </div>
-        </div>
-      </GLTableToolbar>
+        </GLTableToolbar>
 
-      <Divider />
-      <Table sx={{ minWidth: 750 }} aria-labelledby={tableName}>
-        <GLTableHeader
-          columns={columnDefs}
-          enableRowSelect={enableRowSelect}
-          numSelected={selectedRows.length}
-          namespace={namespace}
-          rowCount={rowCount}
-          order={sorting[1]}
-          orderBy={sorting[0]}
+        <Divider />
+        <Table aria-labelledby={tableName}>
+          <GLTableHeader
+            columns={columnDefs}
+            enableRowSelect={enableRowSelect}
+            numSelected={selectedRows.length}
+            namespace={namespace}
+            rowCount={rowCount}
+            order={sorting[1]}
+            orderBy={sorting[0]}
+          />
+          <TableBody data-test={`${namespace}-table-body`}>
+            {loading || isRemoteLoading
+              ? times(pageSize || 10, index => (
+                  <TableRow key={`${index}-skeleton-row`} data-test="loading-row">
+                    {times(columnDefs.length + 1, i => (
+                      <TableCell key={`${i}-skeleton-cell`}>
+                        <Skeleton animation="wave" variant="rect" height={40} />
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))
+              : visibleRows &&
+                visibleRows.map((row, index) => {
+                  return (
+                    <GLTableRow
+                      key={row.id}
+                      row={row}
+                      enableRowSelect={enableRowSelect}
+                      isItemSelected={isItemSelected(row.id, selectedRows)}
+                      labelId={`${tableName && tableName.toLowerCase()}-${index}`}
+                      index={index}
+                      columnDefs={columnDefs}
+                      enableDropdownRow={enableDropdownRow}
+                      dropdownColumnDefs={dropdownColumnDefs}
+                      namespace={namespace}
+                      rowName={rowName}
+                      enableRowClick={enableRowClick}
+                      onRowClick={onRowClick}
+                      rowProps={rowProps}
+                      cellProps={cellProps}
+                      determine_color={determine_color}
+                    >
+                      {enableDropdownRow && expandRow === row[rowName] && (
+                        <GLTableRowDropdown
+                          row={row}
+                          dropdownRows={row[dropdownRowsName]}
+                          dropdownColumnDefs={dropdownColumnDefs}
+                          namespace={namespace}
+                        />
+                      )}
+                    </GLTableRow>
+                  );
+                })}
+          </TableBody>
+        </Table>
+        {!loading && visibleRows.length === 0 && <p style={{ textAlign: "center" }}>{noContentMessage}</p>}
+        <TablePagination
+          rowsPerPageOptions={[5, 10, 25, 50, 100]}
+          component="div"
+          count={rowCount}
+          rowsPerPage={pageSize}
+          page={page}
+          onPageChange={(e, v) => dispatch(updatePage(namespace, v))}
+          onRowsPerPageChange={e => dispatch(updatePageSize(namespace, e.target.value))}
         />
-        <TableBody data-test={`${namespace}-table-body`}>
-          {loading || isRemoteLoading
-            ? times(pageSize || 10, index => (
-                <TableRow key={`${index}-skeleton-row`} data-test="loading-row">
-                  {times(columnDefs.length + 1, i => (
-                    <TableCell key={`${i}-skeleton-cell`}>
-                      <Skeleton animation="wave" variant="rect" height={40} />
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))
-            : visibleRows &&
-              visibleRows.map((row, index) => {
-                return (
-                  <GLTableRow
-                    key={row.id}
-                    row={row}
-                    enableRowSelect={enableRowSelect}
-                    isItemSelected={isItemSelected(row.id, selectedRows)}
-                    labelId={`${tableName && tableName.toLowerCase()}-${index}`}
-                    index={index}
-                    columnDefs={columnDefs}
-                    enableDropdownRow={enableDropdownRow}
-                    dropdownColumnDefs={dropdownColumnDefs}
-                    namespace={namespace}
-                    rowName={rowName}
-                    enableRowClick={enableRowClick}
-                    onRowClick={onRowClick}
-                    rowProps={rowProps}
-                    cellProps={cellProps}
-                    determine_color={determine_color}
-                  >
-                    {enableDropdownRow && expandRow === row[rowName] && (
-                      <GLTableRowDropdown
-                        row={row}
-                        dropdownRows={row[dropdownRowsName]}
-                        dropdownColumnDefs={dropdownColumnDefs}
-                        namespace={namespace}
-                      />
-                    )}
-                  </GLTableRow>
-                );
-              })}
-        </TableBody>
-      </Table>
-      {!loading && visibleRows.length === 0 && <p style={{ textAlign: "center" }}>{noContentMessage}</p>}
-      <TablePagination
-        rowsPerPageOptions={[5, 10, 25, 50, 100]}
-        component="div"
-        count={rowCount}
-        rowsPerPage={pageSize}
-        page={page}
-        onPageChange={(e, v) => dispatch(updatePage(namespace, v))}
-        onRowsPerPageChange={e => dispatch(updatePageSize(namespace, e.target.value))}
-      />
-    </Paper>
+      </Paper>
+    </div>
   );
 };
 

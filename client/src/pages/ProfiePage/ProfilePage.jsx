@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import * as API from "../../api";
@@ -18,13 +18,16 @@ import ProfileDetails from "./components/ProfileDetails";
 import { ProfileActions } from "./components/ProfileActions";
 import ProfileAffiliateMetrics from "./components/ProfileAffiliateActions";
 import ProfileAffiliateEarnings from "./components/ProfileAffiliateEarnings";
+import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
+import { format_date } from "../../utils/helper_functions";
+import { determine_color } from "../PaychecksPage/paychecksHelpers";
 
 const ProfilePage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   let { id } = useParams();
   const userSlice = useSelector(state => state.userSlice.userPage);
-  const { current_user, loading, user, message, error, success } = userSlice;
+  const { current_user, user, error, success } = userSlice;
 
   const { _id, first_name, last_name, email, isVerified, isAdmin, shipping, email_subscription } = user;
 
@@ -32,7 +35,7 @@ const ProfilePage = () => {
   const { month_earnings, year_earnings, loading_year_earnings, loading_month_earnings } = affiliateSlice;
 
   const paycheckSlice = useSelector(state => state.paycheckSlice);
-  const { paychecks, totalPages } = paycheckSlice;
+  const { message, loading, remoteVersionRequirement } = paycheckSlice;
 
   const promoSlice = useSelector(state => state.promoSlice);
   const { promos, error: promo_errors, message: promo_message } = promoSlice;
@@ -45,6 +48,11 @@ const ProfilePage = () => {
     if (cleanup) {
       dispatch(API.detailsUser(id || current_user._id));
       dispatch(API.listOrders({ user: id || current_user._id }));
+      if (user.affiliate) {
+        dispatch(API.listPaychecks({ affiliate: user.affiliate._id }));
+      } else {
+        dispatch(API.listPaychecks({ user: id || current_user._id }));
+      }
     }
     return () => {
       cleanup = false;
@@ -80,6 +88,29 @@ const ProfilePage = () => {
     };
   }, [dispatch, user.affiliate, user.affiliate.public_code, user.affiliate.sponsor]);
 
+  const column_defs = useMemo(
+    () => [
+      { title: "Date Created", display: paycheck => paycheck.createdAt && format_date(paycheck.createdAt) },
+      { title: "Date Paid", display: paycheck => paycheck.paid_at && format_date(paycheck.paid_at) },
+      {
+        title: "Affiliate",
+        display: paycheck => (paycheck.affiliate ? paycheck.affiliate.artist_name : paycheck.team && paycheck.team.team_name)
+      },
+      {
+        title: "Paid",
+        display: paycheck => (paycheck.paid ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />)
+      },
+      { title: "Amount", display: paycheck => `$${paycheck.amount.toFixed(2)}` }
+    ],
+    []
+  );
+
+  // const remoteApi = useCallback(options => API.getPaychecks(options), []);
+  const remoteApi = useCallback(
+    options => API.getPaychecks({ ...options, filters: { ...options.filers, affiliate: user?.affiliate._id } }),
+    [user?.affiliate._id]
+  );
+
   return (
     <div className="p-20px inner_content">
       <Helmet>
@@ -100,7 +131,7 @@ const ProfilePage = () => {
       </div>
       <Loading loading={loading}>
         <div>
-          <div className="jc-b">
+          <div className="jc-b wrap">
             <ProfileDetails />
             <div>
               <ProfileActions />
@@ -110,24 +141,19 @@ const ProfilePage = () => {
           <ProfileAffiliateEarnings />
         </div>
       </Loading>
-      {/* {user && user.is_affiliated && user.affiliate && affiliate && (affiliate.promoter || affiliate.sponsor) && (
-        <GLTable
-          title="My Paychecks"
-          rows={paychecks}
-          column_defs={column_defs}
+      <div className="mt-20px">
+        <GLTableV2
+          remoteApi={remoteApi}
+          remoteVersionRequirement={remoteVersionRequirement}
           determine_color={determine_color}
-          colors={colors}
-          // search={search}
-          // sort_options={sort_options}
-          // set_search={set_search}
-          // handleListItems={handleListItems}
-          // sortHandler={sortHandler}
-          totalPages={totalPages}
-          page={page}
-          limit={limit}
-          update_page={update_page}
+          tableName={"Paychecks"}
+          namespaceScope="paycheckSlice"
+          namespace="paycheckTable"
+          columnDefs={column_defs}
+          loading={loading}
+          enableRowSelect={false}
         />
-      )} */}
+      </div>
       <h1
         style={{
           textAlign: "center",

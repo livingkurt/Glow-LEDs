@@ -1,32 +1,15 @@
-import { determine_filter, month_dates } from "../../util";
+import { month_dates } from "../../util";
 import { affiliate_db } from "../affiliates";
 import { order_db } from "../orders";
 import { paycheck_db } from "../paychecks";
 import { team_db } from "../teams";
+import { getFilteredData } from "./paycheck_helper";
 
 export default {
-  findAll_paychecks_s: async (query: { page: string; search: string; sort: string; limit: string }) => {
+  findAll_paychecks_s: async (query: { page: string; search: string; sort: any; limit: string; filters: any }) => {
     try {
-      const page: string = query.page ? query.page : "1";
-      const limit: string = query.limit ? query.limit : "0";
-      const search = query.search
-        ? {
-            facebook_name: {
-              $regex: query.search,
-              $options: "i"
-            }
-          }
-        : {};
-      const filter = determine_filter(query, search);
-      const sort_query = query.sort && query.sort.toLowerCase();
-      let sort: any = { _id: -1 };
-      if (sort_query === "glover name") {
-        sort = { artist_name: 1 };
-      } else if (sort_query === "facebook name") {
-        sort = { facebook_name: 1 };
-      } else if (sort_query === "newest") {
-        sort = { _id: -1 };
-      }
+      const sort_options = ["createdAt", "paid_at", "paid", "amount"];
+      const { filter, sort, limit, page } = getFilteredData({ query, sort_options, search_name: "affiliate" });
       const paychecks = await paycheck_db.findAll_paychecks_db(filter, sort, limit, page);
       const count = await paycheck_db.count_paychecks_db(filter);
       return {

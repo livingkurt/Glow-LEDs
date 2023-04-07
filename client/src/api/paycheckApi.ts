@@ -3,6 +3,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { headers } from "../utils/helpers/user_helpers";
 import { create_query } from "../utils/helper_functions";
+import { pickBy } from "lodash";
 
 export const getPaychecks = async ({
   search,
@@ -17,8 +18,35 @@ export const getPaychecks = async ({
   page: number;
   pageSize: number;
 }) => {
+  console.log({ filters });
   try {
     return axios.get(`/api/paychecks`, {
+      params: {
+        limit: pageSize,
+        page: page,
+        search: search,
+        sort: sorting,
+        filters
+      }
+    });
+  } catch (error) {}
+};
+
+export const getMyPaychecks = async ({
+  search,
+  sorting,
+  filters,
+  page,
+  pageSize
+}: {
+  search: string;
+  sorting: any;
+  filters: any;
+  page: number;
+  pageSize: number;
+}) => {
+  try {
+    return axios.get(`/api/paychecks/:id/my`, {
       params: {
         limit: pageSize,
         page: page,
