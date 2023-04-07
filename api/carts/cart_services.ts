@@ -137,6 +137,7 @@ export default {
 
     try {
       const data = await cart_db.findById_carts_db(id);
+      console.log({ data });
       const cartItems = [...data.cartItems];
       cartItems.splice(item_index, 1); // 2nd parameter means remove one item only
       if (cartItems.length === 0) {

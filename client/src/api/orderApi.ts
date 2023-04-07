@@ -41,7 +41,9 @@ export const createPayOrder = createAsyncThunk(
   async ({ order, paymentMethod }: { order: any; paymentMethod: any }, thunkApi: any) => {
     try {
       const {
-        userSlice: { current_user },
+        userSlice: {
+          userPage: { current_user }
+        },
         cartSlice: {
           cartPage: { my_cart }
         }
@@ -66,11 +68,6 @@ export const createPayOrderGuest = createAsyncThunk(
     { order, paymentMethod, create_account, password }: { order: any; paymentMethod: any; create_account: boolean; password: string },
     thunkApi: any
   ) => {
-    const {
-      cartSlice: {
-        cartPage: { my_cart }
-      }
-    } = thunkApi.getState();
     try {
       let user_id = "";
       if (create_account) {
