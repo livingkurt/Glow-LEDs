@@ -62,7 +62,10 @@ const GLTableRow = ({
         aria-checked={enableRowSelect && isItemSelected}
         tabIndex={-1}
         sx={{
-          backgroundColor: determine_color ? determine_color(row) : "white" // Set background color based on attribute value
+          backgroundColor: determine_color ? determine_color(row) : "white", // Set background color based on attribute value
+          "&:hover": {
+            backgroundColor: `${determine_color ? darken(determine_color(row), 0.3) : "white"} !important`
+          }
         }}
         key={row.id}
         selected={enableRowSelect && isItemSelected}
