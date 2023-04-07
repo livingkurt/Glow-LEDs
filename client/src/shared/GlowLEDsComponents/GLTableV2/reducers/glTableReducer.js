@@ -269,11 +269,8 @@ const reducer =
       }
       case `${namespace}/${SELECT_ROW}`: {
         const { rowId } = action.payload;
-        console.log({ rowId });
         const { selectedRows } = state;
-        console.log({ selectedRows });
         const updatedSelections = selectedRows.includes(rowId) ? selectedRows.filter(id => id !== rowId) : [...selectedRows, rowId];
-        console.log({ updatedSelections });
         return {
           ...state,
           selectedRows: [...updatedSelections]
