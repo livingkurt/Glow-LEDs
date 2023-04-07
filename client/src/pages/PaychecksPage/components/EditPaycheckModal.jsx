@@ -4,30 +4,37 @@ import GLModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiion
 import { set_edit_paycheck_modal, set_paycheck } from "../../../slices/paycheckSlice";
 import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
-import { snake_case } from "../../../utils/helper_functions";
 
 const EditPaycheckModal = () => {
   const dispatch = useDispatch();
   const paychecksSlice = useSelector(state => state.paycheckSlice.paycheckPage);
   const { edit_paycheck_modal, paycheck, loading } = paychecksSlice;
-  const { affiliate, title } = paycheck;
+  const { affiliate, user, team, promo_code } = paycheck;
 
   const affiliateSlice = useSelector(state => state.affiliateSlice);
   const { affiliates, loading: loading_affiliates } = affiliateSlice;
+
+  const userSlice = useSelector(state => state.userSlice);
+  const { users, loading: loading_users } = userSlice;
+
+  const teamSlice = useSelector(state => state.teamSlice);
+  const { teams, loading: loading_teams } = teamSlice;
+
+  const promoSlice = useSelector(state => state.promoSlice);
+  const { promos, loading: loading_promos } = promoSlice;
 
   useEffect(() => {
     let clean = true;
     if (clean) {
       dispatch(API.listAffiliates({ active: true }));
+      dispatch(API.listUsers({}));
+      dispatch(API.listTeams({}));
+      dispatch(API.listPromos({}));
     }
     return () => {
       clean = false;
     };
   }, [dispatch, paycheck._id]);
-
-  const generate_pathname = () => {
-    return affiliate ? snake_case(`${title} by ${affiliate.artist_name}`) : "";
-  };
 
   const formFields = {
     affiliate: {
@@ -36,30 +43,59 @@ const EditPaycheckModal = () => {
       options: affiliates,
       labelProp: "artist_name"
     },
-    title: {
-      type: "text",
-      label: "Title"
+    user: {
+      type: "autocomplete",
+      label: "User",
+      options: users,
+      labelProp: "artist_name"
     },
-    video: {
-      type: "text",
-      label: "Video"
+    team: {
+      type: "autocomplete",
+      label: "User",
+      options: teams,
+      labelProp: "artist_name"
     },
-    description: {
-      type: "text",
-      label: "Description"
+    promo_code: {
+      type: "autocomplete",
+      label: "User",
+      options: promos,
+      labelProp: "artist_name"
     },
-    level: {
-      type: "select",
-      label: "Difficulty",
-      options: ["beginner", "intermediate", "advanced"]
+    amount: {
+      type: "number",
+      label: "Amount"
     },
-    order: {
-      type: "text",
-      label: "Order"
+    revenue: {
+      type: "number",
+      label: "Revenue"
     },
-    active: {
-      type: "checkbox",
-      label: "Active"
+    earned: {
+      type: "number",
+      label: "Earned"
+    },
+    uses: {
+      type: "number",
+      label: "Uses"
+    },
+    venmo: {
+      type: "number",
+      label: "Venmo"
+    },
+    stripe_connect_id: {
+      type: "number",
+      label: "Stripe Connect ID"
+    },
+    paid: {
+      type: "number",
+      label: "Paid"
+    },
+    paid_at: {
+      type: "number",
+      label: "Paid At"
+    },
+    reciept: {
+      type: "number",
+      label: "Reciept"
     }
   };
 
@@ -68,7 +104,7 @@ const EditPaycheckModal = () => {
       <GLModal
         isOpen={edit_paycheck_modal}
         onConfirm={() => {
-          dispatch(API.savePaycheck({ ...paycheck, affiliate: affiliate._id, pathname: generate_pathname() }));
+          dispatch(API.savePaycheck({ ...paycheck, affiliate: affiliate._id, user: user._id, team: team._id, promo_code: promo_code._id }));
           dispatch(API.listAffiliates({ active: true }));
         }}
         onCancel={() => {

@@ -85,7 +85,7 @@ const PaychecksPage = () => {
         )
       }
     ],
-    [dispatch, today]
+    []
   );
 
   const remoteApi = useCallback(options => getPaychecks(options), []);
@@ -261,21 +261,21 @@ export default PaychecksPage;
 //   }
 // ];
 
-//   const colors = [
-//     { name: "Paid", color: "#3e4c6d" },
-//     { name: "Not Paid", color: "#6f3c3c" }
-//   ];
+// const colors = [
+//   { name: "Paid", color: "#3e4c6d" },
+//   { name: "Not Paid", color: "#6f3c3c" }
+// ];
 
-//   const determine_color = paycheck => {
-//     let result = "";
-//     if (paycheck.paid) {
-//       result = colors[0].color;
-//     }
-//     if (!paycheck.paid) {
-//       result = colors[1].color;
-//     }
-//     return result;
-//   };
+// const determine_color = paycheck => {
+//   let result = "";
+//   if (paycheck.paid) {
+//     result = colors[0].color;
+//   }
+//   if (!paycheck.paid) {
+//     result = colors[1].color;
+//   }
+//   return result;
+// };
 
 //   const update_page = (e, new_page) => {
 //     let search = "";

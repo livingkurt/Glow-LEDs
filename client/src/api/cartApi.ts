@@ -127,7 +127,6 @@ export const deleteCartItem = createAsyncThunk(
           cartPage: { my_cart }
         }
       } = thunkApi.getState();
-      console.log({ item_index, type });
       const { data } = await axios.put(`/api/carts/${my_cart._id}/cart_item/${item_index}`, headers(current_user));
       return { data, type };
     } catch (error) {}
