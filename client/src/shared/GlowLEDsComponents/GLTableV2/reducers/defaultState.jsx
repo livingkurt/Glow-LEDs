@@ -1,30 +1,30 @@
-export default {
-  tableName: '',
-  namespace: '',
+const defaultState = {
+  tableName: "",
+  namespace: "",
   rows: [],
   selectedRows: [],
-  nonTagFilters: ['departments', 'locations'],
+  nonTagFilters: ["departments", "locations"],
   searchBy: (row, search) => {
     const searchableText = row.name;
     return searchableText.toLowerCase().includes(search.toLowerCase());
   },
-  sorting: [0, 'asc'],
+  sorting: [0, "asc"],
   dropdownColumnDefs: [{}],
   availableFilters: {},
   filters: {},
   filteredRows: [],
   visibleRows: [],
-  page: 0,
+  page: 1,
   pageSize: 10,
-  search: '',
+  search: "",
   enableRowSelect: true,
   enableDropdownRow: false,
-  expandRow: '',
+  expandRow: "",
   enableSearch: true,
   menuOpen: false,
   menuSelection: null,
   enableRowClick: false,
-  filterSearch: '',
+  filterSearch: "",
   // Describes Remote fetching state of the table if remote is enabled
   remote: {
     isRemote: false,
@@ -35,6 +35,8 @@ export default {
     remoteCount: null,
     // time when we last fetched a page from a remote, if a prop
     // is passed requesting a newer version we would need to issue a re-fetch
-    latestRemoteVersionTimestamp: 0,
-  },
+    latestRemoteVersionTimestamp: 0
+  }
 };
+
+export default defaultState;
