@@ -659,7 +659,7 @@ const OrderPage = props => {
               )}
               {current_user && current_user.first_name && (
                 <Link to={"/secure/account/profile"}>
-                  <GLButton variant="secondary">Back to Orders</GLButton>
+                  <GLButton variant="secondary">Back to Profile</GLButton>
                 </Link>
               )}
             </div>

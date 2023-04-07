@@ -41,7 +41,6 @@ const ProfilePage = () => {
     let cleanup = true;
     if (cleanup) {
       dispatch(API.detailsUser(id || current_user._id));
-      dispatch(API.detailsUser(id || current_user._id));
       dispatch(API.listOrders({ user: id || current_user._id }));
       if (user.affiliate) {
         dispatch(API.listPaychecks({ affiliate: user.affiliate._id }));
