@@ -146,7 +146,6 @@ const affiliatesSlice = createSlice({
       state.affiliates = [];
     },
     [API.listAffiliates.fulfilled as any]: (state: any, { payload }: any) => {
-      console.log({ payload });
       state.loading = false;
       state.affiliates = payload.data;
       state.totalPages = payload.total_count;

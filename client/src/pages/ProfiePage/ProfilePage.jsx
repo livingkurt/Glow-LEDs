@@ -4,16 +4,14 @@ import { useParams } from "react-router-dom";
 import * as API from "../../api";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import { Loading, Notification } from "../../shared/SharedComponents";
-import { open_edit_user_modal } from "../../slices/userSlice";
 import { is_admin } from "../../utils/helpers/user_helpers";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import "./ProfilePage.scss";
 import { Helmet } from "react-helmet";
 import { EditUserModal } from "../UsersPage/components";
-import GLTable from "../../shared/GlowLEDsComponents/GLTable/GLTable";
 import { OrderListItem } from "../OrdersPage/components";
 import { determine_order_color } from "./profileHelpers";
-import { determine_code_tier, this_month_date_range, this_year_date_range } from "../DashboardPage/background/worker_helpers";
+import { this_month_date_range, this_year_date_range } from "../DashboardPage/background/worker_helpers";
 import ProfileDetails from "./components/ProfileDetails";
 import { ProfileActions } from "./components/ProfileActions";
 import ProfileAffiliateMetrics from "./components/ProfileAffiliateActions";
@@ -27,7 +25,7 @@ const ProfilePage = () => {
   const history = useHistory();
   let { id } = useParams();
   const userSlice = useSelector(state => state.userSlice.userPage);
-  const { current_user, user, error, success } = userSlice;
+  const { current_user, user } = userSlice;
 
   const { first_name } = user;
 
@@ -37,14 +35,15 @@ const ProfilePage = () => {
   const orderSlice = useSelector(state => state.orderSlice);
   const { orders } = orderSlice;
 
+  console.log({ orders });
+
   useEffect(() => {
     let cleanup = true;
     if (cleanup) {
       dispatch(API.detailsUser(id || current_user._id));
-      dispatch(API.listOrders({ user: id || current_user._id }));
-      if (user.affiliate) {
-        dispatch(API.listPaychecks({ affiliate: user.affiliate._id }));
-        dispatch(API.listPromos({ affiliate: user.affiliate._id }));
+      dispatch(API.listMyOrders(id || current_user._id));
+      if (user?.affiliate) {
+        dispatch(API.listPromos({ affiliate: user?.affiliate._id }));
       } else {
         dispatch(API.listPaychecks({ user: id || current_user._id }));
       }
@@ -52,36 +51,38 @@ const ProfilePage = () => {
     return () => {
       cleanup = false;
     };
-  }, [current_user._id, dispatch, id]);
+  }, [current_user._id, dispatch, id, user?.affiliate]);
 
   useEffect(() => {
     let cleanup = true;
     const { start_date: month_start_date, end_date: month_end_date } = this_month_date_range();
     const { start_date: year_start_date, end_date: year_end_date } = this_year_date_range();
     if (cleanup) {
-      dispatch(
-        API.affiliateEarnings({
-          promo_code: user?.affiliate?.public_code?.promo_code,
-          start_date: month_start_date,
-          end_date: month_end_date,
-          sponsor: user.affiliate.sponsor,
-          type: "month"
-        })
-      );
-      dispatch(
-        API.affiliateEarnings({
-          promo_code: user?.affiliate?.public_code?.promo_code,
-          start_date: year_start_date,
-          end_date: year_end_date,
-          sponsor: user.affiliate.sponsor,
-          type: "year"
-        })
-      );
+      if (user.is_affiliated && user?.affiliate) {
+        dispatch(
+          API.affiliateEarnings({
+            promo_code: user?.affiliate?.public_code?.promo_code,
+            start_date: month_start_date,
+            end_date: month_end_date,
+            sponsor: user?.affiliate?.sponsor,
+            type: "month"
+          })
+        );
+        dispatch(
+          API.affiliateEarnings({
+            promo_code: user?.affiliate?.public_code?.promo_code,
+            start_date: year_start_date,
+            end_date: year_end_date,
+            sponsor: user?.affiliate?.sponsor,
+            type: "year"
+          })
+        );
+      }
     }
     return () => {
       cleanup = false;
     };
-  }, [dispatch, user.affiliate, user.affiliate.public_code, user.affiliate.sponsor]);
+  }, [dispatch, user?.affiliate, user?.affiliate?.public_code, user?.affiliate?.sponsor, user.is_affiliated]);
 
   const column_defs = useMemo(
     () => [
@@ -102,8 +103,8 @@ const ProfilePage = () => {
 
   // const remoteApi = useCallback(options => API.getPaychecks(options), []);
   const remoteApi = useCallback(
-    options => API.getPaychecks({ ...options, filters: { ...options.filers, affiliate: user?.affiliate._id } }),
-    [user?.affiliate._id]
+    options => API.getPaychecks({ ...options, filters: { ...options.filers, affiliate: user?.affiliate?._id } }),
+    [user?.affiliate?._id]
   );
 
   return (
@@ -136,19 +137,21 @@ const ProfilePage = () => {
           <ProfileAffiliateEarnings />
         </div>
       </Loading>
-      <div className="mt-20px">
-        <GLTableV2
-          remoteApi={remoteApi}
-          remoteVersionRequirement={remoteVersionRequirement}
-          determine_color={determine_color}
-          tableName={"Paychecks"}
-          namespaceScope="paycheckSlice"
-          namespace="paycheckTable"
-          columnDefs={column_defs}
-          loading={loading}
-          enableRowSelect={false}
-        />
-      </div>
+      {user && user?.affiliate?._id && (
+        <div className="mt-20px">
+          <GLTableV2
+            remoteApi={remoteApi}
+            remoteVersionRequirement={remoteVersionRequirement}
+            determine_color={determine_color}
+            tableName={"Paychecks"}
+            namespaceScope="paycheckSlice"
+            namespace="paycheckTable"
+            columnDefs={column_defs}
+            loading={loading}
+            enableRowSelect={false}
+          />
+        </div>
+      )}
       <h1
         style={{
           textAlign: "center",

@@ -32,32 +32,6 @@ export const getPaychecks = async ({
   } catch (error) {}
 };
 
-export const getMyPaychecks = async ({
-  search,
-  sorting,
-  filters,
-  page,
-  pageSize
-}: {
-  search: string;
-  sorting: any;
-  filters: any;
-  page: number;
-  pageSize: number;
-}) => {
-  try {
-    return axios.get(`/api/paychecks/:id/my`, {
-      params: {
-        limit: pageSize,
-        page: page,
-        search: search
-        // sort: sorting,
-        // filters: pickBy(filters, (val: any) => val.length > 0)
-      }
-    });
-  } catch (error) {}
-};
-
 export const listPaychecks = createAsyncThunk("paychecks/listPaychecks", async (query: any, thunkApi: any) => {
   try {
     const {

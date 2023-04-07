@@ -24,7 +24,7 @@ router.route("/mark_as_shipped").put(order_controller.mark_as_shipped_orders_c);
 router.route("/invoice").put(order_controller.invoice_orders_c);
 router.route("/eligible_for_review").post(order_controller.eligible_for_review_orders_c);
 
-router.route("/user/:id").get(isAuth, order_controller.findMy_orders_c);
+router.route("/:id/user").get(isAuth, order_controller.findMy_orders_c);
 router.route("/guest").post(order_controller.create_orders_c);
 router.route("/guest/:id").get(order_controller.findById_orders_c);
 router.route("/secure").post(isAuth, order_controller.create_orders_c);

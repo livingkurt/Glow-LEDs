@@ -3,7 +3,6 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { headers } from "../utils/helpers/user_helpers";
 import { create_query } from "../utils/helper_functions";
-import { deleteCart } from "./cartApi";
 
 export const listOrders = createAsyncThunk("orders/listOrders", async (query: any, thunkApi: any) => {
   try {
@@ -13,6 +12,19 @@ export const listOrders = createAsyncThunk("orders/listOrders", async (query: an
       }
     } = thunkApi.getState();
     const { data } = await axios.get(`/api/orders?${create_query(query)}`, headers(current_user));
+    return data;
+  } catch (error) {}
+});
+
+export const listMyOrders = createAsyncThunk("orders/listMyOrders", async (order_id: any, thunkApi: any) => {
+  try {
+    const {
+      userSlice: {
+        userPage: { current_user }
+      }
+    } = thunkApi.getState();
+    const { data } = await axios.get(`/api/orders/${order_id}/user`, headers(current_user));
+    console.log({ data });
     return data;
   } catch (error) {}
 });

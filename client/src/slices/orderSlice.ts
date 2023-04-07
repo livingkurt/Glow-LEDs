@@ -164,6 +164,20 @@ const orderSlice = createSlice({
       state.error = payload.error;
       state.message = payload.message;
     },
+    [API.listMyOrders.pending as any]: (state: any, { payload }: any) => {
+      state.loading = true;
+      state.orders = [];
+    },
+    [API.listMyOrders.fulfilled as any]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.orders = payload;
+      state.message = "Orders Found";
+    },
+    [API.listMyOrders.rejected as any]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.error = payload.error;
+      state.message = payload.message;
+    },
     [API.createPayOrder.pending as any]: (state: any, { payload }: any) => {
       state.loading_payment = true;
     },

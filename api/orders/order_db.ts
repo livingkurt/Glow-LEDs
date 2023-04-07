@@ -4,6 +4,7 @@ import { Affiliate } from "../affiliates";
 
 export default {
   findAll_orders_db: async (filter: any, sort: unknown, limit: string, page: string) => {
+    console.log({ filter, sort, limit, page });
     try {
       return await Order.find(filter)
         .sort(sort)
