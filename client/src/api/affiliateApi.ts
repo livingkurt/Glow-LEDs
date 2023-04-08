@@ -96,7 +96,9 @@ export const detailsAffiliate = createAsyncThunk(
   async ({ pathname, id }: DetailsAffiliate, thunkApi: any) => {
     try {
       const {
-        userSlice: { current_user }
+        userSlice: {
+          userPage: { current_user }
+        }
       } = thunkApi.getState();
       let response: any = {};
       if (id) {

@@ -47,9 +47,10 @@ export const addToCart = createAsyncThunk(
   async ({ cart, cart_item, type }: { cart: any; cart_item: any; type: string }, thunkApi: any) => {
     try {
       const {
-        userSlice: { current_user }
+        userSlice: {
+          userPage: { current_user }
+        }
       } = thunkApi.getState();
-
       if (!cart._id) {
         const { data } = await axios.post("/api/carts/start_cart", { cart_item, current_user });
         return { data, type };

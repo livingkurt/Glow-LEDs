@@ -25,7 +25,7 @@ if (shipping_string) {
 
 const initialState: object = {
   cartSlice: { cartPage: { my_cart }, shipping: shippingAddress },
-  userSlice: { current_user: {} },
+  userSlice: { userPage: { current_user: {} } },
   settingSlice: { show_search_bar: true }
 };
 

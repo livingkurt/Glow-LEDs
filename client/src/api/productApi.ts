@@ -66,7 +66,9 @@ export const saveProductReview = createAsyncThunk(
   ) => {
     try {
       const {
-        userSlice: { current_user }
+        userSlice: {
+          userPage: { current_user }
+        }
       } = thunkApi.getState();
       const { data } = await axios.post(`/api/products/reviews/${product_pathname}`, { review, current_user }, headers(current_user));
       return data;
@@ -79,7 +81,9 @@ export const deleteProductReview = createAsyncThunk(
   async ({ product_pathname, review_id }: { product_pathname: string; review_id: string }, thunkApi: any) => {
     try {
       const {
-        userSlice: { current_user }
+        userSlice: {
+          userPage: { current_user }
+        }
       } = thunkApi.getState();
       const { data } = await axios.delete(`/api/products/reviews/${product_pathname}/delete_one/${review_id}`, headers(current_user));
       return data;

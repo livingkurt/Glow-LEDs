@@ -167,7 +167,9 @@ export const refundOrder = createAsyncThunk(
   ) => {
     try {
       const {
-        userSlice: { current_user }
+        userSlice: {
+          userPage: { current_user }
+        }
       } = thunkApi.getState();
       const { data } = await axios.put(
         "/api/payments/secure/refund/" + order._id,
@@ -189,7 +191,9 @@ export const payOrder = createAsyncThunk(
   async ({ order, paymentMethod }: { order: any; paymentMethod: any }, thunkApi: any) => {
     try {
       const {
-        userSlice: { current_user }
+        userSlice: {
+          userPage: { current_user }
+        }
       } = thunkApi.getState();
       const { data } = await axios.put("/api/payments/secure/pay/" + order._id, { paymentMethod }, headers(current_user));
       return data;

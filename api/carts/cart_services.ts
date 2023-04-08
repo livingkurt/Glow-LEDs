@@ -72,7 +72,7 @@ export default {
   start_cart_carts_s: async (body: any) => {
     const { cart_item, current_user } = body;
     try {
-      if (current_user._id) {
+      if (current_user?._id) {
         const data: any = await cart_db.create_carts_db({ user: current_user._id, cartItems: [...cart_item] });
         return data;
       } else {
@@ -80,6 +80,7 @@ export default {
         return data;
       }
     } catch (error) {
+      console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -137,7 +138,6 @@ export default {
 
     try {
       const data = await cart_db.findById_carts_db(id);
-      console.log({ data });
       const cartItems = [...data.cartItems];
       cartItems.splice(item_index, 1); // 2nd parameter means remove one item only
       if (cartItems.length === 0) {
