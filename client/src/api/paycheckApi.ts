@@ -18,7 +18,6 @@ export const getPaychecks = async ({
   page: number;
   pageSize: number;
 }) => {
-  console.log({ filters });
   try {
     return axios.get(`/api/paychecks`, {
       params: {

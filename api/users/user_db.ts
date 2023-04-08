@@ -19,6 +19,7 @@ export default {
             }
           ]
         })
+        .populate("wholesaler")
         .populate("products")
         .limit(parseInt(limit))
         .skip(Math.max(parseInt(page) - 1, 0) * parseInt(limit));
@@ -42,6 +43,7 @@ export default {
             }
           ]
         })
+        .populate("wholesaler")
         .populate("products");
     } catch (error) {
       if (error instanceof Error) {
@@ -63,6 +65,7 @@ export default {
             }
           ]
         })
+        .populate("wholesaler")
         .populate("products");
     } catch (error) {
       if (error instanceof Error) {

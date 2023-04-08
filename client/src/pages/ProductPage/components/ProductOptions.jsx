@@ -12,7 +12,6 @@ import ReactTooltip from "react-tooltip";
 import GLTooltip from "../../../shared/GlowLEDsComponents/GLTooltip/GLTooltip";
 import Rating from "../../../shared/GlowLEDsComponents/GLRating/Rating";
 import { determine_sampler_pack_name, determine_sampler_pack_pathname, determine_sizing_quick_look } from "../productHelpers";
-import { isWholesaler } from "../../../utils/helpers/user_helpers";
 import { useSelector } from "react-redux";
 
 const ProductOptions = ({
@@ -436,7 +435,7 @@ const ProductOptions = ({
             product.sale_end_date,
             false,
             "dark",
-            isWholesaler(current_user),
+            current_user?.isWholesaler,
             wholesale_price
           )}
         </div>

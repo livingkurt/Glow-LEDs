@@ -5,7 +5,6 @@ import { determine_product_name_display, sale_price_switch } from "../../../util
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import { LazyImage } from "../../../shared/SharedComponents";
 import Rating from "../../../shared/GlowLEDsComponents/GLRating/Rating";
-import { isWholesaler } from "../../../utils/helpers/user_helpers";
 import { useSelector } from "react-redux";
 
 // import Resizer from 'react-image-file-resizer';
@@ -147,7 +146,7 @@ const ProductItemD = props => {
               {sale_price_switch({
                 product: props.product,
                 cartItem: false,
-                wholesaler: isWholesaler(current_user)
+                wholesaler: current_user?.isWholesaler
               })}
             </label>
 

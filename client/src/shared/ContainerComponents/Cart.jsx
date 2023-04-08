@@ -10,7 +10,6 @@ import { GLButton, GLTooltip } from "../GlowLEDsComponents";
 import * as API from "../../api";
 import { clear_order_state } from "../../slices/orderSlice";
 import { set_success } from "../../slices/cartSlice";
-import { isWholesaler } from "../../utils/helpers/user_helpers";
 
 const Cart = props => {
   const history = useHistory();
@@ -90,7 +89,7 @@ const Cart = props => {
   };
 
   const determine_wholesale_proceed = () => {
-    return isWholesaler(current_user) && determine_total(cartItems, isWholesaler(current_user)) > current_user.minimum_order_amount;
+    return current_user?.isWholesaler && determine_total(cartItems, current_user?.isWholesaler) > current_user.minimum_order_amount;
   };
 
   const top_categories_grid = () => {
@@ -314,7 +313,7 @@ const Cart = props => {
                             product: item,
                             cartItem: true,
                             background: "light",
-                            wholesaler: isWholesaler(current_user)
+                            wholesaler: current_user?.isWholesaler
                           })}
                         </div>
                       </div>
@@ -334,14 +333,14 @@ const Cart = props => {
       <div className="column w-100per pos-fix add_to_cart ph-1rem br-20px" style={{ bottom: cartItems.length === 0 ? "-10px" : "0px" }}>
         <label className="fs-17px title_font mv-1rem">
           Subtotal ( {cartItems && cartItems?.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)} items ) : ${" "}
-          {determine_total(cartItems, isWholesaler(current_user)).toFixed(2)}
+          {determine_total(cartItems, current_user?.isWholesaler).toFixed(2)}
         </label>
         <Link to="/checkout/cart" className="w-100per">
           <GLButton variant="secondary" className=" w-100per mb-2rem" onClick={closeMenu} aria-label="Delete">
             View Cart
           </GLButton>
         </Link>
-        {isWholesaler(current_user) ? (
+        {current_user?.isWholesaler ? (
           <GLTooltip
             tooltip={!determine_wholesale_proceed() && "You must meet your minimum order requirment to continue"}
             className="w-100per"

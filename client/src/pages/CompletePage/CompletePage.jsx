@@ -8,7 +8,6 @@ import OrderComplete from "./components/OrderComplete";
 import FeatureComplete from "./components/FeatureComplete";
 import EmailComplete from "./components/EmailComplete";
 import AffiliateComplete from "./components/AffiliateComplete";
-import { is_admin } from "../../utils/helpers/user_helpers";
 
 const CompletePage = props => {
   const [data, set_data] = useState();
@@ -118,7 +117,7 @@ const CompletePage = props => {
             <link rel="canonical" href={data.link} />
             <meta property="og:url" content={data.link} />
           </Helmet>
-          {is_admin(current_user) && (
+          {current_user?.isAdmin && (
             <div className="jc-b mb-1rem">
               <Link to="/secure/glow/emails">
                 <GLButton variant="primary" className="mh-10px">

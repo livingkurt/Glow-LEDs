@@ -14,9 +14,8 @@ import useWindowDimensions from "../../shared/Hooks/windowDimensions";
 import { isMobile } from "react-device-detect";
 import { OrderSummaryStep, ShippingStep } from "./components";
 import * as API from "../../api";
-import { empty_cart, save_shipping } from "../../slices/cartSlice";
+import { save_shipping } from "../../slices/cartSlice";
 import { set_loading, set_loading_payment } from "../../slices/orderSlice";
-import { isWholesaler } from "../../utils/helpers/user_helpers";
 
 const PlaceOrderPage = props => {
   const cartSlice = useSelector(state => state.cartSlice.cartPage);
@@ -99,11 +98,11 @@ const PlaceOrderPage = props => {
   useEffect(() => {
     let clean = true;
     const determine_wholesale_proceed = () => {
-      return isWholesaler(current_user) && determine_total(cartItems, isWholesaler(current_user)) > current_user.minimum_order_amount;
+      return current_user?.isWholesaler && determine_total(cartItems, current_user?.isWholesaler) > current_user.minimum_order_amount;
     };
 
     if (clean) {
-      if (isWholesaler(current_user) && !determine_wholesale_proceed()) {
+      if (current_user?.isWholesaler && !determine_wholesale_proceed()) {
         props.history.push("/checkout/cart");
       }
     }
@@ -128,7 +127,7 @@ const PlaceOrderPage = props => {
       }
 
       // dispatch(savePayment({ paymentMethod }));
-      stable_setItemsPrice(determine_total(cartItems, isWholesaler(current_user)));
+      stable_setItemsPrice(determine_total(cartItems, current_user?.isWholesaler));
       // if (!show_message && promo_code) {
       // 	activate_promo_code(promo_code.toLowerCase());
       // }

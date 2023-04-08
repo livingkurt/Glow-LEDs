@@ -8,7 +8,6 @@ import { sale_price_switch } from "../../../utils/react_helper_functions";
 import { LazyImage } from "../../SharedComponents";
 import { GLButton } from "..";
 import * as API from "../../../api";
-import { isWholesaler } from "../../../utils/helpers/user_helpers";
 
 const CarouselItem = props => {
   const [product, set_product] = useState(props.product);
@@ -225,7 +224,7 @@ const CarouselItem = props => {
                   <label className="product-price">
                     {sale_price_switch({
                       product,
-                      wholesaler: isWholesaler(current_user)
+                      wholesaler: current_user?.isWholesaler
                     })}
                   </label>
                 )}

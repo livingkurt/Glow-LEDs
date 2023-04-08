@@ -1,6 +1,5 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { is_admin } from "../../../utils/helpers/user_helpers";
 
 const ProfileDetails = () => {
   const userSlice = useSelector(state => state.userSlice.userPage);
@@ -10,7 +9,7 @@ const ProfileDetails = () => {
 
   return (
     <div className="">
-      {is_admin(current_user) && (
+      {current_user?.isAdmin && (
         <div className="mb-20px">
           <h3>ID</h3>
           <label>{_id}</label>
@@ -54,7 +53,7 @@ const ProfileDetails = () => {
         <h3>Promotional Emails</h3>
         <label>{email_subscription ? "Subscribed" : "Not Subscribed"}</label>
       </div>
-      {is_admin(current_user) && (
+      {current_user?.isAdmin && (
         <>
           <div className="mb-20px">
             <h3>Verified</h3>

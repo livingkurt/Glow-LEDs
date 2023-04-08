@@ -62,7 +62,7 @@ const reducers = {
     paycheckPage: paycheckSlice,
     paycheckTable: glTableReducer("paycheckTable", {
       searchBy: (row: any, search: string) => {
-        const searchableText = `${row.artist} ${row.last_name}}`;
+        const searchableText = row.affiliate;
         return searchableText.toLowerCase().includes(search.toLowerCase());
       }
     })
@@ -85,7 +85,15 @@ const reducers = {
   [dashboardApi.reducerPath]: dashboardApi.reducer,
   [placeOrderApi.reducerPath]: placeOrderApi.reducer,
   dashboardSlice: dashboardSlice,
-  wholesalerSlice: wholesalerSlice,
+  wholesalerSlice: combineReducers({
+    wholesalerPage: wholesalerSlice,
+    wholesalerTable: glTableReducer("wholesalerTable", {
+      searchBy: (row: any, search: string) => {
+        const searchableText = `${row?.user?.first_name} ${row?.user?.last_name}}`;
+        return searchableText.toLowerCase().includes(search.toLowerCase());
+      }
+    })
+  }),
   tutorialSlice: combineReducers({
     tutorialPage: tutorialSlice,
     tutorialTable: glTableReducer("tutorialTable", {

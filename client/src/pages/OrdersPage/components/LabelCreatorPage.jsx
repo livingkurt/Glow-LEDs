@@ -7,7 +7,7 @@ import { useHistory } from "react-router-dom";
 import { Loading } from "../../../shared/SharedComponents";
 import Autocomplete from "react-google-autocomplete";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
-import { is_admin } from "../../../utils/helpers/user_helpers";
+
 import * as API from "../../../api";
 
 const LabelCreatorPage = props => {
@@ -35,7 +35,7 @@ const LabelCreatorPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      if (is_admin(current_user)) {
+      if (current_user?.isAdmin) {
         get_all_shipping();
       }
       dispatch(API.listParcels({}));
@@ -332,7 +332,7 @@ const LabelCreatorPage = props => {
                     To Glow LEDs
                   </GLButton>
                 </li>
-                {is_admin(current_user) && (
+                {current_user?.isAdmin && (
                   <li>
                     <div className="ai-c h-25px mv-10px mb-30px jc-c">
                       <div className="custom-select w-100per">
@@ -624,7 +624,7 @@ const LabelCreatorPage = props => {
                     From Destanye
                   </GLButton>
                 </li>
-                {is_admin(current_user) && (
+                {current_user?.isAdmin && (
                   <li>
                     <div className="ai-c h-25px mv-10px mb-30px jc-c">
                       <div className="custom-select w-100per">
@@ -909,7 +909,7 @@ const LabelCreatorPage = props => {
             </div>
             <div className="w-35rem m-10px">
               <h3>Package Dimmensions</h3>
-              {is_admin(current_user) && (
+              {current_user?.isAdmin && (
                 <li>
                   <div className="ai-c h-25px mv-10px mb-30px jc-c">
                     <div className="custom-select w-100per">

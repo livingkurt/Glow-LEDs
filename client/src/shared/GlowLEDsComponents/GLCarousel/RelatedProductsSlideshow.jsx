@@ -16,7 +16,6 @@ import { LazyImage } from "../../SharedComponents";
 import { GLButton } from "..";
 import Rating from "../GLRating/Rating";
 import * as API from "../../../api";
-import { isWholesaler } from "../../../utils/helpers/user_helpers";
 
 const RelatedProductsSlideshow = ({
   product_category,
@@ -452,7 +451,7 @@ const RelatedProductsSlideshow = ({
                   </Link>
 
                   <label className="product-price mv-3px">
-                    {sale_price_switch({ product, cartItem: false, wholesaler: isWholesaler(current_user) })}
+                    {sale_price_switch({ product, cartItem: false, wholesaler: current_user?.isWholesaler })}
                   </label>
 
                   {product.rating ? (

@@ -229,7 +229,7 @@ export default {
         isVerified: user.isVerified,
         isAdmin: user.isAdmin,
         shipping: user.shipping,
-        wholesaler: user.wholesaler,
+        wholesaler: user.isWholesaler,
         minimum_order_amount: user.minimum_order_amount,
         access_token: getAccessToken(user),
         refresh_token: await getRefreshToken(user)
@@ -259,7 +259,7 @@ export default {
         isVerified: user.isVerified,
         isAdmin: user.isAdmin,
         shipping: user.shipping,
-        wholesaler: user.wholesaler,
+        wholesaler: user.isWholesaler,
         minimum_order_amount: user.minimum_order_amount,
         access_token: getAccessToken(user),
         refresh_token: getRefreshToken(user)

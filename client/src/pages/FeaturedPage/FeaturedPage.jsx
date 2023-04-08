@@ -5,7 +5,6 @@ import { Helmet } from "react-helmet";
 import { humanize } from "../../utils/helper_functions";
 import { useHistory } from "react-router-dom";
 import { GLButton } from "../../shared/GlowLEDsComponents";
-import { is_admin } from "../../utils/helpers/user_helpers";
 import * as API from "../../api";
 
 const FeaturedPage = props => {
@@ -56,7 +55,7 @@ const FeaturedPage = props => {
             <GLButton variant="secondary" onClick={() => history.goBack()}>
               Back to Features
             </GLButton>
-            {is_admin(current_user) && (
+            {current_user?.isAdmin && (
               <Link to={"/secure/glow/editfeature/" + props.match.params.pathname}>
                 <GLButton variant="secondary" style={{ width: "156px" }}>
                   Edit Feature

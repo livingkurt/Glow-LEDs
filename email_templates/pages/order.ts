@@ -219,7 +219,7 @@ export default (props: any) => {
 																							<td style='font-family:helvetica;width:100%;white-space:nowrap;'>
 																								<p style='color:white;line-height:150%;font-size:16px;font-weight:600;margin:0 0 0 15px;'
 																									align="right">
-																									${email_sale_price_switch(item, "white", order?.user?.wholesaler)}
+																									${email_sale_price_switch(item, "white", order?.user?.isWholesaler)}
 																								</p>
 																							</td>
 																						</tr>

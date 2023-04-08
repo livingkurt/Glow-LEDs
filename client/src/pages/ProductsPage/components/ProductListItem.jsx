@@ -7,7 +7,6 @@ import { sale_price_switch } from "../../../utils/react_helper_functions";
 import styled from "styled-components";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import * as API from "../../../api";
-import { isWholesaler } from "../../../utils/helpers/user_helpers";
 
 const grid = 8;
 const size = 30;
@@ -199,7 +198,7 @@ const ProductListItem = props => {
         <label className="product-price w-500px">
           {sale_price_switch({
             product,
-            wholesaler: isWholesaler(current_user)
+            wholesaler: current_user?.isWholesaler
           })}
           }
         </label>

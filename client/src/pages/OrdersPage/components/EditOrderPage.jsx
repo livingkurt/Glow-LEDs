@@ -8,7 +8,6 @@ import { API_External, API_Products } from "../../../utils";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import Overflow from "react-overflow-indicator";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
-import { is_admin } from "../../../utils/helpers/user_helpers";
 import * as API from "../../../api";
 
 const EditOrderPage = props => {
@@ -624,7 +623,7 @@ const EditOrderPage = props => {
                         />
                       </li>
                       <h2>Other Info</h2>
-                      {is_admin(current_user) && (
+                      {current_user?.isAdmin && (
                         <li>
                           <label htmlFor="production_note">Production Note</label>
                           <input

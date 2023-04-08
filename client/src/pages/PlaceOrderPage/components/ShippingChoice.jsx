@@ -7,7 +7,6 @@ import InternationalShippingSpeed from "./InternationalShippingSpeed";
 import ShippingSpeed from "./InternationalShippingSpeed";
 
 const ShippingChoice = ({ rates, hide_pay_button, shipping, current_shipping_speed, choose_shipping_rate, re_choose_shipping_rate }) => {
-  console.log({ rates });
   return (
     <div className="w-100per">
       {hide_pay_button && rates && (
@@ -28,7 +27,7 @@ const ShippingChoice = ({ rates, hide_pay_button, shipping, current_shipping_spe
         <div className=" mv-1rem jc-b ai-c w-100per">
           <div className="shipping_rates jc-b w-100per ">
             <div className="jc-b w-100per">
-              <div>{current_shipping_speed.speed === "First" ? "Standard" : current_shipping_speed.speed}</div>
+              <div>{!shipping.international ? "Standard" : current_shipping_speed.rate.service}</div>
 
               <div>
                 {" "}

@@ -6,7 +6,6 @@ import { useHistory } from "react-router-dom";
 import { LazyImage } from "../../shared/SharedComponents";
 import { API_Users } from "../../utils";
 import { GLButton } from "../../shared/GlowLEDsComponents";
-import { is_admin } from "../../utils/helpers/user_helpers";
 import { ProductSimpleItemD, ProductSimpleItemM } from "../ProductsGridPage/components";
 import * as API from "../../api";
 
@@ -67,7 +66,7 @@ const SponsorPage = props => {
             <GLButton variant="secondary" onClick={() => history.goBack()}>
               Back
             </GLButton>
-            {is_admin(current_user) && (
+            {current_user?.isAdmin && (
               <Link to={"/secure/glow/editaffiliate/" + props.match.params.pathname}>
                 <GLButton variant="secondary" style={{ width: "156px" }}>
                   Edit Affiliate

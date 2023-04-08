@@ -205,7 +205,7 @@ const GLTableV2 = ({
   const hasFilters = availableFilters && Object.keys(availableFilters).length > 0;
   return (
     <div style={{ overflowX: "scroll" }} className="w-100per">
-      <Paper className={containerClassNames} style={{ ...style, margin: "1px", minWidth: "750px" }} data-test="glTable">
+      <Paper className={containerClassNames} style={{ ...style, margin: "1px", minWidth: "1000px" }} data-test="glTable">
         <GLTableToolbar
           tableName={tableName}
           numSelected={numSelected}

@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 import * as API from "../../api";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import { Loading, Notification } from "../../shared/SharedComponents";
-import { is_admin } from "../../utils/helpers/user_helpers";
 import { useHistory } from "react-router-dom";
 import "./ProfilePage.scss";
 import { Helmet } from "react-helmet";
@@ -113,7 +112,7 @@ const ProfilePage = () => {
       </Helmet>
       <EditUserModal />
       <Notification message={message} />
-      {is_admin(current_user) && (
+      {current_user?.isAdmin && (
         <GLButton variant="icon" onClick={() => history.goBack()}>
           <i class="fas fa-chevron-left"></i>
         </GLButton>
@@ -162,7 +161,7 @@ const ProfilePage = () => {
       </h1>
       {orders && orders.length > 0 ? (
         orders.map((order, index) => (
-          <OrderListItem key={index} determine_color={determine_order_color} order={order} admin={is_admin(current_user)} />
+          <OrderListItem key={index} determine_color={determine_order_color} order={order} admin={current_user?.isAdmin} />
         ))
       ) : (
         <div style={{ textAlign: "center" }}>

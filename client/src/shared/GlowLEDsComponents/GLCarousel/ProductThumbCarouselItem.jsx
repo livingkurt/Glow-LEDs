@@ -4,7 +4,6 @@ import { Link, useHistory } from "react-router-dom";
 import Rating from "./Rating";
 import { sale_price_switch } from "../../../utils/react_helper_functions";
 import { LazyImage } from "../../SharedComponents";
-import { isWholesaler } from "../../../utils/helpers/user_helpers";
 import { useSelector } from "react-redux";
 
 const ProductThumbCarouselItem = props => {
@@ -67,7 +66,7 @@ const ProductThumbCarouselItem = props => {
                   {sale_price_switch({
                     product: props.product,
                     cartItem: props.product.product_options,
-                    wholesaler: isWholesaler(current_user)
+                    wholesaler: current_user?.isWholesaler
                   })}
                 </label>
               )}

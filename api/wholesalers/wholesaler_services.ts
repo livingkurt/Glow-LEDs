@@ -1,45 +1,20 @@
 import { determine_filter } from "../../util";
 import dotenv from "dotenv";
 import wholesaler_db from "./wholesaler_db";
+import { getFilteredData } from "../paychecks/paycheck_helper";
 dotenv.config();
 
 export default {
-  findAll_wholesalers_s: async (query: { search: string; sort: string; page: string; limit: string }) => {
+  findAll_wholesalers_s: async (query: { page: string; search: string; sort: any; limit: string; filters: any }) => {
     try {
-      const page: any = query.page ? query.page : 1;
-      const limit: any = query.limit ? query.limit : 0;
-      const search = query.search
-        ? {
-            facebook_name: {
-              $regex: query.search,
-              $options: "i"
-            }
-          }
-        : {};
-      const filter = determine_filter(query, search);
-
-      const sort_query = query.sort && query.sort.toLowerCase();
-      let sort: any = { _id: -1 };
-      if (sort_query === "glover name") {
-        sort = { artist_name: 1 };
-      } else if (sort_query === "facebook name") {
-        sort = { facebook_name: 1 };
-      } else if (sort_query === "sponsor") {
-        sort = { sponsor: -1 };
-      } else if (sort_query === "promoter") {
-        sort = { promoter: -1 };
-      } else if (sort_query === "active") {
-        sort = { active: -1 };
-      } else if (sort_query === "newest") {
-        sort = { _id: -1 };
-      }
-
+      const sort_options = ["user", "company", "minimum_order_amount"];
+      const { filter, sort, limit, page } = getFilteredData({ query, sort_options, search_name: "company" });
       const wholesalers = await wholesaler_db.findAll_wholesalers_db(filter, sort, limit, page);
       const count = await wholesaler_db.count_wholesalers_db(filter);
       return {
-        wholesalers,
-        totalPages: Math.ceil(count / limit),
-        currentPage: parseInt(page)
+        data: wholesalers,
+        total_count: count,
+        currentPage: page
       };
     } catch (error) {
       if (error instanceof Error) {

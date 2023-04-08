@@ -1,5 +1,5 @@
 import React from "react";
-import { is_admin } from "../../../utils/helpers/user_helpers";
+
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import useWindowDimensions from "../../../shared/Hooks/windowDimensions";
 import { Stripe } from "../../../shared/SharedComponents/Stripe";
@@ -60,7 +60,7 @@ const PaymentStep = ({
               <div htmlFor="order_note">Add a note</div>
               <input type="text" name="order_note" id="order_note" className="w-100per" onChange={e => set_order_note(e.target.value)} />
             </div>
-            {is_admin(current_user) && (
+            {current_user?.isAdmin && (
               <div className="w-100per mt-10px">
                 <div htmlFor="production_note">Add a production note</div>
                 <input
@@ -187,9 +187,9 @@ const PaymentStep = ({
                 </>
               )}
             </li>
-            {is_admin(current_user) && (
+            {current_user?.isAdmin && (
               <div className="mt-2rem">
-                {is_admin(current_user) && users && (
+                {current_user?.isAdmin && users && (
                   <div>
                     {loading_checkboxes ? (
                       <div>Loading...</div>
@@ -263,7 +263,7 @@ const PaymentStep = ({
                     </GLButton>
                   </div>
                 )}
-                {is_admin(current_user) && users && (
+                {current_user?.isAdmin && users && (
                   <GLButton onClick={create_order_without_user} variant="secondary" className="w-100per mb-12px">
                     Create Order Without User
                   </GLButton>

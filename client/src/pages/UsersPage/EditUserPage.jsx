@@ -4,7 +4,6 @@ import { useHistory } from "react-router-dom";
 import { Loading } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../shared/GlowLEDsComponents";
-import { is_admin } from "../../utils/helpers/user_helpers";
 import * as API from "../../api";
 import { set_user } from "../../slices/userSlice";
 
@@ -37,7 +36,7 @@ const EditUserPage = props => {
     is_employee,
     affiliate,
     isVerified,
-    is_admin,
+    isAdmin,
     shipping,
     email_subscription,
     stripe_connect_id,
@@ -66,7 +65,7 @@ const EditUserPage = props => {
         is_affiliated,
         is_employee,
         isVerified,
-        isAdmin: is_admin,
+        isAdmin,
         email_subscription,
         shipping,
         stripe_connect_id,
@@ -127,7 +126,7 @@ const EditUserPage = props => {
                           onChange={e => dispatch(set_user({ [e.target.name]: e.target.value }))}
                         />
                       </li>
-                      {is_admin(current_user) && (
+                      {current_user?.isAdmin && (
                         <>
                           <li>
                             <label htmlFor="affiliate">Affiliate</label>
@@ -309,7 +308,7 @@ const EditUserPage = props => {
                         </li>
                       )}
 
-                      {is_admin(current_user) && (
+                      {current_user?.isAdmin && (
                         <>
                           {loading_checkboxes ? (
                             <div>Loading...</div>
@@ -399,7 +398,7 @@ const EditUserPage = props => {
                               <input
                                 type="checkbox"
                                 name="isAdmin"
-                                defaultChecked={is_admin}
+                                defaultChecked={isAdmin}
                                 id="isAdmin"
                                 onChange={e => dispatch(set_user({ shipping: { ...shipping, [e.target.name]: e.target.checked } }))}
                               />

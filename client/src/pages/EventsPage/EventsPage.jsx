@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 import { Loading } from "../../shared/SharedComponents";
 import { daysBetween, format_date } from "../../utils/helper_functions";
 import { GLButton } from "../../shared/GlowLEDsComponents";
-import { is_admin } from "../../utils/helpers/user_helpers";
 
 const EventsPage = props => {
   const [events, set_events] = useState([]);
@@ -114,7 +113,7 @@ const EventsPage = props => {
       <Loading loading={loading} />
       <div className="wrap jc-b">
         <div className="wrap jc-b">
-          {is_admin(current_user) &&
+          {current_user?.isAdmin &&
             colors.map((color, index) => {
               return (
                 <div className="wrap jc-b w-16rem m-1rem" key={index}>
@@ -144,7 +143,7 @@ const EventsPage = props => {
             <li
               className={`container`}
               style={{
-                backgroundColor: is_admin(current_user)
+                backgroundColor: current_user?.isAdmin
                   ? determine_color(event)
                   : festivals_going.includes(event.title)
                   ? "#4d5061"
@@ -166,7 +165,7 @@ const EventsPage = props => {
                   </div>
                   <div className="mt-5px">{event.age}</div>
                 </div>
-                {is_admin(current_user) && (
+                {current_user?.isAdmin && (
                   <div className="w-350px">
                     <div className="mt-5px p-5px br-10px" style={determine_font(event.date, 28)}>
                       Sale: {determine_action_dates(event.date, 28)}

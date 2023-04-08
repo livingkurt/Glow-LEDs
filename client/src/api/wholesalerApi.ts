@@ -4,6 +4,32 @@ import axios from "axios";
 import { create_query } from "../utils/helper_functions";
 import { headers } from "../utils/helpers/user_helpers";
 
+export const getWholesalers = async ({
+  search,
+  sorting,
+  filters,
+  page,
+  pageSize
+}: {
+  search: string;
+  sorting: any;
+  filters: any;
+  page: number;
+  pageSize: number;
+}) => {
+  try {
+    return axios.get(`/api/wholesalers`, {
+      params: {
+        limit: pageSize,
+        page: page,
+        search: search,
+        sort: sorting,
+        filters
+      }
+    });
+  } catch (error) {}
+};
+
 export const listWholesalers = createAsyncThunk("wholesalers/listWholesalers", async (query: any, thunkApi: any) => {
   try {
     const {

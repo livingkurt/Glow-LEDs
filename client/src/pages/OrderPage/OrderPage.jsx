@@ -8,7 +8,6 @@ import { API_Emails, API_Orders, API_Shipping } from "../../utils";
 import useClipboard from "react-hook-clipboard";
 import useWindowDimensions from "../../shared/Hooks/windowDimensions";
 import { determine_color } from "../../utils/helpers/order_helpers";
-import { is_admin, isWholesaler } from "../../utils/helpers/user_helpers";
 import CartItem from "../../shared/SharedComponents/CartItem";
 import CheckoutSteps from "../../shared/SharedComponents/CheckoutSteps";
 import { Stripe } from "../../shared/SharedComponents/Stripe";
@@ -524,7 +523,7 @@ const OrderPage = props => {
   const { promos } = promoSlice;
 
   const [promo_code_validations, set_promo_code_validations] = useState("");
-  const items_price = determine_total(order_items, isWholesaler(current_user));
+  const items_price = determine_total(order_items, current_user?.isWholesaler);
   const [show_message, set_show_message] = useState("");
   const [itemsPrice, setItemsPrice] = useState(items_price);
   const [tax_rate, set_tax_rate] = useState(0);
@@ -652,7 +651,7 @@ const OrderPage = props => {
           {order.isPaid ? <CheckoutSteps step1 step2 step3 step4 /> : <CheckoutSteps step1 step2 step3 />}
           <div className="mb-10px ml-20px jc-b">
             <div>
-              {is_admin(current_user) && (
+              {current_user?.isAdmin && (
                 <Link to={props.location.previous_path || "/secure/glow/orders?page=1?limit=10"}>
                   <GLButton variant="secondary">Back to Admin Orders</GLButton>
                 </Link>
@@ -663,14 +662,14 @@ const OrderPage = props => {
                 </Link>
               )}
             </div>
-            {is_admin(current_user) && (
+            {current_user?.isAdmin && (
               <GLButton variant="secondary" onClick={() => add_items_to_cart()}>
                 Add Items to Cart
               </GLButton>
             )}
           </div>
 
-          {is_admin(current_user) && (
+          {current_user?.isAdmin && (
             <div className="row">
               <div className="ai-c">
                 <GLButton
@@ -796,7 +795,7 @@ const OrderPage = props => {
                   </div>
                 )}
 
-                {is_admin(current_user) && order.return_tracking_number && (
+                {current_user?.isAdmin && order.return_tracking_number && (
                   <div className="w-100per column mt-1rem">
                     <label>
                       Return Tracking #:{" "}
@@ -878,7 +877,7 @@ const OrderPage = props => {
                     </div>
                   </div>
                   <div>
-                    {is_admin(current_user) && (
+                    {current_user?.isAdmin && (
                       <GLButton
                         variant="secondary"
                         className="w-200px mv-10px mr-1rem"
@@ -894,7 +893,7 @@ ${order.shipping.email}`)
                         Copy to clipboard
                       </GLButton>
                     )}
-                    {is_admin(current_user) && (
+                    {current_user?.isAdmin && (
                       <Link to={`/secure/glow/userprofile/${order.user && order.user._id}`}>
                         <GLButton variant="secondary">View User</GLButton>
                       </Link>
@@ -912,7 +911,7 @@ ${order.shipping.email}`)
                 <div style={{ borderTop: ".1rem white solid", width: "100%" }}>
                   <p style={{ marginBottom: "0px" }}>{order.isPaid ? "Paid at " + format_date(order.paidAt) : "Not Paid"}</p>
                 </div>
-                {is_admin(current_user) && (
+                {current_user?.isAdmin && (
                   <div className="">
                     <div className="pt-1rem" htmlFor="payment">
                       Payment Method: {order.payment.paymentMethod}
@@ -1047,7 +1046,7 @@ ${order.shipping.email}`)
                 )}
               </ul>
 
-              {is_admin(current_user) && (
+              {current_user?.isAdmin && (
                 <div className="column">
                   <label htmlFor="message_to_user">Message to User</label>
                   <input
@@ -1060,7 +1059,7 @@ ${order.shipping.email}`)
                 </div>
               )}
 
-              {is_admin(current_user) && (
+              {current_user?.isAdmin && (
                 <div>
                   <div className="jc-b">
                     <div className="column jc-b w-100per mr-1rem">
@@ -1078,7 +1077,7 @@ ${order.shipping.email}`)
                           Print Label
                         </GLButton>
                       )}
-                      {is_admin(current_user) && (
+                      {current_user?.isAdmin && (
                         <GLButton variant="secondary" className="w-100per mv-5px " onClick={get_invoice}>
                           Print Invoice
                         </GLButton>
@@ -1227,7 +1226,7 @@ ${order.shipping.email}`)
 									</GLButton> */}
                     </div>
                   </div>
-                  {/* {is_admin(current_user) && (
+                  {/* {current_user?.isAdmin && (
                     <div className="mv-10px">
                       <label htmlFor="promo_code">Promo Code</label>
                       <form onSubmit={e => check_code(e)} className="row">

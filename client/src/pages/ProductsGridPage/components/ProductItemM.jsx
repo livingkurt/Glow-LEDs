@@ -4,7 +4,6 @@ import { Link, useHistory } from "react-router-dom";
 import { determine_product_name_display, sale_price_switch } from "../../../utils/react_helper_functions";
 import { LazyImage } from "../../../shared/SharedComponents";
 import Rating from "../../../shared/GlowLEDsComponents/GLRating/Rating";
-import { isWholesaler } from "../../../utils/helpers/user_helpers";
 import { useSelector } from "react-redux";
 
 const ProductItemM = props => {
@@ -66,7 +65,7 @@ const ProductItemM = props => {
                     {" "}
                     {sale_price_switch({
                       product: props.product,
-                      wholesaler: isWholesaler(current_user)
+                      wholesaler: current_user?.isWholesaler
                     })}
                   </div>
                 )}

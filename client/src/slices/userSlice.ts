@@ -6,7 +6,7 @@ import jwt_decode from "jwt-decode";
 import setAuthToken from "../utils/setAuthToken";
 
 const userSlice = createSlice({
-  name: "users",
+  name: "userSlice",
   initialState: {
     loading: false,
     access_token: "",
@@ -19,7 +19,7 @@ const userSlice = createSlice({
       is_employee: false,
       affiliate: {},
       isVerified: false,
-      is_admin: false,
+      isAdmin: false,
       shipping: {
         first_name: "",
         last_name: "",
@@ -34,7 +34,7 @@ const userSlice = createSlice({
       email_subscription: false,
       stripe_connect_id: "",
       weekly_wage: 0,
-      wholesaler: false,
+      isWholesaler: false,
       minimum_order_amount: "",
       guest: false,
       international: false
@@ -110,7 +110,7 @@ const userSlice = createSlice({
         is_employee: false,
         affiliate: {},
         isVerified: false,
-        is_admin: false,
+        isAdmin: false,
         shipping: {
           first_name: "",
           last_name: "",
@@ -125,7 +125,7 @@ const userSlice = createSlice({
         email_subscription: false,
         stripe_connect_id: "",
         weekly_wage: 0,
-        wholesaler: false,
+        isWholesaler: false,
         minimum_order_amount: "",
         guest: false,
         international: false
@@ -145,7 +145,7 @@ const userSlice = createSlice({
         is_employee: false,
         affiliate: {},
         isVerified: false,
-        is_admin: false,
+        isAdmin: false,
         shipping: {
           first_name: "",
           last_name: "",
@@ -160,7 +160,7 @@ const userSlice = createSlice({
         email_subscription: false,
         stripe_connect_id: "",
         weekly_wage: 0,
-        wholesaler: false,
+        isWholesaler: false,
         minimum_order_amount: "",
         guest: false,
         international: false
@@ -178,8 +178,8 @@ const userSlice = createSlice({
     },
     [API.listUsers.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.users = payload.users;
-      state.totalPages = payload.totalPages;
+      state.users = payload.data;
+      state.totalPages = payload.total_count;
       state.page = payload.currentPage;
       state.message = "Users Found";
       state.loading = false;

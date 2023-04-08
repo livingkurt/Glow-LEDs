@@ -1,13 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import GLModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiionModal";
 import { set_edit_user_modal, set_user } from "../../../slices/userSlice";
 import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
-import { snake_case } from "../../../utils/helper_functions";
-import { get } from "lodash";
-import { AppBar, Tab, Tabs, Typography } from "@mui/material";
-import GLTabPanel from "../../../shared/GlowLEDsComponents/GLTabPanel/GLTabPanel";
+import { Typography } from "@mui/material";
 
 const EditUserModal = () => {
   const dispatch = useDispatch();
@@ -19,10 +16,14 @@ const EditUserModal = () => {
   const affiliateSlice = useSelector(state => state.affiliateSlice.affiliatePage);
   const { affiliates, loading: loading_affiliates } = affiliateSlice;
 
+  const wholesalerSlice = useSelector(state => state.wholesalerSlice.wholesalerPage);
+  const { wholesalers, loading: loading_wholesalers } = wholesalerSlice;
+
   useEffect(() => {
     let clean = true;
     if (clean) {
       dispatch(API.listAffiliates({ active: true, limit: 0, page: 0 }));
+      dispatch(API.listWholesalers());
     }
     return () => {
       clean = false;
@@ -93,13 +94,16 @@ const EditUserModal = () => {
       permissions: ["admin"]
     },
     wholesaler: {
-      type: "checkbox",
-      label: "Wholesaler",
+      type: "autocomplete",
+      label: "Wholesalers",
+      options: wholesalers,
+      labelProp: "wholesaler",
+      getOptionLabel: option => option.company,
       permissions: ["admin"]
     },
-    minimum_order_amount: {
-      type: "number",
-      label: "Minimum Order Amount",
+    isWholesaler: {
+      type: "checkbox",
+      label: "Is Wholesaler",
       permissions: ["admin"]
     },
     shipping: {
@@ -151,7 +155,7 @@ const EditUserModal = () => {
       <GLModal
         isOpen={edit_user_modal}
         onConfirm={() => {
-          dispatch(API.saveUser({ ...user, affiliate: affiliate._id ? affiliate._id : null }));
+          dispatch(API.saveUser({ ...user, affiliate: affiliate?._id ? affiliate?._id : null }));
         }}
         onCancel={() => {
           dispatch(set_edit_user_modal(false));

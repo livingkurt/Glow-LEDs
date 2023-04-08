@@ -6,7 +6,6 @@ import { decide_warning, determine_total } from "../../utils/helper_functions";
 
 import { GLButton, GLTooltip } from "../../shared/GlowLEDsComponents";
 import { API_Products } from "../../utils";
-import { is_admin, isWholesaler } from "../../utils/helpers/user_helpers";
 import RelatedProductsSlideshow from "../../shared/GlowLEDsComponents/GLCarousel/RelatedProductsSlideshow";
 
 const CartPage = props => {
@@ -38,7 +37,7 @@ const CartPage = props => {
   };
 
   const determine_wholesale_proceed = () => {
-    return isWholesaler(current_user) && determine_total(cartItems, isWholesaler(current_user)) > current_user.minimum_order_amount;
+    return current_user?.isWholesaler && determine_total(cartItems, current_user?.isWholesaler) > current_user.minimum_order_amount;
   };
 
   return (
@@ -75,10 +74,10 @@ const CartPage = props => {
           <div className="cart-action">
             <h3 className="fs-17px">
               Subtotal ( {cartItems?.reduce((a, c) => parseInt(a) + parseInt(c.qty), 0)} items ) : ${" "}
-              {determine_total(cartItems, isWholesaler(current_user)).toFixed(2)}
+              {determine_total(cartItems, current_user?.isWholesaler).toFixed(2)}
             </h3>
 
-            {isWholesaler(current_user) ? (
+            {current_user?.isWholesaler ? (
               <GLTooltip
                 tooltip={!determine_wholesale_proceed() && "You must meet your minimum order requirment to continue"}
                 className="w-100per"
@@ -96,7 +95,7 @@ const CartPage = props => {
                 Proceed to Checkout
               </GLButton>
             )}
-            {is_admin(current_user) && (
+            {current_user?.isAdmin && (
               <GLButton onClick={() => dimminish_stock()} variant="primary" className="w-100per bob">
                 Dimmish Stock
               </GLButton>

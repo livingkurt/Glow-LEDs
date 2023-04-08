@@ -3,9 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams, Link } from "react-router-dom";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import { open_edit_user_modal } from "../../../slices/userSlice";
-import { is_admin } from "../../../utils/helpers/user_helpers";
+
 import { open_edit_affiliate_modal } from "../../../slices/affiliateSlice";
 import { EditAffiliateModal } from "../../AffiliatesPage/components";
+import { open_edit_wholesaler_modal } from "../../../slices/wholesalerSlice";
 
 export const ProfileActions = () => {
   let { id } = useParams();
@@ -33,7 +34,7 @@ export const ProfileActions = () => {
           Edit Profile
         </GLButton>
       </div>
-      {is_admin(current_user) ? (
+      {current_user?.isAdmin ? (
         <div
           style={{
             height: 50
@@ -76,6 +77,20 @@ export const ProfileActions = () => {
               }}
             >
               Edit Affiliate Profile
+            </GLButton>
+          </div>
+        )}{" "}
+      </div>
+      <div className="ml-5px">
+        {user.isWholesaler && (
+          <div>
+            <GLButton
+              variant="primary"
+              onClick={() => {
+                dispatch(open_edit_wholesaler_modal(user.isWholesaler));
+              }}
+            >
+              Edit Wholesaler Profile
             </GLButton>
           </div>
         )}{" "}

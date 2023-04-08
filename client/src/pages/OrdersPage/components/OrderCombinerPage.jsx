@@ -6,7 +6,7 @@ import { API_Orders, API_Shipping } from "../../../utils";
 import { useHistory } from "react-router-dom";
 import { Loading } from "../../../shared/SharedComponents";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
-import { is_admin } from "../../../utils/helpers/user_helpers";
+
 import * as API from "../../../api";
 
 const OrderCombinerPage = props => {
@@ -33,7 +33,7 @@ const OrderCombinerPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      if (is_admin(current_user)) {
+      if (current_user?.isAdmin) {
         get_orders();
       }
       dispatch(API.listParcels({}));
@@ -244,7 +244,7 @@ const OrderCombinerPage = props => {
                     To Glow LEDs
                   </GLButton>
                 </li>
-                {is_admin(current_user) && (
+                {current_user?.isAdmin && (
                   <li>
                     <div className="ai-c h-25px mv-10px mb-30px jc-c">
                       <div className="custom-select w-100per">
@@ -514,7 +514,7 @@ const OrderCombinerPage = props => {
                     From Glow LEDs
                   </GLButton>
                 </li>
-                {is_admin(current_user) && (
+                {current_user?.isAdmin && (
                   <li>
                     <div className="ai-c h-25px mv-10px mb-30px jc-c">
                       <div className="custom-select w-100per">
@@ -781,7 +781,7 @@ const OrderCombinerPage = props => {
             </div>
             <div className="w-35rem m-10px">
               <h3>Package Dimmensions</h3>
-              {is_admin(current_user) && (
+              {current_user?.isAdmin && (
                 <li>
                   <div className="ai-c h-25px mv-10px mb-30px jc-c">
                     <div className="custom-select w-100per">

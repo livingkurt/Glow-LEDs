@@ -8,7 +8,6 @@ import useWindowDimensions from "../../shared/Hooks/windowDimensions";
 import { getUrlParameter, manuals } from "../../utils/helper_functions";
 import { ProductDetails, ProductFacts, ProductImages, ProductOptions, ProductSelection } from "./components";
 import { GLButton } from "../../shared/GlowLEDsComponents";
-import { is_admin, isWholesaler } from "../../utils/helpers/user_helpers";
 import ProductSlideshow from "../../shared/GlowLEDsComponents/GLCarousel/ProductSlideshow copy";
 import PictureChooser from "./components/PictureChooser";
 import RelatedProductsSlideshow from "../../shared/GlowLEDsComponents/GLCarousel/RelatedProductsSlideshow";
@@ -120,7 +119,7 @@ const ProductPage = props => {
       set_images(item.images);
 
       if (item.price > 0) {
-        if (isWholesaler(current_user)) {
+        if (current_user?.isWholesaler) {
           set_wholesale_price(item.wholesale_price);
         }
         set_price(item.price);
@@ -309,7 +308,7 @@ const ProductPage = props => {
       set_secondary_color(option.secondary_color);
     }
     if (option.price > 0) {
-      if (isWholesaler(current_user)) {
+      if (current_user?.isWholesaler) {
         set_wholesale_price(option.wholesale_price);
       }
       set_price(option.price);
@@ -630,13 +629,13 @@ const ProductPage = props => {
     }
     if (option.price > 0) {
       if (has_add_on && show_add_on) {
-        if (isWholesaler(current_user)) {
+        if (current_user?.isWholesaler) {
           set_wholesale_price(option.wholesale_price);
         }
         set_price(option.price + add_on_price);
         set_sale_price(option.sale_price + add_on_price);
       } else {
-        if (isWholesaler(current_user)) {
+        if (current_user?.isWholesaler) {
           set_wholesale_price(option.wholesale_price);
         }
         set_price(option.price);
@@ -716,7 +715,7 @@ const ProductPage = props => {
 
     // set_secondary_products(secondary.secondary_products);
     if (product.category === "glowstringz") {
-      if (isWholesaler(current_user)) {
+      if (current_user?.isWholesaler) {
         set_wholesale_price(secondary.wholesale_price);
       }
       set_price(secondary.price);
@@ -742,7 +741,7 @@ const ProductPage = props => {
                 <GLButton variant="secondary">Back to Products</GLButton>
               </Link>
             </div>
-            {is_admin(current_user) && (
+            {current_user?.isAdmin && (
               <div className=" pos-rel z-pos-1 br-10px">
                 <GLButton variant="secondary" className=" w-300px" onClick={e => set_show_product_options(show => (show ? false : true))}>
                   Edit Product

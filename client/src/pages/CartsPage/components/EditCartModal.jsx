@@ -4,8 +4,6 @@ import GLModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiion
 import { set_edit_cart_modal, set_cart } from "../../../slices/cartSlice";
 import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
-import { snake_case } from "../../../utils/helper_functions";
-import { get } from "lodash";
 import { AppBar, Tab, Tabs, Typography } from "@mui/material";
 import GLTabPanel from "../../../shared/GlowLEDsComponents/GLTabPanel/GLTabPanel";
 

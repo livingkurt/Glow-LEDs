@@ -1,5 +1,3 @@
-/* eslint-disable max-lines-per-function */
-
 import { createSlice } from "@reduxjs/toolkit";
 import * as API from "../api/wholesalerApi";
 
@@ -9,39 +7,17 @@ const wholesalersSlice = createSlice({
     loading: false,
     wholesalers: [],
     wholesaler: {
-      id: "",
-      user: undefined,
-      artist_name: "",
-      instagram_handle: "",
-      facebook_name: "",
-      percentage_off: "",
-      sponsor: "",
-      promoter: "",
-      rave_mob: "",
-      active: "",
-      style: "",
-      inspiration: "",
-      bio: "",
-      link: "",
-      picture: "",
-      location: "",
-      years: "",
-      team: "",
-      video: "",
-      venmo: "",
-      products: [],
-      chips: [],
-      pathname: "",
-      public_code: undefined,
-      private_code: undefined
+      user: "",
+      company: "",
+      minimum_order_amount: "",
+      active: false
     },
+    remoteVersionRequirement: 0,
+    edit_wholesaler_modal: false,
+    wholesaler_modal: false,
     message: "",
     success: false,
     error: {},
-    search: "",
-    sort: "",
-    page: 1,
-    limit: 10,
     sort_options: ["Newest", "Artist Name", "Facebook Name", "Instagram Handle", "Sponsor", "Promoter"],
     colors: [
       { name: "Sponsor", color: "#3e4c6d" },
@@ -65,17 +41,34 @@ const wholesalersSlice = createSlice({
     set_success: (state, { payload }) => {
       state.success = payload;
     },
-    set_search: (state, { payload }) => {
-      state.search = payload;
+    set_edit_wholesaler_modal: (state, { payload }) => {
+      state.edit_wholesaler_modal = payload;
     },
-    set_sort: (state, { payload }) => {
-      state.sort = payload;
+    open_create_wholesaler_modal: (state, { payload }) => {
+      state.edit_wholesaler_modal = true;
+      state.wholesaler = {
+        user: "",
+        company: "",
+        minimum_order_amount: "",
+        active: false
+      };
     },
-    set_page: (state, { payload }) => {
-      state.page = payload;
+    open_edit_wholesaler_modal: (state, { payload }) => {
+      state.edit_wholesaler_modal = true;
+      state.wholesaler = payload;
     },
-    set_limit: (state, { payload }) => {
-      state.limit = payload;
+    close_wholesaler_modal: (state, { payload }) => {
+      state.wholesaler_modal = false;
+      state.wholesaler = {
+        user: "",
+        company: "",
+        minimum_order_amount: "",
+        active: false
+      };
+    },
+    open_wholesaler_modal: (state, { payload }) => {
+      state.wholesaler_modal = true;
+      state.wholesaler = payload;
     }
   },
   extraReducers: {
@@ -85,8 +78,8 @@ const wholesalersSlice = createSlice({
     },
     [API.listWholesalers.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.wholesalers = payload.wholesalers;
-      state.totalPages = payload.totalPages;
+      state.wholesalers = payload.data;
+      state.totalPages = payload.total_count;
       state.page = payload.currentPage;
       state.message = "Wholesalers Found";
     },
@@ -97,18 +90,18 @@ const wholesalersSlice = createSlice({
     },
     [API.saveWholesaler.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
-      state.success = false;
     },
     [API.saveWholesaler.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
+      state.edit_wholesaler_modal = false;
       state.success = true;
       state.message = "Wholesaler Saved";
+      state.remoteVersionRequirement = Date.now();
     },
     [API.saveWholesaler.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
-      state.success = false;
     },
     [API.detailsWholesaler.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -130,6 +123,7 @@ const wholesalersSlice = createSlice({
       state.loading = false;
       state.wholesaler = payload.wholesaler;
       state.message = "Wholesaler Deleted";
+      state.remoteVersionRequirement = Date.now();
     },
     [API.deleteWholesaler.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
@@ -139,5 +133,13 @@ const wholesalersSlice = createSlice({
   }
 });
 
-export const { set_search, set_sort, set_page, set_success, set_limit, set_loading, set_wholesaler } = wholesalersSlice.actions;
+export const {
+  set_loading,
+  set_wholesaler,
+  set_edit_wholesaler_modal,
+  open_create_wholesaler_modal,
+  open_wholesaler_modal,
+  close_wholesaler_modal,
+  open_edit_wholesaler_modal
+} = wholesalersSlice.actions;
 export default wholesalersSlice.reducer;

@@ -6,7 +6,7 @@ import Checkbox from "@mui/material/Checkbox";
 import { useDispatch } from "react-redux";
 import { determineHover, rowCheckboxClicked } from "../glTableHelpers";
 import { onExpandRow, selectRow } from "../actions/actions";
-import { darken } from "@mui/material";
+import { darken, lighten } from "@mui/material";
 
 const GLTableRow = ({
   row,
@@ -65,6 +65,12 @@ const GLTableRow = ({
           backgroundColor: determine_color ? determine_color(row) : "white", // Set background color based on attribute value
           "&:hover": {
             backgroundColor: `${determine_color ? darken(determine_color(row), 0.3) : "white"} !important`
+          },
+          "&.Mui-selected": {
+            backgroundColor: determine_color ? darken(determine_color(row), 0.3) : "white",
+            "&:hover": {
+              backgroundColor: `${determine_color ? darken(determine_color(row), 0.5) : "white"} !important`
+            }
           }
         }}
         key={row._id}
@@ -80,7 +86,17 @@ const GLTableRow = ({
               size="large"
               color="primary"
               sx={{
-                color: determine_color ? "white" : ""
+                color: determine_color ? "white" : "",
+                "& .MuiSvgIcon-root": {
+                  color: "white"
+                },
+                "& .Mui-checked": {
+                  color: "white",
+                  backgroundColor: determine_color ? determine_color(row) : "#"
+                },
+                "&:hover": {
+                  backgroundColor: `${determine_color ? darken(determine_color(row), 0.3) : "white"} !important`
+                }
               }}
               checked={enableRowSelect && isItemSelected}
               inputProps={{
