@@ -3,40 +3,12 @@ import { allRecordsApi } from "./api/allRecordsApi";
 import { dashboardApi } from "./pages/DashboardPage/dashboardApi";
 import { placeOrderApi } from "./pages/PlaceOrderPage/placeOrderApi";
 import reducer from "./reducer";
-import { check_authentication } from "./utils/react_helper_functions";
 
-let my_cart: any;
-const cart_string: any = localStorage.getItem("my_cart");
-
-if (cart_string) {
-  my_cart = JSON.parse(cart_string);
-} else {
-  my_cart = { cartItems: [] };
-}
-
-let shippingAddress: any;
-const shipping_string: any = sessionStorage.getItem("shippingAddress");
-
-if (shipping_string) {
-  shippingAddress = JSON.parse(shipping_string);
-} else {
-  shippingAddress = {};
-}
-
-const initialState: object = {
-  cartSlice: { cartPage: { my_cart }, shipping: shippingAddress },
-  settingSlice: { show_search_bar: true }
-};
+const apiMiddleware = [dashboardApi.middleware, placeOrderApi.middleware, allRecordsApi.middleware];
 
 const store = configureStore({
   reducer: reducer,
-  middleware: getDefaultMiddleware =>
-    getDefaultMiddleware({ serializableCheck: false }).concat([
-      dashboardApi.middleware,
-      placeOrderApi.middleware,
-      allRecordsApi.middleware
-    ]),
-  preloadedState: initialState
+  middleware: getDefaultMiddleware => getDefaultMiddleware({ serializableCheck: false }).concat(apiMiddleware)
 });
 
 export default store;

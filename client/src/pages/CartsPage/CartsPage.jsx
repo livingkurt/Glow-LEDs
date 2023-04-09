@@ -18,7 +18,7 @@ const CartsPage = () => {
 
   const column_defs = useMemo(
     () => [
-      { title: "User", display: row => (row.user ? `${row.user.first_name} ${row.user.last_name}` : "Guest") },
+      { title: "User", display: row => (row?.user ? `${row?.user.first_name} ${row?.user.last_name}` : "Guest") },
       { title: "Cart Items", display: row => row.cartItems.map(item => item.name).join(", ") },
       {
         title: "Actions",

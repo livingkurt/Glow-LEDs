@@ -3,11 +3,29 @@
 import { createSlice } from "@reduxjs/toolkit";
 import * as API from "../api";
 
+let my_cart: any;
+const cart_string: any = localStorage.getItem("my_cart");
+
+if (cart_string) {
+  my_cart = JSON.parse(cart_string);
+} else {
+  my_cart = { cartItems: [] };
+}
+
+let shippingAddress: any;
+const shipping_string: any = sessionStorage.getItem("shippingAddress");
+
+if (shipping_string) {
+  shippingAddress = JSON.parse(shipping_string);
+} else {
+  shippingAddress = {};
+}
+
 const cartSlice = createSlice({
   name: "carts",
   initialState: {
     loading: false,
-    my_cart: { cartItems: [] },
+    my_cart: { ...my_cart },
     carts: [],
     cart: {
       cartItems: []
@@ -16,6 +34,7 @@ const cartSlice = createSlice({
     error: {},
     success: false,
     shipping: {
+      ...shippingAddress,
       first_name: "",
       last_name: "",
       address_1: "",

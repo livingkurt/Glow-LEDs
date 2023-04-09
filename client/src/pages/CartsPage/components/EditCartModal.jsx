@@ -314,7 +314,7 @@ const EditCartModal = () => {
       <GLModal
         isOpen={edit_cart_modal}
         onConfirm={() => {
-          dispatch(API.saveCart({ ...cart, user: user._id ? user._id : null }));
+          dispatch(API.saveCart({ ...cart, user: user?._id ? user?._id : null }));
         }}
         onCancel={() => {
           dispatch(set_edit_cart_modal(false));
