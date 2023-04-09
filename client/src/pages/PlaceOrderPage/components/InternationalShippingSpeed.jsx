@@ -16,8 +16,6 @@ const InternationalShippingSpeed = ({ rates, service, choose_shipping_rate }) =>
       }
     })
     .filter(rate => rate.carrier === "USPS" || rate.carrier === "FedEx");
-  // .slice(0, 2);
-  console.log({ sortedRates });
 
   const determine_service = rate => {
     if (rate.est_delivery_days) {

@@ -16,14 +16,15 @@ export const listOrders = createAsyncThunk("orders/listOrders", async (query: an
   } catch (error) {}
 });
 
-export const listMyOrders = createAsyncThunk("orders/listMyOrders", async (order_id: any, thunkApi: any) => {
+export const listMyOrders = createAsyncThunk("orders/listMyOrders", async (user_id: any, thunkApi: any) => {
   try {
     const {
       userSlice: {
         userPage: { current_user }
       }
     } = thunkApi.getState();
-    const { data } = await axios.get(`/api/orders/${order_id}/user`, headers(current_user));
+    const { data } = await axios.get(`/api/orders/${user_id}/user`, headers(current_user));
+    console.log({ data });
     return data;
   } catch (error) {}
 });

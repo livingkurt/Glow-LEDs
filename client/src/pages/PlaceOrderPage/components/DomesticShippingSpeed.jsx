@@ -16,7 +16,6 @@ const DomesticShippingSpeed = ({ rates, service, name, time, choose_shipping_rat
   });
 
   const lowestRate = sortedRates[0];
-  console.log({ lowestRate });
 
   return (
     <div className=" mv-1rem jc-b  ai-c">

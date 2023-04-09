@@ -57,8 +57,6 @@ const DashboardPage = props => {
   const monthy_revenue = useGetMonthlyRevenueOrdersQuery({ year });
   const yearly_revenue = useGetYearlyRevenueOrdersQuery();
 
-  console.log({ affiliate_earnings_code_usage });
-
   useChangedEffect(() => {
     dispatch(listAffiliates({ active: true }));
     const dates = getMonthStartEndDates(month, parseInt(year) || parseInt(current_year));
@@ -127,7 +125,6 @@ const DashboardPage = props => {
         return { ...promo_code_usage, artist_name: affiliate.artist_name };
       })
     );
-    console.log({ affiliate_earnings });
     set_earnings(affiliate_earnings);
   };
 

@@ -5,7 +5,6 @@ dotenv.config();
 
 export default {
   findAll_tutorials_s: async (query: { search: string; sort: string; page: string; limit: string }) => {
-    console.log({ query });
     try {
       const page: any = query.page ? query.page : 1;
       const limit: any = query.limit ? query.limit : 0;

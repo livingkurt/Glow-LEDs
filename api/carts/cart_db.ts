@@ -42,7 +42,6 @@ export default {
     try {
       return await Cart.create(body);
     } catch (error) {
-      console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }

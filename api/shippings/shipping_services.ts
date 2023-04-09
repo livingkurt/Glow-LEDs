@@ -77,7 +77,6 @@ export default {
       // // Box size determined here and will output parcel_size that contains length, width and height
 
       const parcel_size = determine_parcel(order.orderItems, parcels);
-      console.log({ parcel_size });
       const parcel = new EasyPost.Parcel({
         length: parcel_size.length,
         width: parcel_size.width,
@@ -126,7 +125,6 @@ export default {
         };
       }
     } catch (error) {
-      console.log({ error: error.error.errors });
       if (error instanceof Error) {
         throw new Error(error_message || error.message);
       }

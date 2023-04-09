@@ -26,9 +26,7 @@ export default {
       } else if (sort_query === "newest") {
         sort = { _id: -1 };
       }
-      console.log({ filter, sort, limit, page });
       const users = await user_db.findAll_users_db(filter, sort, limit, page);
-      console.log({ users });
       const count = await user_db.count_users_db(filter);
       return {
         data: users,
@@ -212,7 +210,6 @@ export default {
 
   login_users_s: async (email: string, password: string) => {
     const user: any = await user_db.findByEmail_users_db(email);
-    console.log({ user });
 
     if (!user) {
       throw new Error("Email Not Found");

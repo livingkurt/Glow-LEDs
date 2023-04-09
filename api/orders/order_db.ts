@@ -4,7 +4,6 @@ import { Affiliate } from "../affiliates";
 
 export default {
   findAll_orders_db: async (filter: any, sort: unknown, limit: string, page: string) => {
-    console.log({ filter, sort, limit, page });
     try {
       return await Order.find(filter)
         .sort(sort)
@@ -617,7 +616,6 @@ export default {
     return final_result;
   },
   get_range_affiliate_earnings_code_usage_orders_db: async (start_date: string, end_date: string) => {
-    console.log({ start_date, end_date });
     try {
       const affiliatesEarnings = await Affiliate.aggregate([
         {
@@ -688,7 +686,6 @@ export default {
           }
         }
       ]);
-      console.log({ affiliatesEarnings });
 
       return affiliatesEarnings;
     } catch (error) {

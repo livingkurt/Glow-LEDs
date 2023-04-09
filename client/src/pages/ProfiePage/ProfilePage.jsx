@@ -37,11 +37,11 @@ const ProfilePage = () => {
   useEffect(() => {
     let cleanup = true;
     if (cleanup) {
-      console.log("Hello");
       dispatch(API.detailsUser(id || current_user._id));
       dispatch(API.listMyOrders(id || current_user._id));
-      if (user?.affiliate) {
+      if (user.is_affiliate) {
         dispatch(API.listPromos({ affiliate: user?.affiliate._id }));
+        dispatch(API.listPaychecks({ affiliate: user?.affiliate._id || current_user.affiliate }));
       } else {
         dispatch(API.listPaychecks({ user: id || current_user._id }));
       }
