@@ -37,7 +37,9 @@ const CartPage = props => {
   };
 
   const determine_wholesale_proceed = () => {
-    return current_user?.isWholesaler && determine_total(cartItems, current_user?.isWholesaler) > current_user.minimum_order_amount;
+    return (
+      current_user?.isWholesaler && determine_total(cartItems, current_user?.isWholesaler) > current_user?.wholesaler?.minimum_order_amount
+    );
   };
 
   return (

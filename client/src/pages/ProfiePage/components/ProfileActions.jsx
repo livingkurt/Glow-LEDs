@@ -7,6 +7,7 @@ import { open_edit_user_modal } from "../../../slices/userSlice";
 import { open_edit_affiliate_modal } from "../../../slices/affiliateSlice";
 import { EditAffiliateModal } from "../../AffiliatesPage/components";
 import { open_edit_wholesaler_modal } from "../../../slices/wholesalerSlice";
+import { EditWholesalerModal } from "../../WholesalersPage/components";
 
 export const ProfileActions = () => {
   let { id } = useParams();
@@ -67,35 +68,33 @@ export const ProfileActions = () => {
         </div>
       )}
 
-      <div className="ml-5px">
-        {user.is_affiliated && (
-          <div>
-            <GLButton
-              variant="primary"
-              onClick={() => {
-                dispatch(open_edit_affiliate_modal(user.affiliate));
-              }}
-            >
-              Edit Affiliate Profile
-            </GLButton>
-          </div>
-        )}{" "}
-      </div>
-      <div className="ml-5px">
-        {user.isWholesaler && (
-          <div>
-            <GLButton
-              variant="primary"
-              onClick={() => {
-                dispatch(open_edit_wholesaler_modal(user.isWholesaler));
-              }}
-            >
-              Edit Wholesaler Profile
-            </GLButton>
-          </div>
-        )}{" "}
-      </div>
+      {user.is_affiliated && (
+        <div>
+          <GLButton
+            variant="primary"
+            onClick={() => {
+              dispatch(open_edit_affiliate_modal(user.affiliate));
+            }}
+          >
+            Edit Affiliate Profile
+          </GLButton>
+        </div>
+      )}
+
+      {user.isWholesaler && (
+        <div>
+          <GLButton
+            variant="primary"
+            onClick={() => {
+              dispatch(open_edit_wholesaler_modal(user.wholesaler));
+            }}
+          >
+            Edit Wholesaler Profile
+          </GLButton>
+        </div>
+      )}
       <EditAffiliateModal />
+      <EditWholesalerModal />
     </div>
   );
 };

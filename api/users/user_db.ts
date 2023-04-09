@@ -5,6 +5,7 @@ require("dotenv");
 
 export default {
   findAll_users_db: async (filter: any, sort: unknown, limit: string, page: string) => {
+    console.log({ filter, sort, limit, page });
     try {
       return await User.find(filter)
         .sort(sort)
@@ -24,6 +25,7 @@ export default {
         .limit(parseInt(limit))
         .skip(Math.max(parseInt(page) - 1, 0) * parseInt(limit));
     } catch (error) {
+      console.log({ findAll_users_db: error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -75,7 +77,7 @@ export default {
   },
   findByEmail_users_db: async (email: string) => {
     try {
-      return await User.findOne({ email });
+      return await User.findOne({ email }).populate("wholesaler");
     } catch (error) {}
   },
   create_users_db: async (user: any) => {

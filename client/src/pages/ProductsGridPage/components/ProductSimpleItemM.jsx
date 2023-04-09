@@ -51,7 +51,7 @@ const ProductSmallScreen = props => {
                 <div className="">
                   {sale_price_switch({
                     product: props.product,
-                    wholesaler: current_user?.isWholesaler
+                    isWholesaler: current_user?.isWholesaler
                   })}
                 </div>
               )}

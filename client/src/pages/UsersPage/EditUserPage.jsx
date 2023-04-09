@@ -41,8 +41,7 @@ const EditUserPage = props => {
     email_subscription,
     stripe_connect_id,
     weekly_wage,
-    wholesaler,
-    minimum_order_amount,
+    isWholesaler,
     guest,
     international
   } = user;
@@ -70,8 +69,7 @@ const EditUserPage = props => {
         shipping,
         stripe_connect_id,
         weekly_wage,
-        wholesaler,
-        minimum_order_amount,
+        isWholesaler,
         international,
         guest
       })
@@ -356,26 +354,17 @@ const EditUserPage = props => {
                             <div>Loading...</div>
                           ) : (
                             <li>
-                              <label htmlFor="wholesaler">Wholesaler</label>
+                              <label htmlFor="isWholesaler">Is Wholesaler</label>
                               <input
                                 type="checkbox"
-                                name="wholesaler"
-                                defaultChecked={wholesaler}
-                                id="wholesaler"
+                                name="isWholesaler"
+                                defaultChecked={isWholesaler}
+                                id="isWholesaler"
                                 onChange={e => dispatch(set_user({ [e.target.name]: e.target.checked }))}
                               />
                             </li>
                           )}
-                          <li>
-                            <label htmlFor="minimum_order_amount">Minimum Order Amount</label>
-                            <input
-                              type="text"
-                              name="minimum_order_amount"
-                              value={minimum_order_amount}
-                              id="minimum_order_amount"
-                              onChange={e => dispatch(set_user({ [e.target.name]: e.target.value }))}
-                            />
-                          </li>
+
                           {loading_checkboxes ? (
                             <div>Loading...</div>
                           ) : (

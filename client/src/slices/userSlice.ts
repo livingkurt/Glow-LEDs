@@ -62,7 +62,6 @@ const userSlice = createSlice({
   reducers: {
     set_user: (state, { payload }) => {
       const updated_user = payload;
-      console.log({ updated_user });
       return {
         ...state,
         user: { ...state.user, ...updated_user }
@@ -126,7 +125,6 @@ const userSlice = createSlice({
         stripe_connect_id: "",
         weekly_wage: 0,
         isWholesaler: false,
-        minimum_order_amount: "",
         guest: false,
         international: false
       };

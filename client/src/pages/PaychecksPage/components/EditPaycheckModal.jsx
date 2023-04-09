@@ -14,7 +14,7 @@ const EditPaycheckModal = () => {
   const affiliateSlice = useSelector(state => state.affiliateSlice);
   const { affiliates, loading: loading_affiliates } = affiliateSlice;
 
-  const userSlice = useSelector(state => state.userSlice);
+  const userSlice = useSelector(state => state.userSlice.userPage);
   const { users, loading: loading_users } = userSlice;
 
   const teamSlice = useSelector(state => state.teamSlice);

@@ -7,7 +7,7 @@ dotenv.config();
 export default {
   findAll_wholesalers_s: async (query: { page: string; search: string; sort: any; limit: string; filters: any }) => {
     try {
-      const sort_options = ["user", "company", "minimum_order_amount"];
+      const sort_options = ["company", "minimum_order_amount", "active"];
       const { filter, sort, limit, page } = getFilteredData({ query, sort_options, search_name: "company" });
       const wholesalers = await wholesaler_db.findAll_wholesalers_db(filter, sort, limit, page);
       const count = await wholesaler_db.count_wholesalers_db(filter);

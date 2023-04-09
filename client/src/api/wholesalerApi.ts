@@ -37,7 +37,7 @@ export const listWholesalers = createAsyncThunk("wholesalers/listWholesalers", a
         userPage: { current_user }
       }
     } = thunkApi.getState();
-    const { data } = await axios.get("/api/wholesalers?" + create_query(query), headers(current_user));
+    const { data } = await axios.get(`/api/wholesalers?${create_query(query)}`, headers(current_user));
     return data;
   } catch (error) {}
 });

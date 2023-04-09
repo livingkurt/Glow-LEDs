@@ -421,7 +421,7 @@ const ProductOptions = ({
       return choice(0);
     }
   };
-
+  console.log({ current_user });
   return (
     <ul>
       <li className="jc-b ai-c">

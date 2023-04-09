@@ -89,7 +89,9 @@ const Cart = props => {
   };
 
   const determine_wholesale_proceed = () => {
-    return current_user?.isWholesaler && determine_total(cartItems, current_user?.isWholesaler) > current_user.minimum_order_amount;
+    return (
+      current_user?.isWholesaler && determine_total(cartItems, current_user?.isWholesaler) > current_user?.wholesaler?.minimum_order_amount
+    );
   };
 
   const top_categories_grid = () => {
@@ -313,7 +315,7 @@ const Cart = props => {
                             product: item,
                             cartItem: true,
                             background: "light",
-                            wholesaler: current_user?.isWholesaler
+                            isWholesaler: current_user?.isWholesaler
                           })}
                         </div>
                       </div>

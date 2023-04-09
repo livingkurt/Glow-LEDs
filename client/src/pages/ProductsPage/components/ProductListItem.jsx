@@ -198,7 +198,7 @@ const ProductListItem = props => {
         <label className="product-price w-500px">
           {sale_price_switch({
             product,
-            wholesaler: current_user?.isWholesaler
+            isWholesaler: current_user?.isWholesaler
           })}
           }
         </label>

@@ -451,7 +451,7 @@ const RelatedProductsSlideshow = ({
                   </Link>
 
                   <label className="product-price mv-3px">
-                    {sale_price_switch({ product, cartItem: false, wholesaler: current_user?.isWholesaler })}
+                    {sale_price_switch({ product, cartItem: false, isWholesaler: current_user?.isWholesaler })}
                   </label>
 
                   {product.rating ? (

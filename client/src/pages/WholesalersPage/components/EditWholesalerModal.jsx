@@ -4,34 +4,36 @@ import GLModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiion
 import { set_edit_wholesaler_modal, set_wholesaler } from "../../../slices/wholesalerSlice";
 import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
-import { snake_case } from "../../../utils/helper_functions";
+import { fullName } from "../../UsersPage/usersHelpers";
 
 const EditWholesalerModal = () => {
   const dispatch = useDispatch();
   const wholesalersSlice = useSelector(state => state.wholesalerSlice.wholesalerPage);
   const { edit_wholesaler_modal, wholesaler, loading } = wholesalersSlice;
-  const { user, title } = wholesaler;
 
   const userSlice = useSelector(state => state.userSlice.userPage);
-  const { users, loading: loading_users } = userSlice;
+  const { users, loading: loading_users, user, current_user } = userSlice;
 
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(API.listUsers());
+      if (current_user?.isAdmin) {
+        dispatch(API.listUsers());
+      }
     }
     return () => {
       clean = false;
     };
-  }, [dispatch, wholesaler._id]);
+  }, [current_user?.isAdmin, dispatch]);
 
   const formFields = {
     user: {
       type: "autocomplete",
       label: "Users",
-      options: users,
+      options: users.filter(user => fullName(user)),
       labelProp: "user",
-      getOptionLabel: option => `${option.first_name} ${option.last_name}`
+      getOptionLabel: option => `${option.first_name} ${option.last_name}`,
+      permissions: ["admin"]
     },
     company: {
       type: "text",
@@ -39,11 +41,13 @@ const EditWholesalerModal = () => {
     },
     minimum_order_amount: {
       type: "number",
-      label: "Minimum Order Amount"
+      label: "Minimum Order Amount",
+      permissions: ["admin"]
     },
     active: {
       type: "checkbox",
-      label: "Active"
+      label: "Active",
+      permissions: ["admin"]
     }
   };
 
@@ -52,8 +56,10 @@ const EditWholesalerModal = () => {
       <GLModal
         isOpen={edit_wholesaler_modal}
         onConfirm={() => {
-          dispatch(API.saveWholesaler({ ...wholesaler, user: user._id }));
-          dispatch(API.listAffiliates({ active: true }));
+          dispatch(API.saveWholesaler({ ...wholesaler, user: user?._id || wholesaler?.user?._id || current_user?._id }));
+          if (current_user?.isAdmin) {
+            dispatch(API.listUsers());
+          }
         }}
         onCancel={() => {
           dispatch(set_edit_wholesaler_modal(false));

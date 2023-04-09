@@ -7,8 +7,8 @@ import Rating from "../../../shared/GlowLEDsComponents/GLRating/Rating";
 import { useSelector } from "react-redux";
 
 const ProductSelection = ({ product, name, price, sale_price, previous_price, facts, wholesale_price }) => {
-  const user = useSelector(state => state.userSlice);
-  const { current_user } = user;
+  const userSlice = useSelector(state => state.userSlice.userPage);
+  const { current_user } = userSlice;
   return (
     <div>
       <h1 className="product_title_side lh-50px fs-25px mv-0px">{name}</h1>

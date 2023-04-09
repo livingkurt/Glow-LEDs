@@ -7,7 +7,33 @@ const wholesalersSlice = createSlice({
     loading: false,
     wholesalers: [],
     wholesaler: {
-      user: "",
+      user: {
+        first_name: "",
+        last_name: "",
+        email: "",
+        is_affiliated: false,
+        is_employee: false,
+        affiliate: {},
+        isVerified: false,
+        isAdmin: false,
+        shipping: {
+          first_name: "",
+          last_name: "",
+          address_1: "",
+          address_2: "",
+          city: "",
+          state: "",
+          postalCode: "",
+          international: false,
+          country: ""
+        },
+        email_subscription: false,
+        stripe_connect_id: "",
+        weekly_wage: 0,
+        isWholesaler: false,
+        guest: false,
+        international: false
+      },
       company: "",
       minimum_order_amount: "",
       active: false

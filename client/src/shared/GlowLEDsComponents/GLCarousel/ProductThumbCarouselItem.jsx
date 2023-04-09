@@ -66,7 +66,7 @@ const ProductThumbCarouselItem = props => {
                   {sale_price_switch({
                     product: props.product,
                     cartItem: props.product.product_options,
-                    wholesaler: current_user?.isWholesaler
+                    isWholesaler: current_user?.isWholesaler
                   })}
                 </label>
               )}

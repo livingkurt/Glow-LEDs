@@ -224,7 +224,7 @@ const CarouselItem = props => {
                   <label className="product-price">
                     {sale_price_switch({
                       product,
-                      wholesaler: current_user?.isWholesaler
+                      isWholesaler: current_user?.isWholesaler
                     })}
                   </label>
                 )}

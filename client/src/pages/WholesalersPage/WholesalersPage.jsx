@@ -9,6 +9,8 @@ import { EditWholesalerModal } from "./components";
 import * as API from "../../api";
 import { Button } from "@mui/material";
 import { getWholesalers } from "../../api";
+import { fullName } from "../UsersPage/usersHelpers";
+import { determine_color } from "./wholesalerHelper";
 
 const WholesalersPage = () => {
   const wholesalerSlice = useSelector(state => state.wholesalerSlice.wholesalerPage);
@@ -37,11 +39,8 @@ const WholesalersPage = () => {
           </GLButton>
         )
       },
-      { title: "Title", display: "title" },
-      { title: "Video", display: "video" },
-      { title: "Level", display: "level" },
-      { title: "Order", display: "order" },
-      { title: "Categorys", display: "categorys" },
+      { title: "Company", display: "company" },
+      { title: "Minimum Order Amount", display: "minimum_order_amount" },
       {
         title: "Actions",
         display: wholesaler => (
@@ -55,7 +54,7 @@ const WholesalersPage = () => {
             >
               <i className="fas fa-edit" />
             </GLButton>
-            <GLButton variant="icon" onClick={() => dispatch(API.deleteWholesaler(wholesaler.pathname))} aria-label="Delete">
+            <GLButton variant="icon" onClick={() => dispatch(API.deleteWholesaler(wholesaler._id))} aria-label="Delete">
               <i className="fas fa-trash-alt" />
             </GLButton>
           </div>
@@ -80,6 +79,7 @@ const WholesalersPage = () => {
         namespaceScope="wholesalerSlice"
         namespace="wholesalerTable"
         columnDefs={column_defs}
+        determine_color={determine_color}
         loading={loading}
         enableRowSelect={true}
         titleActions={

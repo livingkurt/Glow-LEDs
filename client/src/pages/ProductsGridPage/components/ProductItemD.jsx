@@ -146,7 +146,7 @@ const ProductItemD = props => {
               {sale_price_switch({
                 product: props.product,
                 cartItem: false,
-                wholesaler: current_user?.isWholesaler
+                isWholesaler: current_user?.isWholesaler
               })}
             </label>
 
