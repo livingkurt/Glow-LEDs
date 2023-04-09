@@ -184,8 +184,8 @@ const PlaceOrderPage = props => {
   //   39 Red Admiral Ct Apartment 39
   // Little Paxton, England PE19 6BU
   // United Kingdom
-  const get_shipping_rates = async verfify_ship => {
-    const verify = shipping.international ? false : verfify_ship;
+  const get_shipping_rates = async verify_ship => {
+    const verify = shipping.international ? false : verify_ship;
     const request = await API_Shipping.get_shipping_rates(
       {
         orderItems: cartItems,

@@ -94,12 +94,12 @@ const ProductDetails = ({ product, manuals, description, included_items, pathnam
                         height: "50px",
                         color: "#4d5061"
                       }}
-                      key={size.size}
+                      key={size?.size}
                       className=""
                     >
-                      <th style={{ width: "10px" }}>{size.size}</th>
-                      <th style={{ width: "10px" }}>{size.hand_length}"</th>
-                      <th style={{ width: "10px" }}>{size.hand_width}"</th>
+                      <th style={{ width: "10px" }}>{size?.size}</th>
+                      <th style={{ width: "10px" }}>{size?.hand_length}"</th>
+                      <th style={{ width: "10px" }}>{size?.hand_width}"</th>
                     </tr>
                   ))}
                 </tbody>

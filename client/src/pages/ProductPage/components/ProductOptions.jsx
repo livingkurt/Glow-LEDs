@@ -352,11 +352,11 @@ const ProductOptions = ({
             </li>
             <li className="mb-10px jc-b w-100per">
               <div className="title_font"> Hand Length:</div>{" "}
-              <div className="title_font">{size && sizes_short(width, product.name)[size].hand_length} inches</div>
+              <div className="title_font">{size && sizes_short(width, product.name)[size]?.hand_length} inches</div>
             </li>
             <li className="jc-b w-100per mb-10px">
               <div className="title_font"> Hand Width:</div>{" "}
-              <div className="title_font">{size && sizes_short(width, product.name)[size].hand_width} inches</div>
+              <div className="title_font">{size && sizes_short(width, product.name)[size]?.hand_width} inches</div>
             </li>
             {/* <hr className="w-50per jc-c " /> */}
             <li className="jc-c ta-c w-100oer mt-20px lh-30px">Worried about the fit? We've got your back with our:</li>
