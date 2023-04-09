@@ -22,7 +22,7 @@ export default {
       const count = await cart_db.count_carts_db(filter);
       return {
         data: carts,
-        total_count: Math.ceil(count / parseInt(limit)),
+        total_count: count,
         currentPage: page
       };
     } catch (error) {
