@@ -11,7 +11,12 @@ import { GLButton } from "../../../shared/GlowLEDsComponents";
 import ReactTooltip from "react-tooltip";
 import GLTooltip from "../../../shared/GlowLEDsComponents/GLTooltip/GLTooltip";
 import Rating from "../../../shared/GlowLEDsComponents/GLRating/Rating";
-import { determine_sampler_pack_name, determine_sampler_pack_pathname, determine_sizing_quick_look } from "../productHelpers";
+import {
+  determine_sampler,
+  determine_sampler_pack_name,
+  determine_sampler_pack_pathname,
+  determine_sizing_quick_look
+} from "../productHelpers";
 import { useSelector } from "react-redux";
 
 const ProductOptions = ({
@@ -358,21 +363,24 @@ const ProductOptions = ({
               <div className="title_font"> Hand Width:</div>{" "}
               <div className="title_font">{size && sizes_short(width, product.name)[size]?.hand_width} inches</div>
             </li>
-            {/* <hr className="w-50per jc-c " /> */}
-            <li className="jc-c ta-c w-100oer mt-20px lh-30px">Worried about the fit? We've got your back with our:</li>
-            <li>
-              {product.category === "gloves" &&
-                !(
-                  product.name.includes("Supreme Gloves V1 Sizing Sampler Pack") ||
-                  product.name.includes("Supreme Gloves V2 Sizing Sampler Pack")
-                ) && (
-                  <div className="w-100per jc-c">
-                    <Link to={`/collections/all/products/${determine_sampler_pack_pathname(product.name)}`}>
-                      <GLButton variant="primary">{determine_sampler_pack_name(product.name)}</GLButton>
-                    </Link>
-                  </div>
-                )}
-            </li>
+            {determine_sampler(product?.name) && (
+              <>
+                <li className="jc-c ta-c w-100oer mt-20px lh-30px">Worried about the fit? We've got your back with our:</li>
+                <li>
+                  {product.category === "gloves" &&
+                    !(
+                      product.name.includes("Supreme Gloves V1 Sizing Sampler Pack") ||
+                      product.name.includes("Supreme Gloves V2 Sizing Sampler Pack")
+                    ) && (
+                      <div className="w-100per jc-c">
+                        <Link to={`/collections/all/products/${determine_sampler_pack_pathname(product.name)}`}>
+                          <GLButton variant="primary">{determine_sampler_pack_name(product.name)}</GLButton>
+                        </Link>
+                      </div>
+                    )}
+                </li>
+              </>
+            )}
             <hr />
           </ul>
         )}

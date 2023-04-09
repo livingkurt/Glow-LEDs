@@ -28,10 +28,10 @@ export const determine_sampler_pack_name = name => {
 };
 export const determine_sampler_pack_pathname = name => {
   if (name.includes("Supreme Gloves V1")) {
-    return "supremes_gloves_v1_sizing_sampler_pack";
+    return "supreme_gloves_v1_sizing_sampler_pack";
   }
   if (name.includes("Supreme Gloves V2")) {
-    return "supremes_gloves_v2_sizing_sampler_pack";
+    return "supreme_gloves_v2_sizing_sampler_pack";
   }
 };
 
@@ -42,6 +42,11 @@ export const determine_sizing_quick_look = name => {
     name === "Supreme Gloves V2" ||
     name === "Supreme Gloves V1"
   ) {
+    return true;
+  }
+};
+export const determine_sampler = name => {
+  if (name === "Refresh Pack V2 (6 Pairs Supreme Gloves V2 + 120 Batteries)" || name === "Supreme Gloves V2") {
     return true;
   }
 };
