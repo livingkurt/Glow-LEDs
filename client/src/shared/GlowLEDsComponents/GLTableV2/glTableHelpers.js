@@ -173,3 +173,16 @@ export const pipe =
   (...fns) =>
   x =>
     fns.reduce((v, f) => f(v), x);
+
+export const tableColors = {
+  inactive: "#6d3e3e",
+  active: "#3e4c6d",
+  waiting: "#636363",
+  completed: "#333333",
+  paused: "#33323e",
+  alt_color_1: "#4b7188",
+  alt_color_2: "#6f5f7d",
+  alt_color_3: "#874d72",
+  alt_color_4: "#31887c",
+  alt_color_5: "#a9a9a9"
+};
