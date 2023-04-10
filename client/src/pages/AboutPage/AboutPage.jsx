@@ -190,7 +190,7 @@ const AboutPage = () => {
             </ReadMore>
           </div>
           <h2 className="about_names ta-c fs-25px" style={{ marginTop: 0, marginBottom: "25px" }}>
-            Welcome to the Glow LEDs Family! Can't to meet you all!
+            Welcome to the Glow LEDs Family! Can't wait to meet you all!
           </h2>
           <div
             style={{
