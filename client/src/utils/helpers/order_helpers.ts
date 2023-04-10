@@ -31,7 +31,7 @@ export const determine_color = (order: any) => {
     if (order.isPaid) {
       result = colors[1].color;
     }
-    if (order.shipping.shipping_rate && order.shipping.shipping_rate.service !== "First") {
+    if (!(order.shipping.shipping_rate.service === "First" || order.shipping.shipping_rate.service === "ParcelSelect")) {
       result = colors[6].color;
     }
     if (order.shipping.shipping_label) {

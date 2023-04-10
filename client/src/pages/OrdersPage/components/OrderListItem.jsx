@@ -319,7 +319,8 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
             ) : (
               order.shipping.shipping_rate && (
                 <p className="title_font ai-c fs-30px">
-                  {order.shipping.shipping_rate.service !== "First" && order.shipping.shipping_rate.service}{" "}
+                  {!(order.shipping.shipping_rate.service === "First" || order.shipping.shipping_rate.service === "ParcelSelect") &&
+                    order.shipping.shipping_rate.service}{" "}
                 </p>
               )
             )}

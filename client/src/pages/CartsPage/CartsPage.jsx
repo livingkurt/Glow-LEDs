@@ -18,6 +18,25 @@ const CartsPage = () => {
 
   const column_defs = useMemo(
     () => [
+      {
+        title: "Active",
+        display: cart => (
+          <GLButton
+            variant="icon"
+            onClick={() => {
+              dispatch(
+                API.saveCart({
+                  ...cart,
+                  active: cart.active ? false : true
+                })
+              );
+            }}
+            aria-label={cart.active ? "deactivate" : "activate"}
+          >
+            {cart.active ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
+          </GLButton>
+        )
+      },
       { title: "User", display: row => (row?.user ? `${row?.user.first_name} ${row?.user.last_name}` : "Guest") },
       { title: "Cart Items", display: row => row.cartItems.map(item => item.name).join(", ") },
       {
