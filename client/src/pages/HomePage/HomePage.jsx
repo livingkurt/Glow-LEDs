@@ -562,11 +562,19 @@ const HomePage = props => {
                     </div>
                   </div>
                   <div className="jc-c">
-                    <Link to={home_page.link}>
-                      <GLButton variant="primary" className="bob">
-                        {home_page.button}
-                      </GLButton>
-                    </Link>
+                    {home_page?.link[0] === "/" ? (
+                      <Link to={home_page.link}>
+                        <GLButton variant="primary" className="bob">
+                          {home_page.button}
+                        </GLButton>
+                      </Link>
+                    ) : (
+                      <a href={home_page.link} target="_blank" rel="noreferrer">
+                        <GLButton variant="primary" className="bob">
+                          {home_page.button}
+                        </GLButton>
+                      </a>
+                    )}
                   </div>
                 </div>
               );
