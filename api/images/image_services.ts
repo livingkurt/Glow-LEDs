@@ -1,6 +1,9 @@
+import { promisify } from "util";
 import { image_db } from "../images";
 import { getFilteredData } from "./image_helper";
 import { ImgurClient } from "imgur";
+import path from "path";
+import appRoot from "app-root-path";
 const fs = require("fs");
 const client = new ImgurClient({ clientId: process.env.IMGUR_ClIENT_ID });
 
@@ -33,19 +36,17 @@ export default {
   },
   upload_images_s: async (body: any, files: any) => {
     const { albumName } = body;
+    const deleteFile = promisify(fs.unlink);
 
-    console.log({ albumName, files });
     try {
       const uploadedImageLinks = [];
       const album: any = await client.createAlbum(albumName);
-      console.log({ album });
       for (const image of files) {
         try {
           const upload: any = await client.upload({
             image: fs.createReadStream(image.path),
             album: album.deletehash // optional
           });
-          console.log({ upload });
           uploadedImageLinks.push(upload.data.link);
         } catch (error) {
           if (error instanceof Error) {
@@ -53,14 +54,17 @@ export default {
           }
         }
       }
-      console.log({ uploadedImageLinks });
       // Create a image record in an array
-      await Promise.all(
+      const images = await Promise.all(
         uploadedImageLinks.map(async (link: any) => {
           return await image_db.create_images_db({ link, album: albumName });
         })
       );
-      return uploadedImageLinks;
+      // Delete all files in uploads directory
+      const uploadsDir = path.join(appRoot.path, "uploads");
+      const uploadedFiles = await promisify(fs.readdir)(uploadsDir);
+      await Promise.all(uploadedFiles.map((file: string) => deleteFile(path.join(uploadsDir, file))));
+      return images;
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
