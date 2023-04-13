@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Box, Button, Container, Grid, Paper, TextField, Typography } from "@mui/material";
+import { Box, Button, Container, Grid, TextField } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
-// Set up custom styles for the Paper component
 const StyledBox = styled(Box)({
   padding: "16px",
   textAlign: "center"

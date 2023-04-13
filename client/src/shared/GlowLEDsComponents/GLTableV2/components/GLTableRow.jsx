@@ -4,7 +4,7 @@ import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import Checkbox from "@mui/material/Checkbox";
 import { useDispatch } from "react-redux";
-import { determineHover, rowCheckboxClicked } from "../glTableHelpers";
+import { determineHover, rowCheckboxClicked, tableColors } from "../glTableHelpers";
 import { onExpandRow, selectRow } from "../actions/actions";
 import { darken, lighten } from "@mui/material";
 
@@ -62,14 +62,14 @@ const GLTableRow = ({
         aria-checked={enableRowSelect && isItemSelected}
         tabIndex={-1}
         sx={{
-          backgroundColor: determine_color ? determine_color(row) : "white", // Set background color based on attribute value
+          backgroundColor: determine_color ? determine_color(row) : tableColors.active, // Set background color based on attribute value
           "&:hover": {
-            backgroundColor: `${determine_color ? darken(determine_color(row), 0.3) : "white"} !important`
+            backgroundColor: `${determine_color ? darken(determine_color(row), 0.3) : darken(tableColors.active, 0.3)} !important`
           },
           "&.Mui-selected": {
-            backgroundColor: determine_color ? darken(determine_color(row), 0.3) : "white",
+            backgroundColor: `${determine_color ? darken(determine_color(row), 0.3) : darken(tableColors.active, 0.3)} !important`,
             "&:hover": {
-              backgroundColor: `${determine_color ? darken(determine_color(row), 0.5) : "white"} !important`
+              backgroundColor: `${determine_color ? darken(determine_color(row), 0.5) : darken(tableColors.active, 0.3)} !important`
             }
           }
         }}
@@ -119,7 +119,7 @@ const GLTableRow = ({
               data-test={`${namespace}-cell`}
               onClick={column.nonSelectable ? () => {} : onCellClick}
               sx={{
-                color: determine_color ? "white" : ""
+                color: "white"
               }}
             >
               {value}

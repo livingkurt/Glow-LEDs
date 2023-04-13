@@ -9,14 +9,12 @@ import { EditImageModal } from "./components";
 import * as API from "../../api";
 import { Button } from "@mui/material";
 import { getImages } from "../../api";
-import { determine_color } from "./imagesHelpers";
 import { format_date } from "../../utils/helper_functions";
 import UploadImageModal from "./components/UploadImageModal";
 
 const ImagesPage = () => {
   const imageSlice = useSelector(state => state.imageSlice.imagePage);
   const { message, loading, remoteVersionRequirement } = imageSlice;
-  const date = new Date();
   const dispatch = useDispatch();
 
   const column_defs = useMemo(
@@ -67,7 +65,6 @@ const ImagesPage = () => {
       <GLTableV2
         remoteApi={remoteApi}
         remoteVersionRequirement={remoteVersionRequirement}
-        determine_color={determine_color}
         tableName={"Images"}
         namespaceScope="imageSlice"
         namespace="imageTable"
