@@ -14,7 +14,7 @@ const defaultState = {
   filters: {},
   filteredRows: [],
   visibleRows: [],
-  page: 1,
+  page: 0,
   pageSize: 10,
   search: "",
   enableRowSelect: true,

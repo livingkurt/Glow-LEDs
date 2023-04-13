@@ -71,10 +71,11 @@ export const addRows =
 // ----------- Reorder Table -----------
 export const reorderRows =
   (namespace, { remoteReorderApi, reorderedItems, remoteVersionRequirementType }) =>
-  dispatch => {
-    console.log({ reorderedItems, remoteVersionRequirementType, remoteReorderApi });
+  (dispatch, getState) => {
+    const { page, pageSize } = getState().tutorialSlice.tutorialTable;
+    const startOrder = page * pageSize;
     const items = [...reorderedItems].map((item, index) => {
-      return { ...item, order: index };
+      return { ...item, order: startOrder + index };
     });
     dispatch({
       type: `${namespace}/${REORDER_ROWS_SUCCESS}`,
@@ -87,13 +88,6 @@ export const reorderRows =
       // });
     });
   };
-// ----------- Clear Table -----------
-export const clearTable = namespace => dispatch => {
-  dispatch({
-    type: `${namespace}/${CLEAR_TABLE}`,
-    payload: {}
-  });
-};
 
 // ----------- Search -----------
 export const applySearch = (namespace, search) => dispatch => {

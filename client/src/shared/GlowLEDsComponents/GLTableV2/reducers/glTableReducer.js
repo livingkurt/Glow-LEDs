@@ -53,13 +53,15 @@ const reducer =
       }
       case `${namespace}/${REORDER_ROWS_SUCCESS}`: {
         const { items } = action.payload;
+        const startOrder = state.page * state.pageSize;
+
         // Update the order attribute for each row
         const reorderedRows = items.map((row, index) => {
           const newRow = { ...row };
           const updatedRow = items.find(item => item._id === newRow._id);
 
           if (updatedRow) {
-            newRow.order = index;
+            newRow.order = startOrder + index;
           }
 
           return newRow;
