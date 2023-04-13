@@ -1,38 +1,14 @@
 import { determine_filter } from "../../util";
 import dotenv from "dotenv";
 import tutorial_db from "./tutorial_db";
+import { getFilteredData } from "../api_helpers";
 dotenv.config();
 
 export default {
   findAll_tutorials_s: async (query: { search: string; sort: string; page: string; limit: string }) => {
     try {
-      const page: any = query.page ? query.page : 1;
-      const limit: any = query.limit ? query.limit : 0;
-      const search = query.search
-        ? {
-            title: {
-              $regex: query.search,
-              $options: "i"
-            }
-          }
-        : {};
-      const filter = determine_filter(query, search);
-
-      const sort_query = query.sort && query.sort.toLowerCase();
-      let sort: any = { _id: -1 };
-      if (sort_query === "glover name") {
-        sort = { artist_name: 1 };
-      } else if (sort_query === "facebook name") {
-        sort = { facebook_name: 1 };
-      } else if (sort_query === "sponsor") {
-        sort = { sponsor: -1 };
-      } else if (sort_query === "promoter") {
-        sort = { promoter: -1 };
-      } else if (sort_query === "active") {
-        sort = { active: -1 };
-      } else if (sort_query === "newest") {
-        sort = { _id: -1 };
-      }
+      const sort_options = ["title", "video", "level", "order"];
+      const { filter, sort, limit, page } = getFilteredData({ query, sort_options, search_name: "title", defaultSort: { order: 1 } });
 
       const tutorials = await tutorial_db.findAll_tutorials_db(filter, sort, limit, page);
       const count = await tutorial_db.count_tutorials_db(filter);
@@ -68,6 +44,28 @@ export default {
   update_tutorials_s: async (params: any, body: any) => {
     try {
       return await tutorial_db.update_tutorials_db(params, body);
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  reorder_tutorials_s: async (body: any) => {
+    try {
+      const { reorderedItems } = body;
+
+      console.log({ reorderedItems });
+
+      // Update each tutorial's order using the reorderedItems array
+      const updatePromises = reorderedItems.map(async (item: any) => {
+        await tutorial_db.update_tutorials_db({ id: item._id }, { ...item, order: item.order });
+      });
+
+      // Wait for all update operations to complete
+      await Promise.all(updatePromises);
+
+      // Send success response
+      return "Tutorials reordered successfully.";
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

@@ -21,7 +21,8 @@ import {
   FETCH_TABLE_PAGE_SUCCESS,
   FETCH_TABLE_FILTERS,
   FETCH_TABLE_FILTERS_SUCCESS,
-  REORDER_ROWS
+  REORDER_ROWS,
+  REORDER_ROWS_SUCCESS
 } from "../actions/actionTypes";
 import { calcVisibleRows } from "../glTableHelpers";
 import defaultState from "./defaultState";
@@ -50,13 +51,12 @@ const reducer =
           ...calcVisibleRows(newState)
         };
       }
-      case `${namespace}/${REORDER_ROWS}`: {
+      case `${namespace}/${REORDER_ROWS_SUCCESS}`: {
         const { items } = action.payload;
-        let reorderedRows = [...items];
-        // // Update the order attribute for each row
-        reorderedRows = reorderedRows.map((row, index) => {
+        // Update the order attribute for each row
+        const reorderedRows = items.map((row, index) => {
           const newRow = { ...row };
-          const updatedRow = reorderedRows.find(item => item._id === newRow._id);
+          const updatedRow = items.find(item => item._id === newRow._id);
 
           if (updatedRow) {
             newRow.order = index;
@@ -72,7 +72,6 @@ const reducer =
           visibleRows: reorderedRows
         };
       }
-
       case `${namespace}/${FETCH_TABLE_FILTERS}`: {
         return {
           ...state,

@@ -3,7 +3,6 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { create_query } from "../utils/helper_functions";
 import { headers } from "../utils/helpers/user_helpers";
-import pickBy from "lodash/pickBy";
 
 export const getTutorials = async ({
   search,
@@ -23,11 +22,16 @@ export const getTutorials = async ({
       params: {
         limit: pageSize,
         page: page,
-        search: search
-        // sort: sorting,
-        // filters: pickBy(filters, (val: any) => val.length > 0)
+        search: search,
+        sort: sorting,
+        filters: filters
       }
     });
+  } catch (error) {}
+};
+export const reorderTutorials = async ({ reorderedItems }: { reorderedItems: any }) => {
+  try {
+    return axios.put(`/api/tutorials/reorder`, { reorderedItems });
   } catch (error) {}
 };
 

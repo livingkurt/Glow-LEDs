@@ -107,6 +107,7 @@ const reducers = {
   tutorialSlice: combineReducers({
     tutorialPage: tutorialSlice,
     tutorialTable: glTableReducer("tutorialTable", {
+      sorting: [3, "desc"],
       searchBy: (row: any, search: string) => {
         const searchableText = row.title;
         return searchableText.toLowerCase().includes(search.toLowerCase());

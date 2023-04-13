@@ -49,6 +49,18 @@ export default {
       res.status(500).send({ error, message: "Error Updating Tutorial" });
     }
   },
+  reorder_tutorials_c: async (req: any, res: any) => {
+    const { body } = req;
+    try {
+      const tutorial = await tutorial_services.reorder_tutorials_s(body);
+      if (tutorial) {
+        return res.status(200).send(tutorial);
+      }
+      return res.status(500).send({ message: "Error Reordering Tutorial" });
+    } catch (error) {
+      res.status(500).send({ error, message: "Error Reordering Tutorial" });
+    }
+  },
   remove_tutorials_c: async (req: any, res: any) => {
     const { params } = req;
     try {

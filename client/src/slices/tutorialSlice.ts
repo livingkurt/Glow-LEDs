@@ -84,6 +84,10 @@ const tutorialsSlice = createSlice({
     open_tutorial_modal: (state, { payload }) => {
       state.tutorial_modal = true;
       state.tutorial = payload;
+    },
+    setRemoteVersionRequirement: (state, { payload }) => {
+      console.log("setRemoteVersionRequirement");
+      state.remoteVersionRequirement = Date.now();
     }
   },
   extraReducers: {
@@ -155,6 +159,7 @@ export const {
   open_create_tutorial_modal,
   open_tutorial_modal,
   close_tutorial_modal,
-  open_edit_tutorial_modal
+  open_edit_tutorial_modal,
+  setRemoteVersionRequirement
 } = tutorialsSlice.actions;
 export default tutorialsSlice.reducer;

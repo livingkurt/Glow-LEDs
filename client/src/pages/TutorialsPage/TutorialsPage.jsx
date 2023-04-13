@@ -8,7 +8,6 @@ import { open_create_tutorial_modal, open_edit_tutorial_modal } from "../../slic
 import { EditTutorialModal } from "./components";
 import * as API from "../../api";
 import { Button } from "@mui/material";
-import { getTutorials } from "../../api";
 
 const TutorialsPage = () => {
   const tutorialSlice = useSelector(state => state.tutorialSlice.tutorialPage);
@@ -65,7 +64,8 @@ const TutorialsPage = () => {
     [dispatch]
   );
 
-  const remoteApi = useCallback(options => getTutorials(options), []);
+  const remoteApi = useCallback(options => API.getTutorials(options), []);
+  const remoteReorderApi = useCallback(options => API.reorderTutorials(options), []);
 
   return (
     <div className="main_container p-20px">
@@ -75,7 +75,9 @@ const TutorialsPage = () => {
       <Notification message={message} />
       <GLTableV2
         remoteApi={remoteApi}
+        remoteReorderApi={remoteReorderApi}
         remoteVersionRequirement={remoteVersionRequirement}
+        remoteVersionRequirementType={"tutorials/setRemoteVersionRequirement"}
         tableName={"Tutorials"}
         namespaceScope="tutorialSlice"
         namespace="tutorialTable"

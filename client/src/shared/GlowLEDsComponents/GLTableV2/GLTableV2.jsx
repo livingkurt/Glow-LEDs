@@ -116,6 +116,8 @@ const GLTableV2 = ({
   containerClassNames,
   style,
   remoteVersionRequirement,
+  remoteVersionRequirementType,
+  remoteReorderApi,
   determine_color
 }) => {
   const isMounted = useRef(false);
@@ -283,8 +285,8 @@ const GLTableV2 = ({
               if (!result.destination) {
                 return;
               }
-              const items = reorder(visibleRows, result.source.index, result.destination.index);
-              dispatch(reorderRows(namespace, { items }));
+              const reorderedItems = reorder(visibleRows, result.source.index, result.destination.index);
+              dispatch(reorderRows(namespace, { reorderedItems, remoteVersionRequirementType, remoteReorderApi }));
             }}
           >
             <Droppable droppableId="droppable">

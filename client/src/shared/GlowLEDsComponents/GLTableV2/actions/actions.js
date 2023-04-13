@@ -21,8 +21,10 @@ import {
   FETCH_TABLE_PAGE_SUCCESS,
   FETCH_TABLE_FILTERS,
   FETCH_TABLE_FILTERS_SUCCESS,
-  REORDER_ROWS
+  REORDER_ROWS,
+  REORDER_ROWS_SUCCESS
 } from "./actionTypes";
+import { setRemoteVersionRequirement } from "../../../../slices/tutorialSlice";
 
 // ----------- Remote Fetch -----------
 
@@ -66,10 +68,25 @@ export const addRows =
     });
   };
 
-export const reorderRows = (namespace, { items }) => ({
-  type: `${namespace}/${REORDER_ROWS}`,
-  payload: { items }
-});
+// ----------- Reorder Table -----------
+export const reorderRows =
+  (namespace, { remoteReorderApi, reorderedItems, remoteVersionRequirementType }) =>
+  dispatch => {
+    console.log({ reorderedItems, remoteVersionRequirementType, remoteReorderApi });
+    const items = [...reorderedItems].map((item, index) => {
+      return { ...item, order: index };
+    });
+    dispatch({
+      type: `${namespace}/${REORDER_ROWS_SUCCESS}`,
+      payload: { items }
+    });
+
+    return remoteReorderApi({ reorderedItems: items, remoteVersionRequirementType }).then(response => {
+      // dispatch({
+      //   type: remoteVersionRequirementType
+      // });
+    });
+  };
 // ----------- Clear Table -----------
 export const clearTable = namespace => dispatch => {
   dispatch({

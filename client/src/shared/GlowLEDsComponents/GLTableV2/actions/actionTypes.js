@@ -15,6 +15,7 @@ export const TOGGLE_SORT = "TOGGLE_SORT";
 export const ON_EXPAND_ROW = "ON_EXPAND_ROW";
 // Row Dropdown
 export const REORDER_ROWS = "REORDER_ROWS";
+export const REORDER_ROWS_SUCCESS = "REORDER_ROWS_SUCCESS";
 // Pagination
 export const UPDATE_PAGE = "UPDATE_PAGE";
 export const UPDATE_PAGE_SIZE = "UPDATE_PAGE_SIZE";
