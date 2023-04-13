@@ -19,3 +19,4 @@ export * from "./teamApi";
 export * from "./userApi";
 export * from "./tutorialApi";
 export * from "./wholesalerApi";
+export * from "./imageApi";

@@ -802,6 +802,11 @@ const Sidebar = props => {
                   Tutorials
                 </GLButton>
               </Link>
+              <Link to="/secure/glow/images?page=1?limit=10">
+                <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
+                  Images
+                </GLButton>
+              </Link>
               <Link to="/secure/glow/paychecks?page=1?limit=10">
                 <GLButton className="sidebar-btn secondary" onClick={closeMenu}>
                   Paychecks

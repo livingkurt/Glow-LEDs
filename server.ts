@@ -1,11 +1,15 @@
 require("newrelic");
 export {};
 import sslRedirect from "heroku-ssl-redirect";
-import express from "express";
+import express, { Request, Response } from "express";
+import multer, { Multer } from "multer";
 import path from "path";
 import mongoose from "mongoose";
+import { imgbox } from "imgbox-js";
 import routes from "./api";
 import template_routes from "./email_templates/template_routes";
+import axios from "axios";
+import FormData from "form-data";
 const config = require("./config");
 const cors = require("cors");
 require("dotenv").config();
@@ -15,10 +19,6 @@ const expressAttack = require("express-attack");
 const requestIp = require("request-ip");
 const EasyPost = require("@easypost/api");
 const bodyParser = require("body-parser");
-const easy_post_api = require("@easypost/api");
-
-const multer = require("multer");
-// import { imgbox } from "node_modules/imgbox-js/lib/index";
 
 // const scout = require("@scout_apm/scout-apm");
 // const express = require("express");
@@ -110,51 +110,6 @@ app.post("/api/gcode", async (req: any, res: any) => {
       res.send("Gcode Continous File Created");
     });
   } catch (err) {}
-});
-
-// const upload = multer({
-//   storage: multer.memoryStorage(),
-//   fileFilter: function (req: any, file: any, cb: any) {
-//     cb(null, true);
-//   },
-//   fields: [{ name: "images" }, { name: "album_title" }]
-// });
-// const cpUpload = upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'gallery', maxCount: 8 }])
-
-const upload = multer();
-
-app.post("/api/image_upload", upload.fields([{ name: "images" }, { name: "album_title" }]), async (req: any, res: any) => {
-  try {
-    const { images } = req.files;
-    const { album_title } = req.body;
-    console.log({ images, album_title });
-
-    const imageArray: Array<unknown> = [];
-    req.files.images.forEach((image: any) => {
-      imageArray.push(image.buffer);
-    });
-    console.log({ imageArray });
-    const options = {
-      auth_cookie: process.env.IMGBOX_AUTH_COOKIE,
-      album_title: album_title,
-      content_type: "safe",
-      thumbnail_size: "800r",
-      comments_enabled: false,
-      logger: true
-    };
-
-    // const send = await imgbox(images, options);
-    // console.log({ send });
-    // if (send) {
-    //   res.send("Image Uploaded Correctly");
-    // } else {
-    //   res.send("Image Failed Upload");
-    // }
-  } catch (error) {
-    if (error instanceof Error) {
-      throw new Error(error.message);
-    }
-  }
 });
 
 //   // Start express

@@ -3,6 +3,9 @@ import jwt from "jsonwebtoken";
 const config = require("./config");
 import { Request } from "express";
 import { IAffiliate } from "./types/affiliateTypes";
+import multer, { Multer } from "multer";
+import path from "path";
+import { v4 as uuidv4 } from "uuid";
 export interface IGetUserAuthInfoRequest extends Request {
   user: any; // or any other type
 }
@@ -184,6 +187,34 @@ export const make_private_code = (length: any) => {
 // };
 // // const a = [ 1, 3, 6, 10, -1 ];
 // // combinations(a, 9);
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "uploads/");
+  },
+  filename: function (req, file, cb) {
+    const fileExtension = path.extname(file.originalname);
+    const fileName = uuidv4() + fileExtension;
+    cb(null, fileName);
+  }
+});
+
+// Set up multer middleware for handling file uploads
+export const upload = multer({
+  storage: storage,
+  limits: { fileSize: 1024 * 1024 * 10 }, // 10 MB file size limit
+  fileFilter: function (req, file, cb) {
+    const fileTypes = /jpeg|jpg|png|gif/;
+    const mimeType = fileTypes.test(file.mimetype);
+    const extName = fileTypes.test(path.extname(file.originalname).toLowerCase());
+    if (mimeType && extName) {
+      return cb(null, true);
+    }
+    //  else {
+    //   cb("Error: Images only!");
+    // }
+  }
+});
 
 export const deepEqual = (object1: any, object2: any) => {
   const keys1 = Object.keys(object1);

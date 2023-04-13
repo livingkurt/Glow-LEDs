@@ -28,6 +28,7 @@ import { allRecordsApi } from "./api/allRecordsApi";
 import glTableReducer from "./shared/GlowLEDsComponents/GLTableV2/reducers/glTableReducer";
 import dashboardSlice from "./pages/DashboardPage/dashboardSlice";
 import { combineReducers } from "redux";
+import imageSlice from "./slices/imageSlice";
 
 const reducers = {
   affiliateSlice: combineReducers({
@@ -61,6 +62,15 @@ const reducers = {
   paycheckSlice: combineReducers({
     paycheckPage: paycheckSlice,
     paycheckTable: glTableReducer("paycheckTable", {
+      searchBy: (row: any, search: string) => {
+        const searchableText = row.affiliate;
+        return searchableText.toLowerCase().includes(search.toLowerCase());
+      }
+    })
+  }),
+  imageSlice: combineReducers({
+    imagePage: imageSlice,
+    imageTable: glTableReducer("imageTable", {
       searchBy: (row: any, search: string) => {
         const searchableText = row.affiliate;
         return searchableText.toLowerCase().includes(search.toLowerCase());

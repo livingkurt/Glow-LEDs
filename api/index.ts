@@ -23,6 +23,7 @@ import palette_routes from "./palettes/palette_routes";
 import filament_routes from "./filaments/filament_routes";
 import wholesaler_routes from "./wholesalers/wholesaler_routes";
 import tutorial_routes from "./tutorials/tutorial_routes";
+import image_routes from "./images/image_routes";
 
 const router = express.Router();
 
@@ -50,5 +51,6 @@ router.use("/api/palettes", palette_routes);
 router.use("/api/filaments", filament_routes);
 router.use("/api/wholesalers", wholesaler_routes);
 router.use("/api/tutorials", tutorial_routes);
+router.use("/api/images", image_routes);
 
 export default router;

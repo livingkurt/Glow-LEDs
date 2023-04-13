@@ -1108,6 +1108,11 @@ const Header = props => {
                         Tutorials
                       </GLButton>
                     </Link>
+                    <Link to="/secure/glow/images?page=1?limit=10">
+                      <GLButton variant="nav" fullWidth className="ta-l">
+                        Images
+                      </GLButton>
+                    </Link>
                     <Link to="/secure/glow/paychecks?page=1?limit=10">
                       <GLButton variant="nav" fullWidth className="ta-l">
                         Paychecks

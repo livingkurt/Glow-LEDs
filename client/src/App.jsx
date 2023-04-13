@@ -85,6 +85,7 @@ import { Four04Page } from "./pages/Four04Page";
 import { TutorialsPage } from "./pages/TutorialsPage";
 import { WholesalersPage } from "./pages/WholesalersPage";
 import { TutorialsGridPage } from "./pages/TutorialsGridPage";
+import { ImagesPage } from "./pages/ImagesPage";
 
 const App = props => {
   const theme_colors = {
@@ -352,6 +353,7 @@ const App = props => {
                 <AdminRoute path="/secure/glow/product_display" component={ProductsDisplayPage} />
 
                 <AdminRoute path="/secure/glow/tutorials" component={TutorialsPage} />
+                <AdminRoute path="/secure/glow/images" component={ImagesPage} />
                 <AdminRoute path="/secure/glow/wholesalers" component={WholesalersPage} />
 
                 {/* Public Routes */}
