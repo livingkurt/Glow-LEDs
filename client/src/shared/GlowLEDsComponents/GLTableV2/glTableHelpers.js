@@ -186,3 +186,10 @@ export const tableColors = {
   alt_color_4: "#31887c",
   alt_color_5: "#a9a9a9"
 };
+
+export const reorder = (list, startIndex, endIndex) => {
+  const result = Array.from(list);
+  const [removed] = result.splice(startIndex, 1);
+  result.splice(endIndex, 0, removed);
+  return result;
+};

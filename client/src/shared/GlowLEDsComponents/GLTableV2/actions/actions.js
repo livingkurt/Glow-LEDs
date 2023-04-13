@@ -20,7 +20,8 @@ import {
   FETCH_TABLE_PAGE,
   FETCH_TABLE_PAGE_SUCCESS,
   FETCH_TABLE_FILTERS,
-  FETCH_TABLE_FILTERS_SUCCESS
+  FETCH_TABLE_FILTERS_SUCCESS,
+  REORDER_ROWS
 } from "./actionTypes";
 
 // ----------- Remote Fetch -----------
@@ -65,6 +66,10 @@ export const addRows =
     });
   };
 
+export const reorderRows = (namespace, { items }) => ({
+  type: `${namespace}/${REORDER_ROWS}`,
+  payload: { items }
+});
 // ----------- Clear Table -----------
 export const clearTable = namespace => dispatch => {
   dispatch({

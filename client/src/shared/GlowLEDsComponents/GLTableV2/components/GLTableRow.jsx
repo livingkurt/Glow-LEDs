@@ -6,7 +6,7 @@ import Checkbox from "@mui/material/Checkbox";
 import { useDispatch } from "react-redux";
 import { determineHover, rowCheckboxClicked, tableColors } from "../glTableHelpers";
 import { onExpandRow, selectRow } from "../actions/actions";
-import { darken, lighten } from "@mui/material";
+import { darken } from "@mui/material";
 
 const GLTableRow = ({
   row,
@@ -22,7 +22,9 @@ const GLTableRow = ({
   onRowClick,
   rowProps,
   cellProps,
-  determine_color
+  determine_color,
+  provided,
+  innerRef
 }) => {
   const dispatch = useDispatch();
 
@@ -78,6 +80,9 @@ const GLTableRow = ({
         id={`${namespace}-row-${name}`}
         data-test={`${namespace}-row-${name}`.replace(/ +/g, "_")}
         data-test-multi={`${namespace}-row`}
+        ref={innerRef}
+        {...provided.draggableProps}
+        {...provided.dragHandleProps}
         {...rowProps(row)}
       >
         {enableRowSelect && (

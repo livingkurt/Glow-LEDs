@@ -17,8 +17,9 @@ import {
 } from "./components";
 import glTable from "./glTable.module.scss";
 import "./glTable.scss";
-import { isItemSelected, visibleSelected } from "./glTableHelpers";
-import { addRows, updatePage, updatePageSize, fetchTablePage, fetchTableFilters } from "./actions/actions";
+import { isItemSelected, reorder, visibleSelected } from "./glTableHelpers";
+import { addRows, updatePage, updatePageSize, fetchTablePage, fetchTableFilters, reorderRows } from "./actions/actions";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 // const useStyles = makeStyles(() => ({
 //   palette: {
@@ -277,50 +278,69 @@ const GLTableV2 = ({
             order={sorting[1]}
             orderBy={sorting[0]}
           />
-          <TableBody data-test={`${namespace}-table-body`}>
-            {loading || isRemoteLoading
-              ? times(pageSize || 10, index => (
-                  <TableRow key={`${index}-skeleton-row`} data-test="loading-row">
-                    {times(columnDefs.length + 1, i => (
-                      <TableCell key={`${i}-skeleton-cell`}>
-                        <Skeleton animation="wave" variant="rect" height={40} />
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                ))
-              : visibleRows &&
-                visibleRows.map((row, index) => {
-                  return (
-                    <GLTableRow
-                      key={row._id}
-                      row={row}
-                      enableRowSelect={enableRowSelect}
-                      isItemSelected={isItemSelected(row._id, selectedRows)}
-                      labelId={`${tableName && tableName.toLowerCase()}-${index}`}
-                      index={index}
-                      columnDefs={columnDefs}
-                      enableDropdownRow={enableDropdownRow}
-                      dropdownColumnDefs={dropdownColumnDefs}
-                      namespace={namespace}
-                      rowName={rowName}
-                      enableRowClick={enableRowClick}
-                      onRowClick={onRowClick}
-                      rowProps={rowProps}
-                      cellProps={cellProps}
-                      determine_color={determine_color}
-                    >
-                      {enableDropdownRow && expandRow === row[rowName] && (
-                        <GLTableRowDropdown
-                          row={row}
-                          dropdownRows={row[dropdownRowsName]}
-                          dropdownColumnDefs={dropdownColumnDefs}
-                          namespace={namespace}
-                        />
-                      )}
-                    </GLTableRow>
-                  );
-                })}
-          </TableBody>
+          <DragDropContext
+            onDragEnd={result => {
+              if (!result.destination) {
+                return;
+              }
+              const items = reorder(visibleRows, result.source.index, result.destination.index);
+              dispatch(reorderRows(namespace, { items }));
+            }}
+          >
+            <Droppable droppableId="droppable">
+              {provided => (
+                <TableBody {...provided.droppableProps} ref={provided.innerRef} data-test={`${namespace}-table-body`}>
+                  {loading || isRemoteLoading
+                    ? times(pageSize || 10, index => (
+                        <TableRow key={`${index}-skeleton-row`} data-test="loading-row">
+                          {times(columnDefs.length + 1, i => (
+                            <TableCell key={`${i}-skeleton-cell`}>
+                              <Skeleton animation="wave" variant="rect" height={40} />
+                            </TableCell>
+                          ))}
+                        </TableRow>
+                      ))
+                    : visibleRows &&
+                      visibleRows.map((row, index) => (
+                        <Draggable key={row._id} draggableId={row._id} index={index}>
+                          {provided => (
+                            <GLTableRow
+                              key={row._id}
+                              row={row}
+                              provided={provided}
+                              innerRef={provided.innerRef}
+                              enableRowSelect={enableRowSelect}
+                              isItemSelected={isItemSelected(row._id, selectedRows)}
+                              labelId={`${tableName && tableName.toLowerCase()}-${index}`}
+                              index={index}
+                              columnDefs={columnDefs}
+                              enableDropdownRow={enableDropdownRow}
+                              dropdownColumnDefs={dropdownColumnDefs}
+                              namespace={namespace}
+                              rowName={rowName}
+                              enableRowClick={enableRowClick}
+                              onRowClick={onRowClick}
+                              rowProps={rowProps}
+                              cellProps={cellProps}
+                              determine_color={determine_color}
+                            >
+                              {enableDropdownRow && expandRow === row[rowName] && (
+                                <GLTableRowDropdown
+                                  row={row}
+                                  dropdownRows={row[dropdownRowsName]}
+                                  dropdownColumnDefs={dropdownColumnDefs}
+                                  namespace={namespace}
+                                />
+                              )}
+                            </GLTableRow>
+                          )}
+                        </Draggable>
+                      ))}
+                  {provided.placeholder}
+                </TableBody>
+              )}
+            </Droppable>
+          </DragDropContext>
         </Table>
         {!loading && visibleRows.length === 0 && <p style={{ textAlign: "center" }}>{noContentMessage}</p>}
         <TablePagination
