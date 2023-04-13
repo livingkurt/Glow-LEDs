@@ -33,7 +33,7 @@ export const getImages = async ({
 export const listImages = createAsyncThunk("images/listImages", async (query: any, thunkApi: any) => {
   try {
     const {
-      userSlice: {
+      users: {
         userPage: { current_user }
       }
     } = thunkApi.getState();
@@ -45,7 +45,7 @@ export const listImages = createAsyncThunk("images/listImages", async (query: an
 export const saveImage = createAsyncThunk("images/saveImage", async (image: any, thunkApi: any) => {
   try {
     const {
-      userSlice: {
+      users: {
         userPage: { current_user }
       }
     } = thunkApi.getState();
@@ -63,7 +63,7 @@ export const saveImage = createAsyncThunk("images/saveImage", async (image: any,
 export const detailsImage = createAsyncThunk("images/detailsImage", async (id: string, thunkApi: any) => {
   try {
     const {
-      userSlice: {
+      users: {
         userPage: { current_user }
       }
     } = thunkApi.getState();
@@ -75,7 +75,7 @@ export const detailsImage = createAsyncThunk("images/detailsImage", async (id: s
 export const deleteImage = createAsyncThunk("images/deleteImage", async (pathname, thunkApi: any) => {
   try {
     const {
-      userSlice: {
+      users: {
         userPage: { current_user }
       }
     } = thunkApi.getState();

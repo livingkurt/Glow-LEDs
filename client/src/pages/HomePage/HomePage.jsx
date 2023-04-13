@@ -59,11 +59,11 @@ const HomePage = props => {
     history.push("/collections/all/products?search=" + search);
   };
 
-  const contentSlice = useSelector(state => state.contentSlice);
-  const { contents } = contentSlice;
+  const contentPage = useSelector(state => state.contents);
+  const { contents } = contentPage;
 
-  const featureSlice = useSelector(state => state.featureSlice);
-  const { features } = featureSlice;
+  const featurePage = useSelector(state => state.features);
+  const { features } = featurePage;
 
   const dispatch = useDispatch();
 

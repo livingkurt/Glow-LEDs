@@ -8,20 +8,20 @@ import { snake_case } from "../../../utils/helper_functions";
 
 const EditAffiliateModal = () => {
   const dispatch = useDispatch();
-  const affiliateSlice = useSelector(state => state.affiliateSlice.affiliatePage);
-  const { edit_affiliate_modal, affiliate, loading } = affiliateSlice;
+  const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
+  const { edit_affiliate_modal, affiliate, loading } = affiliatePage;
 
-  const userSlice = useSelector(state => state.userSlice.userPage);
-  const { users, loading: loading_affiliates } = userSlice;
+  const userPage = useSelector(state => state.users.userPage);
+  const { users, loading: loading_affiliates } = userPage;
 
-  const productSlice = useSelector(state => state.productSlice);
-  const { products, loading: loading_products } = productSlice;
+  const productPage = useSelector(state => state.products.productPage);
+  const { products, loading: loading_products } = productPage;
 
-  const chipSlice = useSelector(state => state.chipSlice);
-  const { chips, loading: loading_chips } = chipSlice;
+  const chipPage = useSelector(state => state.chips);
+  const { chips, loading: loading_chips } = chipPage;
 
-  const promoSlice = useSelector(state => state.promoSlice);
-  const { promos, loading: loading_promos } = promoSlice;
+  const promoPage = useSelector(state => state.promos);
+  const { promos, loading: loading_promos } = promoPage;
 
   useEffect(() => {
     let clean = true;
@@ -219,14 +219,14 @@ export default EditAffiliateModal;
 // }));
 
 // const EditAffiliateModal = props => {
-//   const userSlice = useSelector(state => state.userSlice.userPage);
-//   const { users, loading: loading_users } = userSlice;
+//   const userPage = useSelector(state => state.users.userPage);
+//   const { users, loading: loading_users } = userPage;
 
 //   const history = useHistory();
 
-//   const affiliateSlice = useSelector(state => state.affiliateSlice.affiliatePage);
-//   const affiliate = useSelector(state => state.affiliateSlice.affiliate);
-//   const { loading, success } = affiliateSlice;
+//   const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
+//   const affiliate = useSelector(state => state.affiliates.affiliate);
+//   const { loading, success } = affiliatePage;
 //   const {
 //     user,
 //     artist_name,
@@ -254,14 +254,14 @@ export default EditAffiliateModal;
 //     private_code
 //   } = affiliate;
 
-// const productSlice = useSelector(state => state.productSlice);
-// const { products: products_list, loading: loading_products } = productSlice;
+// const productPage = useSelector(state => state.products.productPage);
+// const { products: products_list, loading: loading_products } = productPage;
 
-// const chipClice = useSelector(state => state.chipClice);
-// const { chips: chips_list, loading: loading_chips } = chipClice;
+// const chipPage = useSelector(state => state.chips);
+// const { chips: chips_list, loading: loading_chips } = chipPage;
 
-// const promoSlice = useSelector(state => state.promoSlice);
-// const { promos: promos_list, loading: loading_promos } = promoSlice;
+// const promoPage = useSelector(state => state.promos);
+// const { promos: promos_list, loading: loading_promos } = promoPage;
 
 //   const dispatch = useDispatch();
 

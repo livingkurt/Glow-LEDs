@@ -12,8 +12,8 @@ const TeamsPage = props => {
   const [search, set_search] = useState("");
   const [sort, setSortOrder] = useState("");
   const category = props.match.params.category ? props.match.params.category : "";
-  const teamSlice = useSelector(state => state.teamSlice);
-  const { loading, teams, message, error, success } = teamSlice;
+  const teamPage = useSelector(state => state.teams);
+  const { loading, teams, message, error, success } = teamPage;
 
   const dispatch = useDispatch();
 

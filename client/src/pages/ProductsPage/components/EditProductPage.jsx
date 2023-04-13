@@ -39,7 +39,7 @@ const EditProductPage = props => {
 
   const history = useHistory();
 
-  const productSlice = useSelector(state => state.productSlice);
+  const productPage = useSelector(state => state.products.productPage);
   const {
     product,
     loading,
@@ -68,7 +68,7 @@ const EditProductPage = props => {
     secondary_image,
     sale_start_date,
     sale_end_date
-  } = productSlice;
+  } = productPage;
 
   const {
     _id: id,
@@ -158,17 +158,17 @@ const EditProductPage = props => {
     extra_cost
   } = product;
 
-  const chipSlice = useSelector(state => state.chipSlice);
-  const { chips: chips_list } = chipSlice;
+  const chipPage = useSelector(state => state.chips);
+  const { chips: chips_list } = chipPage;
 
-  const filamentSlice = useSelector(state => state.filamentSlice);
-  const { filaments: filaments_list } = filamentSlice;
+  const filamentPage = useSelector(state => state.filaments);
+  const { filaments: filaments_list } = filamentPage;
 
-  const userSlice = useSelector(state => state.userSlice.userPage);
-  const { users } = userSlice;
+  const userPage = useSelector(state => state.users.userPage);
+  const { users } = userPage;
 
-  const categorySlice = useSelector(state => state.categorySlice);
-  const { categorys: categorys_list } = categorySlice;
+  const categoryPage = useSelector(state => state.categorys);
+  const { categorys: categorys_list } = categoryPage;
 
   const dispatch = useDispatch();
 

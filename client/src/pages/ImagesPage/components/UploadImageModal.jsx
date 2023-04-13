@@ -5,8 +5,8 @@ import GLDisplayModal from "../../../shared/GlowLEDsComponents/GLDisplayModal/GL
 
 const UploadImageModal = () => {
   const dispatch = useDispatch();
-  const imagesSlice = useSelector(state => state.imageSlice.imagePage);
-  const { upload_image_modal } = imagesSlice;
+  const imagePage = useSelector(state => state.images.imagePage);
+  const { upload_image_modal } = imagePage;
   return (
     <div>
       <GLDisplayModal onClose={() => dispatch(close_image_modal())} open={upload_image_modal} title={"Image Uploader"}>

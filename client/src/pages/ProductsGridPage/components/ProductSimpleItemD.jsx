@@ -7,8 +7,8 @@ import Rating from "../../../shared/GlowLEDsComponents/GLRating/Rating";
 import { useSelector } from "react-redux";
 
 const Product = props => {
-  const userSlice = useSelector(state => state.userSlice.userPage);
-  const { current_user } = userSlice;
+  const userPage = useSelector(state => state.users.userPage);
+  const { current_user } = userPage;
   const history = useHistory();
   return (
     <li key={props.product.pathname} style={props.style}>

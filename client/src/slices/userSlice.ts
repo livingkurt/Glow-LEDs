@@ -5,8 +5,8 @@ import * as API from "../api";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "../utils/setAuthToken";
 
-const userSlice = createSlice({
-  name: "userSlice",
+const userPage = createSlice({
+  name: "userPage",
   initialState: {
     loading: false,
     access_token: "",
@@ -297,5 +297,5 @@ export const {
   open_user_modal,
   close_user_modal,
   open_edit_user_modal
-} = userSlice.actions;
-export default userSlice.reducer;
+} = userPage.actions;
+export default userPage.reducer;

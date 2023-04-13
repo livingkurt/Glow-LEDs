@@ -34,7 +34,7 @@ export const getPaychecks = async ({
 export const listPaychecks = createAsyncThunk("paychecks/listPaychecks", async (query: any, thunkApi: any) => {
   try {
     const {
-      userSlice: {
+      users: {
         userPage: { current_user }
       }
     } = thunkApi.getState();
@@ -46,7 +46,7 @@ export const listPaychecks = createAsyncThunk("paychecks/listPaychecks", async (
 export const savePaycheck = createAsyncThunk("paychecks/savePaycheck", async (paycheck: any, thunkApi: any) => {
   try {
     const {
-      userSlice: {
+      users: {
         userPage: { current_user }
       }
     } = thunkApi.getState();
@@ -64,7 +64,7 @@ export const savePaycheck = createAsyncThunk("paychecks/savePaycheck", async (pa
 export const detailsPaycheck = createAsyncThunk("paychecks/detailsPaycheck", async (id: string, thunkApi: any) => {
   try {
     const {
-      userSlice: {
+      users: {
         userPage: { current_user }
       }
     } = thunkApi.getState();
@@ -76,7 +76,7 @@ export const detailsPaycheck = createAsyncThunk("paychecks/detailsPaycheck", asy
 export const deletePaycheck = createAsyncThunk("paychecks/deletePaycheck", async (pathname, thunkApi: any) => {
   try {
     const {
-      userSlice: {
+      users: {
         userPage: { current_user }
       }
     } = thunkApi.getState();

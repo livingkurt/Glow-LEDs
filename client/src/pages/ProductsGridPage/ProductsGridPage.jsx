@@ -52,11 +52,11 @@ const AllProductsPage = props => {
   const [sort, set_sort] = useState("");
   const [filter, set_filter] = useState("");
 
-  const productSlice = useSelector(state => state.productSlice);
-  const { products: main_products, totalPages, currentPage, loading, error } = productSlice;
+  const productPage = useSelector(state => state.products.productPage);
+  const { products: main_products, totalPages, currentPage, loading, error } = productPage;
 
-  const chipSlice = useSelector(state => state.chipSlice);
-  const { chips: chips_list } = chipSlice;
+  const chipPage = useSelector(state => state.chips);
+  const { chips: chips_list } = chipPage;
 
   const dispatch = useDispatch();
 

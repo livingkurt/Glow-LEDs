@@ -15,8 +15,8 @@ const FeaturesGridPage = props => {
   const category = props.match.params.category ? props.match.params.category : "";
   const subcategory = props.match.params.subcategory ? props.match.params.subcategory : "";
 
-  const featureSlice = useSelector(state => state.featureSlice);
-  const { features, loading, error } = featureSlice;
+  const featurePage = useSelector(state => state.features);
+  const { features, loading, error } = featurePage;
   const dispatch = useDispatch();
 
   useEffect(() => {

@@ -11,13 +11,13 @@ import { set_team } from "../../slices/teamSlice";
 const EditTeamPage = props => {
   const [loading_checkboxes, set_loading_checkboxes] = useState(true);
 
-  const affiliateSlice = useSelector(state => state.affiliateSlice.affiliatePage);
-  const { affiliates: affiliates_list } = affiliateSlice;
+  const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
+  const { affiliates: affiliates_list } = affiliatePage;
 
   const history = useHistory();
 
-  const teamSlice = useSelector(state => state.teamSlice);
-  const { team, loading, error } = teamSlice;
+  const teamPage = useSelector(state => state.teams);
+  const { team, loading, error } = teamPage;
   const {
     _id: id,
     affiliates,
@@ -43,11 +43,11 @@ const EditTeamPage = props => {
     venmo
   } = team;
 
-  const userSlice = useSelector(state => state.userSlice.userPage);
-  const { users } = userSlice;
+  const userPage = useSelector(state => state.users.userPage);
+  const { users } = userPage;
 
-  const promoSlice = useSelector(state => state.promoSlice);
-  const { promos: promos_list } = promoSlice;
+  const promoPage = useSelector(state => state.promos);
+  const { promos: promos_list } = promoPage;
 
   const dispatch = useDispatch();
 

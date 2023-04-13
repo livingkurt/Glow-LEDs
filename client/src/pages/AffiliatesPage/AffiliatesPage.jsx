@@ -12,8 +12,8 @@ import { getAffiliates } from "../../api";
 import { determine_color } from "./affiliateHelpers";
 
 const AffiliatesPage = () => {
-  const affiliatesSlice = useSelector(state => state.affiliateSlice.affiliatePage);
-  const { message, loading, remoteVersionRequirement } = affiliatesSlice;
+  const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
+  const { message, loading, remoteVersionRequirement } = affiliatePage;
 
   const dispatch = useDispatch();
 
@@ -82,7 +82,7 @@ const AffiliatesPage = () => {
         remoteVersionRequirement={remoteVersionRequirement}
         determine_color={determine_color}
         tableName={"Affiliates"}
-        namespaceScope="affiliateSlice"
+        namespaceScope="affiliates"
         namespace="affiliateTable"
         columnDefs={column_defs}
         loading={loading}

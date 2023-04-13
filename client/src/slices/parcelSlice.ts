@@ -3,8 +3,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import * as API from "../api";
 
-const parcelSlice = createSlice({
-  name: "parcels",
+const parcelPage = createSlice({
+  name: "parcelPage",
   initialState: {
     loading: false,
     parcels: [],
@@ -106,5 +106,5 @@ const parcelSlice = createSlice({
   }
 });
 
-export const { set_search, set_sort, set_page, set_limit, set_loading, set_parcel } = parcelSlice.actions;
-export default parcelSlice.reducer;
+export const { set_search, set_sort, set_page, set_limit, set_loading, set_parcel } = parcelPage.actions;
+export default parcelPage.reducer;

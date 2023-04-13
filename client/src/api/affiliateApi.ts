@@ -4,7 +4,6 @@ import axios from "axios";
 import { create_query } from "../utils/helper_functions";
 import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
-import { DetailsAffiliate } from "../actions/affiliateActions";
 import { set_current_user } from "../slices/userSlice";
 import { headers } from "../utils/helpers/user_helpers";
 
@@ -37,7 +36,7 @@ export const getAffiliates = async ({
 export const listAffiliates = createAsyncThunk("affiliates/listAffiliates", async (query: any, thunkApi: any) => {
   try {
     const {
-      userSlice: {
+      users: {
         userPage: { current_user }
       }
     } = thunkApi.getState();
@@ -49,7 +48,7 @@ export const listAffiliates = createAsyncThunk("affiliates/listAffiliates", asyn
 export const saveAffiliate = createAsyncThunk("affiliates/saveAffiliate", async (affiliate: any, thunkApi: any) => {
   try {
     const {
-      userSlice: {
+      users: {
         userPage: { current_user }
       }
     } = thunkApi.getState();
@@ -91,30 +90,27 @@ export const saveAffiliate = createAsyncThunk("affiliates/saveAffiliate", async 
   } catch (error) {}
 });
 
-export const detailsAffiliate = createAsyncThunk(
-  "affiliates/detailsAffiliate",
-  async ({ pathname, id }: DetailsAffiliate, thunkApi: any) => {
-    try {
-      const {
-        userSlice: {
-          userPage: { current_user }
-        }
-      } = thunkApi.getState();
-      let response: any = {};
-      if (id) {
-        response = await axios.get(`/api/affiliates/${id}`);
-      } else if (pathname) {
-        response = await axios.get(`/api/affiliates/${pathname}/pathname`);
+export const detailsAffiliate = createAsyncThunk("affiliates/detailsAffiliate", async ({ pathname, id }: any, thunkApi: any) => {
+  try {
+    const {
+      users: {
+        userPage: { current_user }
       }
-      return response.data;
-    } catch (error) {}
-  }
-);
+    } = thunkApi.getState();
+    let response: any = {};
+    if (id) {
+      response = await axios.get(`/api/affiliates/${id}`);
+    } else if (pathname) {
+      response = await axios.get(`/api/affiliates/${pathname}/pathname`);
+    }
+    return response.data;
+  } catch (error) {}
+});
 
 export const deleteAffiliate = createAsyncThunk("affiliates/deleteAffiliate", async (pathname, thunkApi: any) => {
   try {
     const {
-      userSlice: {
+      users: {
         userPage: { current_user }
       }
     } = thunkApi.getState();
@@ -126,7 +122,7 @@ export const deleteAffiliate = createAsyncThunk("affiliates/deleteAffiliate", as
 export const create_rave_mob_affiliates = createAsyncThunk("affiliates/create_rave_mob_affiliates", async (csv, thunkApi: any) => {
   try {
     const {
-      userSlice: {
+      users: {
         userPage: { current_user }
       }
     } = thunkApi.getState();
@@ -149,7 +145,7 @@ export const affiliateEarnings = createAsyncThunk(
   ) => {
     try {
       const {
-        userSlice: {
+        users: {
           userPage: { current_user }
         }
       } = thunkApi.getState();

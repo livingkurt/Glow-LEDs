@@ -9,12 +9,11 @@ import { EditWholesalerModal } from "./components";
 import * as API from "../../api";
 import { Button } from "@mui/material";
 import { getWholesalers } from "../../api";
-import { fullName } from "../UsersPage/usersHelpers";
 import { determine_color } from "./wholesalerHelper";
 
 const WholesalersPage = () => {
-  const wholesalerSlice = useSelector(state => state.wholesalerSlice.wholesalerPage);
-  const { message, loading, remoteVersionRequirement } = wholesalerSlice;
+  const wholesalerPage = useSelector(state => state.wholesalers.wholesalerPage);
+  const { message, loading, remoteVersionRequirement } = wholesalerPage;
 
   const dispatch = useDispatch();
 
@@ -76,7 +75,7 @@ const WholesalersPage = () => {
         remoteApi={remoteApi}
         remoteVersionRequirement={remoteVersionRequirement}
         tableName={"Wholesalers"}
-        namespaceScope="wholesalerSlice"
+        namespaceScope="wholesalers"
         namespace="wholesalerTable"
         columnDefs={column_defs}
         determine_color={determine_color}

@@ -12,11 +12,11 @@ const EditUserPage = props => {
 
   const history = useHistory();
 
-  const userSlice = useSelector(state => state.userSlice.userPage);
-  const { current_user, user, loading, error } = userSlice;
+  const userPage = useSelector(state => state.users.userPage);
+  const { current_user, user, loading, error } = userPage;
 
-  const affiliateSlice = useSelector(state => state.affiliateSlice.affiliatePage);
-  const { affiliates } = affiliateSlice;
+  const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
+  const { affiliates } = affiliatePage;
 
   useEffect(() => {
     let clean = true;

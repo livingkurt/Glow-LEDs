@@ -21,8 +21,8 @@ if (shipping_string) {
   shippingAddress = {};
 }
 
-const cartSlice = createSlice({
-  name: "carts",
+const cartPage = createSlice({
+  name: "cartPage",
   initialState: {
     loading: false,
     my_cart: { ...my_cart },
@@ -230,5 +230,5 @@ export const {
   close_cart_modal,
   open_edit_cart_modal,
   empty_cart
-} = cartSlice.actions;
-export default cartSlice.reducer;
+} = cartPage.actions;
+export default cartPage.reducer;

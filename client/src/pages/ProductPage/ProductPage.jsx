@@ -14,11 +14,11 @@ import RelatedProductsSlideshow from "../../shared/GlowLEDsComponents/GLCarousel
 import * as API from "../../api";
 
 const ProductPage = props => {
-  const userSlice = useSelector(state => state.userSlice.userPage);
-  let { current_user } = userSlice;
+  const userPage = useSelector(state => state.users.userPage);
+  let { current_user } = userPage;
 
-  const cartSlice = useSelector(state => state.cartSlice.cartPage);
-  const { my_cart, success } = cartSlice;
+  const cartPage = useSelector(state => state.carts.cartPage);
+  const { my_cart, success } = cartPage;
   const { cartItems } = my_cart;
 
   const [name, set_name] = useState("");
@@ -73,8 +73,8 @@ const ProductPage = props => {
   // const [ option_group_name, set_option_group_name ] = useState('');
   // const [ secondary_group_name, set_secondary_group_name ] = useState('');
 
-  const productSlice = useSelector(state => state.productSlice);
-  const { product, loading, error } = productSlice;
+  const productPage = useSelector(state => state.products.productPage);
+  const { product, loading, error } = productPage;
 
   const { width, height } = useWindowDimensions();
 

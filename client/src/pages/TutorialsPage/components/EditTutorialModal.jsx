@@ -8,12 +8,12 @@ import { snake_case } from "../../../utils/helper_functions";
 
 const EditTutorialModal = () => {
   const dispatch = useDispatch();
-  const tutorialsSlice = useSelector(state => state.tutorialSlice.tutorialPage);
-  const { edit_tutorial_modal, tutorial, loading } = tutorialsSlice;
+  const tutorialPage = useSelector(state => state.tutorials.tutorialPage);
+  const { edit_tutorial_modal, tutorial, loading } = tutorialPage;
   const { affiliate, title } = tutorial;
 
-  const affiliateSlice = useSelector(state => state.affiliateSlice);
-  const { affiliates, loading: loading_affiliates } = affiliateSlice;
+  const affiliatePage = useSelector(state => state.affiliates);
+  const { affiliates, loading: loading_affiliates } = affiliatePage;
 
   useEffect(() => {
     let clean = true;

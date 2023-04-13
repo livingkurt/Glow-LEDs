@@ -7,8 +7,8 @@ import { GLButton } from "../../../shared/GlowLEDsComponents";
 const ViewOrder = props => {
   const [order_number, set_order_number] = useState("");
 
-  const userSlice = useSelector(state => state.userSlice.userPage);
-  const { current_user } = userSlice;
+  const userPage = useSelector(state => state.users.userPage);
+  const { current_user } = userPage;
   return (
     <div className="form">
       <Helmet>

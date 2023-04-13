@@ -3,8 +3,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import * as API from "../api";
 
-const orderSlice = createSlice({
-  name: "orders",
+const orderPage = createSlice({
+  name: "orderPage",
   initialState: {
     loading: false,
     loading_payment: false,
@@ -287,5 +287,5 @@ const orderSlice = createSlice({
 });
 
 export const { set_search, set_sort, set_page, set_limit, set_loading, set_loading_payment, set_order, clear_order_state } =
-  orderSlice.actions;
-export default orderSlice.reducer;
+  orderPage.actions;
+export default orderPage.reducer;

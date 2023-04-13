@@ -26,8 +26,8 @@ const Header = props => {
 
   const { height, width } = useWindowDimensions();
 
-  const settingSlice = useSelector(state => state.settingSlice);
-  const { show_search_bar } = settingSlice;
+  const settingPage = useSelector(state => state.settings);
+  const { show_search_bar } = settingPage;
 
   useEffect(() => {
     window.addEventListener("mousedown", handleClickOutside);
@@ -35,8 +35,8 @@ const Header = props => {
       window.removeEventListener("mousedown", handleClickOutside);
     };
   });
-  const userSlice = useSelector(state => state.userSlice.userPage);
-  const { current_user } = userSlice;
+  const userPage = useSelector(state => state.users.userPage);
+  const { current_user } = userPage;
 
   useEffect(() => {
     let clean = true;
@@ -48,9 +48,9 @@ const Header = props => {
     return () => (clean = false);
   }, [current_user]);
 
-  const cartSlice = useSelector(state => state.cartSlice.cartPage);
+  const cartPage = useSelector(state => state.carts.cartPage);
 
-  const { my_cart } = cartSlice;
+  const { my_cart } = cartPage;
   const { cartItems } = my_cart;
 
   const open_sidebar = () => {
@@ -180,8 +180,8 @@ const Header = props => {
   // 	btn.classList.toggle('not-active');
   // });
 
-  const chipSlice = useSelector(state => state.chipSlice);
-  const { chips: chips_list } = chipSlice;
+  const chipPage = useSelector(state => state.chips);
+  const { chips: chips_list } = chipPage;
 
   const [chip_name, set_chip_name] = useState();
 

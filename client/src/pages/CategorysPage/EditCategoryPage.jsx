@@ -23,8 +23,8 @@ const EditCategoryPage = props => {
 
   const history = useHistory();
 
-  const categorySlice = useSelector(state => state.categorySlice);
-  const { categorys: subcategorys_list, category, loading, error } = categorySlice;
+  const categoryPage = useSelector(state => state.categorys);
+  const { categorys: subcategorys_list, category, loading, error } = categoryPage;
 
   const dispatch = useDispatch();
 

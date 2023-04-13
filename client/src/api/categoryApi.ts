@@ -7,7 +7,7 @@ import { create_query } from "../utils/helper_functions";
 export const listCategorys = createAsyncThunk("categorys/listCategorys", async (query: any, thunkApi: any) => {
   try {
     const {
-      userSlice: {
+      users: {
         userPage: { current_user }
       }
     } = thunkApi.getState();
@@ -19,7 +19,7 @@ export const listCategorys = createAsyncThunk("categorys/listCategorys", async (
 export const saveCategory = createAsyncThunk("categorys/saveCategory", async (category: any, thunkApi: any) => {
   try {
     const {
-      userSlice: {
+      users: {
         userPage: { current_user }
       }
     } = thunkApi.getState();
@@ -37,7 +37,7 @@ export const saveCategory = createAsyncThunk("categorys/saveCategory", async (ca
 export const detailsCategory = createAsyncThunk("categorys/detailsCategory", async (id: string, thunkApi: any) => {
   try {
     const {
-      userSlice: {
+      users: {
         userPage: { current_user }
       }
     } = thunkApi.getState();
@@ -49,7 +49,7 @@ export const detailsCategory = createAsyncThunk("categorys/detailsCategory", asy
 export const deleteCategory = createAsyncThunk("categorys/deleteCategory", async (pathname, thunkApi: any) => {
   try {
     const {
-      userSlice: {
+      users: {
         userPage: { current_user }
       }
     } = thunkApi.getState();

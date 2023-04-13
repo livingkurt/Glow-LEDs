@@ -35,13 +35,13 @@ import axios from "axios";
 
 const DashboardPage = props => {
   const dispatch = useDispatch();
-  const dashboardSlice = useSelector(state => state.dashboardSlice);
+  const dashboardPage = useSelector(state => state.dashboards);
 
-  const { year, month, start_date, end_date, start_end_date, loading } = dashboardSlice;
+  const { year, month, start_date, end_date, start_end_date, loading } = dashboardPage;
 
   const [earnings, set_earnings] = useState([]);
-  const affiliateSlice = useSelector(state => state.affiliateSlice.affiliatePage);
-  const { affiliates } = affiliateSlice;
+  const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
+  const { affiliates } = affiliatePage;
   const history = useHistory();
   const current_year = new Date().getFullYear();
   // const business_start_date = new Date("2020-08-01");

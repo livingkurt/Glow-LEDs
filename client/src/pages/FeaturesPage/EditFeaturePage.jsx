@@ -25,16 +25,16 @@ const EditFeaturePage = props => {
   const [description, set_description] = useState("");
   const [release_date, set_release_date] = useState("");
 
-  const userSlice = useSelector(state => state.userSlice.userPage);
-  const { users } = userSlice;
+  const userPage = useSelector(state => state.users.userPage);
+  const { users } = userPage;
 
   const history = useHistory();
 
-  const featureSlice = useSelector(state => state.featureSlice);
-  const { feature, loading, error } = featureSlice;
+  const featurePage = useSelector(state => state.features);
+  const { feature, loading, error } = featurePage;
 
-  const productSlice = useSelector(state => state.productSlice);
-  const { products } = productSlice;
+  const productPage = useSelector(state => state.products.productPage);
+  const { products } = productPage;
 
   const dispatch = useDispatch();
 

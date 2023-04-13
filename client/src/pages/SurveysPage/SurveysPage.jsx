@@ -15,8 +15,8 @@ const SurveysPage = props => {
 
   const [loading_surveys, set_loading_surveys] = useState(false);
   const category = props.match.params.category ? props.match.params.category : "";
-  const surveySlice = useSelector(state => state.surveySlice);
-  const { loading, surveys, message, error, success } = surveySlice;
+  const surveyPage = useSelector(state => state.surveys);
+  const { loading, surveys, message, error, success } = surveyPage;
 
   const dispatch = useDispatch();
 

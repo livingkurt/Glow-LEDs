@@ -10,8 +10,8 @@ import * as API from "../../api";
 const ContentsPage = props => {
   const [search, set_search] = useState("");
   const category = props.match.params.category ? props.match.params.category : "";
-  const contentSlice = useSelector(state => state.contentSlice);
-  const { loading, contents, message, error, success } = contentSlice;
+  const contentPage = useSelector(state => state.contents);
+  const { loading, contents, message, error, success } = contentPage;
 
   const dispatch = useDispatch();
 

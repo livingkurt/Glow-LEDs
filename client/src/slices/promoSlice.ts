@@ -3,8 +3,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import * as API from "../api";
 
-const promoSlice = createSlice({
-  name: "promos",
+const promoPage = createSlice({
+  name: "promoPage",
   initialState: {
     loading: false,
     promos: [],
@@ -130,5 +130,5 @@ const promoSlice = createSlice({
   }
 });
 
-export const { set_search, set_sort, set_page, set_limit, set_loading, set_promo } = promoSlice.actions;
-export default promoSlice.reducer;
+export const { set_search, set_sort, set_page, set_limit, set_loading, set_promo } = promoPage.actions;
+export default promoPage.reducer;

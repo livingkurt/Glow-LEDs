@@ -24,8 +24,8 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
   const [order_items, set_order_items] = useState(order.orderItems);
 
   const [order_state, set_order_state] = useState(order);
-  const userSlice = useSelector(state => state.userSlice.userPage);
-  const { current_user } = userSlice;
+  const userPage = useSelector(state => state.users.userPage);
+  const { current_user } = userPage;
   setTimeout(() => {
     set_loading_checkboxes(false);
   }, 500);

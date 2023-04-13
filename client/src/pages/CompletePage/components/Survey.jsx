@@ -32,16 +32,16 @@ const Survey = props => {
   setTimeout(() => {
     set_loading_checkboxes(false);
   }, 500);
-  const userSlice = useSelector(state => state.userSlice.userPage);
-  const { users, current_user } = userSlice;
+  const userPage = useSelector(state => state.users.userPage);
+  const { users, current_user } = userPage;
 
   const history = useHistory();
 
-  const orderSlice = useSelector(state => state.orderSlice);
-  const { order } = orderSlice;
+  const orderPage = useSelector(state => state.orders);
+  const { order } = orderPage;
 
-  const surveySlice = useSelector(state => state.surveySlice);
-  const { surveys, loading, error, success } = surveySlice;
+  const surveyPage = useSelector(state => state.surveys);
+  const { surveys, loading, error, success } = surveyPage;
 
   const dispatch = useDispatch();
 

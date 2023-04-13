@@ -8,11 +8,11 @@ import { fullName } from "../../UsersPage/usersHelpers";
 
 const EditWholesalerModal = () => {
   const dispatch = useDispatch();
-  const wholesalersSlice = useSelector(state => state.wholesalerSlice.wholesalerPage);
-  const { edit_wholesaler_modal, wholesaler, loading } = wholesalersSlice;
+  const wholesalerPage = useSelector(state => state.wholesalers.wholesalerPage);
+  const { edit_wholesaler_modal, wholesaler, loading } = wholesalerPage;
 
-  const userSlice = useSelector(state => state.userSlice.userPage);
-  const { users, loading: loading_users, user, current_user } = userSlice;
+  const userPage = useSelector(state => state.users.userPage);
+  const { users, loading: loading_users, user, current_user } = userPage;
 
   useEffect(() => {
     let clean = true;

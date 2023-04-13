@@ -4,8 +4,8 @@ import { createSlice } from "@reduxjs/toolkit";
 import * as API from "../api";
 import { format_date } from "../utils/helper_functions";
 
-const paycheckSlice = createSlice({
-  name: "paychecks",
+const paycheckPage = createSlice({
+  name: "paycheckPage",
   initialState: {
     loading: false,
     paychecks: [],
@@ -148,5 +148,5 @@ export const {
   open_paycheck_modal,
   close_paycheck_modal,
   open_edit_paycheck_modal
-} = paycheckSlice.actions;
-export default paycheckSlice.reducer;
+} = paycheckPage.actions;
+export default paycheckPage.reducer;

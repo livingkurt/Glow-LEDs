@@ -3,8 +3,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import * as API from "../api";
 
-const surveySlice = createSlice({
-  name: "surveys",
+const surveyPage = createSlice({
+  name: "surveyPage",
   initialState: {
     loading: false,
     surveys: [],
@@ -124,5 +124,5 @@ const surveySlice = createSlice({
   }
 });
 
-export const { set_search, set_sort, set_page, set_limit, set_loading, set_survey } = surveySlice.actions;
-export default surveySlice.reducer;
+export const { set_search, set_sort, set_page, set_limit, set_loading, set_survey } = surveyPage.actions;
+export default surveyPage.reducer;

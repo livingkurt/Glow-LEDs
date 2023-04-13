@@ -16,10 +16,10 @@ const CarouselItem = props => {
   const [size, set_size] = useState(null);
   const dispatch = useDispatch();
   const history = useHistory();
-  const userSlice = useSelector(state => state.userSlice.userPage);
-  const { current_user } = userSlice;
-  const cartSlice = useSelector(state => state.cartSlice.cartPage);
-  const { my_cart } = cartSlice;
+  const userPage = useSelector(state => state.users.userPage);
+  const { current_user } = userPage;
+  const cartPage = useSelector(state => state.carts.cartPage);
+  const { my_cart } = cartPage;
   const { cartItems } = my_cart;
 
   useEffect(() => {

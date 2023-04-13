@@ -44,8 +44,8 @@ const Cart = props => {
     document.querySelector(".cart_sidebar").classList.remove("open");
   };
 
-  const userSlice = useSelector(state => state.userSlice.userPage);
-  const { current_user } = userSlice;
+  const userPage = useSelector(state => state.users.userPage);
+  const { current_user } = userPage;
 
   useEffect(() => {
     let clean = true;
@@ -65,9 +65,9 @@ const Cart = props => {
     }
   };
 
-  const cartSlice = useSelector(state => state.cartSlice.cartPage);
+  const cartPage = useSelector(state => state.carts.cartPage);
 
-  const { my_cart } = cartSlice;
+  const { my_cart } = cartPage;
   const { cartItems } = my_cart;
 
   const [no_items_in_cart, set_no_items_in_cart] = useState("");

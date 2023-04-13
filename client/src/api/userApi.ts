@@ -33,7 +33,7 @@ export const getUsers = async ({
 export const listUsers = createAsyncThunk("users/listUsers", async (query: any, thunkApi: any) => {
   try {
     const {
-      userSlice: {
+      users: {
         userPage: { current_user }
       }
     } = thunkApi.getState();
@@ -45,7 +45,7 @@ export const listUsers = createAsyncThunk("users/listUsers", async (query: any, 
 export const saveUser = createAsyncThunk("users/saveUser", async (user: any, thunkApi: any) => {
   try {
     const {
-      userSlice: {
+      users: {
         userPage: { current_user }
       }
     } = thunkApi.getState();
@@ -63,7 +63,7 @@ export const saveUser = createAsyncThunk("users/saveUser", async (user: any, thu
 export const detailsUser = createAsyncThunk("users/detailsUser", async (id: any, thunkApi: any) => {
   try {
     const {
-      userSlice: {
+      users: {
         userPage: { current_user }
       }
     } = thunkApi.getState();
@@ -75,7 +75,7 @@ export const detailsUser = createAsyncThunk("users/detailsUser", async (id: any,
 export const deleteUser = createAsyncThunk("users/deleteUser", async (id: string, thunkApi: any) => {
   try {
     const {
-      userSlice: {
+      users: {
         userPage: { current_user }
       }
     } = thunkApi.getState();

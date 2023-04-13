@@ -21,10 +21,8 @@ import {
   FETCH_TABLE_PAGE_SUCCESS,
   FETCH_TABLE_FILTERS,
   FETCH_TABLE_FILTERS_SUCCESS,
-  REORDER_ROWS,
   REORDER_ROWS_SUCCESS
 } from "./actionTypes";
-import { setRemoteVersionRequirement } from "../../../../slices/tutorialSlice";
 
 // ----------- Remote Fetch -----------
 
@@ -70,9 +68,8 @@ export const addRows =
 
 // ----------- Reorder Table -----------
 export const reorderRows =
-  (namespace, { remoteReorderApi, reorderedItems, remoteVersionRequirementType }) =>
-  (dispatch, getState) => {
-    const { page, pageSize } = getState().tutorialSlice.tutorialTable;
+  (namespace, { remoteReorderApi, reorderedItems, remoteVersionRequirementType, page, pageSize }) =>
+  dispatch => {
     const startOrder = page * pageSize;
     const items = [...reorderedItems].map((item, index) => {
       return { ...item, order: startOrder + index };
@@ -88,6 +85,14 @@ export const reorderRows =
       // });
     });
   };
+
+// ----------- Clear Table -----------
+export const clearTable = namespace => dispatch => {
+  dispatch({
+    type: `${namespace}/${CLEAR_TABLE}`,
+    payload: {}
+  });
+};
 
 // ----------- Search -----------
 export const applySearch = (namespace, search) => dispatch => {

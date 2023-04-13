@@ -65,8 +65,8 @@ const ProductOptions = ({
 }) => {
   const { width } = useWindowDimensions();
 
-  const userSlice = useSelector(state => state.userSlice.userPage);
-  const { current_user } = userSlice;
+  const userPage = useSelector(state => state.users.userPage);
+  const { current_user } = userPage;
 
   const determine_option_styles = (option_product_object, option) => {
     const classes = "packs fs-13px flex-s-0 min-w-40px mr-1rem mb-1rem ";

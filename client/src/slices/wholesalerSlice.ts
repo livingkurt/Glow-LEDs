@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import * as API from "../api/wholesalerApi";
 
-const wholesalersSlice = createSlice({
-  name: "wholesalers",
+const wholesalerPage = createSlice({
+  name: "wholesalerPage",
   initialState: {
     loading: false,
     wholesalers: [],
@@ -167,5 +167,5 @@ export const {
   open_wholesaler_modal,
   close_wholesaler_modal,
   open_edit_wholesaler_modal
-} = wholesalersSlice.actions;
-export default wholesalersSlice.reducer;
+} = wholesalerPage.actions;
+export default wholesalerPage.reducer;

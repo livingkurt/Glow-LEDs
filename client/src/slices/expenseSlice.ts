@@ -3,8 +3,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import * as API from "../api";
 
-const expenseSlice = createSlice({
-  name: "expenses",
+const expensePage = createSlice({
+  name: "expensePage",
   initialState: {
     loading: false,
     expenses: [],
@@ -106,5 +106,5 @@ const expenseSlice = createSlice({
   }
 });
 
-export const { set_search, set_sort, set_page, set_limit, set_loading, set_expense } = expenseSlice.actions;
-export default expenseSlice.reducer;
+export const { set_search, set_sort, set_page, set_limit, set_loading, set_expense } = expensePage.actions;
+export default expensePage.reducer;

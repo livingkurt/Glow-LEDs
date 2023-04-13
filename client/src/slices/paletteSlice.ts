@@ -3,8 +3,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import * as API from "../api";
 
-const paletteSlice = createSlice({
-  name: "palettes",
+const palettePage = createSlice({
+  name: "palettePage",
   initialState: {
     loading: false,
     palettes: [],
@@ -106,5 +106,5 @@ const paletteSlice = createSlice({
   }
 });
 
-export const { set_search, set_sort, set_page, set_limit, set_loading, set_palette } = paletteSlice.actions;
-export default paletteSlice.reducer;
+export const { set_search, set_sort, set_page, set_limit, set_loading, set_palette } = palettePage.actions;
+export default palettePage.reducer;

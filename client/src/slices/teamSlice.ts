@@ -2,8 +2,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import * as API from "../api";
 
-const teamSlice = createSlice({
-  name: "teams",
+const teamPage = createSlice({
+  name: "teamPage",
   initialState: {
     loading: false,
     teams: [],
@@ -130,5 +130,5 @@ const teamSlice = createSlice({
   }
 });
 
-export const { set_search, set_sort, set_page, set_limit, set_loading, set_team } = teamSlice.actions;
-export default teamSlice.reducer;
+export const { set_search, set_sort, set_page, set_limit, set_loading, set_team } = teamPage.actions;
+export default teamPage.reducer;

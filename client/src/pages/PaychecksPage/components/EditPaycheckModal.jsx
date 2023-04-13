@@ -7,21 +7,21 @@ import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
 
 const EditPaycheckModal = () => {
   const dispatch = useDispatch();
-  const paychecksSlice = useSelector(state => state.paycheckSlice.paycheckPage);
-  const { edit_paycheck_modal, paycheck, loading } = paychecksSlice;
+  const paycheckPage = useSelector(state => state.paychecks.paycheckPage);
+  const { edit_paycheck_modal, paycheck, loading } = paycheckPage;
   const { affiliate, user, team, promo_code } = paycheck;
 
-  const affiliateSlice = useSelector(state => state.affiliateSlice);
-  const { affiliates, loading: loading_affiliates } = affiliateSlice;
+  const affiliatePage = useSelector(state => state.affiliates);
+  const { affiliates, loading: loading_affiliates } = affiliatePage;
 
-  const userSlice = useSelector(state => state.userSlice.userPage);
-  const { users, loading: loading_users } = userSlice;
+  const userPage = useSelector(state => state.users.userPage);
+  const { users, loading: loading_users } = userPage;
 
-  const teamSlice = useSelector(state => state.teamSlice);
-  const { teams, loading: loading_teams } = teamSlice;
+  const teamPage = useSelector(state => state.teams);
+  const { teams, loading: loading_teams } = teamPage;
 
-  const promoSlice = useSelector(state => state.promoSlice);
-  const { promos, loading: loading_promos } = promoSlice;
+  const promoPage = useSelector(state => state.promos);
+  const { promos, loading: loading_promos } = promoPage;
 
   useEffect(() => {
     let clean = true;

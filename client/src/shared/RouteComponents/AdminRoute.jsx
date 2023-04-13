@@ -3,8 +3,8 @@ import { Route, Redirect } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const AdminRoute = ({ component: Component, ...rest }) => {
-  const userSlice = useSelector(state => state.userSlice.userPage);
-  const { current_user } = userSlice;
+  const userPage = useSelector(state => state.users.userPage);
+  const { current_user } = userPage;
 
   return (
     // Show the component only when the user is logged in

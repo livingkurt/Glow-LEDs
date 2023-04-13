@@ -13,8 +13,8 @@ const FeaturesPage = props => {
   const [search, set_search] = useState("");
   const [sort, setSortOrder] = useState("");
   const category = props.match.params.category ? props.match.params.category : "";
-  const featureSlice = useSelector(state => state.featureSlice);
-  const { loading, features, message, error, success } = featureSlice;
+  const featurePage = useSelector(state => state.features);
+  const { loading, features, message, error, success } = featurePage;
 
   const dispatch = useDispatch();
 

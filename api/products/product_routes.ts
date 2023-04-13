@@ -14,6 +14,7 @@ router.route("/update_stock").put(product_controller.update_stock_products_c);
 router.route("/update_product_order").put(product_controller.update_product_order_products_c);
 router.route("/add_product_options").put(product_controller.add_product_options_products_c);
 router.route("/save_item_group_id").put(product_controller.save_item_group_id_products_c);
+router.route("/reorder").put(product_controller.reorder_products_c);
 // router
 //   .route("/compress_images")
 //   .post(product_controller.compress_images_products_c);

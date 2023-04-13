@@ -16,11 +16,11 @@ const Review = props => {
   //
   const dispatch = useDispatch();
 
-  const userSlice = useSelector(state => state.userSlice.userPage);
+  const userPage = useSelector(state => state.users.userPage);
 
-  let { current_user } = userSlice;
-  const productSlice = useSelector(state => state.productSlice);
-  const { success, loading } = productSlice;
+  let { current_user } = userPage;
+  const productPage = useSelector(state => state.products.productPage);
+  const { success, loading } = productPage;
 
   const [review_modal, setReviewModal] = useState("none");
   const [rating, setRating] = useState(5);

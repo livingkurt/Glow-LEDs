@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const CheckoutSteps = props => {
-  const userSlice = useSelector(state => state.userSlice.userPage);
-  const { current_user } = userSlice;
+  const userPage = useSelector(state => state.users.userPage);
+  const { current_user } = userPage;
   return (
     <div className="checkout-steps">
       <div className={props.step1 ? "active" : ""}>{current_user && current_user.first_name ? "Login" : "Email"}</div>

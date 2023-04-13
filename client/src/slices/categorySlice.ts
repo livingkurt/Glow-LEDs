@@ -3,8 +3,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import * as API from "../api";
 
-const categorySlice = createSlice({
-  name: "categorys",
+const categoryPage = createSlice({
+  name: "categoryPage",
   initialState: {
     loading: false,
     categorys: [],
@@ -106,5 +106,5 @@ const categorySlice = createSlice({
   }
 });
 
-export const { set_search, set_sort, set_page, set_limit, set_loading, set_category } = categorySlice.actions;
-export default categorySlice.reducer;
+export const { set_search, set_sort, set_page, set_limit, set_loading, set_category } = categoryPage.actions;
+export default categoryPage.reducer;

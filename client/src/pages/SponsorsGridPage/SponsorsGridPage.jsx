@@ -8,8 +8,8 @@ import { SponsorItemD, SponsorItemM } from "./components";
 import * as API from "../../api";
 
 const AllSponsorsPage = props => {
-  const affiliateSlice = useSelector(state => state.affiliateSlice.affiliatePage);
-  const { affiliates, loading, error } = affiliateSlice;
+  const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
+  const { affiliates, loading, error } = affiliatePage;
   const dispatch = useDispatch();
 
   useEffect(() => {

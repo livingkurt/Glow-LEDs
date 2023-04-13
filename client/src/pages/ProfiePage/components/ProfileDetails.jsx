@@ -2,8 +2,8 @@ import React from "react";
 import { useSelector } from "react-redux";
 
 const ProfileDetails = () => {
-  const userSlice = useSelector(state => state.userSlice.userPage);
-  const { current_user, user } = userSlice;
+  const userPage = useSelector(state => state.users.userPage);
+  const { current_user, user } = userPage;
 
   const { _id, first_name, last_name, email, isVerified, isAdmin, shipping, email_subscription } = user;
 

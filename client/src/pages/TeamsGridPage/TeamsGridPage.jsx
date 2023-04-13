@@ -8,8 +8,8 @@ import { TeamItemD, TeamItemM } from "./components";
 import * as API from "../../api";
 
 const AllTeamsPage = props => {
-  const teamSlice = useSelector(state => state.teamSlice);
-  const { teams, loading, error } = teamSlice;
+  const teamPage = useSelector(state => state.teams);
+  const { teams, loading, error } = teamPage;
   const dispatch = useDispatch();
   const category = props.match.params.category ? props.match.params.category : "";
 

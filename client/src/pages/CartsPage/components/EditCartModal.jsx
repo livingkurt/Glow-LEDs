@@ -11,15 +11,15 @@ const EditCartModal = () => {
   const dispatch = useDispatch();
 
   const [tabIndex, setTabIndex] = useState(0);
-  const cartSlice = useSelector(state => state.cartSlice.cartPage);
-  const { edit_cart_modal, cart, loading } = cartSlice;
+  const cartPage = useSelector(state => state.carts.cartPage);
+  const { edit_cart_modal, cart, loading } = cartPage;
   const { user } = cart;
 
-  const userSlice = useSelector(state => state.userSlice.userPage);
-  const { users, loading: loading_users } = userSlice;
+  const userPage = useSelector(state => state.users.userPage);
+  const { users, loading: loading_users } = userPage;
 
-  const productSlice = useSelector(state => state.productSlice);
-  const { products, loading: loading_products } = productSlice;
+  const productPage = useSelector(state => state.products.productPage);
+  const { products, loading: loading_products } = productPage;
 
   useEffect(() => {
     let clean = true;

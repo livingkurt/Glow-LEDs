@@ -17,8 +17,8 @@ const DatabaseMigrationPage = props => {
 
   const today = accurate_date(date);
   const end_date = accurate_date(addDays(date, 7));
-  const userSlice = useSelector(state => state.userSlice.userPage);
-  const { current_user } = userSlice;
+  const userPage = useSelector(state => state.users.userPage);
+  const { current_user } = userPage;
 
   const [collection, set_collection] = useState("");
   const [search_parameter_field, set_search_parameter_field] = useState("");

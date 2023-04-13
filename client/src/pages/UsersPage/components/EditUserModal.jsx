@@ -9,15 +9,15 @@ import { Typography } from "@mui/material";
 const EditUserModal = () => {
   const dispatch = useDispatch();
 
-  const userSlice = useSelector(state => state.userSlice.userPage);
-  const { edit_user_modal, user, loading } = userSlice;
+  const userPage = useSelector(state => state.users.userPage);
+  const { edit_user_modal, user, loading } = userPage;
 
   const { affiliate } = user;
-  const affiliateSlice = useSelector(state => state.affiliateSlice.affiliatePage);
-  const { affiliates, loading: loading_affiliates } = affiliateSlice;
+  const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
+  const { affiliates, loading: loading_affiliates } = affiliatePage;
 
-  const wholesalerSlice = useSelector(state => state.wholesalerSlice.wholesalerPage);
-  const { wholesalers, loading: loading_wholesalers } = wholesalerSlice;
+  const wholesalerPage = useSelector(state => state.wholesalers.wholesalerPage);
+  const { wholesalers, loading: loading_wholesalers } = wholesalerPage;
 
   useEffect(() => {
     let clean = true;

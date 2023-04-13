@@ -23,16 +23,16 @@ const ProfilePage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   let { id } = useParams();
-  const userSlice = useSelector(state => state.userSlice.userPage);
-  const { current_user, user } = userSlice;
+  const userPage = useSelector(state => state.users.userPage);
+  const { current_user, user } = userPage;
 
   const { first_name } = user;
 
-  const paycheckSlice = useSelector(state => state.paycheckSlice);
-  const { message, loading, remoteVersionRequirement } = paycheckSlice;
+  const paycheckPage = useSelector(state => state.paychecks.paycheckPage);
+  const { message, loading, remoteVersionRequirement } = paycheckPage;
 
-  const orderSlice = useSelector(state => state.orderSlice);
-  const { orders } = orderSlice;
+  const orderPage = useSelector(state => state.orders);
+  const { orders } = orderPage;
 
   useEffect(() => {
     let cleanup = true;
@@ -142,7 +142,7 @@ const ProfilePage = () => {
             remoteVersionRequirement={remoteVersionRequirement}
             determine_color={determine_color}
             tableName={"Paychecks"}
-            namespaceScope="paycheckSlice"
+            namespaceScope="paychecks"
             namespace="paycheckTable"
             columnDefs={column_defs}
             loading={loading}

@@ -15,8 +15,8 @@ const EditPromoPage = props => {
   const [loading_checkboxes, set_loading_checkboxes] = useState(true);
   const history = useHistory();
 
-  const promoSlice = useSelector(state => state.promoSlice);
-  const { promo, loading, error } = promoSlice;
+  const promoPage = useSelector(state => state.promos);
+  const { promo, loading, error } = promoPage;
 
   const {
     id,
@@ -44,14 +44,14 @@ const EditPromoPage = props => {
     end_date
   } = promo;
 
-  const userSlice = useSelector(state => state.userSlice.userPage);
-  const { users } = userSlice;
+  const userPage = useSelector(state => state.users.userPage);
+  const { users } = userPage;
 
-  const affiliateSlice = useSelector(state => state.affiliateSlice.affiliatePage);
-  const { affiliates } = affiliateSlice;
+  const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
+  const { affiliates } = affiliatePage;
 
-  const productSlice = useSelector(state => state.productSlice);
-  const { products } = productSlice;
+  const productPage = useSelector(state => state.products.productPage);
+  const { products } = productPage;
 
   const dispatch = useDispatch();
 

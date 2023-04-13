@@ -13,8 +13,8 @@ import { determine_color } from "./paychecksHelpers";
 import { format_date } from "../../utils/helper_functions";
 
 const PaychecksPage = () => {
-  const paycheckSlice = useSelector(state => state.paycheckSlice.paycheckPage);
-  const { message, loading, remoteVersionRequirement } = paycheckSlice;
+  const paycheckPage = useSelector(state => state.paychecks.paycheckPage);
+  const { message, loading, remoteVersionRequirement } = paycheckPage;
   const date = new Date();
   const dispatch = useDispatch();
 
@@ -101,7 +101,7 @@ const PaychecksPage = () => {
         remoteVersionRequirement={remoteVersionRequirement}
         determine_color={determine_color}
         tableName={"Paychecks"}
-        namespaceScope="paycheckSlice"
+        namespaceScope="paychecks"
         namespace="paycheckTable"
         columnDefs={column_defs}
         loading={loading}
@@ -152,16 +152,16 @@ export default PaychecksPage;
 //   const [selectedRows, setSelectedRows] = useState([]);
 
 //   const category = props.match.params.category ? props.match.params.category : "";
-//   const paycheckSlice = useSelector(state => state.paycheckSlice);
-//   const { loading, paychecks, message, error, totalPages, success } = paycheckSlice;
+// const paycheckPage = useSelector(state => state.paychecks.paycheckPage);
+//   const { loading, paychecks, message, error, totalPages, success } = paycheckPage;
 
 //   const dispatch = useDispatch();
 
-//   const affiliateSlice = useSelector(state => state.affiliateSlice.affiliatePage);
-//   const { affiliates } = affiliateSlice;
+//   const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
+//   const { affiliates } = affiliatePage;
 
-//   const teamSlice = useSelector(state => state.teamSlice);
-//   const { teams } = teamSlice;
+//   const teamPage = useSelector(state => state.teams);
+//   const { teams } = teamPage;
 //   const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
 //   const date = new Date();

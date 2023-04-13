@@ -11,12 +11,12 @@ import { GLButton } from "../../../shared/GlowLEDsComponents";
 import * as API from "../../../api";
 
 const LabelCreatorPage = props => {
-  const userSlice = useSelector(state => state.userSlice.userPage);
-  const { current_user } = userSlice;
+  const userPage = useSelector(state => state.users.userPage);
+  const { current_user } = userPage;
 
   const history = useHistory();
-  const parcelSlice = useSelector(state => state.parcelSlice);
-  const { parcels } = parcelSlice;
+  const parcelPage = useSelector(state => state.parcels);
+  const { parcels } = parcelPage;
 
   const [all_shipping, set_all_shipping] = useState([]);
   const [loading, set_loading] = useState(true);

@@ -12,8 +12,8 @@ const ChipsPage = props => {
   const [search, set_search] = useState("");
   const [sort, setSortOrder] = useState("");
   const category = props.match.params.category ? props.match.params.category : "";
-  const chipSlice = useSelector(state => state.chipSlice);
-  const { loading, chips, message, error, success } = chipSlice;
+  const chipPage = useSelector(state => state.chips);
+  const { loading, chips, message, error, success } = chipPage;
 
   const dispatch = useDispatch();
 

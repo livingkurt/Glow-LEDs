@@ -5,14 +5,14 @@ import { Loading } from "../../../shared/SharedComponents";
 import { determine_code_tier } from "../../DashboardPage/background/worker_helpers";
 
 const ProfileAffiliateEarnings = () => {
-  const userSlice = useSelector(state => state.userSlice.userPage);
-  const { user, error } = userSlice;
+  const userPage = useSelector(state => state.users.userPage);
+  const { user, error } = userPage;
 
-  const affiliateSlice = useSelector(state => state.affiliateSlice.affiliatePage);
-  const { month_earnings, year_earnings, loading_year_earnings, loading_month_earnings } = affiliateSlice;
+  const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
+  const { month_earnings, year_earnings, loading_year_earnings, loading_month_earnings } = affiliatePage;
 
-  const promoSlice = useSelector(state => state.promoSlice);
-  const { promos } = promoSlice;
+  const promoPage = useSelector(state => state.promos);
+  const { promos } = promoPage;
 
   return (
     <div>

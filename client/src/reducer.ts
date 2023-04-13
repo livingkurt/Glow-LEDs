@@ -31,7 +31,7 @@ import { combineReducers } from "redux";
 import imageSlice from "./slices/imageSlice";
 
 const reducers = {
-  affiliateSlice: combineReducers({
+  affiliates: combineReducers({
     affiliatePage: affiliateSlice,
     affiliateTable: glTableReducer("affiliateTable", {
       searchBy: (row: any, search: string) => {
@@ -40,7 +40,7 @@ const reducers = {
       }
     })
   }),
-  cartSlice: combineReducers({
+  carts: combineReducers({
     cartPage: cartSlice,
     cartTable: glTableReducer("cartTable", {
       searchBy: (row: any, search: string) => {
@@ -49,17 +49,17 @@ const reducers = {
       }
     })
   }),
-  categorySlice: categorySlice,
-  chipSlice: chipSlice,
-  contentSlice: contentSlice,
-  emailSlice: emailSlice,
-  expenseSlice: expenseSlice,
-  featureSlice: featureSlice,
-  filamentSlice: filamentSlice,
-  orderSlice: orderSlice,
-  paletteSlice: paletteSlice,
-  parcelSlice: parcelSlice,
-  paycheckSlice: combineReducers({
+  categorys: categorySlice,
+  chips: chipSlice,
+  contents: contentSlice,
+  emails: emailSlice,
+  expenses: expenseSlice,
+  features: featureSlice,
+  filaments: filamentSlice,
+  orders: orderSlice,
+  palettes: paletteSlice,
+  parcels: parcelSlice,
+  paychecks: combineReducers({
     paycheckPage: paycheckSlice,
     paycheckTable: glTableReducer("paycheckTable", {
       searchBy: (row: any, search: string) => {
@@ -68,7 +68,7 @@ const reducers = {
       }
     })
   }),
-  imageSlice: combineReducers({
+  images: combineReducers({
     imagePage: imageSlice,
     imageTable: glTableReducer("imageTable", {
       searchBy: (row: any, search: string) => {
@@ -77,12 +77,21 @@ const reducers = {
       }
     })
   }),
-  productSlice: productSlice,
-  promoSlice: promoSlice,
-  settingSlice: settingSlice,
-  surveySlice: surveySlice,
-  teamSlice: teamSlice,
-  userSlice: combineReducers({
+  products: combineReducers({
+    productPage: productSlice,
+    productTable: glTableReducer("productTable", {
+      sorting: [2, "desc"],
+      searchBy: (row: any, search: string) => {
+        const searchableText = row.title;
+        return searchableText.toLowerCase().includes(search.toLowerCase());
+      }
+    })
+  }),
+  promos: promoSlice,
+  settings: settingSlice,
+  surveys: surveySlice,
+  teams: teamSlice,
+  users: combineReducers({
     userPage: userSlice,
     userTable: glTableReducer("userTable", {
       searchBy: (row: any, search: string) => {
@@ -94,8 +103,8 @@ const reducers = {
   [allRecordsApi.reducerPath]: allRecordsApi.reducer,
   [dashboardApi.reducerPath]: dashboardApi.reducer,
   [placeOrderApi.reducerPath]: placeOrderApi.reducer,
-  dashboardSlice: dashboardSlice,
-  wholesalerSlice: combineReducers({
+  dashboards: dashboardSlice,
+  wholesalers: combineReducers({
     wholesalerPage: wholesalerSlice,
     wholesalerTable: glTableReducer("wholesalerTable", {
       searchBy: (row: any, search: string) => {
@@ -104,7 +113,7 @@ const reducers = {
       }
     })
   }),
-  tutorialSlice: combineReducers({
+  tutorials: combineReducers({
     tutorialPage: tutorialSlice,
     tutorialTable: glTableReducer("tutorialTable", {
       sorting: [3, "desc"],

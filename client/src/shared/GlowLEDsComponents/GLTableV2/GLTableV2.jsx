@@ -286,7 +286,7 @@ const GLTableV2 = ({
                 return;
               }
               const reorderedItems = reorder(visibleRows, result.source.index, result.destination.index);
-              dispatch(reorderRows(namespace, { reorderedItems, remoteVersionRequirementType, remoteReorderApi }));
+              dispatch(reorderRows(namespace, { reorderedItems, remoteVersionRequirementType, remoteReorderApi, page, pageSize }));
             }}
           >
             <Droppable droppableId="droppable">

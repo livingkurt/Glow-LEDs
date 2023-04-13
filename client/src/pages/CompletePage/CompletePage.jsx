@@ -12,11 +12,11 @@ import AffiliateComplete from "./components/AffiliateComplete";
 const CompletePage = props => {
   const [data, set_data] = useState();
 
-  const userSlice = useSelector(state => state.userSlice.userPage);
-  const { current_user } = userSlice;
+  const userPage = useSelector(state => state.users.userPage);
+  const { current_user } = userPage;
 
-  const orderSlice = useSelector(state => state.orderSlice);
-  const { order } = orderSlice;
+  const orderPage = useSelector(state => state.orders);
+  const { order } = orderPage;
 
   useEffect(() => {
     let clean = true;

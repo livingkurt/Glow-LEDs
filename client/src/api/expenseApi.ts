@@ -7,7 +7,7 @@ import { create_query } from "../utils/helper_functions";
 export const listExpenses = createAsyncThunk("expenses/listExpenses", async (query: any, thunkApi: any) => {
   try {
     const {
-      userSlice: {
+      users: {
         userPage: { current_user }
       }
     } = thunkApi.getState();
@@ -19,7 +19,7 @@ export const listExpenses = createAsyncThunk("expenses/listExpenses", async (que
 export const saveExpense = createAsyncThunk("expenses/saveExpense", async (expense: any, thunkApi: any) => {
   try {
     const {
-      userSlice: {
+      users: {
         userPage: { current_user }
       }
     } = thunkApi.getState();
@@ -37,7 +37,7 @@ export const saveExpense = createAsyncThunk("expenses/saveExpense", async (expen
 export const detailsExpense = createAsyncThunk("expenses/detailsExpense", async (id: string, thunkApi: any) => {
   try {
     const {
-      userSlice: {
+      users: {
         userPage: { current_user }
       }
     } = thunkApi.getState();
@@ -49,7 +49,7 @@ export const detailsExpense = createAsyncThunk("expenses/detailsExpense", async 
 export const deleteExpense = createAsyncThunk("expenses/deleteExpense", async (pathname, thunkApi: any) => {
   try {
     const {
-      userSlice: {
+      users: {
         userPage: { current_user }
       }
     } = thunkApi.getState();

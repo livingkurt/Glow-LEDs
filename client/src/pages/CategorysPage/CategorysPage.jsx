@@ -17,16 +17,16 @@ const CategorysPage = props => {
   const [loading_checkboxes, set_loading_checkboxes] = useState(false);
   const [loading_categorys, set_loading_categorys] = useState(false);
   const category = props.match.params.category ? props.match.params.category : "";
-  const categorySlice = useSelector(state => state.categorySlice);
-  const { loading, categorys, message, error, success } = categorySlice;
+  const categoryPage = useSelector(state => state.categorys);
+  const { loading, categorys, message, error, success } = categoryPage;
 
   const dispatch = useDispatch();
 
-  const affiliateSlice = useSelector(state => state.affiliateSlice.affiliatePage);
-  const { affiliates } = affiliateSlice;
+  const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
+  const { affiliates } = affiliatePage;
 
-  const teamSlice = useSelector(state => state.teamSlice);
-  const { teams } = teamSlice;
+  const teamPage = useSelector(state => state.teams);
+  const { teams } = teamPage;
 
   setTimeout(() => {
     set_loading_checkboxes(false);

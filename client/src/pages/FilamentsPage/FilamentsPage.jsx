@@ -16,8 +16,8 @@ const FilamentsPage = props => {
   const [loading_checkboxes, set_loading_checkboxes] = useState(false);
   const [create_filaments, set_create_filaments] = useState(true);
   const category = props.match.params.category ? props.match.params.category : "";
-  const filamentSlice = useSelector(state => state.filamentSlice);
-  const { loading, filaments, message, error, success } = filamentSlice;
+  const filamentPage = useSelector(state => state.filaments);
+  const { loading, filaments, message, error, success } = filamentPage;
 
   const dispatch = useDispatch();
 

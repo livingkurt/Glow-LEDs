@@ -3,8 +3,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import * as API from "../api";
 
-const filamentSlice = createSlice({
-  name: "filaments",
+const filamentPage = createSlice({
+  name: "filamentPage",
   initialState: {
     loading: false,
     filaments: [],
@@ -106,5 +106,5 @@ const filamentSlice = createSlice({
   }
 });
 
-export const { set_search, set_sort, set_page, set_limit, set_loading, set_filament } = filamentSlice.actions;
-export default filamentSlice.reducer;
+export const { set_search, set_sort, set_page, set_limit, set_loading, set_filament } = filamentPage.actions;
+export default filamentPage.reducer;

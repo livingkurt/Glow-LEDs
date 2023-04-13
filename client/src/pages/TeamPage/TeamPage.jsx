@@ -9,10 +9,10 @@ import * as API from "../../api";
 
 const TeamPage = props => {
   const history = useHistory();
-  const teamSlice = useSelector(state => state.teamSlice);
-  const { team } = teamSlice;
-  const userSlice = useSelector(state => state.userSlice.userPage);
-  const { current_user } = userSlice;
+  const teamPage = useSelector(state => state.teams);
+  const { team } = teamPage;
+  const userPage = useSelector(state => state.users.userPage);
+  const { current_user } = userPage;
 
   const dispatch = useDispatch();
 

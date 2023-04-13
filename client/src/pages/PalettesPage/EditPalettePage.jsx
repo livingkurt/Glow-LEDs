@@ -17,15 +17,15 @@ const EditPalettePage = props => {
   const [preset_colors, set_preset_colors] = useState(["red", "green", "blue"]);
   // const [ chip_object, set_chip_object ] = useState({});
 
-  const chipSlice = useSelector(state => state.chipSlice);
-  const { chips: chips_list } = chipSlice;
+  const chipPage = useSelector(state => state.chips);
+  const { chips: chips_list } = chipPage;
 
   const [loading_checkboxes, set_loading_checkboxes] = useState(true);
 
   const history = useHistory();
 
-  const paletteSlice = useSelector(state => state.paletteSlice);
-  const { palette, loading, error } = paletteSlice;
+  const palettePage = useSelector(state => state.palettes);
+  const { palette, loading, error } = palettePage;
 
   const set_state = () => {
     set_id(palette._id);

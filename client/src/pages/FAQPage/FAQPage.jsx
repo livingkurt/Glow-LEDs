@@ -14,8 +14,8 @@ const FAQPage = () => {
   const dispatch = useDispatch();
   const [chip_name, set_chip_name] = useState();
 
-  const chipSlice = useSelector(state => state.chipSlice);
-  const { chips: chips_list } = chipSlice;
+  const chipPage = useSelector(state => state.chips);
+  const { chips: chips_list } = chipPage;
 
   useEffect(() => {
     let clean = true;

@@ -33,7 +33,7 @@ export const getCarts = async ({
 export const listCarts = createAsyncThunk("carts/listCarts", async (query: any, thunkApi: any) => {
   try {
     const {
-      userSlice: {
+      users: {
         userPage: { current_user }
       }
     } = thunkApi.getState();
@@ -47,7 +47,7 @@ export const addToCart = createAsyncThunk(
   async ({ cart, cart_item, type }: { cart: any; cart_item: any; type: string }, thunkApi: any) => {
     try {
       const {
-        userSlice: {
+        users: {
           userPage: { current_user }
         }
       } = thunkApi.getState();
@@ -65,7 +65,7 @@ export const addToCart = createAsyncThunk(
 export const saveCart = createAsyncThunk("carts/saveCart", async (cart: any, thunkApi: any) => {
   try {
     const {
-      userSlice: {
+      users: {
         userPage: { current_user }
       }
     } = thunkApi.getState();
@@ -83,7 +83,7 @@ export const saveCart = createAsyncThunk("carts/saveCart", async (cart: any, thu
 export const detailsCart = createAsyncThunk("carts/detailsCart", async (id: string, thunkApi: any) => {
   try {
     const {
-      userSlice: {
+      users: {
         userPage: { current_user }
       }
     } = thunkApi.getState();
@@ -95,7 +95,7 @@ export const detailsCart = createAsyncThunk("carts/detailsCart", async (id: stri
 export const emptyCart = createAsyncThunk("carts/emptyCart", async (id: string, thunkApi: any) => {
   try {
     const {
-      userSlice: {
+      users: {
         userPage: { current_user }
       }
     } = thunkApi.getState();
@@ -107,7 +107,7 @@ export const emptyCart = createAsyncThunk("carts/emptyCart", async (id: string, 
 export const deleteCart = createAsyncThunk("carts/deleteCart", async (id: string, thunkApi: any) => {
   try {
     const {
-      userSlice: {
+      users: {
         userPage: { current_user }
       }
     } = thunkApi.getState();
@@ -121,10 +121,10 @@ export const deleteCartItem = createAsyncThunk(
   async ({ item_index, type }: { cart: any; item_index: any; type: string }, thunkApi: any) => {
     try {
       const {
-        userSlice: {
+        users: {
           userPage: { current_user }
         },
-        cartSlice: {
+        carts: {
           cartPage: { my_cart }
         }
       } = thunkApi.getState();

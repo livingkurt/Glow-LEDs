@@ -3,8 +3,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import * as API from "../api";
 
-const emailSlice = createSlice({
-  name: "emails",
+const emailPage = createSlice({
+  name: "emailPage",
   initialState: {
     loading: false,
     emails: [],
@@ -125,5 +125,5 @@ const emailSlice = createSlice({
   }
 });
 
-export const { set_search, set_sort, set_page, set_limit, set_loading, set_email, clear_email_success } = emailSlice.actions;
-export default emailSlice.reducer;
+export const { set_search, set_sort, set_page, set_limit, set_loading, set_email, clear_email_success } = emailPage.actions;
+export default emailPage.reducer;

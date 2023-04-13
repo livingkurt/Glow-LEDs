@@ -3,8 +3,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import * as API from "../api";
 
-const settingSlice = createSlice({
-  name: "settings",
+const settingPage = createSlice({
+  name: "settingPage",
   initialState: {
     loading: false,
     settings: [],
@@ -111,5 +111,5 @@ const settingSlice = createSlice({
   }
 });
 
-export const { set_search, set_sort, set_page, set_limit, set_loading, set_setting, set_show_search_bar } = settingSlice.actions;
-export default settingSlice.reducer;
+export const { set_search, set_sort, set_page, set_limit, set_loading, set_setting, set_show_search_bar } = settingPage.actions;
+export default settingPage.reducer;

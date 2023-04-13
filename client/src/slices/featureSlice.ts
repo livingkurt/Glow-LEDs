@@ -3,8 +3,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import * as API from "../api";
 
-const featureSlice = createSlice({
-  name: "features",
+const featurePage = createSlice({
+  name: "featurePage",
   initialState: {
     loading: false,
     features: [],
@@ -106,5 +106,5 @@ const featureSlice = createSlice({
   }
 });
 
-export const { set_search, set_sort, set_page, set_limit, set_loading, set_feature } = featureSlice.actions;
-export default featureSlice.reducer;
+export const { set_search, set_sort, set_page, set_limit, set_loading, set_feature } = featurePage.actions;
+export default featurePage.reducer;

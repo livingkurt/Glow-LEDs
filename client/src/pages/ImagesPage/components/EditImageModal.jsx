@@ -6,8 +6,8 @@ import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
 
 const EditImageModal = () => {
   const dispatch = useDispatch();
-  const imagesSlice = useSelector(state => state.imageSlice.imagePage);
-  const { edit_image_modal, image, loading } = imagesSlice;
+  const imagePage = useSelector(state => state.images.imagePage);
+  const { edit_image_modal, image, loading } = imagePage;
 
   const formFields = {
     link: {

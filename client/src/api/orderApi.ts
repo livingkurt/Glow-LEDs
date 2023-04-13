@@ -7,7 +7,7 @@ import { create_query } from "../utils/helper_functions";
 export const listOrders = createAsyncThunk("orders/listOrders", async (query: any, thunkApi: any) => {
   try {
     const {
-      userSlice: {
+      users: {
         userPage: { current_user }
       }
     } = thunkApi.getState();
@@ -19,7 +19,7 @@ export const listOrders = createAsyncThunk("orders/listOrders", async (query: an
 export const listMyOrders = createAsyncThunk("orders/listMyOrders", async (user_id: any, thunkApi: any) => {
   try {
     const {
-      userSlice: {
+      users: {
         userPage: { current_user }
       }
     } = thunkApi.getState();
@@ -32,7 +32,7 @@ export const listMyOrders = createAsyncThunk("orders/listMyOrders", async (user_
 export const saveOrder = createAsyncThunk("orders/saveOrder", async (order: any, thunkApi: any) => {
   try {
     const {
-      userSlice: {
+      users: {
         userPage: { current_user }
       }
     } = thunkApi.getState();
@@ -53,10 +53,10 @@ export const createPayOrder = createAsyncThunk(
   async ({ order, paymentMethod }: { order: any; paymentMethod: any }, thunkApi: any) => {
     try {
       const {
-        userSlice: {
+        users: {
           userPage: { current_user }
         },
-        cartSlice: {
+        carts: {
           cartPage: { my_cart }
         }
       } = thunkApi.getState();
@@ -129,7 +129,7 @@ export const createPayOrderGuest = createAsyncThunk(
 export const detailsOrder = createAsyncThunk("orders/detailsOrder", async (order_id: string, thunkApi: any) => {
   try {
     const {
-      userSlice: {
+      users: {
         userPage: { current_user }
       }
     } = thunkApi.getState();
@@ -146,7 +146,7 @@ export const detailsOrder = createAsyncThunk("orders/detailsOrder", async (order
 export const deleteOrder = createAsyncThunk("orders/deleteOrder", async (pathname, thunkApi: any) => {
   try {
     const {
-      userSlice: {
+      users: {
         userPage: { current_user }
       }
     } = thunkApi.getState();
@@ -168,7 +168,7 @@ export const refundOrder = createAsyncThunk(
   ) => {
     try {
       const {
-        userSlice: {
+        users: {
           userPage: { current_user }
         }
       } = thunkApi.getState();
@@ -192,7 +192,7 @@ export const payOrder = createAsyncThunk(
   async ({ order, paymentMethod }: { order: any; paymentMethod: any }, thunkApi: any) => {
     try {
       const {
-        userSlice: {
+        users: {
           userPage: { current_user }
         }
       } = thunkApi.getState();

@@ -53,8 +53,8 @@ const Sidebar = props => {
   };
 
   const [first_name, set_first_name] = useState("");
-  const userSlice = useSelector(state => state.userSlice.userPage);
-  const { current_user } = userSlice;
+  const userPage = useSelector(state => state.users.userPage);
+  const { current_user } = userPage;
 
   useEffect(() => {
     let clean = true;
@@ -93,8 +93,8 @@ const Sidebar = props => {
   // 	btn.classList.toggle('not-active');
   // });
 
-  const chipSlice = useSelector(state => state.chipSlice);
-  const { chips: chips_list } = chipSlice;
+  const chipPage = useSelector(state => state.chips);
+  const { chips: chips_list } = chipPage;
 
   const [chip_name, set_chip_name] = useState();
 

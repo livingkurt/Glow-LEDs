@@ -25,11 +25,11 @@ const EditContentPage = props => {
 
   const history = useHistory();
 
-  const contentSlice = useSelector(state => state.contentSlice);
-  const { contents, content, loading, error } = contentSlice;
+  const contentPage = useSelector(state => state.contents);
+  const { contents, content, loading, error } = contentPage;
 
-  const emailSlice = useSelector(state => state.emailSlice);
-  const { emails } = emailSlice;
+  const emailPage = useSelector(state => state.emails);
+  const { emails } = emailPage;
 
   const dispatch = useDispatch();
 

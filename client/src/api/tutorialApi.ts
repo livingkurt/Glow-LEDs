@@ -38,7 +38,7 @@ export const reorderTutorials = async ({ reorderedItems }: { reorderedItems: any
 export const listTutorials = createAsyncThunk("tutorials/listTutorials", async (query: any, thunkApi: any) => {
   try {
     const {
-      userSlice: {
+      users: {
         userPage: { current_user }
       }
     } = thunkApi.getState();
@@ -50,7 +50,7 @@ export const listTutorials = createAsyncThunk("tutorials/listTutorials", async (
 export const saveTutorial = createAsyncThunk("tutorials/saveTutorial", async (tutorial: any, thunkApi: any) => {
   try {
     const {
-      userSlice: {
+      users: {
         userPage: { current_user }
       }
     } = thunkApi.getState();
@@ -80,7 +80,7 @@ export const detailsTutorial = createAsyncThunk("tutorials/detailsTutorial", asy
 export const deleteTutorial = createAsyncThunk("tutorials/deleteTutorial", async (id: string, thunkApi: any) => {
   try {
     const {
-      userSlice: {
+      users: {
         userPage: { current_user }
       }
     } = thunkApi.getState();

@@ -13,8 +13,8 @@ import { determine_color, fullName } from "./usersHelpers";
 import { Link } from "react-router-dom";
 
 const UsersPage = () => {
-  const userSlice = useSelector(state => state.userSlice.userPage);
-  const { message, loading, remoteVersionRequirement } = userSlice;
+  const userPage = useSelector(state => state.users.userPage);
+  const { message, loading, remoteVersionRequirement } = userPage;
 
   const dispatch = useDispatch();
 
@@ -72,7 +72,7 @@ const UsersPage = () => {
         remoteVersionRequirement={remoteVersionRequirement}
         determine_color={determine_color}
         tableName={"Users"}
-        namespaceScope="userSlice"
+        namespaceScope="users"
         namespace="userTable"
         columnDefs={column_defs}
         loading={loading}
@@ -104,8 +104,8 @@ export default UsersPage;
 //   const [search, set_search] = useState("");
 //   const [sort, setSortOrder] = useState("");
 //   const category = props.match.params.category ? props.match.params.category : "";
-//   const userSlice = useSelector(state => state.userSlice.userPage);
-//   const { loading, users, message, error, success } = userSlice;
+//   const userPage = useSelector(state => state.users.userPage);
+//   const { loading, users, message, error, success } = userPage;
 
 //   const dispatch = useDispatch();
 

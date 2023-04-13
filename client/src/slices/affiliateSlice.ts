@@ -3,8 +3,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import * as API from "../api";
 
-const affiliatesSlice = createSlice({
-  name: "affiliates",
+const affiliatePage = createSlice({
+  name: "affiliatePage",
   initialState: {
     loading: false,
     affiliates: [],
@@ -238,5 +238,5 @@ export const {
   close_affiliate_modal,
   open_affiliate_modal,
   set_edit_affiliate_modal
-} = affiliatesSlice.actions;
-export default affiliatesSlice.reducer;
+} = affiliatePage.actions;
+export default affiliatePage.reducer;

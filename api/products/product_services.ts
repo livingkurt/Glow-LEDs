@@ -1,66 +1,22 @@
 import { product_db } from "../products";
 import { dimminish_batteries_stock, dimminish_refresh_stock, dimminish_supremes_stock } from "./product_helpers";
 import { categories, determine_filter, snake_case, subcategories } from "../../util";
+import { getFilteredData } from "../api_helpers";
 
 // const sharp = require("sharp");
 
 export default {
-  findAll_products_s: async (query: { page: string; search: string; sort: string; limit: string }) => {
+  findAll_products_s: async (query: { search: string; sort: string; page: string; limit: string }) => {
     try {
-      const page: string = query.page ? query.page : "1";
-      const limit: string = query.limit ? query.limit : "0";
+      const sort_options = ["name", "category", "order", "price"];
+      const { filter, sort, limit, page } = getFilteredData({ query, sort_options, search_name: "title", defaultSort: { order: 1 } });
 
-      let search = {};
-      if (categories.includes(snake_case(query.search))) {
-        search = query.search
-          ? {
-              category: {
-                $regex: snake_case(query.search),
-                $options: "i"
-              }
-            }
-          : {};
-      } else if (subcategories.includes(snake_case(query.search))) {
-        search = query.search
-          ? {
-              subcategory: {
-                $regex: snake_case(query.search),
-                $options: "i"
-              }
-            }
-          : {};
-      } else {
-        search = query.search
-          ? {
-              name: {
-                $regex: query.search.toLowerCase(),
-                $options: "i"
-              }
-            }
-          : {};
-      }
-
-      const filter = determine_filter(query, search);
-
-      const sort_query = query.sort && query.sort.toLowerCase();
-      let sort: any = { order: 1, _id: -1 };
-      if (sort_query === "lowest") {
-        sort = { price: 1 };
-      } else if (sort_query === "highest") {
-        sort = { price: -1 };
-      } else if (sort_query === "category") {
-        sort = { category: 1 };
-      } else if (sort_query === "hidden") {
-        sort = { hidden: -1 };
-      } else if (sort_query === "newest") {
-        sort = { _id: -1 };
-      }
       const products = await product_db.findAll_products_db(filter, sort, limit, page);
       const count = await product_db.count_products_db(filter);
       return {
-        products,
-        totalPages: Math.ceil(count / parseInt(limit)),
-        currentPage: page
+        data: products,
+        total_count: count,
+        currentPage: parseInt(page)
       };
     } catch (error) {
       if (error instanceof Error) {
@@ -68,6 +24,69 @@ export default {
       }
     }
   },
+  // findAll_products_s: async (query: { page: string; search: string; sort: string; limit: string }) => {
+  //   try {
+  //     const page: string = query.page ? query.page : "1";
+  //     const limit: string = query.limit ? query.limit : "0";
+
+  //     let search = {};
+  //     if (categories.includes(snake_case(query.search))) {
+  //       search = query.search
+  //         ? {
+  //             category: {
+  //               $regex: snake_case(query.search),
+  //               $options: "i"
+  //             }
+  //           }
+  //         : {};
+  //     } else if (subcategories.includes(snake_case(query.search))) {
+  //       search = query.search
+  //         ? {
+  //             subcategory: {
+  //               $regex: snake_case(query.search),
+  //               $options: "i"
+  //             }
+  //           }
+  //         : {};
+  //     } else {
+  //       search = query.search
+  //         ? {
+  //             name: {
+  //               $regex: query.search.toLowerCase(),
+  //               $options: "i"
+  //             }
+  //           }
+  //         : {};
+  //     }
+
+  //     const filter = determine_filter(query, search);
+
+  //     const sort_query = query.sort && query.sort.toLowerCase();
+  //     let sort: any = { order: 1, _id: -1 };
+  //     if (sort_query === "lowest") {
+  //       sort = { price: 1 };
+  //     } else if (sort_query === "highest") {
+  //       sort = { price: -1 };
+  //     } else if (sort_query === "category") {
+  //       sort = { category: 1 };
+  //     } else if (sort_query === "hidden") {
+  //       sort = { hidden: -1 };
+  //     } else if (sort_query === "newest") {
+  //       sort = { _id: -1 };
+  //     }
+  //     const products = await product_db.findAll_products_db(filter, sort, limit, page);
+  //     const count = await product_db.count_products_db(filter);
+  //     return {
+  //       products,
+  //       totalPages: Math.ceil(count / parseInt(limit)),
+  //       currentPage: page
+  //     };
+  //   } catch (error) {
+  //     if (error instanceof Error) {
+  //       throw new Error(error.message);
+  //     }
+  //   }
+  // },
   findById_products_s: async (params: any) => {
     try {
       return await product_db.findById_products_db(params.id);
@@ -90,6 +109,26 @@ export default {
   update_products_s: async (params: any, body: any) => {
     try {
       return await product_db.update_products_db(params.id, body);
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  reorder_products_s: async (body: any) => {
+    try {
+      const { reorderedItems } = body;
+
+      // Update each product's order using the reorderedItems array
+      const updatePromises = reorderedItems.map(async (item: any) => {
+        await product_db.update_products_db(item._id, { ...item, order: item.order });
+      });
+
+      // Wait for all update operations to complete
+      await Promise.all(updatePromises);
+
+      // Send success response
+      return "Productss reordered successfully.";
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

@@ -14,8 +14,8 @@ const PromosPage = props => {
   const [search, set_search] = useState("");
   const [sort, setSortOrder] = useState("");
   const category = props.match.params.category ? props.match.params.category : "";
-  const promoSlice = useSelector(state => state.promoSlice);
-  const { loading, promos, message, error, success } = promoSlice;
+  const promoPage = useSelector(state => state.promos);
+  const { loading, promos, message, error, success } = promoPage;
 
   const dispatch = useDispatch();
 

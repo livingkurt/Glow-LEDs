@@ -12,8 +12,8 @@ const EditSurveyPage = props => {
 
   const history = useHistory();
 
-  const surveySlice = useSelector(state => state.surveySlice);
-  const { survey, loading, error } = surveySlice;
+  const surveyPage = useSelector(state => state.surveys);
+  const { survey, loading, error } = surveyPage;
 
   const {
     id,

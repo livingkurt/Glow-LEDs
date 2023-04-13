@@ -19,16 +19,16 @@ const PalettesPage = props => {
   const [loading_checkboxes, set_loading_checkboxes] = useState(false);
   const [create_palettes, set_create_palettes] = useState(true);
   const category = props.match.params.category ? props.match.params.category : "";
-  const paletteSlice = useSelector(state => state.paletteSlice);
-  const { loading, palettes, message, error, success } = paletteSlice;
+  const palettePage = useSelector(state => state.palettes);
+  const { loading, palettes, message, error, success } = palettePage;
 
   const dispatch = useDispatch();
 
-  const affiliateSlice = useSelector(state => state.affiliateSlice.affiliatePage);
-  const { affiliates } = affiliateSlice;
+  const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
+  const { affiliates } = affiliatePage;
 
-  const teamSlice = useSelector(state => state.teamSlice);
-  const { teams } = teamSlice;
+  const teamPage = useSelector(state => state.teams);
+  const { teams } = teamPage;
 
   setTimeout(() => {
     set_loading_checkboxes(false);

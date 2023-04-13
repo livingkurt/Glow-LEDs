@@ -2,8 +2,8 @@
 
 import { createSlice } from "@reduxjs/toolkit";
 
-const profilesSlice = createSlice({
-  name: "profileSlice",
+const profilePage = createSlice({
+  name: "profilePage",
   initialState: {
     year: "",
     month: "",
@@ -34,5 +34,5 @@ const profilesSlice = createSlice({
   }
 });
 
-export const { set_year, set_month, set_start_date, set_end_date, set_start_end_date, set_loading } = profilesSlice.actions;
-export default profilesSlice.reducer;
+export const { set_year, set_month, set_start_date, set_end_date, set_start_end_date, set_loading } = profilePage.actions;
+export default profilePage.reducer;

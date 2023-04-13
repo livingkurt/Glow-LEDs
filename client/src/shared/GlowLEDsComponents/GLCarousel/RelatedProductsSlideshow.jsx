@@ -30,11 +30,11 @@ const RelatedProductsSlideshow = ({
   const { height, width } = useWindowDimensions();
   const dispatch = useDispatch();
   const history = useHistory();
-  const cartSlice = useSelector(state => state.cartSlice.cartPage);
-  const { my_cart } = cartSlice;
+  const cartPage = useSelector(state => state.carts.cartPage);
+  const { my_cart } = cartPage;
   const { cartItems } = my_cart;
-  const userSlice = useSelector(state => state.userSlice.userPage);
-  const { current_user } = userSlice;
+  const userPage = useSelector(state => state.users.userPage);
+  const { current_user } = userPage;
 
   const [products, set_products] = useState([]);
   const [loading, set_loading] = useState(false);

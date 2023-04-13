@@ -4,8 +4,8 @@ import { createSlice } from "@reduxjs/toolkit";
 import * as API from "../api";
 import { format_date } from "../utils/helper_functions";
 
-const imageSlice = createSlice({
-  name: "images",
+const imagePage = createSlice({
+  name: "imagePage",
   initialState: {
     loading: false,
     images: [],
@@ -143,5 +143,5 @@ export const {
   close_image_modal,
   open_edit_image_modal,
   image_uploaded
-} = imageSlice.actions;
-export default imageSlice.reducer;
+} = imagePage.actions;
+export default imagePage.reducer;

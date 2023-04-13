@@ -4,10 +4,41 @@ import axios from "axios";
 import { headers } from "../utils/helpers/user_helpers";
 import { create_query } from "../utils/helper_functions";
 
+export const getProducts = async ({
+  search,
+  sorting,
+  filters,
+  page,
+  pageSize
+}: {
+  search: string;
+  sorting: any;
+  filters: any;
+  page: number;
+  pageSize: number;
+}) => {
+  try {
+    return axios.get(`/api/products`, {
+      params: {
+        limit: pageSize,
+        page: page,
+        search: search,
+        sort: sorting,
+        filters: filters
+      }
+    });
+  } catch (error) {}
+};
+export const reorderProducts = async ({ reorderedItems }: { reorderedItems: any }) => {
+  try {
+    return axios.put(`/api/products/reorder`, { reorderedItems });
+  } catch (error) {}
+};
+
 export const listProducts = createAsyncThunk("products/listProducts", async (query: any, thunkApi: any) => {
   try {
     const {
-      userSlice: {
+      users: {
         userPage: { current_user }
       }
     } = thunkApi.getState();
@@ -19,7 +50,7 @@ export const listProducts = createAsyncThunk("products/listProducts", async (que
 export const saveProduct = createAsyncThunk("products/saveProduct", async (product: any, thunkApi: any) => {
   try {
     const {
-      userSlice: {
+      users: {
         userPage: { current_user }
       }
     } = thunkApi.getState();
@@ -37,7 +68,7 @@ export const saveProduct = createAsyncThunk("products/saveProduct", async (produ
 export const detailsProduct = createAsyncThunk("products/detailsProduct", async (pathname: any, thunkApi: any) => {
   try {
     const {
-      userSlice: {
+      users: {
         userPage: { current_user }
       }
     } = thunkApi.getState();
@@ -49,7 +80,7 @@ export const detailsProduct = createAsyncThunk("products/detailsProduct", async 
 export const deleteProduct = createAsyncThunk("products/deleteProduct", async (id: string, thunkApi: any) => {
   try {
     const {
-      userSlice: {
+      users: {
         userPage: { current_user }
       }
     } = thunkApi.getState();
@@ -66,7 +97,7 @@ export const saveProductReview = createAsyncThunk(
   ) => {
     try {
       const {
-        userSlice: {
+        users: {
           userPage: { current_user }
         }
       } = thunkApi.getState();
@@ -81,7 +112,7 @@ export const deleteProductReview = createAsyncThunk(
   async ({ product_pathname, review_id }: { product_pathname: string; review_id: string }, thunkApi: any) => {
     try {
       const {
-        userSlice: {
+        users: {
           userPage: { current_user }
         }
       } = thunkApi.getState();

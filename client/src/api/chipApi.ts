@@ -7,7 +7,7 @@ import { create_query } from "../utils/helper_functions";
 export const listChips = createAsyncThunk("chips/listChips", async (query: any, thunkApi: any) => {
   try {
     const {
-      userSlice: {
+      users: {
         userPage: { current_user }
       }
     } = thunkApi.getState();
@@ -19,7 +19,7 @@ export const listChips = createAsyncThunk("chips/listChips", async (query: any, 
 export const saveChip = createAsyncThunk("chips/saveChip", async (chip: any, thunkApi: any) => {
   try {
     const {
-      userSlice: {
+      users: {
         userPage: { current_user }
       }
     } = thunkApi.getState();
@@ -37,7 +37,7 @@ export const saveChip = createAsyncThunk("chips/saveChip", async (chip: any, thu
 export const detailsChip = createAsyncThunk("chips/detailsChip", async (id: string, thunkApi: any) => {
   try {
     const {
-      userSlice: {
+      users: {
         userPage: { current_user }
       }
     } = thunkApi.getState();
@@ -49,7 +49,7 @@ export const detailsChip = createAsyncThunk("chips/detailsChip", async (id: stri
 export const deleteChip = createAsyncThunk("chips/deleteChip", async (pathname, thunkApi: any) => {
   try {
     const {
-      userSlice: {
+      users: {
         userPage: { current_user }
       }
     } = thunkApi.getState();

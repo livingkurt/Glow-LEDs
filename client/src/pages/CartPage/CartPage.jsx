@@ -9,13 +9,13 @@ import { API_Products } from "../../utils";
 import RelatedProductsSlideshow from "../../shared/GlowLEDsComponents/GLCarousel/RelatedProductsSlideshow";
 
 const CartPage = props => {
-  const cartSlice = useSelector(state => state.cartSlice.cartPage);
+  const cartPage = useSelector(state => state.carts.cartPage);
 
-  const { my_cart } = cartSlice;
+  const { my_cart } = cartPage;
   const { cartItems } = my_cart;
 
-  const userSlice = useSelector(state => state.userSlice.userPage);
-  const { current_user } = userSlice;
+  const userPage = useSelector(state => state.users.userPage);
+  const { current_user } = userPage;
   const [no_items_in_cart, set_no_items_in_cart] = useState("");
 
   const checkoutHandler = () => {

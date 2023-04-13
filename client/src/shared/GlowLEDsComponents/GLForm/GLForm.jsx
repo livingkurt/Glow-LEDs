@@ -4,8 +4,8 @@ import { useSelector } from "react-redux";
 import { toCapitalize } from "../../../utils/helper_functions";
 
 const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
-  const userSlice = useSelector(state => state.userSlice.userPage);
-  const { current_user } = userSlice;
+  const userPage = useSelector(state => state.users.userPage);
+  const { current_user } = userPage;
 
   const determine_shown_fields = fieldData => {
     let result = true;

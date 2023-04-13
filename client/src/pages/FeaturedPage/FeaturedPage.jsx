@@ -9,10 +9,10 @@ import * as API from "../../api";
 
 const FeaturedPage = props => {
   const history = useHistory();
-  const featureSlice = useSelector(state => state.featureSlice);
-  const { feature } = featureSlice;
-  const userSlice = useSelector(state => state.userSlice.userPage);
-  const { current_user } = userSlice;
+  const featurePage = useSelector(state => state.features);
+  const { feature } = featurePage;
+  const userPage = useSelector(state => state.users.userPage);
+  const { current_user } = userPage;
 
   const dispatch = useDispatch();
 

@@ -20,8 +20,8 @@ const EditParcelPage = props => {
 
   const history = useHistory();
 
-  const parcelSlice = useSelector(state => state.parcelSlice);
-  const { parcel, loading, error } = parcelSlice;
+  const parcelPage = useSelector(state => state.parcels);
+  const { parcel, loading, error } = parcelPage;
 
   const set_state = () => {
     set_id(parcel._id);

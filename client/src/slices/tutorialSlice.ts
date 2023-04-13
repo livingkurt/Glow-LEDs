@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import * as API from "../api/tutorialApi";
 
-const tutorialsSlice = createSlice({
-  name: "tutorials",
+const tutorialPage = createSlice({
+  name: "tutorialPage",
   initialState: {
     loading: false,
     tutorials: [],
@@ -161,5 +161,5 @@ export const {
   close_tutorial_modal,
   open_edit_tutorial_modal,
   setRemoteVersionRequirement
-} = tutorialsSlice.actions;
-export default tutorialsSlice.reducer;
+} = tutorialPage.actions;
+export default tutorialPage.reducer;

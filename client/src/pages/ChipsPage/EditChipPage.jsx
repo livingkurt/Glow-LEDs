@@ -26,8 +26,8 @@ const EditChipPage = props => {
 
   const history = useHistory();
 
-  const chipSlice = useSelector(state => state.chipSlice);
-  const { chip, message, loading, error } = chipSlice;
+  const chipPage = useSelector(state => state.chips);
+  const { chip, message, loading, error } = chipPage;
 
   const set_state = () => {
     set_id(chip._id);

@@ -12,10 +12,10 @@ import * as API from "../../api";
 const SponsorPage = props => {
   const [teams, set_teams] = useState([]);
   const history = useHistory();
-  const affiliateSlice = useSelector(state => state.affiliateSlice.affiliatePage);
-  const { affiliate } = affiliateSlice;
-  const userSlice = useSelector(state => state.userSlice.userPage);
-  const { current_user } = userSlice;
+  const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
+  const { affiliate } = affiliatePage;
+  const userPage = useSelector(state => state.users.userPage);
+  const { current_user } = userPage;
 
   const dispatch = useDispatch();
 

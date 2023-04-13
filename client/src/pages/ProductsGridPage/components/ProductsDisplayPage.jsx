@@ -28,11 +28,11 @@ const AllProductsPage = props => {
   const collection = props.match.params.collection ? props.match.params.collection : "";
   const promo_code = props.match.params.promo_code ? props.match.params.promo_code : "";
 
-  const productSlice = useSelector(state => state.productSlice);
-  const { products: main_products, loading, error } = productSlice;
+  const productPage = useSelector(state => state.products.productPage);
+  const { products: main_products, loading, error } = productPage;
 
-  const chipSlice = useSelector(state => state.chipSlice);
-  const { chips: chips_list } = chipSlice;
+  const chipPage = useSelector(state => state.chips);
+  const { chips: chips_list } = chipPage;
 
   const dispatch = useDispatch();
   useEffect(() => {

@@ -18,17 +18,17 @@ import { save_shipping } from "../../slices/cartSlice";
 import { set_loading, set_loading_payment } from "../../slices/orderSlice";
 
 const PlaceOrderPage = props => {
-  const cartSlice = useSelector(state => state.cartSlice.cartPage);
-  const { my_cart, shipping, payment } = cartSlice;
+  const cartPage = useSelector(state => state.carts.cartPage);
+  const { my_cart, shipping, payment } = cartPage;
   const { cartItems } = my_cart;
-  const orderSlice = useSelector(state => state.orderSlice);
-  const { order, error: error_order, success_order, success, error_pay, loading, loading_payment } = orderSlice;
+  const orderPage = useSelector(state => state.orders);
+  const { order, error: error_order, success_order, success, error_pay, loading, loading_payment } = orderPage;
 
-  const userSlice = useSelector(state => state.userSlice.userPage);
-  const { users, current_user, loading: user_loading, success: user_success } = userSlice;
+  const userPage = useSelector(state => state.users.userPage);
+  const { users, current_user, loading: user_loading, success: user_success } = userPage;
 
-  const promoSlice = useSelector(state => state.promoSlice);
-  const { promos } = promoSlice;
+  const promoPage = useSelector(state => state.promos);
+  const { promos } = promoPage;
   const items_price = determine_total(cartItems);
 
   const [shipping_rates, set_shipping_rates] = useState({});

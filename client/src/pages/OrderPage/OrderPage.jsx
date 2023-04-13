@@ -23,18 +23,18 @@ const OrderPage = props => {
 
   const dispatch = useDispatch();
 
-  const userSlice = useSelector(state => state.userSlice.userPage);
-  const { current_user } = userSlice;
+  const userPage = useSelector(state => state.users.userPage);
+  const { current_user } = userPage;
 
-  const cartSlice = useSelector(state => state.cartSlice.cartPage);
-  const { my_cart } = cartSlice;
+  const cartPage = useSelector(state => state.carts.cartPage);
+  const { my_cart } = cartPage;
   const { cartItems } = my_cart;
 
-  const orderSlice = useSelector(state => state.orderSlice);
-  const { loading, order, error, orders, refund, success: successPay, error: errorPay } = orderSlice;
+  const orderPage = useSelector(state => state.orders);
+  const { loading, order, error, orders, refund, success: successPay, error: errorPay } = orderPage;
 
-  const parcelSlice = useSelector(state => state.parcelSlice);
-  const { parcels } = parcelSlice;
+  const parcelPage = useSelector(state => state.parcels);
+  const { parcels } = parcelPage;
 
   const [loading_label, set_loading_label] = useState(false);
   const [product, set_product] = useState("");
@@ -519,8 +519,8 @@ const OrderPage = props => {
   };
 
   const [promo_code, set_promo_code] = useState("");
-  const promoSlice = useSelector(state => state.promoSlice);
-  const { promos } = promoSlice;
+  const promoPage = useSelector(state => state.promos);
+  const { promos } = promoPage;
 
   const [promo_code_validations, set_promo_code_validations] = useState("");
   const items_price = determine_total(order_items, current_user?.isWholesaler);

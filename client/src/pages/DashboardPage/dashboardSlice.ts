@@ -3,8 +3,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import * as API from "./dashboardApi";
 
-const dashboardsSlice = createSlice({
-  name: "dashboards",
+const dashboardPage = createSlice({
+  name: "dashboardPage",
   initialState: {
     year: "",
     month: "",
@@ -35,5 +35,5 @@ const dashboardsSlice = createSlice({
   }
 });
 
-export const { set_year, set_month, set_start_date, set_end_date, set_start_end_date, set_loading } = dashboardsSlice.actions;
-export default dashboardsSlice.reducer;
+export const { set_year, set_month, set_start_date, set_end_date, set_start_end_date, set_loading } = dashboardPage.actions;
+export default dashboardPage.reducer;

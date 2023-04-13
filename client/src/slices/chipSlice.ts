@@ -3,8 +3,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import * as API from "../api";
 
-const chipSlice = createSlice({
-  name: "chips",
+const chipPage = createSlice({
+  name: "chipPage",
   initialState: {
     loading: false,
     chips: [],
@@ -106,5 +106,5 @@ const chipSlice = createSlice({
   }
 });
 
-export const { set_search, set_sort, set_page, set_limit, set_loading, set_chip } = chipSlice.actions;
-export default chipSlice.reducer;
+export const { set_search, set_sort, set_page, set_limit, set_loading, set_chip } = chipPage.actions;
+export default chipPage.reducer;

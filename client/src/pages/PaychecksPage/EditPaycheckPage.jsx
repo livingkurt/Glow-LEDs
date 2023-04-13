@@ -15,16 +15,16 @@ const EditPaycheckPage = props => {
 
   const history = useHistory();
 
-  const paycheckSlice = useSelector(state => state.paycheckSlice);
-  const { paycheck, loading, error } = paycheckSlice;
+  const paycheckPage = useSelector(state => state.paychecks.paycheckPage);
+  const { paycheck, loading, error } = paycheckPage;
 
   const { id, affiliate, team, amount, venmo, paid, reciept, paid_at } = paycheck;
 
-  const affiliateSlice = useSelector(state => state.affiliateSlice.affiliatePage);
-  const { affiliates } = affiliateSlice;
+  const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
+  const { affiliates } = affiliatePage;
 
-  const teamSlice = useSelector(state => state.teamSlice);
-  const { teams } = teamSlice;
+  const teamPage = useSelector(state => state.teams);
+  const { teams } = teamPage;
 
   const dispatch = useDispatch();
 

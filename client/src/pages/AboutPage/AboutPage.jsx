@@ -15,14 +15,14 @@ const AboutPage = () => {
 
   const dispatch = useDispatch();
 
-  const affiliateSlice = useSelector(state => state.affiliateSlice.affiliatePage);
-  const { affiliates, loading: loading_sponsors, error } = affiliateSlice;
+  const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
+  const { affiliates, loading: loading_sponsors, error } = affiliatePage;
 
-  const teamSlice = useSelector(state => state.teamSlice);
-  const { teams, loading: loading_team, error: error_team } = teamSlice;
+  const teamPage = useSelector(state => state.teams);
+  const { teams, loading: loading_team, error: error_team } = teamPage;
 
-  const userSlice = useSelector(state => state.userSlice.userPage);
-  const { users, loading_users } = userSlice;
+  const userPage = useSelector(state => state.users.userPage);
+  const { users, loading_users } = userPage;
 
   useEffect(() => {
     let clean = true;

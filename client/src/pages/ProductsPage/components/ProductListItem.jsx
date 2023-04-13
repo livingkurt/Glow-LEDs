@@ -32,8 +32,8 @@ const Container = styled.div`
 `;
 
 const ProductListItem = props => {
-  const userSlice = useSelector(state => state.userSlice.userPage);
-  const { current_user } = userSlice;
+  const userPage = useSelector(state => state.users.userPage);
+  const { current_user } = userPage;
   const history = useHistory();
   const keyCodes = {
     enter: 13,

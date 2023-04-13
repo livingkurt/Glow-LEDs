@@ -12,8 +12,8 @@ import { EditWholesalerModal } from "../../WholesalersPage/components";
 export const ProfileActions = () => {
   let { id } = useParams();
   const dispatch = useDispatch();
-  const userSlice = useSelector(state => state.userSlice.userPage);
-  const { current_user, user } = userSlice;
+  const userPage = useSelector(state => state.users.userPage);
+  const { current_user, user } = userPage;
   const { _id } = user;
   return (
     <div className="row">

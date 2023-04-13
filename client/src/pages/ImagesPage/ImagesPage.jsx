@@ -13,8 +13,8 @@ import { format_date } from "../../utils/helper_functions";
 import UploadImageModal from "./components/UploadImageModal";
 
 const ImagesPage = () => {
-  const imageSlice = useSelector(state => state.imageSlice.imagePage);
-  const { message, loading, remoteVersionRequirement } = imageSlice;
+  const imagePage = useSelector(state => state.images.imagePage);
+  const { message, loading, remoteVersionRequirement } = imagePage;
   const dispatch = useDispatch();
 
   const column_defs = useMemo(
@@ -66,7 +66,7 @@ const ImagesPage = () => {
         remoteApi={remoteApi}
         remoteVersionRequirement={remoteVersionRequirement}
         tableName={"Images"}
-        namespaceScope="imageSlice"
+        namespaceScope="images"
         namespace="imageTable"
         columnDefs={column_defs}
         loading={loading}

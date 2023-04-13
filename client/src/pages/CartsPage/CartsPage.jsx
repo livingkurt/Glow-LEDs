@@ -11,8 +11,8 @@ import { Button } from "@mui/material";
 import { getCarts } from "../../api";
 
 const CartsPage = () => {
-  const cartSlice = useSelector(state => state.cartSlice.cartPage);
-  const { message, loading, remoteVersionRequirement } = cartSlice;
+  const cartPage = useSelector(state => state.carts.cartPage);
+  const { message, loading, remoteVersionRequirement } = cartPage;
 
   const dispatch = useDispatch();
 
@@ -74,7 +74,7 @@ const CartsPage = () => {
         remoteApi={remoteApi}
         remoteVersionRequirement={remoteVersionRequirement}
         tableName={"Carts"}
-        namespaceScope="cartSlice"
+        namespaceScope="carts"
         namespace="cartTable"
         columnDefs={column_defs}
         loading={loading}

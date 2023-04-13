@@ -22,14 +22,14 @@ const useStyles = makeStyles(() => ({
 }));
 
 const EditAffiliatePage = props => {
-  const userSlice = useSelector(state => state.userSlice.userPage);
-  const { users, loading: loading_users } = userSlice;
+  const userPage = useSelector(state => state.users.userPage);
+  const { users, loading: loading_users } = userPage;
 
   const history = useHistory();
 
-  const affiliateSlice = useSelector(state => state.affiliateSlice.affiliatePage);
-  const affiliate = useSelector(state => state.affiliateSlice.affiliate);
-  const { loading, success } = affiliateSlice;
+  const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
+  const affiliate = useSelector(state => state.affiliates.affiliate);
+  const { loading, success } = affiliatePage;
   const {
     user,
     artist_name,
@@ -57,14 +57,14 @@ const EditAffiliatePage = props => {
     private_code
   } = affiliate;
 
-  const productSlice = useSelector(state => state.productSlice);
-  const { products: products_list, loading: loading_products } = productSlice;
+  const productPage = useSelector(state => state.products.productPage);
+  const { products: products_list, loading: loading_products } = productPage;
 
-  const chipClice = useSelector(state => state.chipClice);
-  const { chips: chips_list, loading: loading_chips } = chipClice;
+  const chipPage = useSelector(state => state.chips);
+  const { chips: chips_list, loading: loading_chips } = chipPage;
 
-  const promoSlice = useSelector(state => state.promoSlice);
-  const { promos: promos_list, loading: loading_promos } = promoSlice;
+  const promoPage = useSelector(state => state.promos);
+  const { promos: promos_list, loading: loading_promos } = promoPage;
 
   const dispatch = useDispatch();
 

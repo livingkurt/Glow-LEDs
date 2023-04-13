@@ -42,21 +42,21 @@ const EditUserAffiliatePage = props => {
 
   const { height, width } = useWindowDimensions();
 
-  const productSlice = useSelector(state => state.productSlice);
-  const { products: products_list } = productSlice;
+  const productPage = useSelector(state => state.products.productPage);
+  const { products: products_list } = productPage;
 
-  const chipSlice = useSelector(state => state.chipSlice);
-  const { chips: chips_list } = chipSlice;
+  const chipPage = useSelector(state => state.chips);
+  const { chips: chips_list } = chipPage;
 
-  const promoSlice = useSelector(state => state.promoSlice);
-  const { promos: promos_list } = promoSlice;
+  const promoPage = useSelector(state => state.promos);
+  const { promos: promos_list } = promoPage;
   const history = useHistory();
 
-  const affiliateSlice = useSelector(state => state.affiliateSlice.affiliatePage);
-  const { affiliate, loading, error, success } = affiliateSlice;
+  const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
+  const { affiliate, loading, error, success } = affiliatePage;
 
-  const userSlice = useSelector(state => state.userSlice.userPage);
-  const { current_user } = userSlice;
+  const userPage = useSelector(state => state.users.userPage);
+  const { current_user } = userPage;
 
   const set_state = () => {
     set_id(affiliate._id);

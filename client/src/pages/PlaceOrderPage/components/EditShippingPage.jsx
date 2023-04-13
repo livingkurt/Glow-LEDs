@@ -12,8 +12,8 @@ const ProfilePage = props => {
   const [email, setEmail] = useState("");
   const dispatch = useDispatch();
 
-  const userSlice = useSelector(state => state.userSlice.userPage);
-  const { current_user } = userSlice;
+  const userPage = useSelector(state => state.users.userPage);
+  const { current_user } = userPage;
 
   const submitHandler = e => {
     e.preventDefault();

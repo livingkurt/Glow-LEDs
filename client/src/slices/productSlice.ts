@@ -4,100 +4,102 @@ import { createSlice } from "@reduxjs/toolkit";
 import * as API from "../api";
 import { accurate_date, format_date, format_time } from "../utils/helper_functions";
 
-const productSlice = createSlice({
-  name: "products",
+const product = {
+  name: "",
+  images: [],
+  color_images: [],
+  secondary_color_images: [],
+  option_images: [],
+  secondary_images: [],
+  video: "",
+  brand: "",
+  price: 0,
+  wholesale_price: 0,
+  wholesale_product: false,
+  previous_price: 0,
+  category: "",
+  product_collection: "",
+  categorys: [],
+  subcategorys: [],
+  subcategory: "",
+  countInStock: 0,
+  count_in_stock: 0,
+  quantity: 0,
+  finite_stock: false,
+  facts: "",
+  included_items: "",
+  contributers: [],
+  description: "",
+  rating: 0,
+  numReviews: 0,
+  reviews: [],
+  hidden: false,
+  sale_price: 0,
+  sale_start_date: "",
+  sale_end_date: "",
+  deleted: false,
+  preorder: false,
+  pathname: "",
+  meta_title: "",
+  meta_description: "",
+  meta_keywords: "",
+  length: 0,
+  width: 0,
+  height: 0,
+  volume: 0,
+  package_length: 0,
+  package_width: 0,
+  package_height: 0,
+  package_volume: 0,
+  product_length: 0,
+  product_width: 0,
+  product_height: 0,
+  weight_pounds: 0,
+  weight_ounces: 0,
+  processing_time: [],
+  material_cost: 0,
+  filament_used: 0,
+  printing_time: 0,
+  assembly_time: 0,
+  order: 0,
+  item_group_id: "",
+  chips: [],
+  product_options: [],
+  group_product: false,
+  group_name: "",
+  products: [],
+  has_add_on: false,
+  color_product_group: false,
+  color_group_name: "",
+  color_products: [],
+  filament: {},
+
+  secondary_color_product_group: false,
+  secondary_color_group_name: "",
+  secondary_color_products: [],
+  secondary_product_group: false,
+  secondary_group_name: "",
+  secondary_products: [],
+
+  option_product_group: false,
+  option_group_name: "",
+  option_products: [],
+  color: "",
+  color_code: "",
+  size: "",
+  sizing: "",
+  default_option: false,
+  option: false,
+  macro_product: false,
+  extra_cost: 0
+};
+
+const productPage = createSlice({
+  name: "productPage",
   initialState: {
     loading: false,
     products: [],
-    product: {
-      name: "",
-      images: [],
-      color_images: [],
-      secondary_color_images: [],
-      option_images: [],
-      secondary_images: [],
-      video: "",
-      brand: "",
-      price: 0,
-      wholesale_price: 0,
-      wholesale_product: false,
-      previous_price: 0,
-      category: "",
-      product_collection: "",
-      categorys: [],
-      subcategorys: [],
-      subcategory: "",
-      countInStock: 0,
-      count_in_stock: 0,
-      quantity: 0,
-      finite_stock: false,
-      facts: "",
-      included_items: "",
-      contributers: [],
-      description: "",
-      rating: 0,
-      numReviews: 0,
-      reviews: [],
-      hidden: false,
-      sale_price: 0,
-      sale_start_date: "",
-      sale_end_date: "",
-      deleted: false,
-      preorder: false,
-      pathname: "",
-      meta_title: "",
-      meta_description: "",
-      meta_keywords: "",
-      length: 0,
-      width: 0,
-      height: 0,
-      volume: 0,
-      package_length: 0,
-      package_width: 0,
-      package_height: 0,
-      package_volume: 0,
-      product_length: 0,
-      product_width: 0,
-      product_height: 0,
-      weight_pounds: 0,
-      weight_ounces: 0,
-      processing_time: [],
-      material_cost: 0,
-      filament_used: 0,
-      printing_time: 0,
-      assembly_time: 0,
-      order: 0,
-      item_group_id: "",
-      chips: [],
-      product_options: [],
-      group_product: false,
-      group_name: "",
-      products: [],
-      has_add_on: false,
-      color_product_group: false,
-      color_group_name: "",
-      color_products: [],
-      filament: {},
-
-      secondary_color_product_group: false,
-      secondary_color_group_name: "",
-      secondary_color_products: [],
-      secondary_product_group: false,
-      secondary_group_name: "",
-      secondary_products: [],
-
-      option_product_group: false,
-      option_group_name: "",
-      option_products: [],
-      color: "",
-      color_code: "",
-      size: "",
-      sizing: "",
-      default_option: false,
-      option: false,
-      macro_product: false,
-      extra_cost: 0
-    },
+    product: product,
     color_modifier: "",
     secondary_color_modifier: "",
     option_modifier: "",
@@ -122,6 +124,9 @@ const productSlice = createSlice({
     search: "",
     sort: "",
     page: 1,
+    remoteVersionRequirement: 0,
+    edit_product_modal: false,
+    product_modal: false,
     limit: 10,
     sort_options: ["Newest", "Artist Name", "Facebook Name", "Instagram Handle", "Sponsor", "Promoter"],
     colors: [
@@ -143,20 +148,31 @@ const productSlice = createSlice({
     set_loading: (state, { payload }) => {
       state.loading = payload;
     },
-    set_search: (state, { payload }) => {
-      state.search = payload;
-    },
-    set_sort: (state, { payload }) => {
-      state.sort = payload;
-    },
-    set_page: (state, { payload }) => {
-      state.page = payload;
-    },
-    set_limit: (state, { payload }) => {
-      state.limit = payload;
-    },
     set_success: (state, { payload }) => {
       state.success = payload;
+    },
+    set_edit_product_modal: (state, { payload }) => {
+      state.edit_product_modal = payload;
+    },
+    open_create_product_modal: (state, { payload }) => {
+      state.edit_product_modal = true;
+      state.product = product;
+    },
+    open_edit_product_modal: (state, { payload }) => {
+      state.edit_product_modal = true;
+      state.product = payload;
+    },
+    close_product_modal: (state, { payload }) => {
+      state.product_modal = false;
+      state.product = product;
+    },
+    open_product_modal: (state, { payload }) => {
+      state.product_modal = true;
+      state.product = payload;
+    },
+    setRemoteVersionRequirement: (state, { payload }) => {
+      console.log("setRemoteVersionRequirement");
+      state.remoteVersionRequirement = Date.now();
     },
     set_color_modifier: (state, { payload }) => {
       state.color_modifier = payload;
@@ -218,6 +234,7 @@ const productSlice = createSlice({
     [API.saveProduct.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.message = "Product Saved";
+      state.remoteVersionRequirement = Date.now();
     },
     [API.saveProduct.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
@@ -255,6 +272,7 @@ const productSlice = createSlice({
       state.loading = false;
       state.product = payload.product;
       state.message = "Product Deleted";
+      state.remoteVersionRequirement = Date.now();
     },
     [API.deleteProduct.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
@@ -279,10 +297,6 @@ const productSlice = createSlice({
 });
 
 export const {
-  set_search,
-  set_sort,
-  set_page,
-  set_limit,
   set_loading,
   set_product,
   set_color_modifier,
@@ -297,6 +311,12 @@ export const {
   set_sale_end_time,
   set_loading_options,
   set_new_index,
-  set_success
-} = productSlice.actions;
-export default productSlice.reducer;
+  set_success,
+  set_edit_product_modal,
+  open_create_product_modal,
+  open_product_modal,
+  close_product_modal,
+  open_edit_product_modal,
+  setRemoteVersionRequirement
+} = productPage.actions;
+export default productPage.reducer;

@@ -15,8 +15,8 @@ const SettingsPage = props => {
   const [loading_checkboxes, set_loading_checkboxes] = useState(false);
   const category = props.match.params.category ? props.match.params.category : "";
 
-  const settingSlice = useSelector(state => state.settingSlice);
-  const { loading, settings, message, error, success } = settingSlice;
+  const settingPage = useSelector(state => state.settings);
+  const { loading, settings, message, error, success } = settingPage;
 
   const dispatch = useDispatch();
 

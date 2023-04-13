@@ -13,8 +13,8 @@ const ParcelsPage = props => {
   const [sort, setSortOrder] = useState("");
   const [loading_parcels, set_loading_parcels] = useState(false);
   const category = props.match.params.category ? props.match.params.category : "";
-  const parcelSlice = useSelector(state => state.parcelSlice);
-  const { loading, parcels, message, error, success } = parcelSlice;
+  const parcelPage = useSelector(state => state.parcels);
+  const { loading, parcels, message, error, success } = parcelPage;
 
   const parcelSave = useSelector(state => state.parcelSave);
 

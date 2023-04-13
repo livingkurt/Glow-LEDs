@@ -8,11 +8,11 @@ import CheckoutSteps from "../../PlaceOrderPage/components/GuestCheckoutSteps";
 import { save_payment_method, save_shipping } from "../../../slices/cartSlice";
 
 const ShippingPage = props => {
-  const userSlice = useSelector(state => state.userSlice.userPage);
-  const { current_user } = userSlice;
+  const userPage = useSelector(state => state.users.userPage);
+  const { current_user } = userPage;
 
-  const cartSlice = useSelector(state => state.cartSlice.cartPage);
-  const { shipping } = cartSlice;
+  const cartPage = useSelector(state => state.carts.cartPage);
+  const { shipping } = cartPage;
 
   const [email, set_email] = useState("");
   const [first_name, set_first_name] = useState("");

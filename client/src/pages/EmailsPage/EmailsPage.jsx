@@ -14,8 +14,8 @@ const EmailsPage = props => {
   const [sort, setSortOrder] = useState("");
 
   const category = props.match.params.category ? props.match.params.category : "";
-  const emailSlice = useSelector(state => state.emailSlice);
-  const { loading, emails, message, error, success } = emailSlice;
+  const emailPage = useSelector(state => state.emails);
+  const { loading, emails, message, error, success } = emailPage;
 
   const dispatch = useDispatch();
 

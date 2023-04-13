@@ -20,11 +20,11 @@ const ExpensesPage = props => {
 
   const category = props.match.params.category ? props.match.params.category : "";
 
-  const userSlice = useSelector(state => state.userSlice.userPage);
-  const { current_user } = userSlice;
+  const userPage = useSelector(state => state.users.userPage);
+  const { current_user } = userPage;
 
-  const expenseSlice = useSelector(state => state.expenseSlice);
-  const { loading, expenses, message, error, success } = expenseSlice;
+  const expensePage = useSelector(state => state.expenses);
+  const { loading, expenses, message, error, success } = expensePage;
 
   const dispatch = useDispatch();
 
