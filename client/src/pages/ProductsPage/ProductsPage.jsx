@@ -9,6 +9,7 @@ import { EditProductModal } from "./components";
 import * as API from "../../api";
 import { Link } from "react-router-dom";
 import { Button } from "@mui/material";
+import { determine_color } from "./productsPageHelpers";
 
 const ProductsPage = () => {
   const productPage = useSelector(state => state.products.productPage);
@@ -40,7 +41,7 @@ const ProductsPage = () => {
       },
       { title: "Category", display: "category" },
       { title: "Order", display: "order" },
-      { title: "Price", display: "price" },
+      { title: "Price", display: row => `${row.price}` },
       {
         title: "Use as Template",
         display: row => (
@@ -72,7 +73,10 @@ const ProductsPage = () => {
     [dispatch]
   );
 
-  const remoteApi = useCallback(options => API.getProducts(options), []);
+  const remoteApi = useCallback(
+    options => API.getProducts({ ...options, filters: { ...options.filers, option: false, hidden: false } }),
+    []
+  );
   const remoteReorderApi = useCallback(options => API.reorderProducts(options), []);
 
   return (
@@ -87,6 +91,7 @@ const ProductsPage = () => {
         remoteVersionRequirement={remoteVersionRequirement}
         remoteVersionRequirementType={"products/setRemoteVersionRequirement"}
         tableName={"Products"}
+        determine_color={determine_color}
         namespaceScope="products"
         namespace="productTable"
         columnDefs={column_defs}
@@ -98,7 +103,7 @@ const ProductsPage = () => {
           </Button>
         }
       />
-      <EditProductModal />
+      {/* <EditProductModal /> */}
     </div>
   );
 };
