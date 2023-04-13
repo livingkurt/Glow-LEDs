@@ -3,7 +3,7 @@ import { affiliate_db } from "../affiliates";
 import { order_db } from "../orders";
 import { paycheck_db } from "../paychecks";
 import { team_db } from "../teams";
-import { getFilteredData } from "./paycheck_helper";
+import { getFilteredData } from "../api_helpers";
 
 export default {
   findAll_paychecks_s: async (query: { page: string; search: string; sort: any; limit: string; filters: any }) => {

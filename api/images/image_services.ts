@@ -1,6 +1,6 @@
 import { promisify } from "util";
 import { image_db } from "../images";
-import { getFilteredData } from "./image_helper";
+import { getFilteredData } from "../api_helpers";
 import { ImgurClient } from "imgur";
 import path from "path";
 import appRoot from "app-root-path";

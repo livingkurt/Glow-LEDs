@@ -48,8 +48,7 @@ const ImageUploader = ({ onUpload }) => {
           "Content-Type": "multipart/form-data"
         }
       });
-      onUpload();
-      console.log(response.data);
+      onUpload(response.data);
     } catch (error) {
       console.log(error);
     }

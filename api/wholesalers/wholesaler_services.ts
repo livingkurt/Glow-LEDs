@@ -1,7 +1,7 @@
 import { determine_filter } from "../../util";
 import dotenv from "dotenv";
 import wholesaler_db from "./wholesaler_db";
-import { getFilteredData } from "../paychecks/paycheck_helper";
+import { getFilteredData } from "../api_helpers";
 dotenv.config();
 
 export default {
