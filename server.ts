@@ -5,7 +5,6 @@ import express, { Request, Response } from "express";
 import multer, { Multer } from "multer";
 import path from "path";
 import mongoose from "mongoose";
-import { imgbox } from "imgbox-js";
 import routes from "./api";
 import template_routes from "./email_templates/template_routes";
 import axios from "axios";

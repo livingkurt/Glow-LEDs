@@ -4,7 +4,7 @@ require("babel-register")({
 
 const router = require("./sitemap-routes").default;
 const Sitemap = require("react-router-sitemap").default;
-const fetch = require("node-fetch");
+// const fetch = require("node-fetch");
 const API = "http://localhost:8080";
 const categories = ["gloves", "batteries", "decals", "diffuser_caps", "diffusers", "exo_diffusers", "glowstringz", "glowskinz"];
 const subcategories = [
@@ -51,7 +51,7 @@ const subcategories = [
 const collections = ["novaskinz", "classics", "space_cadet", "platonic_solids", "festie_bestie", "fractal", "texture"];
 
 async function generateSitemap() {
-  let products_res = await fetch(API + "/api/products?deleted=false&hidden=false&option=false");
+  // let products_res = await fetch(API + "/api/products?deleted=false&hidden=false&option=false");
   let { products } = await products_res.json();
 
   let productMap = products

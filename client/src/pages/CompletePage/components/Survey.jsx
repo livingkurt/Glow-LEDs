@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Loading } from "../../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
-import "react-medium-image-zoom/dist/styles.css";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import StarRating from "../../../shared/GlowLEDsComponents/GLRating/StarRating";
 import * as API from "../../../api";

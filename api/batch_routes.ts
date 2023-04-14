@@ -12,6 +12,7 @@ import { Parcel } from "./parcels";
 import Chip from "./chips/chip";
 import { snake_case } from "../util";
 import { Filament } from "./filaments";
+import { Image } from "./images";
 const { isAuth, isAdmin } = require("../util");
 
 const router = express.Router();
@@ -1306,38 +1307,38 @@ router.route("/delete_multiple_products").put(async (req: any, res: any) => {
 
   res.send(product);
 });
-router.route("/get_all_referenced_options_not_hidden").put(async (req: any, res: any) => {
-  const products = await Product.find({ deleted: false, hidden: false });
+// router.route("/get_all_referenced_options_not_hidden").put(async (req: any, res: any) => {
+//   const products = await Product.find({ deleted: false, hidden: false });
 
-  const ids = products.map((product: any) => product._id);
-  const color_product_ids = _.flatten(products.map((product: any) => product.color_products));
+//   const ids = products.map((product: any) => product._id);
+//   const color_product_ids = _.flatten(products.map((product: any) => product.color_products));
 
-  const secondary_color_product_ids = _.flatten(products.map((product: any) => product.secondary_color_products));
+//   const secondary_color_product_ids = _.flatten(products.map((product: any) => product.secondary_color_products));
 
-  const option_product_ids = _.flatten(products.map((product: any) => product.option_products));
-  // const not_associated_products = await Product.find({
-  //   option: true,
-  //   color_products: { $nin: ids },
-  // });
-  //
-  res.send([...color_product_ids, ...secondary_color_product_ids, ...option_product_ids]);
-});
-router.route("/get_all_referenced_options").put(async (req: any, res: any) => {
-  const products = await Product.find({ deleted: false });
+//   const option_product_ids = _.flatten(products.map((product: any) => product.option_products));
+//   // const not_associated_products = await Product.find({
+//   //   option: true,
+//   //   color_products: { $nin: ids },
+//   // });
+//   //
+//   res.send([...color_product_ids, ...secondary_color_product_ids, ...option_product_ids]);
+// });
+// router.route("/get_all_referenced_options").put(async (req: any, res: any) => {
+//   const products = await Product.find({ deleted: false });
 
-  const ids = products.map((product: any) => product._id);
-  const color_product_ids = _.flatten(products.map((product: any) => product.color_products));
+//   const ids = products.map((product: any) => product._id);
+//   const color_product_ids = _.flatten(products.map((product: any) => product.color_products));
 
-  const secondary_color_product_ids = _.flatten(products.map((product: any) => product.secondary_color_products));
+//   const secondary_color_product_ids = _.flatten(products.map((product: any) => product.secondary_color_products));
 
-  const option_product_ids = _.flatten(products.map((product: any) => product.option_products));
-  // const not_associated_products = await Product.find({
-  //   option: true,
-  //   color_products: { $nin: ids },
-  // });
-  //
-  res.send([...color_product_ids, ...secondary_color_product_ids, ...option_product_ids]);
-});
+//   const option_product_ids = _.flatten(products.map((product: any) => product.option_products));
+//   // const not_associated_products = await Product.find({
+//   //   option: true,
+//   //   color_products: { $nin: ids },
+//   // });
+//   //
+//   res.send([...color_product_ids, ...secondary_color_product_ids, ...option_product_ids]);
+// });
 router.route("/all_options").put(async (req: any, res: any) => {
   const products = await Product.find({ deleted: false, option: true });
   //
@@ -1457,29 +1458,63 @@ router.route("/update_refund_price").put(async (req: any, res: any) => {
     console.error(error);
   }
 });
-router.route("/get_all_referenced_color_options").put(async (req: any, res: any) => {
-  const products = await Product.find({ deleted: false });
+// router.route("/get_all_referenced_color_options").put(async (req: any, res: any) => {
+//   const products = await Product.find({ deleted: false });
 
-  const ids = products.map((product: any) => product._id);
-  const color_product_ids = _.flatten(products.map((product: any) => product.color_products));
+//   const ids = products.map((product: any) => product._id);
+//   const color_product_ids = _.flatten(products.map((product: any) => product.color_products));
 
-  res.send(color_product_ids);
-});
-router.route("/get_all_referenced_secondary_color_options").put(async (req: any, res: any) => {
-  const products = await Product.find({ deleted: false });
+//   res.send(color_product_ids);
+// });
+// router.route("/get_all_referenced_secondary_color_options").put(async (req: any, res: any) => {
+//   const products = await Product.find({ deleted: false });
 
-  const ids = products.map((product: any) => product._id);
-  const color_product_ids = _.flatten(products.map((product: any) => product.secondary_color_products));
+//   const ids = products.map((product: any) => product._id);
+//   const color_product_ids = _.flatten(products.map((product: any) => product.secondary_color_products));
 
-  res.send(color_product_ids);
-});
-router.route("/get_all_referenced_option_options").put(async (req: any, res: any) => {
-  const products = await Product.find({ deleted: false });
+//   res.send(color_product_ids);
+// });
+// router.route("/get_all_referenced_option_options").put(async (req: any, res: any) => {
+//   const products = await Product.find({ deleted: false });
 
-  const ids = products.map((product: any) => product._id);
-  const color_product_ids = _.flatten(products.map((product: any) => product.option_products));
+//   const ids = products.map((product: any) => product._id);
+//   const color_product_ids = _.flatten(products.map((product: any) => product.option_products));
 
-  res.send(color_product_ids);
+//   res.send(color_product_ids);
+// });
+
+router.route("/create_image_records_and_reference_them_in_product").put(async (req: any, res: any) => {
+  // const products = await Product.findAll({ deleted: false, hidden: false }, "_id name").limit(1);
+
+  const products = await Product.find({ deleted: false }).limit(1).sort({ order: 1 });
+  for (const product of products) {
+    const { _id, name } = product;
+    const imagesToUpdate = [
+      { array: "images", object: "images_object" },
+      { array: "color_images", object: "color_images_object" },
+      { array: "secondary_color_images", object: "secondary_color_images_object" },
+      { array: "option_images", object: "option_images_object" },
+      { array: "secondary_images", object: "secondary_images_object" }
+    ];
+    for (const { array, object } of imagesToUpdate) {
+      if (product[array] && product[array].length > 0) {
+        const newImageIds = [];
+        for (const imageUrl of product[array]) {
+          console.log({ imageUrl, name });
+          const response: any = await Image.create({ link: imageUrl, album: name });
+          console.log({ response });
+          newImageIds.push(response._id);
+          console.log({ newImageIds });
+        }
+        const update_product: any = await Product.findOne({ _id });
+        if (update_product) {
+          const updated = await Product.updateOne({ _id }, { [object]: newImageIds });
+          return updated;
+        }
+      }
+    }
+  }
+  res.send(products);
 });
 
 export default router;

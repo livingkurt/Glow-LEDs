@@ -9,8 +9,6 @@ import Search from "../../shared/GlowLEDsComponents/GLTable/Search";
 import Sort from "../../shared/GlowLEDsComponents/GLTable/Sort";
 import * as API from "../../api";
 
-const fetch = require("node-fetch");
-
 const CategorysPage = props => {
   const [search, set_search] = useState("");
   const [sort, setSortOrder] = useState("");
