@@ -80,6 +80,11 @@ const PlaceOrderPage = props => {
 
   const [order_note, set_order_note] = useState("");
   const [production_note, set_production_note] = useState("");
+
+  const [show_shipping_complete, set_show_shipping_complete] = useState();
+  const [promo_code_validations, set_promo_code_validations] = useState("");
+  const [email, set_email] = useState("");
+
   setTimeout(() => {
     set_loading_checkboxes(false);
   }, 500);
@@ -215,8 +220,6 @@ const PlaceOrderPage = props => {
       dispatch(set_loading(false));
     }
   };
-
-  const [show_shipping_complete, set_show_shipping_complete] = useState();
 
   const choose_shipping_rate = (rate, speed) => {
     setShippingPrice(parseFloat(rate.retail_rate || rate.rate));
@@ -517,8 +520,6 @@ const PlaceOrderPage = props => {
     return () => (clean = false);
   }, [itemsPrice, taxPrice, tip, shippingPrice]);
 
-  const [promo_code_validations, set_promo_code_validations] = useState("");
-
   const check_code = e => {
     e.preventDefault();
 
@@ -639,8 +640,6 @@ const PlaceOrderPage = props => {
     }
     set_show_promo_code_input_box(true);
   };
-
-  const [email, set_email] = useState("");
 
   const show_hide_steps = step => {
     if (step === "email") {

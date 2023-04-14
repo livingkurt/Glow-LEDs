@@ -3,6 +3,7 @@ import { product_controller } from "../products";
 const { isAuth, isAdmin } = require("../../util");
 
 const router = express.Router();
+router.route("/grid").get(product_controller.findAllGrid_products_c);
 
 router.route("/reviews/:pathname").post(product_controller.reviews_products_c);
 

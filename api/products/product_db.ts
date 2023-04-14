@@ -74,6 +74,75 @@ export default {
       }
     }
   },
+  findAllGrid_products_db: async (filter: any, sort: unknown, limit: string, page: string) => {
+    try {
+      return await Product.find(filter)
+        .sort(sort)
+        .populate("chips")
+        .populate("products")
+        .populate({
+          path: "color_products",
+          populate: {
+            path: "filament"
+          }
+        })
+        .populate({
+          path: "secondary_color_products",
+          populate: {
+            path: "filament"
+          }
+        })
+        .populate({
+          path: "option_products",
+          populate: {
+            path: "filament"
+          }
+        })
+        .populate("filament")
+        .populate({
+          path: "secondary_products",
+          populate: [
+            {
+              path: "filament"
+            },
+            {
+              path: "color_products",
+              populate: {
+                path: "filament"
+              }
+            },
+            {
+              path: "secondary_color_products",
+              populate: {
+                path: "filament"
+              }
+            },
+            {
+              path: "option_products",
+              populate: {
+                path: "filament"
+              }
+            },
+            {
+              path: "secondary_color_products",
+              populate: {
+                path: "filament"
+              }
+            }
+          ]
+        })
+        .populate("categorys")
+        .populate("subcategorys")
+        .populate("contributers")
+        .limit(parseInt(limit))
+        .skip((parseInt(page) - 1) * parseInt(limit))
+        .exec();
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
   aggregateAll_products_db: async () => {
     try {
       const response = await Product.aggregate([

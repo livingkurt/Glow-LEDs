@@ -42,7 +42,7 @@ export const listProducts = createAsyncThunk("products/listProducts", async (que
         userPage: { current_user }
       }
     } = thunkApi.getState();
-    const { data } = await axios.get(`/api/products?${create_query(query)}`, headers(current_user));
+    const { data } = await axios.get(`/api/products/grid?${create_query(query)}`, headers(current_user));
     return data;
   } catch (error) {}
 });
