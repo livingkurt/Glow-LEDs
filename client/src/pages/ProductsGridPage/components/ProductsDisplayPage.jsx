@@ -118,7 +118,7 @@ const AllProductsPage = props => {
       // set_alternative_products(data);
       set_products(data);
     } else if (category === "discounted") {
-      const { data } = await API_Products.findAll_products_a({ subcategory: "imperfect" });
+      const { data } = await API_Products.findAllGrid_products_a({ subcategory: "imperfect" });
       //
       // set_imperfect(data);
       // set_alternative_products(data);

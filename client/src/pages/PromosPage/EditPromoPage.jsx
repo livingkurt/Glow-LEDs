@@ -68,7 +68,7 @@ const EditPromoPage = props => {
   }, [dispatch, props.match.params.id]);
 
   const get_categories = async () => {
-    const { data } = await API_Products.findAll_products_a({
+    const { data } = await API_Products.findAllGrid_products_a({
       limit: 0,
       page: 1
     });

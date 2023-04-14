@@ -150,15 +150,15 @@ const Header = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      findAll_products_a();
+      findAllGrid_products_a();
       dispatch(API.listChips({}));
     }
     return () => (clean = false);
   }, []);
 
-  const findAll_products_a = async () => {
+  const findAllGrid_products_a = async () => {
     set_loading(true);
-    const { data } = await API_Products.findAll_products_a();
+    const { data } = await API_Products.findAllGrid_products_a();
 
     set_options([
       ...categories.map(category => {

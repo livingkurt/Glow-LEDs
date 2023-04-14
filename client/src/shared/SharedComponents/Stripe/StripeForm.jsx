@@ -4,10 +4,8 @@ import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { isMobile } from "react-device-detect";
 import { GLButton } from "../../GlowLEDsComponents";
 import { useDispatch } from "react-redux";
-import { set_loading_payment } from "../../../slices/orderSlice";
 
-const StripeForm = ({ pay_order, date_1, date_2 }) => {
-  const dispatch = useDispatch();
+const StripeForm = ({ pay_order, date_1, date_2, set_loading_payment }) => {
   const stripe = useStripe();
   const elements = useElements();
   const [remove_button, set_remove_button] = useState(false);
@@ -16,7 +14,7 @@ const StripeForm = ({ pay_order, date_1, date_2 }) => {
   const handleSubmit = async event => {
     event.preventDefault();
     isMobile && window.scrollTo({ top: 0, behavior: "smooth" });
-    dispatch(set_loading_payment(true));
+    set_loading_payment(true);
 
     const { error, paymentMethod } = await stripe.createPaymentMethod({
       type: "card",
@@ -24,7 +22,7 @@ const StripeForm = ({ pay_order, date_1, date_2 }) => {
     });
 
     if (error) {
-      dispatch(set_loading_payment(false));
+      set_loading_payment(false);
       set_payment_validations(error.message);
 
       return;

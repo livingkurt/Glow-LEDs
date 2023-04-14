@@ -198,7 +198,7 @@ function ProductPage(props) {
 
   const update_product_catelog = async () => {
     set_loading_upload(true);
-    const { data } = await API_Products.findAll_products_a({
+    const { data } = await API_Products.findAllGrid_products_a({
       limit: 0,
       hidden: false,
       deleted: false,

@@ -2,8 +2,8 @@ import axios from "axios";
 import { create_query } from "./helper_functions";
 
 const product_routes = {
-  findAll_products_a: (query: any) => {
-    return axios.get(`/api/products?${create_query(query)}`);
+  findAllGrid_products_a: (query: any) => {
+    return axios.get(`/api/products/grid?${create_query(query)}`);
   },
   findById_products_a: (id: any) => {
     return axios.get("/api/products/" + id);

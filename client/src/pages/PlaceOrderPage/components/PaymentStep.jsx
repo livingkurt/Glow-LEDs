@@ -35,6 +35,7 @@ const PaymentStep = ({
   paid,
   set_paymentMethod,
   set_user,
+  set_loading_payment,
   user,
   cartItems,
   create_order_without_paying,
@@ -171,7 +172,11 @@ const PaymentStep = ({
               </li>
             )}
             <li>
-              {!loading && !hide_pay_button && cartItems.length > 0 && totalPrice ? <Stripe pay_order={placeOrderHandler} /> : <div></div>}
+              {!loading && !hide_pay_button && cartItems.length > 0 && totalPrice ? (
+                <Stripe pay_order={placeOrderHandler} loading_payment={loading_payment} set_loading_payment={set_loading_payment} />
+              ) : (
+                <div></div>
+              )}
               {(!totalPrice || totalPrice === 0) && (
                 <>
                   <p htmlFor="password">Payment is not necessary at this time</p>

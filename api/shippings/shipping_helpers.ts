@@ -50,6 +50,39 @@ export const determine_parcel = (orderItems: any, parcels: any[]) => {
   }
 };
 
+export const determine_parcel_weight = (order: any) => {
+  let weight = 0;
+  order.orderItems.forEach((item: any, index: number) => {
+    if (item.weight_pounds) {
+      weight += parseInt(item.weight_pounds) * 16 + parseInt(item.weight_ounces);
+    } else {
+      weight += parseInt(item.weight_ounces);
+    }
+    weight *= item.qty;
+  });
+  return weight;
+};
+
+export const calculateTotalOunces = (cartItems: any) => {
+  let totalOunces = 0;
+  for (let i = 0; i < cartItems.length; i++) {
+    const item = cartItems[i];
+    const weightInOunces = item.weight_pounds * 16 + item.weight_ounces;
+    totalOunces += weightInOunces * item.qty;
+  }
+  return totalOunces;
+};
+export const calculateTotalPounds = (cartItems: any) => {
+  let totalOunces = 0;
+  for (let i = 0; i < cartItems.length; i++) {
+    const item = cartItems[i];
+    const weightInOunces = item.weight_pounds * 16 + item.weight_ounces;
+    totalOunces += weightInOunces * item.qty;
+  }
+  const totalPounds = totalOunces / 16;
+  return totalPounds;
+};
+
 // // Helper function to calculate the remaining volume after placing an item
 // const calculateRemainingVolume = (parcel: { volume: number }, item: { volume: number; qty: number }) =>
 //   parcel.volume - item.volume * item.qty;

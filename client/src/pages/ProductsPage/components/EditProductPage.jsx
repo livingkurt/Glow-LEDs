@@ -177,7 +177,7 @@ const EditProductPage = props => {
     if (clean) {
       dispatch(API.detailsProduct(props.match.params.pathname));
       get_all_options();
-      findAll_products_a();
+      findAllGrid_products_a();
     }
     return () => (clean = false);
   }, [dispatch, props.match.params.pathname]);
@@ -206,8 +206,8 @@ const EditProductPage = props => {
     return () => (clean = false);
   }, [product]);
 
-  const findAll_products_a = async () => {
-    const { data } = await API_Products.findAll_products_a({
+  const findAllGrid_products_a = async () => {
+    const { data } = await API_Products.findAllGrid_products_a({
       // option: false,
       limit: 0
     });
@@ -215,7 +215,7 @@ const EditProductPage = props => {
     dispatch(set_macro_products_list(data.products.sort((a, b) => (a.name > b.name ? 1 : -1))));
   };
   const get_all_options = async () => {
-    const { data } = await API_Products.findAll_products_a({
+    const { data } = await API_Products.findAllGrid_products_a({
       option: true,
       limit: 0
     });

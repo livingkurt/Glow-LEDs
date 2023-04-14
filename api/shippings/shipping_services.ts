@@ -1,6 +1,6 @@
 import { order_db } from "../orders";
 import { parcel_db } from "../parcels";
-import { determine_parcel } from "./shipping_helpers";
+import { calculateTotalOunces, calculateTotalPounds, determine_parcel } from "./shipping_helpers";
 
 const easy_post_api = require("@easypost/api");
 
@@ -64,17 +64,7 @@ export default {
       });
       const parcels = await parcel_db.findAll_parcels_db({ deleted: false }, {}, "0", "1");
 
-      let weight = 0;
-      order.orderItems.forEach((item: any, index: number) => {
-        if (item.weight_pounds) {
-          weight += item.weight_pounds * 16 + item.weight_ounces;
-        } else {
-          weight += item.weight_ounces;
-        }
-        weight *= item.qty;
-      });
-      // const parcel_size = packItems(parcels, order.orderItems);
-      // // Box size determined here and will output parcel_size that contains length, width and height
+      const weight = calculateTotalOunces(order.orderItems);
 
       const parcel_size = determine_parcel(order.orderItems, parcels);
       const parcel = new EasyPost.Parcel({
@@ -113,15 +103,17 @@ export default {
         parcel: parcel,
         customsInfo: order.shipping.international ? customsInfo : {}
       });
+      console.log({ shipment });
 
       const saved_shipment = await shipment.save();
-      if (!error_message) {
+      console.log({ saved_shipment, messages: saved_shipment.messages });
+      if (!error_message && saved_shipment.messages.length === 0) {
         return { shipment: saved_shipment, parcel: parcel_size };
       } else {
         return {
           message: "Shipping Failed",
           solution: "Please double check your shipping address for incorrect formatting",
-          error: error_message
+          error: `${error_message} - ${saved_shipment.messages.map((message: any) => message.message).join(" - ")}`
         };
       }
     } catch (error) {
@@ -197,14 +189,7 @@ export default {
         email: process.env.INFO_EMAIL
       });
 
-      let weight = 0;
-      order.orderItems.forEach((item: any, index: number) => {
-        if (item.weight_pounds) {
-          weight += item.weight_pounds * 16 + item.weight_ounces;
-        } else {
-          weight += item.weight_ounces;
-        }
-      });
+      const weight = calculateTotalOunces(order.orderItems);
       const parcels = await parcel_db.findAll_parcels_db({ deleted: false }, {}, "0", "1");
       const parcel_size = determine_parcel(order.orderItems, parcels);
       const parcel = new EasyPost.Parcel({
@@ -364,14 +349,7 @@ export default {
         country: order.shipping.country
       });
 
-      let weight = 0;
-      order.orderItems.forEach((item: any, index: number) => {
-        if (item.weight_pounds) {
-          weight += item.weight_pounds * 16 + item.weight_ounces;
-        } else {
-          weight += item.weight_ounces;
-        }
-      });
+      const weight = calculateTotalOunces(order.orderItems);
       const parcels = await parcel_db.findAll_parcels_db({ deleted: false }, {}, "0", "1");
       const parcel_size = determine_parcel(order.orderItems, parcels);
       const parcel = new EasyPost.Parcel({

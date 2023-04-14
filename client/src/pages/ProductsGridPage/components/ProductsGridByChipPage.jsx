@@ -193,7 +193,7 @@ const AllProductsByChipPage = props => {
       set_products(shuffle(data));
     } else {
       // else if (category === 'discounted') {
-      // 	const { data } = await API_Products.findAll_products_a({ subcategory: 'imperfect' });
+      // 	const { data } = await API_Products.findAllGrid_products_a({ subcategory: 'imperfect' });
       // 	//
       // 	set_products(data);
       // }

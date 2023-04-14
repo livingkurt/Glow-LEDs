@@ -14,6 +14,7 @@ const DomesticShippingSpeed = ({ rates, service, name, time, choose_shipping_rat
       return parseFloat(a.rate) - parseFloat(b.rate);
     }
   });
+  console.log({ rates });
 
   const lowestRate = sortedRates[0];
 
@@ -27,10 +28,10 @@ const DomesticShippingSpeed = ({ rates, service, name, time, choose_shipping_rat
         ) : (
           <label>
             {" "}
-            Est: {lowestRate.est_delivery_days} {lowestRate.est_delivery_days === 1 ? "Day" : "Days"}
+            Est: {lowestRate?.est_delivery_days} {lowestRate?.est_delivery_days === 1 ? "Day" : "Days"}
           </label>
         )}
-        <label> ${parseFloat(lowestRate.retail_rate || lowestRate.rate).toFixed(2)} </label>
+        <label> ${parseFloat(lowestRate?.retail_rate || lowestRate?.rate).toFixed(2)} </label>
       </div>
       <GLButton variant="rates" onClick={() => choose_shipping_rate(lowestRate, service)}>
         Select

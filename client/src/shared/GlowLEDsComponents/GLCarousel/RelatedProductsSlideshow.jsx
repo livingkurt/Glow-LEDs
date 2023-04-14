@@ -72,7 +72,7 @@ const RelatedProductsSlideshow = ({
       };
     }
 
-    const { data } = await API_Products.findAll_products_a(query);
+    const { data } = await API_Products.findAllGrid_products_a(query);
 
     set_products(typeof data === "object" && data.products.filter(product => product.pathname !== product_pathname));
     if (random) {

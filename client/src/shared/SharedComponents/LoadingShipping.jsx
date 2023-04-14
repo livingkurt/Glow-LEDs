@@ -1,6 +1,7 @@
 // React
 import React from "react";
 import { GLButton } from "../GlowLEDsComponents";
+import { useSelector } from "react-redux";
 require("dotenv").config();
 // Components
 
@@ -14,6 +15,36 @@ const LoadingShipment = ({
   set_verify_shipping,
   set_loading_shipping
 }) => {
+  const cartPage = useSelector(state => state.carts.cartPage);
+  const { my_cart } = cartPage;
+  const { cartItems } = my_cart;
+
+  function calculateTotalOunces(cartItems) {
+    let totalOunces = 0;
+    for (let i = 0; i < cartItems.length; i++) {
+      const item = cartItems[i];
+      const weightInOunces = item.weight_pounds * 16 + item.weight_ounces;
+      totalOunces += weightInOunces * item.qty;
+    }
+    return totalOunces;
+  }
+  function calculateTotalPounds(cartItems) {
+    let totalOunces = 0;
+    for (let i = 0; i < cartItems.length; i++) {
+      const item = cartItems[i];
+      const weightInOunces = item.weight_pounds * 16 + item.weight_ounces;
+      totalOunces += weightInOunces * item.qty;
+    }
+    const totalPounds = totalOunces / 16;
+    return totalPounds;
+  }
+
+  // console.log({
+  //   calculateTotalOunces: calculateTotalOunces(cartItems),
+  //   calculateTotalPounds: calculateTotalPounds(cartItems),
+  //   total_ounces: cartItems.reduce((a, c) => a + c.weight_ounces * c.qty, 0)
+  // });
+
   const loading_message = () => {
     setTimeout(() => {
       return <h3 style={{ textAlign: "center" }}>If page doesn't show in 5 seconds, refresh the page.</h3>;
@@ -57,12 +88,22 @@ const LoadingShipment = ({
               <p className="ta-c mv-5px">{error}</p>
             ))}
             <h2 className="ta-c mt-20px">Solution:</h2>
-            <p className="ta-c  mb-1px">Double check you entered your shipping address correctly</p>
-            <hr></hr>
-            <p className="ta-c  mb-1px">Sometimes your address is correct but our system throws a false negative</p>
-            <GLButton variant="primary" className="jc-b m-auto" aria-label="Close" onClick={() => run_address_without_verification()}>
-              Run Address without Verification
-            </GLButton>
+            {error.error.includes("maximum per package") && (
+              <p className="ta-c  mb-1px">
+                The total weight of the items in your cart is {calculateTotalPounds(cartItems)} lbs You need to remove items from your cart
+                and try again.
+              </p>
+            )}
+            {!error.error.includes("maximum per package") && (
+              <>
+                <p className="ta-c  mb-1px">Double check you entered your shipping address correctly</p>
+                <hr></hr>
+                <p className="ta-c  mb-1px">Sometimes your address is correct but our system throws a false negative</p>
+                <GLButton variant="primary" className="jc-b m-auto" aria-label="Close" onClick={() => run_address_without_verification()}>
+                  Run Address without Verification
+                </GLButton>
+              </>
+            )}
             <hr></hr>
             <p className="ta-c  mb-1px">If that does not work please:</p>
             <p className="ta-c mt-20px mb-1px">Contact {process.env.REACT_APP_CONTACT_EMAIL} for assistence</p>
