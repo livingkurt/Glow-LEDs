@@ -216,7 +216,7 @@ const Header = props => {
                   </div>
                 </div>
               </Link>
-              {width < 1106 && (
+              {width < 960 && (
                 <GLButton
                   className="side-bar-open p-10px"
                   onClick={open_sidebar}
