@@ -7,7 +7,7 @@ export default {
         .sort(sort)
         .populate("affiliate")
         .limit(parseInt(limit))
-        .skip(Math.max(parseInt(page) - 1, 0) * parseInt(limit))
+        .skip(Math.max(parseInt(page), 0) * parseInt(limit))
         .exec();
     } catch (error) {
       if (error instanceof Error) {

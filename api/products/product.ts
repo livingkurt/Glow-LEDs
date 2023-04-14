@@ -15,45 +15,20 @@ const reviewSchema = new mongoose.Schema(
     timestamps: true
   }
 );
-const productOptionsSchema = new mongoose.Schema(
-  {
-    name: { type: String },
-    price: { type: Number, default: 0 },
-    sale_price: { type: Number, default: 0 },
-    size: { type: Number },
-    color: { type: String },
-    images: { type: Array },
-    quantity_state: { type: Number },
-    finite_stock: { type: Boolean, default: false },
-    default: { type: Boolean, default: false },
-    dropdown: { type: Boolean, default: false },
-    no_dropdown: { type: Boolean, default: false },
-    deleted: { type: Boolean, default: false },
-    package_length: { type: Number },
-    package_width: { type: Number },
-    package_height: { type: Number },
-    package_volume: { type: Number },
-    package_pounds: { type: Number },
-    package_ounces: { type: Number },
-    material_cost: { type: Number },
-    filament_used: { type: Number },
-    printing_time: { type: Number },
-    assembly_time: { type: Number }
-  },
-  {
-    timestamps: true
-  }
-);
 
 const productSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
-    // display_image: { type: String, required: true },
     images: { type: Array },
     color_images: { type: Array },
     secondary_color_images: { type: Array },
     option_images: { type: Array },
     secondary_images: { type: Array },
+    images_object: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
+    color_images_object: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
+    secondary_color_images_object: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
+    option_images_object: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
+    secondary_images_object: { type: Array },
     video: { type: String },
     brand: { type: String, required: true },
     price: { type: Number },
@@ -113,7 +88,6 @@ const productSchema = new mongoose.Schema(
     order: { type: Number },
     item_group_id: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
     chips: [{ type: mongoose.Schema.Types.ObjectId, ref: "Chip" }],
-    product_options: [productOptionsSchema],
     group_product: { type: Boolean, default: false },
     group_name: { type: String },
     products: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],

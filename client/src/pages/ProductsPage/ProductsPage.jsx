@@ -41,29 +41,26 @@ const ProductsPage = () => {
       },
       { title: "Category", display: "category" },
       { title: "Order", display: "order" },
-      { title: "Price", display: row => `${row.price}` },
-      {
-        title: "Use as Template",
-        display: row => (
-          <Link className="w-500px" to={"/secure/glow/editproduct/" + row.pathname + "/" + true}>
-            <GLButton variant="primary">Use as Template</GLButton>
-          </Link>
-        )
-      },
+      { title: "Price", display: row => `$${row.price}` },
       {
         title: "Actions",
-        display: product => (
+        display: row => (
           <div className="jc-b">
             <GLButton
               variant="icon"
               aria-label="Edit"
               onClick={() => {
-                dispatch(open_edit_product_modal(product));
+                dispatch(open_edit_product_modal(row));
               }}
             >
               <i className="fas fa-edit" />
             </GLButton>
-            <GLButton variant="icon" onClick={() => dispatch(API.deleteProduct(product.pathname))} aria-label="Delete">
+            <Link to={"/secure/glow/editproduct/" + row.pathname + "/" + true}>
+              <GLButton variant="icon" aria-label="Use as Template">
+                <i className="fas fa-clone" />
+              </GLButton>
+            </Link>
+            <GLButton variant="icon" onClick={() => dispatch(API.deleteProduct(row.pathname))} aria-label="Delete">
               <i className="fas fa-trash-alt" />
             </GLButton>
           </div>
@@ -103,7 +100,7 @@ const ProductsPage = () => {
           </Button>
         }
       />
-      {/* <EditProductModal /> */}
+      <EditProductModal />
     </div>
   );
 };

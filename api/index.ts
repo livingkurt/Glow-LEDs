@@ -11,7 +11,7 @@ import product_routes from "./products/product_routes";
 import order_routes from "./orders/order_routes";
 import email_routes from "./emails/email_routes";
 import team_routes from "./teams/team_routes";
-import batch_routes from "./batchs/batch_routes";
+import batch_routes from "./batch_routes";
 import shipping_routes from "./shippings/shipping_routes";
 import payment_routes from "./payments/payment_routes";
 import paycheck_routes from "./paychecks/paycheck_routes";

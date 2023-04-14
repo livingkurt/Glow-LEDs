@@ -22,7 +22,7 @@ export default {
         .populate("wholesaler")
         .populate("products")
         .limit(parseInt(limit))
-        .skip(Math.max(parseInt(page) - 1, 0) * parseInt(limit));
+        .skip(Math.max(parseInt(page), 0) * parseInt(limit));
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
