@@ -39,12 +39,6 @@ const LoadingShipment = ({
     return totalPounds;
   }
 
-  // console.log({
-  //   calculateTotalOunces: calculateTotalOunces(cartItems),
-  //   calculateTotalPounds: calculateTotalPounds(cartItems),
-  //   total_ounces: cartItems.reduce((a, c) => a + c.weight_ounces * c.qty, 0)
-  // });
-
   const loading_message = () => {
     setTimeout(() => {
       return <h3 style={{ textAlign: "center" }}>If page doesn't show in 5 seconds, refresh the page.</h3>;
