@@ -21,7 +21,8 @@ import {
   FETCH_TABLE_PAGE_SUCCESS,
   FETCH_TABLE_FILTERS,
   FETCH_TABLE_FILTERS_SUCCESS,
-  REORDER_ROWS_SUCCESS
+  REORDER_ROWS_SUCCESS,
+  UPDATE_QUERY
 } from "./actionTypes";
 
 // ----------- Remote Fetch -----------
@@ -83,6 +84,16 @@ export const reorderRows =
       // dispatch({
       //   type: remoteVersionRequirementType
       // });
+    });
+  };
+
+// ----------- Clear Table -----------
+export const updateQuery =
+  (namespace, { filters, sorting, page, pageSize, search }) =>
+  dispatch => {
+    dispatch({
+      type: `${namespace}/${UPDATE_QUERY}`,
+      payload: { filters, sorting, page, pageSize, search }
     });
   };
 

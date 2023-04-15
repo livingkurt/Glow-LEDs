@@ -5,6 +5,8 @@ export const FETCH_TABLE_FILTERS = "FETCH_TABLE_FILTERS";
 export const FETCH_TABLE_FILTERS_SUCCESS = "FETCH_TABLE_FILTERS_SUCCESS";
 // Rows
 export const ADD_ROWS = "ADD_ROWS";
+// Rows
+export const UPDATE_QUERY = "UPDATE_QUERY";
 // Clear Table
 export const CLEAR_TABLE = "CLEAR_TABLE";
 // Search

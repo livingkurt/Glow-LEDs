@@ -193,3 +193,46 @@ export const reorder = (list, startIndex, endIndex) => {
   result.splice(endIndex, 0, removed);
   return result;
 };
+
+const parseQueryParams = search => {
+  const params = {};
+
+  if (!search) return params;
+
+  search
+    .substring(1) // Remove the '?' at the start
+    .split("&")
+    .forEach(param => {
+      const [key, value] = param.split("=");
+      params[key] = decodeURIComponent(value);
+    });
+
+  return params;
+};
+
+export const updateTableStateFromUrl = ({ location, search, filters, page, pageSize, sorting }) => {
+  const queryParams = parseQueryParams(location.search);
+
+  return {
+    param_search: queryParams.search || search,
+    param_filters: queryParams.filters ? JSON.parse(queryParams.filters) : filters,
+    param_page: queryParams.page ? parseInt(queryParams.page, 10) : page,
+    param_pageSize: queryParams.pageSize ? parseInt(queryParams.pageSize, 10) : pageSize,
+    param_sorting: queryParams.sorting ? JSON.parse(queryParams.sorting) : sorting
+  };
+};
+
+export const updateUrlWithTableState = ({ location, history, search, filters, page, pageSize, sorting }) => {
+  const queryParams = new URLSearchParams({
+    search,
+    filters: JSON.stringify(filters),
+    page,
+    pageSize,
+    sorting: JSON.stringify(sorting)
+  });
+
+  history.push({
+    pathname: location.pathname,
+    search: `?${queryParams.toString()}`
+  });
+};

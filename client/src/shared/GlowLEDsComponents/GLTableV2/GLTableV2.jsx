@@ -17,9 +17,19 @@ import {
 } from "./components";
 import glTable from "./glTable.module.scss";
 import "./glTable.scss";
-import { isItemSelected, reorder, visibleSelected } from "./glTableHelpers";
-import { addRows, updatePage, updatePageSize, fetchTablePage, fetchTableFilters, reorderRows } from "./actions/actions";
+import { isItemSelected, reorder, updateTableStateFromUrl, updateUrlWithTableState, visibleSelected } from "./glTableHelpers";
+import {
+  addRows,
+  updatePage,
+  updatePageSize,
+  fetchTablePage,
+  fetchTableFilters,
+  reorderRows,
+  applySearch,
+  updateQuery
+} from "./actions/actions";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { useHistory, useLocation } from "react-router-dom";
 
 // const useStyles = makeStyles(() => ({
 //   palette: {
@@ -122,6 +132,8 @@ const GLTableV2 = ({
 }) => {
   const isMounted = useRef(false);
   const dispatch = useDispatch();
+  const history = useHistory();
+  const location = useLocation();
   const tableState = useSelector(state => {
     if (namespaceScope) {
       // This allows deeply nested navigation like "a.b.c". See: https://lodash.com/docs/4.17.15#at
@@ -166,7 +178,18 @@ const GLTableV2 = ({
       if (isMounted.current) {
         // When search changes we want to have some debounce to API calls
         const remoteApiTimeout = setTimeout(() => {
-          dispatch(fetchTablePage(namespace, { remoteApi, search, filters, sorting, page, pageSize }));
+          dispatch(
+            fetchTablePage(namespace, {
+              remoteApi,
+              search,
+              filters,
+              page,
+              pageSize,
+              sorting
+            })
+          );
+          // Call updateUrlWithTableState after the dispatch here
+          updateUrlWithTableState({ location, history, search, filters, page, pageSize, sorting });
         }, 1000);
 
         return () => {
@@ -181,9 +204,41 @@ const GLTableV2 = ({
   }, [dispatch, remoteApi, search]);
 
   useEffect(() => {
+    const { param_search, param_filters, param_page, param_pageSize, param_sorting } = updateTableStateFromUrl({
+      location,
+      search,
+      filters,
+      page,
+      pageSize,
+      sorting
+    });
+
+    // Update the state based on the URL parameters
+    dispatch(
+      updateQuery(namespace, {
+        search: param_search,
+        filters: param_filters,
+        page: param_page,
+        pageSize: param_pageSize,
+        sorting: param_sorting
+      })
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
     // When filters, sorting or paging changes we want to fire an API call immediately
     if (remoteApi) {
-      dispatch(fetchTablePage(namespace, { remoteApi, search, filters, sorting, page, pageSize }));
+      dispatch(
+        fetchTablePage(namespace, {
+          remoteApi,
+          search,
+          filters,
+          page,
+          pageSize,
+          sorting
+        })
+      );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, remoteApi, namespace, filters, sorting, page, pageSize]);
@@ -191,7 +246,16 @@ const GLTableV2 = ({
   useEffect(() => {
     // When a newer page version is required
     if (remoteApi && remoteVersionRequirement > latestRemoteVersionTimestamp) {
-      dispatch(fetchTablePage(namespace, { remoteApi, search, filters, sorting, page, pageSize }));
+      dispatch(
+        fetchTablePage(namespace, {
+          remoteApi,
+          search,
+          filters,
+          page,
+          pageSize,
+          sorting
+        })
+      );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, remoteApi, namespace, remoteVersionRequirement]);

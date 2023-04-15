@@ -22,7 +22,8 @@ import {
   FETCH_TABLE_FILTERS,
   FETCH_TABLE_FILTERS_SUCCESS,
   REORDER_ROWS,
-  REORDER_ROWS_SUCCESS
+  REORDER_ROWS_SUCCESS,
+  UPDATE_QUERY
 } from "../actions/actionTypes";
 import { calcVisibleRows } from "../glTableHelpers";
 import defaultState from "./defaultState";
@@ -142,6 +143,17 @@ const reducer =
             }
           };
         }
+      }
+      case `${namespace}/${UPDATE_QUERY}`: {
+        const { filters, sorting, page, pageSize, search } = action.payload;
+        return {
+          ...state,
+          search: search,
+          filters: filters,
+          page: page,
+          pageSize: pageSize,
+          sorting: sorting
+        };
       }
       case `${namespace}/${CLEAR_TABLE}`: {
         return {
