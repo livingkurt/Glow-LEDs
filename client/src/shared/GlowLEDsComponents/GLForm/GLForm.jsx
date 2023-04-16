@@ -2,6 +2,7 @@ import { Autocomplete, Checkbox, FormControlLabel, Skeleton, TextField } from "@
 import { useSelector } from "react-redux";
 
 import { toCapitalize } from "../../../utils/helper_functions";
+import GLAutocomplete from "../GLAutocomplete/GLAutocomplete";
 
 const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
   const userPage = useSelector(state => state.users.userPage);
@@ -44,16 +45,36 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
           switch (fieldData.type) {
             case "autocomplete":
               return (
-                <Autocomplete
+                <GLAutocomplete
                   key={fieldName}
-                  name={fieldName}
                   margin="normal"
-                  size="small"
                   value={fieldState || ""}
                   options={fieldData.options || []}
-                  getOptionLabel={option => (fieldData.getOptionLabel ? fieldData.getOptionLabel(option) : option[fieldData.labelProp])}
+                  getOptionLabel={option =>
+                    option ? (fieldData.getOptionLabel ? fieldData.getOptionLabel(option) : option[fieldData.labelProp]) : ""
+                  }
+                  optionDisplay={option => (fieldData.getOptionLabel ? fieldData.getOptionLabel(option) : option[fieldData.labelProp])}
+                  getOptionSelected={(option, value) => option._id === value._id}
+                  name={fieldName}
+                  label={fieldData.label}
                   onChange={(event, value) => onChange({ [fieldName]: value })}
-                  renderInput={params => <TextField {...params} margin="normal" label={fieldData.label} variant="outlined" />}
+                />
+              );
+            case "autocomplete_multiple":
+              return (
+                <GLAutocomplete
+                  key={fieldName}
+                  margin="normal"
+                  value={fieldState || ""}
+                  options={fieldData.options || []}
+                  getOptionLabel={option =>
+                    option ? (fieldData.getOptionLabel ? fieldData.getOptionLabel(option) : option[fieldData.labelProp]) : ""
+                  }
+                  optionDisplay={option => (fieldData.getOptionLabel ? fieldData.getOptionLabel(option) : option[fieldData.labelProp])}
+                  getOptionSelected={(option, value) => option._id === value._id}
+                  name={fieldName}
+                  label={fieldData.label}
+                  onChange={(event, value) => onChange({ [fieldName]: value })}
                 />
               );
             case "checkbox":
@@ -73,16 +94,19 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
               );
             case "select":
               return (
-                <Autocomplete
+                <GLAutocomplete
                   key={fieldName}
-                  name={fieldName}
                   margin="normal"
-                  size="small"
                   value={fieldState || ""}
                   options={fieldData.options || []}
-                  getOptionLabel={option => toCapitalize(option)}
+                  getOptionLabel={option =>
+                    option ? (fieldData.getOptionLabel ? fieldData.getOptionLabel(option) : option[fieldData.labelProp]) : ""
+                  }
+                  optionDisplay={option => (fieldData.getOptionLabel ? fieldData.getOptionLabel(option) : option[fieldData.labelProp])}
+                  getOptionSelected={(option, value) => option._id === value._id}
+                  name={fieldName}
+                  label={fieldData.label}
                   onChange={(event, value) => onChange({ [fieldName]: value })}
-                  renderInput={params => <TextField {...params} margin="normal" label={fieldData.label} variant="outlined" />}
                 />
               );
             default:

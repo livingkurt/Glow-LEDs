@@ -281,7 +281,7 @@ export default EditAffiliateModal;
 
 //   useEffect(() => {
 //     if (success) {
-//       history.push(props.location.previous_path || "/secure/glow/affiliates?page=1?limit=10");
+//       history.push(props.location.previous_path || "/secure/glow/affiliates");
 //       dispatch(set_success(false));
 //     }
 //   }, [dispatch, history, props.location.previous_path, success]);
@@ -308,7 +308,7 @@ export default EditAffiliateModal;
 //                 margin="normal"
 //                 value={user}
 //                 options={users}
-//                 option_name={option => (option.first_name ? `${option.first_name} ${option.last_name}` : "")}
+//                 optionDisplay={option => (option.first_name ? `${option.first_name} ${option.last_name}` : "")}
 //                 getOptionLabel={option => `${option.first_name} ${option.last_name}`}
 //                 getOptionSelected={(option, value) => option._id === value._id}
 //                 name="user"
@@ -472,7 +472,7 @@ export default EditAffiliateModal;
 //                 margin="normal"
 //                 value={public_code}
 //                 options={promos_list}
-//                 option_name="promo_code"
+//                 optionDisplay="promo_code"
 //                 getOptionLabel={option => option.promo_code}
 //                 getOptionSelected={(option, value) => option.promo_code === value.promo_code}
 //                 name="public_code"
@@ -485,7 +485,7 @@ export default EditAffiliateModal;
 //                 margin="normal"
 //                 value={private_code}
 //                 options={promos_list}
-//                 option_name="promo_code"
+//                 optionDisplay="promo_code"
 //                 getOptionLabel={option => option.promo_code}
 //                 getOptionSelected={(option, value) => option.promo_code === value.promo_code}
 //                 name="private_code"

@@ -124,7 +124,7 @@ const CompletePage = props => {
                   Back to Emails
                 </GLButton>
               </Link>
-              <Link to={props.location.previous_path || "/secure/glow/orders?page=1?limit=10"}>
+              <Link to={props.location.previous_path || "/secure/glow/orders"}>
                 <GLButton variant="primary" className="mh-10px">
                   Back to Orders
                 </GLButton>

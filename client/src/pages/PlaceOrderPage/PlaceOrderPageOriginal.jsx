@@ -377,7 +377,7 @@ const PlaceOrderPage = props => {
     dimminish_stock();
     send_used_code_email();
     promo_code_used();
-    props.history.push("/secure/glow/orders?page=1?limit=10");
+    props.history.push("/secure/glow/orders");
     sessionStorage.removeItem("shippingAddress");
   };
 
@@ -437,7 +437,7 @@ const PlaceOrderPage = props => {
     empty_cart();
     dimminish_stock();
     promo_code_used();
-    props.history.push("/secure/glow/orders?page=1?limit=10");
+    props.history.push("/secure/glow/orders");
     sessionStorage.removeItem("shippingAddress");
   };
 

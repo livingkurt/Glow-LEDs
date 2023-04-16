@@ -9,59 +9,6 @@ import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import Chip from "@mui/material/Chip";
 import Checkbox from "@mui/material/Checkbox";
-import { makeStyles, styled } from "@mui/styles";
-
-const StyledTextField = styled(TextField)({
-  "& label.Mui-focused": {
-    color: "white"
-  },
-  "& .MuiInput-underline:after": {
-    borderBottomColor: "white"
-  },
-  "& .MuiOutlinedInput-root": {
-    "& fieldset": {
-      borderColor: "white"
-    },
-    "&:hover fieldset": {
-      borderColor: "white"
-    },
-    "&.Mui-focused fieldset": {
-      borderColor: "white"
-    }
-  }
-});
-
-const useStyles = makeStyles(() => ({
-  inputRoot: {
-    color: "white !important"
-  },
-  inputBase: {
-    color: "white !important"
-  },
-  "& .MuiOutlinedInput-root": {
-    "& fieldset": {
-      borderColor: "white"
-    }
-  },
-  input: {
-    fontSize: "1.2rem",
-    color: "white"
-  },
-  chip: {
-    ".MuiChip-label": {
-      fontSize: "16px"
-    }
-  },
-  formLabel: {
-    color: "#000",
-    "&.Mui-focused": {
-      color: "#000"
-    }
-  },
-  "& .MuiSvgIcon-root": {
-    color: "white"
-  }
-}));
 
 const GLAutocomplete = ({
   loading,
@@ -94,11 +41,10 @@ const GLAutocomplete = ({
   chipLabel,
   textFieldDataTest,
   margin,
-  option_name,
+  optionDisplay,
   customClasses,
   ...otherProps
 }) => {
-  const default_classes = useStyles();
   const icon = <CheckBoxOutlineBlankIcon fontSize="medium" />;
   const checkedIcon = <CheckBoxIcon fontSize="medium" />;
   return (
@@ -108,7 +54,6 @@ const GLAutocomplete = ({
           disabled={disabled}
           value={value}
           size="small"
-          classes={default_classes}
           color={inputColor}
           freeSolo={freeSolo}
           disableCloseOnSelect={disableCloseOnSelect}
@@ -121,12 +66,8 @@ const GLAutocomplete = ({
           getOptionDisabled={chipsOptionsDisabled}
           {...otherProps}
           renderInput={params => (
-            <StyledTextField
+            <TextField
               {...params}
-              className={classes.textField}
-              InputLabelProps={{
-                style: { color: "#fff" }
-              }}
               inputProps={{ ...params.inputProps, onKeyDown: restrictCharacters, ...inputPropsTextField, color: "white" }}
               name={name}
               margin={margin}
@@ -145,7 +86,6 @@ const GLAutocomplete = ({
                     <Chip
                       key={option}
                       style={{ fontSize: "1.6rem" }}
-                      classes={classes.chip}
                       label={!chipLabel ? option : option[chipLabel]}
                       {...getTagProps({ index })}
                       disabled={chipsOptionsDisabled ? chipsOptionsDisabled(option) : false}
@@ -159,12 +99,12 @@ const GLAutocomplete = ({
             return showCheckbox ? (
               <li {...props}>
                 <Checkbox icon={icon} size="medium" checkedIcon={checkedIcon} style={{ marginRight: 8 }} checked={selected} />
-                {option[option_name] || option.name}
+                {option[optionDisplay] || option.name}
               </li>
             ) : (
               <li {...props}>
-                {/* {option[option_name] || option.name} */}
-                {typeof option_name === "function" ? option_name(option) : option[option_name] || option.name}
+                {/* {option[optionDisplay] || option.name} */}
+                {typeof optionDisplay === "function" ? optionDisplay(option) : option[optionDisplay] || option.name}
               </li>
             );
           }}
@@ -185,30 +125,30 @@ GLAutocomplete.defaultProps = {
   multiple: false,
   showCheckbox: false,
   margin: "normal",
-  // textFieldDataTest: "",
+  textFieldDataTest: "",
   disableCloseOnSelect: false,
-  chipsOptionsDisabled: () => false
-  // value: [],
-  // options: []
-  // getOptionLabel: option => option.name
-  // getOptionSelected: (option, value) => option === value,
-  // getOptionDisabled: x => x,
-  // restrictCharacters: x => x,
-  // onInputChange: x => x,
-  // helperText: "",
-  // label: "",
-  // variant: "outlined",
-  // name: "",
-  // onChange: x => x,
-  // onBlur: x => x,
-  // disabled: false,
-  // error: null,
-  // classes: {},
-  // inputColor: "default",
-  // chipColor: x => x,
-  // inputType: "text",
-  // limitTags: 5,
-  // inputPropsTextField: {}
+  chipsOptionsDisabled: () => false,
+  value: [],
+  options: [],
+  getOptionLabel: option => (option ? option.name : ""),
+  getOptionSelected: (option, value) => option === value,
+  getOptionDisabled: x => x,
+  restrictCharacters: x => x,
+  onInputChange: x => x,
+  helperText: "",
+  label: "",
+  variant: "outlined",
+  name: "",
+  onChange: x => x,
+  onBlur: x => x,
+  disabled: false,
+  error: null,
+  classes: {},
+  inputColor: "default",
+  chipColor: x => x,
+  inputType: "text",
+  limitTags: 5,
+  inputPropsTextField: {}
 };
 
 GLAutocomplete.propTypes = {

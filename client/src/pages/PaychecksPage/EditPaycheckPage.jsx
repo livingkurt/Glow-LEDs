@@ -58,7 +58,7 @@ const EditPaycheckPage = props => {
       })
     );
     e.target.reset();
-    history.push("/secure/glow/paychecks?page=1?limit=10");
+    history.push("/secure/glow/paychecks");
   };
 
   const update_affiliate = e => {
@@ -224,7 +224,7 @@ const EditPaycheckPage = props => {
                 </li>
                 <li>
                   <GLButton variant="secondary" onClick={e => e.preventDefault()}>
-                    <Link to="/secure/glow/paychecks?page=1?limit=10">Back to Paychecks</Link>
+                    <Link to="/secure/glow/paychecks">Back to Paychecks</Link>
                   </GLButton>
                 </li>
               </ul>

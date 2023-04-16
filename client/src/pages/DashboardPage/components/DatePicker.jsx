@@ -28,7 +28,7 @@ const DatePicker = ({ year, month, start_date, end_date, start_end_date }) => {
             margin="normal"
             value={year}
             options={years}
-            option_name={option => option}
+            optionDisplay={option => option}
             getOptionLabel={option => option}
             getOptionSelected={(option, value) => option === value}
             name="year"
@@ -42,7 +42,7 @@ const DatePicker = ({ year, month, start_date, end_date, start_end_date }) => {
             margin="normal"
             value={month}
             options={months}
-            option_name={option => option}
+            optionDisplay={option => option}
             getOptionLabel={option => option}
             getOptionSelected={(option, value) => option === value}
             name="month"

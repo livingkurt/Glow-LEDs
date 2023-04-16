@@ -366,7 +366,7 @@ const PlaceOrderPage = props => {
     dimminish_stock();
     send_used_code_email();
     promo_code_used();
-    props.history.push("/secure/glow/orders?page=1?limit=10");
+    props.history.push("/secure/glow/orders");
     sessionStorage.removeItem("shippingAddress");
   };
 
@@ -426,7 +426,7 @@ const PlaceOrderPage = props => {
     dispatch(API.emptyCart(my_cart._id));
     dimminish_stock();
     promo_code_used();
-    props.history.push("/secure/glow/orders?page=1?limit=10");
+    props.history.push("/secure/glow/orders");
     sessionStorage.removeItem("shippingAddress");
   };
 
@@ -1262,7 +1262,7 @@ export default PlaceOrderPage;
 //     dimminish_stock();
 //     send_used_code_email();
 //     promo_code_used();
-//     props.history.push("/secure/glow/orders?page=1?limit=10");
+//     props.history.push("/secure/glow/orders");
 //     sessionStorage.removeItem("shippingAddress");
 //   };
 
@@ -1322,7 +1322,7 @@ export default PlaceOrderPage;
 //     empty_cart();
 //     dimminish_stock();
 //     promo_code_used();
-//     props.history.push("/secure/glow/orders?page=1?limit=10");
+//     props.history.push("/secure/glow/orders");
 //     sessionStorage.removeItem("shippingAddress");
 //   };
 

@@ -350,7 +350,7 @@ export const navigation = [
       },
       {
         title: "Orders",
-        link: "/secure/glow/orders?page=1?limit=10"
+        link: "/secure/glow/orders"
       },
       {
         title: "Products",

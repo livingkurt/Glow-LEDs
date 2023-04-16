@@ -652,7 +652,7 @@ const OrderPage = props => {
           <div className="mb-10px ml-20px jc-b">
             <div>
               {current_user?.isAdmin && (
-                <Link to={props.location.previous_path || "/secure/glow/orders?page=1?limit=10"}>
+                <Link to={props.location.previous_path || "/secure/glow/orders"}>
                   <GLButton variant="secondary">Back to Admin Orders</GLButton>
                 </Link>
               )}
