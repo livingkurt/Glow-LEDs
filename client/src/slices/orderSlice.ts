@@ -236,7 +236,6 @@ const orderPage = createSlice({
     },
     [API.deleteOrder.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.order = payload.order;
       state.message = "Order Deleted";
     },
     [API.deleteOrder.rejected as any]: (state: any, { payload }: any) => {

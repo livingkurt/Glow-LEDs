@@ -55,19 +55,15 @@ export const createPayOrder = createAsyncThunk(
       const {
         users: {
           userPage: { current_user }
-        },
-        carts: {
-          cartPage: { my_cart }
         }
       } = thunkApi.getState();
-      const { data: order_created } = await axios.post(`/api/orders`, { ...order, user: current_user }, headers(current_user));
+      const { data: order_created } = await axios.post(`/api/orders/secure`, { ...order, user: current_user }, headers(current_user));
 
       const { data: payment_created } = await axios.put(
         "/api/payments/secure/pay/" + order_created._id,
         { paymentMethod },
         headers(current_user)
       );
-      // thunkApi.dispatch(deleteCart(my_cart._id));
       sessionStorage.removeItem("shippingAddress");
       return { order: order_created, payment_created };
     } catch (error) {}
@@ -116,11 +112,7 @@ export const createPayOrderGuest = createAsyncThunk(
       const { data: payment_created } = await axios.put("/api/payments/guest/pay/" + order_created._id, {
         paymentMethod
       });
-      if (order_created.promo_code) {
-        await axios.put("/api/emails/code_used/" + order_created.promo_code);
-      }
       sessionStorage.removeItem("shippingAddress");
-      // thunkApi.dispatch(deleteCart(my_cart._id));
       return { order: order_created, payment_created };
     } catch (error) {}
   }
@@ -143,14 +135,14 @@ export const detailsOrder = createAsyncThunk("orders/detailsOrder", async (order
   } catch (error) {}
 });
 
-export const deleteOrder = createAsyncThunk("orders/deleteOrder", async (pathname, thunkApi: any) => {
+export const deleteOrder = createAsyncThunk("orders/deleteOrder", async (id: string, thunkApi: any) => {
   try {
     const {
       users: {
         userPage: { current_user }
       }
     } = thunkApi.getState();
-    const { data } = await axios.delete("/api/orders/" + pathname, headers(current_user));
+    const { data } = await axios.delete(`/api/orders/glow/${id}`, headers(current_user));
     return data;
   } catch (error) {}
 });
