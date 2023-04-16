@@ -1,10 +1,9 @@
 import React, { useCallback, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
 import * as API from "../../api";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import { Loading, Notification } from "../../shared/SharedComponents";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 import "./ProfilePage.scss";
 import { Helmet } from "react-helmet";
 import { EditUserModal } from "../UsersPage/components";
@@ -18,13 +17,15 @@ import ProfileAffiliateEarnings from "./components/ProfileAffiliateEarnings";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { format_date } from "../../utils/helper_functions";
 import { determine_color } from "../PaychecksPage/paychecksHelpers";
+import { set_success } from "../../slices/userSlice";
 
 const ProfilePage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
+  const location = useLocation();
   let { id } = useParams();
   const userPage = useSelector(state => state.users.userPage);
-  const { current_user, user } = userPage;
+  const { current_user, user, success } = userPage;
 
   const { first_name } = user;
 
@@ -37,6 +38,7 @@ const ProfilePage = () => {
   useEffect(() => {
     let cleanup = true;
     if (cleanup) {
+      dispatch(set_success(false));
       dispatch(API.detailsUser(id || current_user._id));
       dispatch(API.listMyOrders(id || current_user._id));
       if (user.is_affiliate) {
@@ -104,6 +106,19 @@ const ProfilePage = () => {
     options => API.getPaychecks({ ...options, filters: { ...options.filers, affiliate: user?.affiliate?._id } }),
     [user?.affiliate?._id]
   );
+
+  useEffect(() => {
+    let cleanup = true;
+    if (cleanup) {
+      if (success) {
+        history.push("/secure/account/profile");
+        window.location.reload();
+      }
+    }
+    return () => {
+      cleanup = false;
+    };
+  }, [dispatch, history, success]);
 
   return (
     <div className="p-20px inner_content">

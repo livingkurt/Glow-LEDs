@@ -99,6 +99,13 @@ export const loginUser = createAsyncThunk("users/loginUser", async (userData: an
   } catch (error) {}
 });
 
+export const loginAsUser = createAsyncThunk("users/loginAsUser", async (userData: any, thunkApi: any) => {
+  try {
+    const { data } = await axios.post("/api/users/login_as_user", userData);
+    return data;
+  } catch (error) {}
+});
+
 export const passwordReset = createAsyncThunk(
   "users/passwordReset",
   async ({ user_id, password, rePassword }: { user_id: string; password: string; rePassword: string }, thunkApi: any) => {

@@ -8,6 +8,7 @@ import { open_edit_affiliate_modal } from "../../../slices/affiliateSlice";
 import { EditAffiliateModal } from "../../AffiliatesPage/components";
 import { open_edit_wholesaler_modal } from "../../../slices/wholesalerSlice";
 import { EditWholesalerModal } from "../../WholesalersPage/components";
+import * as API from "../../../api";
 
 export const ProfileActions = () => {
   let { id } = useParams();
@@ -90,6 +91,18 @@ export const ProfileActions = () => {
             }}
           >
             Edit Wholesaler Profile
+          </GLButton>
+        </div>
+      )}
+      {current_user?.isAdmin && (
+        <div>
+          <GLButton
+            variant="primary"
+            onClick={() => {
+              dispatch(API.loginAsUser(user));
+            }}
+          >
+            Sign In as User
           </GLButton>
         </div>
       )}

@@ -278,6 +278,25 @@ const userPage = createSlice({
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
+    },
+    [API.loginAsUser.pending as any]: (state: any, { payload }: any) => {
+      state.loading = true;
+    },
+    [API.loginAsUser.fulfilled as any]: (state: any, { payload }: any) => {
+      const { access_token, refresh_token } = payload;
+      localStorage.setItem("accessToken", access_token);
+      setAuthToken(access_token);
+      const decoded = jwt_decode(access_token);
+      state.access_token = access_token;
+      state.loading = false;
+      state.current_user = decoded;
+      state.message = "User Login Success";
+      state.success = true;
+    },
+    [API.loginAsUser.rejected as any]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.error = payload.error;
+      state.message = payload.message;
     }
   }
 });

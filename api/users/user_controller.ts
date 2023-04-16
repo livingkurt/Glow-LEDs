@@ -264,6 +264,31 @@ export default {
       res.status(500).send({ error, message: "User Not Found" });
     }
   },
+  login_as_user_users_c: async (req: any, res: any) => {
+    const { body } = req;
+    try {
+      const user = await user_services.login_as_user_users_s(body.email);
+      //
+      if (user) {
+        return jwt.sign(
+          user,
+          config.ACCESS_TOKEN_SECRET,
+          {
+            expiresIn: "15m"
+          },
+          (err: any, access_token: string) => {
+            return res.status(200).send({
+              success: true,
+              access_token: "Bearer " + access_token
+            });
+          }
+        );
+      }
+      return res.status(404).send({ message: "User Not Found" });
+    } catch (error) {
+      res.status(500).send({ error, message: "User Not Found" });
+    }
+  },
   refresh_login_users_c: async (req: any, res: any) => {
     try {
       //get refreshToken

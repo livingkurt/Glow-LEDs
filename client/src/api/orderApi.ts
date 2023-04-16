@@ -60,7 +60,7 @@ export const createPayOrder = createAsyncThunk(
       const { data: order_created } = await axios.post(`/api/orders/secure`, { ...order, user: current_user }, headers(current_user));
 
       const { data: payment_created } = await axios.put(
-        "/api/payments/secure/pay/" + order_created._id,
+        `/api/payments/secure/pay/${order_created._id}`,
         { paymentMethod },
         headers(current_user)
       );

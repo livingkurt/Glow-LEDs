@@ -238,6 +238,26 @@ export default {
       throw new Error("Password Incorrect");
     }
   },
+  login_as_user_users_s: async (email: string) => {
+    const user: any = await user_db.findByEmail_users_db(email);
+
+    return {
+      _id: user.id,
+      first_name: user.first_name,
+      last_name: user.last_name,
+      email: user.email,
+      affiliate: user.affiliate,
+      email_subscription: user.email_subscription,
+      is_affiliated: user.is_affiliated,
+      isVerified: user.isVerified,
+      isAdmin: user.isAdmin,
+      shipping: user.shipping,
+      isWholesaler: user.isWholesaler,
+      wholesaler: user.wholesaler,
+      access_token: getAccessToken(user),
+      refresh_token: await getRefreshToken(user)
+    };
+  },
   refresh_login_users_s: async (email: string, password: string) => {
     const user: any = await user_db.findByEmail_users_db(email);
 
