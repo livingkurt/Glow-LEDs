@@ -48,51 +48,118 @@ export const saveOrder = createAsyncThunk("orders/saveOrder", async (order: any,
   } catch (error) {}
 });
 
+// export const createPayOrder = createAsyncThunk(
+//   "orders/createPayOrder",
+//   async ({ order, paymentMethod }: { order: any; paymentMethod: any }, thunkApi: any) => {
+//     try {
+// const {
+//   users: {
+//     userPage: { current_user }
+//   }
+// } = thunkApi.getState();
+//       const { data: order_created } = await axios.post(`/api/orders/secure`, { ...order, user: current_user }, headers(current_user));
+
+// const { data: payment_created } = await axios.put(
+//   `/api/payments/secure/pay/${order_created._id}`,
+//   { paymentMethod },
+//   headers(current_user)
+// );
+// sessionStorage.removeItem("shippingAddress");
+// return { order: order_created, payment_created };
+//     } catch (error) {
+//       console.log({ createPayOrder_error: error });
+//     }
+//   }
+// );
+
+// export const createPayOrderGuest = createAsyncThunk(
+//   "orders/createPayOrderGuest",
+//   async (
+//     { order, paymentMethod, create_account, password }: { order: any; paymentMethod: any; create_account: boolean; password: string },
+//     thunkApi: any
+//   ) => {
+//     try {
+//       let user_id = "";
+//       if (create_account) {
+//         const { data: create_user } = await axios.post("/api/users/register", {
+//           first_name: order.shipping.first_name,
+//           last_name: order.shipping.last_name,
+//           email: order.shipping.email,
+//           password: password
+//         });
+//         user_id = create_user._id;
+//         axios.post("/api/emails/account_created", create_user);
+//       } else if (!create_account) {
+//         const { data: user } = await axios.get("/api/users/email/" + order.shipping.email.toLowerCase());
+//         if (user && Object.keys(user).length > 0) {
+//           user_id = user._id;
+//         } else {
+//           const { data: new_user } = await axios.post("/api/users/", {
+//             first_name: order.shipping.first_name,
+//             last_name: order.shipping.last_name,
+//             email: order.shipping.email,
+//             isVerified: true,
+//             email_subscription: true,
+//             guest: true,
+//             password: process.env.REACT_APP_TEMP_PASS
+//           });
+//           user_id = new_user._id;
+//         }
+//       }
+
+//       const { data: order_created } = await axios.post("/api/orders/guest", {
+//         ...order,
+//         user: user_id
+//       });
+//       const { data: payment_created } = await axios.put("/api/payments/guest/pay/" + order_created._id, {
+//         paymentMethod
+//       });
+//       sessionStorage.removeItem("shippingAddress");
+//       return { order: order_created, payment_created };
+//     } catch (error) {
+//       console.log({ createPayOrderGuest: error });
+//     }
+//   }
+// );
+
 export const createPayOrder = createAsyncThunk(
   "orders/createPayOrder",
-  async ({ order, paymentMethod }: { order: any; paymentMethod: any }, thunkApi: any) => {
-    try {
-      const {
-        users: {
-          userPage: { current_user }
-        }
-      } = thunkApi.getState();
-      const { data: order_created } = await axios.post(`/api/orders/secure`, { ...order, user: current_user }, headers(current_user));
-
-      const { data: payment_created } = await axios.put(
-        `/api/payments/secure/pay/${order_created._id}`,
-        { paymentMethod },
-        headers(current_user)
-      );
-      sessionStorage.removeItem("shippingAddress");
-      return { order: order_created, payment_created };
-    } catch (error) {}
-  }
-);
-
-export const createPayOrderGuest = createAsyncThunk(
-  "orders/createPayOrderGuest",
   async (
-    { order, paymentMethod, create_account, password }: { order: any; paymentMethod: any; create_account: boolean; password: string },
+    {
+      order,
+      paymentMethod,
+      create_account,
+      new_password
+    }: { order: any; paymentMethod: any; create_account: boolean; new_password: string },
     thunkApi: any
   ) => {
+    console.log({ order, paymentMethod, create_account, new_password });
+    const {
+      users: {
+        userPage: { current_user }
+      }
+    } = thunkApi.getState();
+
+    let user_id = null;
+
     try {
-      let user_id = "";
-      if (create_account) {
+      if (current_user && Object.keys(current_user).length > 0) {
+        user_id = current_user ? current_user.id : null;
+      } else if (create_account) {
         const { data: create_user } = await axios.post("/api/users/register", {
           first_name: order.shipping.first_name,
           last_name: order.shipping.last_name,
           email: order.shipping.email,
-          password: password
+          password: new_password
         });
-        user_id = create_user._id;
         axios.post("/api/emails/account_created", create_user);
+        user_id = create_user._id;
       } else if (!create_account) {
         const { data: user } = await axios.get("/api/users/email/" + order.shipping.email.toLowerCase());
         if (user && Object.keys(user).length > 0) {
           user_id = user._id;
         } else {
-          const { data: new_user } = await axios.post("/api/users/", {
+          const { data: new_user } = await axios.post("/api/users", {
             first_name: order.shipping.first_name,
             last_name: order.shipping.last_name,
             email: order.shipping.email,
@@ -105,16 +172,14 @@ export const createPayOrderGuest = createAsyncThunk(
         }
       }
 
-      const { data: order_created } = await axios.post("/api/orders/guest", {
-        ...order,
-        user: user_id
-      });
-      const { data: payment_created } = await axios.put("/api/payments/guest/pay/" + order_created._id, {
-        paymentMethod
-      });
+      const { data: order_created } = await axios.post("/api/orders", { ...order, user: user_id });
+      const { data: payment_created } = await axios.put(`/api/payments/${order_created._id}/pay`, { paymentMethod });
       sessionStorage.removeItem("shippingAddress");
       return { order: order_created, payment_created };
-    } catch (error) {}
+    } catch (error) {
+      console.log({ createPayOrder: error });
+      throw error;
+    }
   }
 );
 

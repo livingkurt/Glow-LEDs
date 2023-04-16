@@ -304,63 +304,65 @@ const PlaceOrderPage = props => {
   const placeOrderHandler = async paymentMethod => {
     check_authentication();
     if (cartItems.length > 0) {
-      if (current_user && current_user.first_name) {
-        dispatch(
-          API.createPayOrder({
-            order: {
-              orderItems: cartItems,
-              shipping: shipment_id
-                ? {
-                    ...shipping,
-                    shipment_id,
-                    shipping_rate
-                  }
-                : shipping,
-              payment,
-              itemsPrice,
-              shippingPrice,
-              taxPrice,
-              totalPrice,
-              current_user,
-              order_note,
-              production_note,
-              tip,
-              promo_code: show_message && promo_code,
-              parcel: parcel || null
-            },
-            paymentMethod
-          })
-        );
-      } else {
-        dispatch(
-          API.createPayOrderGuest({
-            order: {
-              orderItems: cartItems,
-              shipping: shipment_id
-                ? {
-                    ...shipping,
-                    shipment_id,
-                    shipping_rate
-                  }
-                : shipping,
-              payment,
-              itemsPrice,
-              shippingPrice,
-              taxPrice,
-              totalPrice,
-              order_note,
-              production_note,
-              tip,
-              promo_code: show_message && promo_code,
-              parcel: parcel || null,
-              guest: true
-            },
-            create_account,
-            new_password,
-            paymentMethod
-          })
-        );
-      }
+      // if (current_user && current_user.first_name) {
+      dispatch(
+        API.createPayOrder({
+          order: {
+            orderItems: cartItems,
+            shipping: shipment_id
+              ? {
+                  ...shipping,
+                  shipment_id,
+                  shipping_rate
+                }
+              : shipping,
+            payment,
+            itemsPrice,
+            shippingPrice,
+            taxPrice,
+            totalPrice,
+            current_user,
+            order_note,
+            production_note,
+            tip,
+            promo_code: show_message && promo_code,
+            parcel: parcel || null
+          },
+          create_account,
+          new_password,
+          paymentMethod
+        })
+      );
+      // } else {
+      //   dispatch(
+      //     API.createPayOrderGuest({
+      //       order: {
+      //         orderItems: cartItems,
+      //         shipping: shipment_id
+      //           ? {
+      //               ...shipping,
+      //               shipment_id,
+      //               shipping_rate
+      //             }
+      //           : shipping,
+      //         payment,
+      //         itemsPrice,
+      //         shippingPrice,
+      //         taxPrice,
+      //         totalPrice,
+      //         order_note,
+      //         production_note,
+      //         tip,
+      //         promo_code: show_message && promo_code,
+      //         parcel: parcel || null,
+      //         guest: true
+      //       },
+      // create_account,
+      // new_password,
+      // paymentMethod
+      //     })
+      //   );
+      // }
     }
   };
   const dimminish_stock = async () => {

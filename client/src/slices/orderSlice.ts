@@ -192,20 +192,20 @@ const orderPage = createSlice({
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.createPayOrderGuest.pending as any]: (state: any, { payload }: any) => {
-      state.loading_payment = true;
-    },
-    [API.createPayOrderGuest.fulfilled as any]: (state: any, { payload }: any) => {
-      state.loading_payment = false;
-      state.success = true;
-      state.order = payload.order;
-      state.message = "Guest Order Created and Paid";
-    },
-    [API.createPayOrderGuest.rejected as any]: (state: any, { payload }: any) => {
-      state.loading_payment = false;
-      state.error = payload.error;
-      state.message = payload.message;
-    },
+    // [API.createPayOrderGuest.pending as any]: (state: any, { payload }: any) => {
+    //   state.loading_payment = true;
+    // },
+    // [API.createPayOrderGuest.fulfilled as any]: (state: any, { payload }: any) => {
+    //   state.loading_payment = false;
+    //   state.success = true;
+    //   state.order = payload.order;
+    //   state.message = "Guest Order Created and Paid";
+    // },
+    // [API.createPayOrderGuest.rejected as any]: (state: any, { payload }: any) => {
+    //   state.loading_payment = false;
+    //   state.error = payload.error;
+    //   state.message = payload.message;
+    // },
     [API.saveOrder.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
     },
