@@ -34,22 +34,7 @@ const PlaceOrderPage = props => {
 
   const promoPage = useSelector(state => state.promos);
   const { promos } = promoPage;
-  // const userPage = useSelector(state => state.users.userPage);
-  // const { current_user, loading: user_loading, success: user_success } = userPage;
 
-  // const cart = useSelector(state => state.cart);
-  // const { cartItems, shipping, payment } = cart;
-  // const orderCreate = useSelector(state => state.orderCreate);
-  // const { order, error: error_order, success: success_order } = orderCreate;
-
-  // const orderPay = useSelector(state => state.orderPay);
-  // const { success: successPay, error: error_pay } = orderPay;
-
-  // const userList = useSelector(state => state.userList);
-  // const { users } = userList;
-
-  // const promoList = useSelector(state => state.promoList);
-  // const { promos } = promoList;
   const items_price = determine_total(cartItems);
 
   const [shipping_rates, set_shipping_rates] = useState({});
@@ -304,7 +289,6 @@ const PlaceOrderPage = props => {
   const placeOrderHandler = async paymentMethod => {
     check_authentication();
     if (cartItems.length > 0) {
-      // if (current_user && current_user.first_name) {
       dispatch(
         API.createPayOrder({
           order: {
@@ -333,36 +317,6 @@ const PlaceOrderPage = props => {
           paymentMethod
         })
       );
-      // } else {
-      //   dispatch(
-      //     API.createPayOrderGuest({
-      //       order: {
-      //         orderItems: cartItems,
-      //         shipping: shipment_id
-      //           ? {
-      //               ...shipping,
-      //               shipment_id,
-      //               shipping_rate
-      //             }
-      //           : shipping,
-      //         payment,
-      //         itemsPrice,
-      //         shippingPrice,
-      //         taxPrice,
-      //         totalPrice,
-      //         order_note,
-      //         production_note,
-      //         tip,
-      //         promo_code: show_message && promo_code,
-      //         parcel: parcel || null,
-      //         guest: true
-      //       },
-      // create_account,
-      // new_password,
-      // paymentMethod
-      //     })
-      //   );
-      // }
     }
   };
   const dimminish_stock = async () => {
