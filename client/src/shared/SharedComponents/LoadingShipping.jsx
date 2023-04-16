@@ -19,20 +19,11 @@ const LoadingShipment = ({
   const { my_cart } = cartPage;
   const { cartItems } = my_cart;
 
-  function calculateTotalOunces(cartItems) {
-    let totalOunces = 0;
-    for (let i = 0; i < cartItems.length; i++) {
-      const item = cartItems[i];
-      const weightInOunces = item.weight_pounds * 16 + item.weight_ounces;
-      totalOunces += weightInOunces * item.qty;
-    }
-    return totalOunces;
-  }
   function calculateTotalPounds(cartItems) {
     let totalOunces = 0;
     for (let i = 0; i < cartItems.length; i++) {
       const item = cartItems[i];
-      const weightInOunces = item.weight_pounds * 16 + item.weight_ounces;
+      const weightInOunces = (item?.weight_pounds * 16 || 0) + (item?.weight_ounces || 0);
       totalOunces += weightInOunces * item.qty;
     }
     const totalPounds = totalOunces / 16;
@@ -78,17 +69,17 @@ const LoadingShipment = ({
         <div className="error_message_payment jc-c column">
           <div>
             <h2 className="ta-c mv-5px">Error:</h2>
-            {error.error.split("-").map(error => (
+            {error?.error?.split("-").map(error => (
               <p className="ta-c mv-5px">{error}</p>
             ))}
             <h2 className="ta-c mt-20px">Solution:</h2>
-            {error.error.includes("maximum per package") && (
+            {error?.error?.includes("maximum per package") && (
               <p className="ta-c  mb-1px">
                 The total weight of the items in your cart is {calculateTotalPounds(cartItems)} lbs You need to remove items from your cart
                 and try again.
               </p>
             )}
-            {!error.error.includes("maximum per package") && (
+            {!error?.error?.includes("maximum per package") && (
               <>
                 <p className="ta-c  mb-1px">Double check you entered your shipping address correctly</p>
                 <hr></hr>

@@ -135,3 +135,6 @@ email_templates/components/*.js
 certification/glowleds-key.pem
 
 client/src/scss/OLDSCSS.scss
+/test-results/
+/playwright-report/
+/playwright/.cache/

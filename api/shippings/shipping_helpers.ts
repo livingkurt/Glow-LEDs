@@ -67,11 +67,12 @@ export const calculateTotalOunces = (cartItems: any) => {
   let totalOunces = 0;
   for (let i = 0; i < cartItems.length; i++) {
     const item = cartItems[i];
-    const weightInOunces = item.weight_pounds * 16 + item.weight_ounces;
+    const weightInOunces = (item?.weight_pounds * 16 || 0) + (item?.weight_ounces || 0);
     totalOunces += weightInOunces * item.qty;
   }
   return totalOunces;
 };
+
 export const calculateTotalPounds = (cartItems: any) => {
   let totalOunces = 0;
   for (let i = 0; i < cartItems.length; i++) {

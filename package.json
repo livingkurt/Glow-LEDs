@@ -51,6 +51,7 @@
     "table-scraper": "^1.0.3"
   },
   "devDependencies": {
+    "@playwright/test": "^1.32.3",
     "@types/bcryptjs": "^2.4.2",
     "@types/jsonwebtoken": "^8.5.0",
     "@types/mongoose": "^5.7.32",
