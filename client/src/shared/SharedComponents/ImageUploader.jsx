@@ -4,14 +4,14 @@ import { Box, Button, Container, Grid, TextField } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 const StyledBox = styled(Box)({
-  padding: "16px",
-  textAlign: "center"
+  // padding: "16px",
+  // textAlign: "center"
 });
 
-const ImageUploader = ({ onUpload }) => {
+const ImageUploader = ({ onUpload, album }) => {
   const [files, setFiles] = useState([]);
   const [previewUrls, setPreviewUrls] = useState([]);
-  const [albumName, setAlbumName] = useState("");
+  const [albumName, setAlbumName] = useState(album);
 
   const handleFileChange = event => {
     const selectedFiles = event.target.files;
@@ -54,46 +54,45 @@ const ImageUploader = ({ onUpload }) => {
   };
 
   return (
-    <StyledBox sx={{ marginTop: 4 }}>
-      <Container maxWidth="sm">
-        {/* <Typography variant="h5" component="h1" gutterBottom>
-          Image Uploader
-        </Typography> */}
-        <form onSubmit={handleSubmit}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField
-                size="small"
-                id="album-name"
-                label="Album Name"
-                variant="outlined"
-                fullWidth
-                value={albumName}
-                onChange={handleAlbumNameChange}
-              />
-            </Grid>
-            <Grid item xs={12}>
+    <div className="pv-20px">
+      <form onSubmit={handleSubmit}>
+        <Grid container spacing={2} alignItems="center">
+          <Grid item xs={12} sm={9}>
+            <TextField
+              size="small"
+              id="album-name"
+              label="Album Name"
+              variant="outlined"
+              value={albumName}
+              onChange={handleAlbumNameChange}
+              fullWidth
+            />
+          </Grid>
+          <Grid item xs={12} sm={3} container justifyContent="space-around">
+            <div>
               <input type="file" hidden onChange={handleFileChange} id="upload-input" multiple />
               <label htmlFor="upload-input">
                 <Button variant="contained" component="span">
-                  Select Files
+                  Select
                 </Button>
               </label>
-            </Grid>
-            {previewUrls.map((url, index) => (
-              <Grid item xs={12} key={index}>
-                <img src={url} alt="Preview" style={{ maxWidth: "100%" }} />
-              </Grid>
-            ))}
-            <Grid item xs={12}>
+            </div>
+            <div>
               <Button variant="contained" type="submit" disabled={files.length === 0}>
                 Upload
               </Button>
-            </Grid>
+            </div>
           </Grid>
-        </form>
-      </Container>
-    </StyledBox>
+        </Grid>
+        <Grid container spacing={2} alignItems="flex-end">
+          {previewUrls.map((url, index) => (
+            <Grid item xs={4} key={index}>
+              <img src={url} alt="Preview" style={{ maxWidth: "100%" }} />
+            </Grid>
+          ))}
+        </Grid>
+      </form>
+    </div>
   );
 };
 

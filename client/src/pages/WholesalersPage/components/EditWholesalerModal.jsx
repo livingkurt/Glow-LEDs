@@ -28,7 +28,7 @@ const EditWholesalerModal = () => {
 
   const formFields = {
     user: {
-      type: "autocomplete",
+      type: "autocomplete_single",
       label: "Users",
       options: users.filter(user => fullName(user)),
       labelProp: "user",

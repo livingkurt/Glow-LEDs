@@ -68,7 +68,7 @@ const GLAutocomplete = ({
           renderInput={params => (
             <TextField
               {...params}
-              inputProps={{ ...params.inputProps, onKeyDown: restrictCharacters, ...inputPropsTextField, color: "white" }}
+              inputProps={{ ...params.inputProps, onKeyDown: restrictCharacters, ...inputPropsTextField }}
               name={name}
               margin={margin}
               data-test={textFieldDataTest}
@@ -89,7 +89,7 @@ const GLAutocomplete = ({
                       label={!chipLabel ? option : option[chipLabel]}
                       {...getTagProps({ index })}
                       disabled={chipsOptionsDisabled ? chipsOptionsDisabled(option) : false}
-                      color={!chipLabel ? "" : chipColor === "function" ? chipColor(option) : chipColor}
+                      color={!chipLabel ? "" : typeof chipColor === "function" ? chipColor(option) : chipColor}
                       size="medium"
                     />
                   ))
@@ -98,14 +98,11 @@ const GLAutocomplete = ({
           renderOption={(props, option, { selected }) => {
             return showCheckbox ? (
               <li {...props}>
-                <Checkbox icon={icon} size="medium" checkedIcon={checkedIcon} style={{ marginRight: 8 }} checked={selected} />
-                {option[optionDisplay] || option.name}
-              </li>
-            ) : (
-              <li {...props}>
-                {/* {option[optionDisplay] || option.name} */}
+                <Checkbox icon={icon} size="large" checkedIcon={checkedIcon} style={{ marginRight: 8 }} checked={selected} />
                 {typeof optionDisplay === "function" ? optionDisplay(option) : option[optionDisplay] || option.name}
               </li>
+            ) : (
+              <li {...props}>{typeof optionDisplay === "function" ? optionDisplay(option) : option[optionDisplay] || option.name}</li>
             );
           }}
           onChange={onChange}
@@ -145,7 +142,7 @@ GLAutocomplete.defaultProps = {
   error: null,
   classes: {},
   inputColor: "default",
-  chipColor: x => x,
+  chipColor: () => "primary",
   inputType: "text",
   limitTags: 5,
   inputPropsTextField: {}
@@ -174,7 +171,7 @@ GLAutocomplete.propTypes = {
   onChange: PropTypes.func,
   onBlur: PropTypes.func,
   disabled: PropTypes.bool,
-  margin: PropTypes.bool,
+  margin: PropTypes.string,
   error: PropTypes.array,
   classes: PropTypes.object,
   inputColor: PropTypes.string,

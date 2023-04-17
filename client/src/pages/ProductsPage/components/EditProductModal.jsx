@@ -16,20 +16,33 @@ const EditProductModal = () => {
   const productPage = useSelector(state => state.products.productPage);
   const { edit_product_modal, product, loading, products } = productPage;
   const userPage = useSelector(state => state.users.userPage);
-  const { users, loading_users } = userPage;
+  const { users, loading: loading_users } = userPage;
+  const imagePage = useSelector(state => state.images.imagePage);
+  const { images, loading: loading_images } = imagePage;
+  const categoryPage = useSelector(state => state.categorys);
+  const { categorys, loading: loading_categorys } = categoryPage;
 
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(API.listProducts({}));
+      dispatch(API.listProducts({ option: true }));
       dispatch(API.listUsers({}));
+      dispatch(API.listImages({}));
+      dispatch(API.listCategorys({}));
     }
     return () => {
       clean = false;
     };
   }, [dispatch, product._id]);
 
-  const formFields = productFormFields({ products, users });
+  const formFields = productFormFields({
+    products,
+    users,
+    images,
+    categorys,
+    setState: (value, key) => dispatch(set_product({ [key]: [...product[key], ...value] })),
+    product
+  });
 
   return (
     <div>
@@ -48,7 +61,12 @@ const EditProductModal = () => {
         cancelColor="secondary"
         disableEscapeKeyDown
       >
-        <GLForm formData={formFields} state={product} onChange={value => dispatch(set_product(value))} loading={loading && loading_users} />
+        <GLForm
+          formData={formFields}
+          state={product}
+          onChange={value => dispatch(set_product(value))}
+          loading={loading && loading_users && loading_images && loading_categorys}
+        />
         <Typography component="h4" variant="h4" sx={{ mb: 2 }}>
           {formFields.reviews.title}
         </Typography>

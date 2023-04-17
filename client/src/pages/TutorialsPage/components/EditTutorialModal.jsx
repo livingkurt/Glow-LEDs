@@ -4,7 +4,7 @@ import GLModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiion
 import { set_edit_tutorial_modal, set_tutorial } from "../../../slices/tutorialSlice";
 import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
-import { snake_case } from "../../../utils/helper_functions";
+import { snake_case, toCapitalize } from "../../../utils/helper_functions";
 
 const EditTutorialModal = () => {
   const dispatch = useDispatch();
@@ -12,7 +12,7 @@ const EditTutorialModal = () => {
   const { edit_tutorial_modal, tutorial, loading } = tutorialPage;
   const { affiliate, title } = tutorial;
 
-  const affiliatePage = useSelector(state => state.affiliates);
+  const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
   const { affiliates, loading: loading_affiliates } = affiliatePage;
 
   useEffect(() => {
@@ -31,7 +31,7 @@ const EditTutorialModal = () => {
 
   const formFields = {
     affiliate: {
-      type: "autocomplete",
+      type: "autocomplete_single",
       label: "Affiliate",
       options: affiliates,
       labelProp: "artist_name"
@@ -45,12 +45,13 @@ const EditTutorialModal = () => {
       label: "Video"
     },
     description: {
-      type: "text",
+      type: "text_multiline",
       label: "Description"
     },
     level: {
-      type: "select",
+      type: "autocomplete_single",
       label: "Difficulty",
+      getOptionLabel: option => toCapitalize(option),
       options: ["beginner", "intermediate", "advanced"]
     },
     order: {

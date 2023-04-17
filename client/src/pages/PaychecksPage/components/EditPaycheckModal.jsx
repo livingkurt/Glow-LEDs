@@ -38,25 +38,25 @@ const EditPaycheckModal = () => {
 
   const formFields = {
     affiliate: {
-      type: "autocomplete",
+      type: "autocomplete_single",
       label: "Affiliate",
       options: affiliates,
       labelProp: "artist_name"
     },
     user: {
-      type: "autocomplete",
+      type: "autocomplete_single",
       label: "User",
       options: users,
       labelProp: "artist_name"
     },
     team: {
-      type: "autocomplete",
+      type: "autocomplete_single",
       label: "User",
       options: teams,
       labelProp: "artist_name"
     },
     promo_code: {
-      type: "autocomplete",
+      type: "autocomplete_single",
       label: "User",
       options: promos,
       labelProp: "artist_name"

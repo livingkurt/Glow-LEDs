@@ -36,7 +36,7 @@ const EditAffiliateModal = () => {
 
   const formFields = {
     user: {
-      type: "autocomplete",
+      type: "autocomplete_single",
       label: "Users",
       options: users,
       labelProp: "user",
@@ -79,26 +79,26 @@ const EditAffiliateModal = () => {
       label: "Percentage Off"
     },
     chips: {
-      type: "autocomplete",
+      type: "autocomplete_single",
       label: "Chips",
       options: chips,
       labelProp: "name",
       getOptionLabel: option => option.name
     },
     glow_gear: {
-      type: "autocomplete",
+      type: "autocomplete_single",
       label: "Products",
       options: products,
       labelProp: "name"
     },
     public_code: {
-      type: "autocomplete",
+      type: "autocomplete_single",
       label: "Public Code",
       options: promos,
       labelProp: "promo_code"
     },
     private_code: {
-      type: "autocomplete",
+      type: "autocomplete_single",
       label: "Private Code",
       options: promos,
       labelProp: "promo_code"

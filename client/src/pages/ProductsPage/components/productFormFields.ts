@@ -1,81 +1,61 @@
-export const productFormFields = ({ products, users }: { products: any; users: any }) => {
+export const productFormFields = ({
+  products,
+  users,
+  images,
+  categorys,
+  setState,
+  product
+}: {
+  products: any;
+  users: any;
+  images: any;
+  categorys: any;
+  setState: any;
+  product: any;
+}) => {
   return {
     name: {
       type: "text",
       label: "Name",
       required: true
     },
-    images: {
-      type: "array",
-      label: "Images"
+    price: {
+      type: "number",
+      label: "Price"
     },
-    color_images: {
-      type: "array",
-      label: "Color Images"
+    description: {
+      type: "text_multiline",
+      label: "Description"
     },
-    secondary_color_images: {
-      type: "array",
-      label: "Secondary Color Images"
+    facts: {
+      type: "text_multiline",
+      label: "Facts"
     },
-    option_images: {
-      type: "array",
-      label: "Option Images"
-    },
-    secondary_images: {
-      type: "array",
-      label: "Secondary Images"
-    },
-    video: {
-      type: "text",
-      label: "Video"
+    included_items: {
+      type: "text_multiline",
+      label: "Included Items"
     },
     brand: {
       type: "text",
       label: "Brand",
       required: true
     },
-    price: {
-      type: "number",
-      label: "Price"
-    },
-    wholesale_price: {
-      type: "number",
-      label: "Wholesale Price"
-    },
-    wholesale_product: {
-      type: "checkbox",
-      label: "Wholesale Product"
-    },
-    previous_price: {
-      type: "number",
-      label: "Previous Price"
-    },
     category: {
       type: "text",
       label: "Category",
       required: true
     },
-    product_collection: {
-      type: "text",
-      label: "Product Collection"
-    },
-    categorys: {
-      type: "array_of_objects",
-      label: "Categorys"
-    },
-    subcategorys: {
-      type: "array_of_objects",
-      label: "Subcategorys"
-    },
     subcategory: {
       type: "text",
       label: "Subcategory"
     },
-    countInStock: {
+    product_collection: {
+      type: "text",
+      label: "Product Collection"
+    },
+    previous_price: {
       type: "number",
-      label: "Count in Stock",
-      default: 30,
-      required: true
+      label: "Previous Price"
     },
     count_in_stock: {
       type: "number",
@@ -88,23 +68,47 @@ export const productFormFields = ({ products, users }: { products: any; users: a
       label: "Finite Stock",
       default: false
     },
-    facts: {
-      type: "text",
-      label: "Facts"
+    images_object: {
+      type: "image_upload",
+      label: "Images",
+      options: images,
+      labelProp: "link",
+      album: `${product.name} Images`,
+      onUpload: (images: any) => setState(images, "images_object")
     },
-    included_items: {
+
+    video: {
       type: "text",
-      label: "Included Items"
+      label: "Video"
     },
+
+    wholesale_price: {
+      type: "number",
+      label: "Wholesale Price"
+    },
+    wholesale_product: {
+      type: "checkbox",
+      label: "Wholesale Product"
+    },
+    categorys: {
+      type: "autocomplete_multiple",
+      label: "Categorys",
+      options: categorys,
+      labelProp: "name"
+    },
+    subcategorys: {
+      type: "autocomplete_multiple",
+      label: "Subcategorys",
+      options: categorys,
+      labelProp: "name"
+    },
+
     contributers: {
       type: "array",
       label: "Contributers",
       default: "5f2d7c0e9005a57059801ce8"
     },
-    description: {
-      type: "text",
-      label: "Description"
-    },
+
     rating: {
       type: "number",
       label: "Rating",
@@ -115,41 +119,7 @@ export const productFormFields = ({ products, users }: { products: any; users: a
       label: "Number of Reviews",
       default: 0
     },
-    reviews: {
-      type: "array_of_objects",
-      title: "Reviews",
-      fields: {
-        user: {
-          type: "autocomplete",
-          label: "Users",
-          options: users,
-          labelProp: "user",
-          getOptionLabel: (option: any) => `${option.first_name} ${option.last_name}`
-        },
-        first_name: {
-          type: "text",
-          label: "First Name",
-          labelProps: "first_name"
-        },
-        last_name: {
-          type: "text",
-          label: "Last Name",
-          labelProps: "last_name"
-        },
-        rating: {
-          type: "number",
-          label: "Rating",
-          labelProps: "rating",
-          required: true
-        },
-        comment: {
-          type: "text",
-          label: "Comment",
-          labelProps: "comment",
-          required: true
-        }
-      }
-    },
+
     hidden: {
       type: "checkbox",
       label: "Hidden",
@@ -172,12 +142,6 @@ export const productFormFields = ({ products, users }: { products: any; users: a
       label: "Sale End Date",
       labelProps: "sale_end_date"
     },
-    deleted: {
-      type: "checkbox",
-      label: "Deleted",
-      labelProps: "deleted",
-      defaultValue: false
-    },
     preorder: {
       type: "checkbox",
       label: "Preorder",
@@ -195,12 +159,12 @@ export const productFormFields = ({ products, users }: { products: any; users: a
       labelProps: "meta_title"
     },
     meta_description: {
-      type: "text",
+      type: "text_multiline",
       label: "Meta Description",
       labelProps: "meta_description"
     },
     meta_keywords: {
-      type: "text",
+      type: "text_multiline",
       label: "Meta Keywords",
       labelProps: "meta_keywords"
     },
@@ -260,11 +224,6 @@ export const productFormFields = ({ products, users }: { products: any; users: a
       label: "Quantity",
       labelProps: "quantity"
     },
-    finite_stock: {
-      type: "number",
-      label: "Finite Stock",
-      labelProps: "finite_stock"
-    },
     add_on_price: {
       type: "number",
       label: "Add-On Price",
@@ -275,15 +234,9 @@ export const productFormFields = ({ products, users }: { products: any; users: a
       label: "Show Add-On",
       labelProps: "show_add_on"
     },
-    product: {
-      type: "autocomplete",
-      label: "Product",
-      options: products,
-      labelProp: "name",
-      required: true
-    },
+
     color_product: {
-      type: "autocomplete",
+      type: "autocomplete_single",
       label: "Color Product",
       options: products,
       labelProp: "name"
@@ -293,8 +246,16 @@ export const productFormFields = ({ products, users }: { products: any; users: a
       label: "Color Product Name",
       labelProp: "color_product_name"
     },
+    color_images_object: {
+      type: "image_upload",
+      label: "Color Images",
+      options: images,
+      labelProp: "link",
+      album: `${product.name} Color Images`,
+      onUpload: (images: any) => setState(images, "color_images_object")
+    },
     secondary_color_product: {
-      type: "autocomplete",
+      type: "autocomplete_single",
       label: "Secondary Color Product",
       options: products,
       labelProp: "name"
@@ -304,16 +265,32 @@ export const productFormFields = ({ products, users }: { products: any; users: a
       label: "Secondary Color Product Name",
       labelProp: "secondary_color_product_name"
     },
+    secondary_color_images_object: {
+      type: "image_upload",
+      label: "Secondary Color Images",
+      options: images,
+      labelProp: "link",
+      album: `${product.name} Secondary Color Images`,
+      onUpload: (images: any) => setState(images, "secondary_color_images_object")
+    },
     option_product_name: {
       type: "text",
       label: "Option Product Name",
       labelProp: "option_product_name"
     },
     option_product: {
-      type: "autocomplete",
+      type: "autocomplete_single",
       label: "Option Product",
       options: products,
       labelProp: "name"
+    },
+    option_images_object: {
+      type: "image_upload",
+      label: "Option Images",
+      options: images,
+      labelProp: "link",
+      album: `${product.name} Option Images`,
+      onUpload: (images: any) => setState(images, "option_images_object")
     },
     secondary_product_name: {
       type: "text",
@@ -321,10 +298,53 @@ export const productFormFields = ({ products, users }: { products: any; users: a
       labelProp: "secondary_product_name"
     },
     secondary_product: {
-      type: "autocomplete",
+      type: "autocomplete_single",
       label: "Secondary Product",
       options: products,
       labelProp: "name"
+    },
+    secondary_images_object: {
+      type: "image_upload",
+      label: "Secondary Images",
+      options: images,
+      labelProp: "link",
+      album: `${product.name} Secondary Images`,
+      onUpload: (images: any) => setState(images, "secondary_images_object")
+    },
+    reviews: {
+      type: "array_of_objects",
+      title: "Reviews",
+      fields: {
+        user: {
+          type: "autocomplete_single",
+          label: "Users",
+          options: users,
+          labelProp: "user",
+          getOptionLabel: (option: any) => (option ? `${option.first_name} ${option.last_name}` : "")
+        },
+        first_name: {
+          type: "text",
+          label: "First Name",
+          labelProps: "first_name"
+        },
+        last_name: {
+          type: "text",
+          label: "Last Name",
+          labelProps: "last_name"
+        },
+        rating: {
+          type: "number",
+          label: "Rating",
+          labelProps: "rating",
+          required: true
+        },
+        comment: {
+          type: "text",
+          label: "Comment",
+          labelProps: "comment",
+          required: true
+        }
+      }
     }
   };
 };

@@ -9,6 +9,11 @@ export default {
     try {
       return await Product.find(filter)
         .sort(sort)
+        .populate("images_object")
+        .populate("color_images_object")
+        .populate("secondary_color_images_object")
+        .populate("option_images_object")
+        .populate("secondary_images_object")
         .populate("chips")
         .populate("products")
         .populate({
@@ -78,6 +83,11 @@ export default {
     try {
       return await Product.find(filter)
         .sort(sort)
+        .populate("images_object")
+        .populate("color_images_object")
+        .populate("secondary_color_images_object")
+        .populate("option_images_object")
+        .populate("secondary_images_object")
         .populate("chips")
         .populate("products")
         .populate({
@@ -190,6 +200,11 @@ export default {
         query = { pathname: id };
       }
       return await Product.findOne(query)
+        .populate("images_object")
+        .populate("color_images_object")
+        .populate("secondary_color_images_object")
+        .populate("option_images_object")
+        .populate("secondary_images_object")
         .populate("chips")
         .populate("products")
         .populate({

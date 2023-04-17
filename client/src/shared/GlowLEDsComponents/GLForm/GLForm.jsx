@@ -1,8 +1,10 @@
-import { Autocomplete, Checkbox, FormControlLabel, Skeleton, TextField } from "@mui/material";
+import { Autocomplete, Checkbox, FormControlLabel, Skeleton, TextField, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 
 import { toCapitalize } from "../../../utils/helper_functions";
 import GLAutocomplete from "../GLAutocomplete/GLAutocomplete";
+import ImageUploader from "../../SharedComponents/ImageUploader";
+import { ImageDisplay } from "../../SharedComponents";
 
 const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
   const userPage = useSelector(state => state.users.userPage);
@@ -43,7 +45,7 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
           }
         } else if (determine_shown_fields(fieldData)) {
           switch (fieldData.type) {
-            case "autocomplete":
+            case "autocomplete_single":
               return (
                 <GLAutocomplete
                   key={fieldName}
@@ -60,8 +62,34 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
                   onChange={(event, value) => onChange({ [fieldName]: value })}
                 />
               );
+            case "image_upload":
+              return (
+                <>
+                  <Typography className="title_font mt-10px ta-c">{fieldData.label}</Typography>
+                  <ImageUploader onUpload={fieldData.onUpload} album={fieldData.album} />
+                  <ImageDisplay images={fieldState} set_images={value => onChange({ [fieldName]: value })} />
+                </>
+              );
             case "autocomplete_multiple":
               return (
+                // <GLAutocomplete
+                //   key={fieldName}
+                //   margin="normal"
+                //   value={fieldState || ""}
+                //   options={fieldData.options || []}
+                //   getOptionLabel={option =>
+                //     option ? (fieldData.getOptionLabel ? fieldData.getOptionLabel(option) : option[fieldData.labelProp]) : ""
+                //   }
+                //   optionDisplay={option => (fieldData.getOptionLabel ? fieldData.getOptionLabel(option) : option[fieldData.labelProp])}
+                //   getOptionSelected={(option, value) => option._id === value._id}
+                //   name={fieldName}
+                //   label={fieldData.label}
+                //   onChange={(event, value) => onChange({ [fieldName]: value })}
+                //   // disableCloseOnSelect
+                //   // limitTags={5}
+                //   multiple
+                //   showCheckbox
+                // />
                 <GLAutocomplete
                   key={fieldName}
                   margin="normal"
@@ -75,6 +103,9 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
                   name={fieldName}
                   label={fieldData.label}
                   onChange={(event, value) => onChange({ [fieldName]: value })}
+                  disableCloseOnSelect
+                  multiple
+                  showCheckbox
                 />
               );
             case "checkbox":
@@ -92,24 +123,7 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
                   label={fieldData.label}
                 />
               );
-            case "select":
-              return (
-                <GLAutocomplete
-                  key={fieldName}
-                  margin="normal"
-                  value={fieldState || ""}
-                  options={fieldData.options || []}
-                  getOptionLabel={option =>
-                    option ? (fieldData.getOptionLabel ? fieldData.getOptionLabel(option) : option[fieldData.labelProp]) : ""
-                  }
-                  optionDisplay={option => (fieldData.getOptionLabel ? fieldData.getOptionLabel(option) : option[fieldData.labelProp])}
-                  getOptionSelected={(option, value) => option._id === value._id}
-                  name={fieldName}
-                  label={fieldData.label}
-                  onChange={(event, value) => onChange({ [fieldName]: value })}
-                />
-              );
-            default:
+            case "text":
               return (
                 <TextField
                   key={fieldName}
@@ -124,6 +138,39 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
                   onChange={e => onChange({ [fieldName]: e.target.value })}
                 />
               );
+            case "number":
+              return (
+                <TextField
+                  key={fieldName}
+                  name={fieldName}
+                  margin="normal"
+                  size="small"
+                  fullWidth
+                  type={fieldData.type}
+                  label={fieldData.label}
+                  variant="outlined"
+                  value={fieldState || ""}
+                  onChange={e => onChange({ [fieldName]: e.target.value })}
+                />
+              );
+            case "text_multiline":
+              return (
+                <TextField
+                  key={fieldName}
+                  name={fieldName}
+                  margin="normal"
+                  size="small"
+                  fullWidth
+                  type={fieldData.type}
+                  label={fieldData.label}
+                  multiline
+                  variant="outlined"
+                  value={fieldState || ""}
+                  onChange={e => onChange({ [fieldName]: e.target.value })}
+                />
+              );
+            default:
+              return <div></div>;
           }
         }
       })}

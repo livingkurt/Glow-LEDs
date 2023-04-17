@@ -35,7 +35,7 @@ const EditCartModal = () => {
 
   const formFields = {
     user: {
-      type: "autocomplete",
+      type: "autocomplete_single",
       label: "Users",
       options: users,
       labelProp: "user",
@@ -238,14 +238,14 @@ const EditCartModal = () => {
           labelProps: "wholesale_price"
         },
         product: {
-          type: "autocomplete",
+          type: "autocomplete_single",
           label: "Product",
           options: products,
           labelProp: "name",
           required: true
         },
         color_product: {
-          type: "autocomplete",
+          type: "autocomplete_single",
           label: "Color Product",
           options: products,
           labelProp: "name"
@@ -256,7 +256,7 @@ const EditCartModal = () => {
           labelProp: "color_product_name"
         },
         secondary_color_product: {
-          type: "autocomplete",
+          type: "autocomplete_single",
           label: "Secondary Color Product",
           options: products,
           labelProp: "name"
@@ -272,7 +272,7 @@ const EditCartModal = () => {
           labelProp: "option_product_name"
         },
         option_product: {
-          type: "autocomplete",
+          type: "autocomplete_single",
           label: "Option Product",
           options: products,
           labelProp: "name"
@@ -283,7 +283,7 @@ const EditCartModal = () => {
           labelProp: "secondary_product_name"
         },
         secondary_product: {
-          type: "autocomplete",
+          type: "autocomplete_single",
           label: "Secondary Product",
           options: products,
           labelProp: "name"

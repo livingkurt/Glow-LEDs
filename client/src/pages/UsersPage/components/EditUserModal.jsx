@@ -77,7 +77,7 @@ const EditUserModal = () => {
       permissions: ["admin"]
     },
     affiliate: {
-      type: "autocomplete",
+      type: "autocomplete_single",
       label: "Affiliates",
       options: affiliates,
       labelProp: "affiliate",
@@ -94,7 +94,7 @@ const EditUserModal = () => {
       permissions: ["admin"]
     },
     wholesaler: {
-      type: "autocomplete",
+      type: "autocomplete_single",
       label: "Wholesalers",
       options: wholesalers,
       labelProp: "wholesaler",

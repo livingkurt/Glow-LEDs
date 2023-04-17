@@ -162,9 +162,8 @@ const productPage = createSlice({
       state.edit_product_modal = true;
       state.product = payload;
     },
-    close_product_modal: (state, { payload }) => {
-      state.product_modal = false;
-      state.product = product;
+    close_edit_product_modal: (state, { payload }) => {
+      state.edit_product_modal = false;
     },
     open_product_modal: (state, { payload }) => {
       state.product_modal = true;
@@ -234,6 +233,7 @@ const productPage = createSlice({
     [API.saveProduct.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.message = "Product Saved";
+      state.edit_product_modal = false;
       state.remoteVersionRequirement = Date.now();
     },
     [API.saveProduct.rejected as any]: (state: any, { payload }: any) => {
@@ -315,7 +315,7 @@ export const {
   set_edit_product_modal,
   open_create_product_modal,
   open_product_modal,
-  close_product_modal,
+  close_edit_product_modal,
   open_edit_product_modal,
   setRemoteVersionRequirement
 } = productPage.actions;
