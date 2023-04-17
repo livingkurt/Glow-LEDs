@@ -6,18 +6,18 @@ import { LazyImage } from "../../../shared/SharedComponents";
 import Rating from "../../../shared/GlowLEDsComponents/GLRating/Rating";
 import { useSelector } from "react-redux";
 
-const Product = props => {
+const ProductSimpleItemD = ({ product, size, style }) => {
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
   const history = useHistory();
   return (
-    <li key={props.product.pathname} style={props.style}>
+    <li key={product.pathname} style={style}>
       <div className="tooltip">
         <div className="tooltipoverlay">
           <div className="product">
             <Link
               to={{
-                pathname: "/collections/all/products/" + props.product.pathname,
+                pathname: "/collections/all/products/" + product.pathname,
                 previous_path: history.location.pathname
               }}
               className="m-auto"
@@ -27,44 +27,44 @@ const Product = props => {
                   {/* <Link to={'/collections/all/products/' + item.pathname}> */}
                   <LazyImage
                     className="product-image"
-                    alt={props.product.name}
+                    alt={product.name}
                     title="Product Image"
-                    size={{ height: props.size, width: props.size }}
+                    size={{ height: size, width: size }}
                     effect="blur"
-                    src={props.product.images && props.product.images[0]}
+                    src={product?.images_object[0].link}
                   />
                 </div>
               </div>
             </Link>
 
             {/* <label style={{ fontSize: '1.3rem' }} className="title_font">
-							{props.product.brand}
+							{product.brand}
 						</label> */}
             <Link
               to={{
-                pathname: "/collections/all/products/" + props.product.pathname,
+                pathname: "/collections/all/products/" + product.pathname,
                 previous_path: history.location.pathname
               }}
             >
               <label className="mt-10px" style={{ fontSize: "1.6rem" }}>
-                {determine_product_name_display(props.product, false)}
+                {determine_product_name_display(product, false)}
               </label>
             </Link>
-            {props.product.name === "Custom Infinity Mirror" ? (
+            {product.name === "Custom Infinity Mirror" ? (
               <label className="product-price">
                 $549.99 - $<i className="fas fa-arrow-up" />
               </label>
             ) : (
               <label className="product-price">
                 {sale_price_switch({
-                  product: props.product,
+                  product: product,
                   isWholesaler: current_user?.isWholesaler
                 })}
               </label>
             )}
 
-            {props.product.rating ? (
-              <Rating rating={props.product.rating} numReviews={props.product.numReviews} />
+            {product.rating ? (
+              <Rating rating={product.rating} numReviews={product.numReviews} />
             ) : (
               <span className="rating vis-hid ta-c">No Reviews</span>
             )}
@@ -75,4 +75,4 @@ const Product = props => {
   );
 };
 
-export default Product;
+export default ProductSimpleItemD;

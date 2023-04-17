@@ -307,7 +307,7 @@ const SponsorPage = props => {
 									<Link to={'/collections/all/products/' + product.pathname} className="pos-rel">
 										<img
 											className="m-1rem br-10px h-auto max-h-300px max-w-300px ta-c responsive_img "
-											src={product.images[0]}
+											src={product?.images_object[0].link}
 										/>
 										<h3
 											className="pos-abs m-1rem w-300px ta-c"

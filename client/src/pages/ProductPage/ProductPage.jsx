@@ -12,6 +12,8 @@ import ProductSlideshow from "../../shared/GlowLEDsComponents/GLCarousel/Product
 import PictureChooser from "./components/PictureChooser";
 import RelatedProductsSlideshow from "../../shared/GlowLEDsComponents/GLCarousel/RelatedProductsSlideshow";
 import * as API from "../../api";
+import { open_edit_product_modal } from "../../slices/productSlice";
+import { EditProductModal } from "../ProductsPage/components";
 
 const ProductPage = props => {
   const userPage = useSelector(state => state.users.userPage);
@@ -734,6 +736,7 @@ const ProductPage = props => {
     !loading &&
     product?.hasOwnProperty("name") && (
       <div className="">
+        {/* <EditProductModal /> */}
         <div className="p-1rem">
           <div className="jc-b">
             <div className="mb-10px">
@@ -743,7 +746,10 @@ const ProductPage = props => {
             </div>
             {current_user?.isAdmin && (
               <div className=" pos-rel z-pos-1 br-10px">
-                <GLButton variant="secondary" className=" w-300px" onClick={e => set_show_product_options(show => (show ? false : true))}>
+                <GLButton variant="secondary" className=" w-300px" onClick={e => dispatch(open_edit_product_modal(product))}>
+                  Edit Product
+                </GLButton>
+                {/* <GLButton variant="secondary" className=" w-300px" onClick={e => set_show_product_options(show => (show ? false : true))}>
                   Edit Product
                 </GLButton>
                 {show_product_options && (
@@ -764,7 +770,7 @@ const ProductPage = props => {
                         ))}
                     </div>
                   </div>
-                )}
+                )} */}
               </div>
             )}
           </div>
@@ -779,12 +785,12 @@ const ProductPage = props => {
                 <meta name="twitter:title" content={product.meta_title} />
                 <link rel="canonical" href={`https://www.glow-leds.com/collections/all/products/${product.pathname}`} />
                 <meta property="og:url" content={`https://www.glow-leds.com/collections/all/products/${product.pathname}`} />
-                {product.images && (
+                {product.images_object && (
                   <div>
-                    <meta property="og:image" content={"https://www.glow-leds.com/" + product.images[0]} />
+                    <meta property="og:image" content={"https://www.glow-leds.com/" + product.images_object[0].link} />
 
-                    <meta property="og:image:secure_url" content={"https://www.glow-leds.com/" + product.images[0]} />
-                    <meta name="twitter:image" content={"https://www.glow-leds.com/" + product.images[0]} />
+                    <meta property="og:image:secure_url" content={"https://www.glow-leds.com/" + product.images_object[0].link} />
+                    <meta name="twitter:image" content={"https://www.glow-leds.com/" + product.images_object[0].link} />
                   </div>
                 )}
                 <meta

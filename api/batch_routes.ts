@@ -1484,10 +1484,9 @@ router.route("/update_refund_price").put(async (req: any, res: any) => {
 // });
 
 router.route("/create_image_records_and_reference_them_in_product").put(async (req: any, res: any) => {
-  // const products = await Product.findAll({ deleted: false, hidden: false }, "_id name").limit(1);
+  const products = await Product.find({ deleted: false }).sort({ order: 1 });
 
-  const products = await Product.find({ deleted: false }).limit(1).sort({ order: 1 });
-  for (const product of products) {
+  const processProduct = async (product: any) => {
     const { _id, name } = product;
     const imagesToUpdate = [
       { array: "images", object: "images_object" },
@@ -1496,24 +1495,29 @@ router.route("/create_image_records_and_reference_them_in_product").put(async (r
       { array: "option_images", object: "option_images_object" },
       { array: "secondary_images", object: "secondary_images_object" }
     ];
+
     for (const { array, object } of imagesToUpdate) {
       if (product[array] && product[array].length > 0) {
-        const newImageIds = [];
-        for (const imageUrl of product[array]) {
-          console.log({ imageUrl, name });
-          const response: any = await Image.create({ link: imageUrl, album: name });
-          console.log({ response });
-          newImageIds.push(response._id);
-          console.log({ newImageIds });
-        }
+        const newImageIds = await Promise.all(
+          product[array].map(async (imageUrl: string) => {
+            console.log({ imageUrl, name });
+            const response: any = await Image.create({ link: imageUrl, album: name });
+            console.log({ response });
+            return response._id;
+          })
+        );
+
+        console.log({ newImageIds });
+
         const update_product: any = await Product.findOne({ _id });
         if (update_product) {
-          const updated = await Product.updateOne({ _id }, { [object]: newImageIds });
-          return updated;
+          await Product.updateOne({ _id }, { [object]: newImageIds });
         }
       }
     }
-  }
+  };
+
+  await Promise.all(products.map(processProduct));
   res.send(products);
 });
 

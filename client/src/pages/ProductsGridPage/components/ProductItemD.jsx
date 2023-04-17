@@ -9,12 +9,9 @@ import { useSelector } from "react-redux";
 
 // import Resizer from 'react-image-file-resizer';
 
-const ProductItemD = props => {
+const ProductItemD = ({ product, style, size, product_occurrences }) => {
   const history = useHistory();
   const [image_number, set_image_number] = useState(0);
-  const [number_of_items, set_number_of_items] = useState(5);
-  const [image, set_image] = useState(props.product.name);
-  const [images, set_images] = useState(props.product.images);
 
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
@@ -26,12 +23,12 @@ const ProductItemD = props => {
         return image_number - 1;
       });
     } else {
-      set_image_number(images.length - 1);
+      set_image_number(product?.images_object?.length - 1);
     }
   };
   const move_right = e => {
     e.preventDefault();
-    if (image_number !== props.product.images.length - 1) {
+    if (image_number !== product?.images_object?.length - 1) {
       set_image_number(image_number => {
         return image_number + 1;
       });
@@ -40,13 +37,13 @@ const ProductItemD = props => {
     }
   };
   return (
-    <li key={props.product.pathname} className="product-thumb" style={props.style}>
+    <li key={product.pathname} className="product-thumb" style={style}>
       <div className="tooltip">
         <div className="tooltipoverlay">
           <div className="product">
             <Link
               to={{
-                pathname: "/collections/all/products/" + props.product.pathname,
+                pathname: "/collections/all/products/" + product.pathname,
                 previous_path: history.location.pathname
               }}
               className="m-auto"
@@ -54,21 +51,21 @@ const ProductItemD = props => {
               <div className="row mt-15px">
                 <div className="column ai-c pos-rel">
                   {/* <Link to={'/collections/all/products/' + item.pathname}> */}
-                  {images.length === 1 && (
+                  {product?.images_object?.length === 1 && (
                     <LazyImage
                       className="product-image"
-                      alt={props.product.name}
+                      alt={product.name}
                       title="Product Image"
-                      size={{ height: props.size, width: props.size }}
+                      size={{ height: size, width: size }}
                       effect="blur"
-                      src={props.product.images && props.product.images[0]}
+                      src={product?.images_object && product?.images_object[0].link}
                     />
                   )}
-                  {images.length > 1 && (
+                  {product?.images_object?.length > 1 && (
                     // <div className="image-btn-container">
                     <div>
                       <div className="jc-b w-100per pos-rel ">
-                        {images.length > 1 && (
+                        {product?.images_object?.length > 1 && (
                           <div className="ai-c pos-abs left-0px top-125px image-btn">
                             <GLButton
                               style={{ backgroundColor: "transparent" }}
@@ -84,14 +81,14 @@ const ProductItemD = props => {
                           <LazyImage
                             key={image_number + x}
                             className="product-image"
-                            alt={image}
+                            // alt={product?.images_object}
                             title="Product Image"
-                            size={{ height: props.size, width: props.size }}
+                            size={{ height: size, width: size }}
                             effect="blur"
-                            src={images[image_number + x]}
+                            src={product?.images_object[image_number + x].link}
                           />
                         ))}
-                        {images.length > 1 && (
+                        {product?.images_object?.length > 1 && (
                           <div className="ai-c pos-abs right-0px top-125px image-btn">
                             <GLButton
                               style={{ backgroundColor: "transparent" }}
@@ -108,14 +105,14 @@ const ProductItemD = props => {
                     </div>
                   )}
                   {Array.from({ length: 60 }).map((_, index) => {
-                    const productOccurrence = props?.product_occurrences[index];
+                    const productOccurrence = product_occurrences[index];
 
-                    if (productOccurrence?.name === props.product.name) {
+                    if (productOccurrence?.name === product.name) {
                       return (
-                        <div className="pos-abs br-10px w-2rem h-2rem  ai-c ta-c jc-c top-0px left-5px" key={props.product._id}>
+                        <div className="pos-abs br-10px w-2rem h-2rem  ai-c ta-c jc-c top-0px left-5px" key={product._id}>
                           <img
                             className=" mt-3px ml-2px h-100px w-100px"
-                            alt={props.product.name}
+                            alt={product.name}
                             title="Product Image"
                             src="https://images2.imgbox.com/37/cb/FOp4J3VP_o.png"
                           />
@@ -130,28 +127,28 @@ const ProductItemD = props => {
             </Link>
 
             {/* <label className="mt-5px title_font" style={{ fontSize: '14px' }}>
-							{props.product.brand}
+							{product.brand}
 						</label> */}
             <Link
               to={{
-                pathname: "/collections/all/products/" + props.product.pathname,
+                pathname: "/collections/all/products/" + product.pathname,
                 previous_path: history.location.pathname
               }}
               className="mt-13px"
             >
-              <label style={{ fontSize: "1.6rem" }}>{determine_product_name_display(props.product, false)}</label>
+              <label style={{ fontSize: "1.6rem" }}>{determine_product_name_display(product, false)}</label>
             </Link>
 
             <label className="product-price mv-3px">
               {sale_price_switch({
-                product: props.product,
+                product: product,
                 cartItem: false,
                 isWholesaler: current_user?.isWholesaler
               })}
             </label>
 
-            {props.product.rating ? (
-              <Rating rating={props.product.rating} numReviews={props.product.numReviews} />
+            {product.rating ? (
+              <Rating rating={product.rating} numReviews={product.numReviews} />
             ) : (
               <span className="rating vis-hid ta-c">No Reviews</span>
             )}

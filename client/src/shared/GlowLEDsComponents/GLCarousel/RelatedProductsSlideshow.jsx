@@ -82,9 +82,6 @@ const RelatedProductsSlideshow = ({
   };
 
   const [image_number, set_image_number] = useState(0);
-  const [number_of_items, set_number_of_items] = useState(5);
-  // const [ image, set_image ] = useState(product.name);
-  // const [ images, set_images ] = useState(product.images);
   const responsive = {
     superLargeDesktop: {
       // the naming can be any, depends on you.
@@ -153,7 +150,7 @@ const RelatedProductsSlideshow = ({
       size: size ? size : option.size,
       color: color && color.color,
       secondary_color: secondary_color && secondary_color.secondary_color,
-      display_image: product.images[0],
+      display_image: product?.images_object[0].link,
       price: product.price,
       sale_price: product.sale_price,
       sale_start_date: product.sale_start_date,
@@ -276,29 +273,6 @@ const RelatedProductsSlideshow = ({
                                   color: "white"
                                 }}
                               >
-                                {/* <label
-																	aria-label="Sort"
-																	htmlFor="sort"
-																	className="select-label mr-1rem mt-1rem"
-																>
-																	{product.option_group_name ? product.option_group_name : 'Size'}:
-																</label>
-																<div className="ai-c wrap jc-c">
-																	{product.option_products &&
-																		product.option_products.map((option, index) => (
-																			<GLButton
-																				key={index}
-																				id={option.size}
-																				value={JSON.stringify(option)}
-																				onClick={(e) => update_option(e)}
-																				className={`packs fs-13px flex-s-0 min-w-40px mr-2px mb-1rem btn ${option.default_option
-																					? 'off ft-primary'
-																					: 'on ft-white'}`}
-																			>
-																				{option.size}
-																			</GLButton>
-																		))}
-																</div> */}
                                 <div className={`ai-c  mv-10px ${width < 1150 ? "jc-b" : ""}`}>
                                   <h3 aria-label="Sort" htmlFor="sort" className="select-label mr-1rem mt-1rem">
                                     {product.option_group_name ? product.option_group_name : "Size"}:
@@ -365,31 +339,19 @@ const RelatedProductsSlideshow = ({
                       <div className="column ai-c pos-rel">
                         {/* <Link to={'/collections/all/products/' + item.pathname}> */}
 
-                        {product.images.length === 1 && (
+                        {product.images_object.length === 1 && (
                           <LazyImage
                             className="carousel-image"
                             alt={product.name}
                             title="Product Image"
                             // size={{ height: 200, width: 200 }}
                             effect="blur"
-                            src={product.images && product.images[0]}
+                            src={product?.images_object[0].link}
                           />
                         )}
-                        {product.images.length > 1 && (
-                          // <div className="image-btn-container">
+                        {product.images_object.length > 1 && (
                           <div>
                             <div className="jc-b w-100per pos-rel ">
-                              {/* {product.images.length > 1 && (
-																<div className="ai-c pos-abs left-0px top-125px image-btn">
-																	<GLButton
-																		style={{ backgroundColor: 'transparent' }}
-																		variant="icon"
-																		onClick={(e) => move_left(e)}
-																	>
-																		<i className="fas fa-chevron-left fs-40px" />
-																	</GLButton>
-																</div>
-															)} */}
                               {[...Array(1).keys()].map(x => (
                                 <LazyImage
                                   key={image_number + x}
@@ -399,47 +361,15 @@ const RelatedProductsSlideshow = ({
                                   // size={{ height: 200, width: 200 }}
                                   effect="blur"
                                   // src={images[image_number + x]}
-                                  src={product.images[0]}
+                                  src={product?.images_object[0].link}
                                 />
                               ))}
-
-                              {/* {product.images.length > 1 && (
-																<div className="ai-c pos-abs right-0px top-125px image-btn">
-																	<GLButton
-																		style={{ backgroundColor: 'transparent' }}
-																		variant="icon"
-																		onClick={(e) => move_right(e)}
-																	>
-																		<i className="fas fa-chevron-right fs-40px" />
-																	</GLButton>
-																</div>
-															)} */}
-                              {/* </div> */}
                             </div>
                           </div>
                         )}
-                        {/* {[ ...Array(12).keys() ].map(
-										(x, index) =>
-											product_occurrences &&
-											product_occurrences[index] &&
-											product_occurrences[index].name === product.name && (
-												<div className="pos-abs br-10px w-2rem h-2rem  ai-c ta-c jc-c top-0px left-5px">
-													<img
-														className=" mt-3px ml-2px h-100px w-100px"
-														alt={product.name}
-														title="Product Image"
-														src="https://images2.imgbox.com/37/cb/FOp4J3VP_o.png"
-													/>
-												</div>
-											)
-									)} */}
                       </div>
                     </div>
                   </Link>
-
-                  {/* <label className="mt-5px title_font" style={{ fontSize: '14px' }}>
-							{product.brand}
-						</label> */}
                   <Link
                     to={{
                       pathname: "/collections/all/products/" + product.pathname,

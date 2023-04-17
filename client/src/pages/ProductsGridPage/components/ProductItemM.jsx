@@ -6,16 +6,16 @@ import { LazyImage } from "../../../shared/SharedComponents";
 import Rating from "../../../shared/GlowLEDsComponents/GLRating/Rating";
 import { useSelector } from "react-redux";
 
-const ProductItemM = props => {
+const ProductItemM = ({ product, style, size, product_occurrences }) => {
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
   const history = useHistory();
   return (
-    <li key={props.product.pathname} className=" w-100per" style={props.style}>
-      {props.product_occurrences && (
+    <li key={product.pathname} className=" w-100per" style={style}>
+      {product_occurrences && (
         <Link
           to={{
-            pathname: "/collections/all/products/" + props.product.pathname,
+            pathname: "/collections/all/products/" + product.pathname,
             state: { prevPath: history.location.pathname }
           }}
         >
@@ -24,22 +24,22 @@ const ProductItemM = props => {
               <div className="column ai-c pos-rel">
                 <LazyImage
                   className="product-image w-200px h-200px "
-                  alt={props.product.name}
+                  alt={product.name}
                   title="Product Image"
-                  size={{ height: props.size, width: props.size }}
+                  size={{ height: size, width: size }}
                   effect="blur"
-                  src={props.product.images && props.product.images[0]}
+                  src={product?.images_object && product?.images_object[0].link}
                 />
 
                 {Array.from({ length: 60 }).map((_, index) => {
-                  const productOccurrence = props?.product_occurrences[index];
+                  const productOccurrence = product_occurrences[index];
 
-                  if (productOccurrence?.name === props.product.name) {
+                  if (productOccurrence?.name === product.name) {
                     return (
-                      <div className="pos-abs br-10px w-2rem h-2rem  ai-c ta-c jc-c top-0px left-5px" key={props.product._id}>
+                      <div className="pos-abs br-10px w-2rem h-2rem  ai-c ta-c jc-c top-0px left-5px" key={product._id}>
                         <img
                           className=" mt-3px ml-2px h-100px w-100px"
-                          alt={props.product.name}
+                          alt={product.name}
                           title="Product Image"
                           src="https://images2.imgbox.com/37/cb/FOp4J3VP_o.png"
                         />
@@ -53,10 +53,10 @@ const ProductItemM = props => {
             </div>
             <div className="ph-10px">
               <div className="product_text mt-10px" style={{ fontSize: "1.6rem" }}>
-                {determine_product_name_display(props.product, false)}
+                {determine_product_name_display(product, false)}
               </div>
               <div className="product_text mt-10px">
-                {props.product.name === "Custom Infinity Mirror" ? (
+                {product.name === "Custom Infinity Mirror" ? (
                   <div className="">
                     $549.99 - $<i className="fas fa-arrow-up" />
                   </div>
@@ -64,14 +64,14 @@ const ProductItemM = props => {
                   <div className="">
                     {" "}
                     {sale_price_switch({
-                      product: props.product,
+                      product: product,
                       isWholesaler: current_user?.isWholesaler
                     })}
                   </div>
                 )}
               </div>
-              {props.product.rating ? (
-                <Rating rating={props.product.rating} numReviews={props.product.numReviews} />
+              {product.rating ? (
+                <Rating rating={product.rating} numReviews={product.numReviews} />
               ) : (
                 <span className="rating vis-hid ta-c">No Reviews</span>
               )}

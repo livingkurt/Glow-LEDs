@@ -40,7 +40,7 @@ const ProductThumbCarouselItem = props => {
                 title="Product Image"
                 size={{ height: props.size, width: props.size }}
                 effect="blur"
-                src={product.images && product.images[0]}
+                src={product?.images_object[0].link}
               />
               {/* <LazyLoadImage
 								className="product-image"
@@ -48,7 +48,7 @@ const ProductThumbCarouselItem = props => {
 								title="Product Image"
 								style={{ height: props.size, width: props.size }}
 								effect="blur"
-								src={product.images && product.images[0]}
+								src={product?.images_object[0].link}
 							/> */}
 
               {/* <label className="title_font" style={{ fontSize: '1.3rem' }}>

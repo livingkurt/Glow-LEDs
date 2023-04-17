@@ -59,7 +59,7 @@ const CarouselItem = props => {
       size: size ? size : option.size,
       color: color && color.color,
       secondary_color: secondary_color && secondary_color.secondary_color,
-      display_image: product.images[0],
+      display_image: product?.images_object[0].link,
       price: product.price,
       sale_price: product.sale_price,
       sale_start_date: product.sale_start_date,
@@ -199,7 +199,7 @@ const CarouselItem = props => {
                   title="Product Image"
                   size={{ height: props.size, width: props.size }}
                   effect="blur"
-                  src={product.images && product.images[0]}
+                  src={product?.images_object[0].link}
                 />
                 {/* <LazyLoadImage
 								className="product-image"
@@ -207,7 +207,7 @@ const CarouselItem = props => {
 								title="Product Image"
 								style={{ height: props.size, width: props.size }}
 								effect="blur"
-								src={product.images && product.images[0]}
+								src={product?.images_object[0].link}
 							/> */}
 
                 {/* <label style={{ fontSize: '1.3rem' }} className="title_font mt-5px ">

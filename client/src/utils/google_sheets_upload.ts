@@ -286,8 +286,8 @@ export const facebook_catalog_upload = async (products: any) => {
       const condition = "New";
       const price = `${product.price} USD`;
       const link = `https://www.glow-leds.com/collections/all/products/${product.pathname}`;
-      const image_link = product.images[0];
-      const additional_image_link = product.images[1];
+      const image_link = product.images_object[0].link;
+      const additional_image_link = product.images_object[1].link;
       const brand = "Glow LEDs";
       const inventory = product.count_in_stock;
       const fb_product_category = "toys & games > electronic toys";
@@ -400,8 +400,8 @@ export const current_products_upload = async (products: any) => {
       const condition = "New";
       const price = `${product.price} USD`;
       const link = `https://www.glow-leds.com/collections/all/products/${product.pathname}`;
-      const image_link = product.images[0];
-      const additional_image_link = product.images[1];
+      const image_link = product.images_object[0].link;
+      const additional_image_link = product.images_object[1].link;
       const brand = "Glow LEDs";
       const inventory = product.count_in_stock;
       const fb_product_category = "toys & games > electronic toys";
@@ -504,7 +504,7 @@ export const google_catalog_upload = async (products: any) => {
       const condition = "New";
       const price = product.price + " USD";
       const link = `https://www.glow-leds.com/collections/all/products/${product.pathname}`;
-      const image_link = product.images[0];
+      const image_link = product.images_object[0].link;
       const brand = "Glow LEDs";
       const mpn = product.pathname;
       const google_product_category = "Toys & Games > Toys > Visual Toys";

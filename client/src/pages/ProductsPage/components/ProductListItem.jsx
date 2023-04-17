@@ -241,7 +241,7 @@ const ProductListItem = props => {
                   alt={product.name}
                   title="Product Image"
                   effect="blur"
-                  src={product.images && product.images[0]} // use normal <img> attributes as
+                  src={product?.images_object[0].link} // use normal <img> attributes as
                 />
               </li>
               <li>

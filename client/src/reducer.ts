@@ -72,7 +72,7 @@ const reducers = {
     imagePage: imageSlice,
     imageTable: glTableReducer("imageTable", {
       searchBy: (row: any, search: string) => {
-        const searchableText = row.affiliate;
+        const searchableText = row.album;
         return searchableText.toLowerCase().includes(search.toLowerCase());
       }
     })
@@ -82,7 +82,7 @@ const reducers = {
     productTable: glTableReducer("productTable", {
       sorting: [2, "desc"],
       searchBy: (row: any, search: string) => {
-        const searchableText = row.title;
+        const searchableText = row.name;
         return searchableText.toLowerCase().includes(search.toLowerCase());
       }
     })

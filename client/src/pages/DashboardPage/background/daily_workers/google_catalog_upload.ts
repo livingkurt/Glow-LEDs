@@ -43,7 +43,7 @@ export const google_catalog_upload = async () => {
         const condition = "New";
         const price = `${product.price} USD`;
         const link = `https://www.glow-leds.com/collections/all/products/${product.pathname}`;
-        const image_link = product.images[0];
+        const image_link = product.images_object[0].link;
         const brand = "Glow LEDs";
         const mpn = product.pathname;
         const google_product_category = "Toys & Games > Toys > Visual Toys";
