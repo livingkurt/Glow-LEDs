@@ -1,6 +1,7 @@
 import { Box, Stack, IconButton, Typography } from "@mui/material";
-import { Delete } from "@mui/icons-material";
+import { Delete, Edit } from "@mui/icons-material";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { open_edit_product_modal } from "../../slices/productSlice";
 
 const ImageDisplay = ({ images, onChange }) => {
   const remove_image = image_index => {

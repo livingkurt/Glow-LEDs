@@ -81,9 +81,11 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
                   }
                   optionDisplay={option => (fieldData.getOptionLabel ? fieldData.getOptionLabel(option) : option[fieldData.labelProp])}
                   getOptionSelected={(option, value) => option._id === value._id}
-                  name={fieldName}
+                  fieldName={fieldName}
+                  labelProp={fieldData.labelProp}
                   label={fieldData.label}
                   onChange={value => onChange({ [fieldName]: value })}
+                  onEdit={fieldData.onEdit}
                   showItems
                 />
               );

@@ -49,193 +49,193 @@ const EditCartModal = () => {
         name: {
           type: "text",
           label: "Name",
-          labelProps: "name",
+          labelProp: "name",
           required: true
         },
         qty: {
           type: "number",
           label: "Quantity",
-          labelProps: "qty",
+          labelProp: "qty",
           required: true
         },
         display_image: {
           type: "text",
           label: "Display Image",
-          labelProps: "display_image",
+          labelProp: "display_image",
           required: true
         },
         secondary_image: {
           type: "text",
           label: "Secondary Image",
-          labelProps: "secondary_image"
+          labelProp: "secondary_image"
         },
         color: {
           type: "text",
           label: "Color",
-          labelProps: "color"
+          labelProp: "color"
         },
         secondary_color: {
           type: "text",
           label: "Secondary Color",
-          labelProps: "secondary_color"
+          labelProp: "secondary_color"
         },
         color_group_name: {
           type: "text",
           label: "Color Group Name",
-          labelProps: "color_group_name"
+          labelProp: "color_group_name"
         },
         secondary_color_group_name: {
           type: "text",
           label: "Secondary Color Group Name",
-          labelProps: "secondary_color_group_name"
+          labelProp: "secondary_color_group_name"
         },
         color_code: {
           type: "text",
           label: "Color Code",
-          labelProps: "color_code"
+          labelProp: "color_code"
         },
         secondary_color_code: {
           type: "text",
           label: "Secondary Color Code",
-          labelProps: "secondary_color_code"
+          labelProp: "secondary_color_code"
         },
         price: {
           type: "number",
           label: "Price",
-          labelProps: "price",
+          labelProp: "price",
           required: true
         },
         category: {
           type: "text",
           label: "Category",
-          labelProps: "category",
+          labelProp: "category",
           required: true
         },
         subcategory: {
           type: "text",
           label: "Subcategory",
-          labelProps: "subcategory"
+          labelProp: "subcategory"
         },
         product_collection: {
           type: "text",
           label: "Product Collection",
-          labelProps: "product_collection"
+          labelProp: "product_collection"
         },
         pathname: {
           type: "text",
           label: "Pathname",
-          labelProps: "pathname"
+          labelProp: "pathname"
         },
         size: {
           type: "text",
           label: "Size",
-          labelProps: "size"
+          labelProp: "size"
         },
         preorder: {
           type: "checkbox",
           label: "Preorder",
-          labelProps: "preorder"
+          labelProp: "preorder"
         },
         sale_price: {
           type: "number",
           label: "Sale Price",
-          labelProps: "sale_price"
+          labelProp: "sale_price"
         },
         sale_start_date: {
           type: "date",
           label: "Sale Start Date",
-          labelProps: "sale_start_date"
+          labelProp: "sale_start_date"
         },
         sale_end_date: {
           type: "date",
           label: "Sale End Date",
-          labelProps: "sale_end_date"
+          labelProp: "sale_end_date"
         },
         package_volume: {
           type: "number",
           label: "Package Volume",
-          labelProps: "package_volume"
+          labelProp: "package_volume"
         },
         weight_pounds: {
           type: "number",
           label: "Weight (lbs)",
-          labelProps: "weight_pounds"
+          labelProp: "weight_pounds"
         },
         weight_ounces: {
           type: "number",
           label: "Weight (oz)",
-          labelProps: "weight_ounces"
+          labelProp: "weight_ounces"
         },
         count_in_stock: {
           type: "number",
           label: "Count in Stock",
-          labelProps: "count_in_stock"
+          labelProp: "count_in_stock"
         },
         length: {
           type: "number",
           label: "Length",
-          labelProps: "length"
+          labelProp: "length"
         },
         width: {
           type: "number",
           label: "Width",
-          labelProps: "width"
+          labelProp: "width"
         },
         height: {
           type: "number",
           label: "Height",
-          labelProps: "height"
+          labelProp: "height"
         },
         package_length: {
           type: "number",
           label: "Package Length",
-          labelProps: "package_length"
+          labelProp: "package_length"
         },
         package_width: {
           type: "number",
           label: "Package Width",
-          labelProps: "package_width"
+          labelProp: "package_width"
         },
         package_height: {
           type: "number",
           label: "Package Height",
-          labelProps: "package_height"
+          labelProp: "package_height"
         },
         processing_time: {
           type: "multi-select",
           label: "Processing Time",
-          labelProps: "processing_time",
+          labelProp: "processing_time",
           options: ["1 day", "2 days", "3 days", "4 days", "5 days", "6 days", "7 days"]
         },
         quantity: {
           type: "number",
           label: "Quantity",
-          labelProps: "quantity"
+          labelProp: "quantity"
         },
         finite_stock: {
           type: "number",
           label: "Finite Stock",
-          labelProps: "finite_stock"
+          labelProp: "finite_stock"
         },
         add_on_price: {
           type: "number",
           label: "Add-On Price",
-          labelProps: "add_on_price"
+          labelProp: "add_on_price"
         },
         show_add_on: {
           type: "checkbox",
           label: "Show Add-On",
-          labelProps: "show_add_on"
+          labelProp: "show_add_on"
         },
         wholesale_product: {
           type: "checkbox",
           label: "Wholesale Product",
-          labelProps: "wholesale_product"
+          labelProp: "wholesale_product"
         },
         wholesale_price: {
           type: "number",
           label: "Wholesale Price",
-          labelProps: "wholesale_price"
+          labelProp: "wholesale_price"
         },
         product: {
           type: "autocomplete_single",

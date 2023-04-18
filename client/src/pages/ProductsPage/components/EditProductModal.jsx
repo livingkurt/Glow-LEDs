@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import GLModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiionModal";
-import { set_edit_product_modal, set_product } from "../../../slices/productSlice";
+import { open_edit_product_modal, set_edit_product_modal, set_product } from "../../../slices/productSlice";
 import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
 import { AppBar, Tab, Tabs, Typography } from "@mui/material";
@@ -40,6 +40,7 @@ const EditProductModal = () => {
     users,
     categorys,
     setState: (value, key) => dispatch(set_product({ [key]: [...product[key], ...value] })),
+    onEdit: product => dispatch(open_edit_product_modal(product)),
     product
   });
 

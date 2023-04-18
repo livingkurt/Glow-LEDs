@@ -81,7 +81,7 @@ const reducers = {
   products: combineReducers({
     productPage: productSlice,
     productTable: glTableReducer("productTable", {
-      sorting: [2, "desc"],
+      sorting: [3, "desc"],
       searchBy: (row: any, search: string) => {
         const searchableText = row.name;
         return searchableText.toLowerCase().includes(search.toLowerCase());

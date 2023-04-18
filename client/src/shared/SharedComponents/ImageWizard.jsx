@@ -10,7 +10,6 @@ const ImageWizard = ({ fieldData, fieldState, onChange, fieldName }) => {
   const imagePage = useSelector(state => state.images.imagePage);
   const { image } = imagePage;
   const [text, setText] = useState("");
-  console.log({ text });
 
   const handleSaveId = () => {
     dispatch(detailsImage(text));

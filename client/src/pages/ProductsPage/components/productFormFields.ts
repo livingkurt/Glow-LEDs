@@ -1,10 +1,13 @@
+import { open_edit_product_modal } from "../../../slices/productSlice";
+
 export const productFormFields = ({
   products,
   users,
   // images,
   categorys,
   setState,
-  product
+  product,
+  onEdit
 }: {
   products: any;
   users: any;
@@ -12,6 +15,7 @@ export const productFormFields = ({
   categorys: any;
   setState: any;
   product: any;
+  onEdit: any;
 }) => {
   return {
     name: {
@@ -130,123 +134,124 @@ export const productFormFields = ({
     hidden: {
       type: "checkbox",
       label: "Hidden",
-      labelProps: "hidden",
+      labelProp: "hidden",
       defaultValue: false
     },
     sale_price: {
       type: "number",
       label: "Sale Price",
-      labelProps: "sale_price",
+      labelProp: "sale_price",
       defaultValue: 0
     },
     sale_start_date: {
       type: "date",
       label: "Sale Start Date",
-      labelProps: "sale_start_date"
+      labelProp: "sale_start_date"
     },
     sale_end_date: {
       type: "date",
       label: "Sale End Date",
-      labelProps: "sale_end_date"
+      labelProp: "sale_end_date"
     },
     preorder: {
       type: "checkbox",
       label: "Preorder",
-      labelProps: "preorder",
+      labelProp: "preorder",
       defaultValue: false
     },
     pathname: {
       type: "text",
       label: "Pathname",
-      labelProps: "pathname"
+      labelProp: "pathname"
     },
     meta_title: {
       type: "text",
       label: "Meta Title",
-      labelProps: "meta_title"
+      labelProp: "meta_title"
     },
     meta_description: {
       type: "text_multiline",
       label: "Meta Description",
-      labelProps: "meta_description"
+      labelProp: "meta_description"
     },
     meta_keywords: {
       type: "text_multiline",
       label: "Meta Keywords",
-      labelProps: "meta_keywords"
+      labelProp: "meta_keywords"
     },
     length: {
       type: "number",
       label: "Length",
-      labelProps: "length"
+      labelProp: "length"
     },
     width: {
       type: "number",
       label: "Width",
-      labelProps: "width"
+      labelProp: "width"
     },
     height: {
       type: "number",
       label: "Height",
-      labelProps: "height"
+      labelProp: "height"
     },
     package_length: {
       type: "number",
       label: "Package Length",
-      labelProps: "package_length"
+      labelProp: "package_length"
     },
     package_width: {
       type: "number",
       label: "Package Width",
-      labelProps: "package_width"
+      labelProp: "package_width"
     },
     package_height: {
       type: "number",
       label: "Package Height",
-      labelProps: "package_height"
+      labelProp: "package_height"
     },
     package_volume: {
       type: "number",
       label: "Package Volume",
-      labelProps: "package_volume"
+      labelProp: "package_volume"
     },
     weight_pounds: {
       type: "number",
       label: "Weight (lbs)",
-      labelProps: "weight_pounds"
+      labelProp: "weight_pounds"
     },
     weight_ounces: {
       type: "number",
       label: "Weight (oz)",
-      labelProps: "weight_ounces"
+      labelProp: "weight_ounces"
     },
     processing_time: {
       type: "multi-select",
       label: "Processing Time",
-      labelProps: "processing_time",
+      labelProp: "processing_time",
       options: ["1 day", "2 days", "3 days", "4 days", "5 days", "6 days", "7 days"]
     },
     quantity: {
       type: "number",
       label: "Quantity",
-      labelProps: "quantity"
+      labelProp: "quantity"
     },
     add_on_price: {
       type: "number",
       label: "Add-On Price",
-      labelProps: "add_on_price"
+      labelProp: "add_on_price"
     },
     show_add_on: {
       type: "checkbox",
       label: "Show Add-On",
-      labelProps: "show_add_on"
+      labelProp: "show_add_on"
     },
 
     color_products: {
       type: "autocomplete_multiple",
       label: "Color Product",
       options: products,
-      labelProp: "name"
+      labelProp: "name",
+      onEdit: (product: any) => onEdit(product)
     },
     color_product_name: {
       type: "text",
@@ -265,7 +270,8 @@ export const productFormFields = ({
       type: "autocomplete_multiple",
       label: "Secondary Color Product",
       options: products,
-      labelProp: "name"
+      labelProp: "name",
+      onEdit: (product: any) => onEdit(product)
     },
     secondary_color_product_name: {
       type: "text",
@@ -289,7 +295,8 @@ export const productFormFields = ({
       type: "autocomplete_multiple",
       label: "Option Product",
       options: products,
-      labelProp: "name"
+      labelProp: "name",
+      onEdit: (product: any) => onEdit(product)
     },
     option_images_object: {
       type: "image_upload",
@@ -308,7 +315,8 @@ export const productFormFields = ({
       type: "autocomplete_multiple",
       label: "Secondary Product",
       options: products,
-      labelProp: "name"
+      labelProp: "name",
+      onEdit: (product: any) => onEdit(product)
     },
     secondary_images_object: {
       type: "image_upload",
@@ -332,23 +340,23 @@ export const productFormFields = ({
         first_name: {
           type: "text",
           label: "First Name",
-          labelProps: "first_name"
+          labelProp: "first_name"
         },
         last_name: {
           type: "text",
           label: "Last Name",
-          labelProps: "last_name"
+          labelProp: "last_name"
         },
         rating: {
           type: "number",
           label: "Rating",
-          labelProps: "rating",
+          labelProp: "rating",
           required: true
         },
         comment: {
           type: "text",
           label: "Comment",
-          labelProps: "comment",
+          labelProp: "comment",
           required: true
         }
       }
