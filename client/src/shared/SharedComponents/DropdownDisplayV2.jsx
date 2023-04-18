@@ -7,7 +7,7 @@ import Chip from "@mui/material/Chip";
 import { Icon } from "@mui/material";
 import Stack from "@mui/material/Stack";
 
-const DropdownDisplayV2 = ({ options, value, getOptionLabel, getOptionSelected, name, label, onChange }) => {
+const DropdownDisplayV2 = ({ options, value, getOptionLabel, getOptionSelected, name, label, onChange, showItems }) => {
   const handleDragEnd = result => {
     if (!result.destination) return;
     const items = Array.from(value);
@@ -55,36 +55,38 @@ const DropdownDisplayV2 = ({ options, value, getOptionLabel, getOptionSelected, 
                   ))
                 }
               />
-              <Stack sx={{ mt: 1 }} spacing={1} direction="column">
-                {value.map((item, index) => (
-                  <Draggable key={item._id} draggableId={item._id} index={index}>
-                    {(provided, snapshot) => (
-                      <Chip
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                        key={item._id}
-                        label={item.name}
-                        onDelete={() => onChange(value.filter(selectedItem => selectedItem._id !== item._id))}
-                        sx={{
-                          width: "100%",
-                          fontSize: "14px",
-                          backgroundColor: snapshot.isDragging ? "secondary.main" : "primary.main",
-                          color: "white",
-                          display: "flex", // Make the Chip component a flex container
-                          justifyContent: "space-between", // Set the label to the left and the delete icon to the right
-                          "&:hover": {
-                            backgroundColor: "primary.dark"
-                          },
-                          ...provided.draggableProps.style
-                        }}
-                        deleteIcon={<Icon style={{ color: "white" }}>clear</Icon>}
-                      />
-                    )}
-                  </Draggable>
-                ))}
-                {provided.placeholder}
-              </Stack>
+              {showItems && (
+                <Stack sx={{ mt: 1 }} spacing={1} direction="column">
+                  {value.map((item, index) => (
+                    <Draggable key={item._id} draggableId={item._id} index={index}>
+                      {(provided, snapshot) => (
+                        <Chip
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                          key={item._id}
+                          label={item.name}
+                          onDelete={() => onChange(value.filter(selectedItem => selectedItem._id !== item._id))}
+                          sx={{
+                            width: "100%",
+                            fontSize: "14px",
+                            backgroundColor: snapshot.isDragging ? "secondary.main" : "primary.main",
+                            color: "white",
+                            display: "flex", // Make the Chip component a flex container
+                            justifyContent: "space-between", // Set the label to the left and the delete icon to the right
+                            "&:hover": {
+                              backgroundColor: "primary.dark"
+                            },
+                            ...provided.draggableProps.style
+                          }}
+                          deleteIcon={<Icon style={{ color: "white" }}>clear</Icon>}
+                        />
+                      )}
+                    </Draggable>
+                  ))}
+                  {provided.placeholder}
+                </Stack>
+              )}
             </div>
           )}
         </Droppable>

@@ -10,8 +10,8 @@ const client = new ImgurClient({ clientId: process.env.IMGUR_ClIENT_ID });
 export default {
   findAll_images_s: async (query: { page: string; search: string; sort: any; limit: string; filters: any }) => {
     try {
-      const sort_options = ["createdAt", "paid_at", "paid", "amount"];
-      const { filter, sort, limit, page } = getFilteredData({ query, sort_options, search_name: "affiliate" });
+      const sort_options = ["createdAt", "album", "image", "link"];
+      const { filter, sort, limit, page } = getFilteredData({ query, sort_options, search_name: "album" });
       const images = await image_db.findAll_images_db(filter, sort, limit, page);
       const count = await image_db.count_images_db(filter);
       return {

@@ -22,6 +22,8 @@ const EditProductModal = () => {
   const categoryPage = useSelector(state => state.categorys);
   const { categorys, loading: loading_categorys } = categoryPage;
 
+  console.log({ images });
+
   useEffect(() => {
     let clean = true;
     if (clean) {

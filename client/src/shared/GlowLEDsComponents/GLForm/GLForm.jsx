@@ -5,6 +5,7 @@ import { toCapitalize } from "../../../utils/helper_functions";
 import GLAutocomplete from "../GLAutocomplete/GLAutocomplete";
 import ImageUploader from "../../SharedComponents/ImageUploader";
 import { DropdownDisplayV2, ImageDisplay } from "../../SharedComponents";
+import ImageWizard from "../../SharedComponents/ImageWizard";
 
 const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
   const userPage = useSelector(state => state.users.userPage);
@@ -65,9 +66,7 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
             case "image_upload":
               return (
                 <>
-                  <Typography className="title_font mt-10px ta-c">{fieldData.label}</Typography>
-                  <ImageUploader onUpload={fieldData.onUpload} album={fieldData.album} />
-                  <ImageDisplay images={fieldState} set_images={value => onChange({ [fieldName]: value })} />
+                  <ImageWizard fieldData={fieldData} fieldState={fieldState} fieldName={fieldName} onChange={onChange} />
                 </>
               );
             case "autocomplete_multiple":
@@ -85,6 +84,7 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
                   name={fieldName}
                   label={fieldData.label}
                   onChange={value => onChange({ [fieldName]: value })}
+                  showItems
                 />
               );
             case "checkbox":

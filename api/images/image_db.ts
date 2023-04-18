@@ -5,9 +5,6 @@ export default {
     try {
       return await Image.find(filter)
         .sort(sort)
-        .populate("user")
-        .populate("affiliate")
-        .populate("team")
         .limit(parseInt(limit))
         .skip(Math.max(parseInt(page), 0) * parseInt(limit))
         .exec();
@@ -19,7 +16,7 @@ export default {
   },
   findById_images_db: async (id: string) => {
     try {
-      return await Image.findOne({ _id: id }).populate("user").populate("affiliate").populate("team");
+      return await Image.findOne({ _id: id });
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

@@ -2,9 +2,9 @@ import { Box, Stack, IconButton, Typography } from "@mui/material";
 import { Delete } from "@mui/icons-material";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
-const ImageDisplay = ({ images, set_images }) => {
+const ImageDisplay = ({ images, onChange }) => {
   const remove_image = image_index => {
-    set_images(
+    onChange(
       images.filter((image, index) => {
         return image_index !== index;
       })
@@ -15,7 +15,7 @@ const ImageDisplay = ({ images, set_images }) => {
     const newImages = Array.from(images);
     const [removed] = newImages.splice(startIndex, 1);
     newImages.splice(endIndex, 0, removed);
-    set_images(newImages);
+    onChange(newImages);
   };
 
   return (

@@ -74,6 +74,7 @@ export const productFormFields = ({
       options: images,
       labelProp: "link",
       album: `${product.name} Images`,
+      getOptionLabel: (option: any) => option.link,
       onUpload: (images: any) => setState(images, "images_object")
     },
 
