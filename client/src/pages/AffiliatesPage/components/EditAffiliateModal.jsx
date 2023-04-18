@@ -79,14 +79,13 @@ const EditAffiliateModal = () => {
       label: "Percentage Off"
     },
     chips: {
-      type: "autocomplete_single",
+      type: "autocomplete_multiple",
       label: "Chips",
       options: chips,
-      labelProp: "name",
-      getOptionLabel: option => option.name
+      labelProp: "name"
     },
-    glow_gear: {
-      type: "autocomplete_single",
+    products: {
+      type: "autocomplete_multiple",
       label: "Products",
       options: products,
       labelProp: "name"
