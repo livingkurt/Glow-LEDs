@@ -8,7 +8,7 @@ export default {
   findAll_tutorials_s: async (query: { search: string; sort: string; page: string; limit: string }) => {
     try {
       const sort_options = ["title", "video", "level", "order"];
-      const { filter, sort, limit, page } = getFilteredData({ query, sort_options, search_name: "title", defaultSort: { order: 1 } });
+      const { filter, sort, limit, page } = getFilteredData({ query, sort_options, search_name: "title" });
 
       const tutorials = await tutorial_db.findAll_tutorials_db(filter, sort, limit, page);
       const count = await tutorial_db.count_tutorials_db(filter);

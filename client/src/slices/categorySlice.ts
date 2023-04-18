@@ -1,20 +1,20 @@
-/* eslint-disable max-lines-per-function */
-
 import { createSlice } from "@reduxjs/toolkit";
-import * as API from "../api";
+import * as API from "../api/categoryApi";
 
 const categoryPage = createSlice({
   name: "categoryPage",
   initialState: {
     loading: false,
     categorys: [],
-    category: {},
+    category: {
+      name: ""
+    },
+    remoteVersionRequirement: 0,
+    edit_category_modal: false,
+    category_modal: false,
     message: "",
+    success: false,
     error: {},
-    search: "",
-    sort: "",
-    page: 1,
-    limit: 10,
     sort_options: ["Newest", "Artist Name", "Facebook Name", "Instagram Handle", "Sponsor", "Promoter"],
     colors: [
       { name: "Sponsor", color: "#3e4c6d" },
@@ -35,17 +35,35 @@ const categoryPage = createSlice({
     set_loading: (state, { payload }) => {
       state.loading = payload;
     },
-    set_search: (state, { payload }) => {
-      state.search = payload;
+    set_success: (state, { payload }) => {
+      state.success = payload;
     },
-    set_sort: (state, { payload }) => {
-      state.sort = payload;
+    set_edit_category_modal: (state, { payload }) => {
+      state.edit_category_modal = payload;
     },
-    set_page: (state, { payload }) => {
-      state.page = payload;
+    open_create_category_modal: (state, { payload }) => {
+      state.edit_category_modal = true;
+      state.category = {
+        name: ""
+      };
     },
-    set_limit: (state, { payload }) => {
-      state.limit = payload;
+    open_edit_category_modal: (state, { payload }) => {
+      state.edit_category_modal = true;
+      state.category = payload;
+    },
+    close_category_modal: (state, { payload }) => {
+      state.category_modal = false;
+      state.category = {
+        name: ""
+      };
+    },
+    open_category_modal: (state, { payload }) => {
+      state.category_modal = true;
+      state.category = payload;
+    },
+    setRemoteVersionRequirement: (state, { payload }) => {
+      console.log("setRemoteVersionRequirement");
+      state.remoteVersionRequirement = Date.now();
     }
   },
   extraReducers: {
@@ -55,8 +73,8 @@ const categoryPage = createSlice({
     },
     [API.listCategorys.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.categorys = payload.categorys;
-      state.totalPages = payload.totalPages;
+      state.categorys = payload.data;
+      state.totalPages = payload.total_count;
       state.page = payload.currentPage;
       state.message = "Categorys Found";
     },
@@ -70,7 +88,10 @@ const categoryPage = createSlice({
     },
     [API.saveCategory.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
+      state.edit_category_modal = false;
+      state.success = true;
       state.message = "Category Saved";
+      state.remoteVersionRequirement = Date.now();
     },
     [API.saveCategory.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
@@ -97,6 +118,7 @@ const categoryPage = createSlice({
       state.loading = false;
       state.category = payload.category;
       state.message = "Category Deleted";
+      state.remoteVersionRequirement = Date.now();
     },
     [API.deleteCategory.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
@@ -106,5 +128,14 @@ const categoryPage = createSlice({
   }
 });
 
-export const { set_search, set_sort, set_page, set_limit, set_loading, set_category } = categoryPage.actions;
+export const {
+  set_loading,
+  set_category,
+  set_edit_category_modal,
+  open_create_category_modal,
+  open_category_modal,
+  close_category_modal,
+  open_edit_category_modal,
+  setRemoteVersionRequirement
+} = categoryPage.actions;
 export default categoryPage.reducer;

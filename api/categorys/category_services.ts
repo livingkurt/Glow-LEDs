@@ -1,18 +1,17 @@
 import { category_db } from "../categorys";
-import { determine_filter } from "../../util";
+import { getFilteredData } from "../api_helpers";
 
 export default {
   findAll_categorys_s: async (query: { page: string; search: string; sort: string; limit: string }) => {
     try {
-      const page: string = query.page ? query.page : "1";
-      const limit: string = query.limit ? query.limit : "0";
-      const filter = determine_filter(query, {});
-      const sort = {};
+      const sort_options = ["name"];
+      const { filter, sort, limit, page } = getFilteredData({ query, sort_options, search_name: "name" });
       const categorys = await category_db.findAll_categorys_db(filter, sort, limit, page);
+      console.log({ categorys });
       const count = await category_db.count_categorys_db(filter);
       return {
-        categorys,
-        totalPages: Math.ceil(count / parseInt(limit)),
+        data: categorys,
+        total_count: count,
         currentPage: page
       };
     } catch (error) {

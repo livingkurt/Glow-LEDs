@@ -1,5 +1,3 @@
-import { open_edit_product_modal } from "../../../slices/productSlice";
-
 export const productFormFields = ({
   products,
   users,

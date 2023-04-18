@@ -50,7 +50,16 @@ const reducers = {
       }
     })
   }),
-  categorys: categorySlice,
+  categorys: combineReducers({
+    categoryPage: categorySlice,
+    categoryTable: glTableReducer("categoryTable", {
+      sorting: [0, "desc"],
+      searchBy: (row: any, search: string) => {
+        const searchableText = row.name;
+        return searchableText.toLowerCase().includes(search.toLowerCase());
+      }
+    })
+  }),
   chips: chipSlice,
   contents: contentSlice,
   emails: emailSlice,

@@ -9,7 +9,7 @@ export default {
   findAll_products_s: async (query: { search: string; sort: string; page: string; limit: string }) => {
     try {
       const sort_options = ["name", "hidden", "category", "order", "price"];
-      const { filter, sort, limit, page } = getFilteredData({ query, sort_options, search_name: "name", defaultSort: { order: 1 } });
+      const { filter, sort, limit, page } = getFilteredData({ query, sort_options, search_name: "name" });
 
       const products = await product_db.findAll_products_db(filter, sort, limit, page);
       const count = await product_db.count_products_db(filter);
