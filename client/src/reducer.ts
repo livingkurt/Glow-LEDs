@@ -43,6 +43,7 @@ const reducers = {
   carts: combineReducers({
     cartPage: cartSlice,
     cartTable: glTableReducer("cartTable", {
+      sorting: [1, "asc"],
       searchBy: (row: any, search: string) => {
         const searchableText = `${row.first_name} ${row.last_name}}`;
         return searchableText.toLowerCase().includes(search.toLowerCase());

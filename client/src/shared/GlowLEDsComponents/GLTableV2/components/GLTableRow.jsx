@@ -159,7 +159,7 @@ GLTableRow.propTypes = {
   enableRowClick: PropTypes.bool,
   onRowClick: PropTypes.func,
   rowProps: PropTypes.func,
-  determine_color: PropTypes.func,
+  determine_color: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),
   cellProps: PropTypes.func
 };
 

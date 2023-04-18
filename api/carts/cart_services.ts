@@ -1,23 +1,12 @@
 import { cart_db } from "../carts";
-import { deepEqual, determine_filter } from "../../util";
-import { user_db } from "../users";
+import { deepEqual } from "../../util";
+import { getFilteredData } from "../api_helpers";
 
 export default {
   findAll_carts_s: async (query: { page: string; search: string; sort: string; limit: string }) => {
     try {
-      const page: string = query.page ? query.page : "1";
-      const limit: string = query.limit ? query.limit : "0";
-      const search = query.search
-        ? {
-            facebook_name: {
-              $regex: query.search,
-              $options: "i"
-            }
-          }
-        : {};
-      const filter = determine_filter(query, search);
-      const sort = {};
-
+      const sort_options = ["active", "updatedAt", "user", "cartItems"];
+      const { filter, sort, limit, page } = getFilteredData({ query, sort_options, search_name: { updatedAt: 1 } });
       const carts = await cart_db.findAll_carts_db(filter, sort, limit, page);
       const count = await cart_db.count_carts_db(filter);
       return {

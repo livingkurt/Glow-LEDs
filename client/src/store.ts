@@ -8,7 +8,10 @@ const apiMiddleware = [dashboardApi.middleware, placeOrderApi.middleware, allRec
 
 const store = configureStore({
   reducer: reducer,
-  middleware: getDefaultMiddleware => getDefaultMiddleware({ immutableCheck: false, serializableCheck: false }).concat(apiMiddleware)
+  middleware: getDefaultMiddleware => getDefaultMiddleware({ immutableCheck: false, serializableCheck: false }).concat(apiMiddleware),
+  devTools: {
+    maxAge: 10 // maximum allowed actions to be stored in the history tree
+  }
 });
 
 export default store;

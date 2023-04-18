@@ -22,9 +22,9 @@ export const getCarts = async ({
       params: {
         limit: pageSize,
         page: page,
-        search: search
-        // sort: sorting,
-        // filters: pickBy(filters, (val: any) => val.length > 0)
+        search: search,
+        sort: sorting,
+        filters
       }
     });
   } catch (error) {}

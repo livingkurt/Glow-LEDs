@@ -9,6 +9,8 @@ import { EditCartModal } from "./components";
 import * as API from "../../api";
 import { Button } from "@mui/material";
 import { getCarts } from "../../api";
+import { humanDate } from "../../helpers/dateHelpers";
+import { determine_color } from "./cartsPageHelpers";
 
 const CartsPage = () => {
   const cartPage = useSelector(state => state.carts.cartPage);
@@ -37,6 +39,7 @@ const CartsPage = () => {
           </GLButton>
         )
       },
+      { title: "Date Updated", display: row => humanDate(row.updatedAt) },
       { title: "User", display: row => (row?.user ? `${row?.user.first_name} ${row?.user.last_name}` : "Guest") },
       { title: "Cart Items", display: row => row.cartItems.map(item => item.name).join(", ") },
       {
@@ -76,6 +79,7 @@ const CartsPage = () => {
         tableName={"Carts"}
         namespaceScope="carts"
         namespace="cartTable"
+        determine_color={determine_color}
         columnDefs={column_defs}
         loading={loading}
         enableRowSelect={true}
