@@ -82,7 +82,7 @@ const WholesalersPage = () => {
         loading={loading}
         enableRowSelect={true}
         titleActions={
-          <Button color="primary" variant="primary" onClick={() => dispatch(open_create_wholesaler_modal())}>
+          <Button color="primary" variant="contained" onClick={() => dispatch(open_create_wholesaler_modal())}>
             Create Wholesaler
           </Button>
         }

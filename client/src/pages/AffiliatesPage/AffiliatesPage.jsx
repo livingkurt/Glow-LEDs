@@ -88,7 +88,7 @@ const AffiliatesPage = () => {
         loading={loading}
         enableRowSelect={true}
         titleActions={
-          <Button color="primary" variant="primary" onClick={() => dispatch(open_create_affiliate_modal())}>
+          <Button color="primary" variant="contained" onClick={() => dispatch(open_create_affiliate_modal())}>
             Create Affiliate
           </Button>
         }

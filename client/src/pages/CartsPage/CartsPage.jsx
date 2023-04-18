@@ -80,7 +80,7 @@ const CartsPage = () => {
         loading={loading}
         enableRowSelect={true}
         titleActions={
-          <Button color="primary" variant="primary" onClick={() => dispatch(open_create_cart_modal())}>
+          <Button color="primary" variant="contained" onClick={() => dispatch(open_create_cart_modal())}>
             Create Cart
           </Button>
         }

@@ -107,7 +107,7 @@ const PaychecksPage = () => {
         loading={loading}
         enableRowSelect={true}
         titleActions={
-          <Button color="primary" variant="primary" onClick={() => dispatch(open_create_paycheck_modal())}>
+          <Button color="primary" variant="contained" onClick={() => dispatch(open_create_paycheck_modal())}>
             Create Paycheck
           </Button>
         }

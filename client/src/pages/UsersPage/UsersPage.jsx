@@ -78,7 +78,7 @@ const UsersPage = () => {
         loading={loading}
         enableRowSelect={true}
         titleActions={
-          <Button color="primary" variant="primary" onClick={() => dispatch(open_create_user_modal())}>
+          <Button color="primary" variant="contained" onClick={() => dispatch(open_create_user_modal())}>
             Create User
           </Button>
         }

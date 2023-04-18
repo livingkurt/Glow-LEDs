@@ -72,7 +72,7 @@ const ImagesPage = () => {
         loading={loading}
         enableRowSelect={true}
         titleActions={
-          <Button color="primary" variant="primary" onClick={() => dispatch(open_create_image_modal())}>
+          <Button color="primary" variant="contained" onClick={() => dispatch(open_create_image_modal())}>
             Create Image
           </Button>
         }
