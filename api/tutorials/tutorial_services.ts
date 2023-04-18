@@ -1,4 +1,3 @@
-import { determine_filter } from "../../util";
 import dotenv from "dotenv";
 import tutorial_db from "./tutorial_db";
 import { getFilteredData } from "../api_helpers";

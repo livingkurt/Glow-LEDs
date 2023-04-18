@@ -4,7 +4,6 @@ import GLModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiion
 import { set_edit_category_modal, set_category } from "../../../slices/categorySlice";
 import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
-import { snake_case, toCapitalize } from "../../../utils/helper_functions";
 import { categoryFormFields } from "../categoryHelpers";
 
 const EditCategoryModal = () => {
