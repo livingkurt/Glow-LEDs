@@ -1,14 +1,14 @@
 export const productFormFields = ({
   products,
   users,
-  images,
+  // images,
   categorys,
   setState,
   product
 }: {
   products: any;
   users: any;
-  images: any;
+  // images: any;
   categorys: any;
   setState: any;
   product: any;
@@ -71,7 +71,7 @@ export const productFormFields = ({
     images_object: {
       type: "image_upload",
       label: "Images",
-      options: images,
+      // options: images,
       labelProp: "link",
       album: `${product.name} Images`,
       getOptionLabel: (option: any) => option.link,
@@ -256,7 +256,7 @@ export const productFormFields = ({
     color_images_object: {
       type: "image_upload",
       label: "Color Images",
-      options: images,
+      // options: images,
       labelProp: "link",
       album: `${product.name} Color Images`,
       onUpload: (images: any) => setState(images, "color_images_object")
@@ -275,7 +275,7 @@ export const productFormFields = ({
     secondary_color_images_object: {
       type: "image_upload",
       label: "Secondary Color Images",
-      options: images,
+      // options: images,
       labelProp: "link",
       album: `${product.name} Secondary Color Images`,
       onUpload: (images: any) => setState(images, "secondary_color_images_object")
@@ -294,7 +294,7 @@ export const productFormFields = ({
     option_images_object: {
       type: "image_upload",
       label: "Option Images",
-      options: images,
+      // options: images,
       labelProp: "link",
       album: `${product.name} Option Images`,
       onUpload: (images: any) => setState(images, "option_images_object")
@@ -313,7 +313,7 @@ export const productFormFields = ({
     secondary_images_object: {
       type: "image_upload",
       label: "Secondary Images",
-      options: images,
+      // options: images,
       labelProp: "link",
       album: `${product.name} Secondary Images`,
       onUpload: (images: any) => setState(images, "secondary_images_object")
