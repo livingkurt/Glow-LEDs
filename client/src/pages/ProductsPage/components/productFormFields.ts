@@ -90,15 +90,21 @@ export const productFormFields = ({
       type: "checkbox",
       label: "Wholesale Product"
     },
-    // categorys: {
+    categorys: {
+      type: "autocomplete_multiple",
+      label: "Categorys",
+      options: categorys,
+      labelProp: "name"
+    },
+    subcategorys: {
+      type: "autocomplete_multiple",
+      label: "Subcategorys",
+      options: categorys,
+      labelProp: "name"
+    },
+    // collections: {
     //   type: "autocomplete_multiple",
-    //   label: "Categorys",
-    //   options: categorys,
-    //   labelProp: "name"
-    // },
-    // subcategorys: {
-    //   type: "autocomplete_multiple",
-    //   label: "Subcategorys",
+    //   label: "Collections",
     //   options: categorys,
     //   labelProp: "name"
     // },

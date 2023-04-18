@@ -13,6 +13,7 @@ import Chip from "./chips/chip";
 import { snake_case } from "../util";
 import { Filament } from "./filaments";
 import { Image } from "./images";
+import { Category } from "./categorys";
 const { isAuth, isAdmin } = require("../util");
 
 const router = express.Router();
@@ -1518,6 +1519,44 @@ router.route("/create_image_records_and_reference_them_in_product").put(async (r
   };
 
   await Promise.all(products.map(processProduct));
+  res.send(products);
+});
+router.route("/create_category_records_and_reference_them_in_product").put(async (req: any, res: any) => {
+  const findOrCreateCategory = async (name: any) => {
+    let category = await Category.findOne({ name });
+    if (!category) {
+      category = new Category({ name });
+      await category.save();
+    }
+    return category;
+  };
+  const products = await Product.find({ deleted: false }).sort({ order: 1 });
+
+  for (const product of products) {
+    console.log({ product });
+    if (product.category) {
+      const category = await findOrCreateCategory(product.category);
+      product.categorys.push(category);
+    }
+
+    if (product.subcategory) {
+      const subcategory = await findOrCreateCategory(product.subcategory);
+      product.subcategorys.push(subcategory);
+    }
+
+    if (product.product_collection) {
+      const collection = await findOrCreateCategory(product.product_collection);
+      product.collections.push(collection);
+    } else {
+      // Add an empty array to the collections field if there is no value
+      product.collections = [];
+    }
+
+    // Save the updated product
+    await product.save();
+  }
+
+  console.log("Migration completed");
   res.send(products);
 });
 
