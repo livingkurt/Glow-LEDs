@@ -90,18 +90,18 @@ export const productFormFields = ({
       type: "checkbox",
       label: "Wholesale Product"
     },
-    categorys: {
-      type: "autocomplete_multiple",
-      label: "Categorys",
-      options: categorys,
-      labelProp: "name"
-    },
-    subcategorys: {
-      type: "autocomplete_multiple",
-      label: "Subcategorys",
-      options: categorys,
-      labelProp: "name"
-    },
+    // categorys: {
+    //   type: "autocomplete_multiple",
+    //   label: "Categorys",
+    //   options: categorys,
+    //   labelProp: "name"
+    // },
+    // subcategorys: {
+    //   type: "autocomplete_multiple",
+    //   label: "Subcategorys",
+    //   options: categorys,
+    //   labelProp: "name"
+    // },
 
     contributers: {
       type: "array",
@@ -235,8 +235,8 @@ export const productFormFields = ({
       labelProps: "show_add_on"
     },
 
-    color_product: {
-      type: "autocomplete_single",
+    color_products: {
+      type: "autocomplete_multiple",
       label: "Color Product",
       options: products,
       labelProp: "name"
@@ -254,8 +254,8 @@ export const productFormFields = ({
       album: `${product.name} Color Images`,
       onUpload: (images: any) => setState(images, "color_images_object")
     },
-    secondary_color_product: {
-      type: "autocomplete_single",
+    secondary_color_products: {
+      type: "autocomplete_multiple",
       label: "Secondary Color Product",
       options: products,
       labelProp: "name"
@@ -278,8 +278,8 @@ export const productFormFields = ({
       label: "Option Product Name",
       labelProp: "option_product_name"
     },
-    option_product: {
-      type: "autocomplete_single",
+    option_products: {
+      type: "autocomplete_multiple",
       label: "Option Product",
       options: products,
       labelProp: "name"
@@ -297,8 +297,8 @@ export const productFormFields = ({
       label: "Secondary Product Name",
       labelProp: "secondary_product_name"
     },
-    secondary_product: {
-      type: "autocomplete_single",
+    secondary_products: {
+      type: "autocomplete_multiple",
       label: "Secondary Product",
       options: products,
       labelProp: "name"

@@ -736,7 +736,6 @@ const ProductPage = props => {
     !loading &&
     product?.hasOwnProperty("name") && (
       <div className="">
-        {/* <EditProductModal /> */}
         <div className="p-1rem">
           <div className="jc-b">
             <div className="mb-10px">
@@ -745,7 +744,7 @@ const ProductPage = props => {
               </Link>
             </div>
             {current_user?.isAdmin && (
-              <div className=" pos-rel z-pos-1 br-10px">
+              <div className="br-10px">
                 <GLButton variant="secondary" className=" w-300px" onClick={e => dispatch(open_edit_product_modal(product))}>
                   Edit Product
                 </GLButton>
@@ -844,6 +843,7 @@ const ProductPage = props => {
                   </div>
                 </div>
               )}
+              {/* <EditProductModal /> */}
               <div className="details">
                 <div className="">
                   {(secondary_image || width > 819) && (

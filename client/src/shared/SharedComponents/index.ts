@@ -9,5 +9,6 @@ export { default as ImageLoad } from "./ImageLoad";
 export { default as LazyImage } from "./LazyImage";
 export { default as ErrorView } from "./ErrorView";
 export { default as DropdownDisplay } from "./DropdownDisplay";
+export { default as DropdownDisplayV2 } from "./DropdownDisplayV2";
 export { default as ImageDisplay } from "./ImageDisplay";
 export { default as Notification } from "./Notification";
