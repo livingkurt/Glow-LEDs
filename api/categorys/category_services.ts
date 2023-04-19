@@ -7,7 +7,6 @@ export default {
       const sort_options = ["name"];
       const { filter, sort, limit, page } = getFilteredData({ query, sort_options, search_name: "name" });
       const categorys = await category_db.findAll_categorys_db(filter, sort, limit, page);
-      console.log({ categorys });
       const count = await category_db.count_categorys_db(filter);
       return {
         data: categorys,

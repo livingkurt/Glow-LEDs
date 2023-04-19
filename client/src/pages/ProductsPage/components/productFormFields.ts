@@ -105,12 +105,12 @@ export const productFormFields = ({
       options: categorys,
       labelProp: "name"
     },
-    // collections: {
-    //   type: "autocomplete_multiple",
-    //   label: "Collections",
-    //   options: categorys,
-    //   labelProp: "name"
-    // },
+    collections: {
+      type: "autocomplete_multiple",
+      label: "Collections",
+      options: categorys,
+      labelProp: "name"
+    },
 
     contributers: {
       type: "array",

@@ -112,6 +112,7 @@ const GLTableV2 = ({
   restrictSearchChars,
   searchPlaceholder,
   dropdownRowsName,
+  dropdownRows,
   rowName,
   minItemsToShowFilter,
   withCheckbox,
@@ -381,7 +382,6 @@ const GLTableV2 = ({
                               index={index}
                               columnDefs={columnDefs}
                               enableDropdownRow={enableDropdownRow}
-                              dropdownColumnDefs={dropdownColumnDefs}
                               namespace={namespace}
                               rowName={rowName}
                               enableRowClick={enableRowClick}
@@ -393,7 +393,10 @@ const GLTableV2 = ({
                               {enableDropdownRow && expandRow === row[rowName] && (
                                 <GLTableRowDropdown
                                   row={row}
-                                  dropdownRows={row[dropdownRowsName]}
+                                  enableRowSelect={enableRowSelect}
+                                  determine_color={determine_color}
+                                  isItemSelected={isItemSelected}
+                                  dropdownRows={dropdownRows}
                                   dropdownColumnDefs={dropdownColumnDefs}
                                   namespace={namespace}
                                 />

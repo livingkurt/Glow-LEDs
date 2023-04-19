@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Notification } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
@@ -13,9 +13,15 @@ import { determine_color } from "./productsPageHelpers";
 
 const ProductsPage = () => {
   const productPage = useSelector(state => state.products.productPage);
-  const { message, loading, remoteVersionRequirement } = productPage;
+  const { message, loading, remoteVersionRequirement, product } = productPage;
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (product.name) {
+      dispatch(open_edit_product_modal(product));
+    }
+  }, [dispatch, product]);
 
   const column_defs = useMemo(
     () => [
@@ -50,7 +56,7 @@ const ProductsPage = () => {
               variant="icon"
               aria-label="Edit"
               onClick={() => {
-                dispatch(open_edit_product_modal(row));
+                dispatch(API.detailsProduct(row._id));
               }}
             >
               <i className="fas fa-edit" />
@@ -92,6 +98,10 @@ const ProductsPage = () => {
         namespaceScope="products"
         namespace="productTable"
         columnDefs={column_defs}
+        enableDropdownRow
+        rowName={"name"}
+        dropdownColumnDefs={column_defs}
+        dropdownRows={row => [row.color_products, row.secondary_color_products, row.option_products, row.secondary_products].flat()}
         loading={loading}
         enableRowSelect={true}
         titleActions={

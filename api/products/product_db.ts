@@ -9,67 +9,11 @@ export default {
     try {
       return await Product.find(filter)
         .sort(sort)
-        .populate("images_object")
-        .populate("color_images_object")
-        .populate("secondary_color_images_object")
-        .populate("option_images_object")
-        .populate("secondary_images_object")
-        .populate("chips")
-        .populate("products")
-        .populate({
-          path: "color_products",
-          populate: {
-            path: "filament"
-          }
-        })
-        .populate({
-          path: "secondary_color_products",
-          populate: {
-            path: "filament"
-          }
-        })
-        .populate({
-          path: "option_products",
-          populate: {
-            path: "filament"
-          }
-        })
-        .populate("filament")
-        .populate({
-          path: "secondary_products",
-          populate: [
-            {
-              path: "filament"
-            },
-            {
-              path: "color_products",
-              populate: {
-                path: "filament"
-              }
-            },
-            {
-              path: "secondary_color_products",
-              populate: {
-                path: "filament"
-              }
-            },
-            {
-              path: "option_products",
-              populate: {
-                path: "filament"
-              }
-            },
-            {
-              path: "secondary_color_products",
-              populate: {
-                path: "filament"
-              }
-            }
-          ]
-        })
+        .populate("color_products")
+        .populate("secondary_color_products")
+        .populate("option_products")
+        .populate("secondary_products")
         .populate("categorys")
-        .populate("subcategorys")
-        .populate("contributers")
         .limit(parseInt(limit))
         .skip(Math.max(parseInt(page), 0) * parseInt(limit))
         .exec();
@@ -92,21 +36,63 @@ export default {
         .populate("products")
         .populate({
           path: "color_products",
-          populate: {
-            path: "filament"
-          }
+          populate: [
+            {
+              path: "filament"
+            },
+            {
+              path: "images_object"
+            },
+            {
+              path: "categorys"
+            },
+            {
+              path: "subcategorys"
+            },
+            {
+              path: "collections"
+            }
+          ]
         })
         .populate({
           path: "secondary_color_products",
-          populate: {
-            path: "filament"
-          }
+          populate: [
+            {
+              path: "filament"
+            },
+            {
+              path: "images_object"
+            },
+            {
+              path: "categorys"
+            },
+            {
+              path: "subcategorys"
+            },
+            {
+              path: "collections"
+            }
+          ]
         })
         .populate({
           path: "option_products",
-          populate: {
-            path: "filament"
-          }
+          populate: [
+            {
+              path: "filament"
+            },
+            {
+              path: "images_object"
+            },
+            {
+              path: "categorys"
+            },
+            {
+              path: "subcategorys"
+            },
+            {
+              path: "collections"
+            }
+          ]
         })
         .populate("filament")
         .populate({
@@ -114,6 +100,18 @@ export default {
           populate: [
             {
               path: "filament"
+            },
+            {
+              path: "images_object"
+            },
+            {
+              path: "categorys"
+            },
+            {
+              path: "subcategorys"
+            },
+            {
+              path: "collections"
             },
             {
               path: "color_products",
@@ -143,6 +141,7 @@ export default {
         })
         .populate("categorys")
         .populate("subcategorys")
+        .populate("collections")
         .populate("contributers")
         .limit(parseInt(limit))
         .skip((parseInt(page) - 1) * parseInt(limit))
@@ -209,21 +208,63 @@ export default {
         .populate("products")
         .populate({
           path: "color_products",
-          populate: {
-            path: "filament"
-          }
+          populate: [
+            {
+              path: "filament"
+            },
+            {
+              path: "images_object"
+            },
+            {
+              path: "categorys"
+            },
+            {
+              path: "subcategorys"
+            },
+            {
+              path: "collections"
+            }
+          ]
         })
         .populate({
           path: "secondary_color_products",
-          populate: {
-            path: "filament"
-          }
+          populate: [
+            {
+              path: "filament"
+            },
+            {
+              path: "images_object"
+            },
+            {
+              path: "categorys"
+            },
+            {
+              path: "subcategorys"
+            },
+            {
+              path: "collections"
+            }
+          ]
         })
         .populate({
           path: "option_products",
-          populate: {
-            path: "filament"
-          }
+          populate: [
+            {
+              path: "filament"
+            },
+            {
+              path: "images_object"
+            },
+            {
+              path: "categorys"
+            },
+            {
+              path: "subcategorys"
+            },
+            {
+              path: "collections"
+            }
+          ]
         })
         .populate("filament")
         .populate({
@@ -231,6 +272,18 @@ export default {
           populate: [
             {
               path: "filament"
+            },
+            {
+              path: "images_object"
+            },
+            {
+              path: "categorys"
+            },
+            {
+              path: "subcategorys"
+            },
+            {
+              path: "collections"
             },
             {
               path: "color_products",
@@ -260,6 +313,7 @@ export default {
         })
         .populate("categorys")
         .populate("subcategorys")
+        .populate("collections")
         .populate("contributers");
     } catch (error) {
       if (error instanceof Error) {

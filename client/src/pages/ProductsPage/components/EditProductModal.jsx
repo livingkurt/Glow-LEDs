@@ -19,7 +19,7 @@ const EditProductModal = () => {
   const { users, loading: loading_users } = userPage;
   // const imagePage = useSelector(state => state.images.imagePage);
   // const { images, loading: loading_images } = imagePage;
-  const categoryPage = useSelector(state => state.categorys);
+  const categoryPage = useSelector(state => state.categorys.categoryPage);
   const { categorys, loading: loading_categorys } = categoryPage;
 
   useEffect(() => {
