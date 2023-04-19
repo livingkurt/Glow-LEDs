@@ -250,7 +250,9 @@ const Header = props => {
                 <Link to="/" aria-label="Home Page">
                   {/* <div className="pos-rel"> */}
                   <div className="row pos-rel">
-                    <label className="glow_leds_text">Glow LEDs</label>
+                    <label className="glow_leds_text" data-testid="glow_leds_title">
+                      Glow LEDs
+                    </label>
 
                     <label className="tm" style={{ color: "#9a9898" }}>
                       ™

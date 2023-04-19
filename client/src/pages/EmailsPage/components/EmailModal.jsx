@@ -59,6 +59,7 @@ const EmailModal = props => {
     >
       <span
         className="pos-abs right-15px top-10px close"
+        data-testid="close_email_modal"
         onClick={() => {
           props.set_show_modal(false);
           // localStorage.setItem('popup', today);

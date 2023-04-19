@@ -185,6 +185,7 @@ const ProductOptions = ({
       <GLTooltip tooltip={variant === "disabled" && "You must choose an option before adding to you cart"}>
         <GLButton
           variant={variant}
+          data-testid="add_to_cart_button"
           className={`${variant !== "disabled" && "bob"} mt-10px w-100per`}
           tooltip={variant === "disabled" && "You must choose an option before adding to you cart"}
           onClick={handleAddToCart}

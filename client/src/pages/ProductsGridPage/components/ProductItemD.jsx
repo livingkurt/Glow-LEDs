@@ -48,7 +48,7 @@ const ProductItemD = ({ product, style, size, product_occurrences }) => {
               }}
               className="m-auto"
             >
-              <div className="row mt-15px">
+              <div className="row mt-15px" data-testid={product.pathname}>
                 <div className="column ai-c pos-rel">
                   {/* <Link to={'/collections/all/products/' + item.pathname}> */}
                   {product?.images_object?.length === 1 && (
