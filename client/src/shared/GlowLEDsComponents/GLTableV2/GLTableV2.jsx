@@ -240,6 +240,7 @@ const GLTableV2 = ({
           sorting
         })
       );
+      updateUrlWithTableState({ location, history, search, filters, page, pageSize, sorting });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, remoteApi, namespace, filters, sorting, page, pageSize]);
