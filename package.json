@@ -96,17 +96,17 @@
     "build": "tsc && npm run build:client",
     "build:client": "cd client && npm run build",
     "heroku-postbuild": "npm run build",
-    "lint": "npm lint:scss && npm lint:js",
+    "lint": "npm run lint:scss && npm run lint:js",
     "lint-staged": "$(npm bin)/lint-staged",
-    "lint:fix": "npm lint:js:fix && npm lint:scss:fix",
-    "lint:js": "eslint client/src --ext jsx,js --cache ",
-    "lint:js:fix": "npm lint:js --fix",
-    "lint:scss": "stylelint './client/src/scss/**/*.scss' --cache",
-    "lint:scss:fix": "npm lint:scss --fix",
+    "lint:fix": "npm run lint:js:fix && npm run lint:scss:fix",
+    "lint:js": "eslint client/src --ext jsx,js --cache",
+    "lint:js:fix": "npm run lint:js --fix",
+    "lint:scss": "stylelint './client/src//**/*.scss' --cache",
+    "lint:scss:fix": "npm run lint:scss --fix",
     "stylelint-check": "stylelint-config-prettier-check"
-  },
+    },
   "pre-commit": [
-    "lint-staged"
+    "npm run lint-staged"
   ],
   "lint-staged": {
     "client/src/**/*.jsx": [
@@ -117,3 +117,5 @@
     ]
   }
 }
+
+

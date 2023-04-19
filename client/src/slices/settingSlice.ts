@@ -11,19 +11,7 @@ const settingPage = createSlice({
     setting: {},
     message: "",
     error: {},
-    search: "",
-    show_search_bar: false,
-    sort: "",
-    page: 1,
-    limit: 10,
-    sort_options: ["Newest", "Artist Name", "Facebook Name", "Instagram Handle", "Sponsor", "Promoter"],
-    colors: [
-      { name: "Sponsor", color: "#3e4c6d" },
-      { name: "Promoter", color: "#7d5555" },
-      { name: "Team", color: "#557d6c" },
-      { name: "Not Active", color: "#757575" },
-      { name: "Rave Mob", color: "#55797d" }
-    ]
+    show_search_bar: true
   },
   reducers: {
     set_setting: (state, { payload }) => {
@@ -35,18 +23,6 @@ const settingPage = createSlice({
     },
     set_loading: (state, { payload }) => {
       state.loading = payload;
-    },
-    set_search: (state, { payload }) => {
-      state.search = payload;
-    },
-    set_sort: (state, { payload }) => {
-      state.sort = payload;
-    },
-    set_page: (state, { payload }) => {
-      state.page = payload;
-    },
-    set_limit: (state, { payload }) => {
-      state.limit = payload;
     },
     set_show_search_bar: (state, { payload }) => {
       state.show_search_bar = payload;
@@ -111,5 +87,5 @@ const settingPage = createSlice({
   }
 });
 
-export const { set_search, set_sort, set_page, set_limit, set_loading, set_setting, set_show_search_bar } = settingPage.actions;
+export const { set_loading, set_setting, set_show_search_bar } = settingPage.actions;
 export default settingPage.reducer;

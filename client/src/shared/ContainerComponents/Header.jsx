@@ -275,7 +275,7 @@ const Header = props => {
                 </Link>
                 <div className="dropdown-nav">
                   <Link to="/pages/menu/gloving">
-                    <GLButton variant="nav" className="title_font">
+                    <GLButton variant="nav" className="title_font" data-testid="shop_button">
                       Shop
                     </GLButton>
                   </Link>

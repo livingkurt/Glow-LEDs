@@ -1,8 +1,12 @@
-// import { test, expect } from "@playwright/test";
+import { test, expect } from "@playwright/test";
 
-// test("has title", async ({ page }) => {
-//   await page.goto("https://www.glow-leds.com/");
+test("order flow", async ({ page }) => {
+  await page.goto("http://localhost:3000/");
+  // await page.goto("http://localhost:3000/");
+  await page.pause();
+  // await expect(page).toHaveTitle(/Glow LEDs/);
+  // Click on Shop Nav Button
+  await page.getByTestId("shop_button").click();
 
-//   // Expect a title "to contain" a substring.
-//   await expect(page).toHaveTitle(/Playwright/);
-// });
+  // Expect a title "to contain" a substring.
+});
