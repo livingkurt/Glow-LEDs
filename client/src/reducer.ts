@@ -70,7 +70,7 @@ const reducers = {
     orderPage: orderSlice,
     orderTable: glTableReducer("orderTable", {
       sorting: [0, "asc"],
-      nonTagFilters: ["order_status", "international"],
+      nonTagFilters: ["order_status", "shipping"],
       searchBy: (row: any, search: string) => {
         const searchableText = `${row.shipping.first_name} ${row.shipping.last_name} ${row._id}`;
         return searchableText.toLowerCase().includes(search.toLowerCase());

@@ -49,7 +49,7 @@ export default {
   create_filters_orders_s: async (query: { search: string; sort: string; page: string; limit: string }) => {
     try {
       return {
-        order_status: ["isPaid", "isManufactured", "isShipped", "isDelivered", "isDelivered", "isPaused", "isInTransit", "isOutForDelivery"],
+        order_status: ["isPaid", "isManufactured", "isShipped", "isInTransit", "isOutForDelivery", "isDelivered", "isPaused", "isRefunded"],
         shipping: ["international"]
       };
     } catch (error) {

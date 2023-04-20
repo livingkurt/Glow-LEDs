@@ -70,6 +70,14 @@ const GLTableFilterChips = ({ filters, menuOpen, namespace, maxChips, onChangeFu
           return (
             <li key={chip.key}>
               <Chip
+                // color="primary"
+                sx={{
+                  fontSize: "12px"
+                  // "&:hover": {
+                  //   backgroundColor: "#4c6ebf",
+                  //   color: "white"
+                  // }
+                }}
                 label={chip.name}
                 onClick={() => handleClick(chip)}
                 onDelete={() => {

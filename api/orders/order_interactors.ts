@@ -66,6 +66,10 @@ export const normalizeOrderFilters = (input: any) => {
             output["isOutForDelivery"] = true;
             output["isDelivered"] = true;
             break;
+          case "isRefunded":
+            output["isPaid"] = true;
+            output["isRefunded"] = true;
+            break;
         }
       }
     } else if (key === "shipping") {

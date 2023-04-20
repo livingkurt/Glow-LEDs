@@ -6,24 +6,6 @@ export const getSort = (sort_options: string[], querySort: string[]): any => {
   return sort;
 };
 
-interface QueryObj {
-  [key: string]: string[];
-}
-
-const normalizeFilters = (queryObj: QueryObj): Record<string, boolean> => {
-  const convertedQuery: Record<string, boolean> = {};
-  for (const key in queryObj) {
-    if (Object.prototype.hasOwnProperty.call(queryObj, key)) {
-      queryObj[key].forEach((value: string) => {
-        const newKey = value.includes(".") ? value.replace(".", "_") : value;
-        const finalKey = key !== "shipping" ? newKey : `${key}.${newKey}`;
-        convertedQuery[finalKey] = true;
-      });
-    }
-  }
-  return convertedQuery;
-};
-
 export const getFilteredData = ({ query, sort_options, search_name, normalizeFilters }: any) => {
   const page = query.page || "1";
   const limit = query.limit || "0";
@@ -36,7 +18,7 @@ export const getFilteredData = ({ query, sort_options, search_name, normalizeFil
       }
     : {};
 
-  const filter = query?.filters ? { ...normalizeFilters(JSON.parse(query.filters)), ...search, deleted: false } : search;
+  const filter = query?.filters ? { deleted: false, ...normalizeFilters(JSON.parse(query.filters)), ...search } : search;
   console.log({ filter });
   const sort = getSort(sort_options, query?.sort);
   console.log({ sort });
