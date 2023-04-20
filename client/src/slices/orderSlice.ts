@@ -166,6 +166,7 @@ const orderPage = createSlice({
     [API.saveOrder.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.message = "Order Saved";
+      state.edit_order_modal = false;
       state.remoteVersionRequirement = Date.now();
     },
     [API.saveOrder.rejected as any]: (state: any, { payload }: any) => {
