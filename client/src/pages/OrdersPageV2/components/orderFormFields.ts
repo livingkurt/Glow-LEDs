@@ -1,363 +1,511 @@
 export const orderFormFields = ({
-  orders,
   users,
-  // images,
-  categorys,
+  parcels,
   setState,
   order,
   onEdit
 }: {
-  orders: any;
   users: any;
-  // images: any;
-  categorys: any;
+  parcels: any;
   setState: any;
   order: any;
   onEdit: any;
 }) => {
   return {
-    name: {
-      type: "text",
-      label: "Name",
-      required: true
+    user: {
+      type: "autocomplete_single",
+      label: "Users",
+      options: users,
+      labelProp: "user",
+      getOptionLabel: (option: any) => `${option.shipping.first_name} ${option.shipping.last_name}`
     },
-    price: {
-      type: "number",
-      label: "Price"
-    },
-    description: {
-      type: "text_multiline",
-      label: "Description"
-    },
-    facts: {
-      type: "text_multiline",
-      label: "Facts"
-    },
-    included_items: {
-      type: "text_multiline",
-      label: "Included Items"
-    },
-    brand: {
-      type: "text",
-      label: "Brand",
-      required: true
-    },
-    category: {
-      type: "text",
-      label: "Category",
-      required: true
-    },
-    subcategory: {
-      type: "text",
-      label: "Subcategory"
-    },
-    order_collection: {
-      type: "text",
-      label: "Order Collection"
-    },
-    previous_price: {
-      type: "number",
-      label: "Previous Price"
-    },
-    count_in_stock: {
-      type: "number",
-      label: "Count in Stock",
-      default: 30,
-      required: true
-    },
-    finite_stock: {
-      type: "checkbox",
-      label: "Finite Stock",
-      default: false
-    },
-    images_object: {
-      type: "image_upload",
-      label: "Images",
-      // options: images,
-      labelProp: "link",
-      album: `${order.name} Images`,
-      getOptionLabel: (option: any) => option.link,
-      onUpload: (images: any) => setState(images, "images_object")
-    },
-
-    video: {
-      type: "text",
-      label: "Video"
-    },
-
-    wholesale_price: {
-      type: "number",
-      label: "Wholesale Price"
-    },
-    wholesale_order: {
-      type: "checkbox",
-      label: "Wholesale Order"
-    },
-    categorys: {
-      type: "autocomplete_multiple",
-      label: "Categorys",
-      options: categorys,
-      labelProp: "name"
-    },
-    subcategorys: {
-      type: "autocomplete_multiple",
-      label: "Subcategorys",
-      options: categorys,
-      labelProp: "name"
-    },
-    collections: {
-      type: "autocomplete_multiple",
-      label: "Collections",
-      options: categorys,
-      labelProp: "name"
-    },
-
-    contributers: {
-      type: "array",
-      label: "Contributers",
-      default: "5f2d7c0e9005a57059801ce8"
-    },
-
-    rating: {
-      type: "number",
-      label: "Rating",
-      default: 0
-    },
-    numReviews: {
-      type: "number",
-      label: "Number of Reviews",
-      default: 0
-    },
-
-    hidden: {
-      type: "checkbox",
-      label: "Hidden",
-      labelProp: "hidden",
-      defaultValue: false
-    },
-    sale_price: {
-      type: "number",
-      label: "Sale Price",
-      labelProp: "sale_price",
-      defaultValue: 0
-    },
-    sale_start_date: {
-      type: "date",
-      label: "Sale Start Date",
-      labelProp: "sale_start_date"
-    },
-    sale_end_date: {
-      type: "date",
-      label: "Sale End Date",
-      labelProp: "sale_end_date"
-    },
-    preorder: {
-      type: "checkbox",
-      label: "Preorder",
-      labelProp: "preorder",
-      defaultValue: false
-    },
-    pathname: {
-      type: "text",
-      label: "Pathname",
-      labelProp: "pathname"
-    },
-    meta_title: {
-      type: "text",
-      label: "Meta Title",
-      labelProp: "meta_title"
-    },
-    meta_description: {
-      type: "text_multiline",
-      label: "Meta Description",
-      labelProp: "meta_description"
-    },
-    meta_keywords: {
-      type: "text_multiline",
-      label: "Meta Keywords",
-      labelProp: "meta_keywords"
-    },
-    length: {
-      type: "number",
-      label: "Length",
-      labelProp: "length"
-    },
-    width: {
-      type: "number",
-      label: "Width",
-      labelProp: "width"
-    },
-    height: {
-      type: "number",
-      label: "Height",
-      labelProp: "height"
-    },
-    package_length: {
-      type: "number",
-      label: "Package Length",
-      labelProp: "package_length"
-    },
-    package_width: {
-      type: "number",
-      label: "Package Width",
-      labelProp: "package_width"
-    },
-    package_height: {
-      type: "number",
-      label: "Package Height",
-      labelProp: "package_height"
-    },
-    package_volume: {
-      type: "number",
-      label: "Package Volume",
-      labelProp: "package_volume"
-    },
-    weight_pounds: {
-      type: "number",
-      label: "Weight (lbs)",
-      labelProp: "weight_pounds"
-    },
-    weight_ounces: {
-      type: "number",
-      label: "Weight (oz)",
-      labelProp: "weight_ounces"
-    },
-    processing_time: {
-      type: "multi-select",
-      label: "Processing Time",
-      labelProp: "processing_time",
-      options: ["1 day", "2 days", "3 days", "4 days", "5 days", "6 days", "7 days"]
-    },
-    quantity: {
-      type: "number",
-      label: "Quantity",
-      labelProp: "quantity"
-    },
-    add_on_price: {
-      type: "number",
-      label: "Add-On Price",
-      labelProp: "add_on_price"
-    },
-    show_add_on: {
-      type: "checkbox",
-      label: "Show Add-On",
-      labelProp: "show_add_on"
-    },
-
-    color_orders: {
-      type: "autocomplete_multiple",
-      label: "Color Order",
-      options: orders,
-      labelProp: "name",
-      onEdit: (order: any) => onEdit(order)
-    },
-    color_order_name: {
-      type: "text",
-      label: "Color Order Name",
-      labelProp: "color_order_name"
-    },
-    color_images_object: {
-      type: "image_upload",
-      label: "Color Images",
-      // options: images,
-      labelProp: "link",
-      album: `${order.name} Color Images`,
-      onUpload: (images: any) => setState(images, "color_images_object")
-    },
-    secondary_color_orders: {
-      type: "autocomplete_multiple",
-      label: "Secondary Color Order",
-      options: orders,
-      labelProp: "name",
-      onEdit: (order: any) => onEdit(order)
-    },
-    secondary_color_order_name: {
-      type: "text",
-      label: "Secondary Color Order Name",
-      labelProp: "secondary_color_order_name"
-    },
-    secondary_color_images_object: {
-      type: "image_upload",
-      label: "Secondary Color Images",
-      // options: images,
-      labelProp: "link",
-      album: `${order.name} Secondary Color Images`,
-      onUpload: (images: any) => setState(images, "secondary_color_images_object")
-    },
-    option_order_name: {
-      type: "text",
-      label: "Option Order Name",
-      labelProp: "option_order_name"
-    },
-    option_orders: {
-      type: "autocomplete_multiple",
-      label: "Option Order",
-      options: orders,
-      labelProp: "name",
-      onEdit: (order: any) => onEdit(order)
-    },
-    option_images_object: {
-      type: "image_upload",
-      label: "Option Images",
-      // options: images,
-      labelProp: "link",
-      album: `${order.name} Option Images`,
-      onUpload: (images: any) => setState(images, "option_images_object")
-    },
-    secondary_order_name: {
-      type: "text",
-      label: "Secondary Order Name",
-      labelProp: "secondary_order_name"
-    },
-    secondary_orders: {
-      type: "autocomplete_multiple",
-      label: "Secondary Order",
-      options: orders,
-      labelProp: "name",
-      onEdit: (order: any) => onEdit(order)
-    },
-    secondary_images_object: {
-      type: "image_upload",
-      label: "Secondary Images",
-      // options: images,
-      labelProp: "link",
-      album: `${order.name} Secondary Images`,
-      onUpload: (images: any) => setState(images, "secondary_images_object")
-    },
-    reviews: {
+    orderItems: {
       type: "array_of_objects",
-      title: "Reviews",
+      title: "Order Items",
       fields: {
+        name: {
+          type: "text",
+          label: "Name",
+          required: true
+        },
+        qty: {
+          type: "number",
+          label: "Quantity",
+          required: true
+        },
+        display_image: {
+          type: "text",
+          label: "Display Image",
+          required: true
+        },
+        secondary_image: {
+          type: "text",
+          label: "Secondary Image"
+        },
+        color: {
+          type: "text",
+          label: "Color"
+        },
+        secondary_color: {
+          type: "text",
+          label: "Secondary Color"
+        },
+        color_group_name: {
+          type: "text",
+          label: "Color Group Name"
+        },
+        is_printing: {
+          type: "checkbox",
+          label: "Is Printing",
+          default: false
+        },
+        is_manufactured: {
+          type: "checkbox",
+          label: "Is Manufactured",
+          default: false
+        },
+        is_packaged: {
+          type: "checkbox",
+          label: "Is Packaged",
+          default: false
+        },
+        secondary_color_group_name: {
+          type: "text",
+          label: "Secondary Color Group Name"
+        },
+        secondary_color_code: {
+          type: "text",
+          label: "Secondary Color Code"
+        },
+        secondary_group_name: {
+          type: "text",
+          label: "Secondary Group Name"
+        },
+        option_group_name: {
+          type: "text",
+          label: "Option Group Name"
+        },
+        color_code: {
+          type: "text",
+          label: "Color Code"
+        },
+        price: {
+          type: "number",
+          label: "Price",
+          required: true
+        },
+        add_on_price: {
+          type: "number",
+          label: "Add-on Price"
+        },
+        show_add_on: {
+          type: "checkbox",
+          label: "Show Add-on"
+        },
+        category: {
+          type: "text",
+          label: "Category",
+          required: true
+        },
+        count_in_stock: {
+          type: "number",
+          label: "Count in Stock"
+        },
+        subcategory: {
+          type: "text",
+          label: "Subcategory"
+        },
+        pathname: {
+          type: "text",
+          label: "Pathname"
+        },
+        size: {
+          type: "text",
+          label: "Size"
+        },
+        preorder: {
+          type: "checkbox",
+          label: "Preorder"
+        },
+        sale_price: {
+          type: "number",
+          label: "Sale Price"
+        },
+        package_volume: {
+          type: "number",
+          label: "Package Volume"
+        },
+        weight_pounds: {
+          type: "number",
+          label: "Weight (Pounds)"
+        },
+        weight_ounces: {
+          type: "number",
+          label: "Weight (Ounces)"
+        },
+        length: {
+          type: "number",
+          label: "Length"
+        },
+        width: {
+          type: "number",
+          label: "Width"
+        },
+        height: {
+          type: "number",
+          label: "Height"
+        },
+        package_length: {
+          type: "number",
+          label: "Package Length"
+        },
+        package_width: {
+          type: "number",
+          label: "Package Width"
+        },
+        package_height: {
+          type: "number",
+          label: "Package Height"
+        },
+        reviewed: {
+          type: "checkbox",
+          label: "Reviewed",
+          default: false
+        },
+        review_email_sent: {
+          type: "checkbox",
+          label: "Review Email Sent",
+          default: false
+        },
+        product: {
+          type: "select",
+          label: "Product",
+          ref: "Product",
+          required: true
+        },
+        color_product: {
+          type: "select",
+          label: "Color Product",
+          ref: "Product"
+        },
+        color_product_name: {
+          type: "text",
+          label: "Color Product Name"
+        },
+        secondary_color_product: {
+          type: "select",
+          label: "Secondary Color Product",
+          ref: "Product"
+        },
+        secondary_color_product_name: {
+          type: "text",
+          label: "Secondary Color Product Name"
+        },
+        option_product_name: {
+          type: "text",
+          label: "Option Product Name"
+        },
+        option_product: {
+          type: "select",
+          label: "Option Product",
+          ref: "Product"
+        },
+        secondary_product_name: {
+          type: "text",
+          label: "Secondary Product Name"
+        },
+        secondary_product: {
+          type: "select",
+          label: "Secondary Product",
+          ref: "Product"
+        }
+      }
+    },
+    messages: {
+      type: "array_of_objects",
+      title: "Messages",
+      fields: {
+        message: {
+          type: "text",
+          label: "Mesage"
+        },
         user: {
-          type: "autocomplete_single",
-          label: "Users",
-          options: users,
-          labelProp: "user",
-          getOptionLabel: (option: any) => (option ? `${option.first_name} ${option.last_name}` : "")
+          type: "checkbox",
+          label: "User"
+        },
+        admin: {
+          type: "checkbox",
+          label: "Admin"
+        }
+      }
+    },
+    shipping: {
+      type: "object",
+      title: "Shipping",
+      fields: {
+        shipment_id: {
+          type: "text",
+          label: "Shipment ID"
+        },
+        shipping_rate: {
+          type: "object",
+          label: "Shipping Rate"
+        },
+        shipping_label: {
+          type: "object",
+          label: "Shipping Label"
+        },
+        shipment_tracker: {
+          type: "object",
+          label: "Shipment Tracker"
+        },
+        return_shipment_id: {
+          type: "text",
+          label: "Return Shipment ID"
+        },
+        return_shipping_rate: {
+          type: "object",
+          label: "Return Shipping Rate"
+        },
+        return_shipping_label: {
+          type: "object",
+          label: "Return Shipping Label"
+        },
+        return_shipment_tracker: {
+          type: "object",
+          label: "Return Shipment Tracker"
         },
         first_name: {
           type: "text",
           label: "First Name",
-          labelProp: "first_name"
+          required: true
         },
         last_name: {
           type: "text",
           label: "Last Name",
-          labelProp: "last_name"
-        },
-        rating: {
-          type: "number",
-          label: "Rating",
-          labelProp: "rating",
           required: true
         },
-        comment: {
+        email: {
+          type: "email",
+          label: "Email",
+          required: true
+        },
+        address: {
           type: "text",
-          label: "Comment",
-          labelProp: "comment",
+          label: "Address"
+        },
+        address_1: {
+          type: "text",
+          label: "Address 1",
+          required: true
+        },
+        address_2: {
+          type: "text",
+          label: "Address 2"
+        },
+        city: {
+          type: "text",
+          label: "City",
+          required: true
+        },
+        state: {
+          type: "text",
+          label: "State",
+          required: true
+        },
+        postalCode: {
+          type: "text",
+          label: "Postal Code",
+          required: true
+        },
+        international: {
+          type: "checkbox",
+          label: "International"
+        },
+        country: {
+          type: "text",
+          label: "Country",
           required: true
         }
       }
+    },
+    payment: {
+      type: "object",
+      title: "Payment",
+      fields: {
+        paymentMethod: {
+          type: "text",
+          label: "Payment Method"
+        },
+        payment: {
+          type: "object",
+          label: "Payment"
+        },
+        charge: {
+          type: "object",
+          label: "Charge"
+        },
+        refund: {
+          type: "array",
+          label: "Refund"
+        },
+        refund_reason: {
+          type: "array",
+          label: "Refund Reason"
+        }
+      }
+    },
+    itemsPrice: {
+      type: "number",
+      label: "Items Price"
+    },
+    taxPrice: {
+      type: "number",
+      label: "Tax Price"
+    },
+    shippingPrice: {
+      type: "number",
+      label: "Shipping Price"
+    },
+    totalPrice: {
+      type: "number",
+      label: "Total Price"
+    },
+    refundTotal: {
+      type: "number",
+      label: "Refund Total"
+    },
+    guest: {
+      type: "checkbox",
+      label: "Guest",
+      default: false
+    },
+    isPaid: {
+      type: "checkbox",
+      label: "Is Paid",
+      default: false
+    },
+    paidAt: {
+      type: "date",
+      label: "Paid At"
+    },
+    isReassured: {
+      type: "checkbox",
+      label: "Is Reassured",
+      default: false
+    },
+    reassuredAt: {
+      type: "date",
+      label: "Reassured At"
+    },
+    isManufactured: {
+      type: "checkbox",
+      label: "Is Manufactured",
+      default: false
+    },
+    manufacturedAt: {
+      type: "date",
+      label: "Manufactured At"
+    },
+    isPackaged: {
+      type: "checkbox",
+      label: "Is Packaged",
+      default: false
+    },
+    packagedAt: {
+      type: "date",
+      label: "Packaged At"
+    },
+    isShipped: {
+      type: "checkbox",
+      label: "Is Shipped",
+      default: false
+    },
+    shippedAt: {
+      type: "date",
+      label: "Shipped At"
+    },
+    isInTransit: {
+      type: "checkbox",
+      label: "Is In Transit",
+      default: false
+    },
+    inTransitAt: {
+      type: "date",
+      label: "In Transit At"
+    },
+    isOutForDelivery: {
+      type: "checkbox",
+      label: "Is Out For Delivery",
+      default: false
+    },
+    outForDeliveryAt: {
+      type: "date",
+      label: "Out For Delivery At"
+    },
+    isDelivered: {
+      type: "checkbox",
+      label: "Is Delivered",
+      default: false
+    },
+    deliveredAt: {
+      type: "date",
+      label: "Delivered At"
+    },
+    isRefunded: {
+      type: "checkbox",
+      label: "Is Refunded",
+      default: false
+    },
+    refundedAt: {
+      type: "date",
+      label: "Refunded At"
+    },
+    order_note: {
+      type: "text",
+      label: "Order Note"
+    },
+    production_note: {
+      type: "text",
+      label: "Production Note"
+    },
+    tip: {
+      type: "number",
+      label: "Tip"
+    },
+    promo_code: {
+      type: "text",
+      label: "Promo Code"
+    },
+    tracking_number: {
+      type: "text",
+      label: "Tracking Number"
+    },
+    tracking_url: {
+      type: "text",
+      label: "Tracking URL"
+    },
+    return_tracking_number: {
+      type: "text",
+      label: "Return Tracking Number"
+    },
+    is_error: {
+      type: "checkbox",
+      label: "Is Error",
+      default: false
+    },
+    error_at: {
+      type: "date",
+      label: "Error At"
+    },
+    error: {
+      type: "json",
+      label: "Error"
+    },
+    deleted: {
+      type: "checkbox",
+      label: "Deleted",
+      default: false
     }
   };
 };

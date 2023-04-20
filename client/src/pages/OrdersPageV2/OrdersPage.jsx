@@ -25,11 +25,11 @@ const OrdersPage = () => {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (order.name) {
-      dispatch(open_edit_order_modal(order));
-    }
-  }, [dispatch, order]);
+  // useEffect(() => {
+  //   if (order.name) {
+  //     dispatch(open_edit_order_modal(order));
+  //   }
+  // }, [dispatch, order]);
 
   const column_defs = useMemo(
     () => [
@@ -62,7 +62,8 @@ const OrdersPage = () => {
               variant="icon"
               aria-label="Edit"
               onClick={() => {
-                dispatch(API.detailsOrder(row._id));
+                dispatch(open_edit_order_modal(row));
+                // dispatch(API.detailsOrder(row._id));
               }}
             >
               <i className="fas fa-edit" />
@@ -78,23 +79,6 @@ const OrdersPage = () => {
           </div>
         )
       }
-    ],
-    [dispatch]
-  );
-  const dropdown_column_defs = useMemo(
-    () => [
-      {
-        title: "Shipping",
-        display: row => <ShippingDisplay shipping={row.shipping} />,
-        colSpan: 1
-      },
-      {
-        title: "Promo Code",
-        display: row => <MetaDataDisplay row={row} />,
-        colSpan: 2
-      },
-      { title: "Name", display: row => <OrderActionButtons order={row} />, colSpan: 1 },
-      { title: "Since Ordered", display: row => <OrderStatusButtons order={row} />, colSpan: 2 }
     ],
     [dispatch]
   );
@@ -130,7 +114,7 @@ const OrdersPage = () => {
           </Button>
         }
       />
-      {/* <EditOrderModal /> */}
+      <EditOrderModal />
     </div>
   );
 };

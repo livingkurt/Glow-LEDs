@@ -275,7 +275,6 @@ const GLTableV2 = ({
   const rowCount = remoteCount || filteredRows.length;
   const hasFilters = availableFilters && Object.keys(availableFilters).length > 0;
 
-  console.log({ extendedRowComponent: extendedRowComponent(rows[0]) });
   return (
     <div style={{ overflowX: "scroll" }} className="w-100per">
       <Paper className={containerClassNames} style={{ ...style, margin: "1px", minWidth: "1000px" }} data-test="glTable">

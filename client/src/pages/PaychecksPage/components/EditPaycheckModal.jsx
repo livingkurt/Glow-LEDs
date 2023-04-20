@@ -45,9 +45,10 @@ const EditPaycheckModal = () => {
     },
     user: {
       type: "autocomplete_single",
-      label: "User",
+      label: "Users",
       options: users,
-      labelProp: "artist_name"
+      labelProp: "user",
+      getOptionLabel: option => `${option.first_name} ${option.last_name}`
     },
     team: {
       type: "autocomplete_single",

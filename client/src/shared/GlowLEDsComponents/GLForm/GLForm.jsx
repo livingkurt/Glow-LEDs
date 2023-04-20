@@ -1,36 +1,14 @@
-import { Autocomplete, Checkbox, FormControlLabel, Skeleton, TextField, Typography } from "@mui/material";
+import { Checkbox, FormControlLabel, Skeleton, TextField } from "@mui/material";
 import { useSelector } from "react-redux";
 
-import { toCapitalize } from "../../../utils/helper_functions";
 import GLAutocomplete from "../GLAutocomplete/GLAutocomplete";
-import ImageUploader from "../../SharedComponents/ImageUploader";
-import { DropdownDisplayV2, ImageDisplay } from "../../SharedComponents";
+import { DropdownDisplayV2 } from "../../SharedComponents";
 import ImageWizard from "../../SharedComponents/ImageWizard";
+import { determine_shown_fields, formatDate } from "./glFormHelpers";
 
 const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
-
-  const determine_shown_fields = fieldData => {
-    let result = true;
-    if (fieldData.type !== "array_of_objects") {
-      result = false;
-    }
-    if (fieldData.type !== "objects") {
-      result = false;
-    }
-    if (fieldData.permissions) {
-      if (!current_user?.isAdmin && fieldData?.permissions?.includes("admin")) {
-        result = false;
-      }
-      if (current_user?.isAdmin && fieldData?.permissions?.includes("admin")) {
-        result = true;
-      }
-    } else {
-      result = true;
-    }
-    return result;
-  };
 
   return (
     <>
@@ -44,7 +22,7 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
           } else {
             return <Skeleton key={fieldName} variant="rectangular" height={40} style={{ marginTop: 22 }} />;
           }
-        } else if (determine_shown_fields(fieldData)) {
+        } else if (determine_shown_fields(fieldData, current_user)) {
           switch (fieldData.type) {
             case "autocomplete_single":
               return (
@@ -135,6 +113,7 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
                 />
               );
             case "date":
+              const formattedDate = formatDate(fieldState);
               return (
                 <TextField
                   key={fieldName}
@@ -145,7 +124,7 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
                   type={fieldData.type}
                   label={fieldData.label}
                   variant="outlined"
-                  value={fieldState || ""}
+                  value={formattedDate || ""}
                   onChange={e => onChange({ [fieldName]: e.target.value })}
                 />
               );

@@ -11,7 +11,6 @@ const OrderItemsDisplay = ({ order, determine_color, colspan }) => {
     //   <TableCell colSpan={colspan} style={{ color: "white" }}>
     <div className="row">
       {order.orderItems.map((item, index) => {
-        console.log({ item });
         return (
           <div className="row mt-15px" key={index}>
             <div className="column ai-c pos-rel" data-tip={determine_product_name_string(item, true, order.createdAt)}>
