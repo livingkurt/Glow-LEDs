@@ -45,8 +45,7 @@ const order = {
   return_tracking_number: "",
   is_error: false,
   error_at: "",
-  error: { type: Object },
-  deleted: false
+  error: { type: Object }
 };
 
 const orderPage = createSlice({
@@ -60,6 +59,8 @@ const orderPage = createSlice({
     success: false,
     remoteVersionRequirement: 0,
     edit_order_modal: false,
+    hide_label_button: true,
+    loading_label: false,
     limit: 10,
     sort_options: ["Newest", "Artist Name", "Facebook Name", "Instagram Handle", "Sponsor", "Promoter"],
     colors: [
@@ -103,6 +104,12 @@ const orderPage = createSlice({
     },
     close_edit_order_modal: (state, { payload }) => {
       state.edit_order_modal = false;
+    },
+    set_hide_label_button: (state, { payload }) => {
+      state.hide_label_button = payload;
+    },
+    set_loading_label: (state, { payload }) => {
+      state.loading_label = payload;
     },
     setRemoteVersionRequirement: (state, { payload }) => {
       state.remoteVersionRequirement = Date.now();
@@ -173,6 +180,7 @@ const orderPage = createSlice({
     [API.saveOrder.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.message = "Order Saved";
+      state.remoteVersionRequirement = Date.now();
     },
     [API.saveOrder.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
@@ -198,6 +206,7 @@ const orderPage = createSlice({
     [API.deleteOrder.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.message = "Order Deleted";
+      state.remoteVersionRequirement = Date.now();
     },
     [API.deleteOrder.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
@@ -255,6 +264,8 @@ export const {
   open_create_order_modal,
   close_edit_order_modal,
   open_edit_order_modal,
-  setRemoteVersionRequirement
+  setRemoteVersionRequirement,
+  set_hide_label_button,
+  set_loading_label
 } = orderPage.actions;
 export default orderPage.reducer;

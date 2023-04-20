@@ -5,13 +5,17 @@ import { Helmet } from "react-helmet";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { open_create_order_modal, open_edit_order_modal } from "../../slices/orderSlice";
-import { EditOrderModal } from "./components";
+import { EditOrderModal, OrderDropdown } from "./components";
 import * as API from "../../api";
 import { Link } from "react-router-dom";
 import { Button } from "@mui/material";
 import { fullName } from "../UsersPage/usersHelpers";
 import { humanDate } from "../../helpers/dateHelpers";
 import { determine_color, sinceOrdered } from "./ordersPageHelpers";
+import ShippingDisplay from "./components/ShippingDisplay";
+import MetaDataDisplay from "./components/MetaDataDisplay";
+import OrderActionButtons from "./components/OrderActionButtons";
+import { OrderStatusButtons } from "../OrderPage/components";
 
 const OrdersPage = () => {
   const orderPage = useSelector(state => state.orders.orderPage);
@@ -54,6 +58,23 @@ const OrdersPage = () => {
     ],
     [dispatch]
   );
+  const dropdown_column_defs = useMemo(
+    () => [
+      {
+        title: "Shipping",
+        display: row => <ShippingDisplay shipping={row.shipping} />,
+        colSpan: 1
+      },
+      {
+        title: "Promo Code",
+        display: row => <MetaDataDisplay row={row} />,
+        colSpan: 2
+      },
+      { title: "Name", display: row => <OrderActionButtons order={row} />, colSpan: 1 },
+      { title: "Since Ordered", display: row => <OrderStatusButtons order={row} />, colSpan: 2 }
+    ],
+    [dispatch]
+  );
 
   const remoteApi = useCallback(options => API.getOrders(options), []);
 
@@ -72,10 +93,11 @@ const OrdersPage = () => {
         namespaceScope="orders"
         namespace="orderTable"
         columnDefs={column_defs}
-        // enableDropdownRow
-        // rowName={"name"}
-        // dropdownColumnDefs={column_defs}
-        // dropdownComponent
+        enableDropdownRow
+        rowName={"_id"}
+        // dropdownColumnDefs={dropdown_column_defs}
+        // dropdownRows={row => [row]}
+        dropdownComponent={row => <OrderDropdown row={row} determine_color={determine_color} colspan={column_defs.length + 1} />}
         loading={loading}
         enableRowSelect={true}
         titleActions={

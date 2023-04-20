@@ -130,7 +130,8 @@ const GLTableV2 = ({
   remoteVersionRequirementType,
   remoteReorderApi,
   determine_color,
-  enableDragDrop
+  enableDragDrop,
+  dropdownComponent
 }) => {
   const isMounted = useRef(false);
   const dispatch = useDispatch();
@@ -445,15 +446,21 @@ const GLTableV2 = ({
                       determine_color={determine_color}
                     >
                       {enableDropdownRow && expandRow === row[rowName] && (
-                        <GLTableRowDropdown
-                          row={row}
-                          enableRowSelect={enableRowSelect}
-                          determine_color={determine_color}
-                          isItemSelected={isItemSelected}
-                          dropdownRows={dropdownRows}
-                          dropdownColumnDefs={dropdownColumnDefs}
-                          namespace={namespace}
-                        />
+                        <>
+                          {!dropdownComponent ? (
+                            <GLTableRowDropdown
+                              row={row}
+                              enableRowSelect={enableRowSelect}
+                              determine_color={determine_color}
+                              isItemSelected={isItemSelected}
+                              dropdownRows={dropdownRows}
+                              dropdownColumnDefs={dropdownColumnDefs}
+                              namespace={namespace}
+                            />
+                          ) : (
+                            dropdownComponent(row)
+                          )}
+                        </>
                       )}
                     </GLTableRow>
                   ))}
@@ -506,7 +513,8 @@ GLTableV2.defaultProps = {
   containerClassNames: "",
   style: {},
   remoteVersionRequirement: 0,
-  enableDragDrop: false
+  enableDragDrop: false,
+  dropdownComponent: false
 };
 
 GLTableV2.propTypes = {
@@ -561,7 +569,8 @@ GLTableV2.propTypes = {
   loading: PropTypes.bool,
   onRowClick: PropTypes.func,
   rowProps: PropTypes.func,
-  cellProps: PropTypes.func
+  cellProps: PropTypes.func,
+  dropdownComponent: PropTypes.func
 };
 
 export default GLTableV2;
