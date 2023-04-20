@@ -36,7 +36,7 @@ export const getFilteredData = ({ query, sort_options, search_name, normalizeFil
       }
     : {};
 
-  const filter = query?.filters ? { ...normalizeFilters(JSON.parse(query.filters)), ...search } : search;
+  const filter = query?.filters ? { ...normalizeFilters(JSON.parse(query.filters)), ...search, deleted: false } : search;
   console.log({ filter });
   const sort = getSort(sort_options, query?.sort);
   console.log({ sort });
