@@ -24,7 +24,8 @@ const GLTableRow = ({
   cellProps,
   determine_color,
   provided,
-  innerRef
+  innerRef,
+  extendedRowComponent
 }) => {
   const dispatch = useDispatch();
 
@@ -132,6 +133,7 @@ const GLTableRow = ({
           );
         })}
       </TableRow>
+      {extendedRowComponent && extendedRowComponent(row)}
       {children}
     </>
   );
@@ -143,6 +145,7 @@ GLTableRow.defaultProps = {
   rowName: "id",
   enableRowSelect: true,
   enableDropdownRow: false,
+  extendedRowComponent: false,
   rowProps: () => ({}),
   cellProps: () => ({}),
   innerRef: {},
@@ -163,6 +166,7 @@ GLTableRow.propTypes = {
   rowProps: PropTypes.func,
   determine_color: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),
   cellProps: PropTypes.func,
+  extendedRowComponent: PropTypes.func,
   innerRef: PropTypes.object,
   provided: PropTypes.object
 };

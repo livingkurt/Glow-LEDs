@@ -111,7 +111,6 @@ const GLTableV2 = ({
   enableSearch,
   restrictSearchChars,
   searchPlaceholder,
-  dropdownRowsName,
   dropdownRows,
   rowName,
   minItemsToShowFilter,
@@ -131,7 +130,8 @@ const GLTableV2 = ({
   remoteReorderApi,
   determine_color,
   enableDragDrop,
-  dropdownComponent
+  dropdownComponent,
+  extendedRowComponent
 }) => {
   const isMounted = useRef(false);
   const dispatch = useDispatch();
@@ -274,6 +274,8 @@ const GLTableV2 = ({
   const hiddenSelected = numSelected - visibleSelected(visibleRows, selectedRows);
   const rowCount = remoteCount || filteredRows.length;
   const hasFilters = availableFilters && Object.keys(availableFilters).length > 0;
+
+  console.log({ extendedRowComponent: extendedRowComponent(rows[0]) });
   return (
     <div style={{ overflowX: "scroll" }} className="w-100per">
       <Paper className={containerClassNames} style={{ ...style, margin: "1px", minWidth: "1000px" }} data-test="glTable">
@@ -393,17 +395,24 @@ const GLTableV2 = ({
                                 rowProps={rowProps}
                                 cellProps={cellProps}
                                 determine_color={determine_color}
+                                extendedRowComponent={extendedRowComponent}
                               >
                                 {enableDropdownRow && expandRow === row[rowName] && (
-                                  <GLTableRowDropdown
-                                    row={row}
-                                    enableRowSelect={enableRowSelect}
-                                    determine_color={determine_color}
-                                    isItemSelected={isItemSelected}
-                                    dropdownRows={dropdownRows}
-                                    dropdownColumnDefs={dropdownColumnDefs}
-                                    namespace={namespace}
-                                  />
+                                  <>
+                                    {!dropdownComponent ? (
+                                      <GLTableRowDropdown
+                                        row={row}
+                                        enableRowSelect={enableRowSelect}
+                                        determine_color={determine_color}
+                                        isItemSelected={isItemSelected}
+                                        dropdownRows={dropdownRows}
+                                        dropdownColumnDefs={dropdownColumnDefs}
+                                        namespace={namespace}
+                                      />
+                                    ) : (
+                                      dropdownComponent(row)
+                                    )}
+                                  </>
                                 )}
                               </GLTableRow>
                             )}
@@ -497,7 +506,6 @@ GLTableV2.defaultProps = {
   enableSearch: true,
   restrictSearchChars: x => x,
   searchPlaceholder: "Search By Name",
-  dropdownRowsName: "",
   rowName: "",
   minItemsToShowFilter: 10,
   withCheckbox: true,
@@ -514,7 +522,8 @@ GLTableV2.defaultProps = {
   style: {},
   remoteVersionRequirement: 0,
   enableDragDrop: false,
-  dropdownComponent: false
+  dropdownComponent: false,
+  extendedRowComponent: false
 };
 
 GLTableV2.propTypes = {
@@ -555,7 +564,6 @@ GLTableV2.propTypes = {
   restrictSearchChars: PropTypes.func,
   determine_color: PropTypes.func,
   searchPlaceholder: PropTypes.string,
-  dropdownRowsName: PropTypes.string,
   rowName: PropTypes.string,
   minItemsToShowFilter: PropTypes.number,
   withCheckbox: PropTypes.bool,
@@ -570,7 +578,8 @@ GLTableV2.propTypes = {
   onRowClick: PropTypes.func,
   rowProps: PropTypes.func,
   cellProps: PropTypes.func,
-  dropdownComponent: PropTypes.func
+  dropdownComponent: PropTypes.func,
+  extendedRowComponent: PropTypes.func
 };
 
 export default GLTableV2;

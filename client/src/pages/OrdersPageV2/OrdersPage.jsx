@@ -16,6 +16,8 @@ import ShippingDisplay from "./components/ShippingDisplay";
 import MetaDataDisplay from "./components/MetaDataDisplay";
 import OrderActionButtons from "./components/OrderActionButtons";
 import { OrderStatusButtons } from "../OrderPage/components";
+import OrderItemsDisplay from "./components/OrderItemsDisplay";
+import { determine_product_name_string } from "../../utils/react_helper_functions";
 
 const OrdersPage = () => {
   const orderPage = useSelector(state => state.orders.orderPage);
@@ -31,10 +33,26 @@ const OrdersPage = () => {
 
   const column_defs = useMemo(
     () => [
-      { title: "Order #", display: "_id" },
+      // { title: "Order #", display: "_id" },
       { title: "Order Placed", display: row => humanDate(row.createdAt) },
       { title: "Name", display: row => fullName(row.shipping) },
       { title: "Since Ordered", display: row => sinceOrdered(row.createdAt) },
+      {
+        title: "Order Items",
+        display: row => (
+          <div>
+            <div>
+              {row.orderItems.map(item => (
+                <div>{determine_product_name_string(item, true, row.createdAt)}</div>
+              ))}
+            </div>
+            <div>
+              <OrderItemsDisplay order={row} determine_color={determine_color} colspan={column_defs.length + 1} />
+            </div>
+          </div>
+        )
+      },
+
       { title: "Total", display: row => `$${row.totalPrice.toFixed(2)}` },
       {
         title: "Actions",
@@ -49,6 +67,11 @@ const OrdersPage = () => {
             >
               <i className="fas fa-edit" />
             </GLButton>
+            <Link to={`/secure/account/order/${row._id}`}>
+              <GLButton variant="icon" aria-label="view">
+                <i className="fas fa-mountain" />
+              </GLButton>
+            </Link>
             <GLButton variant="icon" onClick={() => dispatch(API.deleteOrder(row.pathname))} aria-label="Delete">
               <i className="fas fa-trash-alt" />
             </GLButton>
@@ -98,6 +121,7 @@ const OrdersPage = () => {
         // dropdownColumnDefs={dropdown_column_defs}
         // dropdownRows={row => [row]}
         dropdownComponent={row => <OrderDropdown row={row} determine_color={determine_color} colspan={column_defs.length + 1} />}
+        extendedRowComponent={row => <OrderItemsDisplay order={row} determine_color={determine_color} colspan={column_defs.length + 1} />}
         loading={loading}
         enableRowSelect={true}
         titleActions={
