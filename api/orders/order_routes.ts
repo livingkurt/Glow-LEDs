@@ -6,6 +6,7 @@ const { isAuth, isAdmin } = require("../../util");
 
 const router = express.Router();
 
+router.route("/filters").get(order_controller.create_filters_orders_c);
 router.route("/").get(order_controller.findAll_orders_c).post(order_controller.create_orders_c);
 router.route("/old").get(order_controller.findAllOld_orders_c);
 router.route("/occurrences").get(order_controller.occurrences_orders_c);

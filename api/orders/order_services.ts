@@ -39,6 +39,18 @@ export default {
       }
     }
   },
+  create_filters_orders_s: async (query: { search: string; sort: string; page: string; limit: string }) => {
+    try {
+      return {
+        order_status: ["isPaid", "isManufactured", "isShipped", "isDelivered", "isPaused"],
+        international: ["Yes", "No"]
+      };
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
   findAllOld_orders_s: async (query: { page: string; search: string; sort: string; limit: string }) => {
     try {
       const page: string = query.page ? query.page : "1";

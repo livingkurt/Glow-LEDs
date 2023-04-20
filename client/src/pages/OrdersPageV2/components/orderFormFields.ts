@@ -1,12 +1,12 @@
 export const orderFormFields = ({
   users,
-  parcels,
+  products,
   setState,
   order,
   onEdit
 }: {
   users: any;
-  parcels: any;
+  products: any;
   setState: any;
   order: any;
   onEdit: any;
@@ -17,7 +17,7 @@ export const orderFormFields = ({
       label: "Users",
       options: users,
       labelProp: "user",
-      getOptionLabel: (option: any) => `${option.shipping.first_name} ${option.shipping.last_name}`
+      getOptionLabel: (option: any) => `${option.first_name} ${option.last_name}`
     },
     orderItems: {
       type: "array_of_objects",
@@ -26,33 +26,244 @@ export const orderFormFields = ({
         name: {
           type: "text",
           label: "Name",
+          labelProp: "name",
           required: true
         },
         qty: {
           type: "number",
           label: "Quantity",
+          labelProp: "qty",
           required: true
         },
         display_image: {
           type: "text",
           label: "Display Image",
+          labelProp: "display_image",
           required: true
         },
         secondary_image: {
           type: "text",
-          label: "Secondary Image"
+          label: "Secondary Image",
+          labelProp: "secondary_image"
         },
         color: {
           type: "text",
-          label: "Color"
+          label: "Color",
+          labelProp: "color"
         },
         secondary_color: {
           type: "text",
-          label: "Secondary Color"
+          label: "Secondary Color",
+          labelProp: "secondary_color"
         },
         color_group_name: {
           type: "text",
-          label: "Color Group Name"
+          label: "Color Group Name",
+          labelProp: "color_group_name"
+        },
+        secondary_color_group_name: {
+          type: "text",
+          label: "Secondary Color Group Name",
+          labelProp: "secondary_color_group_name"
+        },
+        color_code: {
+          type: "text",
+          label: "Color Code",
+          labelProp: "color_code"
+        },
+        secondary_color_code: {
+          type: "text",
+          label: "Secondary Color Code",
+          labelProp: "secondary_color_code"
+        },
+        price: {
+          type: "number",
+          label: "Price",
+          labelProp: "price",
+          required: true
+        },
+        category: {
+          type: "text",
+          label: "Category",
+          labelProp: "category",
+          required: true
+        },
+        subcategory: {
+          type: "text",
+          label: "Subcategory",
+          labelProp: "subcategory"
+        },
+        product_collection: {
+          type: "text",
+          label: "Product Collection",
+          labelProp: "product_collection"
+        },
+        pathname: {
+          type: "text",
+          label: "Pathname",
+          labelProp: "pathname"
+        },
+        size: {
+          type: "text",
+          label: "Size",
+          labelProp: "size"
+        },
+        preorder: {
+          type: "checkbox",
+          label: "Preorder",
+          labelProp: "preorder"
+        },
+        sale_price: {
+          type: "number",
+          label: "Sale Price",
+          labelProp: "sale_price"
+        },
+        sale_start_date: {
+          type: "date",
+          label: "Sale Start Date",
+          labelProp: "sale_start_date"
+        },
+        sale_end_date: {
+          type: "date",
+          label: "Sale End Date",
+          labelProp: "sale_end_date"
+        },
+        package_volume: {
+          type: "number",
+          label: "Package Volume",
+          labelProp: "package_volume"
+        },
+        weight_pounds: {
+          type: "number",
+          label: "Weight (lbs)",
+          labelProp: "weight_pounds"
+        },
+        weight_ounces: {
+          type: "number",
+          label: "Weight (oz)",
+          labelProp: "weight_ounces"
+        },
+        count_in_stock: {
+          type: "number",
+          label: "Count in Stock",
+          labelProp: "count_in_stock"
+        },
+        length: {
+          type: "number",
+          label: "Length",
+          labelProp: "length"
+        },
+        width: {
+          type: "number",
+          label: "Width",
+          labelProp: "width"
+        },
+        height: {
+          type: "number",
+          label: "Height",
+          labelProp: "height"
+        },
+        package_length: {
+          type: "number",
+          label: "Package Length",
+          labelProp: "package_length"
+        },
+        package_width: {
+          type: "number",
+          label: "Package Width",
+          labelProp: "package_width"
+        },
+        package_height: {
+          type: "number",
+          label: "Package Height",
+          labelProp: "package_height"
+        },
+        processing_time: {
+          type: "multi-select",
+          label: "Processing Time",
+          labelProp: "processing_time",
+          options: ["1 day", "2 days", "3 days", "4 days", "5 days", "6 days", "7 days"]
+        },
+        quantity: {
+          type: "number",
+          label: "Quantity",
+          labelProp: "quantity"
+        },
+        finite_stock: {
+          type: "number",
+          label: "Finite Stock",
+          labelProp: "finite_stock"
+        },
+        add_on_price: {
+          type: "number",
+          label: "Add-On Price",
+          labelProp: "add_on_price"
+        },
+        show_add_on: {
+          type: "checkbox",
+          label: "Show Add-On",
+          labelProp: "show_add_on"
+        },
+        wholesale_product: {
+          type: "checkbox",
+          label: "Wholesale Product",
+          labelProp: "wholesale_product"
+        },
+        wholesale_price: {
+          type: "number",
+          label: "Wholesale Price",
+          labelProp: "wholesale_price"
+        },
+        product: {
+          type: "autocomplete_single",
+          label: "Product",
+          options: products.filter((product: any) => product.option === false && product.hidden === false),
+          labelProp: "name",
+          required: true
+        },
+        color_product: {
+          type: "autocomplete_single",
+          label: "Color Product",
+          options: products.filter((product: any) => product.option === true),
+          labelProp: "name"
+        },
+        color_product_name: {
+          type: "text",
+          label: "Color Product Name",
+          labelProp: "color_product_name"
+        },
+        secondary_color_product: {
+          type: "autocomplete_single",
+          label: "Secondary Color Product",
+          options: products.filter((product: any) => product.option === true),
+          labelProp: "name"
+        },
+        secondary_color_product_name: {
+          type: "text",
+          label: "Secondary Color Product Name",
+          labelProp: "secondary_color_product_name"
+        },
+        option_product_name: {
+          type: "text",
+          label: "Option Product Name",
+          labelProp: "option_product_name"
+        },
+        option_product: {
+          type: "autocomplete_single",
+          label: "Option Product",
+          options: products.filter((product: any) => product.option === true),
+          labelProp: "name"
+        },
+        secondary_product_name: {
+          type: "text",
+          label: "Secondary Product Name",
+          labelProp: "secondary_product_name"
+        },
+        secondary_product: {
+          type: "autocomplete_single",
+          label: "Secondary Product",
+          options: products.filter((product: any) => product.option === false && product.hidden === false),
+          labelProp: "name"
         },
         is_printing: {
           type: "checkbox",
@@ -69,14 +280,6 @@ export const orderFormFields = ({
           label: "Is Packaged",
           default: false
         },
-        secondary_color_group_name: {
-          type: "text",
-          label: "Secondary Color Group Name"
-        },
-        secondary_color_code: {
-          type: "text",
-          label: "Secondary Color Code"
-        },
         secondary_group_name: {
           type: "text",
           label: "Secondary Group Name"
@@ -84,88 +287,6 @@ export const orderFormFields = ({
         option_group_name: {
           type: "text",
           label: "Option Group Name"
-        },
-        color_code: {
-          type: "text",
-          label: "Color Code"
-        },
-        price: {
-          type: "number",
-          label: "Price",
-          required: true
-        },
-        add_on_price: {
-          type: "number",
-          label: "Add-on Price"
-        },
-        show_add_on: {
-          type: "checkbox",
-          label: "Show Add-on"
-        },
-        category: {
-          type: "text",
-          label: "Category",
-          required: true
-        },
-        count_in_stock: {
-          type: "number",
-          label: "Count in Stock"
-        },
-        subcategory: {
-          type: "text",
-          label: "Subcategory"
-        },
-        pathname: {
-          type: "text",
-          label: "Pathname"
-        },
-        size: {
-          type: "text",
-          label: "Size"
-        },
-        preorder: {
-          type: "checkbox",
-          label: "Preorder"
-        },
-        sale_price: {
-          type: "number",
-          label: "Sale Price"
-        },
-        package_volume: {
-          type: "number",
-          label: "Package Volume"
-        },
-        weight_pounds: {
-          type: "number",
-          label: "Weight (Pounds)"
-        },
-        weight_ounces: {
-          type: "number",
-          label: "Weight (Ounces)"
-        },
-        length: {
-          type: "number",
-          label: "Length"
-        },
-        width: {
-          type: "number",
-          label: "Width"
-        },
-        height: {
-          type: "number",
-          label: "Height"
-        },
-        package_length: {
-          type: "number",
-          label: "Package Length"
-        },
-        package_width: {
-          type: "number",
-          label: "Package Width"
-        },
-        package_height: {
-          type: "number",
-          label: "Package Height"
         },
         reviewed: {
           type: "checkbox",
@@ -176,48 +297,6 @@ export const orderFormFields = ({
           type: "checkbox",
           label: "Review Email Sent",
           default: false
-        },
-        product: {
-          type: "select",
-          label: "Product",
-          ref: "Product",
-          required: true
-        },
-        color_product: {
-          type: "select",
-          label: "Color Product",
-          ref: "Product"
-        },
-        color_product_name: {
-          type: "text",
-          label: "Color Product Name"
-        },
-        secondary_color_product: {
-          type: "select",
-          label: "Secondary Color Product",
-          ref: "Product"
-        },
-        secondary_color_product_name: {
-          type: "text",
-          label: "Secondary Color Product Name"
-        },
-        option_product_name: {
-          type: "text",
-          label: "Option Product Name"
-        },
-        option_product: {
-          type: "select",
-          label: "Option Product",
-          ref: "Product"
-        },
-        secondary_product_name: {
-          type: "text",
-          label: "Secondary Product Name"
-        },
-        secondary_product: {
-          type: "select",
-          label: "Secondary Product",
-          ref: "Product"
         }
       }
     },

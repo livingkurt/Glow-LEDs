@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import classNames from "classnames";
 import { Grow, Paper } from "@mui/material";
 import { makeStyles } from "@mui/styles";
+import { Popper as MuiPopper } from "@mui/material";
 
 export const useStyles = makeStyles(theme => ({
   paper: {
@@ -62,7 +63,7 @@ const Popper = ({ open, anchorEl, placement, popperClasses, paperClasses, childr
   const classes = useStyles();
   return (
     <div>
-      <Popper
+      <MuiPopper
         open={open}
         anchorEl={anchorEl}
         placement={placement}
@@ -84,7 +85,7 @@ const Popper = ({ open, anchorEl, placement, popperClasses, paperClasses, childr
             <Paper className={classNames(classes.paper, paperClasses)}>{children}</Paper>
           </Grow>
         )}
-      </Popper>
+      </MuiPopper>
     </div>
   );
 };

@@ -1080,7 +1080,7 @@ const Header = props => {
                         Dashboard
                       </GLButton>
                     </Link>
-                    <Link to="/secure/glow/orders?page=1?limit=10">
+                    <Link to="/secure/glow/orders">
                       <GLButton variant="nav" fullWidth className="ta-l">
                         Orders
                       </GLButton>

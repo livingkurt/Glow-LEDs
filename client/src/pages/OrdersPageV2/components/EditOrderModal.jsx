@@ -8,6 +8,7 @@ import { AppBar, Tab, Tabs, Typography } from "@mui/material";
 import GLTabPanel from "../../../shared/GlowLEDsComponents/GLTabPanel/GLTabPanel";
 import { orderFormFields } from "./orderFormFields";
 import { fullName } from "../../UsersPage/usersHelpers";
+import { GLAutocomplete } from "../../../shared/GlowLEDsComponents";
 
 const EditOrderModal = () => {
   const dispatch = useDispatch();
@@ -19,8 +20,6 @@ const EditOrderModal = () => {
   const { users, loading: loading_users } = userPage;
   const productPage = useSelector(state => state.products.productPage);
   const { products, loading: loading_products } = productPage;
-  const categoryPage = useSelector(state => state.categorys.categoryPage);
-  const { categorys, loading: loading_categorys } = categoryPage;
 
   useEffect(() => {
     let clean = true;
@@ -28,7 +27,6 @@ const EditOrderModal = () => {
       dispatch(API.listOrders({ option: true }));
       dispatch(API.listUsers({}));
       dispatch(API.listProducts({}));
-      dispatch(API.listCategorys({}));
     }
     return () => {
       clean = false;
@@ -58,6 +56,46 @@ const EditOrderModal = () => {
 
   //   return formFields;
   // }
+
+  const updateOrderItem = (index, value, order) => {
+    console.log({ order: order.orderItems, value });
+    const orderItems = order.orderItems.map((item, i) => {
+      console.log({ item });
+      if (i === index) {
+        return {
+          ...item,
+          ...value,
+          name: value.name,
+          qty: item.qty || 1,
+          display_image: value?.images[0],
+          price: value.price,
+          category: value.category,
+          pathname: value.pathname,
+          package_volume: value.package_volume,
+          weight_pounds: value.weight_pounds,
+          weight_ounces: value.weight_ounces,
+          package_length: value.package_length,
+          package_width: value.package_width,
+          package_height: value.package_height,
+          product_option: value?.product_options?.find(option => option.default === true),
+          reviewed: value.reviewed,
+          product: { _id: value._id },
+          color_products: value.color_products,
+          secondary_color_products: value.secondary_color_products,
+          option_products: value.option_products,
+          secondary_products: value.secondary_products,
+          color_group_name: value.color_group_name,
+          secondary_color_group_name: value.secondary_color_group_name,
+          option_group_name: value.option_group_name,
+          secondary_group_name: value.secondary_group_name
+        };
+      } else {
+        return item;
+      }
+    });
+    console.log({ orderItems });
+    return { orderItems };
+  };
 
   return (
     <div>
@@ -107,11 +145,26 @@ const EditOrderModal = () => {
         {order?.orderItems?.map((item, index) => {
           return (
             <GLTabPanel value={tabIndex} index={index}>
+              <GLAutocomplete
+                loading={!loading_products}
+                margin="normal"
+                value={item}
+                options={products}
+                optionDisplay={option => (option.name ? option.name : "")}
+                getOptionLabel={option => (option.name ? option.name : "")}
+                getOptionSelected={(option, value) => option._id === value.product}
+                name="product"
+                label="Choose Product"
+                onChange={(e, value) => {
+                  const updatedOrder = updateOrderItem(index, value, order);
+                  dispatch(set_order(updatedOrder));
+                }}
+              />
               <GLForm
                 formData={formFields.orderItems.fields}
                 state={item}
                 onChange={value => {
-                  const orderItems = order.orderItems.map((item, i) => {
+                  const orderItems = value.orderItems.map((item, i) => {
                     if (i === index) {
                       return { ...item, ...value };
                     } else {
@@ -120,7 +173,7 @@ const EditOrderModal = () => {
                   });
                   dispatch(set_order({ orderItems }));
                 }}
-                loading={loading}
+                loading={loading && loading_products}
               />
             </GLTabPanel>
           );

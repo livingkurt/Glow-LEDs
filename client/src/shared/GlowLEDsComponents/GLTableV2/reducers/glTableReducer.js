@@ -21,7 +21,6 @@ import {
   FETCH_TABLE_PAGE_SUCCESS,
   FETCH_TABLE_FILTERS,
   FETCH_TABLE_FILTERS_SUCCESS,
-  REORDER_ROWS,
   REORDER_ROWS_SUCCESS,
   UPDATE_QUERY
 } from "../actions/actionTypes";
@@ -86,6 +85,7 @@ const reducer =
       }
       case `${namespace}/${FETCH_TABLE_FILTERS_SUCCESS}`: {
         const filters = action.payload;
+        console.log({ filters });
 
         return {
           ...state,

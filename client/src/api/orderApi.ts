@@ -29,6 +29,11 @@ export const getOrders = async ({
     });
   } catch (error) {}
 };
+export const getOrderFilters = async () => {
+  const { data } = await axios.get(`/api/orders/filters`);
+  console.log({ data });
+  return data;
+};
 
 export const listOrders = createAsyncThunk("orders/listOrders", async (query: any, thunkApi: any) => {
   try {

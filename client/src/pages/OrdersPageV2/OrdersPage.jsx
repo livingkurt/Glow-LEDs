@@ -12,10 +12,6 @@ import { Button } from "@mui/material";
 import { fullName } from "../UsersPage/usersHelpers";
 import { humanDate } from "../../helpers/dateHelpers";
 import { determine_color, sinceOrdered } from "./ordersPageHelpers";
-import ShippingDisplay from "./components/ShippingDisplay";
-import MetaDataDisplay from "./components/MetaDataDisplay";
-import OrderActionButtons from "./components/OrderActionButtons";
-import { OrderStatusButtons } from "../OrderPage/components";
 import OrderItemsDisplay from "./components/OrderItemsDisplay";
 import { determine_product_name_string } from "../../utils/react_helper_functions";
 
@@ -84,6 +80,7 @@ const OrdersPage = () => {
   );
 
   const remoteApi = useCallback(options => API.getOrders(options), []);
+  const remoteFiltersApi = useCallback(() => API.getOrderFilters(), []);
 
   return (
     <div className="main_container p-20px">
@@ -93,6 +90,7 @@ const OrdersPage = () => {
       <Notification message={message} />
       <GLTableV2
         remoteApi={remoteApi}
+        remoteFiltersApi={remoteFiltersApi}
         remoteVersionRequirement={remoteVersionRequirement}
         remoteVersionRequirementType={"orders/setRemoteVersionRequirement"}
         tableName={"Orders"}

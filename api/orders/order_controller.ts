@@ -14,6 +14,18 @@ export default {
       res.status(500).send({ error, message: "Error Finding Orders" });
     }
   },
+  create_filters_orders_c: async (req: any, res: any) => {
+    const { query } = req;
+    try {
+      const order_filters = await order_services.create_filters_orders_s(query);
+      if (order_filters) {
+        return res.status(200).send(order_filters);
+      }
+      return res.status(404).send({ message: "Orders Not Found" });
+    } catch (error) {
+      res.status(500).send({ error, message: "Error Finding Orders" });
+    }
+  },
   findAllOld_orders_c: async (req: any, res: any) => {
     const { query } = req;
     try {
