@@ -50,7 +50,7 @@ const EditOrderPage = props => {
 
   const history = useHistory();
 
-  const orderPage = useSelector(state => state.orders);
+  const orderPage = useSelector(state => state.orders.orderPage);
   const { order, loading, error } = orderPage;
   const userPage = useSelector(state => state.users.userPage);
   const { current_user, users } = userPage;

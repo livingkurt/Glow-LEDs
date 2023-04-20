@@ -66,7 +66,16 @@ const reducers = {
   expenses: expenseSlice,
   features: featureSlice,
   filaments: filamentSlice,
-  orders: orderSlice,
+  orders: combineReducers({
+    orderPage: orderSlice,
+    orderTable: glTableReducer("orderTable", {
+      sorting: [0, "asc"],
+      searchBy: (row: any, search: string) => {
+        const searchableText = `${row.shipping.first_name} ${row.shipping.last_name} ${row._id}`;
+        return searchableText.toLowerCase().includes(search.toLowerCase());
+      }
+    })
+  }),
   palettes: paletteSlice,
   parcels: parcelSlice,
   paychecks: combineReducers({

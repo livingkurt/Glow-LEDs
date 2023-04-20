@@ -129,7 +129,8 @@ const GLTableV2 = ({
   remoteVersionRequirement,
   remoteVersionRequirementType,
   remoteReorderApi,
-  determine_color
+  determine_color,
+  enableDragDrop
 }) => {
   const isMounted = useRef(false);
   const dispatch = useDispatch();
@@ -346,71 +347,118 @@ const GLTableV2 = ({
             order={sorting[1]}
             orderBy={sorting[0]}
           />
-          <DragDropContext
-            onDragEnd={result => {
-              if (!result.destination) {
-                return;
-              }
-              const reorderedItems = reorder(visibleRows, result.source.index, result.destination.index);
-              dispatch(reorderRows(namespace, { reorderedItems, remoteVersionRequirementType, remoteReorderApi, page, pageSize }));
-            }}
-          >
-            <Droppable droppableId="droppable">
-              {provided => (
-                <TableBody {...provided.droppableProps} ref={provided.innerRef} data-test={`${namespace}-table-body`}>
-                  {loading || isRemoteLoading
-                    ? times(pageSize || 10, index => (
-                        <TableRow key={`${index}-skeleton-row`} data-test="loading-row">
-                          {times(columnDefs.length + 1, i => (
-                            <TableCell key={`${i}-skeleton-cell`}>
-                              <Skeleton animation="wave" variant="rect" height={40} />
-                            </TableCell>
-                          ))}
-                        </TableRow>
-                      ))
-                    : visibleRows &&
-                      visibleRows.map((row, index) => (
-                        <Draggable key={row._id} draggableId={row._id} index={index}>
-                          {provided => (
-                            <GLTableRow
-                              key={row._id}
-                              row={row}
-                              provided={provided}
-                              innerRef={provided.innerRef}
-                              enableRowSelect={enableRowSelect}
-                              isItemSelected={isItemSelected(row._id, selectedRows)}
-                              labelId={`${tableName && tableName.toLowerCase()}-${index}`}
-                              index={index}
-                              columnDefs={columnDefs}
-                              enableDropdownRow={enableDropdownRow}
-                              namespace={namespace}
-                              rowName={rowName}
-                              enableRowClick={enableRowClick}
-                              onRowClick={onRowClick}
-                              rowProps={rowProps}
-                              cellProps={cellProps}
-                              determine_color={determine_color}
-                            >
-                              {enableDropdownRow && expandRow === row[rowName] && (
-                                <GLTableRowDropdown
-                                  row={row}
-                                  enableRowSelect={enableRowSelect}
-                                  determine_color={determine_color}
-                                  isItemSelected={isItemSelected}
-                                  dropdownRows={dropdownRows}
-                                  dropdownColumnDefs={dropdownColumnDefs}
-                                  namespace={namespace}
-                                />
-                              )}
-                            </GLTableRow>
-                          )}
-                        </Draggable>
+          {enableDragDrop ? (
+            <DragDropContext
+              onDragEnd={result => {
+                if (!result.destination) {
+                  return;
+                }
+                const reorderedItems = reorder(visibleRows, result.source.index, result.destination.index);
+                dispatch(reorderRows(namespace, { reorderedItems, remoteVersionRequirementType, remoteReorderApi, page, pageSize }));
+              }}
+            >
+              <Droppable droppableId="droppable">
+                {provided => (
+                  <TableBody {...provided.droppableProps} ref={provided.innerRef} data-test={`${namespace}-table-body`}>
+                    {loading || isRemoteLoading
+                      ? times(pageSize || 10, index => (
+                          <TableRow key={`${index}-skeleton-row`} data-test="loading-row">
+                            {times(columnDefs.length + 1, i => (
+                              <TableCell key={`${i}-skeleton-cell`}>
+                                <Skeleton animation="wave" variant="rect" height={40} />
+                              </TableCell>
+                            ))}
+                          </TableRow>
+                        ))
+                      : visibleRows &&
+                        visibleRows.map((row, index) => (
+                          <Draggable key={row._id} draggableId={row._id} index={index}>
+                            {provided => (
+                              <GLTableRow
+                                key={row._id}
+                                row={row}
+                                provided={provided}
+                                innerRef={provided.innerRef}
+                                enableRowSelect={enableRowSelect}
+                                isItemSelected={isItemSelected(row._id, selectedRows)}
+                                labelId={`${tableName && tableName.toLowerCase()}-${index}`}
+                                index={index}
+                                columnDefs={columnDefs}
+                                enableDropdownRow={enableDropdownRow}
+                                namespace={namespace}
+                                rowName={rowName}
+                                enableRowClick={enableRowClick}
+                                onRowClick={onRowClick}
+                                rowProps={rowProps}
+                                cellProps={cellProps}
+                                determine_color={determine_color}
+                              >
+                                {enableDropdownRow && expandRow === row[rowName] && (
+                                  <GLTableRowDropdown
+                                    row={row}
+                                    enableRowSelect={enableRowSelect}
+                                    determine_color={determine_color}
+                                    isItemSelected={isItemSelected}
+                                    dropdownRows={dropdownRows}
+                                    dropdownColumnDefs={dropdownColumnDefs}
+                                    namespace={namespace}
+                                  />
+                                )}
+                              </GLTableRow>
+                            )}
+                          </Draggable>
+                        ))}
+                    {provided.placeholder}
+                  </TableBody>
+                )}
+              </Droppable>
+            </DragDropContext>
+          ) : (
+            <TableBody data-test={`${namespace}-table-body`}>
+              {loading || isRemoteLoading
+                ? times(pageSize || 10, index => (
+                    <TableRow key={`${index}-skeleton-row`} data-test="loading-row">
+                      {times(columnDefs.length + 1, i => (
+                        <TableCell key={`${i}-skeleton-cell`}>
+                          <Skeleton animation="wave" variant="rect" height={40} />
+                        </TableCell>
                       ))}
-                  {provided.placeholder}
-                </TableBody>
-              )}
-            </Droppable>
-          </DragDropContext>
+                    </TableRow>
+                  ))
+                : visibleRows &&
+                  visibleRows.map((row, index) => (
+                    <GLTableRow
+                      key={row._id}
+                      row={row}
+                      enableRowSelect={enableRowSelect}
+                      isItemSelected={isItemSelected(row._id, selectedRows)}
+                      labelId={`${tableName && tableName.toLowerCase()}-${index}`}
+                      index={index}
+                      columnDefs={columnDefs}
+                      enableDropdownRow={enableDropdownRow}
+                      namespace={namespace}
+                      rowName={rowName}
+                      enableRowClick={enableRowClick}
+                      onRowClick={onRowClick}
+                      rowProps={rowProps}
+                      cellProps={cellProps}
+                      determine_color={determine_color}
+                    >
+                      {enableDropdownRow && expandRow === row[rowName] && (
+                        <GLTableRowDropdown
+                          row={row}
+                          enableRowSelect={enableRowSelect}
+                          determine_color={determine_color}
+                          isItemSelected={isItemSelected}
+                          dropdownRows={dropdownRows}
+                          dropdownColumnDefs={dropdownColumnDefs}
+                          namespace={namespace}
+                        />
+                      )}
+                    </GLTableRow>
+                  ))}
+            </TableBody>
+          )}
         </Table>
         {!loading && visibleRows.length === 0 && <p style={{ textAlign: "center" }}>{noContentMessage}</p>}
         <TablePagination
@@ -457,7 +505,8 @@ GLTableV2.defaultProps = {
   noContentMessage: "No Content",
   containerClassNames: "",
   style: {},
-  remoteVersionRequirement: 0
+  remoteVersionRequirement: 0,
+  enableDragDrop: false
 };
 
 GLTableV2.propTypes = {
@@ -508,6 +557,7 @@ GLTableV2.propTypes = {
   containerClassNames: PropTypes.string,
   style: PropTypes.object,
   enableRowClick: PropTypes.bool,
+  enableDragDrop: PropTypes.bool,
   loading: PropTypes.bool,
   onRowClick: PropTypes.func,
   rowProps: PropTypes.func,

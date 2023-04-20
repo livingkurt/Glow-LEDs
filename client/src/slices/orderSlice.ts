@@ -3,63 +3,63 @@
 import { createSlice } from "@reduxjs/toolkit";
 import * as API from "../api";
 
+const order = {
+  user: {},
+  orderItems: [],
+  messages: [],
+  shipping: {},
+  payment: {},
+  itemsPrice: 0,
+  taxPrice: 0,
+  shippingPrice: 0,
+  totalPrice: 0,
+  refundTotal: 0,
+  guest: false,
+  isPaid: false,
+  paidAt: "",
+  isReassured: false,
+  reassuredAt: "",
+  isManufactured: false,
+  manufacturedAt: "",
+  isPackaged: false,
+  packagedAt: "",
+  isShipped: false,
+  shippedAt: "",
+  isInTransit: false,
+  inTransitAt: "",
+  isOutForDelivery: false,
+  outForDeliveryAt: "",
+  isDelivered: false,
+  deliveredAt: "",
+  isRefunded: false,
+  isPaused: false,
+  pausedAt: "",
+  parcel: {},
+  refundedAt: "",
+  order_note: "",
+  orderion_note: "",
+  tip: 0,
+  promo_code: "",
+  tracking_number: "",
+  tracking_url: "",
+  return_tracking_number: "",
+  is_error: false,
+  error_at: "",
+  error: { type: Object },
+  deleted: false
+};
+
 const orderPage = createSlice({
   name: "orderPage",
   initialState: {
     loading: false,
     loading_payment: false,
     orders: [],
-    order: {
-      user: {},
-      orderItems: [],
-      messages: [],
-      shipping: {},
-      payment: {},
-      itemsPrice: 0,
-      taxPrice: 0,
-      shippingPrice: 0,
-      totalPrice: 0,
-      refundTotal: 0,
-      guest: false,
-      isPaid: false,
-      paidAt: "",
-      isReassured: false,
-      reassuredAt: "",
-      isManufactured: false,
-      manufacturedAt: "",
-      isPackaged: false,
-      packagedAt: "",
-      isShipped: false,
-      shippedAt: "",
-      isInTransit: false,
-      inTransitAt: "",
-      isOutForDelivery: false,
-      outForDeliveryAt: "",
-      isDelivered: false,
-      deliveredAt: "",
-      isRefunded: false,
-      isPaused: false,
-      pausedAt: "",
-      parcel: {},
-      refundedAt: "",
-      order_note: "",
-      production_note: "",
-      tip: 0,
-      promo_code: "",
-      tracking_number: "",
-      tracking_url: "",
-      return_tracking_number: "",
-      is_error: false,
-      error_at: "",
-      error: { type: Object },
-      deleted: false
-    },
+    order: order,
     message: "",
-    // error: {},
-    search: "",
-    sort: "",
-    page: 1,
     success: false,
+    remoteVersionRequirement: 0,
+    edit_order_modal: false,
     limit: 10,
     sort_options: ["Newest", "Artist Name", "Facebook Name", "Instagram Handle", "Sponsor", "Promoter"],
     colors: [
@@ -84,67 +84,28 @@ const orderPage = createSlice({
     set_loading_payment: (state, { payload }) => {
       state.loading_payment = payload;
     },
-    set_search: (state, { payload }) => {
-      state.search = payload;
-    },
-    set_sort: (state, { payload }) => {
-      state.sort = payload;
-    },
-    set_page: (state, { payload }) => {
-      state.page = payload;
-    },
-    set_limit: (state, { payload }) => {
-      state.limit = payload;
-    },
     set_success: (state, { payload }) => {
       state.success = payload;
     },
     clear_order_state: (state, { payload }) => {
-      state.order = {
-        user: {},
-        orderItems: [],
-        messages: [],
-        shipping: {},
-        payment: {},
-        itemsPrice: 0,
-        taxPrice: 0,
-        shippingPrice: 0,
-        totalPrice: 0,
-        refundTotal: 0,
-        guest: false,
-        isPaid: false,
-        paidAt: "",
-        isReassured: false,
-        reassuredAt: "",
-        isManufactured: false,
-        manufacturedAt: "",
-        isPackaged: false,
-        packagedAt: "",
-        isShipped: false,
-        shippedAt: "",
-        isInTransit: false,
-        inTransitAt: "",
-        isOutForDelivery: false,
-        outForDeliveryAt: "",
-        isDelivered: false,
-        deliveredAt: "",
-        isRefunded: false,
-        isPaused: false,
-        pausedAt: "",
-        parcel: {},
-        refundedAt: "",
-        order_note: "",
-        production_note: "",
-        tip: 0,
-        promo_code: "",
-        tracking_number: "",
-        tracking_url: "",
-        return_tracking_number: "",
-        is_error: false,
-        error_at: "",
-        error: { type: Object },
-        deleted: false
-      };
+      state.order = order;
+    },
+    set_edit_order_modal: (state, { payload }) => {
+      state.edit_order_modal = payload;
+    },
+    open_create_order_modal: (state, { payload }) => {
+      state.edit_order_modal = true;
+      state.order = order;
+    },
+    open_edit_order_modal: (state, { payload }) => {
+      state.edit_order_modal = true;
+      state.order = payload;
+    },
+    close_edit_order_modal: (state, { payload }) => {
+      state.edit_order_modal = false;
+    },
+    setRemoteVersionRequirement: (state, { payload }) => {
+      state.remoteVersionRequirement = Date.now();
     }
   },
   extraReducers: {
@@ -285,6 +246,15 @@ const orderPage = createSlice({
   }
 });
 
-export const { set_search, set_sort, set_page, set_limit, set_loading, set_loading_payment, set_order, clear_order_state } =
-  orderPage.actions;
+export const {
+  set_loading,
+  set_loading_payment,
+  set_order,
+  clear_order_state,
+  set_edit_order_modal,
+  open_create_order_modal,
+  close_edit_order_modal,
+  open_edit_order_modal,
+  setRemoteVersionRequirement
+} = orderPage.actions;
 export default orderPage.reducer;

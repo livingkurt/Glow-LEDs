@@ -32,7 +32,7 @@ const ProfilePage = () => {
   const paycheckPage = useSelector(state => state.paychecks.paycheckPage);
   const { message, loading, remoteVersionRequirement } = paycheckPage;
 
-  const orderPage = useSelector(state => state.orders);
+  const orderPage = useSelector(state => state.orders.orderPage);
   const { orders } = orderPage;
 
   useEffect(() => {

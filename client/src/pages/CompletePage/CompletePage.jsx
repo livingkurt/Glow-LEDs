@@ -15,7 +15,7 @@ const CompletePage = props => {
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
 
-  const orderPage = useSelector(state => state.orders);
+  const orderPage = useSelector(state => state.orders.orderPage);
   const { order } = orderPage;
 
   useEffect(() => {

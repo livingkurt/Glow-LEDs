@@ -83,7 +83,8 @@ const TutorialsPage = () => {
         namespace="tutorialTable"
         columnDefs={column_defs}
         loading={loading}
-        enableRowSelect={true}
+        enableRowSelect
+        enableDragDrop
         titleActions={
           <Button color="primary" variant="contained" onClick={() => dispatch(open_create_tutorial_modal())}>
             Create Tutorial

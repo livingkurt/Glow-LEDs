@@ -26,7 +26,7 @@ const PlaceOrderPage = props => {
   const cartPage = useSelector(state => state.carts.cartPage);
   const { my_cart, shipping, payment } = cartPage;
   const { cartItems } = my_cart;
-  const orderPage = useSelector(state => state.orders);
+  const orderPage = useSelector(state => state.orders.orderPage);
   const { order, error: error_order, success_order, success, error_pay } = orderPage;
 
   const userPage = useSelector(state => state.users.userPage);
@@ -896,7 +896,7 @@ export default PlaceOrderPage;
 //   const cartPage = useSelector(state => state.carts.cartPage);
 //   const { my_cart, shipping, payment } = cartPage;
 //   const { cartItems } = my_cart;
-//   const orderPage = useSelector(state => state.orders);
+//   const orderPage = useSelector(state => state.orders.orderPage);
 //   const { order, error: error_order, success_order, success, error_pay } = orderPage;
 
 //   const userPage = useSelector(state => state.users.userPage);

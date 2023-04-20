@@ -15,12 +15,31 @@ import {
   subcategories,
   toCapitalize
 } from "../../util";
+import { getFilteredData } from "../api_helpers";
 const scraper = require("table-scraper");
 
 const today = new Date();
 
 export default {
-  findAll_orders_s: async (query: { page: string; search: string; sort: string; limit: string }) => {
+  findAll_orders_s: async (query: { search: string; sort: string; page: string; limit: string }) => {
+    try {
+      const sort_options = ["createdAt", "shipping.first_name", "totalPrice"];
+      const { filter, sort, limit, page } = getFilteredData({ query, sort_options, search_name: "shipping.first_name" });
+
+      const orders = await order_db.findAll_orders_db(filter, sort, limit, page);
+      const count = await order_db.count_orders_db(filter);
+      return {
+        data: orders,
+        total_count: count,
+        currentPage: parseInt(page)
+      };
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  findAllOld_orders_s: async (query: { page: string; search: string; sort: string; limit: string }) => {
     try {
       const page: string = query.page ? query.page : "1";
       const limit: string = query.limit ? query.limit : "10";

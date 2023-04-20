@@ -18,7 +18,7 @@ const OrderItemD = props => {
   const [refund_amount, set_refund_amount] = useState(0);
   const [refund_reason, set_refund_reason] = useState("");
 
-  const orderPage = useSelector(state => state.orders);
+  const orderPage = useSelector(state => state.orders.orderPage);
   const { order: refund } = orderPage;
 
   const update_refund_state = () => {

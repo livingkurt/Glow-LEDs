@@ -144,7 +144,9 @@ GLTableRow.defaultProps = {
   enableRowSelect: true,
   enableDropdownRow: false,
   rowProps: () => ({}),
-  cellProps: () => ({})
+  cellProps: () => ({}),
+  innerRef: {},
+  provided: {}
 };
 
 GLTableRow.propTypes = {
@@ -160,7 +162,9 @@ GLTableRow.propTypes = {
   onRowClick: PropTypes.func,
   rowProps: PropTypes.func,
   determine_color: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),
-  cellProps: PropTypes.func
+  cellProps: PropTypes.func,
+  innerRef: PropTypes.object,
+  provided: PropTypes.object
 };
 
 export default GLTableRow;

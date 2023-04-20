@@ -36,7 +36,7 @@ const Survey = props => {
 
   const history = useHistory();
 
-  const orderPage = useSelector(state => state.orders);
+  const orderPage = useSelector(state => state.orders.orderPage);
   const { order } = orderPage;
 
   const surveyPage = useSelector(state => state.surveys);

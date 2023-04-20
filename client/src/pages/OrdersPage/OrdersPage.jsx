@@ -24,7 +24,7 @@ const OrdersPage = props => {
   const [loading_email, set_loading_email] = useState("");
 
   const category = props.match.params.category ? props.match.params.category : "";
-  const orderPage = useSelector(state => state.orders);
+  const orderPage = useSelector(state => state.orders.orderPage);
   const { loading, orders, totalPages, message, currentPage, error } = orderPage;
 
   const dispatch = useDispatch();

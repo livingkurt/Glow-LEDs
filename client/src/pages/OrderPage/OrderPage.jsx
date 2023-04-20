@@ -30,7 +30,7 @@ const OrderPage = props => {
   const { my_cart } = cartPage;
   const { cartItems } = my_cart;
 
-  const orderPage = useSelector(state => state.orders);
+  const orderPage = useSelector(state => state.orders.orderPage);
   const { loading, order, error, orders, refund, success: successPay, error: errorPay } = orderPage;
 
   const parcelPage = useSelector(state => state.parcels);

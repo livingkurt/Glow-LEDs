@@ -14,6 +14,18 @@ export default {
       res.status(500).send({ error, message: "Error Finding Orders" });
     }
   },
+  findAllOld_orders_c: async (req: any, res: any) => {
+    const { query } = req;
+    try {
+      const orders = await order_services.findAllOld_orders_s(query);
+      if (orders) {
+        return res.status(200).send(orders);
+      }
+      return res.status(404).send({ message: "Orders Not Found" });
+    } catch (error) {
+      res.status(500).send({ error, message: "Error Finding Orders" });
+    }
+  },
   findMy_orders_c: async (req: any, res: any) => {
     const { params } = req;
     try {

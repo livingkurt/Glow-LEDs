@@ -4,6 +4,32 @@ import axios from "axios";
 import { headers } from "../utils/helpers/user_helpers";
 import { create_query } from "../utils/helper_functions";
 
+export const getOrders = async ({
+  search,
+  sorting,
+  filters,
+  page,
+  pageSize
+}: {
+  search: string;
+  sorting: any;
+  filters: any;
+  page: number;
+  pageSize: number;
+}) => {
+  try {
+    return axios.get(`/api/orders`, {
+      params: {
+        limit: pageSize,
+        page: page,
+        search: search,
+        sort: sorting,
+        filters: filters
+      }
+    });
+  } catch (error) {}
+};
+
 export const listOrders = createAsyncThunk("orders/listOrders", async (query: any, thunkApi: any) => {
   try {
     const {
@@ -11,7 +37,7 @@ export const listOrders = createAsyncThunk("orders/listOrders", async (query: an
         userPage: { current_user }
       }
     } = thunkApi.getState();
-    const { data } = await axios.get(`/api/orders?${create_query(query)}`, headers(current_user));
+    const { data } = await axios.get(`/api/orders/old?${create_query(query)}`, headers(current_user));
     return data;
   } catch (error) {}
 });

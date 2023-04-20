@@ -103,7 +103,8 @@ const ProductsPage = () => {
         dropdownColumnDefs={column_defs}
         dropdownRows={row => [row.color_products, row.secondary_color_products, row.option_products, row.secondary_products].flat()}
         loading={loading}
-        enableRowSelect={true}
+        enableRowSelect
+        enableDragDrop
         titleActions={
           <Button color="primary" variant="contained" onClick={() => dispatch(open_create_product_modal())}>
             Create Product
