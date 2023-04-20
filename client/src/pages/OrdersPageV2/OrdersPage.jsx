@@ -69,7 +69,7 @@ const OrdersPage = () => {
                 <i className="fas fa-mountain" />
               </GLButton>
             </Link>
-            <GLButton variant="icon" onClick={() => dispatch(API.deleteOrder(row.pathname))} aria-label="Delete">
+            <GLButton variant="icon" onClick={() => dispatch(API.deleteOrder(row._id))} aria-label="Delete">
               <i className="fas fa-trash-alt" />
             </GLButton>
           </div>
