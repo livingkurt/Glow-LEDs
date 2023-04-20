@@ -17,7 +17,7 @@ import sortBy from "lodash/sortBy";
 import { makeStyles } from "@mui/styles";
 import { applyFilter, enableClearAll, filterLabelsMap, sortItem } from "../glTableHelpers";
 import { applyFilterSearch, removeAllFilters, removeFilter, toggleFilter, updateFilterDisplay } from "../actions/actions";
-import Popper from "../../GLPopper/GLPopper";
+import GLPopper from "../../GLPopper/GLPopper";
 import { TextField } from "@mui/material";
 import { toCapitalize } from "../../../../utils/helper_functions";
 
@@ -123,7 +123,7 @@ const GLTableFilterDropdown = ({
           Filter By
         </Button>
 
-        <Popper
+        <GLPopper
           open={menuOpen}
           anchorEl={anchorRef.current}
           placement="bottom-start"
@@ -177,9 +177,9 @@ const GLTableFilterDropdown = ({
               </Button>
             </div>
           </MenuList>
-        </Popper>
+        </GLPopper>
         <div>
-          <Popper
+          <GLPopper
             open={Boolean(menuSelection)}
             anchorEl={subAnchorRef.current[menuSelection]}
             placement="right-start"
@@ -258,7 +258,7 @@ const GLTableFilterDropdown = ({
                 </Button>
               </div>
             </MenuList>
-          </Popper>
+          </GLPopper>
         </div>
       </div>
     </ClickAwayListener>

@@ -16,15 +16,22 @@ import {
   toCapitalize
 } from "../../util";
 import { getFilteredData } from "../api_helpers";
+import { normalizeOrderFilters } from "./order_interactors";
 const scraper = require("table-scraper");
 
 const today = new Date();
 
 export default {
-  findAll_orders_s: async (query: { search: string; sort: string; page: string; limit: string }) => {
+  findAll_orders_s: async (query: { search: string; sort: string; page: string; limit: string; filters: any }) => {
     try {
-      const sort_options = ["createdAt", "shipping.first_name", "totalPrice"];
-      const { filter, sort, limit, page } = getFilteredData({ query, sort_options, search_name: "shipping.first_name" });
+      console.log({ query });
+      const sort_options = ["createdAt", "user.first_name", "totalPrice"];
+      const { filter, sort, limit, page } = getFilteredData({
+        query,
+        sort_options,
+        search_name: "shipping.first_name",
+        normalizeFilters: normalizeOrderFilters
+      });
 
       const orders = await order_db.findAll_orders_db(filter, sort, limit, page);
       const count = await order_db.count_orders_db(filter);
@@ -43,7 +50,7 @@ export default {
     try {
       return {
         order_status: ["isPaid", "isManufactured", "isShipped", "isDelivered", "isPaused"],
-        international: ["Yes", "No"]
+        shipping: ["international"]
       };
     } catch (error) {
       if (error instanceof Error) {
