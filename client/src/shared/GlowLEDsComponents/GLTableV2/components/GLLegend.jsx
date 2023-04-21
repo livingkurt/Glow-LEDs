@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import { makeStyles } from "@mui/styles";
 import GLPopper from "../../GLPopper/GLPopper";
-import { Paper, List, ListItem, ListItemText, IconButton, Typography } from "@mui/material";
+import { Paper, List, ListItem, ListItemText, IconButton, Typography, Tooltip } from "@mui/material";
 import { Info } from "@mui/icons-material";
 const useStyles = makeStyles(theme => ({
   root: {
@@ -49,18 +49,20 @@ const GLLegend = ({ colors }) => {
       }}
     >
       <div>
-        <IconButton
-          id="matrixMenuButton"
-          color="secondary"
-          ref={anchorRef}
-          variant="outlined"
-          className={classes.filterButton}
-          onClick={() => {
-            setOpen(!open);
-          }}
-        >
-          <Info />
-        </IconButton>
+        <Tooltip title="Color Legend">
+          <IconButton
+            id="matrixMenuButton"
+            color="secondary"
+            ref={anchorRef}
+            variant="outlined"
+            className={classes.filterButton}
+            onClick={() => {
+              setOpen(!open);
+            }}
+          >
+            <Info />
+          </IconButton>
+        </Tooltip>
 
         <GLPopper
           open={open}
