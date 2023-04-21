@@ -6,6 +6,7 @@ import { makeStyles } from "@mui/styles";
 import { useDispatch } from "react-redux";
 import { removeFilter, updateFilterDisplay } from "../actions/actions";
 import { Button } from "@mui/material";
+import { humanize } from "../../../../utils/helper_functions";
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -78,7 +79,7 @@ const GLTableFilterChips = ({ filters, menuOpen, namespace, maxChips, onChangeFu
                   //   color: "white"
                   // }
                 }}
-                label={chip.name}
+                label={humanize(chip.name)}
                 onClick={() => handleClick(chip)}
                 onDelete={() => {
                   dispatch(removeFilter(namespace, chip.key));

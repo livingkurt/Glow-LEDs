@@ -19,7 +19,7 @@ import { applyFilter, enableClearAll, filterLabelsMap, sortItem } from "../glTab
 import { applyFilterSearch, removeAllFilters, removeFilter, toggleFilter, updateFilterDisplay } from "../actions/actions";
 import GLPopper from "../../GLPopper/GLPopper";
 import { TextField } from "@mui/material";
-import { toCapitalize } from "../../../../utils/helper_functions";
+import { humanize, toCapitalize } from "../../../../utils/helper_functions";
 
 export const useStyles = makeStyles(() => ({
   mainMenu: {
@@ -226,7 +226,7 @@ const GLTableFilterDropdown = ({
                       dense
                     >
                       {withCheckbox && <Checkbox checked={filters[menuSelection]?.includes(item) || false} />}
-                      {typeof item === "string" ? toCapitalize(item) : item}
+                      {typeof item === "string" ? humanize(item) : item}
                     </MenuItem>
                   ))}
                 {Object.keys(booleanFilters)?.includes(menuSelection) && (
@@ -235,7 +235,7 @@ const GLTableFilterDropdown = ({
                       selected={first(filters[menuSelection]) === 1}
                       onClick={() => dispatch(toggleFilter(namespace, { row: menuSelection, item: 1 }))}
                     />
-                    {booleanFilters[menuSelection].label}
+                    {humanize(booleanFilters[menuSelection].label)}
                   </div>
                 )}
               </div>
