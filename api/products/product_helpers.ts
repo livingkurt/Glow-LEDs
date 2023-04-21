@@ -104,3 +104,45 @@ export const dimminish_batteries_stock = async (product: any, item: any) => {
 //     })
 //   );
 // };
+
+export const normalizeProductFilters = (input: any) => {
+  console.log({ input });
+  const output: any = {};
+  Object.keys(input).forEach(key => {
+    switch (key) {
+      case "category":
+        for (const category of input.category) {
+          output["category"] = category;
+        }
+        break;
+      case "subcategory":
+        for (const subcategory of input.subcategory) {
+          output["subcategory"] = subcategory;
+        }
+        break;
+      case "hidden":
+        for (const hidden of input.hidden) {
+          if (hidden === "show") {
+            output["hidden"] = true;
+          } else {
+            output["hidden"] = false;
+          }
+        }
+        break;
+      case "options":
+        for (const options of input.options) {
+          if (options === "show") {
+            output["option"] = true;
+          } else {
+            output["option"] = false;
+          }
+        }
+        break;
+
+      default:
+        break;
+    }
+  });
+  console.log({ output });
+  return output;
+};

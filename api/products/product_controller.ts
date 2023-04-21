@@ -13,6 +13,18 @@ export default {
       res.status(500).send({ error, message: "Error Finding Products" });
     }
   },
+  create_filters_products_c: async (req: any, res: any) => {
+    const { query } = req;
+    try {
+      const product_filters = await product_services.create_filters_products_s(query);
+      if (product_filters) {
+        return res.status(200).send(product_filters);
+      }
+      return res.status(404).send({ message: "Orders Not Found" });
+    } catch (error) {
+      res.status(500).send({ error, message: "Error Finding Orders" });
+    }
+  },
   findAllGrid_products_c: async (req: any, res: any) => {
     const { query } = req;
     try {

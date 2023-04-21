@@ -44,15 +44,15 @@ export const fetchTablePage =
   };
 
 export const fetchTableFilters =
-  (namespace, { remoteFiltersApi }) =>
+  (namespace, { remoteFiltersApi, defaultFilters }) =>
   dispatch => {
     dispatch({
       type: `${namespace}/${FETCH_TABLE_FILTERS}`
     });
-    return remoteFiltersApi().then(response => {
+    return remoteFiltersApi().then(availableFilters => {
       dispatch({
         type: `${namespace}/${FETCH_TABLE_FILTERS_SUCCESS}`,
-        payload: response
+        payload: { availableFilters, defaultFilters }
       });
     });
   };

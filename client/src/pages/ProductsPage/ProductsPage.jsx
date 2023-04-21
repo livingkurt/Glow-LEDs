@@ -9,7 +9,7 @@ import { EditProductModal } from "./components";
 import * as API from "../../api";
 import { Link } from "react-router-dom";
 import { Button } from "@mui/material";
-import { determine_color } from "./productsPageHelpers";
+import { determine_color, productColors } from "./productsPageHelpers";
 
 const ProductsPage = () => {
   const productPage = useSelector(state => state.products.productPage);
@@ -76,11 +76,10 @@ const ProductsPage = () => {
     [dispatch]
   );
 
-  const remoteApi = useCallback(
-    options => API.getProducts({ ...options, filters: { ...options.filers, option: false, hidden: false } }),
-    []
-  );
+  const remoteApi = useCallback(options => API.getProducts(options), []);
   const remoteReorderApi = useCallback(options => API.reorderProducts(options), []);
+  const remoteFiltersApi = useCallback(() => API.getProductFilters(), []);
+  const defaultFilters = { hidden: ["hide_hidden"], options: ["hide_options"] };
 
   return (
     <div className="main_container p-20px">
@@ -91,9 +90,12 @@ const ProductsPage = () => {
       <GLTableV2
         remoteApi={remoteApi}
         remoteReorderApi={remoteReorderApi}
+        remoteFiltersApi={remoteFiltersApi}
+        defaultFilters={defaultFilters}
         remoteVersionRequirement={remoteVersionRequirement}
         remoteVersionRequirementType={"products/setRemoteVersionRequirement"}
         tableName={"Products"}
+        colors={productColors}
         determine_color={determine_color}
         namespaceScope="products"
         namespace="productTable"

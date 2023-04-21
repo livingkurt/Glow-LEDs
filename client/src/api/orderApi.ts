@@ -31,7 +31,6 @@ export const getOrders = async ({
 };
 export const getOrderFilters = async () => {
   const { data } = await axios.get(`/api/orders/filters`);
-  console.log({ data });
   return data;
 };
 

@@ -133,7 +133,8 @@ const GLTableV2 = ({
   enableDragDrop,
   dropdownComponent,
   extendedRowComponent,
-  colors
+  colors,
+  defaultFilters
 }) => {
   const isMounted = useRef(false);
   const dispatch = useDispatch();
@@ -268,7 +269,7 @@ const GLTableV2 = ({
 
   useEffect(() => {
     if (remoteFiltersApi) {
-      dispatch(fetchTableFilters(namespace, { remoteFiltersApi }));
+      dispatch(fetchTableFilters(namespace, { remoteFiltersApi, defaultFilters }));
     }
   }, [dispatch, namespace, remoteFiltersApi]);
 
@@ -328,7 +329,7 @@ const GLTableV2 = ({
             {!hasFilters && titleActions && <div />}
             <div className={glTable.searchContainer}>
               <div className="ai-c">
-                {colors && <GLLegend colors={colors} />}
+                {colors.length > 0 && <GLLegend colors={colors} />}
                 {enableSearch && (
                   <GLTableSearch
                     autoFocus

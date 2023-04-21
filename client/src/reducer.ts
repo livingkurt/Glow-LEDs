@@ -101,6 +101,7 @@ const reducers = {
     productPage: productSlice,
     productTable: glTableReducer("productTable", {
       sorting: [3, "desc"],
+      nonTagFilters: ["category", "subcategory"],
       searchBy: (row: any, search: string) => {
         const searchableText = row.name;
         return searchableText.toLowerCase().includes(search.toLowerCase());

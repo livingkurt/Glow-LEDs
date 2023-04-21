@@ -4,6 +4,7 @@ const { isAuth, isAdmin } = require("../../util");
 
 const router = express.Router();
 router.route("/grid").get(product_controller.findAllGrid_products_c);
+router.route("/filters").get(product_controller.create_filters_products_c);
 
 router.route("/reviews/:pathname").post(product_controller.reviews_products_c);
 

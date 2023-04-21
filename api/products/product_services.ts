@@ -1,5 +1,5 @@
 import { product_db } from "../products";
-import { dimminish_batteries_stock, dimminish_refresh_stock, dimminish_supremes_stock } from "./product_helpers";
+import { dimminish_batteries_stock, dimminish_refresh_stock, dimminish_supremes_stock, normalizeProductFilters } from "./product_helpers";
 import { categories, determine_filter, snake_case, subcategories } from "../../util";
 import { getFilteredData } from "../api_helpers";
 
@@ -9,7 +9,12 @@ export default {
   findAll_products_s: async (query: { search: string; sort: string; page: string; limit: string }) => {
     try {
       const sort_options = ["name", "hidden", "category", "order", "price"];
-      const { filter, sort, limit, page } = getFilteredData({ query, sort_options, search_name: "name" });
+      const { filter, sort, limit, page } = getFilteredData({
+        query,
+        sort_options,
+        search_name: "name",
+        normalizeFilters: normalizeProductFilters
+      });
 
       const products = await product_db.findAll_products_db(filter, sort, limit, page);
       const count = await product_db.count_products_db(filter);
@@ -17,6 +22,58 @@ export default {
         data: products,
         total_count: count,
         currentPage: parseInt(page)
+      };
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  create_filters_products_s: async (query: { search: string; sort: string; page: string; limit: string }) => {
+    try {
+      return {
+        category: ["gloves", "batteries", "decals", "diffuser_caps", "diffusers", "exo_diffusers", "glowstringz", "glowskinz"],
+        subcategory: [
+          "singles",
+          "refresh",
+          "battery_storage",
+          "batteries",
+          "stickers",
+          "clips",
+          "universal",
+          "batman",
+          "outline",
+          "opyn",
+          "clozd",
+          "patterns",
+          "abstract",
+          "shapes",
+          "diffuser_adapters",
+          "geometric",
+          "starter_kit",
+          "sacred_geometry",
+          "imperfect",
+          "domes",
+          "closed_hole",
+          "fisheye",
+          "open_hole",
+          "polygons",
+          "cylinders",
+          "polyhedrons",
+          "gift_card",
+          "nova",
+          "classics",
+          "novaskinz",
+          "alt_novaskinz",
+          "symbols",
+          "emoji",
+          "custom",
+          "colors",
+          "sizes",
+          "secondary_colors"
+        ],
+        hidden: ["show_hidden", "hide_hidden"],
+        options: ["show_options", "hide_options"]
       };
     } catch (error) {
       if (error instanceof Error) {

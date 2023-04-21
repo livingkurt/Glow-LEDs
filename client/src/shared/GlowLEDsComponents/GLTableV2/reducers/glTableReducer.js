@@ -84,12 +84,12 @@ const reducer =
         };
       }
       case `${namespace}/${FETCH_TABLE_FILTERS_SUCCESS}`: {
-        const filters = action.payload;
-        console.log({ filters });
+        const { availableFilters, defaultFilters } = action.payload;
 
         return {
           ...state,
-          availableFilters: filters,
+          availableFilters: availableFilters,
+          filters: defaultFilters,
           remote: {
             ...state.remote,
             isLoadingFilters: false
