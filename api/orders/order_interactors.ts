@@ -1,10 +1,5 @@
-// export const normalizeOrderFilters = (input: any) => {
-//   const output: any = {};
-//   for (const status of input.order_status) {
-//     output[status] = true;
-//   }
-//   return output;
-// };
+import { isEmail } from "../../util";
+
 export const normalizeOrderFilters = (input: any) => {
   const output: any = {};
   Object.keys(input).forEach(key => {
@@ -79,22 +74,9 @@ export const normalizeOrderFilters = (input: any) => {
           output[`shipping.${shipping}`] = true;
         }
         break;
-      case "hidden":
-        for (const hidden of input.hidden) {
-          if (hidden === "show") {
-            output["hidden"] = true;
-          } else {
-            output["hidden"] = false;
-          }
-        }
-        break;
-      case "options":
-        for (const options of input.options) {
-          if (options === "show") {
-            output["option"] = true;
-          } else {
-            output["option"] = false;
-          }
+      case "isPaid":
+        if (!input.isPaid.includes(1)) {
+          output["isPaid"] = false;
         }
         break;
 
@@ -103,4 +85,44 @@ export const normalizeOrderFilters = (input: any) => {
     }
   });
   return output;
+};
+
+export const normalizeOrderSearch = (query: any) => {
+  let search = {};
+  if (query.search && query.search.match(/^[0-9a-fA-F]{24}$/)) {
+    search = query.search ? { _id: query.search } : {};
+  } else if (query.search && isEmail(query.search)) {
+    search = query.search
+      ? {
+          $expr: {
+            $regexMatch: {
+              input: "$shipping.email",
+              regex: query.search,
+              options: "i"
+            }
+          }
+        }
+      : {};
+  } else if (query.search && query.search.substring(0, 1) === "#") {
+    search = query.search
+      ? {
+          promo_code: query.search.slice(1, query.search.length).toLowerCase()
+        }
+      : {};
+  } else {
+    search = query.search
+      ? {
+          $expr: {
+            $regexMatch: {
+              input: {
+                $concat: ["$shipping.first_name", " ", "$shipping.last_name"]
+              },
+              regex: query.search,
+              options: "i"
+            }
+          }
+        }
+      : {};
+  }
+  return search;
 };

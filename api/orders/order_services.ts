@@ -16,7 +16,7 @@ import {
   toCapitalize
 } from "../../util";
 import { getFilteredData } from "../api_helpers";
-import { normalizeOrderFilters } from "./order_interactors";
+import { normalizeOrderFilters, normalizeOrderSearch } from "./order_interactors";
 const scraper = require("table-scraper");
 
 const today = new Date();
@@ -30,8 +30,10 @@ export default {
         query,
         sort_options,
         search_name: "shipping.first_name",
-        normalizeFilters: normalizeOrderFilters
+        normalizeFilters: normalizeOrderFilters,
+        normalizeSearch: normalizeOrderSearch
       });
+      console.log({ filter, sort, limit, page });
 
       const orders = await order_db.findAll_orders_db(filter, sort, limit, page);
       const count = await order_db.count_orders_db(filter);
@@ -48,10 +50,17 @@ export default {
   },
   create_filters_orders_s: async (query: { search: string; sort: string; page: string; limit: string }) => {
     try {
-      return {
+      const availableFilters = {
         order_status: ["isPaid", "isManufactured", "isShipped", "isInTransit", "isOutForDelivery", "isDelivered", "isPaused", "isRefunded"],
-        shipping: ["international"]
+        shipping: ["international"],
+        isPaid: []
       };
+      const booleanFilters = {
+        isPaid: {
+          label: "isPaid"
+        }
+      };
+      return { availableFilters, booleanFilters };
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

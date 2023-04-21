@@ -145,6 +145,19 @@ export const normalizeProductFilters = (input: any) => {
   return output;
 };
 
+export const normalizeProductSearch = (query: any) => {
+  const search = query.search
+    ? {
+        name: {
+          $regex: query.search.toLowerCase(),
+          $options: "i"
+        }
+      }
+    : {};
+
+  return search;
+};
+
 // export const normalizeProductFilters = (input: any) => {
 //   console.log({ input });
 //   const output: any = {};

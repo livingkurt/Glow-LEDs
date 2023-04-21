@@ -1,5 +1,11 @@
 import { product_db } from "../products";
-import { dimminish_batteries_stock, dimminish_refresh_stock, dimminish_supremes_stock, normalizeProductFilters } from "./product_helpers";
+import {
+  dimminish_batteries_stock,
+  dimminish_refresh_stock,
+  dimminish_supremes_stock,
+  normalizeProductFilters,
+  normalizeProductSearch
+} from "./product_helpers";
 import { categories, determine_filter, snake_case, subcategories } from "../../util";
 import { getFilteredData } from "../api_helpers";
 
@@ -13,7 +19,8 @@ export default {
         query,
         sort_options,
         search_name: "name",
-        normalizeFilters: normalizeProductFilters
+        normalizeFilters: normalizeProductFilters,
+        normalizeSearch: normalizeProductSearch
       });
 
       const products = await product_db.findAll_products_db(filter, sort, limit, page);

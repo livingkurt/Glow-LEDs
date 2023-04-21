@@ -6,7 +6,7 @@ export const getSort = (sort_options: string[], querySort: string[]): any => {
   return sort;
 };
 
-export const getFilteredData = ({ query, sort_options, search_name, normalizeFilters }: any) => {
+export const getFilteredData = ({ query, sort_options, search_name, normalizeFilters, normalizeSearch }: any) => {
   const page = query.page || "1";
   const limit = query.limit || "0";
   const search = query.search
@@ -18,7 +18,8 @@ export const getFilteredData = ({ query, sort_options, search_name, normalizeFil
       }
     : {};
 
-  const filter = query?.filters ? { deleted: false, ...normalizeFilters(JSON.parse(query.filters)), ...search } : search;
+  const filter = query?.filters ? { deleted: false, ...normalizeFilters(JSON.parse(query.filters)), ...normalizeSearch(query) } : search;
+  console.log({ filter });
   const sort = getSort(sort_options, query?.sort);
   return { filter, sort, limit, page };
 };
