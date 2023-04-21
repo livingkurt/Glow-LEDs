@@ -24,7 +24,7 @@ import {
   REORDER_ROWS_SUCCESS,
   UPDATE_QUERY
 } from "../actions/actionTypes";
-import { calcVisibleRows } from "../glTableHelpers";
+import { calcVisibleRows, determineFilters } from "../glTableHelpers";
 import defaultState from "./defaultState";
 
 const reducer =
@@ -84,12 +84,13 @@ const reducer =
         };
       }
       case `${namespace}/${FETCH_TABLE_FILTERS_SUCCESS}`: {
-        const { availableFilters, defaultFilters } = action.payload;
+        const { availableFilters, booleanFilters, defaultFilters } = action.payload;
 
         return {
           ...state,
           availableFilters: availableFilters,
-          filters: { ...state.filters, defaultFilters },
+          booleanFilters: booleanFilters,
+          filters: { ...state.filters, ...defaultFilters },
           remote: {
             ...state.remote,
             isLoadingFilters: false

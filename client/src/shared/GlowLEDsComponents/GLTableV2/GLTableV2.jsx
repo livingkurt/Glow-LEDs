@@ -18,16 +18,7 @@ import {
 import glTable from "./glTable.module.scss";
 import "./glTable.scss";
 import { isItemSelected, reorder, updateTableStateFromUrl, updateUrlWithTableState, visibleSelected } from "./glTableHelpers";
-import {
-  addRows,
-  updatePage,
-  updatePageSize,
-  fetchTablePage,
-  fetchTableFilters,
-  reorderRows,
-  applySearch,
-  updateQuery
-} from "./actions/actions";
+import { addRows, updatePage, updatePageSize, fetchTablePage, fetchTableFilters, reorderRows, updateQuery } from "./actions/actions";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { useHistory, useLocation } from "react-router-dom";
 import GLLegend from "./components/GLLegend";
@@ -163,6 +154,7 @@ const GLTableV2 = ({
     menuSelection,
     availableFilters,
     filterSearch,
+    booleanFilters,
     remote: { remoteCount, isLoadingFilters, isRemoteLoading, latestRemoteVersionTimestamp }
   } = tableState;
 
@@ -271,6 +263,7 @@ const GLTableV2 = ({
     if (remoteFiltersApi) {
       dispatch(fetchTableFilters(namespace, { remoteFiltersApi, defaultFilters }));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, namespace, remoteFiltersApi]);
 
   const numSelected = selectedRows.length;
@@ -306,6 +299,7 @@ const GLTableV2 = ({
                     minFilterLength={minFilterLength}
                     filterSearch={filterSearch}
                     isLoading={isLoadingFilters}
+                    booleanFilters={booleanFilters}
                   />
                   <GLTableFilterChips namespace={namespace} filters={filters} menuOpen={menuOpen} maxChips={3} />
                 </div>

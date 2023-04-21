@@ -31,7 +31,7 @@ export default {
   },
   create_filters_products_s: async (query: { search: string; sort: string; page: string; limit: string }) => {
     try {
-      return {
+      const availableFilters = {
         category: ["gloves", "batteries", "decals", "diffuser_caps", "diffusers", "exo_diffusers", "glowstringz", "glowskinz"],
         subcategory: [
           "singles",
@@ -72,9 +72,22 @@ export default {
           "sizes",
           "secondary_colors"
         ],
-        hidden: ["show_hidden", "hide_hidden"],
-        options: ["show_options", "hide_options"]
+        hidden: [],
+        options: []
       };
+      const booleanFilters = {
+        hidden: {
+          label: "Hidden",
+          show_label: "Show Hidden",
+          hide_label: "Hide Hidden"
+        },
+        options: {
+          label: "Options",
+          show_label: "Show Options",
+          hide_label: "Hide Options"
+        }
+      };
+      return { availableFilters, booleanFilters };
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

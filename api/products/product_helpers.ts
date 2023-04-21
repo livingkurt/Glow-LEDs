@@ -121,21 +121,17 @@ export const normalizeProductFilters = (input: any) => {
         }
         break;
       case "hidden":
-        for (const hidden of input.hidden) {
-          if (hidden === "show") {
-            output["hidden"] = true;
-          } else {
-            output["hidden"] = false;
-          }
+        if (input.hidden.includes("show_hidden")) {
+          output["hidden"] = true;
+        } else {
+          output["hidden"] = false;
         }
         break;
       case "options":
-        for (const options of input.options) {
-          if (options === "show") {
-            output["option"] = true;
-          } else {
-            output["option"] = false;
-          }
+        if (input.options.includes("show_options")) {
+          output["option"] = true;
+        } else {
+          output["option"] = false;
         }
         break;
 
@@ -146,3 +142,11 @@ export const normalizeProductFilters = (input: any) => {
   console.log({ output });
   return output;
 };
+
+// for (const options of input.options) {
+//   if (options === "show") {
+//     output["option"] = true;
+//   } else {
+//     output["option"] = false;
+//   }
+// }

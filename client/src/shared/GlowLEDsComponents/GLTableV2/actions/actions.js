@@ -49,10 +49,10 @@ export const fetchTableFilters =
     dispatch({
       type: `${namespace}/${FETCH_TABLE_FILTERS}`
     });
-    return remoteFiltersApi().then(availableFilters => {
+    return remoteFiltersApi().then(({ availableFilters, booleanFilters }) => {
       dispatch({
         type: `${namespace}/${FETCH_TABLE_FILTERS_SUCCESS}`,
-        payload: { availableFilters, defaultFilters }
+        payload: { availableFilters, booleanFilters, defaultFilters }
       });
     });
   };

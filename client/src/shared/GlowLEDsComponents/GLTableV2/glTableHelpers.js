@@ -236,3 +236,20 @@ export const updateUrlWithTableState = ({ location, history, search, filters, pa
     search: `?${queryParams.toString()}`
   });
 };
+
+export const determineFilters = data => {
+  const availableFilters = {};
+  const booleanFilters = {};
+
+  for (const key in data) {
+    const value = data[key];
+
+    if (Array.isArray(value)) {
+      availableFilters[key] = value;
+    } else {
+      booleanFilters[key] = value;
+    }
+  }
+
+  return { availableFilters, booleanFilters };
+};

@@ -17,8 +17,6 @@ export const getProducts = async ({
   page: number;
   pageSize: number;
 }) => {
-  console.log({ filters });
-  // filters: { ...options.filers, hidden: [...options?.filters?.hidden, "hide"], options: [...options?.filters?.options, "hide"] }
   try {
     return axios.get(`/api/products`, {
       params: {
@@ -27,7 +25,6 @@ export const getProducts = async ({
         search: search,
         sort: sorting,
         filters
-        // filters: { ...filters, hidden: ["hide"], options: ["hide"] }
       }
     });
   } catch (error) {}
