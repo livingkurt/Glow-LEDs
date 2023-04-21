@@ -59,7 +59,7 @@ export const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Popper = ({ open, anchorEl, placement, popperClasses, paperClasses, children, boundariesElement, flip, transition }) => {
+const GLPopper = ({ open, anchorEl, placement, popperClasses, paperClasses, children, boundariesElement, flip, transition }) => {
   const classes = useStyles();
   return (
     <div>
@@ -90,7 +90,7 @@ const Popper = ({ open, anchorEl, placement, popperClasses, paperClasses, childr
   );
 };
 
-Popper.defaultProps = {
+GLPopper.defaultProps = {
   open: false,
   anchorEl: {},
   placement: "bottom-start",
@@ -101,7 +101,7 @@ Popper.defaultProps = {
   transition: true
 };
 
-Popper.propTypes = {
+GLPopper.propTypes = {
   open: PropTypes.bool,
   anchorEl: PropTypes.object,
   placement: PropTypes.string,
@@ -112,4 +112,4 @@ Popper.propTypes = {
   transition: PropTypes.bool
 };
 
-export default Popper;
+export default GLPopper;

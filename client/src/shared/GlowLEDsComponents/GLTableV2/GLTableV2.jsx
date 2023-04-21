@@ -30,6 +30,7 @@ import {
 } from "./actions/actions";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { useHistory, useLocation } from "react-router-dom";
+import GLLegend from "./components/GLLegend";
 
 // const useStyles = makeStyles(() => ({
 //   palette: {
@@ -131,7 +132,8 @@ const GLTableV2 = ({
   determine_color,
   enableDragDrop,
   dropdownComponent,
-  extendedRowComponent
+  extendedRowComponent,
+  colors
 }) => {
   const isMounted = useRef(false);
   const dispatch = useDispatch();
@@ -325,15 +327,18 @@ const GLTableV2 = ({
             )}
             {!hasFilters && titleActions && <div />}
             <div className={glTable.searchContainer}>
-              {enableSearch && (
-                <GLTableSearch
-                  autoFocus
-                  restrictSearchChars={restrictSearchChars}
-                  namespace={namespace}
-                  placeholder={searchPlaceholder}
-                  search={search}
-                />
-              )}
+              <div className="ai-c">
+                {colors && <GLLegend colors={colors} />}
+                {enableSearch && (
+                  <GLTableSearch
+                    autoFocus
+                    restrictSearchChars={restrictSearchChars}
+                    namespace={namespace}
+                    placeholder={searchPlaceholder}
+                    search={search}
+                  />
+                )}
+              </div>
             </div>
           </div>
         </GLTableToolbar>
@@ -522,6 +527,7 @@ GLTableV2.defaultProps = {
   remoteVersionRequirement: 0,
   enableDragDrop: false,
   dropdownComponent: false,
+  colors: [],
   extendedRowComponent: false
 };
 
@@ -578,7 +584,8 @@ GLTableV2.propTypes = {
   rowProps: PropTypes.func,
   cellProps: PropTypes.func,
   dropdownComponent: PropTypes.func,
-  extendedRowComponent: PropTypes.func
+  extendedRowComponent: PropTypes.func,
+  colors: PropTypes.array
 };
 
 export default GLTableV2;

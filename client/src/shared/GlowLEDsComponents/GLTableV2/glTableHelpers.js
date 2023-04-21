@@ -183,7 +183,7 @@ export const tableColors = {
   alt_color_1: "#4b7188",
   alt_color_2: "#6f5f7d",
   alt_color_3: "#874d72",
-  alt_color_4: "#31887c",
+  alt_color_4: "#2c796e",
   alt_color_5: "#a9a9a9"
 };
 

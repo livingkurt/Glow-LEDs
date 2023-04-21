@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@mui/material";
 import { fullName } from "../UsersPage/usersHelpers";
 import { humanDate } from "../../helpers/dateHelpers";
-import { determine_color, sinceOrdered } from "./ordersPageHelpers";
+import { determineOrderColors, orderColors, sinceOrdered } from "./ordersPageHelpers";
 import OrderItemsDisplay from "./components/OrderItemsDisplay";
 import { determine_product_name_string } from "../../utils/react_helper_functions";
 
@@ -43,7 +43,7 @@ const OrdersPage = () => {
               ))}
             </div>
             <div>
-              <OrderItemsDisplay order={row} determine_color={determine_color} colspan={column_defs.length + 1} />
+              <OrderItemsDisplay order={row} determine_color={determineOrderColors} colspan={column_defs.length + 1} />
             </div>
           </div>
         )
@@ -94,7 +94,8 @@ const OrdersPage = () => {
         remoteVersionRequirement={remoteVersionRequirement}
         remoteVersionRequirementType={"orders/setRemoteVersionRequirement"}
         tableName={"Orders"}
-        determine_color={determine_color}
+        colors={orderColors}
+        determine_color={determineOrderColors}
         namespaceScope="orders"
         namespace="orderTable"
         columnDefs={column_defs}
@@ -102,8 +103,10 @@ const OrdersPage = () => {
         rowName={"_id"}
         // dropdownColumnDefs={dropdown_column_defs}
         // dropdownRows={row => [row]}
-        dropdownComponent={row => <OrderDropdown row={row} determine_color={determine_color} colspan={column_defs.length + 1} />}
-        extendedRowComponent={row => <OrderItemsDisplay order={row} determine_color={determine_color} colspan={column_defs.length + 1} />}
+        dropdownComponent={row => <OrderDropdown row={row} determine_color={determineOrderColors} colspan={column_defs.length + 1} />}
+        extendedRowComponent={row => (
+          <OrderItemsDisplay order={row} determine_color={determineOrderColors} colspan={column_defs.length + 1} />
+        )}
         loading={loading}
         enableRowSelect={true}
         titleActions={

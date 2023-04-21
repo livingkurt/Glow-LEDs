@@ -1,20 +1,19 @@
 import { tableColors } from "../../shared/GlowLEDsComponents/GLTableV2/glTableHelpers";
 import { daysBetween } from "../../utils/helper_functions";
 
-export const colors = [
-  { name: "Not Paid", color: "#6d3e3e" },
-  { name: "Paid", color: "#3e4c6d" },
-  { name: "Paused", color: "#33323e" },
-  { name: "Manufactured", color: "#4b7188" },
-  { name: "Packaged", color: "#6f5f7d" },
-  { name: "Shipped", color: "#636363" },
-  { name: "Delivered", color: "#333333" },
-  { name: "Priority", color: "#874d72" },
-  { name: "Label Created", color: "#31887c" }
-  // { name: 'Refunded', color: '#a9a9a9' }
+export const orderColors = [
+  { name: "Not Paid", color: tableColors.inactive },
+  { name: "Paid", color: tableColors.active },
+  { name: "Label Created", color: tableColors.alt_color_4 },
+  { name: "Manufactured", color: tableColors.alt_color_1 },
+  { name: "Packaged", color: tableColors.alt_color_2 },
+  { name: "Shipped", color: tableColors.waiting },
+  { name: "Delivered", color: tableColors.completed },
+  { name: "International", color: tableColors.alt_color_3 },
+  { name: "Paused", color: tableColors.paused }
 ];
 
-export const determine_color = (order: any) => {
+export const determineOrderColors = (order: any) => {
   let result = "";
   if (!order.isPaid) {
     result = tableColors.inactive;
