@@ -89,7 +89,7 @@ const reducer =
         return {
           ...state,
           availableFilters: availableFilters,
-          filters: defaultFilters,
+          filters: { ...state.filters, defaultFilters },
           remote: {
             ...state.remote,
             isLoadingFilters: false
