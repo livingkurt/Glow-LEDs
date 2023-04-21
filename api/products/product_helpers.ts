@@ -121,16 +121,12 @@ export const normalizeProductFilters = (input: any) => {
         }
         break;
       case "hidden":
-        if (input.hidden.includes("show_hidden")) {
-          output["hidden"] = true;
-        } else {
+        if (!input.hidden.includes(1)) {
           output["hidden"] = false;
         }
         break;
       case "options":
-        if (input.options.includes("show_options")) {
-          output["option"] = true;
-        } else {
+        if (!input.options.includes(1)) {
           output["option"] = false;
         }
         break;
@@ -139,9 +135,55 @@ export const normalizeProductFilters = (input: any) => {
         break;
     }
   });
+  if (input.hidden.includes("only_hidden")) {
+    output.hidden = true;
+  }
+  if (input.options.includes("only_options")) {
+    output.option = true;
+  }
   console.log({ output });
   return output;
 };
+
+// export const normalizeProductFilters = (input: any) => {
+//   console.log({ input });
+//   const output: any = {};
+//   Object.keys(input).forEach(key => {
+//     switch (key) {
+//       case "category":
+//         for (const category of input.category) {
+//           output["category"] = category;
+//         }
+//         break;
+//       case "subcategory":
+//         for (const subcategory of input.subcategory) {
+//           output["subcategory"] = subcategory;
+//         }
+//         break;
+//       case "hidden":
+//         if (input.hidden.includes("only_hidden")) {
+//           output["hidden"] = true;
+//         }
+//         if (!input.hidden.includes(1)) {
+//           output["hidden"] = false;
+//         }
+//         break;
+//       case "options":
+//         if (input.option.includes("only_option")) {
+//           output["option"] = true;
+//         }
+//         if (!input.options.includes(1)) {
+//           output["option"] = false;
+//         }
+//         break;
+
+//       default:
+//         break;
+//     }
+//   });
+//   console.log({ output });
+//   return output;
+// };
 
 // for (const options of input.options) {
 //   if (options === "show") {

@@ -72,19 +72,15 @@ export default {
           "sizes",
           "secondary_colors"
         ],
-        hidden: [],
-        options: []
+        hidden: ["only_hidden"],
+        options: ["only_options"]
       };
       const booleanFilters = {
         hidden: {
-          label: "Hidden",
-          show_label: "Show Hidden",
-          hide_label: "Hide Hidden"
+          label: "Show Hidden"
         },
         options: {
-          label: "Options",
-          show_label: "Show Options",
-          hide_label: "Hide Options"
+          label: "Show Options"
         }
       };
       return { availableFilters, booleanFilters };

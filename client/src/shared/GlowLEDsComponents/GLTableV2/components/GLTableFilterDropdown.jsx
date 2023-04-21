@@ -212,26 +212,26 @@ const GLTableFilterDropdown = ({
                 </div>
               )}
               <div id="matrix-sub-menu" data-test="matrix-sub-menu" className={classes.menuItemsContainer}>
-                {!Object.keys(booleanFilters)?.includes(menuSelection) &&
-                  sortBy(applyFilter(subMenuItems, filterSearch, minFilterLength), item => sortItem(item)).map(item => (
-                    <MenuItem
-                      className={classes.subMenuItem}
-                      data-test="menu-item"
-                      selected={filters[menuSelection]?.includes(item)}
-                      key={item}
-                      onClick={() => {
-                        dispatch(toggleFilter(namespace, { row: menuSelection, item }));
-                        onChangeFunction(item);
-                      }}
-                      dense
-                    >
-                      {withCheckbox && <Checkbox checked={filters[menuSelection]?.includes(item) || false} />}
-                      {typeof item === "string" ? humanize(item) : item}
-                    </MenuItem>
-                  ))}
+                {sortBy(applyFilter(subMenuItems, filterSearch, minFilterLength), item => sortItem(item)).map(item => (
+                  <MenuItem
+                    className={classes.subMenuItem}
+                    data-test="menu-item"
+                    selected={filters[menuSelection]?.includes(item)}
+                    key={item}
+                    onClick={() => {
+                      dispatch(toggleFilter(namespace, { row: menuSelection, item }));
+                      onChangeFunction(item);
+                    }}
+                    dense
+                  >
+                    {withCheckbox && <Checkbox checked={filters[menuSelection]?.includes(item) || false} />}
+                    {typeof item === "string" ? humanize(item) : item}
+                  </MenuItem>
+                ))}
                 {Object.keys(booleanFilters)?.includes(menuSelection) && (
                   <div>
                     <Switch
+                      checked={first(filters[menuSelection]) === 1}
                       selected={first(filters[menuSelection]) === 1}
                       onClick={() => dispatch(toggleFilter(namespace, { row: menuSelection, item: 1 }))}
                     />

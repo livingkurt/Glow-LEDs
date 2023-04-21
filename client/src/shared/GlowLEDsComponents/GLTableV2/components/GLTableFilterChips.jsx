@@ -40,7 +40,7 @@ const customStyles = {
   }
 };
 
-const GLTableFilterChips = ({ filters, menuOpen, namespace, maxChips, onChangeFunction, disabled }) => {
+const GLTableFilterChips = ({ filters, menuOpen, namespace, maxChips, onChangeFunction, disabled, booleanFilters }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   // determine if there's at least one chip to show
@@ -48,8 +48,23 @@ const GLTableFilterChips = ({ filters, menuOpen, namespace, maxChips, onChangeFu
   // return early if not
   if (!showChips) return null;
 
+  // const chips = Object.entries(pickBy(filters, filterCategory => filterCategory.length > 0)).map(([filterCategory, filterArray]) => {
+  //   if (filterArray.length > 1) {
+  //     return {
+  //       key: filterCategory,
+  //       name: `${filterArray[0]} & ${filterArray.length - 1} more`
+  //     };
+  //   } else {
+  //     return { key: filterCategory, name: filterArray[0] };
+  //   }
+  // });
   const chips = Object.entries(pickBy(filters, filterCategory => filterCategory.length > 0)).map(([filterCategory, filterArray]) => {
-    if (filterArray.length > 1) {
+    console.log({ booleanFilters });
+    console.log({ filterCategory });
+    // console.log({ "booleanFilters[filterCategory": booleanFilters[filterCategory].label, filterCategory });
+    if (Object.keys(booleanFilters).includes(filterCategory)) {
+      return { key: filterCategory, name: booleanFilters[filterCategory].label || filterCategory };
+    } else if (filterArray.length > 1) {
       return {
         key: filterCategory,
         name: `${filterArray[0]} & ${filterArray.length - 1} more`
@@ -79,7 +94,7 @@ const GLTableFilterChips = ({ filters, menuOpen, namespace, maxChips, onChangeFu
                   //   color: "white"
                   // }
                 }}
-                label={humanize(chip.name)}
+                label={chip.name}
                 onClick={() => handleClick(chip)}
                 onDelete={() => {
                   dispatch(removeFilter(namespace, chip.key));
@@ -106,7 +121,8 @@ GLTableFilterChips.defaultProps = {
   maxChips: 3,
   namespace: "",
   onChangeFunction: x => x,
-  disabled: false
+  disabled: false,
+  booleanFilters: {}
 };
 
 GLTableFilterChips.propTypes = {
@@ -115,7 +131,8 @@ GLTableFilterChips.propTypes = {
   maxChips: PropTypes.number,
   namespace: PropTypes.string,
   onChangeFunction: PropTypes.func,
-  disabled: PropTypes.bool
+  disabled: PropTypes.bool,
+  booleanFilters: PropTypes.object
 };
 
 export default GLTableFilterChips;

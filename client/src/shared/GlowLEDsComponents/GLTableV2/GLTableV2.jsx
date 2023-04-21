@@ -301,7 +301,13 @@ const GLTableV2 = ({
                     isLoading={isLoadingFilters}
                     booleanFilters={booleanFilters}
                   />
-                  <GLTableFilterChips namespace={namespace} filters={filters} menuOpen={menuOpen} maxChips={3} />
+                  <GLTableFilterChips
+                    namespace={namespace}
+                    filters={filters}
+                    menuOpen={menuOpen}
+                    maxChips={3}
+                    booleanFilters={booleanFilters}
+                  />
                 </div>
               ))}
             {!hasFilters && titleActions === null && (

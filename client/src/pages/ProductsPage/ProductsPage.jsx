@@ -79,7 +79,7 @@ const ProductsPage = () => {
   const remoteApi = useCallback(options => API.getProducts(options), []);
   const remoteReorderApi = useCallback(options => API.reorderProducts(options), []);
   const remoteFiltersApi = useCallback(() => API.getProductFilters(), []);
-  const defaultFilters = { hidden: ["hide_hidden"], options: ["hide_options"] };
+  const defaultFilters = { hidden: [], options: [] };
 
   return (
     <div className="main_container p-20px">
