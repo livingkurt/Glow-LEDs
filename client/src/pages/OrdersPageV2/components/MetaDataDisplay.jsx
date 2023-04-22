@@ -6,7 +6,7 @@ const MetaDataDisplay = ({ row }) => {
     <div>
       <h2>Meta Data</h2>
       <div>Order ID: {row._id}</div>
-      <div>Payment Method: {row.payment.paymentMethod}</div>
+      <div>Payment Method: {row?.payment?.paymentMethod}</div>
       <div>Promo Code: {row.promo_code}</div>
       {row.tracking_number && (
         <div>

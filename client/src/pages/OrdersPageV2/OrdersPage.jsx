@@ -23,17 +23,18 @@ const OrdersPage = () => {
 
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   if (order.name) {
-  //     dispatch(open_edit_order_modal(order));
-  //   }
-  // }, [dispatch, order]);
+  useEffect(() => {
+    console.log({ order });
+    if (order) {
+      console.log({ order });
+      dispatch(open_edit_order_modal(order));
+    }
+  }, [dispatch, order]);
 
   const column_defs = useMemo(
     () => [
-      // { title: "Order #", display: "_id" },
       { title: "Order Placed", display: row => humanDate(row.createdAt) },
-      { title: "Name", display: row => fullName(row.shipping) },
+      { title: "Name", display: row => row.name },
       { title: "Since Ordered", display: row => sinceOrdered(row.createdAt) },
       {
         title: "Order Items",
@@ -60,8 +61,7 @@ const OrdersPage = () => {
               variant="icon"
               aria-label="Edit"
               onClick={() => {
-                dispatch(open_edit_order_modal(row));
-                // dispatch(API.detailsOrder(row._id));
+                dispatch(API.detailsOrder(row._id));
               }}
             >
               <i className="fas fa-edit" />
@@ -83,6 +83,7 @@ const OrdersPage = () => {
 
   const remoteApi = useCallback(options => API.getOrders(options), []);
   const remoteFiltersApi = useCallback(() => API.getOrderFilters(), []);
+
   return (
     <div className="main_container p-20px">
       <Helmet>

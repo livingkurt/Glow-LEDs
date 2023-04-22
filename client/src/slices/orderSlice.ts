@@ -8,7 +8,7 @@ const order = {
   orderItems: [],
   messages: [],
   shipping: {},
-  payment: {},
+  payment: { paymentMethod: "" },
   itemsPrice: 0,
   taxPrice: 0,
   shippingPrice: 0,
@@ -99,6 +99,7 @@ const orderPage = createSlice({
       state.order = order;
     },
     open_edit_order_modal: (state, { payload }) => {
+      console.log({ payload });
       state.edit_order_modal = true;
       state.order = payload;
     },

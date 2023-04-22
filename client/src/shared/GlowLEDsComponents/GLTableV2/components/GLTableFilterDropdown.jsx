@@ -16,14 +16,7 @@ import first from "lodash/first";
 import sortBy from "lodash/sortBy";
 import { makeStyles } from "@mui/styles";
 import { applyFilter, enableClearAll, filterLabelsMap, sortItem } from "../glTableHelpers";
-import {
-  applyFilterSearch,
-  clearBooleanFilter,
-  removeAllFilters,
-  removeFilter,
-  toggleFilter,
-  updateFilterDisplay
-} from "../actions/actions";
+import { applyFilterSearch, removeAllFilters, removeFilter, toggleFilter, updateFilterDisplay } from "../actions/actions";
 import GLPopper from "../../GLPopper/GLPopper";
 import { TextField } from "@mui/material";
 import { humanize, toCapitalize } from "../../../../utils/helper_functions";
