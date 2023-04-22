@@ -1269,7 +1269,7 @@ export default {
       }
 
       const updatedOrders = await Promise.all(
-        orders.map(async order => {
+        orders.map(async (order: any) => {
           order.user = newUserId;
           return order.save();
         })
