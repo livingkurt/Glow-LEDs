@@ -60,7 +60,7 @@ export const sinceOrdered = (date: string) => {
   const today = new Date();
   const numDays = daysBetween(today, date);
   if (numDays === 0) {
-    return "Ordered Today";
+    return "Today";
   } else {
     // const weekdays = numDays - Math.floor(numDays / 7) * 2;
     return numDays > 1 ? `${numDays} Days` : `${numDays} Day`;
