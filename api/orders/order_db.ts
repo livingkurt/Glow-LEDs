@@ -35,7 +35,6 @@ export default {
       ]);
       return orders;
     } catch (error) {
-      console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -292,53 +291,53 @@ export default {
       }
     }
   },
-  get_daily_revenue_orders_db: async (start_date: string, end_date: string) => {
-    try {
-      const totalPriceByDay = await Order.aggregate([
-        {
-          $match: {
-            deleted: false,
-            isPaid: true,
-            createdAt: {
-              $gte: new Date(start_date),
-              $lt: new Date(end_date)
-            }
-          }
-        },
-        {
-          $group: {
-            _id: {
-              $dateToString: {
-                format: "%Y-%m-%d",
-                date: "$createdAt"
-              }
-            },
-            totalPrice: {
-              $sum: "$totalPrice"
-            }
-          }
-        },
-        {
-          $project: {
-            _id: 0,
-            day: "$_id",
-            totalPrice: "$totalPrice"
-          }
-        },
-        {
-          $sort: {
-            day: 1
-          }
-        }
-      ]);
+  // get_daily_revenue_orders_db: async (start_date: string, end_date: string) => {
+  //   try {
+  //     const totalPriceByDay = await Order.aggregate([
+  //       {
+  //         $match: {
+  //           deleted: false,
+  //           isPaid: true,
+  //           createdAt: {
+  //             $gte: new Date(start_date),
+  //             $lt: new Date(end_date)
+  //           }
+  //         }
+  //       },
+  //       {
+  //         $group: {
+  //           _id: {
+  //             $dateToString: {
+  //               format: "%Y-%m-%d",
+  //               date: "$createdAt"
+  //             }
+  //           },
+  //           totalPrice: {
+  //             $sum: "$totalPrice"
+  //           }
+  //         }
+  //       },
+  //       {
+  //         $project: {
+  //           _id: 0,
+  //           day: "$_id",
+  //           totalPrice: "$totalPrice"
+  //         }
+  //       },
+  //       {
+  //         $sort: {
+  //           day: 1
+  //         }
+  //       }
+  //     ]);
 
-      return totalPriceByDay;
-    } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(error.message);
-      }
-    }
-  },
+  //     return totalPriceByDay;
+  //   } catch (error) {
+  //     if (error instanceof Error) {
+  //       throw new Error(error.message);
+  //     }
+  //   }
+  // },
   get_monthly_revenue_orders_db: async (year: string) => {
     try {
       const totalPriceByMonth = await Order.aggregate([
@@ -441,6 +440,84 @@ export default {
       }
     }
   },
+  get_daily_revenue_orders_db: async (start_date: string, end_date: string) => {
+    console.log({ start_date, end_date });
+    try {
+      const totalPriceByDay = await Order.aggregate([
+        {
+          $match: {
+            deleted: false,
+            isPaid: true,
+            createdAt: {
+              $gte: new Date(start_date),
+              $lt: new Date(end_date)
+            }
+          }
+        },
+        {
+          $group: {
+            _id: {
+              year: { $year: "$createdAt" },
+              month: { $month: "$createdAt" },
+              day: { $dayOfMonth: "$createdAt" }
+            },
+            totalPrice: {
+              $sum: "$totalPrice"
+            },
+            refundTotal: {
+              $sum: "$refundTotal"
+            }
+          }
+        },
+        {
+          $project: {
+            date: {
+              $dateFromParts: {
+                year: "$_id.year",
+                month: "$_id.month",
+                day: "$_id.day"
+              }
+            },
+            totalPrice: 1,
+            refundTotal: 1,
+            _id: 0
+          }
+        },
+        {
+          $sort: {
+            date: 1
+          }
+        },
+        {
+          $group: {
+            _id: null,
+            data: {
+              $push: {
+                date: "$date",
+                totalPrice: {
+                  $sum: "$totalPrice"
+                }
+              }
+            }
+          }
+        },
+        {
+          $project: {
+            _id: 0,
+            data: 1
+          }
+        }
+      ]).exec();
+
+      console.log({ totalPriceByDay });
+      return totalPriceByDay;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+
   get_product_all_time_revenue_orders_db: async (id: string) => {
     try {
       const result = await Order.aggregate([

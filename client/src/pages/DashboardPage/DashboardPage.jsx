@@ -23,7 +23,8 @@ import {
   useGetRangeTipsRevenueOrdersQuery,
   useGetYearlyRevenueOrdersQuery,
   useGetAllTimePayoutsQuery,
-  useGetRangePayoutsQuery
+  useGetRangePayoutsQuery,
+  useGetDailyRevenueOrdersQuery
 } from "./dashboardApi";
 import { getMonthStartEndDates, months, years } from "./dashboardHelpers";
 import { useDispatch, useSelector } from "react-redux";
@@ -34,6 +35,7 @@ import { GLButton } from "../../shared/GlowLEDsComponents";
 import { Loading } from "../../shared/SharedComponents";
 import { listAffiliates } from "../../api";
 import axios from "axios";
+import { humanDate } from "../../helpers/dateHelpers";
 
 const DashboardPage = props => {
   const dispatch = useDispatch();
@@ -55,13 +57,13 @@ const DashboardPage = props => {
   const tips_all_time_revenue = useGetAllTimeTipsRevenueOrdersQuery();
   const tips_range_revenue = useGetRangeTipsRevenueOrdersQuery({ start_date, end_date });
   const affiliate_earnings_code_usage = useGetRangeAffiliateEarningsCodeUsageQuery({ start_date, end_date });
-  // const daily_revenue = useGetMonthlyRevenueOrdersQuery({ start_date, end_date });
+  const daily_revenue = useGetDailyRevenueOrdersQuery({ start_date, end_date });
   const monthy_revenue = useGetMonthlyRevenueOrdersQuery({ year });
   const yearly_revenue = useGetYearlyRevenueOrdersQuery();
   const all_time_payouts = useGetAllTimePayoutsQuery();
   const range_payouts = useGetRangePayoutsQuery({ start_date, end_date });
 
-  console.log({ all_time_payouts, range_payouts });
+  console.log({ daily_revenue });
 
   useChangedEffect(() => {
     dispatch(listAffiliates({ active: true }));
@@ -271,8 +273,37 @@ const DashboardPage = props => {
               {year && month ? `${year} ${month}` : year ? year : month ? month : "All Time"} Payouts
             </h3>
             <h3 className="fs-30px jc-c">
-              ${!range_payouts.isLoading && range_payouts.data[0] ? range_payouts.data[0]?.totalAmounts.toFixed(2) : "0.00"}
+              ${!range_payouts.isLoading && range_payouts.data[0] ? range_payouts.data[0]?.totalAmounts?.toFixed(2) : "0.00"}
             </h3>
+            <h3 className="fs-25px jc-c">Daily Revenue</h3>
+            <Grid container spacing={3}>
+              <Grid item xs={12} sm={6}>
+                <span className="title_font">Day</span>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <span className="title_font">Revenue</span>
+              </Grid>
+            </Grid>
+            <hr />
+            <div>
+              {!daily_revenue.isLoading &&
+                daily_revenue?.data[0]?.data &&
+                [...daily_revenue.data[0].data].map((revenue, index) => {
+                  return (
+                    <div key={index}>
+                      <Grid container spacing={3}>
+                        <Grid item xs={12} sm={6}>
+                          <span className="">{humanDate(revenue.date)}</span>
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                          <span>${revenue.totalPrice.toFixed(2)}</span>
+                        </Grid>
+                      </Grid>
+                      <hr />
+                    </div>
+                  );
+                })}
+            </div>
             <h3 className="fs-25px jc-c">Affiliate Earnings Code Usage</h3>
             <Grid container spacing={3}>
               <Grid item xs={12}>
@@ -318,6 +349,7 @@ const DashboardPage = props => {
                   );
                 })}
             </div>
+
             {/* <div>
               {!affiliate_earnings_code_usage.isLoading &&
                 affiliate_earnings_code_usage?.data &&

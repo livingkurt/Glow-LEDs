@@ -73,6 +73,7 @@ export const {
   useGetProductRangeRevenueOrdersQuery,
   useGetRangeRevenueOrdersQuery,
   useGetMonthlyRevenueOrdersQuery,
+  useGetDailyRevenueOrdersQuery,
   useGetYearlyRevenueOrdersQuery,
   useGetRangeCategoryRevenueOrdersQuery,
   useGetAllTimeCategoryRevenueOrdersQuery,
