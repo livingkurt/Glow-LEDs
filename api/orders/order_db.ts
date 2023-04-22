@@ -3,7 +3,7 @@ import { Order } from "../orders";
 import { Affiliate } from "../affiliates";
 
 export default {
-  findAll_orders_db: async (filter: any, sort: unknown, limit: string, page: string) => {
+  table_orders_db: async (filter: any, sort: unknown, limit: string, page: string) => {
     try {
       const orders = await Order.aggregate([
         { $match: filter },
@@ -42,24 +42,24 @@ export default {
     }
   },
 
-  // findAll_orders_db: async (filter: any, sort: unknown, limit: string, page: string) => {
-  //   try {
-  //     return await Order.find(filter)
-  //       .sort(sort)
-  //       .populate("user")
-  //       .populate("orderItems.product")
-  //       .populate("orderItems.secondary_product")
-  //       .sort(sort)
-  //       .limit(parseInt(limit))
-  //       .skip(Math.max(parseInt(page), 0) * parseInt(limit))
+  findAll_orders_db: async (filter: any, sort: unknown, limit: string, page: string) => {
+    try {
+      return await Order.find(filter)
+        .sort(sort)
+        .populate("user")
+        .populate("orderItems.product")
+        .populate("orderItems.secondary_product")
+        .sort(sort)
+        .limit(parseInt(limit))
+        .skip(Math.max(parseInt(page), 0) * parseInt(limit))
 
-  //       .exec();
-  //   } catch (error) {
-  //     if (error instanceof Error) {
-  //       throw new Error(error.message);
-  //     }
-  //   }
-  // },
+        .exec();
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
 
   findById_orders_db: async (id: string) => {
     try {

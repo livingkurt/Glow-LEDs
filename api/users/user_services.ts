@@ -1,31 +1,24 @@
 import { user_db } from "../users";
 import { determine_filter, getAccessToken, getRefreshToken } from "../../util";
+import { getFilteredData } from "../api_helpers";
+import { normalizeUserFilters, normalizeUserSearch } from "./user_helpers";
 const bcrypt = require("bcryptjs");
 require("dotenv");
 
 export default {
   findAll_users_s: async (query: { page: string; search: string; sort: string; limit: string }) => {
     try {
-      const page: string = query.page ? query.page : "1";
-      const limit: string = query.limit ? query.limit : "0";
-      const search = query.search
-        ? {
-            first_name: {
-              $regex: query.search,
-              $options: "i"
-            }
-          }
-        : {};
-      const filter = determine_filter(query, search);
-      const sort_query = query.sort && query.sort.toLowerCase();
-      let sort: any = { _id: -1 };
-      if (sort_query === "first name") {
-        sort = { first_name: 1 };
-      } else if (sort_query === "last name") {
-        sort = { last_name: 1 };
-      } else if (sort_query === "newest") {
-        sort = { _id: -1 };
-      }
+      console.log({ query });
+      const sort_options = ["createdAt", "first_name", "email", "is_guest", "is_affiliated"];
+      const { filter, sort, limit, page } = getFilteredData({
+        query,
+        sort_options,
+        normalizeFilters: normalizeUserFilters,
+        normalizeSearch: normalizeUserSearch
+      });
+
+      console.log({ filter, sort, limit, page });
+
       const users = await user_db.findAll_users_db(filter, sort, limit, page);
       const count = await user_db.count_users_db(filter);
       return {
@@ -33,6 +26,39 @@ export default {
         total_count: count,
         currentPage: page
       };
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  create_filters_users_s: async (query: { search: string; sort: string; page: string; limit: string }) => {
+    try {
+      const availableFilters = {
+        affiliates: ["only_affiliated_users"],
+        guests: ["only_guest_users"],
+        employees: ["only_employees"],
+        admins: ["only_admins"],
+        wholesalers: ["only_wholesalers"]
+      };
+      const booleanFilters = {
+        affiliates: {
+          label: "Show Affiliates"
+        },
+        guests: {
+          label: "Show Guests"
+        },
+        employees: {
+          label: "Show Employees"
+        },
+        admins: {
+          label: "Show Admins"
+        },
+        wholesalers: {
+          label: "Show Wholesalers"
+        }
+      };
+      return { availableFilters, booleanFilters };
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

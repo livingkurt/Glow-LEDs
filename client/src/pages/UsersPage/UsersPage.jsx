@@ -8,7 +8,6 @@ import { open_combine_users_modal, open_create_user_modal, open_edit_user_modal 
 import { CombineUsersModal, EditUserModal } from "./components";
 import * as API from "../../api";
 import { Button } from "@mui/material";
-import { getUsers } from "../../api";
 import { determine_color, fullName } from "./usersHelpers";
 import { Link } from "react-router-dom";
 
@@ -62,7 +61,8 @@ const UsersPage = () => {
     [dispatch]
   );
 
-  const remoteApi = useCallback(options => getUsers(options), []);
+  const remoteApi = useCallback(options => API.getUsers(options), []);
+  const remoteFiltersApi = useCallback(() => API.getUserFilters(), []);
 
   return (
     <div className="main_container p-20px">
@@ -72,6 +72,7 @@ const UsersPage = () => {
       <Notification message={message} />
       <GLTableV2
         remoteApi={remoteApi}
+        remoteFiltersApi={remoteFiltersApi}
         remoteVersionRequirement={remoteVersionRequirement}
         determine_color={determine_color}
         tableName={"Users"}

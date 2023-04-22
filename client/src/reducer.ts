@@ -115,6 +115,8 @@ const reducers = {
   users: combineReducers({
     userPage: userSlice,
     userTable: glTableReducer("userTable", {
+      sorting: [0, "asc"],
+      nonTagFilters: ["affiliates", "guests", "employees", "admins", "wholesalers"],
       searchBy: (row: any, search: string) => {
         const searchableText = `${row.first_name} ${row.last_name}}`;
         return searchableText.toLowerCase().includes(search.toLowerCase());

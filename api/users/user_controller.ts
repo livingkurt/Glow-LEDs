@@ -19,6 +19,18 @@ export default {
       res.status(500).send({ error, message: "Error Finding User" });
     }
   },
+  create_filters_users_c: async (req: any, res: any) => {
+    const { query } = req;
+    try {
+      const user = await user_services.create_filters_users_s(query);
+      if (user) {
+        return res.status(200).send(user);
+      }
+      return res.status(404).send({ message: "User Not Found" });
+    } catch (error) {
+      res.status(500).send({ error, message: "Error Finding User" });
+    }
+  },
   findById_users_c: async (req: any, res: any) => {
     const { params } = req;
     try {

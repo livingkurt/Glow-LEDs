@@ -35,7 +35,7 @@ export default {
       });
       console.log({ filter, sort, limit, page });
 
-      const orders = await order_db.findAll_orders_db(filter, sort, limit, page);
+      const orders = await order_db.table_orders_db(filter, sort, limit, page);
       const count = await order_db.count_orders_db(filter);
       return {
         data: orders,

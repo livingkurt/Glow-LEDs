@@ -22,12 +22,18 @@ export const getUsers = async ({
       params: {
         limit: pageSize,
         page: page,
-        search: search
-        // sort: sorting,
-        // filters: pickBy(filters, (val: any) => val.length > 0)
+        search: search,
+        sort: sorting,
+        filters
       }
     });
   } catch (error) {}
+};
+
+export const getUserFilters = async () => {
+  const { data } = await axios.get(`/api/users/filters`);
+  console.log({ data });
+  return data;
 };
 
 export const listUsers = createAsyncThunk("users/listUsers", async (query: any, thunkApi: any) => {
