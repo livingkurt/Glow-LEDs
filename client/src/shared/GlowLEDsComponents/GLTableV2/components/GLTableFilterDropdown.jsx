@@ -16,7 +16,14 @@ import first from "lodash/first";
 import sortBy from "lodash/sortBy";
 import { makeStyles } from "@mui/styles";
 import { applyFilter, enableClearAll, filterLabelsMap, sortItem } from "../glTableHelpers";
-import { applyFilterSearch, removeAllFilters, removeFilter, toggleFilter, updateFilterDisplay } from "../actions/actions";
+import {
+  applyFilterSearch,
+  clearBooleanFilter,
+  removeAllFilters,
+  removeFilter,
+  toggleFilter,
+  updateFilterDisplay
+} from "../actions/actions";
 import GLPopper from "../../GLPopper/GLPopper";
 import { TextField } from "@mui/material";
 import { humanize, toCapitalize } from "../../../../utils/helper_functions";
@@ -229,13 +236,24 @@ const GLTableFilterDropdown = ({
                   </MenuItem>
                 ))}
                 {Object.keys(booleanFilters)?.includes(menuSelection) && (
-                  <div>
+                  <div className="jc-b ai-c">
                     <Switch
                       checked={first(filters[menuSelection]) === 1}
                       selected={first(filters[menuSelection]) === 1}
                       onClick={() => dispatch(toggleFilter(namespace, { row: menuSelection, item: 1 }))}
                     />
                     {humanize(booleanFilters[menuSelection].label)}
+                    <Button
+                      data-test="matrix-sub-menu-clear-button"
+                      color="secondary"
+                      variant="text"
+                      onClick={() => {
+                        dispatch(removeFilter(namespace, menuSelection));
+                        onChangeFunction();
+                      }}
+                    >
+                      Clear
+                    </Button>
                   </div>
                 )}
               </div>

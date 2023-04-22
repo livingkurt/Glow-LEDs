@@ -15,6 +15,9 @@ import { format_date } from "../../utils/helper_functions";
 const PaychecksPage = () => {
   const paycheckPage = useSelector(state => state.paychecks.paycheckPage);
   const { message, loading, remoteVersionRequirement } = paycheckPage;
+
+  const paycheckTable = useSelector(state => state.paychecks.paycheckTable);
+  const { selectedRows } = paycheckTable;
   const date = new Date();
   const dispatch = useDispatch();
 
@@ -88,7 +91,8 @@ const PaychecksPage = () => {
     []
   );
 
-  const remoteApi = useCallback(options => getPaychecks(options), []);
+  const remoteApi = useCallback(options => API.getPaychecks(options), []);
+  const remoteFiltersApi = useCallback(() => API.getPaycheckFilters(), []);
 
   return (
     <div className="main_container p-20px">
@@ -98,6 +102,7 @@ const PaychecksPage = () => {
       <Notification message={message} />
       <GLTableV2
         remoteApi={remoteApi}
+        remoteFiltersApi={remoteFiltersApi}
         remoteVersionRequirement={remoteVersionRequirement}
         determine_color={determine_color}
         tableName={"Paychecks"}
@@ -107,9 +112,25 @@ const PaychecksPage = () => {
         loading={loading}
         enableRowSelect={true}
         titleActions={
-          <Button color="primary" variant="contained" onClick={() => dispatch(open_create_paycheck_modal())}>
-            Create Paycheck
-          </Button>
+          <div className="row g-10px">
+            {selectedRows.length > 0 && (
+              <Button
+                color="secondary"
+                variant="contained"
+                onClick={() => {
+                  const confirm = window.confirm(`Are you sure you want to Delete ${selectedRows.length} Paychecks?`);
+                  if (confirm) {
+                    dispatch(API.deleteMultiplePaychecks(selectedRows));
+                  }
+                }}
+              >
+                Delete Paychecks
+              </Button>
+            )}
+            <Button color="primary" variant="contained" onClick={() => dispatch(open_create_paycheck_modal())}>
+              Create Paycheck
+            </Button>
+          </div>
         }
       />
       <EditPaycheckModal />

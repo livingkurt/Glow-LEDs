@@ -268,14 +268,16 @@ const reducer =
       case `${namespace}/${REMOVE_FILTER}`: {
         const { filters, menuSelection } = state;
         const filter = action.payload || menuSelection;
-        const newState = {
+        let newState = {
           ...state,
           filters: {
             ...filters,
             [filter]: []
           }
         };
-
+        if (action.payload) {
+          delete newState.filters[menuSelection];
+        }
         if (state.remote.isRemote) return { ...newState };
 
         return {

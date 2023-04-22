@@ -30,6 +30,11 @@ export const getPaychecks = async ({
   } catch (error) {}
 };
 
+export const getPaycheckFilters = async () => {
+  const { data } = await axios.get(`/api/paychecks/filters`);
+  return data;
+};
+
 export const listPaychecks = createAsyncThunk("paychecks/listPaychecks", async (query: any, thunkApi: any) => {
   try {
     const {
@@ -80,6 +85,18 @@ export const deletePaycheck = createAsyncThunk("paychecks/deletePaycheck", async
       }
     } = thunkApi.getState();
     const { data } = await axios.delete("/api/paychecks/" + pathname, headers(current_user));
+    return data;
+  } catch (error) {}
+});
+
+export const deleteMultiplePaychecks = createAsyncThunk("paycheck/deleteMultiplePaychecks", async (ids: string, thunkApi: any) => {
+  try {
+    const {
+      users: {
+        userPage: { current_user }
+      }
+    } = thunkApi.getState();
+    const { data } = await axios.put(`/api/paycheck/delete_multiple`, { ids }, headers(current_user));
     return data;
   } catch (error) {}
 });

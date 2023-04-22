@@ -4,12 +4,19 @@ import { order_db } from "../orders";
 import { paycheck_db } from "../paychecks";
 import { team_db } from "../teams";
 import { getFilteredData } from "../api_helpers";
+import { normalizePaycheckFilters, normalizePaycheckSearch } from "./paycheck_interactors";
 
 export default {
   findAll_paychecks_s: async (query: { page: string; search: string; sort: any; limit: string; filters: any }) => {
     try {
       const sort_options = ["createdAt", "paid_at", "paid", "amount"];
-      const { filter, sort, limit, page } = getFilteredData({ query, sort_options, search_name: "affiliate" });
+      const { filter, sort, limit, page } = getFilteredData({
+        query,
+        sort_options,
+        search_name: "affiliate",
+        normalizeFilters: normalizePaycheckFilters,
+        normalizeSearch: normalizePaycheckSearch
+      });
       const paychecks = await paycheck_db.findAll_paychecks_db(filter, sort, limit, page);
       const count = await paycheck_db.count_paychecks_db(filter);
       return {
@@ -17,6 +24,24 @@ export default {
         total_count: count,
         currentPage: page
       };
+    } catch (error) {
+      console.log({ error });
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  create_filters_paychecks_s: async (query: { search: string; sort: string; page: string; limit: string }) => {
+    try {
+      const availableFilters = {
+        paid: []
+      };
+      const booleanFilters = {
+        paid: {
+          label: "Show Paid"
+        }
+      };
+      return { availableFilters, booleanFilters };
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

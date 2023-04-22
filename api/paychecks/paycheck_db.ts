@@ -70,7 +70,7 @@ export default {
   },
   remove_multiple_paychecks_db: async (ids: string[]) => {
     try {
-      return await Paycheck.deleteMany({ _id: { $in: ids } });
+      return await Paycheck.updateMany({ _id: { $in: ids } }, { deleted: true });
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

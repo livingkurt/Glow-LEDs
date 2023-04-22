@@ -13,6 +13,18 @@ export default {
       res.status(500).send({ error, message: "Error Finding Paychecks" });
     }
   },
+  create_filters_paychecks_c: async (req: any, res: any) => {
+    const { query } = req;
+    try {
+      const paycheck_filters = await paycheck_services.create_filters_paychecks_s(query);
+      if (paycheck_filters) {
+        return res.status(200).send(paycheck_filters);
+      }
+      return res.status(404).send({ message: "Paychecks Not Found" });
+    } catch (error) {
+      res.status(500).send({ error, message: "Error Finding Paychecks" });
+    }
+  },
   findById_paychecks_c: async (req: any, res: any) => {
     const { params } = req;
     try {

@@ -136,6 +136,19 @@ const paycheckPage = createSlice({
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
+    },
+    [API.deleteMultiplePaychecks.pending as any]: (state: any, { payload }: any) => {
+      state.loading = true;
+    },
+    [API.deleteMultiplePaychecks.fulfilled as any]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.message = "Paycheck Deleted";
+      state.remoteVersionRequirement = Date.now();
+    },
+    [API.deleteMultiplePaychecks.rejected as any]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.error = payload.error;
+      state.message = payload.message;
     }
   }
 });
