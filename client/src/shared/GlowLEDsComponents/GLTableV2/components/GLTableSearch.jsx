@@ -11,6 +11,7 @@ const GLTableSearch = ({ placeholder, namespace, width, autoFocus, restrictSearc
     <TextField
       value={search || ""}
       size="small"
+      style={{ width }}
       id="search-field"
       type="search"
       name="search"

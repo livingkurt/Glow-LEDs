@@ -24,9 +24,7 @@ const OrdersPage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log({ order });
-    if (order) {
-      console.log({ order });
+    if (order.orderItems.length > 0) {
       dispatch(open_edit_order_modal(order));
     }
   }, [dispatch, order]);
@@ -96,6 +94,7 @@ const OrdersPage = () => {
         remoteVersionRequirement={remoteVersionRequirement}
         remoteVersionRequirementType={"orders/setRemoteVersionRequirement"}
         tableName={"Orders"}
+        searchPlaceholder={"Search by ID, Name, Email, #code"}
         colors={orderColors}
         determine_color={determineOrderColors}
         namespaceScope="orders"
