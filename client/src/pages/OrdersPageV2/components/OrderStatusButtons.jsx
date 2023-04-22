@@ -4,32 +4,53 @@ import * as API from "../../../api";
 import { useDispatch } from "react-redux";
 import { set_loading_label } from "../../../slices/orderSlice";
 import { API_Emails } from "../../../utils";
+import { toCapitalize } from "../../../utils/helper_functions";
 
 const OrderStatusButtons = ({ order }) => {
   const dispatch = useDispatch();
   const updateOrder = status => {
     switch (status) {
-      case "isPaid":
+      case "paid":
         dispatch(API.saveOrder({ ...order, isPaid: !order.isPaid, paidAt: new Date() }));
         break;
-      case "isReassured":
+      case "reassured":
         dispatch(API.saveOrder({ ...order, isReassured: !order.isReassured, reassuredAt: new Date() }));
         break;
-      case "isPaused":
+      case "paused":
         dispatch(API.saveOrder({ ...order, isPaused: !order.isPaused, pausedAt: new Date() }));
         break;
-      case "isManufactured":
+      case "manufactured":
         dispatch(API.saveOrder({ ...order, isManufactured: !order.isManufactured, manufacturedAt: new Date() }));
         break;
-      case "isPackaged":
+      case "packaged":
         dispatch(API.saveOrder({ ...order, isPackaged: !order.isPackaged, packagedAt: new Date() }));
         break;
-      case "isShipped":
+      case "shipped":
         dispatch(API.saveOrder({ ...order, isShipped: !order.isShipped, shippedAt: new Date() }));
         break;
       default:
         break;
     }
+    send_order_status_email(status);
+  };
+
+  const send_order_status_email = async (status, message_to_user) => {
+    await API_Emails.send_order_status_email(
+      order,
+      status === "manufactured" ? "Your Order has been Crafted!" : "Your Order has been " + toCapitalize(status) + "!",
+      order.shipping.email,
+      status,
+      message_to_user
+    );
+    await API_Emails.send_order_status_email(
+      order,
+      status === "manufactured"
+        ? order.shipping.first_name + "'s Order has been Crafted!"
+        : order.shipping.first_name + "'s Order has been " + toCapitalize(status) + "!",
+      process.env.REACT_APP_INFO_EMAIL,
+      status,
+      message_to_user
+    );
   };
 
   const send_order_email = async () => {
@@ -39,6 +60,7 @@ const OrderStatusButtons = ({ order }) => {
 
     dispatch(set_loading_label(false));
   };
+
   const send_refund_email = async () => {
     dispatch(set_loading_label(true));
     await API_Emails.send_refund_email(order, "Refund Successful", order.shipping.email, true);
@@ -53,26 +75,30 @@ const OrderStatusButtons = ({ order }) => {
           Send Order Email
         </GLButton>
       )}
-
-      <GLButton variant="primary" className="mv-5px w-100per" onClick={() => updateOrder("isPaid")}>
+      {send_order_email && (
+        <GLButton variant="primary" className="mv-5px w-100per" onClick={() => send_order_status_email("updated")}>
+          Send Update Order Email
+        </GLButton>
+      )}
+      <GLButton variant="primary" className="mv-5px w-100per" onClick={() => updateOrder("paid")}>
         {order.isPaid ? "Unset" : "Set"} to Paid
       </GLButton>
-      <GLButton variant="primary" className="mv-5px w-100per" onClick={() => updateOrder("isReassured")}>
+      <GLButton variant="primary" className="mv-5px w-100per" onClick={() => updateOrder("reassured")}>
         {order.isReassured ? "Unset" : "Set"} to Reassured
       </GLButton>
-      <GLButton variant="primary" className="mv-5px w-100per" onClick={() => updateOrder("isPaused")}>
+      <GLButton variant="primary" className="mv-5px w-100per" onClick={() => updateOrder("paused")}>
         {order.isPaused ? "Unset" : "Set"} to Paused
       </GLButton>
-      <GLButton variant="primary" className="mv-5px w-100per" onClick={() => updateOrder("isManufactured")}>
+      <GLButton variant="primary" className="mv-5px w-100per" onClick={() => updateOrder("manufactured")}>
         {order.isManufactured ? "Unset" : "Set"} to Manufactured
       </GLButton>
-      <GLButton variant="primary" className="mv-5px w-100per" onClick={() => updateOrder("isPackaged")}>
+      <GLButton variant="primary" className="mv-5px w-100per" onClick={() => updateOrder("packaged")}>
         {order.isPackaged ? "Unset" : "Set"} to Packaged
       </GLButton>
-      <GLButton variant="primary" className="mv-5px w-100per" onClick={() => updateOrder("isShipped")}>
+      <GLButton variant="primary" className="mv-5px w-100per" onClick={() => updateOrder("shipped")}>
         {order.isShipped ? "Unset" : "Set"} to Shipped
       </GLButton>
-      <GLButton variant="primary" className="mv-5px w-100per" onClick={() => updateOrder("isRefunded")}>
+      <GLButton variant="primary" className="mv-5px w-100per" onClick={() => updateOrder("refunded")}>
         {order.isRefunded ? "Unset" : "Set"} to Refunded
       </GLButton>
 

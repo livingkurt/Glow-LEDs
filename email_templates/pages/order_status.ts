@@ -37,6 +37,8 @@ const determine_message = (status: string) => {
       return "your shipment is on the way! Track your shipment to see the delivery status.";
     case "reassured":
       return "due to high order volume, orders are taking a little longer than usual. Don't worry we didn't forget about you, we still have your order and we will send it out to you as soon as we can 😊 Each product at Glow LEDs is handmade to order with love 😍 which allows us to think up new products as they are requested. 👍 Thank you so much for the support and patience!  We really appreciate you 💙 💙 💙 ";
+    case "updated":
+      return "your order has been updated, please review the changes and reach out if you need anymore changes made";
 
     default:
       break;
