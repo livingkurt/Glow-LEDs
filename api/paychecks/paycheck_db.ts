@@ -85,5 +85,58 @@ export default {
         throw new Error(error.message);
       }
     }
+  },
+  get_all_time_payouts_paychecks_db: async () => {
+    try {
+      const totalAmount = await Paycheck.aggregate([
+        {
+          $match: {
+            deleted: false,
+            paid: true
+          }
+        },
+        {
+          $group: {
+            _id: null,
+            totalAmount: { $sum: "$amount" }
+          }
+        }
+      ]).exec();
+      console.log({ totalAmount });
+      return totalAmount;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  get_range_payouts_paychecks_db: async (start_date: string, end_date: string) => {
+    console.log({ start_date, end_date });
+    try {
+      const totalAmount = await Paycheck.aggregate([
+        {
+          $match: {
+            deleted: false,
+            paid: true,
+            paid_at: {
+              $gte: new Date(start_date),
+              $lt: new Date(end_date)
+            }
+          }
+        },
+        {
+          $group: {
+            _id: null,
+            totalAmount: { $sum: "$amount" }
+          }
+        }
+      ]).exec();
+      console.log({ totalAmount });
+      return totalAmount;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
   }
 };

@@ -1,4 +1,4 @@
-import { paycheck_services } from "../paychecks";
+import { paycheck_db, paycheck_services } from "../paychecks";
 
 export default {
   findAll_paychecks_c: async (req: any, res: any) => {
@@ -105,6 +105,29 @@ export default {
       const paycheck = await paycheck_services.remove_multiple_paychecks_s(body);
       if (paycheck) {
         return res.status(204).send({ message: "Paycheck Deleted" });
+      }
+      return res.status(500).send({ message: "Error Deleting Paycheck" });
+    } catch (error) {
+      res.status(500).send({ error, message: "Error Deleting Paycheck" });
+    }
+  },
+  get_range_payouts_paychecks_c: async (req: any, res: any) => {
+    const { start_date, end_date } = req.query;
+    try {
+      const paycheck = await paycheck_db.get_range_payouts_paychecks_db(start_date, end_date);
+      if (paycheck) {
+        return res.status(200).send(paycheck);
+      }
+      return res.status(500).send({ message: "Error Deleting Paycheck" });
+    } catch (error) {
+      res.status(500).send({ error, message: "Error Deleting Paycheck" });
+    }
+  },
+  get_all_time_payouts_paychecks_c: async (req: any, res: any) => {
+    try {
+      const paycheck = await paycheck_db.get_all_time_payouts_paychecks_db();
+      if (paycheck) {
+        return res.status(200).send(paycheck);
       }
       return res.status(500).send({ message: "Error Deleting Paycheck" });
     } catch (error) {

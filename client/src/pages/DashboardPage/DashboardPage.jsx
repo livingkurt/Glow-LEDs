@@ -21,7 +21,9 @@ import {
   useGetRangeCategoryRevenueOrdersQuery,
   useGetRangeRevenueOrdersQuery,
   useGetRangeTipsRevenueOrdersQuery,
-  useGetYearlyRevenueOrdersQuery
+  useGetYearlyRevenueOrdersQuery,
+  useGetAllTimePayoutsQuery,
+  useGetRangePayoutsQuery
 } from "./dashboardApi";
 import { getMonthStartEndDates, months, years } from "./dashboardHelpers";
 import { useDispatch, useSelector } from "react-redux";
@@ -56,6 +58,10 @@ const DashboardPage = props => {
   // const daily_revenue = useGetMonthlyRevenueOrdersQuery({ start_date, end_date });
   const monthy_revenue = useGetMonthlyRevenueOrdersQuery({ year });
   const yearly_revenue = useGetYearlyRevenueOrdersQuery();
+  const all_time_payouts = useGetAllTimePayoutsQuery();
+  const range_payouts = useGetRangePayoutsQuery({ start_date, end_date });
+
+  console.log({ all_time_payouts, range_payouts });
 
   useChangedEffect(() => {
     dispatch(listAffiliates({ active: true }));
@@ -166,6 +172,12 @@ const DashboardPage = props => {
                 ? tips_all_time_revenue.data[0]?.total_tips.toFixed(2)
                 : "0.00"}
             </h3>
+            <h3 className="ta-c w-100per jc-c fs-25px">
+              {year && month ? `${year} ${month}` : year ? year : month ? month : "All Time"} Payouts
+            </h3>
+            <h3 className="fs-30px jc-c">
+              ${!all_time_payouts.isLoading && all_time_payouts.data[0] ? all_time_payouts.data[0]?.totalAmount.toFixed(2) : "0.00"}
+            </h3>
             <Grid container spacing={3}>
               <Grid item xs={12} sm={6}>
                 <span className="title_font">Year</span>
@@ -255,6 +267,12 @@ const DashboardPage = props => {
             <h3 className="fs-30px jc-c">
               ${!tips_range_revenue.isLoading && tips_range_revenue.data[0] ? tips_range_revenue.data[0]?.total_tips.toFixed(2) : "0.00"}
             </h3>
+            <h3 className="ta-c w-100per jc-c fs-25px">
+              {year && month ? `${year} ${month}` : year ? year : month ? month : "All Time"} Payouts
+            </h3>
+            <h3 className="fs-30px jc-c">
+              ${!range_payouts.isLoading && range_payouts.data[0] ? range_payouts.data[0]?.totalAmounts.toFixed(2) : "0.00"}
+            </h3>
             <h3 className="fs-25px jc-c">Affiliate Earnings Code Usage</h3>
             <Grid container spacing={3}>
               <Grid item xs={12}>
@@ -339,6 +357,12 @@ const DashboardPage = props => {
             </h3>
             <h3 className="fs-30px jc-c">
               ${!tips_range_revenue.isLoading && tips_range_revenue.data[0] ? tips_range_revenue.data[0]?.total_tips.toFixed(2) : "0.00"}
+            </h3>
+            <h3 className="ta-c w-100per jc-c fs-25px">
+              {year && month ? `${year} ${month}` : year ? year : month ? month : "All Time"} Payouts
+            </h3>
+            <h3 className="fs-30px jc-c">
+              ${!range_payouts.isLoading && range_payouts.data[0] ? range_payouts.data[0]?.totalAmount.toFixed(2) : "0.00"}
             </h3>
             <Grid container spacing={3}>
               <Grid item xs={12} sm={6}>
