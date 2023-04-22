@@ -1,6 +1,118 @@
-MONGODB_URI=
-ACCESS_TOKEN_SECRET=
-PAYPAL_CLIENT_ID=
-PASSWORD=
-EMAIL=
+
+#############################################################################
+################## Glow LEDs Backed Ennvironment Variables ##################
+#############################################################################
+
+################## Database ##################
+RESTORED_MONGODB_URI=
+# RESTORED_MONGODB_URI=mongodb://localhost/db_name
+
+################## User Login ##################
+
+# Local Authorization
+ACCESS_TOKEN_SECRET==
+REFRESH_TOKEN_SECRET=
+
+# Sign in with Google
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+GOOGLE_CALLBACK_URL=
+
+################## Server ##################
+
+PORT=
+NODE_ENV=
+
+################## Company Info ##################
+
+# No Reply Email
+INFO_EMAIL=
+INFO_PASSWORD=
 DISPLAY_EMAIL=
+
+# Contact Email
+CONTACT_EMAIL=
+CONTACT_PASSWORD=
+DISPLAY_CONTACT_EMAIL=
+
+# Admin Login
+LOGIN_EMAIL=
+LOGIN_PASSWORD=
+
+#Temp Password
+TEMP_PASS=
+
+# Production Address
+RETURN_ADDRESS=
+RETURN_CITY=
+RETURN_STATE=
+RETURN_POSTAL_CODE=
+RETURN_COUNTRY=
+
+################## Easy Post ##################
+
+EASY_POST=
+
+# EASY_POST_LIVE=
+# EASY_POST_DEV=
+
+# USPS
+# USPS_SECRET_PROD=
+# USPS_SECRET_DEV=
+
+################## Google Sheets ##################
+
+REACT_APP_GOOGLE_SHEETS_PRIVATE=
+
+# GOOGLE_SHEETS_CLIENT_ID=
+# GOOGLE_SHEETS_CLIENT_SECRET=
+
+################## Stripe ##################
+
+STRIPE_KEY=
+
+# REACT_APP_STRIPE_TEST_PUBLISHER_KEY=
+# REACT_APP_STRIPE_TEST_SECRET_KEY=
+
+# REACT_APP_STRIPE_LIVE_PUBLISHER_KEY=
+# REACT_APP_STRIPE_LIVE_SECRET_KEY=
+
+################## Airtable ##################
+
+AIRTABLE_API_KEY=
+REACT_APP_AIRTABLE_ACCESS_TOKEN=
+
+
+################## Debugging ##################
+
+# Bugsnag
+BUGSNAG_KEY=
+
+# New Relic
+NEW_RELIC_APP_NAME=
+NEW_RELIC_KEY=
+
+# Scout
+SCOUT_KEY=
+SCOUT_LOG_LEVEL=
+SCOUT_MONITOR=
+
+################## Email ##################
+
+# No Reply Email
+GOOGLE_INFO_OAUTH_ID=
+GOOGLE_INFO_OAUTH_SECRET=
+GOOGLE_INFO_OAUTH_REFRESH_TOKEN=
+
+# Contact Email
+GOOGLE_CONTACT_OAUTH_ID=
+GOOGLE_CONTACT_OAUTH_SECRET=
+GOOGLE_CONTACT_OAUTH_REFRESH_TOKEN=
+
+GOOGLE_OAUTH=
+
+################## Image Uploading ##################
+
+# Imgur
+IMGUR_ClIENT_ID=
+IMGUR_ClIENT_SECRET=

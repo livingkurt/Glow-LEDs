@@ -80,11 +80,6 @@ require("./passport")(passport);
 app.use(routes);
 app.use("/api/templates", template_routes);
 
-// app.use('/', htmlRoutes);
-app.get("/api/config/paypal", (req: any, res: any) => {
-  res.send(config.PAYPAL_CLIENT_ID);
-});
-
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("dist"));
   app.use(express.static("client/build"));
