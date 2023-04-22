@@ -26,6 +26,8 @@ export default {
             isShipped: 1,
             shipping: 1,
             promo_code: 1,
+            order_note: 1,
+            production_note: 1,
             tracking_number: 1,
             return_tracking_number: 1
           }

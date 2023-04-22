@@ -46,18 +46,18 @@ const OrdersPage = () => {
             <div>
               <OrderItemsDisplay order={row} determine_color={determineOrderColors} colspan={column_defs.length + 1} />
             </div>
-            <div>
+            <div className="mt-10px">
               {row.order_note && (
-                <li className="row">
-                  <h3 className="">Order Note: </h3>
-                  <label className="mv-2rem ml-1rem">{row.order_note}</label>
-                </li>
+                <div className="ai-c">
+                  <div className="title_font mr-10px">Order Note: </div>
+                  <div>{row.order_note}</div>
+                </div>
               )}
               {row.production_note && (
-                <li className="row">
-                  <h3 className="">Order Note: </h3>
-                  <label className="mv-2rem ml-1rem">{row.production_note}</label>
-                </li>
+                <div className="ai-c">
+                  <div className="title_font mr-10px">Production Note: </div>
+                  <div>{row.production_note}</div>
+                </div>
               )}
             </div>
           </div>
