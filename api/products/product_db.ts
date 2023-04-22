@@ -480,7 +480,7 @@ export default {
   },
   remove_multiple_products_db: async (ids: string[]) => {
     try {
-      return await Product.deleteMany({ _id: { $in: ids } });
+      return await Product.updateMany({ _id: { $in: ids } }, { deleted: true });
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

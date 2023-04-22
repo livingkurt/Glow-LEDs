@@ -15,6 +15,9 @@ const ProductsPage = () => {
   const productPage = useSelector(state => state.products.productPage);
   const { message, loading, remoteVersionRequirement, product } = productPage;
 
+  const productTable = useSelector(state => state.products.productTable);
+  const { selectedRows } = productTable;
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -108,9 +111,25 @@ const ProductsPage = () => {
         enableRowSelect
         enableDragDrop
         titleActions={
-          <Button color="primary" variant="contained" onClick={() => dispatch(open_create_product_modal())}>
-            Create Product
-          </Button>
+          <div className="row g-10px">
+            {selectedRows.length > 0 && (
+              <Button
+                color="secondary"
+                variant="contained"
+                onClick={() => {
+                  const confirm = window.confirm(`Are you sure you want to Delete ${selectedRows.length} Products?`);
+                  if (confirm) {
+                    dispatch(API.deleteMultipleProducts(selectedRows));
+                  }
+                }}
+              >
+                Delete Products
+              </Button>
+            )}
+            <Button color="primary" variant="contained" onClick={() => dispatch(open_create_product_modal())}>
+              Create Product
+            </Button>
+          </div>
         }
       />
       <EditProductModal />

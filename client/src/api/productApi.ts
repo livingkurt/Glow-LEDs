@@ -94,6 +94,18 @@ export const deleteProduct = createAsyncThunk("products/deleteProduct", async (i
   } catch (error) {}
 });
 
+export const deleteMultipleProducts = createAsyncThunk("products/deleteMultipleProducts", async (ids: string, thunkApi: any) => {
+  try {
+    const {
+      users: {
+        userPage: { current_user }
+      }
+    } = thunkApi.getState();
+    const { data } = await axios.put(`/api/products/delete_multiple`, { ids }, headers(current_user));
+    return data;
+  } catch (error) {}
+});
+
 export const saveProductReview = createAsyncThunk(
   "products/deleteProduct",
   async (

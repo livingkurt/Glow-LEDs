@@ -279,6 +279,19 @@ const productPage = createSlice({
       state.error = payload.error;
       state.message = payload.message;
     },
+    [API.deleteMultipleProducts.pending as any]: (state: any, { payload }: any) => {
+      state.loading = true;
+    },
+    [API.deleteMultipleProducts.fulfilled as any]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.message = "Product Deleted";
+      state.remoteVersionRequirement = Date.now();
+    },
+    [API.deleteMultipleProducts.rejected as any]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.error = payload.error;
+      state.message = payload.message;
+    },
     [API.saveProductReview.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
       state.success = false;

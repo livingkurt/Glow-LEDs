@@ -124,6 +124,7 @@ const reducer =
             ...state,
             rows: data,
             filteredRows: data,
+            selectedRows: [],
             visibleRows: data,
             remote: {
               ...state.remote,

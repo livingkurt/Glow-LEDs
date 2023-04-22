@@ -173,7 +173,6 @@ export const deleteMultipleOrders = createAsyncThunk("orders/deleteMultipleOrder
         userPage: { current_user }
       }
     } = thunkApi.getState();
-    console.log({ ids });
     const { data } = await axios.put(`/api/orders/glow/delete_multiple`, { ids }, headers(current_user));
     return data;
   } catch (error) {}
