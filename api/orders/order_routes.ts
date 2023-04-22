@@ -51,6 +51,8 @@ router.route("/get_all_time_tips_revenue_orders").get(order_controller.get_all_t
 
 router.route("/glow/delete_multiple").put(order_controller.remove_multiple_orders_c);
 
+router.route("/glow/:old_user_id/transfer/:new_user_id").put(order_controller.transfer_orders_c);
+
 router
   .route("/glow/:id")
   .get(isAuth, isAdmin, order_controller.findMy_orders_c)

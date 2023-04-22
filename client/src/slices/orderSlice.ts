@@ -251,6 +251,19 @@ const orderPage = createSlice({
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
+    },
+    [API.transferOrders.pending as any]: (state: any, { payload }: any) => {
+      state.loading = true;
+    },
+    [API.transferOrders.fulfilled as any]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.success = true;
+      state.message = "Orders Transfered to New User";
+    },
+    [API.transferOrders.rejected as any]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.error = payload.error;
+      state.message = payload.message;
     }
   }
 });

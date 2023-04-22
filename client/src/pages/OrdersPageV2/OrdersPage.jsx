@@ -111,7 +111,7 @@ const OrdersPage = () => {
         enableRowSelect={true}
         titleActions={
           <div className="row g-10px">
-            {selectedRows.length > 0 && (
+            {selectedRows.length > 1 && (
               <Button
                 color="secondary"
                 variant="contained"

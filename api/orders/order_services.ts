@@ -1,6 +1,6 @@
 import { affiliate_db } from "../affiliates";
 import { expense_db } from "../expenses";
-import { order_db } from "../orders";
+import { Order, order_db } from "../orders";
 import { promo_db } from "../promos";
 import { user_db } from "../users";
 import {
@@ -1252,6 +1252,30 @@ export default {
   remove_multiple_orders_s: async (body: any) => {
     try {
       return await order_db.remove_multiple_orders_db(body.ids);
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  transfer_orders_s: async (params: any) => {
+    const { oldUserId, newUserId } = params;
+
+    try {
+      const orders = await Order.find({ user: oldUserId });
+
+      if (!orders) {
+        throw new Error("No orders found for the old user");
+      }
+
+      const updatedOrders = await Promise.all(
+        orders.map(async order => {
+          order.user = newUserId;
+          return order.save();
+        })
+      );
+
+      return updatedOrders;
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

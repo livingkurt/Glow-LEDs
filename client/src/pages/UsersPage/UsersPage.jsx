@@ -83,7 +83,7 @@ const UsersPage = () => {
         enableRowSelect={true}
         titleActions={
           <div className="row g-10px">
-            {selectedRows.length > 0 && (
+            {selectedRows.length > 1 && (
               <>
                 <Button
                   color="secondary"
@@ -97,20 +97,22 @@ const UsersPage = () => {
                 >
                   Delete Users
                 </Button>
-                <Button
-                  color="primary"
-                  variant="contained"
-                  onClick={() =>
-                    dispatch(
-                      open_combine_users_modal({
-                        user1: rows.find(row => row._id === selectedRows[0]),
-                        user2: rows.find(row => row._id === selectedRows[1])
-                      })
-                    )
-                  }
-                >
-                  Combine Users
-                </Button>
+                {selectedRows.length === 2 && (
+                  <Button
+                    color="primary"
+                    variant="contained"
+                    onClick={() =>
+                      dispatch(
+                        open_combine_users_modal({
+                          user1: rows.find(row => row._id === selectedRows[0]),
+                          user2: rows.find(row => row._id === selectedRows[1])
+                        })
+                      )
+                    }
+                  >
+                    Combine Users
+                  </Button>
+                )}
               </>
             )}
             <Button color="primary" variant="contained" onClick={() => dispatch(open_create_user_modal())}>

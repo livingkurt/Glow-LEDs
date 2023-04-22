@@ -233,3 +233,12 @@ export const payOrderGuest = createAsyncThunk(
     } catch (error) {}
   }
 );
+export const transferOrders = createAsyncThunk(
+  "orders/transferOrders",
+  async ({ oldUserId, newUserId }: { oldUserId: any; newUserId: any }, thunkApi: any) => {
+    try {
+      const { data } = await axios.put(`/api/orders/${oldUserId}transfer/${newUserId}`);
+      return data;
+    } catch (error) {}
+  }
+);
