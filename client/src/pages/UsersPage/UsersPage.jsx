@@ -4,8 +4,8 @@ import { Notification } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
-import { open_create_user_modal, open_edit_user_modal } from "../../slices/userSlice";
-import { EditUserModal } from "./components";
+import { open_combine_users_modal, open_create_user_modal, open_edit_user_modal } from "../../slices/userSlice";
+import { CombineUsersModal, EditUserModal } from "./components";
 import * as API from "../../api";
 import { Button } from "@mui/material";
 import { getUsers } from "../../api";
@@ -15,6 +15,9 @@ import { Link } from "react-router-dom";
 const UsersPage = () => {
   const userPage = useSelector(state => state.users.userPage);
   const { message, loading, remoteVersionRequirement } = userPage;
+
+  const userTable = useSelector(state => state.users.userTable);
+  const { selectedRows, rows } = userTable;
 
   const dispatch = useDispatch();
 
@@ -78,217 +81,46 @@ const UsersPage = () => {
         loading={loading}
         enableRowSelect={true}
         titleActions={
-          <Button color="primary" variant="contained" onClick={() => dispatch(open_create_user_modal())}>
-            Create User
-          </Button>
+          <div className="row g-10px">
+            {selectedRows.length > 0 && (
+              <>
+                <Button
+                  color="secondary"
+                  variant="contained"
+                  onClick={() => {
+                    const confirm = window.confirm(`Are you sure you want to Delete ${selectedRows.length} Users?`);
+                    if (confirm) {
+                      // dispatch(API.deleteMultipleUsers(selectedRows));
+                    }
+                  }}
+                >
+                  Delete Users
+                </Button>
+                <Button
+                  color="primary"
+                  variant="contained"
+                  onClick={() =>
+                    dispatch(
+                      open_combine_users_modal({
+                        user1: rows.find(row => row._id === selectedRows[0]),
+                        user2: rows.find(row => row._id === selectedRows[1])
+                      })
+                    )
+                  }
+                >
+                  Combine Users
+                </Button>
+              </>
+            )}
+            <Button color="primary" variant="contained" onClick={() => dispatch(open_create_user_modal())}>
+              Create User
+            </Button>
+          </div>
         }
       />
       <EditUserModal />
+      <CombineUsersModal />
     </div>
   );
 };
 export default UsersPage;
-
-// import React, { useEffect, useState } from "react";
-// import { Link } from "react-router-dom";
-// import { useSelector, useDispatch } from "react-redux";
-// import { format_date } from "../../utils/helper_functions";
-// import { Loading, Notification } from "../../shared/SharedComponents";
-// import { Helmet } from "react-helmet";
-// import { GLButton } from "../../shared/GlowLEDsComponents";
-// import Search from "../../shared/GlowLEDsComponents/GLTable/Search";
-// import Sort from "../../shared/GlowLEDsComponents/GLTable/Sort";
-// import * as API from "../../api";
-
-// const UsersPage = props => {
-//   const [search, set_search] = useState("");
-//   const [sort, setSortOrder] = useState("");
-//   const category = props.match.params.category ? props.match.params.category : "";
-//   const userPage = useSelector(state => state.users.userPage);
-//   const { loading, users, message, error, success } = userPage;
-
-//   const dispatch = useDispatch();
-
-//   useEffect(() => {
-//     let clean = true;
-//     if (clean) {
-//       dispatch(API.listUsers({}));
-//     }
-//     return () => (clean = false);
-//   }, [success]);
-
-//   const deleteHandler = user => {
-//     dispatch(API.deleteUser(user._id));
-//   };
-
-//   const submitHandler = e => {
-//     e.preventDefault();
-//     dispatch(API.listUsers({ category, search, sort }));
-//   };
-
-//   const sortHandler = e => {
-//     setSortOrder(e.target.value);
-//     dispatch(API.listUsers({ category, search, sort: e.target.value }));
-//   };
-
-//   useEffect(() => {
-//     let clean = true;
-//     if (clean) {
-//       dispatch(API.listUsers({ category, search, sort }));
-//     }
-//     return () => (clean = false);
-//   }, [sort]);
-
-//   const colors = [
-//     { name: "Not Verified", color: "#333333" },
-//     { name: "Verified", color: "#3e4c6d" },
-//     { name: "Admin", color: "#525252" },
-//     { name: "Affiliated", color: "#7d5555" },
-//     { name: "Guest", color: "#3e6d6b" },
-//     { name: "Employee", color: "#557d68" }
-//   ];
-
-//   const determine_color = user => {
-//     let result = "";
-//     if (!user.isVerified) {
-//       result = colors[0].color;
-//     }
-//     if (user.isVerified) {
-//       result = colors[1].color;
-//     }
-//     if (user.guest) {
-//       result = colors[4].color;
-//     }
-//     if (user.is_affiliated) {
-//       result = colors[3].color;
-//     }
-//     if (user.is_employee) {
-//       result = colors[5].color;
-//     }
-//     if (user.isAdmin) {
-//       result = colors[2].color;
-//     }
-//     //
-//     return result;
-//   };
-
-//   const sort_options = ["Date", "First Name", "Last Name"];
-
-//   return (
-//     <div className="main_container p-20px">
-//       <Helmet>
-//         <title>Admin Users | Glow LEDs</title>
-//       </Helmet>
-//       <Notification message={message} />
-//       <div className="wrap jc-b">
-//         {colors.map((color, index) => {
-//           return (
-//             <div className="wrap jc-b w-20rem m-1rem" key={index}>
-//               <label style={{ marginRight: "1rem" }}>{color.name}</label>
-//               <div
-//                 style={{
-//                   backgroundColor: color.color,
-//                   height: "20px",
-//                   width: "60px",
-//                   borderRadius: "5px"
-//                 }}
-//               />
-//             </div>
-//           );
-//         })}
-//         <Link to="/secure/glow/edituser">
-//           <GLButton variant="primary" style={{ width: "160px" }}>
-//             Create User
-//           </GLButton>
-//         </Link>
-//       </div>
-//       <div className="order-header">
-//         <h1
-//           style={{
-//             textAlign: "center",
-//             width: "100%",
-//             margin: "20px auto",
-//             justifyContent: "center"
-//           }}
-//         >
-//           Users
-//         </h1>
-//       </div>
-
-//       <div className="search_and_sort row jc-c ai-c" style={{ overflowX: "scroll" }}>
-//         <Search search={search} set_search={set_search} handleListItems={submitHandler} category={category} />
-//         <Sort sortHandler={sortHandler} sort_options={sort_options} />
-//       </div>
-//       <Loading loading={loading} error={error}>
-//         {users && (
-//           <div className="order-list responsive_table">
-//             <table className="table">
-//               <thead>
-//                 <tr>
-//                   {/* <th>ID</th> */}
-//                   <th>DATE</th>
-//                   <th>FIRST</th>
-//                   <th>LAST</th>
-//                   <th>EMAIL</th>
-//                   <th>Guest</th>
-//                   <th>Affiliated</th>
-//                   {/* <th>VERIFIED</th> */}
-//                   {/* <th>ADMIN</th> */}
-//                   <th>ACTIONS</th>
-//                 </tr>
-//               </thead>
-//               <tbody>
-//                 {users.map((user, index) => (
-//                   <tr
-//                     key={index}
-//                     style={{
-//                       backgroundColor: determine_color(user)
-//                     }}
-//                   >
-//                     {/* <td className="p-10px">{user._id}</td> */}
-//                     <td className="p-10px">{format_date(user.createdAt)}</td>
-//                     <td className="p-10px">{user.first_name}</td>
-//                     <td className="p-10px">{user.last_name}</td>
-//                     <td className="p-10px">{user.email}</td>
-//                     {/* <td className="p-10px">{user.affiliate}</td> */}
-//                     <td className="p-10px">{user.guest ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}</td>
-//                     <td className="p-10px">
-//                       {user.is_affiliated ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
-//                     </td>
-//                     <td className="p-10px">
-//                       {user.is_affiliated ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
-//                     </td>
-//                     {/* <td className="p-10px">
-//                       {user.isVerified ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
-//                     </td>
-//                     <td className="p-10px">
-//                       {user.isAdmin ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
-//                     </td> */}
-//                     <td className="p-10px">
-//                       <div className="jc-b">
-//                         <Link to={"/secure/glow/edituser/" + user._id}>
-//                           <GLButton variant="icon" aria-label="Edit">
-//                             <i className="fas fa-info-circle" />
-//                           </GLButton>
-//                         </Link>
-// <Link to={"/secure/glow/userprofile/" + user._id}>
-//   <GLButton variant="icon" aria-label="view">
-//     <i className="fas fa-mountain" />
-//   </GLButton>
-// </Link>
-//                         <GLButton variant="icon" onClick={() => deleteHandler(user)} aria-label="Delete">
-//                           <i className="fas fa-trash-alt" />
-//                         </GLButton>
-//                       </div>
-//                     </td>
-//                   </tr>
-//                 ))}
-//               </tbody>
-//             </table>
-//           </div>
-//         )}
-//       </Loading>
-//     </div>
-//   );
-// };
-// export default UsersPage;

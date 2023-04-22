@@ -34,3 +34,26 @@ export const determine_color = user => {
 export const fullName = user => {
   return `${user.first_name} ${user.last_name}`;
 };
+
+const allAttributes = [
+  "first_name",
+  "last_name",
+  "email",
+  "shipping",
+  "password",
+  "stripe_connect_id",
+  "isAdmin",
+  "isVerified",
+  "is_affiliated",
+  "is_employee",
+  "weekly_wage",
+  "palettes",
+  "affiliate",
+  "email_subscription",
+  "guest",
+  "wholesaler",
+  "isWholesaler",
+  "minimum_order_amount"
+];
+
+export const attributes = (user1, user2) => Array.from(new Set([...allAttributes, ...Object.keys(user1), ...Object.keys(user2)]));

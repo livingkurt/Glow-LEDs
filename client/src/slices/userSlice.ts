@@ -5,59 +5,52 @@ import * as API from "../api";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "../utils/setAuthToken";
 
+const user = {
+  first_name: "",
+  last_name: "",
+  email: "",
+  is_affiliated: false,
+  is_employee: false,
+  affiliate: {},
+  isVerified: false,
+  isAdmin: false,
+  shipping: {
+    first_name: "",
+    last_name: "",
+    address_1: "",
+    address_2: "",
+    city: "",
+    state: "",
+    postalCode: "",
+    international: false,
+    country: ""
+  },
+  email_subscription: false,
+  stripe_connect_id: "",
+  weekly_wage: 0,
+  isWholesaler: false,
+  minimum_order_amount: "",
+  guest: false,
+  international: false
+};
+
 const userPage = createSlice({
   name: "userPage",
   initialState: {
     loading: false,
     access_token: "",
     users: [],
-    user: {
-      first_name: "",
-      last_name: "",
-      email: "",
-      is_affiliated: false,
-      is_employee: false,
-      affiliate: {},
-      isVerified: false,
-      isAdmin: false,
-      shipping: {
-        first_name: "",
-        last_name: "",
-        address_1: "",
-        address_2: "",
-        city: "",
-        state: "",
-        postalCode: "",
-        international: false,
-        country: ""
-      },
-      email_subscription: false,
-      stripe_connect_id: "",
-      weekly_wage: 0,
-      isWholesaler: false,
-      minimum_order_amount: "",
-      guest: false,
-      international: false
-    },
+    user: user,
     remoteVersionRequirement: 0,
+    combine_user_modal: false,
     edit_user_modal: false,
     user_modal: false,
     current_user: {},
     message: "",
     success: false,
     error: {},
-    search: "",
-    sort: "",
-    page: 1,
-    limit: 10,
-    sort_options: ["Newest", "Artist Name", "Facebook Name", "Instagram Handle", "Sponsor", "Promoter"],
-    colors: [
-      { name: "Sponsor", color: "#3e4c6d" },
-      { name: "Promoter", color: "#7d5555" },
-      { name: "Team", color: "#557d6c" },
-      { name: "Not Active", color: "#757575" },
-      { name: "Rave Mob", color: "#55797d" }
-    ]
+    user1: {},
+    user2: {}
   },
   reducers: {
     set_user: (state, { payload }) => {
@@ -101,72 +94,21 @@ const userPage = createSlice({
     },
     open_create_user_modal: (state, { payload }) => {
       state.edit_user_modal = true;
-      state.user = {
-        first_name: "",
-        last_name: "",
-        email: "",
-        is_affiliated: false,
-        is_employee: false,
-        affiliate: {},
-        isVerified: false,
-        isAdmin: false,
-        shipping: {
-          first_name: "",
-          last_name: "",
-          address_1: "",
-          address_2: "",
-          city: "",
-          state: "",
-          postalCode: "",
-          international: false,
-          country: ""
-        },
-        email_subscription: false,
-        stripe_connect_id: "",
-        weekly_wage: 0,
-        isWholesaler: false,
-        guest: false,
-        international: false
-      };
+      state.user = user;
     },
     open_edit_user_modal: (state, { payload }) => {
       state.edit_user_modal = true;
       state.user = payload;
     },
-    close_user_modal: (state, { payload }) => {
-      state.user_modal = false;
-      state.user = {
-        first_name: "",
-        last_name: "",
-        email: "",
-        is_affiliated: false,
-        is_employee: false,
-        affiliate: {},
-        isVerified: false,
-        isAdmin: false,
-        shipping: {
-          first_name: "",
-          last_name: "",
-          address_1: "",
-          address_2: "",
-          city: "",
-          state: "",
-          postalCode: "",
-          international: false,
-          country: ""
-        },
-        email_subscription: false,
-        stripe_connect_id: "",
-        weekly_wage: 0,
-        isWholesaler: false,
-        minimum_order_amount: "",
-        guest: false,
-        international: false
-      };
+    open_combine_users_modal: (state, { payload }) => {
+      const { user1, user2 } = payload;
+      state.combine_user_modal = true;
+      state.user1 = user1;
+      state.user2 = user2;
     },
-    open_user_modal: (state, { payload }) => {
-      state.user_modal = true;
-      state.user = payload;
+    close_modals: (state, { payload }) => {
+      state.combine_user_modal = false;
+      state.edit_user_modal = false;
     }
   },
   extraReducers: {
@@ -313,8 +255,8 @@ export const {
   set_success,
   set_edit_user_modal,
   open_create_user_modal,
-  open_user_modal,
-  close_user_modal,
+  open_combine_users_modal,
+  close_modals,
   open_edit_user_modal
 } = userPage.actions;
 export default userPage.reducer;

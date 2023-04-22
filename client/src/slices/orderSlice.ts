@@ -99,7 +99,6 @@ const orderPage = createSlice({
       state.order = order;
     },
     open_edit_order_modal: (state, { payload }) => {
-      console.log({ payload });
       state.edit_order_modal = true;
       state.order = payload;
     },
