@@ -264,6 +264,7 @@ export default {
         from: process.env.DISPLAY_INFO_EMAIL,
         to: user.email,
         subject: `You're code was just used!`,
+        bcc: process.env.DISPLAY_INFO_EMAIL,
         html: App({
           body: code_used({
             affiliate,
