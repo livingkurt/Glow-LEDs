@@ -692,7 +692,7 @@ export default {
   },
   remove_multiple_orders_db: async (ids: string[]) => {
     try {
-      return await Order.deleteMany({ _id: { $in: ids } });
+      return await Order.updateMany({ _id: { $in: ids } }, { deleted: true });
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
