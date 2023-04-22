@@ -1248,5 +1248,14 @@ export default {
         throw new Error(error.message);
       }
     }
+  },
+  remove_multiple_orders_s: async (body: any) => {
+    try {
+      return await order_db.remove_multiple_orders_db(body.ids);
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
   }
 };

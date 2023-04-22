@@ -32,6 +32,7 @@ const GLTableRow = ({
   const onCellClick = e => {
     if (enableDropdownRow) {
       if (rowCheckboxClicked(e.target)) {
+        dispatch(selectRow(namespace, row._id));
         return;
       }
       dispatch(onExpandRow(namespace, name));

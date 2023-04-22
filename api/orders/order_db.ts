@@ -34,11 +34,7 @@ export default {
   findBy_orders_db: async (params: any) => {
     try {
       return await Order.findOne(params).populate("user").populate("orderItems.product").populate("orderItems.secondary_product");
-    } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(error.message);
-      }
-    }
+    } catch (error) {}
   },
   create_orders_db: async (body: any) => {
     try {
@@ -688,6 +684,15 @@ export default {
       ]);
 
       return affiliatesEarnings;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  remove_multiple_orders_db: async (ids: string[]) => {
+    try {
+      return await Order.deleteMany({ _id: { $in: ids } });
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

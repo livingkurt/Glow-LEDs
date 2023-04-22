@@ -434,5 +434,16 @@ export default {
     } catch (error) {
       res.status(500).send({ error, message: "Error get_range_affiliate_earnings_code_usage_orders_c" });
     }
-  }
+  },
+  remove_multiple_orders_c: async (req: any, res: any) => {
+    const { body } = req;
+    try {
+      const order = await order_services.remove_multiple_orders_s(body);
+      if (order) {
+        return res.status(204).send({ message: "Order Deleted" });
+      }
+      return res.status(500).send({ message: "Error Deleting Order" });
+    } catch (error) {
+      res.status(500).send({ error, message: "Error Deleting Order" });
+    }
 };

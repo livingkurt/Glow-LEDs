@@ -478,6 +478,15 @@ export default {
       }
     }
   },
+  remove_multiple_products_db: async (ids: string[]) => {
+    try {
+      return await Product.deleteMany({ _id: { $in: ids } });
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
   count_products_db: async (filter: any) => {
     try {
       return await Product.countDocuments(filter);

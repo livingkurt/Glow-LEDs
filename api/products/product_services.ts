@@ -430,7 +430,7 @@ export default {
     //   }
     // }
     return "Success";
-  }
+  },
   // compress_images_products_s: async (body: any) => {
   //   try {
   //     //
@@ -450,4 +450,13 @@ export default {
   //           }
   //   }
   // },
+  remove_multiple_products_s: async (body: any) => {
+    try {
+      return await product_db.remove_multiple_products_db(body.ids);
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  }
 };

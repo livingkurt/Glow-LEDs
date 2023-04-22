@@ -49,6 +49,8 @@ router.route("/get_all_time_category_revenue_orders").get(order_controller.get_a
 router.route("/get_range_tips_revenue_orders").get(order_controller.get_range_tips_revenue_orders_c);
 router.route("/get_all_time_tips_revenue_orders").get(order_controller.get_all_time_tips_revenue_orders_c);
 
+router.route("/glow/delete_multiple").put(order_controller.remove_multiple_orders_c);
+
 router
   .route("/glow/:id")
   .get(isAuth, isAdmin, order_controller.findMy_orders_c)

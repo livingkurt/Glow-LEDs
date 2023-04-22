@@ -200,6 +200,19 @@ const orderPage = createSlice({
       state.error = payload.error;
       state.message = payload.message;
     },
+    [API.deleteMultipleOrders.pending as any]: (state: any, { payload }: any) => {
+      state.loading = true;
+    },
+    [API.deleteMultipleOrders.fulfilled as any]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.message = "Order Deleted";
+      state.remoteVersionRequirement = Date.now();
+    },
+    [API.deleteMultipleOrders.rejected as any]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.error = payload.error;
+      state.message = payload.message;
+    },
     [API.refundOrder.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
     },

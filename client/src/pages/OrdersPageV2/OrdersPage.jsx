@@ -18,6 +18,8 @@ import { determine_product_name_string } from "../../utils/react_helper_function
 const OrdersPage = () => {
   const orderPage = useSelector(state => state.orders.orderPage);
   const { message, loading, remoteVersionRequirement, order } = orderPage;
+  const orderTable = useSelector(state => state.orders.orderTable);
+  const { selectedRows } = orderTable;
 
   const dispatch = useDispatch();
 
@@ -81,7 +83,6 @@ const OrdersPage = () => {
 
   const remoteApi = useCallback(options => API.getOrders(options), []);
   const remoteFiltersApi = useCallback(() => API.getOrderFilters(), []);
-
   return (
     <div className="main_container p-20px">
       <Helmet>
@@ -101,8 +102,6 @@ const OrdersPage = () => {
         columnDefs={column_defs}
         enableDropdownRow
         rowName={"_id"}
-        // dropdownColumnDefs={dropdown_column_defs}
-        // dropdownRows={row => [row]}
         dropdownComponent={row => <OrderDropdown row={row} determine_color={determineOrderColors} colspan={column_defs.length + 1} />}
         extendedRowComponent={row => (
           <OrderItemsDisplay order={row} determine_color={determineOrderColors} colspan={column_defs.length + 1} />
@@ -110,9 +109,25 @@ const OrdersPage = () => {
         loading={loading}
         enableRowSelect={true}
         titleActions={
-          <Button color="primary" variant="contained" onClick={() => dispatch(open_create_order_modal())}>
-            Create Order
-          </Button>
+          <div className="row g-10px">
+            {selectedRows.length > 0 && (
+              <Button
+                color="secondary"
+                variant="contained"
+                onClick={() => {
+                  const confirm = window.confirm(`Are you sure you want to Delete ${selectedRows.length} Orders?`);
+                  if (confirm) {
+                    dispatch(API.deleteMultipleOrders(selectedRows));
+                  }
+                }}
+              >
+                Delete Orders
+              </Button>
+            )}
+            <Button color="primary" variant="contained" onClick={() => dispatch(open_create_order_modal())}>
+              Create Order
+            </Button>
+          </div>
         }
       />
       <EditOrderModal />
