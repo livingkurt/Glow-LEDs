@@ -7,7 +7,6 @@ import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
 import { AppBar, Tab, Tabs, Typography } from "@mui/material";
 import GLTabPanel from "../../../shared/GlowLEDsComponents/GLTabPanel/GLTabPanel";
 import { orderFormFields } from "./orderFormFields";
-import { fullName } from "../../UsersPage/usersHelpers";
 import { GLAutocomplete } from "../../../shared/GlowLEDsComponents";
 
 const EditOrderModal = () => {
@@ -58,9 +57,7 @@ const EditOrderModal = () => {
   // }
 
   const updateOrderItem = (index, value, order) => {
-    console.log({ order: order.orderItems, value });
     const orderItems = order.orderItems.map((item, i) => {
-      console.log({ item });
       if (i === index) {
         return {
           ...item,
@@ -93,7 +90,6 @@ const EditOrderModal = () => {
         return item;
       }
     });
-    console.log({ orderItems });
     return { orderItems };
   };
 

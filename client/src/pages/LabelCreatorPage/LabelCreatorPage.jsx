@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { state_names } from "../../../utils/helper_functions";
+import { state_names } from "../../utils/helper_functions";
 import { Helmet } from "react-helmet";
-import { API_Shipping } from "../../../utils";
+import { API_Shipping } from "../../utils";
 import { useHistory } from "react-router-dom";
-import { Loading } from "../../../shared/SharedComponents";
+import { Loading } from "../../shared/SharedComponents";
 import Autocomplete from "react-google-autocomplete";
-import { GLButton } from "../../../shared/GlowLEDsComponents";
+import { GLButton } from "../../shared/GlowLEDsComponents";
 
-import * as API from "../../../api";
+import * as API from "../../api";
 
 const LabelCreatorPage = props => {
   const userPage = useSelector(state => state.users.userPage);

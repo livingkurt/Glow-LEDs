@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { GLButton } from "../../../shared/GlowLEDsComponents";
+import { GLButton } from "../../shared/GlowLEDsComponents";
 
-const ViewOrder = props => {
+const TrackOrderPage = () => {
   const [order_number, set_order_number] = useState("");
 
   const userPage = useSelector(state => state.users.userPage);
@@ -57,4 +57,4 @@ const ViewOrder = props => {
     </div>
   );
 };
-export default ViewOrder;
+export default TrackOrderPage;

@@ -15,7 +15,6 @@ import Headroom from "react-headroom";
 
 import { createTheme, ThemeProvider } from "@mui/material";
 import glow_leds_theme from "./theme";
-import { EditOrderPage, LabelCreatorPage, OrderCombinerPage, TrackOrderPage } from "./pages/OrdersPage/components";
 import { OrderPage } from "./pages/OrderPage";
 import { PlaceOrderPage } from "./pages/PlaceOrderPage";
 import {
@@ -30,7 +29,7 @@ import { GcodeContinousPage } from "./pages/GcodeContinousPage";
 import { DatabaseMigrationPage } from "./pages/DatabaseMigrationPage";
 import { ProductsPage } from "./pages/ProductsPage";
 // import { OrdersPage } from "./pages/OrdersPage";
-import { OrdersPage } from "./pages/OrdersPageV2";
+import { OrdersPage } from "./pages/OrdersPage";
 import { EditPaycheckPage, PaychecksPage } from "./pages/PaychecksPage";
 import { EditSettingPage, SettingsPage } from "./pages/SettingsPage";
 import { CategorysPage, EditCategoryPage } from "./pages/CategorysPage";
@@ -87,6 +86,8 @@ import { TutorialsPage } from "./pages/TutorialsPage";
 import { WholesalersPage } from "./pages/WholesalersPage";
 import { TutorialsGridPage } from "./pages/TutorialsGridPage";
 import { ImagesPage } from "./pages/ImagesPage";
+import LabelCreatorPage from "./pages/LabelCreatorPage/LabelCreatorPage";
+import TrackOrderPage from "./pages/TrackOrderPage/TrackOrderPage";
 
 const App = props => {
   const theme_colors = {
@@ -317,7 +318,6 @@ const App = props => {
                 <AdminRoute path="/secure/glow/filaments" component={FilamentsPage} />
                 <AdminRoute path="/secure/glow/userprofile/:id" component={ProfilePage} />
                 <AdminRoute path="/secure/glow/edituser/:id?" component={EditUserPage} />
-                <AdminRoute path="/secure/glow/editorder/:id?" component={EditOrderPage} />
                 <AdminRoute path="/secure/glow/editpaycheck/:id?" component={EditPaycheckPage} />
                 <AdminRoute path="/secure/glow/editsetting/:id?" component={EditSettingPage} />
                 <AdminRoute path="/secure/glow/editcategory/:id?" component={EditCategoryPage} />
@@ -337,7 +337,6 @@ const App = props => {
                 <AdminRoute path="/secure/glow/carts" component={CartsPage} />
                 <AdminRoute path="/secure/glow/contents" component={ContentsPage} />
                 <AdminRoute path="/secure/glow/display_products" component={ProductsDisplayPage} />
-                <AdminRoute path="/secure/glow/combine_orders" component={OrderCombinerPage} />
                 <AdminRoute path="/secure/glow/emails/announcement/:id" exact={true} component={AnnouncementEmail} />
                 <AdminRoute path="/secure/glow/emails" component={EmailsPage} />
                 <AdminRoute path="/secure/glow/editpromo/:id?" component={EditPromoPage} />
