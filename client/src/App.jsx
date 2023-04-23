@@ -28,7 +28,6 @@ import { EditProductPage } from "./pages/ProductsPage/components";
 import { GcodeContinousPage } from "./pages/GcodeContinousPage";
 import { DatabaseMigrationPage } from "./pages/DatabaseMigrationPage";
 import { ProductsPage } from "./pages/ProductsPage";
-// import { OrdersPage } from "./pages/OrdersPage";
 import { OrdersPage } from "./pages/OrdersPage";
 import { EditPaycheckPage, PaychecksPage } from "./pages/PaychecksPage";
 import { EditSettingPage, SettingsPage } from "./pages/SettingsPage";
