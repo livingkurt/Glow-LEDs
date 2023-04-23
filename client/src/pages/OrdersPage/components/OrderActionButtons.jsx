@@ -38,7 +38,7 @@ const OrderActionButtons = ({ order }) => {
         production_note: order.production_note
       })
     );
-    dispatch(API.listOrders({}));
+    dispatch(setRemoteVersionRequirement());
   };
 
   const buy_label = async () => {
@@ -192,10 +192,19 @@ const OrderActionButtons = ({ order }) => {
           Create Return Label
         </GLButton>
       )}
+
       {order.shipping.return_shipping_label && (
-        <GLButton variant="secondary" className="w-100px mv-5px" onClick={() => view_return_label()}>
-          View Return Label
-        </GLButton>
+        <a
+          href={order.shipping.return_shipping_label.postage_label.label_url}
+          style={{ width: "100%" }}
+          target="_blank"
+          rel="noreferrer"
+          download={order.shipping.return_shipping_label.postage_label.label_url}
+        >
+          <GLButton variant="secondary" className="mv-5px w-100per">
+            Download Return Label
+          </GLButton>
+        </a>
       )}
       {order.shipping.shipping_label && (
         <GLButton
@@ -204,6 +213,11 @@ const OrderActionButtons = ({ order }) => {
           className="w-100per mv-5px"
         >
           Print Label
+        </GLButton>
+      )}
+      {order.shipping.return_shipping_label && (
+        <GLButton variant="secondary" className="w-100per mv-5px" onClick={() => view_return_label()}>
+          Print Return Label
         </GLButton>
       )}
       <GLButton
