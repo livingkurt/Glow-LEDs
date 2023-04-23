@@ -1,15 +1,13 @@
 import React from "react";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import * as API from "../../../api";
-import { set_hide_label_button, set_loading_label } from "../../../slices/orderSlice";
+import { setRemoteVersionRequirement, set_hide_label_button, set_loading_label } from "../../../slices/orderSlice";
 import { API_Orders, API_Shipping } from "../../../utils";
-import { getUrlParameter } from "../../../utils/helper_functions";
 
 const OrderActionButtons = ({ order }) => {
   const dispatch = useDispatch();
-  const history = useHistory();
 
   const orderPage = useSelector(state => state.orders.orderPage);
   const { hide_label_button } = orderPage;
@@ -58,13 +56,13 @@ const OrderActionButtons = ({ order }) => {
     }
     await API_Shipping.add_tracking_number(order, data.tracking_code, data);
     dispatch(set_hide_label_button(false));
-    const query = getUrlParameter(history.location);
-    dispatch(API.listOrders({ page: query.page, limit: query.limit }));
+    dispatch(setRemoteVersionRequirement());
   };
 
   const create_label = async speed => {
     dispatch(set_loading_label(true));
     const { data: invoice } = await API_Orders.get_invoice(order);
+    console.log({ invoice });
     const { data } = await API_Shipping.create_label(order, order.shipping.shipping_rate, speed);
     setTimeout(() => {
       print_invoice(invoice);
@@ -77,8 +75,26 @@ const OrderActionButtons = ({ order }) => {
     }
     await API_Shipping.add_tracking_number(order, data.tracking_code, data);
     dispatch(set_hide_label_button(false));
-    const query = getUrlParameter(history.location);
-    dispatch(API.listOrders({ page: query.page, limit: query.limit }));
+    dispatch(setRemoteVersionRequirement());
+  };
+
+  const create_return_label = async () => {
+    set_loading_label(true);
+    const { data } = await API_Shipping.create_return_label(order, order.shipping.shipping_rate);
+    print_label(data.postage_label.label_url);
+
+    if (data) {
+      set_loading_label(false);
+    }
+
+    const request = await API_Shipping.add_return_tracking_number(order, data.tracking_code, data);
+
+    dispatch(API.detailsOrder(order._id));
+  };
+
+  const view_return_label = async () => {
+    // show_label(order.shipping.shipping_label.postage_label.label_url);
+    print_label(order.shipping.return_shipping_label.postage_label.label_url);
   };
 
   const print_invoice = contents => {
@@ -105,7 +121,6 @@ const OrderActionButtons = ({ order }) => {
     }, 500);
     return false;
   };
-
   const print_label = content => {
     // const content = document.getElementById(id).innerHTML;
     const frame1 = document.createElement("iframe");
@@ -123,7 +138,7 @@ const OrderActionButtons = ({ order }) => {
     frameDoc.document.write(`<div style="width: 100%;
     display: flex;
     height: 100%;
-    align-items: center;;">
+    align-items: center;">
         <img style="margin: auto; text-align: center;" src="${content}" alt="label" />
     </div>`);
     frameDoc.document.write("</body></html>");
@@ -163,19 +178,23 @@ const OrderActionButtons = ({ order }) => {
           Buy Label
         </GLButton>
       )}
-      {hide_label_button && !order.shipping.shipping_label && (
-        <GLButton variant="primary" onClick={() => create_label("first")} className="w-100per mv-5px">
-          {!order.shipping.shipping_label ? "Create First Class Label" : "Create New First Class  Label"}
+      <GLButton variant="secondary" className="w-100per mv-5px" onClick={() => create_label("first")}>
+        {!order.shipping.shipping_label ? "Create First Class Label" : "Create New First Class Label"}
+      </GLButton>
+      {/* <GLButton variant="secondary" className="w-100per mv-5px" onClick={() => create_label("priority")}>
+        {!order.shipping.shipping_label ? "Create Priority Label" : "Create New Prioirty Label"}
+      </GLButton>
+      <GLButton variant="secondary" className="w-100per mv-5px" onClick={() => create_label("express")}>
+        {!order.shipping.shipping_label ? "Create Express Label" : "Create New Express Label"}
+      </GLButton> */}
+      {!order.shipping.return_shipping_label && (
+        <GLButton variant="secondary" className="w-100per mv-5px" onClick={() => create_return_label()}>
+          Create Return Label
         </GLButton>
       )}
-      {hide_label_button && !order.shipping.shipping_label && (
-        <GLButton variant="primary" onClick={() => create_label("priority")} className="w-100per mv-5px">
-          {!order.shipping.shipping_label ? "Create Priority Label" : "Create New Prioirty Label"}
-        </GLButton>
-      )}
-      {hide_label_button && !order.shipping.shipping_label && (
-        <GLButton variant="primary" onClick={() => create_label("express")} className="w-100per mv-5px">
-          {!order.shipping.shipping_label ? "Create Express Label" : "Create New Express Label"}
+      {order.shipping.return_shipping_label && (
+        <GLButton variant="secondary" className="w-100px mv-5px" onClick={() => view_return_label()}>
+          View Return Label
         </GLButton>
       )}
       {order.shipping.shipping_label && (
@@ -191,6 +210,7 @@ const OrderActionButtons = ({ order }) => {
         variant="primary"
         onClick={async () => {
           const { data: invoice } = await API_Orders.get_invoice(order);
+          console.log({ invoice });
           print_invoice(invoice);
         }}
         className="w-100per mv-5px"

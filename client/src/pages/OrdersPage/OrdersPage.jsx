@@ -116,9 +116,6 @@ const OrdersPage = () => {
         enableDropdownRow
         rowName={"_id"}
         dropdownComponent={row => <OrderDropdown row={row} determine_color={determineOrderColors} colspan={column_defs.length + 1} />}
-        extendedRowComponent={row => (
-          <OrderItemsDisplay order={row} determine_color={determineOrderColors} colspan={column_defs.length + 1} />
-        )}
         loading={loading}
         enableRowSelect={true}
         titleActions={

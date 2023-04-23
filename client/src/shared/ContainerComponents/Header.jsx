@@ -11,6 +11,7 @@ import Filter from "../GlowLEDsComponents/GLTable/Filter";
 import * as API from "../../api";
 import { logout_user } from "../../slices/userSlice";
 import { clear_email_success } from "../../slices/emailSlice";
+import { clear_order_state } from "../../slices/orderSlice";
 
 const Header = props => {
   const history = useHistory();
@@ -1080,7 +1081,7 @@ const Header = props => {
                         Dashboard
                       </GLButton>
                     </Link>
-                    <Link to="/secure/glow/orders">
+                    <Link to="/secure/glow/orders" onClick={() => dispatch(clear_order_state())}>
                       <GLButton variant="nav" fullWidth className="ta-l">
                         Orders
                       </GLButton>
