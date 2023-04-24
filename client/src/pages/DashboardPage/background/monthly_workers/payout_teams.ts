@@ -8,7 +8,8 @@ export const payout_teams = async (): Promise<void> => {
 
     const { start_date, end_date } = last_month_date_range();
     // Get promo code usage for the previous month
-    const { data: teams } = await axios.get(`${domainUrl}/api/teams?active=true&rave_mob=false`);
+    const { data } = await axios.get(`${domainUrl}/api/teams?active=true&rave_mob=false`);
+    const teams = data.teams;
     await Promise.all(
       teams.map(async (team: ITeam) => {
         const { data: promo_code_usage } = await axios.get(

@@ -9,9 +9,10 @@ export const payout_affiliates = async (): Promise<void> => {
 
     const { start_date, end_date } = last_month_date_range();
     // Get promo code usage for the previous month
-    const { data: affiliates } = await axios.get(`${domainUrl}/api/affiliates?active=true&rave_mob=false`);
+    const { data } = await axios.get(`${domainUrl}/api/affiliates?active=true&rave_mob=false`);
+    const affiliates = data.data;
     await Promise.all(
-      affiliates.affiliates.map(async (affiliate: IAffiliate) => {
+      affiliates.map(async (affiliate: IAffiliate) => {
         const { data: promo_code_usage } = await axios.get(
           `${domain()}/api/orders/code_usage/${affiliate?.public_code?.promo_code}?start_date=${start_date}&end_date=${end_date}&sponsor=${
             affiliate.sponsor

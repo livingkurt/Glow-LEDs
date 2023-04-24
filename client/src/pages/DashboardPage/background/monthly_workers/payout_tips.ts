@@ -7,7 +7,9 @@ export const payout_tips = async (): Promise<void> => {
 
     const { start_date, end_date } = last_month_date_range();
     const { data: user } = await axios.get(`${domainUrl}/api/users/5f93cb1e7f9e40002a736df7`);
-    const { data: tips } = await axios.get(`${domainUrl}/api/orders/get_range_tips_orders?start_date=${start_date}&end_date=${end_date}`);
+    const { data: tips } = await axios.get(
+      `${domainUrl}/api/orders/get_range_tips_revenue_orders?start_date=${start_date}&end_date=${end_date}`
+    );
 
     console.log({
       amount: tips[0].total_tips,

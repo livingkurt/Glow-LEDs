@@ -7,8 +7,11 @@ dotenv.config();
 export const payout_employees = async (): Promise<void> => {
   try {
     const domainUrl = domain();
-    const { data } = await axios.get(`${domainUrl}/api/users?is_employee=true`);
-    data.map(async (employee: IUser) => {
+    const { data } = await axios.get(
+      `${domainUrl}/api/users?search=&filters=%7B"employees"%3A%5B"only_employees"%5D%7D&page=0&pageSize=10&sorting=%5B0%2C"asc"%5D`
+    );
+    const employees = data.data;
+    employees.map(async (employee: IUser) => {
       if (employee?.weekly_wage && employee.stripe_connect_id) {
         await axios.post(`${domainUrl}/api/payments/payout_transfer`, {
           amount: employee?.weekly_wage,

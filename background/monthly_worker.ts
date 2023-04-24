@@ -11,8 +11,8 @@ const monthly_worker = () => {
     // Run the code that you only want to run once a week
     payout_affiliates();
     payout_teams();
-    refresh_sponsor_codes();
     payout_tips();
+    refresh_sponsor_codes();
   } else {
     console.log("Not the first of the month");
   }
