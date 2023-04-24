@@ -64,6 +64,11 @@ const ProductsPage = () => {
             >
               <i className="fas fa-edit" />
             </GLButton>
+            <Link to={`/collections/all/products/${row.pathname}`}>
+              <GLButton variant="icon" aria-label="Use as Template">
+                <i className="fas fa-mountain" />
+              </GLButton>
+            </Link>
             <Link to={"/secure/glow/editproduct/" + row.pathname + "/" + true}>
               <GLButton variant="icon" aria-label="Use as Template">
                 <i className="fas fa-clone" />

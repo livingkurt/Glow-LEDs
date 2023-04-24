@@ -34,7 +34,7 @@ const TutorialsGridPage = () => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      dispatch(API.listTutorials({ limit: 0, page: 0 }));
+      dispatch(API.listTutorials({ limit: 0, page: 0, sort: [3, "desc"] }));
     }
     return () => (clean = false);
   }, [dispatch]);
