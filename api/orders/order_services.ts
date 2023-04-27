@@ -24,7 +24,6 @@ const today = new Date();
 export default {
   findAll_orders_s: async (query: { search: string; sort: string; page: string; limit: string; filters: any }) => {
     try {
-      console.log({ query });
       const sort_options = ["createdAt", "user.first_name", "totalPrice"];
       const { filter, sort, limit, page } = getFilteredData({
         query,
@@ -33,10 +32,10 @@ export default {
         normalizeFilters: normalizeOrderFilters,
         normalizeSearch: normalizeOrderSearch
       });
-      console.log({ filter, sort, limit, page });
-
+      console.log({ filter });
       const orders = await order_db.table_orders_db(filter, sort, limit, page);
       const count = await order_db.count_orders_db(filter);
+      console.log({ orders });
       return {
         data: orders,
         total_count: count,

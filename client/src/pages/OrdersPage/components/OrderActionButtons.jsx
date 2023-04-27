@@ -61,22 +61,42 @@ const OrderActionButtons = ({ order }) => {
 
   const create_label = async speed => {
     dispatch(set_loading_label(true));
-    const { data: invoice } = await API_Orders.get_invoice(order);
-    console.log({ invoice });
     const { data } = await API_Shipping.create_label(order, order.shipping.shipping_rate, speed);
+    const { data: invoice } = await API_Orders.get_invoice(order);
     setTimeout(() => {
       print_invoice(invoice);
     }, 1500);
     setTimeout(() => {
       print_label(data.postage_label.label_url);
-    }, 1500);
+    }, 1000);
+
     if (data) {
       dispatch(set_loading_label(false));
     }
-    await API_Shipping.add_tracking_number(order, data.tracking_code, data);
-    dispatch(set_hide_label_button(false));
+
+    const request = await API_Shipping.add_tracking_number(order, data.tracking_code, data);
+
     dispatch(setRemoteVersionRequirement());
   };
+
+  // const create_label = async speed => {
+  //   dispatch(set_loading_label(true));
+  //   const { data: invoice } = await API_Orders.get_invoice(order);
+  //   console.log({ invoice });
+  //   const { data } = await API_Shipping.create_label(order, order.shipping.shipping_rate, speed);
+  //   setTimeout(() => {
+  //     print_invoice(invoice);
+  //   }, 1500);
+  //   setTimeout(() => {
+  //     print_label(data.postage_label.label_url);
+  //   }, 1500);
+  //   if (data) {
+  //     dispatch(set_loading_label(false));
+  //   }
+  //   await API_Shipping.add_tracking_number(order, data.tracking_code, data);
+  //   dispatch(set_hide_label_button(false));
+  //   dispatch(setRemoteVersionRequirement());
+  // };
 
   const create_return_label = async () => {
     set_loading_label(true);
