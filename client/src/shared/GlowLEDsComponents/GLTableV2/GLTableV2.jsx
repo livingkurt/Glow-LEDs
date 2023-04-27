@@ -127,7 +127,6 @@ const GLTableV2 = ({
   defaultFilters,
   dropdownAction
 }) => {
-  console.log("GLTableV2 dropdownAction:", typeof dropdownAction, dropdownAction);
   const isMounted = useRef(false);
   const dispatch = useDispatch();
   const history = useHistory();

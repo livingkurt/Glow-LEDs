@@ -150,8 +150,8 @@ GLTableRow.defaultProps = {
   rowProps: () => ({}),
   cellProps: () => ({}),
   innerRef: {},
-  provided: {}
-  // dropdownAction: x => x
+  provided: {},
+  dropdownAction: x => x
 };
 
 GLTableRow.propTypes = {
