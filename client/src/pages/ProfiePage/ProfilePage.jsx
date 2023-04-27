@@ -102,7 +102,7 @@ const ProfilePage = () => {
 
   // const remoteApi = useCallback(options => API.getPaychecks(options), []);
   const remoteApi = useCallback(
-    options => API.getPaychecks({ ...options, filters: { ...options.filers, affiliate: user?.affiliate?._id } }),
+    options => API.getPaychecks({ ...options, filters: { ...options.filters, affiliate: [user.affiliate._id] } }),
     [user?.affiliate?._id]
   );
 

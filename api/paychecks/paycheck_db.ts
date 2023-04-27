@@ -2,6 +2,7 @@ import { Paycheck } from "../paychecks";
 
 export default {
   findAll_paychecks_db: async (filter: any, sort: unknown, limit: string, page: string) => {
+    console.log({ findAll_paychecks_db: filter });
     try {
       return await Paycheck.find(filter)
         .sort(sort)
