@@ -194,9 +194,9 @@ const ContactPage = props => {
             <option className="contact_options" value="website_bugs">
               Website Bugs
             </option>
-            <option className="contact_options" value="custom_orders">
+            {/* <option className="contact_options" value="custom_orders">
               Custom Orders
-            </option>
+            </option> */}
             <option className="contact_options" value="product_suggestions">
               Product Suggestions
             </option>
