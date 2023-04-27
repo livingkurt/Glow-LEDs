@@ -123,10 +123,11 @@ const GLTableV2 = ({
   determine_color,
   enableDragDrop,
   dropdownComponent,
-  extendedRowComponent,
   colors,
-  defaultFilters
+  defaultFilters,
+  dropdownAction
 }) => {
+  console.log("GLTableV2 dropdownAction:", typeof dropdownAction, dropdownAction);
   const isMounted = useRef(false);
   const dispatch = useDispatch();
   const history = useHistory();
@@ -383,7 +384,6 @@ const GLTableV2 = ({
                           <Draggable key={row._id} draggableId={row._id} index={index}>
                             {provided => (
                               <GLTableRow
-                                key={row._id}
                                 row={row}
                                 provided={provided}
                                 innerRef={provided.innerRef}
@@ -400,7 +400,7 @@ const GLTableV2 = ({
                                 rowProps={rowProps}
                                 cellProps={cellProps}
                                 determine_color={determine_color}
-                                extendedRowComponent={extendedRowComponent}
+                                dropdownAction={dropdownAction}
                               >
                                 {enableDropdownRow && expandRow === row[rowName] && (
                                   <>
@@ -458,6 +458,7 @@ const GLTableV2 = ({
                       rowProps={rowProps}
                       cellProps={cellProps}
                       determine_color={determine_color}
+                      dropdownAction={dropdownAction}
                     >
                       {enableDropdownRow && expandRow === row[rowName] && (
                         <>
@@ -529,7 +530,7 @@ GLTableV2.defaultProps = {
   enableDragDrop: false,
   dropdownComponent: false,
   colors: [],
-  extendedRowComponent: false
+  dropdownAction: x => x
 };
 
 GLTableV2.propTypes = {
@@ -585,7 +586,7 @@ GLTableV2.propTypes = {
   rowProps: PropTypes.func,
   cellProps: PropTypes.func,
   dropdownComponent: PropTypes.func,
-  extendedRowComponent: PropTypes.func,
+  dropdownAction: PropTypes.func,
   colors: PropTypes.array
 };
 

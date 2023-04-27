@@ -5,37 +5,47 @@ import { Affiliate } from "../affiliates";
 export default {
   table_orders_db: async (filter: any, sort: unknown, limit: string, page: string) => {
     try {
-      const orders = await Order.aggregate([
-        { $match: filter },
-        { $sort: sort },
-        {
-          $project: {
-            _id: 1,
-            createdAt: 1,
-            name: {
-              $concat: ["$shipping.first_name", " ", "$shipping.last_name"]
-            },
-            orderItems: 1,
-            totalPrice: 1,
-            payment: { paymentMethod: 1 },
-            isPaid: 1,
-            isReassured: 1,
-            isPaused: 1,
-            isManufactured: 1,
-            isPackaged: 1,
-            isShipped: 1,
-            shipping: 1,
-            promo_code: 1,
-            order_note: 1,
-            production_note: 1,
-            tracking_number: 1,
-            return_tracking_number: 1
-          }
-        },
-        { $skip: Math.max(parseInt(page), 0) * parseInt(limit) },
-        { $limit: parseInt(limit) }
-      ]);
-      return orders;
+      return await Order.find(filter)
+        .sort(sort)
+        .populate("user")
+        .populate("orderItems.product")
+        .populate("orderItems.secondary_product")
+        .sort(sort)
+        .limit(parseInt(limit))
+        .skip(Math.max(parseInt(page), 0) * parseInt(limit))
+
+        .exec();
+      // const orders = await Order.aggregate([
+      //   { $match: filter },
+      //   { $sort: sort },
+      //   {
+      //     $project: {
+      //       _id: 1,
+      //       createdAt: 1,
+      //       name: {
+      //         $concat: ["$shipping.first_name", " ", "$shipping.last_name"]
+      //       },
+      //       orderItems: 1,
+      //       totalPrice: 1,
+      //       payment: { paymentMethod: 1 },
+      //       isPaid: 1,
+      //       isReassured: 1,
+      //       isPaused: 1,
+      //       isManufactured: 1,
+      //       isPackaged: 1,
+      //       isShipped: 1,
+      //       shipping: 1,
+      //       promo_code: 1,
+      //       order_note: 1,
+      //       production_note: 1,
+      //       tracking_number: 1,
+      //       return_tracking_number: 1
+      //     }
+      //   },
+      //   { $skip: Math.max(parseInt(page), 0) * parseInt(limit) },
+      //   { $limit: parseInt(limit) }
+      // ]);
+      // return orders;
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

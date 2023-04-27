@@ -25,11 +25,12 @@ const GLTableRow = ({
   determine_color,
   provided,
   innerRef,
-  extendedRowComponent
+  dropdownAction
 }) => {
   const dispatch = useDispatch();
 
   const onCellClick = e => {
+    dropdownAction(row);
     if (enableDropdownRow) {
       if (rowCheckboxClicked(e.target)) {
         dispatch(selectRow(namespace, row._id));
@@ -134,7 +135,6 @@ const GLTableRow = ({
           );
         })}
       </TableRow>
-      {extendedRowComponent && extendedRowComponent(row)}
       {children}
     </>
   );
@@ -151,6 +151,7 @@ GLTableRow.defaultProps = {
   cellProps: () => ({}),
   innerRef: {},
   provided: {}
+  // dropdownAction: x => x
 };
 
 GLTableRow.propTypes = {
@@ -167,7 +168,7 @@ GLTableRow.propTypes = {
   rowProps: PropTypes.func,
   determine_color: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),
   cellProps: PropTypes.func,
-  extendedRowComponent: PropTypes.func,
+  dropdownAction: PropTypes.func,
   innerRef: PropTypes.object,
   provided: PropTypes.object
 };

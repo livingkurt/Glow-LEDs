@@ -13,25 +13,26 @@ import { humanDate } from "../../helpers/dateHelpers";
 import { determineOrderColors, orderColors, sinceOrdered } from "./ordersPageHelpers";
 import OrderItemsDisplay from "./components/OrderItemsDisplay";
 import { determine_product_name_string } from "../../utils/react_helper_functions";
+import { fullName } from "../UsersPage/usersHelpers";
 
 const OrdersPage = () => {
   const orderPage = useSelector(state => state.orders.orderPage);
-  const { message, loading, remoteVersionRequirement, order } = orderPage;
+  const { message, loading, loading_order, remoteVersionRequirement, order } = orderPage;
   const orderTable = useSelector(state => state.orders.orderTable);
   const { selectedRows } = orderTable;
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (order.orderItems.length > 0) {
-      dispatch(open_edit_order_modal(order));
-    }
-  }, [dispatch, order]);
+  // useEffect(() => {
+  //   if (order.orderItems.length > 0) {
+  //     dispatch(open_edit_order_modal(order));
+  //   }
+  // }, [dispatch, order]);
 
   const column_defs = useMemo(
     () => [
       { title: "Order Placed", display: row => humanDate(row.createdAt) },
-      { title: "Name", display: row => row.name },
+      { title: "Name", display: row => fullName(row.shipping) },
       { title: "Since Ordered", display: row => sinceOrdered(row.createdAt) },
       {
         title: "Order Items",
@@ -73,6 +74,7 @@ const OrdersPage = () => {
               aria-label="Edit"
               onClick={() => {
                 dispatch(API.detailsOrder(row._id));
+                dispatch(open_edit_order_modal(order));
               }}
             >
               <i className="fas fa-edit" />
@@ -116,6 +118,7 @@ const OrdersPage = () => {
         enableDropdownRow
         rowName={"_id"}
         dropdownComponent={row => <OrderDropdown row={row} determine_color={determineOrderColors} colspan={column_defs.length + 1} />}
+        // dropdownAction={row => dispatch(API.detailsOrder(row._id))}
         loading={loading}
         enableRowSelect={true}
         titleActions={

@@ -52,6 +52,7 @@ const orderPage = createSlice({
   name: "orderPage",
   initialState: {
     loading: false,
+    loading_order: false,
     loading_payment: false,
     orders: [],
     order: order,
@@ -175,15 +176,15 @@ const orderPage = createSlice({
       state.message = payload.message;
     },
     [API.detailsOrder.pending as any]: (state: any, { payload }: any) => {
-      state.loading = true;
+      state.loading_order = true;
     },
     [API.detailsOrder.fulfilled as any]: (state: any, { payload }: any) => {
-      state.loading = false;
+      state.loading_order = false;
       state.order = payload;
       state.message = "Order Found";
     },
     [API.detailsOrder.rejected as any]: (state: any, { payload }: any) => {
-      state.loading = false;
+      state.loading_order = false;
       state.error = payload.error;
       state.message = payload.message;
     },

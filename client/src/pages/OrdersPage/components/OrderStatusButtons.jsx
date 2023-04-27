@@ -1,13 +1,16 @@
 import React from "react";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import * as API from "../../../api";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { set_loading_label } from "../../../slices/orderSlice";
 import { API_Emails } from "../../../utils";
 import { toCapitalize } from "../../../utils/helper_functions";
+import { Loading } from "../../../shared/SharedComponents";
 
 const OrderStatusButtons = ({ order }) => {
   const dispatch = useDispatch();
+  const orderPage = useSelector(state => state.orders.orderPage);
+  const { loading_label } = orderPage;
   const updateOrder = status => {
     switch (status) {
       case "paid":
@@ -70,6 +73,7 @@ const OrderStatusButtons = ({ order }) => {
   };
   return (
     <div>
+      <Loading loading={loading_label} />
       {send_order_email && (
         <GLButton variant="primary" className="mv-5px w-100per" onClick={() => send_order_email()}>
           Send Order Email

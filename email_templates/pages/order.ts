@@ -258,7 +258,7 @@ export default (props: any) => {
                                             };
                                           })
                                           .reduce((a: any, c: any) => a + c.price * c.qty, 0)
-                                          .toFixed(2)}</strong>
+                                          ?.toFixed(2)}</strong>
 																			</td>
 																		</tr>`
                                           : ""
@@ -281,7 +281,7 @@ export default (props: any) => {
                                             };
                                           })
                                           .reduce((a: any, c: any) => a + c.price * c.qty, 0)
-                                          .toFixed(2)}</strong></del>
+                                          ?.toFixed(2)}</strong></del>
 																		</td>
 														</tr>`
                                         : ""
@@ -301,7 +301,7 @@ export default (props: any) => {
 															<td style="font-family:helvetica;padding:5px 0;text-align:right" align="righ=t">
 																<strong style="font-size:16px;color:white">-$${(
                                   order.orderItems.reduce((a: any, c: any) => a + c.price * c.qty, 0) - order.itemsPrice
-                                ).toFixed(2)}</strong>
+                                )?.toFixed(2)}</strong>
 															</td>
 														</tr>`
                                 : ""
@@ -314,7 +314,7 @@ export default (props: any) => {
 																		style="font-size:16px">New Subtotal</span></p>
 															</td>
 															<td style="font-family:helvetica;padding:5px 0;text-align:right" align="righ=t">
-																<strong style="font-size:16px;color:white">$${order.itemsPrice.toFixed(2)}</strong>
+																<strong style="font-size:16px;color:white">$${order.itemsPrice?.toFixed(2)}</strong>
 															</td>
 														</tr>`
                                 : ""
@@ -325,7 +325,7 @@ export default (props: any) => {
 																		style="font-size:16px">Taxes</span></p>
 															</td>
 															<td style="font-family:helvetica;padding:5px 0;text-align:right" align="righ=t">
-																<strong style="font-size:16px;color:white">$${order.taxPrice ? order.taxPrice.toFixed(2) : ""}</strong>
+																<strong style="font-size:16px;color:white">$${order.taxPrice ? order.taxPrice?.toFixed(2) : ""}</strong>
 															</td>
 														</tr>
 														<tr>
@@ -334,7 +334,7 @@ export default (props: any) => {
 																		style="font-size:16px">Shipping</span></p>
 															</td>
 															<td style="font-family:helvetica;padding:5px 0;text-align:right" align="righ=t">
-																<strong style="font-size:16px;color:white">$${order.shippingPrice ? order.shippingPrice.toFixed(2) : ""}</strong>
+																<strong style="font-size:16px;color:white">$${order.shippingPrice ? order.shippingPrice?.toFixed(2) : ""}</strong>
 															</td>
 														</tr>
 														${
@@ -346,7 +346,7 @@ export default (props: any) => {
 																		style="font-size:16px">Shipping</span></p>
 															</td>
 															<td style="font-family:helvetica;padding:5px 0;text-align:right" align="right">
-																<strong style="font-size:16px;color:white">$${order.tip ? order.tip.toFixed(2) : ""}</strong>
+																<strong style="font-size:16px;color:white">$${order.tip ? order.tip?.toFixed(2) : ""}</strong>
 															</td>
 														</tr>`
                                 : ""
@@ -364,7 +364,7 @@ export default (props: any) => {
 																		style="font-size:16px">Total</span></p>
 															</td>
 															<td style="font-family:helvetica;padding:20px 0 0" align="right"><strong
-																	style="font-size:24px;color:white">$ ${order.totalPrice ? order.totalPrice.toFixed(2) : ""}</strong></td>
+																	style="font-size:24px;color:white">$ ${order.totalPrice ? order.totalPrice?.toFixed(2) : ""}</strong></td>
 														</tr>
 													</tbody>
 												</table>`
@@ -381,7 +381,7 @@ export default (props: any) => {
 																		style="font-size:16px">Total</span></p>
 															</td>
 															<td style="font-family:helvetica;padding:20px 0 0" align="right"><strong
-																	style="font-size:16px;color:white">$${order.totalPrice ? order.totalPrice.toFixed(2) : ""}</strong></td>
+																	style="font-size:16px;color:white">$${order.totalPrice ? order.totalPrice?.toFixed(2) : ""}</strong></td>
 														</tr>
 													</tbody>
 												</table>`
@@ -397,7 +397,7 @@ export default (props: any) => {
 																		style="font-size:16px">Refund Amount</span></p>
 															</td>
 															<td style="font-family:helvetica;padding:5px 0;" align="right"><strong
-																	style="font-size:16px;color:white">-$${(order.payment.refund.reduce((a: any, c: any) => a + c.amount, 0) / 100).toFixed(2)}</strong></td>
+																	style="font-size:16px;color:white">-$${(order.payment.refund.reduce((a: any, c: any) => a + c.amount, 0) / 100)?.toFixed(2)}</strong></td>
 														</tr>
 														<tr>
 															<td style="font-family:helvetica;padding:5px 0;">
@@ -407,7 +407,7 @@ export default (props: any) => {
 															<td style="font-family:helvetica;padding:5px 0;" align="right"><strong
 																	style="font-size:24px;color:white">$${Math.abs(
                                     order.totalPrice - order.payment.refund.reduce((a: any, c: any) => a + c.amount, 0) / 100
-                                  ).toFixed(2)}</strong></td>
+                                  )?.toFixed(2)}</strong></td>
 														</tr>
 													</tbody>
 												</table>`

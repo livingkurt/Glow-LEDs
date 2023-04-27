@@ -5,12 +5,13 @@ import { useDispatch, useSelector } from "react-redux";
 import * as API from "../../../api";
 import { setRemoteVersionRequirement, set_hide_label_button, set_loading_label } from "../../../slices/orderSlice";
 import { API_Orders, API_Shipping } from "../../../utils";
+import { Loading } from "../../../shared/SharedComponents";
 
 const OrderActionButtons = ({ order }) => {
   const dispatch = useDispatch();
 
   const orderPage = useSelector(state => state.orders.orderPage);
-  const { hide_label_button } = orderPage;
+  const { hide_label_button, loading_label } = orderPage;
   const sendEmail = message => {
     const email = order.shipping.email;
     const subject = "About Your Glow LEDs Order";
@@ -59,52 +60,52 @@ const OrderActionButtons = ({ order }) => {
     dispatch(setRemoteVersionRequirement());
   };
 
-  const create_label = async speed => {
-    dispatch(set_loading_label(true));
-    const { data } = await API_Shipping.create_label(order, order.shipping.shipping_rate, speed);
-    const { data: invoice } = await API_Orders.get_invoice(order);
-    setTimeout(() => {
-      print_invoice(invoice);
-    }, 1500);
-    setTimeout(() => {
-      print_label(data.postage_label.label_url);
-    }, 1000);
-
-    if (data) {
-      dispatch(set_loading_label(false));
-    }
-
-    const request = await API_Shipping.add_tracking_number(order, data.tracking_code, data);
-
-    dispatch(setRemoteVersionRequirement());
-  };
-
   // const create_label = async speed => {
   //   dispatch(set_loading_label(true));
-  //   const { data: invoice } = await API_Orders.get_invoice(order);
-  //   console.log({ invoice });
   //   const { data } = await API_Shipping.create_label(order, order.shipping.shipping_rate, speed);
+  //   const { data: invoice } = await API_Orders.get_invoice(order);
   //   setTimeout(() => {
   //     print_invoice(invoice);
   //   }, 1500);
   //   setTimeout(() => {
   //     print_label(data.postage_label.label_url);
-  //   }, 1500);
+  //   }, 1000);
+
   //   if (data) {
   //     dispatch(set_loading_label(false));
   //   }
-  //   await API_Shipping.add_tracking_number(order, data.tracking_code, data);
-  //   dispatch(set_hide_label_button(false));
+
+  //   const request = await API_Shipping.add_tracking_number(order, data.tracking_code, data);
+
   //   dispatch(setRemoteVersionRequirement());
   // };
 
+  const create_label = async speed => {
+    dispatch(set_loading_label(true));
+    const { data: invoice } = await API_Orders.get_invoice(order);
+    console.log({ invoice });
+    const { data } = await API_Shipping.create_label(order, order.shipping.shipping_rate, speed);
+    setTimeout(() => {
+      print_invoice(invoice);
+    }, 1500);
+    setTimeout(() => {
+      print_label(data.postage_label.label_url);
+    }, 1500);
+    if (data) {
+      dispatch(set_loading_label(false));
+    }
+    await API_Shipping.add_tracking_number(order, data.tracking_code, data);
+    dispatch(set_hide_label_button(false));
+    dispatch(setRemoteVersionRequirement());
+  };
+
   const create_return_label = async () => {
-    set_loading_label(true);
+    dispatch(set_loading_label(true));
     const { data } = await API_Shipping.create_return_label(order, order.shipping.shipping_rate);
     print_label(data.postage_label.label_url);
 
     if (data) {
-      set_loading_label(false);
+      dispatch(set_loading_label(false));
     }
 
     const request = await API_Shipping.add_return_tracking_number(order, data.tracking_code, data);
@@ -141,6 +142,7 @@ const OrderActionButtons = ({ order }) => {
     }, 500);
     return false;
   };
+
   const print_label = content => {
     // const content = document.getElementById(id).innerHTML;
     const frame1 = document.createElement("iframe");
@@ -172,6 +174,7 @@ const OrderActionButtons = ({ order }) => {
   };
   return (
     <div className="">
+      <Loading loading={loading_label} />
       <GLButton variant="secondary" className="w-100per mv-10px" onClick={() => sendEmail("Hello")}>
         Send User a Message
       </GLButton>

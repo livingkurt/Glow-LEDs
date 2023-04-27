@@ -32,10 +32,8 @@ export default {
         normalizeFilters: normalizeOrderFilters,
         normalizeSearch: normalizeOrderSearch
       });
-      console.log({ filter });
       const orders = await order_db.table_orders_db(filter, sort, limit, page);
       const count = await order_db.count_orders_db(filter);
-      console.log({ orders });
       return {
         data: orders,
         total_count: count,
