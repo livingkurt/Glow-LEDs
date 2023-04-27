@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, Link } from "react-router-dom";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
@@ -15,7 +15,15 @@ export const ProfileActions = () => {
   const dispatch = useDispatch();
   const userPage = useSelector(state => state.users.userPage);
   const { current_user, user } = userPage;
-  const { _id } = user;
+  const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
+  const { affiliate } = affiliatePage;
+
+  useEffect(() => {
+    if (affiliate?.artist_name.length > 1) {
+      dispatch(open_edit_affiliate_modal(affiliate));
+    }
+  }, [affiliate, dispatch]);
+
   return (
     <div className="row">
       <div
@@ -74,7 +82,7 @@ export const ProfileActions = () => {
           <GLButton
             variant="primary"
             onClick={() => {
-              dispatch(open_edit_affiliate_modal(user.affiliate));
+              dispatch(API.detailsAffiliate({ id: user.affiliate._id }));
             }}
           >
             Edit Affiliate Profile

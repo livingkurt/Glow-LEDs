@@ -17,13 +17,7 @@ import { createTheme, ThemeProvider } from "@mui/material";
 import glow_leds_theme from "./theme";
 import { OrderPage } from "./pages/OrderPage";
 import { PlaceOrderPage } from "./pages/PlaceOrderPage";
-import {
-  ChangePasswordPage,
-  EditUserAffiliatePage,
-  PasswordResetPage,
-  ResetPasswordPage,
-  AdminChangePasswordPage
-} from "./pages/ProfiePage/components";
+import { ChangePasswordPage, PasswordResetPage, ResetPasswordPage, AdminChangePasswordPage } from "./pages/ProfiePage/components";
 import { EditProductPage } from "./pages/ProductsPage/components";
 import { GcodeContinousPage } from "./pages/GcodeContinousPage";
 import { DatabaseMigrationPage } from "./pages/DatabaseMigrationPage";
@@ -46,7 +40,7 @@ import { ProductsDisplayPage } from "./pages/ProductsGridPage/components";
 import { AnnouncementEmail, EditEmailPage, EmailModal } from "./pages/EmailsPage/components";
 import { EmailsPage } from "./pages/EmailsPage";
 import { EditPromoPage, PromosPage } from "./pages/PromosPage";
-import { AffiliatesPage, EditAffiliatePage } from "./pages/AffiliatesPage";
+import { AffiliatesPage } from "./pages/AffiliatesPage";
 import { EditTeamPage, TeamsPage } from "./pages/TeamsPage";
 import { ChipsPage, EditChipPage } from "./pages/ChipsPage";
 import { HomePage } from "./pages/HomePage";
@@ -296,7 +290,6 @@ const App = props => {
                 <PrivateRoute path="/secure/account/order/:id" component={OrderPage} />
                 <PrivateRoute path="/secure/checkout/placeorder" component={PlaceOrderPage} />
 
-                <PrivateRoute path="/secure/account/edit_affiliate/:id?" component={EditUserAffiliatePage} />
                 {/* Admin Routes */}
                 <AdminRoute
                   path="/secure/glow/editproduct/:pathname?/:template?/:product_option?/:item_group_id?"
@@ -339,7 +332,6 @@ const App = props => {
                 <AdminRoute path="/secure/glow/emails/announcement/:id" exact={true} component={AnnouncementEmail} />
                 <AdminRoute path="/secure/glow/emails" component={EmailsPage} />
                 <AdminRoute path="/secure/glow/editpromo/:id?" component={EditPromoPage} />
-                <AdminRoute path="/secure/glow/editaffiliate/:pathname?" component={EditAffiliatePage} />
                 <AdminRoute path="/secure/glow/editteam/:pathname?" component={EditTeamPage} />
                 <AdminRoute path="/secure/glow/editchip/:id?" component={EditChipPage} />
                 <AdminRoute path="/secure/glow/editcontent/:id?" component={EditContentPage} />

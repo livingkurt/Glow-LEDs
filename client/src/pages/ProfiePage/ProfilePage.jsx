@@ -22,7 +22,6 @@ import { set_success } from "../../slices/userSlice";
 const ProfilePage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const location = useLocation();
   let { id } = useParams();
   const userPage = useSelector(state => state.users.userPage);
   const { current_user, user, success } = userPage;

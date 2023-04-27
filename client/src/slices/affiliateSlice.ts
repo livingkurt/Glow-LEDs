@@ -3,38 +3,46 @@
 import { createSlice } from "@reduxjs/toolkit";
 import * as API from "../api";
 
+const affiliate = {
+  user: null,
+  products: [],
+  chips: [],
+  artist_name: "",
+  instagram_handle: "",
+  facebook_name: "",
+  youtube_link: "",
+  facebook_link: "",
+  instagram_link: "",
+  tiktok_link: "",
+  tiktok: "",
+  percentage_off: 0,
+  public_code: null,
+  private_code: null,
+  location: "",
+  years: "",
+  bio: "",
+  picture: "",
+  video: "",
+  style: "",
+  inspiration: "",
+  link: "",
+  venmo: "",
+  pathname: "",
+  answers: [],
+  promoter: true,
+  rave_mob: false,
+  team: false,
+  sponsor: false,
+  active: true,
+  deleted: false
+};
+
 const affiliatePage = createSlice({
   name: "affiliatePage",
   initialState: {
     loading: false,
     affiliates: [],
-    affiliate: {
-      id: "",
-      user: undefined,
-      artist_name: "",
-      instagram_handle: "",
-      facebook_name: "",
-      percentage_off: "",
-      sponsor: "",
-      promoter: "",
-      rave_mob: "",
-      active: "",
-      style: "",
-      inspiration: "",
-      bio: "",
-      link: "",
-      picture: "",
-      location: "",
-      years: "",
-      team: "",
-      video: "",
-      venmo: "",
-      products: [],
-      chips: [],
-      pathname: "",
-      public_code: undefined,
-      private_code: undefined
-    },
+    affiliate: affiliate,
     remoteVersionRequirement: 0,
     edit_affiliate_modal: false,
     affiliate_modal: false,
@@ -77,33 +85,7 @@ const affiliatePage = createSlice({
     },
     open_create_affiliate_modal: (state, { payload }) => {
       state.edit_affiliate_modal = true;
-      state.affiliate = {
-        id: "",
-        user: undefined,
-        artist_name: "",
-        instagram_handle: "",
-        facebook_name: "",
-        percentage_off: "",
-        sponsor: "",
-        promoter: "",
-        rave_mob: "",
-        active: "",
-        style: "",
-        inspiration: "",
-        bio: "",
-        link: "",
-        picture: "",
-        location: "",
-        years: "",
-        team: "",
-        video: "",
-        venmo: "",
-        products: [],
-        chips: [],
-        pathname: "",
-        public_code: undefined,
-        private_code: undefined
-      };
+      state.affiliate = affiliate;
     },
     open_edit_affiliate_modal: (state, { payload }) => {
       state.edit_affiliate_modal = true;
@@ -111,33 +93,7 @@ const affiliatePage = createSlice({
     },
     close_affiliate_modal: (state, { payload }) => {
       state.affiliate_modal = false;
-      state.affiliate = {
-        id: "",
-        user: undefined,
-        artist_name: "",
-        instagram_handle: "",
-        facebook_name: "",
-        percentage_off: "",
-        sponsor: "",
-        promoter: "",
-        rave_mob: "",
-        active: "",
-        style: "",
-        inspiration: "",
-        bio: "",
-        link: "",
-        picture: "",
-        location: "",
-        years: "",
-        team: "",
-        video: "",
-        venmo: "",
-        products: [],
-        chips: [],
-        pathname: "",
-        public_code: undefined,
-        private_code: undefined
-      };
+      state.affiliate = affiliate;
     },
     open_affiliate_modal: (state, { payload }) => {
       state.affiliate_modal = true;

@@ -14,7 +14,7 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
     <>
       {Object.keys(formData).map(fieldName => {
         const fieldData = formData[fieldName];
-        let fieldState = state[fieldName];
+        let fieldState = state[fieldName] ?? {};
 
         if (loading) {
           if (fieldData.type === "checkbox") {
