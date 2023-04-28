@@ -122,7 +122,7 @@ const userPage = createSlice({
       state.loading = true;
     },
     [API.saveUser.fulfilled as any]: (state: any, { payload }: any) => {
-      // const { data, profile } = payload;
+      const { profile } = payload;
       console.log({ payload });
       state.loading = false;
       state.message = "User Saved";
@@ -130,10 +130,9 @@ const userPage = createSlice({
       state.remoteVersionRequirement = Date.now();
       state.edit_user_modal = false;
       state.success = true;
-      window.location.reload();
-      // if (profile) {
-      //   state.user = data.user;
-      // }
+      if (profile) {
+        window.location.reload();
+      }
     },
     [API.saveUser.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
