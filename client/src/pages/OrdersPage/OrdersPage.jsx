@@ -32,7 +32,7 @@ const OrdersPage = () => {
   const column_defs = useMemo(
     () => [
       { title: "Order Placed", display: row => humanDate(row.createdAt) },
-      { title: "Name", display: row => fullName(row.shipping) },
+      { title: "Name", display: row => <Link to={`/secure/account/profile/${row?.user?._id}`}>{fullName(row.shipping)}</Link> },
       { title: "Since Ordered", display: row => sinceOrdered(row.createdAt) },
       {
         title: "Order Items",
