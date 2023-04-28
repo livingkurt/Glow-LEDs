@@ -16,7 +16,6 @@ const refresh_login = async (access_token, refresh_token) => {
 
 export const check_authentication = ({ force_refresh }) => {
   if (localStorage.accessToken) {
-    console.log({ localStorage: localStorage.accessToken });
     // Set auth token header auth
     const access_token = localStorage.accessToken;
     // const refresh_token = localStorage.refreshToken;
