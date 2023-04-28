@@ -33,7 +33,7 @@ const CombineUserModal = () => {
       return acc;
     }, {});
 
-    dispatch(API.saveUser(combinedUser));
+    dispatch(API.saveUser({ user: combinedUser, profile: false }));
     const userToDeleteId = combinedUser._id === user1._id ? user2._id : user1._id;
 
     dispatch(API.transferOrders({ oldUserId: userToDeleteId, newUserId: combinedUser._id }));

@@ -25,16 +25,19 @@ const EmailModal = props => {
     if (request.isValid) {
       dispatch(
         API.saveUser({
-          _id: null,
-          first_name: "",
-          last_name: "",
-          email,
-          affiliate: null,
-          is_affiliated: false,
-          isVerified: true,
-          isAdmin: false,
-          email_subscription: true,
-          shipping: {}
+          user: {
+            _id: null,
+            first_name: "",
+            last_name: "",
+            email,
+            affiliate: null,
+            is_affiliated: false,
+            isVerified: true,
+            isAdmin: false,
+            email_subscription: true,
+            shipping: {}
+          },
+          profile: false
         })
       );
       const { data: promo } = await API_Promos.create_one_time_use_code();

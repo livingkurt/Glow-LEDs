@@ -270,7 +270,7 @@ const PlaceOrderPage = props => {
   };
 
   const placeOrderHandler = async paymentMethod => {
-    check_authentication();
+    check_authentication({ force_refresh: false });
     if (cartItems.length > 0) {
       if (userInfo && userInfo.first_name) {
         dispatch(

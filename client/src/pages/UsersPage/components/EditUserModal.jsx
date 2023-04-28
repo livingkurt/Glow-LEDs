@@ -5,9 +5,11 @@ import { set_edit_user_modal, set_user } from "../../../slices/userSlice";
 import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
 import { Typography } from "@mui/material";
+import { useLocation } from "react-router-dom";
 
 const EditUserModal = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
 
   const userPage = useSelector(state => state.users.userPage);
   const { edit_user_modal, user, loading } = userPage;
@@ -155,7 +157,12 @@ const EditUserModal = () => {
       <GLModal
         isOpen={edit_user_modal}
         onConfirm={() => {
-          dispatch(API.saveUser({ ...user, affiliate: affiliate?._id ? affiliate?._id : null }));
+          dispatch(
+            API.saveUser({
+              user: { ...user, affiliate: affiliate?._id ? affiliate?._id : null },
+              profile: location.pathname === "/secure/account/profile"
+            })
+          );
         }}
         onCancel={() => {
           dispatch(set_edit_user_modal(false));

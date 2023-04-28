@@ -24,12 +24,12 @@ const ProfilePage = () => {
   const history = useHistory();
   let { id } = useParams();
   const userPage = useSelector(state => state.users.userPage);
-  const { current_user, user, success } = userPage;
+  const { current_user, user, success, message } = userPage;
 
   const { first_name } = user;
 
   const paycheckPage = useSelector(state => state.paychecks.paycheckPage);
-  const { message, loading, remoteVersionRequirement } = paycheckPage;
+  const { loading, remoteVersionRequirement } = paycheckPage;
 
   const orderPage = useSelector(state => state.orders.orderPage);
   const { orders } = orderPage;
@@ -40,7 +40,7 @@ const ProfilePage = () => {
       dispatch(set_success(false));
       dispatch(API.detailsUser(id || current_user._id));
       dispatch(API.listMyOrders(id || current_user._id));
-      if (user.is_affiliate) {
+      if (user.is_affiliate && user?.affiliate) {
         dispatch(API.listPromos({ affiliate: user?.affiliate._id }));
         dispatch(API.listPaychecks({ affiliate: user?.affiliate._id || current_user.affiliate }));
       } else {
@@ -82,7 +82,6 @@ const ProfilePage = () => {
       cleanup = false;
     };
   }, [dispatch, user?.affiliate, user?.affiliate?.public_code, user?.affiliate?.sponsor, user.is_affiliated]);
-
   const column_defs = useMemo(
     () => [
       { title: "Date Created", display: paycheck => paycheck.createdAt && format_date(paycheck.createdAt) },
@@ -105,19 +104,6 @@ const ProfilePage = () => {
     options => API.getPaychecks({ ...options, filters: { ...options.filters, affiliate: [user.affiliate._id] } }),
     [user?.affiliate?._id]
   );
-
-  useEffect(() => {
-    let cleanup = true;
-    if (cleanup) {
-      if (success) {
-        history.push("/secure/account/profile");
-        window.location.reload();
-      }
-    }
-    return () => {
-      cleanup = false;
-    };
-  }, [dispatch, history, success]);
 
   return (
     <div className="p-20px inner_content">

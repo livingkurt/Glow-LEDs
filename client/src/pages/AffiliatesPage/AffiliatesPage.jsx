@@ -10,8 +10,10 @@ import * as API from "../../api";
 import { Button } from "@mui/material";
 import { getAffiliates } from "../../api";
 import { determine_color } from "./affiliateHelpers";
+import { useLocation } from "react-router-dom";
 
 const AffiliatesPage = () => {
+  const location = useLocation();
   const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
   const { message, loading, remoteVersionRequirement } = affiliatePage;
 
@@ -27,8 +29,11 @@ const AffiliatesPage = () => {
             onClick={() => {
               dispatch(
                 API.saveAffiliate({
-                  ...affiliate,
-                  active: affiliate.active ? false : true
+                  affiliate: {
+                    ...affiliate,
+                    active: affiliate.active ? false : true
+                  },
+                  profile: location.pathname === "/secure/account/profile"
                 })
               );
             }}

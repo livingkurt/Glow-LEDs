@@ -6,6 +6,7 @@ import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
 import { set_current_user } from "../slices/userSlice";
 import { headers } from "../utils/helpers/user_helpers";
+import * as API from "../api";
 
 export const getAffiliates = async ({
   search,
@@ -45,35 +46,46 @@ export const listAffiliates = createAsyncThunk("affiliates/listAffiliates", asyn
   } catch (error) {}
 });
 
-export const saveAffiliate = createAsyncThunk("affiliates/saveAffiliate", async (affiliate: any, thunkApi: any) => {
+export const saveAffiliate = createAsyncThunk("affiliates/saveAffiliate", async ({ affiliate, profile }: any, thunkApi: any) => {
   try {
     const {
       users: {
         userPage: { current_user }
       }
     } = thunkApi.getState();
-    if (!affiliate._id) {
+
+    const newAffiliate = !affiliate._id;
+
+    if (newAffiliate) {
       const { data } = await axios.post("/api/affiliates", affiliate, headers(current_user));
+      if (profile) {
+        await thunkApi.dispatch(API.saveUser({ user: { _id: current_user._id, affiliate: data._id }, profile }));
+      }
       return data;
     } else {
-      const { data } = await axios.put(`/api/affiliates/${affiliate.pathname}`, affiliate, headers(current_user));
+      const { data } = await axios.put(`/api/affiliates/${affiliate._id}`, affiliate, headers(current_user));
       return data;
     }
   } catch (error) {}
 });
 
-export const detailsAffiliate = createAsyncThunk("affiliates/detailsAffiliate", async ({ promo_code, id }: any, thunkApi: any) => {
+export const detailsAffiliate = createAsyncThunk("affiliates/detailsAffiliate", async ({ pathname, id }: any, thunkApi: any) => {
   try {
+    const {
+      users: {
+        userPage: { current_user }
+      }
+    } = thunkApi.getState();
     let response: any = {};
     if (id) {
       response = await axios.get(`/api/affiliates/${id}`);
-    } else if (promo_code) {
-      response = await axios.get(`/api/affiliates/${promo_code}/promo_code`);
+    } else if (pathname) {
+      response = await axios.get(`/api/affiliates/${pathname}/pathname`);
     }
-    console.log({ response });
     return response.data;
   } catch (error) {}
 });
+
 export const deleteAffiliate = createAsyncThunk("affiliates/deleteAffiliate", async (pathname, thunkApi: any) => {
   try {
     const {

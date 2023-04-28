@@ -17,13 +17,6 @@ export const ProfileActions = () => {
   const { current_user, user } = userPage;
   const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
   const { affiliate } = affiliatePage;
-
-  useEffect(() => {
-    if (affiliate?.artist_name.length > 1) {
-      dispatch(open_edit_affiliate_modal(affiliate));
-    }
-  }, [affiliate, dispatch]);
-
   return (
     <div className="row">
       <div
@@ -67,7 +60,8 @@ export const ProfileActions = () => {
           <Link to={"/account/changepassword"}>
             <GLButton
               style={{
-                maxWidth: "210px"
+                maxWidth: "210px",
+                marginRight: "10px"
               }}
               variant="primary"
             >
@@ -82,7 +76,10 @@ export const ProfileActions = () => {
           <GLButton
             variant="primary"
             onClick={() => {
-              dispatch(API.detailsAffiliate({ id: user.affiliate._id }));
+              if (user?.affiliate?._id) {
+                dispatch(API.detailsAffiliate({ id: user?.affiliate?._id }));
+              }
+              dispatch(open_edit_affiliate_modal(affiliate));
             }}
           >
             Edit Affiliate Profile

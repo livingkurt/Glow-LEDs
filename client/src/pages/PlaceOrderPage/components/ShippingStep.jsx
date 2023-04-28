@@ -166,19 +166,22 @@ const ShippingStep = ({
     if (save_user_shipping) {
       dispatch(
         API.saveUser({
-          ...current_user,
-          shipping: {
-            first_name,
-            last_name,
-            email: current_user.email,
-            address_1,
-            address_2,
-            city,
-            state,
-            postalCode,
-            country: international ? country : "US",
-            international
-          }
+          user: {
+            ...current_user,
+            shipping: {
+              first_name,
+              last_name,
+              email: current_user.email,
+              address_1,
+              address_2,
+              city,
+              state,
+              postalCode,
+              country: international ? country : "US",
+              international
+            }
+          },
+          profile: false
         })
       );
     }

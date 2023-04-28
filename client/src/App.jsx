@@ -71,7 +71,7 @@ import { SitemapPage } from "./pages/SitemapPage";
 import { MusicPage } from "./pages/MusicPage";
 import { CompletePage } from "./pages/CompletePage";
 import { ProfilePage } from "./pages/ProfiePage";
-import { EditUserPage, UsersPage } from "./pages/UsersPage";
+import { UsersPage } from "./pages/UsersPage";
 import { CheckEmailPage } from "./pages/LoginPage/components";
 import { AffiliateTermsPage } from "./pages/AffiliatesPage/components";
 import { Four04Page } from "./pages/Four04Page";
@@ -97,15 +97,15 @@ const App = props => {
   const [message, set_message] = useState("");
 
   useEffect(() => {
-    check_authentication();
+    check_authentication({ force_refresh: false });
   }, []);
 
-  check_authentication();
+  check_authentication({ force_refresh: false });
 
   const frame = document.getElementsByTagName("body");
 
   setInterval(() => {
-    check_authentication();
+    check_authentication({ force_refresh: false });
   }, 800000);
 
   // We listen to the resize event
@@ -286,7 +286,6 @@ const App = props => {
               <Switch>
                 {/* Private Routes */}
                 <PrivateRoute path="/secure/account/profile" component={ProfilePage} />
-                <PrivateRoute path="/secure/account/editprofile/:id" component={EditUserPage} />
                 <PrivateRoute path="/secure/account/order/:id" component={OrderPage} />
                 <PrivateRoute path="/secure/checkout/placeorder" component={PlaceOrderPage} />
 
@@ -309,7 +308,6 @@ const App = props => {
                 <AdminRoute path="/secure/glow/palettes" component={PalettesPage} />
                 <AdminRoute path="/secure/glow/filaments" component={FilamentsPage} />
                 <AdminRoute path="/secure/glow/userprofile/:id" component={ProfilePage} />
-                <AdminRoute path="/secure/glow/edituser/:id?" component={EditUserPage} />
                 <AdminRoute path="/secure/glow/editpaycheck/:id?" component={EditPaycheckPage} />
                 <AdminRoute path="/secure/glow/editsetting/:id?" component={EditSettingPage} />
                 <AdminRoute path="/secure/glow/editcategory/:id?" component={EditCategoryPage} />

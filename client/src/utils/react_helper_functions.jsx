@@ -14,8 +14,9 @@ const refresh_login = async (access_token, refresh_token) => {
   return data;
 };
 
-export const check_authentication = () => {
+export const check_authentication = ({ force_refresh }) => {
   if (localStorage.accessToken) {
+    console.log({ localStorage: localStorage.accessToken });
     // Set auth token header auth
     const access_token = localStorage.accessToken;
     // const refresh_token = localStorage.refreshToken;
@@ -57,6 +58,25 @@ export const check_authentication = () => {
         // Redirect to login
         window.location.href = "/account/login?redirect=" + window.location.pathname;
       }
+    } else if (force_refresh) {
+      refresh_login(access_token, decoded_access_token.refresh_token)
+        .then(res => {
+          let token = res.data.access_token;
+
+          localStorage.setItem("accessToken", token);
+          setAuthToken(token);
+          // Decode token and get user info and exp
+          const decoded = jwt_decode(token);
+
+          store.dispatch(set_current_user(decoded));
+        })
+        .catch(error => {
+          // Logout user
+          store.dispatch(logout_user(decoded_access_token.refresh_token));
+          // Redirect to login
+          window.location.href = "/account/login?redirect=" + window.location.pathname;
+        });
+      lastExecution = Date.now();
     }
   }
 };

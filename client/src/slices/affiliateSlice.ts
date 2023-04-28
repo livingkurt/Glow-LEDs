@@ -20,6 +20,7 @@ const affiliate = {
   private_code: null,
   location: "",
   years: "",
+  start_year: "",
   bio: "",
   picture: "",
   video: "",

@@ -4,6 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import * as API from "../api";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "../utils/setAuthToken";
+import { check_authentication } from "../utils/react_helper_functions";
 
 const user = {
   first_name: "",
@@ -63,18 +64,6 @@ const userPage = createSlice({
     set_loading: (state, { payload }) => {
       state.loading = payload;
     },
-    set_search: (state, { payload }) => {
-      state.search = payload;
-    },
-    set_sort: (state, { payload }) => {
-      state.sort = payload;
-    },
-    set_page: (state, { payload }) => {
-      state.page = payload;
-    },
-    set_limit: (state, { payload }) => {
-      state.limit = payload;
-    },
     set_current_user: (state, { payload }) => {
       state.current_user = payload;
     },
@@ -133,11 +122,18 @@ const userPage = createSlice({
       state.loading = true;
     },
     [API.saveUser.fulfilled as any]: (state: any, { payload }: any) => {
+      // const { data, profile } = payload;
+      console.log({ payload });
       state.loading = false;
       state.message = "User Saved";
       state.loading = false;
       state.remoteVersionRequirement = Date.now();
       state.edit_user_modal = false;
+      state.success = true;
+      window.location.reload();
+      // if (profile) {
+      //   state.user = data.user;
+      // }
     },
     [API.saveUser.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
@@ -244,10 +240,6 @@ const userPage = createSlice({
 });
 
 export const {
-  set_search,
-  set_sort,
-  set_page,
-  set_limit,
   set_loading,
   set_user,
   set_current_user,

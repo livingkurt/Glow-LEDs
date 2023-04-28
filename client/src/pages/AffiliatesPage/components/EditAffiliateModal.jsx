@@ -4,10 +4,11 @@ import GLModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiion
 import { set_edit_affiliate_modal, set_affiliate } from "../../../slices/affiliateSlice";
 import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
-import { snake_case } from "../../../utils/helper_functions";
+import { useLocation } from "react-router-dom";
 
 const EditAffiliateModal = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
   const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
   const { edit_affiliate_modal, affiliate, loading } = affiliatePage;
 
@@ -59,29 +60,13 @@ const EditAffiliateModal = () => {
       type: "text",
       label: "Inspiration"
     },
-    years: {
+    start_year: {
       type: "text",
-      label: "Years"
+      label: "The year you started gloving"
     },
     bio: {
       type: "text_multiline",
       label: "Bio"
-    },
-    instagram_handle: {
-      type: "text",
-      label: "Instagram Handle"
-    },
-    facebook_name: {
-      type: "text",
-      label: "Facebook Name"
-    },
-    youtube_link: {
-      type: "text",
-      label: "YouTube Link"
-    },
-    facebook_link: {
-      type: "text",
-      label: "Facebook Link"
     },
     instagram_link: {
       type: "text",
@@ -91,16 +76,24 @@ const EditAffiliateModal = () => {
       type: "text",
       label: "TikTok Link"
     },
+    youtube_link: {
+      type: "text",
+      label: "YouTube Link"
+    },
+    facebook_link: {
+      type: "text",
+      label: "Facebook Link"
+    },
 
     chips: {
       type: "autocomplete_multiple",
-      label: "Chips",
+      label: "Microlights you currently have",
       options: chips,
       labelProp: "name"
     },
     products: {
       type: "autocomplete_multiple",
-      label: "Glow LEDs Gear",
+      label: "Glow LEDs Gear you currently have",
       options: products,
       labelProp: "name"
     },
@@ -182,7 +175,7 @@ const EditAffiliateModal = () => {
       <GLModal
         isOpen={edit_affiliate_modal}
         onConfirm={() => {
-          dispatch(API.saveAffiliate(affiliate));
+          dispatch(API.saveAffiliate({ affiliate, profile: location.pathname === "/secure/account/profile" }));
           dispatch(API.listUsers());
         }}
         onCancel={() => {

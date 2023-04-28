@@ -19,6 +19,7 @@ const affiliateSchema = new mongoose.Schema(
     private_code: { type: mongoose.Schema.Types.ObjectId, ref: "Promo" },
     location: { type: String },
     years: { type: String },
+    start_year: { type: String },
     bio: { type: String },
     picture: { type: String },
     video: { type: String },

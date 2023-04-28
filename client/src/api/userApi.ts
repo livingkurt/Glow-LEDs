@@ -3,6 +3,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { headers } from "../utils/helpers/user_helpers";
 import { create_query } from "../utils/helper_functions";
+import { check_authentication } from "../utils/react_helper_functions";
 
 export const getUsers = async ({
   search,
@@ -48,7 +49,7 @@ export const listUsers = createAsyncThunk("users/listUsers", async (query: any, 
   } catch (error) {}
 });
 
-export const saveUser = createAsyncThunk("users/saveUser", async (user: any, thunkApi: any) => {
+export const saveUser = createAsyncThunk("users/saveUser", async ({ user, profile }: any, thunkApi: any) => {
   try {
     const {
       users: {
@@ -58,10 +59,14 @@ export const saveUser = createAsyncThunk("users/saveUser", async (user: any, thu
 
     if (!user._id) {
       const { data } = await axios.post("/api/users", user, headers(current_user));
-      return data;
+
+      return { data, profile };
     } else {
       const { data } = await axios.put(`/api/users/${user._id}`, user, headers(current_user));
-      return data;
+      if (profile) {
+        check_authentication({ force_refresh: true });
+      }
+      return { data, profile };
     }
   } catch (error) {}
 });

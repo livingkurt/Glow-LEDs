@@ -8,6 +8,7 @@ import { API_Orders, API_Shipping } from "../../../utils";
 import { Loading } from "../../../shared/SharedComponents";
 
 const OrderActionButtons = ({ order }) => {
+  console.log({ order });
   const dispatch = useDispatch();
 
   const orderPage = useSelector(state => state.orders.orderPage);
@@ -20,7 +21,6 @@ const OrderActionButtons = ({ order }) => {
   };
 
   const create_duplicate_order = () => {
-    //
     dispatch(
       API.saveOrder({
         orderItems: order.orderItems,
@@ -34,7 +34,7 @@ const OrderActionButtons = ({ order }) => {
         shippingPrice: 0,
         taxPrice: 0,
         totalPrice: 0,
-        user: order.user._id,
+        user: order?.user?._id,
         order_note: `Replacement Order for ${order.shipping.first_name} ${order.shipping.last_name} - Original Order Number is ${order._id}`,
         production_note: order.production_note
       })
@@ -172,6 +172,7 @@ const OrderActionButtons = ({ order }) => {
     }, 500);
     return false;
   };
+
   return (
     <div className="">
       <Loading loading={loading_label} />
@@ -247,7 +248,6 @@ const OrderActionButtons = ({ order }) => {
         variant="primary"
         onClick={async () => {
           const { data: invoice } = await API_Orders.get_invoice(order);
-          console.log({ invoice });
           print_invoice(invoice);
         }}
         className="w-100per mv-5px"
