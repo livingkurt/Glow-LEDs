@@ -155,6 +155,7 @@ export const duplicateOrder = (order: any) => {
     orderItems: order.orderItems,
     shipping: {
       ...order.shipping,
+      return_shipping_label: "",
       shipment_id: null,
       shipping_rate: null,
       shipping_label: null

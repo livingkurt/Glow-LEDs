@@ -56,41 +56,18 @@ const OrderStatusButtons = ({ order }) => {
     );
   };
 
-  const send_order_email = async () => {
-    dispatch(set_loading_label(true));
-    await API_Emails.send_order_email(order, "Thank you for your Glow LEDs Order", order.shipping.email);
-    await API_Emails.send_order_email(order, "New Order Created by " + order.shipping.first_name, process.env.REACT_APP_INFO_EMAIL);
-
-    dispatch(set_loading_label(false));
-  };
-
-  const send_refund_email = async () => {
-    dispatch(set_loading_label(true));
-    await API_Emails.send_refund_email(order, "Refund Successful", order.shipping.email, true);
-    await API_Emails.send_refund_email(order, "New Refunded for " + order.shipping.first_name, process.env.REACT_APP_INFO_EMAIL, true);
-
-    dispatch(set_loading_label(false));
-  };
   return (
     <div>
+      <h3 className="fs-20px mv-5px">Order Status</h3>
       <Loading loading={loading_label} />
-      {send_order_email && (
-        <GLButton variant="primary" className="mv-5px w-100per" onClick={() => send_order_email()}>
-          Send Order Email
-        </GLButton>
-      )}
-      {send_order_email && (
-        <GLButton variant="primary" className="mv-5px w-100per" onClick={() => send_order_status_email("updated")}>
-          Send Update Order Email
-        </GLButton>
-      )}
-      <GLButton variant="primary" className="mv-5px w-100per" onClick={() => updateOrder("paid")}>
+
+      <GLButton variant="secondary" className="mv-5px w-100per" onClick={() => updateOrder("paid")}>
         {order.isPaid ? "Unset" : "Set"} to Paid
       </GLButton>
-      <GLButton variant="primary" className="mv-5px w-100per" onClick={() => updateOrder("reassured")}>
+      <GLButton variant="secondary" className="mv-5px w-100per" onClick={() => updateOrder("reassured")}>
         {order.isReassured ? "Unset" : "Set"} to Reassured
       </GLButton>
-      <GLButton variant="primary" className="mv-5px w-100per" onClick={() => updateOrder("paused")}>
+      <GLButton variant="secondary" className="mv-5px w-100per" onClick={() => updateOrder("paused")}>
         {order.isPaused ? "Unset" : "Set"} to Paused
       </GLButton>
       <GLButton variant="primary" className="mv-5px w-100per" onClick={() => updateOrder("manufactured")}>
@@ -99,18 +76,12 @@ const OrderStatusButtons = ({ order }) => {
       <GLButton variant="primary" className="mv-5px w-100per" onClick={() => updateOrder("packaged")}>
         {order.isPackaged ? "Unset" : "Set"} to Packaged
       </GLButton>
-      <GLButton variant="primary" className="mv-5px w-100per" onClick={() => updateOrder("shipped")}>
+      <GLButton variant="secondary" className="mv-5px w-100per" onClick={() => updateOrder("shipped")}>
         {order.isShipped ? "Unset" : "Set"} to Shipped
       </GLButton>
-      <GLButton variant="primary" className="mv-5px w-100per" onClick={() => updateOrder("refunded")}>
+      <GLButton variant="secondary" className="mv-5px w-100per" onClick={() => updateOrder("refunded")}>
         {order.isRefunded ? "Unset" : "Set"} to Refunded
       </GLButton>
-
-      {send_refund_email && (
-        <GLButton variant="primary" className="mv-5px w-100per" onClick={() => send_refund_email()}>
-          Send Refund Email
-        </GLButton>
-      )}
     </div>
   );
 };

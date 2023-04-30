@@ -65,7 +65,7 @@ export const saveOrder = createAsyncThunk("orders/saveOrder", async (order: any,
         userPage: { current_user }
       }
     } = thunkApi.getState();
-
+    console.log({ order });
     if (!order._id) {
       const { data } = await axios.post("/api/orders", order, headers(current_user));
       sessionStorage.removeItem("shippingAddress");

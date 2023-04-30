@@ -4,7 +4,7 @@ import { determine_tracking_link } from "../ordersPageHelpers";
 const MetaDataDisplay = ({ row }) => {
   return (
     <div>
-      <h2>Meta Data</h2>
+      <h3 className="fs-20px mv-5px">Meta Data</h3>
       <div>Order ID: {row._id}</div>
       <div>Payment Method: {row?.payment?.paymentMethod}</div>
       <div>Promo Code: {row.promo_code}</div>
