@@ -5,7 +5,7 @@ const MetaDataDisplay = ({ row }) => {
   return (
     <div>
       <h3 className="fs-20px mv-5px">Meta Data</h3>
-      <div>Order ID: {row._id}</div>
+      <div>ID #: {row._id}</div>
       <div>Payment Method: {row?.payment?.paymentMethod}</div>
       <div>Promo Code: {row.promo_code}</div>
       {row.tracking_number && (
@@ -16,7 +16,7 @@ const MetaDataDisplay = ({ row }) => {
             href={determine_tracking_link(row.tracking_number)}
             target="_blank"
             rel="noopener noreferrer"
-            className="mv-2rem ml-1rem"
+            className="mv-2rem"
             style={{
               textDecoration: "underline",
               color: "white"
@@ -34,7 +34,7 @@ const MetaDataDisplay = ({ row }) => {
             href={determine_tracking_link(row.return_tracking_number)}
             target="_blank"
             rel="noopener noreferrer"
-            className="mv-2rem ml-1rem"
+            className="mv-2rem"
             style={{
               textDecoration: "underline",
               color: "white"
