@@ -14,6 +14,7 @@ export const validate_promo_code = (data: any) => {
   const promo_codes = data.promos.map((promo: any) => promo.promo_code.toLowerCase());
   //
   const promo = data.promos.find((promo: any) => promo.promo_code === data.promo_code.toLowerCase());
+  console.log({ promo_codes });
 
   // Convert empty fields to an empty string so we can use validator functions
   data.promo_code = !isEmpty(data.promo_code) ? data.promo_code : "";

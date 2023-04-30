@@ -44,7 +44,7 @@ export const normalizePromoFilters = (input: any) => {
 export const normalizePromoSearch = (query: any) => {
   const search = query.search
     ? {
-        $promo_code: {
+        promo_code: {
           $regex: query.search.toLowerCase(),
           $options: "i"
         }

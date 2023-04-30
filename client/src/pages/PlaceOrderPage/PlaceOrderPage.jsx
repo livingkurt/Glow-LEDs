@@ -520,7 +520,7 @@ const PlaceOrderPage = props => {
     console.log({ data });
     //
     const request = validate_promo_code(data);
-
+    console.log({ request });
     set_promo_code_validations(request.errors.promo_code);
 
     if (request.isValid) {

@@ -89,6 +89,8 @@ const promoPage = createSlice({
     [API.savePromo.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.message = "Promo Saved";
+      state.edit_promo_modal = false;
+      state.remoteVersionRequirement = Date.now();
     },
     [API.savePromo.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;

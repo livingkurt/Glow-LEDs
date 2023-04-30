@@ -174,6 +174,7 @@ export default {
           );
           const private_code = {
             promo_code: `${affiliate.artist_name[0].toLowerCase()}${make_private_code(5)}`,
+            user: affiliate.user._id,
             admin_only: false,
             sponsor_only: false,
             single_use: true,
@@ -191,6 +192,7 @@ export default {
           };
           const refresh_private_code = {
             affiliate: affiliate._id,
+            user: affiliate.user._id,
             promo_code: `r${make_private_code(5)}`,
             admin_only: false,
             sponsor_only: true,

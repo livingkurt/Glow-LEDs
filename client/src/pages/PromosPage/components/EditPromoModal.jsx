@@ -44,7 +44,6 @@ const EditPromoModal = () => {
         isOpen={edit_promo_modal}
         onConfirm={() => {
           dispatch(API.savePromo(promo));
-          dispatch(API.listAffiliates({ active: true }));
         }}
         onCancel={() => {
           dispatch(set_edit_promo_modal(false));
