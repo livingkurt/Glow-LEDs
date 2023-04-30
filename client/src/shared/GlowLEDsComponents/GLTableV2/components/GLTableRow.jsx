@@ -20,6 +20,7 @@ const GLTableRow = ({
   rowName,
   enableRowClick,
   onRowClick,
+  handleRowSelection,
   rowProps,
   cellProps,
   determine_color,
@@ -43,6 +44,7 @@ const GLTableRow = ({
         return;
       }
       onRowClick(e, row);
+      handleRowSelection(e, row);
     } else {
       if (e.target.href) {
         return;

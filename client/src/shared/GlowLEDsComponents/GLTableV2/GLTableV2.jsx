@@ -18,7 +18,16 @@ import {
 import glTable from "./glTable.module.scss";
 import "./glTable.scss";
 import { isItemSelected, reorder, updateTableStateFromUrl, updateUrlWithTableState, visibleSelected } from "./glTableHelpers";
-import { addRows, updatePage, updatePageSize, fetchTablePage, fetchTableFilters, reorderRows, updateQuery } from "./actions/actions";
+import {
+  addRows,
+  updatePage,
+  updatePageSize,
+  fetchTablePage,
+  fetchTableFilters,
+  reorderRows,
+  updateQuery,
+  selectRow
+} from "./actions/actions";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { useHistory, useLocation } from "react-router-dom";
 import GLLegend from "./components/GLLegend";
@@ -271,6 +280,50 @@ const GLTableV2 = ({
   const rowCount = remoteCount || filteredRows.length;
   const hasFilters = availableFilters && Object.keys(availableFilters).length > 0;
 
+  const onDragEnd = result => {
+    if (!result.destination) {
+      return;
+    }
+    const sourceIndex = result.source.index;
+    const destinationIndex = result.destination.index;
+
+    let newItems = [...visibleRows];
+    const selectedItems = newItems.filter(item => selectedRows.includes(item._id));
+
+    newItems = newItems.filter(item => !selectedRows.includes(item._id));
+
+    if (sourceIndex < destinationIndex) {
+      newItems.splice(destinationIndex - selectedItems.length + 1, 0, ...selectedItems);
+    } else {
+      newItems.splice(destinationIndex, 0, ...selectedItems);
+    }
+
+    dispatch(
+      reorderRows(namespace, {
+        reorderedItems: newItems,
+        remoteVersionRequirementType,
+        remoteReorderApi,
+        page,
+        pageSize
+      })
+    );
+  };
+
+  const handleRowSelection = (id, cmdPressed) => {
+    if (!cmdPressed) {
+      dispatch(selectRow([id]));
+    } else {
+      let newSelectedRows = [];
+      const selectedIndex = selectedRows.indexOf(id);
+      if (selectedIndex === -1) {
+        newSelectedRows = [...selectedRows, id];
+      } else {
+        newSelectedRows = selectedRows.filter(rowId => rowId !== id);
+      }
+      dispatch(selectRow(newSelectedRows));
+    }
+  };
+
   return (
     <div style={{ overflowX: "scroll" }} className="w-100per">
       <Paper className={containerClassNames} style={{ ...style, margin: "1px", minWidth: "1000px" }} data-test="glTable">
@@ -357,13 +410,14 @@ const GLTableV2 = ({
           />
           {enableDragDrop ? (
             <DragDropContext
-              onDragEnd={result => {
-                if (!result.destination) {
-                  return;
-                }
-                const reorderedItems = reorder(visibleRows, result.source.index, result.destination.index);
-                dispatch(reorderRows(namespace, { reorderedItems, remoteVersionRequirementType, remoteReorderApi, page, pageSize }));
-              }}
+              onDragEnd={onDragEnd}
+              // onDragEnd={result => {
+              //   if (!result.destination) {
+              //     return;
+              //   }
+              //   const reorderedItems = reorder(visibleRows, result.source.index, result.destination.index);
+              //   dispatch(reorderRows(namespace, { reorderedItems, remoteVersionRequirementType, remoteReorderApi, page, pageSize }));
+              // }}
             >
               <Droppable droppableId="droppable">
                 {provided => (
@@ -396,6 +450,7 @@ const GLTableV2 = ({
                                 rowName={rowName}
                                 enableRowClick={enableRowClick}
                                 onRowClick={onRowClick}
+                                handleRowSelection={handleRowSelection}
                                 rowProps={rowProps}
                                 cellProps={cellProps}
                                 determine_color={determine_color}
