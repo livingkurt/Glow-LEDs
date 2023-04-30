@@ -4,6 +4,37 @@ import axios from "axios";
 import { headers } from "../utils/helpers/user_helpers";
 import { create_query } from "../utils/helper_functions";
 
+export const getPromos = async ({
+  search,
+  sorting,
+  filters,
+  page,
+  pageSize
+}: {
+  search: string;
+  sorting: any;
+  filters: any;
+  page: number;
+  pageSize: number;
+}) => {
+  try {
+    return axios.get(`/api/promos/table`, {
+      params: {
+        limit: pageSize,
+        page: page,
+        search: search,
+        sort: sorting,
+        filters
+      }
+    });
+  } catch (error) {}
+};
+
+export const getPromoFilters = async () => {
+  const { data } = await axios.get(`/api/promos/filters`);
+  return data;
+};
+
 export const listPromos = createAsyncThunk("promos/listPromos", async (query: any, thunkApi: any) => {
   try {
     const {
@@ -54,6 +85,18 @@ export const deletePromo = createAsyncThunk("promos/deletePromo", async (pathnam
       }
     } = thunkApi.getState();
     const { data } = await axios.delete("/api/promos/" + pathname, headers(current_user));
+    return data;
+  } catch (error) {}
+});
+
+export const deleteMultiplePromos = createAsyncThunk("promo/deleteMultiplePromos", async (ids: string, thunkApi: any) => {
+  try {
+    const {
+      users: {
+        userPage: { current_user }
+      }
+    } = thunkApi.getState();
+    const { data } = await axios.put(`/api/promo/delete_multiple`, { ids }, headers(current_user));
     return data;
   } catch (error) {}
 });

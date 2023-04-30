@@ -109,7 +109,15 @@ const reducers = {
       }
     })
   }),
-  promos: promoSlice,
+  promos: combineReducers({
+    promoPage: promoSlice,
+    promoTable: glTableReducer("promoTable", {
+      searchBy: (row: any, search: string) => {
+        const searchableText = row.promo_code;
+        return searchableText.toLowerCase().includes(search.toLowerCase());
+      }
+    })
+  }),
   settings: settingSlice,
   shipping: shippingSlice,
   surveys: surveySlice,

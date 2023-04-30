@@ -1,7 +1,9 @@
 import { determine_filter, determine_promoter_code_tier, determine_sponsor_code_tier, make_private_code, month_dates } from "../../util";
 import { affiliate_db } from "../affiliates";
+import { getFilteredData } from "../api_helpers";
 import { order_db } from "../orders";
 import { promo_db } from "../promos";
+import { normalizePromoFilters, normalizePromoSearch } from "./promo_interactors";
 
 export default {
   findAll_promos_s: async (query: { page: string; search: string; sort: string; limit: string }) => {
@@ -36,6 +38,67 @@ export default {
         totalPages: Math.ceil(count / parseInt(limit)),
         currentPage: page
       };
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  findAllTable_promos_s: async (query: { page: string; search: string; sort: any; limit: string; filters: any }) => {
+    try {
+      const sort_options = ["createdAt", "paid_at", "paid", "amount"];
+      const { filter, sort, limit, page } = getFilteredData({
+        query,
+        sort_options,
+        search_name: "affiliate",
+        normalizeFilters: normalizePromoFilters,
+        normalizeSearch: normalizePromoSearch
+      });
+      const promos = await promo_db.findAll_promos_db(filter, sort, limit, page);
+      const count = await promo_db.count_promos_db(filter);
+      return {
+        data: promos,
+        total_count: count,
+        currentPage: page
+      };
+    } catch (error) {
+      console.log({ error });
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  create_filters_promos_s: async (query: { search: string; sort: string; page: string; limit: string }) => {
+    try {
+      const availableFilters = {
+        affiliate_only: [],
+        sponsor_only: [],
+        single_use: [],
+        used: [],
+        admin_only: [],
+        active: []
+      };
+      const booleanFilters = {
+        affiliate_only: {
+          label: "Affiliate Only"
+        },
+        sponsor_only: {
+          label: "Sponsor Only"
+        },
+        single_use: {
+          label: "Single Use"
+        },
+        used: {
+          label: "Used"
+        },
+        admin_only: {
+          label: "Admin Only"
+        },
+        active: {
+          label: "Active"
+        }
+      };
+      return { availableFilters, booleanFilters };
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

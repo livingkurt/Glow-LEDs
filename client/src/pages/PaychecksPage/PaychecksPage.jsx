@@ -8,7 +8,6 @@ import { open_create_paycheck_modal, open_edit_paycheck_modal } from "../../slic
 import { EditPaycheckModal } from "./components";
 import * as API from "../../api";
 import { Button } from "@mui/material";
-import { getPaychecks } from "../../api";
 import { determine_color } from "./paychecksHelpers";
 import { format_date } from "../../utils/helper_functions";
 

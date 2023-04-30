@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { DropdownDisplay, Loading } from "../../shared/SharedComponents";
+import { DropdownDisplay, Loading } from "../../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
-import { API_Products } from "../../utils";
-import { format_date, unformat_date } from "../../utils/helper_functions";
-import { GLButton } from "../../shared/GlowLEDsComponents";
-import * as API from "../../api";
-import { set_promo } from "../../slices/promoSlice";
+import { API_Products } from "../../../utils";
+import { format_date, unformat_date } from "../../../utils/helper_functions";
+import { GLButton } from "../../../shared/GlowLEDsComponents";
+import * as API from "../../../api";
+import { set_promo } from "../../../slices/promoSlice";
 
 const EditPromoPage = props => {
   const [categories, set_categories] = useState([]);

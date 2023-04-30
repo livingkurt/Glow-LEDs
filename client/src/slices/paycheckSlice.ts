@@ -4,21 +4,23 @@ import { createSlice } from "@reduxjs/toolkit";
 import * as API from "../api";
 import { format_date } from "../utils/helper_functions";
 
+const paycheck = {
+  id: "",
+  affiliate: "",
+  team: "",
+  amount: 0,
+  venmo: "",
+  paid: "",
+  reciept: "",
+  paid_at: ""
+};
+
 const paycheckPage = createSlice({
   name: "paycheckPage",
   initialState: {
     loading: false,
     paychecks: [],
-    paycheck: {
-      id: "",
-      affiliate: "",
-      team: "",
-      amount: 0,
-      venmo: "",
-      paid: "",
-      reciept: "",
-      paid_at: ""
-    },
+    paycheck: paycheck,
     remoteVersionRequirement: 0,
     edit_paycheck_modal: false,
     paycheck_modal: false,
@@ -49,16 +51,7 @@ const paycheckPage = createSlice({
     },
     open_create_paycheck_modal: (state, { payload }) => {
       state.edit_paycheck_modal = true;
-      state.paycheck = {
-        id: "",
-        affiliate: "",
-        team: "",
-        amount: 0,
-        venmo: "",
-        paid: "",
-        reciept: "",
-        paid_at: ""
-      };
+      state.paycheck = paycheck;
     },
     open_edit_paycheck_modal: (state, { payload }) => {
       state.edit_paycheck_modal = true;
@@ -66,16 +59,7 @@ const paycheckPage = createSlice({
     },
     close_paycheck_modal: (state, { payload }) => {
       state.paycheck_modal = false;
-      state.paycheck = {
-        id: "",
-        affiliate: "",
-        team: "",
-        amount: 0,
-        venmo: "",
-        paid: "",
-        reciept: "",
-        paid_at: ""
-      };
+      state.paycheck = paycheck;
     },
     open_paycheck_modal: (state, { payload }) => {
       state.paycheck_modal = true;

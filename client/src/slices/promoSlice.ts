@@ -2,43 +2,30 @@
 
 import { createSlice } from "@reduxjs/toolkit";
 import * as API from "../api";
+import { format_date } from "../utils/helper_functions";
+
+const promo = {
+  id: "",
+  affiliate: "",
+  team: "",
+  amount: 0,
+  venmo: "",
+  paid: "",
+  reciept: "",
+  paid_at: ""
+};
 
 const promoPage = createSlice({
   name: "promoPage",
   initialState: {
     loading: false,
     promos: [],
-    promo: {
-      id: "",
-      affiliate: "",
-      user: "",
-      promo_code: "",
-      admin_only: "",
-      affiliate_only: "",
-      sponsor_only: "",
-      single_use: "",
-      used_once: "",
-      excluded_categories: [],
-      excluded_products: [],
-      included_categories: [],
-      included_products: [],
-      exclude: false,
-      include: false,
-      percentage_off: 0,
-      amount_off: 0,
-      minimum_total: 0,
-      free_shipping: false,
-      time_limit: false,
-      active: "",
-      start_date: "",
-      end_date: ""
-    },
+    promo: promo,
+    remoteVersionRequirement: 0,
+    edit_promo_modal: false,
+    promo_modal: false,
     message: "",
     error: {},
-    search: "",
-    sort: "",
-    page: 1,
-    limit: 10,
     sort_options: ["Newest", "Artist Name", "Facebook Name", "Instagram Handle", "Sponsor", "Promoter"],
     colors: [
       { name: "Sponsor", color: "#3e4c6d" },
@@ -59,17 +46,24 @@ const promoPage = createSlice({
     set_loading: (state, { payload }) => {
       state.loading = payload;
     },
-    set_search: (state, { payload }) => {
-      state.search = payload;
+    set_edit_promo_modal: (state, { payload }) => {
+      state.edit_promo_modal = payload;
     },
-    set_sort: (state, { payload }) => {
-      state.sort = payload;
+    open_create_promo_modal: (state, { payload }) => {
+      state.edit_promo_modal = true;
+      state.promo = promo;
     },
-    set_page: (state, { payload }) => {
-      state.page = payload;
+    open_edit_promo_modal: (state, { payload }) => {
+      state.edit_promo_modal = true;
+      state.promo = payload;
     },
-    set_limit: (state, { payload }) => {
-      state.limit = payload;
+    close_promo_modal: (state, { payload }) => {
+      state.promo_modal = false;
+      state.promo = promo;
+    },
+    open_promo_modal: (state, { payload }) => {
+      state.promo_modal = true;
+      state.promo = payload;
     }
   },
   extraReducers: {
@@ -106,7 +100,7 @@ const promoPage = createSlice({
     },
     [API.detailsPromo.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.promo = payload;
+      state.promo = { ...payload, paid_at: payload.paid_at ? format_date(payload.paid_at) : "" };
       state.message = "Promo Found";
     },
     [API.detailsPromo.rejected as any]: (state: any, { payload }: any) => {
@@ -126,9 +120,30 @@ const promoPage = createSlice({
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
+    },
+    [API.deleteMultiplePromos.pending as any]: (state: any, { payload }: any) => {
+      state.loading = true;
+    },
+    [API.deleteMultiplePromos.fulfilled as any]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.message = "Promo Deleted";
+      state.remoteVersionRequirement = Date.now();
+    },
+    [API.deleteMultiplePromos.rejected as any]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.error = payload.error;
+      state.message = payload.message;
     }
   }
 });
 
-export const { set_search, set_sort, set_page, set_limit, set_loading, set_promo } = promoPage.actions;
+export const {
+  set_loading,
+  set_promo,
+  set_edit_promo_modal,
+  open_create_promo_modal,
+  open_promo_modal,
+  close_promo_modal,
+  open_edit_promo_modal
+} = promoPage.actions;
 export default promoPage.reducer;
