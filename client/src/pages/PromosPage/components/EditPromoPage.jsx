@@ -15,7 +15,7 @@ const EditPromoPage = props => {
   const [loading_checkboxes, set_loading_checkboxes] = useState(true);
   const history = useHistory();
 
-  const promoPage = useSelector(state => state.promos);
+  const promoPage = useSelector(state => state.promos.promoPage);
   const { promo, loading, error } = promoPage;
 
   const {

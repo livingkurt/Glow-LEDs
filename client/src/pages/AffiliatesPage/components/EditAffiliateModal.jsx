@@ -21,7 +21,7 @@ const EditAffiliateModal = () => {
   const chipPage = useSelector(state => state.chips);
   const { chips, loading: loading_chips } = chipPage;
 
-  const promoPage = useSelector(state => state.promos);
+  const promoPage = useSelector(state => state.promos.promoPage);
   const { promos, loading: loading_promos } = promoPage;
 
   useEffect(() => {

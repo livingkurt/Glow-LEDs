@@ -519,7 +519,7 @@ const OrderPage = props => {
   };
 
   const [promo_code, set_promo_code] = useState("");
-  const promoPage = useSelector(state => state.promos);
+  const promoPage = useSelector(state => state.promos.promoPage);
   const { promos } = promoPage;
 
   const [promo_code_validations, set_promo_code_validations] = useState("");

@@ -11,7 +11,7 @@ const ProfileAffiliateMetrics = () => {
   const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
   const { month_earnings, loading_month_earnings } = affiliatePage;
 
-  const promoPage = useSelector(state => state.promos);
+  const promoPage = useSelector(state => state.promos.promoPage);
   const { promos } = promoPage;
 
   return (

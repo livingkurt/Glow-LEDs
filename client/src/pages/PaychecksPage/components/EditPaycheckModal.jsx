@@ -20,7 +20,7 @@ const EditPaycheckModal = () => {
   const teamPage = useSelector(state => state.teams);
   const { teams, loading: loading_teams } = teamPage;
 
-  const promoPage = useSelector(state => state.promos);
+  const promoPage = useSelector(state => state.promos.promoPage);
   const { promos, loading: loading_promos } = promoPage;
 
   useEffect(() => {

@@ -46,7 +46,7 @@ const EditTeamPage = props => {
   const userPage = useSelector(state => state.users.userPage);
   const { users } = userPage;
 
-  const promoPage = useSelector(state => state.promos);
+  const promoPage = useSelector(state => state.promos.promoPage);
   const { promos: promos_list } = promoPage;
 
   const dispatch = useDispatch();

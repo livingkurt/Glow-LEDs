@@ -136,7 +136,7 @@ export default PromosPage;
 //   const [search, set_search] = useState("");
 //   const [sort, setSortOrder] = useState("");
 //   const category = props.match.params.category ? props.match.params.category : "";
-//   const promoPage = useSelector(state => state.promos);
+//   const promoPage = useSelector(state => state.promos.promoPage);
 //   const { loading, promos, message, error, success } = promoPage;
 
 //   const dispatch = useDispatch();

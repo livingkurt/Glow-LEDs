@@ -27,7 +27,7 @@ const PlaceOrderPage = props => {
   const userPage = useSelector(state => state.users.userPage);
   const { users, current_user, loading: user_loading, success: user_success } = userPage;
 
-  const promoPage = useSelector(state => state.promos);
+  const promoPage = useSelector(state => state.promos.promoPage);
   const { promos } = promoPage;
   const items_price = determine_total(cartItems);
 
