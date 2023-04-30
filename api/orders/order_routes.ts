@@ -23,7 +23,7 @@ router.route("/each_day_income/:date").get(order_controller.each_day_income_orde
 router.route("/each_month_income/:date").get(order_controller.each_month_income_orders_c);
 router.route("/previous_income/:days").get(order_controller.previous_income_orders_c);
 router.route("/mark_as_shipped").put(order_controller.mark_as_shipped_orders_c);
-router.route("/invoice").put(order_controller.invoice_orders_c);
+router.route("/:id/invoice").get(order_controller.invoice_orders_c);
 router.route("/eligible_for_review").post(order_controller.eligible_for_review_orders_c);
 
 router.route("/:id/user").get(isAuth, order_controller.findMy_orders_c);

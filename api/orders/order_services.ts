@@ -1113,6 +1113,15 @@ export default {
       }
     }
   },
+  invoice_orders_s: async (id: string) => {
+    try {
+      return await order_db.findById_orders_db(id);
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
   get_product_quantities_orders_s: async () => {
     try {
       return await order_db.get_product_quantities_orders_db();

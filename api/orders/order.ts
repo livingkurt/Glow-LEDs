@@ -157,6 +157,7 @@ const orderSchema = new mongoose.Schema(
     tracking_number: { type: String },
     tracking_url: { type: String },
     return_tracking_number: { type: String },
+    return_tracking_url: { type: String },
     is_error: { type: Boolean, default: false },
     error_at: { type: Date },
     error: { type: Object },

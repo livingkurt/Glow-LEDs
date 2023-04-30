@@ -265,6 +265,15 @@ const orderPage = createSlice({
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
+    },
+    [API.buyLabel.fulfilled as any]: (state: any, { payload }: any) => {
+      state.remoteVersionRequirement = Date.now();
+    },
+    [API.createLabel.fulfilled as any]: (state: any, { payload }: any) => {
+      state.remoteVersionRequirement = Date.now();
+    },
+    [API.createReturnLabel.fulfilled as any]: (state: any, { payload }: any) => {
+      state.remoteVersionRequirement = Date.now();
     }
   }
 });

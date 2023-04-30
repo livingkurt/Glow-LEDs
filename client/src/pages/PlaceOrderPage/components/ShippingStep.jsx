@@ -84,21 +84,6 @@ const ShippingStep = ({
     set_loading_checkboxes(false);
   }, 500);
 
-  // useEffect(() => {
-  //   let clean = true;
-  //   if (clean) {
-  //     if (current_user?.isAdmin) {
-  //       get_all_shipping();
-  //     }
-  //   }
-  //   return () => (clean = false);
-  // }, []);
-
-  // const get_all_shipping = async () => {
-  //   const { data } = await API_Shipping.get_all_shipping();
-  //   set_all_shipping(data);
-  // };
-
   // const [ email_validations, set_email_validations ] = useState('');
   const [first_name_validations, set_first_name_validations] = useState("");
   const [last_name_validations, set_last_name_validations] = useState("");

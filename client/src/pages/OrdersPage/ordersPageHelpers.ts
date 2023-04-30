@@ -1,5 +1,8 @@
+import printJS from "print-js";
 import { tableColors } from "../../shared/GlowLEDsComponents/GLTableV2/glTableHelpers";
 import { daysBetween } from "../../utils/helper_functions";
+import { print } from "html-to-printer";
+import { setTimeout } from "timers";
 
 export const orderColors = [
   { name: "Not Paid", color: tableColors.inactive },
@@ -145,4 +148,99 @@ export const print_label = (content: any) => {
     document.body.removeChild(frame1);
   }, 500);
   return false;
+};
+
+export const duplicateOrder = (order: any) => {
+  return {
+    orderItems: order.orderItems,
+    shipping: {
+      ...order.shipping,
+      shipment_id: null,
+      shipping_rate: null,
+      shipping_label: null
+    },
+    itemsPrice: order.itemsPrice,
+    shippingPrice: 0,
+    taxPrice: 0,
+    totalPrice: 0,
+    user: order?.user?._id,
+    order_note: `Replacement Order for ${order.shipping.first_name} ${order.shipping.last_name} - Original Order Number is ${order._id}`,
+    production_note: order.production_note
+  };
+};
+
+export const printHtml = (html: string, id: string) => {
+  const tempDiv = document.createElement("div");
+  tempDiv.innerHTML = html;
+
+  // Append the temporary element to the DOM
+  document.body.appendChild(tempDiv);
+
+  // Print the contents of the 'printableArea' div
+  printJS({
+    printable: id,
+    type: "html",
+    showModal: false,
+    modalMessage: "Preparing print...",
+    onPrintDialogClose: () => {
+      console.log("The print dialog was closed");
+      // Remove the temporary element from the DOM after printing
+      document.body.removeChild(tempDiv);
+    }
+  });
+};
+
+export const sendEmail = (message: string, order: any) => {
+  const email = order.shipping.email;
+  const subject = "About Your Glow LEDs Order";
+  const emailBody = "Hi " + order.user.first_name + ",";
+  document.location = "mailto:" + email + "?subject=" + subject + "&body=" + emailBody;
+};
+
+const waitForImagesToLoad = (htmlString: string) => {
+  return new Promise<void>(resolve => {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(htmlString, "text/html");
+    const images = doc.querySelectorAll("img");
+    let imagesLoaded = 0;
+
+    if (images.length === 0) {
+      resolve();
+    } else {
+      images.forEach(img => {
+        const tmpImage = new Image();
+        tmpImage.src = img.src;
+        tmpImage.onload = () => {
+          imagesLoaded++;
+          if (imagesLoaded === images.length) {
+            resolve();
+          }
+        };
+        tmpImage.onerror = () => {
+          imagesLoaded++;
+          if (imagesLoaded === images.length) {
+            resolve();
+          }
+        };
+      });
+    }
+  });
+};
+
+export const printLabel = async (label: string) => {
+  const html = `<div style="width: 100%;
+  display: flex;
+  height: auto;
+  padding: 40px;
+  align-items: center;">
+      <img style="margin: auto; text-align: center;" src="${label}" alt="label" />
+  </div>`;
+  await waitForImagesToLoad(html);
+  print(html);
+  // print(`<img style="margin: auto; text-align: center;" width="1000px"src="${label}" />`);
+};
+
+export const printInvoice = async (invoice: string) => {
+  await waitForImagesToLoad(invoice);
+  print(invoice);
 };

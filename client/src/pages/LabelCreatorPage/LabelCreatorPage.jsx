@@ -9,8 +9,10 @@ import Autocomplete from "react-google-autocomplete";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 
 import * as API from "../../api";
+import { useGetAllShippingOrdersQuery } from "../PlaceOrderPage/placeOrderApi";
 
 const LabelCreatorPage = props => {
+  const all_shipping = useGetAllShippingOrdersQuery();
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
 
@@ -18,7 +20,6 @@ const LabelCreatorPage = props => {
   const parcelPage = useSelector(state => state.parcels);
   const { parcels } = parcelPage;
 
-  const [all_shipping, set_all_shipping] = useState([]);
   const [loading, set_loading] = useState(true);
   const [to_shipping, set_to_shipping] = useState({});
   const [from_shipping, set_from_shipping] = useState({});
@@ -35,18 +36,10 @@ const LabelCreatorPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      if (current_user?.isAdmin) {
-        get_all_shipping();
-      }
       dispatch(API.listParcels({}));
     }
     return () => (clean = false);
   }, []);
-
-  const get_all_shipping = async () => {
-    const { data } = await API_Shipping.get_all_shipping();
-    set_all_shipping(data);
-  };
 
   const dispatch = useDispatch();
 

@@ -138,31 +138,3 @@ export const deleteProductReview = createAsyncThunk(
     } catch (error) {}
   }
 );
-
-// export const productApi = createApi({
-//   reducerPath: "productApi",
-//   baseQuery: fetchBaseQuery({ baseUrl: "/api/products" }),
-//   endpoints: builder => ({
-//     getProductQuantitiesOrders: builder.query({
-//       query: () => "$"
-//     }),
-//     getAllShippingOrders: builder.query({
-//       query: () => "/get_all_shipping_orders"
-//     }),
-//   })
-// });
-
-// export const {
-//   useGetProductQuantitiesOrdersQuery,
-//   useGetAllShippingOrdersQuery,
-//   useGetAllTimeRevenueOrdersQuery,
-//   useGetProductAllTimeRevenueOrdersQuery,
-//   useGetProductRangeRevenueOrdersQuery,
-//   useGetRangeRevenueOrdersQuery,
-//   useGetMonthlyRevenueOrdersQuery,
-//   useGetYearlyRevenueOrdersQuery,
-//   useGetRangeCategoryRevenueOrdersQuery,
-//   useGetAllTimeCategoryRevenueOrdersQuery,
-//   useGetAllTimeTipsRevenueOrdersQuery,
-//   useGetRangeTipsRevenueOrdersQuery,
-//   useGetRangeAffiliateEarningsC

@@ -14,6 +14,7 @@ export * from "./paycheckApi";
 export * from "./productApi";
 export * from "./promoApi";
 export * from "./settingApi";
+export * from "./shippingApi";
 export * from "./surveyApi";
 export * from "./teamApi";
 export * from "./userApi";

@@ -233,6 +233,7 @@ export const payOrderGuest = createAsyncThunk(
     } catch (error) {}
   }
 );
+
 export const transferOrders = createAsyncThunk(
   "orders/transferOrders",
   async ({ oldUserId, newUserId }: { oldUserId: any; newUserId: any }, thunkApi: any) => {
@@ -242,3 +243,15 @@ export const transferOrders = createAsyncThunk(
     } catch (error) {}
   }
 );
+
+export const invoiceOrder = createAsyncThunk("orders/invoiceOrder", async ({ orderId }: { orderId: string }, thunkApi: any) => {
+  const {
+    users: {
+      userPage: { current_user }
+    }
+  } = thunkApi.getState();
+  try {
+    const { data } = await axios.put(`/api/orders/${orderId}/invoice`, headers(current_user));
+    return data;
+  } catch (error) {}
+});

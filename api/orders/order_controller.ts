@@ -254,9 +254,11 @@ export default {
     }
   },
   invoice_orders_c: async (req: any, res: any) => {
-    const { body } = req;
+    const { params } = req;
+    console.log({ params });
+    const order = await order_services.invoice_orders_s(params.id);
     try {
-      return res.status(200).send(invoice({ order: body }));
+      return res.status(200).send(invoice({ order }));
     } catch (error) {
       res.status(500).send({ error, message: "Error Deleting Order" });
     }

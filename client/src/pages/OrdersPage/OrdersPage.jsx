@@ -10,7 +10,7 @@ import * as API from "../../api";
 import { Link } from "react-router-dom";
 import { Button } from "@mui/material";
 import { humanDate } from "../../helpers/dateHelpers";
-import { determineOrderColors, orderColors, sinceOrdered } from "./ordersPageHelpers";
+import { determineOrderColors, duplicateOrder, orderColors, sinceOrdered } from "./ordersPageHelpers";
 import OrderItemsDisplay from "./components/OrderItemsDisplay";
 import { determine_product_name_string } from "../../utils/react_helper_functions";
 import { fullName } from "../UsersPage/usersHelpers";
@@ -78,6 +78,17 @@ const OrdersPage = () => {
               }}
             >
               <i className="fas fa-edit" />
+            </GLButton>
+            <GLButton
+              variant="icon"
+              aria-label="Duplicate"
+              onClick={() => {
+                const newDuplicateOrder = duplicateOrder(order);
+                console.log({ newDuplicateOrder });
+                dispatch(API.saveOrder(newDuplicateOrder));
+              }}
+            >
+              <i className="fas fa-clone" />
             </GLButton>
             <Link to={`/secure/account/order/${row._id}`}>
               <GLButton variant="icon" aria-label="view">

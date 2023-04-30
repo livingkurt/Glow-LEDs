@@ -19,7 +19,8 @@ import {
   teamSlice,
   userSlice,
   wholesalerSlice,
-  tutorialSlice
+  tutorialSlice,
+  shippingSlice
 } from "./slices";
 
 import { dashboardApi } from "./pages/DashboardPage/dashboardApi";
@@ -110,6 +111,7 @@ const reducers = {
   }),
   promos: promoSlice,
   settings: settingSlice,
+  shipping: shippingSlice,
   surveys: surveySlice,
   teams: teamSlice,
   users: combineReducers({

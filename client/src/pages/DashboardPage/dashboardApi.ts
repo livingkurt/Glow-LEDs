@@ -67,7 +67,6 @@ export const dashboardApi = createApi({
 
 export const {
   useGetProductQuantitiesOrdersQuery,
-  useGetAllShippingOrdersQuery,
   useGetAllTimeRevenueOrdersQuery,
   useGetProductAllTimeRevenueOrdersQuery,
   useGetProductRangeRevenueOrdersQuery,

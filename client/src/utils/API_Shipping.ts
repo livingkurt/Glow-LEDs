@@ -2,7 +2,7 @@ import axios from "axios";
 
 const shipping_routes = {
   get_all_shipping: () => {
-    return axios.get("/api/shipping/all_shipping");
+    return axios.get("/api/shipping");
   },
   get_shipping_rates: (order: any, verify_shipping: boolean) => {
     return axios.put("/api/shipping/get_shipping_rates", {
