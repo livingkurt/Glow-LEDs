@@ -87,6 +87,7 @@ export default {
     };
     const private_code = {
       promo_code: make_private_code(6),
+      user: body.user,
       admin_only: false,
       affiliate_only: true,
       single_use: false,

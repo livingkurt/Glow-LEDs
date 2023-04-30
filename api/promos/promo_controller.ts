@@ -145,5 +145,17 @@ export default {
     } catch (error) {
       res.status(500).send({ error, message: "Error Deleting Promo" });
     }
+  },
+  remove_multiple_promos_c: async (req: any, res: any) => {
+    const { body } = req;
+    try {
+      const promo = await promo_services.remove_multiple_promos_s(body);
+      if (promo) {
+        return res.status(204).send({ message: "Promo Deleted" });
+      }
+      return res.status(500).send({ message: "Error Deleting Promo" });
+    } catch (error) {
+      res.status(500).send({ error, message: "Error Deleting Promo" });
+    }
   }
 };

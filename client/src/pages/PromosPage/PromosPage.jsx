@@ -10,6 +10,8 @@ import * as API from "../../api";
 import { Button } from "@mui/material";
 import { determine_color } from "./promosHelpers";
 import { format_date } from "../../utils/helper_functions";
+import { fullName } from "../UsersPage/usersHelpers";
+import { humanDate } from "../../helpers/dateHelpers";
 
 const PromosPage = () => {
   const promoPage = useSelector(state => state.promos.promoPage);
@@ -21,12 +23,14 @@ const PromosPage = () => {
 
   const column_defs = useMemo(
     () => [
+      { title: "Date", display: paycheck => paycheck.createdAt && humanDate(paycheck.createdAt) },
       {
         title: "Active",
         display: promo => (promo.active ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />)
       },
       { title: "Promo Code", display: promo => promo.promo_code },
-      { title: "Percentage Off", display: promo => `${promo.percentage_off}%` },
+      { title: "Percentage Off", display: promo => `${promo.percentage_off || 0}%` },
+      { title: "User", display: promo => fullName(promo.user) },
       { title: "Amount Off", display: promo => `$${promo.amount_off || "0.00"}` },
       { title: "Minimum Total", display: promo => `$${promo.minimum_total || "0.00"}` },
       {
@@ -87,6 +91,9 @@ const PromosPage = () => {
         enableRowSelect={true}
         titleActions={
           <div className="row g-10px">
+            <Button color="secondary" variant="contained" onClick={() => dispatch(API.refreshSponsorCodes())}>
+              Create Sponsor Codes
+            </Button>
             {selectedRows.length > 1 && (
               <Button
                 color="secondary"
@@ -292,9 +299,9 @@ export default PromosPage;
 //             Create Promo
 //           </GLButton>
 //         </Link>
-//         <GLButton variant="primary" className="h-40px" onClick={refresh_sponsor_codes}>
-//           Create Sponsor Codes
-//         </GLButton>
+// <GLButton variant="primary" className="h-40px" onClick={refresh_sponsor_codes}>
+//   Create Sponsor Codes
+// </GLButton>
 //         <GLButton variant="primary" className="h-40px" onClick={send_code_used_email}>
 //           Send Code Used Email
 //         </GLButton>

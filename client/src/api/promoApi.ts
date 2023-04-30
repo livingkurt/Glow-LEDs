@@ -96,7 +96,19 @@ export const deleteMultiplePromos = createAsyncThunk("promo/deleteMultiplePromos
         userPage: { current_user }
       }
     } = thunkApi.getState();
-    const { data } = await axios.put(`/api/promo/delete_multiple`, { ids }, headers(current_user));
+    const { data } = await axios.put(`/api/promos/delete_multiple`, { ids }, headers(current_user));
+    return data;
+  } catch (error) {}
+});
+
+export const refreshSponsorCodes = createAsyncThunk("promo/refreshSponsorCodes", async (_data, thunkApi: any) => {
+  try {
+    const {
+      users: {
+        userPage: { current_user }
+      }
+    } = thunkApi.getState();
+    const { data } = await axios.post(`/api/promos/refresh_sponsor_codes`, {}, headers(current_user));
     return data;
   } catch (error) {}
 });

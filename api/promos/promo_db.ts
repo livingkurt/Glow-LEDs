@@ -98,6 +98,15 @@ export default {
       }
     }
   },
+  remove_multiple_promos_db: async (ids: string[]) => {
+    try {
+      return await Promo.updateMany({ _id: { $in: ids } }, { deleted: true });
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
   count_promos_db: async (filter: any) => {
     try {
       return await Promo.countDocuments(filter);

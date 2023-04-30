@@ -133,6 +133,19 @@ const promoPage = createSlice({
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
+    },
+    [API.refreshSponsorCodes.pending as any]: (state: any, { payload }: any) => {
+      state.loading = true;
+    },
+    [API.refreshSponsorCodes.fulfilled as any]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.message = "Sponsor Codes Refreshed";
+      state.remoteVersionRequirement = Date.now();
+    },
+    [API.refreshSponsorCodes.rejected as any]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.error = payload.error;
+      state.message = payload.message;
     }
   }
 });

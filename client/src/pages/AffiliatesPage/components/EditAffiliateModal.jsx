@@ -13,7 +13,7 @@ const EditAffiliateModal = () => {
   const { edit_affiliate_modal, affiliate, loading } = affiliatePage;
 
   const userPage = useSelector(state => state.users.userPage);
-  const { users, loading: loading_affiliates } = userPage;
+  const { users, loading: loading_users, current_user } = userPage;
 
   const productPage = useSelector(state => state.products.productPage);
   const { products, loading: loading_products } = productPage;
@@ -175,7 +175,12 @@ const EditAffiliateModal = () => {
       <GLModal
         isOpen={edit_affiliate_modal}
         onConfirm={() => {
-          dispatch(API.saveAffiliate({ affiliate, profile: location.pathname === "/secure/account/profile" }));
+          dispatch(
+            API.saveAffiliate({
+              affiliate: { ...affiliate, user: current_user._id },
+              profile: location.pathname === "/secure/account/profile"
+            })
+          );
           dispatch(API.listUsers());
         }}
         onCancel={() => {
@@ -188,7 +193,12 @@ const EditAffiliateModal = () => {
         cancelColor="secondary"
         disableEscapeKeyDown
       >
-        <GLForm formData={formFields} state={affiliate} onChange={value => dispatch(set_affiliate(value))} loading={loading} />
+        <GLForm
+          formData={formFields}
+          state={affiliate}
+          onChange={value => dispatch(set_affiliate(value))}
+          loading={loading && loading_users && loading_products && loading_chips && loading_promos}
+        />
       </GLModal>
     </div>
   );

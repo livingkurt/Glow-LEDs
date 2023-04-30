@@ -46,11 +46,10 @@ export default {
   },
   findAllTable_promos_s: async (query: { page: string; search: string; sort: any; limit: string; filters: any }) => {
     try {
-      const sort_options = ["createdAt", "paid_at", "paid", "amount"];
+      const sort_options = ["createdAt", "active", "promo_code", "percentage_off", "amount_off", "minimum_total", "free_shipping"];
       const { filter, sort, limit, page } = getFilteredData({
         query,
         sort_options,
-        search_name: "affiliate",
         normalizeFilters: normalizePromoFilters,
         normalizeSearch: normalizePromoSearch
       });
@@ -324,6 +323,15 @@ export default {
   remove_promos_s: async (params: any) => {
     try {
       return await promo_db.remove_promos_db(params.id);
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  remove_multiple_promos_s: async (body: any) => {
+    try {
+      return await promo_db.remove_multiple_promos_db(body.ids);
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

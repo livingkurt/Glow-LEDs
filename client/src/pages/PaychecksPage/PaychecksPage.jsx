@@ -10,6 +10,7 @@ import * as API from "../../api";
 import { Button } from "@mui/material";
 import { determine_color } from "./paychecksHelpers";
 import { format_date } from "../../utils/helper_functions";
+import { humanDate } from "../../helpers/dateHelpers";
 
 const PaychecksPage = () => {
   const paycheckPage = useSelector(state => state.paychecks.paycheckPage);
@@ -24,7 +25,7 @@ const PaychecksPage = () => {
 
   const column_defs = useMemo(
     () => [
-      { title: "Date Paid", display: paycheck => paycheck.paid_at && format_date(paycheck.paid_at) },
+      { title: "Date Paid", display: paycheck => paycheck.paid_at && humanDate(paycheck.paid_at) },
       {
         title: "Paid",
         display: paycheck => (paycheck.paid ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />)
