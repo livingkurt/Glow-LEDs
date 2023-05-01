@@ -377,25 +377,14 @@ export default {
           }
         },
         {
-          $group: {
-            _id: null,
-            data: {
-              $push: {
-                month: "$_id.month",
-                totalPrice: {
-                  $sum: "$totalPrice"
-                }
-              }
-            }
-          }
-        },
-        {
           $project: {
             _id: 0,
-            data: 1
+            month: "$_id.month",
+            totalPrice: 1
           }
         }
       ]).exec();
+
       return totalPriceByMonth;
     } catch (error) {
       if (error instanceof Error) {
@@ -426,22 +415,10 @@ export default {
           }
         },
         {
-          $group: {
-            _id: null,
-            data: {
-              $push: {
-                year: "$_id.year",
-                totalPrice: {
-                  $sum: "$totalPrice"
-                }
-              }
-            }
-          }
-        },
-        {
           $project: {
             _id: 0,
-            data: 1
+            year: "$_id.year",
+            totalPrice: 1
           }
         }
       ]).exec();
@@ -453,7 +430,6 @@ export default {
     }
   },
   get_daily_revenue_orders_db: async (start_date: string, end_date: string) => {
-    console.log({ start_date, end_date });
     try {
       const totalPriceByDay = await Order.aggregate([
         {
@@ -491,7 +467,6 @@ export default {
               }
             },
             totalPrice: 1,
-            refundTotal: 1,
             _id: 0
           }
         },
@@ -499,29 +474,9 @@ export default {
           $sort: {
             date: 1
           }
-        },
-        {
-          $group: {
-            _id: null,
-            data: {
-              $push: {
-                date: "$date",
-                totalPrice: {
-                  $sum: "$totalPrice"
-                }
-              }
-            }
-          }
-        },
-        {
-          $project: {
-            _id: 0,
-            data: 1
-          }
         }
       ]).exec();
 
-      console.log({ totalPriceByDay });
       return totalPriceByDay;
     } catch (error) {
       if (error instanceof Error) {

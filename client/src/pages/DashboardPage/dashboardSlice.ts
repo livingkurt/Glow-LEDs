@@ -2,14 +2,17 @@
 
 import { createSlice } from "@reduxjs/toolkit";
 import * as API from "./dashboardApi";
+import { formatDate } from "../../shared/GlowLEDsComponents/GLForm/glFormHelpers";
+
+const today = new Date().toISOString();
 
 const dashboardPage = createSlice({
   name: "dashboardPage",
   initialState: {
     year: "",
     month: "",
-    start_date: "",
-    end_date: "",
+    start_date: "2020-08-01",
+    end_date: formatDate(today),
     start_end_date: false,
     loading: false
   },
