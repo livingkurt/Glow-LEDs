@@ -28,7 +28,7 @@ const PromosPage = () => {
         title: "Active",
         display: promo => (promo.active ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />)
       },
-      { title: "Promo Code", display: promo => promo.promo_code },
+      { title: "Promo Code", display: promo => promo.promo_code.toUpperCase() },
       { title: "Percentage Off", display: promo => `${promo.percentage_off || 0}%` },
       { title: "User", display: promo => fullName(promo.user) },
       { title: "Affiliate", display: promo => promo?.affiliate?.artist_name },
