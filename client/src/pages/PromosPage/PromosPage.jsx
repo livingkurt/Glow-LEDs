@@ -31,6 +31,7 @@ const PromosPage = () => {
       { title: "Promo Code", display: promo => promo.promo_code },
       { title: "Percentage Off", display: promo => `${promo.percentage_off || 0}%` },
       { title: "User", display: promo => fullName(promo.user) },
+      { title: "Affiliate", display: promo => promo?.affiliate?.artist_name },
       { title: "Amount Off", display: promo => `$${promo.amount_off || "0.00"}` },
       { title: "Minimum Total", display: promo => `$${promo.minimum_total || "0.00"}` },
       {

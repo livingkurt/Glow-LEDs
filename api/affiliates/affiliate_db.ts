@@ -79,11 +79,11 @@ export default {
       }
     }
   },
-  update_affiliates_db: async (params: any, body: any) => {
+  update_affiliates_db: async (id: any, body: any) => {
     try {
-      const affiliate: any = await Affiliate.findOne({ pathname: params.pathname });
+      const affiliate: any = await Affiliate.findOne({ _id: id });
       if (affiliate) {
-        return await Affiliate.updateOne({ pathname: params.pathname }, body);
+        return await Affiliate.updateOne({ _id: id }, body);
       }
     } catch (error) {
       if (error instanceof Error) {

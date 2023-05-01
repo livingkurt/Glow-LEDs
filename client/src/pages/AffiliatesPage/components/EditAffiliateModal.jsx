@@ -177,7 +177,7 @@ const EditAffiliateModal = () => {
         onConfirm={() => {
           dispatch(
             API.saveAffiliate({
-              affiliate: { ...affiliate, user: current_user._id },
+              affiliate: { ...affiliate, user: affiliate?.user?._id || current_user._id },
               profile: location.pathname === "/secure/account/profile"
             })
           );

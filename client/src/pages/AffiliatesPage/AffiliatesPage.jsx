@@ -11,6 +11,7 @@ import { Button } from "@mui/material";
 import { getAffiliates } from "../../api";
 import { determine_color } from "./affiliateHelpers";
 import { useLocation } from "react-router-dom";
+import { fullName } from "../UsersPage/usersHelpers";
 
 const AffiliatesPage = () => {
   const location = useLocation();
@@ -48,7 +49,7 @@ const AffiliatesPage = () => {
         title: "Percentage Off",
         display: affiliate => `${affiliate.private_code && affiliate.private_code.percentage_off}%`
       },
-      { title: "Venmo", display: "venmo" },
+      { title: "User", display: affiliate => fullName(affiliate.user) },
       { title: "Public Code", display: affiliate => affiliate.private_code && affiliate.public_code.promo_code },
       { title: "Private Code", display: affiliate => affiliate.private_code && affiliate.private_code.promo_code },
       {

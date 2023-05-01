@@ -162,7 +162,6 @@ export default {
     const start_date = new Date();
     const next_date = new Date();
     const end_date = new Date(next_date.setMonth(next_date.getMonth() + 1));
-
     try {
       const sponsor_codes = await Promise.all(
         affiliates.map(async (affiliate: any) => {
