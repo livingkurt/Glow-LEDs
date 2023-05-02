@@ -73,6 +73,11 @@ export const calculateTotalOunces = (cartItems: any) => {
   return totalOunces;
 };
 
+export const covertToOunces = (weight: any) => {
+  const weightInOunces = (weight?.weight_pounds * 16 || 0) + (weight?.weight_ounces || 0);
+  return weightInOunces;
+};
+
 export const calculateTotalPounds = (cartItems: any) => {
   let totalOunces = 0;
   for (let i = 0; i < cartItems.length; i++) {

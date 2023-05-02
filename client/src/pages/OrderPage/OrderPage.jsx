@@ -448,7 +448,7 @@ const OrderPage = props => {
     state: process.env.REACT_APP_RETURN_STATE,
     postalCode: process.env.REACT_APP_RETURN_POSTAL_CODE,
     country: process.env.REACT_APP_RETURN_COUNTRY,
-    phone: "906-284-2208",
+    phone: process.env.REACT_APP_PHONE_NUMBER,
     email: process.env.REACT_APP_INFO_EMAIL,
     company: "Glow LEDs"
   };
