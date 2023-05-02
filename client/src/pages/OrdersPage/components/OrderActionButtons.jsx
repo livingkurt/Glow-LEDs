@@ -66,6 +66,13 @@ const OrderActionButtons = ({ order }) => {
     dispatch(set_loading_label(false));
   };
 
+  const sendEmail = message => {
+    const email = order.shipping.email;
+    const subject = "About Your Glow LEDs Order";
+    const emailBody = "Hi " + order.user.first_name + ",";
+    document.location = "mailto:" + email + "?subject=" + subject + "&body=" + emailBody;
+  };
+
   return (
     <div className="">
       <h3 className="fs-20px mv-5px">Actions</h3>
@@ -131,7 +138,9 @@ const OrderActionButtons = ({ order }) => {
           </GLButton>
         </a>
       )}
-
+      <GLButton variant="secondary" className="w-100per mv-10px" onClick={() => sendEmail("Hello")}>
+        Send User a Message
+      </GLButton>
       {send_order_email && (
         <GLButton variant="primary" className="mv-5px w-100per" onClick={() => send_order_email()}>
           Send Order Email
