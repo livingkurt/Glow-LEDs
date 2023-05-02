@@ -8,10 +8,10 @@ export const buyLabel = async ({ shipment_id, shipping_rate, order }: any) => {
   const EasyPost = new easy_post_api(process.env.EASY_POST);
   try {
     const created_shipment = await EasyPost.Shipment.retrieve(shipment_id);
-    console.log({ created_shipment });
+    console.log({ created_shipment, shipping_rate });
     return await created_shipment.buy(shipping_rate, 0);
   } catch (error) {
-    // console.error("Error buying label:", error); // Log the error for debugging purposes
+    console.error("Error buying label:", error); // Log the error for debugging purposes
     return createLabel({ speed: "first", order });
   }
 };
@@ -107,14 +107,16 @@ export const createLabel = async (body: any) => {
     });
   }
 
-  const shipment = new EasyPost.Shipment({
+  const saved_shipment = await EasyPost.Shipment.create({
     to_address: toAddress,
     from_address: fromAddress,
     parcel: parcel,
-    customsInfo: order.shipping.international ? customsInfo : {}
+    customsInfo: order.shipping.international ? customsInfo : {},
+    options: {
+      commercial_invoice_letterhead: "IMAGE_1",
+      commercial_invoice_signature: "IMAGE_2"
+    }
   });
-
-  const saved_shipment = await shipment.save();
   const created_shipment = await EasyPost.Shipment.retrieve(saved_shipment.id);
 
   if (speed === "first") {

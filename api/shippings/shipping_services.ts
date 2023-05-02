@@ -22,15 +22,101 @@ export default {
     }
   },
   get_shipping_rates_shipping_s: async (body: any) => {
-    let error_message = "";
+    const error_message = "";
     try {
       const EasyPost = new easy_post_api(process.env.EASY_POST);
       const order = body.order;
       const verify_shipping = body.verify_shipping;
 
-      let toAddress: any = {};
-      if (verify_shipping) {
-        toAddress = new EasyPost.Address({
+      const toAddress: any = {};
+      // if (verify_shipping) {
+      //   toAddress = new EasyPost.Address({
+      //     verify: ["delivery"],
+      //     name: order.shipping.first_name + " " + order.shipping.last_name,
+      //     street1: order.shipping.address_1,
+      //     street2: order.shipping.address_2,
+      //     city: order.shipping.city,
+      //     state: order.shipping.state,
+      //     zip: order.shipping.postalCode,
+      //     country: order.shipping.country
+      //   });
+      //   toAddress.save().then((addr: any) => {
+      //     error_message = addr.verifications.delivery.errors.map((error: any) => error.message).join(" - ");
+      //   });
+      // } else {
+      //   toAddress = new EasyPost.Address({
+      //     name: order.shipping.first_name + " " + order.shipping.last_name,
+      //     street1: order.shipping.address_1,
+      //     street2: order.shipping.address_2,
+      //     city: order.shipping.city,
+      //     state: order.shipping.state,
+      //     zip: order.shipping.postalCode,
+      //     country: order.shipping.country
+      //   });
+      // }
+      // const fromAddress = new EasyPost.Address({
+      //   street1: process.env.RETURN_ADDRESS,
+      //   city: process.env.RETURN_CITY,
+      //   state: process.env.RETURN_STATE,
+      //   zip: process.env.RETURN_POSTAL_CODE,
+      //   country: process.env.RETURN_COUNTRY,
+      //   company: "Glow LEDs",
+      //   phone: "906-284-2208",
+      //   email: process.env.INFO_EMAIL
+      // });
+      const parcels = await parcel_db.findAll_parcels_db({ deleted: false }, {}, "0", "1");
+
+      const weight = calculateTotalOunces(order.orderItems);
+
+      const parcel_size = determine_parcel(order.orderItems, parcels);
+      // const parcel = new EasyPost.Parcel({
+      //   length: parcel_size.length,
+      //   width: parcel_size.width,
+      //   height: parcel_size.height,
+      //   weight
+      // });
+      // let customsInfo = {};
+      // if (order.shipping.international) {
+      // const customs_items = order.orderItems.map((item: any) => {
+      //   console.log({
+      //     description: "3D Printed Accessories",
+      //     quantity: item.qty,
+      //     value: item.price,
+      //     weight: item.weight,
+      //     origin_country: "US"
+      //   });
+      //   const customs_item = new EasyPost.CustomsItem.create({
+      //     description: "3D Printed Accessories",
+      //     quantity: item.qty,
+      //     value: item.price,
+      //     weight: item.weight,
+      //     origin_country: "US"
+      //   });
+      //   return customs_item;
+      // });
+      // console.log({ customs_items });
+
+      //   customsInfo = new EasyPost.CustomsInfo({
+      // eel_pfc: "NOEEI 30.37(a)",
+      // customs_certify: true,
+      // customs_signer: order.shipping.first_name + " " + order.shipping.last_name,
+      // contents_type: "merchandise",
+      // restriction_type: "none",
+      // non_delivery_option: "return",
+      // customs_items
+      //   });
+      // }
+
+      // const shipment = new EasyPost.Shipment({
+      //   to_address: toAddress,
+      //   from_address: fromAddress,
+      //   parcel: parcel,
+      //   customsInfo: order.shipping.international ? customsInfo : {}
+      // });
+      // console.log({ shipment });
+
+      const shipment = await EasyPost.Shipment.create({
+        to_address: {
           verify: ["delivery"],
           name: order.shipping.first_name + " " + order.shipping.last_name,
           street1: order.shipping.address_1,
@@ -39,86 +125,75 @@ export default {
           state: order.shipping.state,
           zip: order.shipping.postalCode,
           country: order.shipping.country
-        });
-        toAddress.save().then((addr: any) => {
-          error_message = addr.verifications.delivery.errors.map((error: any) => error.message).join(" - ");
-        });
-      } else {
-        toAddress = new EasyPost.Address({
-          name: order.shipping.first_name + " " + order.shipping.last_name,
-          street1: order.shipping.address_1,
-          street2: order.shipping.address_2,
-          city: order.shipping.city,
-          state: order.shipping.state,
-          zip: order.shipping.postalCode,
-          country: order.shipping.country
-        });
-      }
-      const fromAddress = new EasyPost.Address({
-        street1: process.env.RETURN_ADDRESS,
-        city: process.env.RETURN_CITY,
-        state: process.env.RETURN_STATE,
-        zip: process.env.RETURN_POSTAL_CODE,
-        country: process.env.RETURN_COUNTRY,
-        company: "Glow LEDs",
-        phone: "906-284-2208",
-        email: process.env.INFO_EMAIL
-      });
-      const parcels = await parcel_db.findAll_parcels_db({ deleted: false }, {}, "0", "1");
-
-      const weight = calculateTotalOunces(order.orderItems);
-
-      const parcel_size = determine_parcel(order.orderItems, parcels);
-      const parcel = new EasyPost.Parcel({
-        length: parcel_size.length,
-        width: parcel_size.width,
-        height: parcel_size.height,
-        weight
-      });
-      let customsInfo = {};
-      if (order.shipping.international) {
-        const customs_items = order.orderItems.map((item: any) => {
-          const customs_item = new EasyPost.CustomsItem({
-            description: "3D Printed Accessories",
-            quantity: item.qty,
-            value: item.price,
-            weight: item.weight,
-            origin_country: "US"
-          });
-          return customs_item;
-        });
-
-        customsInfo = new EasyPost.CustomsInfo({
+        },
+        from_address: {
+          street1: process.env.RETURN_ADDRESS,
+          city: process.env.RETURN_CITY,
+          state: process.env.RETURN_STATE,
+          zip: process.env.RETURN_POSTAL_CODE,
+          country: process.env.RETURN_COUNTRY,
+          company: "Glow LEDs",
+          phone: "906-284-2208",
+          email: process.env.INFO_EMAIL
+        },
+        parcel: {
+          length: parcel_size.length,
+          width: parcel_size.width,
+          height: parcel_size.height,
+          weight
+        },
+        customs_info: {
           eel_pfc: "NOEEI 30.37(a)",
           customs_certify: true,
           customs_signer: order.shipping.first_name + " " + order.shipping.last_name,
           contents_type: "merchandise",
           restriction_type: "none",
           non_delivery_option: "return",
-          customs_items
-        });
-      }
-
-      const shipment = new EasyPost.Shipment({
-        to_address: toAddress,
-        from_address: fromAddress,
-        parcel: parcel,
-        customsInfo: order.shipping.international ? customsInfo : {}
+          customs_items: order.orderItems.map((item: any) => {
+            return {
+              description: "3D Printed Accessories",
+              quantity: item.qty,
+              value: item.price,
+              weight: item.weight,
+              origin_country: "US"
+            };
+          })
+        },
+        options: {
+          commercial_invoice_letterhead: "IMAGE_1",
+          commercial_invoice_signature: "IMAGE_2"
+        }
       });
-      console.log({ shipment });
 
-      const saved_shipment = await shipment.save();
-      console.log({ saved_shipment, messages: saved_shipment.messages });
-      if (!error_message && saved_shipment.messages.length === 0) {
-        return { shipment: saved_shipment, parcel: parcel_size };
-      } else {
-        return {
-          message: "Shipping Failed",
-          solution: "Please double check your shipping address for incorrect formatting",
-          error: `${error_message} - ${saved_shipment.messages.map((message: any) => message.message).join(" - ")}`
-        };
-      }
+      // or create by using IDs
+      console.log(shipment);
+
+      // const saved_shipment = await EasyPost.Shipment.create({
+      //   to_address: toAddress,
+      //   from_address: fromAddress,
+      //   parcel: parcel,
+      //   customsInfo: order.shipping.international ? customsInfo : {},
+      //   options: {
+      //     commercial_invoice_letterhead: "IMAGE_1",
+      //     commercial_invoice_signature: "IMAGE_2"
+      //   }
+      // });
+
+      // const rates = await saved_shipment.rates();
+      // const saved_shipment = await shipment.save();
+      console.log({ shipment });
+      return { shipment: shipment, parcel: parcel_size };
+      // if (!error_message && saved_shipment.messages.length === 0) {
+      //   return { shipment: saved_shipment, parcel: parcel_size };
+      // } else {
+      //   return {
+      //     message: "Shipping Failed",
+      //     solution: "Please double check your shipping address for incorrect formatting",
+      //     error: `${error_message} - ${saved_shipment.messages.map((message: any) => message.message).join(" - ")}`
+      //   };
+      // }
     } catch (error) {
+      console.log({ error: error.errors });
       if (error instanceof Error) {
         throw new Error(error_message || error.message);
       }
@@ -248,14 +323,24 @@ export default {
         });
       }
 
-      const shipment = new EasyPost.Shipment({
+      // const shipment = new EasyPost.Shipment({
+      //   to_address: toAddress,
+      //   from_address: fromAddress,
+      //   parcel: parcel,
+      //   customsInfo: order.shipping.international ? customsInfo : {}
+      // });
+
+      const saved_shipment = await EasyPost.Shipment.create({
         to_address: toAddress,
         from_address: fromAddress,
         parcel: parcel,
-        customsInfo: order.shipping.international ? customsInfo : {}
+        customsInfo: order.shipping.international ? customsInfo : {},
+        options: {
+          commercial_invoice_letterhead: "IMAGE_1",
+          commercial_invoice_signature: "IMAGE_2"
+        }
       });
 
-      const saved_shipment = await shipment.save();
       const created_shipment = await EasyPost.Shipment.retrieve(saved_shipment.id);
 
       const label = await created_shipment.buy(created_shipment.lowestRate(), 0);

@@ -69,17 +69,17 @@ const LoadingShipment = ({
         <div className="error_message_payment jc-c column">
           <div>
             <h2 className="ta-c mv-5px">Error:</h2>
-            {error?.error?.split("-").map(error => (
+            {/* {error?.error?.split("-").map(error => (
               <p className="ta-c mv-5px">{error}</p>
-            ))}
+            ))} */}
             <h2 className="ta-c mt-20px">Solution:</h2>
-            {error?.error?.includes("maximum per package") && (
+            {/* {error?.error?.includes("maximum per package") && (
               <p className="ta-c  mb-1px">
                 The total weight of the items in your cart is {calculateTotalPounds(cartItems)} lbs You need to remove items from your cart
                 and try again.
               </p>
-            )}
-            {!error?.error?.includes("maximum per package") && (
+            )} */}
+            {/* {!error?.error?.includes("maximum per package") && (
               <>
                 <p className="ta-c  mb-1px">Double check you entered your shipping address correctly</p>
                 <hr></hr>
@@ -88,7 +88,7 @@ const LoadingShipment = ({
                   Run Address without Verification
                 </GLButton>
               </>
-            )}
+            )} */}
             <hr></hr>
             <p className="ta-c  mb-1px">If that does not work please:</p>
             <p className="ta-c mt-20px mb-1px">Contact {process.env.REACT_APP_CONTACT_EMAIL} for assistence</p>

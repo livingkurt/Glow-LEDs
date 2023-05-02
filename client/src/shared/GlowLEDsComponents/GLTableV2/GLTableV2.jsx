@@ -13,7 +13,8 @@ import {
   GLTableFilterDropdown,
   GLTableToolbar,
   GLTableSearch,
-  GLTableFilterChips
+  GLTableFilterChips,
+  GLTableActions
 } from "./components";
 import glTable from "./glTable.module.scss";
 import "./glTable.scss";
@@ -538,13 +539,24 @@ const GLTableV2 = ({
         </Table>
         {!loading && visibleRows.length === 0 && <p style={{ textAlign: "center" }}>{noContentMessage}</p>}
         <TablePagination
-          rowsPerPageOptions={[5, 10, 25, 50, 100]}
+          rowsPerPageOptions={[5, 10, 25, 50, 100, { label: "All", value: -1 }]}
+          colSpan={3}
           component="div"
           count={rowCount}
+          SelectProps={{
+            inputProps: {
+              "aria-label": "rows per page",
+              fontSize: "20px"
+            },
+            SelectDisplayProps: {
+              style: { fontSize: "1.4rem", paddingTop: "15px", paddingRight: "15px" } // Adjust the font size here
+            }
+          }}
           rowsPerPage={pageSize}
           page={page}
           onPageChange={(e, v) => dispatch(updatePage(namespace, v))}
           onRowsPerPageChange={e => dispatch(updatePageSize(namespace, e.target.value))}
+          ActionsComponent={GLTableActions}
         />
       </Paper>
     </div>

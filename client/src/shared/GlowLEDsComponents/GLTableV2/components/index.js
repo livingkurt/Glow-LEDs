@@ -5,3 +5,4 @@ export { default as GLTableToolbar } from "./GLTableToolbar";
 export { default as GLTableFilterDropdown } from "./GLTableFilterDropdown";
 export { default as GLTableSearch } from "./GLTableSearch";
 export { default as GLTableFilterChips } from "./GLTableFilterChips";
+export { default as GLTableActions } from "./GLTableActions";

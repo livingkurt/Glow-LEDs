@@ -10,7 +10,7 @@
   "dependencies": {
     "@bugsnag/js": "^7.10.5",
     "@bugsnag/plugin-express": "^7.10.0",
-    "@easypost/api": "^3.9.1",
+    "@easypost/api": "^6.3.0",
     "@reduxjs/toolkit": "^1.9.0",
     "@scout_apm/scout-apm": "^0.2.3",
     "@types/express": "^4.17.7",
