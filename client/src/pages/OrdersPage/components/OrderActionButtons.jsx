@@ -66,13 +66,6 @@ const OrderActionButtons = ({ order }) => {
     dispatch(set_loading_label(false));
   };
 
-  const sendEmail = message => {
-    const email = order.shipping.email;
-    const subject = "About Your Glow LEDs Order";
-    const emailBody = "Hi " + order.user.first_name + ",";
-    document.location = "mailto:" + email + "?subject=" + subject + "&body=" + emailBody;
-  };
-
   return (
     <div className="">
       <h3 className="fs-20px mv-5px">Actions</h3>

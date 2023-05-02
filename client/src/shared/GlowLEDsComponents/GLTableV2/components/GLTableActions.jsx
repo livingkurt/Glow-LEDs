@@ -2,14 +2,10 @@ import PropTypes from "prop-types";
 import { useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
-import Button from "@mui/material/Button";
 import FirstPageIcon from "@mui/icons-material/FirstPage";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import LastPageIcon from "@mui/icons-material/LastPage";
-import MenuItem from "@mui/material/MenuItem";
-import Select from "@mui/material/Select";
-import InputBase from "@mui/material/InputBase";
 import { useState } from "react";
 import { Autocomplete, TextField } from "@mui/material";
 
@@ -65,7 +61,7 @@ const GLTableActions = ({ count, page, rowsPerPage, onPageChange }) => {
       <Autocomplete
         value={selectedPage}
         onChange={handleSelectedPageChange}
-        options={Array.from({ length: totalPages }, (_, i) => i + 1)}
+        options={pageItems}
         renderInput={params => (
           <TextField
             {...params}
