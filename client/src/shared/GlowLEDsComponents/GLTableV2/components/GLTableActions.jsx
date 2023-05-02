@@ -30,7 +30,7 @@ const GLTableActions = ({ count, page, rowsPerPage, onPageChange }) => {
 
   const handleFirstPageButtonClick = event => {
     onPageChange(event, 0);
-    setSelectedPage(0);
+    setSelectedPage(1);
   };
 
   const handleBackButtonClick = event => {
