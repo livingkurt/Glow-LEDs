@@ -13,25 +13,23 @@ export const buyLabel = async ({ shipment_id, shipping_rate, order }: any) => {
     return createLabel({ speed: "first", order });
   }
 };
-export const addTracking = async ({ label, order }: any) => {
+export const addTracking = async ({ label, order, isReturnTracking = false }: any) => {
   try {
     const tracker = await EasyPost.Tracker.retrieve(label.tracker.id);
     console.log({ tracker });
-    order.shipping.shipment_tracker = label.tracker.id;
-    order.tracking_number = label.tracking_code;
-    order.tracking_url = tracker.public_url;
-    order.shipping.shipping_label = label;
-    await order_db.update_orders_db(order._id, order);
-  } catch (error) {}
-};
-export const addReturnTracking = async ({ label, order }: any) => {
-  try {
-    const tracker = await EasyPost.Tracker.retrieve(label.tracker.id);
-    console.log({ tracker });
-    order.shipping.return_shipment_tracker = label.tracker.id;
-    order.return_tracking_url = tracker.public_url;
-    order.return_tracking_number = label.tracking_code;
-    order.shipping.return_shipping_label = label;
+
+    if (isReturnTracking) {
+      order.shipping.return_shipment_tracker = label.tracker.id;
+      order.return_tracking_url = tracker.public_url;
+      order.return_tracking_number = label.tracking_code;
+      order.shipping.return_shipping_label = label;
+    } else {
+      order.shipping.shipment_tracker = label.tracker.id;
+      order.tracking_number = label.tracking_code;
+      order.tracking_url = tracker.public_url;
+      order.shipping.shipping_label = label;
+    }
+
     await order_db.update_orders_db(order._id, order);
   } catch (error) {}
 };
