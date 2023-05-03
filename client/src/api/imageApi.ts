@@ -1,7 +1,7 @@
 /* eslint-disable consistent-return */
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { headers } from "../utils/helpers/user_helpers";
+
 import { create_query } from "../utils/helper_functions";
 
 export const getImages = async ({
@@ -32,29 +32,18 @@ export const getImages = async ({
 
 export const listImages = createAsyncThunk("images/listImages", async (query: any, thunkApi: any) => {
   try {
-    const {
-      users: {
-        userPage: { current_user }
-      }
-    } = thunkApi.getState();
-    const { data } = await axios.get(`/api/images?${create_query(query)}`, headers(current_user));
+    const { data } = await axios.get(`/api/images?${create_query(query)}`);
     return data;
   } catch (error) {}
 });
 
 export const saveImage = createAsyncThunk("images/saveImage", async (image: any, thunkApi: any) => {
   try {
-    const {
-      users: {
-        userPage: { current_user }
-      }
-    } = thunkApi.getState();
-
     if (!image._id) {
-      const { data } = await axios.post("/api/images", image, headers(current_user));
+      const { data } = await axios.post("/api/images", image);
       return data;
     } else {
-      const { data } = await axios.put(`/api/images/${image._id}`, image, headers(current_user));
+      const { data } = await axios.put(`/api/images/${image._id}`, image);
       return data;
     }
   } catch (error) {}
@@ -62,24 +51,14 @@ export const saveImage = createAsyncThunk("images/saveImage", async (image: any,
 
 export const detailsImage = createAsyncThunk("images/detailsImage", async (id: string, thunkApi: any) => {
   try {
-    const {
-      users: {
-        userPage: { current_user }
-      }
-    } = thunkApi.getState();
-    const { data } = await axios.get(`/api/images/${id}`, headers(current_user));
+    const { data } = await axios.get(`/api/images/${id}`);
     return data;
   } catch (error) {}
 });
 
 export const deleteImage = createAsyncThunk("images/deleteImage", async (pathname, thunkApi: any) => {
   try {
-    const {
-      users: {
-        userPage: { current_user }
-      }
-    } = thunkApi.getState();
-    const { data } = await axios.delete("/api/images/" + pathname, headers(current_user));
+    const { data } = await axios.delete("/api/images/" + pathname);
     return data;
   } catch (error) {}
 });

@@ -1,7 +1,7 @@
 /* eslint-disable consistent-return */
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { headers } from "../utils/helpers/user_helpers";
+
 import { create_query } from "../utils/helper_functions";
 
 export const getOrders = async ({
@@ -36,42 +36,27 @@ export const getOrderFilters = async () => {
 
 export const listOrders = createAsyncThunk("orders/listOrders", async (query: any, thunkApi: any) => {
   try {
-    const {
-      users: {
-        userPage: { current_user }
-      }
-    } = thunkApi.getState();
-    const { data } = await axios.get(`/api/orders/old?${create_query(query)}`, headers(current_user));
+    const { data } = await axios.get(`/api/orders/old?${create_query(query)}`);
     return data;
   } catch (error) {}
 });
 
 export const listMyOrders = createAsyncThunk("orders/listMyOrders", async (user_id: any, thunkApi: any) => {
   try {
-    const {
-      users: {
-        userPage: { current_user }
-      }
-    } = thunkApi.getState();
-    const { data } = await axios.get(`/api/orders/${user_id}/user`, headers(current_user));
+    const { data } = await axios.get(`/api/orders/${user_id}/user`);
     return data;
   } catch (error) {}
 });
 
 export const saveOrder = createAsyncThunk("orders/saveOrder", async (order: any, thunkApi: any) => {
   try {
-    const {
-      users: {
-        userPage: { current_user }
-      }
-    } = thunkApi.getState();
     console.log({ order });
     if (!order._id) {
-      const { data } = await axios.post("/api/orders", order, headers(current_user));
+      const { data } = await axios.post("/api/orders", order);
       sessionStorage.removeItem("shippingAddress");
       return data;
     } else {
-      const { data } = await axios.put(`/api/orders/glow/${order._id}`, order, headers(current_user));
+      const { data } = await axios.put(`/api/orders/glow/${order._id}`, order);
       return data;
     }
   } catch (error) {}
@@ -88,13 +73,13 @@ export const createPayOrder = createAsyncThunk(
     }: { order: any; paymentMethod: any; create_account: boolean; new_password: string },
     thunkApi: any
   ) => {
+    let user_id = null;
+
     const {
       users: {
         userPage: { current_user }
       }
     } = thunkApi.getState();
-
-    let user_id = null;
 
     try {
       if (current_user && Object.keys(current_user).length > 0) {
@@ -138,14 +123,14 @@ export const createPayOrder = createAsyncThunk(
 );
 
 export const detailsOrder = createAsyncThunk("orders/detailsOrder", async (order_id: string, thunkApi: any) => {
+  const {
+    users: {
+      userPage: { current_user }
+    }
+  } = thunkApi.getState();
   try {
-    const {
-      users: {
-        userPage: { current_user }
-      }
-    } = thunkApi.getState();
     if (current_user && current_user.first_name) {
-      const { data } = await axios.get("/api/orders/secure/" + order_id, headers(current_user));
+      const { data } = await axios.get("/api/orders/secure/" + order_id);
       return data;
     } else {
       const { data } = await axios.get("/api/orders/guest/" + order_id);
@@ -156,24 +141,14 @@ export const detailsOrder = createAsyncThunk("orders/detailsOrder", async (order
 
 export const deleteOrder = createAsyncThunk("orders/deleteOrder", async (id: string, thunkApi: any) => {
   try {
-    const {
-      users: {
-        userPage: { current_user }
-      }
-    } = thunkApi.getState();
-    const { data } = await axios.delete(`/api/orders/glow/${id}`, headers(current_user));
+    const { data } = await axios.delete(`/api/orders/glow/${id}`);
     return data;
   } catch (error) {}
 });
 
 export const deleteMultipleOrders = createAsyncThunk("orders/deleteMultipleOrders", async (ids: string, thunkApi: any) => {
   try {
-    const {
-      users: {
-        userPage: { current_user }
-      }
-    } = thunkApi.getState();
-    const { data } = await axios.put(`/api/orders/glow/delete_multiple`, { ids }, headers(current_user));
+    const { data } = await axios.put(`/api/orders/glow/delete_multiple`, { ids });
     return data;
   } catch (error) {}
 });
@@ -190,22 +165,13 @@ export const refundOrder = createAsyncThunk(
     thunkApi: any
   ) => {
     try {
-      const {
-        users: {
-          userPage: { current_user }
-        }
-      } = thunkApi.getState();
-      const { data } = await axios.put(
-        "/api/payments/secure/refund/" + order._id,
-        {
-          ...order,
-          refund_amount: refund_amount,
-          isRefunded: refundResult,
-          RefundedAt: refundResult ? Date.now() : "",
-          refund_reason: refund_reason
-        },
-        headers(current_user)
-      );
+      const { data } = await axios.put("/api/payments/secure/refund/" + order._id, {
+        ...order,
+        refund_amount: refund_amount,
+        isRefunded: refundResult,
+        RefundedAt: refundResult ? Date.now() : "",
+        refund_reason: refund_reason
+      });
       return data;
     } catch (error) {}
   }
@@ -214,12 +180,7 @@ export const payOrder = createAsyncThunk(
   "orders/payOrder",
   async ({ order, paymentMethod }: { order: any; paymentMethod: any }, thunkApi: any) => {
     try {
-      const {
-        users: {
-          userPage: { current_user }
-        }
-      } = thunkApi.getState();
-      const { data } = await axios.put("/api/payments/secure/pay/" + order._id, { paymentMethod }, headers(current_user));
+      const { data } = await axios.put("/api/payments/secure/pay/" + order._id, { paymentMethod });
       return data;
     } catch (error) {}
   }
@@ -245,13 +206,8 @@ export const transferOrders = createAsyncThunk(
 );
 
 export const invoiceOrder = createAsyncThunk("orders/invoiceOrder", async ({ orderId }: { orderId: string }, thunkApi: any) => {
-  const {
-    users: {
-      userPage: { current_user }
-    }
-  } = thunkApi.getState();
   try {
-    const { data } = await axios.put(`/api/orders/${orderId}/invoice`, headers(current_user));
+    const { data } = await axios.put(`/api/orders/${orderId}/invoice`);
     return data;
   } catch (error) {}
 });

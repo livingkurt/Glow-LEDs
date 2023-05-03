@@ -2,7 +2,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { create_query } from "../utils/helper_functions";
-import { headers } from "../utils/helpers/user_helpers";
 
 export const getTutorials = async ({
   search,
@@ -37,29 +36,18 @@ export const reorderTutorials = async ({ reorderedItems }: { reorderedItems: any
 
 export const listTutorials = createAsyncThunk("tutorials/listTutorials", async (query: any, thunkApi: any) => {
   try {
-    const {
-      users: {
-        userPage: { current_user }
-      }
-    } = thunkApi.getState();
-    const { data } = await axios.get(`/api/tutorials?${create_query(query)}`, headers(current_user));
+    const { data } = await axios.get(`/api/tutorials?${create_query(query)}`);
     return data;
   } catch (error) {}
 });
 
 export const saveTutorial = createAsyncThunk("tutorials/saveTutorial", async (tutorial: any, thunkApi: any) => {
   try {
-    const {
-      users: {
-        userPage: { current_user }
-      }
-    } = thunkApi.getState();
-
     if (!tutorial._id) {
-      const { data } = await axios.post("/api/tutorials", tutorial, headers(current_user));
+      const { data } = await axios.post("/api/tutorials", tutorial);
       return data;
     } else {
-      const { data } = await axios.put(`/api/tutorials/${tutorial._id}`, tutorial, headers(current_user));
+      const { data } = await axios.put(`/api/tutorials/${tutorial._id}`, tutorial);
       return data;
     }
   } catch (error) {}
@@ -79,12 +67,7 @@ export const detailsTutorial = createAsyncThunk("tutorials/detailsTutorial", asy
 
 export const deleteTutorial = createAsyncThunk("tutorials/deleteTutorial", async (id: string, thunkApi: any) => {
   try {
-    const {
-      users: {
-        userPage: { current_user }
-      }
-    } = thunkApi.getState();
-    const { data } = await axios.delete(`/api/tutorials/${id}`, headers(current_user));
+    const { data } = await axios.delete(`/api/tutorials/${id}`);
     return data;
   } catch (error) {}
 });
