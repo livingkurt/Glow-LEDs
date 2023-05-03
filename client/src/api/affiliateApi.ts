@@ -2,9 +2,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { create_query } from "../utils/helper_functions";
-import setAuthToken from "../utils/setAuthToken";
-import jwt_decode from "jwt-decode";
-import { set_current_user } from "../slices/userSlice";
 import { headers } from "../utils/helpers/user_helpers";
 import * as API from "../api";
 

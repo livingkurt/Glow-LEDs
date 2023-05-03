@@ -886,7 +886,6 @@ export default PlaceOrderPage;
 // import { listUsers } from "../../actions/userActions";
 // import { API_Emails, API_External, API_Products, API_Promos, API_Shipping } from "../../utils";
 // import { determine_total, state_names } from "../../utils/helper_functions";
-// import { check_authentication } from "../../utils/react_helper_functions";
 // import useWindowDimensions from "../../shared/Hooks/windowDimensions";
 // import { isMobile } from "react-device-detect";
 // import { OrderSummaryStep, ShippingStep } from "./components";
@@ -1154,7 +1153,6 @@ export default PlaceOrderPage;
 //   };
 
 //   const placeOrderHandler = async paymentMethod => {
-//     check_authentication({refresh: false});
 //     if (cartItems.length > 0) {
 //       if (current_user && current_user.first_name) {
 //         dispatch(

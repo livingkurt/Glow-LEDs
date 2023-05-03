@@ -4,7 +4,6 @@ import jwt_decode from "jwt-decode";
 import store from "../store";
 import { logout_user, set_current_user } from "../slices/userSlice";
 import { API_Users } from "../utils";
-import setAuthToken from "../utils/setAuthToken";
 
 export async function refreshToken(access_token, refresh_token) {
   const data = await API_Users.refresh_login(access_token, refresh_token);
@@ -17,10 +16,22 @@ export function isTokenExpired(token) {
   return decoded.exp < currentTime;
 }
 
+export const setAuthToken = access_token => {
+  if (access_token) {
+    // Apply authorization access_token to every request if logged in
+    axios.defaults.headers.common["Authorization"] = access_token;
+  } else {
+    // Delete auth header
+    delete axios.defaults.headers.common["Authorization"];
+  }
+};
+
 export function setCurrentUser(accessToken) {
+  localStorage.setItem("accessToken", accessToken);
   setAuthToken(accessToken);
-  const decoded_access_token = jwt_decode(accessToken);
-  store.dispatch(set_current_user(decoded_access_token));
+  const decoded = jwt_decode(accessToken);
+  store.dispatch(set_current_user(decoded));
+  return { decoded };
 }
 
 export async function handleTokenRefresh(forceRefresh = false) {

@@ -2,8 +2,7 @@
 
 import { createSlice } from "@reduxjs/toolkit";
 import * as API from "../api";
-import jwt_decode from "jwt-decode";
-import setAuthToken from "../utils/setAuthToken";
+import { setAuthToken, setCurrentUser } from "../api/axiosInstance";
 
 const user = {
   first_name: "",
@@ -201,9 +200,10 @@ const userPage = createSlice({
     },
     [API.loginUser.fulfilled as any]: (state: any, { payload }: any) => {
       const { access_token, refresh_token } = payload;
-      localStorage.setItem("accessToken", access_token);
-      setAuthToken(access_token);
-      const decoded = jwt_decode(access_token);
+      const { decoded } = setCurrentUser(access_token);
+      // localStorage.setItem("accessToken", access_token);
+      // setAuthToken(access_token);
+      // const decoded = jwt_decode(access_token);
       state.access_token = access_token;
       state.loading = false;
       state.current_user = decoded;
@@ -220,9 +220,10 @@ const userPage = createSlice({
     },
     [API.loginAsUser.fulfilled as any]: (state: any, { payload }: any) => {
       const { access_token, refresh_token } = payload;
-      localStorage.setItem("accessToken", access_token);
-      setAuthToken(access_token);
-      const decoded = jwt_decode(access_token);
+      const { decoded } = setCurrentUser(access_token);
+      // localStorage.setItem("accessToken", access_token);
+      // setAuthToken(access_token);
+      // const decoded = jwt_decode(access_token);
       state.access_token = access_token;
       state.loading = false;
       state.current_user = decoded;

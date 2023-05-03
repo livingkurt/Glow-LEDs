@@ -8,7 +8,6 @@ import { Helmet } from "react-helmet";
 import useWindowDimensions from "./shared/Hooks/windowDimensions";
 // import Particles from "react-particles-js";
 import particlesjs_config from "./particlesjs_config.json";
-import { check_authentication } from "./utils/react_helper_functions";
 import { daysBetween } from "./utils/helper_functions";
 import { isBrowser, isMobile } from "react-device-detect";
 import Headroom from "react-headroom";
@@ -96,17 +95,7 @@ const App = props => {
 
   const [message, set_message] = useState("");
 
-  // useEffect(() => {
-  //   check_authentication({ force_refresh: false });
-  // }, []);
-
-  // check_authentication({ force_refresh: false });
-
   const frame = document.getElementsByTagName("body");
-
-  // setInterval(() => {
-  //   check_authentication({ force_refresh: false });
-  // }, 800000);
 
   // We listen to the resize event
   window.addEventListener("resize", () => {

@@ -3,7 +3,6 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { headers } from "../utils/helpers/user_helpers";
 import { create_query } from "../utils/helper_functions";
-import { check_authentication } from "../utils/react_helper_functions";
 import { handleTokenRefresh } from "./axiosInstance";
 
 export const getUsers = async ({
@@ -34,7 +33,6 @@ export const getUsers = async ({
 
 export const getUserFilters = async () => {
   const { data } = await axios.get(`/api/users/filters`);
-  console.log({ data });
   return data;
 };
 
