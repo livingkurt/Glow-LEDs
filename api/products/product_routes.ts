@@ -1,12 +1,12 @@
 import express from "express";
 import { product_controller } from "../products";
-const { isAuth, isAdmin } = require("../../util");
+import { isAdmin, isAuth } from "../../middlewares/authMiddleware";
 
 const router = express.Router();
 router.route("/grid").get(product_controller.findAllGrid_products_c);
 router.route("/filters").get(product_controller.create_filters_products_c);
 
-router.route("/reviews/:pathname").post(product_controller.reviews_products_c);
+router.route("/reviews/:pathname").post(isAuth, product_controller.reviews_products_c);
 
 router.route("/best_sellers").post(product_controller.get_best_sellers_products_c);
 router.route("/our_picks").get(product_controller.get_our_picks_products_c);

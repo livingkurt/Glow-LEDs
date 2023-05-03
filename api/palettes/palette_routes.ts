@@ -1,6 +1,6 @@
 import express from "express";
 import { palette_controller } from "../palettes";
-const { isAuth, isAdmin } = require("../../util");
+import { isAdmin, isAuth } from "../../middlewares/authMiddleware";
 
 const router = express.Router();
 

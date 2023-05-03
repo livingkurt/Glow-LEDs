@@ -1,6 +1,6 @@
 import express from "express";
 import { filament_controller } from "../filaments";
-const { isAuth, isAdmin } = require("../../util");
+import { isAdmin, isAuth } from "../../middlewares/authMiddleware";
 
 const router = express.Router();
 

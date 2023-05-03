@@ -5,7 +5,7 @@ import store from "../store";
 import { logout_user, set_current_user } from "../slices/userSlice";
 import { API_Users } from "../utils";
 
-export async function refreshToken(access_token, refresh_token) {
+export async function getFreshAccessToken(access_token, refresh_token) {
   const data = await API_Users.refresh_login(access_token, refresh_token);
   return data.access_token;
 }
@@ -26,12 +26,26 @@ export const setAuthToken = access_token => {
   }
 };
 
+export const refreshAccessToken = async (accessToken, refreshTokenValue) => {
+  try {
+    const newAccessToken = await getFreshAccessToken(accessToken, refreshTokenValue);
+    localStorage.setItem("accessToken", newAccessToken);
+    setAuthToken(newAccessToken);
+    const decoded = jwt_decode(newAccessToken);
+    console.log({ decoded });
+    store.dispatch(set_current_user(decoded));
+    return newAccessToken;
+  } catch (error) {
+    store.dispatch(logout_user(refreshTokenValue));
+    window.location.href = "/account/login?redirect=" + window.location.pathname;
+  }
+};
+
 export function setCurrentUser(accessToken) {
-  localStorage.setItem("accessToken", accessToken);
   setAuthToken(accessToken);
-  const decoded = jwt_decode(accessToken);
-  store.dispatch(set_current_user(decoded));
-  return { decoded };
+  // Decode access_token and get user info and exp
+  const decoded_access_token = jwt_decode(accessToken);
+  store.dispatch(set_current_user(decoded_access_token));
 }
 
 export async function handleTokenRefresh(forceRefresh = false) {
@@ -42,18 +56,8 @@ export async function handleTokenRefresh(forceRefresh = false) {
   if (!refreshTokenValue) return;
 
   if (isTokenExpired(accessToken) || forceRefresh) {
-    try {
-      const newAccessToken = await refreshToken(accessToken, refreshTokenValue);
-      localStorage.setItem("accessToken", newAccessToken);
-      setAuthToken(newAccessToken);
-      const decoded = jwt_decode(newAccessToken);
-      console.log({ decoded });
-      store.dispatch(set_current_user(decoded));
-      return newAccessToken; // Add this line
-    } catch (error) {
-      store.dispatch(logout_user(refreshTokenValue));
-      window.location.href = "/account/login?redirect=" + window.location.pathname;
-    }
+    const newAccessToken = await refreshAccessToken(accessToken, refreshTokenValue);
+    return newAccessToken || accessToken;
   } else {
     setCurrentUser(accessToken);
   }
@@ -67,7 +71,7 @@ axios.interceptors.request.use(
 
     if (accessToken) {
       const refreshedAccessToken = await handleTokenRefresh(); // Get the refreshed access token
-      config.headers["Authorization"] = `Bearer ${refreshedAccessToken}`; // Use the refreshed access token
+      config.headers["Authorization"] = refreshedAccessToken; // Use the refreshed access token
     }
 
     return config;

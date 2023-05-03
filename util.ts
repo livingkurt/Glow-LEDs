@@ -110,30 +110,30 @@ export const toCapitalize = (string: string) => {
   return string.charAt(0).toUpperCase() + string.toLowerCase().slice(1);
 };
 
-export const isAuth = (req: any, res: any, next: () => void) => {
-  const token = req.headers.authorization;
+// export const isAuth = (req: any, res: any, next: () => void) => {
+//   const token = req.headers.authorization;
 
-  if (token) {
-    const onlyToken = token.slice(7, token.length);
-    jwt.verify(onlyToken, config.ACCESS_TOKEN_SECRET, (err: any, decode: any) => {
-      if (err) {
-        return res.status(401).send({ msg: "Invalid Token" });
-      }
-      req.user = decode;
-      next();
-      return;
-    });
-  } else {
-    return res.status(401).send({ msg: "Token is not supplied." });
-  }
-};
+//   if (token) {
+//     const onlyToken = token.slice(7, token.length);
+//     jwt.verify(onlyToken, config.ACCESS_TOKEN_SECRET, (err: any, decode: any) => {
+//       if (err) {
+//         return res.status(401).send({ msg: "Invalid Token" });
+//       }
+//       req.user = decode;
+//       next();
+//       return;
+//     });
+//   } else {
+//     return res.status(401).send({ msg: "Token is not supplied." });
+//   }
+// };
 
-export const isAdmin = (req: any, res: any, next: () => any) => {
-  if (req.user && req.user.isAdmin) {
-    return next();
-  }
-  return res.status(401).send({ msg: "Admin Token is not valid." });
-};
+// export const isAdmin = (req: any, res: any, next: () => any) => {
+//   if (req.user && req.user.isAdmin) {
+//     return next();
+//   }
+//   return res.status(401).send({ msg: "Admin Token is not valid." });
+// };
 
 export const make_private_code = (length: any) => {
   const result = [];

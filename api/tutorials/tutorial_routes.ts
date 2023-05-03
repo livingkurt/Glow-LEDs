@@ -1,6 +1,6 @@
 import express from "express";
 import { tutorial_controller } from ".";
-const { isAuth, isAdmin } = require("../../util");
+import { isAdmin, isAuth } from "../../middlewares/authMiddleware";
 const router = express.Router();
 
 router.route("/").get(tutorial_controller.findAll_tutorials_c).post(isAuth, isAdmin, tutorial_controller.create_tutorials_c);

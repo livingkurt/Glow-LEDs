@@ -1,6 +1,6 @@
 import express from "express";
 import { chip_controller } from "../chips";
-const { isAuth, isAdmin } = require("../../util");
+import { isAdmin, isAuth } from "../../middlewares/authMiddleware";
 
 const router = express.Router();
 

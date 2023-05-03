@@ -1,7 +1,7 @@
 /* eslint-disable consistent-return */
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-
+import { headers } from "../utils/helpers/user_helpers";
 import { create_query } from "../utils/helper_functions";
 
 export const getProducts = async ({
@@ -86,6 +86,11 @@ export const saveProductReview = createAsyncThunk(
     { product_pathname, review }: { product_pathname: string; review: { name: string; rating: number; comment: string } },
     thunkApi: any
   ) => {
+    const {
+      users: {
+        userPage: { current_user }
+      }
+    } = thunkApi.getState();
     try {
       const { data } = await axios.post(`/api/products/reviews/${product_pathname}`, { review, current_user });
       return data;

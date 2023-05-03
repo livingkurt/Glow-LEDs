@@ -1,6 +1,6 @@
 import express from "express";
 import { wholesaler_controller } from "../wholesalers";
-const { isAuth, isAdmin } = require("../../util");
+import { isAdmin, isAuth } from "../../middlewares/authMiddleware";
 const router = express.Router();
 
 router.route("/").get(wholesaler_controller.findAll_wholesalers_c).post(isAuth, wholesaler_controller.create_wholesalers_c);

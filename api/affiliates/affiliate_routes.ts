@@ -1,6 +1,6 @@
 // import express from "express";
 // import { affiliate_controller } from "../affiliates";
-// const { isAuth, isAdmin } = require("../../util");
+// import { isAdmin, isAuth } from "../../middlewares/authMiddleware";
 // const router = express.Router();
 
 // router.route("/id/:id").get(affiliate_controller.findById_affiliates_c);
@@ -19,7 +19,7 @@
 
 import express from "express";
 import { affiliate_controller } from ".";
-const { isAuth, isAdmin } = require("../../util");
+import { isAdmin, isAuth } from "../../middlewares/authMiddleware";
 const router = express.Router();
 
 router.route("/").get(affiliate_controller.findAll_affiliates_c).post(isAuth, affiliate_controller.create_affiliates_c);

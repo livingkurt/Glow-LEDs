@@ -377,7 +377,7 @@ export default {
     }
   },
 
-  reviews_products_s: async (params: any, body: any) => {
+  reviews_products_s: async (params: any, body: any, user: any) => {
     try {
       // const product = await Product.findOne({ pathname: params.pathname });
       const product = await product_db.findById_products_db(params.pathname);
@@ -385,9 +385,9 @@ export default {
         product.reviews = [
           ...product.reviews,
           {
-            user: body.current_user._id,
-            first_name: body.current_user.first_name,
-            last_name: body.current_user.last_name,
+            user: user._id,
+            first_name: user.first_name,
+            last_name: user.last_name,
             rating: Number(body.review.rating),
             comment: body.review.comment
           }

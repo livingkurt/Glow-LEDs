@@ -58,11 +58,11 @@ export default {
       }
     }
   },
-  start_cart_carts_s: async (body: any) => {
-    const { cart_item, current_user } = body;
+  start_cart_carts_s: async (body: any, user: any) => {
+    const { cart_item } = body;
     try {
-      if (current_user?._id) {
-        const data: any = await cart_db.create_carts_db({ user: current_user._id, cartItems: [...cart_item] });
+      if (user?._id) {
+        const data: any = await cart_db.create_carts_db({ user: user._id, cartItems: [...cart_item] });
         return data;
       } else {
         const data: any = await cart_db.create_carts_db({ cartItems: [...cart_item] });

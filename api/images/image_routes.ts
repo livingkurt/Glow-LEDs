@@ -1,7 +1,6 @@
 import express from "express";
 import { image_controller } from "../images";
 import { upload } from "./image_helper";
-const { isAuth, isAdmin } = require("../../util");
 
 const router = express.Router();
 router.route("/delete_multiple").post(image_controller.remove_multiple_images_c);

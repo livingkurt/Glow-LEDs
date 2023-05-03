@@ -1,6 +1,6 @@
 import express from "express";
 import { email_controller } from "../emails";
-const { isAuth, isAdmin } = require("../../util");
+import { isAdmin, isAuth } from "../../middlewares/authMiddleware";
 const router = express.Router();
 const cors = require("cors");
 

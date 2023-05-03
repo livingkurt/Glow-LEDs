@@ -184,9 +184,9 @@ export default {
     }
   },
   reviews_products_c: async (req: any, res: any) => {
-    const { params, body } = req;
+    const { params, body, user } = req;
     try {
-      const product = await product_services.reviews_products_s(params, body);
+      const product = await product_services.reviews_products_s(params, body, user);
       if (product) {
         return res.status(204).send({ message: "Product Deleted" });
       }

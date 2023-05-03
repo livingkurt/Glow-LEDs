@@ -1,6 +1,6 @@
 import express from "express";
 import { content_controller } from "../contents";
-const { isAuth, isAdmin } = require("../../util");
+import { isAdmin, isAuth } from "../../middlewares/authMiddleware";
 const router = express.Router();
 
 router.route("/").get(content_controller.findAll_contents_c).post(isAuth, isAdmin, content_controller.create_contents_c);

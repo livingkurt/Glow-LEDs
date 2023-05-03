@@ -14,7 +14,7 @@ import { snake_case } from "../util";
 import { Filament } from "./filaments";
 import { Image } from "./images";
 import { Category } from "./categorys";
-const { isAuth, isAdmin } = require("../util");
+import { isAdmin, isAuth } from "../middlewares/authMiddleware";
 
 const router = express.Router();
 

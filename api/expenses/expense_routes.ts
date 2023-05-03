@@ -1,6 +1,6 @@
 import express from "express";
 import { expense_controller } from "../expenses";
-const { isAuth, isAdmin } = require("../../util");
+import { isAdmin, isAuth } from "../../middlewares/authMiddleware";
 
 const router = express.Router();
 router.route("/monthly_expenses").put(expense_controller.findAllByDate_expenses_c);

@@ -1,6 +1,6 @@
 import express from "express";
 import { user_controller } from "../users";
-const { isAuth, isAdmin } = require("../../util");
+import { isAdmin, isAuth } from "../../middlewares/authMiddleware";
 
 const router = express.Router();
 
