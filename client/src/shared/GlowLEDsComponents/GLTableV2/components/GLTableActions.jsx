@@ -61,6 +61,7 @@ const GLTableActions = ({ count, page, rowsPerPage, onPageChange }) => {
       <Autocomplete
         value={selectedPage}
         onChange={handleSelectedPageChange}
+        getOptionLabel={option => option.toString()}
         options={pageItems}
         renderInput={params => (
           <TextField

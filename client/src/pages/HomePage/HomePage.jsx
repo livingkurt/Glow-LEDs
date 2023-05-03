@@ -5,7 +5,7 @@ import { Helmet } from "react-helmet";
 import { categories, homepage_videos, humanize, subcategories } from "../../utils/helper_functions";
 import { API_Content, API_Products } from "../../utils";
 import useWindowDimensions from "../../shared/Hooks/windowDimensions";
-import { Loading } from "../../shared/SharedComponents";
+import { Loading, Notification } from "../../shared/SharedComponents";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import HomeSlideshow from "./HomeSlideshow";
 import ReadMore from "../../shared/GlowLEDsComponents/GLReadMore/ReadMore";
@@ -20,11 +20,23 @@ const HomePage = props => {
   const [options, set_options] = useState([]);
   const [products, set_products] = useState([]);
   const [slideshow, set_slideshow] = useState([]);
+  const [promo_code, set_promo_code] = useState(props.match.params.promo_code ? props.match.params.promo_code : "");
   const [search, set_search] = useState("");
-
+  const [message, set_message] = useState("");
   const wrapperRef = useRef(null);
 
   const { height, width } = useWindowDimensions();
+
+  useEffect(() => {
+    let clean = true;
+    if (clean) {
+      if (promo_code) {
+        sessionStorage.setItem("promo_code", promo_code);
+        set_message(`${promo_code} Added to Checkout`);
+      }
+    }
+    return () => (clean = false);
+  }, [promo_code]);
 
   useEffect(() => {
     window.addEventListener("mousedown", handleClickOutside);
@@ -158,6 +170,7 @@ const HomePage = props => {
           content="https://www.glow-leds.com/images/optimized_images/logo_images/glow_leds_link_logo_optimized.png"
         />
       </Helmet>
+      <Notification message={message} />
       <Loading loading={slideshow.length === 0} />
       {contents &&
       contents.filter(content => content.active === true)[0] &&

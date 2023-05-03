@@ -365,7 +365,7 @@ const App = props => {
 
                 {/* Collections */}
                 {/* Product Collections */}
-                <Route path="/collections/all/products/code/:promo_code" exact={true} component={ProductsGridPage} />
+                <Route path="/code/:promo_code" exact={true} component={HomePage} />
                 <Route path="/collections/all/products" exact={true} component={ProductsGridPage} />
                 <Route path="/collections/all/products/shop_by_chip" component={ProductsGridByChipPage} />
                 <Route

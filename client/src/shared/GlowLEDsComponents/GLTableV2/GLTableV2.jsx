@@ -438,6 +438,7 @@ const GLTableV2 = ({
                           <Draggable key={row._id} draggableId={row._id} index={index}>
                             {provided => (
                               <GLTableRow
+                                key={row._id}
                                 row={row}
                                 provided={provided}
                                 innerRef={provided.innerRef}

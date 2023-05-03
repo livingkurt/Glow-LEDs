@@ -101,7 +101,7 @@ const HomeSlideshow = ({ slideshow }) => {
       itemClass="carousel-item-padding-40-px"
     >
       {slideshow.map((slide, index) => (
-        <div className="slideshow-img-container">
+        <div className="slideshow-img-container" key={slide.link}>
           <Link to={slide.link}>
             <GLButton variant="primary" className={"title_font"}>
               {slide.label}

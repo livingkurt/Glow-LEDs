@@ -16,8 +16,6 @@ export const buyLabel = async ({ shipment_id, shipping_rate, order }: any) => {
 export const addTracking = async ({ label, order, isReturnTracking = false }: any) => {
   try {
     const tracker = await EasyPost.Tracker.retrieve(label.tracker.id);
-    console.log({ tracker });
-
     if (isReturnTracking) {
       order.shipping.return_shipment_tracker = label.tracker.id;
       order.return_tracking_url = tracker.public_url;
