@@ -19,17 +19,17 @@ const LoginPage = props => {
   const userPage = useSelector(state => state.users.userPage);
   const { loading: user_loading, current_user, error } = userPage;
   const dispatch = useDispatch();
-  const redirect = props.location.search ? props.location.search.split("=")[1] : "/";
 
   useEffect(() => {
     let clean = true;
     if (clean) {
       if (current_user && current_user.hasOwnProperty("first_name")) {
+        const redirect = current_user.isAdmin ? "/secure/glow/dashboard" : "/secure/account/profile";
         props.history.push(redirect);
       }
     }
     return () => (clean = false);
-  }, [current_user, props.history, redirect]);
+  }, [current_user, props.history]);
 
   setTimeout(() => {
     set_loading(false);
@@ -118,7 +118,7 @@ const LoginPage = props => {
           </li>
           <li>New to Glow LEDs?</li>
           <li>
-            <Link to={redirect === "/" ? "register" : "register?redirect=" + redirect}>
+            <Link to={"/account/register"}>
               <GLButton variant="primary" className="ta-c w-100per">
                 Create Account
               </GLButton>

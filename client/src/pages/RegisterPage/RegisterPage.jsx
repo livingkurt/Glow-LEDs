@@ -161,7 +161,7 @@ const RegisterPage = props => {
           </li>
           <li>
             <div className="ta-c">Already have an account?</div>
-            <Link to={redirect === "/" ? "login" : "login?redirect=" + redirect}>
+            <Link to={"/account/login"}>
               <GLButton type="submit" variant="secondary" className="mt-10px ta-c w-100per">
                 Login
               </GLButton>

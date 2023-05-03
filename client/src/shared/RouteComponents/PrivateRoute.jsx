@@ -19,6 +19,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
       {isLoading ? (
         <div>Loading...</div>
       ) : (
+        // <Loading loading={isLoading} />
         <Route
           {...rest}
           render={props =>
