@@ -1,10 +1,19 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Route, Redirect } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const AdminRoute = ({ component: Component, ...rest }) => {
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
+  console.log({ current_user });
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    if (current_user) {
+      setIsLoading(false);
+    }
+  }, [current_user]);
 
   const determinePathname = props => {
     let pathname = props.location.pathname;
@@ -17,14 +26,18 @@ const AdminRoute = ({ component: Component, ...rest }) => {
   };
 
   return (
-    // Show the component only when the user is logged in
-    // Otherwise, redirect the user to /signin page
-    <Route
-      {...rest}
-      render={props =>
-        current_user.isAdmin ? <Component {...props} /> : <Redirect to={"/account/login?redirect=" + determinePathname(props)} />
-      }
-    />
+    <>
+      {isLoading ? (
+        <div>Loading...</div>
+      ) : (
+        <Route
+          {...rest}
+          render={props =>
+            current_user.isAdmin ? <Component {...props} /> : <Redirect to={"/account/login?redirect=" + determinePathname(props)} />
+          }
+        />
+      )}
+    </>
   );
 };
 
