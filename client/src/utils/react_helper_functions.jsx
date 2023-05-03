@@ -1,6 +1,5 @@
 import React from "react";
 import jwt_decode from "jwt-decode";
-import setAuthToken from "../utils/setAuthToken";
 import { API_Users } from ".";
 import store from "../store";
 import { GLButton } from "../shared/GlowLEDsComponents";
