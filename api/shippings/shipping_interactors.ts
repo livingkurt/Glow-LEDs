@@ -1,6 +1,6 @@
 import { order_db } from "../orders";
 import { parcel_db } from "../parcels";
-import { calculateTotalOunces, determine_parcel } from "./shipping_helpers";
+import { calculateTotalOunces, covertToOunces, determine_parcel } from "./shipping_helpers";
 
 const easy_post_api = require("@easypost/api");
 const EasyPost = new easy_post_api(process.env.EASY_POST);
@@ -97,7 +97,7 @@ export const createShippingRates = async ({ order, returnLabel }: any) => {
           description: "3D Printed Accessories",
           quantity: item.qty,
           value: item.price,
-          weight: item.weight,
+          weight: covertToOunces(item),
           origin_country: "US"
         };
       })
