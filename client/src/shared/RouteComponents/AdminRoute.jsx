@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 const AdminRoute = ({ component: Component, ...rest }) => {
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
-  console.log({ current_user });
 
   const [isLoading, setIsLoading] = useState(true);
 
