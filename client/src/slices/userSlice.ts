@@ -4,7 +4,6 @@ import { createSlice } from "@reduxjs/toolkit";
 import * as API from "../api";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "../utils/setAuthToken";
-import { check_authentication } from "../utils/react_helper_functions";
 
 const user = {
   first_name: "",

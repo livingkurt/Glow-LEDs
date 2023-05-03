@@ -4,6 +4,7 @@ import axios from "axios";
 import { headers } from "../utils/helpers/user_helpers";
 import { create_query } from "../utils/helper_functions";
 import { check_authentication } from "../utils/react_helper_functions";
+import { handleTokenRefresh } from "./axiosInstance";
 
 export const getUsers = async ({
   search,
@@ -64,7 +65,7 @@ export const saveUser = createAsyncThunk("users/saveUser", async ({ user, profil
     } else {
       const { data } = await axios.put(`/api/users/${user._id}`, user, headers(current_user));
       if (profile) {
-        check_authentication({ force_refresh: true });
+        handleTokenRefresh(true);
       }
       return { data, profile };
     }

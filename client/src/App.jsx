@@ -96,17 +96,17 @@ const App = props => {
 
   const [message, set_message] = useState("");
 
-  useEffect(() => {
-    check_authentication({ force_refresh: false });
-  }, []);
+  // useEffect(() => {
+  //   check_authentication({ force_refresh: false });
+  // }, []);
 
-  check_authentication({ force_refresh: false });
+  // check_authentication({ force_refresh: false });
 
   const frame = document.getElementsByTagName("body");
 
-  setInterval(() => {
-    check_authentication({ force_refresh: false });
-  }, 800000);
+  // setInterval(() => {
+  //   check_authentication({ force_refresh: false });
+  // }, 800000);
 
   // We listen to the resize event
   window.addEventListener("resize", () => {
