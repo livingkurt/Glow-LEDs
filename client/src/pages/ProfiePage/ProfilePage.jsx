@@ -8,7 +8,7 @@ import "./ProfilePage.scss";
 import { Helmet } from "react-helmet";
 import { EditUserModal } from "../UsersPage/components";
 import { OrderListItem } from "../OrdersPage/components";
-import { determine_order_color } from "./profileHelpers";
+import { determine_order_color, getProfileTitle } from "./profileHelpers";
 import { this_month_date_range, this_year_date_range } from "../DashboardPage/background/worker_helpers";
 import ProfileDetails from "./components/ProfileDetails";
 import { ProfileActions } from "./components/ProfileActions";
@@ -119,9 +119,7 @@ const ProfilePage = () => {
       )}
 
       <div className="row">
-        <h1 style={{ textAlign: "center", width: "100%" }}>
-          {current_user.first_name === first_name ? "My Profile" : `${first_name}'s Profile`}
-        </h1>
+        <h1 style={{ textAlign: "center", width: "100%" }}>{getProfileTitle(current_user, first_name, "Profile")}</h1>
       </div>
       <Loading loading={loading}>
         <div>
@@ -157,7 +155,7 @@ const ProfilePage = () => {
           justifyContent: "center"
         }}
       >
-        {current_user.first_name === first_name ? "My Orders" : `${first_name}'s Orders`}
+        {getProfileTitle(current_user, first_name, "Orders")}
       </h1>
       {orders && orders.length > 0 ? (
         orders.map((order, index) => (
