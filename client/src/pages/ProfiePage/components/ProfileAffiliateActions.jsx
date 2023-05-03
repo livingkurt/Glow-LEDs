@@ -3,8 +3,10 @@ import { useSelector } from "react-redux";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import { determine_code_tier } from "../../DashboardPage/background/worker_helpers";
 import { determine_terms_link } from "../profileHelpers";
+import useClipboard from "react-hook-clipboard";
 
 const ProfileAffiliateMetrics = () => {
+  const [clipboard, copyToClipboard] = useClipboard();
   const userPage = useSelector(state => state.users.userPage);
   const { user } = userPage;
 
@@ -43,7 +45,18 @@ const ProfileAffiliateMetrics = () => {
               </div>
             </>
           )}
+          <div className="mb-20px">
+            <h3>Promo Code URL</h3>
+            <label>https://www.glow-leds.com?code={user.affiliate.public_code.promo_code.toUpperCase()}</label>
+          </div>
           <div>
+            <GLButton
+              variant="primary"
+              className="mv-10px mr-1rem"
+              onClick={() => copyToClipboard(`https://www.glow-leds.com?code=${user.affiliate.public_code.promo_code.toUpperCase()}`)}
+            >
+              Copy Link to Clipboard
+            </GLButton>
             <a href={determine_terms_link(user.affiliate)} target="_blank" rel="noopener noreferrer" className="mr-10px">
               <GLButton variant="primary">Affiliate Terms</GLButton>
             </a>

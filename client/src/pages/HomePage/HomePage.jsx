@@ -20,23 +20,22 @@ const HomePage = props => {
   const [options, set_options] = useState([]);
   const [products, set_products] = useState([]);
   const [slideshow, set_slideshow] = useState([]);
-  const [promo_code, set_promo_code] = useState(props.match.params.promo_code ? props.match.params.promo_code : "");
+  // const [promo_code, set_promo_code] = useState(props.match.params.promo_code ? props.match.params.promo_code : "");
   const [search, set_search] = useState("");
   const [message, set_message] = useState("");
   const wrapperRef = useRef(null);
 
   const { height, width } = useWindowDimensions();
+  const [promoCode, setPromoCode] = useState("");
 
   useEffect(() => {
-    let clean = true;
-    if (clean) {
-      if (promo_code) {
-        sessionStorage.setItem("promo_code", promo_code);
-        set_message(`${promo_code} Added to Checkout`);
-      }
+    const queryParams = new URLSearchParams(window.location.search);
+    const code = queryParams.get("code");
+    if (code) {
+      sessionStorage.setItem("promo_code", code);
+      set_message(`Code ${code} Added to Checkout`);
     }
-    return () => (clean = false);
-  }, [promo_code]);
+  }, []);
 
   useEffect(() => {
     window.addEventListener("mousedown", handleClickOutside);

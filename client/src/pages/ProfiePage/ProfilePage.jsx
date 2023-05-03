@@ -125,7 +125,7 @@ const ProfilePage = () => {
       </div>
       <Loading loading={loading}>
         <div>
-          <div className="jc-b wrap">
+          <div className="wrap">
             <ProfileDetails />
             <div>
               <ProfileActions />

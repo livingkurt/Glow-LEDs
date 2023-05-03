@@ -8,7 +8,7 @@ const ProfileDetails = () => {
   const { _id, first_name, last_name, email, isVerified, isAdmin, shipping, email_subscription } = user;
 
   return (
-    <div className="">
+    <div className="w-50per">
       {current_user?.isAdmin && (
         <div className="mb-20px">
           <h3>ID</h3>
