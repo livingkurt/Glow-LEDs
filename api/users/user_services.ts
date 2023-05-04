@@ -1,7 +1,7 @@
 import { user_db } from "../users";
-import { determine_filter, getAccessToken, getRefreshToken } from "../../util";
 import { getFilteredData } from "../api_helpers";
 import { normalizeUserFilters, normalizeUserSearch } from "./user_helpers";
+import { getRefreshToken } from "./userInteractors";
 const bcrypt = require("bcryptjs");
 require("dotenv");
 
@@ -440,7 +440,6 @@ export default {
           first_name: user.first_name,
           last_name: user.last_name,
           email: user.email,
-          password: user.password,
           isAdmin: user.isAdmin,
           cart: user.cart,
           isVerified: user.isVerified,
@@ -448,7 +447,6 @@ export default {
           is_affiliated: user.is_affiliated,
           email_subscription: user.email_subscription,
           shipping: user.shipping,
-          access_token: getAccessToken(user),
           refresh_token: getRefreshToken(user)
         };
       }

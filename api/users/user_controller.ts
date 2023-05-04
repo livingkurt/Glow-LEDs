@@ -1,6 +1,6 @@
 import { user_db, user_services } from "../users";
-import { getAccessToken, getRefreshToken } from "../../util";
 import Token from "../tokens/token";
+import { getAccessToken, getRefreshToken } from "./userInteractors";
 // import Token from "../tokens/token";
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");

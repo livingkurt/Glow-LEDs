@@ -11,62 +11,6 @@ export interface IGetUserAuthInfoRequest extends Request {
   user: any; // or any other type
 }
 
-export const getAccessToken = (user: any) => {
-  return jwt.sign(
-    {
-      _id: user._id,
-      first_name: user.first_name,
-      last_name: user.last_name,
-      email: user.email,
-      isAdmin: user.isAdmin,
-      isVerified: user.isVerified,
-      affiliate: user.affiliate,
-      email_subscription: user.email_subscription,
-      shipping: user.shipping,
-      is_affiliated: user.is_affiliated,
-      isWholesaler: user.isWholesaler,
-      wholesaler: user.wholesaler
-    },
-    config.ACCESS_TOKEN_SECRET,
-    {
-      expiresIn: "15m"
-    }
-  );
-};
-export const getRefreshToken = async (user: any) => {
-  try {
-    const refreshToken = jwt.sign(
-      {
-        _id: user._id,
-        first_name: user.first_name,
-        last_name: user.last_name,
-        email: user.email,
-        isAdmin: user.isAdmin,
-        isVerified: user.isVerified,
-        affiliate: user.affiliate,
-        email_subscription: user.email_subscription,
-        shipping: user.shipping,
-        is_affiliated: user.is_affiliated,
-        wholesaler: user.wholesaler,
-        isWholesaler: user.isWholesaler
-      },
-      config.REFRESH_TOKEN_SECRET,
-      {
-        expiresIn: "200d"
-      }
-    );
-    console.log("saving new refresh token");
-    // Store the refresh token in the database
-    await Token.create({ user: user.id, token: refreshToken });
-    // if (token) {
-    return refreshToken;
-    // }
-  } catch (error) {
-    console.error(error);
-    return;
-  }
-};
-
 export const onlyUnique = (value: any, index: any, self: any) => {
   return self.indexOf(value) === index;
 };
@@ -78,62 +22,9 @@ export const isEmail = (email: string) => {
   return re.test(String(email).toLowerCase());
 };
 
-// //middleware function to check if the incoming request in authenticated:
-// export const checkAuth = (req: any, res: any, next: any) => {
-// 	// get the token stored in the custom header called 'x-auth-token'
-// 	const token = req.get('x-auth-token');
-// 	//send error message if no token is found:
-// 	if (!token) {
-// 		return res.status(401).json({ error: 'Access denied, token missing!' });
-// 	} else {
-// 		try {
-// 			//if the incoming request has a valid token, we extract the payload from the token and attach it to the request object.
-// 			const payload: any = jwt.verify(token, config.ACCESS_TOKEN_SECRET);
-// 			req.user = payload.user;
-// 			next();
-// 		} catch (error) {
-// 			// token can be expired or invalid. Send appropriate errors in each case:
-// 			if (error.name === 'TokenExpiredError') {
-// 				return res.status(401).json({ error: 'Session timed out,please login again' });
-// 			} else if (error.name === 'JsonWebTokenError') {
-// 				return res.status(401).json({ error: 'Invalid token,please login again!' });
-// 			} else {
-// 				//catch other unprecedented errors
-// 				console.error(error);
-// 				return res.status(400).json({ error });
-// 			}
-// 		}
-// 	}
-// };
-
 export const toCapitalize = (string: string) => {
   return string.charAt(0).toUpperCase() + string.toLowerCase().slice(1);
 };
-
-// export const isAuth = (req: any, res: any, next: () => void) => {
-//   const token = req.headers.authorization;
-
-//   if (token) {
-//     const onlyToken = token.slice(7, token.length);
-//     jwt.verify(onlyToken, config.ACCESS_TOKEN_SECRET, (err: any, decode: any) => {
-//       if (err) {
-//         return res.status(401).send({ msg: "Invalid Token" });
-//       }
-//       req.user = decode;
-//       next();
-//       return;
-//     });
-//   } else {
-//     return res.status(401).send({ msg: "Token is not supplied." });
-//   }
-// };
-
-// export const isAdmin = (req: any, res: any, next: () => any) => {
-//   if (req.user && req.user.isAdmin) {
-//     return next();
-//   }
-//   return res.status(401).send({ msg: "Admin Token is not valid." });
-// };
 
 export const make_private_code = (length: any) => {
   const result = [];
@@ -155,38 +46,6 @@ export const make_private_code = (length: any) => {
 // 		return [ null, error ];
 // 	}
 // };
-
-// const combinations = (a: any, m: any) => {
-// 	const gc = (a: any) => {
-// 		const fn = (n: any, src: any, got: any, all: any) => {
-// 			if (n == 0) {
-// 				if (got.length > 0) {
-// 					all[all.length] = got;
-// 				}
-// 				return;
-// 			}
-// 			for (let j = 0; j < src.length; j++) {
-// 				fn(n - 1, src.slice(j + 1), got.concat([ src[j] ]), all);
-// 			}
-// 			return;
-// 		};
-// 		const all: any = [];
-// 		for (let i = 0; i < a.length; i++) {
-// 			fn(i, a, [], all);
-// 		}
-// 		all.push(a);
-// 		return all;
-// 	};
-// 	const c = gc(a);
-// 	return c.filter((e: any) => {
-// 		let n = e.length;
-// 		let sum = 0;
-// 		while (n--) sum += parseFloat(e[n]) || 0;
-// 		return sum <= m;
-// 	}, m);
-// };
-// // const a = [ 1, 3, 6, 10, -1 ];
-// // combinations(a, 9);
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
