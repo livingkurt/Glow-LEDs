@@ -3,6 +3,7 @@ import { isEmail } from "../../util";
 
 export const normalizeOrderFilters = (input: any) => {
   const output: any = {};
+  console.log({ input });
   Object.keys(input).forEach(key => {
     switch (key) {
       case "order_status":
@@ -75,6 +76,12 @@ export const normalizeOrderFilters = (input: any) => {
           output[`shipping.${shipping}`] = true;
         }
         break;
+      case "user":
+        for (const user of input.user) {
+          console.log({ user: user });
+          output["user"] = user;
+        }
+        break;
       case "isPaid":
         if (!input.isPaid.includes(1)) {
           output["isPaid"] = false;
@@ -85,6 +92,7 @@ export const normalizeOrderFilters = (input: any) => {
         break;
     }
   });
+  console.log({ output });
   return output;
 };
 

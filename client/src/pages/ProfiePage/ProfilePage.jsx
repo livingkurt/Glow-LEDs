@@ -18,6 +18,12 @@ import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { format_date } from "../../utils/helper_functions";
 import { determine_color } from "../PaychecksPage/paychecksHelpers";
 import { set_success } from "../../slices/userSlice";
+import { determineOrderColors, orderColors, sinceOrdered } from "../OrdersPage/ordersPageHelpers";
+import OrderItemsDisplay from "../OrdersPage/components/OrderItemsDisplay";
+import { determine_product_name_string } from "../../utils/react_helper_functions";
+import { Link } from "react-router-dom";
+import { humanDate } from "../../helpers/dateHelpers";
+import { fullName } from "../UsersPage/usersHelpers";
 
 const ProfilePage = () => {
   const dispatch = useDispatch();
@@ -31,8 +37,11 @@ const ProfilePage = () => {
   const paycheckPage = useSelector(state => state.paychecks.paycheckPage);
   const { loading, remoteVersionRequirement } = paycheckPage;
 
+  // const orderPage = useSelector(state => state.orders.orderPage);
+  // const { orders } = orderPage;
+
   const orderPage = useSelector(state => state.orders.orderPage);
-  const { orders } = orderPage;
+  const { loading: loading_order } = orderPage;
 
   useEffect(() => {
     let cleanup = true;
@@ -82,7 +91,7 @@ const ProfilePage = () => {
       cleanup = false;
     };
   }, [dispatch, user?.affiliate, user?.affiliate?.public_code, user?.affiliate?.sponsor, user.is_affiliated]);
-  const column_defs = useMemo(
+  const paycheckColumnDefs = useMemo(
     () => [
       { title: "Date Created", display: paycheck => paycheck.createdAt && format_date(paycheck.createdAt) },
       { title: "Date Paid", display: paycheck => paycheck.paid_at && format_date(paycheck.paid_at) },
@@ -99,10 +108,66 @@ const ProfilePage = () => {
     []
   );
 
+  const orderColumnDefs = useMemo(
+    () => [
+      { title: "Order #", display: "_id" },
+      { title: "Order Placed", display: row => humanDate(row.createdAt) },
+      { title: "Name", display: row => <Link to={`/secure/account/profile/${row?.user?._id}`}>{fullName(row.shipping)}</Link> },
+      {
+        title: "Order Items",
+        display: row => (
+          <div>
+            <div>
+              {row.orderItems.map(item => (
+                <div>{determine_product_name_string(item, true, row.createdAt)}</div>
+              ))}
+            </div>
+            <div>
+              <OrderItemsDisplay order={row} determine_color={determineOrderColors} colspan={orderColumnDefs.length + 1} />
+            </div>
+            <div className="mt-10px">
+              {row.order_note && (
+                <div className="ai-c">
+                  <div className="title_font mr-10px">Order Note: </div>
+                  <div>{row.order_note}</div>
+                </div>
+              )}
+              {row.production_note && (
+                <div className="ai-c">
+                  <div className="title_font mr-10px">Production Note: </div>
+                  <div>{row.production_note}</div>
+                </div>
+              )}
+            </div>
+          </div>
+        )
+      },
+
+      { title: "Total", display: row => `$${row.totalPrice.toFixed(2)}` },
+      {
+        title: "Actions",
+        display: row => (
+          <div className="jc-b">
+            <Link to={`/secure/account/order/${row._id}`}>
+              <GLButton variant="icon" aria-label="view">
+                <i className="fas fa-mountain" />
+              </GLButton>
+            </Link>
+          </div>
+        )
+      }
+    ],
+    [dispatch]
+  );
+
   // const remoteApi = useCallback(options => API.getPaychecks(options), []);
-  const remoteApi = useCallback(
+  const paychecksRemoteApi = useCallback(
     options => API.getPaychecks({ ...options, filters: { ...options.filters, affiliate: [user.affiliate._id] } }),
     [user?.affiliate?._id]
+  );
+  const ordersRemoteApi = useCallback(
+    options => API.getOrders({ ...options, filters: { ...options.filters, user: [user._id] } }),
+    [user._id]
   );
 
   return (
@@ -136,36 +201,29 @@ const ProfilePage = () => {
       {user && user?.affiliate?._id && (
         <div className="mt-20px">
           <GLTableV2
-            remoteApi={remoteApi}
+            remoteApi={paychecksRemoteApi}
             remoteVersionRequirement={remoteVersionRequirement}
             determine_color={determine_color}
             tableName={"Paychecks"}
             namespaceScope="paychecks"
             namespace="paycheckTable"
-            columnDefs={column_defs}
+            columnDefs={paycheckColumnDefs}
             loading={loading}
             enableRowSelect={false}
           />
         </div>
       )}
-      <h1
-        style={{
-          textAlign: "center",
-          width: "100%",
-          justifyContent: "center"
-        }}
-      >
-        {getProfileTitle(current_user, first_name, "Orders")}
-      </h1>
-      {orders && orders.length > 0 ? (
-        orders.map((order, index) => (
-          <OrderListItem key={index} determine_color={determine_order_color} order={order} admin={current_user?.isAdmin} />
-        ))
-      ) : (
-        <div style={{ textAlign: "center" }}>
-          <h3>No Orders</h3>
-        </div>
-      )}
+      <GLTableV2
+        remoteApi={ordersRemoteApi}
+        tableName={"Orders"}
+        colors={orderColors}
+        determine_color={determineOrderColors}
+        namespaceScope="orders"
+        namespace="orderTable"
+        columnDefs={orderColumnDefs}
+        loading={loading_order}
+        enableRowSelect={false}
+      />
     </div>
   );
 };
