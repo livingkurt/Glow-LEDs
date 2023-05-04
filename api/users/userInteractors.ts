@@ -21,7 +21,7 @@ export const getAccessToken = (user: any) => {
     },
     process.env.ACCESS_TOKEN_SECRET || "",
     {
-      expiresIn: "15m"
+      expiresIn: "10000"
     }
   );
 };
@@ -47,12 +47,20 @@ export const getRefreshToken = async (user: any) => {
         expiresIn: "200d"
       }
     );
-    console.log("saving new refresh token");
-    // Store the refresh token in the database
-    await Token.create({ user: user.id, token: refreshToken });
-    // if (token) {
-    return refreshToken;
+    // console.log("saving new refresh token");
+    // const existingToken = await Token.findOne({ user: user._id });
+    // if (existingToken) {
+    //   existingToken.token = refreshToken;
+    //   await existingToken.save();
+    //   console.log("Updated refresh token in the database:", existingToken);
+    // } else {
+    //   // If no existing token is found, create a new one
+    const newToken = await Token.create({ user: user._id, token: refreshToken });
+    console.log("Stored refresh token in the database:", newToken);
     // }
+    // console.log({ getRefreshToken: refreshToken });
+
+    return refreshToken;
   } catch (error) {
     console.error(error);
     return;

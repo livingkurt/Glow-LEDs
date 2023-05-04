@@ -2,6 +2,7 @@ import { user_db } from "../users";
 import { getFilteredData } from "../api_helpers";
 import { normalizeUserFilters, normalizeUserSearch } from "./user_helpers";
 import { getRefreshToken } from "./userInteractors";
+import Token from "../tokens/token";
 const bcrypt = require("bcryptjs");
 require("dotenv");
 
@@ -211,6 +212,8 @@ export default {
     if (!user) {
       throw new Error("Invalid Credentials");
     }
+    const existingToken = await Token.findOne({ user: user._id });
+    console.log({ existingToken });
 
     return {
       _id: user.id,
@@ -225,7 +228,7 @@ export default {
       shipping: user.shipping,
       isWholesaler: user.isWholesaler,
       wholesaler: user.wholesaler,
-      refresh_token: getRefreshToken(user)
+      refresh_token: existingToken?.token
     };
   },
   password_reset_users_s: async (body: any) => {
@@ -253,6 +256,8 @@ export default {
       }
       const isMatch = await bcrypt.compare(body.current_password, user.password);
 
+      const existingToken = await Token.findOne({ user: user._id });
+
       if (isMatch) {
         return {
           _id: user.id,
@@ -266,7 +271,7 @@ export default {
           is_affiliated: user.is_affiliated,
           email_subscription: user.email_subscription,
           shipping: user.shipping,
-          refresh_token: getRefreshToken(user)
+          refresh_token: existingToken.token
         };
       }
     } catch (error) {
