@@ -18,38 +18,29 @@ const shipping_routes = {
     });
   },
   get_custom_shipping_rates: (data: any) => {
+    const accessToken = localStorage.getItem("accessToken");
     return axios.put(
       "/api/shipping/get_custom_shipping_rates",
       { data },
       {
         headers: {
-          Authorization: "Bearer " + data.current_user.access_token
+          Authorization: "Bearer " + accessToken
         }
       }
     );
   },
   get_different_shipping_rates: (data: any) => {
+    const accessToken = localStorage.getItem("accessToken");
     return axios.put(
       "/api/shipping/get_different_shipping_rates",
       { data },
       {
         headers: {
-          Authorization: "Bearer " + data.current_user.access_token
+          Authorization: "Bearer " + accessToken
         }
       }
     );
   },
-  // get_different_shipping_rates: (data: any) => {
-  // 	return axios.put(
-  // 		'/api/shipping/get_different_shipping_rates',
-  // 		{ data },
-  // 		{
-  // 			headers: {
-  // 				Authorization: 'Bearer ' + data.current_user.access_token
-  // 			}
-  // 		}
-  // 	);
-  // },
   add_tracking_number: (order: any, tracking_number: any, label: any) => {
     return axios.put("/api/shipping/tracking_number", {
       order,

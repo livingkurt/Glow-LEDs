@@ -176,8 +176,6 @@ const userPage = createSlice({
       state.loading = true;
     },
     [API.registerUser.fulfilled as any]: (state: any, { payload }: any) => {
-      state.access_token = "";
-      // state.current_user = payload;
       state.loading = false;
       state.message = "User Registered";
       state.success = true;
