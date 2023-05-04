@@ -73,13 +73,14 @@ const Cart = props => {
   const [no_items_in_cart, set_no_items_in_cart] = useState("");
 
   const checkoutHandler = () => {
+    console.log({ current_user });
     dispatch(clear_order_state());
     if (decide_warning(props.date_1, props.date_2)) {
       if (cartItems.length === 0) {
         set_no_items_in_cart("Cannot proceed to checkout without any items in cart");
       } else {
         if (current_user.hasOwnProperty("first_name")) {
-          history.push("/account/login?redirect=/secure/checkout/placeorder");
+          history.push("/secure/checkout/placeorder");
         } else {
           history.push("/checkout/placeorder");
         }

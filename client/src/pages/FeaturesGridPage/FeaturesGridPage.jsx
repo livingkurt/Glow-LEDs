@@ -72,13 +72,6 @@ const FeaturesGridPage = props => {
         <link rel="canonical" href="https://www.glow-leds.com/collections/features" />
         <meta property="og:url" content="https://www.glow-leds.com/collections/features" />
       </Helmet>
-      {/* <div className="jc-fe">
-        <Link to="/account/login?redirect=/account/submit_feature">
-          <GLButton variant="secondary" className="">
-            Submit Feature
-          </GLButton>
-        </Link>
-      </div> */}
       <div className="jc-c">
         <div className="row">
           <h1>{"Featured " + humanize(category) || "Featured"}</h1>
