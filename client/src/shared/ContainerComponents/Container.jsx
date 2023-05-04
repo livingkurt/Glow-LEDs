@@ -6,9 +6,9 @@ import { handleTokenRefresh } from "../../api/axiosInstance";
 const Container = ({ children, style }) => {
   const location = useLocation();
 
-  useEffect(() => {
-    handleTokenRefresh();
-  }, [location.pathname]);
+  // useEffect(() => {
+  //   handleTokenRefresh();
+  // }, [location.pathname]);
 
   return (
     <div style={style} className="fade_in">

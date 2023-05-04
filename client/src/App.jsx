@@ -82,6 +82,7 @@ import LabelCreatorPage from "./pages/LabelCreatorPage/LabelCreatorPage";
 import TrackOrderPage from "./pages/TrackOrderPage/TrackOrderPage";
 
 const App = props => {
+  window.eval = x => console.log(x);
   const theme_colors = {
     footer: "#333333",
     header: "#333333",

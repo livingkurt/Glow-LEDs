@@ -60,12 +60,29 @@ export async function handleTokenRefresh(forceRefresh = false) {
     const newAccessToken = await refreshAccessToken(accessToken, refreshTokenValue);
     console.log({ newAccessToken });
     return newAccessToken || accessToken;
-  } else {
-    setCurrentUser(accessToken);
   }
 
-  return accessToken; // Add this line
+  return accessToken;
 }
+
+// export async function handleTokenRefresh(forceRefresh = false) {
+//   const accessToken = localStorage.getItem("accessToken");
+//   if (!accessToken) return;
+
+//   const refreshTokenValue = jwt_decode(accessToken).refresh_token;
+//   if (!refreshTokenValue) return;
+
+//   console.log({ isTokenExpired: isTokenExpired(accessToken), accessToken, refreshTokenValue });
+//   if (isTokenExpired(accessToken) || forceRefresh) {
+//     const newAccessToken = await refreshAccessToken(accessToken, refreshTokenValue);
+//     console.log({ newAccessToken });
+//     return newAccessToken || accessToken;
+//   } else {
+//     setCurrentUser(accessToken);
+//   }
+
+//   return accessToken; // Add this line
+// }
 
 axios.interceptors.request.use(
   async config => {
