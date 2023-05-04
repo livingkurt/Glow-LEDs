@@ -38,7 +38,6 @@ const userPage = createSlice({
   name: "userPage",
   initialState: {
     loading: false,
-    access_token: "",
     users: [],
     user: user,
     remoteVersionRequirement: 0,
@@ -196,7 +195,7 @@ const userPage = createSlice({
       localStorage.setItem("accessToken", access_token);
       setAuthToken(access_token);
       const decoded = jwt_decode(access_token);
-      state.access_token = access_token;
+      // state.access_token = access_token;
       state.loading = false;
       state.current_user = decoded;
       state.message = "User Login Success";
@@ -215,7 +214,7 @@ const userPage = createSlice({
       localStorage.setItem("accessToken", access_token);
       setAuthToken(access_token);
       const decoded = jwt_decode(access_token);
-      state.access_token = access_token;
+      // state.access_token = access_token;
       state.loading = false;
       state.current_user = decoded;
       state.message = "User Login Success";

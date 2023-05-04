@@ -172,7 +172,6 @@ const ProfilePage = () => {
         <title>Admin User Profile | Glow LEDs</title>
       </Helmet>
       <EditUserModal />
-      <Notification message={message} />
       {current_user?.isAdmin && (
         <GLButton variant="icon" onClick={() => history.goBack()}>
           <i class="fas fa-chevron-left"></i>

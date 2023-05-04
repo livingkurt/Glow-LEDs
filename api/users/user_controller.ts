@@ -379,7 +379,6 @@ export default {
     try {
       //delete the refresh token saved in database:
       const { refresh_token } = req.user;
-      console.log({ refresh_token });
       //
       await Token.findOneAndDelete({ token: refresh_token });
       return res.status(200).json({ success: "User logged out!" });
