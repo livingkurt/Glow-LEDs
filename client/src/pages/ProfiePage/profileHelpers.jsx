@@ -56,3 +56,11 @@ export const determine_terms_link = affiliate => {
     return affiliateLinks.team.termsLink;
   }
 };
+
+export const getProfileTitle = (current_user, first_name, title) => {
+  if (!current_user || current_user.first_name === first_name || first_name === "") {
+    return `My ${title}`;
+  } else {
+    return `${first_name}'s ${title}`;
+  }
+};
