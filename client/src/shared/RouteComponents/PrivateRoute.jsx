@@ -19,7 +19,6 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
   useEffect(() => {
     (async () => {
       const accessToken = await handleTokenRefresh();
-      console.log({ PrivateRoute: accessToken });
       setCurrentUser(accessToken);
       setIsTokenRefreshed(true);
     })();

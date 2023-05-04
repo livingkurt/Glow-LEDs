@@ -19,7 +19,6 @@ const AdminRoute = ({ component: Component, ...rest }) => {
   useEffect(() => {
     (async () => {
       const accessToken = await handleTokenRefresh();
-      console.log({ AdminRoute: accessToken });
       setCurrentUser(accessToken);
       setIsTokenRefreshed(true);
     })();

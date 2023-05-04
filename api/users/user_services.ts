@@ -213,7 +213,6 @@ export default {
       throw new Error("Invalid Credentials");
     }
     const existingToken = await Token.findOne({ user: user._id });
-    console.log({ existingToken });
 
     return {
       _id: user.id,
