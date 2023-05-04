@@ -1,14 +1,13 @@
-import React, { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as API from "../../api";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import { Loading, Notification } from "../../shared/SharedComponents";
-import { useHistory, useLocation, useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import "./ProfilePage.scss";
 import { Helmet } from "react-helmet";
 import { EditUserModal } from "../UsersPage/components";
-import { OrderListItem } from "../OrdersPage/components";
-import { determine_order_color, getProfileTitle } from "./profileHelpers";
+import { getProfileTitle } from "./profileHelpers";
 import { this_month_date_range, this_year_date_range } from "../DashboardPage/background/worker_helpers";
 import ProfileDetails from "./components/ProfileDetails";
 import { ProfileActions } from "./components/ProfileActions";
@@ -18,7 +17,7 @@ import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { format_date } from "../../utils/helper_functions";
 import { determine_color } from "../PaychecksPage/paychecksHelpers";
 import { set_success } from "../../slices/userSlice";
-import { determineOrderColors, orderColors, sinceOrdered } from "../OrdersPage/ordersPageHelpers";
+import { determineOrderColors, orderColors } from "../OrdersPage/ordersPageHelpers";
 import OrderItemsDisplay from "../OrdersPage/components/OrderItemsDisplay";
 import { determine_product_name_string } from "../../utils/react_helper_functions";
 import { Link } from "react-router-dom";
@@ -30,15 +29,12 @@ const ProfilePage = () => {
   const history = useHistory();
   let { id } = useParams();
   const userPage = useSelector(state => state.users.userPage);
-  const { current_user, user, success, message } = userPage;
+  const { current_user, user, message } = userPage;
 
   const { first_name } = user;
 
   const paycheckPage = useSelector(state => state.paychecks.paycheckPage);
   const { loading, remoteVersionRequirement } = paycheckPage;
-
-  // const orderPage = useSelector(state => state.orders.orderPage);
-  // const { orders } = orderPage;
 
   const orderPage = useSelector(state => state.orders.orderPage);
   const { loading: loading_order } = orderPage;
@@ -205,6 +201,7 @@ const ProfilePage = () => {
             remoteVersionRequirement={remoteVersionRequirement}
             determine_color={determine_color}
             tableName={"Paychecks"}
+            enableSearch={false}
             namespaceScope="paychecks"
             namespace="paycheckTable"
             columnDefs={paycheckColumnDefs}
@@ -213,10 +210,12 @@ const ProfilePage = () => {
           />
         </div>
       )}
+      <div className="mt-20px" />
       <GLTableV2
         remoteApi={ordersRemoteApi}
         tableName={"Orders"}
         colors={orderColors}
+        enableSearch={false}
         determine_color={determineOrderColors}
         namespaceScope="orders"
         namespace="orderTable"
