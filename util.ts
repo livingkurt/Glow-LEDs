@@ -6,6 +6,7 @@ import { IAffiliate } from "./types/affiliateTypes";
 import multer, { Multer } from "multer";
 import path from "path";
 import { v4 as uuidv4 } from "uuid";
+import Token from "./api/tokens/token";
 export interface IGetUserAuthInfoRequest extends Request {
   user: any; // or any other type
 }
@@ -33,7 +34,7 @@ export const getAccessToken = (user: any) => {
     }
   );
 };
-export const getRefreshToken = (user: any) => {
+export const getRefreshToken = async (user: any) => {
   try {
     const refreshToken = jwt.sign(
       {
@@ -56,8 +57,8 @@ export const getRefreshToken = (user: any) => {
         expiresIn: "200d" // 1 year in seconds
       }
     );
-    // const token = await Token.create({ token: refreshToken });
-    //
+    // Store the refresh token in the database
+    await Token.create({ user: user.id, token: refreshToken });
     // if (token) {
     return refreshToken;
     // }

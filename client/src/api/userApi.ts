@@ -88,6 +88,13 @@ export const loginUser = createAsyncThunk("users/loginUser", async (userData: an
   } catch (error) {}
 });
 
+export const logoutUser = createAsyncThunk("users/logoutUser", async (_data: any, thunkApi: any) => {
+  try {
+    const { data } = await axios.delete("/api/users/logout");
+    return data;
+  } catch (error) {}
+});
+
 export const loginAsUser = createAsyncThunk("users/loginAsUser", async (userData: any, thunkApi: any) => {
   try {
     const { data } = await axios.post("/api/users/login_as_user", userData);

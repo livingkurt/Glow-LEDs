@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { validate_login } from "../../../utils/validations";
 import useWindowDimensions from "../../../shared/Hooks/windowDimensions";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
-import { logout_user } from "../../../slices/userSlice";
 import * as API from "../../../api";
 const EmailStep = ({
   email_completed,
@@ -40,7 +39,7 @@ const EmailStep = ({
   };
   const submit_logout = e => {
     e.preventDefault();
-    dispatch(logout_user(current_user.refresh_token));
+    dispatch(API.logoutUser(current_user.refresh_token));
     history.push("/checkout/placeorder");
   };
 

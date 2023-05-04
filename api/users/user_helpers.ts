@@ -1,4 +1,8 @@
 import { isEmail } from "../../util";
+import Token from "../tokens/token";
+const config = require("../../config");
+const jwt = require("jsonwebtoken");
+require("dotenv");
 
 export const normalizeUserFilters = (input: any) => {
   console.log({ input });

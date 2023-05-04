@@ -1,17 +1,16 @@
-// import mongoose from "mongoose";
-// export {};
+import mongoose from "mongoose";
+export {};
 
-// const token_schema = new mongoose.Schema(
-//   {
-//     token: { type: String },
-//     active: { type: Boolean },
-//     deleted: { type: Boolean, default: false }
-//   },
-//   {
-//     timestamps: true
-//   }
-// );
+const token_schema = new mongoose.Schema(
+  {
+    token: { type: String },
+    user: { type: mongoose.Schema.Types.ObjectId, ref: "User" }
+  },
+  {
+    timestamps: true
+  }
+);
 
-// const tokenModal = mongoose.model("Token", token_schema);
+const Token = mongoose.model("Token", token_schema);
 
-// export default tokenModal;
+export default Token;

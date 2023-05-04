@@ -1,5 +1,6 @@
 import { user_db, user_services } from "../users";
 import { getAccessToken, getRefreshToken } from "../../util";
+import Token from "../tokens/token";
 // import Token from "../tokens/token";
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -155,7 +156,7 @@ export default {
         const payload = jwt.verify(refresh_token, config.REFRESH_TOKEN_SECRET);
         //
 
-        const user = await user_services.refresh_login_users_s(payload.email, payload.password);
+        const user = await user_services.refresh_login_users_s(payload.email);
         //
         const access_token = jwt.sign(user, config.ACCESS_TOKEN_SECRET, {
           expiresIn: "15m"
@@ -304,46 +305,83 @@ export default {
   },
   refresh_login_users_c: async (req: any, res: any) => {
     try {
-      //get refreshToken
+      // get refreshToken
       const { refresh_token } = req.body;
-      //
-      //send error if no refresh_token is sent
+
+      // send error if no refresh_token is sent
       if (!refresh_token) {
         return res.status(403).send({ error: "Access denied,token missing!" });
       } else {
-        // //query for the token to check if it is valid:
-        // const tokenDoc = await Token.findOne({ token: refresh_token });
-        //
-        // //send error if no token found:
-        // if (!tokenDoc) {
-        // 	return res.status(401).json({ error: 'Token expired!' });
-        // } else {
-        // await Token.findOneAndDelete({ token: refresh_token });
-        //extract payload from refresh token and generate a new access token and send it
-        const payload = jwt.verify(refresh_token, config.REFRESH_TOKEN_SECRET);
+        // query for the token to check if it is valid:
+        const tokenDoc = await Token.findOne({ token: refresh_token });
 
-        const user = await user_services.refresh_login_users_s(payload.email, payload.password);
+        // send error if no token found:
+        if (!tokenDoc) {
+          return res.status(401).json({ error: "Token expired!" });
+        } else {
+          await Token.findOneAndDelete({ token: refresh_token });
+          // extract payload from refresh token and generate a new access token and send it
+          const payload = jwt.verify(refresh_token, config.REFRESH_TOKEN_SECRET);
+          const user = await user_services.refresh_login_users_s(payload.email);
 
-        const access_token = jwt.sign(user, config.ACCESS_TOKEN_SECRET, {
-          expiresIn: "15m"
-        });
-        return res.status(200).send({
-          success: true,
-          access_token: "Bearer " + access_token
-        });
+          const access_token = jwt.sign(user, config.ACCESS_TOKEN_SECRET, {
+            expiresIn: "15m"
+          });
+          return res.status(200).send({
+            success: true,
+            access_token: "Bearer " + access_token
+          });
+        }
       }
-      // }
     } catch (error) {
       console.error({ error });
       return res.status(500).send({ error: "Internal Server Error" });
     }
   },
+
+  // refresh_login_users_c: async (req: any, res: any) => {
+  //   try {
+  //     //get refreshToken
+  //     const { refresh_token } = req.body;
+  //     //
+  //     //send error if no refresh_token is sent
+  //     if (!refresh_token) {
+  //       return res.status(403).send({ error: "Access denied,token missing!" });
+  //     } else {
+  //       // //query for the token to check if it is valid:
+  //       // const tokenDoc = await Token.findOne({ token: refresh_token });
+  //       //
+  //       // //send error if no token found:
+  //       // if (!tokenDoc) {
+  //       // 	return res.status(401).json({ error: 'Token expired!' });
+  //       // } else {
+  //       // await Token.findOneAndDelete({ token: refresh_token });
+  //       //extract payload from refresh token and generate a new access token and send it
+  //       const payload = jwt.verify(refresh_token, config.REFRESH_TOKEN_SECRET);
+
+  //       const user = await user_services.refresh_login_users_s(payload.email);
+
+  //       const access_token = jwt.sign(user, config.ACCESS_TOKEN_SECRET, {
+  //         expiresIn: "15m"
+  //       });
+  //       return res.status(200).send({
+  //         success: true,
+  //         access_token: "Bearer " + access_token
+  //       });
+  //     }
+  //     // }
+  //   } catch (error) {
+  //     console.error({ error });
+  //     return res.status(500).send({ error: "Internal Server Error" });
+  //   }
+  // },
   logout_users_c: async (req: any, res: any) => {
     try {
       //delete the refresh token saved in database:
-      const { refresh_token } = req.body;
+      const { refresh_token } = req.user;
+      console.log({ refresh_token });
       //
-      // await Token.findOneAndDelete({ token: refresh_token });
+      await Token.findOneAndDelete({ token: refresh_token });
       return res.status(200).json({ success: "User logged out!" });
     } catch (error) {
       console.error(error);

@@ -24,8 +24,6 @@ export const setCurrentUser = (req: any, res: any, next: () => void) => {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
 
-  console.log({ token, authHeader });
-
   if (!token) {
     req.user = null;
     return next();

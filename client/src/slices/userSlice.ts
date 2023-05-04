@@ -66,14 +66,6 @@ const userPage = createSlice({
     set_current_user: (state, { payload }) => {
       state.current_user = payload;
     },
-    logout_user: (state, { payload }) => {
-      localStorage.removeItem("accessToken");
-      setAuthToken(false);
-      return {
-        ...state,
-        current_user: {}
-      };
-    },
     set_success: (state, { payload }) => {
       state.success = payload;
     },
@@ -233,6 +225,23 @@ const userPage = createSlice({
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
+    },
+    [API.logoutUser.pending as any]: (state: any, { payload }: any) => {
+      state.loading = true;
+    },
+    [API.logoutUser.fulfilled as any]: (state: any, { payload }: any) => {
+      localStorage.removeItem("accessToken");
+      setAuthToken(false);
+      state.current_user = {};
+      // return {
+      //   ...state,
+      //   current_user: {}
+      // };
+    },
+    [API.logoutUser.rejected as any]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.error = payload.error;
+      state.message = payload.message;
     }
   }
 });
@@ -241,7 +250,6 @@ export const {
   set_loading,
   set_user,
   set_current_user,
-  logout_user,
   set_success,
   set_edit_user_modal,
   open_create_user_modal,

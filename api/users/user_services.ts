@@ -162,7 +162,7 @@ export default {
   // 	const user: any = await user_db.findById_users_db(params.id);
   //
   // 	if (!user) {
-  // 		throw new Error('Email Not Found');
+  // 		throw new Error('Invalid Credentials');
   // 	}
 
   // 	const updatedUser = await user_db.update_users_db(params.id, body);
@@ -238,7 +238,7 @@ export default {
     const user: any = await user_db.findByEmail_users_db(email);
 
     if (!user) {
-      throw new Error("Email Not Found");
+      throw new Error("Invalid Credentials");
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
@@ -284,41 +284,34 @@ export default {
       refresh_token: await getRefreshToken(user)
     };
   },
-  refresh_login_users_s: async (email: string, password: string) => {
+  refresh_login_users_s: async (email: string) => {
     const user: any = await user_db.findByEmail_users_db(email);
-    console.log({ user });
 
     if (!user) {
-      throw new Error("Email Not Found");
+      throw new Error("Invalid Credentials");
     }
 
-    // const isMatch = await bcrypt.compare(password, user.password);
-
-    if (password === user.password) {
-      return {
-        _id: user.id,
-        first_name: user.first_name,
-        last_name: user.last_name,
-        email: user.email,
-        affiliate: user.affiliate,
-        email_subscription: user.email_subscription,
-        is_affiliated: user.is_affiliated,
-        isVerified: user.isVerified,
-        isAdmin: user.isAdmin,
-        shipping: user.shipping,
-        isWholesaler: user.isWholesaler,
-        wholesaler: user.wholesaler,
-        access_token: getAccessToken(user),
-        refresh_token: getRefreshToken(user)
-      };
-    } else {
-      throw new Error("Password Incorrect");
-    }
+    return {
+      _id: user.id,
+      first_name: user.first_name,
+      last_name: user.last_name,
+      email: user.email,
+      affiliate: user.affiliate,
+      email_subscription: user.email_subscription,
+      is_affiliated: user.is_affiliated,
+      isVerified: user.isVerified,
+      isAdmin: user.isAdmin,
+      shipping: user.shipping,
+      isWholesaler: user.isWholesaler,
+      wholesaler: user.wholesaler,
+      access_token: getAccessToken(user),
+      refresh_token: getRefreshToken(user)
+    };
   },
   // refresh_login_users_s: async (access_token: string, refresh_token: string) => {
   // 	const user: any = await user_db.findByEmail_users_db(email);
   // 	if (!user) {
-  // 		throw new Error('Email Not Found');
+  // 		throw new Error('Invalid Credentials');
   // 	}
   // 	const isMatch = await bcrypt.compare(password, user.password);
 

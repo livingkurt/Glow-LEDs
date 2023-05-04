@@ -6,7 +6,6 @@ import { update_products_url } from "../../utils/helper_functions";
 import { GLButton } from "../GlowLEDsComponents";
 import Filter from "../GlowLEDsComponents/GLTable/Filter";
 import * as API from "../../api";
-import { logout_user } from "../../slices/userSlice";
 
 const Sidebar = props => {
   const history = useHistory();
@@ -47,7 +46,7 @@ const Sidebar = props => {
   const dispatch = useDispatch();
 
   const handleLogout = () => {
-    dispatch(logout_user(current_user.refresh_token));
+    dispatch(API.logoutUser(current_user.refresh_token));
     closeMenu();
     history.push("/account/login");
   };
