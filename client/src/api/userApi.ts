@@ -88,12 +88,17 @@ export const loginUser = createAsyncThunk("users/loginUser", async (userData: an
   } catch (error) {}
 });
 
-export const logoutUser = createAsyncThunk("users/logoutUser", async (_data: any, thunkApi: any) => {
+export const logoutUser = createAsyncThunk("users/logoutUser", async (refresh_token: any) => {
   try {
-    const { data } = await axios.delete("/api/users/logout");
+    const { data } = await axios.put("/api/users/logout", { data: { refresh_token } });
     return data;
   } catch (error) {}
 });
+export const refreshLogin = async (refresh_token: any, thunkApi: any) => {
+  try {
+    return await axios.put("/api/users/refresh_login", { refresh_token });
+  } catch (error) {}
+};
 
 export const loginAsUser = createAsyncThunk("users/loginAsUser", async (userData: any, thunkApi: any) => {
   try {

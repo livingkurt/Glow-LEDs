@@ -9,7 +9,6 @@ import Paper from "@mui/material/Paper";
 import { Divider, Typography } from "@mui/material";
 
 const GLDisplayTable = ({ rows, columnDefs, loading, title, containerClassNames }) => {
-  console.log({ rows });
   return (
     <Paper sx={{ margin: "20px 0" }}>
       <Typography variant="h6" align="center" sx={{ padding: "10px 0" }}>

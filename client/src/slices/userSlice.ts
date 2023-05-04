@@ -191,16 +191,17 @@ const userPage = createSlice({
       state.loading = true;
     },
     [API.loginUser.fulfilled as any]: (state: any, { payload }: any) => {
-      const { access_token } = payload;
+      const { access_token, refresh_token } = payload;
       localStorage.setItem("accessToken", access_token);
+      localStorage.setItem("refreshToken", refresh_token); // Store the refresh token
       setAuthToken(access_token);
       const decoded = jwt_decode(access_token);
-      // state.access_token = access_token;
       state.loading = false;
       state.current_user = decoded;
       state.message = "User Login Success";
       state.success = true;
     },
+
     [API.loginUser.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
@@ -210,11 +211,12 @@ const userPage = createSlice({
       state.loading = true;
     },
     [API.loginAsUser.fulfilled as any]: (state: any, { payload }: any) => {
-      const { access_token } = payload;
+      const { access_token, refresh_token } = payload;
       localStorage.setItem("accessToken", access_token);
+      localStorage.setItem("refreshToken", refresh_token); // Store the refresh token
       setAuthToken(access_token);
       const decoded = jwt_decode(access_token);
-      // state.access_token = access_token;
+      state.access_token = access_token;
       state.loading = false;
       state.current_user = decoded;
       state.message = "User Login Success";
@@ -230,12 +232,9 @@ const userPage = createSlice({
     },
     [API.logoutUser.fulfilled as any]: (state: any, { payload }: any) => {
       localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
       setAuthToken(false);
       state.current_user = {};
-      // return {
-      //   ...state,
-      //   current_user: {}
-      // };
     },
     [API.logoutUser.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;

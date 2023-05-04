@@ -257,11 +257,10 @@ export default {
         shipping: user.shipping,
         isWholesaler: user.isWholesaler,
         wholesaler: user.wholesaler,
-        access_token: getAccessToken(user),
         refresh_token: await getRefreshToken(user)
       };
     } else {
-      throw new Error("Password Incorrect");
+      throw new Error("Invalid Credentials");
     }
   },
   login_as_user_users_s: async (email: string) => {
@@ -280,7 +279,6 @@ export default {
       shipping: user.shipping,
       isWholesaler: user.isWholesaler,
       wholesaler: user.wholesaler,
-      access_token: getAccessToken(user),
       refresh_token: await getRefreshToken(user)
     };
   },
@@ -304,7 +302,6 @@ export default {
       shipping: user.shipping,
       isWholesaler: user.isWholesaler,
       wholesaler: user.wholesaler,
-      access_token: getAccessToken(user),
       refresh_token: getRefreshToken(user)
     };
   },

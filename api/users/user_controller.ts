@@ -257,27 +257,23 @@ export default {
     const { body } = req;
     try {
       const user = await user_services.login_users_s(body.email, body.password);
-      //
+
       if (user) {
-        return jwt.sign(
-          user,
-          config.ACCESS_TOKEN_SECRET,
-          {
-            expiresIn: "15m"
-          },
-          (err: any, access_token: string) => {
-            return res.status(200).send({
-              success: true,
-              access_token: "Bearer " + access_token
-            });
-          }
-        );
+        // Generate the access token here
+        const access_token = getAccessToken(user);
+        return res.status(200).send({
+          success: true,
+          access_token: access_token,
+          // Include the refresh_token in the response
+          refresh_token: user.refresh_token
+        });
       }
       return res.status(404).send({ message: "User Not Found" });
     } catch (error) {
       res.status(500).send({ error, message: "User Not Found" });
     }
   },
+
   login_as_user_users_c: async (req: any, res: any) => {
     const { body } = req;
     try {
@@ -293,7 +289,7 @@ export default {
           (err: any, access_token: string) => {
             return res.status(200).send({
               success: true,
-              access_token: "Bearer " + access_token
+              access_token: access_token
             });
           }
         );
@@ -307,6 +303,7 @@ export default {
     try {
       // get refreshToken
       const { refresh_token } = req.body;
+      console.log({ refresh_token });
 
       // send error if no refresh_token is sent
       if (!refresh_token) {
@@ -314,6 +311,7 @@ export default {
       } else {
         // query for the token to check if it is valid:
         const tokenDoc = await Token.findOne({ token: refresh_token });
+        console.log({ tokenDoc });
 
         // send error if no token found:
         if (!tokenDoc) {
@@ -378,7 +376,8 @@ export default {
   logout_users_c: async (req: any, res: any) => {
     try {
       //delete the refresh token saved in database:
-      const { refresh_token } = req.user;
+      const { refresh_token } = req.body;
+      console.log({ refresh_token });
       //
       await Token.findOneAndDelete({ token: refresh_token });
       return res.status(200).json({ success: "User logged out!" });

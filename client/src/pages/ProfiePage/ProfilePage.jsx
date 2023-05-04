@@ -87,6 +87,7 @@ const ProfilePage = () => {
       cleanup = false;
     };
   }, [dispatch, user?.affiliate, user?.affiliate?.public_code, user?.affiliate?.sponsor, user.is_affiliated]);
+
   const paycheckColumnDefs = useMemo(
     () => [
       { title: "Date Created", display: paycheck => paycheck.createdAt && format_date(paycheck.createdAt) },
@@ -156,7 +157,6 @@ const ProfilePage = () => {
     [dispatch]
   );
 
-  // const remoteApi = useCallback(options => API.getPaychecks(options), []);
   const paychecksRemoteApi = useCallback(
     options => API.getPaychecks({ ...options, filters: { ...options.filters, affiliate: [user.affiliate._id] } }),
     [user?.affiliate?._id]

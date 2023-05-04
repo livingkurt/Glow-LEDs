@@ -18,7 +18,6 @@ export const getAccessToken = (user: any) => {
       first_name: user.first_name,
       last_name: user.last_name,
       email: user.email,
-      password: user.password,
       isAdmin: user.isAdmin,
       isVerified: user.isVerified,
       affiliate: user.affiliate,
@@ -30,7 +29,7 @@ export const getAccessToken = (user: any) => {
     },
     config.ACCESS_TOKEN_SECRET,
     {
-      expiresIn: "15m" // 1 year in seconds
+      expiresIn: "15m"
     }
   );
 };
@@ -42,7 +41,6 @@ export const getRefreshToken = async (user: any) => {
         first_name: user.first_name,
         last_name: user.last_name,
         email: user.email,
-        password: user.password,
         isAdmin: user.isAdmin,
         isVerified: user.isVerified,
         affiliate: user.affiliate,
@@ -54,9 +52,10 @@ export const getRefreshToken = async (user: any) => {
       },
       config.REFRESH_TOKEN_SECRET,
       {
-        expiresIn: "200d" // 1 year in seconds
+        expiresIn: "200d"
       }
     );
+    console.log("saving new refresh token");
     // Store the refresh token in the database
     await Token.create({ user: user.id, token: refreshToken });
     // if (token) {
