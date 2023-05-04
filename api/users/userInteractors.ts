@@ -56,9 +56,6 @@ export const getRefreshToken = async (user: any) => {
     // } else {
     //   // If no existing token is found, create a new one
     const newToken = await Token.create({ user: user._id, token: refreshToken });
-    console.log("Stored refresh token in the database:", newToken);
-    // }
-    // console.log({ getRefreshToken: refreshToken });
 
     return refreshToken;
   } catch (error) {
