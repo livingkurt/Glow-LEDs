@@ -204,7 +204,7 @@ const parseQueryParams = search => {
     .split("&")
     .forEach(param => {
       const [key, value] = param.split("=");
-      params[key] = decodeURIComponent(value);
+      // params[key] = decodeURIComponent(value);
     });
 
   return params;

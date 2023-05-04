@@ -1,7 +1,7 @@
 import { email_sale_price_switch, determine_product_name, determin_card_logo_images, humanDate } from "../../util";
 
 export default ({ order }: any) => {
-  return `<body id="invoice" style="background-color:transparent;zoom:100%; font-family: Helvetica;">
+  return `<body id="invoice" style="background-color:transparent;zoom:100%; font-family: Helvetica; color: black;">
   <div
     style="display:flex;flex-direction:column;margin:40px;margin-top:75px;font-size:25px;line-height:35px;color:black;background-color:white">
     <table cellpadding="0" cellspacing="0" style="width:100%;line-height:inherit;text-align:left;font-size:25px"

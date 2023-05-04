@@ -1,8 +1,7 @@
-import printJS from "print-js";
 import { tableColors } from "../../shared/GlowLEDsComponents/GLTableV2/glTableHelpers";
 import { daysBetween } from "../../utils/helper_functions";
-import { print } from "html-to-printer";
 import { setTimeout } from "timers";
+const { printHtml } = require("print-html-element");
 
 export const orderColors = [
   { name: "Not Paid", color: tableColors.inactive },
@@ -170,27 +169,6 @@ export const duplicateOrder = (order: any) => {
   };
 };
 
-export const printHtml = (html: string, id: string) => {
-  const tempDiv = document.createElement("div");
-  tempDiv.innerHTML = html;
-
-  // Append the temporary element to the DOM
-  document.body.appendChild(tempDiv);
-
-  // Print the contents of the 'printableArea' div
-  printJS({
-    printable: id,
-    type: "html",
-    showModal: false,
-    modalMessage: "Preparing print...",
-    onPrintDialogClose: () => {
-      console.log("The print dialog was closed");
-      // Remove the temporary element from the DOM after printing
-      document.body.removeChild(tempDiv);
-    }
-  });
-};
-
 export const sendEmail = (message: string, order: any) => {
   const email = order.shipping.email;
   const subject = "About Your Glow LEDs Order";
@@ -237,11 +215,10 @@ export const printLabel = async (label: string) => {
       <img style="margin: auto; text-align: center;" src="${label}" alt="label" />
   </div>`;
   await waitForImagesToLoad(html);
-  print(html);
-  // print(`<img style="margin: auto; text-align: center;" width="1000px"src="${label}" />`);
+  printHtml(html);
 };
 
 export const printInvoice = async (invoice: string) => {
   await waitForImagesToLoad(invoice);
-  print(invoice);
+  printHtml(invoice);
 };
