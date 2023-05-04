@@ -24,11 +24,9 @@ export default {
     }
   },
   create_images_db: async (body: any) => {
-    console.log({ body });
     try {
       return await Image.create(body);
     } catch (error) {
-      console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }

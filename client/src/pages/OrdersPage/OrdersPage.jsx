@@ -84,7 +84,6 @@ const OrdersPage = () => {
               aria-label="Duplicate"
               onClick={() => {
                 const newDuplicateOrder = duplicateOrder(row);
-                console.log({ newDuplicateOrder });
                 dispatch(API.saveOrder(newDuplicateOrder));
               }}
             >

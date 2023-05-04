@@ -284,7 +284,6 @@ const MovableItem = ({ name, index, currentColumnName, moveCardHandler, setItems
 };
 
 const Column = ({ children, className, title }) => {
-  console.log({ title });
   const [{ isOver, canDrop }, drop] = useDrop({
     accept: "Our first type",
     drop: () => ({ name: title }),

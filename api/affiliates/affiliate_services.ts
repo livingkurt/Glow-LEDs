@@ -110,7 +110,6 @@ export default {
     }
   },
   update_affiliates_s: async (params: any, body: IAffiliate) => {
-    console.log({ params, body });
     try {
       return await affiliate_db.update_affiliates_db(params.id, body);
     } catch (error) {

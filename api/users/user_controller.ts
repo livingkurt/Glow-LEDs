@@ -249,7 +249,6 @@ export default {
         });
       });
     } catch (error) {
-      console.log({ error });
       res.status(500).send({ error, message: "Error Registering User" });
     }
   },
@@ -303,7 +302,6 @@ export default {
     try {
       // get refreshToken
       const { refresh_token } = req.body;
-      console.log({ refresh_token });
 
       // send error if no refresh_token is sent
       if (!refresh_token) {
@@ -311,7 +309,6 @@ export default {
       } else {
         // query for the token to check if it is valid:
         const tokenDoc = await Token.findOne({ token: refresh_token });
-        console.log({ tokenDoc });
 
         // send error if no token found:
         if (!tokenDoc) {
@@ -377,7 +374,6 @@ export default {
     try {
       //delete the refresh token saved in database:
       const { refresh_token } = req.body;
-      console.log({ refresh_token });
       //
       await Token.findOneAndDelete({ token: refresh_token });
       return res.status(200).json({ success: "User logged out!" });

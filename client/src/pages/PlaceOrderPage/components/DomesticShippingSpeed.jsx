@@ -14,7 +14,6 @@ const DomesticShippingSpeed = ({ rates, service, name, time, choose_shipping_rat
       return parseFloat(a.rate) - parseFloat(b.rate);
     }
   });
-  console.log({ rates });
 
   const lowestRate = sortedRates[0];
 

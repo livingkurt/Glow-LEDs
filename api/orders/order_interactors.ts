@@ -3,7 +3,6 @@ import { isEmail } from "../../util";
 
 export const normalizeOrderFilters = (input: any) => {
   const output: any = {};
-  console.log({ input });
   Object.keys(input).forEach(key => {
     switch (key) {
       case "order_status":
@@ -78,7 +77,6 @@ export const normalizeOrderFilters = (input: any) => {
         break;
       case "user":
         for (const user of input.user) {
-          console.log({ user: user });
           output["user"] = user;
         }
         break;
@@ -92,13 +90,11 @@ export const normalizeOrderFilters = (input: any) => {
         break;
     }
   });
-  console.log({ output });
   return output;
 };
 
 export const normalizeOrderSearch = (query: any) => {
   let search = {};
-  console.log({ search: query.search.match(/^[0-9a-fA-F]{24}$/, query) });
   if (query.search && query.search.match(/^[0-9a-fA-F]{24}$/)) {
     search = query.search ? { _id: mongoose.Types.ObjectId(query.search) } : {};
   } else if (query.search && isEmail(query.search)) {

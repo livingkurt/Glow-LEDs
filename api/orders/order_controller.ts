@@ -255,7 +255,6 @@ export default {
   },
   invoice_orders_c: async (req: any, res: any) => {
     const { params } = req;
-    console.log({ params });
     const order = await order_services.invoice_orders_s(params.id);
     try {
       return res.status(200).send(invoice({ order }));

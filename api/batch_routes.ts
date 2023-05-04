@@ -1501,14 +1501,10 @@ router.route("/create_image_records_and_reference_them_in_product").put(async (r
       if (product[array] && product[array].length > 0) {
         const newImageIds = await Promise.all(
           product[array].map(async (imageUrl: string) => {
-            console.log({ imageUrl, name });
             const response: any = await Image.create({ link: imageUrl, album: name });
-            console.log({ response });
             return response._id;
           })
         );
-
-        console.log({ newImageIds });
 
         const update_product: any = await Product.findOne({ _id });
         if (update_product) {
@@ -1533,7 +1529,6 @@ router.route("/create_category_records_and_reference_them_in_product").put(async
   const products = await Product.find({ deleted: false }).sort({ order: 1 });
 
   for (const product of products) {
-    console.log({ product });
     if (product.category) {
       const category = await findOrCreateCategory(product.category);
       product.categorys.push(category);
@@ -1556,7 +1551,6 @@ router.route("/create_category_records_and_reference_them_in_product").put(async
     await product.save();
   }
 
-  console.log("Migration completed");
   res.send(products);
 });
 

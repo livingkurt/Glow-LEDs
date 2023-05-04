@@ -8,7 +8,6 @@ require("dotenv");
 export default {
   findAll_users_s: async (query: { page: string; search: string; sort: string; limit: string }) => {
     try {
-      console.log({ query });
       const sort_options = ["createdAt", "first_name", "email", "is_guest", "is_affiliated"];
       const { filter, sort, limit, page } = getFilteredData({
         query,
@@ -16,8 +15,6 @@ export default {
         normalizeFilters: normalizeUserFilters,
         normalizeSearch: normalizeUserSearch
       });
-
-      console.log({ filter, sort, limit, page });
 
       const users = await user_db.findAll_users_db(filter, sort, limit, page);
       const count = await user_db.count_users_db(filter);

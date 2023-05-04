@@ -82,7 +82,8 @@ const Header = props => {
   const dispatch = useDispatch();
 
   const handleLogout = () => {
-    dispatch(API.logoutUser(current_user.refresh_token));
+    const refreshToken = localStorage.getItem("refreshToken");
+    dispatch(API.logoutUser(refreshToken));
     history.push("/account/login");
   };
   const [last_id, set_last_id] = useState("");

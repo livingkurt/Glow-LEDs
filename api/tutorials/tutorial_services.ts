@@ -53,8 +53,6 @@ export default {
     try {
       const { reorderedItems } = body;
 
-      console.log({ reorderedItems });
-
       // Update each tutorial's order using the reorderedItems array
       const updatePromises = reorderedItems.map(async (item: any) => {
         await tutorial_db.update_tutorials_db({ id: item._id }, { ...item, order: item.order });

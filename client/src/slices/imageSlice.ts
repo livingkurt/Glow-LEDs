@@ -80,7 +80,6 @@ const imagePage = createSlice({
       state.images = [];
     },
     [API.listImages.fulfilled as any]: (state: any, { payload }: any) => {
-      console.log({ payload });
       state.loading = false;
       state.images = payload.data;
       state.totalPages = payload.total_count;

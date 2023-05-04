@@ -124,7 +124,6 @@ const DashboardPage = () => {
     return !data.isLoading && data.data[0];
   };
 
-  console.log({ month, year, yearly_revenue, earnings });
   return (
     <div className="main_container p-20px">
       <Helmet>

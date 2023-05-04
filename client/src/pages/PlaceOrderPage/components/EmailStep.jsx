@@ -39,7 +39,8 @@ const EmailStep = ({
   };
   const submit_logout = e => {
     e.preventDefault();
-    dispatch(API.logoutUser(current_user.refresh_token));
+    const refreshToken = localStorage.getItem("refreshToken");
+    dispatch(API.logoutUser(refreshToken));
     history.push("/checkout/placeorder");
   };
 

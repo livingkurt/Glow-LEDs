@@ -174,7 +174,6 @@ export default {
     }
   },
   findMy_orders_s: async (params: any) => {
-    console.log({ params });
     try {
       const sort = { _id: -1 };
       const filter = { deleted: false, user: params.id };

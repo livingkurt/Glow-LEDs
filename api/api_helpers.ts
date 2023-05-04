@@ -1,5 +1,4 @@
 export const getSort = (sort_options: string[], querySort: string[]): any => {
-  console.log({ querySort });
   const sortIndex = querySort ? parseInt(querySort[0]) : 1;
   const direction = querySort ? (querySort[1] === "asc" ? -1 : 1) : 1;
   const sort = sort_options[sortIndex] ? { [sort_options[sortIndex]]: direction } : { _id: -1 };

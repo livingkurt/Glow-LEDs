@@ -48,7 +48,5 @@ export const payout_employees = async (): Promise<void> => {
         save_paycheck_to_expenses(data);
       }
     });
-  } catch (error) {
-    console.log({ error });
-  }
+  } catch (error) {}
 };

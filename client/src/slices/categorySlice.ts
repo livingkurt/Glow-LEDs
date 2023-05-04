@@ -62,7 +62,6 @@ const categoryPage = createSlice({
       state.category = payload;
     },
     setRemoteVersionRequirement: (state, { payload }) => {
-      console.log("setRemoteVersionRequirement");
       state.remoteVersionRequirement = Date.now();
     }
   },

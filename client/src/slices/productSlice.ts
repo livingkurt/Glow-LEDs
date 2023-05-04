@@ -170,7 +170,6 @@ const productPage = createSlice({
       state.product = payload;
     },
     setRemoteVersionRequirement: (state, { payload }) => {
-      console.log("setRemoteVersionRequirement");
       state.remoteVersionRequirement = Date.now();
     },
     set_color_modifier: (state, { payload }) => {

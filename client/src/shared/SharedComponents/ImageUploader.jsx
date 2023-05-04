@@ -48,9 +48,7 @@ const ImageUploader = ({ onUpload, album }) => {
         }
       });
       onUpload(response.data);
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   return (

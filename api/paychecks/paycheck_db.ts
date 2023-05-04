@@ -2,7 +2,6 @@ import { Paycheck } from "../paychecks";
 
 export default {
   findAll_paychecks_db: async (filter: any, sort: unknown, limit: string, page: string) => {
-    console.log({ findAll_paychecks_db: filter });
     try {
       return await Paycheck.find(filter)
         .sort(sort)
@@ -103,7 +102,6 @@ export default {
           }
         }
       ]).exec();
-      console.log({ totalAmount });
       return totalAmount;
     } catch (error) {
       if (error instanceof Error) {
@@ -112,7 +110,6 @@ export default {
     }
   },
   get_range_payouts_paychecks_db: async (start_date: string, end_date: string) => {
-    console.log({ start_date, end_date });
     try {
       const totalAmount = await Paycheck.aggregate([
         {
@@ -132,7 +129,6 @@ export default {
           }
         }
       ]).exec();
-      console.log({ totalAmount });
       return totalAmount;
     } catch (error) {
       if (error instanceof Error) {

@@ -50,7 +50,6 @@ export const listMyOrders = createAsyncThunk("orders/listMyOrders", async (user_
 
 export const saveOrder = createAsyncThunk("orders/saveOrder", async (order: any, thunkApi: any) => {
   try {
-    console.log({ order });
     if (!order._id) {
       const { data } = await axios.post("/api/orders", order);
       sessionStorage.removeItem("shippingAddress");
@@ -116,7 +115,6 @@ export const createPayOrder = createAsyncThunk(
       sessionStorage.removeItem("shippingAddress");
       return { order: order_created, payment_created };
     } catch (error) {
-      console.log({ createPayOrder: error });
       throw error;
     }
   }

@@ -48,20 +48,7 @@ const GLTableFilterChips = ({ filters, menuOpen, namespace, maxChips, onChangeFu
   // return early if not
   if (!showChips) return null;
 
-  // const chips = Object.entries(pickBy(filters, filterCategory => filterCategory.length > 0)).map(([filterCategory, filterArray]) => {
-  //   if (filterArray.length > 1) {
-  //     return {
-  //       key: filterCategory,
-  //       name: `${filterArray[0]} & ${filterArray.length - 1} more`
-  //     };
-  //   } else {
-  //     return { key: filterCategory, name: filterArray[0] };
-  //   }
-  // });
   const chips = Object.entries(pickBy(filters, filterCategory => filterCategory.length > 0)).map(([filterCategory, filterArray]) => {
-    console.log({ booleanFilters });
-    console.log({ filterCategory });
-    // console.log({ "booleanFilters[filterCategory": booleanFilters[filterCategory].label, filterCategory });
     if (Object.keys(booleanFilters).includes(filterCategory)) {
       return { key: filterCategory, name: booleanFilters[filterCategory].label || filterCategory };
     } else if (filterArray.length > 1) {

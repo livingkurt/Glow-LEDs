@@ -1,5 +1,4 @@
 export const normalizePromoFilters = (input: any) => {
-  console.log({ input });
   const output: any = {};
   Object.keys(input).forEach(key => {
     switch (key) {

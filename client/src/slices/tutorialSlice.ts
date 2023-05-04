@@ -86,7 +86,6 @@ const tutorialPage = createSlice({
       state.tutorial = payload;
     },
     setRemoteVersionRequirement: (state, { payload }) => {
-      console.log("setRemoteVersionRequirement");
       state.remoteVersionRequirement = Date.now();
     }
   },

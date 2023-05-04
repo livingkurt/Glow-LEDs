@@ -33,15 +33,12 @@ export const setAuthToken = accessToken => {
 export const refreshAccessToken = async refreshTokenValue => {
   try {
     const newAccessToken = await getFreshAccessToken(refreshTokenValue);
-    console.log({ newAccessToken });
     localStorage.setItem("accessToken", newAccessToken);
     setAuthToken(newAccessToken);
     const decoded = jwt_decode(newAccessToken);
-    console.log({ decoded });
     store.dispatch(set_current_user(decoded));
     return newAccessToken;
   } catch (error) {
-    console.log("Error in refreshAccessToken:", error); // Log the error here
     store.dispatch(API.logoutUser(refreshTokenValue));
     window.location.href = "/account/login?redirect=" + window.location.pathname;
   }

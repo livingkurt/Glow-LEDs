@@ -113,7 +113,6 @@ const userPage = createSlice({
     },
     [API.saveUser.fulfilled as any]: (state: any, { payload }: any) => {
       const { profile } = payload;
-      console.log({ payload });
       state.loading = false;
       state.message = "User Saved";
       state.loading = false;

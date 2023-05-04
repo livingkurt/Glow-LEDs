@@ -46,7 +46,8 @@ const Sidebar = props => {
   const dispatch = useDispatch();
 
   const handleLogout = () => {
-    dispatch(API.logoutUser(current_user.refresh_token));
+    const refreshToken = localStorage.getItem("refreshToken");
+    dispatch(API.logoutUser(refreshToken));
     closeMenu();
     history.push("/account/login");
   };

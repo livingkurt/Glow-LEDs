@@ -5,7 +5,6 @@ const jwt = require("jsonwebtoken");
 require("dotenv");
 
 export const normalizeUserFilters = (input: any) => {
-  console.log({ input });
   const output: any = {};
   Object.keys(input).forEach(key => {
     switch (key) {
@@ -64,7 +63,6 @@ export const normalizeUserFilters = (input: any) => {
   if (input.employees?.includes("only_employees")) {
     output.is_employee = true;
   }
-  console.log({ output });
   return output;
 };
 

@@ -90,7 +90,7 @@ export const loginUser = createAsyncThunk("users/loginUser", async (userData: an
 
 export const logoutUser = createAsyncThunk("users/logoutUser", async (refresh_token: any) => {
   try {
-    const { data } = await axios.put("/api/users/logout", { data: { refresh_token } });
+    const { data } = await axios.put("/api/users/logout", { refresh_token });
     return data;
   } catch (error) {}
 });
