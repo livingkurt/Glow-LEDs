@@ -12,7 +12,6 @@ router.route("/validate_email/:email").post(user_controller.validate_email_c);
 router.route("/register").post(user_controller.register_users_c);
 router.route("/login").post(user_controller.login_users_c);
 router.route("/login_as_user").post(isAuth, isAdmin, user_controller.login_as_user_users_c);
-router.route("/update/:id").put(user_controller.update_profile_users_c);
 router.route("/password_reset").put(user_controller.password_reset_users_c);
 router.route("/reset_password").post(user_controller.reset_password_users_c);
 router.route("/refresh_login").put(user_controller.refresh_login_users_c);

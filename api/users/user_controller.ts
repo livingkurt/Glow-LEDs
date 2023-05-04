@@ -93,111 +93,6 @@ export default {
       res.status(500).send({ error, message: "Error Creating User" });
     }
   },
-  // update_profile_users_c: async (req: any, res: any) => {
-  // 	const { params, body } = req;
-  //
-  // 	try {
-  // 		const user = await user_services.update_profile_users_s(params, body);
-  // 		if (user) {
-  // 			return res.status(200).send(user);
-  // 		}
-  // 		return res.status(404).send({ message: 'User Not Found' });
-  // 	} catch (error) {
-  //
-  // 		res.status(500).send({ error, message: 'Error Finding User' });
-  // 	}
-  // },
-  // update_profile_users_c: async (req: any, res: any) => {
-  // 	const { params, body } = req;
-  // 	try {
-  // 		const user = await user_services.update_profile_users_s(params, body);
-  //
-  // 		if (user) {
-  // 			return jwt.sign(
-  // 				user,
-  // 				config.ACCESS_TOKEN_SECRET,
-  // 				{
-  // 					expiresIn: '15m'
-  // 				},
-  // 				(err: any, access_token: string) => {
-  // 					return res.status(200).send({
-  // 						success: true,
-  // 						access_token: 'Bearer ' + access_token
-  // 					});
-  // 				}
-  // 			);
-  // 		}
-  // 		return res.status(404).send({ message: 'User Not Found' });
-  // 	} catch (error) {
-  //
-  // 		res.status(500).send({ error, message: 'Error Finding User' });
-  // 	}
-  // },
-  update_profile_users_c: async (req: any, res: any) => {
-    //
-    const { body } = req;
-    //get refreshToken
-    const { refresh_token } = body;
-
-    try {
-      //send error if no refresh_token is sent
-      if (!refresh_token) {
-        return res.status(403).send({ error: "Access denied,token missing!" });
-      } else {
-        // //query for the token to check if it is valid:
-        // const tokenDoc = await Token.findOne({ token: refresh_token });
-        //
-        // //send error if no token found:
-        // if (!tokenDoc) {
-        // 	return res.status(401).json({ error: 'Token expired!' });
-        // } else {
-        // await Token.findOneAndDelete({ token: refresh_token });
-        //extract payload from refresh token and generate a new access token and send it
-        const payload = jwt.verify(refresh_token, config.REFRESH_TOKEN_SECRET);
-        //
-
-        const user = await user_services.refresh_login_users_s(payload.email);
-        //
-        const access_token = jwt.sign(user, config.ACCESS_TOKEN_SECRET, {
-          expiresIn: "15m"
-        });
-        // const user: any = await user_db.findById_users_db(params.id);
-        //
-        if (user) {
-          const updatedUser = await user_db.update_users_db(user._id, body);
-
-          if (updatedUser) {
-            const payload = {
-              ...updatedUser,
-              access_token: getAccessToken(updatedUser),
-              refresh_token: getRefreshToken(updatedUser)
-            };
-            return jwt.sign(
-              payload,
-              config.ACCESS_TOKEN_SECRET,
-              {
-                expiresIn: "15m"
-              },
-              (err: any, access_token: string) => {
-                return {
-                  success: true,
-                  access_token: "Bearer " + access_token
-                };
-              }
-            );
-          }
-        }
-        return res.status(200).send({
-          success: true,
-          access_token: "Bearer " + access_token
-        });
-      }
-      // }
-    } catch (error) {
-      console.error({ error });
-      return res.status(500).send({ error: "Internal Server Error!" });
-    }
-  },
   update_users_c: async (req: any, res: any) => {
     const { params, body } = req;
     try {
@@ -333,43 +228,6 @@ export default {
       return res.status(500).send({ error: "Internal Server Error" });
     }
   },
-
-  // refresh_login_users_c: async (req: any, res: any) => {
-  //   try {
-  //     //get refreshToken
-  //     const { refresh_token } = req.body;
-  //     //
-  //     //send error if no refresh_token is sent
-  //     if (!refresh_token) {
-  //       return res.status(403).send({ error: "Access denied,token missing!" });
-  //     } else {
-  //       // //query for the token to check if it is valid:
-  //       // const tokenDoc = await Token.findOne({ token: refresh_token });
-  //       //
-  //       // //send error if no token found:
-  //       // if (!tokenDoc) {
-  //       // 	return res.status(401).json({ error: 'Token expired!' });
-  //       // } else {
-  //       // await Token.findOneAndDelete({ token: refresh_token });
-  //       //extract payload from refresh token and generate a new access token and send it
-  //       const payload = jwt.verify(refresh_token, config.REFRESH_TOKEN_SECRET);
-
-  //       const user = await user_services.refresh_login_users_s(payload.email);
-
-  //       const access_token = jwt.sign(user, config.ACCESS_TOKEN_SECRET, {
-  //         expiresIn: "15m"
-  //       });
-  //       return res.status(200).send({
-  //         success: true,
-  //         access_token: "Bearer " + access_token
-  //       });
-  //     }
-  //     // }
-  //   } catch (error) {
-  //     console.error({ error });
-  //     return res.status(500).send({ error: "Internal Server Error" });
-  //   }
-  // },
   logout_users_c: async (req: any, res: any) => {
     try {
       //delete the refresh token saved in database:
@@ -382,32 +240,6 @@ export default {
       return res.status(500).json({ error: "Internal Server Error!" });
     }
   },
-  // refresh_login_users_c: async (req: any, res: any) => {
-  // 	const { body } = req;
-  // 	try {
-  // 		prnt({ body });
-  // 		const user = await user_services.refresh_login_users_s(body.access_token, body.refresh_token);
-  // 		if (user) {
-  // 			return jwt.sign(
-  // 				user,
-  // 				config.ACCESS_TOKEN_SECRET,
-  // 				{
-  // 					expiresIn: '48hr'
-  // 				},
-  // 				(err: any, access_token: string) => {
-  // 					return res.status(200).send({
-  // 						success: true,
-  // 						access_token: 'Bearer ' + access_token
-  // 					});
-  // 				}
-  // 			);
-  // 		}
-  // 		return res.status(404).send({ message: 'User Not Found' });
-  // 	} catch (error) {
-  //
-  // 		res.status(500).send({ error, message: 'Error Finding User' });
-  // 	}
-  // },
   password_reset_users_c: async (req: any, res: any) => {
     const { body } = req;
     try {

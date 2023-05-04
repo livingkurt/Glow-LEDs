@@ -23,7 +23,7 @@ export function isTokenExpired(token) {
 export const setAuthToken = accessToken => {
   if (accessToken) {
     // Apply authorization accessToken to every request if logged in
-    axios.defaults.headers.common["Authorization"] = "Bearer " + accessToken;
+    axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
   } else {
     // Delete auth header
     delete axios.defaults.headers.common["Authorization"];
@@ -73,7 +73,7 @@ axios.interceptors.request.use(
 
       if (!isRefreshRequest) {
         const refreshedAccessToken = await handleTokenRefresh(); // Get the refreshed access token
-        config.headers["Authorization"] = refreshedAccessToken; // Use the refreshed access token
+        config.headers["Authorization"] = `Bearer ${refreshedAccessToken}`; // Use the refreshed access token
       }
     }
 

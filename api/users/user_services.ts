@@ -110,80 +110,6 @@ export default {
       }
     }
   },
-  // update_profile_users_s: async (params: any, body: any) => {
-  //
-  // 	try {
-  // 		const user: any = await user_db.findById_users_db(params.id);
-  //
-  // 		if (user) {
-  // 			const updatedUser = await user_db.update_users_db(params.id, body);
-  // 			if (updatedUser) {
-  // 				const payload = {
-  // 					_id: updatedUser.id,
-  // 					first_name: updatedUser.first_name,
-  // 					last_name: updatedUser.last_name,
-  // 					email: updatedUser.email,
-  // 					affiliate: updatedUser.affiliate._id,
-  // 					cart: updatedUser.cart,
-  // 					email_subscription: updatedUser.email_subscription,
-  // 					shipping: updatedUser.shipping,
-  // 					is_affiliated: updatedUser.is_affiliated,
-  // 					isVerified: updatedUser.isVerified,
-  // 					isAdmin: updatedUser.isAdmin,
-  // 					access_token: getAccessToken(updatedUser),
-  // 					refresh_token: getRefreshToken(updatedUser)
-  // 				};
-  // 				return jwt.sign(
-  // 					payload,
-  // 					config.ACCESS_TOKEN_SECRET,
-  // 					{
-  // 						expiresIn: '15m'
-  // 					},
-  // 					(err: any, access_token: string) => {
-  // 						return {
-  // 							success: true,
-  // 							access_token: 'Bearer ' + access_token
-  // 						};
-  // 					}
-  // 				);
-  // 			}
-  // 		}
-  // 	} catch (error) {
-  //
-  // 		if (error instanceof Error) {
-  // throw new Error(error.message);
-  // }
-  // 	}
-  // },
-  // update_profile_users_s: async (params: any, body: any) => {
-  // 	const user: any = await user_db.findById_users_db(params.id);
-  //
-  // 	if (!user) {
-  // 		throw new Error('Invalid Credentials');
-  // 	}
-
-  // 	const updatedUser = await user_db.update_users_db(params.id, body);
-
-  // 	if (updatedUser) {
-  // 		return {
-  // 			_id: updatedUser.id,
-  // 			first_name: updatedUser.first_name,
-  // 			last_name: updatedUser.last_name,
-  // 			email: updatedUser.email,
-  // 			affiliate: updatedUser.affiliate,
-  // 			cart: updatedUser.cart,
-  // 			email_subscription: updatedUser.email_subscription,
-  // 			is_affiliated: updatedUser.is_affiliated,
-  // 			isVerified: updatedUser.isVerified,
-  // 			isAdmin: updatedUser.isAdmin,
-  // 			shipping: updatedUser.shipping,
-  // 			access_token: getAccessToken(updatedUser),
-  // 			refresh_token: await getRefreshToken(updatedUser)
-  // 		};
-  // 	} else {
-  // 		throw new Error('User Update Error');
-  // 	}
-  // },
   update_users_s: async (params: any, body: any) => {
     try {
       return await user_db.update_users_db(params.id, body);
@@ -302,59 +228,6 @@ export default {
       refresh_token: getRefreshToken(user)
     };
   },
-  // refresh_login_users_s: async (access_token: string, refresh_token: string) => {
-  // 	const user: any = await user_db.findByEmail_users_db(email);
-  // 	if (!user) {
-  // 		throw new Error('Invalid Credentials');
-  // 	}
-  // 	const isMatch = await bcrypt.compare(password, user.password);
-
-  // 	if (isMatch) {
-  // 		return {
-  // 			_id: user.id,
-  // 			first_name: user.first_name,
-  // 			last_name: user.last_name,
-  // 			email: user.email,
-  // 			affiliate: user.affiliate,
-  // 			cart: user.cart,
-  // 			email_subscription: user.email_subscription,
-  // 			is_affiliated: user.is_affiliated,
-  // 			isVerified: user.isVerified,
-  // 			isAdmin: user.isAdmin,
-  // 			shipping: user.shipping,
-  // 			access_token: getAccessToken(user),
-  // 			refresh_token: getRefreshToken(user)
-  // 		};
-  // 	} else {
-  // 		throw new Error('Password Incorrect');
-  // 	}
-  // },
-  // refresh_login_users_s = async (access_token: string, refresh_token: string) => {
-  // 	try {
-  // 		//get refreshToken
-  // 		const { refreshToken } = req.body;
-  // 		//send error if no refreshToken is sent
-  // 		if (!refreshToken) {
-  // 			return res.status(403).json({ error: "Access denied,token missing!" });
-  // 		} else {
-  // 			//query for the token to check if it is valid:
-  // 			const tokenDoc = await Token.findOne({ token: refreshToken });
-  // 			//send error if no token found:
-  // 			if (!tokenDoc) {
-  // 				return res.status(401).json({ error: "Token expired!" });
-  // 			} else {
-  // 				//extract payload from refresh token and generate a new access token and send it
-  // 				const payload = jwt.verify(tokenDoc.token, REFRESH_TOKEN_SECRET);
-  // 				const accessToken = jwt.sign({ user: payload }, ACCESS_TOKEN_SECRET, {
-  // 					expiresIn: "10m",
-  // 				});
-  // 				return res.status(200).json({ accessToken });
-  // 			}
-  // 		}
-  // 	} catch (error) {
-  // 		return res.status(500).json({ error: "Internal Server Error!" });
-  // 	}
-  // };
   password_reset_users_s: async (body: any) => {
     try {
       const user: any = await user_db.findById_users_db(body.user_id);
@@ -370,61 +243,7 @@ export default {
       }
     }
   },
-  // reset_password_users_s: async (params: any) => {
-  // 	try {
-  // 		return await user_db.findById_users_db(params.id);
-  // 	} catch (error) {
-  //
-  // 		if (error instanceof Error) {
-  //             throw new Error(error.message);
-  //           }
-  // // 	}
-  // },
-  // verify_users_s: async (req: any, res: any) => {
-  // 	try {
-  // 		const userId = req.params.id;
-  //
-  // 		const user: any = await User.findById(userId).populate('affiliate');
-  // 		if (user) {
-  // 			user.first_name = req.body.first_name || user.first_name;
-  // 			user.last_name = req.body.last_name || user.last_name;
-  // 			user.email = req.body.email || user.email;
-  // 			user.password = req.body.password || user.password;
-  // 			user.isAdmin = req.body.isAdmin || user.isAdmin;
-  // 			user.cart = req.body.cart || user.cart;
-  // 			user.email_subscription = req.body.email_subscription || user.email_subscription;
-  // 			user.is_affiliated = req.body.is_affiliated || user.is_affiliated;
-  // 			user.isVerified = true;
-  // 			user.deleted = req.body.deleted || false;
-  // 			const updatedUser = await user.save();
-  // 			if (updatedUser) {
-  // 				// const updatedUser = await User.updateOne({ _id: userId }, user);
-  //
-  // 				res.send({
-  // 					_id: updatedUser.id,
-  // 					first_name: updatedUser.first_name,
-  // 					last_name: updatedUser.last_name,
-  // 					email: updatedUser.email,
-  // 					affiliate: updatedUser.affiliate,
-  // 					email_subscription: updatedUser.email_subscription,
-  // 					is_affiliated: updatedUser.is_affiliated,
-  // 					// isVerified: updatedUser.isVerified,
-  // 					shipping: updatedUser.shipping
-  // 					// token: getAccessToken(updatedUser)
-  // 				});
-  // 			} else {
-  // 				return res.status(500).send({ message: ' Error in Updating User.' });
-  // 			}
-  // 			// res.status(202).send({ message: 'Verified Account' });
-  // 		} else {
-  // 			res.status(404).send({ message: 'User Not Found' });
-  // 		}
-  // 	} catch (error) {
-  //
 
-  // 		res.status(500).send({ error, message: 'Error Verifying User' });
-  // 	}
-  // },
   check_password_s: async (params: any, body: any) => {
     try {
       const user = await user_db.findById_users_db(params.id);
