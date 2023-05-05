@@ -17,6 +17,14 @@ export const createLabel = createAsyncThunk("shipping/createLabel", async ({ ord
     return data;
   } catch (error) {}
 });
+
+export const createTracker = createAsyncThunk("shipping/createTracker", async ({ orderId }: any, thunkApi: any) => {
+  try {
+    const { data } = await axios.put(`/api/shipping/${orderId}/create_tracker`, {});
+
+    return data;
+  } catch (error) {}
+});
 export const createReturnLabel = createAsyncThunk("shipping/createReturnLabel", async ({ orderId }: any, thunkApi: any) => {
   try {
     const { data } = await axios.put(`/api/shipping/${orderId}/create_return_label`, {});

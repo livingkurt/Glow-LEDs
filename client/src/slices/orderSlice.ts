@@ -7,8 +7,27 @@ const order = {
   user: {},
   orderItems: [],
   messages: [],
-  shipping: {},
-  payment: { paymentMethod: "" },
+  shipping: {
+    shipment_id: "",
+    shipping_rate: {},
+    shipping_label: {},
+    shipment_tracker: {},
+    return_shipment_id: "",
+    return_shipping_rate: {},
+    return_shipping_label: {},
+    return_shipment_tracker: {},
+    first_name: "",
+    last_name: "",
+    email: "",
+    address_1: "",
+    address_2: "",
+    city: "",
+    state: "",
+    postalCode: "",
+    international: "",
+    country: ""
+  },
+  payment: { paymentMethod: "stripe", payment: {}, charge: {}, refund: [], refund_reason: "" },
   itemsPrice: 0,
   taxPrice: 0,
   shippingPrice: 0,
@@ -37,7 +56,7 @@ const order = {
   parcel: {},
   refundedAt: "",
   order_note: "",
-  orderion_note: "",
+  production_note: "",
   tip: 0,
   promo_code: "",
   tracking_number: "",
@@ -45,7 +64,7 @@ const order = {
   return_tracking_number: "",
   is_error: false,
   error_at: "",
-  error: { type: Object }
+  error: false
 };
 
 const orderPage = createSlice({

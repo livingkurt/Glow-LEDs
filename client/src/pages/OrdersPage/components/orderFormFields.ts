@@ -369,10 +369,6 @@ export const orderFormFields = ({
           label: "Email",
           required: true
         },
-        address: {
-          type: "text",
-          label: "Address"
-        },
         address_1: {
           type: "text",
           label: "Address 1",
