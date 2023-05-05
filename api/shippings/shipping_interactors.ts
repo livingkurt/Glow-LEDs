@@ -1,3 +1,4 @@
+import { determine_tracking_carrier } from "../../util";
 import { order_db } from "../orders";
 import { parcel_db } from "../parcels";
 import { calculateTotalOunces, covertToOunces, determine_parcel } from "./shipping_helpers";
@@ -14,7 +15,6 @@ export const buyLabel = async ({ shipment_id, shipping_rate, order }: any) => {
   }
 };
 export const addTracking = async ({ label, order, isReturnTracking = false }: any) => {
-  console.log({ label, order, isReturnTracking });
   try {
     const tracker = await EasyPost.Tracker.retrieve(label.tracker.id);
     if (isReturnTracking) {
@@ -23,7 +23,6 @@ export const addTracking = async ({ label, order, isReturnTracking = false }: an
       order.return_tracking_number = label.tracking_code;
       order.shipping.return_shipping_label = label;
     } else {
-      console.log({ tracker: label.tracker.id, tracking_code: label.tracking_code, public_url: tracker.public_url, label });
       order.shipping.shipment_tracker = label.tracker.id;
       order.tracking_number = label.tracking_code;
       order.tracking_url = tracker.public_url;
@@ -36,27 +35,22 @@ export const addTracking = async ({ label, order, isReturnTracking = false }: an
 export const createTracker = async ({ order }: any) => {
   try {
     const tracker = await EasyPost.Tracker.create({
-      tracking_code: process.env.NODE_ENV === "production" ? order.tracking_number : "EZ1000000001"
+      tracking_code: process.env.NODE_ENV === "production" ? order.tracking_number : "EZ1000000001",
+      carrier: determine_tracking_carrier(order.tracking_number)
     });
+    if (tracker.shipment_id) {
+      const label = await EasyPost.Shipment.retrieve(tracker.shipment_id);
+      console.log({ label });
+      order.tracking_url = tracker.public_url;
+      order.shipping.shipping_label = label;
+    }
     order.shipping.shipment_tracker = tracker.id;
     order.tracking_url = tracker.public_url;
+    await order_db.update_orders_db(order._id, order);
     return tracker;
   } catch (error) {
     console.log("Error creating tracker:", error);
   }
-  // try {
-  //   console.log({ tracking_number: order.tracking_number });
-  //   const tracker = await EasyPost.Tracker.create({
-  //     tracking_code: order.tracking_number,
-  //     carrier: "USPS"
-  //   });
-  //   console.log({ tracker });
-  // order.shipping.shipment_tracker = tracker.id;
-  // order.tracking_url = tracker.public_url;
-
-  //   await order_db.update_orders_db(order._id, order);
-  //   return tracker;
-  // } catch (error) {}
 };
 
 export const createLabel = async (body: any) => {

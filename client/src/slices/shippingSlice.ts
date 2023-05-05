@@ -66,6 +66,15 @@ const shippingSlice = createSlice({
       state.loading_label = false;
       state.error = payload.error;
       state.message = payload.message;
+    },
+    [API.createTracker.pending as any]: (state: any, { payload }: any) => {
+      state.loading_label = true;
+    },
+    [API.createTracker.fulfilled as any]: (state: any, { payload }: any) => {
+      state.loading_label = false;
+    },
+    [API.createTracker.rejected as any]: (state: any, { payload }: any) => {
+      state.loading_label = false;
     }
   }
 });

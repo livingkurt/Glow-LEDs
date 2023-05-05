@@ -55,6 +55,7 @@ export default {
   create_tracker_shipping_s: async (params: any) => {
     try {
       const order = await order_db.findById_orders_db(params.order_id);
+      console.log({ order });
       const tracker: any = await createTracker({ order });
       return tracker;
     } catch (error) {

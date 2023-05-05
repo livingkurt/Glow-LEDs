@@ -23,7 +23,11 @@ export const determineOrderColors = (order: any) => {
     if (order.isPaid) {
       result = tableColors.active;
     }
-    if (!(order?.shipping?.shipping_rate?.service === "First" || order?.shipping?.shipping_rate?.service === "ParcelSelect")) {
+    if (
+      order.shipping.international ||
+      (order?.shipping?.shipping_rate &&
+        !(order?.shipping?.shipping_rate?.service === "First" || order?.shipping?.shipping_rate?.service === "ParcelSelect"))
+    ) {
       result = tableColors.alt_color_3;
     }
     if (order.shipping.shipping_label) {
@@ -154,10 +158,14 @@ export const duplicateOrder = (order: any) => {
     orderItems: order.orderItems,
     shipping: {
       ...order.shipping,
-      return_shipping_label: "",
       shipment_id: null,
       shipping_rate: null,
-      shipping_label: null
+      shipment_tracker: null,
+      shipping_label: null,
+      return_shipment_id: null,
+      return_shipping_rate: null,
+      return_shipment_tracker: null,
+      return_shipping_label: null
     },
     itemsPrice: order.itemsPrice,
     shippingPrice: 0,
@@ -165,7 +173,11 @@ export const duplicateOrder = (order: any) => {
     totalPrice: 0,
     user: order?.user?._id,
     order_note: `Replacement Order for ${order.shipping.first_name} ${order.shipping.last_name} - Original Order Number is ${order._id}`,
-    production_note: order.production_note
+    production_note: order.production_note,
+    return_tracking_url: "",
+    tracking_url: "",
+    return_tracking_number: "",
+    tracking_number: ""
   };
 };
 

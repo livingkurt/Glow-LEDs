@@ -706,6 +706,28 @@ export const shipping_status_steps = (order: any, status: string) => {
 		</div>`;
 };
 
+export const determine_tracking_carrier = (tracking_number: string) => {
+  if (tracking_number.startsWith("1Z")) {
+    return "UPS";
+  } else if (tracking_number.startsWith("9")) {
+    return "FEDEX";
+  } else if (tracking_number.startsWith("927")) {
+    return "DHL";
+  } else if (tracking_number.length === 22) {
+    return "USPS";
+  } else if (tracking_number.startsWith("LX")) {
+    return "UPS";
+  } else if (tracking_number.startsWith("C")) {
+    return "FEDEX";
+  } else if (tracking_number.startsWith("S")) {
+    return "DHL";
+  } else if (tracking_number.startsWith("CJ")) {
+    return "USPS";
+  } else {
+    return "USPS";
+  }
+};
+
 export const determine_tracking_link = (tracking_number: string) => {
   if (tracking_number.startsWith("1Z")) {
     return `https://www.ups.com/track?tracknum=${tracking_number}`;

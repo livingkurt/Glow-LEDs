@@ -293,6 +293,9 @@ const orderPage = createSlice({
     },
     [API.createReturnLabel.fulfilled as any]: (state: any, { payload }: any) => {
       state.remoteVersionRequirement = Date.now();
+    },
+    [API.createTracker.fulfilled as any]: (state: any, { payload }: any) => {
+      state.remoteVersionRequirement = Date.now();
     }
   }
 });
