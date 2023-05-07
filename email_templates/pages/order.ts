@@ -65,7 +65,9 @@ export default (props: any) => {
 											${email && email.h2 ? email.h2 : ""}
 										</p>
 									</tr>
-									<tr style="font-family:helvetica">
+									${
+                    order.isRefunded
+                      ? `<tr style="font-family:helvetica">
 										<h2
 											style="text-align:center;font-family:helvetica; font-size: 25px; width:100%;margin:0px;line-height:50px;color:white; padding-bottom: 7px;">
 											What to Expect </h2>
@@ -93,10 +95,13 @@ export default (props: any) => {
 										<p style="font-size: 16px; line-height: 30px;">For more
 											information about how we create our products and shipping times, refer to our FAQs.</p>
 									</tr>
-									<tr style="font-family:helvetica;line-height:0em">
+										<tr style="font-family:helvetica;line-height:0em">
 										<td style="font-family:helvetica;line-height:0em">
 										</td>
-									</tr>
+									</tr>`
+                      : ""
+                  }
+
 									<tr>
 										<td style="font-family:helvetica">
 
