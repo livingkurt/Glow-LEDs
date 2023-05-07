@@ -8,7 +8,8 @@ const determine_emoji = (status: string) => {
       return "📦";
     case "shipped":
       return "🚚";
-
+    case "updated":
+      return "👍";
     default:
       break;
   }

@@ -160,7 +160,7 @@ const EditOrderModal = () => {
                 formData={formFields.orderItems.fields}
                 state={item}
                 onChange={value => {
-                  const orderItems = value.orderItems.map((item, i) => {
+                  const orderItems = order.orderItems.map((item, i) => {
                     if (i === index) {
                       return { ...item, ...value };
                     } else {
