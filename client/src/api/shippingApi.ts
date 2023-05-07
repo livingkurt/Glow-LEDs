@@ -32,18 +32,26 @@ export const createReturnLabel = createAsyncThunk("shipping/createReturnLabel", 
   } catch (error) {}
 });
 
-// export const shippingRates = createAsyncThunk("shipping/shippingRates", async ({ order, verify_shipping }: any, thunkApi: any) => {
-//   try {
-//     const { data } = await axios.put(
-//       "/api/shipping/get_shipping_rates",
-//       {
-//         order,
-//         verify_shipping
-//       },
-//     );
-//     return data;
-//   } catch (error) {}
-// });
+export const shippingRates = createAsyncThunk("shipping/shippingRates", async ({ order, verify_shipping }: any, thunkApi: any) => {
+  try {
+    const { data } = await axios.put(`/api/shipping/shipping_rates`, { order });
+    return data;
+  } catch (error) {}
+});
+
+export const differentShippingRates = createAsyncThunk("shipping/differentShippingRates", async (order: any, thunkApi: any) => {
+  console.log({ shipping_label: order.shipping.shipping_label, shipment_id: order.shipping.shipment_id });
+  try {
+    if (order.shipping.shipment_id && !order.shipping.shipping_label) {
+      const { data } = await axios.get(`/api/shipping/${order._id}/different_shipping_rates/${order.shipping.shipment_id}`);
+      return data;
+    } else {
+      const { data } = await axios.put(`/api/shipping/shipping_rates`, { order });
+      console.log({ data });
+      return data;
+    }
+  } catch (error) {}
+});
 // export const createLabel = createAsyncThunk("shipping/createLabel", async ({ order, shipping_rate, speed }: any, thunkApi: any) => {
 
 //   try {
@@ -58,28 +66,14 @@ export const createReturnLabel = createAsyncThunk("shipping/createReturnLabel", 
 //   } catch (error) {}
 // });
 // export const customShippingRates = createAsyncThunk("shipping/customShippingRates", async (data: any, thunkApi: any) => {
-
 //   try {
-//     const { data: response_data } = await axios.put(
-//       "/api/shipping/get_custom_shipping_rates",
-//       {
-//         data
-//       },
-//     );//     return response_data;
-//   } catch (error) {}
-// });
-// export const differentShippingRates = createAsyncThunk("shipping/differentShippingRates", async (data: any, thunkApi: any) => {
-
-//   try {
-//     const { data: response_data } = await axios.put(
-//       "/api/shipping/get_different_shipping_rates",
-//       {
-//         data
-//       },
-//     );
+//     const { data } = await axios.put("/api/shipping/get_custom_shipping_rates", {
+//       data
+//     });
 //     return response_data;
 //   } catch (error) {}
 // });
+
 // export const addTrackingNumber = createAsyncThunk(//   "shipping/addTrackingNumber",
 //   async ({ order, tracking_number, label }: any, thunkApi: any) => {
 //     try {

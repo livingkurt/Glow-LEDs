@@ -5,7 +5,7 @@ const shipping_routes = {
     return axios.get("/api/shipping");
   },
   get_shipping_rates: (order: any, verify_shipping: boolean) => {
-    return axios.put("/api/shipping/get_shipping_rates", {
+    return axios.put("/api/shipping/shipping_rates", {
       order,
       verify_shipping
     });

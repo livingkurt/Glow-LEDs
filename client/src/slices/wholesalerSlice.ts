@@ -43,15 +43,7 @@ const wholesalerPage = createSlice({
     wholesaler_modal: false,
     message: "",
     success: false,
-    error: {},
-    sort_options: ["Newest", "Artist Name", "Facebook Name", "Instagram Handle", "Sponsor", "Promoter"],
-    colors: [
-      { name: "Sponsor", color: "#3e4c6d" },
-      { name: "Promoter", color: "#7d5555" },
-      { name: "Team", color: "#557d6c" },
-      { name: "Not Active", color: "#757575" },
-      { name: "Rave Mob", color: "#55797d" }
-    ]
+    error: {}
   },
   reducers: {
     set_wholesaler: (state, { payload }) => {

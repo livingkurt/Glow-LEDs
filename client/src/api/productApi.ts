@@ -3,6 +3,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { headers } from "../utils/helpers/user_helpers";
 import { create_query } from "../utils/helper_functions";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query";
 
 export const getProducts = async ({
   search,
@@ -107,3 +108,17 @@ export const deleteProductReview = createAsyncThunk(
     } catch (error) {}
   }
 );
+
+// export const productApi = createApi({
+//   reducerPath: "productApi",
+//   baseQuery: fetchBaseQuery({ baseUrl: "/api" }),
+//   endpoints: builder => ({
+//     getProductQuantitiesOrders: builder.query({
+//       query: () => "/orders/get_product_quantities_orders"
+//     }),
+//   })
+// });
+
+// export const {
+
+// } = productApi;

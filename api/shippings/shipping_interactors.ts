@@ -7,6 +7,7 @@ const easy_post_api = require("@easypost/api");
 const EasyPost = new easy_post_api(process.env.EASY_POST);
 
 export const buyLabel = async ({ shipment_id, shipping_rate, order }: any) => {
+  console.log({ shipment_id, shipping_rate: shipping_rate.id });
   try {
     return await EasyPost.Shipment.buy(shipment_id, shipping_rate.id);
   } catch (error) {
@@ -14,7 +15,7 @@ export const buyLabel = async ({ shipment_id, shipping_rate, order }: any) => {
     return createLabel({ speed: "first", order });
   }
 };
-export const addTracking = async ({ label, order, isReturnTracking = false }: any) => {
+export const addTracking = async ({ label, order, shipping_rate, isReturnTracking = false }: any) => {
   try {
     const tracker = await EasyPost.Tracker.retrieve(label.tracker.id);
     if (isReturnTracking) {
@@ -23,6 +24,10 @@ export const addTracking = async ({ label, order, isReturnTracking = false }: an
       order.return_tracking_number = label.tracking_code;
       order.shipping.return_shipping_label = label;
     } else {
+      order.shipping.shipment_id = label.id;
+      if (shipping_rate) {
+        order.shipping.shipping_rate = shipping_rate;
+      }
       order.shipping.shipment_tracker = label.tracker.id;
       order.tracking_number = label.tracking_code;
       order.tracking_url = tracker.public_url;
@@ -71,6 +76,8 @@ export const createLabel = async (body: any) => {
 export const createShippingRates = async ({ order, returnLabel }: any) => {
   const parcels = await parcel_db.findAll_parcels_db({ deleted: false }, {}, "0", "1");
   const parcel = determine_parcel(order.orderItems, parcels);
+
+  console.log({ order });
 
   const customerAddress = {
     verify: ["delivery"],
@@ -126,5 +133,6 @@ export const createShippingRates = async ({ order, returnLabel }: any) => {
       commercial_invoice_signature: "IMAGE_2"
     }
   });
+  console.log({ shipment });
   return { shipment, parcel };
 };

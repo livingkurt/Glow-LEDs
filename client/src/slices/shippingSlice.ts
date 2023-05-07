@@ -8,12 +8,26 @@ const shippingSlice = createSlice({
   initialState: {
     loading_label: false,
     invoice: "",
-    label: ""
+    label: "",
+    shippingRates: [],
+    shippingRate: {},
+    rate: {},
+    hideLabelButton: true
   },
   reducers: {
     clearPrints: (state, { payload }) => {
       state.invoice = "";
       state.label = "";
+    },
+    chooseShippingRate: (state, { payload }) => {
+      const { rate, speed } = payload;
+      state.hideLabelButton = false;
+      state.shippingRate = rate;
+      state.rate = { rate, speed };
+    },
+    reChooseShippingRate: (state, { payload }) => {
+      state.hideLabelButton = true;
+      state.shippingRate = {};
     }
   },
   extraReducers: {
@@ -75,9 +89,27 @@ const shippingSlice = createSlice({
     },
     [API.createTracker.rejected as any]: (state: any, { payload }: any) => {
       state.loading_label = false;
+    },
+    [API.differentShippingRates.pending as any]: (state: any, { payload }: any) => {
+      state.loading = true;
+      state.shippingRates = [];
+    },
+    [API.differentShippingRates.fulfilled as any]: (state: any, { payload }: any) => {
+      const { shipment } = payload;
+      console.log({ shipment });
+      state.loading = false;
+      state.success = true;
+      state.shippingRates = shipment.rates;
+      state.shipment_id = shipment.id;
+      state.message = "Orders Transfered to New User";
+    },
+    [API.differentShippingRates.rejected as any]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.error = payload.error;
+      state.message = payload.message;
     }
   }
 });
 
-export const { clearPrints } = shippingSlice.actions;
+export const { clearPrints, chooseShippingRate, reChooseShippingRate } = shippingSlice.actions;
 export default shippingSlice.reducer;

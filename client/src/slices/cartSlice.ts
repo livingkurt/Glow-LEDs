@@ -48,15 +48,7 @@ const cartPage = createSlice({
     remoteVersionRequirement: 0,
     edit_cart_modal: false,
     cart_modal: false,
-    paymentMethod: "stripe",
-    sort_options: ["Newest", "Artist Name", "Facebook Name", "Instagram Handle", "Sponsor", "Promoter"],
-    colors: [
-      { name: "Sponsor", color: "#3e4c6d" },
-      { name: "Promoter", color: "#7d5555" },
-      { name: "Team", color: "#557d6c" },
-      { name: "Not Active", color: "#757575" },
-      { name: "Rave Mob", color: "#55797d" }
-    ]
+    paymentMethod: "stripe"
   },
   reducers: {
     set_cart: (state, { payload }) => {

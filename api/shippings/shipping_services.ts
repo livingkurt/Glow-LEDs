@@ -7,7 +7,7 @@ const easy_post_api = require("@easypost/api");
 const EasyPost = new easy_post_api(process.env.EASY_POST);
 
 export default {
-  get_shipping_rates_shipping_s: async (body: any) => {
+  shipping_rates_shipping_s: async (body: any) => {
     try {
       return await createShippingRates({ order: body.order, returnLabel: false });
     } catch (error) {
@@ -16,11 +16,17 @@ export default {
       }
     }
   },
-  get_different_shipping_rates_shipping_s: async (body: any) => {
-    const { shipment_id } = body;
-
+  different_shipping_rates_shipping_s: async (params: any) => {
+    const { shipment_id, order_id } = params;
+    console.log({ shipment_id, order_id });
     try {
-      return await EasyPost.Shipment.retrieve(shipment_id);
+      if (shipment_id) {
+        const shipment = await EasyPost.Shipment.retrieve(shipment_id);
+        return { shipment };
+      } else {
+        const order = await order_db.findById_orders_db(order_id);
+        return await createShippingRates({ order: order, returnLabel: false });
+      }
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -30,9 +36,11 @@ export default {
   buy_label_shipping_s: async (params: any) => {
     const order = await order_db.findById_orders_db(params.order_id);
     const { shipping_rate, shipment_id } = order.shipping;
+    console.log({ shipping_rate, shipment_id });
     try {
       const label: any = await buyLabel({ shipment_id, shipping_rate, order });
-      await addTracking({ order, label });
+      console.log({ label });
+      await addTracking({ order, label, shipping_rate });
       return { invoice: invoice({ order }), label: label.postage_label.label_url };
     } catch (error) {
       if (error instanceof Error) {
@@ -55,7 +63,6 @@ export default {
   create_tracker_shipping_s: async (params: any) => {
     try {
       const order = await order_db.findById_orders_db(params.order_id);
-      console.log({ order });
       const tracker: any = await createTracker({ order });
       return tracker;
     } catch (error) {
@@ -81,7 +88,7 @@ export default {
     }
   },
 
-  get_custom_shipping_rates_shipping_s: async (body: any) => {
+  custom_shipping_rates_shipping_s: async (body: any) => {
     try {
       const to_shipping = body.data.to_shipping;
       const from_shipping = body.data.from_shipping;

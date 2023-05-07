@@ -4,11 +4,20 @@ import { useSelector } from "react-redux";
 import GLAutocomplete from "../GLAutocomplete/GLAutocomplete";
 import { DropdownDisplayV2 } from "../../SharedComponents";
 import ImageWizard from "../../SharedComponents/ImageWizard";
-import { determine_shown_fields, formatDate } from "./glFormHelpers";
+import { determine_shown_fields, formatDate, getValueByStringPath } from "./glFormHelpers";
 
 const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
+
+  const determineOptions = (fieldData, fieldState) => {
+    if (typeof fieldData.options === "string") {
+      console.log({ fieldData, fieldState });
+      return getValueByStringPath(fieldState, fieldData.options);
+    } else {
+      return fieldData.options || [];
+    }
+  };
 
   return (
     <>
@@ -30,7 +39,7 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
                   key={fieldName}
                   margin="normal"
                   value={fieldState || ""}
-                  options={fieldData.options || []}
+                  options={determineOptions(fieldData, state) || []}
                   getOptionLabel={option =>
                     option ? (fieldData.getOptionLabel ? fieldData.getOptionLabel(option) : option[fieldData.labelProp]) : ""
                   }

@@ -14,6 +14,7 @@ import { determineOrderColors, duplicateOrder, orderColors, sinceOrdered } from 
 import OrderItemsDisplay from "./components/OrderItemsDisplay";
 import { determine_product_name_string } from "../../utils/react_helper_functions";
 import { fullName } from "../UsersPage/usersHelpers";
+import ShippingModal from "./components/ShippingModal";
 
 const OrdersPage = () => {
   const orderPage = useSelector(state => state.orders.orderPage);
@@ -154,6 +155,7 @@ const OrdersPage = () => {
         }
       />
       <EditOrderModal />
+      <ShippingModal />
     </div>
   );
 };

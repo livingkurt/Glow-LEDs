@@ -74,7 +74,29 @@ export default {
 
   findById_orders_db: async (id: string) => {
     try {
-      return await Order.findOne({ _id: id }).populate("user").populate("orderItems.product").populate("orderItems.secondary_product");
+      return await Order.findOne({ _id: id })
+        .populate("user")
+        .populate("orderItems.color_product")
+        .populate("orderItems.secondary_color_product")
+        .populate("orderItems.option_product")
+        .populate("orderItems.secondary_product")
+        .populate({
+          path: "orderItems.product",
+          populate: [
+            {
+              path: "color_products"
+            },
+            {
+              path: "secondary_color_products"
+            },
+            {
+              path: "option_products"
+            },
+            {
+              path: "secondary_products"
+            }
+          ]
+        });
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

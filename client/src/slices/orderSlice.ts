@@ -80,16 +80,8 @@ const orderPage = createSlice({
     remoteVersionRequirement: 0,
     edit_order_modal: false,
     hide_label_button: true,
-    loading_label: false,
-    limit: 10,
-    sort_options: ["Newest", "Artist Name", "Facebook Name", "Instagram Handle", "Sponsor", "Promoter"],
-    colors: [
-      { name: "Sponsor", color: "#3e4c6d" },
-      { name: "Promoter", color: "#7d5555" },
-      { name: "Team", color: "#557d6c" },
-      { name: "Not Active", color: "#757575" },
-      { name: "Rave Mob", color: "#55797d" }
-    ]
+    shippingModal: false,
+    loading_label: false
   },
   reducers: {
     set_order: (state, { payload }) => {
@@ -133,6 +125,14 @@ const orderPage = createSlice({
     },
     setRemoteVersionRequirement: (state, { payload }) => {
       state.remoteVersionRequirement = Date.now();
+    },
+    openShippingModal: (state, { payload }) => {
+      state.shippingModal = true;
+      state.order = payload;
+    },
+    closeShippingModal: (state, { payload }) => {
+      state.shippingModal = false;
+      state.order = order;
     }
   },
   extraReducers: {
@@ -186,6 +186,7 @@ const orderPage = createSlice({
     [API.saveOrder.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.message = "Order Saved";
+      state.shippingModal = false;
       state.edit_order_modal = false;
       state.remoteVersionRequirement = Date.now();
     },
@@ -285,6 +286,7 @@ const orderPage = createSlice({
       state.error = payload.error;
       state.message = payload.message;
     },
+
     [API.buyLabel.fulfilled as any]: (state: any, { payload }: any) => {
       state.remoteVersionRequirement = Date.now();
     },
@@ -311,6 +313,8 @@ export const {
   open_edit_order_modal,
   setRemoteVersionRequirement,
   set_hide_label_button,
-  set_loading_label
+  set_loading_label,
+  openShippingModal,
+  closeShippingModal
 } = orderPage.actions;
 export default orderPage.reducer;

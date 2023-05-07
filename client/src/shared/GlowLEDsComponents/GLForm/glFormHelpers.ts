@@ -27,3 +27,22 @@ export const determine_shown_fields = (fieldData: any, current_user: any) => {
   }
   return result;
 };
+
+export const getValueByStringPath = (obj: any, path: string) => {
+  const properties = path.split(".");
+  let result = obj;
+  console.log({ obj });
+  console.log({ path });
+  console.log({ properties });
+
+  for (const property of properties) {
+    console.log({ property });
+    if (result && Object.prototype.hasOwnProperty.call(result, property)) {
+      result = result[property];
+    } else {
+      return undefined;
+    }
+  }
+  console.log({ result });
+  return result;
+};

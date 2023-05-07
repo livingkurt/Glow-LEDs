@@ -224,7 +224,7 @@ export const orderFormFields = ({
         color_product: {
           type: "autocomplete_single",
           label: "Color Product",
-          options: products.filter((product: any) => product.option === true),
+          options: "product.color_products",
           labelProp: "name"
         },
         color_product_name: {
@@ -235,7 +235,7 @@ export const orderFormFields = ({
         secondary_color_product: {
           type: "autocomplete_single",
           label: "Secondary Color Product",
-          options: products.filter((product: any) => product.option === true),
+          options: "product.secondary_color_products",
           labelProp: "name"
         },
         secondary_color_product_name: {
@@ -251,7 +251,7 @@ export const orderFormFields = ({
         option_product: {
           type: "autocomplete_single",
           label: "Option Product",
-          options: products.filter((product: any) => product.option === true),
+          options: "product.option_products",
           labelProp: "name"
         },
         secondary_product_name: {
@@ -262,7 +262,7 @@ export const orderFormFields = ({
         secondary_product: {
           type: "autocomplete_single",
           label: "Secondary Product",
-          options: products.filter((product: any) => product.option === false && product.hidden === false),
+          options: "product.seconday_products",
           labelProp: "name"
         },
         is_printing: {

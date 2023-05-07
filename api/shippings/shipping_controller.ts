@@ -28,7 +28,6 @@ export default {
   },
   create_tracker_shipping_c: async (req: any, res: any) => {
     const { params } = req;
-    console.log({ params });
     try {
       const shipping = await shipping_services.create_tracker_shipping_s(params);
       if (shipping) {
@@ -66,10 +65,10 @@ export default {
     }
   },
   different_shipping_rates_shipping_c: async (req: any, res: any) => {
-    const { body } = req;
+    const { params } = req;
 
     try {
-      const shipping = await shipping_services.get_shipping_rates_shipping_s(body.data);
+      const shipping = await shipping_services.different_shipping_rates_shipping_s(params);
       if (shipping) {
         return res.status(200).send(shipping);
       }
@@ -78,10 +77,10 @@ export default {
       res.status(500).send({ error, message: "Error Updating Shipping" });
     }
   },
-  get_custom_shipping_rates_shipping_c: async (req: any, res: any) => {
+  custom_shipping_rates_shipping_c: async (req: any, res: any) => {
     const { body } = req;
     try {
-      const shipping = await shipping_services.get_custom_shipping_rates_shipping_s(body);
+      const shipping = await shipping_services.custom_shipping_rates_shipping_s(body);
       if (shipping) {
         return res.status(201).send(shipping);
       }
@@ -91,10 +90,10 @@ export default {
     }
   },
 
-  get_shipping_rates_shipping_c: async (req: any, res: any) => {
+  shipping_rates_shipping_c: async (req: any, res: any) => {
     const { body } = req;
     try {
-      const shipping = await shipping_services.get_shipping_rates_shipping_s(body);
+      const shipping = await shipping_services.shipping_rates_shipping_s(body);
 
       if (shipping) {
         return res.status(200).send(shipping);

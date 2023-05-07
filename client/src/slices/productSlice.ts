@@ -127,15 +127,7 @@ const productPage = createSlice({
     remoteVersionRequirement: 0,
     edit_product_modal: false,
     product_modal: false,
-    limit: 10,
-    sort_options: ["Newest", "Artist Name", "Facebook Name", "Instagram Handle", "Sponsor", "Promoter"],
-    colors: [
-      { name: "Sponsor", color: "#3e4c6d" },
-      { name: "Promoter", color: "#7d5555" },
-      { name: "Team", color: "#557d6c" },
-      { name: "Not Active", color: "#757575" },
-      { name: "Rave Mob", color: "#55797d" }
-    ]
+    limit: 10
   },
   reducers: {
     set_product: (state, { payload }) => {
