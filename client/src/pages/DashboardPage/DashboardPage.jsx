@@ -1,13 +1,5 @@
 import { Helmet } from "react-helmet";
-import useChangedEffect from "../../shared/Hooks/useChangedEffect";
 import { humanize } from "../../utils/helper_functions";
-import { payout_employees } from "./background/weekly_workers/payout_employees";
-import { payout_affiliates } from "./background/monthly_workers/payout_affiliates";
-import { payout_teams } from "./background/monthly_workers/payout_teams";
-import { payout_tips } from "./background/monthly_workers/payout_tips";
-import { refresh_sponsor_codes } from "./background/monthly_workers/refresh_sponsor_codes";
-import { facebook_catalog_upload } from "./background/daily_workers/facebook_catalog_upload";
-import { google_catalog_upload } from "./background/daily_workers/google_catalog_upload";
 import {
   useGetMonthlyRevenueOrdersQuery,
   useGetRangeAffiliateEarningsCodeUsageQuery,
@@ -18,15 +10,12 @@ import {
   useGetRangePayoutsQuery,
   useGetDailyRevenueOrdersQuery
 } from "./dashboardApi";
-import { months, run_daily_workers, run_monthly_workers, run_weekly_workers } from "./dashboardHelpers";
+import { isLoading, months, run_daily_workers, run_monthly_workers, run_weekly_workers } from "./dashboardHelpers";
 import { useDispatch, useSelector } from "react-redux";
-import { set_loading } from "./dashboardSlice";
 import { DatePicker } from "./components";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import { Loading } from "../../shared/SharedComponents";
-import { listAffiliates } from "../../api";
-import axios from "axios";
 import { humanDate } from "../../helpers/dateHelpers";
 import { GLDisplayTable } from "../../shared/GlowLEDsComponents/GLDisplayTable";
 import { Divider, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
@@ -37,10 +26,6 @@ const DashboardPage = () => {
 
   const { year, month, start_date, end_date, start_end_date, loading } = dashboardPage;
 
-  const [earnings, set_earnings] = useState([]);
-  const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
-  const { affiliates } = affiliatePage;
-
   const range_revenue = useGetRangeRevenueOrdersQuery({ start_date, end_date });
   const category_range_revenue = useGetRangeCategoryRevenueOrdersQuery({ start_date, end_date });
   const tips_range_revenue = useGetRangeTipsRevenueOrdersQuery({ start_date, end_date });
@@ -50,43 +35,7 @@ const DashboardPage = () => {
   const yearly_revenue = useGetYearlyRevenueOrdersQuery();
   const range_payouts = useGetRangePayoutsQuery({ start_date, end_date });
 
-  useEffect(() => {
-    dispatch(listAffiliates({ active: true }));
-  }, []);
-
-  useEffect(() => {
-    let clean = true;
-    if (clean) {
-      if (affiliates) {
-        affiliate_earnings();
-      }
-    }
-    return () => {
-      clean = false;
-    };
-  }, [affiliates, year, month]);
-
-  const affiliate_earnings = async () => {
-    const affiliate_earnings = await Promise.all(
-      affiliates
-        .filter(affiliate => {
-          return affiliate.sponsor === true || affiliate.promoter === true;
-        })
-        .map(async affiliate => {
-          const { data: promo_code_usage } = await axios.get(
-            `/api/orders/code_usage/${affiliate?.public_code?.promo_code}?start_date=${start_date}&end_date=${end_date}&sponsor=${affiliate.sponsor}`
-          );
-          return { ...promo_code_usage, artist_name: affiliate.artist_name };
-        })
-    );
-    set_earnings(affiliate_earnings);
-  };
-
   const timeLabel = year && month ? `${year} ${month}` : year ? year : month ? month : "All Time";
-
-  const isLoading = data => {
-    return !data.isLoading && data.data[0];
-  };
 
   return (
     <div className="main_container p-20px">
@@ -179,20 +128,21 @@ const DashboardPage = () => {
             ]}
           />
         )}
-        {earnings?.length > 0 && (
-          <GLDisplayTable
-            title={`${year && month ? `${year} ${month}` : year ? year : month ? month : "All Time"} Affiliate Earnings Code Usage`}
-            loading={!earnings}
-            rows={earnings.sort((a, b) => b.number_of_uses - a.number_of_uses)}
-            columnDefs={[
-              { title: "Ranking", display: (row, index) => `${index + 1}.` },
-              { title: "Affiliate", display: row => row?.artist_name },
-              { title: "Code Usage", display: row => (row.number_of_uses ? row?.number_of_uses : "0") },
-              { title: "Earnings", display: row => `$${row.earnings ? row?.earnings?.toFixed(2) : "0:00"}` },
-              { title: "Revenue", display: row => `$${row?.revenue ? row?.revenue?.toFixed(2) : "0:00"}` }
-            ]}
-          />
-        )}
+        <GLDisplayTable
+          title={`${year && month ? `${year} ${month}` : year ? year : month ? month : "All Time"} Affiliate Earnings Code Usage`}
+          loading={affiliate_earnings_code_usage.isLoading && affiliate_earnings_code_usage.data}
+          rows={
+            !affiliate_earnings_code_usage.isLoading &&
+            [...affiliate_earnings_code_usage.data].sort((a, b) => b.number_of_uses - a.number_of_uses)
+          }
+          columnDefs={[
+            { title: "Ranking", display: (row, index) => `${index + 1}.` },
+            { title: "Affiliate", display: row => row?.artist_name },
+            { title: "Code Usage", display: row => (row.number_of_uses ? row?.number_of_uses : "0") },
+            { title: "Earnings", display: row => `$${row.earnings ? row?.earnings?.toFixed(2) : "0:00"}` },
+            { title: "Revenue", display: row => `$${row?.revenue ? row?.revenue?.toFixed(2) : "0:00"}` }
+          ]}
+        />
 
         {category_range_revenue.isSuccess && (
           <GLDisplayTable

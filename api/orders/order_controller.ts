@@ -424,10 +424,10 @@ export default {
       res.status(500).send({ error, message: "Error get_all_time_tips_revenue_orders_c" });
     }
   },
-  get_range_affiliate_earnings_code_usage_orders_c: async (req: any, res: any) => {
+  affiliate_earnings_c: async (req: any, res: any) => {
     const { query } = req;
     try {
-      const orders = await order_services.get_range_affiliate_earnings_code_usage_orders_s(query);
+      const orders = await order_services.affiliate_earnings_s(query);
       if (orders) {
         return res.status(200).send(orders);
       }

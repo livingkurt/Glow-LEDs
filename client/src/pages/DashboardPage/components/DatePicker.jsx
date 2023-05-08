@@ -4,10 +4,9 @@ import { Divider, Grid, Paper, TextField, Typography } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { GLAutocomplete } from "../../../shared/GlowLEDsComponents";
 import { getMonthStartEndDates, months, years } from "../dashboardHelpers";
-import PropTypes from "prop-types";
 import { set_end_date, set_month, set_start_date, set_year } from "../dashboardSlice";
 
-const DatePicker = ({ year, month, start_date, end_date, start_end_date }) => {
+const DatePicker = ({ year, month, start_date, end_date }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
@@ -30,7 +29,6 @@ const DatePicker = ({ year, month, start_date, end_date, start_end_date }) => {
   }, [dispatch, location.search, year, month]);
 
   const handleYearChange = selectedYear => {
-    console.log({ selectedYear });
     const { start_date, end_date } = getMonthStartEndDates({ year: selectedYear, month });
     dispatch(set_year(selectedYear));
     updateUrlParams({ start_date, end_date, year: selectedYear, month });

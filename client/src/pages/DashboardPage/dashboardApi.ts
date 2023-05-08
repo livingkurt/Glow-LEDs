@@ -53,7 +53,7 @@ export const dashboardApi = createApi({
     }),
     getRangeAffiliateEarningsCodeUsage: builder.query({
       query: ({ start_date, end_date }: { start_date: string; end_date: string }) =>
-        `/orders/get_range_affiliate_earnings_code_usage?start_date=${start_date}&end_date=${end_date}`
+        `/orders/affiliate_earnings?start_date=${start_date}&end_date=${end_date}`
     }),
     getAllTimePayouts: builder.query({
       query: () => "/paychecks/get_all_time_payouts"

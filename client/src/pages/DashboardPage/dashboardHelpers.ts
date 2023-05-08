@@ -80,3 +80,7 @@ export const run_monthly_workers = (dispatch: any) => {
     dispatch(set_loading(false));
   }
 };
+
+export const isLoading = (data: any) => {
+  return !data.isLoading && data.data[0];
+};

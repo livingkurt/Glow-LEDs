@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { isEmail } from "../../util";
+import order_db from "./order_db";
 
 export const normalizeOrderFilters = (input: any) => {
   const output: any = {};
@@ -131,4 +132,49 @@ export const normalizeOrderSearch = (query: any) => {
       : {};
   }
   return search;
+};
+
+export const getCodeUsage = async (data: any) => {
+  const { promo_code, start_date, end_date, sponsor } = data;
+  try {
+    const sort = {};
+
+    const filter = {
+      deleted: false,
+      isPaid: true,
+      createdAt: {
+        $gte: start_date,
+        $lte: end_date
+      },
+      promo_code: new RegExp(promo_code, "i")
+    };
+
+    const limit = "0";
+    const page = "1";
+
+    const orders = await order_db.findAll_orders_db(filter, sort, limit, page);
+
+    const number_of_uses = orders
+      .filter((order: any) => order.promo_code)
+      .filter((order: any) => order.promo_code.toLowerCase() === promo_code.toLowerCase()).length;
+    const revenue = orders
+      .filter((order: any) => order.promo_code)
+      .filter((order: any) => order.promo_code.toLowerCase() === promo_code.toLowerCase())
+      .reduce(
+        (a: any, order: any) =>
+          a +
+          order.totalPrice -
+          order.taxPrice -
+          (order.payment.refund ? order.payment.refund.reduce((a: any, c: any) => a + c.amount, 0) / 100 : 0),
+        0
+      );
+    const earnings = sponsor === "true" ? revenue * 0.15 : revenue * 0.1;
+
+    return { number_of_uses, revenue, earnings };
+    // return "Success";
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+  }
 };

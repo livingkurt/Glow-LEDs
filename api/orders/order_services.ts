@@ -16,7 +16,7 @@ import {
   toCapitalize
 } from "../../util";
 import { getFilteredData } from "../api_helpers";
-import { normalizeOrderFilters, normalizeOrderSearch } from "./order_interactors";
+import { getCodeUsage, normalizeOrderFilters, normalizeOrderSearch } from "./order_interactors";
 const scraper = require("table-scraper");
 
 const today = new Date();
@@ -1244,15 +1244,34 @@ export default {
       }
     }
   },
-  get_range_affiliate_earnings_code_usage_orders_s: async (query: { start_date: string; end_date: string }) => {
-    try {
-      const { start_date, end_date } = query;
-      return await order_db.get_range_affiliate_earnings_code_usage_orders_db(start_date, end_date);
-    } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(error.message);
-      }
-    }
+  affiliate_earnings_s: async (query: any) => {
+    const { start_date, end_date } = query;
+    console.log({ start_date, end_date });
+
+    // Retrieve affiliates
+    const a_filter: any = { deleted: false, active: true };
+    const affiliates = await affiliate_db.findAll_affiliates_db(a_filter, {}, "0", "1");
+
+    const filtered_affiliates = affiliates.filter((affiliate: any) => {
+      return affiliate.sponsor === true || affiliate.promoter === true;
+    });
+
+    const earnings = await Promise.all(
+      filtered_affiliates.map(async (affiliate: any) => {
+        const promo_code = affiliate?.public_code?.promo_code;
+        const sponsor = affiliate.sponsor;
+        const { number_of_uses, revenue, earnings }: any = await getCodeUsage({
+          promo_code,
+          start_date,
+          end_date,
+          sponsor
+        });
+
+        return { number_of_uses, revenue, earnings, artist_name: affiliate.artist_name };
+      })
+    );
+
+    return earnings;
   },
   remove_multiple_orders_s: async (body: any) => {
     try {
