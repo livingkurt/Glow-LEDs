@@ -18,6 +18,7 @@ const dashboardPage = createSlice({
   },
   reducers: {
     set_year: (state, { payload }) => {
+      console.log({ payload });
       state.year = payload;
     },
     set_month: (state, { payload }) => {

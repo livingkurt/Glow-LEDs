@@ -66,7 +66,7 @@ export default (props: any) => {
 										</p>
 									</tr>
 									${
-                    order.isRefunded
+                    !order.isRefunded
                       ? `<tr style="font-family:helvetica">
 										<h2
 											style="text-align:center;font-family:helvetica; font-size: 25px; width:100%;margin:0px;line-height:50px;color:white; padding-bottom: 7px;">

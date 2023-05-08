@@ -1,27 +1,72 @@
-import { Grid } from "@mui/material";
-import { makeStyles } from "@mui/styles";
+import { useEffect } from "react";
+import { useHistory, useLocation } from "react-router-dom";
+import { Divider, Grid, Paper, TextField, Typography } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { GLAutocomplete, GLCheckboxV2, GLTextField } from "../../../shared/GlowLEDsComponents";
-import { months, years } from "../dashboardHelpers";
+import { GLAutocomplete } from "../../../shared/GlowLEDsComponents";
+import { getMonthStartEndDates, months, years } from "../dashboardHelpers";
 import PropTypes from "prop-types";
-import { set_end_date, set_month, set_start_date, set_start_end_date, set_year } from "../dashboardSlice";
-
-const useStyles = makeStyles(() => ({
-  textField: {
-    marginTop: 15,
-    marginBottom: 15
-  },
-  skeleton: {
-    marginTop: -10,
-    marginBottom: -10
-  }
-}));
+import { set_end_date, set_month, set_start_date, set_year } from "../dashboardSlice";
 
 const DatePicker = ({ year, month, start_date, end_date, start_end_date }) => {
-  const classes = useStyles();
   const dispatch = useDispatch();
+  const history = useHistory();
+  const location = useLocation();
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const startDateFromUrl = searchParams.get("start_date");
+    const endDateFromUrl = searchParams.get("end_date");
+
+    if (startDateFromUrl) {
+      const startDateObj = new Date(startDateFromUrl);
+      dispatch(set_start_date(startDateFromUrl));
+      dispatch(set_year(startDateObj.getFullYear().toString()));
+      dispatch(set_month(months[startDateObj.getUTCMonth()]));
+    }
+
+    if (endDateFromUrl) {
+      dispatch(set_end_date(endDateFromUrl));
+    }
+  }, [dispatch, location.search, year, month]);
+
+  const handleYearChange = selectedYear => {
+    console.log({ selectedYear });
+    const { start_date, end_date } = getMonthStartEndDates({ year: selectedYear, month });
+    dispatch(set_year(selectedYear));
+    updateUrlParams({ start_date, end_date, year: selectedYear, month });
+  };
+
+  const handleMonthChange = selectedMonth => {
+    const { start_date, end_date } = getMonthStartEndDates({ year, month: selectedMonth });
+    dispatch(set_month(selectedMonth));
+    updateUrlParams({ start_date, end_date });
+  };
+
+  const handleStartDateChange = date => {
+    dispatch(set_start_date(date));
+    updateUrlParams({ start_date: date });
+  };
+
+  const handleEndDateChange = date => {
+    dispatch(set_end_date(date));
+    updateUrlParams({ end_date: date });
+  };
+
+  const updateUrlParams = ({ start_date, end_date }) => {
+    const searchParams = new URLSearchParams(location.search);
+    if (start_date) {
+      searchParams.set("start_date", start_date);
+    }
+    if (end_date) {
+      searchParams.set("end_date", end_date);
+    }
+    history.push({ search: searchParams.toString() });
+  };
   return (
-    <div>
+    <Paper className="p-20px mt-20px">
+      <Typography variant="h6" align="center">
+        Choose Date Range
+      </Typography>
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
           <GLAutocomplete
@@ -33,8 +78,7 @@ const DatePicker = ({ year, month, start_date, end_date, start_end_date }) => {
             getOptionSelected={(option, value) => option === value}
             name="year"
             label="Year"
-            onChange={(e, value) => dispatch(set_year(value))}
-            classes={classes}
+            onChange={(e, value) => handleYearChange(value)}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -47,59 +91,41 @@ const DatePicker = ({ year, month, start_date, end_date, start_end_date }) => {
             getOptionSelected={(option, value) => option === value}
             name="month"
             label="Month"
-            onChange={(e, value) => dispatch(set_month(value))}
-            classes={classes}
+            onChange={(e, value) => handleMonthChange(value)}
           />
         </Grid>
       </Grid>
-      <GLCheckboxV2 onChecked={e => dispatch(set_start_end_date(e.target.checked))} checked={start_end_date} label="Specific Dates" />
-      {start_end_date && (
-        <Grid container spacing={3}>
-          <Grid item xs={12} sm={6}>
-            <GLTextField
-              size="small"
-              value={start_date}
-              fullWidth
-              type="date"
-              margin="normal"
-              name="start_date"
-              label="Start Date"
-              variant="outlined"
-              onChange={e => dispatch(set_start_date(e.target.value))}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <GLTextField
-              size="small"
-              value={end_date}
-              fullWidth
-              type="date"
-              margin="normal"
-              name="end_date"
-              label="End Date"
-              variant="outlined"
-              onChange={e => dispatch(set_end_date(e.target.value))}
-            />
-          </Grid>
+      <Divider className="mt-10px mb-10px" />
+      <Grid container spacing={3}>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            size="small"
+            value={start_date}
+            fullWidth
+            type="date"
+            margin="normal"
+            name="start_date"
+            label="Start Date"
+            variant="outlined"
+            onChange={e => handleStartDateChange(e.target.value)}
+          />
         </Grid>
-      )}
-    </div>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            size="small"
+            value={end_date}
+            fullWidth
+            type="date"
+            margin="normal"
+            name="end_date"
+            label="End Date"
+            variant="outlined"
+            onChange={e => handleEndDateChange(e.target.value)}
+          />
+        </Grid>
+      </Grid>
+    </Paper>
   );
-};
-DatePicker.propTypes = {
-  year: PropTypes.string,
-  month: PropTypes.string,
-  start_date: PropTypes.string,
-  end_date: PropTypes.string,
-  start_end_date: PropTypes.bool
-};
-
-DatePicker.defaultProps = {
-  year: "",
-  month: "",
-  start_date: "",
-  end_date: "",
-  start_end_date: false
 };
 
 export default DatePicker;

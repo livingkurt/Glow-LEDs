@@ -1,9 +1,6 @@
-import { useHistory } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import { makeStyles } from "@mui/styles";
-import { Grid } from "@mui/material";
 import useChangedEffect from "../../shared/Hooks/useChangedEffect";
-import { create_query, humanize } from "../../utils/helper_functions";
+import { humanize } from "../../utils/helper_functions";
 import { payout_employees } from "./background/weekly_workers/payout_employees";
 import { payout_affiliates } from "./background/monthly_workers/payout_affiliates";
 import { payout_teams } from "./background/monthly_workers/payout_teams";
@@ -12,23 +9,18 @@ import { refresh_sponsor_codes } from "./background/monthly_workers/refresh_spon
 import { facebook_catalog_upload } from "./background/daily_workers/facebook_catalog_upload";
 import { google_catalog_upload } from "./background/daily_workers/google_catalog_upload";
 import {
-  // get_airtable_expenses,
-  useGetAllTimeCategoryRevenueOrdersQuery,
-  useGetAllTimeRevenueOrdersQuery,
-  useGetAllTimeTipsRevenueOrdersQuery,
   useGetMonthlyRevenueOrdersQuery,
   useGetRangeAffiliateEarningsCodeUsageQuery,
   useGetRangeCategoryRevenueOrdersQuery,
   useGetRangeRevenueOrdersQuery,
   useGetRangeTipsRevenueOrdersQuery,
   useGetYearlyRevenueOrdersQuery,
-  useGetAllTimePayoutsQuery,
   useGetRangePayoutsQuery,
   useGetDailyRevenueOrdersQuery
 } from "./dashboardApi";
-import { getMonthStartEndDates, months, years } from "./dashboardHelpers";
+import { months, run_daily_workers, run_monthly_workers, run_weekly_workers } from "./dashboardHelpers";
 import { useDispatch, useSelector } from "react-redux";
-import { set_end_date, set_loading, set_start_date } from "./dashboardSlice";
+import { set_loading } from "./dashboardSlice";
 import { DatePicker } from "./components";
 import { useEffect, useState } from "react";
 import { GLButton } from "../../shared/GlowLEDsComponents";
@@ -37,6 +29,7 @@ import { listAffiliates } from "../../api";
 import axios from "axios";
 import { humanDate } from "../../helpers/dateHelpers";
 import { GLDisplayTable } from "../../shared/GlowLEDsComponents/GLDisplayTable";
+import { Divider, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 
 const DashboardPage = () => {
   const dispatch = useDispatch();
@@ -72,35 +65,6 @@ const DashboardPage = () => {
       clean = false;
     };
   }, [affiliates, year, month]);
-  const run_daily_workers = () => {
-    const confirm = window.confirm("Are you sure you want to run the daily worker?");
-    if (confirm) {
-      dispatch(set_loading(true));
-      facebook_catalog_upload();
-      google_catalog_upload();
-      dispatch(set_loading(false));
-    }
-  };
-
-  const run_weekly_workers = () => {
-    const confirm = window.confirm("Are you sure you want to run the weekly worker?");
-    if (confirm) {
-      dispatch(set_loading(true));
-      payout_employees();
-      dispatch(set_loading(false));
-    }
-  };
-  const run_monthly_workers = () => {
-    const confirm = window.confirm("Are you sure you want to run the monthly worker?");
-    if (confirm) {
-      dispatch(set_loading(true));
-      payout_affiliates();
-      payout_teams();
-      payout_tips();
-      refresh_sponsor_codes();
-      dispatch(set_loading(false));
-    }
-  };
 
   const affiliate_earnings = async () => {
     const affiliate_earnings = await Promise.all(
@@ -131,13 +95,13 @@ const DashboardPage = () => {
       </Helmet>
       <h2 className="ta-c w-100per jc-c fs-30px">Glow LEDs Dashboard</h2>
       <div className="jc-b w-100per">
-        <GLButton variant="primary" onClick={() => run_daily_workers()}>
+        <GLButton variant="primary" onClick={() => run_daily_workers(dispatch)}>
           Run Daily Workers
         </GLButton>
-        <GLButton variant="primary" onClick={() => run_weekly_workers()}>
+        <GLButton variant="primary" onClick={() => run_weekly_workers(dispatch)}>
           Run Weekly Workers
         </GLButton>
-        <GLButton variant="primary" onClick={() => run_monthly_workers()}>
+        <GLButton variant="primary" onClick={() => run_monthly_workers(dispatch)}>
           Run Monthly Workers
         </GLButton>
       </div>
@@ -148,12 +112,30 @@ const DashboardPage = () => {
       />
       <div className="m-auto w-100per max-w-800px">
         <DatePicker year={year} month={month} start_date={start_date} end_date={end_date} start_end_date={start_end_date} />
-        <h3 className="ta-c w-100per jc-c fs-25px">{timeLabel} Sales</h3>
-        <h3 className="fs-30px jc-c">${isLoading(range_revenue) ? range_revenue.data[0]?.totalPrice.toFixed(2) : "0.00"}</h3>
-        <h3 className="ta-c w-100per jc-c fs-25px">{timeLabel} Tips</h3>
-        <h3 className="fs-30px jc-c">${isLoading(tips_range_revenue) ? tips_range_revenue.data[0]?.total_tips.toFixed(2) : "0.00"}</h3>
-        <h3 className="ta-c w-100per jc-c fs-25px">{timeLabel} Payouts</h3>
-        <h3 className="fs-30px jc-c">${isLoading(range_payouts) ? range_payouts.data[0]?.totalAmount?.toFixed(2) : "0.00"}</h3>
+        <Paper sx={{ margin: "20px 0" }}>
+          <Typography variant="h6" align="center" sx={{ padding: "10px 0" }}>
+            {timeLabel}
+          </Typography>
+          <Divider />
+          <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+              <TableHead>
+                <TableRow>
+                  <TableCell className="title_font">Sales</TableCell>
+                  <TableCell className="title_font">Tips</TableCell>
+                  <TableCell className="title_font">Payouts</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
+                  <TableCell>${isLoading(range_revenue) ? range_revenue.data[0]?.totalPrice.toFixed(2) : "0.00"}</TableCell>
+                  <TableCell>${isLoading(tips_range_revenue) ? tips_range_revenue.data[0]?.total_tips.toFixed(2) : "0.00"}</TableCell>
+                  <TableCell>${isLoading(range_payouts) ? range_payouts.data[0]?.totalAmount?.toFixed(2) : "0.00"}</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Paper>
         {!month && !year && (
           <div>
             {yearly_revenue.isSuccess && (
