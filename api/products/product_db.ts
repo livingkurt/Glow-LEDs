@@ -506,7 +506,6 @@ export default {
         "name count_in_stock category subcategory product_collection"
       ).exec();
 
-      console.log({ currentStock });
       return currentStock;
     } catch (error) {
       if (error instanceof Error) {

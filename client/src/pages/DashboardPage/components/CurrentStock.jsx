@@ -5,14 +5,30 @@ const CurrentStock = ({ currentStock }) => {
   return (
     <div>
       <GLDisplayTable
-        title={"Current Glove Stock"}
+        title={"Current Supreme V2 Stock"}
         loading={currentStock.isLoading && currentStock.data}
-        rows={!currentStock.isLoading && currentStock.data?.filter(row => row.subcategory === "gloves" || row.category === "gloves")}
+        rows={
+          !currentStock.isLoading &&
+          currentStock.data?.filter(row => (row.subcategory === "gloves" || row.category === "gloves") && row.name.includes("V2"))
+        }
         columnDefs={[
           { title: "Name", display: "name" },
           { title: "Count in Stock", display: row => row?.count_in_stock }
         ]}
       />
+      <GLDisplayTable
+        title={"Current Supreme V1 Stock"}
+        loading={currentStock.isLoading && currentStock.data}
+        rows={
+          !currentStock.isLoading &&
+          currentStock.data?.filter(row => (row.subcategory === "gloves" || row.category === "gloves") && !row.name.includes("V2"))
+        }
+        columnDefs={[
+          { title: "Name", display: "name" },
+          { title: "Count in Stock", display: row => row?.count_in_stock }
+        ]}
+      />
+
       <GLDisplayTable
         title={"Current Battery Stock"}
         loading={currentStock.isLoading && currentStock.data}
