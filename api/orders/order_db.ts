@@ -796,6 +796,42 @@ export default {
       }
     }
   },
+  get_range_gloves_data_orders_db: async (start_date: string, end_date: string) => {
+    try {
+      const orders_data = await Order.aggregate([
+        {
+          $match: {
+            deleted: false,
+            isPaid: true,
+            createdAt: {
+              $gte: new Date(start_date),
+              $lt: new Date(end_date)
+            }
+          }
+        },
+        {
+          $unwind: "$orderItems"
+        },
+        {
+          $group: {
+            _id: {
+              subcategory: "$orderItems.subcategory",
+              option_product_name: "$orderItems.option_product_name"
+            },
+            count: { $sum: 1 },
+            total_price: { $sum: "$orderItems.price" }
+          }
+        }
+      ]).exec();
+      console.log({ orders_data });
+      // Transform the aggregation results into the desired output format
+      // const breakdown = {
+      //   // ... Process 'orders_data' array to build your desired output structure
+      // };
+
+      return orders_data;
+    } catch (error) {}
+  },
   remove_multiple_orders_db: async (ids: string[]) => {
     try {
       return await Order.updateMany({ _id: { $in: ids } }, { deleted: true });

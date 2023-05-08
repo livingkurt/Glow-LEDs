@@ -458,5 +458,14 @@ export default {
         throw new Error(error.message);
       }
     }
+  },
+  current_stock_products_s: async () => {
+    try {
+      return await product_db.current_stock_products_db();
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
   }
 };

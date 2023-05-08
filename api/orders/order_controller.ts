@@ -424,6 +424,18 @@ export default {
       res.status(500).send({ error, message: "Error get_all_time_tips_revenue_orders_c" });
     }
   },
+  get_range_gloves_data_orders_c: async (req: any, res: any) => {
+    const { query } = req;
+    try {
+      const orders = await order_services.get_range_gloves_data_orders_s(query);
+      if (orders) {
+        return res.status(200).send(orders);
+      }
+      return res.status(500).send({ message: "Error get_all_time_tips_revenue_orders_c" });
+    } catch (error) {
+      res.status(500).send({ error, message: "Error get_all_time_tips_revenue_orders_c" });
+    }
+  },
   affiliate_earnings_c: async (req: any, res: any) => {
     const { query } = req;
     try {

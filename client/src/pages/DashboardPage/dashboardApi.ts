@@ -61,6 +61,13 @@ export const dashboardApi = createApi({
     getRangePayouts: builder.query({
       query: ({ start_date, end_date }: { start_date: string; end_date: string }) =>
         `/paychecks/get_range_payouts?start_date=${start_date}&end_date=${end_date}`
+    }),
+    getRangeGloves: builder.query({
+      query: ({ start_date, end_date }: { start_date: string; end_date: string }) =>
+        `/paychecks/get_range_payouts?start_date=${start_date}&end_date=${end_date}`
+    }),
+    getCurrentStock: builder.query({
+      query: () => `/products/current_stock`
     })
   })
 });
@@ -80,7 +87,9 @@ export const {
   useGetRangeTipsRevenueOrdersQuery,
   useGetRangeAffiliateEarningsCodeUsageQuery,
   useGetAllTimePayoutsQuery,
-  useGetRangePayoutsQuery
+  useGetRangePayoutsQuery,
+  useGetRangeGlovesQuery,
+  useGetCurrentStockQuery
 } = dashboardApi;
 
 // export const get_airtable_expenses = async (year: number): Promise<void> => {

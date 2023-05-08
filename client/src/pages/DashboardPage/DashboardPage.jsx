@@ -1,5 +1,4 @@
 import { Helmet } from "react-helmet";
-import { humanize } from "../../utils/helper_functions";
 import {
   useGetMonthlyRevenueOrdersQuery,
   useGetRangeAffiliateEarningsCodeUsageQuery,
@@ -8,15 +7,15 @@ import {
   useGetRangeTipsRevenueOrdersQuery,
   useGetYearlyRevenueOrdersQuery,
   useGetRangePayoutsQuery,
-  useGetDailyRevenueOrdersQuery
+  useGetDailyRevenueOrdersQuery,
+  useGetRangeGlovesQuery,
+  useGetCurrentStockQuery
 } from "./dashboardApi";
-import { isLoading, months, run_daily_workers, run_monthly_workers, run_weekly_workers } from "./dashboardHelpers";
+import { determineTabName, isLoading, run_daily_workers, run_monthly_workers, run_weekly_workers, timeLabel } from "./dashboardHelpers";
 import { useDispatch, useSelector } from "react-redux";
 import { DatePicker } from "./components";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import { Loading } from "../../shared/SharedComponents";
-import { humanDate } from "../../helpers/dateHelpers";
-import { GLDisplayTable } from "../../shared/GlowLEDsComponents/GLDisplayTable";
 import {
   AppBar,
   Divider,
@@ -33,6 +32,10 @@ import {
 } from "@mui/material";
 import { setTabIndex } from "./dashboardSlice";
 import GLTabPanel from "../../shared/GlowLEDsComponents/GLTabPanel/GLTabPanel";
+import YearlyMonthlyDailyRevenue from "./components/YearlyMonthlyDailyRevenue";
+import AffiliateEarnings from "./components/AffiliateEarnings";
+import CategorySales from "./components/CategorySales";
+import CurrentStock from "./components/CurrentStock";
 
 const DashboardPage = () => {
   const dispatch = useDispatch();
@@ -48,18 +51,9 @@ const DashboardPage = () => {
   const monthy_revenue = useGetMonthlyRevenueOrdersQuery({ year });
   const yearly_revenue = useGetYearlyRevenueOrdersQuery();
   const range_payouts = useGetRangePayoutsQuery({ start_date, end_date });
-
-  const timeLabel = year && month ? `${year} ${month}` : year ? year : month ? month : "All Time";
-
-  const determineTabName = (month, year) => {
-    if (year && month) {
-      return "Daily";
-    } else if (year) {
-      return "Monthly";
-    } else {
-      return "Yearly";
-    }
-  };
+  // const range_gloves = useGetRangeGlovesQuery({ start_date, end_date });
+  const currentStock = useGetCurrentStockQuery();
+  console.log({ currentStock });
 
   return (
     <div className="main_container p-20px">
@@ -87,7 +81,7 @@ const DashboardPage = () => {
         <DatePicker year={year} month={month} start_date={start_date} end_date={end_date} start_end_date={start_end_date} />
         <Paper sx={{ margin: "20px 0" }}>
           <Typography variant="h6" align="center" sx={{ padding: "10px 0" }}>
-            {timeLabel}
+            {timeLabel(month, year)}
           </Typography>
           <Divider />
           <TableContainer component={Paper}>
@@ -121,90 +115,27 @@ const DashboardPage = () => {
               <Tab label={`${determineTabName(month, year)} Revenue`} value={0} />;
               <Tab label={"Affiliate Earnings"} value={1} />;
               <Tab label={"Product Categories"} value={2} />;
+              <Tab label={"Current Stock"} value={3} />;
             </Tabs>
           </AppBar>
         </Paper>
         <GLTabPanel value={tabIndex} index={0}>
-          {!month && !year && (
-            <div>
-              {yearly_revenue.isSuccess && (
-                <GLDisplayTable
-                  title={"Yearly Revenue"}
-                  loading={yearly_revenue.isLoading && yearly_revenue.data}
-                  rows={!yearly_revenue.isLoading && yearly_revenue.data && [...yearly_revenue.data].sort((a, b) => a.year - b.year)}
-                  columnDefs={[
-                    { title: "Year", display: "year" },
-                    { title: "Revenue", display: row => `$${row.totalPrice.toFixed(2)}` }
-                  ]}
-                />
-              )}
-            </div>
-          )}
-
-          {month && year && (
-            <>
-              {daily_revenue.isSuccess && (
-                <GLDisplayTable
-                  title={"Daily Revenue"}
-                  loading={daily_revenue.isLoading && daily_revenue.data}
-                  rows={!daily_revenue.isLoading && daily_revenue.data}
-                  columnDefs={[
-                    { title: "Day", display: row => humanDate(row.date) },
-                    { title: "Revenue", display: row => `$${row.totalPrice.toFixed(2)}` }
-                  ]}
-                />
-              )}
-            </>
-          )}
-
-          {!month && year && (
-            <GLDisplayTable
-              title={"Monthly Revenue"}
-              loading={monthy_revenue.isLoading}
-              rows={[...monthy_revenue.data].sort((a, b) => a.month - b.month)}
-              columnDefs={[
-                { title: "Year", display: row => months[row.month - 1] },
-                { title: "Revenue", display: row => `$${row.totalPrice.toFixed(2)}` }
-              ]}
-            />
-          )}
-        </GLTabPanel>
-        <GLTabPanel value={tabIndex} index={1}>
-          <GLDisplayTable
-            title={`${year && month ? `${year} ${month}` : year ? year : month ? month : "All Time"} Affiliate Earnings Code Usage`}
-            loading={affiliate_earnings_code_usage.isLoading && affiliate_earnings_code_usage.data}
-            rows={
-              !affiliate_earnings_code_usage.isLoading &&
-              [...affiliate_earnings_code_usage.data].sort((a, b) => b.number_of_uses - a.number_of_uses)
-            }
-            columnDefs={[
-              { title: "Ranking", display: (row, index) => `${index + 1}.` },
-              { title: "Affiliate", display: row => row?.artist_name },
-              { title: "Code Usage", display: row => (row.number_of_uses ? row?.number_of_uses : "0") },
-              { title: "Earnings", display: row => `$${row.earnings ? row?.earnings?.toFixed(2) : "0:00"}` },
-              { title: "Revenue", display: row => `$${row?.revenue ? row?.revenue?.toFixed(2) : "0:00"}` }
-            ]}
+          <YearlyMonthlyDailyRevenue
+            month={month}
+            year={year}
+            yearly_revenue={yearly_revenue}
+            daily_revenue={daily_revenue}
+            monthy_revenue={monthy_revenue}
           />
         </GLTabPanel>
+        <GLTabPanel value={tabIndex} index={1}>
+          <AffiliateEarnings month={month} year={year} affiliate_earnings_code_usage={affiliate_earnings_code_usage} />
+        </GLTabPanel>
         <GLTabPanel value={tabIndex} index={2}>
-          {category_range_revenue.isSuccess && (
-            <GLDisplayTable
-              title="Category Sales"
-              loading={category_range_revenue.isLoading && category_range_revenue?.data}
-              rows={
-                !category_range_revenue.isLoading &&
-                category_range_revenue?.data &&
-                [...category_range_revenue.data]
-                  // .sort((a, b) => a._id.localeCompare(b._id))
-                  .sort((a, b) => b.revenue - a.revenue)
-              }
-              columnDefs={[
-                { title: "Category", display: row => humanize(row._id) },
-                { title: "Revenue", display: row => `$${row.revenue.toFixed(2)}` },
-                { title: "Quantity Sold", display: "quantity" }
-              ]}
-            />
-          )}
+          <CategorySales category_range_revenue={category_range_revenue} />
+        </GLTabPanel>
+        <GLTabPanel value={tabIndex} index={3}>
+          <CurrentStock currentStock={currentStock} />
         </GLTabPanel>
       </div>
     </div>

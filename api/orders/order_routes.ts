@@ -48,6 +48,7 @@ router.route("/get_range_category_revenue_orders").get(order_controller.get_rang
 router.route("/get_all_time_category_revenue_orders").get(order_controller.get_all_time_category_revenue_orders_c);
 router.route("/get_range_tips_revenue_orders").get(order_controller.get_range_tips_revenue_orders_c);
 router.route("/get_all_time_tips_revenue_orders").get(order_controller.get_all_time_tips_revenue_orders_c);
+router.route("/get_range_gloves_data_orders").get(order_controller.get_range_gloves_data_orders_c);
 
 router.route("/glow/delete_multiple").put(order_controller.remove_multiple_orders_c);
 

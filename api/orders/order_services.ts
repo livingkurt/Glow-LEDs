@@ -799,96 +799,7 @@ export default {
       const page = "1";
 
       const orders_data = await order_db.findAll_orders_db(o_filter, sort, limit, page);
-      const expenses_data = await expense_db.findAll_expenses_db(e_filter, sort, "0", "1");
-      const income = orders_data.reduce(
-        (a: any, c: any) =>
-          a + c.totalPrice - c.taxPrice - (c.refundAmmount ? c.refundAmmount.reduce((a: any, c: any) => a + c, 0) / 100 : 0),
-        0
-      );
-      const expenses = expenses_data.reduce((a: any, c: any) => a + c.amount, 0);
-      const category_income = categories.map((category, index) => {
-        return {
-          category: category,
-          income: orders_data
-            .map((order: any) => order.orderItems)
-            .flat(1)
-            .filter((item: any) => item.category === category)
-            .flat(1)
-            .reduce((a: any, c: any) => parseFloat(a) + parseFloat(c.price), 0)
-        };
-      });
-      const subcategory_income = subcategories.map((subcategory, index) => {
-        return {
-          subcategory: subcategory,
-          income: orders_data
-            .map((order: any) => order.orderItems)
-            .flat(1)
-            .filter((item: any) => item.subcategory === subcategory)
-            .flat(1)
-            .reduce((a: any, c: any) => parseFloat(a) + parseFloat(c.price), 0)
-        };
-      });
-      const category_expenses = ["Supplies", "Entertainment", "Website", "Shipping", "Equipment"].map((category, index) => {
-        return {
-          category: category,
-          expense: expenses_data
-            .filter((expense: any) => expense.category === category)
-            .reduce((a: any, c: any) => parseFloat(a) + parseFloat(c.amount), 0)
-        };
-      });
 
-      const batt_1620 = orders_data
-        .map((order: any) => order.orderItems)
-        .flat(1)
-        .filter((item: any) => item.name === "Bulk CR1620 Batteries");
-      const batt_1616 = orders_data
-        .map((order: any) => order.orderItems)
-        .flat(1)
-        .filter((item: any) => item.name === "Bulk CR1616 Batteries");
-      const batt_1225 = orders_data
-        .map((order: any) => order.orderItems)
-        .flat(1)
-        .filter((item: any) => item.name === "Bulk CR1225 Batteries");
-      const batt_1620_options = batt_1620
-        .filter((item: any) => item.product_option)
-        .reduce((a: any, c: any) => a + c.product_option.size, 0);
-      const batt_1616_options = batt_1616
-        .filter((item: any) => item.product_option)
-        .reduce((a: any, c: any) => a + c.product_option.size, 0);
-      const batt_1225_options = batt_1225
-        .filter((item: any) => item.product_option)
-        .reduce((a: any, c: any) => a + c.product_option.size, 0);
-      const batt_1620_size = batt_1620.filter((item: any) => item.size > 0).reduce((a: any, c: any) => parseInt(a) + parseInt(c.size), 0);
-      const batt_1616_size = batt_1616.filter((item: any) => item.size > 0).reduce((a: any, c: any) => parseInt(a) + parseInt(c.size), 0);
-      const batt_1225_size = batt_1225.filter((item: any) => item.size > 0).reduce((a: any, c: any) => parseInt(a) + parseInt(c.size), 0);
-      const batt_1620_options_total = batt_1620
-        .filter((item: any) => item.product_option)
-        .reduce((a: any, c: any) => a + c.product_option.price, 0);
-      const batt_1616_options_total = batt_1616
-        .filter((item: any) => item.product_option)
-        .reduce((a: any, c: any) => a + c.product_option.price, 0);
-      const batt_1225_options_total = batt_1225
-        .filter((item: any) => item.product_option)
-        .reduce((a: any, c: any) => a + c.product_option.price, 0);
-      const batt_1620_size_total = batt_1620
-        .filter((item: any) => item.size > 0)
-        .reduce((a: any, c: any) => parseFloat(a) + parseFloat(c.price), 0);
-      const batt_1616_size_total = batt_1616
-        .filter((item: any) => item.size > 0)
-        .reduce((a: any, c: any) => parseFloat(a) + parseFloat(c.price), 0);
-      const batt_1225_size_total = batt_1225
-        .filter((item: any) => item.size > 0)
-        .reduce((a: any, c: any) => parseFloat(a) + parseFloat(c.price), 0);
-
-      const decals = orders_data
-        .map((order: any) => order.orderItems)
-        .flat(1)
-        .filter((item: any) => item.category === "decals");
-      const decals_total = orders_data
-        .map((order: any) => order.orderItems)
-        .flat(1)
-        .filter((item: any) => item.category === "decals")
-        .reduce((a: any, c: any) => parseFloat(a) + parseFloat(c.price), 0);
       const gloves = orders_data
         .map((order: any) => order.orderItems)
         .flat(1)
@@ -985,53 +896,6 @@ export default {
         .filter((item: any) => item.subcategory === "refresh" && item.option_product_name === "Supreme Gloves - XL")
         .reduce((a: any, c: any) => parseFloat(a) + parseFloat(c.price), 0);
       const breakdown = {
-        macro_income: {
-          income,
-          expenses,
-          profit: income + expenses,
-          category_income,
-          subcategory_income,
-          category_expenses
-        },
-        batteries: {
-          batt_1620_qty_sold: batt_1620_options + batt_1620_size,
-          batt_1616_qty_sold: batt_1616_options + batt_1616_size,
-          batt_1225_qty_sold: batt_1225_options + batt_1225_size,
-          batt_1620_total_income: batt_1620_options_total + batt_1620_size_total,
-          batt_1616_total_income: batt_1616_options_total + batt_1616_size_total,
-          batt_1225_total_income: batt_1225_options_total + batt_1225_size_total,
-          batt_1620_total_expenses: -(batt_1620_options + batt_1620_size) * 0.0632,
-          batt_1616_total_expenses: -(batt_1616_options + batt_1616_size) * 0.0632,
-          batt_1225_total_expenses: -(batt_1225_options + batt_1225_size) * 0.0632,
-          batt_1620_profit: batt_1620_options_total + batt_1620_size_total - (batt_1620_options + batt_1620_size) * 0.0632,
-          batt_1616_profit: batt_1616_options_total + batt_1616_size_total - (batt_1616_options + batt_1616_size) * 0.0632,
-          batt_1225_profit: batt_1225_options_total + batt_1225_size_total - (batt_1225_options + batt_1225_size) * 0.0632,
-
-          refresh_qty_sold: refresh.length,
-          total_qty_sold: batt_1620_options + batt_1620_size + batt_1616_options + batt_1616_size + batt_1225_options + batt_1225_size,
-          total_expenses:
-            -(batt_1620_options + batt_1620_size + batt_1616_options + batt_1616_size + batt_1225_options + batt_1225_size) * 0.0632,
-          total_profit:
-            batt_1620_options_total +
-            batt_1620_size_total +
-            batt_1616_options_total +
-            batt_1616_size_total +
-            batt_1225_options_total +
-            batt_1225_size_total -
-            (batt_1620_options + batt_1620_size + batt_1616_options + batt_1616_size + batt_1225_options + batt_1225_size) * 0.0632,
-          total_income:
-            batt_1620_options_total +
-            batt_1620_size_total +
-            batt_1616_options_total +
-            batt_1616_size_total +
-            batt_1225_options_total +
-            batt_1225_size_total
-        },
-        decals: {
-          qty_sold: decals.length * 11,
-          sets: decals.length,
-          total_income: decals_total
-        },
         gloves: {
           singles_qty_sold: gloves.length,
           s_qty_sold: s_gloves.length,
@@ -1112,6 +976,352 @@ export default {
       }
     }
   },
+  // income_orders_s: async (params: any) => {
+  //   // const { month, year } = params;
+  //   const o_filter: any = {
+  //     deleted: false,
+  //     isPaid: true
+  //   };
+  //   const e_filter: any = {
+  //     deleted: false
+  //   };
+
+  //   if (params.year) {
+  //     const createdAt = {
+  //       $gte: new Date(params.year + "-01-01"),
+  //       $lte: new Date(params.year + "-12-31")
+  //     };
+  //     o_filter.createdAt = createdAt;
+  //     e_filter.date_of_purchase = createdAt;
+  //   }
+  //   if (params.month) {
+  //     const createdAt = {
+  //       $gte: new Date(month_dates(params.month, params.year).start_date),
+  //       $lte: new Date(month_dates(params.month, params.year).end_date)
+  //     };
+  //     o_filter.createdAt = createdAt;
+  //     e_filter.date_of_purchase = createdAt;
+  //   }
+  //   try {
+  //     const sort = {};
+
+  //     const limit = "0";
+  //     const page = "1";
+
+  //     const orders_data = await order_db.findAll_orders_db(o_filter, sort, limit, page);
+  //     const expenses_data = await expense_db.findAll_expenses_db(e_filter, sort, "0", "1");
+  //     const income = orders_data.reduce(
+  //       (a: any, c: any) =>
+  //         a + c.totalPrice - c.taxPrice - (c.refundAmmount ? c.refundAmmount.reduce((a: any, c: any) => a + c, 0) / 100 : 0),
+  //       0
+  //     );
+  //     const expenses = expenses_data.reduce((a: any, c: any) => a + c.amount, 0);
+  //     const category_income = categories.map((category, index) => {
+  //       return {
+  //         category: category,
+  //         income: orders_data
+  //           .map((order: any) => order.orderItems)
+  //           .flat(1)
+  //           .filter((item: any) => item.category === category)
+  //           .flat(1)
+  //           .reduce((a: any, c: any) => parseFloat(a) + parseFloat(c.price), 0)
+  //       };
+  //     });
+  //     const subcategory_income = subcategories.map((subcategory, index) => {
+  //       return {
+  //         subcategory: subcategory,
+  //         income: orders_data
+  //           .map((order: any) => order.orderItems)
+  //           .flat(1)
+  //           .filter((item: any) => item.subcategory === subcategory)
+  //           .flat(1)
+  //           .reduce((a: any, c: any) => parseFloat(a) + parseFloat(c.price), 0)
+  //       };
+  //     });
+  //     const category_expenses = ["Supplies", "Entertainment", "Website", "Shipping", "Equipment"].map((category, index) => {
+  //       return {
+  //         category: category,
+  //         expense: expenses_data
+  //           .filter((expense: any) => expense.category === category)
+  //           .reduce((a: any, c: any) => parseFloat(a) + parseFloat(c.amount), 0)
+  //       };
+  //     });
+
+  //     const batt_1620 = orders_data
+  //       .map((order: any) => order.orderItems)
+  //       .flat(1)
+  //       .filter((item: any) => item.name === "Bulk CR1620 Batteries");
+  //     const batt_1616 = orders_data
+  //       .map((order: any) => order.orderItems)
+  //       .flat(1)
+  //       .filter((item: any) => item.name === "Bulk CR1616 Batteries");
+  //     const batt_1225 = orders_data
+  //       .map((order: any) => order.orderItems)
+  //       .flat(1)
+  //       .filter((item: any) => item.name === "Bulk CR1225 Batteries");
+  //     const batt_1620_options = batt_1620
+  //       .filter((item: any) => item.product_option)
+  //       .reduce((a: any, c: any) => a + c.product_option.size, 0);
+  //     const batt_1616_options = batt_1616
+  //       .filter((item: any) => item.product_option)
+  //       .reduce((a: any, c: any) => a + c.product_option.size, 0);
+  //     const batt_1225_options = batt_1225
+  //       .filter((item: any) => item.product_option)
+  //       .reduce((a: any, c: any) => a + c.product_option.size, 0);
+  //     const batt_1620_size = batt_1620.filter((item: any) => item.size > 0).reduce((a: any, c: any) => parseInt(a) + parseInt(c.size), 0);
+  //     const batt_1616_size = batt_1616.filter((item: any) => item.size > 0).reduce((a: any, c: any) => parseInt(a) + parseInt(c.size), 0);
+  //     const batt_1225_size = batt_1225.filter((item: any) => item.size > 0).reduce((a: any, c: any) => parseInt(a) + parseInt(c.size), 0);
+  //     const batt_1620_options_total = batt_1620
+  //       .filter((item: any) => item.product_option)
+  //       .reduce((a: any, c: any) => a + c.product_option.price, 0);
+  //     const batt_1616_options_total = batt_1616
+  //       .filter((item: any) => item.product_option)
+  //       .reduce((a: any, c: any) => a + c.product_option.price, 0);
+  //     const batt_1225_options_total = batt_1225
+  //       .filter((item: any) => item.product_option)
+  //       .reduce((a: any, c: any) => a + c.product_option.price, 0);
+  //     const batt_1620_size_total = batt_1620
+  //       .filter((item: any) => item.size > 0)
+  //       .reduce((a: any, c: any) => parseFloat(a) + parseFloat(c.price), 0);
+  //     const batt_1616_size_total = batt_1616
+  //       .filter((item: any) => item.size > 0)
+  //       .reduce((a: any, c: any) => parseFloat(a) + parseFloat(c.price), 0);
+  //     const batt_1225_size_total = batt_1225
+  //       .filter((item: any) => item.size > 0)
+  //       .reduce((a: any, c: any) => parseFloat(a) + parseFloat(c.price), 0);
+
+  //     const decals = orders_data
+  //       .map((order: any) => order.orderItems)
+  //       .flat(1)
+  //       .filter((item: any) => item.category === "decals");
+  //     const decals_total = orders_data
+  //       .map((order: any) => order.orderItems)
+  //       .flat(1)
+  //       .filter((item: any) => item.category === "decals")
+  //       .reduce((a: any, c: any) => parseFloat(a) + parseFloat(c.price), 0);
+  //     const gloves = orders_data
+  //       .map((order: any) => order.orderItems)
+  //       .flat(1)
+  //       .filter((item: any) => item.subcategory === "singles");
+  //     const s_gloves = orders_data
+  //       .map((order: any) => order.orderItems)
+  //       .flat(1)
+  //       .filter((item: any) => item.subcategory === "singles" && item.option_product_name === "Supreme Gloves - S");
+  //     const m_gloves = orders_data
+  //       .map((order: any) => order.orderItems)
+  //       .flat(1)
+  //       .filter((item: any) => item.subcategory === "singles" && item.option_product_name === "Supreme Gloves - M");
+  //     const l_gloves = orders_data
+  //       .map((order: any) => order.orderItems)
+  //       .flat(1)
+  //       .filter((item: any) => item.subcategory === "singles" && item.option_product_name === "Supreme Gloves - L");
+  //     const xl_gloves = orders_data
+  //       .map((order: any) => order.orderItems)
+  //       .flat(1)
+  //       .filter((item: any) => item.subcategory === "singles" && item.option_product_name === "Supreme Gloves - XL");
+  //     const refresh = orders_data
+  //       .map((order: any) => order.orderItems)
+  //       .flat(1)
+  //       .filter((item: any) => item.subcategory === "refresh");
+  //     const s_refresh = orders_data
+  //       .map((order: any) => order.orderItems)
+  //       .flat(1)
+  //       .filter((item: any) => item.subcategory === "refresh" && item.option_product_name === "Supreme Gloves - S");
+  //     const m_refresh = orders_data
+  //       .map((order: any) => order.orderItems)
+  //       .flat(1)
+  //       .filter((item: any) => item.subcategory === "refresh" && item.option_product_name === "Supreme Gloves - M");
+  //     const l_refresh = orders_data
+  //       .map((order: any) => order.orderItems)
+  //       .flat(1)
+  //       .filter((item: any) => item.subcategory === "refresh" && item.option_product_name === "Supreme Gloves - L");
+  //     const xl_refresh = orders_data
+  //       .map((order: any) => order.orderItems)
+  //       .flat(1)
+  //       .filter((item: any) => item.subcategory === "refresh" && item.option_product_name === "Supreme Gloves - XL");
+  //     const gloves_total = orders_data
+  //       .map((order: any) => order.orderItems)
+  //       .flat(1)
+  //       .filter((item: any) => item.category === "gloves")
+  //       .reduce((a: any, c: any) => parseFloat(a) + parseFloat(c.price), 0);
+  //     const singles_total = orders_data
+  //       .map((order: any) => order.orderItems)
+  //       .flat(1)
+  //       .filter((item: any) => item.subcategory === "singles")
+  //       .reduce((a: any, c: any) => parseFloat(a) + parseFloat(c.price), 0);
+  //     const refresh_total = orders_data
+  //       .map((order: any) => order.orderItems)
+  //       .flat(1)
+  //       .filter((item: any) => item.subcategory === "refresh")
+  //       .reduce((a: any, c: any) => parseFloat(a) + parseFloat(c.price), 0);
+  //     const s_singles_total = orders_data
+  //       .map((order: any) => order.orderItems)
+  //       .flat(1)
+  //       .filter((item: any) => item.subcategory === "singles" && item.option_product_name === "Supreme Gloves - S")
+  //       .reduce((a: any, c: any) => parseFloat(a) + parseFloat(c.price), 0);
+  //     const m_singles_total = orders_data
+  //       .map((order: any) => order.orderItems)
+  //       .flat(1)
+  //       .filter((item: any) => item.subcategory === "singles" && item.option_product_name === "Supreme Gloves - M")
+  //       .reduce((a: any, c: any) => parseFloat(a) + parseFloat(c.price), 0);
+  //     const l_singles_total = orders_data
+  //       .map((order: any) => order.orderItems)
+  //       .flat(1)
+  //       .filter((item: any) => item.subcategory === "singles" && item.option_product_name === "Supreme Gloves - L")
+  //       .reduce((a: any, c: any) => parseFloat(a) + parseFloat(c.price), 0);
+  //     const xl_singles_total = orders_data
+  //       .map((order: any) => order.orderItems)
+  //       .flat(1)
+  //       .filter((item: any) => item.subcategory === "singles" && item.option_product_name === "Supreme Gloves - XL")
+  //       .reduce((a: any, c: any) => parseFloat(a) + parseFloat(c.price), 0);
+  //     const s_refresh_total = orders_data
+  //       .map((order: any) => order.orderItems)
+  //       .flat(1)
+  //       .filter((item: any) => item.subcategory === "refresh" && item.option_product_name === "Supreme Gloves - S")
+  //       .reduce((a: any, c: any) => parseFloat(a) + parseFloat(c.price), 0);
+  //     const m_refresh_total = orders_data
+  //       .map((order: any) => order.orderItems)
+  //       .flat(1)
+  //       .filter((item: any) => item.subcategory === "refresh" && item.option_product_name === "Supreme Gloves - M")
+  //       .reduce((a: any, c: any) => parseFloat(a) + parseFloat(c.price), 0);
+  //     const l_refresh_total = orders_data
+  //       .map((order: any) => order.orderItems)
+  //       .flat(1)
+  //       .filter((item: any) => item.subcategory === "refresh" && item.option_product_name === "Supreme Gloves - L")
+  //       .reduce((a: any, c: any) => parseFloat(a) + parseFloat(c.price), 0);
+  //     const xl_refresh_total = orders_data
+  //       .map((order: any) => order.orderItems)
+  //       .flat(1)
+  //       .filter((item: any) => item.subcategory === "refresh" && item.option_product_name === "Supreme Gloves - XL")
+  //       .reduce((a: any, c: any) => parseFloat(a) + parseFloat(c.price), 0);
+  //     const breakdown = {
+  //       macro_income: {
+  //         income,
+  //         expenses,
+  //         profit: income + expenses,
+  //         category_income,
+  //         subcategory_income,
+  //         category_expenses
+  //       },
+  //       batteries: {
+  //         batt_1620_qty_sold: batt_1620_options + batt_1620_size,
+  //         batt_1616_qty_sold: batt_1616_options + batt_1616_size,
+  //         batt_1225_qty_sold: batt_1225_options + batt_1225_size,
+  //         batt_1620_total_income: batt_1620_options_total + batt_1620_size_total,
+  //         batt_1616_total_income: batt_1616_options_total + batt_1616_size_total,
+  //         batt_1225_total_income: batt_1225_options_total + batt_1225_size_total,
+  //         batt_1620_total_expenses: -(batt_1620_options + batt_1620_size) * 0.0632,
+  //         batt_1616_total_expenses: -(batt_1616_options + batt_1616_size) * 0.0632,
+  //         batt_1225_total_expenses: -(batt_1225_options + batt_1225_size) * 0.0632,
+  //         batt_1620_profit: batt_1620_options_total + batt_1620_size_total - (batt_1620_options + batt_1620_size) * 0.0632,
+  //         batt_1616_profit: batt_1616_options_total + batt_1616_size_total - (batt_1616_options + batt_1616_size) * 0.0632,
+  //         batt_1225_profit: batt_1225_options_total + batt_1225_size_total - (batt_1225_options + batt_1225_size) * 0.0632,
+
+  //         refresh_qty_sold: refresh.length,
+  //         total_qty_sold: batt_1620_options + batt_1620_size + batt_1616_options + batt_1616_size + batt_1225_options + batt_1225_size,
+  //         total_expenses:
+  //           -(batt_1620_options + batt_1620_size + batt_1616_options + batt_1616_size + batt_1225_options + batt_1225_size) * 0.0632,
+  //         total_profit:
+  //           batt_1620_options_total +
+  //           batt_1620_size_total +
+  //           batt_1616_options_total +
+  //           batt_1616_size_total +
+  //           batt_1225_options_total +
+  //           batt_1225_size_total -
+  //           (batt_1620_options + batt_1620_size + batt_1616_options + batt_1616_size + batt_1225_options + batt_1225_size) * 0.0632,
+  //         total_income:
+  //           batt_1620_options_total +
+  //           batt_1620_size_total +
+  //           batt_1616_options_total +
+  //           batt_1616_size_total +
+  //           batt_1225_options_total +
+  //           batt_1225_size_total
+  //       },
+  //       decals: {
+  //         qty_sold: decals.length * 11,
+  //         sets: decals.length,
+  //         total_income: decals_total
+  //       },
+  //       gloves: {
+  //         singles_qty_sold: gloves.length,
+  //         s_qty_sold: s_gloves.length,
+  //         m_qty_sold: m_gloves.length,
+  //         l_qty_sold: l_gloves.length,
+  //         xl_qty_sold: xl_gloves.length,
+  //         s_total_income: s_singles_total,
+  //         m_total_income: m_singles_total,
+  //         l_total_income: l_singles_total,
+  //         xl_total_income: xl_singles_total,
+  //         s_total_expenses: -s_gloves.length * 0.7,
+  //         m_total_expenses: -m_gloves.length * 0.7,
+  //         l_total_expenses: -l_gloves.length * 0.7,
+  //         xl_total_expenses: -xl_gloves.length * 0.7,
+  //         s_total_profit: s_gloves.length * 3.95 - s_gloves.length * 0.7,
+  //         m_total_profit: m_gloves.length * 3.95 - m_gloves.length * 0.7,
+  //         l_total_profit: l_gloves.length * 3.95 - l_gloves.length * 0.7,
+  //         xl_total_profit: xl_gloves.length * 3.95 - xl_gloves.length * 0.7,
+  //         refresh_qty_sold: refresh.length,
+  //         total_expenses: -gloves.length * 0.7,
+  //         total_profit: singles_total - gloves.length * 0.7,
+  //         total_qty_sold: gloves.length,
+  //         total_income: singles_total
+  //       },
+  //       refresh_packs: {
+  //         s_qty_sold: s_refresh.length * 6,
+  //         m_qty_sold: m_refresh.length * 6,
+  //         l_qty_sold: l_refresh.length * 6,
+  //         xl_qty_sold: xl_refresh.length * 6,
+  //         s_total_income: s_refresh_total,
+  //         m_total_income: m_refresh_total,
+  //         l_total_income: l_refresh_total,
+  //         xl_total_income: xl_refresh_total,
+  //         s_total_expenses: -s_refresh.length * 6 * 0.7,
+  //         m_total_expenses: -m_refresh.length * 6 * 0.7,
+  //         l_total_expenses: -l_refresh.length * 6 * 0.7,
+  //         xl_total_expenses: -xl_refresh.length * 6 * 0.7,
+  //         s_total_profit: s_refresh.length * 6 * 3.95 - s_refresh.length * 6 * 0.7,
+  //         m_total_profit: m_refresh.length * 6 * 3.95 - m_refresh.length * 6 * 0.7,
+  //         l_total_profit: l_refresh.length * 6 * 3.95 - l_refresh.length * 6 * 0.7,
+  //         xl_total_profit: xl_refresh.length * 6 * 3.95 - xl_refresh.length * 6 * 0.7,
+  //         refresh_qty_sold: refresh.length,
+  //         total_expenses: -(refresh.length * 6) * 0.7,
+  //         total_profit: refresh_total - refresh.length * 6 * 0.7,
+  //         total_qty_sold: refresh.length * 6,
+  //         total_income: refresh_total
+  //       },
+  //       total_gloves: {
+  //         singles_qty_sold: gloves.length,
+  //         s_qty_sold: s_gloves.length + s_refresh.length * 6,
+  //         m_qty_sold: m_gloves.length + m_refresh.length * 6,
+  //         l_qty_sold: l_gloves.length + l_refresh.length * 6,
+  //         xl_qty_sold: xl_gloves.length + xl_refresh.length * 6,
+  //         s_total_income: s_singles_total + s_refresh_total,
+  //         m_total_income: m_singles_total + m_refresh_total,
+  //         l_total_income: l_singles_total + l_refresh_total,
+  //         xl_total_income: xl_singles_total + xl_refresh_total,
+  //         s_total_expenses: -(s_gloves.length + s_refresh.length * 6) * 0.7,
+  //         m_total_expenses: -(m_gloves.length + m_refresh.length * 6) * 0.7,
+  //         l_total_expenses: -(l_gloves.length + l_refresh.length * 6) * 0.7,
+  //         xl_total_expenses: -(xl_gloves.length + xl_refresh.length * 6) * 0.7,
+  //         s_total_profit: (s_gloves.length + s_refresh.length * 6) * 3.95 - (s_gloves.length + s_refresh.length * 6) * 0.7,
+  //         m_total_profit: (m_gloves.length + m_refresh.length * 6) * 3.95 - (m_gloves.length + m_refresh.length * 6) * 0.7,
+  //         l_total_profit: (l_gloves.length + l_refresh.length * 6) * 3.95 - (l_gloves.length + l_refresh.length * 6) * 0.7,
+  //         xl_total_profit: (xl_gloves.length + xl_refresh.length * 6) * 3.95 - (xl_gloves.length + xl_refresh.length * 6) * 0.7,
+  //         refresh_qty_sold: refresh.length,
+  //         total_expenses: -(gloves.length + refresh.length * 6) * 0.7,
+  //         total_profit: gloves_total - (gloves.length + refresh.length * 6) * 0.7,
+  //         total_qty_sold: gloves.length + refresh.length * 6,
+  //         total_income: gloves_total
+  //       }
+  //     };
+
+  //     return breakdown;
+  //   } catch (error) {
+  //     if (error instanceof Error) {
+  //       throw new Error(error.message);
+  //     }
+  //   }
+  // },
   invoice_orders_s: async (id: string) => {
     try {
       return await order_db.findById_orders_db(id);
@@ -1228,6 +1438,16 @@ export default {
   get_all_time_tips_revenue_orders_s: async () => {
     try {
       return await order_db.get_all_time_tips_revenue_orders_db();
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  get_range_gloves_data_orders_s: async (query: { start_date: string; end_date: string }) => {
+    const { start_date, end_date } = query;
+    try {
+      return await order_db.get_range_gloves_data_orders_db(start_date, end_date);
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

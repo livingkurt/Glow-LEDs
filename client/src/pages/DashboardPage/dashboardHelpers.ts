@@ -84,3 +84,17 @@ export const run_monthly_workers = (dispatch: any) => {
 export const isLoading = (data: any) => {
   return !data.isLoading && data.data[0];
 };
+
+export const timeLabel = (month: string, year: string) => {
+  return year && month ? `${year} ${month}` : year ? year : month ? month : "All Time";
+};
+
+export const determineTabName = (month: string, year: string) => {
+  if (year && month) {
+    return "Daily";
+  } else if (year) {
+    return "Monthly";
+  } else {
+    return "Yearly";
+  }
+};

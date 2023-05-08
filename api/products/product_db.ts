@@ -495,5 +495,23 @@ export default {
         throw new Error(error.message);
       }
     }
+  },
+  current_stock_products_db: async () => {
+    try {
+      const currentStock = await Product.find(
+        {
+          finite_stock: true,
+          deleted: false
+        },
+        "name count_in_stock category subcategory product_collection"
+      ).exec();
+
+      console.log({ currentStock });
+      return currentStock;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
   }
 };
