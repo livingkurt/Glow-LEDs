@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import { Divider, Grid, Paper, TextField, Typography } from "@mui/material";
+import { Button, Divider, Grid, Paper, TextField, Typography } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { GLAutocomplete } from "../../../shared/GlowLEDsComponents";
 import { getMonthStartEndDates, months, years } from "../dashboardHelpers";
-import { set_end_date, set_month, set_start_date, set_year } from "../dashboardSlice";
+import { resetDateRange, set_end_date, set_month, set_start_date, set_year } from "../dashboardSlice";
 
 const DatePicker = ({ year, month, start_date, end_date }) => {
   const dispatch = useDispatch();
@@ -31,7 +31,7 @@ const DatePicker = ({ year, month, start_date, end_date }) => {
   const handleYearChange = selectedYear => {
     const { start_date, end_date } = getMonthStartEndDates({ year: selectedYear, month });
     dispatch(set_year(selectedYear));
-    updateUrlParams({ start_date, end_date, year: selectedYear, month });
+    updateUrlParams({ start_date, end_date });
   };
 
   const handleMonthChange = selectedMonth => {
@@ -50,7 +50,7 @@ const DatePicker = ({ year, month, start_date, end_date }) => {
     updateUrlParams({ end_date: date });
   };
 
-  const updateUrlParams = ({ start_date, end_date }) => {
+  const updateUrlParams = ({ start_date, end_date, year, month }) => {
     const searchParams = new URLSearchParams(location.search);
     if (start_date) {
       searchParams.set("start_date", start_date);
@@ -60,6 +60,7 @@ const DatePicker = ({ year, month, start_date, end_date }) => {
     }
     history.push({ search: searchParams.toString() });
   };
+
   return (
     <Paper className="p-20px mt-20px">
       <Typography variant="h6" align="center">
@@ -122,6 +123,16 @@ const DatePicker = ({ year, month, start_date, end_date }) => {
           />
         </Grid>
       </Grid>
+      <Button
+        onClick={() => {
+          dispatch(resetDateRange());
+          history.push({ search: "" });
+        }}
+        variant="contained"
+        className="mt-10px"
+      >
+        Reset Date Range
+      </Button>
     </Paper>
   );
 };

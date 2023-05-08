@@ -13,13 +13,18 @@ const dashboardPage = createSlice({
     month: "",
     start_date: "2020-08-01",
     end_date: formatDate(today),
-    start_end_date: false,
+    tabIndex: 0,
     loading: false
   },
   reducers: {
     set_year: (state, { payload }) => {
-      console.log({ payload });
       state.year = payload;
+    },
+    resetDateRange: (state, { payload }) => {
+      state.year = "";
+      state.month = "";
+      state.start_date = "2020-08-01";
+      state.end_date = formatDate(today);
     },
     set_month: (state, { payload }) => {
       state.month = payload;
@@ -30,8 +35,8 @@ const dashboardPage = createSlice({
     set_end_date: (state, { payload }) => {
       state.end_date = payload;
     },
-    set_start_end_date: (state, { payload }) => {
-      state.start_end_date = payload;
+    setTabIndex: (state, { payload }) => {
+      state.tabIndex = payload;
     },
     set_loading: (state, { payload }) => {
       state.loading = payload;
@@ -39,5 +44,5 @@ const dashboardPage = createSlice({
   }
 });
 
-export const { set_year, set_month, set_start_date, set_end_date, set_start_end_date, set_loading } = dashboardPage.actions;
+export const { set_year, set_month, set_start_date, set_end_date, resetDateRange, set_loading, setTabIndex } = dashboardPage.actions;
 export default dashboardPage.reducer;
