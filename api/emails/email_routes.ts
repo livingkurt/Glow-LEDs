@@ -25,6 +25,7 @@ router.route("/password_reset").post(email_controller.send_password_reset_emails
 router.route("/reset_password").post(email_controller.send_reset_password_emails_c);
 router.route("/account_created").post(email_controller.send_account_created_emails_c);
 router.route("/send_shipping_status").post(email_controller.send_shipping_status_emails_c);
+router.route("/current_stock").post(email_controller.send_current_stock_emails_c);
 
 // router.route('/verified').post(email_controller.send_verified_emails_c);
 

@@ -114,8 +114,7 @@ const DashboardPage = () => {
             >
               <Tab label={`${determineTabName(month, year)} Revenue`} value={0} />;
               <Tab label={"Affiliate Earnings"} value={1} />;
-              <Tab label={"Product Categories"} value={2} />;
-              <Tab label={"Current Stock"} value={3} />;
+              <Tab label={"Product Categories"} value={2} />;{/* <Tab label={"Current Stock"} value={3} />; */}
             </Tabs>
           </AppBar>
         </Paper>
@@ -134,9 +133,10 @@ const DashboardPage = () => {
         <GLTabPanel value={tabIndex} index={2}>
           <CategorySales category_range_revenue={category_range_revenue} />
         </GLTabPanel>
-        <GLTabPanel value={tabIndex} index={3}>
-          <CurrentStock currentStock={currentStock} />
-        </GLTabPanel>
+        {/* <GLTabPanel value={tabIndex} index={3}>
+
+        </GLTabPanel> */}
+        <CurrentStock currentStock={currentStock} />
       </div>
     </div>
   );

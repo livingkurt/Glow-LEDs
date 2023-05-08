@@ -27,6 +27,7 @@ import { determine_status } from "../emails/email_interactors";
 import { format_date, toCapitalize } from "../../util";
 import { sendEmail, send_multiple_emails } from "./email_helper";
 import email_db from "./email_db";
+import { product_db } from "../products";
 
 export default {
   findAll_emails_c: async (req: any, res: any) => {
@@ -172,6 +173,20 @@ export default {
     };
 
     sendEmail(mailOptions, res, "info", "Order Status Email Sent to " + req.body.email);
+  },
+  send_current_stock_emails_c: async (req: any, res: any) => {
+    const data = await product_db.current_stock_products_db();
+
+    const mailOptions = {
+      from: process.env.DISPLAY_INFO_EMAIL,
+      to: process.env.INFO_EMAIL,
+      subject: "Glow LEDs Current Stock",
+      html: App({
+        body: order_status(data)
+      })
+    };
+
+    sendEmail(mailOptions, res, "info", "Current Stock Email Sent to " + process.env.INFO_EMAIL);
   },
   send_affiliate_emails_c: async (req: any, res: any) => {
     const body = {

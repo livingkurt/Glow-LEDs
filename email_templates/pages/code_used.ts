@@ -1,7 +1,6 @@
 import { determine_code_tier, format_date, months } from "../../util";
 
-export default (props: any) => {
-  const { affiliate, number_of_uses, earnings } = props;
+export default ({ affiliate, number_of_uses, earnings }: any) => {
   const date = new Date();
   return `<table
 	style="border-spacing:0;width:100%; padding: 10px; max-width: 600px; width: 100%; margin: auto; padding-bottom: 10px;">

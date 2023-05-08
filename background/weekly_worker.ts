@@ -1,4 +1,5 @@
 import { payout_employees } from "../client/src/pages/DashboardPage/background/weekly_workers/payout_employees";
+import { check_stock } from "../client/src/pages/DashboardPage/background/weekly_workers/check_stock";
 
 const weekly_worker = () => {
   // Get the current date
@@ -7,6 +8,7 @@ const weekly_worker = () => {
   if (today.getDay() === 5) {
     // Run the code that you only want to run once a week
     payout_employees();
+    check_stock();
   } else {
     console.log("Not Friday");
   }

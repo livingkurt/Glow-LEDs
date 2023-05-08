@@ -30,6 +30,8 @@ import { months } from "../util";
 import { user_db } from "../api/users";
 import { determine_status } from "../api/emails/email_interactors";
 import { email_db } from "../api/emails";
+import current_stock from "./pages/current_stock";
+import { product_db } from "../api/products";
 const router = express.Router();
 
 router.get("/email_subscription", async (req: { body: any }, res: { send: (arg0: string) => void }) => {
@@ -76,6 +78,10 @@ router.get("/refund", async (req: { body: any }, res: { send: (arg0: string) => 
     order: data
   };
   res.send(App({ body: order(body), unsubscribe: false }));
+});
+router.get("/current_stock", async (req: { body: any }, res: { send: (arg0: string) => void }) => {
+  const data = await product_db.current_stock_products_db();
+  res.send(App({ body: current_stock(data) }));
 });
 router.get("/code_used", async (req: { body: any }, res: { send: (arg0: string) => void }) => {
   const promo_code = "cosmo";

@@ -1,9 +1,13 @@
 import React from "react";
 import { GLDisplayTable } from "../../../shared/GlowLEDsComponents/GLDisplayTable";
+import { Typography } from "@mui/material";
 
 const CurrentStock = ({ currentStock }) => {
   return (
     <div>
+      <Typography variant="h4" align="center">
+        {"Current Stock"}
+      </Typography>
       <GLDisplayTable
         title={"Current Supreme V2 Stock"}
         loading={currentStock.isLoading && currentStock.data}
