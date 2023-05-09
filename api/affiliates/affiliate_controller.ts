@@ -15,10 +15,8 @@ export default {
   },
   findByPathname_affiliates_c: async (req: any, res: any) => {
     const { params } = req;
-    console.log({ params });
     try {
       const affiliate = await affiliate_services.findByPathname_affiliates_s(params);
-      console.log({ affiliate });
       if (affiliate) {
         return res.status(200).send(affiliate);
       }

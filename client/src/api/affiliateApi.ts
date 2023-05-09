@@ -68,7 +68,6 @@ export const detailsAffiliate = createAsyncThunk("affiliates/detailsAffiliate", 
       return data;
     } else if (pathname) {
       const { data } = await axios.get(`/api/affiliates/${pathname}/pathname`);
-      console.log({ data });
       return data;
     }
   } catch (error) {}
