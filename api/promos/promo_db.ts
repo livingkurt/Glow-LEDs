@@ -20,6 +20,21 @@ export default {
       }
     }
   },
+  findByAffiliateId_promos_db: async (affiliateId: string) => {
+    const currentDate = new Date();
+    try {
+      return await Promo.find({
+        affiliate: affiliateId,
+        active: true,
+        start_date: { $lte: currentDate },
+        end_date: { $gte: currentDate }
+      });
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
   findById_promos_db: async (id: string) => {
     try {
       return await Promo.findOne({ _id: id })

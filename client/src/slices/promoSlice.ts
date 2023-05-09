@@ -75,6 +75,23 @@ const promoPage = createSlice({
       state.error = payload.error;
       state.message = payload.message;
     },
+    [API.listSponsorCodes.pending as any]: (state: any, { payload }: any) => {
+      state.loading = true;
+      state.refreshCode = "";
+      state.twentyFiveOffCode = "";
+    },
+    [API.listSponsorCodes.fulfilled as any]: (state: any, { payload }: any) => {
+      const { refreshCode, twentyFiveOffCode } = payload;
+      state.loading = false;
+      state.refreshCode = refreshCode;
+      state.twentyFiveOffCode = twentyFiveOffCode;
+      state.message = "Promos Found";
+    },
+    [API.listSponsorCodes.rejected as any]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.error = payload.error;
+      state.message = payload.message;
+    },
     [API.savePromo.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
     },

@@ -49,6 +49,18 @@ export default {
       res.status(500).send({ error, message: "Error Finding Promo" });
     }
   },
+  findByAffiliateId_promos_c: async (req: any, res: any) => {
+    const { params } = req;
+    try {
+      const promo = await promo_services.findByAffiliateId_promos_s(params);
+      if (promo) {
+        return res.status(200).send(promo);
+      }
+      return res.status(404).send({ message: "Promo Not Found" });
+    } catch (error) {
+      res.status(500).send({ error, message: "Error Finding Promo" });
+    }
+  },
   findByCode_promos_c: async (req: any, res: any) => {
     const { params } = req;
     try {

@@ -42,6 +42,13 @@ export const listPromos = createAsyncThunk("promos/listPromos", async (query: an
   } catch (error) {}
 });
 
+export const listSponsorCodes = createAsyncThunk("promos/listSponsorCodes", async (affiliateId: string, thunkApi: any) => {
+  try {
+    const { data } = await axios.get(`/api/promos/${affiliateId}/sponsor_codes`);
+    return data;
+  } catch (error) {}
+});
+
 export const savePromo = createAsyncThunk("promos/savePromo", async (promo: any, thunkApi: any) => {
   try {
     if (!promo._id) {

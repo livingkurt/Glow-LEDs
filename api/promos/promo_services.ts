@@ -3,6 +3,7 @@ import { affiliate_db } from "../affiliates";
 import { getFilteredData } from "../api_helpers";
 import { order_db } from "../orders";
 import { promo_db } from "../promos";
+import { extractCodes } from "./promo_helpers";
 import { normalizePromoFilters, normalizePromoSearch } from "./promo_interactors";
 
 export default {
@@ -106,6 +107,18 @@ export default {
   findById_promos_s: async (params: any) => {
     try {
       return await promo_db.findById_promos_db(params.id);
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  findByAffiliateId_promos_s: async (params: any) => {
+    console.log({ affiliate_id: params.affiliate_id });
+    try {
+      const promos = await promo_db.findByAffiliateId_promos_db(params.affiliate_id);
+      const { twentyFiveOffCode, refreshCode }: any = extractCodes(promos);
+      return { twentyFiveOffCode, refreshCode };
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

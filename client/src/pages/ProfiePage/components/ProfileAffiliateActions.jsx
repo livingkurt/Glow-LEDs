@@ -14,11 +14,11 @@ const ProfileAffiliateMetrics = () => {
   const { month_earnings, loading_month_earnings } = affiliatePage;
 
   const promoPage = useSelector(state => state.promos.promoPage);
-  const { promos } = promoPage;
+  const { refreshCode, twentyFiveOffCode } = promoPage;
 
   return (
     <div className="group_item w-100per">
-      {user.is_affiliated && user.affiliate && user.affiliate.public_code && promos && (
+      {user.is_affiliated && user.affiliate && user.affiliate.public_code && (
         <div className="mb-20px ">
           <h2 className="group_images">Affiliate Metrics</h2>
           <div className="mb-20px">
@@ -37,11 +37,11 @@ const ProfileAffiliateMetrics = () => {
             <>
               <div className="mb-20px">
                 <h3>Monthly Sponsor Code ($25 off)</h3>
-                <label>{promos && promos[0] && promos[0].promo_code.toUpperCase()}</label>
+                <label>{twentyFiveOffCode?.toUpperCase()}</label>
               </div>
               <div className="mb-20px">
                 <h3>Refresh Pack Sponsor Code</h3>
-                <label>{promos && promos[1] && promos[1].promo_code.toUpperCase()}</label>
+                <label>{refreshCode?.toUpperCase()}</label>
               </div>
             </>
           )}

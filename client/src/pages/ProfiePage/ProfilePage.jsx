@@ -45,10 +45,7 @@ const ProfilePage = () => {
       dispatch(set_success(false));
       dispatch(API.detailsUser(id || current_user._id));
       dispatch(API.listMyOrders(id || current_user._id));
-      if (user.is_affiliate && user?.affiliate) {
-        dispatch(API.listPromos({ affiliate: user?.affiliate._id }));
-        dispatch(API.listPaychecks({ affiliate: user?.affiliate._id || current_user.affiliate }));
-      } else {
+      if (user.is_employee) {
         dispatch(API.listPaychecks({ user: id || current_user._id }));
       }
     }
@@ -63,6 +60,12 @@ const ProfilePage = () => {
     const { start_date: year_start_date, end_date: year_end_date } = this_year_date_range();
     if (cleanup) {
       if (user.is_affiliated && user?.affiliate) {
+        dispatch(API.listPaychecks({ affiliate: user?.affiliate._id || current_user.affiliate }));
+        if (user?.affiliate?.sponsor) {
+          console.log({ sponsor: user?.affiliate?.sponsor, affiliate: user?.affiliate._id });
+          dispatch(API.listSponsorCodes(user?.affiliate._id));
+        }
+
         dispatch(
           API.affiliateEarnings({
             promo_code: user?.affiliate?.public_code?.promo_code,
@@ -193,7 +196,7 @@ const ProfilePage = () => {
           <ProfileAffiliateEarnings />
         </div>
       </Loading>
-      {user && user?.affiliate?._id && (
+      {/* {user && user?.affiliate?._id && (
         <div className="mt-20px">
           <GLTableV2
             remoteApi={paychecksRemoteApi}
@@ -223,7 +226,7 @@ const ProfilePage = () => {
         columnDefs={orderColumnDefs}
         loading={loading_order}
         enableRowSelect={false}
-      />
+      /> */}
     </div>
   );
 };
