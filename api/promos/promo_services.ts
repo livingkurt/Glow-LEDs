@@ -114,7 +114,6 @@ export default {
     }
   },
   findByAffiliateId_promos_s: async (params: any) => {
-    console.log({ affiliate_id: params.affiliate_id });
     try {
       const promos = await promo_db.findByAffiliateId_promos_db(params.affiliate_id);
       const { twentyFiveOffCode, refreshCode }: any = extractCodes(promos);
