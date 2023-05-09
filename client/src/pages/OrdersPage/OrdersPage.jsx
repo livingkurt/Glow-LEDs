@@ -24,12 +24,6 @@ const OrdersPage = () => {
 
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   if (order.orderItems.length > 0) {
-  //     dispatch(open_edit_order_modal(order));
-  //   }
-  // }, [dispatch, order]);
-
   const column_defs = useMemo(
     () => [
       { title: "Order Placed", display: row => humanDate(row.createdAt) },
@@ -129,7 +123,6 @@ const OrdersPage = () => {
         enableDropdownRow
         rowName={"_id"}
         dropdownComponent={row => <OrderDropdown row={row} determine_color={determineOrderColors} colspan={column_defs.length + 1} />}
-        // dropdownAction={row => dispatch(API.detailsOrder(row._id))}
         loading={loading}
         enableRowSelect={true}
         titleActions={

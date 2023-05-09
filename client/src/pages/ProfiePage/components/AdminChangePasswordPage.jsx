@@ -20,7 +20,7 @@ const AdminChangePasswordPage = props => {
 
   const submitHandler = async e => {
     e.preventDefault();
-    dispatch(API.passwordReset(props.match.params.id, password, rePassword));
+    dispatch(API.passwordReset({ userId: props.match.params.id, password, rePassword }));
     history.push("/secure/glow/userprofile/" + props.match.params.id);
   };
 

@@ -199,6 +199,7 @@ const ProfilePage = () => {
             remoteApi={paychecksRemoteApi}
             remoteVersionRequirement={remoteVersionRequirement}
             determine_color={determine_color}
+            noURLParams
             tableName={"Paychecks"}
             enableSearch={false}
             namespaceScope="paychecks"
@@ -215,6 +216,7 @@ const ProfilePage = () => {
         tableName={"Orders"}
         colors={orderColors}
         enableSearch={false}
+        noURLParams
         determine_color={determineOrderColors}
         namespaceScope="orders"
         namespace="orderTable"

@@ -230,21 +230,6 @@ export default {
       refresh_token: existingToken?.token
     };
   },
-  password_reset_users_s: async (body: any) => {
-    try {
-      const user: any = await user_db.findById_users_db(body.user_id);
-
-      if (!user) {
-        throw new Error("User Does Not Exist");
-      } else {
-        return user;
-      }
-    } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(error.message);
-      }
-    }
-  },
 
   check_password_s: async (params: any, body: any) => {
     try {

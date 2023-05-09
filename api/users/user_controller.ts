@@ -217,8 +217,6 @@ export default {
         }
       }
     } catch (error) {
-      console.log("refresh_login_users_c error:", error);
-      console.error({ error });
       return res.status(500).send({ error: "Internal Server Error" });
     }
   },
@@ -238,7 +236,7 @@ export default {
   password_reset_users_c: async (req: any, res: any) => {
     const { body } = req;
     try {
-      const user = await user_services.password_reset_users_s(body);
+      const user: any = await user_db.findById_users_db(body.userId);
       bcrypt.genSalt(10, (err: any, salt: any) => {
         bcrypt.hash(body.password, salt, async (err: any, hash: any) => {
           if (err) throw err;
@@ -252,6 +250,7 @@ export default {
         });
       });
     } catch (error) {
+      console.log({ error });
       res.status(500).send({ error, message: "Error Registering User" });
     }
   },

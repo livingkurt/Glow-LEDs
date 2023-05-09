@@ -160,8 +160,14 @@ const userPage = createSlice({
       state.loading = true;
     },
     [API.passwordReset.fulfilled as any]: (state: any, { payload }: any) => {
-      state.access_token = "";
-      state.current_user = payload;
+      const { current_user, data } = payload;
+
+      if (!current_user.isAdmin) {
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        setAuthToken(false);
+        state.current_user = {};
+      }
       state.loading = false;
       state.message = "Password Reset";
       state.success = true;

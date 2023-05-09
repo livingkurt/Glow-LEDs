@@ -45,9 +45,7 @@ const LoginPage = props => {
 
     if (request.isValid) {
       dispatch(API.loginUser({ email: email.toLowerCase(), password }));
-      //
       set_loading(user_loading);
-      // dispatch(loginUser(email, password));
     }
   };
 

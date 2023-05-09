@@ -4,13 +4,13 @@ import { isAdmin, isAuth } from "../../middlewares/authMiddleware";
 
 const router = express.Router();
 
+router.route("/login").post(user_controller.login_users_c);
 router.route("/email/:email").get(user_controller.findByEmail_users_c);
 router.route("/affiliate/:id").get(user_controller.findByEmail_users_c);
 
 router.route("/check_password/:id").post(user_controller.check_password_c);
 router.route("/validate_email/:email").post(user_controller.validate_email_c);
 router.route("/register").post(user_controller.register_users_c);
-router.route("/login").post(user_controller.login_users_c);
 router.route("/login_as_user").post(isAuth, isAdmin, user_controller.login_as_user_users_c);
 router.route("/password_reset").put(user_controller.password_reset_users_c);
 router.route("/reset_password").post(user_controller.reset_password_users_c);

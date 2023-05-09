@@ -109,18 +109,24 @@ export const loginAsUser = createAsyncThunk("users/loginAsUser", async (userData
 
 export const passwordReset = createAsyncThunk(
   "users/passwordReset",
-  async ({ user_id, password, rePassword }: { user_id: string; password: string; rePassword: string }, thunkApi: any) => {
+  async ({ userId, password, rePassword }: { userId: string; password: string; rePassword: string }, thunkApi: any) => {
+    const {
+      users: {
+        userPage: { current_user }
+      }
+    } = thunkApi.getState();
     try {
       const { data } = await axios.put("/api/users/password_reset", {
-        user_id,
+        userId,
         password,
         rePassword
       });
 
-      if (data && data.hasOwnProperty("first_name")) {
-        axios.post("/api/emails/password_reset", data);
-        return data;
-      }
+      // if (data && data.hasOwnProperty("first_name")) {
+      //   axios.post("/api/emails/password_reset", data);
+      //   return data;
+      // }
+      return { current_user, data };
     } catch (error) {}
   }
 );

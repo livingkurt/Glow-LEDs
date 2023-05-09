@@ -135,7 +135,8 @@ const GLTableV2 = ({
   dropdownComponent,
   colors,
   defaultFilters,
-  dropdownAction
+  dropdownAction,
+  noURLParams
 }) => {
   const isMounted = useRef(false);
   const dispatch = useDispatch();
@@ -196,8 +197,10 @@ const GLTableV2 = ({
               sorting
             })
           );
-          // Call updateUrlWithTableState after the dispatch here
-          updateUrlWithTableState({ location, history, search, filters, page, pageSize, sorting });
+          if (!noURLParams) {
+            // Call updateUrlWithTableState after the dispatch here
+            updateUrlWithTableState({ location, history, search, filters, page, pageSize, sorting });
+          }
         }, 1000);
 
         return () => {
@@ -212,25 +215,28 @@ const GLTableV2 = ({
   }, [dispatch, remoteApi, search]);
 
   useEffect(() => {
-    const { param_search, param_filters, param_page, param_pageSize, param_sorting } = updateTableStateFromUrl({
-      location,
-      search,
-      filters,
-      page,
-      pageSize,
-      sorting
-    });
+    if (!noURLParams) {
+      const { param_search, param_filters, param_page, param_pageSize, param_sorting } = updateTableStateFromUrl({
+        location,
+        search,
+        filters,
+        page,
+        pageSize,
+        sorting
+      });
 
-    // Update the state based on the URL parameters
-    dispatch(
-      updateQuery(namespace, {
-        search: param_search,
-        filters: param_filters,
-        page: param_page,
-        pageSize: param_pageSize,
-        sorting: param_sorting
-      })
-    );
+      // Update the state based on the URL parameters
+      dispatch(
+        updateQuery(namespace, {
+          search: param_search,
+          filters: param_filters,
+          page: param_page,
+          pageSize: param_pageSize,
+          sorting: param_sorting
+        })
+      );
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -247,7 +253,9 @@ const GLTableV2 = ({
           sorting
         })
       );
-      updateUrlWithTableState({ location, history, search, filters, page, pageSize, sorting });
+      if (!noURLParams) {
+        updateUrlWithTableState({ location, history, search, filters, page, pageSize, sorting });
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, remoteApi, namespace, filters, sorting, page, pageSize]);
@@ -597,6 +605,7 @@ GLTableV2.defaultProps = {
   enableDragDrop: false,
   dropdownComponent: false,
   colors: [],
+  noURLParams: false,
   dropdownAction: x => x
 };
 
@@ -654,7 +663,8 @@ GLTableV2.propTypes = {
   cellProps: PropTypes.func,
   dropdownComponent: PropTypes.func,
   dropdownAction: PropTypes.func,
-  colors: PropTypes.array
+  colors: PropTypes.array,
+  noURLParams: PropTypes.bool
 };
 
 export default GLTableV2;
