@@ -63,13 +63,14 @@ export const saveAffiliate = createAsyncThunk("affiliates/saveAffiliate", async 
 
 export const detailsAffiliate = createAsyncThunk("affiliates/detailsAffiliate", async ({ pathname, id }: any, thunkApi: any) => {
   try {
-    let response: any = {};
     if (id) {
-      response = await axios.get(`/api/affiliates/${id}`);
+      const { data } = await axios.get(`/api/affiliates/${id}`);
+      return data;
     } else if (pathname) {
-      response = await axios.get(`/api/affiliates/${pathname}/pathname`);
+      const { data } = await axios.get(`/api/affiliates/${pathname}/pathname`);
+      console.log({ data });
+      return data;
     }
-    return response.data;
   } catch (error) {}
 });
 

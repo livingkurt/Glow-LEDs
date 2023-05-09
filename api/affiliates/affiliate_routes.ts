@@ -22,13 +22,13 @@ import { affiliate_controller } from ".";
 import { isAdmin, isAuth } from "../../middlewares/authMiddleware";
 const router = express.Router();
 
-router.route("/").get(affiliate_controller.findAll_affiliates_c).post(isAuth, affiliate_controller.create_affiliates_c);
-// router.route("/reorder").put(affiliate_controller.reorder_affiliates_c);
-
 router
-  .route("/:promo_code/promo_code")
+  .route("/:pathname/pathname")
   .get(affiliate_controller.findByPathname_affiliates_c)
   .put(isAuth, affiliate_controller.update_affiliates_c);
+
+router.route("/").get(affiliate_controller.findAll_affiliates_c).post(isAuth, affiliate_controller.create_affiliates_c);
+// router.route("/reorder").put(affiliate_controller.reorder_affiliates_c);
 
 router
   .route("/:id")
