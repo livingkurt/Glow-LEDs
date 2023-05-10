@@ -57,19 +57,13 @@ const ProductThumbCarouselItem = props => {
               <label style={{ fontSize: "1.6rem" }} className="mt-10px">
                 {product.name}
               </label>
-              {product.name === "Custom Infinity Mirror" ? (
-                <label className="product-price">
-                  $549.99 - $<i className="fas fa-arrow-up" />
-                </label>
-              ) : (
-                <label className="product-price">
-                  {sale_price_switch({
-                    product: props.product,
-                    cartItem: props.product.product_options,
-                    isWholesaler: current_user?.isWholesaler
-                  })}
-                </label>
-              )}
+              <label className="product-price">
+                {sale_price_switch({
+                  product: props.product,
+                  cartItem: props.product.product_options,
+                  isWholesaler: current_user?.isWholesaler
+                })}
+              </label>
 
               {product.rating ? (
                 <Rating rating={product.rating} numReviews={product.numReviews} />

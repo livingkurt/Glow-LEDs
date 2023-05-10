@@ -56,19 +56,12 @@ const ProductItemM = ({ product, style, size, product_occurrences }) => {
                 {determine_product_name_display(product, false)}
               </div>
               <div className="product_text mt-10px">
-                {product.name === "Custom Infinity Mirror" ? (
-                  <div className="">
-                    $549.99 - $<i className="fas fa-arrow-up" />
-                  </div>
-                ) : (
-                  <div className="">
-                    {" "}
-                    {sale_price_switch({
-                      product: product,
-                      isWholesaler: current_user?.isWholesaler
-                    })}
-                  </div>
-                )}
+                <div className="">
+                  {sale_price_switch({
+                    product: product,
+                    isWholesaler: current_user?.isWholesaler
+                  })}
+                </div>
               </div>
               {product.rating ? (
                 <Rating rating={product.rating} numReviews={product.numReviews} />

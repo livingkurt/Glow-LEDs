@@ -112,31 +112,6 @@ const MaintenancePage = props => {
             create truly ridiculous light shows. 100% facemelt guarantee.
           </p>
         </div>
-        {/* <div className="container">
-					<div className="jc-c">
-						<h2>Infinity Mirrors</h2>
-					</div>
-					<div className="jc-c" style={video_wrapper}>
-						<div className="iframe-container">
-							<iframe
-								width="996"
-								height="560"
-								title="Infinity Mirrors"
-								style={{ borderRadius: '20px' }}
-								src="https://www.youtube.com/embed/RLiFZahHbjU?mute=1&showinfo=0&rel=0&autoplay=1&loop=1"
-								frameborder="0"
-								allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-								allowfullscreen="1"
-							/>
-						</div>
-					</div>
-					<p className="p_descriptions" style={{ textAlign: 'center' }}>
-						Wanting to invoke a sense of wonder and amazement in your guests (and yourself)? Infinity
-						mirrors are the perfect addition to any chill space. Look into another dimension as vibrant LEDs
-						go on for miles of rainbow bliss. Order a custom infinity mirror to add that personal touch that
-						will only be found in your space.
-					</p>
-				</div> */}
         <div className="container">
           <div className="jc-c">
             <h2>Glowstringz</h2>

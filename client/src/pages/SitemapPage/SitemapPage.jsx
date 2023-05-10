@@ -93,9 +93,6 @@ const SitemapPage = () => {
               <li>
                 <Link to="/collections/all/products/glowstringz">Glowstringz</Link>
               </li>
-              {/* <li>
-								<Link to="/collections/all/products/infinity_mirrors">Infinity Mirrors</Link>
-							</li> */}
             </ul>
           </div>
           <div style={{ width: "50%" }}>
@@ -239,16 +236,6 @@ const SitemapPage = () => {
                   <li>
                     <Link to="/collections/all/products/dodecahedron_face_diffuser_caps">Dodecahedron Face Diffuser Caps</Link>
                   </li>
-                  {/* <li>
-							<Link to="/collections/all/products/lion_diffuser_caps">
-								Lion Diffuser Caps
-							</Link>
-						</li> */}
-                  {/* <li>
-							<Link to="/collections/all/products/illuminate￼_diffuser_caps">
-								Illuminate Diffuser Caps
-							</Link>
-						</li> */}
                   <li>
                     <Link to="/collections/all/products/dizzy_face_emoji_diffuser_caps">Dizzy Face Emoji Diffuser Caps</Link>
                   </li>
@@ -258,26 +245,6 @@ const SitemapPage = () => {
                   <li>
                     <Link to="/collections/all/products/custom_diffuser_caps">Custom Diffuser Caps</Link>
                   </li>
-                  {/* <li>
-							<Link to="/collections/all/products/large_custom_infinity_mirror">
-								Large Custom Infinity Mirror
-							</Link>
-						</li> */}
-                  {/* <li>
-										<Link to="/collections/all/products/serotonin_molecule_infinity_mirror">
-											Serotonin Molecule Infinity Mirror
-										</Link>
-									</li>
-									<li>
-										<Link to="/collections/all/products/triforce_infinity_mirror">
-											Triforce Infinity Mirror
-										</Link>
-									</li> */}
-                  {/* <li>
-										<Link to="/collections/all/products/custom_infinity_mirror">
-											Custom Infinity Mirrors
-										</Link>
-									</li> */}
                   <li>
                     <Link to="/collections/all/products/coin_battery_storage">Coin Battery Storage</Link>
                   </li>
