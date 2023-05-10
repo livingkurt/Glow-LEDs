@@ -1,5 +1,6 @@
 /* eslint-disable consistent-return */
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import Covy from "../shared/GlowLEDsComponents/GLCovy/GLCovy";
 import axios from "axios";
 
 import * as API from "../api";
@@ -8,14 +9,24 @@ export const buyLabel = createAsyncThunk("shipping/buyLabel", async ({ orderId }
   try {
     const { data } = await axios.put(`/api/shipping/${orderId}/buy_label`, {});
     return data;
-  } catch (error) {}
+  } catch (error) {
+    Covy().showSnackbar({
+      message: `Error: ${error}`,
+      severity: "error"
+    });
+  }
 });
 
 export const createLabel = createAsyncThunk("shipping/createLabel", async ({ orderId, speed }: any, thunkApi: any) => {
   try {
     const { data } = await axios.put(`/api/shipping/${orderId}/create_label/${speed}`, {});
     return data;
-  } catch (error) {}
+  } catch (error) {
+    Covy().showSnackbar({
+      message: `Error: ${error}`,
+      severity: "error"
+    });
+  }
 });
 
 export const createTracker = createAsyncThunk("shipping/createTracker", async ({ orderId }: any, thunkApi: any) => {
@@ -23,34 +34,52 @@ export const createTracker = createAsyncThunk("shipping/createTracker", async ({
     const { data } = await axios.put(`/api/shipping/${orderId}/create_tracker`, {});
 
     return data;
-  } catch (error) {}
+  } catch (error) {
+    Covy().showSnackbar({
+      message: `Error: ${error}`,
+      severity: "error"
+    });
+  }
 });
 export const createReturnLabel = createAsyncThunk("shipping/createReturnLabel", async ({ orderId }: any, thunkApi: any) => {
   try {
     const { data } = await axios.put(`/api/shipping/${orderId}/create_return_label`, {});
     return data;
-  } catch (error) {}
+  } catch (error) {
+    Covy().showSnackbar({
+      message: `Error: ${error}`,
+      severity: "error"
+    });
+  }
 });
 
 export const shippingRates = createAsyncThunk("shipping/shippingRates", async ({ order, verify_shipping }: any, thunkApi: any) => {
   try {
     const { data } = await axios.put(`/api/shipping/shipping_rates`, { order });
     return data;
-  } catch (error) {}
+  } catch (error) {
+    Covy().showSnackbar({
+      message: `Error: ${error}`,
+      severity: "error"
+    });
+  }
 });
 
 export const differentShippingRates = createAsyncThunk("shipping/differentShippingRates", async (order: any, thunkApi: any) => {
-  console.log({ shipping_label: order.shipping.shipping_label, shipment_id: order.shipping.shipment_id });
   try {
     if (order.shipping.shipment_id && !order.shipping.shipping_label) {
       const { data } = await axios.get(`/api/shipping/${order._id}/different_shipping_rates/${order.shipping.shipment_id}`);
       return data;
     } else {
       const { data } = await axios.put(`/api/shipping/shipping_rates`, { order });
-      console.log({ data });
       return data;
     }
-  } catch (error) {}
+  } catch (error) {
+    Covy().showSnackbar({
+      message: `Error: ${error}`,
+      severity: "error"
+    });
+  }
 });
 // export const createLabel = createAsyncThunk("shipping/createLabel", async ({ order, shipping_rate, speed }: any, thunkApi: any) => {
 
@@ -63,7 +92,12 @@ export const differentShippingRates = createAsyncThunk("shipping/differentShippi
 //       },
 //     );
 //     return data;
-//   } catch (error) {}
+//     } catch (error) {
+//   Covy().showSnackbar({
+//     message: `Error: ${error}`,
+//     severity: "error"
+//   });
+// }
 // });
 // export const customShippingRates = createAsyncThunk("shipping/customShippingRates", async (data: any, thunkApi: any) => {
 //   try {
@@ -71,7 +105,12 @@ export const differentShippingRates = createAsyncThunk("shipping/differentShippi
 //       data
 //     });
 //     return response_data;
-//   } catch (error) {}
+//     } catch (error) {
+//   Covy().showSnackbar({
+//     message: `Error: ${error}`,
+//     severity: "error"
+//   });
+// }
 // });
 
 // export const addTrackingNumber = createAsyncThunk(//   "shipping/addTrackingNumber",
@@ -86,7 +125,12 @@ export const differentShippingRates = createAsyncThunk("shipping/differentShippi
 //         },
 //       );
 //       return data;
-//     } catch (error) {}
+//       } catch (error) {
+//   Covy().showSnackbar({
+//     message: `Error: ${error}`,
+//     severity: "error"
+//   });
+// }
 //   }
 // );
 // export const addReturnTrackingNumber = createAsyncThunk(
@@ -102,7 +146,12 @@ export const differentShippingRates = createAsyncThunk("shipping/differentShippi
 //         },
 //       );
 //       return data;
-//     } catch (error) {}
+//       } catch (error) {
+//   Covy().showSnackbar({
+//     message: `Error: ${error}`,
+//     severity: "error"
+//   });
+// }
 //   }
 // );
 
@@ -117,5 +166,10 @@ export const differentShippingRates = createAsyncThunk("shipping/differentShippi
 //       },
 //     );
 //     return data;
-//   } catch (error) {}
+//     } catch (error) {
+//   Covy().showSnackbar({
+//     message: `Error: ${error}`,
+//     severity: "error"
+//   });
+// }
 // });

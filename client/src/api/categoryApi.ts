@@ -1,5 +1,6 @@
 /* eslint-disable consistent-return */
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import Covy from "../shared/GlowLEDsComponents/GLCovy/GLCovy";
 import axios from "axios";
 import { create_query } from "../utils/helper_functions";
 
@@ -26,19 +27,34 @@ export const getCategorys = async ({
         filters: filters
       }
     });
-  } catch (error) {}
+  } catch (error) {
+    Covy().showSnackbar({
+      message: `Error: ${error}`,
+      severity: "error"
+    });
+  }
 };
 export const reorderCategorys = async ({ reorderedItems }: { reorderedItems: any }) => {
   try {
     return axios.put(`/api/categorys/reorder`, { reorderedItems });
-  } catch (error) {}
+  } catch (error) {
+    Covy().showSnackbar({
+      message: `Error: ${error}`,
+      severity: "error"
+    });
+  }
 };
 
 export const listCategorys = createAsyncThunk("categorys/listCategorys", async (query: any, thunkApi: any) => {
   try {
     const { data } = await axios.get(`/api/categorys?${create_query(query)}`);
     return data;
-  } catch (error) {}
+  } catch (error) {
+    Covy().showSnackbar({
+      message: `Error: ${error}`,
+      severity: "error"
+    });
+  }
 });
 
 export const saveCategory = createAsyncThunk("categorys/saveCategory", async (category: any, thunkApi: any) => {
@@ -50,7 +66,12 @@ export const saveCategory = createAsyncThunk("categorys/saveCategory", async (ca
       const { data } = await axios.put(`/api/categorys/${category._id}`, category);
       return data;
     }
-  } catch (error) {}
+  } catch (error) {
+    Covy().showSnackbar({
+      message: `Error: ${error}`,
+      severity: "error"
+    });
+  }
 });
 
 export const detailsCategory = createAsyncThunk("categorys/detailsCategory", async ({ pathname, id }: any, thunkApi: any) => {
@@ -62,12 +83,22 @@ export const detailsCategory = createAsyncThunk("categorys/detailsCategory", asy
       response = await axios.get(`/api/categorys/${pathname}/pathname`);
     }
     return response.data;
-  } catch (error) {}
+  } catch (error) {
+    Covy().showSnackbar({
+      message: `Error: ${error}`,
+      severity: "error"
+    });
+  }
 });
 
 export const deleteCategory = createAsyncThunk("categorys/deleteCategory", async (id: string, thunkApi: any) => {
   try {
     const { data } = await axios.delete(`/api/categorys/${id}`);
     return data;
-  } catch (error) {}
+  } catch (error) {
+    Covy().showSnackbar({
+      message: `Error: ${error}`,
+      severity: "error"
+    });
+  }
 });

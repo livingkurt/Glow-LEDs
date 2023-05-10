@@ -13,12 +13,14 @@ import Bugsnag from "@bugsnag/js";
 import BugsnagPluginReact from "@bugsnag/plugin-react";
 import { ErrorView } from "./shared/SharedComponents";
 import Links from "./Links";
+import Covy from "./shared/GlowLEDsComponents/GLCovy/GLCovy";
 require("dotenv").config();
 
 // Bugsnag.start({
 // 	apiKey: process.env.REACT_APP_BUGSNAG_KEY,
 // 	plugins: [ new BugsnagPluginReact() ]
 // });
+Covy();
 const path = new URL(window.location.href);
 //
 //

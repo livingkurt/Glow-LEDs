@@ -4,6 +4,7 @@ import axios from "axios";
 import { create_query } from "../utils/helper_functions";
 
 import * as API from "../api";
+import Covy from "../shared/GlowLEDsComponents/GLCovy/GLCovy";
 
 export const getAffiliates = async ({
   search,
@@ -28,14 +29,24 @@ export const getAffiliates = async ({
         // filters: pickBy(filters, (val: any) => val.length > 0)
       }
     });
-  } catch (error) {}
+  } catch (error) {
+    Covy().showSnackbar({
+      message: `Error: ${error}`,
+      severity: "error"
+    });
+  }
 };
 
 export const listAffiliates = createAsyncThunk("affiliates/listAffiliates", async (query: any, thunkApi: any) => {
   try {
     const { data } = await axios.get(`/api/affiliates?${create_query(query)}`);
     return data;
-  } catch (error) {}
+  } catch (error) {
+    Covy().showSnackbar({
+      message: `Error: ${error}`,
+      severity: "error"
+    });
+  }
 });
 
 export const saveAffiliate = createAsyncThunk("affiliates/saveAffiliate", async ({ affiliate, profile }: any, thunkApi: any) => {
@@ -58,7 +69,12 @@ export const saveAffiliate = createAsyncThunk("affiliates/saveAffiliate", async 
       const { data } = await axios.put(`/api/affiliates/${affiliate._id}`, affiliate);
       return data;
     }
-  } catch (error) {}
+  } catch (error) {
+    Covy().showSnackbar({
+      message: `Error: ${error}`,
+      severity: "error"
+    });
+  }
 });
 
 export const detailsAffiliate = createAsyncThunk("affiliates/detailsAffiliate", async ({ pathname, id }: any, thunkApi: any) => {
@@ -70,21 +86,36 @@ export const detailsAffiliate = createAsyncThunk("affiliates/detailsAffiliate", 
       const { data } = await axios.get(`/api/affiliates/${pathname}/pathname`);
       return data;
     }
-  } catch (error) {}
+  } catch (error) {
+    Covy().showSnackbar({
+      message: `Error: ${error}`,
+      severity: "error"
+    });
+  }
 });
 
 export const deleteAffiliate = createAsyncThunk("affiliates/deleteAffiliate", async (pathname, thunkApi: any) => {
   try {
     const { data } = await axios.delete(`/api/affiliates/${pathname}`);
     return data;
-  } catch (error) {}
+  } catch (error) {
+    Covy().showSnackbar({
+      message: `Error: ${error}`,
+      severity: "error"
+    });
+  }
 });
 
 export const create_rave_mob_affiliates = createAsyncThunk("affiliates/create_rave_mob_affiliates", async (csv, thunkApi: any) => {
   try {
     const { data } = await axios.put("/api/affiliates/create_rave_mob_affiliates", { csv });
     return data;
-  } catch (error) {}
+  } catch (error) {
+    Covy().showSnackbar({
+      message: `Error: ${error}`,
+      severity: "error"
+    });
+  }
 });
 
 export const affiliateEarnings = createAsyncThunk(
@@ -109,6 +140,11 @@ export const affiliateEarnings = createAsyncThunk(
         `/api/orders/code_usage/${promo_code}?start_date=${start_date}&end_date=${end_date}&sponsor=${sponsor}`
       );
       return { data, type };
-    } catch (error) {}
+    } catch (error) {
+      Covy().showSnackbar({
+        message: `Error: ${error}`,
+        severity: "error"
+      });
+    }
   }
 );

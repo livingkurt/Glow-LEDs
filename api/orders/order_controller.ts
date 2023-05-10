@@ -72,6 +72,7 @@ export default {
       }
       return res.status(500).send(order);
     } catch (error) {
+      console.log({ error });
       res.status(500).send({ error, message: "Error Creating Order" });
     }
   },

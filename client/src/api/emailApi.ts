@@ -1,5 +1,6 @@
 /* eslint-disable consistent-return */
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import Covy from "../shared/GlowLEDsComponents/GLCovy/GLCovy";
 import axios from "axios";
 
 import { create_query } from "../utils/helper_functions";
@@ -8,7 +9,12 @@ export const listEmails = createAsyncThunk("emails/listEmails", async (query: an
   try {
     const { data } = await axios.get(`/api/emails?${create_query(query)}`);
     return data;
-  } catch (error) {}
+  } catch (error) {
+    Covy().showSnackbar({
+      message: `Error: ${error}`,
+      severity: "error"
+    });
+  }
 });
 
 export const saveEmail = createAsyncThunk("emails/saveEmail", async (email: any, thunkApi: any) => {
@@ -20,21 +26,36 @@ export const saveEmail = createAsyncThunk("emails/saveEmail", async (email: any,
       const { data } = await axios.put(`/api/emails/${email._id}`, email);
       return data;
     }
-  } catch (error) {}
+  } catch (error) {
+    Covy().showSnackbar({
+      message: `Error: ${error}`,
+      severity: "error"
+    });
+  }
 });
 
 export const detailsEmail = createAsyncThunk("emails/detailsEmail", async (id: string, thunkApi: any) => {
   try {
     const { data } = await axios.get(`/api/emails/${id}`);
     return data;
-  } catch (error) {}
+  } catch (error) {
+    Covy().showSnackbar({
+      message: `Error: ${error}`,
+      severity: "error"
+    });
+  }
 });
 
 export const deleteEmail = createAsyncThunk("emails/deleteEmail", async (pathname, thunkApi: any) => {
   try {
     const { data } = await axios.delete("/api/emails/" + pathname);
     return data;
-  } catch (error) {}
+  } catch (error) {
+    Covy().showSnackbar({
+      message: `Error: ${error}`,
+      severity: "error"
+    });
+  }
 });
 
 export const sendContactEmail = createAsyncThunk(
@@ -60,6 +81,11 @@ export const sendContactEmail = createAsyncThunk(
       const { data } = await axios.post("/api/emails/contact", contact_info);
       axios.post("/api/emails/contact_confirmation", contact_info);
       return data;
-    } catch (error) {}
+    } catch (error) {
+      Covy().showSnackbar({
+        message: `Error: ${error}`,
+        severity: "error"
+      });
+    }
   }
 );

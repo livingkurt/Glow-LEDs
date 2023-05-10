@@ -1,5 +1,6 @@
 /* eslint-disable consistent-return */
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import Covy from "../shared/GlowLEDsComponents/GLCovy/GLCovy";
 import axios from "axios";
 
 import { create_query } from "../utils/helper_functions";
@@ -27,14 +28,24 @@ export const getImages = async ({
         filters
       }
     });
-  } catch (error) {}
+  } catch (error) {
+    Covy().showSnackbar({
+      message: `Error: ${error}`,
+      severity: "error"
+    });
+  }
 };
 
 export const listImages = createAsyncThunk("images/listImages", async (query: any, thunkApi: any) => {
   try {
     const { data } = await axios.get(`/api/images?${create_query(query)}`);
     return data;
-  } catch (error) {}
+  } catch (error) {
+    Covy().showSnackbar({
+      message: `Error: ${error}`,
+      severity: "error"
+    });
+  }
 });
 
 export const saveImage = createAsyncThunk("images/saveImage", async (image: any, thunkApi: any) => {
@@ -46,19 +57,34 @@ export const saveImage = createAsyncThunk("images/saveImage", async (image: any,
       const { data } = await axios.put(`/api/images/${image._id}`, image);
       return data;
     }
-  } catch (error) {}
+  } catch (error) {
+    Covy().showSnackbar({
+      message: `Error: ${error}`,
+      severity: "error"
+    });
+  }
 });
 
 export const detailsImage = createAsyncThunk("images/detailsImage", async (id: string, thunkApi: any) => {
   try {
     const { data } = await axios.get(`/api/images/${id}`);
     return data;
-  } catch (error) {}
+  } catch (error) {
+    Covy().showSnackbar({
+      message: `Error: ${error}`,
+      severity: "error"
+    });
+  }
 });
 
 export const deleteImage = createAsyncThunk("images/deleteImage", async (pathname, thunkApi: any) => {
   try {
     const { data } = await axios.delete("/api/images/" + pathname);
     return data;
-  } catch (error) {}
+  } catch (error) {
+    Covy().showSnackbar({
+      message: `Error: ${error}`,
+      severity: "error"
+    });
+  }
 });

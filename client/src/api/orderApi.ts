@@ -1,5 +1,6 @@
 /* eslint-disable consistent-return */
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import Covy from "../shared/GlowLEDsComponents/GLCovy/GLCovy";
 import axios from "axios";
 
 import { create_query } from "../utils/helper_functions";
@@ -27,7 +28,12 @@ export const getOrders = async ({
         filters: filters
       }
     });
-  } catch (error) {}
+  } catch (error) {
+    Covy().showSnackbar({
+      message: `Error: ${error}`,
+      severity: "error"
+    });
+  }
 };
 export const getOrderFilters = async () => {
   const { data } = await axios.get(`/api/orders/filters`);
@@ -38,14 +44,24 @@ export const listOrders = createAsyncThunk("orders/listOrders", async (query: an
   try {
     const { data } = await axios.get(`/api/orders/old?${create_query(query)}`);
     return data;
-  } catch (error) {}
+  } catch (error) {
+    Covy().showSnackbar({
+      message: `Error: ${error}`,
+      severity: "error"
+    });
+  }
 });
 
 export const listMyOrders = createAsyncThunk("orders/listMyOrders", async (user_id: any, thunkApi: any) => {
   try {
     const { data } = await axios.get(`/api/orders/${user_id}/user`);
     return data;
-  } catch (error) {}
+  } catch (error) {
+    Covy().showSnackbar({
+      message: `Error: ${error}`,
+      severity: "error"
+    });
+  }
 });
 
 export const saveOrder = createAsyncThunk("orders/saveOrder", async (order: any, thunkApi: any) => {
@@ -58,7 +74,12 @@ export const saveOrder = createAsyncThunk("orders/saveOrder", async (order: any,
       const { data } = await axios.put(`/api/orders/glow/${order._id}`, order);
       return data;
     }
-  } catch (error) {}
+  } catch (error) {
+    Covy().showSnackbar({
+      message: `Error: ${error}`,
+      severity: "error"
+    });
+  }
 });
 
 export const createPayOrder = createAsyncThunk(
@@ -134,21 +155,36 @@ export const detailsOrder = createAsyncThunk("orders/detailsOrder", async (order
       const { data } = await axios.get("/api/orders/guest/" + order_id);
       return data;
     }
-  } catch (error) {}
+  } catch (error) {
+    Covy().showSnackbar({
+      message: `Error: ${error}`,
+      severity: "error"
+    });
+  }
 });
 
 export const deleteOrder = createAsyncThunk("orders/deleteOrder", async (id: string, thunkApi: any) => {
   try {
     const { data } = await axios.delete(`/api/orders/glow/${id}`);
     return data;
-  } catch (error) {}
+  } catch (error) {
+    Covy().showSnackbar({
+      message: `Error: ${error}`,
+      severity: "error"
+    });
+  }
 });
 
 export const deleteMultipleOrders = createAsyncThunk("orders/deleteMultipleOrders", async (ids: string, thunkApi: any) => {
   try {
     const { data } = await axios.put(`/api/orders/glow/delete_multiple`, { ids });
     return data;
-  } catch (error) {}
+  } catch (error) {
+    Covy().showSnackbar({
+      message: `Error: ${error}`,
+      severity: "error"
+    });
+  }
 });
 
 export const refundOrder = createAsyncThunk(
@@ -171,7 +207,12 @@ export const refundOrder = createAsyncThunk(
         refund_reason: refund_reason
       });
       return data;
-    } catch (error) {}
+    } catch (error) {
+      Covy().showSnackbar({
+        message: `Error: ${error}`,
+        severity: "error"
+      });
+    }
   }
 );
 export const payOrder = createAsyncThunk(
@@ -180,7 +221,12 @@ export const payOrder = createAsyncThunk(
     try {
       const { data } = await axios.put("/api/payments/secure/pay/" + order._id, { paymentMethod });
       return data;
-    } catch (error) {}
+    } catch (error) {
+      Covy().showSnackbar({
+        message: `Error: ${error}`,
+        severity: "error"
+      });
+    }
   }
 );
 export const payOrderGuest = createAsyncThunk(
@@ -189,7 +235,12 @@ export const payOrderGuest = createAsyncThunk(
     try {
       const { data } = await axios.put("/api/payments/guest/pay/" + order._id, { paymentMethod });
       return data;
-    } catch (error) {}
+    } catch (error) {
+      Covy().showSnackbar({
+        message: `Error: ${error}`,
+        severity: "error"
+      });
+    }
   }
 );
 
@@ -199,7 +250,12 @@ export const transferOrders = createAsyncThunk(
     try {
       const { data } = await axios.put(`/api/orders/${oldUserId}transfer/${newUserId}`);
       return data;
-    } catch (error) {}
+    } catch (error) {
+      Covy().showSnackbar({
+        message: `Error: ${error}`,
+        severity: "error"
+      });
+    }
   }
 );
 
@@ -207,5 +263,10 @@ export const invoiceOrder = createAsyncThunk("orders/invoiceOrder", async ({ ord
   try {
     const { data } = await axios.put(`/api/orders/${orderId}/invoice`);
     return data;
-  } catch (error) {}
+  } catch (error) {
+    Covy().showSnackbar({
+      message: `Error: ${error}`,
+      severity: "error"
+    });
+  }
 });

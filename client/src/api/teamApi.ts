@@ -1,5 +1,6 @@
 /* eslint-disable consistent-return */
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import Covy from "../shared/GlowLEDsComponents/GLCovy/GLCovy";
 import axios from "axios";
 
 import { create_query } from "../utils/helper_functions";
@@ -8,7 +9,12 @@ export const listTeams = createAsyncThunk("teams/listTeams", async (query: any, 
   try {
     const { data } = await axios.get(`/api/teams?${create_query(query)}`);
     return data;
-  } catch (error) {}
+  } catch (error) {
+    Covy().showSnackbar({
+      message: `Error: ${error}`,
+      severity: "error"
+    });
+  }
 });
 
 export const saveTeam = createAsyncThunk("teams/saveTeam", async (team: any, thunkApi: any) => {
@@ -20,19 +26,34 @@ export const saveTeam = createAsyncThunk("teams/saveTeam", async (team: any, thu
       const { data } = await axios.put(`/api/teams/${team._id}`, team);
       return data;
     }
-  } catch (error) {}
+  } catch (error) {
+    Covy().showSnackbar({
+      message: `Error: ${error}`,
+      severity: "error"
+    });
+  }
 });
 
 export const detailsTeam = createAsyncThunk("teams/detailsTeam", async (pathname: any, thunkApi: any) => {
   try {
     const { data } = await axios.get(`/api/teams/${pathname}`);
     return data;
-  } catch (error) {}
+  } catch (error) {
+    Covy().showSnackbar({
+      message: `Error: ${error}`,
+      severity: "error"
+    });
+  }
 });
 
 export const deleteTeam = createAsyncThunk("teams/deleteTeam", async (pathname, thunkApi: any) => {
   try {
     const { data } = await axios.delete("/api/teams/" + pathname);
     return data;
-  } catch (error) {}
+  } catch (error) {
+    Covy().showSnackbar({
+      message: `Error: ${error}`,
+      severity: "error"
+    });
+  }
 });

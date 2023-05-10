@@ -394,6 +394,16 @@ const PlaceOrderPage = props => {
         paidAt: isPaid ? today : null
       })
     );
+    // setTimeout(() => {
+    //   props.history.push("/pages/complete/order/" + order._id);
+    //   set_loading_payment(false);
+    //   dispatch(API.emptyCart(my_cart._id));
+    //   promo_code_used();
+    //   dimminish_stock();
+    //   send_used_code_email();
+    //   sessionStorage.removeItem("shippingAddress");
+    //   // dispatch(removeOrderState());
+    // }, 2000);
   };
 
   const create_order_without_user = async () => {
