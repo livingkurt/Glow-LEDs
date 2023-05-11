@@ -13,28 +13,28 @@ const GLDisplayTable = ({ rows, columnDefs, loading, title, onEdit }) => {
   const [editField, setEditField] = useState(null);
   const [editValue, setEditValue] = useState(null);
 
-  const handleClick = (columnDef, row, rowIndex, e) => {
+  const handleClick = (attribute, row, rowIndex, e) => {
     e.stopPropagation();
     if (onEdit) {
       setEditRowIndex(rowIndex);
-      setEditField(columnDef.attribute);
-      setEditValue(row[columnDef.attribute]);
+      setEditField(attribute);
+      setEditValue(row[attribute]);
     }
   };
 
-  const handleSave = (row, e) => {
+  const handleSave = (row, e, attribute) => {
     e.stopPropagation();
-    onEdit(row, editValue);
+    onEdit({ ...row, [attribute]: editValue });
     setEditRowIndex(null);
     setEditField(null);
     setEditValue(null);
   };
 
-  const displayValue = (columnDef, row, rowIndex) => {
-    if (typeof columnDef.display === "string") {
-      return row[columnDef.display];
+  const displayValue = (display, row, rowIndex) => {
+    if (typeof display === "string") {
+      return row[display];
     } else {
-      return columnDef.display(row, rowIndex);
+      return display(row, rowIndex);
     }
   };
 
@@ -90,12 +90,14 @@ const GLDisplayTable = ({ rows, columnDefs, loading, title, onEdit }) => {
                             onClick={e => e.stopPropagation()}
                             onChange={e => setEditValue(e.target.value)}
                           />
-                          <Button variant="contained" sx={{ height: 22 }} onClick={e => handleSave(row, e)}>
+                          <Button variant="contained" sx={{ height: 22 }} onClick={e => handleSave(row, e, columnDef.attribute)}>
                             Save
                           </Button>
                         </Box>
                       ) : (
-                        <div onClick={e => handleClick(columnDef, row, rowIndex, e)}>{displayValue(columnDef, row, rowIndex)}</div>
+                        <div onClick={e => handleClick(columnDef.attribute, row, rowIndex, e)}>
+                          {displayValue(columnDef.display, row, rowIndex)}
+                        </div>
                       )}
                     </TableCell>
                   ))}

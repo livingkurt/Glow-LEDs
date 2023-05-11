@@ -14,8 +14,8 @@ const CurrentStock = ({ currentStock }) => {
       <GLDisplayTable
         title={"Current Supreme V2 Stock"}
         loading={currentStock.isLoading && currentStock.data}
-        onEdit={async (row, value) => {
-          await dispatch(API.saveProduct({ ...row, count_in_stock: value }));
+        onEdit={async value => {
+          await dispatch(API.saveProduct(value));
           currentStock.refetch();
         }}
         rows={
@@ -34,8 +34,8 @@ const CurrentStock = ({ currentStock }) => {
       <GLDisplayTable
         title={"Current Supreme V1 Stock"}
         loading={currentStock.isLoading && currentStock.data}
-        onEdit={async (row, value) => {
-          await dispatch(API.saveProduct({ ...row, count_in_stock: value }));
+        onEdit={async value => {
+          await dispatch(API.saveProduct(value));
           currentStock.refetch();
         }}
         rows={
@@ -52,8 +52,8 @@ const CurrentStock = ({ currentStock }) => {
         title={"Current Battery Stock"}
         loading={currentStock.isLoading && currentStock.data}
         rows={!currentStock.isLoading && currentStock?.data?.filter(row => row.category === "batteries")}
-        onEdit={async (row, value) => {
-          await dispatch(API.saveProduct({ ...row, count_in_stock: value }));
+        onEdit={async value => {
+          await dispatch(API.saveProduct(value));
           currentStock.refetch();
         }}
         columnDefs={[
