@@ -1,4 +1,3 @@
-import * as React from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -7,13 +6,15 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Divider, Typography, TextField, Button, Box } from "@mui/material";
+import { useEffect, useState } from "react";
 
 const GLDisplayTable = ({ rows, columnDefs, loading, title, onEdit }) => {
-  const [editRowIndex, setEditRowIndex] = React.useState(null);
-  const [editField, setEditField] = React.useState(null);
-  const [editValue, setEditValue] = React.useState(null);
+  const [editRowIndex, setEditRowIndex] = useState(null);
+  const [editField, setEditField] = useState(null);
+  const [editValue, setEditValue] = useState(null);
 
-  const handleClick = (columnDef, row, rowIndex) => {
+  const handleClick = (columnDef, row, rowIndex, e) => {
+    e.stopPropagation();
     if (onEdit) {
       setEditRowIndex(rowIndex);
       setEditField(columnDef.attribute);
@@ -21,7 +22,8 @@ const GLDisplayTable = ({ rows, columnDefs, loading, title, onEdit }) => {
     }
   };
 
-  const handleSave = row => {
+  const handleSave = (row, e) => {
+    e.stopPropagation();
     onEdit(row, editValue);
     setEditRowIndex(null);
     setEditField(null);
@@ -35,6 +37,24 @@ const GLDisplayTable = ({ rows, columnDefs, loading, title, onEdit }) => {
       return columnDef.display(row, rowIndex);
     }
   };
+
+  useEffect(() => {
+    const handleClickOutside = () => {
+      setEditRowIndex(null);
+      setEditField(null);
+      setEditValue(null);
+    };
+
+    if (editRowIndex !== null) {
+      document.addEventListener("click", handleClickOutside);
+    } else {
+      document.removeEventListener("click", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [editRowIndex]);
 
   return (
     <Paper sx={{ margin: "20px 0" }}>
@@ -62,13 +82,20 @@ const GLDisplayTable = ({ rows, columnDefs, loading, title, onEdit }) => {
                     <TableCell key={colIndex}>
                       {onEdit && editRowIndex === rowIndex && editField === columnDef.attribute ? (
                         <Box className="ai-c g-10px">
-                          <TextField size="small" sx={{ width: 75 }} value={editValue} onChange={e => setEditValue(e.target.value)} />
-                          <Button variant="contained" onClick={() => handleSave(row)}>
+                          <TextField
+                            size="small"
+                            sx={{ width: 50 }}
+                            inputProps={{ style: { height: 12, fontSize: 14, padding: 5 } }}
+                            value={editValue}
+                            onClick={e => e.stopPropagation()}
+                            onChange={e => setEditValue(e.target.value)}
+                          />
+                          <Button variant="contained" sx={{ height: 22 }} onClick={e => handleSave(row, e)}>
                             Save
                           </Button>
                         </Box>
                       ) : (
-                        <div onClick={() => handleClick(columnDef, row, rowIndex)}>{displayValue(columnDef, row, rowIndex)}</div>
+                        <div onClick={e => handleClick(columnDef, row, rowIndex, e)}>{displayValue(columnDef, row, rowIndex)}</div>
                       )}
                     </TableCell>
                   ))}
