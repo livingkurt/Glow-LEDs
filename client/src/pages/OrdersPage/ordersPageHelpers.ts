@@ -23,11 +23,7 @@ export const determineOrderColors = (order: any) => {
     if (order.isPaid) {
       result = tableColors.active;
     }
-    if (
-      order.shipping.international ||
-      (order?.shipping?.shipping_rate &&
-        !(order?.shipping?.shipping_rate?.service === "First" || order?.shipping?.shipping_rate?.service === "ParcelSelect"))
-    ) {
+    if (order.shipping.international) {
       result = tableColors.alt_color_3;
     }
     if (order.shipping.shipping_label) {
