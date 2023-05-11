@@ -8,34 +8,21 @@ import {
   useGetYearlyRevenueOrdersQuery,
   useGetRangePayoutsQuery,
   useGetDailyRevenueOrdersQuery,
-  useGetRangeGlovesQuery,
   useGetCurrentStockQuery
 } from "./dashboardApi";
-import { determineTabName, isLoading, run_daily_workers, run_monthly_workers, run_weekly_workers, timeLabel } from "./dashboardHelpers";
+import { determineTabName, run_daily_workers, run_monthly_workers, run_weekly_workers } from "./dashboardHelpers";
 import { useDispatch, useSelector } from "react-redux";
 import { DatePicker } from "./components";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import { Loading } from "../../shared/SharedComponents";
-import {
-  AppBar,
-  Divider,
-  Paper,
-  Tab,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Tabs,
-  Typography
-} from "@mui/material";
+import { AppBar, Paper, Tab, Tabs } from "@mui/material";
 import { setTabIndex } from "./dashboardSlice";
 import GLTabPanel from "../../shared/GlowLEDsComponents/GLTabPanel/GLTabPanel";
 import YearlyMonthlyDailyRevenue from "./components/YearlyMonthlyDailyRevenue";
 import AffiliateEarnings from "./components/AffiliateEarnings";
 import CategorySales from "./components/CategorySales";
 import CurrentStock from "./components/CurrentStock";
+import TotalsTable from "./components/TotalsTable";
 
 const DashboardPage = () => {
   const dispatch = useDispatch();
@@ -79,30 +66,13 @@ const DashboardPage = () => {
       />
       <div className="m-auto w-100per max-w-800px">
         <DatePicker year={year} month={month} start_date={start_date} end_date={end_date} start_end_date={start_end_date} />
-        <Paper sx={{ margin: "20px 0" }}>
-          <Typography variant="h6" align="center" sx={{ padding: "10px 0" }}>
-            {timeLabel(month, year)}
-          </Typography>
-          <Divider />
-          <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
-              <TableHead>
-                <TableRow>
-                  <TableCell className="title_font">Sales</TableCell>
-                  <TableCell className="title_font">Tips</TableCell>
-                  <TableCell className="title_font">Payouts</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
-                  <TableCell>${isLoading(range_revenue) ? range_revenue.data[0]?.totalPrice.toFixed(2) : "0.00"}</TableCell>
-                  <TableCell>${isLoading(tips_range_revenue) ? tips_range_revenue.data[0]?.total_tips.toFixed(2) : "0.00"}</TableCell>
-                  <TableCell>${isLoading(range_payouts) ? range_payouts.data[0]?.totalAmount?.toFixed(2) : "0.00"}</TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Paper>
+        <TotalsTable
+          range_revenue={range_revenue}
+          tips_range_revenue={tips_range_revenue}
+          range_payouts={range_payouts}
+          month={month}
+          year={year}
+        />
         <Paper>
           <AppBar position="sticky" color="transparent">
             <Tabs
