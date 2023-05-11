@@ -16,8 +16,10 @@ export const buyLabel = async ({ shipment_id, shipping_rate, order }: any) => {
   }
 };
 export const addTracking = async ({ label, order, shipping_rate, isReturnTracking = false }: any) => {
+  console.log({ label, order, shipping_rate });
   try {
     const tracker = await EasyPost.Tracker.retrieve(label.tracker.id);
+    console.log({ tracker });
     if (isReturnTracking) {
       order.shipping.return_shipment_tracker = label.tracker.id;
       order.return_tracking_url = tracker.public_url;
@@ -35,7 +37,12 @@ export const addTracking = async ({ label, order, shipping_rate, isReturnTrackin
     }
 
     await order_db.update_orders_db(order._id, order);
-  } catch (error) {}
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+    console.log("Error adding tracking:", error);
+  }
 };
 export const createTracker = async ({ order }: any) => {
   try {
@@ -55,6 +62,9 @@ export const createTracker = async ({ order }: any) => {
     return tracker;
   } catch (error) {
     console.log("Error creating tracker:", error);
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
   }
 };
 
@@ -71,6 +81,32 @@ export const createLabel = async (body: any) => {
     const rate = shipment.rates.find((rate: any) => rate.service === "Express").id;
     return await EasyPost.Shipment.buy(shipment.id, rate.id);
   }
+};
+
+export const refundLabel = async ({ order, is_return_tracking }: any) => {
+  console.log({ order, is_return_tracking });
+  const refund = await EasyPost.Refund.create({
+    carrier: order.shipping.shipping_rate.carrier,
+    tracking_codes: [is_return_tracking ? order.return_tracking_number : order.tracking_number]
+  });
+  console.log({ refund });
+  if (refund) {
+    if (is_return_tracking) {
+      order.shipping.return_shipment_tracker = null;
+      order.return_tracking_url = null;
+      order.return_tracking_number = null;
+      order.shipping.return_shipping_label = null;
+    } else {
+      order.shipping.shipment_id = null;
+      order.shipping.shipping_rate = null;
+      order.shipping.shipment_tracker = null;
+      order.tracking_number = null;
+      order.tracking_url = null;
+      order.shipping.shipping_label = null;
+    }
+  }
+
+  return await order_db.update_orders_db(order._id, order);
 };
 
 export const createShippingRates = async ({ order, returnLabel }: any) => {

@@ -1,7 +1,7 @@
 import invoice from "../../email_templates/pages/invoice";
 import { order_db } from "../orders";
 import { covertToOunces } from "./shipping_helpers";
-import { addTracking, buyLabel, createLabel, createShippingRates, createTracker } from "./shipping_interactors";
+import { addTracking, buyLabel, createLabel, createShippingRates, createTracker, refundLabel } from "./shipping_interactors";
 
 const easy_post_api = require("@easypost/api");
 const EasyPost = new easy_post_api(process.env.EASY_POST);
@@ -52,6 +52,18 @@ export default {
       const label: any = await createLabel({ order, speed: params.speed });
       await addTracking({ order, label });
       return { invoice: invoice({ order }), label: label.postage_label.label_url };
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  refund_label_shipping_s: async (params: any) => {
+    const { order_id, is_return_tracking } = params;
+    try {
+      const order = await order_db.findById_orders_db(order_id);
+      const refund: any = await refundLabel({ order, is_return_tracking });
+      return refund;
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

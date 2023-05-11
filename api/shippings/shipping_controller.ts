@@ -26,6 +26,18 @@ export default {
       res.status(500).send({ error, message: "Error Finding Shipping" });
     }
   },
+  refund_label_shipping_c: async (req: any, res: any) => {
+    const { params } = req;
+    try {
+      const shipping = await shipping_services.refund_label_shipping_s(params);
+      if (shipping) {
+        return res.status(200).send(shipping);
+      }
+      return res.status(404).send({ message: "Shipping Not Found" });
+    } catch (error) {
+      res.status(500).send({ error, message: "Error Finding Shipping" });
+    }
+  },
   create_tracker_shipping_c: async (req: any, res: any) => {
     const { params } = req;
     try {

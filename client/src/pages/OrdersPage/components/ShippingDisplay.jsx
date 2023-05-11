@@ -1,5 +1,7 @@
 import React from "react";
 import { Typography, Box, Divider } from "@mui/material";
+import { sendEmail } from "../ordersPageHelpers";
+import { GLButton } from "../../../shared/GlowLEDsComponents";
 
 const ShippingDisplay = ({ shipping }) => {
   return (
@@ -22,6 +24,7 @@ const ShippingDisplay = ({ shipping }) => {
         <Typography>{shipping.international && "International"}</Typography>
         <Typography>{shipping.email}</Typography>
       </Box>
+
       {shipping.shipping_rate && (
         <Box className="max-w-300px w-100per lh-25px">
           <Typography variant="h6" mt="10px" mb="5px">
@@ -56,11 +59,14 @@ const ShippingDisplay = ({ shipping }) => {
               Rate:{" "}
             </Typography>
             <Typography component="label" className=" mv-0px">
-              ${shipping.shipping_rate.retail_rate}
+              ${shipping.shipping_rate.retail_rate || shipping.shipping_rate.rate}
             </Typography>
           </Box>
         </Box>
       )}
+      <GLButton variant="secondary" className="w-100per mv-10px" onClick={() => sendEmail("Hello")}>
+        Send User a Message
+      </GLButton>
     </Box>
   );
 };

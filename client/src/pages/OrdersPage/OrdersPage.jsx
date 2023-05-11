@@ -89,7 +89,16 @@ const OrdersPage = () => {
                 <i className="fas fa-mountain" />
               </GLButton>
             </Link>
-            <GLButton variant="icon" onClick={() => dispatch(API.deleteOrder(row._id))} aria-label="Delete">
+            <GLButton
+              variant="icon"
+              onClick={() => {
+                const confirm = window.confirm("Are you sure you want DELETE this order?");
+                if (confirm) {
+                  dispatch(API.deleteOrder(row._id));
+                }
+              }}
+              aria-label="Delete"
+            >
               <i className="fas fa-trash-alt" />
             </GLButton>
           </div>
