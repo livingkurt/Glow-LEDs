@@ -64,11 +64,23 @@ export const listMyOrders = createAsyncThunk("orders/listMyOrders", async (user_
   }
 });
 
+export const createNoPayOrder = createAsyncThunk("orders/createNoPayOrder", async (order: any, thunkApi: any) => {
+  try {
+    const { data } = await axios.post("/api/orders", order);
+    sessionStorage.removeItem("shippingAddress");
+    return data;
+  } catch (error) {
+    Covy().showSnackbar({
+      message: `Error: ${error}`,
+      severity: "error"
+    });
+  }
+});
+
 export const saveOrder = createAsyncThunk("orders/saveOrder", async (order: any, thunkApi: any) => {
   try {
     if (!order._id) {
       const { data } = await axios.post("/api/orders", order);
-      sessionStorage.removeItem("shippingAddress");
       return data;
     } else {
       const { data } = await axios.put(`/api/orders/glow/${order._id}`, order);

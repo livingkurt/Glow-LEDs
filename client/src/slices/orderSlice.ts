@@ -78,6 +78,7 @@ const orderPage = createSlice({
     message: "",
     success: false,
     success_order: false,
+    success_no_pay_order: false,
     remoteVersionRequirement: 0,
     edit_order_modal: false,
     hide_label_button: true,
@@ -187,13 +188,28 @@ const orderPage = createSlice({
     [API.saveOrder.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.message = "Order Saved";
-      state.order = payload;
-      state.success_order = true;
       state.shippingModal = false;
       state.edit_order_modal = false;
       state.remoteVersionRequirement = Date.now();
     },
     [API.saveOrder.rejected as any]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.error = payload.error;
+      state.message = payload.message;
+    },
+    [API.createNoPayOrder.pending as any]: (state: any, { payload }: any) => {
+      state.loading = true;
+    },
+    [API.createNoPayOrder.fulfilled as any]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.message = "Order Saved";
+      state.shippingModal = false;
+      state.edit_order_modal = false;
+      state.order = payload;
+      state.success_no_pay_order = true;
+      state.remoteVersionRequirement = Date.now();
+    },
+    [API.createNoPayOrder.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;

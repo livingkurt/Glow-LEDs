@@ -26,7 +26,7 @@ const PlaceOrderPage = props => {
   const { my_cart, shipping, payment } = cartPage;
   const { cartItems } = my_cart;
   const orderPage = useSelector(state => state.orders.orderPage);
-  const { order, error: error_order, success_order, success, error_pay } = orderPage;
+  const { order, error: error_order, success_order, success_no_pay_order, success, error_pay } = orderPage;
 
   const userPage = useSelector(state => state.users.userPage);
   const { users, current_user, loading: user_loading, success: user_success } = userPage;
@@ -408,7 +408,7 @@ const PlaceOrderPage = props => {
 
   const create_order_without_user = async () => {
     dispatch(
-      API.saveOrder({
+      API.createNoPayOrder({
         orderItems: cartItems,
         shipping: shipment_id
           ? {
@@ -441,7 +441,7 @@ const PlaceOrderPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      if (success_order && order && totalPrice === 0) {
+      if (success_no_pay_order && order && totalPrice === 0) {
         setTimeout(() => {
           props.history.push("/pages/complete/order/" + order._id);
           set_loading_payment(false);
@@ -456,7 +456,7 @@ const PlaceOrderPage = props => {
       }
     }
     return () => (clean = false);
-  }, [success_order]);
+  }, [success_no_pay_order]);
 
   // const empty_cart = () => {
   //   for (let item of cartItems) {

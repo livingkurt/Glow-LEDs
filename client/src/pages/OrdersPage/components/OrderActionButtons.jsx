@@ -54,9 +54,18 @@ const OrderActionButtons = ({ order }) => {
       >
         Print Invoice
       </GLButton>
-      {hide_label_button && !order.shipping.shipping_label && (
-        <GLButton variant="primary" onClick={() => dispatch(API.buyLabel({ orderId: order._id }))} className="w-100per mv-5px">
-          Buy Label
+      {/* {hide_label_button && !order.shipping.shipping_label && ( */}
+      <GLButton variant="primary" onClick={() => dispatch(API.buyLabel({ orderId: order._id }))} className="w-100per mv-5px">
+        Buy Label
+      </GLButton>
+      {/* )} */}
+      {order.shipping.shipping_label && (
+        <GLButton
+          variant="secondary"
+          className="w-100per mv-5px"
+          onClick={() => dispatch(API.createLabel({ orderId: order._id, speed: "first" }))}
+        >
+          Replace Shipping Label
         </GLButton>
       )}
       {order.shipping.shipping_label && (
@@ -73,15 +82,6 @@ const OrderActionButtons = ({ order }) => {
           Refund Label
         </GLButton>
       )}
-      {/* {order.shipping.shipping_label && (
-        <GLButton
-          variant="secondary"
-          className="w-100per mv-5px"
-          onClick={() => dispatch(API.createLabel({ orderId: order._id, speed: "first" }))}
-        >
-          Replace Shipping Label
-        </GLButton>
-      )} */}
 
       <GLButton variant="secondary" className="w-100per mv-5px" onClick={() => dispatch(openShippingModal(order))}>
         Choose New Shipping Rate
