@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import { Button, Divider, Grid, Paper, TextField, Typography } from "@mui/material";
+import { Box, Button, Divider, Grid, Paper, TextField, Typography } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { GLAutocomplete } from "../../../shared/GlowLEDsComponents";
 import { getMonthStartEndDates, months, years } from "../dashboardHelpers";
@@ -123,16 +123,28 @@ const DatePicker = ({ year, month, start_date, end_date }) => {
           />
         </Grid>
       </Grid>
-      <Button
-        onClick={() => {
-          dispatch(resetDateRange());
-          history.push({ search: "" });
-        }}
-        variant="contained"
-        className="mt-10px"
-      >
-        Reset Date Range
-      </Button>
+      <Box className="jc-b">
+        <Button
+          onClick={() => {
+            dispatch(resetDateRange());
+            history.push({ search: "" });
+          }}
+          variant="contained"
+          className="mt-10px"
+        >
+          Reset Date Range
+        </Button>
+        <Button
+          onClick={() => {
+            dispatch(set_month(""));
+            history.push({ search: "" });
+          }}
+          variant="contained"
+          className="mt-10px"
+        >
+          Remove Month
+        </Button>
+      </Box>
     </Paper>
   );
 };

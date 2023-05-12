@@ -388,13 +388,24 @@ export default {
         {
           $group: {
             _id: {
-              month: { $month: "$createdAt" }
+              month: { $month: "$createdAt" },
+              day: { $dayOfMonth: "$createdAt" }
+            },
+            dailyTotalPrice: {
+              $sum: "$totalPrice"
+            }
+          }
+        },
+        {
+          $group: {
+            _id: {
+              month: "$_id.month"
             },
             totalPrice: {
-              $sum: "$totalPrice"
+              $sum: "$dailyTotalPrice"
             },
-            refundTotal: {
-              $sum: "$refundTotal"
+            dailyAverage: {
+              $avg: "$dailyTotalPrice"
             }
           }
         },
@@ -402,7 +413,8 @@ export default {
           $project: {
             _id: 0,
             month: "$_id.month",
-            totalPrice: 1
+            totalPrice: 1,
+            dailyAverage: 1
           }
         }
       ]).exec();
@@ -426,13 +438,24 @@ export default {
         {
           $group: {
             _id: {
-              year: { $year: "$createdAt" }
+              year: { $year: "$createdAt" },
+              month: { $month: "$createdAt" }
+            },
+            monthlyTotalPrice: {
+              $sum: "$totalPrice"
+            }
+          }
+        },
+        {
+          $group: {
+            _id: {
+              year: "$_id.year"
             },
             totalPrice: {
-              $sum: "$totalPrice"
+              $sum: "$monthlyTotalPrice"
             },
-            refundTotal: {
-              $sum: "$refundTotal"
+            monthlyAverage: {
+              $avg: "$monthlyTotalPrice"
             }
           }
         },
@@ -440,7 +463,8 @@ export default {
           $project: {
             _id: 0,
             year: "$_id.year",
-            totalPrice: 1
+            totalPrice: 1,
+            monthlyAverage: 1
           }
         }
       ]).exec();
@@ -469,13 +493,26 @@ export default {
             _id: {
               year: { $year: "$createdAt" },
               month: { $month: "$createdAt" },
-              day: { $dayOfMonth: "$createdAt" }
+              day: { $dayOfMonth: "$createdAt" },
+              hour: { $hour: "$createdAt" }
+            },
+            hourlyTotalPrice: {
+              $sum: "$totalPrice"
+            }
+          }
+        },
+        {
+          $group: {
+            _id: {
+              year: "$_id.year",
+              month: "$_id.month",
+              day: "$_id.day"
             },
             totalPrice: {
-              $sum: "$totalPrice"
+              $sum: "$hourlyTotalPrice"
             },
-            refundTotal: {
-              $sum: "$refundTotal"
+            hourlyAverage: {
+              $avg: "$hourlyTotalPrice"
             }
           }
         },
@@ -489,6 +526,7 @@ export default {
               }
             },
             totalPrice: 1,
+            hourlyAverage: 1,
             _id: 0
           }
         },

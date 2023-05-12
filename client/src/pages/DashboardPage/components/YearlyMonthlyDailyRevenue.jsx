@@ -3,6 +3,7 @@ import { GLDisplayTable } from "../../../shared/GlowLEDsComponents/GLDisplayTabl
 import { months } from "../dashboardHelpers";
 
 const YearlyMonthlyDailyRevenue = ({ month, year, yearly_revenue, daily_revenue, monthy_revenue }) => {
+  console.log({ yearly_revenue });
   return (
     <>
       {!month && !year && (
@@ -14,13 +15,25 @@ const YearlyMonthlyDailyRevenue = ({ month, year, yearly_revenue, daily_revenue,
               rows={!yearly_revenue.isLoading && yearly_revenue.data && [...yearly_revenue.data].sort((a, b) => a.year - b.year)}
               columnDefs={[
                 { title: "Year", display: "year" },
-                { title: "Revenue", display: row => `$${row.totalPrice.toFixed(2)}` }
+                { title: "Revenue", display: row => `$${row.totalPrice.toFixed(2)}` },
+                { title: "Monthly Average", display: row => `$${row.monthlyAverage.toFixed(2)}` }
               ]}
             />
           )}
         </div>
       )}
-
+      {!month && year && (
+        <GLDisplayTable
+          title={"Monthly Revenue"}
+          loading={monthy_revenue.isLoading}
+          rows={[...monthy_revenue.data].sort((a, b) => a.month - b.month)}
+          columnDefs={[
+            { title: "Year", display: row => months[row.month - 1] },
+            { title: "Revenue", display: row => `$${row.totalPrice.toFixed(2)}` },
+            { title: "Daily Average", display: row => `$${row.dailyAverage.toFixed(2)}` }
+          ]}
+        />
+      )}
       {month && year && (
         <>
           {daily_revenue.isSuccess && (
@@ -30,23 +43,12 @@ const YearlyMonthlyDailyRevenue = ({ month, year, yearly_revenue, daily_revenue,
               rows={!daily_revenue.isLoading && daily_revenue.data}
               columnDefs={[
                 { title: "Day", display: row => humanDate(row.date) },
-                { title: "Revenue", display: row => `$${row.totalPrice.toFixed(2)}` }
+                { title: "Revenue", display: row => `$${row.totalPrice.toFixed(2)}` },
+                { title: "Hourly Average", display: row => `$${row.hourlyAverage.toFixed(2)}` }
               ]}
             />
           )}
         </>
-      )}
-
-      {!month && year && (
-        <GLDisplayTable
-          title={"Monthly Revenue"}
-          loading={monthy_revenue.isLoading}
-          rows={[...monthy_revenue.data].sort((a, b) => a.month - b.month)}
-          columnDefs={[
-            { title: "Year", display: row => months[row.month - 1] },
-            { title: "Revenue", display: row => `$${row.totalPrice.toFixed(2)}` }
-          ]}
-        />
       )}
     </>
   );
