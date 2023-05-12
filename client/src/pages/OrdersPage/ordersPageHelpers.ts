@@ -1,7 +1,8 @@
 import { tableColors } from "../../shared/GlowLEDsComponents/GLTableV2/glTableHelpers";
 import { daysBetween } from "../../utils/helper_functions";
 import { setTimeout } from "timers";
-const { printHtml } = require("print-html-element");
+import { Printd } from "printd";
+// const { printHtml } = require("print-html-element");
 
 export const orderColors = [
   { name: "Not Paid", color: tableColors.inactive },
@@ -219,14 +220,54 @@ export const printLabel = async (label: string) => {
   display: flex;
   height: auto;
   padding: 40px;
+  font-family: Helvetica;
   align-items: center;">
       <img style="margin: auto; text-align: center;" src="${label}" alt="label" />
   </div>`;
   await waitForImagesToLoad(html);
-  printHtml(html);
+
+  const d = new Printd();
+  const container = document.createElement("div");
+  container.innerHTML = html;
+  d.print(container, [
+    `
+    html {
+    color: black;
+    font-family: helvetica, sans-serif;
+  }
+`
+  ]);
 };
 
 export const printInvoice = async (invoice: string) => {
   await waitForImagesToLoad(invoice);
-  printHtml(invoice);
+
+  const d = new Printd();
+  const container = document.createElement("div");
+  container.innerHTML = invoice;
+  d.print(container, [
+    `
+  html {
+    color: black;
+    font-family: helvetica, sans-serif;
+  }
+`
+  ]);
 };
+
+// export const printLabel = async (label: string) => {
+//   const html = `<div style="width: 100%;
+//   display: flex;
+//   height: auto;
+//   padding: 40px;
+//   align-items: center;">
+//       <img style="margin: auto; text-align: center;" src="${label}" alt="label" />
+//   </div>`;
+//   await waitForImagesToLoad(html);
+//   printHtml(html);
+// };
+
+// export const printInvoice = async (invoice: string) => {
+//   await waitForImagesToLoad(invoice);
+//   printHtml(invoice);
+// };
