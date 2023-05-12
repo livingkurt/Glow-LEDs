@@ -88,3 +88,68 @@ export const calculateTotalPounds = (cartItems: any) => {
   const totalPounds = totalOunces / 16;
   return totalPounds;
 };
+
+export const parseOrderData = (label: any, order: any) => {
+  try {
+    const headers = [
+      "to_address.name",
+      "to_address.company",
+      "to_address.phone",
+      "to_address.email",
+      "to_address.street1",
+      "to_address.street2",
+      "to_address.city",
+      "to_address.state",
+      "to_address.zip",
+      "to_address.country",
+      "from_address.name",
+      "from_address.company",
+      "from_address.phone",
+      "from_address.email",
+      "from_address.street1",
+      "from_address.street2",
+      "from_address.city",
+      "from_address.state",
+      "from_address.zip",
+      "from_address.country",
+      "parcel.length",
+      "parcel.width",
+      "parcel.height",
+      "parcel.weight",
+      "parcel.predefined_package",
+      "carrier",
+      "service"
+    ];
+
+    const data = [
+      label.buyer_address.name,
+      label.buyer_address.company || "",
+      label.buyer_address.phone || "",
+      label.buyer_address.email || "",
+      label.buyer_address.street1,
+      label.buyer_address.street2 || "",
+      label.buyer_address.city,
+      label.buyer_address.state,
+      label.buyer_address.zip,
+      label.buyer_address.country,
+      label.return_address.name || "",
+      label.return_address.company || "",
+      label.return_address.phone || "",
+      label.return_address.email || "",
+      label.return_address.street1,
+      label.return_address.street2 || "",
+      label.return_address.city,
+      label.return_address.state,
+      label.return_address.zip,
+      label.return_address.country,
+      label.parcel.length,
+      label.parcel.width,
+      label.parcel.height,
+      label.parcel.weight,
+      label.parcel.predefined_package || "",
+      order.shipping.shipping_rate.carrier,
+      order.shipping.shipping_rate.service
+    ];
+    return [headers, data];
+  } catch (error) {}
+};

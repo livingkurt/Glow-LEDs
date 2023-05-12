@@ -77,6 +77,18 @@ export const refundLabel = createAsyncThunk("shipping/refundLabel", async ({ ord
   }
 });
 
+export const generateCSVLabel = createAsyncThunk("shipping/generateCSVLabel", async ({ orderId }: any, thunkApi: any) => {
+  try {
+    const { data } = await axios.put(`/api/shipping/${orderId}/generate_csv_label`);
+    return data;
+  } catch (error) {
+    Covy().showSnackbar({
+      message: `Error: ${error}`,
+      severity: "error"
+    });
+  }
+});
+
 export const differentShippingRates = createAsyncThunk("shipping/differentShippingRates", async (order: any, thunkApi: any) => {
   try {
     if (order.shipping.shipment_id && !order.shipping.shipping_label) {

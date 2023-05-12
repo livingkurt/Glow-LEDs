@@ -1,6 +1,6 @@
 import invoice from "../../email_templates/pages/invoice";
 import { order_db } from "../orders";
-import { covertToOunces } from "./shipping_helpers";
+import { covertToOunces, parseOrderData } from "./shipping_helpers";
 import { addTracking, buyLabel, createLabel, createShippingRates, createTracker, refundLabel } from "./shipping_interactors";
 
 const easy_post_api = require("@easypost/api");
@@ -94,6 +94,20 @@ export default {
       await addTracking({ order, label, isReturnTracking: true });
 
       return { label: label.postage_label.label_url };
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  generate_csv_label_shipping_s: async (params: any) => {
+    try {
+      const order = await order_db.findById_orders_db(params.order_id);
+      const label = await EasyPost.Shipment.retrieve(order.shipping.shipment_id);
+      const csvData = parseOrderData(label, order);
+      console.log({ csvData });
+
+      return csvData;
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

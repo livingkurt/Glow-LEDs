@@ -8,6 +8,7 @@ import { printInvoice, printLabel, sendEmail } from "../ordersPageHelpers";
 import { clearPrints } from "../../../slices/shippingSlice";
 import { toCapitalize } from "../../../utils/helper_functions";
 import { openShippingModal, set_loading_label } from "../../../slices/orderSlice";
+import GenerateCSVLabel from "./GenerateCSVLabel";
 
 const OrderActionButtons = ({ order }) => {
   const dispatch = useDispatch();
@@ -157,6 +158,7 @@ const OrderActionButtons = ({ order }) => {
           </GLButton>
         </a>
       )}
+      <GenerateCSVLabel order={order} />
     </div>
   );
 };

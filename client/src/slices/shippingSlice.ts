@@ -11,6 +11,7 @@ const shippingSlice = createSlice({
     label: "",
     shippingRates: [],
     shippingRate: {},
+    csvLabel: [],
     rate: {},
     hideLabelButton: true
   },
@@ -88,6 +89,17 @@ const shippingSlice = createSlice({
       state.loading_label = false;
     },
     [API.createTracker.rejected as any]: (state: any, { payload }: any) => {
+      state.loading_label = false;
+    },
+    [API.generateCSVLabel.pending as any]: (state: any, { payload }: any) => {
+      state.loading_label = true;
+    },
+    [API.generateCSVLabel.fulfilled as any]: (state: any, { payload }: any) => {
+      state.loading_label = false;
+      console.log({ payload });
+      state.csvLabel = payload;
+    },
+    [API.generateCSVLabel.rejected as any]: (state: any, { payload }: any) => {
       state.loading_label = false;
     },
     [API.differentShippingRates.pending as any]: (state: any, { payload }: any) => {
