@@ -220,7 +220,6 @@ export const printLabel = async (label: string) => {
   display: flex;
   height: auto;
   padding: 40px;
-  font-family: Helvetica;
   align-items: center;">
       <img style="margin: auto; text-align: center;" src="${label}" alt="label" />
   </div>`;
