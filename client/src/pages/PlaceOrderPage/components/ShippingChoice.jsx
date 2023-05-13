@@ -1,24 +1,34 @@
 // React
-import React from "react";
+import React, { useState } from "react";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
-import ChooseShipping from "./ChooseShipping";
 import DomesticShippingSpeed from "./DomesticShippingSpeed";
 import InternationalShippingSpeed from "./InternationalShippingSpeed";
-import ShippingSpeed from "./InternationalShippingSpeed";
+import { determine_service } from "../placeOrderHelpers";
 
 const ShippingChoice = ({ rates, hide_pay_button, shipping, current_shipping_speed, choose_shipping_rate, re_choose_shipping_rate }) => {
+  const [modalShown, setModalShown] = useState(false);
   return (
     <div className="w-100per">
       {hide_pay_button && rates && (
         <div className="w-100per">
           {shipping && shipping.international && (
             <div>
-              <InternationalShippingSpeed rates={rates} choose_shipping_rate={choose_shipping_rate} />
+              <InternationalShippingSpeed
+                rates={rates}
+                choose_shipping_rate={choose_shipping_rate}
+                modalShown={modalShown}
+                setModalShown={setModalShown}
+              />
             </div>
           )}
           {shipping && !shipping.international && (
             <div>
-              <DomesticShippingSpeed rates={rates} choose_shipping_rate={choose_shipping_rate} />
+              <DomesticShippingSpeed
+                rates={rates}
+                choose_shipping_rate={choose_shipping_rate}
+                modalShown={modalShown}
+                setModalShown={setModalShown}
+              />
             </div>
           )}
         </div>
@@ -27,13 +37,11 @@ const ShippingChoice = ({ rates, hide_pay_button, shipping, current_shipping_spe
         <div className=" mv-1rem jc-b ai-c w-100per">
           <div className="shipping_rates jc-b w-100per ">
             <div className="jc-b w-100per">
-              <div>{!shipping.international ? "Standard" : current_shipping_speed.rate.service}</div>
-
-              <div>
-                {" "}
-                Est: {current_shipping_speed.rate.est_delivery_days} {current_shipping_speed.rate.est_delivery_days === 1 ? "Day" : "Days"}
+              <div>{current_shipping_speed.name}</div>
+              <div className="jc-b max-w-150px w-100per">
+                <div>{determine_service(current_shipping_speed.rate)}</div>
+                <div>${parseFloat(current_shipping_speed.rate.retail_rate || current_shipping_speed.rate.rate).toFixed(2)}</div>
               </div>
-              <div>${parseFloat(current_shipping_speed.rate.retail_rate || current_shipping_speed.rate.rate).toFixed(2)}</div>
             </div>
           </div>
           <GLButton className="rates w-10rem" onClick={() => re_choose_shipping_rate()}>

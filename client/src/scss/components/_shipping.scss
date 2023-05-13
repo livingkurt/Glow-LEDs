@@ -1,16 +1,16 @@
-@use '../abstracts' as *;
+@use "../abstracts" as *;
 // Shipping Rates
 
 .shipping_rates {
   box-shadow: $bs_deep;
   font-size: 1.5rem;
-  padding: .75em 2em 0.55em 1em;
+  padding: 12px 10px;
   background: $theme_color_secondary;
   color: $theme_color_phrase_font;
   border: 0;
   // position: relative;
   border-radius: 10px;
-  transition: all .5s ease;
+  transition: all 0.5s ease;
   font-family: "phrase_font";
   border-radius: 10px 0 0 10px;
 }
@@ -28,7 +28,7 @@
   height: 100%;
   width: 8rem;
   color: $theme_color_phrase_font;
-  font-family: 'phrase_font';
+  font-family: "phrase_font";
   // pointer-events: none;
   padding: 1rem;
   border-radius: 0 10px 10px 0;
@@ -40,9 +40,9 @@
 
 .rates::before,
 .rates::after {
-  --size: .4em;
+  --size: 0.4em;
 
-  content: '';
+  content: "";
   // position: absolute;
   width: 0;
   height: 0;

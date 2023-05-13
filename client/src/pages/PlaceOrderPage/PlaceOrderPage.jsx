@@ -227,12 +227,12 @@ const PlaceOrderPage = props => {
 
   const [show_shipping_complete, set_show_shipping_complete] = useState();
 
-  const choose_shipping_rate = (rate, speed) => {
+  const choose_shipping_rate = (rate, speed, name) => {
     setShippingPrice(parseFloat(rate.retail_rate || rate.rate));
     setPreviousShippingPrice(parseFloat(rate.retail_rate || rate.rate));
     set_hide_pay_button(false);
     set_shipping_rate(rate);
-    set_current_shipping_speed({ rate, speed });
+    set_current_shipping_speed({ rate, speed, name });
     get_promo_code();
     set_show_promo_code(true);
     set_show_shipping_complete(true);
