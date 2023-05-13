@@ -1173,11 +1173,11 @@ ${order.shipping.email}`)
 											)} */}
                       {order.shipping.return_shipping_label && (
                         <a
-                          href={order.shipping.return_shipping_label.postage_label.label_url}
+                          href={order.shipping.return_shipping_label.postage_label?.label_url}
                           style={{ width: "100%" }}
                           target="_blank"
                           rel="noreferrer"
-                          download={order.shipping.return_shipping_label.postage_label.label_url}
+                          download={order.shipping.return_shipping_label.postage_label?.label_url}
                         >
                           <GLButton variant="secondary" className="mv-5px w-100per">
                             Download Return Label

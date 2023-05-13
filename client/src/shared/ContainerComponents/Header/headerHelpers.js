@@ -48,7 +48,7 @@ const features = {
 const glowskinz = {
   name: "Glowskinz",
   path: "/collections/all/products/category/glowskinz",
-  variant: "nav",
+  variant: "",
   className: "nav-btn-link",
   id: "glowskinz_dropdown",
   sideDrawer: {
@@ -61,15 +61,12 @@ const glowskinz = {
       {
         name: "CLOZD Glowskinz",
         path: "/collections/all/products/category/glowskinz/subcategory/clozd",
-        variant: "nav",
+        variant: "",
         className: "nav-btn-link",
         id: "clozd_dropdown",
         subSideDrawer: {
-          name: "CLOZD Glowskinz",
-          path: "/collections/all/products/category/glowskinz/subcategory/clozd",
           variant: "nav",
           className: "ta-l fs-18px title_font",
-          id: "clozd_dropdown",
           subDrawerItems: [
             {
               name: "Classics",
@@ -100,7 +97,7 @@ const glowskinz = {
 const exo_diffusers = {
   name: "EXO Diffusers",
   path: "/collections/all/products/category/exo_diffusers",
-  variant: "nav",
+  variant: "",
   className: "nav-btn-link",
   id: "exo_diffusers_dropdown",
   sideDrawer: {
@@ -109,10 +106,11 @@ const exo_diffusers = {
       {
         name: "Collections",
         path: "/collections/all/products/category/exo_diffusers",
-        variant: "nav",
+        variant: "",
         className: "nav-btn-link w-100per",
         id: "exo_diffusers_collections_dropdown",
         subSideDrawer: {
+          variant: "nav",
           className: "ta-l fs-18px title_font",
           id: "exo_diffusers_collections_dropdown",
           subDrawerItems: [
@@ -151,7 +149,7 @@ const exo_diffusers = {
 const diffuser_caps = {
   name: "Diffuser Caps",
   path: "/collections/all/products/category/diffuser_caps",
-  variant: "nav",
+  variant: "",
   className: "nav-btn-link",
   id: "diffuser_caps_dropdown",
   sideDrawer: {
@@ -166,10 +164,11 @@ const diffuser_caps = {
       {
         name: "Collections",
         path: "/collections/all/products/category/diffuser_caps",
-        variant: "nav",
+        variant: "",
         className: "nav-btn-link w-100per",
         id: "collections_dropdown",
         subSideDrawer: {
+          variant: "nav",
           className: "ta-l fs-18px title_font",
           subDrawerItems: [
             {
@@ -236,7 +235,7 @@ const diffuser_caps = {
 const diffusers = {
   name: "Diffusers",
   path: "/collections/all/products/category/diffusers",
-  variant: "nav",
+  variant: "",
   className: "nav-btn-link",
   id: "diffusers_dropdown",
   sideDrawer: {
@@ -508,7 +507,8 @@ export const navItems = [
     path: "/",
     variant: "nav",
     className: "title_font",
-    ariaLabel: "Home Page"
+    ariaLabel: "Home Page",
+    headerLocation: "center"
   },
   {
     name: "Shop",
@@ -517,14 +517,16 @@ export const navItems = [
     className: "title_font",
     dataTestId: "shop_button",
     columns: [features, enhancers],
-    otherColumns: [essentials]
+    otherColumns: [essentials],
+    headerLocation: "center"
   },
   {
     name: "Learn",
     path: "/collections/all/tutorials",
     variant: "nav",
     className: "title_font",
-    dataTestId: "learn_button"
+    dataTestId: "learn_button",
+    headerLocation: "center"
   },
   {
     name: "Community",
@@ -532,7 +534,8 @@ export const navItems = [
     variant: "nav",
     className: "title_font",
     dataTestId: "community_button",
-    columns: [community]
+    columns: [community],
+    headerLocation: "center"
   },
   {
     name: "Support",
@@ -540,6 +543,33 @@ export const navItems = [
     variant: "nav",
     className: "title_font",
     dataTestId: "support_button",
-    columns: [support]
+    columns: [support],
+    headerLocation: "center"
   }
+  // {
+  //   name: "Cart",
+  //   path: "/collections/all/tutorials",
+  //   variant: "nav",
+  //   className: "title_font",
+  //   dataTestId: "learn_button",
+  //   headerLocation: "center",
+  // },
+  // {
+  //   name: "Community",
+  //   path: "/pages/menu/support",
+  //   variant: "nav",
+  //   className: "title_font",
+  //   dataTestId: "community_button",
+  //   columns: [community],
+  //   headerLocation: "center",
+  // },
+  // {
+  //   name: "Support",
+  //   path: "/pages/menu/support",
+  //   variant: "nav",
+  //   className: "title_font",
+  //   dataTestId: "support_button",
+  //   columns: [support],
+  //   headerLocation: "center",
+  // }
 ];

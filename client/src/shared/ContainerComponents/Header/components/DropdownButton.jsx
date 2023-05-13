@@ -3,7 +3,7 @@ import { GLButton } from "../../../GlowLEDsComponents";
 import { HashLink } from "react-router-hash-link";
 import { useSelector } from "react-redux";
 
-const ButtonWithDropdown = ({ path, variant, className, name, id, show_hide, permissions }) => {
+const ButtonWithDropdown = ({ path, variant, className, name, id, show_hide, permissions, extraContent }) => {
   const users = useSelector(state => state.users.userPage);
   const { current_user } = users;
   if (permissions && !permissions(current_user)) {
@@ -14,13 +14,13 @@ const ButtonWithDropdown = ({ path, variant, className, name, id, show_hide, per
       {path.includes("#") ? (
         <HashLink to={path} className="w-100per">
           <GLButton variant={variant} className={className} fullWidth>
-            {name}
+            {name} {extraContent}
           </GLButton>
         </HashLink>
       ) : (
         <Link to={path} className="w-100per">
           <GLButton variant={variant} className={className} fullWidth>
-            {name}
+            {name} {extraContent}
           </GLButton>
         </Link>
       )}
