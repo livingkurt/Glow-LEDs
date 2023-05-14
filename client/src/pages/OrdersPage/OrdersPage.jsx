@@ -16,7 +16,6 @@ import { determine_product_name_string } from "../../utils/react_helper_function
 import { fullName } from "../UsersPage/usersHelpers";
 import ShippingModal from "./components/ShippingModal";
 import { open_create_pickup_modal } from "../../slices/shippingSlice";
-import SettingsBackupRestoreIcon from "@mui/icons-material/SettingsBackupRestore";
 import CreatePickupModal from "./components/CreatePickupModal";
 import RefundOrderModal from "./components/RefundOrderModal";
 
