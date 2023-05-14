@@ -11,6 +11,7 @@ const shippingSlice = createSlice({
     label: "",
     shippingRates: [],
     shippingRate: {},
+    create_pickup_modal: false,
     csvLabel: [],
     rate: {},
     hideLabelButton: true
@@ -25,6 +26,12 @@ const shippingSlice = createSlice({
       state.hideLabelButton = false;
       state.shippingRate = rate;
       state.rate = { rate, speed };
+    },
+    open_create_pickup_modal: (state, { payload }) => {
+      state.create_pickup_modal = true;
+    },
+    close_create_pickup_modal: (state, { payload }) => {
+      state.create_pickup_modal = false;
     },
     reChooseShippingRate: (state, { payload }) => {
       state.hideLabelButton = true;
@@ -123,5 +130,6 @@ const shippingSlice = createSlice({
   }
 });
 
-export const { clearPrints, chooseShippingRate, reChooseShippingRate } = shippingSlice.actions;
+export const { clearPrints, chooseShippingRate, reChooseShippingRate, open_create_pickup_modal, close_create_pickup_modal } =
+  shippingSlice.actions;
 export default shippingSlice.reducer;

@@ -114,6 +114,79 @@ export default {
       }
     }
   },
+  create_pickup_shipping_s: async (params: any) => {
+    const { date } = params;
+    console.log({ date });
+    try {
+      // const homeAddress = {
+      //   street1: process.env.RETURN_ADDRESS,
+      //   city: process.env.RETURN_CITY,
+      //   state: process.env.RETURN_STATE,
+      //   zip: process.env.RETURN_POSTAL_CODE,
+      //   country: process.env.RETURN_COUNTRY,
+      //   company: "Glow LEDs",
+      //   phone: process.env.PHONE_NUMBER,
+      //   email: process.env.INFO_EMAIL
+      // };
+
+      const homeAddress = await EasyPost.Address.create({
+        street1: process.env.RETURN_ADDRESS,
+        city: process.env.RETURN_CITY,
+        state: process.env.RETURN_STATE,
+        zip: process.env.RETURN_POSTAL_CODE,
+        country: process.env.RETURN_COUNTRY,
+        company: "Glow LEDs",
+        phone: process.env.PHONE_NUMBER,
+        email: process.env.INFO_EMAIL
+      });
+
+      const orders = await order_db.findAll_orders_db(
+        {},
+        // { isPaid: true, isPackaged: true, isShipped: false, isDelivered: false },
+        {},
+        "0",
+        "1"
+      );
+      // console.log({ orders });
+      const fedexOrders = orders.filter(
+        (order: any) => order.shipping && order.shipping.shipping_label && order.shipping.shipping_label.selected_rate.carrier === "FedEx"
+      );
+
+      const shipmentIds = fedexOrders.map((order: any) => order.shipping.shipment_id);
+      // for (let i = 0; i < shipmentIds.length; i++) {
+      //   try {
+      //     const shipment = await EasyPost.Shipment.retrieve(shipmentIds[i]);
+      //     console.log({ shipment });
+      //     console.log(`Successfully retrieved shipment ${shipmentIds[i]}`);
+      //   } catch (error) {
+      //     console.log(`Failed to retrieve shipment ${shipmentIds[i]}`);
+      //     throw error;
+      //   }
+      // }
+      console.log({ shipmentIds });
+      const shipments = await Promise.all(shipmentIds.map((id: any) => EasyPost.Shipment.retrieve(id)));
+      console.log({ shipments });
+
+      const formattedDate = new Date(date);
+      const pickup = await EasyPost.Pickup.create({
+        address: homeAddress,
+        min_datetime: formattedDate, // use date here
+        max_datetime: formattedDate, // use date here
+        reference: "my-first-pickup",
+        is_account_address: false,
+        instructions: "Special pickup instructions",
+        shipment: shipments
+      });
+
+      console.log({ pickup });
+      return pickup;
+    } catch (error) {
+      console.log({ error });
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
 
   custom_shipping_rates_shipping_s: async (body: any) => {
     try {

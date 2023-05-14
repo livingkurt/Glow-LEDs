@@ -8,6 +8,7 @@ router.route("/:order_id/buy_label").put(isAuth, isAdmin, shipping_controller.bu
 router.route("/:order_id/create_label/:speed").put(isAuth, isAdmin, shipping_controller.create_label_shipping_c);
 router.route("/:order_id/create_return_label").put(isAuth, isAdmin, shipping_controller.create_return_label_shipping_c);
 router.route("/:order_id/generate_csv_label").put(isAuth, isAdmin, shipping_controller.generate_csv_label_shipping_c);
+router.route("/:date/create_pickup").put(isAuth, isAdmin, shipping_controller.create_pickup_shipping_c);
 router.route("/:order_id/refund_label/:is_return_tracking").put(isAuth, isAdmin, shipping_controller.refund_label_shipping_c);
 
 router.route("/:order_id/create_tracker").put(isAuth, isAdmin, shipping_controller.create_tracker_shipping_c);

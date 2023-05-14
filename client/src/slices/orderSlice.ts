@@ -112,6 +112,7 @@ const orderPage = createSlice({
       state.edit_order_modal = true;
       state.order = order;
     },
+
     open_edit_order_modal: (state, { payload }) => {
       state.edit_order_modal = true;
       state.order = payload;
@@ -328,6 +329,7 @@ export const {
   clear_order_state,
   set_edit_order_modal,
   open_create_order_modal,
+
   close_edit_order_modal,
   open_edit_order_modal,
   setRemoteVersionRequirement,

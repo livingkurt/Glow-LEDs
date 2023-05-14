@@ -15,6 +15,8 @@ import OrderItemsDisplay from "./components/OrderItemsDisplay";
 import { determine_product_name_string } from "../../utils/react_helper_functions";
 import { fullName } from "../UsersPage/usersHelpers";
 import ShippingModal from "./components/ShippingModal";
+import { open_create_pickup_modal } from "../../slices/shippingSlice";
+import CreatePickupModal from "./components/CreatePickupModal";
 
 const OrdersPage = () => {
   const orderPage = useSelector(state => state.orders.orderPage);
@@ -150,6 +152,9 @@ const OrdersPage = () => {
                 Delete Orders
               </Button>
             )}
+            <Button color="secondary" variant="contained" onClick={() => dispatch(open_create_pickup_modal())}>
+              Create Fedex Pickup
+            </Button>
             <Button color="primary" variant="contained" onClick={() => dispatch(open_create_order_modal())}>
               Create Order
             </Button>
@@ -158,6 +163,7 @@ const OrdersPage = () => {
       />
       <EditOrderModal />
       <ShippingModal />
+      <CreatePickupModal />
     </div>
   );
 };

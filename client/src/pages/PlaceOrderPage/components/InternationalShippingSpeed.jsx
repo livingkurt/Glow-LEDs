@@ -21,7 +21,7 @@ const InternationalShippingSpeed = ({ rates, service, choose_shipping_rate, moda
 
   const [open, setOpen] = useState(false);
 
-  const handleOpen = (rate, index) => {
+  const handleOpen = rate => {
     if (modalShown) {
       choose_shipping_rate(rate, service, toTitleCaseSnakeCase(rate.service));
       return;

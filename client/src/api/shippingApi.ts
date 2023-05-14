@@ -89,6 +89,18 @@ export const generateCSVLabel = createAsyncThunk("shipping/generateCSVLabel", as
   }
 });
 
+export const createPickup = createAsyncThunk("shipping/createPickup", async ({ date }: any, thunkApi: any) => {
+  try {
+    const { data } = await axios.put(`/api/shipping/${date}/create_pickup`);
+    return data;
+  } catch (error) {
+    Covy().showSnackbar({
+      message: `Error: ${error}`,
+      severity: "error"
+    });
+  }
+});
+
 export const differentShippingRates = createAsyncThunk("shipping/differentShippingRates", async (order: any, thunkApi: any) => {
   try {
     if (order.shipping.shipment_id && !order.shipping.shipping_label) {
