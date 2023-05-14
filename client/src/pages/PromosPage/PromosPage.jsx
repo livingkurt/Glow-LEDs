@@ -12,6 +12,7 @@ import { determine_color } from "./promosHelpers";
 import { format_date } from "../../utils/helper_functions";
 import { fullName } from "../UsersPage/usersHelpers";
 import { humanDate } from "../../helpers/dateHelpers";
+import { API_Emails } from "../../utils";
 
 const PromosPage = () => {
   const promoPage = useSelector(state => state.promos.promoPage);
@@ -95,6 +96,14 @@ const PromosPage = () => {
             <Button color="secondary" variant="contained" onClick={() => dispatch(API.refreshSponsorCodes())}>
               Create Sponsor Codes
             </Button>
+            {/* <Button
+              color="secondary"
+              variant="contained"
+              className="h-40px"
+              onClick={async () => await API_Emails.send_code_used_emails_a("cosmo")}
+            >
+              Send Code Used Email
+            </Button> */}
             {selectedRows.length > 1 && (
               <Button
                 color="secondary"
@@ -303,9 +312,9 @@ export default PromosPage;
 // <GLButton variant="primary" className="h-40px" onClick={refresh_sponsor_codes}>
 //   Create Sponsor Codes
 // </GLButton>
-//         <GLButton variant="primary" className="h-40px" onClick={send_code_used_email}>
-//           Send Code Used Email
-//         </GLButton>
+// <GLButton variant="primary" className="h-40px" onClick={send_code_used_email}>
+//   Send Code Used Email
+// </GLButton>
 //       </div>
 
 //       <div className="jc-c">

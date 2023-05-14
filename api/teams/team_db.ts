@@ -27,6 +27,15 @@ export default {
       }
     }
   },
+  findBy_teams_db: async (query: any) => {
+    try {
+      return await Team.findOne(query).populate("affiliates").populate("public_code").populate("private_code").populate("captain");
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
   findByAffiliate_teams_db: async (affiliate_id: string) => {
     try {
       return await Team.find({ affiliates: { $in: [affiliate_id] } })

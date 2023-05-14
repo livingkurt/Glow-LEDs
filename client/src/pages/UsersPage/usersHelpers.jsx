@@ -57,3 +57,15 @@ const allAttributes = [
 ];
 
 export const attributes = (user1, user2) => Array.from(new Set([...allAttributes, ...Object.keys(user1), ...Object.keys(user2)]));
+
+export const duplicateUser = user => {
+  return {
+    ...user,
+    first_name: `Copy ${user.first_name}`,
+    email: `copy${user.email}`,
+    _id: null,
+    password: null,
+    createdAt: null,
+    updatedAt: null
+  };
+};

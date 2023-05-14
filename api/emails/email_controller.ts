@@ -24,10 +24,11 @@ import { affiliate_db } from "../affiliates";
 import { promo_db } from "../promos";
 import { user_db } from "../users";
 import { determine_status } from "../emails/email_interactors";
-import { format_date, toCapitalize } from "../../util";
-import { sendEmail, send_multiple_emails } from "./email_helper";
+import { determine_code_tier, format_date, toCapitalize } from "../../util";
+import { sendEmail, sendEmailForUser, send_multiple_emails } from "./email_helper";
 import email_db from "./email_db";
 import { product_db } from "../products";
+import { team_db } from "../teams";
 
 export default {
   findAll_emails_c: async (req: any, res: any) => {
@@ -261,38 +262,72 @@ export default {
   },
   send_code_used_emails_c: async (req: any, res: any) => {
     const { promo_code } = req.params;
+    console.log({ promo_code });
     const today = new Date();
     const first_of_month = new Date(today.getFullYear(), today.getMonth(), 1);
     const promo = await promo_db.findBy_promos_db({ promo_code });
-    const affiliate = await affiliate_db.findBy_affiliates_db({ public_code: promo._id });
-    if (affiliate) {
-      const user = await user_db.findByAffiliateId_users_db(affiliate._id);
-      const stats: any = await order_services.code_usage_orders_s(
-        { promo_code },
-        {
-          start_date: first_of_month,
-          end_date: today,
-          sponsor: affiliate.artist_name
-        }
-      );
-      const mailOptions = {
-        from: process.env.DISPLAY_INFO_EMAIL,
-        to: user.email,
-        subject: `You're code was just used!`,
-        bcc: process.env.INFO_EMAIL,
-        html: App({
-          body: code_used({
-            affiliate,
-            number_of_uses: stats.number_of_uses,
-            earnings: affiliate.sponsor ? stats.revenue * 0.15 : stats.revenue * 0.1
-          }),
-          unsubscribe: false
-        })
-      };
 
-      sendEmail(mailOptions, res, "info", "Code Used Email sent to " + user.email);
+    let mailRecipients: string[] = [];
+    let mailSubject = "";
+    let mailBodyData = {};
+
+    if (promo_code === "inkybois") {
+      const team = await team_db.findBy_teams_db({ promo_code }); // You'll need to define team_db similar to how you've defined promo_db, affiliate_db etc.
+
+      if (team) {
+        const users = await Promise.all(
+          team.affiliates.map(async (affiliate_id: any) => {
+            const affiliate = await affiliate_db.findBy_affiliates_db({ _id: affiliate_id });
+            return await user_db.findByAffiliateId_users_db(affiliate._id);
+          })
+        );
+
+        mailRecipients = users.map(user => user.email);
+        const stats: any = await order_services.code_usage_orders_s({ promo_code }, { start_date: first_of_month, end_date: today });
+        mailSubject = `Your team's code was just used!`;
+        mailBodyData = {
+          name: team.team_name,
+          promo_code: promo_code,
+          percentage_off: null,
+          number_of_uses: stats.number_of_uses,
+          earnings: team.sponsor ? stats.revenue * 0.15 : stats.revenue * 0.1
+        };
+      }
+    } else {
+      const affiliate = await affiliate_db.findBy_affiliates_db({ public_code: promo._id });
+      if (affiliate) {
+        const user = await user_db.findByAffiliateId_users_db(affiliate._id);
+        const stats: any = await order_services.code_usage_orders_s(
+          { promo_code },
+          { start_date: first_of_month, end_date: today, sponsor: affiliate.artist_name }
+        );
+
+        mailRecipients = [user.email];
+        mailSubject = `Your code was just used!`;
+        mailBodyData = {
+          name: affiliate.artist_name,
+          promo_code: promo_code,
+          percentage_off: determine_code_tier(affiliate, stats.number_of_uses),
+          number_of_uses: stats.number_of_uses,
+          earnings: affiliate.sponsor ? stats.revenue * 0.15 : stats.revenue * 0.1
+        };
+      }
     }
+
+    const mailOptions = {
+      from: process.env.DISPLAY_INFO_EMAIL,
+      to: mailRecipients,
+      subject: mailSubject,
+      bcc: process.env.INFO_EMAIL,
+      html: App({
+        body: code_used(mailBodyData),
+        unsubscribe: false
+      })
+    };
+    console.log({ mailOptions });
+    sendEmail(mailOptions, res, "info", "Code Used Email sent to " + mailRecipients.join(", "));
   },
+
   send_password_reset_emails_c: async (req: any, res: any) => {
     const mailOptions = {
       from: process.env.DISPLAY_INFO_EMAIL,

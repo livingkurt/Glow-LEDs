@@ -8,7 +8,7 @@ import { open_combine_users_modal, open_create_user_modal, open_edit_user_modal 
 import { CombineUsersModal, EditUserModal } from "./components";
 import * as API from "../../api";
 import { Button } from "@mui/material";
-import { determine_color, fullName } from "./usersHelpers";
+import { determine_color, duplicateUser, fullName } from "./usersHelpers";
 import { Link } from "react-router-dom";
 
 const UsersPage = () => {
@@ -45,6 +45,16 @@ const UsersPage = () => {
               }}
             >
               <i className="fas fa-edit" />
+            </GLButton>
+            <GLButton
+              variant="icon"
+              aria-label="Duplicate"
+              onClick={() => {
+                const newDuplicateUser = duplicateUser(user);
+                dispatch(API.saveUser({ user: newDuplicateUser, profile: false }));
+              }}
+            >
+              <i className="fas fa-clone" />
             </GLButton>
             <Link to={"/secure/glow/userprofile/" + user._id}>
               <GLButton variant="icon" aria-label="view">

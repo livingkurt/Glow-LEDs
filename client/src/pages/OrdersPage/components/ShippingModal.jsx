@@ -16,8 +16,6 @@ const ShippingModal = () => {
   const shippingSlice = useSelector(state => state.shipping);
   const { shippingRates, shippingRate, hideLabelButton, rate, shipment_id, loading } = shippingSlice;
 
-  console.log({ shippingRates });
-
   useEffect(() => {
     if (order.shipping.first_name.length > 0) {
       dispatch(API.differentShippingRates(order));
