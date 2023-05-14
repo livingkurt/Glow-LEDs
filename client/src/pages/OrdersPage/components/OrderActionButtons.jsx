@@ -55,12 +55,12 @@ const OrderActionButtons = ({ order }) => {
       >
         Print Invoice
       </GLButton>
-      {/* {hide_label_button && !order.shipping.shipping_label && ( */}
-      <GLButton variant="primary" onClick={() => dispatch(API.buyLabel({ orderId: order._id }))} className="w-100per mv-5px">
-        Buy Label
-      </GLButton>
-      {/* )} */}
-      {order.shipping.shipping_label && (
+      {order.shipping.shipment_id !== null && !order.shipping.shipping_label && (
+        <GLButton variant="primary" onClick={() => dispatch(API.buyLabel({ orderId: order._id }))} className="w-100per mv-5px">
+          Buy Label
+        </GLButton>
+      )}
+      {/* {order.shipping.shipping_label && (
         <GLButton
           variant="secondary"
           className="w-100per mv-5px"
@@ -68,7 +68,7 @@ const OrderActionButtons = ({ order }) => {
         >
           Replace Shipping Label
         </GLButton>
-      )}
+      )} */}
       {order.shipping.shipping_label && (
         <GLButton
           variant="secondary"
@@ -84,11 +84,15 @@ const OrderActionButtons = ({ order }) => {
         </GLButton>
       )}
 
-      <GLButton variant="secondary" className="w-100per mv-5px" onClick={() => dispatch(openShippingModal(order))}>
+      <GLButton
+        variant={order.shipping.shipment_id === null ? "primary" : "secondary"}
+        className="w-100per mv-5px"
+        onClick={() => dispatch(openShippingModal(order))}
+      >
         Choose New Shipping Rate
       </GLButton>
 
-      <GLButton
+      {/* <GLButton
         variant="secondary"
         className="w-100per mv-5px"
         onClick={() =>
@@ -116,7 +120,7 @@ const OrderActionButtons = ({ order }) => {
         <GLButton variant="secondary" className="w-100per mv-5px" onClick={() => dispatch(API.createTracker({ orderId: order._id }))}>
           Add Shipment Tracker
         </GLButton>
-      )}
+      )} */}
       {!order.shipping.return_shipping_label && (
         <GLButton variant="secondary" className="w-100per mv-5px" onClick={() => dispatch(API.createReturnLabel({ orderId: order._id }))}>
           Buy Return Label

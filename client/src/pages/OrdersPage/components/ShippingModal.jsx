@@ -6,6 +6,7 @@ import * as API from "../../../api";
 import { chooseShippingRate, reChooseShippingRate } from "../../../slices/shippingSlice";
 import { Loading } from "../../../shared/SharedComponents";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
+import LoadingInside from "../../../shared/SharedComponents/LoadingInside";
 
 const ShippingModal = () => {
   const dispatch = useDispatch();
@@ -40,7 +41,24 @@ const ShippingModal = () => {
       <GLModal
         isOpen={shippingModal}
         onConfirm={() => {
-          dispatch(API.saveOrder({ ...order, shipping: { ...order.shipping, shipping_rate: shippingRate, shipment_id } }));
+          if (order.shipping.shipping_label) {
+            console.log("refund label");
+            dispatch(API.refundLabel({ orderId: order._id, isReturnTracking: false }));
+          }
+          dispatch(
+            API.saveOrder({
+              ...order,
+              shipping: {
+                ...order.shipping,
+                shipping_rate: shippingRate,
+                shipment_id,
+                shipping_label: null,
+                shipment_tracker: null
+              },
+              tracking_number: "",
+              tracking_url: ""
+            })
+          );
         }}
         onCancel={() => {
           dispatch(closeShippingModal());
@@ -52,7 +70,7 @@ const ShippingModal = () => {
         cancelColor="secondary"
         disableEscapeKeyDown
       >
-        <Loading loading={loading} />
+        <LoadingInside loading={loading} />
         {hideLabelButton &&
           sortedRates?.map((rate, index) => {
             return (

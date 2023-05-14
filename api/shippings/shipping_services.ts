@@ -1,7 +1,7 @@
 import invoice from "../../email_templates/pages/invoice";
 import { order_db } from "../orders";
 import { covertToOunces, parseOrderData } from "./shipping_helpers";
-import { addTracking, buyLabel, createLabel, createShippingRates, createTracker, refundLabel } from "./shipping_interactors";
+import { addTracking, buyLabel, clearTracking, createLabel, createShippingRates, createTracker, refundLabel } from "./shipping_interactors";
 
 const easy_post_api = require("@easypost/api");
 const EasyPost = new easy_post_api(process.env.EASY_POST);
@@ -20,11 +20,11 @@ export default {
     const { shipment_id, order_id } = params;
     console.log({ shipment_id, order_id });
     try {
-      if (shipment_id) {
+      const order = await order_db.findById_orders_db(order_id);
+      if (shipment_id && !order.shipping.shipping_label) {
         const shipment = await EasyPost.Shipment.retrieve(shipment_id);
         return { shipment };
       } else {
-        const order = await order_db.findById_orders_db(order_id);
         return await createShippingRates({ order: order, returnLabel: false });
       }
     } catch (error) {
@@ -33,6 +33,7 @@ export default {
       }
     }
   },
+
   buy_label_shipping_s: async (params: any) => {
     const order = await order_db.findById_orders_db(params.order_id);
     const { shipping_rate, shipment_id } = order.shipping;
@@ -66,6 +67,7 @@ export default {
     try {
       const order = await order_db.findById_orders_db(order_id);
       const refund: any = await refundLabel({ order, is_return_tracking });
+      await clearTracking({ order, isReturnTracking: is_return_tracking });
       return refund;
     } catch (error) {
       if (error instanceof Error) {

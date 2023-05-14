@@ -135,7 +135,6 @@ const orderPage = createSlice({
     },
     closeShippingModal: (state, { payload }) => {
       state.shippingModal = false;
-      state.order = order;
     }
   },
   extraReducers: {

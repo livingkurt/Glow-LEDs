@@ -7,11 +7,12 @@ const easy_post_api = require("@easypost/api");
 const EasyPost = new easy_post_api(process.env.EASY_POST);
 
 export const buyLabel = async ({ shipment_id, shipping_rate, order }: any) => {
+  console.log({ shipment_id, shipping_rate });
   try {
     return await EasyPost.Shipment.buy(shipment_id, shipping_rate?.id);
   } catch (error) {
     console.error("Error buying label:", error);
-    return createLabel({ speed: "first", order });
+    // return createLabel({ speed: "first", order });
   }
 };
 export const addTracking = async ({ label, order, isReturnTracking = false }: any) => {
@@ -29,6 +30,23 @@ export const addTracking = async ({ label, order, isReturnTracking = false }: an
       order.tracking_number = label.tracking_code;
       order.tracking_url = tracker.public_url;
       order.shipping.shipping_label = label;
+    }
+
+    await order_db.update_orders_db(order._id, order);
+  } catch (error) {}
+};
+export const clearTracking = async ({ order, isReturnTracking = false }: any) => {
+  try {
+    if (isReturnTracking) {
+      order.shipping.return_shipment_tracker = null;
+      order.return_tracking_url = null;
+      order.return_tracking_number = null;
+      order.shipping.return_shipping_label = null;
+    } else {
+      order.shipping.shipment_tracker = null;
+      order.tracking_number = null;
+      order.tracking_url = null;
+      order.shipping.shipping_label = null;
     }
 
     await order_db.update_orders_db(order._id, order);
@@ -163,9 +181,10 @@ export const createShippingRates = async ({ order, returnLabel }: any) => {
         commercial_invoice_signature: "IMAGE_2"
       }
     });
+    console.log({ createShippingRates: shipment });
     return { shipment, parcel };
   } catch (error) {
-    console.error("Error creating rates:", error);
+    console.log("Error creating rates:", error);
   }
 };
 

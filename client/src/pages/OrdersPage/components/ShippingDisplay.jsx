@@ -2,6 +2,7 @@ import React from "react";
 import { Typography, Box, Divider } from "@mui/material";
 import { sendEmail } from "../ordersPageHelpers";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
+import { determine_service, toTitleCaseSnakeCase } from "../../PlaceOrderPage/placeOrderHelpers";
 
 const ShippingDisplay = ({ shipping }) => {
   return (
@@ -43,7 +44,7 @@ const ShippingDisplay = ({ shipping }) => {
               Speed:{" "}
             </Typography>
             <Typography component="label" className=" mv-0px">
-              {shipping.shipping_rate.service}{" "}
+              {toTitleCaseSnakeCase(shipping.shipping_rate.service)}{" "}
             </Typography>
           </Box>
           <Box className="ai-c jc-b w-100per">
@@ -51,7 +52,7 @@ const ShippingDisplay = ({ shipping }) => {
               Delivery Time:{" "}
             </Typography>
             <Typography component="label" className=" mv-0px">
-              {shipping.shipping_rate.est_delivery_days} {shipping.shipping_rate.est_delivery_days === 1 ? "Day" : "Days"}{" "}
+              {determine_service(shipping.shipping_rate)}
             </Typography>
           </Box>
           <Box className="ai-c jc-b w-100per">
