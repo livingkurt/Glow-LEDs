@@ -12,8 +12,16 @@ const GenerateCSVLabel = ({ order }) => {
 
   const generateAndDownloadCSV = async csvLabel => {
     try {
-      const csvData = [csvLabel[0], csvLabel[1]]; // Extract the header row and next row from csvLabel
-      const csvContent = csvData.map(row => row.join(",")).join("\n"); // Convert the CSV data to string format
+      // Create array of keys for header row
+      const headers = Object.keys(csvLabel);
+
+      // Create array of values for data row
+      const values = Object.values(csvLabel);
+
+      // Combine headers and values to create 2D array for CSV
+      const csvArray = [headers, values];
+
+      const csvContent = csvArray.map(row => row.join(",")).join("\n");
       const csvBlob = new Blob([csvContent], { type: "text/csv;charset=utf-8" });
 
       saveAs(csvBlob, `${order.shipping.first_name}_${order.shipping.last_name}_Label.csv`); // Download the CSV using file-saver
@@ -23,7 +31,7 @@ const GenerateCSVLabel = ({ order }) => {
   };
 
   useEffect(() => {
-    if (csvLabel.length > 0) {
+    if (Object.keys(csvLabel).length > 0) {
       generateAndDownloadCSV(csvLabel);
     }
   }, [csvLabel]);

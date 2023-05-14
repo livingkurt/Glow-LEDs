@@ -105,8 +105,9 @@ export default {
   generate_csv_label_shipping_s: async (params: any) => {
     try {
       const order = await order_db.findById_orders_db(params.order_id);
-      const label = await EasyPost.Shipment.retrieve(order.shipping.shipment_id);
-      const csvData = parseOrderData(label, order);
+      const shipment = await EasyPost.Shipment.retrieve(order.shipping.shipment_id);
+      console.log({ shipment });
+      const csvData = parseOrderData(shipment, order);
       console.log({ csvData });
 
       return csvData;
