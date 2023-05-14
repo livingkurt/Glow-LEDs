@@ -181,12 +181,14 @@ export default {
     }
   },
   secure_refund_payments_c: async (req: any, res: any) => {
+    const { order_id } = req.params;
+    console.log({ order_id });
     try {
       //
-      const order = await Order.findById(req.params.id);
+      const order = await Order.findById(order_id);
       const refund = await stripe.refunds.create({
         payment_intent: order.payment.charge.id,
-        amount: (parseFloat(req.body.refund_amount) * 100).toFixed(0)
+        amount: (parseFloat(req.body.refundAmount) * 100).toFixed(0)
       });
 
       if (refund) {
@@ -200,10 +202,10 @@ export default {
           paymentMethod: order.payment.paymentMethod,
           charge: order.payment.charge,
           refund: [...order.payment.refund, refund],
-          refund_reason: [...order.payment.refund_reason, req.body.refund_reason]
+          refund_reason: [...order.payment.refund_reason, req.body.refundReason]
         };
         order.refundTotal = refundTotal;
-        const updated = await Order.updateOne({ _id: req.params.id }, order);
+        const updated = await Order.updateOne({ _id: order_id }, order);
 
         if (updated) {
           res.send(order);
@@ -214,6 +216,7 @@ export default {
         res.status(500).send({ message: "Refund not Created" });
       }
     } catch (error) {
+      console.log({ error });
       res.status(500).send({ error, message: "Error Refunding Order" });
     }
   },

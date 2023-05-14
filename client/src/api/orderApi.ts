@@ -199,34 +199,20 @@ export const deleteMultipleOrders = createAsyncThunk("orders/deleteMultipleOrder
   }
 });
 
-export const refundOrder = createAsyncThunk(
-  "orders/refundOrder",
-  async (
-    {
-      order,
-      refundResult,
-      refund_amount,
-      refund_reason
-    }: { order: { _id: string }; refundResult: boolean; refund_amount: number; refund_reason: string },
-    thunkApi: any
-  ) => {
-    try {
-      const { data } = await axios.put("/api/payments/secure/refund/" + order._id, {
-        ...order,
-        refund_amount: refund_amount,
-        isRefunded: refundResult,
-        RefundedAt: refundResult ? Date.now() : "",
-        refund_reason: refund_reason
-      });
-      return data;
-    } catch (error) {
-      Covy().showSnackbar({
-        message: `Error: ${error}`,
-        severity: "error"
-      });
-    }
+export const refundOrder = createAsyncThunk("orders/refundOrder", async ({ orderId, refundAmount, refundReason }: any, thunkApi: any) => {
+  try {
+    const { data } = await axios.put(`/api/payments/${orderId}/refund`, {
+      refundAmount,
+      refundReason
+    });
+    return data;
+  } catch (error) {
+    Covy().showSnackbar({
+      message: `Error: ${error}`,
+      severity: "error"
+    });
   }
-);
+});
 export const payOrder = createAsyncThunk(
   "orders/payOrder",
   async ({ order, paymentMethod }: { order: any; paymentMethod: any }, thunkApi: any) => {

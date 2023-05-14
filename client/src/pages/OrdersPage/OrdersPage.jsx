@@ -4,7 +4,7 @@ import { Notification } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
-import { open_create_order_modal, open_edit_order_modal } from "../../slices/orderSlice";
+import { openRefundModal, open_create_order_modal, open_edit_order_modal } from "../../slices/orderSlice";
 import { EditOrderModal, OrderDropdown } from "./components";
 import * as API from "../../api";
 import { Link } from "react-router-dom";
@@ -16,7 +16,9 @@ import { determine_product_name_string } from "../../utils/react_helper_function
 import { fullName } from "../UsersPage/usersHelpers";
 import ShippingModal from "./components/ShippingModal";
 import { open_create_pickup_modal } from "../../slices/shippingSlice";
+import SettingsBackupRestoreIcon from "@mui/icons-material/SettingsBackupRestore";
 import CreatePickupModal from "./components/CreatePickupModal";
+import RefundOrderModal from "./components/RefundOrderModal";
 
 const OrdersPage = () => {
   const orderPage = useSelector(state => state.orders.orderPage);
@@ -61,7 +63,48 @@ const OrdersPage = () => {
         )
       },
 
-      { title: "Total", display: row => `$${row.totalPrice.toFixed(2)}` },
+      {
+        title: "Total",
+        display: row => (
+          <div>
+            {!row.isRefunded && (
+              <div>
+                <div>${row.totalPrice.toFixed(2)}</div>
+              </div>
+            )}
+            {row.isRefunded && (
+              <div>
+                <del style={{ color: "red" }}>
+                  <label style={{ color: "white" }}>
+                    <div>${row.totalPrice.toFixed(2)}</div>
+                  </label>
+                </del>
+              </div>
+            )}
+            {row.isRefunded && (
+              <div>
+                <div>-${(row.payment.refund.reduce((a, c) => a + c.amount, 0) / 100).toFixed(2)}</div>
+              </div>
+            )}
+            {row.isRefunded && (
+              <div>
+                <div>${(row.totalPrice - row.payment.refund.reduce((a, c) => a + c.amount, 0) / 100).toFixed(2)}</div>
+              </div>
+            )}
+          </div>
+        )
+      },
+      // { title: "Total", display: row => `$${row.totalPrice.toFixed(2)}` },
+      // display: row => (
+      //   <div className="w-200px">
+      //     <div className="jc-b w-100per">
+      //       Subtotal: ${row.orderItems?.reduce((a, c) => parseInt(a) + parseInt(c.price) * parseInt(c.qty), 0).toFixed(2)}
+      //     </div>
+      //     <div className="jc-b w-100per">Tax: ${row.taxPrice.toFixed(2)}</div>
+      //     <div className="jc-b w-100per">Shipping: ${row.shippingPrice.toFixed(2)}</div>
+      //     <div className="jc-b w-100per">Total: ${row.totalPrice.toFixed(2)}</div>
+      //   </div>
+      // )
       {
         title: "Actions",
         display: row => (
@@ -91,6 +134,15 @@ const OrdersPage = () => {
                 <i className="fas fa-mountain" />
               </GLButton>
             </Link>
+            <GLButton
+              variant="icon"
+              onClick={() => {
+                dispatch(openRefundModal(row));
+              }}
+              aria-label="Refund"
+            >
+              <i class="fas fa-hand-holding-usd"></i>
+            </GLButton>
             <GLButton
               variant="icon"
               onClick={() => {
@@ -164,6 +216,7 @@ const OrdersPage = () => {
       <EditOrderModal />
       <ShippingModal />
       <CreatePickupModal />
+      <RefundOrderModal />
     </div>
   );
 };

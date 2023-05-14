@@ -79,9 +79,12 @@ const orderPage = createSlice({
     success: false,
     success_order: false,
     success_no_pay_order: false,
+    refundModal: false,
     remoteVersionRequirement: 0,
     edit_order_modal: false,
     hide_label_button: true,
+    refundAmount: 0,
+    refundReason: "",
     shippingModal: false,
     loading_label: false
   },
@@ -132,6 +135,20 @@ const orderPage = createSlice({
     openShippingModal: (state, { payload }) => {
       state.shippingModal = true;
       state.order = payload;
+    },
+    openRefundModal: (state, { payload }) => {
+      state.refundModal = true;
+      state.order = payload;
+    },
+    closeRefundModal: (state, { payload }) => {
+      state.refundModal = false;
+      state.order = order;
+    },
+    setRefundAmount: (state, { payload }) => {
+      state.refundAmount = payload;
+    },
+    setRefundReason: (state, { payload }) => {
+      state.refundReason = payload;
     },
     closeShippingModal: (state, { payload }) => {
       state.shippingModal = false;
@@ -259,7 +276,9 @@ const orderPage = createSlice({
     [API.refundOrder.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.refund = true;
+      state.refundModal = false;
       state.message = "Order Refunded";
+      state.remoteVersionRequirement = Date.now();
     },
     [API.refundOrder.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
@@ -328,13 +347,16 @@ export const {
   clear_order_state,
   set_edit_order_modal,
   open_create_order_modal,
-
+  openRefundModal,
   close_edit_order_modal,
   open_edit_order_modal,
   setRemoteVersionRequirement,
   set_hide_label_button,
   set_loading_label,
   openShippingModal,
+  closeRefundModal,
+  setRefundAmount,
+  setRefundReason,
   closeShippingModal
 } = orderPage.actions;
 export default orderPage.reducer;
