@@ -274,14 +274,14 @@ export default {
       const team = await team_db.findBy_teams_db({ promo_code }); // You'll need to define team_db similar to how you've defined promo_db, affiliate_db etc.
 
       if (team) {
-        const users = await Promise.all(
+        const users: any = await Promise.all(
           team.affiliates.map(async (affiliate_id: any) => {
             const affiliate = await affiliate_db.findBy_affiliates_db({ _id: affiliate_id });
             return await user_db.findByAffiliateId_users_db(affiliate._id);
           })
         );
 
-        mailRecipients = users.map(user => user.email) || [];
+        mailRecipients = users.map((user: any) => user.email);
         const stats: any = await order_services.code_usage_orders_s({ promo_code }, { start_date: first_of_month, end_date: today });
         mailSubject = `Your team's code was just used!`;
         mailBodyData = {
