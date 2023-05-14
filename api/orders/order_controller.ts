@@ -308,18 +308,6 @@ export default {
       res.status(500).send({ error, message: "Error get_all_time_revenue_orders_c" });
     }
   },
-  get_product_all_time_revenue_orders_c: async (req: any, res: any) => {
-    const { params } = req;
-    try {
-      const orders = await order_services.get_product_all_time_revenue_orders_s(params);
-      if (orders) {
-        return res.status(200).send(orders);
-      }
-      return res.status(500).send({ message: "Error get_product_all_time_revenue_orders_c" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error get_product_all_time_revenue_orders_c" });
-    }
-  },
   get_product_range_revenue_orders_c: async (req: any, res: any) => {
     const { query, params } = req;
     try {
@@ -330,6 +318,18 @@ export default {
       return res.status(500).send({ message: "Error get_product_range_revenue_orders_c" });
     } catch (error) {
       res.status(500).send({ error, message: "Error get_product_range_revenue_orders_c" });
+    }
+  },
+  get_all_product_range_revenue_orders_c: async (req: any, res: any) => {
+    const { query } = req;
+    try {
+      const orders = await order_services.get_all_product_range_revenue_orders_s(query);
+      if (orders) {
+        return res.status(200).send(orders);
+      }
+      return res.status(500).send({ message: "Error get_range_revenue_orders_c" });
+    } catch (error) {
+      res.status(500).send({ error, message: "Error get_range_revenue_orders_c" });
     }
   },
   get_range_revenue_orders_c: async (req: any, res: any) => {
@@ -377,6 +377,31 @@ export default {
       return res.status(500).send({ message: "Error get_yearly_revenue_orders_c" });
     } catch (error) {
       res.status(500).send({ error, message: "Error get_yearly_revenue_orders_c" });
+    }
+  },
+  get_monthly_revenue_product_orders_c: async (req: any, res: any) => {
+    const { query, params } = req;
+    console.log({ query, params });
+    try {
+      const orders = await order_services.get_monthly_revenue_product_orders_s(params, query);
+      if (orders) {
+        return res.status(200).send(orders);
+      }
+      return res.status(500).send({ message: "Error get_monthly_revenue_product_orders_c" });
+    } catch (error) {
+      res.status(500).send({ error, message: "Error get_monthly_revenue_product_orders_c" });
+    }
+  },
+  get_yearly_revenue_product_orders_c: async (req: any, res: any) => {
+    const { params } = req;
+    try {
+      const orders = await order_services.get_yearly_revenue_product_orders_s(params);
+      if (orders) {
+        return res.status(200).send(orders);
+      }
+      return res.status(500).send({ message: "Error get_yearly_revenue_product_orders_c" });
+    } catch (error) {
+      res.status(500).send({ error, message: "Error get_yearly_revenue_product_orders_c" });
     }
   },
   get_range_category_revenue_orders_c: async (req: any, res: any) => {

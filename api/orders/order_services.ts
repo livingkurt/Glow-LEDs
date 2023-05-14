@@ -1358,19 +1358,20 @@ export default {
       }
     }
   },
-  get_product_all_time_revenue_orders_s: async (params: { id: string }) => {
+  get_product_range_revenue_orders_s: async (params: { id: string }, query: { start_date: string; end_date: string }) => {
     try {
-      return await order_db.get_product_all_time_revenue_orders_db(params.id);
+      const { start_date, end_date } = query;
+      return await order_db.get_product_range_revenue_orders_db(params.id, start_date, end_date);
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
       }
     }
   },
-  get_product_range_revenue_orders_s: async (params: { id: string }, query: { start_date: string; end_date: string }) => {
+  get_all_product_range_revenue_orders_s: async (query: { start_date: string; end_date: string }) => {
     try {
       const { start_date, end_date } = query;
-      return await order_db.get_product_range_revenue_orders_db(params.id, start_date, end_date);
+      return await order_db.get_all_product_range_revenue_orders_db(start_date, end_date);
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -1391,6 +1392,27 @@ export default {
     try {
       const { start_date, end_date } = query;
       return await order_db.get_daily_revenue_orders_db(start_date, end_date);
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  get_monthly_revenue_product_orders_s: async (params: any, query: { year: string }) => {
+    const { year } = query;
+    const { product_id } = params;
+    try {
+      return await order_db.get_monthly_revenue_product_orders_db(year, product_id);
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  get_yearly_revenue_product_orders_s: async (params: any) => {
+    const { product_id } = params;
+    try {
+      return await order_db.get_yearly_revenue_product_orders_db(product_id);
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

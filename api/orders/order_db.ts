@@ -372,6 +372,140 @@ export default {
   //     }
   //   }
   // },
+  get_monthly_revenue_product_orders_db: async (year: string, product_id: string) => {
+    try {
+      const ObjectId = require("mongoose").Types.ObjectId;
+      const totalPriceByMonth = await Order.aggregate([
+        {
+          $match: {
+            deleted: false,
+            isPaid: true,
+            createdAt: {
+              $gte: new Date(`${year}-01-01T00:00:00.000Z`),
+              $lt: new Date(`${parseInt(year) + 1}-01-01T00:00:00.000Z`)
+            }
+          }
+        },
+        {
+          $unwind: "$orderItems"
+        },
+        {
+          $match: {
+            "orderItems.product": ObjectId(product_id)
+          }
+        },
+        {
+          $group: {
+            _id: { month: { $month: "$createdAt" }, day: { $dayOfMonth: "$createdAt" } },
+            dailyTotal: {
+              $sum: {
+                $multiply: ["$orderItems.price", "$orderItems.qty"]
+              }
+            },
+            monthlyQuantity: {
+              $sum: "$orderItems.qty"
+            }
+          }
+        },
+        {
+          $group: {
+            _id: "$_id.month",
+            totalPrice: {
+              $sum: "$dailyTotal"
+            },
+            totalQuantity: {
+              $sum: "$monthlyQuantity"
+            },
+            dailyAverage: {
+              $avg: "$dailyTotal"
+            }
+          }
+        },
+        {
+          $project: {
+            _id: 0,
+            month: "$_id",
+            totalPrice: 1,
+            dailyAverage: 1,
+            totalQuantity: 1
+          }
+        }
+      ]).exec();
+
+      return totalPriceByMonth;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+
+  get_yearly_revenue_product_orders_db: async (product_id: string) => {
+    try {
+      const ObjectId = require("mongoose").Types.ObjectId;
+      const totalPriceByYear = await Order.aggregate([
+        {
+          $match: {
+            deleted: false,
+            isPaid: true
+          }
+        },
+        {
+          $unwind: "$orderItems"
+        },
+        {
+          $match: {
+            "orderItems.product": ObjectId(product_id)
+          }
+        },
+        {
+          $group: {
+            _id: {
+              year: { $year: "$createdAt" },
+              month: { $month: "$createdAt" }
+            },
+            monthlyTotal: {
+              $sum: {
+                $multiply: ["$orderItems.price", "$orderItems.qty"]
+              }
+            },
+            yearlyQuantity: {
+              $sum: "$orderItems.qty"
+            }
+          }
+        },
+        {
+          $group: {
+            _id: "$_id.year",
+            totalPrice: {
+              $sum: "$monthlyTotal"
+            },
+            monthlyAverage: {
+              $avg: "$monthlyTotal"
+            },
+            totalQuantity: {
+              $sum: "$monthlyQuantity"
+            }
+          }
+        },
+        {
+          $project: {
+            _id: 0,
+            year: "$_id",
+            totalPrice: 1,
+            monthlyAverage: 1,
+            totalQuantity: 1
+          }
+        }
+      ]).exec();
+      return totalPriceByYear;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+
   get_monthly_revenue_orders_db: async (year: string) => {
     try {
       const totalPriceByMonth = await Order.aggregate([
@@ -545,14 +679,37 @@ export default {
     }
   },
 
-  get_product_all_time_revenue_orders_db: async (id: string) => {
+  get_product_range_revenue_orders_db: async (id: string, start_date: string, end_date: string) => {
     try {
       const result = await Order.aggregate([
-        { $match: { deleted: false, isPaid: true, "orderItems.product": id } },
+        {
+          $match: {
+            deleted: false,
+            isPaid: true,
+            "orderItems.product": id,
+            createdAt: {
+              $gte: new Date(start_date),
+              $lt: new Date(end_date)
+            }
+          }
+        },
+        {
+          $unwind: "$orderItems"
+        },
         {
           $group: {
             _id: "$orderItems.product",
-            totalRevenue: { $sum: { $multiply: ["$orderItems.price", "$orderItems.quantity"] } }
+            name: { $first: "$orderItems.name" },
+            totalRevenue: { $sum: { $multiply: ["$orderItems.price", "$orderItems.qty"] } },
+            totalQuantity: { $sum: "$orderItems.qty" }
+          }
+        },
+        {
+          $project: {
+            _id: 0,
+            name: 1,
+            totalRevenue: 1,
+            totalQuantity: 1
           }
         }
       ]).exec();
@@ -563,7 +720,7 @@ export default {
       }
     }
   },
-  get_product_range_revenue_orders_db: async (id: string, start_date: string, end_date: string) => {
+  get_all_product_range_revenue_orders_db: async (start_date: string, end_date: string) => {
     try {
       const result = await Order.aggregate([
         {
@@ -573,14 +730,26 @@ export default {
             createdAt: {
               $gte: new Date(start_date),
               $lt: new Date(end_date)
-            },
-            "orderItems.product": id
+            }
           }
+        },
+        {
+          $unwind: "$orderItems"
         },
         {
           $group: {
             _id: "$orderItems.product",
-            totalRevenue: { $sum: { $multiply: ["$orderItems.price", "$orderItems.quantity"] } }
+            name: { $first: "$orderItems.name" },
+            totalRevenue: { $sum: { $multiply: ["$orderItems.price", "$orderItems.qty"] } },
+            totalQuantity: { $sum: "$orderItems.qty" }
+          }
+        },
+        {
+          $project: {
+            _id: 1,
+            name: 1,
+            totalRevenue: 1,
+            totalQuantity: 1
           }
         }
       ]).exec();
@@ -591,6 +760,7 @@ export default {
       }
     }
   },
+
   get_all_time_tips_revenue_orders_db: async () => {
     try {
       const total_tips = await Order.aggregate([

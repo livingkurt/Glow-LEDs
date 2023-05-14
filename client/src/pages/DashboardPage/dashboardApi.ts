@@ -19,12 +19,22 @@ export const dashboardApi = createApi({
     getYearlyRevenueOrders: builder.query({
       query: () => "/orders/get_yearly_revenue_orders"
     }),
+    getMonthlyRevenueOrders: builder.query({
+      query: ({ year }: { year: string }) => `/orders/get_monthly_revenue_orders?year=${year}`
+    }),
+    getYearlyRevenueProductOrders: builder.query({
+      query: ({ productId }: { productId: string }) => `/orders/get_yearly_revenue_product_orders/${productId}/product`
+    }),
+    getMonthlyRevenueProductOrders: builder.query({
+      query: ({ year, productId }: { year: string; productId: string }) =>
+        `/orders/get_monthly_revenue_product_orders/${productId}/product?year=${year}`
+    }),
     getProductAllTimeRevenueOrders: builder.query({
       query: id => `/orders/get_product_all_time_revenue_orders/${id},`
     }),
     getProductRangeRevenueOrders: builder.query({
-      query: ({ id, start_date, end_date }: { id: string; start_date: string; end_date: string }) =>
-        `/orders/get_product_range_revenue_orders/${id}?start_date=${start_date}&end_date=${end_date}`
+      query: ({ productId, start_date, end_date }: { productId: string; start_date: string; end_date: string }) =>
+        `/orders/${productId}/product_range_revenue_orders?start_date=${start_date}&end_date=${end_date}`
     }),
     getRangeRevenueOrders: builder.query({
       query: ({ start_date, end_date }: { start_date: string; end_date: string }) =>
@@ -33,9 +43,6 @@ export const dashboardApi = createApi({
     getDailyRevenueOrders: builder.query({
       query: ({ start_date, end_date }: { start_date: string; end_date: string }) =>
         `/orders/get_daily_revenue_orders?start_date=${start_date}&end_date=${end_date}`
-    }),
-    getMonthlyRevenueOrders: builder.query({
-      query: ({ year }: { year: string }) => `/orders/get_monthly_revenue_orders?year=${year}`
     }),
     getRangeCategoryRevenueOrders: builder.query({
       query: ({ start_date, end_date }: { start_date: string; end_date: string }) =>
@@ -66,6 +73,10 @@ export const dashboardApi = createApi({
       query: ({ start_date, end_date }: { start_date: string; end_date: string }) =>
         `/paychecks/get_range_payouts?start_date=${start_date}&end_date=${end_date}`
     }),
+    getProductRevenue: builder.query({
+      query: ({ start_date, end_date }: { start_date: string; end_date: string }) =>
+        `/orders/get_all_product_range_revenue_orders?start_date=${start_date}&end_date=${end_date}`
+    }),
     getCurrentStock: builder.query({
       query: () => `/products/current_stock`
     })
@@ -89,7 +100,10 @@ export const {
   useGetAllTimePayoutsQuery,
   useGetRangePayoutsQuery,
   useGetRangeGlovesQuery,
-  useGetCurrentStockQuery
+  useGetCurrentStockQuery,
+  useGetProductRevenueQuery,
+  useGetMonthlyRevenueProductOrdersQuery,
+  useGetYearlyRevenueProductOrdersQuery
 } = dashboardApi;
 
 // export const get_airtable_expenses = async (year: number): Promise<void> => {

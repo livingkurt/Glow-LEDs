@@ -25,7 +25,7 @@ import { promo_db } from "../promos";
 import { user_db } from "../users";
 import { determine_status } from "../emails/email_interactors";
 import { determine_code_tier, format_date, toCapitalize } from "../../util";
-import { sendEmail, sendEmailForUser, send_multiple_emails } from "./email_helper";
+import { sendEmail, send_multiple_emails } from "./email_helper";
 import email_db from "./email_db";
 import { product_db } from "../products";
 import { team_db } from "../teams";
@@ -262,12 +262,11 @@ export default {
   },
   send_code_used_emails_c: async (req: any, res: any) => {
     const { promo_code } = req.params;
-    console.log({ promo_code });
     const today = new Date();
     const first_of_month = new Date(today.getFullYear(), today.getMonth(), 1);
     const promo = await promo_db.findBy_promos_db({ promo_code });
 
-    let mailRecipients: string[] = [];
+    let mailRecipients: any = [];
     let mailSubject = "";
     let mailBodyData = {};
 
@@ -282,7 +281,7 @@ export default {
           })
         );
 
-        mailRecipients = users.map(user => user.email);
+        mailRecipients = users.map(user => user.email) || [];
         const stats: any = await order_services.code_usage_orders_s({ promo_code }, { start_date: first_of_month, end_date: today });
         mailSubject = `Your team's code was just used!`;
         mailBodyData = {
