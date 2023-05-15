@@ -199,13 +199,12 @@ const ProductPage = props => {
           if (product.has_add_on) {
             set_show_add_on(false);
           }
-          //   if (product.name !== "CLOZD Omniskinz Sleds") {
-          //     set_add_on_price(secondary_color.price);
-          //     set_price(secondary_color.price + product.price);
-          //   }
-          // } else {
-          //   set_show_add_on(true);
-          // }
+          if (product.name !== "CLOZD Omniskinz Sleds") {
+            set_add_on_price(secondary_color.price);
+            set_price(secondary_color.price + product.price);
+          }
+        } else {
+          set_show_add_on(true);
         }
       }
       if (product.option_products) {
