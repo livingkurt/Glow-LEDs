@@ -179,12 +179,10 @@ const ProductPage = props => {
     update_universal_state(product);
     const query = getUrlParameter(props.location);
     if (props.location.search.length === 0) {
-      //
       if (product.color_products) {
         set_color_products(product.color_products);
 
         const color = product.color_products.find(color => color.default_option === true);
-        //
         if (color) {
           update_color_product_state(color);
         }
@@ -193,7 +191,6 @@ const ProductPage = props => {
         set_secondary_color_products(product.secondary_color_products);
 
         const secondary_color = product.secondary_color_products.find(secondary_color => secondary_color.default_option === true);
-        //
         if (secondary_color) {
           update_secondary_color_product_state(secondary_color);
           if (product.has_add_on) {
