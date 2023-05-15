@@ -5,6 +5,7 @@ import { create_query } from "../utils/helper_functions";
 
 import * as API from "../api";
 import Covy from "../shared/GlowLEDsComponents/GLCovy/GLCovy";
+import { handleTokenRefresh } from "./axiosInstance";
 
 export const getAffiliates = async ({
   search,
@@ -140,6 +141,22 @@ export const affiliateEarnings = createAsyncThunk(
         `/api/orders/code_usage/${promo_code}?start_date=${start_date}&end_date=${end_date}&sponsor=${sponsor}`
       );
       return { data, type };
+    } catch (error) {
+      Covy().showSnackbar({
+        message: `Error: ${error}`,
+        severity: "error"
+      });
+    }
+  }
+);
+
+export const monthlyCheckin = createAsyncThunk(
+  "affiliate/monthlyCheckin",
+  async ({ affiliateId, questionsConcerns, numberOfContent }: any, thunkApi: any) => {
+    try {
+      const { data } = await axios.put(`/api/affiliates/${affiliateId}/monthly_checkin`, { questionsConcerns, numberOfContent });
+      await handleTokenRefresh(true);
+      return data;
     } catch (error) {
       Covy().showSnackbar({
         message: `Error: ${error}`,

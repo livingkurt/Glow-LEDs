@@ -23,6 +23,8 @@ import { determine_product_name_string } from "../../utils/react_helper_function
 import { Link } from "react-router-dom";
 import { humanDate } from "../../helpers/dateHelpers";
 import { fullName } from "../UsersPage/usersHelpers";
+import { Grid } from "@mui/material";
+import SponsorMonthlyCheckinModal from "./components/SponsorMonthlyCheckinModal";
 
 const ProfilePage = () => {
   const dispatch = useDispatch();
@@ -184,49 +186,52 @@ const ProfilePage = () => {
       <div className="row">
         <h1 style={{ textAlign: "center", width: "100%" }}>{getProfileTitle(current_user, first_name, "Profile")}</h1>
       </div>
-      <Loading loading={loading}>
-        <div>
-          <div className="wrap">
-            <ProfileDetails />
-            <div>
-              <ProfileActions />
-              <ProfileAffiliateMetrics />
-            </div>
-          </div>
+      <Loading loading={loading}></Loading>
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={6}>
+          <ProfileDetails />
+          <ProfileActions />
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <ProfileAffiliateMetrics />
+        </Grid>
+        <Grid item xs={12}>
           <ProfileAffiliateEarnings />
-        </div>
-      </Loading>
-      {/* {user && user?.affiliate?._id && (
-        <div className="mt-20px">
+        </Grid>
+        <Grid item xs={12}>
+          {user && user?.affiliate?._id && (
+            <GLTableV2
+              remoteApi={paychecksRemoteApi}
+              remoteVersionRequirement={remoteVersionRequirement}
+              determine_color={determine_color}
+              noURLParams
+              tableName={"Paychecks"}
+              enableSearch={false}
+              namespaceScope="paychecks"
+              namespace="paycheckTable"
+              columnDefs={paycheckColumnDefs}
+              loading={loading}
+              enableRowSelect={false}
+            />
+          )}
+        </Grid>
+        <Grid item xs={12}>
           <GLTableV2
-            remoteApi={paychecksRemoteApi}
-            remoteVersionRequirement={remoteVersionRequirement}
-            determine_color={determine_color}
-            noURLParams
-            tableName={"Paychecks"}
+            remoteApi={ordersRemoteApi}
+            tableName={"Orders"}
+            colors={orderColors}
             enableSearch={false}
-            namespaceScope="paychecks"
-            namespace="paycheckTable"
-            columnDefs={paycheckColumnDefs}
-            loading={loading}
+            noURLParams
+            determine_color={determineOrderColors}
+            namespaceScope="orders"
+            namespace="orderTable"
+            columnDefs={orderColumnDefs}
+            loading={loading_order}
             enableRowSelect={false}
           />
-        </div>
-      )}
-      <div className="mt-20px" />
-      <GLTableV2
-        remoteApi={ordersRemoteApi}
-        tableName={"Orders"}
-        colors={orderColors}
-        enableSearch={false}
-        noURLParams
-        determine_color={determineOrderColors}
-        namespaceScope="orders"
-        namespace="orderTable"
-        columnDefs={orderColumnDefs}
-        loading={loading_order}
-        enableRowSelect={false}
-      /> */}
+        </Grid>
+      </Grid>
+      <SponsorMonthlyCheckinModal />
     </div>
   );
 };

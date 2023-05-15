@@ -1,14 +1,15 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, Link } from "react-router-dom";
-import { GLButton } from "../../../shared/GlowLEDsComponents";
 import { open_edit_user_modal } from "../../../slices/userSlice";
-
-import { open_edit_affiliate_modal } from "../../../slices/affiliateSlice";
-import { EditAffiliateModal } from "../../AffiliatesPage/components";
+import { openMonthlyCheckinModal, open_edit_affiliate_modal } from "../../../slices/affiliateSlice";
 import { open_edit_wholesaler_modal } from "../../../slices/wholesalerSlice";
-import { EditWholesalerModal } from "../../WholesalersPage/components";
 import * as API from "../../../api";
+import { setOpenMonthlyCheckinModal } from "../profileSlice";
+import { Box, Button, Typography } from "@mui/material";
+import { EditAffiliateModal } from "../../AffiliatesPage/components";
+import { EditWholesalerModal } from "../../WholesalersPage/components";
+import SponsorMonthlyCheckinModal from "./SponsorMonthlyCheckinModal";
 
 export const ProfileActions = () => {
   let { id } = useParams();
@@ -17,102 +18,85 @@ export const ProfileActions = () => {
   const { current_user, user } = userPage;
   const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
   const { affiliate } = affiliatePage;
+
+  const currentMonth = new Date().toLocaleString("default", { month: "long" });
+  const checkinCompleted = user?.affiliate?.sponsorMonthlyCheckins?.find(checkin => checkin.month === currentMonth);
   return (
-    <div className="row">
-      <div
-        style={{
-          height: 50
+    <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={() => {
+          dispatch(open_edit_user_modal(user));
         }}
       >
-        <GLButton
-          style={{
-            marginRight: "10px",
-            maxWidth: "225px"
-          }}
-          onClick={() => {
-            dispatch(open_edit_user_modal(user));
-          }}
-          variant="primary"
-        >
-          Edit Profile
-        </GLButton>
-      </div>
-      {current_user?.isAdmin ? (
-        <div
-          style={{
-            height: 50
-          }}
-        >
-          <Link to={"/secure/glow/change_password/" + id}>
-            <GLButton
-              style={{
-                marginRight: "10px",
-                maxWidth: "210px"
-              }}
-              variant="primary"
-            >
-              Change Password
-            </GLButton>
-          </Link>
-        </div>
-      ) : (
-        <div>
-          <Link to={"/account/changepassword"}>
-            <GLButton
-              style={{
-                maxWidth: "210px",
-                marginRight: "10px"
-              }}
-              variant="primary"
-            >
-              Change Password
-            </GLButton>
-          </Link>
-        </div>
-      )}
+        Edit Profile
+      </Button>
+
+      <Link to={current_user?.isAdmin ? "/secure/glow/change_password/" + id : "/account/changepassword"} className="w-100per">
+        <Button variant="contained" color="secondary" fullWidth>
+          Change Password
+        </Button>
+      </Link>
 
       {user.is_affiliated && (
-        <div>
-          <GLButton
-            variant="primary"
-            onClick={() => {
-              if (user?.affiliate?._id) {
-                dispatch(API.detailsAffiliate({ id: user?.affiliate?._id }));
-              }
-              dispatch(open_edit_affiliate_modal(affiliate));
-            }}
-          >
-            Edit Affiliate Profile
-          </GLButton>
-        </div>
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={() => {
+            if (user?.affiliate?._id) {
+              dispatch(API.detailsAffiliate({ id: user?.affiliate?._id }));
+            }
+            dispatch(open_edit_affiliate_modal(affiliate));
+          }}
+        >
+          Edit Affiliate Profile
+        </Button>
+      )}
+
+      {!checkinCompleted && (
+        <Typography variant="body1" gutterBottom>
+          You have not checked in for the month of {currentMonth}
+        </Typography>
+      )}
+      {user.is_affiliated && user.affiliate.sponsor && (
+        <Button
+          variant="contained"
+          color={checkinCompleted ? "secondary" : "primary"}
+          onClick={() => {
+            dispatch(openMonthlyCheckinModal());
+          }}
+        >
+          Sponsor Monthly Checkin for {new Date().toLocaleString("default", { month: "long" })}
+        </Button>
       )}
 
       {user.isWholesaler && (
-        <div>
-          <GLButton
-            variant="primary"
-            onClick={() => {
-              dispatch(open_edit_wholesaler_modal(user.wholesaler));
-            }}
-          >
-            Edit Wholesaler Profile
-          </GLButton>
-        </div>
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={() => {
+            dispatch(open_edit_wholesaler_modal(user.wholesaler));
+          }}
+        >
+          Edit Wholesaler Profile
+        </Button>
       )}
+
       {current_user?.isAdmin && (
-        <div>
-          <GLButton
-            variant="primary"
-            onClick={() => {
-              dispatch(API.loginAsUser(user));
-            }}
-          >
-            Sign In as User
-          </GLButton>
-        </div>
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={() => {
+            dispatch(API.loginAsUser(user));
+          }}
+        >
+          Sign In as User
+        </Button>
       )}
+
       <EditAffiliateModal />
       <EditWholesalerModal />
-    </div>
+    </Box>
   );
 };

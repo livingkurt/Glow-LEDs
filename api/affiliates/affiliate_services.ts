@@ -4,6 +4,7 @@ import { IAffiliate } from "../../types/affiliateTypes";
 import { IUser } from "../../types/userTypes";
 import affiliate_db from "./affiliate_db";
 import { user_db } from "../users";
+import Affiliate from "./affiliate";
 const bcrypt = require("bcryptjs");
 dotenv.config();
 const stripe = require("stripe")(process.env.STRIPE_KEY);
@@ -109,6 +110,61 @@ export default {
       }
     }
   },
+  monthly_checkin_affiliates_s: async (params: any, body: any) => {
+    const { id } = params;
+    const { questionsConcerns, numberOfContent } = body;
+
+    try {
+      // Get the current month
+      const monthNames = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+      ];
+      const date = new Date();
+      const currentMonth = monthNames[date.getMonth()];
+
+      // Prepare the check-in object
+      const checkin = {
+        month: currentMonth,
+        questionsConcerns: questionsConcerns,
+        numberOfContent: numberOfContent
+        // add any additional fields here
+      };
+
+      const affiliate: any = await Affiliate.findOne({ _id: id });
+      if (affiliate) {
+        const existingCheckinIndex = affiliate.sponsorMonthlyCheckins.findIndex((checkin: any) => checkin.month === currentMonth);
+
+        if (existingCheckinIndex > -1) {
+          // Update the existing checkin
+          affiliate.sponsorMonthlyCheckins[existingCheckinIndex] = checkin;
+        } else {
+          // Add a new checkin
+          affiliate.sponsorMonthlyCheckins.push(checkin);
+        }
+
+        // Save the updated affiliate
+        await affiliate.save();
+
+        return affiliate;
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+
   update_affiliates_s: async (params: any, body: IAffiliate) => {
     try {
       return await affiliate_db.update_affiliates_db(params.id, body);

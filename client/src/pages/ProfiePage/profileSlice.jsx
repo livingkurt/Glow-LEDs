@@ -34,5 +34,6 @@ const profilePage = createSlice({
   }
 });
 
-export const { set_year, set_month, set_start_date, set_end_date, set_start_end_date, set_loading } = profilePage.actions;
+export const { set_year, set_month, set_start_date, set_end_date, set_start_end_date, set_loading, setOpenMonthlyCheckinModal } =
+  profilePage.actions;
 export default profilePage.reducer;

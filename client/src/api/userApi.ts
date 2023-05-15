@@ -4,7 +4,7 @@ import Covy from "../shared/GlowLEDsComponents/GLCovy/GLCovy";
 import axios from "axios";
 
 import { create_query } from "../utils/helper_functions";
-import { handleTokenRefresh } from "./axiosInstance";
+import { handleTokenRefresh, setCurrentUser } from "./axiosInstance";
 
 export const getUsers = async ({
   search,
@@ -63,7 +63,9 @@ export const saveUser = createAsyncThunk("users/saveUser", async ({ user, profil
     } else {
       const { data } = await axios.put(`/api/users/${user._id}`, user);
       if (profile) {
-        handleTokenRefresh(true);
+        await handleTokenRefresh(true);
+        // setCurrentUser(accessToken);
+        // window.location.reload();
       }
       return { data, profile };
     }

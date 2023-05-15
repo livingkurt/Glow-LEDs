@@ -57,7 +57,12 @@ const affiliatePage = createSlice({
     search: "",
     sort: "",
     page: 1,
-    limit: 10
+    limit: 10,
+    month: "",
+    files: [],
+    monthlyCheckinModal: false,
+    questionsConcerns: "",
+    numberOfContent: 0
   },
   reducers: {
     set_affiliate: (state, { payload }) => {
@@ -91,6 +96,29 @@ const affiliatePage = createSlice({
     open_affiliate_modal: (state, { payload }) => {
       state.affiliate_modal = true;
       state.affiliate = payload;
+    },
+    setMonth: (state, { payload }) => {
+      state.month = payload;
+    },
+    setFiles: (state, { payload }) => {
+      state.files = payload;
+    },
+    openMonthlyCheckinModal: (state, { payload }) => {
+      state.monthlyCheckinModal = true;
+    },
+    closeMonthlyCheckinModal: (state, { payload }) => {
+      state.monthlyCheckinModal = false;
+    },
+    setNumberOfContent: (state, { payload }) => {
+      state.numberOfContent = payload;
+    },
+    setCheckin: (state, { payload }) => {
+      const { numberOfContent, questionsConcerns } = payload;
+      state.numberOfContent = numberOfContent;
+      state.questionsConcerns = questionsConcerns;
+    },
+    setQuestion: (state, { payload }) => {
+      state.questionsConcerns = payload;
     }
   },
   extraReducers: {
@@ -152,6 +180,17 @@ const affiliatePage = createSlice({
       state.error = payload.error;
       state.message = payload.message;
     },
+    [API.monthlyCheckin.pending as any]: (state: any, { payload }: any) => {
+      state.loading = true;
+    },
+    [API.monthlyCheckin.fulfilled as any]: (state: any, { payload }: any) => {
+      state.monthlyCheckinModal = false;
+    },
+    [API.monthlyCheckin.rejected as any]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.error = payload.error;
+      state.message = payload.message;
+    },
     [API.affiliateEarnings.pending as any]: (state: any, { payload }: any) => {
       state.loading_year_earnings = true;
       state.loading_month_earnings = true;
@@ -186,6 +225,13 @@ export const {
   open_edit_affiliate_modal,
   close_affiliate_modal,
   open_affiliate_modal,
-  set_edit_affiliate_modal
+  set_edit_affiliate_modal,
+  openMonthlyCheckinModal,
+  closeMonthlyCheckinModal,
+  setMonth,
+  setFiles,
+  setQuestion,
+  setNumberOfContent,
+  setCheckin
 } = affiliatePage.actions;
 export default affiliatePage.reducer;

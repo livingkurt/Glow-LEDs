@@ -2,7 +2,7 @@
 
 import { createSlice } from "@reduxjs/toolkit";
 import * as API from "../api";
-import { setAuthToken } from "../api/axiosInstance";
+import { handleTokenRefresh, setAuthToken, setCurrentUser } from "../api/axiosInstance";
 import jwt_decode from "jwt-decode";
 
 const user = {
@@ -112,16 +112,18 @@ const userPage = createSlice({
       state.loading = true;
     },
     [API.saveUser.fulfilled as any]: (state: any, { payload }: any) => {
-      const { profile } = payload;
+      // const { profile } = payload;
       state.loading = false;
       state.message = "User Saved";
       state.loading = false;
       state.remoteVersionRequirement = Date.now();
       state.edit_user_modal = false;
       state.success = true;
-      if (profile) {
-        window.location.reload();
-      }
+      // if (profile) {
+      //   const accessToken = await handleTokenRefresh();
+      //   setCurrentUser(accessToken);
+      //   // window.location.reload();
+      // }
     },
     [API.saveUser.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;

@@ -1,6 +1,17 @@
 import mongoose from "mongoose";
 export {};
 
+const sponsorCheckinSchema = new mongoose.Schema(
+  {
+    month: { type: String },
+    questionsConcerns: { type: String },
+    numberOfContent: { type: Number }
+  },
+  {
+    timestamps: true
+  }
+);
+
 const affiliateSchema = new mongoose.Schema(
   {
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
@@ -15,6 +26,7 @@ const affiliateSchema = new mongoose.Schema(
     tiktok_link: { type: String },
     tiktok: { type: String },
     percentage_off: { type: Number },
+    sponsorMonthlyCheckins: [sponsorCheckinSchema],
     public_code: { type: mongoose.Schema.Types.ObjectId, ref: "Promo" },
     private_code: { type: mongoose.Schema.Types.ObjectId, ref: "Promo" },
     location: { type: String },

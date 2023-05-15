@@ -4,6 +4,7 @@ import { GLButton } from "../../../shared/GlowLEDsComponents";
 import { determine_code_tier } from "../../DashboardPage/background/worker_helpers";
 import { determine_terms_link } from "../profileHelpers";
 import useClipboard from "react-hook-clipboard";
+import { Box, Button } from "@mui/material";
 
 const ProfileAffiliateMetrics = () => {
   const [clipboard, copyToClipboard] = useClipboard();
@@ -49,25 +50,30 @@ const ProfileAffiliateMetrics = () => {
             <h3>Promo Code URL</h3>
             <label>https://www.glow-leds.com?code={user.affiliate.public_code.promo_code.toUpperCase()}</label>
           </div>
-          <div>
-            <GLButton
-              variant="primary"
-              className="mv-10px mr-1rem"
+          <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+            <Button
+              variant="contained"
+              color="primary"
+              fullWidth
               onClick={() => copyToClipboard(`https://www.glow-leds.com?code=${user.affiliate.public_code.promo_code.toUpperCase()}`)}
             >
               Copy Link to Clipboard
-            </GLButton>
+            </Button>
             <a href={determine_terms_link(user.affiliate)} target="_blank" rel="noopener noreferrer" className="mr-10px">
-              <GLButton variant="primary">Affiliate Terms</GLButton>
+              <Button variant="contained" color="secondary" fullWidth>
+                Affiliate Terms
+              </Button>
             </a>
             <a
               href={"https://docs.google.com/document/d/1hiquje1Bw-SWlYEO2Lp8NMfVZhvMRNNrwNog4Ltr5Ac/edit"}
               target="_blank"
               rel="noopener noreferrer"
             >
-              <GLButton variant="primary">Affiliate Learnings</GLButton>
+              <Button variant="contained" color="secondary" fullWidth>
+                Affiliate Learnings
+              </Button>
             </a>
-          </div>
+          </Box>
         </div>
       )}
     </div>

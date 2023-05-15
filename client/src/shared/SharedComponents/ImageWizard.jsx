@@ -25,7 +25,7 @@ const ImageWizard = ({ fieldData, fieldState, onChange, fieldName }) => {
   return (
     <div>
       <Typography className="title_font mt-10px ta-c">{fieldData.label}</Typography>
-      <ImageUploader onUpload={fieldData.onUpload} album={fieldData.album} />
+      <ImageUploader onUpload={fieldData.onUpload} album={fieldData.album} type="image" />
       <div className="ai-c g-10px">
         <TextField label="Enter an Image ID" fullWidth margin="normal" size="small" onChange={e => setText(e.target.value)} />
         <Button variant="contained" sx={{ height: "40px" }} onClick={handleSaveId}>

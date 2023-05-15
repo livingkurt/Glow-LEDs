@@ -3,12 +3,7 @@ import axios from "axios";
 import { Box, Button, Container, Grid, TextField } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
-const StyledBox = styled(Box)({
-  // padding: "16px",
-  // textAlign: "center"
-});
-
-const ImageUploader = ({ onUpload, album }) => {
+const ImageUploader = ({ onUpload, album, type }) => {
   const [files, setFiles] = useState([]);
   const [previewUrls, setPreviewUrls] = useState([]);
   const [albumName, setAlbumName] = useState(album);
@@ -42,7 +37,7 @@ const ImageUploader = ({ onUpload, album }) => {
     formData.append("albumName", albumName);
 
     try {
-      const response = await axios.post("/api/images/upload", formData, {
+      const response = await axios.post(`/api/images/upload/${type}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data"
         }
