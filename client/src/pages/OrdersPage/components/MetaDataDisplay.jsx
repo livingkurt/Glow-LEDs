@@ -52,7 +52,7 @@ const MetaDataDisplay = ({ row }) => {
           <label className="phrase_font">Tracking Number: </label>
 
           <a
-            href={determine_tracking_link(row.tracking_number)}
+            href={row.tracking_url ? row.tracking_url : determine_tracking_link(row.tracking_number)}
             target="_blank"
             rel="noopener noreferrer"
             className="mv-2rem"
@@ -70,7 +70,7 @@ const MetaDataDisplay = ({ row }) => {
           <label className="phrase_font">Return Tracking Number: </label>
 
           <a
-            href={determine_tracking_link(row.return_tracking_number)}
+            href={row.return_tracking_url ? row.return_tracking_url : determine_tracking_link(row.return_tracking_number)}
             target="_blank"
             rel="noopener noreferrer"
             className="mv-2rem"

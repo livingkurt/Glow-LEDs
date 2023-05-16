@@ -96,6 +96,9 @@ export const normalizeOrderFilters = (input: any) => {
 
 export const normalizeOrderSearch = (query: any) => {
   let search = {};
+  const USPS_REGEX = /^[0-9]{20,22}$/; // Matches USPS tracking numbers
+  const FEDEX_REGEX = /^[0-9]{12,15}$/; // Matches FedEx tracking numbers
+
   if (query.search && query.search.match(/^[0-9a-fA-F]{24}$/)) {
     search = query.search ? { _id: mongoose.Types.ObjectId(query.search) } : {};
   } else if (query.search && isEmail(query.search)) {
@@ -114,6 +117,18 @@ export const normalizeOrderSearch = (query: any) => {
     search = query.search
       ? {
           promo_code: query.search.slice(1, query.search.length).toLowerCase()
+        }
+      : {};
+  } else if (query.search && query.search.match(USPS_REGEX)) {
+    search = query.search
+      ? {
+          tracking_number: query.search
+        }
+      : {};
+  } else if (query.search && query.search.match(FEDEX_REGEX)) {
+    search = query.search
+      ? {
+          tracking_number: query.search
         }
       : {};
   } else {
