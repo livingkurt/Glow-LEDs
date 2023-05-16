@@ -65,7 +65,7 @@ const ShippingDisplay = ({ shipping }) => {
           </Box>
         </Box>
       )}
-      <GLButton variant="secondary" className="w-100per mv-10px" onClick={() => sendEmail("Hello")}>
+      <GLButton variant="secondary" className="w-100per mv-10px" onClick={() => sendEmail(shipping)}>
         Send User a Message
       </GLButton>
     </Box>

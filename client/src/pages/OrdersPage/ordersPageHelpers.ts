@@ -178,10 +178,10 @@ export const duplicateOrder = (order: any) => {
   };
 };
 
-export const sendEmail = (message: string, order: any) => {
-  const email = order.shipping.email;
+export const sendEmail = (shipping: any) => {
+  const email = shipping.email;
   const subject = "About Your Glow LEDs Order";
-  const emailBody = "Hi " + order.user.first_name + ",";
+  const emailBody = "Hi " + shipping.first_name + ",";
   document.location = "mailto:" + email + "?subject=" + subject + "&body=" + emailBody;
 };
 
