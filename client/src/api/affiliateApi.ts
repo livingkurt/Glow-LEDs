@@ -152,9 +152,14 @@ export const affiliateEarnings = createAsyncThunk(
 
 export const monthlyCheckin = createAsyncThunk(
   "affiliate/monthlyCheckin",
-  async ({ affiliateId, questionsConcerns, numberOfContent }: any, thunkApi: any) => {
+  async ({ affiliateId, questionsConcerns, numberOfContent, month, year }: any, thunkApi: any) => {
     try {
-      const { data } = await axios.put(`/api/affiliates/${affiliateId}/monthly_checkin`, { questionsConcerns, numberOfContent });
+      const { data } = await axios.put(`/api/affiliates/${affiliateId}/monthly_checkin`, {
+        questionsConcerns,
+        numberOfContent,
+        month,
+        year
+      });
       await handleTokenRefresh(true);
       return data;
     } catch (error) {

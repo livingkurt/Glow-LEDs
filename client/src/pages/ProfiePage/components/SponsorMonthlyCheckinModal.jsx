@@ -8,25 +8,24 @@ import { useEffect } from "react";
 const SponsorMonthlyCheckinModal = () => {
   const dispatch = useDispatch();
   const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
-  const { questionsConcerns, monthlyCheckinModal, numberOfContent } = affiliatePage;
+  const { questionsConcerns, monthlyCheckinModal, numberOfContent, month, year } = affiliatePage;
   const userPage = useSelector(state => state.users.userPage);
   const { user } = userPage;
 
   useEffect(() => {
     if (user?.affiliate) {
-      const currentMonth = new Date().toLocaleString("default", { month: "long" });
-      const checkin = user?.affiliate?.sponsorMonthlyCheckins?.find(checkin => checkin.month === currentMonth);
+      const checkin = user?.affiliate?.sponsorMonthlyCheckins?.find(checkin => checkin.month === month && checkin.year === year);
       if (checkin) {
         dispatch(setCheckin(checkin));
       }
     }
-  }, [user?.affiliate?.sponsorMonthlyCheckins, dispatch, user?.affiliate]);
+  }, [user?.affiliate?.sponsorMonthlyCheckins, dispatch, user?.affiliate, month, year]);
 
   return (
     <GLActiionModal
       isOpen={monthlyCheckinModal}
       onConfirm={() => {
-        dispatch(API.monthlyCheckin({ affiliateId: user.affiliate._id, questionsConcerns, numberOfContent }));
+        dispatch(API.monthlyCheckin({ affiliateId: user.affiliate._id, questionsConcerns, numberOfContent, month, year }));
         dispatch(API.detailsUser(user._id));
       }}
       onCancel={() => dispatch(closeMonthlyCheckinModal())}
@@ -45,7 +44,7 @@ const SponsorMonthlyCheckinModal = () => {
           </Typography>
         </Grid>
         <Grid item>
-          <Typography variant="body1">You are checking in for: {new Date().toLocaleString("default", { month: "long" })}</Typography>
+          <Typography variant="body1">You are checking in for: {month}</Typography>
         </Grid>
         <Grid item>
           <TextField

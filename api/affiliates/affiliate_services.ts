@@ -112,38 +112,24 @@ export default {
   },
   monthly_checkin_affiliates_s: async (params: any, body: any) => {
     const { id } = params;
-    const { questionsConcerns, numberOfContent } = body;
+    const { questionsConcerns, numberOfContent, month, year } = body;
 
     try {
-      // Get the current month
-      const monthNames = [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December"
-      ];
-      const date = new Date();
-      const currentMonth = monthNames[date.getMonth()];
-
       // Prepare the check-in object
       const checkin = {
-        month: currentMonth,
+        month: month,
+        year: year,
         questionsConcerns: questionsConcerns,
         numberOfContent: numberOfContent
         // add any additional fields here
       };
+      console.log({ checkin });
 
       const affiliate: any = await Affiliate.findOne({ _id: id });
       if (affiliate) {
-        const existingCheckinIndex = affiliate.sponsorMonthlyCheckins.findIndex((checkin: any) => checkin.month === currentMonth);
+        const existingCheckinIndex = affiliate.sponsorMonthlyCheckins.findIndex(
+          (checkin: any) => checkin.month === month && checkin.year === year
+        );
 
         if (existingCheckinIndex > -1) {
           // Update the existing checkin
@@ -159,6 +145,7 @@ export default {
         return affiliate;
       }
     } catch (error) {
+      console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }

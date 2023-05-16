@@ -19,8 +19,19 @@ export const ProfileActions = () => {
   const affiliatePage = useSelector(state => state.affiliates.affiliatePage);
   const { affiliate } = affiliatePage;
 
+  const date = new Date();
+  date.setMonth(date.getMonth() - 1);
+  const previousMonth = date.toLocaleString("default", { month: "long" });
   const currentMonth = new Date().toLocaleString("default", { month: "long" });
-  const checkinCompleted = user?.affiliate?.sponsorMonthlyCheckins?.find(checkin => checkin.month === currentMonth);
+  const currentYear = new Date().getFullYear();
+  const checkinCompleted = user?.affiliate?.sponsorMonthlyCheckins?.find(
+    checkin => checkin.month === currentMonth && checkin.year === currentYear
+  );
+
+  const previousCheckin = user?.affiliate?.sponsorMonthlyCheckins?.find(
+    checkin => checkin.month === previousMonth && checkin.year === currentYear
+  );
+
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
       <Button
@@ -53,22 +64,39 @@ export const ProfileActions = () => {
           Edit Affiliate Profile
         </Button>
       )}
-
-      {!checkinCompleted && (
-        <Typography variant="body1" gutterBottom>
-          You have not checked in for the month of {currentMonth}
-        </Typography>
-      )}
-      {user.is_affiliated && user.affiliate.sponsor && (
-        <Button
-          variant="contained"
-          color={checkinCompleted ? "secondary" : "primary"}
-          onClick={() => {
-            dispatch(openMonthlyCheckinModal());
-          }}
-        >
-          Sponsor Monthly Checkin for {new Date().toLocaleString("default", { month: "long" })}
-        </Button>
+      {user.is_affiliated && user?.affiliate?.sponsor && (
+        <>
+          {!previousCheckin && (
+            <Typography variant="body1" gutterBottom>
+              You have not checked in for the month of {previousMonth}
+            </Typography>
+          )}
+          {!previousCheckin && (
+            <Button
+              variant="contained"
+              color={previousCheckin ? "secondary" : "primary"}
+              onClick={() => {
+                dispatch(openMonthlyCheckinModal({ month: previousMonth, year: currentYear }));
+              }}
+            >
+              Sponsor Monthly Checkin for {previousMonth}
+            </Button>
+          )}
+          {!checkinCompleted && (
+            <Typography variant="body1" gutterBottom>
+              You have not checked in for the month of {currentMonth}
+            </Typography>
+          )}
+          <Button
+            variant="contained"
+            color={checkinCompleted ? "secondary" : "primary"}
+            onClick={() => {
+              dispatch(openMonthlyCheckinModal({ month: currentMonth, year: currentYear }));
+            }}
+          >
+            Sponsor Monthly Checkin for {currentMonth}
+          </Button>
+        </>
       )}
 
       {user.isWholesaler && (

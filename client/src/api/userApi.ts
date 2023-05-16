@@ -64,8 +64,6 @@ export const saveUser = createAsyncThunk("users/saveUser", async ({ user, profil
       const { data } = await axios.put(`/api/users/${user._id}`, user);
       if (profile) {
         await handleTokenRefresh(true);
-        // setCurrentUser(accessToken);
-        // window.location.reload();
       }
       return { data, profile };
     }

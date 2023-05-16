@@ -59,6 +59,7 @@ const affiliatePage = createSlice({
     page: 1,
     limit: 10,
     month: "",
+    year: "",
     files: [],
     monthlyCheckinModal: false,
     questionsConcerns: "",
@@ -104,10 +105,15 @@ const affiliatePage = createSlice({
       state.files = payload;
     },
     openMonthlyCheckinModal: (state, { payload }) => {
+      const { month, year } = payload;
       state.monthlyCheckinModal = true;
+      state.month = month;
+      state.year = year;
     },
     closeMonthlyCheckinModal: (state, { payload }) => {
       state.monthlyCheckinModal = false;
+      state.month = "";
+      state.year = "";
     },
     setNumberOfContent: (state, { payload }) => {
       state.numberOfContent = payload;
@@ -185,6 +191,8 @@ const affiliatePage = createSlice({
     },
     [API.monthlyCheckin.fulfilled as any]: (state: any, { payload }: any) => {
       state.monthlyCheckinModal = false;
+      state.numberOfContent = 0;
+      state.questionsConcerns = "";
     },
     [API.monthlyCheckin.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;

@@ -4,6 +4,7 @@ export {};
 const sponsorCheckinSchema = new mongoose.Schema(
   {
     month: { type: String },
+    year: { type: Number },
     questionsConcerns: { type: String },
     numberOfContent: { type: Number }
   },
