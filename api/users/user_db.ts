@@ -29,6 +29,28 @@ export default {
       }
     }
   },
+  findBy_users_db: async (filter: any) => {
+    try {
+      return await User.findOne(filter)
+        .populate({
+          path: "affiliate",
+          populate: [
+            {
+              path: "public_code"
+            },
+            {
+              path: "private_code"
+            }
+          ]
+        })
+        .populate("wholesaler")
+        .populate("products");
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
   findById_users_db: async (id: string) => {
     try {
       return await User.findOne({ _id: id })

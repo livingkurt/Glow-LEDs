@@ -1,3 +1,6 @@
+import { affiliate_db } from "../affiliates";
+import { user_db } from "../users";
+
 export const normalizePaycheckFilters = (input: any) => {
   const output: any = {};
   Object.keys(input).forEach(key => {
@@ -7,9 +10,14 @@ export const normalizePaycheckFilters = (input: any) => {
           output["paid"] = false;
         }
         break;
-      case "affiliate":
-        for (const affiliate of input.affiliate) {
-          output["affiliate"] = affiliate;
+      case "affiliates":
+        for (const affiliate of input.affiliates) {
+          output["affiliate"] = affiliate.value;
+        }
+        break;
+      case "employees":
+        for (const employee of input.employees) {
+          output["user"] = employee.value;
         }
         break;
 
@@ -32,3 +40,43 @@ export const normalizePaycheckSearch = (query: any) => {
 
   return search;
 };
+
+// export const normalizePaycheckSearch = async (query: any) => {
+//   if (!query.search) {
+//     return {};
+//   }
+
+//   // Find all matching affiliates
+//   const affiliates = await affiliate_db.findAll_affiliates_db({ artist_name: query.search }, {}, "0", "1");
+
+//   // Find all matching users
+//   const users = await user_db.findAll_users_db(
+//     {
+//       $expr: {
+//         $regexMatch: {
+//           input: {
+//             $concat: ["$first_name", " ", "$last_name"]
+//           },
+//           regex: query.search,
+//           options: "i"
+//         }
+//       }
+//     },
+//     {},
+//     "0",
+//     "1"
+//   );
+
+//   // Construct the search filter
+
+//   const affiliateIds = affiliates.map((affiliate: any) => affiliate._id);
+//   const userIds = users.map((user: any) => user._id);
+
+//   const search = {
+//     $or: [{ affiliate: { $in: affiliateIds } }, { user: { $in: userIds } }]
+//   };
+
+//   console.log({ affiliateIds });
+
+//   return search;
+// };

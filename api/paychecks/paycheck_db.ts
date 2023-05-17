@@ -26,6 +26,15 @@ export default {
       }
     }
   },
+  findBy_paychecks_db: async (filter: any) => {
+    try {
+      return await Paycheck.findOne(filter).populate("user").populate("affiliate").populate("team");
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
   findMy_paychecks_db: async (affiliate_id: string) => {
     try {
       return await Paycheck.find({ deleted: false, affiliate: affiliate_id }).sort({ _id: -1 }).populate("affiliate").populate("team");

@@ -5,6 +5,7 @@ import { paycheck_db } from "../paychecks";
 import { team_db } from "../teams";
 import { getFilteredData } from "../api_helpers";
 import { normalizePaycheckFilters, normalizePaycheckSearch } from "./paycheck_interactors";
+import { user_db } from "../users";
 
 export default {
   findAll_paychecks_s: async (query: { page: string; search: string; sort: any; limit: string; filters: any }) => {
@@ -14,9 +15,10 @@ export default {
         query,
         sort_options,
         search_name: "affiliate",
-        normalizeFilters: normalizePaycheckFilters,
-        normalizeSearch: normalizePaycheckSearch
+        normalizeFilters: normalizePaycheckFilters
+        // normalizeSearch: normalizePaycheckSearch
       });
+      console.log({ filter });
       const paychecks = await paycheck_db.findAll_paychecks_db(filter, sort, limit, page);
       const count = await paycheck_db.count_paychecks_db(filter);
       return {
@@ -31,9 +33,13 @@ export default {
     }
   },
   create_filters_paychecks_s: async (query: { search: string; sort: string; page: string; limit: string }) => {
+    const affiliates = await affiliate_db.findAll_affiliates_db({ active: true }, {}, "0", "1");
+    const users = await user_db.findAll_users_db({ is_employee: true }, {}, "0", "1");
     try {
       const availableFilters = {
-        paid: []
+        paid: [],
+        affiliates: affiliates.map((affiliate: any) => ({ display: affiliate.artist_name, value: affiliate._id }))
+        // employees: users.map((user: any) => ({ display: `${user.first_name} ${user.last_name}`, value: user._id }))
       };
       const booleanFilters = {
         paid: {

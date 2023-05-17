@@ -11,6 +11,7 @@ import { Button } from "@mui/material";
 import { determine_color } from "./paychecksHelpers";
 import { format_date } from "../../utils/helper_functions";
 import { humanDate } from "../../helpers/dateHelpers";
+import { fullName } from "../UsersPage/usersHelpers";
 
 const PaychecksPage = () => {
   const paycheckPage = useSelector(state => state.paychecks.paycheckPage);
@@ -33,6 +34,10 @@ const PaychecksPage = () => {
       {
         title: "Affiliate",
         display: paycheck => (paycheck.affiliate ? paycheck.affiliate.artist_name : paycheck.team && paycheck.team.team_name)
+      },
+      {
+        title: "User",
+        display: paycheck => (paycheck.user ? fullName(paycheck.user) : "")
       },
 
       { title: "Amount", display: paycheck => `$${paycheck.amount.toFixed(2)}` },
