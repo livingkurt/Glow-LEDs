@@ -92,7 +92,7 @@ const OrderActionButtons = ({ order }) => {
         Choose New Shipping Rate
       </GLButton>
 
-      {/* <GLButton
+      <GLButton
         variant="secondary"
         className="w-100per mv-5px"
         onClick={() =>
@@ -116,6 +116,7 @@ const OrderActionButtons = ({ order }) => {
       >
         Clear Shipping Label
       </GLButton>
+      {/*
       {!order.shipping.shipment_tracker && order.tracking_number && (
         <GLButton variant="secondary" className="w-100per mv-5px" onClick={() => dispatch(API.createTracker({ orderId: order._id }))}>
           Add Shipment Tracker

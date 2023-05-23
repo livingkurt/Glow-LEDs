@@ -129,6 +129,7 @@ export const createShippingRates = async ({ order, returnLabel }: any) => {
 
     const customerAddress = {
       verify: ["delivery"],
+      email: order.shipping.email,
       name: `${order.shipping.first_name} ${order.shipping.last_name}`,
       street1: order.shipping.address_1,
       street2: order.shipping.address_2,
@@ -141,14 +142,16 @@ export const createShippingRates = async ({ order, returnLabel }: any) => {
 
     const returnAddress = {
       street1: process.env.RETURN_ADDRESS,
+      email: process.env.INFO_EMAIL,
       city: process.env.RETURN_CITY,
       state: process.env.RETURN_STATE,
       zip: process.env.RETURN_POSTAL_CODE,
       country: process.env.RETURN_COUNTRY,
       company: "Glow LEDs",
-      phone: process.env.PHONE_NUMBER,
-      email: process.env.INFO_EMAIL
+      phone: process.env.PHONE_NUMBER
     };
+
+    console.log({ customerAddress, returnAddress });
 
     const shipment = await EasyPost.Shipment.create({
       to_address: returnLabel ? returnAddress : customerAddress,
