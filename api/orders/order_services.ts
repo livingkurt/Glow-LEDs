@@ -48,7 +48,17 @@ export default {
   create_filters_orders_s: async (query: { search: string; sort: string; page: string; limit: string }) => {
     try {
       const availableFilters = {
-        order_status: ["isPaid", "isManufactured", "isShipped", "isInTransit", "isOutForDelivery", "isDelivered", "isPaused", "isRefunded"],
+        order_status: [
+          "isPaid",
+          "isManufactured",
+          "isPackaged",
+          "isShipped",
+          "isInTransit",
+          "isOutForDelivery",
+          "isDelivered",
+          "isPaused",
+          "isRefunded"
+        ],
         shipping: ["international"],
         isPaid: []
       };

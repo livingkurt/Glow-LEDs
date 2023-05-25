@@ -522,6 +522,8 @@ export default {
           updateOrder("isDelivered", "deliveredAt");
         } else if (tracker.status === "out_for_delivery") {
           updateOrder("isOutForDelivery", "outForDeliveryAt");
+        } else if (order.isShipped === true && tracker.status === "in_transit") {
+          updateOrder("isInTransit", "inTransitAt");
         } else if (tracker.status === "in_transit") {
           updateOrder("isShipped", "shippedAt");
         }
