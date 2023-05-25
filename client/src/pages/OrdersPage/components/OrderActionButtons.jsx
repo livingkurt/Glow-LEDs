@@ -116,12 +116,12 @@ const OrderActionButtons = ({ order }) => {
       >
         Clear Shipping Label
       </GLButton>
-      {/*
+
       {!order.shipping.shipment_tracker && order.tracking_number && (
         <GLButton variant="secondary" className="w-100per mv-5px" onClick={() => dispatch(API.createTracker({ orderId: order._id }))}>
           Add Shipment Tracker
         </GLButton>
-      )} */}
+      )}
       {!order.shipping.return_shipping_label && (
         <GLButton variant="secondary" className="w-100per mv-5px" onClick={() => dispatch(API.createReturnLabel({ orderId: order._id }))}>
           Buy Return Label
