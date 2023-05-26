@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { API_Emails } from "../../../utils";
 import { toCapitalize } from "../../../utils/helper_functions";
 import { set_loading_label } from "../../../slices/orderSlice";
+import config from "../../../config";
 
 const MetaDataDisplay = ({ row }) => {
   const dispatch = useDispatch();
@@ -20,7 +21,7 @@ const MetaDataDisplay = ({ row }) => {
       status === "manufactured"
         ? row.shipping.first_name + "'s Order has been Crafted!"
         : row.shipping.first_name + "'s Order has been " + toCapitalize(status) + "!",
-      process.env.REACT_APP_INFO_EMAIL,
+      config.REACT_APP_INFO_EMAIL,
       status,
       message_to_user
     );
@@ -29,7 +30,7 @@ const MetaDataDisplay = ({ row }) => {
   const send_order_email = async () => {
     dispatch(set_loading_label(true));
     await API_Emails.send_order_email(row, "Thank you for your Glow LEDs Order", row.shipping.email);
-    await API_Emails.send_order_email(row, "New Order Created by " + row.shipping.first_name, process.env.REACT_APP_INFO_EMAIL);
+    await API_Emails.send_order_email(row, "New Order Created by " + row.shipping.first_name, config.REACT_APP_INFO_EMAIL);
 
     dispatch(set_loading_label(false));
   };
@@ -37,7 +38,7 @@ const MetaDataDisplay = ({ row }) => {
   const send_refund_email = async () => {
     dispatch(set_loading_label(true));
     await API_Emails.send_refund_email(row, "Refund Successful", row.shipping.email, true);
-    await API_Emails.send_refund_email(row, "New Refunded for " + row.shipping.first_name, process.env.REACT_APP_INFO_EMAIL, true);
+    await API_Emails.send_refund_email(row, "New Refunded for " + row.shipping.first_name, config.REACT_APP_INFO_EMAIL, true);
 
     dispatch(set_loading_label(false));
   };

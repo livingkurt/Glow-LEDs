@@ -1,3 +1,4 @@
+import config from "../../config";
 import { email_sale_price_switch, determine_product_name, determin_card_logo_images, humanDate } from "../../util";
 
 export default ({ order }: any) => {
@@ -24,9 +25,9 @@ export default ({ order }: any) => {
           <td colspan="2" valign="top">
             <table style="width:100%;line-height:inherit;text-align:left;font-size:25px" width="100%" align="left">
               <tr>
-                <td valign="top">Glow LEDs<br />${process.env.RETURN_ADDRESS}<br />${process.env.RETURN_CITY}, ${
-    process.env.RETURN_STATE
-  } ${process.env.RETURN_POSTAL_CODE} <br />${process.env.CONTACT_EMAIL}
+                <td valign="top">Glow LEDs<br />${config.RETURN_ADDRESS}<br />${config.RETURN_CITY}, ${config.RETURN_STATE} ${
+    config.RETURN_POSTAL_CODE
+  } <br />${config.CONTACT_EMAIL}
                 </td>
                 <td valign="top" align="right" style="text-align: right;">${order.shipping.first_name}
                   ${order.shipping.last_name}<br>${order.shipping.address_1}
@@ -331,7 +332,7 @@ export default ({ order }: any) => {
       <div style="text-align:center">We want to feature you!</div>
       <div style="text-align:center">We are figuring this out as we go so any feedback is welcome.</div>
       <div style="text-align:center">We appreciate you more than you know.</div>
-      <div style="text-align:center"><strong>Questions or concerns?:</strong> ${process.env.CONTACT_EMAIL}</div>
+      <div style="text-align:center"><strong>Questions or concerns?:</strong> ${config.CONTACT_EMAIL}</div>
     </div>
   </div>
 </body>`;

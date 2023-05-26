@@ -1,5 +1,5 @@
 import axios from "axios";
-import { domain } from "../worker_helpers";
+import { domain } from "../../../../helpers/sharedHelpers";
 
 export const review_checker = async () => {
   const domainUrl = domain();

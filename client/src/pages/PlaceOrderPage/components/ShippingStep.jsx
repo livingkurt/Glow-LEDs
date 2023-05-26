@@ -13,6 +13,7 @@ import GLTooltip from "../../../shared/GlowLEDsComponents/GLTooltip/GLTooltip";
 import { useGetAllShippingOrdersQuery } from "../placeOrderApi";
 import { save_shipping } from "../../../slices/cartSlice";
 import * as API from "../../../api";
+import config from "../../../config";
 
 const ShippingStep = ({
   shipping_completed,
@@ -349,7 +350,7 @@ const ShippingStep = ({
                 <li>
                   <label htmlFor="address_autocomplete">Address</label>
                   <Autocomplete
-                    apiKey={process.env.REACT_APP_GOOGLE_PLACES_KEY}
+                    apiKey={config.REACT_APP_GOOGLE_PLACES_KEY}
                     className="fs-16px"
                     value={address_1}
                     options={{

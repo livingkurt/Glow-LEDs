@@ -1,13 +1,11 @@
 import { determine_filter, make_private_code, snake_case } from "../../util";
-import dotenv from "dotenv";
 import { IAffiliate } from "../../types/affiliateTypes";
 import { IUser } from "../../types/userTypes";
 import affiliate_db from "./affiliate_db";
 import { user_db } from "../users";
 import Affiliate from "./affiliate";
+import config from "../../config";
 const bcrypt = require("bcryptjs");
-dotenv.config();
-const stripe = require("stripe")(process.env.STRIPE_KEY);
 
 export default {
   findAll_affiliates_s: async (query: { search: string; sort: string; page: string; limit: string }) => {
@@ -199,7 +197,7 @@ export default {
         user.last_name = member["First and Last Name"].split(" ")[1];
         user.email = member["Email Address"].toLowerCase();
         user.promoter = true;
-        user.password = process.env.TEMP_PASS;
+        user.password = config.TEMP_PASS;
         affiliate.artist_name = member["Glover Name"];
         affiliate.instagram_handle = member["Instagram Username"];
         affiliate.facebook_name = member["Facebook Page Link"];
@@ -246,7 +244,7 @@ export default {
         } else {
           try {
             let hashed_password = "";
-            const temporary_password = process.env.TEMP_PASS;
+            const temporary_password = config.TEMP_PASS;
             bcrypt.genSalt(10, (err: any, salt: any) => {
               bcrypt.hash(temporary_password, salt, async (err: any, hash: any) => {
                 if (err) throw err;

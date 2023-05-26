@@ -1,7 +1,5 @@
 import jwt from "jsonwebtoken";
-import dotenv from "dotenv";
-
-dotenv.config();
+import config from "../config";
 
 export const setCurrentUser = (req: any, res: any, next: () => void) => {
   const authHeader = req.headers["authorization"];
@@ -12,7 +10,7 @@ export const setCurrentUser = (req: any, res: any, next: () => void) => {
     return next();
   }
 
-  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET || "", (err: any, user: any) => {
+  jwt.verify(token, config.ACCESS_TOKEN_SECRET || "", (err: any, user: any) => {
     if (err) {
       req.user = null;
       return next();
@@ -27,7 +25,7 @@ export const isAuth = (req: any, res: any, next: () => void) => {
 
   if (token) {
     const onlyToken = token.slice(7, token.length);
-    jwt.verify(onlyToken, process.env.ACCESS_TOKEN_SECRET || "", (err: any, decode: any) => {
+    jwt.verify(onlyToken, config.ACCESS_TOKEN_SECRET || "", (err: any, decode: any) => {
       if (err) {
         return res.status(401).send({ msg: "Invalid Token" });
       }

@@ -15,7 +15,7 @@ const day_num = parseInt(day);
 //
 
 export const top_code_usage_upload = async (year: number, month: string) => {
-  // google_sheets_json.private_key = process.env.REACT_APP_REACT_APP_GOOGLE_SHEETS_PRIVATE;
+  // google_sheets_json.private_key = config.REACT_APP_REACT_APP_GOOGLE_SHEETS_PRIVATE;
 
   try {
     const { GoogleSpreadsheet } = require("google-spreadsheet");
@@ -26,8 +26,8 @@ export const top_code_usage_upload = async (year: number, month: string) => {
 
     // use service account creds
     // await doc.useServiceAccountAuth({
-    //   client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
-    //   private_key: process.env.GOOGLE_PRIVATE_KEY,
+    //   client_email: config.GOOGLE_SERVICE_ACCOUNT_EMAIL,
+    //   private_key: config.GOOGLE_PRIVATE_KEY,
     // });
     // OR load directly from json file if not in secure environment
     await doc.useServiceAccountAuth(google_sheets_json);
@@ -85,7 +85,7 @@ export const top_code_usage_upload = async (year: number, month: string) => {
 };
 
 export const top_earner_upload = async (year: number, month: string) => {
-  // google_sheets_json.private_key = process.env.REACT_APP_REACT_APP_GOOGLE_SHEETS_PRIVATE;
+  // google_sheets_json.private_key = config.REACT_APP_REACT_APP_GOOGLE_SHEETS_PRIVATE;
 
   try {
     const { GoogleSpreadsheet } = require("google-spreadsheet");
@@ -96,8 +96,8 @@ export const top_earner_upload = async (year: number, month: string) => {
 
     // use service account creds
     // await doc.useServiceAccountAuth({
-    //   client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
-    //   private_key: process.env.GOOGLE_PRIVATE_KEY,
+    //   client_email: config.GOOGLE_SERVICE_ACCOUNT_EMAIL,
+    //   private_key: config.GOOGLE_PRIVATE_KEY,
     // });
     // OR load directly from json file if not in secure environment
     await doc.useServiceAccountAuth(google_sheets_json);
@@ -155,7 +155,7 @@ export const top_earner_upload = async (year: number, month: string) => {
 };
 
 export const affiliate_revenue_upload = async (position: any, year: number, month: string, google_sheet: string) => {
-  // google_sheets_json.private_key = process.env.REACT_APP_REACT_APP_GOOGLE_SHEETS_PRIVATE;
+  // google_sheets_json.private_key = config.REACT_APP_REACT_APP_GOOGLE_SHEETS_PRIVATE;
 
   try {
     const { GoogleSpreadsheet } = require("google-spreadsheet");
@@ -166,8 +166,8 @@ export const affiliate_revenue_upload = async (position: any, year: number, mont
 
     // use service account creds
     // await doc.useServiceAccountAuth({
-    //   client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
-    //   private_key: process.env.GOOGLE_PRIVATE_KEY,
+    //   client_email: config.GOOGLE_SERVICE_ACCOUNT_EMAIL,
+    //   private_key: config.GOOGLE_PRIVATE_KEY,
     // });
     // OR load directly from json file if not in secure environment
     await doc.useServiceAccountAuth(google_sheets_json);
@@ -224,7 +224,7 @@ export const affiliate_revenue_upload = async (position: any, year: number, mont
 };
 
 export const facebook_catalog_upload = async (products: any) => {
-  // google_sheets_json.private_key = process.env.REACT_APP_REACT_APP_GOOGLE_SHEETS_PRIVATE;
+  // google_sheets_json.private_key = config.REACT_APP_REACT_APP_GOOGLE_SHEETS_PRIVATE;
 
   try {
     const { GoogleSpreadsheet } = require("google-spreadsheet");
@@ -236,8 +236,8 @@ export const facebook_catalog_upload = async (products: any) => {
 
     // use service account creds
     // await doc.useServiceAccountAuth({
-    //   client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
-    //   private_key: process.env.GOOGLE_PRIVATE_KEY,
+    //   client_email: config.GOOGLE_SERVICE_ACCOUNT_EMAIL,
+    //   private_key: config.GOOGLE_PRIVATE_KEY,
     // });
     // OR load directly from json file if not in secure environment
     await doc.useServiceAccountAuth(google_sheets_json);
@@ -336,7 +336,7 @@ export const facebook_catalog_upload = async (products: any) => {
   } catch (error) {}
 };
 export const current_products_upload = async (products: any) => {
-  // google_sheets_json.private_key = process.env.REACT_APP_REACT_APP_GOOGLE_SHEETS_PRIVATE;
+  // google_sheets_json.private_key = config.REACT_APP_REACT_APP_GOOGLE_SHEETS_PRIVATE;
 
   try {
     const { GoogleSpreadsheet } = require("google-spreadsheet");
@@ -348,8 +348,8 @@ export const current_products_upload = async (products: any) => {
 
     // use service account creds
     // await doc.useServiceAccountAuth({
-    //   client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
-    //   private_key: process.env.GOOGLE_PRIVATE_KEY,
+    //   client_email: config.GOOGLE_SERVICE_ACCOUNT_EMAIL,
+    //   private_key: config.GOOGLE_PRIVATE_KEY,
     // });
     // OR load directly from json file if not in secure environment
     await doc.useServiceAccountAuth(google_sheets_json);
@@ -452,7 +452,7 @@ export const current_products_upload = async (products: any) => {
 };
 
 export const google_catalog_upload = async (products: any) => {
-  // google_sheets_json.private_key = process.env.REACT_APP_REACT_APP_GOOGLE_SHEETS_PRIVATE;
+  // google_sheets_json.private_key = config.REACT_APP_REACT_APP_GOOGLE_SHEETS_PRIVATE;
   try {
     const { GoogleSpreadsheet } = require("google-spreadsheet");
 
@@ -462,8 +462,8 @@ export const google_catalog_upload = async (products: any) => {
 
     // use service account creds
     // await doc.useServiceAccountAuth({
-    //   client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
-    //   private_key: process.env.GOOGLE_PRIVATE_KEY,
+    //   client_email: config.GOOGLE_SERVICE_ACCOUNT_EMAIL,
+    //   private_key: config.GOOGLE_PRIVATE_KEY,
     // });
     // OR load directly from json file if not in secure environment
     await doc.useServiceAccountAuth(google_sheets_json);
@@ -537,7 +537,7 @@ export const google_catalog_upload = async (products: any) => {
 };
 
 export const orders_upload = async (orders: any) => {
-  // google_sheets_json.private_key = process.env.REACT_APP_REACT_APP_GOOGLE_SHEETS_PRIVATE;
+  // google_sheets_json.private_key = config.REACT_APP_REACT_APP_GOOGLE_SHEETS_PRIVATE;
 
   try {
     const { GoogleSpreadsheet } = require("google-spreadsheet");
@@ -549,8 +549,8 @@ export const orders_upload = async (orders: any) => {
 
     // use service account creds
     // await doc.useServiceAccountAuth({
-    //   client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
-    //   private_key: process.env.GOOGLE_PRIVATE_KEY,
+    //   client_email: config.GOOGLE_SERVICE_ACCOUNT_EMAIL,
+    //   private_key: config.GOOGLE_PRIVATE_KEY,
     // });
     // OR load directly from json file if not in secure environment
     await doc.useServiceAccountAuth(google_sheets_json);

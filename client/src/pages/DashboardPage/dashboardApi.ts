@@ -1,7 +1,4 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import axios from "axios";
-import dotenv from "dotenv";
-dotenv.config();
 
 export const dashboardApi = createApi({
   reducerPath: "dashboardApi",

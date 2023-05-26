@@ -1,7 +1,5 @@
-import dotenv from "dotenv";
 import wholesaler_db from "./wholesaler_db";
 import { getFilteredData } from "../api_helpers";
-dotenv.config();
 
 export default {
   findAll_wholesalers_s: async (query: { page: string; search: string; sort: any; limit: string; filters: any }) => {

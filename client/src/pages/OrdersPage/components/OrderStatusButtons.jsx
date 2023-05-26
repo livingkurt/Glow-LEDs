@@ -6,6 +6,7 @@ import { set_loading_label } from "../../../slices/orderSlice";
 import { API_Emails } from "../../../utils";
 import { toCapitalize } from "../../../utils/helper_functions";
 import { Loading } from "../../../shared/SharedComponents";
+import config from "../../../config";
 
 const OrderStatusButtons = ({ order }) => {
   const dispatch = useDispatch();
@@ -50,7 +51,7 @@ const OrderStatusButtons = ({ order }) => {
       status === "manufactured"
         ? order.shipping.first_name + "'s Order has been Crafted!"
         : order.shipping.first_name + "'s Order has been " + toCapitalize(status) + "!",
-      process.env.REACT_APP_INFO_EMAIL,
+      config.REACT_APP_INFO_EMAIL,
       status,
       message_to_user
     );

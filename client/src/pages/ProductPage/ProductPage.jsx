@@ -14,6 +14,7 @@ import RelatedProductsSlideshow from "../../shared/GlowLEDsComponents/GLCarousel
 import * as API from "../../api";
 import { open_edit_product_modal } from "../../slices/productSlice";
 import { EditProductModal } from "../ProductsPage/components";
+import config from "../../config";
 
 const ProductPage = props => {
   const userPage = useSelector(state => state.users.userPage);
@@ -420,7 +421,7 @@ const ProductPage = props => {
   useEffect(() => {
     let clean = true;
     if (clean) {
-      if (process.env.NODE_ENV === "production") {
+      if (config.NODE_ENV === "production") {
         const recently_viewed = sessionStorage.getItem("recently_viewed");
         const products = JSON.parse(recently_viewed);
         //

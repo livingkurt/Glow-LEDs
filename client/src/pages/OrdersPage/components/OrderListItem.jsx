@@ -13,6 +13,7 @@ import { GLButton } from "../../../shared/GlowLEDsComponents";
 import { OrderStatusButtons } from "../../OrderPage/components";
 import useWindowDimensions from "../../../shared/Hooks/windowDimensions";
 import * as API from "../../../api";
+import config from "../../../config";
 
 const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_email, listOrdersFilters }) => {
   const history = useHistory();
@@ -187,14 +188,14 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
   const send_order_email = async () => {
     set_loading_label(true);
     await API_Emails.send_order_email(order, "Thank you for your Glow LEDs Order", order.shipping.email);
-    await API_Emails.send_order_email(order, "New Order Created by " + order.shipping.first_name, process.env.REACT_APP_INFO_EMAIL);
+    await API_Emails.send_order_email(order, "New Order Created by " + order.shipping.first_name, config.REACT_APP_INFO_EMAIL);
 
     set_loading_label(false);
   };
   const send_refund_email = async () => {
     set_loading_label(true);
     await API_Emails.send_refund_email(order, "Refund Successful", order.shipping.email, true);
-    await API_Emails.send_refund_email(order, "New Refunded for " + order.shipping.first_name, process.env.REACT_APP_INFO_EMAIL, true);
+    await API_Emails.send_refund_email(order, "New Refunded for " + order.shipping.first_name, config.REACT_APP_INFO_EMAIL, true);
 
     set_loading_label(false);
   };

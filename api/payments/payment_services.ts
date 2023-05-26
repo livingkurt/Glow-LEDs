@@ -1,6 +1,6 @@
+import config from "../../config";
 import { order_db } from "../orders";
-require("dotenv").config();
-const stripe = require("stripe")(process.env.STRIPE_KEY);
+const stripe = require("stripe")(config.STRIPE_KEY);
 
 export default {
   secure_pay_payments_s: async (params: any, body: any) => {
@@ -23,7 +23,7 @@ export default {
             await stripe.paymentIntents.confirm(
               result.id,
               {
-                payment_method: process.env.NODE_ENV === "production" ? body.paymentMethod.id : "pm_card_" + body.paymentMethod.card.brand
+                payment_method: config.NODE_ENV === "production" ? body.paymentMethod.id : "pm_card_" + body.paymentMethod.card.brand
               },
               async (err: any, result: any) => {
                 if (err) {
@@ -87,7 +87,7 @@ export default {
 
 // import { Order } from '../models';
 // require('dotenv').config();
-// const stripe = require('stripe')(process.env.STRIPE_KEY);
+// const stripe = require('stripe')(config.STRIPE_KEY);
 
 // export default {
 // 	secure_pay: async (req: any, res: any) => {
@@ -123,7 +123,7 @@ export default {
 // 							result.id,
 // 							{
 // 								payment_method:
-// 									process.env.NODE_ENV === 'production'
+// 									config.NODE_ENV === 'production'
 // 										? req.body.paymentMethod.id
 // 										: 'pm_card_' + req.body.paymentMethod.card.brand
 // 							},

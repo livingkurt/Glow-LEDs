@@ -1,3 +1,5 @@
+import config from "../../config";
+
 export default (background_color: string) => {
   return `<table style="width:100%;border-spacing:0;color:white;background:${
     background_color ? background_color : `#7d7c7c`
@@ -14,8 +16,8 @@ export default (background_color: string) => {
             href="">
             Please DO NOT reply to this email.
             <br>
-            For any questions email <a href="mailto:${process.env.CONTACT_EMAIL}"
-              style="font-size:16px;text-decoration:none;color:#009eff;">${process.env.CONTACT_EMAIL}
+            For any questions email <a href="mailto:${config.CONTACT_EMAIL}"
+              style="font-size:16px;text-decoration:none;color:#009eff;">${config.CONTACT_EMAIL}
           </p>
         </td>
       </tr>

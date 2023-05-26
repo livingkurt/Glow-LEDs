@@ -4,8 +4,9 @@ import { getFilteredData } from "../api_helpers";
 import { ImgurClient } from "imgur";
 import path from "path";
 import appRoot from "app-root-path";
+import config from "../../config";
 const fs = require("fs");
-const client = new ImgurClient({ clientId: process.env.IMGUR_ClIENT_ID });
+const client = new ImgurClient({ clientId: config.IMGUR_ClIENT_ID });
 
 export default {
   findAll_images_s: async (query: { page: string; search: string; sort: any; limit: string; filters: any }) => {

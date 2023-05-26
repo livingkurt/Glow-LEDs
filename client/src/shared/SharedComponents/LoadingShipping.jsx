@@ -2,6 +2,7 @@
 import React from "react";
 import { GLButton } from "../GlowLEDsComponents";
 import { useSelector } from "react-redux";
+import config from "../../config";
 require("dotenv").config();
 // Components
 
@@ -52,13 +53,8 @@ const LoadingShipment = ({
     <div>
       {loading ? (
         <div className="jc-c column">
-          <img src={process.env.PUBLIC_URL + "/loading.gif"} className="loading_gif" alt="Loading Circle" title="Loading Circle" />
-          <img
-            src={process.env.PUBLIC_URL + "/loading_overlay.png"}
-            className="loading_png"
-            alt="Loading Overlay"
-            title="Loading Overlay"
-          />
+          <img src={config.PUBLIC_URL + "/loading.gif"} className="loading_gif" alt="Loading Circle" title="Loading Circle" />
+          <img src={config.PUBLIC_URL + "/loading_overlay.png"} className="loading_png" alt="Loading Overlay" title="Loading Overlay" />
           <div className="payment_message">
             <h2 className="ta-c">Wait a moment while we process your Payment</h2>
             <p className="ta-c">Please Do not Refresh Page</p>
@@ -91,7 +87,7 @@ const LoadingShipment = ({
             )} */}
             <hr></hr>
             <p className="ta-c  mb-1px">If that does not work please:</p>
-            <p className="ta-c mt-20px mb-1px">Contact {process.env.REACT_APP_CONTACT_EMAIL} for assistence</p>
+            <p className="ta-c mt-20px mb-1px">Contact {config.REACT_APP_CONTACT_EMAIL} for assistence</p>
           </div>
 
           <GLButton className="sidebar_close_button" aria-label="Close" onClick={() => close_error()}>

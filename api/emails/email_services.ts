@@ -1,7 +1,7 @@
 import { determine_filter } from "../../util";
 import { user_db } from "../users";
 import { email_db } from "../emails";
-require("dotenv").config();
+import config from "../../config";
 
 export default {
   findAll_emails_s: async (query: { page: string; search: string; sort: string; limit: string }) => {
@@ -76,10 +76,10 @@ export default {
   },
   send_emails_s: async (body: any) => {
     const test = ["lavacquek@icloud.com"];
-    const email: any = body.test ? test : body.email ? body.email : process.env.INFO_EMAIL;
+    const email: any = body.test ? test : body.email ? body.email : config.INFO_EMAIL;
     const mailOptions = {
       to: email,
-      from: process.env.DISPLAY_INFO_EMAIL,
+      from: config.DISPLAY_INFO_EMAIL,
       subject: body.subject,
       html: body.template
     };
@@ -104,8 +104,8 @@ export default {
     const emails: any = body.test ? test : all_emails;
 
     const mailOptions = {
-      to: body.email ? body.email : process.env.INFO_EMAIL,
-      from: process.env.DISPLAY_INFO_EMAIL,
+      to: body.email ? body.email : config.INFO_EMAIL,
+      from: config.DISPLAY_INFO_EMAIL,
       subject: body.subject,
       html: body.template,
       bcc: emails

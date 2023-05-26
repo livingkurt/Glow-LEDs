@@ -15,8 +15,7 @@ import { OrderStatusButtons } from "./components";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import { validate_promo_code } from "../../utils/validations";
 import * as API from "../../api";
-
-require("dotenv").config();
+import config from "../../config";
 
 const OrderPage = props => {
   const { height, width } = useWindowDimensions();
@@ -181,7 +180,7 @@ const OrderPage = props => {
       status === "manufactured"
         ? order.shipping.first_name + "'s Order has been Crafted!"
         : order.shipping.first_name + "'s Order has been " + toCapitalize(status) + "!",
-      process.env.REACT_APP_INFO_EMAIL,
+      config.REACT_APP_INFO_EMAIL,
       status,
       message_to_user
     );
@@ -190,7 +189,7 @@ const OrderPage = props => {
   const send_paid_email = async () => {
     const { data: order } = await API_Orders.findById_orders_a(props.match.params.id);
     await API_Emails.send_order_email(order, "Thank you for your Glow LEDs Order!", order.shipping.email);
-    await API_Emails.send_order_email(order, "New Order Created by " + order.shipping.first_name, process.env.REACT_APP_INFO_EMAIL);
+    await API_Emails.send_order_email(order, "New Order Created by " + order.shipping.first_name, config.REACT_APP_INFO_EMAIL);
   };
   const update_order_payment_state = (order, state, is_action) => {
     if (state) {
@@ -443,13 +442,13 @@ const OrderPage = props => {
   const address = {
     first_name: "Kurt",
     last_name: "LaVacque",
-    address_1: process.env.REACT_APP_RETURN_ADDRESS,
-    city: process.env.REACT_APP_RETURN_CITY,
-    state: process.env.REACT_APP_RETURN_STATE,
-    postalCode: process.env.REACT_APP_RETURN_POSTAL_CODE,
-    country: process.env.REACT_APP_RETURN_COUNTRY,
-    phone: process.env.REACT_APP_PHONE_NUMBER,
-    email: process.env.REACT_APP_INFO_EMAIL,
+    address_1: config.REACT_APP_RETURN_ADDRESS,
+    city: config.REACT_APP_RETURN_CITY,
+    state: config.REACT_APP_RETURN_STATE,
+    postalCode: config.REACT_APP_RETURN_POSTAL_CODE,
+    country: config.REACT_APP_RETURN_COUNTRY,
+    phone: config.REACT_APP_PHONE_NUMBER,
+    email: config.REACT_APP_INFO_EMAIL,
     company: "Glow LEDs"
   };
 
@@ -490,7 +489,7 @@ const OrderPage = props => {
   const send_order_email = async () => {
     set_loading_label(true);
     await API_Emails.send_order_email(order, "Thank you for your Glow LEDs Order", order.shipping.email);
-    await API_Emails.send_order_email(order, "New Order Created by " + order.shipping.first_name, process.env.REACT_APP_INFO_EMAIL);
+    await API_Emails.send_order_email(order, "New Order Created by " + order.shipping.first_name, config.REACT_APP_INFO_EMAIL);
 
     set_loading_label(false);
   };
@@ -498,7 +497,7 @@ const OrderPage = props => {
   const send_refund_email = async () => {
     set_loading_label(true);
     await API_Emails.send_refund_email(order, "Refund Successful", order.shipping.email, true);
-    await API_Emails.send_refund_email(order, "New Refunded for " + order.shipping.first_name, process.env.REACT_APP_INFO_EMAIL, true);
+    await API_Emails.send_refund_email(order, "New Refunded for " + order.shipping.first_name, config.REACT_APP_INFO_EMAIL, true);
 
     set_loading_label(false);
   };

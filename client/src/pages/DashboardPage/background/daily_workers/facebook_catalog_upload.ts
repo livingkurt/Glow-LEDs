@@ -1,18 +1,17 @@
 import axios from "axios";
 
-import dotenv from "dotenv";
-import { domain } from "../worker_helpers";
-dotenv.config();
+import config from "../../../../config";
+import { domain } from "../../../../helpers/sharedHelpers";
 const google_sheets_json = require("./google_sheet_credentials.json");
 
 export const facebook_catalog_upload = async () => {
-  google_sheets_json.web.client_secret = process.env.REACT_APP_GOOGLE_SHEETS_PRIVATE;
+  google_sheets_json.web.client_secret = config.REACT_APP_GOOGLE_SHEETS_PRIVATE;
   try {
     const { GoogleSpreadsheet } = require("google-spreadsheet");
     const doc = new GoogleSpreadsheet("1NqPY49Q-58oCVuslOw576zNyBUnyAAaOmGdzCrVT4g8");
     await doc.useServiceAccountAuth({
-      client_email: process.env.REACT_APP_INFO_EMAIL,
-      private_key: process.env.REACT_APP_GOOGLE_SHEETS_PRIVATE
+      client_email: config.REACT_APP_INFO_EMAIL,
+      private_key: config.REACT_APP_GOOGLE_SHEETS_PRIVATE
     });
     await doc.loadInfo();
     const sheet = doc.sheetsByIndex[0];

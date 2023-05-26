@@ -29,6 +29,7 @@ import { sendEmail, send_multiple_emails } from "./email_helper";
 import email_db from "./email_db";
 import { product_db } from "../products";
 import { team_db } from "../teams";
+import config from "../../config";
 
 export default {
   findAll_emails_c: async (req: any, res: any) => {
@@ -103,7 +104,7 @@ export default {
       order: req.body.order
     };
     const mailOptions = {
-      from: process.env.DISPLAY_INFO_EMAIL,
+      from: config.DISPLAY_INFO_EMAIL,
       to: req.body.email,
       subject: req.body.subject,
       html: App({ body: order(body), unsubscribe: false })
@@ -120,7 +121,7 @@ export default {
       order: req.body.order
     };
     const mailOptions = {
-      from: process.env.DISPLAY_INFO_EMAIL,
+      from: config.DISPLAY_INFO_EMAIL,
       to: req.body.email,
       subject: req.body.subject,
       html: App({ body: order(body), unsubscribe: false })
@@ -144,7 +145,7 @@ export default {
       order: order_data
     };
     const mailOptions = {
-      from: process.env.DISPLAY_INFO_EMAIL,
+      from: config.DISPLAY_INFO_EMAIL,
       to: email,
       subject: "Your Glow LEDs Refund",
       html: App({ body: order(body), unsubscribe: false })
@@ -164,7 +165,7 @@ export default {
     };
 
     const mailOptions = {
-      from: process.env.DISPLAY_INFO_EMAIL,
+      from: config.DISPLAY_INFO_EMAIL,
       to: req.body.email,
       subject: req.body.status === "reassured" ? "Thank you for your patience" : req.body.subject,
       html: App({
@@ -179,15 +180,15 @@ export default {
     const data = await product_db.current_stock_products_db();
 
     const mailOptions = {
-      from: process.env.DISPLAY_INFO_EMAIL,
-      to: process.env.INFO_EMAIL,
+      from: config.DISPLAY_INFO_EMAIL,
+      to: config.INFO_EMAIL,
       subject: "Glow LEDs Current Stock",
       html: App({
         body: order_status(data)
       })
     };
 
-    sendEmail(mailOptions, res, "info", "Current Stock Email Sent to " + process.env.INFO_EMAIL);
+    sendEmail(mailOptions, res, "info", "Current Stock Email Sent to " + config.INFO_EMAIL);
   },
   send_affiliate_emails_c: async (req: any, res: any) => {
     const body = {
@@ -195,7 +196,7 @@ export default {
       title: "Thank you for signing up!"
     };
     const mailOptions = {
-      from: process.env.DISPLAY_INFO_EMAIL,
+      from: config.DISPLAY_INFO_EMAIL,
       to: req.body.email,
       subject: req.body.subject,
       html: App({ body: affiliate(body), unsubscribe: false })
@@ -209,7 +210,7 @@ export default {
       title: "Thank you for sending us your art!"
     };
     const mailOptions = {
-      from: process.env.DISPLAY_INFO_EMAIL,
+      from: config.DISPLAY_INFO_EMAIL,
       to: req.body.email,
       subject: req.body.subject,
       html: App({
@@ -222,7 +223,7 @@ export default {
   },
   send_external_contact_emails_c: async (req: any, res: any) => {
     const mailOptions = {
-      to: process.env.LOGIN_EMAIL,
+      to: config.LOGIN_EMAIL,
       from: req.body.email,
       subject: `${req.body.subject} - ${req.body.name}`,
       html: req.body.message
@@ -232,7 +233,7 @@ export default {
   send_user_contact_emails_c: async (req: any, res: any) => {
     const { email, first_name, reason_for_contact } = req.body;
     const mailOptions = {
-      to: process.env.DISPLAY_CONTACT_EMAIL,
+      to: config.DISPLAY_CONTACT_EMAIL,
       from: email,
       subject: `New message from ${first_name} - ${reason_for_contact}`,
       html: contact(req.body)
@@ -243,7 +244,7 @@ export default {
     const { email, first_name } = req.body;
 
     const mailOptions = {
-      from: process.env.DISPLAY_CONTACT_EMAIL,
+      from: config.DISPLAY_CONTACT_EMAIL,
       to: email,
       subject: `Thank you for Contacting Glow LEDs Support`,
       html: contact_confirmation(req.body)
@@ -253,7 +254,7 @@ export default {
   send_custom_contact_emails_c: async (req: any, res: any) => {
     const { order, email } = req.body;
     const mailOptions = {
-      from: process.env.DISPLAY_CONTACT_EMAIL,
+      from: config.DISPLAY_CONTACT_EMAIL,
       to: email,
       subject: `Thank you for ordering a custom Glow LEDs Product!`,
       html: custom_contact({ order })
@@ -314,10 +315,10 @@ export default {
     }
 
     const mailOptions = {
-      from: process.env.DISPLAY_INFO_EMAIL,
+      from: config.DISPLAY_INFO_EMAIL,
       to: mailRecipients,
       subject: mailSubject,
-      bcc: process.env.INFO_EMAIL,
+      bcc: config.INFO_EMAIL,
       html: App({
         body: code_used(mailBodyData),
         unsubscribe: false
@@ -329,7 +330,7 @@ export default {
 
   send_password_reset_emails_c: async (req: any, res: any) => {
     const mailOptions = {
-      from: process.env.DISPLAY_INFO_EMAIL,
+      from: config.DISPLAY_INFO_EMAIL,
       to: req.body.data.email,
       subject: "Glow LEDs Password Reset",
       html: App({
@@ -346,7 +347,7 @@ export default {
     const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 }, "0", "1");
 
     const mailOptions = {
-      from: process.env.DISPLAY_INFO_EMAIL,
+      from: config.DISPLAY_INFO_EMAIL,
       to: req.body.email,
       subject: "Enjoy 10% off your next purchase!",
       html: App({
@@ -413,7 +414,7 @@ export default {
     const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 }, "0", "1");
 
     const mailOptions = {
-      from: process.env.DISPLAY_INFO_EMAIL,
+      from: config.DISPLAY_INFO_EMAIL,
       to: req.body.email,
       subject: "Enjoy 10% off your next purchase!",
       html: App({
@@ -430,7 +431,7 @@ export default {
   },
   send_reset_password_emails_c: async (req: any, res: any) => {
     const mailOptions = {
-      from: process.env.DISPLAY_INFO_EMAIL,
+      from: config.DISPLAY_INFO_EMAIL,
       to: req.body.email,
       subject: "Glow LEDs Reset Password",
       html: App({
@@ -448,7 +449,7 @@ export default {
     const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 }, "0", "1");
 
     const mailOptions = {
-      from: process.env.DISPLAY_INFO_EMAIL,
+      from: config.DISPLAY_INFO_EMAIL,
       to: req.body.email,
       subject: "Glow LEDs Account Created",
       html: App({
@@ -466,7 +467,7 @@ export default {
   },
   send_verified_emails_c: async (req: any, res: any) => {
     const mailOptions = {
-      from: process.env.DISPLAY_INFO_EMAIL,
+      from: config.DISPLAY_INFO_EMAIL,
       to: req.body.email,
       subject: "Glow LEDs Account Created",
       html: App({
@@ -503,7 +504,7 @@ export default {
           // tracking_details: tracker.tracking_details.reverse()[0]
         };
         const mailOptions = {
-          from: process.env.DISPLAY_INFO_EMAIL,
+          from: config.DISPLAY_INFO_EMAIL,
           to: order.shipping.email,
           subject: determine_status(tracker.status),
           html: App({

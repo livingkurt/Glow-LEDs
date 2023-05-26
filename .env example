@@ -4,8 +4,8 @@
 #############################################################################
 
 ################## Database ##################
-RESTORED_MONGODB_URI=
-# RESTORED_MONGODB_URI=mongodb://localhost/db_name
+MONGODB_URI=
+# MONGODB_URI=mongodb://localhost/db_name
 
 ################## User Login ##################
 

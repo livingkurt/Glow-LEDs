@@ -1,8 +1,7 @@
 import axios from "axios";
-import { domain, get_todays_date, save_paycheck_to_expenses } from "../worker_helpers";
-import dotenv from "dotenv";
+import { get_todays_date, save_paycheck_to_expenses } from "../worker_helpers";
 import { IUser } from "../../../../types/userTypes";
-dotenv.config();
+import { domain } from "../../../../helpers/sharedHelpers";
 
 export const payout_employees = async (): Promise<void> => {
   try {

@@ -32,12 +32,13 @@ import { determine_status } from "../api/emails/email_interactors";
 import { email_db } from "../api/emails";
 import current_stock from "./pages/current_stock";
 import { product_db } from "../api/products";
+import config from "../config";
 const router = express.Router();
 
 router.get("/email_subscription", async (req: { body: any }, res: { send: (arg0: string) => void }) => {
   const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 }, "0", "1");
   const body = {
-    email: process.env.CONTACT_EMAIL,
+    email: config.CONTACT_EMAIL,
     promo_code: "xoteag",
     categories: contents && contents[0].home_page.slideshow
   };
@@ -1960,7 +1961,7 @@ router.get("/shipping_status", async (req: { body: any }, res: { send: (arg0: st
 router.get("/review", async (req: { body: any }, res: { send: (arg0: string) => void }) => {
   const contents = await content_db.findAll_contents_db({ deleted: false }, { _id: -1 }, "0", "1");
   const body = {
-    email: process.env.CONTACT_EMAIL,
+    email: config.CONTACT_EMAIL,
     promo_code: "xoteag",
     categories: contents && contents[0].home_page.slideshow
   };

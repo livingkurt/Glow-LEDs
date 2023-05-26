@@ -1,3 +1,5 @@
+import config from "../../config";
+
 export default (props: {
   message: string;
   first_name: string;
@@ -17,7 +19,7 @@ export default (props: {
       Hello ${props.first_name},
     </h1>
     <p>
-      Thank you for contacting Glow LEDs! 
+      Thank you for contacting Glow LEDs!
       We'll answer your questions/requests as soon as possible. Thank you for your patience and support!
     </p>
     <h3>
@@ -104,14 +106,14 @@ export default (props: {
     </p>`
         : ""
     }
-  
+
     <p>
       <div>Name: ${props.first_name} ${props.last_name}</div>
 
       <div>Email: ${props.email}</div>
 
       ${props.order_number ? `<div>Order Number: ${props.order_number}</div>` : `<div></div>`}
-      
+
       <div>Reason For Contact: ${props.reason_for_contact}</div>
 
       ${props.artist_name ? `<div>Glover Name: ${props.artist_name}</div>` : `<div></div>`}
@@ -121,7 +123,7 @@ export default (props: {
       ${props.facebook_name ? `<div>Facebook Name: ${props.facebook_name}</div>` : `<div></div>`}
 
       ${props.song_id ? `<div>Song ID: ${props.song_id}</div>` : `<div></div>`}
-      
+
       ${props.quote ? `<div>Quote: ${props.quote}</div>` : `<div></div>`}
 
     </p>
@@ -129,7 +131,7 @@ export default (props: {
       Thank you,
     </h3>
       <div>Kurt @ Glow LEDs</div>
-      <div>${process.env.CONTACT_EMAIL}</div>
+      <div>${config.CONTACT_EMAIL}</div>
       <div>www.glow-leds.com</div>
 	`;
 };

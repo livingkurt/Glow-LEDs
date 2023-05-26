@@ -1,4 +1,6 @@
-export default (header_footer_color: string) => {
+import config from "../../config";
+
+export default (header_footer_color: string): string => {
   return `<table style="width:100%;border-spacing:0;background-color:${header_footer_color ? header_footer_color : `#333333`}">
   <tbody>
     <tr>
@@ -38,8 +40,8 @@ export default (header_footer_color: string) => {
           <tr>
             <td style="font-family:helvetica;color:white">
               <p style="text-align:center;font-size:16px;color:white"><strong>Glow LEDs</strong> <br /><br />${
-                process.env.RETURN_ADDRESS
-              } <br />${process.env.RETURN_CITY}, ${process.env.RETURN_STATE} ${process.env.RETURN_POSTAL_CODE} </p>
+                config.RETURN_ADDRESS
+              } <br />${config.RETURN_CITY}, ${config.RETURN_STATE} ${config.RETURN_POSTAL_CODE} </p>
               <p style="text-align:center;font-size:16px;color:white">Copyright © 2022</p>
             </td>
           </tr>

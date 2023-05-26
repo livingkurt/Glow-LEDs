@@ -1,5 +1,6 @@
 import React from "react";
 import { Helmet } from "react-helmet";
+import config from "../../../config";
 
 const AffiliateComplete = ({ current_user, order_id }) => {
   return (
@@ -23,7 +24,7 @@ const AffiliateComplete = ({ current_user, order_id }) => {
         <p className="max-w-800px mv-2rem lh-30px ta-c">
           {" "}
           If you have not recieved a confirmation email make sure to check your spam folder for the confirmation email. Please reach out
-          with any questions or concerns to {process.env.REACT_APP_CONTACT_EMAIL}.
+          with any questions or concerns to {config.REACT_APP_CONTACT_EMAIL}.
         </p>
       </div>
     </div>

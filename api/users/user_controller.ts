@@ -1,10 +1,10 @@
 import { user_db, user_services } from "../users";
 import Token from "../tokens/token";
 import { getAccessToken, getRefreshToken } from "./userInteractors";
+import config from "../../config";
 // import Token from "../tokens/token";
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const config = require("../../config");
 require("dotenv");
 
 export default {
@@ -74,7 +74,7 @@ export default {
     try {
       let user: any = {};
       let hashed_password = "";
-      const temporary_password = process.env.TEMP_PASS;
+      const temporary_password = config.TEMP_PASS;
       bcrypt.genSalt(10, (err: any, salt: any) => {
         bcrypt.hash(temporary_password, salt, async (err: any, hash: any) => {
           if (err) throw err;

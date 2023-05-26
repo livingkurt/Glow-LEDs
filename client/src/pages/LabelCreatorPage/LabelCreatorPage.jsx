@@ -10,6 +10,7 @@ import { GLButton } from "../../shared/GlowLEDsComponents";
 
 import * as API from "../../api";
 import { useGetAllShippingOrdersQuery } from "../PlaceOrderPage/placeOrderApi";
+import config from "../../config";
 
 const LabelCreatorPage = props => {
   const all_shipping = useGetAllShippingOrdersQuery();
@@ -208,23 +209,23 @@ const LabelCreatorPage = props => {
   const address = {
     first_name: "Kurt",
     last_name: "LaVacque",
-    address_1: process.env.REACT_APP_RETURN_ADDRESS,
-    city: process.env.REACT_APP_RETURN_CITY,
-    state: process.env.REACT_APP_RETURN_STATE,
-    postalCode: process.env.REACT_APP_RETURN_POSTAL_CODE,
-    country: process.env.REACT_APP_RETURN_COUNTRY,
-    phone: process.env.REACT_APP_PHONE_NUMBER,
-    email: process.env.REACT_APP_INFO_EMAIL,
+    address_1: config.REACT_APP_RETURN_ADDRESS,
+    city: config.REACT_APP_RETURN_CITY,
+    state: config.REACT_APP_RETURN_STATE,
+    postalCode: config.REACT_APP_RETURN_POSTAL_CODE,
+    country: config.REACT_APP_RETURN_COUNTRY,
+    phone: config.REACT_APP_PHONE_NUMBER,
+    email: config.REACT_APP_INFO_EMAIL,
     company: "Glow LEDs"
   };
   const destanye_address = {
     first_name: "Destanye",
     last_name: "Salinas",
-    address_1: process.env.REACT_APP_RETURN_ADDRESS,
-    city: process.env.REACT_APP_RETURN_CITY,
-    state: process.env.REACT_APP_RETURN_STATE,
-    postalCode: process.env.REACT_APP_RETURN_POSTAL_CODE,
-    country: process.env.REACT_APP_RETURN_COUNTRY,
+    address_1: config.REACT_APP_RETURN_ADDRESS,
+    city: config.REACT_APP_RETURN_CITY,
+    state: config.REACT_APP_RETURN_STATE,
+    postalCode: config.REACT_APP_RETURN_POSTAL_CODE,
+    country: config.REACT_APP_RETURN_COUNTRY,
     phone: "",
     email: "destanyesalinas@gmail.com",
     company: ""
@@ -440,7 +441,7 @@ const LabelCreatorPage = props => {
                 <li>
                   <label htmlFor="address_autocomplete">Address</label>
                   <Autocomplete
-                    apiKey={process.env.REACT_APP_GOOGLE_PLACES_KEY}
+                    apiKey={config.REACT_APP_GOOGLE_PLACES_KEY}
                     className="fs-16px"
                     // placeholder="Start typing Address"
                     value={to_shipping.address_1}
@@ -732,7 +733,7 @@ const LabelCreatorPage = props => {
                 <li>
                   <label htmlFor="address_autocomplete">Address</label>
                   <Autocomplete
-                    apiKey={process.env.REACT_APP_GOOGLE_PLACES_KEY}
+                    apiKey={config.REACT_APP_GOOGLE_PLACES_KEY}
                     className="fs-16px"
                     // placeholder="Start typing Address"
                     value={from_shipping.address_1}

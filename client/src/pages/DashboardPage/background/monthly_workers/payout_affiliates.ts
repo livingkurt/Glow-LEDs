@@ -1,7 +1,8 @@
 import axios from "axios";
 import { IAffiliate } from "../../../../types/affiliateTypes";
 
-import { domain, last_month_date_range, determine_code_tier, get_todays_date, save_paycheck_to_expenses } from "../worker_helpers";
+import { last_month_date_range, determine_code_tier, get_todays_date, save_paycheck_to_expenses } from "../worker_helpers";
+import { domain } from "../../../../helpers/sharedHelpers";
 
 export const payout_affiliates = async (): Promise<void> => {
   try {

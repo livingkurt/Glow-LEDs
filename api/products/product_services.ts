@@ -415,7 +415,7 @@ export default {
     // const { images, album_title } = body;
     // try {
     //   const options = {
-    //     auth_cookie: process.env.IMGBOX_AUTH_COOKIE,
+    //     auth_cookie: config.IMGBOX_AUTH_COOKIE,
     //     album_title: album_title,
     //     content_type: "safe",
     //     thumbnail_size: "800r",

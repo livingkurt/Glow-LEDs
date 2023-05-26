@@ -6,7 +6,6 @@ import { Helmet } from "react-helmet";
 import { humanize } from "../../utils/helper_functions";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import * as API from "../../api";
-require("dotenv").config();
 
 const ContactPage = props => {
   const dispatch = useDispatch();

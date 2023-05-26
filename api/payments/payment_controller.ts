@@ -1,6 +1,6 @@
+import config from "../../config";
 import { Order } from "../orders";
-require("dotenv").config();
-const stripe = require("stripe")(process.env.STRIPE_KEY);
+const stripe = require("stripe")(config.STRIPE_KEY);
 
 export default {
   secure_pay_payments_c: async (req: any, res: any) => {

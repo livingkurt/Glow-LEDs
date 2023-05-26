@@ -1,7 +1,5 @@
-import dotenv from "dotenv";
 import tutorial_db from "./tutorial_db";
 import { getFilteredData } from "../api_helpers";
-dotenv.config();
 
 export default {
   findAll_tutorials_s: async (query: { search: string; sort: string; page: string; limit: string }) => {

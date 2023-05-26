@@ -1,7 +1,5 @@
-import dotenv from "dotenv";
-
 import axios from "axios";
-dotenv.config();
+import config from "../../../config";
 
 const Airtable = require("airtable");
 
@@ -56,7 +54,7 @@ const current_products_upload = async () => {
         };
       });
 
-    const base = new Airtable({ apiKey: process.env.REACT_APP_AIRTABLE_API_KEY }).base("app9vDOYXFhhQr529");
+    const base = new Airtable({ apiKey: config.REACT_APP_AIRTABLE_ACCESS_TOKEN }).base("app9vDOYXFhhQr529");
 
     base("Current Products").update(new_rows, function (err: any, records: any) {
       if (err) {

@@ -1,6 +1,7 @@
 import React from "react";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import { Link } from "react-router-dom";
+import config from "../../../config";
 
 const EmailComplete = () => {
   return (
@@ -48,7 +49,7 @@ const EmailComplete = () => {
         <p className="max-w-800px mv-2rem lh-30px ta-c">
           {" "}
           If you have not recieved a confirmation email make sure to check your spam folder for the confirmation email. Please reach out
-          with any questions or concerns to {process.env.REACT_APP_CONTACT_EMAIL}.
+          with any questions or concerns to {config.REACT_APP_CONTACT_EMAIL}.
         </p>
       </div>
       <div className="jc-c ai-c m-auto wrap">

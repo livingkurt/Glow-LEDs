@@ -3,6 +3,7 @@ import { getFilteredData } from "../api_helpers";
 import { normalizeUserFilters, normalizeUserSearch } from "./user_helpers";
 import { getRefreshToken } from "./userInteractors";
 import Token from "../tokens/token";
+import config from "../../config";
 const bcrypt = require("bcryptjs");
 require("dotenv");
 
@@ -95,7 +96,7 @@ export default {
       let user: any = {};
       let response: any = {};
       let hashed_password = "";
-      const temporary_password = process.env.TEMP_PASS;
+      const temporary_password = config.TEMP_PASS;
       bcrypt.genSalt(10, (err: any, salt: any) => {
         bcrypt.hash(temporary_password, salt, async (err: any, hash: any) => {
           if (err) throw err;
@@ -133,7 +134,7 @@ export default {
   register_users_s: async (body: any) => {
     const user: any = await user_db.findByEmail_users_db(body.email);
     if (user) {
-      const isMatch = await bcrypt.compare(process.env.TEMP_PASS, user.password);
+      const isMatch = await bcrypt.compare(config.TEMP_PASS, user.password);
       if (isMatch) {
         return { user: user, matched: true };
       } else {

@@ -1,5 +1,6 @@
 import App from "../../email_templates/App";
 import { announcement } from "../../email_templates/pages";
+import config from "../../config";
 
 const cron = require("node-cron");
 const { google } = require("googleapis");
@@ -8,8 +9,8 @@ const nodemailer = require("nodemailer");
 export const send_multiple_emails = async (emailAddresses: any, time: any, email: any, template: any, subject: string, res: any) => {
   try {
     const mailOptions = {
-      to: process.env.INFO_EMAIL,
-      from: process.env.DISPLAY_INFO_EMAIL,
+      to: config.INFO_EMAIL,
+      from: config.DISPLAY_INFO_EMAIL,
       subject: subject,
       html: App({
         body: announcement(template),
@@ -51,17 +52,17 @@ const createTransporter = async (type: string) => {
     let credentials: any = {};
     if (type === "contact") {
       credentials = {
-        user: process.env.CONTACT_EMAIL,
-        client_id: process.env.GOOGLE_CONTACT_OAUTH_ID,
-        client_secret: process.env.GOOGLE_CONTACT_OAUTH_SECRET,
-        refresh_token: process.env.GOOGLE_CONTACT_OAUTH_REFRESH_TOKEN
+        user: config.CONTACT_EMAIL,
+        client_id: config.GOOGLE_CONTACT_OAUTH_ID,
+        client_secret: config.GOOGLE_CONTACT_OAUTH_SECRET,
+        refresh_token: config.GOOGLE_CONTACT_OAUTH_REFRESH_TOKEN
       };
     } else {
       credentials = {
-        user: process.env.INFO_EMAIL,
-        client_id: process.env.GOOGLE_INFO_OAUTH_ID,
-        client_secret: process.env.GOOGLE_INFO_OAUTH_SECRET,
-        refresh_token: process.env.GOOGLE_INFO_OAUTH_REFRESH_TOKEN
+        user: config.INFO_EMAIL,
+        client_id: config.GOOGLE_INFO_OAUTH_ID,
+        client_secret: config.GOOGLE_INFO_OAUTH_SECRET,
+        refresh_token: config.GOOGLE_INFO_OAUTH_REFRESH_TOKEN
       };
     }
 

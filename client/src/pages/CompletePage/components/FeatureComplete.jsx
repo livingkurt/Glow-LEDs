@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import { Link } from "react-router-dom";
 import Survey from "./Survey";
+import config from "../../../config";
 
 const FeatureComplete = ({ current_user, order_id }) => {
   const [show_modal, set_show_modal] = useState(false);
@@ -79,7 +80,7 @@ const FeatureComplete = ({ current_user, order_id }) => {
         <p className="max-w-800px mv-2rem lh-30px ta-c">
           {" "}
           If you have not recieved a confirmation email make sure to check your spam folder for the confirmation email. Please reach out
-          with any questions or concerns to {process.env.REACT_APP_CONTACT_EMAIL}.
+          with any questions or concerns to {config.REACT_APP_CONTACT_EMAIL}.
         </p>
       </div>
       <div className="jc-c ai-c m-auto wrap">

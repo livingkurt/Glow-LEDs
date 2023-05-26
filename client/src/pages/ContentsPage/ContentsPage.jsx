@@ -6,6 +6,7 @@ import { Helmet } from "react-helmet";
 import Search from "../../shared/GlowLEDsComponents/GLTable/Search";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import * as API from "../../api";
+import config from "../../config";
 
 const ContentsPage = props => {
   const [search, set_search] = useState("");
@@ -49,7 +50,7 @@ const ContentsPage = props => {
       </Helmet>
       <Notification message={message} />
       <div className="wrap jc-b">
-        <a href={process.env.NODE_ENV === "production" ? "https://www.glow-leds.com/links" : "http://localhost:3000/links"}>
+        <a href={config.NODE_ENV === "production" ? "https://www.glow-leds.com/links" : "http://localhost:3000/links"}>
           <GLButton variant="primary" style={{ width: "160px" }}>
             Visit Links Page
           </GLButton>

@@ -1,6 +1,6 @@
 // React
 import React from "react";
-require("dotenv").config();
+import config from "../../config";
 
 const LoadingInside = props => {
   const loading_message = () => {
@@ -15,13 +15,13 @@ const LoadingInside = props => {
         <div style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", position: "relative" }}>
           <div className="loading_images_container">
             <img
-              src={process.env.PUBLIC_URL + "/loading.gif"}
+              src={config.PUBLIC_URL + "/loading.gif"}
               className="loading_gif_inside"
               alt="LoadingInside Circle"
               title="LoadingInside Circle"
             />
             <img
-              src={process.env.PUBLIC_URL + "/loading_overlay.png"}
+              src={config.PUBLIC_URL + "/loading_overlay.png"}
               className="loading_png_inside"
               alt="LoadingInside Overlay"
               title="LoadingInside Overlay"

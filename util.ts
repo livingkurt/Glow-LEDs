@@ -1,6 +1,6 @@
 export {};
 import jwt from "jsonwebtoken";
-const config = require("./config");
+import config from "./config";
 import { Request } from "express";
 import { IAffiliate } from "./types/affiliateTypes";
 import multer, { Multer } from "multer";

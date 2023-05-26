@@ -1,10 +1,11 @@
+import config from "../../config";
 import invoice from "../../email_templates/pages/invoice";
 import { order_db } from "../orders";
 import { covertToOunces, parseOrderData } from "./shipping_helpers";
 import { addTracking, buyLabel, clearTracking, createLabel, createShippingRates, createTracker, refundLabel } from "./shipping_interactors";
 
 const easy_post_api = require("@easypost/api");
-const EasyPost = new easy_post_api(process.env.EASY_POST);
+const EasyPost = new easy_post_api(config.EASY_POST);
 
 export default {
   shipping_rates_shipping_s: async (body: any) => {
@@ -122,25 +123,25 @@ export default {
     console.log({ date });
     try {
       // const homeAddress = {
-      //   street1: process.env.RETURN_ADDRESS,
-      //   city: process.env.RETURN_CITY,
-      //   state: process.env.RETURN_STATE,
-      //   zip: process.env.RETURN_POSTAL_CODE,
-      //   country: process.env.RETURN_COUNTRY,
+      //   street1: config.RETURN_ADDRESS,
+      //   city: config.RETURN_CITY,
+      //   state: config.RETURN_STATE,
+      //   zip: config.RETURN_POSTAL_CODE,
+      //   country: config.RETURN_COUNTRY,
       //   company: "Glow LEDs",
-      //   phone: process.env.PHONE_NUMBER,
-      //   email: process.env.INFO_EMAIL
+      //   phone: config.PHONE_NUMBER,
+      //   email: config.INFO_EMAIL
       // };
 
       const homeAddress = await EasyPost.Address.create({
-        street1: process.env.RETURN_ADDRESS,
-        city: process.env.RETURN_CITY,
-        state: process.env.RETURN_STATE,
-        zip: process.env.RETURN_POSTAL_CODE,
-        country: process.env.RETURN_COUNTRY,
+        street1: config.RETURN_ADDRESS,
+        city: config.RETURN_CITY,
+        state: config.RETURN_STATE,
+        zip: config.RETURN_POSTAL_CODE,
+        country: config.RETURN_COUNTRY,
         company: "Glow LEDs",
-        phone: process.env.PHONE_NUMBER,
-        email: process.env.INFO_EMAIL
+        phone: config.PHONE_NUMBER,
+        email: config.INFO_EMAIL
       });
 
       const orders = await order_db.findAll_orders_db(

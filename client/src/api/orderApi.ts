@@ -4,6 +4,7 @@ import Covy from "../shared/GlowLEDsComponents/GLCovy/GLCovy";
 import axios from "axios";
 
 import { create_query } from "../utils/helper_functions";
+import config from "../config";
 
 export const getOrders = async ({
   search,
@@ -137,7 +138,7 @@ export const createPayOrder = createAsyncThunk(
             isVerified: true,
             email_subscription: true,
             guest: true,
-            password: process.env.REACT_APP_TEMP_PASS
+            password: config.REACT_APP_TEMP_PASS
           });
           user_id = new_user._id;
         }

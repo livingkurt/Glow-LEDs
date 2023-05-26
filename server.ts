@@ -9,21 +9,17 @@ import routes from "./api";
 import template_routes from "./email_templates/template_routes";
 import axios from "axios";
 import FormData from "form-data";
-const config = require("./config");
+import config from "./config";
 const cors = require("cors");
-require("dotenv").config();
 const passport = require("passport");
 const compression = require("compression");
 const expressAttack = require("express-attack");
 const requestIp = require("request-ip");
-const EasyPost = require("@easypost/api");
 const bodyParser = require("body-parser");
 
 // const scout = require("@scout_apm/scout-apm");
 // const express = require("express");
 const fs = require("fs");
-
-EasyPost.apiKey = process.env.EASYPOST_API_KEY;
 
 // // The "main" function
 // async function start() {
@@ -36,7 +32,7 @@ EasyPost.apiKey = process.env.EASYPOST_API_KEY;
 //   });
 
 mongoose
-  .connect(config.RESTORED_MONGODB_URI, {
+  .connect(config.MONGODB_URI || "", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true
@@ -80,7 +76,7 @@ require("./passport")(passport);
 app.use(routes);
 app.use("/api/templates", template_routes);
 
-if (process.env.NODE_ENV === "production") {
+if (config.NODE_ENV === "production") {
   app.use(express.static("dist"));
   app.use(express.static("client/build"));
   // app.use("/dist", express.static(path.join(__dirname, "dist")));

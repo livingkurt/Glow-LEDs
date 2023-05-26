@@ -1,8 +1,5 @@
 import axios from "axios";
-import { domain } from "../worker_helpers";
-import dotenv from "dotenv";
-
-dotenv.config();
+import { domain } from "../../../../helpers/sharedHelpers";
 
 export const check_stock = async (): Promise<void> => {
   try {

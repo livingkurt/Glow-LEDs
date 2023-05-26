@@ -8,6 +8,7 @@ import OrderComplete from "./components/OrderComplete";
 import FeatureComplete from "./components/FeatureComplete";
 import EmailComplete from "./components/EmailComplete";
 import AffiliateComplete from "./components/AffiliateComplete";
+import config from "../../config";
 
 const CompletePage = props => {
   const [data, set_data] = useState();
@@ -84,7 +85,7 @@ const CompletePage = props => {
   const send_email = async () => {
     if (props.match.params.type === "order") {
       await API_Emails.send_order_email(order, "Thank you for your Glow LEDs Order", order.shipping.email);
-      await API_Emails.send_order_email(order, "New Order Created by " + order.shipping.first_name, process.env.REACT_APP_INFO_EMAIL);
+      await API_Emails.send_order_email(order, "New Order Created by " + order.shipping.first_name, config.REACT_APP_INFO_EMAIL);
 
       if (order.orderItems.some(item => item.category === "custom")) {
         await API_Emails.send_custom_contact_email(order, order.shipping.email);
@@ -92,15 +93,11 @@ const CompletePage = props => {
     } else if (props.match.params.type === "affiliate") {
       const { data: affiliate } = await API_Affiliates.findByPathname_affiliates_a(props.match.params.id);
       await API_Emails.send_affiliate_email(affiliate, "Welcome to the Team!", affiliate.user.email);
-      await API_Emails.send_affiliate_email(
-        affiliate,
-        "New Affiliate Created by " + affiliate.artist_name,
-        process.env.REACT_APP_INFO_EMAIL
-      );
+      await API_Emails.send_affiliate_email(affiliate, "New Affiliate Created by " + affiliate.artist_name, config.REACT_APP_INFO_EMAIL);
     } else if (props.match.params.type === "feature") {
       const { data: feature } = await API_Features.findById_features_a(props.match.params.id);
       await API_Emails.send_feature_email(feature, "Your Glow LEDs Feature", feature.user.email);
-      await API_Emails.send_feature_email(feature, "New Feature Created by " + feature.artist_name, process.env.REACT_APP_INFO_EMAIL);
+      await API_Emails.send_feature_email(feature, "New Feature Created by " + feature.artist_name, config.REACT_APP_INFO_EMAIL);
     }
   };
 

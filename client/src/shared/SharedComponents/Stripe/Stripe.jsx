@@ -1,11 +1,12 @@
 // React
 import React, { useState } from "react";
-import { CardElement, Elements, useStripe, useElements } from "@stripe/react-stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
 import StripeForm from "./StripeForm";
 import { loadStripe } from "@stripe/stripe-js";
+import config from "../../../config";
 
 const Stripe = props => {
-  const [stripePromise, setStripePromise] = useState(() => loadStripe(process.env.REACT_APP_STRIPE_KEY));
+  const [stripePromise, setStripePromise] = useState(() => loadStripe(config.REACT_APP_STRIPE_KEY));
   return (
     <div>
       <Elements stripe={stripePromise}>

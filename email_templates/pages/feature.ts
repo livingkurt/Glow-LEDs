@@ -1,3 +1,4 @@
+import config from "../../config";
 import { toCapitalize } from "../../util";
 
 export default (props: any) => {
@@ -32,33 +33,40 @@ export default (props: any) => {
             <td style="font-size:16px;height:30px"><strong>Email:</strong> ${feature.email}</td>
           </tr>
           <tr>
-            <td style="font-size:16px;height:30px"><strong>Category:</strong> ${feature &&
-            feature.category
-              ? toCapitalize(feature.category)
-              : ""}</td>
+            <td style="font-size:16px;height:30px"><strong>Category:</strong> ${
+              feature && feature.category ? toCapitalize(feature.category) : ""
+            }</td>
           </tr>
-          ${feature.instagram_handle
-            ? `<tr>
+          ${
+            feature.instagram_handle
+              ? `<tr>
             <td style="font-size:16px;height:30px"><strong>Instagram:</strong> ${feature.instagram_handle}</td>
           </tr>`
-            : ""}
-          ${feature.facebook_name
-            ? `<tr>
+              : ""
+          }
+          ${
+            feature.facebook_name
+              ? `<tr>
             <td style="font-size:16px;height:30px"><strong>Facebook:</strong> ${feature.facebook_name}</td>
           </tr>`
-            : ""}
-          ${feature.description
-            ? `<tr>
+              : ""
+          }
+          ${
+            feature.description
+              ? `<tr>
             <td style="font-size:16px;height:30px">
               <p style="line-height: 30px;"><strong>Bio:</strong> ${feature.description}</p>
             </td>
           </tr>`
-            : ""}
-          ${feature.song_id
-            ? `<tr>
+              : ""
+          }
+          ${
+            feature.song_id
+              ? `<tr>
             <td style="font-size:16px;height:30px"><strong>Song ID:</strong> ${feature.song_id}</td>
           </tr>`
-            : ""}
+              : ""
+          }
         </tbody>
       </table>
       <table style="border-spacing:0;margin-top:19px;width:100%;padding:10px">
@@ -122,8 +130,7 @@ export default (props: any) => {
               </table>
             </li>
             <li>
-              <div>Type or paste ${process.env
-                .CONTACT_EMAIL} into the &quot;Email To&quot; field</div>
+              <div>Type or paste ${config.CONTACT_EMAIL} into the &quot;Email To&quot; field</div>
               <table width="100%" style="max-width:400px;width:100%;margin:auto">
                 <tr>
                   <td><img src="https://thumbs2.imgbox.com/b9/4f/IW8ZTgwp_t.png" alt="Glow LEDs" title="Email Image"
@@ -181,7 +188,7 @@ export default (props: any) => {
           </tr>
         </tbody>
       </table>
-      
+
       <table style="border-spacing:0;margin-top:19px;width:100%">
         <tbody>
           <tr style="font-size:16px;text-align:center">

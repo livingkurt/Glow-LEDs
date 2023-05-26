@@ -1,7 +1,6 @@
 import jwt from "jsonwebtoken";
-import dotenv from "dotenv";
 import Token from "../tokens/token";
-dotenv.config();
+import config from "../../config";
 
 export const getAccessToken = (user: any) => {
   return jwt.sign(
@@ -19,7 +18,7 @@ export const getAccessToken = (user: any) => {
       isWholesaler: user.isWholesaler,
       wholesaler: user.wholesaler
     },
-    process.env.ACCESS_TOKEN_SECRET || "",
+    config.ACCESS_TOKEN_SECRET || "",
     {
       expiresIn: "1hr"
     }
@@ -42,7 +41,7 @@ export const getRefreshToken = async (user: any) => {
         wholesaler: user.wholesaler,
         isWholesaler: user.isWholesaler
       },
-      process.env.REFRESH_TOKEN_SECRET || "",
+      config.REFRESH_TOKEN_SECRET || "",
       {
         expiresIn: "30d"
       }

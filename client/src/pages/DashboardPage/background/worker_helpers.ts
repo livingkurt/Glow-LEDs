@@ -1,17 +1,8 @@
 import axios from "axios";
 import { IAffiliate } from "../../../types/affiliateTypes";
-import dotenv from "dotenv";
+import config from "../../../config";
 const baseId = "app1s1rBexc8nLb9s";
 const tableIdOrName = "tblsCcVphzBosLDmU";
-dotenv.config();
-
-export const domain = (): string => {
-  if (process.env.NODE_ENV === "development") {
-    return "http://localhost:3000";
-  } else {
-    return "https://www.glow-leds.com";
-  }
-};
 
 export const last_month_date_range = (): { start_date: string; end_date: string } => {
   const currentYear = new Date().getFullYear();
@@ -105,7 +96,7 @@ export const save_paycheck_to_expenses = async (data: any): Promise<void> => {
       },
       {
         headers: {
-          Authorization: `Bearer ${process.env.REACT_APP_AIRTABLE_ACCESS_TOKEN}`,
+          Authorization: `Bearer ${config.REACT_APP_AIRTABLE_ACCESS_TOKEN}`,
           "Content-Type": "application/json"
         }
       }

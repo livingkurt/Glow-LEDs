@@ -1,7 +1,5 @@
-// React
 import React from "react";
-require("dotenv").config();
-// Components
+import config from "../../config";
 
 const Loading = ({ loading, error, children }) => {
   const loading_message = () => {
@@ -14,13 +12,8 @@ const Loading = ({ loading, error, children }) => {
     <div>
       {loading ? (
         <div className="jc-c column">
-          <img src={process.env.PUBLIC_URL + "/loading.gif"} className="loading_gif" alt="Loading Circle" title="Loading Circle" />
-          <img
-            src={process.env.PUBLIC_URL + "/loading_overlay.png"}
-            className="loading_png"
-            alt="Loading Overlay"
-            title="Loading Overlay"
-          />
+          <img src={config.PUBLIC_URL + "/loading.gif"} className="loading_gif" alt="Loading Circle" title="Loading Circle" />
+          <img src={config.PUBLIC_URL + "/loading_overlay.png"} className="loading_png" alt="Loading Overlay" title="Loading Overlay" />
           {loading_message()}
         </div>
       ) : error && error.message ? (

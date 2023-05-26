@@ -80,6 +80,7 @@ import { TutorialsGridPage } from "./pages/TutorialsGridPage";
 import { ImagesPage } from "./pages/ImagesPage";
 import LabelCreatorPage from "./pages/LabelCreatorPage/LabelCreatorPage";
 import TrackOrderPage from "./pages/TrackOrderPage/TrackOrderPage";
+import config from "./config";
 
 const App = props => {
   const theme_colors = {
@@ -261,7 +262,7 @@ const App = props => {
           <Cart visible={visible} height={height} width={width} date_1={out_of_office_date_1} date_2={out_of_office_date_2} />
 
           <Content>
-            {process.env.NODE_ENV === "production" && (
+            {config.NODE_ENV === "production" && (
               <MessengerCustomerChat
                 pageId="100365571740684"
                 appId="379385106779969"
