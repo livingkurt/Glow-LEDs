@@ -1,6 +1,6 @@
 import config from "../../config";
 
-export default (background_color: string) => {
+export default (background_color: string): string => {
   return `<table style="width:100%;border-spacing:0;color:white;background:${
     background_color ? background_color : `#7d7c7c`
   };padding:20px;">

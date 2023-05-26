@@ -6,7 +6,7 @@ import {
   order_status_steps
 } from "../../util";
 
-export default (props: any) => {
+export default (props: any): string => {
   const { email, order } = props;
   return `<table style="width:100%;border-spacing:0; padding: 10px;">
 	<tr>

@@ -1,7 +1,7 @@
 import config from "../../config";
 import { toCapitalize } from "../../util";
 
-export default (props: any) => {
+export default (props: any): string => {
   const { feature } = props;
   return `<table style="border-spacing:0;width:100%; padding: 10px; max-width: 600px; width: 100%; margin: auto;">
   <tbody>

@@ -1,6 +1,6 @@
 import { determine_code_tier, format_date, months } from "../../util";
 
-export default ({ name, promo_code, percentage_off, number_of_uses, earnings }: any) => {
+export default ({ name, promo_code, percentage_off, number_of_uses, earnings }: any): string => {
   const date = new Date();
   return `<table
 	style="border-spacing:0;width:100%; padding: 10px; max-width: 600px; width: 100%; margin: auto; padding-bottom: 10px;">

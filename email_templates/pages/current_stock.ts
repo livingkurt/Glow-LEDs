@@ -1,6 +1,6 @@
 import { format_date } from "../../util";
 
-export default (products: any) => {
+export default (products: any): string => {
   const date = new Date();
   return `<table style="width:100%;border-spacing:0;padding:10px">
 	<tr style="font-size:16px">

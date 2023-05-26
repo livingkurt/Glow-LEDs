@@ -1,5 +1,5 @@
-export default (props: any) => {
-	return `
+export default (props: any): string => {
+  return `
 <table style="border-spacing:0;width:100%;">
   <tbody>
     <tr style="font-size:16px">
@@ -49,8 +49,9 @@ export default (props: any) => {
                   <table style="width:100%;border-spacing:0">
                     <tbody>
                       <tr>
-                        ${props.categories[0]
-							? `<td style="font-family:helvetica;width:50%">
+                        ${
+                          props.categories[0]
+                            ? `<td style="font-family:helvetica;width:50%">
                           <table width="100%" style="max-width:800px">
                             <tr>
                               <td style="position: relative;">
@@ -66,9 +67,11 @@ export default (props: any) => {
                             </tr>
                           </table>
                         </td>`
-							: ''}
-                        ${props.categories[1]
-							? `<td style="font-family:helvetica;width:50%">
+                            : ""
+                        }
+                        ${
+                          props.categories[1]
+                            ? `<td style="font-family:helvetica;width:50%">
                           <table width="100%" style="max-width:800px">
                             <tr>
                               <td style="position: relative;">
@@ -84,7 +87,8 @@ export default (props: any) => {
                             </tr>
                           </table>
                         </td>`
-							: ''}
+                            : ""
+                        }
 
                       </tr>
                     </tbody>
@@ -92,8 +96,9 @@ export default (props: any) => {
                   <table style="width:100%;border-spacing:0">
                     <tbody>
                       <tr>
-                        ${props.categories[2]
-							? `<td style="font-family:helvetica;width:50%">
+                        ${
+                          props.categories[2]
+                            ? `<td style="font-family:helvetica;width:50%">
                           <table width="100%" style="max-width:800px">
                             <tr>
                               <td style="position: relative;">
@@ -109,9 +114,11 @@ export default (props: any) => {
                             </tr>
                           </table>
                         </td>`
-							: ''}
-                        ${props.categories[3]
-							? `<td style="font-family:helvetica;width:50%">
+                            : ""
+                        }
+                        ${
+                          props.categories[3]
+                            ? `<td style="font-family:helvetica;width:50%">
                           <table width="100%" style="max-width:800px">
                             <tr>
                               <td style="position: relative;">
@@ -127,7 +134,8 @@ export default (props: any) => {
                             </tr>
                           </table>
                         </td>`
-							: ''}
+                            : ""
+                        }
 
                       </tr>
                     </tbody>
@@ -135,8 +143,9 @@ export default (props: any) => {
                   <table style="width:100%;border-spacing:0">
                     <tbody>
                       <tr>
-                        ${props.categories[4]
-							? `<td style="font-family:helvetica;width:50%">
+                        ${
+                          props.categories[4]
+                            ? `<td style="font-family:helvetica;width:50%">
                           <table width="100%" style="max-width:800px">
                             <tr>
                               <td style="position: relative;">
@@ -152,9 +161,11 @@ export default (props: any) => {
                             </tr>
                           </table>
                         </td>`
-							: ''}
-                        ${props.categories[5]
-							? `<td style="font-family:helvetica;width:50%">
+                            : ""
+                        }
+                        ${
+                          props.categories[5]
+                            ? `<td style="font-family:helvetica;width:50%">
                           <table width="100%" style="max-width:800px">
                             <tr>
                               <td style="position: relative;">
@@ -170,7 +181,8 @@ export default (props: any) => {
                             </tr>
                           </table>
                         </td>`
-							: ''}
+                            : ""
+                        }
 
                       </tr>
                     </tbody>
@@ -178,8 +190,9 @@ export default (props: any) => {
                   <table style="width:100%;border-spacing:0">
                     <tbody>
                       <tr>
-                        ${props.categories[6]
-							? `<td style="font-family:helvetica;width:50%">
+                        ${
+                          props.categories[6]
+                            ? `<td style="font-family:helvetica;width:50%">
                           <table width="100%" style="max-width:800px">
                             <tr>
                               <td style="position: relative;">
@@ -195,9 +208,11 @@ export default (props: any) => {
                             </tr>
                           </table>
                         </td>`
-							: ''}
-                        ${props.categories[7]
-							? `<td style="font-family:helvetica;width:50%">
+                            : ""
+                        }
+                        ${
+                          props.categories[7]
+                            ? `<td style="font-family:helvetica;width:50%">
                           <table width="100%" style="max-width:800px">
                             <tr>
                               <td style="position: relative;">
@@ -213,7 +228,8 @@ export default (props: any) => {
                             </tr>
                           </table>
                         </td>`
-							: ''}
+                            : ""
+                        }
 
                       </tr>
                     </tbody>
@@ -221,8 +237,9 @@ export default (props: any) => {
                   <table style="width:100%;border-spacing:0">
                     <tbody>
                       <tr>
-                        ${props.categories[8]
-							? `<td style="font-family:helvetica;width:50%">
+                        ${
+                          props.categories[8]
+                            ? `<td style="font-family:helvetica;width:50%">
                           <table width="100%" style="max-width:800px">
                             <tr>
                               <td style="position: relative;">
@@ -238,9 +255,11 @@ export default (props: any) => {
                             </tr>
                           </table>
                         </td>`
-							: ''}
-                        ${props.categories[9]
-							? `<td style="font-family:helvetica;width:50%">
+                            : ""
+                        }
+                        ${
+                          props.categories[9]
+                            ? `<td style="font-family:helvetica;width:50%">
                           <table width="100%" style="max-width:800px">
                             <tr>
                               <td style="position: relative;">
@@ -256,7 +275,8 @@ export default (props: any) => {
                             </tr>
                           </table>
                         </td>`
-							: ''}
+                            : ""
+                        }
 
                       </tr>
                     </tbody>
@@ -264,8 +284,9 @@ export default (props: any) => {
                   <table style="width:100%;border-spacing:0">
                     <tbody>
                       <tr>
-                        ${props.categories[10]
-							? `<td style="font-family:helvetica;width:50%">
+                        ${
+                          props.categories[10]
+                            ? `<td style="font-family:helvetica;width:50%">
                           <table width="100%" style="max-width:800px">
                             <tr>
                               <td style="position: relative;">
@@ -281,9 +302,11 @@ export default (props: any) => {
                             </tr>
                           </table>
                         </td>`
-							: ''}
-                        ${props.categories[11]
-							? `<td style="font-family:helvetica;width:50%">
+                            : ""
+                        }
+                        ${
+                          props.categories[11]
+                            ? `<td style="font-family:helvetica;width:50%">
                           <table width="100%" style="max-width:800px">
                             <tr>
                               <td style="position: relative;">
@@ -299,7 +322,8 @@ export default (props: any) => {
                             </tr>
                           </table>
                         </td>`
-							: ''}
+                            : ""
+                        }
 
                       </tr>
                     </tbody>
@@ -347,7 +371,7 @@ export default (props: any) => {
         </tr>
       </tbody>
     </table>
-  
+
     <div style="display:flex;justify-content:center;margin:10px 0"><a
         href="/collections/all/products/code/${props.promo_code.toUpperCase()}"
         style="background-color:#4c4f60;color:white;border-radius:10px;border:0;padding:15px;text-decoration:none" target="_blank">

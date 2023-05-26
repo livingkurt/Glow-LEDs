@@ -1,7 +1,7 @@
 import config from "../../config";
 import { domain } from "../email_template_helpers";
 
-export default (props: any) => {
+export default (props: any): string => {
   return `<table style="border-spacing:0;width:100%; padding: 10px; max-width: 600px; width: 100%; margin: auto;">
   <tbody>
     <tr style="font-size:16px">

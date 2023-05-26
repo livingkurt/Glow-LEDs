@@ -1,16 +1,5 @@
-export default (props: any) => {
-  const {
-    h1,
-    h2,
-    images,
-    p,
-    button,
-    link,
-    module_color,
-    button_color,
-    text_color,
-    title_color,
-  } = props;
+export default (props: any): string => {
+  const { h1, h2, images, p, button, link, module_color, button_color, text_color, title_color } = props;
   return `<table style="border-spacing:0;width:100%; padding: 10px; max-width: 800px; width: 100%; margin: auto;">
   <tbody>
     <tr style="font-size:16px">
@@ -18,12 +7,14 @@ export default (props: any) => {
         <table style="max-width:800px;width:100%;text-align:left;border-spacing:0;margin:0 auto;">
           <tr>
             <td style="font-family:helvetica;">
-              ${h1
-                ? `<h1
+              ${
+                h1
+                  ? `<h1
                 style="text-align:center;font-family:helvetica;width:100%;margin:10px auto;line-height:50px;color:${title_color};font-size:50px; padding-bottom: 7px;">
                 ${h1}
               </h1>`
-                : ""}
+                  : ""
+              }
             </td>
           </tr>
         </table>
@@ -55,8 +46,9 @@ export default (props: any) => {
                   <table style="width:100%;border-spacing:0">
                     <tbody>
                       <tr>
-                        ${images[0]
-                          ? ` <td style="font-family:helvetica;width:50%">
+                        ${
+                          images[0]
+                            ? ` <td style="font-family:helvetica;width:50%">
                           <table width="100%" style="max-width:800px">
                             <tr>
                               <td><img src=${images[0]} alt="Glow LEDs" title="Email Image"
@@ -65,9 +57,11 @@ export default (props: any) => {
                             </tr>
                           </table>
                         </td>`
-                          : ""}
-                        ${images[1]
-                          ? ` <td style="font-family:helvetica;width:50%">
+                            : ""
+                        }
+                        ${
+                          images[1]
+                            ? ` <td style="font-family:helvetica;width:50%">
                           <table width="100%" style="max-width:800px">
                             <tr>
                               <td><img src=${images[1]} alt="Glow LEDs" title="Email Image"
@@ -76,15 +70,17 @@ export default (props: any) => {
                             </tr>
                           </table>
                         </td>`
-                          : ""}
+                            : ""
+                        }
                       </tr>
                     </tbody>
                   </table>
                   <table style="width:100%;border-spacing:0">
                     <tbody>
                       <tr>
-                        ${images[2]
-                          ? ` <td style="font-family:helvetica;width:50%">
+                        ${
+                          images[2]
+                            ? ` <td style="font-family:helvetica;width:50%">
                           <table width="100%" style="max-width:800px">
                             <tr>
                               <td><img src=${images[2]} alt="Glow LEDs" title="Email Image"
@@ -93,9 +89,11 @@ export default (props: any) => {
                             </tr>
                           </table>
                         </td>`
-                          : ""}
-                        ${images[3]
-                          ? ` <td style="font-family:helvetica;width:50%">
+                            : ""
+                        }
+                        ${
+                          images[3]
+                            ? ` <td style="font-family:helvetica;width:50%">
                           <table width="100%" style="max-width:800px">
                             <tr>
                               <td><img src=${images[3]} alt="Glow LEDs" title="Email Image"
@@ -104,15 +102,17 @@ export default (props: any) => {
                             </tr>
                           </table>
                         </td>`
-                          : ""}
+                            : ""
+                        }
 
                       </tr>
                     </tbody>
                     <table style="width:100%;border-spacing:0">
                       <tbody>
                         <tr>
-                          ${images[4]
-                            ? ` <td style="font-family:helvetica;width:50%">
+                          ${
+                            images[4]
+                              ? ` <td style="font-family:helvetica;width:50%">
                             <table width="100%" style="max-width:800px">
                               <tr>
                                 <td><img src=${images[4]} alt="Glow LEDs" title="Email Image"
@@ -121,9 +121,11 @@ export default (props: any) => {
                               </tr>
                             </table>
                           </td>`
-                            : ""}
-                          ${images[5]
-                            ? ` <td style="font-family:helvetica;width:50%">
+                              : ""
+                          }
+                          ${
+                            images[5]
+                              ? ` <td style="font-family:helvetica;width:50%">
                             <table width="100%" style="max-width:800px">
                               <tr>
                                 <td><img src=${images[5]} alt="Glow LEDs" title="Email Image"
@@ -132,7 +134,8 @@ export default (props: any) => {
                               </tr>
                             </table>
                           </td>`
-                            : ""}
+                              : ""
+                          }
 
                         </tr>
                       </tbody>
@@ -140,8 +143,9 @@ export default (props: any) => {
                     <table style="width:100%;border-spacing:0">
                       <tbody>
                         <tr>
-                          ${images[6]
-                            ? ` <td style="font-family:helvetica;width:50%">
+                          ${
+                            images[6]
+                              ? ` <td style="font-family:helvetica;width:50%">
                             <table width="100%" style="max-width:800px">
                               <tr>
                                 <td><img src=${images[6]} alt="Glow LEDs" title="Email Image"
@@ -150,9 +154,11 @@ export default (props: any) => {
                               </tr>
                             </table>
                           </td>`
-                            : ""}
-                          ${images[7]
-                            ? ` <td style="font-family:helvetica;width:50%">
+                              : ""
+                          }
+                          ${
+                            images[7]
+                              ? ` <td style="font-family:helvetica;width:50%">
                             <table width="100%" style="max-width:800px">
                               <tr>
                                 <td><img src=${images[7]} alt="Glow LEDs" title="Email Image"
@@ -161,7 +167,8 @@ export default (props: any) => {
                               </tr>
                             </table>
                           </td>`
-                            : ""}
+                              : ""
+                          }
 
                         </tr>
                       </tbody>
@@ -181,12 +188,14 @@ export default (props: any) => {
                   <tbody>
                     <tr>
 
-                      ${p
-                        ? `
+                      ${
+                        p
+                          ? `
                       <pre
                         style="max-width: 800px; text-align:center; font-family:helvetica;overflow-x:auto;white-space: pre-wrap;word-wrap:break-word;max-width:800px;width:100%;margin:0px;color:${text_color};font-size:16px;line-height:20px">${p}</pre>
                       `
-                        : ""}
+                          : ""
+                      }
 
                     </tr>
                   </tbody>

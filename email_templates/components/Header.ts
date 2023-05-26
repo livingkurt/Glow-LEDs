@@ -1,4 +1,4 @@
-export default (header_footer_color: string) => {
+export default (header_footer_color: string): string => {
   return `<table style="width:100%;border-spacing:0;color:white;background:${
     header_footer_color ? header_footer_color : `#333333`
   };padding:20px;height:100%">

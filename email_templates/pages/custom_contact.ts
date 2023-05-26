@@ -1,11 +1,11 @@
-export default ({ order }: any) => {
+export default ({ order }: any): string => {
   return `
     <h1>
       Hello ${order.shipping.first_name},
     </h1>
     <p>
       Thank you for choosing to customize your order!
-      
+
     </p>
     <h3>
       How our Custom Product process works
@@ -24,7 +24,7 @@ export default ({ order }: any) => {
       Step 2: Consultation
     </h3>
     <p>
-      Please reply to this email with a description in detail of what you would like us to make for you. 
+      Please reply to this email with a description in detail of what you would like us to make for you.
       This could be modifying a current product or a creating a completly new product!
       Feel free to send inspiration photos and drawings to help us better understand your vision.
     </p>

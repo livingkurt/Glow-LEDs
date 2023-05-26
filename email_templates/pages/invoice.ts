@@ -1,7 +1,7 @@
 import config from "../../config";
 import { email_sale_price_switch, determine_product_name, determin_card_logo_images, humanDate } from "../../util";
 
-export default ({ order }: any) => {
+export default ({ order }: any): string => {
   return `<body id="invoice" style="background-color:transparent;zoom:100%; font-family: Helvetica; color: black;">
   <div
     style="display:flex;flex-direction:column;margin:40px;margin-top:75px;font-size:25px;line-height:35px;color:black;background-color:white">

@@ -1,6 +1,6 @@
 import { format_date, determine_product_name, order_status_steps, determine_tracking_link } from "../../util";
 
-const determine_emoji = (status: string) => {
+const determine_emoji = (status: string): string | undefined => {
   switch (status) {
     case "manufactured":
       return "🛠️";
@@ -14,7 +14,7 @@ const determine_emoji = (status: string) => {
       break;
   }
 };
-const determine_color = (status: string) => {
+const determine_color = (status: string): string | undefined => {
   switch (status) {
     case "manufactured":
       return "#4b7188";
@@ -28,7 +28,7 @@ const determine_color = (status: string) => {
       break;
   }
 };
-const determine_message = (status: string) => {
+const determine_message = (status: string): string | undefined => {
   switch (status) {
     case "manufactured":
       return "your items just finished being hand crafted! We will notify you when you items have been cleaned up and packaged.";
@@ -46,7 +46,7 @@ const determine_message = (status: string) => {
   }
 };
 
-export default ({ email, order, status, message_to_user }: any) => {
+export default ({ email, order, status, message_to_user }: any): string => {
   return `<table style="width:100%;border-spacing:0;padding:10px">
   <tr>
     <td style="font-family:helvetica;border:0">

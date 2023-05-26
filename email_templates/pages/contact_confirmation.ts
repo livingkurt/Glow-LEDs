@@ -13,7 +13,7 @@ export default (props: {
   facebook_name: string;
   song_id: string;
   quote: string;
-}) => {
+}): string => {
   return `
     <h1>
       Hello ${props.first_name},

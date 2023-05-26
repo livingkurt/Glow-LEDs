@@ -1,4 +1,4 @@
-export default (props: any) => {
+export default (props: any): string => {
   return `<div style="background-color:#7d7c7c;padding:10px">
 
 

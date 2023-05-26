@@ -1,6 +1,6 @@
 import { format_date, determine_product_name, determine_tracking_link, shipping_status_steps } from "../../util";
 
-const determine_emoji = (status: string) => {
+const determine_emoji = (status: string): string | undefined => {
   switch (status) {
     case "delivered":
       return "🏠";
@@ -19,7 +19,7 @@ const determine_emoji = (status: string) => {
   }
 };
 
-const determine_color = (status: string) => {
+const determine_color = (status: string): string | undefined => {
   switch (status) {
     case "delivered":
       return "#5c8883";
@@ -38,7 +38,7 @@ const determine_color = (status: string) => {
   }
 };
 
-const determine_message = (status: string) => {
+const determine_message = (status: string): string | undefined => {
   switch (status) {
     case "delivered":
       return "your items have been delivered! Please let us know if you have any questions or concerns.";

@@ -1,4 +1,4 @@
-export default (props: any) => {
+export default (props: any): string => {
   const { affiliate } = props;
   return `<table
 	style="border-spacing:0;width:100%; padding: 10px; max-width: 600px; width: 100%; margin: auto; padding-bottom: 10px;">
@@ -57,26 +57,34 @@ export default (props: any) => {
 									<tr>
 										<td style="font-size:16px;height:30px">Category: ${affiliate.category}</td>
 									</tr>
-									${affiliate.instagram_handle
-                    ? `<tr>
+									${
+                    affiliate.instagram_handle
+                      ? `<tr>
 										<td style="font-size:16px;height:30px">Instagram: ${affiliate.instagram_handle}</td>
 									</tr>`
-                    : ""}
-									${affiliate.facebook_name
-                    ? `<tr>
+                      : ""
+                  }
+									${
+                    affiliate.facebook_name
+                      ? `<tr>
 										<td style="font-size:16px;height:30px">Facebook: ${affiliate.facebook_name}</td>
 									</tr>`
-                    : ""}
-									${affiliate.tiktok
-                    ? `<tr>
+                      : ""
+                  }
+									${
+                    affiliate.tiktok
+                      ? `<tr>
 										<td style="font-size:16px;height:30px">Tiktok: ${affiliate.tiktok}</td>
 									</tr>`
-                    : ""}
-									${affiliate.bio
-                    ? `<tr>
+                      : ""
+                  }
+									${
+                    affiliate.bio
+                      ? `<tr>
 										<td style="font-size:16px;height:30px">Bio: ${affiliate.bio}</td>
 									</tr>`
-                    : ""}
+                      : ""
+                  }
 								</tbody>
 							</table>
 							<table
@@ -111,7 +119,7 @@ export default (props: any) => {
 												</a>
 										</td>
 									</tr>
-								
+
 
 								</tbody>
 							</table>
@@ -130,9 +138,7 @@ export default (props: any) => {
 									</tr>
 									<tr>
 										<td style="font-size:16px"><strong>Answer 1:</strong><br /><br />
-											<div>${affiliate && affiliate.answers
-                        ? affiliate.answers[0]
-                        : ""}</div>
+											<div>${affiliate && affiliate.answers ? affiliate.answers[0] : ""}</div>
 										</td>
 									</tr>
 									<tr>
@@ -142,9 +148,7 @@ export default (props: any) => {
 									</tr>
 									<tr>
 										<td style="font-size:16px"><strong>Answer 2:</strong><br /><br />
-											<div> ${affiliate && affiliate.answers
-                        ? affiliate.answers[1]
-                        : ""}</div>
+											<div> ${affiliate && affiliate.answers ? affiliate.answers[1] : ""}</div>
 										</td>
 									</tr>
 									<tr>
@@ -154,9 +158,7 @@ export default (props: any) => {
 									</tr>
 									<tr>
 										<td style="font-size:16px"><strong>Answer 3:</strong><br /><br />
-											<div>${affiliate && affiliate.answers
-                        ? affiliate.answers[2]
-                        : ""}</div>
+											<div>${affiliate && affiliate.answers ? affiliate.answers[2] : ""}</div>
 										</td>
 									</tr>
 
