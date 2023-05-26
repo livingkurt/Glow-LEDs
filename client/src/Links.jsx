@@ -5,6 +5,7 @@ import useWindowDimensions from "./shared/Hooks/windowDimensions";
 import { hslToHex } from "./utils/helper_functions";
 import { API_Content } from "./utils";
 import config from "./config";
+import { domain } from "./helpers/sharedHelpers";
 
 const Links = props => {
   const [multiplier, set_multiplier] = useState(0);
@@ -135,7 +136,7 @@ const Links = props => {
                     mozBoxShadow: `0 0 10px ${hslToHex(num, 100, 50)}`,
                     boxShadow: `0 0 10px ${hslToHex(num, 100, 50)}`
                   }}
-                  href={`${config.NODE_ENV === "production" ? "https://www.glow-leds.com" : "http://localhost:3000"}${link.link}`}
+                  href={`${domain()}${link.link}`}
                 >
                   {link.icon && <i className={link.icon} />} {link.label}
                 </a>

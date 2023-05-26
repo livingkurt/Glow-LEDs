@@ -1,6 +1,6 @@
 import config from "../config";
 
-export const decideDomain = (domain: string) => {
+export const domain = (): string => {
   if (config.NODE_ENV === "production") {
     return "https://www.glow-leds.com";
   } else {
