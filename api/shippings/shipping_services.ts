@@ -19,33 +19,29 @@ export default {
   },
   different_shipping_rates_shipping_s: async (params: any) => {
     const { shipment_id, order_id } = params;
-    console.log({ shipment_id, order_id });
+
+    const order = await order_db.findById_orders_db(order_id);
     try {
-      const order = await order_db.findById_orders_db(order_id);
       if (shipment_id && !order.shipping.shipping_label) {
         const shipment = await EasyPost.Shipment.retrieve(shipment_id);
         return { shipment };
       } else {
-        return await createShippingRates({ order: order, returnLabel: false });
+        return await createShippingRates({ order, returnLabel: false });
       }
     } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(error.message);
-      }
+      console.log({ different_shipping_rates_shipping_s: error });
+      return await createShippingRates({ order, returnLabel: false });
     }
   },
 
   buy_label_shipping_s: async (params: any) => {
     const order = await order_db.findById_orders_db(params.order_id);
     const { shipping_rate, shipment_id } = order.shipping;
-    console.log({ shipping_rate, shipment_id });
     try {
       const label: any = await buyLabel({ shipment_id, shipping_rate, order });
-      console.log({ label });
       await addTracking({ order, label, shipping_rate });
       return { invoice: invoice({ order }), label: label.postage_label.label_url };
     } catch (error) {
-      // console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }

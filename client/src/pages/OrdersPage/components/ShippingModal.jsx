@@ -4,7 +4,6 @@ import GLModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiion
 import { closeShippingModal } from "../../../slices/orderSlice";
 import * as API from "../../../api";
 import { chooseShippingRate, reChooseShippingRate } from "../../../slices/shippingSlice";
-import { Loading } from "../../../shared/SharedComponents";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import LoadingInside from "../../../shared/SharedComponents/LoadingInside";
 
@@ -39,10 +38,6 @@ const ShippingModal = () => {
       <GLModal
         isOpen={shippingModal}
         onConfirm={() => {
-          // if (order.shipping.shipping_label) {
-          //   console.log("refund label");
-          //   dispatch(API.refundLabel({ orderId: order._id, isReturnTracking: false }));
-          // }
           dispatch(
             API.saveOrder({
               ...order,
@@ -57,6 +52,8 @@ const ShippingModal = () => {
               tracking_url: ""
             })
           );
+          dispatch(closeShippingModal());
+          dispatch(reChooseShippingRate());
         }}
         onCancel={() => {
           dispatch(closeShippingModal());

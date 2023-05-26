@@ -103,7 +103,6 @@ const shippingSlice = createSlice({
     },
     [API.generateCSVLabel.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading_label = false;
-      console.log({ payload });
       state.csvLabel = payload;
     },
     [API.generateCSVLabel.rejected as any]: (state: any, { payload }: any) => {
@@ -115,7 +114,6 @@ const shippingSlice = createSlice({
     },
     [API.differentShippingRates.fulfilled as any]: (state: any, { payload }: any) => {
       const { shipment } = payload;
-      console.log({ shipment });
       state.loading = false;
       state.success = true;
       state.shippingRates = shipment.rates;

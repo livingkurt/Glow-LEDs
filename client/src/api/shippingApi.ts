@@ -102,6 +102,7 @@ export const createPickup = createAsyncThunk("shipping/createPickup", async ({ d
 });
 
 export const differentShippingRates = createAsyncThunk("shipping/differentShippingRates", async (order: any, thunkApi: any) => {
+  console.log({ order, shipment_id: order.shipping.shipment_id, shipping_label: order.shipping.shipping_label });
   try {
     if (order.shipping.shipment_id && !order.shipping.shipping_label) {
       const { data } = await axios.get(`/api/shipping/${order._id}/different_shipping_rates/${order.shipping.shipment_id}`);
