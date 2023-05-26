@@ -206,7 +206,6 @@ const ShippingStep = ({
       console.error("Invalid shipping data:", shipping);
       return;
     }
-    console.log({ shipping });
     let autocompleteElement = document.querySelector("#autocomplete");
     const street_num = autocompleteElement ? autocompleteElement.value : "";
 
@@ -365,7 +364,6 @@ const ShippingStep = ({
                       types: ["address"]
                     }}
                     onPlaceSelected={place => {
-                      console.log({ place });
                       update_google_shipping(place);
                     }}
                     onChange={e => set_address_1(e.target.value)}
