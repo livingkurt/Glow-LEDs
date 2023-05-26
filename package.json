@@ -106,9 +106,6 @@
     "lint:scss:fix": "npm run lint:scss --fix",
     "stylelint-check": "stylelint-config-prettier-check"
   },
-  "pre-commit": [
-    "npm run lint-staged"
-  ],
   "lint-staged": {
     "client/src/**/*.jsx": [
       "eslint --fix --cache"

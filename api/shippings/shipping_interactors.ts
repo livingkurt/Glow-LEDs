@@ -80,12 +80,10 @@ export const createTracker = async ({ order }: any) => {
 };
 
 export const refundLabel = async ({ order, is_return_tracking }: any) => {
-  console.log({ order, is_return_tracking });
   const refund = await EasyPost.Refund.create({
     carrier: order.shipping.shipping_rate.carrier,
     tracking_codes: [is_return_tracking ? order.return_tracking_number : order.tracking_number]
   });
-  console.log({ refund });
   if (refund) {
     if (is_return_tracking) {
       order.shipping.return_shipment_tracker = null;
@@ -110,8 +108,9 @@ export const createLabel = async ({ order, shipping_rate }: any) => {
     const { shipment }: any = await createShippingRates({ order, returnLabel: false });
 
     const rate = shipment.rates.find((rate: any) => rate.service === shipping_rate.service).id;
-    console.log({ rate, shipment });
-    return await EasyPost.Shipment.buy(shipment.id, rate.id);
+    console.log({ createLabel: rate, shipment });
+    // return await EasyPost.Shipment.buy(shipment.id, rate.id);
+    return "test";
   } catch (error) {
     console.error("Error create label:", error);
   }
