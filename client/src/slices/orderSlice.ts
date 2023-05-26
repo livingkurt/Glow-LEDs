@@ -86,6 +86,7 @@ const orderPage = createSlice({
     refundAmount: 0,
     refundReason: "",
     shippingModal: false,
+    createLabelModal: false,
     loading_label: false
   },
   reducers: {

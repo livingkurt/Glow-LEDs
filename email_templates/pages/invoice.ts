@@ -25,8 +25,8 @@ export default ({ order }: any): string => {
           <td colspan="2" valign="top">
             <table style="width:100%;line-height:inherit;text-align:left;font-size:25px" width="100%" align="left">
               <tr>
-                <td valign="top">Glow LEDs<br />${config.RETURN_ADDRESS}<br />${config.RETURN_CITY}, ${config.RETURN_STATE} ${
-    config.RETURN_POSTAL_CODE
+                <td valign="top">Glow LEDs<br />${config.PRODUCTION_ADDRESS}<br />${config.PRODUCTION_CITY}, ${config.PRODUCTION_STATE} ${
+    config.PRODUCTION_POSTAL_CODE
   } <br />${config.CONTACT_EMAIL}
                 </td>
                 <td valign="top" align="right" style="text-align: right;">${order.shipping.first_name}

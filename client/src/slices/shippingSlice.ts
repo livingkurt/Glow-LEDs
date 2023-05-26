@@ -12,20 +12,73 @@ const shippingSlice = createSlice({
     shippingRates: [],
     shippingRate: {},
     create_pickup_modal: false,
+    createLabelModal: false,
     csvLabel: [],
     rate: {},
-    hideLabelButton: true
+    hideLabelButton: true,
+    parcel: {},
+    toShipping: {
+      first_name: "",
+      last_name: "",
+      address_1: "",
+      address_2: "",
+      city: "",
+      state: "",
+      postalCode: "",
+      country: "",
+      international: "",
+      phone: "",
+      email: "",
+      company: ""
+    },
+    fromShipping: {
+      first_name: "",
+      last_name: "",
+      address_1: "",
+      address_2: "",
+      city: "",
+      state: "",
+      postalCode: "",
+      country: "",
+      international: "",
+      phone: "",
+      email: "",
+      company: ""
+    }
   },
   reducers: {
     clearPrints: (state, { payload }) => {
       state.invoice = "";
       state.label = "";
     },
+    setToShipping: (state, { payload }) => {
+      const updatedToShipping = payload;
+      return {
+        ...state,
+        toShipping: { ...state.toShipping, ...updatedToShipping }
+      };
+    },
+    setFromShipping: (state, { payload }) => {
+      const updatedFromShipping = payload;
+      return {
+        ...state,
+        fromShipping: { ...state.fromShipping, ...updatedFromShipping }
+      };
+    },
+    setParcel: (state, { payload }) => {
+      state.parcel = payload;
+    },
     chooseShippingRate: (state, { payload }) => {
       const { rate, speed } = payload;
       state.hideLabelButton = false;
       state.shippingRate = rate;
       state.rate = { rate, speed };
+    },
+    openCreateLabelModal: (state, { payload }) => {
+      state.createLabelModal = true;
+    },
+    closeCreateLabelModal: (state, { payload }) => {
+      state.createLabelModal = false;
     },
     open_create_pickup_modal: (state, { payload }) => {
       state.create_pickup_modal = true;
@@ -128,6 +181,16 @@ const shippingSlice = createSlice({
   }
 });
 
-export const { clearPrints, chooseShippingRate, reChooseShippingRate, open_create_pickup_modal, close_create_pickup_modal } =
-  shippingSlice.actions;
+export const {
+  clearPrints,
+  chooseShippingRate,
+  reChooseShippingRate,
+  open_create_pickup_modal,
+  close_create_pickup_modal,
+  openCreateLabelModal,
+  closeCreateLabelModal,
+  setToShipping,
+  setFromShipping,
+  setParcel
+} = shippingSlice.actions;
 export default shippingSlice.reducer;

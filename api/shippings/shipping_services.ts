@@ -5,6 +5,7 @@ import { covertToOunces, parseOrderData } from "./shipping_helpers";
 import { addTracking, buyLabel, clearTracking, createLabel, createShippingRates, createTracker, refundLabel } from "./shipping_interactors";
 
 const easy_post_api = require("@easypost/api");
+console.log({ ShippingServices: config.EASY_POST });
 const EasyPost = new easy_post_api(config.EASY_POST);
 
 export default {
@@ -119,22 +120,22 @@ export default {
     console.log({ date });
     try {
       // const homeAddress = {
-      //   street1: config.RETURN_ADDRESS,
-      //   city: config.RETURN_CITY,
-      //   state: config.RETURN_STATE,
-      //   zip: config.RETURN_POSTAL_CODE,
-      //   country: config.RETURN_COUNTRY,
+      //   street1: config.PRODUCTION_ADDRESS,
+      //   city: config.PRODUCTION_CITY,
+      //   state: config.PRODUCTION_STATE,
+      //   zip: config.PRODUCTION_POSTAL_CODE,
+      //   country: config.PRODUCTION_COUNTRY,
       //   company: "Glow LEDs",
       //   phone: config.PHONE_NUMBER,
       //   email: config.INFO_EMAIL
       // };
 
       const homeAddress = await EasyPost.Address.create({
-        street1: config.RETURN_ADDRESS,
-        city: config.RETURN_CITY,
-        state: config.RETURN_STATE,
-        zip: config.RETURN_POSTAL_CODE,
-        country: config.RETURN_COUNTRY,
+        street1: config.PRODUCTION_ADDRESS,
+        city: config.PRODUCTION_CITY,
+        state: config.PRODUCTION_STATE,
+        zip: config.PRODUCTION_POSTAL_CODE,
+        country: config.PRODUCTION_COUNTRY,
         company: "Glow LEDs",
         phone: config.PHONE_NUMBER,
         email: config.INFO_EMAIL

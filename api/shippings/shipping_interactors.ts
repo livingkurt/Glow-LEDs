@@ -5,6 +5,7 @@ import { parcel_db } from "../parcels";
 import { calculateTotalOunces, covertToOunces, determine_parcel } from "./shipping_helpers";
 
 const easy_post_api = require("@easypost/api");
+console.log({ ShippingInteractors: config.EASY_POST });
 const EasyPost = new easy_post_api(config.EASY_POST);
 
 export const buyLabel = async ({ shipment_id, shipping_rate, order }: any) => {
@@ -131,12 +132,12 @@ export const createShippingRates = async ({ order, returnLabel }: any) => {
     };
 
     const returnAddress = {
-      street1: config.RETURN_ADDRESS,
+      street1: config.PRODUCTION_ADDRESS,
       email: config.INFO_EMAIL,
-      city: config.RETURN_CITY,
-      state: config.RETURN_STATE,
-      zip: config.RETURN_POSTAL_CODE,
-      country: config.RETURN_COUNTRY,
+      city: config.PRODUCTION_CITY,
+      state: config.PRODUCTION_STATE,
+      zip: config.PRODUCTION_POSTAL_CODE,
+      country: config.PRODUCTION_COUNTRY,
       company: "Glow LEDs",
       phone: config.PHONE_NUMBER
     };

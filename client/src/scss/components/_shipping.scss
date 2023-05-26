@@ -49,3 +49,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
+.pac-container {
+  z-index: 2000 !important; /* You might need to adjust this value */
+}

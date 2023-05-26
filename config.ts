@@ -5,11 +5,14 @@ dotenv.config();
 const environment = process.env.ENVIRONMENT;
 
 const decideEnvironment = (prod: string | undefined, dev: string | undefined): string | undefined => {
+  console.log({ environment });
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   if (environment === "dev") {
+    console.log("dev");
     return dev;
   } else {
+    console.log("prod");
     return prod;
   }
 };
@@ -55,11 +58,11 @@ const config = {
   TEMP_PASS: process.env.TEMP_PASS,
 
   // Production Address
-  RETURN_ADDRESS: process.env.RETURN_ADDRESS,
-  RETURN_CITY: process.env.RETURN_CITY,
-  RETURN_STATE: process.env.RETURN_STATE,
-  RETURN_POSTAL_CODE: process.env.RETURN_POSTAL_CODE,
-  RETURN_COUNTRY: process.env.RETURN_COUNTRY,
+  PRODUCTION_ADDRESS: process.env.PRODUCTION_ADDRESS,
+  PRODUCTION_CITY: process.env.PRODUCTION_CITY,
+  PRODUCTION_STATE: process.env.PRODUCTION_STATE,
+  PRODUCTION_POSTAL_CODE: process.env.PRODUCTION_POSTAL_CODE,
+  PRODUCTION_COUNTRY: process.env.PRODUCTION_COUNTRY,
 
   // Easy Post
   EASY_POST: decideEnvironment(process.env.EASY_POST_LIVE, process.env.EASY_POST_DEV),

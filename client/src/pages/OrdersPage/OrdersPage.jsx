@@ -15,9 +15,10 @@ import OrderItemsDisplay from "./components/OrderItemsDisplay";
 import { determine_product_name_string } from "../../utils/react_helper_functions";
 import { fullName } from "../UsersPage/usersHelpers";
 import ShippingModal from "./components/ShippingModal";
-import { open_create_pickup_modal } from "../../slices/shippingSlice";
+import { openCreateLabelModal, open_create_pickup_modal } from "../../slices/shippingSlice";
 import CreatePickupModal from "./components/CreatePickupModal";
 import RefundOrderModal from "./components/RefundOrderModal";
+import CreateLabelModal from "./components/CreateLabelModal";
 
 const OrdersPage = () => {
   const orderPage = useSelector(state => state.orders.orderPage);
@@ -203,6 +204,9 @@ const OrdersPage = () => {
                 Delete Orders
               </Button>
             )}
+            <Button color="secondary" variant="contained" onClick={() => dispatch(openCreateLabelModal())}>
+              Create Label
+            </Button>
             <Button color="secondary" variant="contained" onClick={() => dispatch(open_create_pickup_modal())}>
               Create Fedex Pickup
             </Button>
@@ -216,6 +220,7 @@ const OrdersPage = () => {
       <ShippingModal />
       <CreatePickupModal />
       <RefundOrderModal />
+      <CreateLabelModal />
     </div>
   );
 };

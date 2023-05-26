@@ -5,6 +5,9 @@ import GLAutocomplete from "../GLAutocomplete/GLAutocomplete";
 import { DropdownDisplayV2 } from "../../SharedComponents";
 import ImageWizard from "../../SharedComponents/ImageWizard";
 import { determine_shown_fields, formatDate, getValueByStringPath } from "./glFormHelpers";
+import GoogleAutocomplete from "../../../pages/PlaceOrderPage/components/GoogleAutocomplete";
+import config from "../../../config";
+import AddressAutocomplete from "../../../pages/PlaceOrderPage/components/AddressAutocomplete";
 
 const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
   const userPage = useSelector(state => state.users.userPage);
@@ -12,7 +15,6 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
 
   const determineOptions = (fieldData, fieldState) => {
     if (typeof fieldData.options === "string") {
-      console.log({ fieldData, fieldState });
       return getValueByStringPath(fieldState, fieldData.options);
     } else {
       return fieldData.options || [];
@@ -89,6 +91,27 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
                     />
                   }
                   label={fieldData.label}
+                />
+              );
+            case "autocomplete_address":
+              return (
+                <GoogleAutocomplete
+                  key={fieldName}
+                  name={fieldName}
+                  placeholder={"Enter a Location"}
+                  margin="normal"
+                  size="small"
+                  variant="outlined"
+                  fullWidth
+                  apiKey={config.REACT_APP_GOOGLE_PLACES_KEY}
+                  value={fieldState || ""}
+                  options={{
+                    types: ["address"]
+                  }}
+                  onPlaceSelected={place => {
+                    fieldData.setGeneratedAddress(place);
+                  }}
+                  onChange={e => onChange({ [fieldName]: e.target.value })}
                 />
               );
             case "text":
