@@ -1,15 +1,16 @@
 import dotenv from "dotenv";
 
 dotenv.config();
-const environment = process.env.ENVIRONMENT;
+const environment = "dev";
+// const environment = process.env.ENVIRONMENT;
 
 const decideEnvironment = (prod: string | undefined, dev: string | undefined): string | undefined => {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  if (environment === "prod") {
-    return prod;
-  } else if (environment === "dev") {
+  if (environment === "dev") {
     return dev;
+  } else {
+    return prod;
   }
 };
 

@@ -116,7 +116,7 @@ export const createPayOrder = createAsyncThunk(
 
     try {
       if (current_user && Object.keys(current_user).length > 0) {
-        user_id = current_user ? current_user.id : null;
+        user_id = current_user ? current_user._id : null;
       } else if (create_account) {
         const { data: create_user } = await axios.post("/api/users/register", {
           first_name: order.shipping.first_name,

@@ -13,7 +13,7 @@ export const buyLabel = async ({ shipment_id, shipping_rate, order }: any) => {
     return await EasyPost.Shipment.buy(shipment_id, shipping_rate?.id);
   } catch (error) {
     console.error("Error buying label:", error);
-    // return createLabel({ speed: "first", order });
+    return createLabel({ speed: "first", order, shipping_rate });
   }
 };
 export const addTracking = async ({ label, order, isReturnTracking = false }: any) => {
@@ -105,20 +105,13 @@ export const refundLabel = async ({ order, is_return_tracking }: any) => {
   return await order_db.update_orders_db(order._id, order);
 };
 
-export const createLabel = async (body: any) => {
+export const createLabel = async ({ order, shipping_rate }: any) => {
   try {
-    const { order, speed } = body;
     const { shipment }: any = await createShippingRates({ order, returnLabel: false });
 
-    if (speed === "first") {
-      return await EasyPost.Shipment.buy(shipment.id, shipment.lowestRate());
-    } else if (speed === "priority") {
-      const rate = shipment.rates.find((rate: any) => rate.service === "Priority").id;
-      return await EasyPost.Shipment.buy(shipment.id, rate.id);
-    } else if (speed === "express") {
-      const rate = shipment.rates.find((rate: any) => rate.service === "Express").id;
-      return await EasyPost.Shipment.buy(shipment.id, rate.id);
-    }
+    const rate = shipment.rates.find((rate: any) => rate.service === shipping_rate.service).id;
+    console.log({ rate, shipment });
+    return await EasyPost.Shipment.buy(shipment.id, rate.id);
   } catch (error) {
     console.error("Error create label:", error);
   }
