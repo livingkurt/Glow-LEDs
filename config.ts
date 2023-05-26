@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 
 dotenv.config();
-// const environment = "dev";
+// const environment = "prod";
 const environment = process.env.ENVIRONMENT;
 
 const decideEnvironment = (prod: string | undefined, dev: string | undefined): string | undefined => {
