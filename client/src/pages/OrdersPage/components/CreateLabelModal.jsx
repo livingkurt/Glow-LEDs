@@ -77,7 +77,7 @@ const CreateLabelModal = () => {
     state: config.REACT_APP_PRODUCTION_STATE,
     postalCode: config.REACT_APP_PRODUCTION_POSTAL_CODE,
     country: config.REACT_APP_PRODUCTION_COUNTRY,
-    phone: config.REACT_APP_HEADQUARTERS_PHONE_NUMBER,
+    phone: config.REACT_APP_PRODUCTION_PHONE_NUMBER,
     email: config.REACT_APP_INFO_EMAIL,
     company: "Glow LEDs"
   };
