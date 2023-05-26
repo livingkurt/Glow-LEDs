@@ -39,10 +39,10 @@ const ShippingModal = () => {
       <GLModal
         isOpen={shippingModal}
         onConfirm={() => {
-          if (order.shipping.shipping_label) {
-            console.log("refund label");
-            dispatch(API.refundLabel({ orderId: order._id, isReturnTracking: false }));
-          }
+          // if (order.shipping.shipping_label) {
+          //   console.log("refund label");
+          //   dispatch(API.refundLabel({ orderId: order._id, isReturnTracking: false }));
+          // }
           dispatch(
             API.saveOrder({
               ...order,

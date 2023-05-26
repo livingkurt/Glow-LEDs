@@ -95,24 +95,29 @@ const OrderActionButtons = ({ order }) => {
       <GLButton
         variant="secondary"
         className="w-100per mv-5px"
-        onClick={() =>
-          dispatch(
-            API.saveOrder({
-              ...order,
-              shipping: {
-                ...order.shipping,
-                shipment_id: null,
-                shipping_rate: null,
-                shipment_tracker: null,
-                shipping_label: null,
-                return_shipment_id: null,
-                return_shipping_rate: null,
-                return_shipment_tracker: null,
-                return_shipping_label: null
-              }
-            })
-          )
-        }
+        onClick={() => {
+          const confirm = window.confirm(
+            "Are you sure you want CLEAR the LABEL for this order, if you have purchased the label you will need to manually refund it?"
+          );
+          if (confirm) {
+            dispatch(
+              API.saveOrder({
+                ...order,
+                shipping: {
+                  ...order.shipping,
+                  shipment_id: null,
+                  shipping_rate: null,
+                  shipment_tracker: null,
+                  shipping_label: null,
+                  return_shipment_id: null,
+                  return_shipping_rate: null,
+                  return_shipment_tracker: null,
+                  return_shipping_label: null
+                }
+              })
+            );
+          }
+        }}
       >
         Clear Shipping Label
       </GLButton>
