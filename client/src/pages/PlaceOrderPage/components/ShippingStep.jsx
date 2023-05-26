@@ -202,11 +202,19 @@ const ShippingStep = ({
   };
 
   const update_google_shipping = shipping => {
-    const street_num = document.querySelector("#autocomplete").value;
-    const street_number = shipping.address_components.filter(comp => comp.types.includes("street_number"))[0];
-    if (!street_number) {
+    if (!shipping || !shipping.address_components) {
+      console.error("Invalid shipping data:", shipping);
+      return;
+    }
+    console.log({ shipping });
+    let autocompleteElement = document.querySelector("#autocomplete");
+    const street_num = autocompleteElement ? autocompleteElement.value : "";
+
+    const street_number = shipping.address_components.filter(comp => comp.types.includes("street_number"))[0] || {};
+    if (!street_number.long_name) {
       set_verify_shipping(false);
     }
+
     const address = shipping.address_components.filter(comp => comp.types.includes("route"))[0];
     const street_1 = `${(street_number && street_number.long_name) || street_num.split(" ")[0]} ${address.short_name}`;
     const city = shipping.address_components.filter(comp => comp.types.includes("locality"))[0];
@@ -242,7 +250,7 @@ const ShippingStep = ({
       {shipping_completed && (
         <div>
           {show_shipping ? (
-            <form onSubmit={submitHandler}>
+            <form>
               <ul className={`shipping-container mv-0px pv-0px ${width > 400 ? "ph-2rem" : "p-0px"}`}>
                 {current_user && current_user.shipping && current_user.shipping.hasOwnProperty("first_name") && (
                   <li>
@@ -357,18 +365,11 @@ const ShippingStep = ({
                       types: ["address"]
                     }}
                     onPlaceSelected={place => {
+                      console.log({ place });
                       update_google_shipping(place);
                     }}
                     onChange={e => set_address_1(e.target.value)}
                   />
-                  {/* <input
-                    ref={ref}
-                    type="text"
-                    value={autocompleteRef}
-                    name="address_1"
-                    id="address_1"
-                    onChange={e => set_address_1(e.target.value)}
-                  /> */}
                 </li>
                 <label
                   className="validation_text"
@@ -480,7 +481,7 @@ const ShippingStep = ({
                   {country_validations}
                 </label>
                 <li>
-                  <GLButton type="submit" variant="primary" className="bob">
+                  <GLButton onClick={submitHandler} variant="primary" className="bob">
                     Continue
                   </GLButton>
                 </li>
@@ -546,37 +547,6 @@ const ShippingStep = ({
                   {Math.max(...cartItems.map(item => item.processing_time[1]))} business days
                 </h4>
               )}
-
-              {/* <GLModal
-                show_modal={show_modal}
-                set_show_modal={set_show_modal}
-                title={"Processing Time Explained"}
-                onClose={() => set_show_modal(false)}
-                showClose={false}
-                confirmLabel="I Agree"
-                confirmVariant={agree ? "primary" : "disabled"}
-                confirmDisabled={!agree}
-                onConfirm={() => {
-                  set_show_modal(false);
-                  next_step("payment");
-                }}
-              >
-                <p> Processing time is independent of the selected shipping speed. </p>
-                <p style={{ webkitTextStroke: "1px black !important" }}>
-                  Add this processing time to your shipping speed to get the most accurate delivery date.
-                </p>
-                <p> Many of our products are hand-made and made to order which means they are not made until your order is placed. </p>
-                <p> There may be many orders in front of you that need just as much love and care as yours. </p>
-                <p>
-                  We are a small company, not an Amazon, and always appriciate your understanding and support as we continue to grow!
-                </p>{" "}
-                <GLCheckbox onChecked={set_agree} value={agree}>
-                  <h3 style={{ color: "red", fontSize: "20px", margin: "5px 0px" }}>
-                    Estimated Time to Ship {Math.max(...cartItems.map(item => item.processing_time[0]))} -{" "}
-                    {Math.max(...cartItems.map(item => item.processing_time[1]))} business days
-                  </h3>
-                </GLCheckbox>
-              </GLModal> */}
               {!show_payment && (
                 <GLTooltip tooltip={!show_shipping_complete && "You must select shipping speed before continuing"} className="w-100per">
                   <GLButton
