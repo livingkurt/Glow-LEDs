@@ -5,7 +5,6 @@ import { covertToOunces, parseOrderData } from "./shipping_helpers";
 import { addTracking, buyLabel, clearTracking, createLabel, createShippingRates, createTracker, refundLabel } from "./shipping_interactors";
 
 const easy_post_api = require("@easypost/api");
-console.log({ ShippingServices: config.EASY_POST });
 const EasyPost = new easy_post_api(config.EASY_POST);
 
 export default {
@@ -30,7 +29,6 @@ export default {
         return await createShippingRates({ order, returnLabel: false });
       }
     } catch (error) {
-      console.log({ different_shipping_rates_shipping_s: error });
       return await createShippingRates({ order, returnLabel: false });
     }
   },
@@ -104,9 +102,7 @@ export default {
     try {
       const order = await order_db.findById_orders_db(params.order_id);
       const shipment = await EasyPost.Shipment.retrieve(order.shipping.shipment_id);
-      console.log({ shipment });
       const csvData = parseOrderData(shipment, order);
-      console.log({ csvData });
 
       return csvData;
     } catch (error) {

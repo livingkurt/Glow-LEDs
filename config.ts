@@ -5,14 +5,11 @@ dotenv.config();
 const environment = process.env.ENVIRONMENT;
 
 const decideEnvironment = (prod: string | undefined, dev: string | undefined): string | undefined => {
-  console.log({ environment });
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   if (environment === "dev") {
-    console.log("dev");
     return dev;
   } else {
-    console.log("prod");
     return prod;
   }
 };

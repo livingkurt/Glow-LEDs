@@ -324,7 +324,6 @@ export default {
         unsubscribe: false
       })
     };
-    console.log({ mailOptions });
     sendEmail(mailOptions, res, "info", "Code Used Email sent to " + mailRecipients.join(", "));
   },
 

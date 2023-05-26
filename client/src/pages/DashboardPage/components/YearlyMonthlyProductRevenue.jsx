@@ -6,7 +6,6 @@ import { months } from "../dashboardHelpers";
 import { Divider, Paper, Typography } from "@mui/material";
 
 const YearlyMonthlyProductRevenue = ({ month, year, yearly_product_revenue, monthly_product_revenue, all_product_revenue }) => {
-  console.log({ all_product_revenue });
   const dispatch = useDispatch();
   const productPage = useSelector(state => state.products.productPage);
   const { product } = productPage;

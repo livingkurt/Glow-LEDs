@@ -100,7 +100,6 @@ const Header = props => {
       el.classList.remove("show-dropdown");
     });
     const current_menu = document.getElementById(id);
-    console.log({ last_id, id });
     if (last_id === id) {
       current_menu.classList.remove("show-dropdown");
     } else {

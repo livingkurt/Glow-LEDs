@@ -5,7 +5,6 @@ import { parcel_db } from "../parcels";
 import { calculateTotalOunces, covertToOunces, determine_parcel } from "./shipping_helpers";
 
 const easy_post_api = require("@easypost/api");
-console.log({ ShippingInteractors: config.EASY_POST });
 const EasyPost = new easy_post_api(config.EASY_POST);
 
 export const buyLabel = async ({ shipment_id, shipping_rate, order }: any) => {

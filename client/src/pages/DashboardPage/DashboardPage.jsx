@@ -53,7 +53,6 @@ const DashboardPage = () => {
   // const range_product_revenue = useGetProductRangeRevenueOrdersQuery({ productId: product._id, start_date, end_date });
   // const range_gloves = useGetRangeGlovesQuery({ start_date, end_date });
   const currentStock = useGetCurrentStockQuery();
-  console.log({ monthly_product_revenue, yearly_product_revenue, year });
 
   return (
     <div className="main_container p-20px">

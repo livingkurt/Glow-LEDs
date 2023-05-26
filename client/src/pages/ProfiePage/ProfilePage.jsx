@@ -64,7 +64,6 @@ const ProfilePage = () => {
       if (user.is_affiliated && user?.affiliate) {
         dispatch(API.listPaychecks({ affiliate: user?.affiliate._id || current_user.affiliate }));
         if (user?.affiliate?.sponsor) {
-          console.log({ sponsor: user?.affiliate?.sponsor, affiliate: user?.affiliate._id });
           dispatch(API.listSponsorCodes(user?.affiliate._id));
         }
 

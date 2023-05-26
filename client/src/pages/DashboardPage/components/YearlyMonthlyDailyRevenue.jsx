@@ -3,7 +3,6 @@ import { GLDisplayTable } from "../../../shared/GlowLEDsComponents/GLDisplayTabl
 import { months } from "../dashboardHelpers";
 
 const YearlyMonthlyDailyRevenue = ({ month, year, yearly_revenue, daily_revenue, monthy_revenue }) => {
-  console.log({ yearly_revenue });
   return (
     <>
       {!month && !year && (
