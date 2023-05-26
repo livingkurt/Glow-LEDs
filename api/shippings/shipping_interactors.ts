@@ -8,7 +8,6 @@ const easy_post_api = require("@easypost/api");
 const EasyPost = new easy_post_api(config.EASY_POST);
 
 export const buyLabel = async ({ shipment_id, shipping_rate, order }: any) => {
-  console.log({ shipment_id, shipping_rate });
   try {
     return await EasyPost.Shipment.buy(shipment_id, shipping_rate?.id);
   } catch (error) {
@@ -106,11 +105,8 @@ export const refundLabel = async ({ order, is_return_tracking }: any) => {
 export const createLabel = async ({ order, shipping_rate }: any) => {
   try {
     const { shipment }: any = await createShippingRates({ order, returnLabel: false });
-
-    const rate = shipment.rates.find((rate: any) => rate.service === shipping_rate.service).id;
-    console.log({ createLabel: rate, shipment });
-    // return await EasyPost.Shipment.buy(shipment.id, rate.id);
-    return "test";
+    const rate = shipment.rates.find((rate: any) => rate.service === shipping_rate.service && rate.carrier === shipping_rate.carrier);
+    return await EasyPost.Shipment.buy(shipment.id, rate.id);
   } catch (error) {
     console.error("Error create label:", error);
   }
@@ -145,8 +141,6 @@ export const createShippingRates = async ({ order, returnLabel }: any) => {
       phone: config.PHONE_NUMBER
     };
 
-    console.log({ customerAddress, returnAddress });
-
     const shipment = await EasyPost.Shipment.create({
       to_address: returnLabel ? returnAddress : customerAddress,
       from_address: returnLabel ? customerAddress : returnAddress,
@@ -178,7 +172,6 @@ export const createShippingRates = async ({ order, returnLabel }: any) => {
         commercial_invoice_signature: "IMAGE_2"
       }
     });
-    console.log({ createShippingRates: shipment });
     return { shipment, parcel };
   } catch (error) {
     console.log("Error creating rates:", error);
