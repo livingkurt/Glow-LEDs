@@ -371,7 +371,7 @@ const PlaceOrderPage = props => {
   const create_no_payment_order = async ({ isPaid }) => {
     set_loading_payment(true);
     dispatch(
-      API.saveOrder({
+      API.createNoPayOrder({
         orderItems: cartItems,
         shipping: {
           ...shipping,
@@ -394,21 +394,11 @@ const PlaceOrderPage = props => {
         paidAt: isPaid ? today : null
       })
     );
-    // setTimeout(() => {
-    //   props.history.push("/pages/complete/order/" + order._id);
-    //   set_loading_payment(false);
-    //   dispatch(API.emptyCart(my_cart._id));
-    //   promo_code_used();
-    //   dimminish_stock();
-    //   send_used_code_email();
-    //   sessionStorage.removeItem("shippingAddress");
-    //   // dispatch(removeOrderState());
-    // }, 2000);
   };
 
   const create_order_without_user = async () => {
     dispatch(
-      API.createNoPayOrder({
+      API.saveOrder({
         orderItems: cartItems,
         shipping: shipment_id
           ? {

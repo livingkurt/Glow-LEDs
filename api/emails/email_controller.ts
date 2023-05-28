@@ -271,60 +271,61 @@ export default {
     let mailSubject = "";
     let mailBodyData = {};
 
-    if (promo_code === "inkybois") {
-      const team = await team_db.findBy_teams_db({ promo_code }); // You'll need to define team_db similar to how you've defined promo_db, affiliate_db etc.
-
-      if (team) {
-        const users: any = await Promise.all(
-          team.affiliates.map(async (affiliate_id: any) => {
-            const affiliate = await affiliate_db.findBy_affiliates_db({ _id: affiliate_id });
-            return await user_db.findByAffiliateId_users_db(affiliate._id);
-          })
-        );
-
-        mailRecipients = users.map((user: any) => user.email);
-        const stats: any = await order_services.code_usage_orders_s({ promo_code }, { start_date: first_of_month, end_date: today });
-        mailSubject = `Your team's code was just used!`;
-        mailBodyData = {
-          name: team.team_name,
-          promo_code: promo_code,
-          percentage_off: null,
-          number_of_uses: stats.number_of_uses,
-          earnings: team.sponsor ? stats.revenue * 0.15 : stats.revenue * 0.1
-        };
+    if (promo) {
+      if (promo_code === "inkybois") {
+        const team = await team_db.findBy_teams_db({ promo_code });
+        if (team) {
+          const users: any = await Promise.all(
+            team.affiliates.map(async (affiliate_id: any) => {
+              const affiliate = await affiliate_db.findBy_affiliates_db({ _id: affiliate_id });
+              return await user_db.findByAffiliateId_users_db(affiliate._id);
+            })
+          );
+          mailRecipients = users.map((user: any) => user.email);
+          mailSubject = `Your team's code was just used!`;
+          const stats: any = await order_services.code_usage_orders_s({ promo_code }, { start_date: first_of_month, end_date: today });
+          mailBodyData = {
+            name: team.team_name,
+            promo_code: promo_code,
+            percentage_off: null,
+            number_of_uses: stats.number_of_uses,
+            earnings: team.sponsor ? stats.revenue * 0.15 : stats.revenue * 0.1
+          };
+        }
+      } else {
+        const affiliate = await affiliate_db.findBy_affiliates_db({ public_code: promo._id });
+        if (affiliate) {
+          const user = await user_db.findByAffiliateId_users_db(affiliate._id);
+          mailRecipients = [user.email];
+          mailSubject = `Your code was just used!`;
+          const stats: any = await order_services.code_usage_orders_s(
+            { promo_code },
+            { start_date: first_of_month, end_date: today, sponsor: affiliate.artist_name }
+          );
+          mailBodyData = {
+            name: affiliate.artist_name,
+            promo_code: promo_code,
+            percentage_off: determine_code_tier(affiliate, stats.number_of_uses),
+            number_of_uses: stats.number_of_uses,
+            earnings: affiliate.sponsor ? stats.revenue * 0.15 : stats.revenue * 0.1
+          };
+        }
       }
-    } else {
-      const affiliate = await affiliate_db.findBy_affiliates_db({ public_code: promo._id });
-      if (affiliate) {
-        const user = await user_db.findByAffiliateId_users_db(affiliate._id);
-        const stats: any = await order_services.code_usage_orders_s(
-          { promo_code },
-          { start_date: first_of_month, end_date: today, sponsor: affiliate.artist_name }
-        );
 
-        mailRecipients = [user.email];
-        mailSubject = `Your code was just used!`;
-        mailBodyData = {
-          name: affiliate.artist_name,
-          promo_code: promo_code,
-          percentage_off: determine_code_tier(affiliate, stats.number_of_uses),
-          number_of_uses: stats.number_of_uses,
-          earnings: affiliate.sponsor ? stats.revenue * 0.15 : stats.revenue * 0.1
+      if (mailRecipients.length > 0) {
+        const mailOptions = {
+          from: config.DISPLAY_INFO_EMAIL,
+          to: mailRecipients,
+          subject: mailSubject,
+          bcc: config.INFO_EMAIL,
+          html: App({
+            body: code_used(mailBodyData),
+            unsubscribe: false
+          })
         };
+        sendEmail(mailOptions, res, "info", "Code Used Email sent to " + mailRecipients.join(", "));
       }
     }
-
-    const mailOptions = {
-      from: config.DISPLAY_INFO_EMAIL,
-      to: mailRecipients,
-      subject: mailSubject,
-      bcc: config.INFO_EMAIL,
-      html: App({
-        body: code_used(mailBodyData),
-        unsubscribe: false
-      })
-    };
-    sendEmail(mailOptions, res, "info", "Code Used Email sent to " + mailRecipients.join(", "));
   },
 
   send_password_reset_emails_c: async (req: any, res: any) => {

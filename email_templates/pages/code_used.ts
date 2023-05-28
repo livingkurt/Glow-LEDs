@@ -16,7 +16,7 @@ export default ({ name, promo_code, percentage_off, number_of_uses, earnings }: 
 									Congrats ${name}! </h1>
 								<h4
 									style="text-align:center;font-family:helvetica;color:#333333;font-size:30px;margin-top:0px;margin-bottom:10px;">
-									Your affiliate code, "${promo_code.toUpperCase()}" was just used in an order!</h4>
+									Your affiliate code, "${promo_code?.toUpperCase()}" was just used in an order!</h4>
 							</td>
 						</tr>
 					</tbody>
