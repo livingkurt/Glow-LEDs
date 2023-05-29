@@ -12,7 +12,7 @@ export const buyLabel = async ({ shipment_id, shipping_rate, order }: any) => {
     return await EasyPost.Shipment.buy(shipment_id, shipping_rate?.id);
   } catch (error) {
     console.error("Error buying label:", error);
-    return createLabel({ speed: "first", order, shipping_rate });
+    return await createLabel({ order, shipping_rate });
   }
 };
 export const addTracking = async ({ label, order, isReturnTracking = false }: any) => {

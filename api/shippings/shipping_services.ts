@@ -49,7 +49,7 @@ export default {
   create_label_shipping_s: async (params: any) => {
     try {
       const order = await order_db.findById_orders_db(params.order_id);
-      const label: any = await createLabel({ order, speed: params.speed });
+      const label: any = await createLabel({ order });
       await addTracking({ order, label });
       return { invoice: invoice({ order }), label: label.postage_label.label_url };
     } catch (error) {
