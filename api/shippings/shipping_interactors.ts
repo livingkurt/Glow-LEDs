@@ -9,10 +9,14 @@ const EasyPost = new easy_post_api(config.EASY_POST);
 
 export const buyLabel = async ({ shipment_id, shipping_rate, order }: any) => {
   try {
-    return await EasyPost.Shipment.buy(shipment_id, shipping_rate?.id);
+    const label = await EasyPost.Shipment.buy(shipment_id, shipping_rate?.id);
+    await addTracking({ order, label, shipping_rate });
+    return label;
   } catch (error) {
     console.error("Error buying label:", error);
-    return await createLabel({ order, shipping_rate });
+    const label = await createLabel({ order, shipping_rate });
+    await addTracking({ order, label, shipping_rate: label.selected_rate });
+    return label;
   }
 };
 export const addTracking = async ({ label, order, isReturnTracking = false }: any) => {
@@ -61,14 +65,42 @@ export const createTracker = async ({ order }: any) => {
       tracking_code: order.tracking_number,
       carrier: order.shipping.shipping_rate.carrier
     });
+
     if (order.shipping.shipping_rate.shipment_id) {
-      const label = await EasyPost.Shipment.retrieve(order.shipping.shipping_rate.shipment_id);
-      order.tracking_url = tracker.public_url;
-      order.shipping.shipping_label = label;
+      const label = await EasyPost.Shipment.retrieve("shp_af853123c4184800a55b5293c8f76b6a");
+      console.log({ label, id: order.shipping.shipping_rate.shipment_id });
+      // Assume shipmentDate is the creation date of the shipment with shipment_id
+      const shipmentDate = new Date(label.updated_at);
+
+      // console.log({ shipmentDate });
+
+      // Format shipmentDate to YYYY-MM-DD
+      const formattedDate = shipmentDate.toISOString().split("T")[0];
+
+      // console.log({ formattedDate });
+
+      // Retrieve shipments created on the same day as shipment_id
+      const { shipments } = await EasyPost.Shipment.all({
+        start_datetime: `${formattedDate}T00:00:00Z`,
+        end_datetime: `${formattedDate}T23:59:59Z`,
+        purchased: true,
+        page_size: 100 // Adjust this value as needed
+      });
+      // console.log({ shipments });
+
+      // Find the correct shipment based on shipment_id
+      const shipment = shipments.find((shipment: any) => shipment.id === order.shipping.shipping_rate.shipment_id);
+      console.log({ shipment });
+
+      if (shipment) {
+        order.tracking_url = tracker.public_url;
+        order.shipping.shipping_label = shipment.postage_label;
+      }
     }
+
     order.shipping.shipment_tracker = tracker.id;
     order.tracking_url = tracker.public_url;
-    await order_db.update_orders_db(order._id, order);
+    // await order_db.update_orders_db(order._id, order);
     return tracker;
   } catch (error) {
     console.log("Error creating tracker:", error);
@@ -77,6 +109,62 @@ export const createTracker = async ({ order }: any) => {
     }
   }
 };
+
+// export const createTracker = async ({ order }: any) => {
+//   try {
+//     const tracker = await EasyPost.Tracker.create({
+//       tracking_code: order.tracking_number,
+//       carrier: order.shipping.shipping_rate.carrier
+//     });
+//     if (order.shipping.shipping_rate.shipment_id) {
+//       const label = await EasyPost.Shipment.retrieve(order.shipping.shipping_rate.shipment_id);
+
+//       order.tracking_url = tracker.public_url;
+//       order.shipping.shipping_label = label;
+//     }
+//     order.shipping.shipment_tracker = tracker.id;
+//     order.tracking_url = tracker.public_url;
+//     // await order_db.update_orders_db(order._id, order);
+//     return tracker;
+//   } catch (error) {
+//     console.log("Error creating tracker:", error);
+//     if (error instanceof Error) {
+//       throw new Error(error.message);
+//     }
+//   }
+// };
+// export const createTracker = async ({ order }: any) => {
+//   try {
+//     const tracker = await EasyPost.Tracker.create({
+//       tracking_code: order.tracking_number,
+//       carrier: order.shipping.shipping_rate.carrier
+//     });
+//     if (order.shipping.shipping_rate.shipment_id) {
+//       const shipment = await EasyPost.Shipment.retrieve(order.shipping.shipping_rate.shipment_id);
+//       const { shipments } = await EasyPost.Shipment.all({
+//         page_size: 20,
+//         purchased: true,
+//         start_datetime: new Date(shipment.created_at).setDate(new Date(shipment.created_at).getDate() - 1),
+//         end_datetime: new Date(shipment.created_at).setDate(new Date(shipment.created_at).getDate() + 1)
+//       });
+//       console.log({ shipments });
+//       // Find the shipment in the shipments array that matches the shipment.id
+//       const label = shipments.find((shipment: any) => shipment.id === order.shipping.shipping_rate.shipment_id);
+//       console.log({ label, postage_label: label });
+//       order.tracking_url = tracker.public_url;
+//       order.shipping.shipping_label = label;
+//     }
+//     order.shipping.shipment_tracker = tracker.id;
+//     order.tracking_url = tracker.public_url;
+//     // await order_db.update_orders_db(order._id, order);
+//     return tracker;
+//   } catch (error) {
+//     console.log("Error creating tracker:", error);
+//     if (error instanceof Error) {
+//       throw new Error(error.message);
+//     }
+//   }
+// };
 
 export const refundLabel = async ({ order, is_return_tracking }: any) => {
   const refund = await EasyPost.Refund.create({

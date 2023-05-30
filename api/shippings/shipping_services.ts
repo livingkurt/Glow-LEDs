@@ -38,7 +38,6 @@ export default {
     const { shipping_rate, shipment_id } = order.shipping;
     try {
       const label: any = await buyLabel({ shipment_id, shipping_rate, order });
-      await addTracking({ order, label, shipping_rate });
       return { invoice: invoice({ order }), label: label.postage_label.label_url };
     } catch (error) {
       if (error instanceof Error) {
