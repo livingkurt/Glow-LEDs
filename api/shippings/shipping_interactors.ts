@@ -19,7 +19,7 @@ export const buyLabel = async ({ shipment_id, shipping_rate, order }: any) => {
     return label;
   }
 };
-export const addTracking = async ({ label, order, isReturnTracking = false }: any) => {
+export const addTracking = async ({ label, order, shipping_rate, isReturnTracking = false }: any) => {
   try {
     const tracker = await EasyPost.Tracker.retrieve(label.tracker.id);
     console.log({ tracker, label });
@@ -34,11 +34,13 @@ export const addTracking = async ({ label, order, isReturnTracking = false }: an
       order.tracking_number = label.tracking_code;
       order.tracking_url = tracker.public_url;
       order.shipping.shipping_label = label;
+      order.shipping.shipping_rate = shipping_rate;
+      order.shipping.shipment_id = label.id;
     }
 
     await order_db.update_orders_db(order._id, order);
   } catch (error) {
-    console.log({ addTracking: error });
+    console.error("Error adding tracking:", error);
   }
 };
 export const clearTracking = async ({ order, isReturnTracking = false }: any) => {
@@ -65,42 +67,15 @@ export const createTracker = async ({ order }: any) => {
       tracking_code: order.tracking_number,
       carrier: order.shipping.shipping_rate.carrier
     });
-
     if (order.shipping.shipping_rate.shipment_id) {
-      const label = await EasyPost.Shipment.retrieve("shp_af853123c4184800a55b5293c8f76b6a");
-      console.log({ label, id: order.shipping.shipping_rate.shipment_id });
-      // Assume shipmentDate is the creation date of the shipment with shipment_id
-      const shipmentDate = new Date(label.updated_at);
+      const label = await EasyPost.Shipment.retrieve(order.shipping.shipping_rate.shipment_id);
 
-      // console.log({ shipmentDate });
-
-      // Format shipmentDate to YYYY-MM-DD
-      const formattedDate = shipmentDate.toISOString().split("T")[0];
-
-      // console.log({ formattedDate });
-
-      // Retrieve shipments created on the same day as shipment_id
-      const { shipments } = await EasyPost.Shipment.all({
-        start_datetime: `${formattedDate}T00:00:00Z`,
-        end_datetime: `${formattedDate}T23:59:59Z`,
-        purchased: true,
-        page_size: 100 // Adjust this value as needed
-      });
-      // console.log({ shipments });
-
-      // Find the correct shipment based on shipment_id
-      const shipment = shipments.find((shipment: any) => shipment.id === order.shipping.shipping_rate.shipment_id);
-      console.log({ shipment });
-
-      if (shipment) {
-        order.tracking_url = tracker.public_url;
-        order.shipping.shipping_label = shipment.postage_label;
-      }
+      order.tracking_url = tracker.public_url;
+      order.shipping.shipping_label = label;
     }
-
     order.shipping.shipment_tracker = tracker.id;
     order.tracking_url = tracker.public_url;
-    // await order_db.update_orders_db(order._id, order);
+    await order_db.update_orders_db(order._id, order);
     return tracker;
   } catch (error) {
     console.log("Error creating tracker:", error);
@@ -109,62 +84,6 @@ export const createTracker = async ({ order }: any) => {
     }
   }
 };
-
-// export const createTracker = async ({ order }: any) => {
-//   try {
-//     const tracker = await EasyPost.Tracker.create({
-//       tracking_code: order.tracking_number,
-//       carrier: order.shipping.shipping_rate.carrier
-//     });
-//     if (order.shipping.shipping_rate.shipment_id) {
-//       const label = await EasyPost.Shipment.retrieve(order.shipping.shipping_rate.shipment_id);
-
-//       order.tracking_url = tracker.public_url;
-//       order.shipping.shipping_label = label;
-//     }
-//     order.shipping.shipment_tracker = tracker.id;
-//     order.tracking_url = tracker.public_url;
-//     // await order_db.update_orders_db(order._id, order);
-//     return tracker;
-//   } catch (error) {
-//     console.log("Error creating tracker:", error);
-//     if (error instanceof Error) {
-//       throw new Error(error.message);
-//     }
-//   }
-// };
-// export const createTracker = async ({ order }: any) => {
-//   try {
-//     const tracker = await EasyPost.Tracker.create({
-//       tracking_code: order.tracking_number,
-//       carrier: order.shipping.shipping_rate.carrier
-//     });
-//     if (order.shipping.shipping_rate.shipment_id) {
-//       const shipment = await EasyPost.Shipment.retrieve(order.shipping.shipping_rate.shipment_id);
-//       const { shipments } = await EasyPost.Shipment.all({
-//         page_size: 20,
-//         purchased: true,
-//         start_datetime: new Date(shipment.created_at).setDate(new Date(shipment.created_at).getDate() - 1),
-//         end_datetime: new Date(shipment.created_at).setDate(new Date(shipment.created_at).getDate() + 1)
-//       });
-//       console.log({ shipments });
-//       // Find the shipment in the shipments array that matches the shipment.id
-//       const label = shipments.find((shipment: any) => shipment.id === order.shipping.shipping_rate.shipment_id);
-//       console.log({ label, postage_label: label });
-//       order.tracking_url = tracker.public_url;
-//       order.shipping.shipping_label = label;
-//     }
-//     order.shipping.shipment_tracker = tracker.id;
-//     order.tracking_url = tracker.public_url;
-//     // await order_db.update_orders_db(order._id, order);
-//     return tracker;
-//   } catch (error) {
-//     console.log("Error creating tracker:", error);
-//     if (error instanceof Error) {
-//       throw new Error(error.message);
-//     }
-//   }
-// };
 
 export const refundLabel = async ({ order, is_return_tracking }: any) => {
   const refund = await EasyPost.Refund.create({

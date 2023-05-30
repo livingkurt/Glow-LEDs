@@ -49,7 +49,7 @@ export default {
     try {
       const order = await order_db.findById_orders_db(params.order_id);
       const label: any = await createLabel({ order });
-      await addTracking({ order, label });
+      await addTracking({ order, label, shipping_rate: label.selected_rate });
       return { invoice: invoice({ order }), label: label.postage_label.label_url };
     } catch (error) {
       if (error instanceof Error) {
@@ -88,7 +88,7 @@ export default {
       const { shipment }: any = await createShippingRates({ order, returnLabel: true });
 
       const label = await EasyPost.Shipment.buy(shipment.id, shipment.lowestRate());
-      await addTracking({ order, label, isReturnTracking: true });
+      await addTracking({ order, label, shipping_rate: label.selected_rate, isReturnTracking: true });
 
       return { label: label.postage_label.label_url };
     } catch (error) {
