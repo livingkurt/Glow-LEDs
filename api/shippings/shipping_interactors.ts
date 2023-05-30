@@ -63,16 +63,16 @@ export const clearTracking = async ({ order, isReturnTracking = false }: any) =>
 
 export const createTracker = async ({ order }: any) => {
   try {
+    const label = await EasyPost.Shipment.retrieve(order.shipping.shipment_id);
+    console.log({ label });
     const tracker = await EasyPost.Tracker.create({
       tracking_code: order.tracking_number,
-      carrier: order.shipping.shipping_rate.carrier
+      carrier: order.shipping?.shipping_rate?.carrier || label.selected_rate.carrier
     });
-    if (order.shipping.shipping_rate.shipment_id) {
-      const label = await EasyPost.Shipment.retrieve(order.shipping.shipping_rate.shipment_id);
 
-      order.tracking_url = tracker.public_url;
-      order.shipping.shipping_label = label;
-    }
+    order.tracking_url = tracker.public_url;
+    order.shipping.shipping_label = label;
+    order.shipping.shipping_rate = order.shipping?.shipping_rate || label.selected_rate;
     order.shipping.shipment_tracker = tracker.id;
     order.tracking_url = tracker.public_url;
     await order_db.update_orders_db(order._id, order);
