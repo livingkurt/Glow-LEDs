@@ -110,47 +110,6 @@ export default {
       }
     }
   },
-  // monthly_checkin_affiliates_s: async (params: any, body: any) => {
-  //   const { id } = params;
-  //   const { questionsConcerns, numberOfContent, month, year } = body;
-
-  //   try {
-  //     // Prepare the check-in object
-  //     const checkin = {
-  //       month: month,
-  //       year: year,
-  //       questionsConcerns: questionsConcerns,
-  //       numberOfContent: numberOfContent
-  //       // add any additional fields here
-  //     };
-  //     console.log({ checkin });
-
-  //     const affiliate: any = await Affiliate.findOne({ _id: id });
-  //     if (affiliate) {
-  //       const existingCheckinIndex = affiliate.sponsorMonthlyCheckins.findIndex(
-  //         (checkin: any) => checkin.month === month && checkin.year === year
-  //       );
-
-  //       if (existingCheckinIndex > -1) {
-  //         // Update the existing checkin
-  //         affiliate.sponsorMonthlyCheckins[existingCheckinIndex] = checkin;
-  //       } else {
-  //         // Add a new checkin
-  //         affiliate.sponsorMonthlyCheckins.push(checkin);
-  //       }
-
-  //       // Save the updated affiliate
-  //       await affiliate.save();
-
-  //       return affiliate;
-  //     }
-  //   } catch (error) {
-  //     console.log({ error });
-  //     if (error instanceof Error) {
-  //       throw new Error(error.message);
-  //     }
-  //   }
-  // },
   monthly_checkin_affiliates_s: async (params: any, body: any) => {
     const { id } = params;
     const { questionsConcerns, numberOfContent, month, year } = body;
@@ -214,6 +173,16 @@ export default {
     }
   },
 
+  checkin_status_affiliates_s: async (query: any) => {
+    const { start_date, end_date } = query;
+    try {
+      return await affiliate_db.checkin_status_affiliates_db(start_date, end_date);
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
   update_affiliates_s: async (params: any, body: IAffiliate) => {
     try {
       return await affiliate_db.update_affiliates_db(params.id, body);

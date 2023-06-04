@@ -12,7 +12,8 @@ import {
   useGetProductRevenueQuery,
   useGetProductRangeRevenueOrdersQuery,
   useGetMonthlyRevenueProductOrdersQuery,
-  useGetYearlyRevenueProductOrdersQuery
+  useGetYearlyRevenueProductOrdersQuery,
+  useGetSponsorCheckinStatusQuery
 } from "./dashboardApi";
 import { determineTabName, run_daily_workers, run_monthly_workers, run_weekly_workers } from "./dashboardHelpers";
 import { useDispatch, useSelector } from "react-redux";
@@ -29,6 +30,7 @@ import CurrentStock from "./components/CurrentStock";
 import TotalsTable from "./components/TotalsTable";
 import AllProductRevenue from "./components/AllProductRevenue";
 import YearlyMonthlyProductRevenue from "./components/YearlyMonthlyProductRevenue";
+import SponsorCheckins from "./components/SponsorCheckins";
 
 const DashboardPage = () => {
   const dispatch = useDispatch();
@@ -48,11 +50,14 @@ const DashboardPage = () => {
   const monthy_revenue = useGetMonthlyRevenueOrdersQuery({ year });
   const yearly_revenue = useGetYearlyRevenueOrdersQuery();
   const range_payouts = useGetRangePayoutsQuery({ start_date, end_date });
+  const sponsorCheckinStatus = useGetSponsorCheckinStatusQuery({ start_date, end_date });
   const monthly_product_revenue = useGetMonthlyRevenueProductOrdersQuery({ productId: product._id, year });
   const yearly_product_revenue = useGetYearlyRevenueProductOrdersQuery({ productId: product._id });
   // const range_product_revenue = useGetProductRangeRevenueOrdersQuery({ productId: product._id, start_date, end_date });
   // const range_gloves = useGetRangeGlovesQuery({ start_date, end_date });
   const currentStock = useGetCurrentStockQuery();
+
+  console.log({ sponsorCheckinStatus });
 
   return (
     <div className="main_container p-20px">
@@ -93,12 +98,15 @@ const DashboardPage = () => {
               onChange={(e, newValue) => {
                 dispatch(setTabIndex(newValue));
               }}
+              variant="scrollable"
+              scrollButtons="false"
             >
               <Tab label={`${determineTabName(month, year)} Revenue`} value={0} />;
               <Tab label={"Affiliate Earnings"} value={1} />;
               <Tab label={"Product Categories"} value={2} />;
               <Tab label={"All Products"} value={3} />
               <Tab label={"Product Revenue"} value={4} />
+              <Tab label={"Sponsor Checkins"} value={5} />
             </Tabs>
           </AppBar>
         </Paper>
@@ -128,6 +136,9 @@ const DashboardPage = () => {
             month={month}
             year={year}
           />
+        </GLTabPanel>
+        <GLTabPanel value={tabIndex} index={5}>
+          <SponsorCheckins month={month} year={year} sponsorCheckinStatus={sponsorCheckinStatus} />
         </GLTabPanel>
         <CurrentStock currentStock={currentStock} />
       </div>

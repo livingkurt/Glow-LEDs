@@ -10,6 +10,7 @@ router
 
 router.route("/").get(affiliate_controller.findAll_affiliates_c).post(isAuth, affiliate_controller.create_affiliates_c);
 // router.route("/reorder").put(affiliate_controller.reorder_affiliates_c);
+router.route("/checkin_status").get(affiliate_controller.checkin_status_affiliates_c);
 router.route("/:id/monthly_checkin").put(affiliate_controller.monthly_checkin_affiliates_c);
 
 router

@@ -76,6 +76,10 @@ export const dashboardApi = createApi({
     }),
     getCurrentStock: builder.query({
       query: () => `/products/current_stock`
+    }),
+    getSponsorCheckinStatus: builder.query({
+      query: ({ start_date, end_date }: { start_date: string; end_date: string }) =>
+        `/affiliates/checkin_status?start_date=${start_date}&end_date=${end_date}`
     })
   })
 });
@@ -100,7 +104,8 @@ export const {
   useGetCurrentStockQuery,
   useGetProductRevenueQuery,
   useGetMonthlyRevenueProductOrdersQuery,
-  useGetYearlyRevenueProductOrdersQuery
+  useGetYearlyRevenueProductOrdersQuery,
+  useGetSponsorCheckinStatusQuery
 } = dashboardApi;
 
 // export const get_airtable_expenses = async (year: number): Promise<void> => {

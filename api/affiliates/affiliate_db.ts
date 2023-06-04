@@ -79,6 +79,157 @@ export default {
       }
     }
   },
+  checkin_status_affiliates_db: async (start_date: string, end_date: string) => {
+    try {
+      const startYear = parseInt(start_date.slice(0, 4));
+      const startMonth = parseInt(start_date.slice(5, 7));
+      const endYear = parseInt(end_date.slice(0, 4));
+      const endMonth = parseInt(end_date.slice(5, 7));
+
+      const sponsorCheckins = await Affiliate.aggregate([
+        {
+          $match: {
+            active: true,
+            sponsor: true
+          }
+        },
+        {
+          $unwind: {
+            path: "$sponsorMonthlyCheckins",
+            preserveNullAndEmptyArrays: true
+          }
+        },
+        {
+          $addFields: {
+            "sponsorMonthlyCheckins.monthNumber": {
+              $switch: {
+                branches: [
+                  { case: { $eq: ["$sponsorMonthlyCheckins.month", "January"] }, then: 1 },
+                  { case: { $eq: ["$sponsorMonthlyCheckins.month", "February"] }, then: 2 },
+                  { case: { $eq: ["$sponsorMonthlyCheckins.month", "March"] }, then: 3 },
+                  { case: { $eq: ["$sponsorMonthlyCheckins.month", "April"] }, then: 4 },
+                  { case: { $eq: ["$sponsorMonthlyCheckins.month", "May"] }, then: 5 },
+                  { case: { $eq: ["$sponsorMonthlyCheckins.month", "June"] }, then: 6 },
+                  { case: { $eq: ["$sponsorMonthlyCheckins.month", "July"] }, then: 7 },
+                  { case: { $eq: ["$sponsorMonthlyCheckins.month", "August"] }, then: 8 },
+                  { case: { $eq: ["$sponsorMonthlyCheckins.month", "September"] }, then: 9 },
+                  { case: { $eq: ["$sponsorMonthlyCheckins.month", "October"] }, then: 10 },
+                  { case: { $eq: ["$sponsorMonthlyCheckins.month", "November"] }, then: 11 },
+                  { case: { $eq: ["$sponsorMonthlyCheckins.month", "December"] }, then: 12 }
+                ],
+                default: 0
+              }
+            }
+          }
+        },
+        {
+          $group: {
+            _id: "$_id",
+            artist_name: { $first: "$artist_name" },
+            hasCheckedIn: {
+              $first: {
+                $cond: [
+                  {
+                    $and: [
+                      { $ne: ["$sponsorMonthlyCheckins", null] },
+                      { $gte: ["$sponsorMonthlyCheckins.year", startYear] },
+                      { $lte: ["$sponsorMonthlyCheckins.year", endYear] },
+                      { $gte: ["$sponsorMonthlyCheckins.monthNumber", startMonth] },
+                      { $lte: ["$sponsorMonthlyCheckins.monthNumber", endMonth] }
+                    ]
+                  },
+                  true,
+                  false
+                ]
+              }
+            },
+            numberOfContent: {
+              $max: {
+                $cond: [
+                  {
+                    $and: [
+                      { $ne: ["$sponsorMonthlyCheckins", null] },
+                      { $gte: ["$sponsorMonthlyCheckins.year", startYear] },
+                      { $lte: ["$sponsorMonthlyCheckins.year", endYear] },
+                      { $gte: ["$sponsorMonthlyCheckins.monthNumber", startMonth] },
+                      { $lte: ["$sponsorMonthlyCheckins.monthNumber", endMonth] }
+                    ]
+                  },
+                  "$sponsorMonthlyCheckins.numberOfContent",
+                  0
+                ]
+              }
+            },
+            totalNumberOfContent: {
+              $sum: {
+                $cond: [
+                  {
+                    $and: [{ $ne: ["$sponsorMonthlyCheckins", null] }, { $eq: ["$sponsorMonthlyCheckins.year", startYear] }]
+                  },
+                  "$sponsorMonthlyCheckins.numberOfContent",
+                  0
+                ]
+              }
+            }
+          }
+        }
+      ]);
+      return sponsorCheckins;
+    } catch (error) {
+      console.log({ error });
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+
+  // checkin_status_affiliates_db: async (start_date: string, end_date: string) => {
+  //   try {
+  //     const sponsorCheckins = await Affiliate.aggregate([
+  //       {
+  //         $match: {
+  //           active: true,
+  //           sponsor: true
+  //         }
+  //       },
+  //       {
+  //         $unwind: {
+  //           path: "$sponsorMonthlyCheckins",
+  //           preserveNullAndEmptyArrays: true
+  //         }
+  //       },
+  //       {
+  //         $group: {
+  //           _id: "$_id",
+  //           artist_name: { $first: "$artist_name" },
+  //           hasCheckedIn: {
+  //             $first: {
+  //               $cond: [
+  //                 {
+  //                   $and: [
+  //                     { $ne: ["$sponsorMonthlyCheckins", null] },
+  //                     { $gte: ["$sponsorMonthlyCheckins.createdAt", start_date] },
+  //                     { $lte: ["$sponsorMonthlyCheckins.createdAt", end_date] }
+  //                   ]
+  //                 },
+  //                 true,
+  //                 false
+  //               ]
+  //             }
+  //           },
+  //           numberOfContent: { $first: "$sponsorMonthlyCheckins.numberOfContent" }
+  //         }
+  //       }
+  //     ]);
+  //     return sponsorCheckins;
+  //   } catch (error) {
+  //     console.log({ error });
+  //     if (error instanceof Error) {
+  //       throw new Error(error.message);
+  //     }
+  //   }
+  // },
+
   update_affiliates_db: async (id: any, body: any) => {
     try {
       const affiliate: any = await Affiliate.findOne({ _id: id });
