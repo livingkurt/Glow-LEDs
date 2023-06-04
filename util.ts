@@ -369,13 +369,23 @@ export const removeDuplicates = (originalArray: any, prop: any) => {
   return newArray;
 };
 
-export const format_date = (unformatted_date: any) => {
-  const month = unformatted_date?.slice(5, 7);
-  const day = unformatted_date?.slice(8, 10);
-  const year = unformatted_date?.slice(0, 4);
-  const formatted_date = `${month}/${day}/${year}`;
-  return formatted_date;
+// export const format_date = (unformatted_date: any) => {
+//   console.log({ unformatted_date });
+//   const month = unformatted_date?.slice(5, 7);
+//   const day = unformatted_date?.slice(8, 10);
+//   const year = unformatted_date?.slice(0, 4);
+//   const formatted_date = `${month}/${day}/${year}`;
+//   return formatted_date;
+// };
+
+export const format_date = (isoDateString: any) => {
+  const date = new Date(isoDateString);
+  const month = ("0" + (date.getMonth() + 1)).slice(-2); // Months are zero indexed, so +1
+  const day = ("0" + date.getDate()).slice(-2);
+  const year = date.getFullYear();
+  return `${month}/${day}/${year}`;
 };
+
 export const humanDate = (date: string): string => {
   return new Date(date).toLocaleDateString();
 };

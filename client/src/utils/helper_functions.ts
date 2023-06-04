@@ -225,12 +225,12 @@ export const determine_sponsor_code_tier = (code_usage: number) => {
   }
 };
 
-export const format_date = (unformatted_date: string) => {
-  const month = unformatted_date.slice(5, 7);
-  const day = unformatted_date.slice(8, 10);
-  const year = unformatted_date.slice(0, 4);
-  const formatted_date = `${month}/${day}/${year}`;
-  return formatted_date;
+export const format_date = (isoDateString: string) => {
+  const date = new Date(isoDateString);
+  const month = ("0" + (date.getMonth() + 1)).slice(-2); // Months are zero indexed, so +1
+  const day = ("0" + date.getDate()).slice(-2);
+  const year = date.getFullYear();
+  return `${month}/${day}/${year}`;
 };
 export const format_time = (unformatted_time: any) => {
   let hour = unformatted_time.slice(11, 13);
