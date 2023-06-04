@@ -11,8 +11,6 @@ import { Button } from "@mui/material";
 import { determine_color } from "./promosHelpers";
 import { format_date } from "../../utils/helper_functions";
 import { fullName } from "../UsersPage/usersHelpers";
-import { humanDate } from "../../helpers/dateHelpers";
-import { API_Emails } from "../../utils";
 
 const PromosPage = () => {
   const promoPage = useSelector(state => state.promos.promoPage);
@@ -24,7 +22,7 @@ const PromosPage = () => {
 
   const column_defs = useMemo(
     () => [
-      { title: "Date", display: paycheck => paycheck.createdAt && humanDate(paycheck.createdAt) },
+      { title: "Date", display: paycheck => paycheck.createdAt && format_date(paycheck.createdAt) },
       {
         title: "Active",
         display: promo => (promo.active ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />)

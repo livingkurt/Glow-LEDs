@@ -9,8 +9,8 @@ import { EditCartModal } from "./components";
 import * as API from "../../api";
 import { Button } from "@mui/material";
 import { getCarts } from "../../api";
-import { humanDate } from "../../helpers/dateHelpers";
 import { determine_color } from "./cartsPageHelpers";
+import { format_date } from "../../utils/helper_functions";
 
 const CartsPage = () => {
   const cartPage = useSelector(state => state.carts.cartPage);
@@ -39,7 +39,7 @@ const CartsPage = () => {
           </GLButton>
         )
       },
-      { title: "Date Updated", display: row => humanDate(row.updatedAt) },
+      { title: "Date Updated", display: row => format_date(row.updatedAt) },
       { title: "User", display: row => (row?.user ? `${row?.user.first_name} ${row?.user.last_name}` : "Guest") },
       { title: "Cart Items", display: row => row.cartItems.map(item => item.name).join(", ") },
       {

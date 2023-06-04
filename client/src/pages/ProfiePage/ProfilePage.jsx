@@ -21,7 +21,6 @@ import { determineOrderColors, orderColors } from "../OrdersPage/ordersPageHelpe
 import OrderItemsDisplay from "../OrdersPage/components/OrderItemsDisplay";
 import { determine_product_name_string } from "../../utils/react_helper_functions";
 import { Link } from "react-router-dom";
-import { humanDate } from "../../helpers/dateHelpers";
 import { fullName } from "../UsersPage/usersHelpers";
 import { Grid } from "@mui/material";
 import SponsorMonthlyCheckinModal from "./components/SponsorMonthlyCheckinModal";
@@ -112,7 +111,7 @@ const ProfilePage = () => {
   const orderColumnDefs = useMemo(
     () => [
       { title: "Order #", display: "_id" },
-      { title: "Order Placed", display: row => humanDate(row.createdAt) },
+      { title: "Order Placed", display: row => format_date(row.createdAt) },
       { title: "Name", display: row => <Link to={`/secure/account/profile/${row?.user?._id}`}>{fullName(row.shipping)}</Link> },
       {
         title: "Order Items",

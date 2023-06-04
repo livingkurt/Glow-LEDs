@@ -9,7 +9,6 @@ import { EditOrderModal, OrderDropdown } from "./components";
 import * as API from "../../api";
 import { Link } from "react-router-dom";
 import { Button } from "@mui/material";
-import { humanDate } from "../../helpers/dateHelpers";
 import { determineOrderColors, duplicateOrder, orderColors, sinceOrdered } from "./ordersPageHelpers";
 import OrderItemsDisplay from "./components/OrderItemsDisplay";
 import { determine_product_name_string } from "../../utils/react_helper_functions";
@@ -19,6 +18,7 @@ import { openCreateLabelModal, open_create_pickup_modal } from "../../slices/shi
 import CreatePickupModal from "./components/CreatePickupModal";
 import RefundOrderModal from "./components/RefundOrderModal";
 import CreateLabelModal from "./components/CreateLabelModal";
+import { format_date } from "../../utils/helper_functions";
 
 const OrdersPage = () => {
   const orderPage = useSelector(state => state.orders.orderPage);
@@ -30,7 +30,7 @@ const OrdersPage = () => {
 
   const column_defs = useMemo(
     () => [
-      { title: "Order Placed", display: row => humanDate(row.createdAt) },
+      { title: "Order Placed", display: row => format_date(row.createdAt) },
       { title: "Name", display: row => <Link to={`/secure/account/profile/${row?.user?._id}`}>{fullName(row.shipping)}</Link> },
       { title: "Since Ordered", display: row => sinceOrdered(row.createdAt) },
       {

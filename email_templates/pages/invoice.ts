@@ -1,5 +1,5 @@
 import config from "../../config";
-import { email_sale_price_switch, determine_product_name, determin_card_logo_images, humanDate } from "../../util";
+import { email_sale_price_switch, determine_product_name, determin_card_logo_images, format_date } from "../../util";
 
 export default ({ order }: any): string => {
   return `<body id="invoice" style="background-color:transparent;zoom:100%; font-family: Helvetica; color: black;">
@@ -16,7 +16,7 @@ export default ({ order }: any): string => {
                     src="/images/optimized_images/logo_images/glow_logo_desaturated_optimized.png"
                     style="width:500px;margin-left:-5px" /></td>
                 <td style="text-align:right;font-size:25px" valign="top" align="right"><strong>Invoice #:</strong>
-                  ${order._id}<br /><strong>Created:</strong> ${humanDate(order.createdAt)}</td>
+                  ${order._id}<br /><strong>Created:</strong> ${format_date(order.createdAt)}</td>
               </tr>
             </table>
           </td>

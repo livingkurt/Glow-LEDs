@@ -1,5 +1,5 @@
-import { humanDate } from "../../../helpers/dateHelpers";
 import { GLDisplayTable } from "../../../shared/GlowLEDsComponents/GLDisplayTable";
+import { format_date } from "../../../utils/helper_functions";
 import { months } from "../dashboardHelpers";
 
 const YearlyMonthlyDailyRevenue = ({ month, year, yearly_revenue, daily_revenue, monthy_revenue }) => {
@@ -41,7 +41,7 @@ const YearlyMonthlyDailyRevenue = ({ month, year, yearly_revenue, daily_revenue,
               loading={daily_revenue.isLoading && daily_revenue.data}
               rows={!daily_revenue.isLoading && daily_revenue.data}
               columnDefs={[
-                { title: "Day", display: row => humanDate(row.date) },
+                { title: "Day", display: row => format_date(row.date) },
                 { title: "Revenue", display: row => `$${row.totalPrice.toFixed(2)}` },
                 { title: "Hourly Average", display: row => `$${row.hourlyAverage.toFixed(2)}` }
               ]}
