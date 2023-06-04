@@ -121,8 +121,7 @@ const OrderActionButtons = ({ order }) => {
       >
         Clear Shipping Label
       </GLButton>
-
-      {order.shipment_id && order.tracking_number && (
+      {order.shipping.shipment_id && order.tracking_number && (
         <GLButton variant="secondary" className="w-100per mv-5px" onClick={() => dispatch(API.createTracker({ orderId: order._id }))}>
           Link Order to Label
         </GLButton>
