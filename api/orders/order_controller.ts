@@ -1,4 +1,5 @@
 import invoice from "../../email_templates/pages/invoice";
+import { affiliate_db } from "../affiliates";
 import { order_services } from "../orders";
 
 export default {
@@ -257,8 +258,9 @@ export default {
   invoice_orders_c: async (req: any, res: any) => {
     const { params } = req;
     const order = await order_services.invoice_orders_s(params.id);
+    const affiliate = await affiliate_db.findBy_affiliates_db({ _id: order.user.affiliate });
     try {
-      return res.status(200).send(invoice({ order }));
+      return res.status(200).send(invoice({ order, isSponsor: affiliate.sponsor }));
     } catch (error) {
       res.status(500).send({ error, message: "Error Deleting Order" });
     }
