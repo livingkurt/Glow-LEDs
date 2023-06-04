@@ -109,6 +109,8 @@ const affiliatePage = createSlice({
       state.monthlyCheckinModal = true;
       state.month = month;
       state.year = year;
+      state.numberOfContent = 0;
+      state.questionsConcerns = "";
     },
     closeMonthlyCheckinModal: (state, { payload }) => {
       state.monthlyCheckinModal = false;

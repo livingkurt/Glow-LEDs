@@ -4,7 +4,7 @@ import { getFilteredData } from "../api_helpers";
 import { order_db } from "../orders";
 import { promo_db } from "../promos";
 import { extractCodes } from "./promo_helpers";
-import { normalizePromoFilters, normalizePromoSearch } from "./promo_interactors";
+import { generateSponsorCodes, normalizePromoFilters, normalizePromoSearch } from "./promo_interactors";
 
 export default {
   findAll_promos_s: async (query: { page: string; search: string; sort: string; limit: string }) => {
@@ -168,60 +168,24 @@ export default {
     }
   },
   refresh_sponsor_codes_promos_s: async (body: any) => {
-    const a_filter: any = { deleted: false, active: true, sponsor: true };
-    const affiliates = await affiliate_db.findAll_affiliates_db(a_filter, {}, "0", "1");
-    const start_date = new Date();
-    const next_date = new Date();
-    const end_date = new Date(next_date.setMonth(next_date.getMonth() + 1));
+    const affiliates = await affiliate_db.findAll_affiliates_db({ deleted: false, active: true, sponsor: true }, {}, "0", "1");
+    const currentMonth = new Date().toLocaleString("default", { month: "long" });
+    const currentYear = new Date().getFullYear();
+
+    // const previousCheckin = affiliate?.sponsorMonthlyCheckins?.find(
+    //   (checkin: any) => checkin.month === previousMonth && checkin.year === currentYear
+    // );
+
     try {
       const sponsor_codes = await Promise.all(
         affiliates.map(async (affiliate: any) => {
-          const old_codes = await promo_db.findAll_promos_db({ affiliate: affiliate._id, active: true }, {}, "2", "1");
-          await Promise.all(
-            old_codes.map(async (code: any) => {
-              await promo_db.update_promos_db(code.id, { active: false });
-            })
+          //const previousMonth = date.toLocaleString("default", { month: "long" });
+          const checkinCompleted = affiliate?.sponsorMonthlyCheckins?.find(
+            (checkin: any) => checkin.month === currentMonth && checkin.year === currentYear
           );
-          const private_code = {
-            promo_code: `${affiliate.artist_name[0].toLowerCase()}${make_private_code(5)}`,
-            user: affiliate.user._id,
-            admin_only: false,
-            sponsor_only: false,
-            single_use: true,
-            used_once: false,
-            excluded_categories: [],
-            excluded_products: [],
-            percentage_off: 0,
-            amount_off: 25,
-            free_shipping: true,
-            affiliate: affiliate._id,
-            time_limit: true,
-            start_date: start_date,
-            end_date: end_date,
-            active: true
-          };
-          const refresh_private_code = {
-            affiliate: affiliate._id,
-            user: affiliate.user._id,
-            promo_code: `r${make_private_code(5)}`,
-            admin_only: false,
-            sponsor_only: true,
-            single_use: true,
-            used_once: false,
-            excluded_categories: [],
-            included_products: ["61a9501f914391295a266c8b"],
-            percentage_off: 0,
-            amount_off: 34.99,
-            free_shipping: true,
-            include: true,
-            time_limit: true,
-            start_date: start_date,
-            end_date: end_date,
-            active: true
-          };
-          const refresh_pack_code: any = await promo_db.create_promos_db(refresh_private_code);
-          const allowance_code: any = await promo_db.create_promos_db(private_code);
-          return [...refresh_pack_code, ...allowance_code];
+          if (checkinCompleted) {
+            return generateSponsorCodes(affiliate);
+          }
         })
       );
       return sponsor_codes;

@@ -79,7 +79,7 @@ export const ProfileActions = () => {
                 dispatch(openMonthlyCheckinModal({ month: previousMonth, year: currentYear }));
               }}
             >
-              Sponsor Monthly Checkin for {previousMonth}
+              {previousCheckin ? "Edit" : "Start"} Sponsor Monthly Checkin for {previousMonth}
             </Button>
           )}
           {!checkinCompleted && (
@@ -94,7 +94,7 @@ export const ProfileActions = () => {
               dispatch(openMonthlyCheckinModal({ month: currentMonth, year: currentYear }));
             }}
           >
-            Sponsor Monthly Checkin for {currentMonth}
+            {checkinCompleted ? "Edit" : "Start"} Sponsor Monthly Checkin for {currentMonth}
           </Button>
         </>
       )}

@@ -89,9 +89,9 @@ export const generateCSVLabel = createAsyncThunk("shipping/generateCSVLabel", as
   }
 });
 
-export const createPickup = createAsyncThunk("shipping/createPickup", async ({ date }: any, thunkApi: any) => {
+export const createPickup = createAsyncThunk("shipping/createPickup", async ({ readyTime, latestTimeAvailable }: any, thunkApi: any) => {
   try {
-    const { data } = await axios.put(`/api/shipping/${date}/create_pickup`);
+    const { data } = await axios.put(`/api/shipping/create_pickup`, { readyTime, latestTimeAvailable });
     return data;
   } catch (error) {
     Covy().showSnackbar({

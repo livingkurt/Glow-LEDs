@@ -76,9 +76,9 @@ export default {
     }
   },
   create_pickup_shipping_c: async (req: any, res: any) => {
-    const { params } = req;
+    const { body } = req;
     try {
-      const shipping = await shipping_services.create_pickup_shipping_s(params);
+      const shipping = await shipping_services.create_pickup_shipping_s(body);
       if (shipping) {
         return res.status(200).send(shipping);
       }

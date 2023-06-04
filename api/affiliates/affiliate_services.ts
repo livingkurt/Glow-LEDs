@@ -5,6 +5,8 @@ import affiliate_db from "./affiliate_db";
 import { user_db } from "../users";
 import Affiliate from "./affiliate";
 import config from "../../config";
+import { generateSponsorCodes } from "../promos/promo_interactors";
+import { monthToNum } from "./affiliate_helpers";
 const bcrypt = require("bcryptjs");
 
 export default {
@@ -108,9 +110,56 @@ export default {
       }
     }
   },
+  // monthly_checkin_affiliates_s: async (params: any, body: any) => {
+  //   const { id } = params;
+  //   const { questionsConcerns, numberOfContent, month, year } = body;
+
+  //   try {
+  //     // Prepare the check-in object
+  //     const checkin = {
+  //       month: month,
+  //       year: year,
+  //       questionsConcerns: questionsConcerns,
+  //       numberOfContent: numberOfContent
+  //       // add any additional fields here
+  //     };
+  //     console.log({ checkin });
+
+  //     const affiliate: any = await Affiliate.findOne({ _id: id });
+  //     if (affiliate) {
+  //       const existingCheckinIndex = affiliate.sponsorMonthlyCheckins.findIndex(
+  //         (checkin: any) => checkin.month === month && checkin.year === year
+  //       );
+
+  //       if (existingCheckinIndex > -1) {
+  //         // Update the existing checkin
+  //         affiliate.sponsorMonthlyCheckins[existingCheckinIndex] = checkin;
+  //       } else {
+  //         // Add a new checkin
+  //         affiliate.sponsorMonthlyCheckins.push(checkin);
+  //       }
+
+  //       // Save the updated affiliate
+  //       await affiliate.save();
+
+  //       return affiliate;
+  //     }
+  //   } catch (error) {
+  //     console.log({ error });
+  //     if (error instanceof Error) {
+  //       throw new Error(error.message);
+  //     }
+  //   }
+  // },
   monthly_checkin_affiliates_s: async (params: any, body: any) => {
     const { id } = params;
     const { questionsConcerns, numberOfContent, month, year } = body;
+
+    // Get previous month and year
+    const prevDate = new Date();
+    prevDate.setMonth(prevDate.getMonth() - 1);
+    const prevMonth = prevDate.toLocaleString("default", { month: "long" });
+    const prevYear = prevDate.getFullYear();
 
     try {
       // Prepare the check-in object
@@ -133,8 +182,23 @@ export default {
           // Update the existing checkin
           affiliate.sponsorMonthlyCheckins[existingCheckinIndex] = checkin;
         } else {
-          // Add a new checkin
-          affiliate.sponsorMonthlyCheckins.push(checkin);
+          // Find the correct position for the new checkin based on month and year
+          const correctPosition = affiliate.sponsorMonthlyCheckins.findIndex(
+            (checkin: any) => new Date(`${checkin.year}-${monthToNum(checkin.month)}-01`) > new Date(`${year}-${monthToNum(month)}-01`)
+          );
+
+          // If correct position found, insert at that position, else push to the end
+          if (correctPosition !== -1) {
+            affiliate.sponsorMonthlyCheckins.splice(correctPosition, 0, checkin);
+          } else {
+            affiliate.sponsorMonthlyCheckins.push(checkin);
+          }
+          console.log({ month, prevMonth, year, prevYear });
+          // If the check-in is for the previous month and year, generate sponsor codes
+          if (month === prevMonth && year === prevYear) {
+            console.log("Generating sponsor codes...");
+            await generateSponsorCodes(affiliate);
+          }
         }
 
         // Save the updated affiliate

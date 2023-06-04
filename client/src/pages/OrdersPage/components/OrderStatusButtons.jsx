@@ -27,7 +27,15 @@ const OrderStatusButtons = ({ order }) => {
         dispatch(API.saveOrder({ ...order, isManufactured: !order.isManufactured, manufacturedAt: new Date() }));
         break;
       case "packaged":
-        dispatch(API.saveOrder({ ...order, isPackaged: !order.isPackaged, packagedAt: new Date() }));
+        dispatch(
+          API.saveOrder({
+            ...order,
+            isManufactured: !order.isManufactured,
+            manufacturedAt: new Date(),
+            isPackaged: !order.isPackaged,
+            packagedAt: new Date()
+          })
+        );
         break;
       case "shipped":
         dispatch(API.saveOrder({ ...order, isShipped: !order.isShipped, shippedAt: new Date() }));
