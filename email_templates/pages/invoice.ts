@@ -17,7 +17,7 @@ export default ({ order, isSponsor }: any): string => {
                     src="/images/optimized_images/logo_images/glow_logo_desaturated_optimized.png"
                     style="width:500px;margin-left:-5px" /></td>
                 <td style="text-align:right;font-size:25px" valign="top" align="right"><strong>Invoice #:</strong>
-                  ${order._id}<br /><strong>Created:</strong> ${format_date(order.createdAt)}</td>
+                  ${order._id}<br /><strong>Created:</strong> ${order.createdAt ? format_date(order.createdAt) : ""}</td>
               </tr>
             </table>
           </td>
