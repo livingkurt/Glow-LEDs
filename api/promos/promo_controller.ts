@@ -98,9 +98,8 @@ export default {
     }
   },
   refresh_sponsor_codes_promos_c: async (req: any, res: any) => {
-    const { body } = req;
     try {
-      const promo = await promo_services.refresh_sponsor_codes_promos_s(body);
+      const promo = await promo_services.refresh_sponsor_codes_promos_s();
       if (promo) {
         return res.status(201).send(promo);
       }

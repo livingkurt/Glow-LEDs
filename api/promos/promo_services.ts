@@ -167,7 +167,7 @@ export default {
       }
     }
   },
-  refresh_sponsor_codes_promos_s: async (body: any) => {
+  refresh_sponsor_codes_promos_s: async () => {
     const affiliates = await affiliate_db.findAll_affiliates_db({ deleted: false, active: true, sponsor: true }, {}, "0", "1");
     const currentMonth = new Date().toLocaleString("default", { month: "long" });
     const currentYear = new Date().getFullYear();

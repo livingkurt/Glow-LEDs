@@ -77,10 +77,9 @@ const DashboardPage = () => {
         </GLButton>
       </div>
       <Loading
-        loading={
-          loading && daily_revenue.isLoading && monthy_revenue.isLoading && category_range_revenue.isLoading && yearly_revenue.isLoading
-        }
+        loading={daily_revenue.isLoading && monthy_revenue.isLoading && category_range_revenue.isLoading && yearly_revenue.isLoading}
       />
+      <Loading loading={loading} />
       <div className="m-auto w-100per max-w-800px">
         <DatePicker year={year} month={month} start_date={start_date} end_date={end_date} start_end_date={start_end_date} />
         <TotalsTable
