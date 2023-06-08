@@ -131,6 +131,8 @@ const orderSchema = new mongoose.Schema(
     guest: { type: Boolean, default: false },
     isPaid: { type: Boolean, default: false },
     paidAt: { type: Date },
+    isPickup: { type: Boolean, default: false },
+    pickupAt: { type: Date },
     isReassured: { type: Boolean, default: false },
     reassuredAt: { type: Date },
     isManufactured: { type: Boolean, default: false },

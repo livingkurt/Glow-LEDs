@@ -151,6 +151,29 @@ const shippingSlice = createSlice({
     [API.createTracker.rejected as any]: (state: any, { payload }: any) => {
       state.loading_label = false;
     },
+    [API.createPickup.pending as any]: (state: any, { payload }: any) => {
+      state.loading_label = true;
+    },
+    [API.createPickup.fulfilled as any]: (state: any, { payload }: any) => {
+      state.loading_label = false;
+      state.pickup = payload.pickup;
+      state.orders = payload.orders;
+    },
+    [API.createPickup.rejected as any]: (state: any, { payload }: any) => {
+      state.loading_label = false;
+    },
+    [API.confirmPickup.pending as any]: (state: any, { payload }: any) => {
+      state.loading_label = true;
+    },
+    [API.confirmPickup.fulfilled as any]: (state: any, { payload }: any) => {
+      state.loading_label = false;
+      state.pickup = {};
+      state.orders = {};
+      state.create_pickup_modal = false;
+    },
+    [API.confirmPickup.rejected as any]: (state: any, { payload }: any) => {
+      state.loading_label = false;
+    },
     [API.generateCSVLabel.pending as any]: (state: any, { payload }: any) => {
       state.loading_label = true;
     },

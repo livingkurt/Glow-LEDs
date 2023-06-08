@@ -33,6 +33,14 @@ const ShippingDisplay = ({ shipping }) => {
           </Typography>
           <Box className="ai-c jc-b w-100per">
             <Typography component="label" className="mv-0px mr-5px">
+              Purchased:
+            </Typography>
+            <Typography component="label" className=" mv-0px">
+              {shipping.shipping_label ? "True" : "False"}
+            </Typography>
+          </Box>
+          <Box className="ai-c jc-b w-100per">
+            <Typography component="label" className="mv-0px mr-5px">
               Carrier:{" "}
             </Typography>
             <Typography component="label" className=" mv-0px">

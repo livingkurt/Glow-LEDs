@@ -100,6 +100,22 @@ export const createPickup = createAsyncThunk("shipping/createPickup", async ({ r
     });
   }
 });
+export const confirmPickup = createAsyncThunk("shipping/confirmPickup", async ({ pickupId, rateId, orders }: any, thunkApi: any) => {
+  try {
+    const { data } = await axios.put(`/api/shipping/confirm_pickup`, { pickupId, rateId, orders });
+    Covy().showSnackbar({
+      message: `Pickup Confirmed`,
+      severity: "success"
+    });
+
+    return data;
+  } catch (error) {
+    Covy().showSnackbar({
+      message: `Error: ${error}`,
+      severity: "error"
+    });
+  }
+});
 
 export const differentShippingRates = createAsyncThunk("shipping/differentShippingRates", async (order: any, thunkApi: any) => {
   console.log({ order, shipment_id: order.shipping.shipment_id, shipping_label: order.shipping.shipping_label });

@@ -114,8 +114,6 @@ export default {
     const { readyTime, latestTimeAvailable } = body;
 
     try {
-      console.log({ readyTime, latestTimeAvailable });
-
       const formattedReadyTime = new Date(readyTime);
       const formattedLatestTimeAvailable = new Date(latestTimeAvailable);
       const homeAddress = await EasyPost.Address.create({
@@ -130,38 +128,73 @@ export default {
       });
 
       const orders = await order_db.findAll_orders_db(
-        { isPaid: true, isPackaged: true, "shipping.shipping_label.selected_rate.carrier": "FedEx", isShipped: false, isDelivered: false },
+        {
+          deleted: false,
+          isPaid: true,
+          isPackaged: true,
+          "shipping.shipping_rate.carrier": "FedEx",
+          isPickup: false,
+          isShipped: false,
+          isDelivered: false
+        },
         {},
         "0",
         "1"
       );
+      if (!orders) {
+        throw new Error("Orders not found");
+      }
+
       const shipmentIds = orders.map((order: any) => order.shipping.shipment_id);
-      console.log({ shipmentIds });
       const shipments = await Promise.all(shipmentIds.map((id: any) => EasyPost.Shipment.retrieve(id)));
 
-      console.log({
-        address: homeAddress,
-        min_datetime: formattedReadyTime, // use date here
-        max_datetime: formattedLatestTimeAvailable, // use date here
-        reference: "test",
-        is_account_address: false,
-        instructions: "Pick up on front porch please.",
-        shipment: shipments
+      // Create a batch with the shipments
+      const batch = await EasyPost.Batch.create({
+        shipments: shipments
       });
 
       const pickup = await EasyPost.Pickup.create({
         address: homeAddress,
         min_datetime: formattedReadyTime, // use date here
         max_datetime: formattedLatestTimeAvailable, // use date here
-        reference: "test",
+        reference: `${orders.map((order: any) => `${order.shipping.first_name} ${order.shipping.last_name}`)} Orders`,
         is_account_address: false,
         instructions: "Pick up on front porch please.",
-        shipment: shipments
+        batch: batch
       });
 
-      console.log({ pickup });
-      return "Success";
-      // return pickup;
+      return { pickup, orders };
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  confirm_pickup_shipping_s: async (body: any) => {
+    const { pickupId, rateId, orders } = body;
+
+    try {
+      // Retrieve the pickup
+      const pickup = await EasyPost.Pickup.retrieve(pickupId);
+
+      // Find the rate in the pickup's rates
+      const rate = pickup.pickup_rates.find((rate: any) => rate.id === rateId);
+      if (!rate) {
+        throw new Error("Rate not found");
+      }
+      // Buy the pickup
+      const boughtPickup = await EasyPost.Pickup.buy(pickupId, rate.carrier, rate.service);
+
+      // Update the orders that are being added to the batch
+      for (const order of orders) {
+        console.log({ order });
+        order.isPickup = true;
+        order.pickupAt = new Date(); // set the pickupAt field to the current date
+        await order_db.update_orders_db(order._id, order);
+      }
+
+      // Return the bought pickup
+      return boughtPickup;
     } catch (error) {
       console.log({ error });
       if (error instanceof Error) {

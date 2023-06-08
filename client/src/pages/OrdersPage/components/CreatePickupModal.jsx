@@ -4,21 +4,21 @@ import { useDispatch, useSelector } from "react-redux";
 import GLActiionModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiionModal";
 import * as API from "../../../api";
 import TextField from "@mui/material/TextField";
-import { Grid } from "@mui/material";
+import { Grid, Button, Radio, FormControlLabel, RadioGroup, Typography } from "@mui/material";
+import { Loading } from "../../../shared/SharedComponents";
 
 const CreatePickupModal = () => {
   const dispatch = useDispatch();
   const shipping = useSelector(state => state.shipping);
-  const { create_pickup_modal } = shipping;
+  const { create_pickup_modal, pickup, orders, loading_label } = shipping;
 
-  // Current date iso date and time
   const date = new Date();
   const latestDate = new Date();
   latestDate.setHours(date.getHours() + 6);
 
   const formatDate = date => {
     const year = date.getFullYear();
-    const month = ("0" + (date.getMonth() + 1)).slice(-2); // Months are 0 based index in JavaScript
+    const month = ("0" + (date.getMonth() + 1)).slice(-2);
     const day = ("0" + date.getDate()).slice(-2);
     const hours = ("0" + date.getHours()).slice(-2);
     const minutes = ("0" + date.getMinutes()).slice(-2);
@@ -28,23 +28,31 @@ const CreatePickupModal = () => {
 
   const [readyTime, setReadyTime] = useState(formatDate(date));
   const [latestTimeAvailable, setLatestTimeAvailable] = useState(formatDate(latestDate));
+  const [selectedRate, setSelectedRate] = useState("");
 
   const handleCreatePickup = () => {
     dispatch(API.createPickup({ readyTime, latestTimeAvailable }));
   };
 
+  const handleConfirmPickup = () => {
+    if (selectedRate) {
+      dispatch(API.confirmPickup({ pickupId: pickup.id, rateId: selectedRate, orders }));
+    }
+  };
+
   return (
     <GLActiionModal
       isOpen={create_pickup_modal}
-      onConfirm={handleCreatePickup}
+      onConfirm={handleConfirmPickup}
       onCancel={() => dispatch(close_create_pickup_modal(false))}
       title={"Create Pickup"}
-      confirmLabel={"Create"}
+      confirmLabel={"Confirm"}
       confirmColor="primary"
       cancelLabel={"Cancel"}
       cancelColor="secondary"
       disableEscapeKeyDown
     >
+      <Loading loading={loading_label} />
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <TextField
@@ -72,6 +80,38 @@ const CreatePickupModal = () => {
             }}
           />
         </Grid>
+        <Grid item xs={12}>
+          <Button variant="contained" color="primary" onClick={handleCreatePickup}>
+            Generate Pickup Rates
+          </Button>
+        </Grid>
+        {orders && (
+          <Grid item xs={12}>
+            <Typography variant="h6" gutterBottom component="div">
+              Packages in Pickup
+            </Typography>
+            <Typography variant="body" gutterBottom component="div">
+              {orders?.map((order, index) => `${order.shipping.first_name} ${order.shipping.last_name}`)}
+            </Typography>
+          </Grid>
+        )}
+        {pickup && pickup.pickup_rates && (
+          <Grid item xs={12}>
+            <Typography variant="h6" gutterBottom component="div">
+              Choose Pickup Rate
+            </Typography>
+            <RadioGroup value={selectedRate} onChange={e => setSelectedRate(e.target.value)}>
+              {pickup.pickup_rates.map((rate, index) => (
+                <FormControlLabel
+                  key={index}
+                  value={rate.id}
+                  control={<Radio />}
+                  label={`${rate.carrier} - ${rate.service} - $${rate.rate}`}
+                />
+              ))}
+            </RadioGroup>
+          </Grid>
+        )}
       </Grid>
     </GLActiionModal>
   );
