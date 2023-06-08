@@ -157,7 +157,7 @@ export default {
         address: homeAddress,
         min_datetime: formattedReadyTime, // use date here
         max_datetime: formattedLatestTimeAvailable, // use date here
-        reference: `${orders.map((order: any) => `${order.shipping.first_name} ${order.shipping.last_name}`)} Orders`,
+        reference: `${orders.map((order: any) => `${order.shipping.first_name} ${order.shipping.last_name}`).join(", ")} Orders`,
         is_account_address: false,
         instructions: "Pick up on front porch please.",
         batch: batch
