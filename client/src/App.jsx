@@ -81,6 +81,7 @@ import { ImagesPage } from "./pages/ImagesPage";
 import LabelCreatorPage from "./pages/LabelCreatorPage/LabelCreatorPage";
 import TrackOrderPage from "./pages/TrackOrderPage/TrackOrderPage";
 import config from "./config";
+import { EditOrderPage } from "./pages/EditOrderPage";
 
 const App = props => {
   const theme_colors = {
@@ -288,6 +289,7 @@ const App = props => {
                 <AdminRoute path="/secure/glow/edit_all_data" component={DatabaseMigrationPage} />
                 <AdminRoute path="/secure/glow/products" component={ProductsPage} />
                 <AdminRoute path="/secure/glow/create_label" component={LabelCreatorPage} />
+                <AdminRoute path="/secure/glow/edit_order/:id" component={EditOrderPage} />
                 <AdminRoute path="/secure/glow/orders" component={OrdersPage} />
                 <AdminRoute path="/secure/glow/users" component={UsersPage} />
                 <AdminRoute path="/secure/glow/paychecks" component={PaychecksPage} />
