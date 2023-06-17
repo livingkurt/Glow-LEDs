@@ -26,6 +26,19 @@ export default {
       res.status(500).send({ error, message: "Error Finding Image" });
     }
   },
+  findByLink_images_c: async (req: any, res: any) => {
+    const { body } = req;
+    try {
+      const image = await image_services.findByLink_images_s(body);
+
+      if (image) {
+        return res.status(200).send(image);
+      }
+      return res.status(404).send({ message: "Image Not Found" });
+    } catch (error) {
+      res.status(500).send({ error, message: "Error Finding Image" });
+    }
+  },
   upload_images_c: async (req: any, res: any) => {
     const { body, files } = req;
     try {

@@ -77,6 +77,18 @@ export const detailsImage = createAsyncThunk("images/detailsImage", async (id: s
   }
 });
 
+export const getImagesByLink = createAsyncThunk("images/getImagesByLink", async (link: string, thunkApi: any) => {
+  try {
+    const { data } = await axios.put(`/api/images/link`, { link });
+    return data;
+  } catch (error) {
+    Covy().showSnackbar({
+      message: `Error: ${error}`,
+      severity: "error"
+    });
+  }
+});
+
 export const deleteImage = createAsyncThunk("images/deleteImage", async (pathname, thunkApi: any) => {
   try {
     const { data } = await axios.delete("/api/images/" + pathname);

@@ -101,10 +101,23 @@ const imagePage = createSlice({
     },
     [API.detailsImage.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.image = { ...payload, paid_at: payload.paid_at ? format_date(payload.paid_at) : "" };
+      state.image = payload;
       state.message = "Image Found";
     },
     [API.detailsImage.rejected as any]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.error = payload.error;
+      state.message = payload.message;
+    },
+    [API.getImagesByLink.pending as any]: (state: any, { payload }: any) => {
+      state.loading = true;
+    },
+    [API.getImagesByLink.fulfilled as any]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.image = payload;
+      state.message = "Image Found";
+    },
+    [API.getImagesByLink.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;

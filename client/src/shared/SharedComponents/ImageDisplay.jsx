@@ -1,7 +1,8 @@
 import { Box, Stack, IconButton, Typography } from "@mui/material";
 import { Delete, Edit } from "@mui/icons-material";
+import { FileCopy } from "@mui/icons-material";
+
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { open_edit_product_modal } from "../../slices/productSlice";
 
 const ImageDisplay = ({ images, onChange }) => {
   const remove_image = image_index => {
@@ -17,6 +18,9 @@ const ImageDisplay = ({ images, onChange }) => {
     const [removed] = newImages.splice(startIndex, 1);
     newImages.splice(endIndex, 0, removed);
     onChange(newImages);
+  };
+  const copyToClipboard = link => {
+    navigator.clipboard.writeText(link);
   };
 
   return (
@@ -61,7 +65,10 @@ const ImageDisplay = ({ images, onChange }) => {
                           src={picture.link}
                         />
                         <Typography style={{ color: "white" }}>{picture.link}</Typography>
-                        <Stack direction="column" justifyContent="flex-end">
+                        <Stack direction="row" justifyContent="flex-end">
+                          <IconButton onClick={() => copyToClipboard(picture.link)} aria-label="Copy">
+                            <FileCopy style={{ color: "white", fontSize: "20px" }} />
+                          </IconButton>
                           <IconButton onClick={() => remove_image(index)} aria-label="Delete">
                             <Delete style={{ color: "white", fontSize: "20px" }} />
                           </IconButton>

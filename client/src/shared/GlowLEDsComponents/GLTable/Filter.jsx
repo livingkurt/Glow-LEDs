@@ -2,7 +2,6 @@
 import React from "react";
 
 const Filter = ({ filterHandler, filter_options, state, title, width }) => {
-  console.log({ filterHandler, filter_options, state, title, width });
   return (
     <div className="ai-c ml-1rem mh-1rem">
       <div className={`custom-select ${width && "w-100per"}`}>

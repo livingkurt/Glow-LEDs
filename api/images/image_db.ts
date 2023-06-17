@@ -15,8 +15,25 @@ export default {
     }
   },
   findById_images_db: async (id: string) => {
+    let query = {};
+
     try {
-      return await Image.findOne({ _id: id });
+      if (id && id.match(/^[0-9a-fA-F]{24}$/)) {
+        query = { _id: id };
+      } else {
+        query = { link: id };
+      }
+      console.log({ query });
+      return await Image.findOne(query);
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  findByLink_images_db: async (link: string) => {
+    try {
+      return await Image.findOne({ link: link });
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

@@ -35,6 +35,15 @@ export default {
       }
     }
   },
+  findByLink_images_s: async (body: any) => {
+    try {
+      return await image_db.findByLink_images_db(body.link);
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
   upload_images_s: async (body: any, files: any) => {
     const { albumName } = body;
     const deleteFile = promisify(fs.unlink);

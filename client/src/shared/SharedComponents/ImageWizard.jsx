@@ -2,7 +2,7 @@ import { Button, TextField, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import ImageUploader from "./ImageUploader";
 import ImageDisplay from "./ImageDisplay";
-import { detailsImage } from "../../api";
+import * as API from "../../api";
 import { useDispatch, useSelector } from "react-redux";
 
 const ImageWizard = ({ fieldData, fieldState, onChange, fieldName }) => {
@@ -12,7 +12,7 @@ const ImageWizard = ({ fieldData, fieldState, onChange, fieldName }) => {
   const [text, setText] = useState("");
 
   const handleSaveId = () => {
-    dispatch(detailsImage(text));
+    dispatch(API.getImagesByLink(text));
   };
 
   useEffect(() => {
