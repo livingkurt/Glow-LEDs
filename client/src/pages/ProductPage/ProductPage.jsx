@@ -118,8 +118,8 @@ const ProductPage = props => {
   const update_universal_state = item => {
     set_previous_price(0);
     if (item) {
-      set_image(item.images && item.images[0]);
-      set_images(item.images);
+      set_image(item.images_object && item.images_object[0].link);
+      set_images(item.images_object);
 
       if (item.price > 0) {
         if (current_user?.isWholesaler) {
@@ -352,9 +352,9 @@ const ProductPage = props => {
       set_count_in_stock(secondary.count_in_stock);
     }
     if (secondary.subcategory !== "batteries") {
-      if (secondary.images.length > 0) {
-        set_images(secondary.images);
-        set_image(secondary.images && secondary.images[0]);
+      if (secondary.images_object.length > 0) {
+        set_images(secondary.images_object);
+        set_image(secondary.images_object && secondary.images_object[0]?.link);
       }
     }
   };
@@ -468,7 +468,7 @@ const ProductPage = props => {
       name,
       size,
       color: size !== "1 Skin" && color,
-      display_image: image ? image : images[0],
+      display_image: image ? image : images[0]?.link,
       secondary_image: secondary_image ? secondary_image : "",
       price,
       preorder,
@@ -552,9 +552,9 @@ const ProductPage = props => {
     // }
     set_color(option.color);
     set_color_code(option.color_code);
-    if (option.images && option.images[0]) {
-      set_images(option.images);
-      set_image(option.images[0]);
+    if (option.images_object && option.images_object[0]) {
+      set_images(option.images_object);
+      set_image(option.images_object[0]);
     }
     set_color_product(option._id);
     set_color_product_object(option);
@@ -589,13 +589,13 @@ const ProductPage = props => {
     // }
     set_secondary_color(option.color);
     set_secondary_color_code(option.color_code);
-    if (option.images && option.images[0]) {
+    if (option.images_object && option.images_object[0]) {
       if (product.name === "CLOZD Omniskinz Sleds") {
-        set_image(option.images[0]);
-        set_images(option.images);
+        set_image(option.images_object[0]);
+        set_images(option.images_object);
       } else {
-        set_secondary_image(option.images[0]);
-        set_secondary_images(option.images);
+        set_secondary_image(option.images_object[0]);
+        set_secondary_images(option.images_object);
       }
     }
     set_secondary_color_product(option._id);
@@ -650,9 +650,9 @@ const ProductPage = props => {
     }
 
     if (option.subcategory !== "gloves") {
-      if (option.images && option.images[0]) {
-        set_images(option.images);
-        set_image(option.images[0]);
+      if (option.images_object && option.images_object[0]) {
+        set_images(option.images_object);
+        set_image(option.images_object[0]);
       }
       if (option.description) {
         set_description(option.description);
@@ -681,9 +681,9 @@ const ProductPage = props => {
   const update_secondary = e => {
     const secondary = JSON.parse(e.target.value);
     if (secondary.subcategory !== "coin") {
-      if (secondary.images && secondary.images[0]) {
-        set_images(secondary.images);
-        set_image(secondary.images[0]);
+      if (secondary.images_object && secondary.images_object[0]) {
+        set_images(secondary.images_object);
+        set_image(secondary.images_object[0]);
       }
       if (product.name !== "Diffuser Caps + Adapters Starter Kit V4" && product.name !== "CLOZD Omniskinz Sleds") {
         set_option_products(secondary.option_products);

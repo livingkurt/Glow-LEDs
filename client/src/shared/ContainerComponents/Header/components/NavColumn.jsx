@@ -15,7 +15,7 @@ const NavColumn = ({ columns, show_hide, chip_name, filterHandler, chips_list })
             </GLButton>
           </Link>
           <hr className="w-95per m-0px" />
-          {chips_list && index === 0 && (
+          {chips_list && column.name === "Featured" && (
             <Filter title="Shop By Chip" width="100per" state={chip_name} filterHandler={filterHandler} filter_options={chips_list} />
           )}
           {column.rows.map(row => (

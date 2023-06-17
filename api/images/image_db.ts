@@ -23,7 +23,6 @@ export default {
       } else {
         query = { link: id };
       }
-      console.log({ query });
       return await Image.findOne(query);
     } catch (error) {
       if (error instanceof Error) {

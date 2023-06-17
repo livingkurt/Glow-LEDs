@@ -1,38 +1,39 @@
-import React from 'react';
+import React from "react";
 
-const PictureChooser = (props) => {
-	const classes = 'details-image ' + props.show_hide;
+const PictureChooser = ({ product, className, show_hide }) => {
+  const classes = "details-image " + show_hide;
 
-	const change_image = (e, index) => {
-		if (index >= props.images.length) {
-			const expandedSecondaryImg = document.getElementById('expandedSecondaryImg');
-			expandedSecondaryImg.src = e.target.currentSrc;
-			expandedSecondaryImg.parentElement.style.display = 'block';
-		} else if (index < props.images.length) {
-			const expandImg = document.getElementById('expandedImg');
-			expandImg.src = e.target.src;
-			expandImg.parentElement.style.display = 'block';
-		}
-	};
+  const change_image = (e, index) => {
+    if (index >= product.images.length) {
+      const expandedSecondaryImg = document.getElementById("expandedSecondaryImg");
+      expandedSecondaryImg.src = e.target.currentSrc;
+      expandedSecondaryImg.parentElement.style.display = "block";
+    } else if (index < product.images.length) {
+      const expandImg = document.getElementById("expandedImg");
+      expandImg.src = e.target.src;
+      expandImg.parentElement.style.display = "block";
+    }
+  };
+  console.log({ product });
 
-	return (
-		<div className={`details-image ${props.className}`}>
-			{props.images &&
-				[ ...props.images, ...props.secondary_images ].map((image, index) => {
-					return (
-						<div className="picture-chooser-container" key={index}>
-							<img
-								src={image}
-								alt="PictureChooser"
-								title="PictureChooser"
-								style={{ width: '100%' }}
-								onClick={(e) => change_image(e, index)}
-							/>
-						</div>
-					);
-				})}
-		</div>
-	);
+  return (
+    <div className={`details-image ${className}`}>
+      {product.images_object &&
+        [...product.images_object, ...product.secondary_images_object].map((image, index) => {
+          return (
+            <div className="picture-chooser-container" key={index}>
+              <img
+                src={image.link}
+                alt="PictureChooser"
+                title="PictureChooser"
+                style={{ width: "100%" }}
+                onClick={e => change_image(e, index)}
+              />
+            </div>
+          );
+        })}
+    </div>
+  );
 };
 
 export default PictureChooser;
