@@ -554,7 +554,7 @@ const ProductPage = props => {
     set_color_code(option.color_code);
     if (option.images_object && option.images_object[0]) {
       set_images(option.images_object);
-      set_image(option.images_object[0]);
+      set_image(option.images_object[0].link);
     }
     set_color_product(option._id);
     set_color_product_object(option);
@@ -591,10 +591,10 @@ const ProductPage = props => {
     set_secondary_color_code(option.color_code);
     if (option.images_object && option.images_object[0]) {
       if (product.name === "CLOZD Omniskinz Sleds") {
-        set_image(option.images_object[0]);
+        set_image(option.images_object[0].link);
         set_images(option.images_object);
       } else {
-        set_secondary_image(option.images_object[0]);
+        set_secondary_image(option.images_object[0].link);
         set_secondary_images(option.images_object);
       }
     }
@@ -652,7 +652,7 @@ const ProductPage = props => {
     if (option.subcategory !== "gloves") {
       if (option.images_object && option.images_object[0]) {
         set_images(option.images_object);
-        set_image(option.images_object[0]);
+        set_image(option.images_object[0].link);
       }
       if (option.description) {
         set_description(option.description);
@@ -683,7 +683,7 @@ const ProductPage = props => {
     if (secondary.subcategory !== "coin") {
       if (secondary.images_object && secondary.images_object[0]) {
         set_images(secondary.images_object);
-        set_image(secondary.images_object[0]);
+        set_image(secondary.images_object[0].link);
       }
       if (product.name !== "Diffuser Caps + Adapters Starter Kit V4" && product.name !== "CLOZD Omniskinz Sleds") {
         set_option_products(secondary.option_products);
