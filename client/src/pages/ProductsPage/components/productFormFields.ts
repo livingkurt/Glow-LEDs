@@ -5,12 +5,14 @@ export const productFormFields = ({
   categorys,
   setState,
   product,
-  onEdit
+  onEdit,
+  chips
 }: {
   products: any;
   users: any;
   // images: any;
   categorys: any;
+  chips: any;
   setState: any;
   product: any;
   onEdit: any;
@@ -323,6 +325,13 @@ export const productFormFields = ({
       labelProp: "link",
       album: `${product.name} Secondary Images`,
       onUpload: (images: any) => setState(images, "secondary_images_object")
+    },
+    chips: {
+      type: "autocomplete_multiple",
+      label: "Chips",
+      options: chips,
+      labelProp: "name",
+      onEdit: (chip: any) => onEdit(chip)
     },
     reviews: {
       type: "array_of_objects",

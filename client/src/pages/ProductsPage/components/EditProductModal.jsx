@@ -21,6 +21,8 @@ const EditProductModal = () => {
   // const { images, loading: loading_images } = imagePage;
   const categoryPage = useSelector(state => state.categorys.categoryPage);
   const { categorys, loading: loading_categorys } = categoryPage;
+  const chipPage = useSelector(state => state.chips);
+  const { chips, loading: loading_chips } = chipPage;
 
   useEffect(() => {
     let clean = true;
@@ -39,6 +41,7 @@ const EditProductModal = () => {
     products,
     users,
     categorys,
+    chips,
     setState: (value, key) => dispatch(set_product({ [key]: [...product[key], ...value] })),
     onEdit: product => dispatch(open_edit_product_modal(product)),
     product

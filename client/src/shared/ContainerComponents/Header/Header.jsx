@@ -185,7 +185,8 @@ const Header = props => {
   // });
 
   const chipPage = useSelector(state => state.chips);
-  const { chips: chips_list } = chipPage;
+  const { chips: chips_list, loading: loading_chips } = chipPage;
+  console.log({ chips_list });
 
   const [chip_name, set_chip_name] = useState();
 
@@ -275,7 +276,13 @@ const Header = props => {
                     {item.columns && (
                       <div className="hover_fade_in nav-dropdown">
                         <div className="jc-c">
-                          <NavColumn columns={item.columns} show_hide={show_hide} />
+                          <NavColumn
+                            columns={item.columns}
+                            show_hide={show_hide}
+                            chip_name={chip_name}
+                            filterHandler={filterHandler}
+                            chips_list={chips_list}
+                          />
                           <DrawerItem columns={item.columns} show_hide_nested={show_hide_nested} />
                           <SubDrawerItem columns={item.columns} show_hide_nested={show_hide_nested} />
                           <NavColumn columns={item.otherColumns} />

@@ -69,11 +69,22 @@ const ProductsPage = () => {
                 <i className="fas fa-mountain" />
               </GLButton>
             </Link>
-            <Link to={"/secure/glow/editproduct/" + row.pathname + "/" + true}>
-              <GLButton variant="icon" aria-label="Use as Template">
-                <i className="fas fa-clone" />
-              </GLButton>
-            </Link>
+            <GLButton
+              variant="icon"
+              aria-label="Use as Template"
+              onClick={() =>
+                dispatch(
+                  API.saveProduct({
+                    ...row,
+                    _id: null,
+                    name: `${row.name} Copy`,
+                    pathname: `${row.pathname}_copy`
+                  })
+                )
+              }
+            >
+              <i className="fas fa-clone" />
+            </GLButton>
             <GLButton variant="icon" onClick={() => dispatch(API.deleteProduct(row.pathname))} aria-label="Delete">
               <i className="fas fa-trash-alt" />
             </GLButton>

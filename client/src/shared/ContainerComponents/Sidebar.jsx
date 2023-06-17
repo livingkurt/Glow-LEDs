@@ -499,18 +499,14 @@ const Sidebar = props => {
                 </Link>
               )}
             </ul>
-            {/* <Link to="/collections/all/products/shop_by_chip">
-              <GLButton
-                className="sidebar-btn secondary"
-                style={{ padding: "7px 10px 7px 20px" }}
-                onClick={closeMenu}
-              >
+            <Link to="/collections/all/products/shop_by_chip">
+              <GLButton className="sidebar-btn secondary" style={{ padding: "7px 10px 7px 20px" }} onClick={closeMenu}>
                 Shop By Chip
               </GLButton>
-            </Link> */}
-            {/* <div style={{ marginLeft: -"5px" }} className="sidebar-btn secondary pl-0px">
+            </Link>
+            <div style={{ marginLeft: -"5px" }} className="sidebar-btn secondary pl-0px">
               <Filter title="Shop By Chip" width="100per" state={chip_name} filterHandler={filterHandler} filter_options={chips_list} />
-            </div> */}
+            </div>
             <Link to="/collections/all/products/category/new_releases">
               <GLButton className="sidebar-btn secondary" style={{ padding: "7px 10px 7px 20px" }} onClick={closeMenu}>
                 New Releases! 🆕
