@@ -5,6 +5,7 @@ import { API_Emails } from "../../../utils";
 import { toCapitalize } from "../../../utils/helper_functions";
 import { set_loading_label } from "../../../slices/orderSlice";
 import config from "../../../config";
+import * as API from "../../../api";
 
 const MetaDataDisplay = ({ row }) => {
   const dispatch = useDispatch();
@@ -26,6 +27,7 @@ const MetaDataDisplay = ({ row }) => {
       status,
       message_to_user
     );
+    dispatch(API.saveOrder({ ...row, isUpdated: false }));
     dispatch(set_loading_label(false));
   };
 

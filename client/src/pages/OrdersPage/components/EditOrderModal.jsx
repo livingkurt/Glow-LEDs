@@ -98,7 +98,7 @@ const EditOrderModal = () => {
       <GLModal
         isOpen={edit_order_modal}
         onConfirm={() => {
-          dispatch(API.saveOrder({ ...order }));
+          dispatch(API.saveOrder({ ...order, isUpdated: true, updatedAt: new Date() }));
         }}
         onCancel={() => {
           dispatch(set_edit_order_modal(false));

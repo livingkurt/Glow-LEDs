@@ -135,6 +135,8 @@ const orderSchema = new mongoose.Schema(
     pickupAt: { type: Date },
     isReassured: { type: Boolean, default: false },
     reassuredAt: { type: Date },
+    isUpdated: { type: Boolean, default: false },
+    updatedAt: { type: Date },
     isManufactured: { type: Boolean, default: false },
     manufacturedAt: { type: Date },
     isPackaged: { type: Boolean, default: false },

@@ -7,6 +7,7 @@ import { Printd } from "printd";
 export const orderColors = [
   { name: "Not Paid", color: tableColors.inactive },
   { name: "Paid", color: tableColors.active },
+  { name: "Updated", color: tableColors.alt_color_5 },
   { name: "Label Created", color: tableColors.alt_color_4 },
   { name: "Manufactured", color: tableColors.alt_color_1 },
   { name: "Packaged", color: tableColors.alt_color_2 },
@@ -23,6 +24,9 @@ export const determineOrderColors = (order: any) => {
   } else {
     if (order.isPaid) {
       result = tableColors.active;
+    }
+    if (order.isUpdated) {
+      result = tableColors.alt_color_5;
     }
     if (order.shipping.international) {
       result = tableColors.alt_color_3;

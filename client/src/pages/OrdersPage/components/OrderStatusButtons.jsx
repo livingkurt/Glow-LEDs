@@ -79,6 +79,9 @@ const OrderStatusButtons = ({ order }) => {
       <GLButton variant="secondary" className="mv-5px w-100per" onClick={() => updateOrder("paused")}>
         {order.isPaused ? "Unset" : "Set"} to Paused
       </GLButton>
+      <GLButton variant="secondary" className="mv-5px w-100per" onClick={() => updateOrder("updated")}>
+        {order.isUpdated ? "Unset" : "Set"} to Updated
+      </GLButton>
       <GLButton variant="primary" className="mv-5px w-100per" onClick={() => updateOrder("manufactured")}>
         {order.isManufactured ? "Unset" : "Set"} to Manufactured
       </GLButton>
