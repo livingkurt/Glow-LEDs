@@ -9,6 +9,7 @@ import config from "../../../config";
 const MetaDataDisplay = ({ row }) => {
   const dispatch = useDispatch();
   const send_order_status_email = async (status, message_to_user) => {
+    dispatch(set_loading_label(true));
     await API_Emails.send_order_status_email(
       row,
       status === "manufactured" ? "Your Order has been Crafted!" : "Your Order has been " + toCapitalize(status) + "!",
@@ -25,6 +26,7 @@ const MetaDataDisplay = ({ row }) => {
       status,
       message_to_user
     );
+    dispatch(set_loading_label(false));
   };
 
   const send_order_email = async () => {
