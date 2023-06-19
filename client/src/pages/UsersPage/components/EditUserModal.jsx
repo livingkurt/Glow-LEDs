@@ -21,11 +21,15 @@ const EditUserModal = () => {
   const wholesalerPage = useSelector(state => state.wholesalers.wholesalerPage);
   const { wholesalers, loading: loading_wholesalers } = wholesalerPage;
 
+  const promoPage = useSelector(state => state.promos.promoPage);
+  const { promos, loading: loading_promos } = promoPage;
+
   useEffect(() => {
     let clean = true;
     if (clean) {
       dispatch(API.listAffiliates({ active: true, limit: 0, page: 0 }));
       dispatch(API.listWholesalers());
+      dispatch(API.listPromos({}));
     }
     return () => {
       clean = false;
@@ -84,6 +88,13 @@ const EditUserModal = () => {
       options: affiliates,
       labelProp: "affiliate",
       getOptionLabel: option => option.artist_name,
+      permissions: ["admin"]
+    },
+    employee_code: {
+      type: "autocomplete_single",
+      label: "Employee Code",
+      options: promos,
+      labelProp: "promo_code",
       permissions: ["admin"]
     },
     email_subscription: {

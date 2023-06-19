@@ -186,7 +186,6 @@ const Header = props => {
 
   const chipPage = useSelector(state => state.chips);
   const { chips: chips_list, loading: loading_chips } = chipPage;
-  console.log({ chips_list });
 
   const [chip_name, set_chip_name] = useState();
 

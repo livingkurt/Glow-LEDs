@@ -16,17 +16,17 @@ export const promoFormFields = ({
   return {
     affiliate: {
       type: "autocomplete_single",
-      label: "Affiliate",
+      label: "Affiliates",
       options: affiliates,
-      labelProp: "name",
-      getOptionLabel: (option: any) => option.name
+      labelProp: "affiliate",
+      getOptionLabel: (option: any) => option.artist_name
     },
     user: {
       type: "autocomplete_single",
       label: "User",
-      options: users,
+      options: users.filter((user: any) => user.first_name && user.last_name),
       labelProp: "user",
-      getOptionLabel: (option: any) => (option ? `${option.first_name} ${option.last_name}` : "")
+      getOptionLabel: (option: any) => `${option.first_name} ${option.last_name}`
     },
     promo_code: {
       type: "text",
@@ -122,11 +122,6 @@ export const promoFormFields = ({
       type: "checkbox",
       label: "Active",
       default: true
-    },
-    deleted: {
-      type: "checkbox",
-      label: "Deleted",
-      default: false
     }
   };
 };

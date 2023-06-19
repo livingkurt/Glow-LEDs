@@ -31,6 +31,7 @@ const userSchema = new mongoose.Schema(
     weekly_wage: { type: Number },
     palettes: [{ type: mongoose.Schema.Types.ObjectId, ref: "Palette" }],
     affiliate: { type: mongoose.Schema.Types.ObjectId, ref: "Affiliate" },
+    employee_code: { type: mongoose.Schema.Types.ObjectId, ref: "Promo" },
     email_subscription: { type: Boolean, default: true },
     guest: { type: Boolean },
     wholesaler: { type: mongoose.Schema.Types.ObjectId, ref: "Wholesaler" },

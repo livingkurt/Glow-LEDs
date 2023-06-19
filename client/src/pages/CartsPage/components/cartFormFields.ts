@@ -3,7 +3,7 @@ export const cartFormFields = ({ products, users }: { products: any; users: any 
     user: {
       type: "autocomplete_single",
       label: "Users",
-      options: users,
+      options: users.filter((user: any) => user.first_name && user.last_name),
       labelProp: "user",
       getOptionLabel: (option: any) => `${option.first_name} ${option.last_name}`
     },

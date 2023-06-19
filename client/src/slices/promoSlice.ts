@@ -5,14 +5,28 @@ import * as API from "../api";
 import { format_date } from "../utils/helper_functions";
 
 const promo = {
-  id: "",
-  affiliate: "",
-  team: "",
-  amount: 0,
-  venmo: "",
-  paid: "",
-  reciept: "",
-  paid_at: ""
+  affiliate: null,
+  user: null,
+  promo_code: "",
+  admin_only: false,
+  affiliate_only: false,
+  sponsor_only: false,
+  excluded_categories: [],
+  included_categories: [],
+  included_products: [],
+  excluded_products: [],
+  percentage_off: 0,
+  free_shipping: false,
+  exclude: false,
+  include: false,
+  amount_off: 0,
+  single_use: false,
+  time_limit: 0,
+  start_date: "",
+  end_date: "",
+  used_once: false,
+  minimum_total: 0,
+  active: false
 };
 
 const promoPage = createSlice({
