@@ -158,6 +158,15 @@ export default {
         {
           $match: { deleted: false, hidden: false }
         },
+        // Perform a $lookup (join) here
+        {
+          $lookup: {
+            from: "images", // replace with your collection name where Image data is stored
+            localField: "images_object", // this is your field in the product collection which corresponds to _id in Image collection
+            foreignField: "_id", // this is usually _id in the related collection
+            as: "images_object" // output alias
+          }
+        },
         {
           $group: {
             _id: "$category",
@@ -184,11 +193,13 @@ export default {
       ]).sort({ _id: 1 });
       return response;
     } catch (error) {
+      console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }
     }
   },
+
   findById_products_db: async (id: string) => {
     let query = {};
 

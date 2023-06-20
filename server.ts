@@ -21,6 +21,14 @@ const bodyParser = require("body-parser");
 // const express = require("express");
 const fs = require("fs");
 
+const Bugsnag = require("@bugsnag/js");
+const BugsnagPluginExpress = require("@bugsnag/plugin-express");
+
+Bugsnag.start({
+  apiKey: config.BUGSNAG_KEY,
+  plugins: [BugsnagPluginExpress]
+});
+
 // // The "main" function
 // async function start() {
 //   // Trigger the download and installation of the core-agent
@@ -58,6 +66,9 @@ app.all("*", function (req: any, res: any, next: any) {
 });
 // app.use(allowCrossDomain);
 
+const bugsnagMiddleware = Bugsnag.getPlugin("express");
+app.use(bugsnagMiddleware.requestHandler);
+
 app.use(cors({ origin: ["http://localhost:3000", "https://livingkurt.github.io/"] }));
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb" }));
@@ -86,6 +97,8 @@ if (config.NODE_ENV === "production") {
   });
 }
 
+app.use(bugsnagMiddleware.errorHandler);
+
 app.listen(config.PORT, () => {
   console.log(`Server listening on port ${config.PORT}`);
 });
@@ -99,7 +112,16 @@ app.post("/api/gcode", async (req: any, res: any) => {
 
       res.send("Gcode Continous File Created");
     });
-  } catch (err) {}
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+  }
+});
+
+app.get("/api/bugsnag-test", function (req, res) {
+  Bugsnag.notify(new Error("Test error"));
+  res.send("Test error sent to Bugsnag");
 });
 
 //   // Start express

@@ -228,7 +228,7 @@ export default {
       const filter = { name: { $in: names }, deleted: false, hidden: false };
       const limit = "0";
       const page = "1";
-      const products = await product_db.findAll_products_db(filter, sort, limit, page);
+      const products = await product_db.findAllGrid_products_db(filter, sort, limit, page);
       const compareFn = (a: any, b: any) => {
         const aIndex = occurences.findIndex((x: any) => x.name === a.name);
         const bIndex = occurences.findIndex((x: any) => x.name === b.name);
@@ -274,7 +274,7 @@ export default {
       const filter = { name: { $in: names }, deleted: false, hidden: false };
       const limit = "0";
       const page = "1";
-      return await product_db.findAll_products_db(filter, sort, limit, page);
+      return await product_db.findAllGrid_products_db(filter, sort, limit, page);
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

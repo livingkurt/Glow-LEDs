@@ -48,7 +48,7 @@ const LazyImage = ({ src, alt, size, className, border }) => {
             entries => {
               entries.forEach(entry => {
                 if (!didCancel && (entry.intersectionRatio > 0 || entry.isIntersecting)) {
-                  setImageSrc(src);
+                  setImageSrc(src || placeHolder); // Here we set imageSrc to src if it's defined, otherwise set it to placeHolder
                   observer.unobserve(imageRef);
                 }
               });
@@ -61,7 +61,7 @@ const LazyImage = ({ src, alt, size, className, border }) => {
           observer.observe(imageRef);
         } else {
           // Old browsers fallback
-          setImageSrc(src);
+          setImageSrc(src || placeHolder); // Same change here
         }
       }
       return () => {

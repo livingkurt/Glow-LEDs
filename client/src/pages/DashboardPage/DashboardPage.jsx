@@ -57,8 +57,6 @@ const DashboardPage = () => {
   // const range_gloves = useGetRangeGlovesQuery({ start_date, end_date });
   const currentStock = useGetCurrentStockQuery();
 
-  console.log({ sponsorCheckinStatus });
-
   return (
     <div className="main_container p-20px">
       <Helmet>

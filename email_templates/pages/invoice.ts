@@ -2,7 +2,6 @@ import config from "../../config";
 import { email_sale_price_switch, determine_product_name, determin_card_logo_images, format_date } from "../../util";
 
 export default ({ order, isSponsor }: any): string => {
-  console.log({ order, isSponsor });
   return `<body id="invoice" style="background-color:transparent;zoom:100%; font-family: Helvetica; color: black;">
   <div
     style="display:flex;flex-direction:column;margin:40px;margin-top:75px;font-size:25px;line-height:35px;color:black;background-color:white">

@@ -14,7 +14,6 @@ const PictureChooser = ({ product, className, show_hide }) => {
       expandImg.parentElement.style.display = "block";
     }
   };
-  console.log({ product });
 
   return (
     <div className={`details-image ${className}`}>
