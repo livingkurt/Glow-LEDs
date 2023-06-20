@@ -60,6 +60,8 @@ export async function handleTokenRefresh(forceRefresh = false) {
   if (isTokenExpired(accessToken) || forceRefresh) {
     const newAccessToken = await refreshAccessToken(refreshTokenValue);
     return newAccessToken || accessToken;
+  } else {
+    setCurrentUser(accessToken);
   }
 
   return accessToken;

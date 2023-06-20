@@ -81,9 +81,18 @@ import { ImagesPage } from "./pages/ImagesPage";
 import LabelCreatorPage from "./pages/LabelCreatorPage/LabelCreatorPage";
 import TrackOrderPage from "./pages/TrackOrderPage/TrackOrderPage";
 import config from "./config";
+import jwt_decode from "jwt-decode";
 import { EditOrderPage } from "./pages/EditOrderPage";
+import { set_current_user } from "./slices/userSlice";
+import { useDispatch } from "react-redux";
+import { handleTokenRefresh } from "./api/axiosInstance";
 
-const App = props => {
+const App = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    handleTokenRefresh();
+  }, [dispatch]);
+
   const theme_colors = {
     footer: "#333333",
     header: "#333333",
