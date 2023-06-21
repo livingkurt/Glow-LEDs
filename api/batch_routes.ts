@@ -15,6 +15,7 @@ import { Filament } from "./filaments";
 import { Image } from "./images";
 import { Category } from "./categorys";
 import { isAdmin, isAuth } from "../middlewares/authMiddleware";
+import { Cart } from "./carts";
 
 const router = express.Router();
 
@@ -1552,6 +1553,29 @@ router.route("/create_category_records_and_reference_them_in_product").put(async
   }
 
   res.send(products);
+});
+router.route("/delete_old_carts").put(async (req: any, res: any) => {
+  try {
+    // Get the ids of the most recent cart for each user
+    const mostRecentCarts = await Cart.aggregate([
+      { $sort: { createdAt: -1 } },
+      { $group: { _id: "$user", cart: { $first: "$_id" } } },
+      { $match: { _id: { $ne: null } } } // Exclude carts with no user
+    ]);
+
+    const mostRecentCartIds = mostRecentCarts.map(c => c.cart);
+    console.log({ mostRecentCartIds });
+
+    // Delete all carts that are not in the list of most recent cart ids
+    // And carts with no user
+    const result = await Cart.deleteMany({
+      $or: [{ _id: { $nin: mostRecentCartIds } }, { user: null }]
+    });
+
+    console.log(`Deleted ${result.deletedCount} extra carts.`);
+  } catch (err) {
+    console.error("An error occurred:", err);
+  }
 });
 
 export default router;

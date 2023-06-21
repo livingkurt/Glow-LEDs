@@ -213,13 +213,17 @@ export default {
         const data = await cart_db.findById_carts_db(id);
         const cartItems = [...data.cartItems];
         cartItems.splice(item_index, 1); // 2nd parameter means remove one item only
+        console.log({ cartItems });
         if (cartItems.length === 0) {
+          console.log("Remove Cart");
           await cart_db.remove_carts_db(id);
           return { message: "Cart Deleted" };
         } else {
+          console.log("Update Cart");
           await cart_db.update_carts_db(id, {
             cartItems: cartItems
           });
+          console.log("Send New Cart");
           const new_cart = await cart_db.findById_carts_db(id);
           return new_cart;
         }

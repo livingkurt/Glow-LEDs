@@ -22,7 +22,7 @@ export default {
   },
   findById_carts_db: async (id: string) => {
     try {
-      return await Cart.findOne({ _id: id, active: true }).populate("user");
+      return await Cart.findOne({ _id: id, active: true, deleted: false }).populate("user");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -31,7 +31,7 @@ export default {
   },
   findByUser_carts_db: async (user_id: string) => {
     try {
-      return await Cart.findOne({ user: user_id, active: true }).populate("user");
+      return await Cart.findOne({ user: user_id, active: true, , deleted: false }).populate("user");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

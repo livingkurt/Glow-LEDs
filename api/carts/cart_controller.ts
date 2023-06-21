@@ -126,7 +126,8 @@ export default {
   empty_carts_c: async (req: any, res: any) => {
     const { params } = req;
     try {
-      const cart = await cart_services.empty_carts_s(params);
+      // const cart = await cart_services.empty_carts_s(params);
+      const cart = await cart_services.remove_carts_s(params);
       if (cart) {
         return res.status(201).send(cart);
       }
