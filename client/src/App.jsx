@@ -84,14 +84,23 @@ import config from "./config";
 import jwt_decode from "jwt-decode";
 import { EditOrderPage } from "./pages/EditOrderPage";
 import { set_current_user } from "./slices/userSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { handleTokenRefresh } from "./api/axiosInstance";
+import * as API from "./api";
 
 const App = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     handleTokenRefresh();
   }, [dispatch]);
+
+  const userPage = useSelector(state => state.users.userPage);
+  const { current_user } = userPage;
+  useEffect(() => {
+    if (current_user._id) {
+      dispatch(API.getCurrentUserCart(current_user._id));
+    }
+  }, [dispatch, current_user._id]);
 
   const theme_colors = {
     footer: "#333333",

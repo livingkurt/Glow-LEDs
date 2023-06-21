@@ -236,9 +236,11 @@ const userPage = createSlice({
       state.loading = true;
     },
     [API.logoutUser.fulfilled as any]: (state: any, { payload }: any) => {
+      const { my_cart } = payload;
       localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");
       setAuthToken(false);
+      localStorage.setItem("my_cart", JSON.stringify(my_cart));
       state.current_user = {};
     },
     [API.logoutUser.rejected as any]: (state: any, { payload }: any) => {

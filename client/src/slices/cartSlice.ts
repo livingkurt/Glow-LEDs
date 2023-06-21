@@ -133,10 +133,13 @@ const cartPage = createSlice({
       state.loading = true;
     },
     [API.addToCart.fulfilled as any]: (state: any, { payload }: any) => {
-      const { data, type } = payload;
+      const { data, type, current_user } = payload;
       if (type === "add_to_cart") {
         state.my_cart = data;
-        localStorage.setItem("my_cart", JSON.stringify(data));
+        // Only update local storage if the user is not logged in
+        if (!current_user) {
+          localStorage.setItem("my_cart", JSON.stringify(data));
+        }
       }
       if (type === "edit_cart") {
         state.cart = data;
@@ -146,6 +149,7 @@ const cartPage = createSlice({
       state.edit_cart_modal = false;
       state.loading = false;
     },
+
     [API.addToCart.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.error = payload.error;
@@ -206,6 +210,21 @@ const cartPage = createSlice({
     [API.emptyCart.fulfilled as any]: (state: any, { payload }: any) => {
       localStorage.removeItem("my_cart");
       state.my_cart = { cartItems: [] };
+    },
+    [API.getCurrentUserCart.pending as any]: (state: any, { payload }: any) => {
+      state.loading = true;
+    },
+    [API.getCurrentUserCart.fulfilled as any]: (state: any, { payload }: any) => {
+      if (payload !== state.my_cart) {
+        state.loading = false;
+        state.my_cart = payload;
+        state.message = "User Cart Found";
+      }
+    },
+    [API.getCurrentUserCart.rejected as any]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.error = payload.error;
+      state.message = payload.message;
     }
   }
 });
@@ -220,7 +239,6 @@ export const {
   open_create_cart_modal,
   open_cart_modal,
   close_cart_modal,
-  open_edit_cart_modal,
-  empty_cart
+  open_edit_cart_modal
 } = cartPage.actions;
 export default cartPage.reducer;

@@ -27,6 +27,8 @@ export default {
   },
   findByUser_carts_c: async (req: any, res: any) => {
     const { params } = req;
+
+    console.log({ params });
     try {
       const cart = await cart_services.findByUser_carts_s(params);
       if (cart) {
@@ -62,22 +64,35 @@ export default {
       res.status(500).send({ error, message: "Error Updating Cart" });
     }
   },
-  start_cart_carts_c: async (req: any, res: any) => {
-    const { body, user } = req;
-    try {
-      const cart = await cart_services.start_cart_carts_s(body, user);
-      if (cart) {
-        return res.status(201).send(cart);
-      }
-      return res.status(500).send({ message: "Error Creating Cart" });
-    } catch (error) {
-      res.status(500).send({ error, message: "Error Creating Cart" });
-    }
-  },
-  add_to_cart_carts_c: async (req: any, res: any) => {
+  update_user_carts_c: async (req: any, res: any) => {
     const { params, body } = req;
     try {
-      const cart = await cart_services.add_to_cart_carts_s(params, body);
+      const cart = await cart_services.update_user_carts_s(params, body);
+      if (cart) {
+        return res.status(200).send(cart);
+      }
+      return res.status(500).send({ message: "Error Updating Cart" });
+    } catch (error) {
+      res.status(500).send({ error, message: "Error Updating Cart" });
+    }
+  },
+  // start_cart_carts_c: async (req: any, res: any) => {
+  //   const { body, user } = req;
+  //   try {
+  //     const cart = await cart_services.start_cart_carts_s(body, user);
+  //     if (cart) {
+  //       return res.status(201).send(cart);
+  //     }
+  //     return res.status(500).send({ message: "Error Creating Cart" });
+  //   } catch (error) {
+  //     res.status(500).send({ error, message: "Error Creating Cart" });
+  //   }
+  // },
+  add_to_cart_carts_c: async (req: any, res: any) => {
+    const { params, body } = req;
+    console.log({ params, body });
+    try {
+      const cart = await cart_services.add_to_cart_carts_s(body);
       if (cart) {
         return res.status(200).send(cart);
       }

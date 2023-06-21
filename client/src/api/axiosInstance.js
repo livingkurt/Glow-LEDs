@@ -43,11 +43,40 @@ export const refreshAccessToken = async refreshTokenValue => {
   }
 };
 
+// export function setCurrentUser(accessToken) {
+//   setAuthToken(accessToken);
+//   const decoded_access_token = jwt_decode(accessToken);
+//   store.dispatch(set_current_user(decoded_access_token));
+//   return decoded_access_token;
+// }
+
+// export async function handleTokenRefresh(forceRefresh = false) {
+//   const accessToken = localStorage.getItem("accessToken");
+//   if (!accessToken) return;
+
+//   const refreshTokenValue = localStorage.getItem("refreshToken"); // Get the refresh token from localStorage
+//   if (!refreshTokenValue) return;
+
+//   if (isTokenExpired(accessToken) || forceRefresh) {
+//     const newAccessToken = await refreshAccessToken(refreshTokenValue);
+//     return newAccessToken || accessToken;
+//   } else {
+//     const user = setCurrentUser(accessToken); // store the user object
+
+//     // After the access token has been set and the user object has been dispatched, fetch the user's cart
+//     if (user) {
+//       store.dispatch(API.getCurrentUserCart(user._id)); // replace `user._id` with appropriate user ID reference
+//     }
+//   }
+
+//   return accessToken;
+// }
+
 export function setCurrentUser(accessToken) {
   setAuthToken(accessToken);
-  // Decode access_token and get user info and exp
   const decoded_access_token = jwt_decode(accessToken);
   store.dispatch(set_current_user(decoded_access_token));
+  return decoded_access_token;
 }
 
 export async function handleTokenRefresh(forceRefresh = false) {
@@ -61,7 +90,7 @@ export async function handleTokenRefresh(forceRefresh = false) {
     const newAccessToken = await refreshAccessToken(refreshTokenValue);
     return newAccessToken || accessToken;
   } else {
-    setCurrentUser(accessToken);
+    const current_user = setCurrentUser(accessToken);
   }
 
   return accessToken;

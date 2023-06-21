@@ -57,13 +57,17 @@ export const addToCart = createAsyncThunk(
           userPage: { current_user }
         }
       } = thunkApi.getState();
-      if (!cart._id) {
-        const { data } = await axios.post("/api/carts/start_cart", { cart_item, current_user });
-        return { data, type };
+
+      // Call handle_cart route whether the cart exists or not
+      let data;
+      if (cart._id) {
+        data = await axios.post(`/api/carts/${cart._id}/add_to_cart`, { cart_item, cartItems: cart.cartItems, current_user });
       } else {
-        const { data } = await axios.put(`/api/carts/${cart._id}/add_to_cart`, { cart_item, cartItems: cart.cartItems });
-        return { data, type };
+        data = await axios.post(`/api/carts/add_to_cart`, { cart_item, cartItems: cart.cartItems, current_user });
       }
+
+      // Add current_user to the returned payload
+      return { data: data.data, type, current_user };
     } catch (error) {
       Covy().showSnackbar({
         message: `Error: ${error}`,
@@ -72,6 +76,31 @@ export const addToCart = createAsyncThunk(
     }
   }
 );
+
+// export const addToCart = createAsyncThunk(
+//   "carts/addToCart",
+//   async ({ cart, cart_item, type }: { cart: any; cart_item: any; type: string }, thunkApi: any) => {
+//     try {
+//       const {
+//         users: {
+//           userPage: { current_user }
+//         }
+//       } = thunkApi.getState();
+//       if (!cart._id) {
+//         const { data } = await axios.post("/api/carts/start_cart", { cart_item, current_user });
+//         return { data, type };
+//       } else {
+//         const { data } = await axios.put(`/api/carts/${cart._id}/add_to_cart`, { cart_item, cartItems: cart.cartItems, current_user });
+//         return { data, type };
+//       }
+//     } catch (error) {
+//       Covy().showSnackbar({
+//         message: `Error: ${error}`,
+//         severity: "error"
+//       });
+//     }
+//   }
+// );
 
 export const saveCart = createAsyncThunk("carts/saveCart", async (cart: any, thunkApi: any) => {
   try {
@@ -93,6 +122,19 @@ export const saveCart = createAsyncThunk("carts/saveCart", async (cart: any, thu
 export const detailsCart = createAsyncThunk("carts/detailsCart", async (id: string, thunkApi: any) => {
   try {
     const { data } = await axios.get(`/api/carts/${id}`);
+    return data;
+  } catch (error) {
+    Covy().showSnackbar({
+      message: `Error: ${error}`,
+      severity: "error"
+    });
+  }
+});
+
+export const getCurrentUserCart = createAsyncThunk("carts/getCurrentUserCart", async (id: string, thunkApi: any) => {
+  try {
+    const { data } = await axios.get(`/api/carts/${id}/user`);
+    console.log({ data });
     return data;
   } catch (error) {
     Covy().showSnackbar({

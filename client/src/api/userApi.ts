@@ -2,6 +2,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import Covy from "../shared/GlowLEDsComponents/GLCovy/GLCovy";
 import axios from "axios";
+import jwt_decode from "jwt-decode";
 
 import { create_query } from "../utils/helper_functions";
 import { handleTokenRefresh, setCurrentUser } from "./axiosInstance";
@@ -115,6 +116,38 @@ export const registerUser = createAsyncThunk("users/registerUser", async (userDa
 export const loginUser = createAsyncThunk("users/loginUser", async (userData: any, thunkApi: any) => {
   try {
     const { data } = await axios.post("/api/users/login", userData);
+
+    // Decode access_token and get user info
+    const decoded: any = jwt_decode(data.access_token);
+    const userId = decoded._id;
+
+    console.log({ data });
+    // Fetch user's cart
+    const userCartResponse = await axios.get(`/api/carts/${userId}/user`);
+    const userCart = userCartResponse.data;
+    console.log({ userCart });
+    // Get anonymous cart from localStorage
+    const anonymousCartString = localStorage.getItem("my_cart");
+    const anonymousCart = anonymousCartString ? JSON.parse(anonymousCartString) : { cartItems: [] };
+
+    // Merge the carts
+    anonymousCart.cartItems.forEach((anonymousCartItem: any) => {
+      const existingItemIndex = userCart.cartItems.findIndex(
+        (userCartItem: any) => userCartItem.product_id === anonymousCartItem.product_id
+      );
+      if (existingItemIndex !== -1) {
+        userCart.cartItems[existingItemIndex].quantity += anonymousCartItem.quantity;
+      } else {
+        userCart.cartItems.push(anonymousCartItem);
+      }
+    });
+
+    // Update the user's cart
+    await axios.put(`/api/carts/${userId}/user`, { cartItems: userCart.cartItems });
+
+    // Remove the anonymous cart
+    localStorage.removeItem("my_cart");
+
     return data;
   } catch (error) {
     Covy().showSnackbar({
@@ -124,10 +157,27 @@ export const loginUser = createAsyncThunk("users/loginUser", async (userData: an
   }
 });
 
-export const logoutUser = createAsyncThunk("users/logoutUser", async (refresh_token: any) => {
+// export const loginUser = createAsyncThunk("users/loginUser", async (userData: any, thunkApi: any) => {
+//   try {
+//     const { data } = await axios.post("/api/users/login", userData);
+//     return data;
+//   } catch (error) {
+//     Covy().showSnackbar({
+//       message: `Error: ${error}`,
+//       severity: "error"
+//     });
+//   }
+// });
+
+export const logoutUser = createAsyncThunk("users/logoutUser", async (refresh_token: any, thunkApi: any) => {
+  const {
+    carts: {
+      cartPage: { my_cart }
+    }
+  } = thunkApi.getState();
   try {
-    const { data } = await axios.put("/api/users/logout", { refresh_token });
-    return data;
+    await axios.put("/api/users/logout", { refresh_token });
+    return { my_cart };
   } catch (error) {
     Covy().showSnackbar({
       message: `Error: ${error}`,
