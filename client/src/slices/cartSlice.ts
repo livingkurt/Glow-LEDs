@@ -4,10 +4,10 @@ import { createSlice } from "@reduxjs/toolkit";
 import * as API from "../api";
 
 let my_cart: any;
-const cart_string: any = localStorage.getItem("my_cart");
+const cart_string: any = localStorage.getItem("cartItems");
 
 if (cart_string) {
-  my_cart = JSON.parse(cart_string);
+  my_cart = { cartItems: JSON.parse(cart_string) };
 } else {
   my_cart = { cartItems: [] };
 }
@@ -137,8 +137,8 @@ const cartPage = createSlice({
       if (type === "add_to_cart") {
         state.my_cart = data;
         // Only update local storage if the user is not logged in
-        if (!current_user) {
-          localStorage.setItem("my_cart", JSON.stringify(data));
+        if (Object.keys(current_user).length === 0) {
+          localStorage.setItem("cartItems", JSON.stringify(data.cartItems));
         }
       }
       if (type === "edit_cart") {
@@ -175,7 +175,7 @@ const cartPage = createSlice({
       state.loading = false;
       state.my_cart = { cartItems: [] };
       state.message = "Cart Deleted";
-      localStorage.removeItem("my_cart");
+      localStorage.removeItem("cartItems");
     },
     [API.deleteCart.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
@@ -190,10 +190,10 @@ const cartPage = createSlice({
       state.loading = false;
       if (data.message === "Cart Deleted") {
         state.my_cart = { cartItems: [] };
-        localStorage.removeItem("my_cart");
+        localStorage.removeItem("cartItems");
       } else if (type === "add_to_cart") {
         state.my_cart = data;
-        localStorage.setItem("my_cart", JSON.stringify(data));
+        localStorage.setItem("cartItems", JSON.stringify(data.cartItems));
       } else if (type === "edit_cart") {
         state.cart = data;
       }
@@ -208,14 +208,14 @@ const cartPage = createSlice({
       state.cart = {};
     },
     [API.emptyCart.fulfilled as any]: (state: any, { payload }: any) => {
-      localStorage.removeItem("my_cart");
+      localStorage.removeItem("cartItems");
       state.my_cart = { cartItems: [] };
     },
     [API.getCurrentUserCart.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
     },
     [API.getCurrentUserCart.fulfilled as any]: (state: any, { payload }: any) => {
-      if (payload !== state.my_cart) {
+      if (payload !== state.my_cart && payload.cartItems) {
         state.loading = false;
         state.my_cart = payload;
         state.message = "User Cart Found";

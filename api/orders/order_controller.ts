@@ -73,7 +73,6 @@ export default {
       }
       return res.status(500).send(order);
     } catch (error) {
-      console.log({ error });
       res.status(500).send({ error, message: "Error Creating Order" });
     }
   },
@@ -258,9 +257,7 @@ export default {
   invoice_orders_c: async (req: any, res: any) => {
     const { params } = req;
     try {
-      console.log({ params });
       const order = await order_services.invoice_orders_s(params.id);
-      console.log({ order });
 
       if (order.user && order.user.affiliate) {
         const affiliate = await affiliate_db.findBy_affiliates_db({ _id: order.user.affiliate });
@@ -390,7 +387,6 @@ export default {
   },
   get_monthly_revenue_product_orders_c: async (req: any, res: any) => {
     const { query, params } = req;
-    console.log({ query, params });
     try {
       const orders = await order_services.get_monthly_revenue_product_orders_s(params, query);
       if (orders) {

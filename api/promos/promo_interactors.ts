@@ -111,7 +111,6 @@ export const generateSponsorCodes = async (affiliate: any) => {
     const allowance_code: any = await promo_db.create_promos_db(private_code);
     return [...refresh_pack_code, ...allowance_code];
   } catch (error) {
-    console.log({ error });
     if (error instanceof Error) {
       throw new Error(error.message);
     }

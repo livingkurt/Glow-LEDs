@@ -28,7 +28,6 @@ export default {
   findByUser_carts_c: async (req: any, res: any) => {
     const { params } = req;
 
-    console.log({ params });
     try {
       const cart = await cart_services.findByUser_carts_s(params);
       if (cart) {
@@ -89,8 +88,7 @@ export default {
   //   }
   // },
   add_to_cart_carts_c: async (req: any, res: any) => {
-    const { params, body } = req;
-    console.log({ params, body });
+    const { body } = req;
     try {
       const cart = await cart_services.add_to_cart_carts_s(body);
       if (cart) {
@@ -114,9 +112,9 @@ export default {
     }
   },
   remove_cart_item_carts_c: async (req: any, res: any) => {
-    const { params } = req;
+    const { params, body } = req;
     try {
-      const cart = await cart_services.remove_cart_item_carts_s(params);
+      const cart = await cart_services.remove_cart_item_carts_s(params, body);
       if (cart) {
         return res.status(201).send(cart);
       }

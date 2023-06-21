@@ -84,7 +84,6 @@ export default {
     try {
       return await Promo.create(body);
     } catch (error) {
-      console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }

@@ -193,7 +193,6 @@ export default {
       ]).sort({ _id: 1 });
       return response;
     } catch (error) {
-      console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }

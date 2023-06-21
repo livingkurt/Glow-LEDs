@@ -187,7 +187,6 @@ export default {
 
       // Update the orders that are being added to the batch
       for (const order of orders) {
-        console.log({ order });
         order.isPickup = true;
         order.pickupAt = new Date(); // set the pickupAt field to the current date
         await order_db.update_orders_db(order._id, order);
@@ -196,7 +195,6 @@ export default {
       // Return the bought pickup
       return boughtPickup;
     } catch (error) {
-      console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }

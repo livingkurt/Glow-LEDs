@@ -1,6 +1,7 @@
 import { cart_db } from "../carts";
 import { deepEqual } from "../../util";
 import { getFilteredData } from "../api_helpers";
+import { updateCartItems } from "./cart_helpers";
 
 export default {
   findAll_carts_s: async (query: { page: string; search: string; sort: string; limit: string }) => {
@@ -61,7 +62,7 @@ export default {
   update_user_carts_s: async (params: any, body: any) => {
     const { id } = params;
     try {
-      return await cart_db.update_carts_db(id, body);
+      return await cart_db.update_user_carts_db(id, body);
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);
@@ -69,48 +70,31 @@ export default {
     }
   },
   add_to_cart_carts_s: async (body: any) => {
-    const { cart_item, cart, current_user } = body;
-
-    console.log({ cart_item, current_user });
+    const { cart_item, cartItems, current_user } = body;
 
     try {
-      let data;
-
       // Get the user's active cart if the user is logged in
-      if (current_user) {
-        data = await cart_db.findByUser_carts_db(current_user._id);
+      if (current_user && Object.keys(current_user).length > 0) {
+        let data = await cart_db.findByUser_carts_db(current_user._id);
+        if (data) {
+          data.cartItems = updateCartItems(data.cartItems, cart_item);
+          await cart_db.update_carts_db(data._id, { cartItems: data.cartItems });
+          data = await cart_db.findById_carts_db(data._id);
+          return data;
+        } else {
+          data = await cart_db.create_carts_db({ user: current_user._id, cartItems: [cart_item] });
+          return data;
+        }
       } else {
         // If the user is not logged in, update the anonymous cart
-        data = cart;
-      }
-
-      // Check if there's an existing cart
-      if (data) {
-        const cartItems = data.cartItems;
-        let new_cart_items = [];
-        const item_exists: any = cartItems.find((x: any) => deepEqual({ ...x, qty: null }, { ...cart_item, qty: null }));
-        if (item_exists) {
-          new_cart_items = cartItems.map((x: any) => (deepEqual({ ...x, qty: null }, { ...cart_item, qty: null }) ? cart_item : x));
+        if (cartItems && cartItems.length > 0) {
+          const new_cart_items = updateCartItems(cartItems, cart_item);
+          return { cartItems: new_cart_items };
         } else {
-          new_cart_items = [...cartItems, cart_item];
+          return { cartItems: [cart_item] };
         }
-        data.cartItems = new_cart_items;
-        if (current_user) {
-          // If user is logged in, update the database
-          await cart_db.update_carts_db(data._id, {
-            cartItems: new_cart_items
-          });
-          data = await cart_db.findById_carts_db(data._id);
-        }
-        return data;
-      } else {
-        // If no active cart, create a new one
-        const userId = current_user ? current_user._id : null;
-        data = await cart_db.create_carts_db({ user: userId, cartItems: [cart_item] });
-        return data;
       }
     } catch (error) {
-      console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -220,23 +204,36 @@ export default {
       }
     }
   },
-  remove_cart_item_carts_s: async (params: any) => {
+  remove_cart_item_carts_s: async (params: any, body: any) => {
     const { id, item_index } = params;
+    const { current_user, my_cart } = body;
 
     try {
-      const data = await cart_db.findById_carts_db(id);
-      const cartItems = [...data.cartItems];
-      cartItems.splice(item_index, 1); // 2nd parameter means remove one item only
-      if (cartItems.length === 0) {
-        await cart_db.remove_carts_db(id);
-        return { message: "Cart Deleted" };
+      if (current_user && Object.keys(current_user).length > 0) {
+        const data = await cart_db.findById_carts_db(id);
+        const cartItems = [...data.cartItems];
+        cartItems.splice(item_index, 1); // 2nd parameter means remove one item only
+        if (cartItems.length === 0) {
+          await cart_db.remove_carts_db(id);
+          return { message: "Cart Deleted" };
+        } else {
+          await cart_db.update_carts_db(id, {
+            cartItems: cartItems
+          });
+          const new_cart = await cart_db.findById_carts_db(id);
+          return new_cart;
+        }
       } else {
-        await cart_db.update_carts_db(id, {
-          cartItems: cartItems
-        });
-        const new_cart = await cart_db.findById_carts_db(id);
-
-        return new_cart;
+        if (my_cart && my_cart.length > 0) {
+          my_cart.splice(item_index, 1);
+          if (my_cart.length === 0) {
+            return { message: "Cart is now empty" };
+          } else {
+            return { cartItems: my_cart };
+          }
+        } else {
+          throw new Error("There is no cart to modify");
+        }
       }
     } catch (error) {
       if (error instanceof Error) {

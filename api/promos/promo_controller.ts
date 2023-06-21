@@ -75,7 +75,6 @@ export default {
   },
   create_promos_c: async (req: any, res: any) => {
     const { body } = req;
-    console.log({ body });
     try {
       const promo = await promo_services.create_promos_s(body);
       if (promo) {

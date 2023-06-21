@@ -370,7 +370,6 @@ export const removeDuplicates = (originalArray: any, prop: any) => {
 };
 
 // export const format_date = (unformatted_date: any) => {
-//   console.log({ unformatted_date });
 //   const month = unformatted_date?.slice(5, 7);
 //   const day = unformatted_date?.slice(8, 10);
 //   const year = unformatted_date?.slice(0, 4);

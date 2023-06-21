@@ -53,7 +53,6 @@ export default {
   },
   create_products_c: async (req: any, res: any) => {
     const { body } = req;
-    console.log({ body });
     try {
       const product = await product_services.create_products_s(body);
       if (product) {
@@ -61,7 +60,6 @@ export default {
       }
       return res.status(500).send({ message: "Error Creating Product" });
     } catch (error) {
-      console.log({ error });
       res.status(500).send({ error, message: "Error Creating Product" });
     }
   },

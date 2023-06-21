@@ -176,7 +176,6 @@ export default {
       ]);
       return sponsorCheckins;
     } catch (error) {
-      console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }
@@ -223,7 +222,6 @@ export default {
   //     ]);
   //     return sponsorCheckins;
   //   } catch (error) {
-  //     console.log({ error });
   //     if (error instanceof Error) {
   //       throw new Error(error.message);
   //     }

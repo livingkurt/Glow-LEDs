@@ -18,7 +18,6 @@ export default {
         normalizeFilters: normalizePaycheckFilters
         // normalizeSearch: normalizePaycheckSearch
       });
-      console.log({ filter });
       const paychecks = await paycheck_db.findAll_paychecks_db(filter, sort, limit, page);
       const count = await paycheck_db.count_paychecks_db(filter);
       return {

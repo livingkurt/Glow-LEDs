@@ -6,6 +6,7 @@ import jwt_decode from "jwt-decode";
 
 import { create_query } from "../utils/helper_functions";
 import { handleTokenRefresh, setCurrentUser } from "./axiosInstance";
+import { updateCartItems } from "../helpers/userHelpers";
 
 export const getUsers = async ({
   search,
@@ -121,40 +122,35 @@ export const loginUser = createAsyncThunk("users/loginUser", async (userData: an
     const decoded: any = jwt_decode(data.access_token);
     const userId = decoded._id;
 
-    console.log({ data });
     // Fetch user's cart
     const userCartResponse = await axios.get(`/api/carts/${userId}/user`);
-    const userCart = userCartResponse.data;
-    console.log({ userCart });
+    let userCart = userCartResponse.data;
+
+    if (!userCart || !userCart.cartItems) {
+      // If there is no cart for the user, create a new one
+      const newCartResponse = await axios.post(`/api/carts`, { userId: userId, cartItems: [] });
+      userCart = newCartResponse.data;
+    }
+
     // Get anonymous cart from localStorage
-    const anonymousCartString = localStorage.getItem("my_cart");
-    const anonymousCart = anonymousCartString ? JSON.parse(anonymousCartString) : { cartItems: [] };
+    const anonymousCartItemsString = localStorage.getItem("cartItems");
+    if (anonymousCartItemsString) {
+      const anonymousCartItems = anonymousCartItemsString ? JSON.parse(anonymousCartItemsString) : { cartItems: [] };
 
-    // Merge the carts
-    anonymousCart.cartItems.forEach((anonymousCartItem: any) => {
-      const existingItemIndex = userCart.cartItems.findIndex(
-        (userCartItem: any) => userCartItem.product_id === anonymousCartItem.product_id
-      );
-      if (existingItemIndex !== -1) {
-        userCart.cartItems[existingItemIndex].quantity += anonymousCartItem.quantity;
-      } else {
-        userCart.cartItems.push(anonymousCartItem);
-      }
-    });
+      // Merge the carts
+      anonymousCartItems.forEach((anonymousCartItem: any) => {
+        userCart.cartItems = updateCartItems(userCart.cartItems, anonymousCartItem);
+      });
 
-    // Update the user's cart
-    await axios.put(`/api/carts/${userId}/user`, { cartItems: userCart.cartItems });
+      // Update the user's cart
+      await axios.put(`/api/carts/${userId}/user`, { cartItems: userCart.cartItems });
 
-    // Remove the anonymous cart
-    localStorage.removeItem("my_cart");
+      // Remove the anonymous cart
+      // localStorage.removeItem("cartItems");
+    }
 
     return data;
-  } catch (error) {
-    Covy().showSnackbar({
-      message: `Error: ${error}`,
-      severity: "error"
-    });
-  }
+  } catch (error) {}
 });
 
 // export const loginUser = createAsyncThunk("users/loginUser", async (userData: any, thunkApi: any) => {

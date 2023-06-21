@@ -1498,7 +1498,6 @@ export default {
   },
   affiliate_earnings_s: async (query: any) => {
     const { start_date, end_date } = query;
-    console.log({ start_date, end_date });
 
     // Retrieve affiliates
     const a_filter: any = { deleted: false, active: true };

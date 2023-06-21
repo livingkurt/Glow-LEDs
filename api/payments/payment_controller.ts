@@ -182,9 +182,7 @@ export default {
   },
   secure_refund_payments_c: async (req: any, res: any) => {
     const { order_id } = req.params;
-    console.log({ order_id });
     try {
-      //
       const order = await Order.findById(order_id);
       const refund = await stripe.refunds.create({
         payment_intent: order.payment.charge.id,
@@ -216,7 +214,6 @@ export default {
         res.status(500).send({ message: "Refund not Created" });
       }
     } catch (error) {
-      console.log({ error });
       res.status(500).send({ error, message: "Error Refunding Order" });
     }
   },

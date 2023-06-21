@@ -1031,7 +1031,6 @@ export default {
           }
         }
       ]).exec();
-      console.log({ orders_data });
       // Transform the aggregation results into the desired output format
       // const breakdown = {
       //   // ... Process 'orders_data' array to build your desired output structure

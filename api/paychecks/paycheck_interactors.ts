@@ -76,7 +76,5 @@ export const normalizePaycheckSearch = (query: any) => {
 //     $or: [{ affiliate: { $in: affiliateIds } }, { user: { $in: userIds } }]
 //   };
 
-//   console.log({ affiliateIds });
-
 //   return search;
 // };

@@ -55,15 +55,18 @@ export const addToCart = createAsyncThunk(
       const {
         users: {
           userPage: { current_user }
+        },
+        carts: {
+          cartPage: { my_cart }
         }
       } = thunkApi.getState();
 
       // Call handle_cart route whether the cart exists or not
       let data;
       if (cart._id) {
-        data = await axios.post(`/api/carts/${cart._id}/add_to_cart`, { cart_item, cartItems: cart.cartItems, current_user });
+        data = await axios.post(`/api/carts/${cart._id}/add_to_cart`, { cart_item, cartItems: my_cart.cartItems, current_user });
       } else {
-        data = await axios.post(`/api/carts/add_to_cart`, { cart_item, cartItems: cart.cartItems, current_user });
+        data = await axios.post(`/api/carts/add_to_cart`, { cart_item, cartItems: my_cart.cartItems, current_user });
       }
 
       // Add current_user to the returned payload
@@ -134,7 +137,6 @@ export const detailsCart = createAsyncThunk("carts/detailsCart", async (id: stri
 export const getCurrentUserCart = createAsyncThunk("carts/getCurrentUserCart", async (id: string, thunkApi: any) => {
   try {
     const { data } = await axios.get(`/api/carts/${id}/user`);
-    console.log({ data });
     return data;
   } catch (error) {
     Covy().showSnackbar({
@@ -173,11 +175,14 @@ export const deleteCartItem = createAsyncThunk(
   async ({ item_index, type }: { cart: any; item_index: any; type: string }, thunkApi: any) => {
     try {
       const {
+        users: {
+          userPage: { current_user }
+        },
         carts: {
           cartPage: { my_cart }
         }
       } = thunkApi.getState();
-      const { data } = await axios.put(`/api/carts/${my_cart._id}/cart_item/${item_index}`);
+      const { data } = await axios.put(`/api/carts/${my_cart._id}/cart_item/${item_index}`, { current_user, my_cart });
       return { data, type };
     } catch (error) {
       Covy().showSnackbar({

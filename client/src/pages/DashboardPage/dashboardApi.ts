@@ -149,7 +149,6 @@ export const {
 //     //     "Content-Type": "application/json"
 //     //   }
 //     // });
-//     // console.log(response.data);
 //     // return response.data;
 //     const response = await axios.get(`${airtableApiEndpoint}/${base}/${table_id}`, {
 //       headers,
@@ -159,9 +158,7 @@ export const {
 //       }
 //     });
 //     const records = response.data.records;
-//     console.log(records); // Do something with the retrieved records
 //     return records;
 //   } catch (error) {
-//     console.log(error);
 //   }
 // };
