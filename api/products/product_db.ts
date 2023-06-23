@@ -513,7 +513,7 @@ export default {
           finite_stock: true,
           deleted: false
         },
-        "name count_in_stock category subcategory product_collection"
+        "name count_in_stock category subcategory product_collection option_products"
       ).exec();
 
       return currentStock;

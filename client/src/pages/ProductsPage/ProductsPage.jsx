@@ -51,6 +51,7 @@ const ProductsPage = () => {
       { title: "Category", display: "category" },
       { title: "Order", display: "order" },
       { title: "Price", display: row => `$${row.price}` },
+      { title: "Count In Stock", display: "count_in_stock" },
       {
         title: "Actions",
         display: row => (
