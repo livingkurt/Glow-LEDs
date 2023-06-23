@@ -3,18 +3,31 @@
 import { createSlice } from "@reduxjs/toolkit";
 import * as API from "../api";
 
+const expense = {
+  id: "",
+  expense_name: "",
+  application: "",
+  url: "",
+  place_of_purchase: "",
+  date_of_purchase: "",
+  category: "",
+  card: "",
+  amount: 0,
+  documents: []
+};
+
 const expensePage = createSlice({
   name: "expensePage",
   initialState: {
     loading: false,
     expenses: [],
-    expense: {},
+    expense: expense,
+    remoteVersionRequirement: 0,
+    edit_expense_modal: false,
+    upload_expense_modal: false,
+    expense_modal: false,
     message: "",
-    error: {},
-    search: "",
-    sort: "",
-    page: 1,
-    limit: 10
+    error: {}
   },
   reducers: {
     set_expense: (state, { payload }) => {
@@ -27,17 +40,30 @@ const expensePage = createSlice({
     set_loading: (state, { payload }) => {
       state.loading = payload;
     },
-    set_search: (state, { payload }) => {
-      state.search = payload;
+    set_edit_expense_modal: (state, { payload }) => {
+      state.edit_expense_modal = payload;
     },
-    set_sort: (state, { payload }) => {
-      state.sort = payload;
+    open_create_expense_modal: (state, { payload }) => {
+      state.edit_expense_modal = true;
+      state.expense = expense;
     },
-    set_page: (state, { payload }) => {
-      state.page = payload;
+    open_edit_expense_modal: (state, { payload }) => {
+      state.edit_expense_modal = true;
+      state.expense = payload;
     },
-    set_limit: (state, { payload }) => {
-      state.limit = payload;
+    close_expense_modal: (state, { payload }) => {
+      state.edit_expense_modal = false;
+      state.upload_expense_modal = false;
+      state.expense_modal = false;
+      state.expense = expense;
+    },
+    open_expense_modal: (state, { payload }) => {
+      state.expense_modal = true;
+      state.expense = payload;
+    },
+    expense_uploaded: (state, { payload }) => {
+      state.upload_expense_modal = false;
+      state.remoteVersionRequirement = Date.now();
     }
   },
   extraReducers: {
@@ -47,8 +73,8 @@ const expensePage = createSlice({
     },
     [API.listExpenses.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.expenses = payload.expenses;
-      state.totalPages = payload.totalPages;
+      state.expenses = payload.data;
+      state.totalPages = payload.total_count;
       state.page = payload.currentPage;
       state.message = "Expenses Found";
     },
@@ -63,6 +89,8 @@ const expensePage = createSlice({
     [API.saveExpense.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.message = "Expense Saved";
+      state.remoteVersionRequirement = Date.now();
+      state.edit_expense_modal = false;
     },
     [API.saveExpense.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
@@ -82,6 +110,19 @@ const expensePage = createSlice({
       state.error = payload.error;
       state.message = payload.message;
     },
+    [API.getExpensesByLink.pending as any]: (state: any, { payload }: any) => {
+      state.loading = true;
+    },
+    [API.getExpensesByLink.fulfilled as any]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.expense = payload;
+      state.message = "Expense Found";
+    },
+    [API.getExpensesByLink.rejected as any]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.error = payload.error;
+      state.message = payload.message;
+    },
     [API.deleteExpense.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
     },
@@ -89,6 +130,7 @@ const expensePage = createSlice({
       state.loading = false;
       state.expense = payload.expense;
       state.message = "Expense Deleted";
+      state.remoteVersionRequirement = Date.now();
     },
     [API.deleteExpense.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
@@ -98,5 +140,14 @@ const expensePage = createSlice({
   }
 });
 
-export const { set_search, set_sort, set_page, set_limit, set_loading, set_expense } = expensePage.actions;
+export const {
+  set_loading,
+  set_expense,
+  set_edit_expense_modal,
+  open_create_expense_modal,
+  open_expense_modal,
+  close_expense_modal,
+  open_edit_expense_modal,
+  expense_uploaded
+} = expensePage.actions;
 export default expensePage.reducer;

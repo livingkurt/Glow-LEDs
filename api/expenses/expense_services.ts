@@ -1,41 +1,17 @@
 import { expense_db } from "../expenses";
 import { determine_category, determine_application, determine_filter, determine_place, unformat_date } from "../../util";
+import { getFilteredData } from "../api_helpers";
 
 export default {
-  findAll_expenses_s: async (query: { page: string; search: string; sort: string; limit: string }) => {
+  findAll_expenses_s: async (query: { page: string; search: string; sort: any; limit: string; filters: any }) => {
     try {
-      const page: string = query.page ? query.page : "1";
-      const limit: string = query.limit ? query.limit : "0";
-      const search = query.search
-        ? {
-            expense_name: {
-              $regex: query.search,
-              $options: "i"
-            }
-          }
-        : {};
-      const filter = determine_filter(query, search);
-      const sort_query = query.sort && query.sort.toLowerCase();
-      let sort: any = { date_of_purchase: -1 };
-      if (sort_query === "lowest") {
-        sort = { amount: 1 };
-      } else if (sort_query === "highest") {
-        sort = { amount: -1 };
-      } else if (sort_query === "newest") {
-        sort = { _id: -1 };
-      } else if (sort_query === "date") {
-        sort = { date_of_purchase: -1 };
-      } else if (sort_query === "category") {
-        sort = { category: 1, createdAt: -1 };
-      } else if (sort_query === "application") {
-        sort = { application: 1, createdAt: -1 };
-      }
-
+      const sort_options = ["date_of_purchase", "expense_name", "category", "amount"];
+      const { filter, sort, limit, page } = getFilteredData({ query, sort_options, search_name: "expense_name" });
       const expenses = await expense_db.findAll_expenses_db(filter, sort, limit, page);
       const count = await expense_db.count_expenses_db(filter);
       return {
-        expenses,
-        totalPages: Math.ceil(count / parseInt(limit)),
+        data: expenses,
+        total_count: count,
         currentPage: page
       };
     } catch (error) {

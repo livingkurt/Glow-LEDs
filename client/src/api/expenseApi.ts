@@ -5,6 +5,37 @@ import axios from "axios";
 
 import { create_query } from "../utils/helper_functions";
 
+export const getExpenses = async ({
+  search,
+  sorting,
+  filters,
+  page,
+  pageSize
+}: {
+  search: string;
+  sorting: any;
+  filters: any;
+  page: number;
+  pageSize: number;
+}) => {
+  try {
+    return axios.get(`/api/expenses`, {
+      params: {
+        limit: pageSize,
+        page: page,
+        search: search,
+        sort: sorting,
+        filters
+      }
+    });
+  } catch (error) {
+    Covy().showSnackbar({
+      message: `Error: ${error}`,
+      severity: "error"
+    });
+  }
+};
+
 export const listExpenses = createAsyncThunk("expenses/listExpenses", async (query: any, thunkApi: any) => {
   try {
     const { data } = await axios.get(`/api/expenses?${create_query(query)}`);
@@ -37,6 +68,18 @@ export const saveExpense = createAsyncThunk("expenses/saveExpense", async (expen
 export const detailsExpense = createAsyncThunk("expenses/detailsExpense", async (id: string, thunkApi: any) => {
   try {
     const { data } = await axios.get(`/api/expenses/${id}`);
+    return data;
+  } catch (error) {
+    Covy().showSnackbar({
+      message: `Error: ${error}`,
+      severity: "error"
+    });
+  }
+});
+
+export const getExpensesByLink = createAsyncThunk("expenses/getExpensesByLink", async (link: string, thunkApi: any) => {
+  try {
+    const { data } = await axios.put(`/api/expenses/link`, { link });
     return data;
   } catch (error) {
     Covy().showSnackbar({

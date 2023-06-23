@@ -11,6 +11,7 @@ const expenseSchema = new mongoose.Schema(
     category: { type: String },
     card: { type: String },
     amount: { type: Number },
+    documents: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }],
     deleted: { type: Boolean, default: false }
   },
   {

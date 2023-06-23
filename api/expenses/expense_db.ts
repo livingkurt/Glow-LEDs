@@ -3,12 +3,11 @@ import { Expense } from "../expenses";
 export default {
   findAll_expenses_db: async (filter: any, sort: unknown, limit: string, page: string) => {
     try {
-      return await Expense.find({ ...filter })
+      return await Expense.find(filter)
         .sort(sort)
-        .populate("user")
-        .populate("affiliate")
+        .populate("documents")
         .limit(parseInt(limit))
-        .skip((parseInt(page) - 1) * parseInt(limit))
+        .skip(Math.max(parseInt(page), 0) * parseInt(limit))
         .exec();
     } catch (error) {
       if (error instanceof Error) {
@@ -18,7 +17,7 @@ export default {
   },
   findById_expenses_db: async (id: string) => {
     try {
-      return await Expense.findOne({ _id: id }).populate("user").populate("affiliate");
+      return await Expense.findOne({ _id: id }).populate("documents");
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

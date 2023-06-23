@@ -64,7 +64,15 @@ const reducers = {
   chips: chipSlice,
   contents: contentSlice,
   emails: emailSlice,
-  expenses: expenseSlice,
+  expenses: combineReducers({
+    expensePage: expenseSlice,
+    expenseTable: glTableReducer("expenseTable", {
+      searchBy: (row: any, search: string) => {
+        const searchableText = row.expense_name;
+        return searchableText.toLowerCase().includes(search.toLowerCase());
+      }
+    })
+  }),
   features: featureSlice,
   filaments: filamentSlice,
   orders: combineReducers({
