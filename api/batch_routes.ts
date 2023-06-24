@@ -1577,5 +1577,67 @@ router.route("/delete_old_carts").put(async (req: any, res: any) => {
     console.error("An error occurred:", err);
   }
 });
+router.route("/make_expenses_positive").put(async (req: any, res: any) => {
+  try {
+    const expenses = await Expense.find({ deleted: false });
+    const updated_expenses = expenses.map(async (expense: any) => {
+      if (expense.amount < 0) {
+        expense.amount = expense.amount * -1;
+        await expense.save();
+      }
+    });
+    res.send(updated_expenses);
+  } catch (err) {
+    console.error("An error occurred:", err);
+  }
+});
+router.route("/card_migration").put(async (req: any, res: any) => {
+  try {
+    // Replace FID with Fidelity 7484 in expenses
+    const expenses = await Expense.find({ deleted: false });
+    const updated_expenses = expenses.map(async (expense: any) => {
+      if (expense.card === "FID") {
+        expense.card = "Fidelity 7484";
+        await expense.save();
+      }
+      if (expense.card === "AMZNK") {
+        expense.card = "Amazon 9204";
+        await expense.save();
+      }
+      if (expense.card === "AMEX") {
+        expense.card = "Joint AMEX 1006";
+        await expense.save();
+      }
+      if (expense.card === "GL AMEX") {
+        expense.card = "Amazon Business 1004";
+        await expense.save();
+      }
+    });
+    res.send(updated_expenses);
+  } catch (err) {
+    console.error("An error occurred:", err);
+  }
+});
 
 export default router;
+// (expense.card === "Joint Amex 1006")
+// (expense.card === "Fidelity 7484")
+// (expense.card === "Covantage 0933")
+// (expense.card === "Amazon 9204")
+// (expense.card === "Amazon Business 1004")
+// (expense.card === "Destanye 1991")
+// (expense.card === "Amazon Business 1005")
+// (expense.card === "Stripe")
+// (expense.card === "Chase 2365")
+// (expense.card === "Joint Amex 2012")
+// (expense.card === "Amazon 4654")
+// (expense.card === "Mastercard 2713")
+// (expense.card === "Amazon Business 1004")
+// (expense.card === "Amazon Business 0584")
+//  (expense.card === "Charles Schwab 9432")
+//  (expense.card === "Charles Schwab 7633")
+//  (expense.card === "Venmo Balance")
+//  (expense.card === "Charles Schwab 2628")
+// (expense.card === "Venmo balance")
+// (expense.card === "Covantage 7060")
+// (expense.card === "Mastercard 7404")

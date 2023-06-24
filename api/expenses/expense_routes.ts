@@ -6,6 +6,7 @@ const router = express.Router();
 router.route("/monthly_expenses").put(expense_controller.findAllByDate_expenses_c);
 router.route("/yearly_expenses").put(expense_controller.findAllByDate_expenses_c);
 router.route("/").get(isAuth, isAdmin, expense_controller.findAll_expenses_c).post(isAuth, isAdmin, expense_controller.create_expenses_c);
+router.route("/airtable").post(expense_controller.get_airtable_expenses_c);
 
 router.route("/create_all_expenses_s").post(expense_controller.create_all_expenses_c);
 router.route("/total_expenses").get(expense_controller.findAllByDate_expenses_c);

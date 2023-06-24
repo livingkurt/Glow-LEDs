@@ -44,7 +44,7 @@ const ExpensesPage = () => {
       },
       {
         title: "Amount",
-        display: expense => expense.amount && `$${expense.amount}`
+        display: expense => expense.amount && `$${expense.amount.toFixed(2)}`
       },
 
       {

@@ -1,6 +1,24 @@
-import { expense_db } from "../expenses";
+import { Expense, expense_db } from "../expenses";
 import { determine_category, determine_application, determine_filter, determine_place, unformat_date } from "../../util";
 import { getFilteredData } from "../api_helpers";
+import config from "../../config";
+import { Image } from "../images";
+import axios from "axios";
+import fs from "fs";
+import { processInvoice } from "./expense_interactors";
+
+const Airtable = require("airtable");
+
+const expenses2023 = new Airtable({ apiKey: config.AIRTABLE_API_KEY }).base("app1s1rBexc8nLb9s");
+const expenses2022 = new Airtable({ apiKey: config.AIRTABLE_API_KEY }).base("appdOmbvAUthq73YV");
+const expenses2021 = new Airtable({ apiKey: config.AIRTABLE_API_KEY }).base("appZpYNucg1uWM2tn");
+const expenses2020 = new Airtable({ apiKey: config.AIRTABLE_API_KEY }).base("app0SsFiabhtaLV2f");
+const expenses2019 = new Airtable({ apiKey: config.AIRTABLE_API_KEY }).base("appZcHPFoIX7iLJgz");
+// Airtable.configure({
+//   endpointUrl: "https://api.airtable.com",
+//   apiKey: config.AIRTABLE_API_KEY
+// });
+// const base = Airtable.base("app1s1rBexc8nLb9s");
 
 export default {
   findAll_expenses_s: async (query: { page: string; search: string; sort: any; limit: string; filters: any }) => {
@@ -56,6 +74,165 @@ export default {
       }
     }
   },
+  // get_airtable_expenses_s: async () => {
+  //   const bases = [
+  //     { base: new Airtable({ apiKey: config.AIRTABLE_API_KEY }).base("appZcHPFoIX7iLJgz"), name: "2019 Expenses" },
+  //     { base: new Airtable({ apiKey: config.AIRTABLE_API_KEY }).base("app0SsFiabhtaLV2f"), name: "2020 Expenses" },
+  //     { base: new Airtable({ apiKey: config.AIRTABLE_API_KEY }).base("appZpYNucg1uWM2tn"), name: "2021 Expenses" },
+  //     { base: new Airtable({ apiKey: config.AIRTABLE_API_KEY }).base("appdOmbvAUthq73YV"), name: "2022 Expenses" },
+  //     { base: new Airtable({ apiKey: config.AIRTABLE_API_KEY }).base("app1s1rBexc8nLb9s"), name: "2023 Expenses" }
+  //   ];
+
+  //   try {
+  //     // Create a Promise for each base
+  //     const promises = bases.map(({ base, name }) => {
+  //       return new Promise<void>((resolve, reject) => {
+  //         base(name)
+  //           .select({
+  //             // Add any filters or sorting here
+  //           })
+  //           .eachPage(
+  //             async function page(records: any, fetchNextPage: any) {
+  //               // This function (`page`) will get called for each page of records.
+
+  //               for (const expenseRecord of records) {
+  //                 const record = expenseRecord.fields;
+
+  //                 // Process attachments
+  //                 const documents = [];
+  //                 if (Array.isArray(record.Invoice)) {
+  //                   for (const doc of record.Invoice) {
+  //                     // Create a new Image for each document
+  //                     const newImage = new Image({
+  //                       link: doc.url,
+  //                       album: record.Expense,
+  //                       deleted: false // set other fields as necessary
+  //                     });
+
+  //                     // Save the Image
+  //                     await newImage.save();
+
+  //                     // Add the new Image's ID to the documents array
+  //                     documents.push(newImage._id);
+  //                   }
+  //                 }
+
+  //                 // Create a new Mongoose document
+  //                 const newExpense = new Expense({
+  //                   expense_name: record.Expense || "",
+  //                   url: record["Invoice URL"],
+  //                   place_of_purchase: record["Place of Purchase"],
+  //                   date_of_purchase: new Date(record.Date),
+  //                   category: record.Category && record.Category.join(", "),
+  //                   card: record.Card,
+  //                   amount: record.Amount,
+  //                   documents,
+  //                   deleted: record["Return Issues"] || false
+  //                 });
+
+  //                 // Save the Expense
+  //                 await newExpense.save();
+  //               }
+
+  //               // To fetch the next page of records, call `fetchNextPage`.
+  //               fetchNextPage();
+  //             },
+  //             function done(err: any) {
+  //               if (err) {
+  //                 reject(err);
+  //                 return;
+  //               }
+  //               resolve();
+  //             }
+  //           );
+  //       });
+  //     });
+
+  //     // Wait for all the Promises to complete
+  //     await Promise.all(promises);
+  //   } catch (error) {
+  //     if (error instanceof Error) {
+  //       throw new Error(error.message);
+  //     }
+  //   }
+  // },
+
+  get_airtable_expenses_s: async () => {
+    const bases = [
+      { base: new Airtable({ apiKey: config.AIRTABLE_API_KEY }).base("appZcHPFoIX7iLJgz"), name: "2019 Expenses" },
+      { base: new Airtable({ apiKey: config.AIRTABLE_API_KEY }).base("app0SsFiabhtaLV2f"), name: "2020 Expenses" },
+      { base: new Airtable({ apiKey: config.AIRTABLE_API_KEY }).base("appZpYNucg1uWM2tn"), name: "2021 Expenses" },
+      { base: new Airtable({ apiKey: config.AIRTABLE_API_KEY }).base("appdOmbvAUthq73YV"), name: "2022 Expenses" },
+      { base: new Airtable({ apiKey: config.AIRTABLE_API_KEY }).base("app1s1rBexc8nLb9s"), name: "2023 Expenses" }
+    ];
+
+    try {
+      // Create a Promise for each base
+      const promises = bases.map(({ base, name }) => {
+        return new Promise<void>((resolve, reject) => {
+          base(name)
+            .select({
+              maxRecords: 10
+              /* Add any filters or sorting here */
+            })
+            .eachPage(
+              async function page(records: any, fetchNextPage: any) {
+                // This function (`page`) will get called for each page of records.
+                for (const expenseRecord of records) {
+                  const record = expenseRecord.fields;
+
+                  // Process attachments
+                  const documents = [];
+                  if (Array.isArray(record.Invoice)) {
+                    for (const doc of record.Invoice) {
+                      const imageId = await processInvoice(doc, record);
+                      if (imageId.length > 0) {
+                        documents.push(imageId);
+                      }
+                    }
+                  }
+                  // console.log({ documents });
+
+                  //   // Create a new Mongoose document
+                  const newExpense = new Expense({
+                    expense_name: record.Expense || "",
+                    url: record["Invoice URL"],
+                    place_of_purchase: record["Place of Purchase"],
+                    date_of_purchase: new Date(record.Date),
+                    category: record.Category && record.Category.join(", "),
+                    card: record.Card,
+                    amount: record.Amount,
+                    documents,
+                    deleted: record["Return Issues"] || false
+                  });
+                  // Save the Expense
+                  await newExpense.save();
+                }
+
+                // To fetch the next page of records, call `fetchNextPage`.
+                fetchNextPage();
+              },
+              function done(err: any) {
+                if (err) {
+                  reject(err);
+                  return;
+                }
+                resolve();
+              }
+            );
+        });
+      });
+
+      // Wait for all the Promises to complete
+      await Promise.all(promises);
+    } catch (error) {
+      console.log({ get_airtable_expenses_s: error });
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+
   create_all_expenses_s: async (body: any) => {
     const { data, card, properties } = body;
     try {

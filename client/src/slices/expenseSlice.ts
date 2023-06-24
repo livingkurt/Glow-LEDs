@@ -110,25 +110,12 @@ const expensePage = createSlice({
       state.error = payload.error;
       state.message = payload.message;
     },
-    [API.getExpensesByLink.pending as any]: (state: any, { payload }: any) => {
-      state.loading = true;
-    },
-    [API.getExpensesByLink.fulfilled as any]: (state: any, { payload }: any) => {
-      state.loading = false;
-      state.expense = payload;
-      state.message = "Expense Found";
-    },
-    [API.getExpensesByLink.rejected as any]: (state: any, { payload }: any) => {
-      state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
-    },
     [API.deleteExpense.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
     },
     [API.deleteExpense.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
-      state.expense = payload.expense;
+      state.expense = expense;
       state.message = "Expense Deleted";
       state.remoteVersionRequirement = Date.now();
     },

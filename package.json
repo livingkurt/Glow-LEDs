@@ -43,6 +43,8 @@
     "nodemailer": "^6.4.10",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
+    "pdf-poppler": "^0.2.1",
+    "pdf2pic": "^2.2.1",
     "print-html-element": "^0.5.1",
     "request": "^2.88.2",
     "request-ip": "^2.1.3",

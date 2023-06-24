@@ -50,6 +50,15 @@ export default {
       res.status(500).send({ error, message: "Error Creating Expense" });
     }
   },
+  get_airtable_expenses_c: async (req: any, res: any) => {
+    try {
+      const expense = await expense_services.get_airtable_expenses_s();
+      // if (expense) {
+      return res.status(201).send(expense);
+    } catch (error) {
+      res.status(500).send({ error, message: "Error Creating Expense" });
+    }
+  },
   create_all_expenses_c: async (req: any, res: any) => {
     const { body } = req;
     try {
