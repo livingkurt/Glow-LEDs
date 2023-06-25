@@ -12,10 +12,17 @@ import { Parcel } from "./parcels";
 import Chip from "./chips/chip";
 import { snake_case } from "../util";
 import { Filament } from "./filaments";
-import { Image } from "./images";
+import { Image, image_db, image_services } from "./images";
 import { Category } from "./categorys";
 import { isAdmin, isAuth } from "../middlewares/authMiddleware";
 import { Cart } from "./carts";
+import path from "path";
+import fs from "fs";
+import axios from "axios";
+import appRoot from "app-root-path";
+import { downloadFile, sanitizeExpenseName } from "./expenses/expense_helpers";
+import { Parser } from "json2csv";
+import config from "../config";
 
 const router = express.Router();
 
@@ -1616,6 +1623,151 @@ router.route("/card_migration").put(async (req: any, res: any) => {
     res.send(updated_expenses);
   } catch (err) {
     console.error("An error occurred:", err);
+  }
+});
+router.route("/airtable_invoice_download").put(async (req: any, res: any) => {
+  try {
+    // Replace FID with Fidelity 7484 in expenses
+    const expenses = await Expense.find({ deleted: false });
+
+    expenses.forEach(async (expense: any) => {
+      if (expense.airtable_invoice_links && expense.airtable_invoice_links.length > 0) {
+        expense.airtable_invoice_links.forEach(async (link: any, index: any) => {
+          const url = link;
+          const sanitizedExpenseName = sanitizeExpenseName(expense.expense_name); // function to sanitize expense name
+          const path = `temp/${expense.airtable_id}_${sanitizedExpenseName}`;
+
+          // Download the image and save it to a temporary file
+          await downloadFile(url, path, `${expense.airtable_id}_${sanitizedExpenseName}`);
+        });
+      }
+    });
+
+    res.json({ message: "Files are being downloaded and saved." });
+  } catch (err) {
+    console.error("An error occurred:", err);
+  }
+});
+router.route("/link_documents_to_expenses").put(async (req: any, res: any) => {
+  try {
+    // Get the path to the temp directory
+    const tempDir = path.join(appRoot.path, "temp");
+
+    // Read the files from the temp directory
+    const files = fs
+      .readdirSync(tempDir)
+      .filter(file => [".jpg", ".jpeg", ".png", ".gif"].includes(path.extname(file).toLowerCase()))
+      .map(file => ({
+        name: file,
+        path: path.join(tempDir, file)
+      }));
+
+    // Group the files by airtable_id
+    const filesByAirtableId: { [key: string]: any[] } = {};
+    for (const file of files) {
+      // Split the filename by underscore
+      const splitName = file.name.split("_");
+      const airtable_id: any = splitName.shift();
+      let expense_name = splitName.join("_");
+
+      // Remove the file extension from expense_name
+      expense_name = path.basename(expense_name, path.extname(expense_name));
+
+      if (!filesByAirtableId[airtable_id]) {
+        filesByAirtableId[airtable_id] = [];
+      }
+      filesByAirtableId[airtable_id].push({ ...file, expense_name });
+    }
+    console.log({ filesByAirtableId });
+
+    // Loop through each airtable_id
+    for (const airtable_id in filesByAirtableId) {
+      // Find the expense with the matching airtable_id
+      const expense = await Expense.findOne({ airtable_id });
+
+      // If the expense exists and has no documents
+      if (expense && expense.documents.length === 0) {
+        // Get the files and expense_name for this airtable_id
+        const files = filesByAirtableId[airtable_id];
+        const expense_name = sanitizeExpenseName(files[0].expense_name);
+        console.log({ albumName: expense_name }, files);
+        const uploadedImageLinks = [];
+
+        const albumResponse = await axios.post(
+          "https://api.imgur.com/3/album",
+          { title: expense_name, privacy: "hidden" },
+          {
+            headers: { Authorization: `Client-ID ${config.IMGUR_ClIENT_ID}` }
+          }
+        );
+        const album = albumResponse.data.data;
+
+        for (const image of files) {
+          const imageData = fs.createReadStream(image.path);
+          const imgResponse = await axios.post("https://api.imgur.com/3/image", imageData, {
+            headers: {
+              Authorization: `Client-ID ${config.IMGUR_ClIENT_ID}`,
+              "Content-Type": "multipart/form-data"
+            },
+            params: { album: album.deletehash }
+          });
+          uploadedImageLinks.push(imgResponse.data.data.link);
+        }
+
+        const images: any = await Promise.all(
+          uploadedImageLinks.map(async (link: any) => {
+            return await image_db.create_images_db({ link, album: expense_name });
+          })
+        );
+
+        console.log({ images });
+
+        // Loop through each image
+        for (const image of images) {
+          // Add the image id to the expense's documents array
+          expense.documents.push(image._id);
+        }
+
+        // Save the updated expense
+        await Expense.updateOne({ _id: expense._id }, expense);
+      } else if (expense) {
+        console.log(`Expense with airtable_id: ${airtable_id} already has documents. No update was made.`);
+      } else {
+        console.error(`No expense found with airtable_id: ${airtable_id}`);
+      }
+    }
+
+    res.status(200).send({ message: "Images uploaded and linked to expenses successfully" });
+  } catch (err) {
+    console.error("An error occurred:", err);
+    res.status(500).send({ message: err.message });
+  }
+});
+router.route("/export_expenses_as_csv").put(async (req: any, res: any) => {
+  try {
+    const expenses = await Expense.find({});
+
+    const jsonExpenses = JSON.parse(JSON.stringify(expenses));
+    const csvFields = Object.keys(expenses[0]._doc);
+    const csvParser = new Parser({ fields: csvFields });
+    const csvData = csvParser.parse(jsonExpenses);
+
+    fs.writeFileSync("./expenses.csv", csvData);
+
+    res.status(200).send({ message: "Expenses successfully exported to CSV" });
+  } catch (err) {
+    console.error("An error occurred:", err);
+    res.status(500).send({ message: err.message });
+  }
+});
+router.route("/delete_all_expenses").put(async (req: any, res: any) => {
+  try {
+    // Delete all expenses
+    await Expense.deleteMany({});
+    res.status(200).send({ message: "Expenses Deleted" });
+  } catch (err) {
+    console.error("An error occurred:", err);
+    res.status(500).send({ message: err.message });
   }
 });
 

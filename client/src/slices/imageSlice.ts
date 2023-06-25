@@ -17,7 +17,9 @@ const imagePage = createSlice({
     remoteVersionRequirement: 0,
     edit_image_modal: false,
     upload_image_modal: false,
+    image_display_modal: false,
     image_modal: false,
+    selected_image: null,
     message: "",
     error: {}
   },
@@ -34,6 +36,14 @@ const imagePage = createSlice({
     },
     set_edit_image_modal: (state, { payload }) => {
       state.edit_image_modal = payload;
+    },
+    open_image_display_modal: (state, { payload }) => {
+      state.image_display_modal = true;
+      state.selected_image = payload;
+    },
+    close_image_display_modal: (state, { payload }) => {
+      state.image_display_modal = false;
+      state.selected_image = null;
     },
     open_create_image_modal: (state, { payload }) => {
       state.upload_image_modal = true;
@@ -147,6 +157,8 @@ export const {
   open_image_modal,
   close_image_modal,
   open_edit_image_modal,
-  image_uploaded
+  image_uploaded,
+  open_image_display_modal,
+  close_image_display_modal
 } = imagePage.actions;
 export default imagePage.reducer;

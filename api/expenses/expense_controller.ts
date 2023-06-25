@@ -1,4 +1,4 @@
-import { expense_services } from "../expenses";
+import { expense_db, expense_services } from "../expenses";
 
 export default {
   findAll_expenses_c: async (req: any, res: any) => {
@@ -93,6 +93,55 @@ export default {
       return res.status(500).send({ message: "Error Deleting Expense" });
     } catch (error) {
       res.status(500).send({ error, message: "Error Deleting Expense" });
+    }
+  },
+  get_range_expenses_expenses_c: async (req: any, res: any) => {
+    const { start_date, end_date } = req.query;
+    console.log({ start_date, end_date });
+    try {
+      const expense = await expense_db.get_range_expenses_expenses_db(start_date, end_date);
+      if (expense) {
+        return res.status(200).send(expense);
+      }
+      return res.status(500).send({ message: "Error Finding Expenses" });
+    } catch (error) {
+      res.status(500).send({ error, message: "Error Finding Expenses" });
+    }
+  },
+  get_daily_expenses_expenses_c: async (req: any, res: any) => {
+    const { start_date, end_date } = req.query;
+    console.log({ start_date, end_date });
+    try {
+      const expense = await expense_db.get_daily_expenses_expenses_db(start_date, end_date);
+      if (expense) {
+        return res.status(200).send(expense);
+      }
+      return res.status(500).send({ message: "Error Finding Expenses" });
+    } catch (error) {
+      res.status(500).send({ error, message: "Error Finding Expenses" });
+    }
+  },
+  get_monthly_expenses_expenses_c: async (req: any, res: any) => {
+    const { year } = req.query;
+    try {
+      const expense = await expense_db.get_monthly_expenses_expenses_db(year);
+      if (expense) {
+        return res.status(200).send(expense);
+      }
+      return res.status(500).send({ message: "Error Finding Expenses" });
+    } catch (error) {
+      res.status(500).send({ error, message: "Error Finding Expenses" });
+    }
+  },
+  get_yearly_expenses_expenses_c: async (req: any, res: any) => {
+    try {
+      const expense = await expense_db.get_yearly_expenses_expenses_db();
+      if (expense) {
+        return res.status(200).send(expense);
+      }
+      return res.status(500).send({ message: "Error Finding Expenses" });
+    } catch (error) {
+      res.status(500).send({ error, message: "Error Finding Expenses" });
     }
   }
 };

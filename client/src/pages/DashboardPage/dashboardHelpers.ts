@@ -98,3 +98,99 @@ export const determineTabName = (month: string, year: string) => {
     return "Yearly";
   }
 };
+
+export const combineYearlyRevenueAndExpenses = (revenueData: any, expensesData: any) => {
+  let combinedData = [];
+
+  for (let revenue of revenueData) {
+    let expense = expensesData.find((exp: any) => exp.year === revenue.year);
+
+    combinedData.push({
+      year: revenue.year,
+      revenue: revenue.totalPrice,
+      revenueMonthlyAverage: revenue.monthlyAverage,
+      expense: expense ? expense.amount : 0,
+      expenseMonthlyAverage: expense ? expense.monthlyAverage : 0
+    });
+  }
+
+  for (let expense of expensesData) {
+    if (!combinedData.find(data => data.year === expense.year)) {
+      combinedData.push({
+        year: expense.year,
+        revenue: 0,
+        revenueMonthlyAverage: 0,
+        expense: expense.amount,
+        expenseMonthlyAverage: expense.monthlyAverage
+      });
+    }
+  }
+
+  combinedData.sort((a, b) => a.year - b.year);
+
+  return combinedData;
+};
+
+export const combineMonthlyRevenueAndExpenses = (revenueData: any, expensesData: any) => {
+  let combinedData = [];
+
+  for (let revenue of revenueData) {
+    let expense = expensesData.find((exp: any) => exp.month === revenue.month);
+
+    combinedData.push({
+      month: revenue.month,
+      revenue: revenue.totalPrice,
+      revenueDailyAverage: revenue.dailyAverage,
+      expense: expense ? expense.amount : 0,
+      expenseDailyAverage: expense ? expense.dailyAverage : 0
+    });
+  }
+
+  for (let expense of expensesData) {
+    if (!combinedData.find(data => data.month === expense.month)) {
+      combinedData.push({
+        month: expense.month,
+        revenue: 0,
+        revenueDailyAverage: 0,
+        expense: expense.amount,
+        expenseDailyAverage: expense.dailyAverage
+      });
+    }
+  }
+
+  combinedData.sort((a, b) => a.month - b.month);
+
+  return combinedData;
+};
+
+export const combineDailyRevenueAndExpenses = (revenueData: any, expensesData: any) => {
+  let combinedData = [];
+
+  for (let revenue of revenueData) {
+    let expense = expensesData.find((exp: any) => new Date(exp.date).toDateString() === new Date(revenue.date).toDateString());
+
+    combinedData.push({
+      date: revenue.date,
+      revenue: revenue.totalPrice,
+      revenueHourlyAverage: revenue.hourlyAverage,
+      expense: expense ? expense.amount : 0,
+      expenseHourlyAverage: expense ? expense.hourlyAverage : 0
+    });
+  }
+
+  for (let expense of expensesData) {
+    if (!combinedData.find(data => new Date(data.date).toDateString() === new Date(expense.date).toDateString())) {
+      combinedData.push({
+        date: expense.date,
+        revenue: 0,
+        revenueHourlyAverage: 0,
+        expense: expense.amount,
+        expenseHourlyAverage: expense.hourlyAverage
+      });
+    }
+  }
+
+  combinedData.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()); // This sorts by date
+
+  return combinedData;
+};

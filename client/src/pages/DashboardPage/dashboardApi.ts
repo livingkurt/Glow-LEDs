@@ -19,6 +19,10 @@ export const dashboardApi = createApi({
     getMonthlyRevenueOrders: builder.query({
       query: ({ year }: { year: string }) => `/orders/get_monthly_revenue_orders?year=${year}`
     }),
+    getDailyRevenueOrders: builder.query({
+      query: ({ start_date, end_date }: { start_date: string; end_date: string }) =>
+        `/orders/get_daily_revenue_orders?start_date=${start_date}&end_date=${end_date}`
+    }),
     getYearlyRevenueProductOrders: builder.query({
       query: ({ productId }: { productId: string }) => `/orders/get_yearly_revenue_product_orders/${productId}/product`
     }),
@@ -37,10 +41,7 @@ export const dashboardApi = createApi({
       query: ({ start_date, end_date }: { start_date: string; end_date: string }) =>
         `/orders/get_range_revenue_orders?start_date=${start_date}&end_date=${end_date}`
     }),
-    getDailyRevenueOrders: builder.query({
-      query: ({ start_date, end_date }: { start_date: string; end_date: string }) =>
-        `/orders/get_daily_revenue_orders?start_date=${start_date}&end_date=${end_date}`
-    }),
+
     getRangeCategoryRevenueOrders: builder.query({
       query: ({ start_date, end_date }: { start_date: string; end_date: string }) =>
         `/orders/get_range_category_revenue_orders?start_date=${start_date}&end_date=${end_date}`
@@ -66,6 +67,10 @@ export const dashboardApi = createApi({
       query: ({ start_date, end_date }: { start_date: string; end_date: string }) =>
         `/paychecks/get_range_payouts?start_date=${start_date}&end_date=${end_date}`
     }),
+    getRangeExpenses: builder.query({
+      query: ({ start_date, end_date }: { start_date: string; end_date: string }) =>
+        `/expenses/get_range_expenses?start_date=${start_date}&end_date=${end_date}`
+    }),
     getRangeGloves: builder.query({
       query: ({ start_date, end_date }: { start_date: string; end_date: string }) =>
         `/paychecks/get_range_payouts?start_date=${start_date}&end_date=${end_date}`
@@ -80,6 +85,16 @@ export const dashboardApi = createApi({
     getSponsorCheckinStatus: builder.query({
       query: ({ start_date, end_date }: { start_date: string; end_date: string }) =>
         `/affiliates/checkin_status?start_date=${start_date}&end_date=${end_date}`
+    }),
+    getYearlyExpenseOrders: builder.query({
+      query: () => "/expenses/get_yearly_expenses_expenses"
+    }),
+    getMonthlyExpenseOrders: builder.query({
+      query: ({ year }: { year: string }) => `/expenses/get_monthly_expenses_expenses?year=${year}`
+    }),
+    getDailyExpenseOrders: builder.query({
+      query: ({ start_date, end_date }: { start_date: string; end_date: string }) =>
+        `/expenses/get_daily_expenses_expenses?start_date=${start_date}&end_date=${end_date}`
     })
   })
 });
@@ -100,12 +115,16 @@ export const {
   useGetRangeAffiliateEarningsCodeUsageQuery,
   useGetAllTimePayoutsQuery,
   useGetRangePayoutsQuery,
+  useGetRangeExpensesQuery,
   useGetRangeGlovesQuery,
   useGetCurrentStockQuery,
   useGetProductRevenueQuery,
   useGetMonthlyRevenueProductOrdersQuery,
   useGetYearlyRevenueProductOrdersQuery,
-  useGetSponsorCheckinStatusQuery
+  useGetSponsorCheckinStatusQuery,
+  useGetYearlyExpenseOrdersQuery,
+  useGetMonthlyExpenseOrdersQuery,
+  useGetDailyExpenseOrdersQuery
 } = dashboardApi;
 
 // export const get_airtable_expenses = async (year: number): Promise<void> => {

@@ -2,28 +2,13 @@ import { Expense, expense_db } from "../expenses";
 import { determine_category, determine_application, determine_filter, determine_place, unformat_date } from "../../util";
 import { getFilteredData } from "../api_helpers";
 import config from "../../config";
-import { Image } from "../images";
-import axios from "axios";
-import fs from "fs";
-import { processInvoice } from "./expense_interactors";
 
 const Airtable = require("airtable");
-
-const expenses2023 = new Airtable({ apiKey: config.AIRTABLE_API_KEY }).base("app1s1rBexc8nLb9s");
-const expenses2022 = new Airtable({ apiKey: config.AIRTABLE_API_KEY }).base("appdOmbvAUthq73YV");
-const expenses2021 = new Airtable({ apiKey: config.AIRTABLE_API_KEY }).base("appZpYNucg1uWM2tn");
-const expenses2020 = new Airtable({ apiKey: config.AIRTABLE_API_KEY }).base("app0SsFiabhtaLV2f");
-const expenses2019 = new Airtable({ apiKey: config.AIRTABLE_API_KEY }).base("appZcHPFoIX7iLJgz");
-// Airtable.configure({
-//   endpointUrl: "https://api.airtable.com",
-//   apiKey: config.AIRTABLE_API_KEY
-// });
-// const base = Airtable.base("app1s1rBexc8nLb9s");
 
 export default {
   findAll_expenses_s: async (query: { page: string; search: string; sort: any; limit: string; filters: any }) => {
     try {
-      const sort_options = ["date_of_purchase", "expense_name", "category", "amount"];
+      const sort_options = ["date_of_purchase", "expense_name", "place_of_purchase", "card", "category", "amount"];
       const { filter, sort, limit, page } = getFilteredData({ query, sort_options, search_name: "expense_name" });
       const expenses = await expense_db.findAll_expenses_db(filter, sort, limit, page);
       const count = await expense_db.count_expenses_db(filter);
@@ -172,7 +157,7 @@ export default {
         return new Promise<void>((resolve, reject) => {
           base(name)
             .select({
-              maxRecords: 10
+              // maxRecords: 10
               /* Add any filters or sorting here */
             })
             .eachPage(
@@ -182,27 +167,46 @@ export default {
                   const record = expenseRecord.fields;
 
                   // Process attachments
-                  const documents = [];
+                  // const documents = [];
+                  // if (Array.isArray(record.Invoice)) {
+                  //   for (const doc of record.Invoice) {
+                  //     // const imageId = await processInvoice(doc, record);
+
+                  //     if (doc.url) {
+                  //       documents.push(doc.url);
+                  //     }
+                  //     // if (imageId.length > 0) {
+                  //     //   documents.push(imageId);
+                  //     // }
+                  //   }
+                  // }
+                  const airtable_invoice_links = [];
                   if (Array.isArray(record.Invoice)) {
                     for (const doc of record.Invoice) {
-                      const imageId = await processInvoice(doc, record);
-                      if (imageId.length > 0) {
-                        documents.push(imageId);
+                      // const imageId = await processInvoice(doc, record);
+
+                      if (doc.url) {
+                        airtable_invoice_links.push(doc.url);
                       }
+                      // if (imageId.length > 0) {
+                      //   airtable_invoice_links.push(imageId);
+                      // }
                     }
                   }
-                  // console.log({ documents });
+                  // console.log({ airtable_invoice_links });
+                  console.log({ record });
 
-                  //   // Create a new Mongoose document
+                  //   // Create a new Mongoose airtable_invoice_link
                   const newExpense = new Expense({
                     expense_name: record.Expense || "",
-                    url: record["Invoice URL"],
+                    invoice_url: record["Invoice URL"],
                     place_of_purchase: record["Place of Purchase"],
                     date_of_purchase: new Date(record.Date),
                     category: record.Category && record.Category.join(", "),
                     card: record.Card,
                     amount: record.Amount,
-                    documents,
+                    airtable_id: expenseRecord.id,
+                    airtable_invoice_links,
                     deleted: record["Return Issues"] || false
                   });
                   // Save the Expense

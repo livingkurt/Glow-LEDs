@@ -10,15 +10,23 @@ import { Button } from "@mui/material";
 import { getExpenses } from "../../api";
 import { format_date } from "../../utils/helper_functions";
 import { open_create_expense_modal, open_edit_expense_modal } from "../../slices/expenseSlice";
+import GLImageModal from "../../shared/GlowLEDsComponents/GLImageModal/GLImageModal";
+import { close_image_display_modal, open_image_display_modal } from "../../slices/imageSlice";
 
 const ExpensesPage = () => {
   const expensePage = useSelector(state => state.expenses.expensePage);
   const { message, loading, remoteVersionRequirement } = expensePage;
+  const imagePage = useSelector(state => state.images.imagePage);
+  const { image_display_modal, selected_image } = imagePage;
   const dispatch = useDispatch();
 
   const column_defs = useMemo(
     () => [
       { title: "Date Added", display: expense => expense.date_of_purchase && format_date(expense.date_of_purchase) },
+      {
+        title: "Expense",
+        display: "expense_name"
+      },
       {
         title: "Place of Purchase",
         display: "place_of_purchase"
@@ -31,16 +39,35 @@ const ExpensesPage = () => {
         title: "Card",
         display: "card"
       },
+      // {
+      //   title: "Airtable ID",
+      //   display: "airtable_id"
+      // },
+      // {
+      //   title: "Invoice URL",
+      //   display: expense => <div style={{ overflow: "hidden", width: "100px" }}>{expense.invoice_url}</div>
+      // },
       {
         title: "Documents",
         display: expense =>
           expense?.documents.map(document => {
             return (
               <div className="jc-c">
-                <img src={document.link} alt={"receipt"} style={{ width: "50px", height: "50px" }} />
+                <img
+                  src={document.link}
+                  alt={"receipt"}
+                  style={{ width: "50px", height: "50px" }}
+                  onClick={() => dispatch(open_image_display_modal(document.link))}
+                />
               </div>
             );
           })
+      },
+      {
+        title: "Invoice Links",
+        display: expense => (
+          <div style={{ overflow: "hidden", width: "100px" }}>{expense?.airtable_invoice_links.map(links => links).join(", ")}</div>
+        )
       },
       {
         title: "Amount",
@@ -89,6 +116,7 @@ const ExpensesPage = () => {
           </Button>
         }
       />
+      <GLImageModal open={image_display_modal} onClose={() => dispatch(close_image_display_modal(false))} selected_image={selected_image} />
       <EditExpenseModal />
     </div>
   );

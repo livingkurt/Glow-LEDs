@@ -1,20 +1,27 @@
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Notification } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
-import { open_create_image_modal, open_edit_image_modal } from "../../slices/imageSlice";
+import {
+  close_image_display_modal,
+  open_create_image_modal,
+  open_edit_image_modal,
+  open_image_display_modal,
+  set_selected_image
+} from "../../slices/imageSlice";
 import { EditImageModal } from "./components";
 import * as API from "../../api";
-import { Button } from "@mui/material";
+import { Button, Dialog, DialogContent } from "@mui/material";
 import { getImages } from "../../api";
 import { format_date } from "../../utils/helper_functions";
 import UploadImageModal from "./components/UploadImageModal";
+import GLImageModal from "../../shared/GlowLEDsComponents/GLImageModal/GLImageModal";
 
 const ImagesPage = () => {
   const imagePage = useSelector(state => state.images.imagePage);
-  const { message, loading, remoteVersionRequirement } = imagePage;
+  const { message, loading, remoteVersionRequirement, image_display_modal, selected_image } = imagePage;
   const dispatch = useDispatch();
 
   const column_defs = useMemo(
@@ -28,7 +35,12 @@ const ImagesPage = () => {
         title: "Image",
         display: image => (
           <div className="jc-c">
-            <img src={image.link} alt={image.name} style={{ width: "50px", height: "50px" }} />
+            <img
+              src={image.link}
+              alt={image.name}
+              style={{ width: "50px", height: "50px" }}
+              onClick={() => dispatch(open_image_display_modal(image.link))}
+            />
           </div>
         )
       },
@@ -77,6 +89,7 @@ const ImagesPage = () => {
           </Button>
         }
       />
+      <GLImageModal open={image_display_modal} onClose={() => dispatch(close_image_display_modal(false))} selected_image={selected_image} />
       <UploadImageModal />
       <EditImageModal />
     </div>

@@ -13,7 +13,11 @@ import {
   useGetProductRangeRevenueOrdersQuery,
   useGetMonthlyRevenueProductOrdersQuery,
   useGetYearlyRevenueProductOrdersQuery,
-  useGetSponsorCheckinStatusQuery
+  useGetSponsorCheckinStatusQuery,
+  useGetRangeExpensesQuery,
+  useGetDailyExpenseOrdersQuery,
+  useGetMonthlyExpenseOrdersQuery,
+  useGetYearlyExpenseOrdersQuery
 } from "./dashboardApi";
 import { determineTabName, run_daily_workers, run_monthly_workers, run_weekly_workers } from "./dashboardHelpers";
 import { useDispatch, useSelector } from "react-redux";
@@ -45,11 +49,16 @@ const DashboardPage = () => {
   const category_range_revenue = useGetRangeCategoryRevenueOrdersQuery({ start_date, end_date });
   const tips_range_revenue = useGetRangeTipsRevenueOrdersQuery({ start_date, end_date });
   const affiliate_earnings_code_usage = useGetRangeAffiliateEarningsCodeUsageQuery({ start_date, end_date });
-  const daily_revenue = useGetDailyRevenueOrdersQuery({ start_date, end_date });
   const all_product_revenue = useGetProductRevenueQuery({ start_date, end_date });
-  const monthy_revenue = useGetMonthlyRevenueOrdersQuery({ year });
+  const daily_revenue = useGetDailyRevenueOrdersQuery({ start_date, end_date });
+  const monthly_revenue = useGetMonthlyRevenueOrdersQuery({ year });
   const yearly_revenue = useGetYearlyRevenueOrdersQuery();
+  const daily_expenses = useGetDailyExpenseOrdersQuery({ start_date, end_date });
+  const monthly_expenses = useGetMonthlyExpenseOrdersQuery({ year });
+  const yearly_expenses = useGetYearlyExpenseOrdersQuery();
   const range_payouts = useGetRangePayoutsQuery({ start_date, end_date });
+  const range_expenses = useGetRangeExpensesQuery({ start_date, end_date });
+  console.log({ daily_expenses, monthly_expenses, yearly_expenses, daily_revenue, monthly_revenue, yearly_revenue });
   const sponsorCheckinStatus = useGetSponsorCheckinStatusQuery({ start_date, end_date });
   const monthly_product_revenue = useGetMonthlyRevenueProductOrdersQuery({ productId: product._id, year });
   const yearly_product_revenue = useGetYearlyRevenueProductOrdersQuery({ productId: product._id });
@@ -75,7 +84,7 @@ const DashboardPage = () => {
         </GLButton>
       </div>
       <Loading
-        loading={daily_revenue.isLoading && monthy_revenue.isLoading && category_range_revenue.isLoading && yearly_revenue.isLoading}
+        loading={daily_revenue.isLoading && monthly_revenue.isLoading && category_range_revenue.isLoading && yearly_revenue.isLoading}
       />
       <Loading loading={loading} />
       <div className="m-auto w-100per max-w-800px">
@@ -84,6 +93,7 @@ const DashboardPage = () => {
           range_revenue={range_revenue}
           tips_range_revenue={tips_range_revenue}
           range_payouts={range_payouts}
+          range_expenses={range_expenses}
           month={month}
           year={year}
         />
@@ -113,7 +123,10 @@ const DashboardPage = () => {
             year={year}
             yearly_revenue={yearly_revenue}
             daily_revenue={daily_revenue}
-            monthy_revenue={monthy_revenue}
+            monthly_revenue={monthly_revenue}
+            yearly_expenses={yearly_expenses}
+            daily_expenses={daily_expenses}
+            monthly_expenses={monthly_expenses}
           />
         </GLTabPanel>
         <GLTabPanel value={tabIndex} index={1}>
