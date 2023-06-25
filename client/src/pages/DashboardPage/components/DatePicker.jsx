@@ -11,55 +11,55 @@ const DatePicker = ({ year, month, start_date, end_date }) => {
   const history = useHistory();
   const location = useLocation();
 
-  useEffect(() => {
-    const searchParams = new URLSearchParams(location.search);
-    const startDateFromUrl = searchParams.get("start_date");
-    const endDateFromUrl = searchParams.get("end_date");
+  // useEffect(() => {
+  //   const searchParams = new URLSearchParams(location.search);
+  //   const startDateFromUrl = searchParams.get("start_date");
+  //   const endDateFromUrl = searchParams.get("end_date");
 
-    if (startDateFromUrl) {
-      const startDateObj = new Date(startDateFromUrl);
-      dispatch(set_start_date(startDateFromUrl));
-      dispatch(set_year(startDateObj.getFullYear().toString()));
-      dispatch(set_month(months[startDateObj.getUTCMonth()]));
-    }
+  //   if (startDateFromUrl) {
+  //     const startDateObj = new Date(startDateFromUrl);
+  //     dispatch(set_start_date(startDateFromUrl));
+  //     dispatch(set_year(startDateObj.getFullYear().toString()));
+  //     dispatch(set_month(months[startDateObj.getUTCMonth()]));
+  //   }
 
-    if (endDateFromUrl) {
-      dispatch(set_end_date(endDateFromUrl));
-    }
-  }, [dispatch, location.search, year, month]);
+  //   if (endDateFromUrl) {
+  //     dispatch(set_end_date(endDateFromUrl));
+  //   }
+  // }, [dispatch, location.search, year, month]);
 
   const handleYearChange = selectedYear => {
     const { start_date, end_date } = getMonthStartEndDates({ year: selectedYear, month });
     dispatch(set_year(selectedYear));
-    updateUrlParams({ start_date, end_date });
+    // updateUrlParams({ start_date, end_date });
   };
 
   const handleMonthChange = selectedMonth => {
     const { start_date, end_date } = getMonthStartEndDates({ year, month: selectedMonth });
     dispatch(set_month(selectedMonth));
-    updateUrlParams({ start_date, end_date });
+    // updateUrlParams({ start_date, end_date });
   };
 
   const handleStartDateChange = date => {
     dispatch(set_start_date(date));
-    updateUrlParams({ start_date: date });
+    // updateUrlParams({ start_date: date });
   };
 
   const handleEndDateChange = date => {
     dispatch(set_end_date(date));
-    updateUrlParams({ end_date: date });
+    // updateUrlParams({ end_date: date });
   };
 
-  const updateUrlParams = ({ start_date, end_date, year, month }) => {
-    const searchParams = new URLSearchParams(location.search);
-    if (start_date) {
-      searchParams.set("start_date", start_date);
-    }
-    if (end_date) {
-      searchParams.set("end_date", end_date);
-    }
-    history.push({ search: searchParams.toString() });
-  };
+  // const updateUrlParams = ({ start_date, end_date, year, month }) => {
+  //   const searchParams = new URLSearchParams(location.search);
+  //   if (start_date) {
+  //     searchParams.set("start_date", start_date);
+  //   }
+  //   if (end_date) {
+  //     searchParams.set("end_date", end_date);
+  //   }
+  //   history.push({ search: searchParams.toString() });
+  // };
 
   return (
     <Paper className="p-20px mt-20px">
