@@ -95,7 +95,17 @@ const GLDisplayTable = ({ rows, columnDefs, loading, title, onEdit }) => {
                           </Button>
                         </Box>
                       ) : (
-                        <div onClick={e => handleClick(columnDef.attribute, row, rowIndex, e)}>
+                        <div
+                          onClick={e => handleClick(columnDef.attribute, row, rowIndex, e)}
+                          style={{
+                            color:
+                              columnDef.title === "Profit" && columnDef.value(row) < 0
+                                ? "red"
+                                : columnDef.title === "Profit" && columnDef.value(row) > 0
+                                ? "green"
+                                : "black"
+                          }}
+                        >
                           {displayValue(columnDef.display, row, rowIndex)}
                         </div>
                       )}

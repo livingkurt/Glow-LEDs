@@ -87,7 +87,7 @@ const DashboardPage = () => {
         loading={daily_revenue.isLoading && monthly_revenue.isLoading && category_range_revenue.isLoading && yearly_revenue.isLoading}
       />
       <Loading loading={loading} />
-      <div className="m-auto w-100per max-w-800px">
+      <div className="m-auto w-100per max-w-1000px">
         <DatePicker year={year} month={month} start_date={start_date} end_date={end_date} start_end_date={start_end_date} />
         <TotalsTable
           range_revenue={range_revenue}
