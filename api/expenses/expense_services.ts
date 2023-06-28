@@ -2,6 +2,7 @@ import { Expense, expense_db } from "../expenses";
 import { determine_category, determine_application, determine_filter, determine_place, unformat_date } from "../../util";
 import { getFilteredData } from "../api_helpers";
 import config from "../../config";
+import { normalizeExpenseFilters, normalizeExpenseSearch } from "./expense_helpers";
 
 const Airtable = require("airtable");
 
@@ -9,7 +10,13 @@ export default {
   findAll_expenses_s: async (query: { page: string; search: string; sort: any; limit: string; filters: any }) => {
     try {
       const sort_options = ["date_of_purchase", "expense_name", "place_of_purchase", "card", "category", "amount"];
-      const { filter, sort, limit, page } = getFilteredData({ query, sort_options, search_name: "expense_name" });
+      const { filter, sort, limit, page } = getFilteredData({
+        query,
+        sort_options,
+        search_name: "expense_name",
+        normalizeFilters: normalizeExpenseFilters,
+        normalizeSearch: normalizeExpenseSearch
+      });
       const expenses = await expense_db.findAll_expenses_db(filter, sort, limit, page);
       const count = await expense_db.count_expenses_db(filter);
       return {
@@ -23,6 +30,21 @@ export default {
       }
     }
   },
+  create_filters_expenses_s: async (query: { search: string; sort: string; page: string; limit: string }) => {
+    try {
+      const availableFilters = {
+        place_of_purchase: await Expense.distinct("place_of_purchase"),
+        category: await Expense.distinct("category"),
+        card: await Expense.distinct("card")
+      };
+      return { availableFilters };
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+
   findAllByDate_expenses_s: async (body: any) => {
     try {
       const filter = {

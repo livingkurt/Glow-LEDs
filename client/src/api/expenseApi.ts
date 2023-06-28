@@ -36,6 +36,11 @@ export const getExpenses = async ({
   }
 };
 
+export const getExpenseFilters = async () => {
+  const { data } = await axios.get(`/api/expenses/filters`);
+  return data;
+};
+
 export const listExpenses = createAsyncThunk("expenses/listExpenses", async (query: any, thunkApi: any) => {
   try {
     const { data } = await axios.get(`/api/expenses?${create_query(query)}`);

@@ -85,21 +85,26 @@ export const get_todays_date = (): string => {
 
 export const save_paycheck_to_expenses = async (data: any): Promise<void> => {
   try {
-    const response = await axios.post(
-      `https://api.airtable.com/v0/${baseId}/${tableIdOrName}`,
-      {
-        records: [
-          {
-            fields: data
-          }
-        ]
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${config.REACT_APP_AIRTABLE_ACCESS_TOKEN}`,
-          "Content-Type": "application/json"
-        }
-      }
-    );
+    await axios.post(`/api/expenses`, data);
   } catch (error) {}
 };
+// export const save_paycheck_to_expenses = async (data: any): Promise<void> => {
+//   try {
+//     const response = await axios.post(
+//       `https://api.airtable.com/v0/${baseId}/${tableIdOrName}`,
+//       {
+//         records: [
+//           {
+//             fields: data
+//           }
+//         ]
+//       },
+//       {
+//         headers: {
+//           Authorization: `Bearer ${config.REACT_APP_AIRTABLE_ACCESS_TOKEN}`,
+//           "Content-Type": "application/json"
+//         }
+//       }
+//     );
+//   } catch (error) {}
+// };

@@ -12,6 +12,7 @@ import { format_date } from "../../utils/helper_functions";
 import { open_create_expense_modal, open_edit_expense_modal } from "../../slices/expenseSlice";
 import GLImageModal from "../../shared/GlowLEDsComponents/GLImageModal/GLImageModal";
 import { close_image_display_modal, open_image_display_modal } from "../../slices/imageSlice";
+import { determineExpenseColors } from "./expensesPageHelpers";
 
 const ExpensesPage = () => {
   const expensePage = useSelector(state => state.expenses.expensePage);
@@ -92,7 +93,7 @@ const ExpensesPage = () => {
   );
 
   const remoteApi = useCallback(options => getExpenses(options), []);
-  // const remoteFiltersApi = useCallback(() => API.getProductFilters(), []);
+  const remoteFiltersApi = useCallback(() => API.getExpenseFilters(), []);
 
   return (
     <div className="main_container p-20px">
@@ -102,8 +103,9 @@ const ExpensesPage = () => {
       <Notification message={message} />
       <GLTableV2
         remoteApi={remoteApi}
-        // remoteFiltersApi={remoteFiltersApi}
+        remoteFiltersApi={remoteFiltersApi}
         remoteVersionRequirement={remoteVersionRequirement}
+        determine_color={determineExpenseColors}
         tableName={"Expenses"}
         namespaceScope="expenses"
         namespace="expenseTable"

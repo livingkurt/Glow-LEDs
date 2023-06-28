@@ -13,6 +13,18 @@ export default {
       res.status(500).send({ error, message: "Error Finding Expenses" });
     }
   },
+  create_filters_expenses_c: async (req: any, res: any) => {
+    const { query } = req;
+    try {
+      const expense_filters = await expense_services.create_filters_expenses_s(query);
+      if (expense_filters) {
+        return res.status(200).send(expense_filters);
+      }
+      return res.status(404).send({ message: "Expenses Not Found" });
+    } catch (error) {
+      res.status(500).send({ error, message: "Error Finding Expenses" });
+    }
+  },
   findAllByDate_expenses_c: async (req: any, res: any) => {
     const { body } = req;
     try {

@@ -2,9 +2,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import Covy from "../shared/GlowLEDsComponents/GLCovy/GLCovy";
 import axios from "axios";
-import { headers } from "../utils/helpers/user_helpers";
 import { create_query } from "../utils/helper_functions";
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query";
 
 export const getProducts = async ({
   search,

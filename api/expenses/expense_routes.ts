@@ -3,6 +3,7 @@ import { expense_controller } from "../expenses";
 import { isAdmin, isAuth } from "../../middlewares/authMiddleware";
 
 const router = express.Router();
+router.route("/filters").get(expense_controller.create_filters_expenses_c);
 router.route("/monthly_expenses").put(expense_controller.findAllByDate_expenses_c);
 router.route("/yearly_expenses").put(expense_controller.findAllByDate_expenses_c);
 router.route("/").get(isAuth, isAdmin, expense_controller.findAll_expenses_c).post(isAuth, isAdmin, expense_controller.create_expenses_c);

@@ -37,12 +37,12 @@ export const payout_employees = async (): Promise<void> => {
           paid_at: new Date()
         });
         const data = {
-          Expense: `${employee.first_name} ${employee.last_name} Paycheck`,
-          Date: get_todays_date(),
-          Amount: employee?.weekly_wage || 0, // ensure that Amount is a number and not undefined
-          "Place of Purchase": "Stripe",
-          Card: "Stripe",
-          Category: ["Employee Paycheck"]
+          expense_name: `${employee.first_name} ${employee.last_name} Paycheck`,
+          place_of_purchase: "Stripe",
+          date_of_purchase: get_todays_date(),
+          category: "Employee Paycheck",
+          card: "Stripe",
+          amount: employee?.weekly_wage || 0 // ensure that Amount is a number and not undefined
         };
         save_paycheck_to_expenses(data);
       }
