@@ -43,7 +43,9 @@ const OrderStatusButtons = ({ order }) => {
       default:
         break;
     }
-    send_order_status_email(status);
+    if (status !== "paused") {
+      send_order_status_email(status);
+    }
   };
 
   const send_order_status_email = async (status, message_to_user) => {

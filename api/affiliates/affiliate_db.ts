@@ -240,11 +240,12 @@ export default {
       }
     }
   },
-  remove_affiliates_db: async (params: { pathname: string }) => {
+  remove_affiliates_db: async (id: string) => {
+    console.log({ id });
     try {
-      const affiliate: any = await Affiliate.findOne({ pathname: params.pathname });
+      const affiliate: any = await Affiliate.findOne({ _id: id });
       if (affiliate) {
-        return await Affiliate.updateOne({ pathname: params.pathname }, { deleted: true });
+        return await Affiliate.updateOne({ _id: id }, { deleted: true });
       }
     } catch (error) {
       if (error instanceof Error) {

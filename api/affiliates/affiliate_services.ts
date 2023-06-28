@@ -309,9 +309,10 @@ export default {
       }
     }
   },
-  remove_affiliates_s: async (params: { pathname: string }) => {
+  remove_affiliates_s: async (params: any) => {
+    const { id } = params;
     try {
-      return await affiliate_db.remove_affiliates_db(params);
+      return await affiliate_db.remove_affiliates_db(id);
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

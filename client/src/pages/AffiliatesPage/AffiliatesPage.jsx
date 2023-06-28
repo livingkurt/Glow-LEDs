@@ -65,7 +65,7 @@ const AffiliatesPage = () => {
             >
               <i className="fas fa-edit" />
             </GLButton>
-            <GLButton variant="icon" onClick={() => dispatch(API.deleteAffiliate(affiliate.pathname))} aria-label="Delete">
+            <GLButton variant="icon" onClick={() => dispatch(API.deleteAffiliate(affiliate._id))} aria-label="Delete">
               <i className="fas fa-trash-alt" />
             </GLButton>
           </div>

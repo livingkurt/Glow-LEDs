@@ -95,9 +95,10 @@ export const detailsAffiliate = createAsyncThunk("affiliates/detailsAffiliate", 
   }
 });
 
-export const deleteAffiliate = createAsyncThunk("affiliates/deleteAffiliate", async (pathname, thunkApi: any) => {
+export const deleteAffiliate = createAsyncThunk("affiliates/deleteAffiliate", async (id, thunkApi: any) => {
+  console.log({ id });
   try {
-    const { data } = await axios.delete(`/api/affiliates/${pathname}`);
+    const { data } = await axios.delete(`/api/affiliates/${id}`);
     return data;
   } catch (error) {
     Covy().showSnackbar({

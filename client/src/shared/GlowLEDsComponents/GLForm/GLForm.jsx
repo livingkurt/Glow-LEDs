@@ -7,11 +7,17 @@ import ImageWizard from "../../SharedComponents/ImageWizard";
 import { determine_shown_fields, formatDate, getValueByStringPath } from "./glFormHelpers";
 import GoogleAutocomplete from "../../../pages/PlaceOrderPage/components/GoogleAutocomplete";
 import config from "../../../config";
-import AddressAutocomplete from "../../../pages/PlaceOrderPage/components/AddressAutocomplete";
+import { useEffect, useMemo, useState } from "react";
+import { debounce } from "lodash";
 
 const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
+
+  const [localState, setLocalState] = useState({});
+  useEffect(() => {
+    setLocalState(state);
+  }, [state]);
 
   const determineOptions = (fieldData, fieldState) => {
     if (typeof fieldData.options === "string") {
@@ -21,11 +27,18 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
     }
   };
 
+  const debouncedOnChange = useMemo(() => debounce(onChange, 300), [onChange]);
+
+  const handleInputChange = (fieldName, value) => {
+    setLocalState(prevState => ({ ...prevState, [fieldName]: value }));
+    debouncedOnChange({ [fieldName]: value });
+  };
+
   return (
     <>
       {Object.keys(formData).map(fieldName => {
         const fieldData = formData[fieldName];
-        let fieldState = state[fieldName] ?? {};
+        let fieldState = localState[fieldName] ?? {};
 
         if (loading) {
           if (fieldData.type === "checkbox") {
@@ -41,7 +54,7 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
                   key={fieldName}
                   margin="normal"
                   value={fieldState || ""}
-                  options={determineOptions(fieldData, state) || []}
+                  options={determineOptions(fieldData, localState) || []}
                   getOptionLabel={option =>
                     option ? (fieldData.getOptionLabel ? fieldData.getOptionLabel(option) : option[fieldData.labelProp]) : ""
                   }
@@ -49,7 +62,7 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
                   getOptionSelected={(option, value) => option._id === value._id}
                   name={fieldName}
                   label={fieldData.label}
-                  onChange={(event, value) => onChange({ [fieldName]: value })}
+                  onChange={(event, value) => handleInputChange(fieldName, value)}
                 />
               );
             case "image_upload":
@@ -73,7 +86,7 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
                   fieldName={fieldName}
                   labelProp={fieldData.labelProp}
                   label={fieldData.label}
-                  onChange={value => onChange({ [fieldName]: value })}
+                  onChange={value => handleInputChange(fieldName, value)}
                   onEdit={fieldData.onEdit}
                   showItems
                 />
@@ -86,7 +99,7 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
                     <Checkbox
                       name={fieldName}
                       size="large"
-                      onChange={e => onChange({ [fieldName]: e.target.checked })}
+                      onChange={e => handleInputChange(fieldName, e.target.checked)}
                       checked={!!fieldState}
                     />
                   }
@@ -111,7 +124,7 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
                   onPlaceSelected={place => {
                     fieldData.setGeneratedAddress(place);
                   }}
-                  onChange={e => onChange({ [fieldName]: e.target.value })}
+                  onChange={e => handleInputChange(fieldName, e.target.value)}
                 />
               );
             case "text":
@@ -126,7 +139,7 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
                   label={fieldData.label}
                   variant="outlined"
                   value={fieldState || ""}
-                  onChange={e => onChange({ [fieldName]: e.target.value })}
+                  onChange={e => handleInputChange(fieldName, e.target.value)}
                 />
               );
             case "number":
@@ -141,7 +154,7 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
                   label={fieldData.label}
                   variant="outlined"
                   value={fieldState || ""}
-                  onChange={e => onChange({ [fieldName]: e.target.value })}
+                  onChange={e => handleInputChange(fieldName, e.target.value)}
                 />
               );
             case "date":
@@ -157,7 +170,7 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
                   label={fieldData.label}
                   variant="outlined"
                   value={formattedDate || ""}
-                  onChange={e => onChange({ [fieldName]: e.target.value })}
+                  onChange={e => handleInputChange(fieldName, e.target.value)}
                 />
               );
             case "text_multiline":
@@ -173,7 +186,7 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
                   multiline
                   variant="outlined"
                   value={fieldState || ""}
-                  onChange={e => onChange({ [fieldName]: e.target.value })}
+                  onChange={e => handleInputChange(fieldName, e.target.value)}
                 />
               );
             default:
