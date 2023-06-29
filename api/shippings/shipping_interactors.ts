@@ -10,13 +10,20 @@ const EasyPost = new easy_post_api(config.EASY_POST);
 export const buyLabel = async ({ shipment_id, shipping_rate, order }: any) => {
   try {
     const label = await EasyPost.Shipment.buy(shipment_id, shipping_rate?.id);
+    console.log("Label:", label); // Added logging
     await addTracking({ order, label, shipping_rate });
     return label;
   } catch (error) {
     console.error("Error buying label:", error);
-    const label = await createLabel({ order, shipping_rate });
-    await addTracking({ order, label, shipping_rate: label.selected_rate });
-    return label;
+    try {
+      const label = await createLabel({ order, shipping_rate });
+      console.log("Label (createLabel):", label); // Added logging
+      await addTracking({ order, label, shipping_rate: label.selected_rate });
+      return label;
+    } catch (error) {
+      console.error("Error creating label:", error);
+      throw new Error("Error creating label");
+    }
   }
 };
 export const addTracking = async ({ label, order, shipping_rate, isReturnTracking = false }: any) => {
@@ -37,9 +44,15 @@ export const addTracking = async ({ label, order, shipping_rate, isReturnTrackin
       order.shipping.shipment_id = label.id;
     }
 
-    await order_db.update_orders_db(order._id, order);
+    try {
+      await order_db.update_orders_db(order._id, order);
+    } catch (error) {
+      console.error("Error updating order with tracking:", error);
+      throw new Error("Error updating order with tracking");
+    }
   } catch (error) {
     console.error("Error adding tracking:", error);
+    throw new Error("Error adding tracking");
   }
 };
 export const clearTracking = async ({ order, isReturnTracking = false }: any) => {

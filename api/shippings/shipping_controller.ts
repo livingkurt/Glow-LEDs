@@ -11,7 +11,8 @@ export default {
       }
       return res.status(404).send({ message: "Shipping Not Found" });
     } catch (error) {
-      res.status(500).send({ error, message: "Error Finding Shipping" });
+      const errorMessage = error instanceof Error ? error.message : "Error Finding Shipping";
+      res.status(500).send({ error, message: errorMessage });
     }
   },
   create_label_shipping_c: async (req: any, res: any) => {
