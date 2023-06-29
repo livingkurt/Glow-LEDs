@@ -13,8 +13,17 @@ const CreatePickupModal = () => {
   const { create_pickup_modal, pickup, orders, loading_label } = shipping;
 
   const date = new Date();
+  date.setMinutes(date.getMinutes() + 30); // set time 30 minutes into the future
+
   const latestDate = new Date();
+
   latestDate.setHours(date.getHours() + 6);
+
+  // Check if time exceeds 20:00 (8 PM)
+  if (latestDate.getHours() >= 19) {
+    // Set time to 20:00
+    latestDate.setHours(19, 0, 0, 0);
+  }
 
   const formatDate = date => {
     const year = date.getFullYear();

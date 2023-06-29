@@ -112,6 +112,7 @@ export default {
   },
   create_pickup_shipping_s: async (body: any) => {
     const { readyTime, latestTimeAvailable } = body;
+    console.log({ readyTime, latestTimeAvailable });
 
     try {
       const formattedReadyTime = new Date(readyTime);
@@ -147,24 +148,25 @@ export default {
 
       const shipmentIds = orders.map((order: any) => order.shipping.shipment_id);
       const shipments = await Promise.all(shipmentIds.map((id: any) => EasyPost.Shipment.retrieve(id)));
+      if (shipments) {
+        // Create a batch with the shipments
+        const batch = await EasyPost.Batch.create({
+          shipments: shipments
+        });
 
-      // Create a batch with the shipments
-      const batch = await EasyPost.Batch.create({
-        shipments: shipments
-      });
-
-      const pickup = await EasyPost.Pickup.create({
-        address: homeAddress,
-        min_datetime: formattedReadyTime, // use date here
-        max_datetime: formattedLatestTimeAvailable, // use date here
-        reference: `${orders.map((order: any) => `${order.shipping.first_name} ${order.shipping.last_name}`).join(", ")} Orders`,
-        is_account_address: false,
-        instructions: "Pick up on front porch please.",
-        batch: batch
-      });
-
-      return { pickup, orders };
+        const pickup = await EasyPost.Pickup.create({
+          address: homeAddress,
+          min_datetime: formattedReadyTime, // use date here
+          max_datetime: formattedLatestTimeAvailable, // use date here
+          reference: `${orders.map((order: any) => `${order.shipping.first_name} ${order.shipping.last_name}`).join(", ")} Orders`,
+          is_account_address: false,
+          instructions: "Pick up on front porch please.",
+          batch: batch
+        });
+        return { pickup, orders };
+      }
     } catch (error) {
+      console.log({ error });
       if (error instanceof Error) {
         throw new Error(error.message);
       }
