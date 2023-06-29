@@ -56,7 +56,11 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
                   value={fieldState || ""}
                   options={determineOptions(fieldData, localState) || []}
                   getOptionLabel={option =>
-                    option ? (fieldData.getOptionLabel ? fieldData.getOptionLabel(option) : option[fieldData.labelProp]) : ""
+                    option && option[fieldData.labelProp]
+                      ? fieldData.getOptionLabel
+                        ? fieldData.getOptionLabel(option)
+                        : option[fieldData.labelProp]
+                      : ""
                   }
                   optionDisplay={option => (fieldData.getOptionLabel ? fieldData.getOptionLabel(option) : option[fieldData.labelProp])}
                   getOptionSelected={(option, value) => option._id === value._id}
@@ -79,7 +83,11 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
                   value={fieldState || ""}
                   options={fieldData.options || []}
                   getOptionLabel={option =>
-                    option ? (fieldData.getOptionLabel ? fieldData.getOptionLabel(option) : option[fieldData.labelProp]) : ""
+                    option && option[fieldData.labelProp]
+                      ? fieldData.getOptionLabel
+                        ? fieldData.getOptionLabel(option)
+                        : option[fieldData.labelProp]
+                      : ""
                   }
                   optionDisplay={option => (fieldData.getOptionLabel ? fieldData.getOptionLabel(option) : option[fieldData.labelProp])}
                   getOptionSelected={(option, value) => option._id === value._id}

@@ -41,8 +41,8 @@ const DropdownDisplayV2 = ({
             <div {...provided.droppableProps} ref={provided.innerRef}>
               <Autocomplete
                 multiple
-                value={value}
-                options={options}
+                value={Array.isArray(value) ? value : []}
+                options={Array.isArray(options) ? options : []}
                 getOptionLabel={getOptionLabel}
                 getOptionSelected={getOptionSelected}
                 onChange={(e, value) => onChange(value)}
