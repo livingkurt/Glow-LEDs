@@ -23,6 +23,8 @@ import { format_date } from "../../utils/helper_functions";
 const OrdersPage = () => {
   const orderPage = useSelector(state => state.orders.orderPage);
   const { message, loading, loading_order, remoteVersionRequirement, order } = orderPage;
+  const userPage = useSelector(state => state.users.userPage);
+  const { current_user } = userPage;
   const orderTable = useSelector(state => state.orders.orderTable);
   const { selectedRows } = orderTable;
 
@@ -31,7 +33,10 @@ const OrdersPage = () => {
   const column_defs = useMemo(
     () => [
       { title: "Order Placed", display: row => format_date(row.createdAt) },
-      { title: "Name", display: row => <Link to={`/secure/account/profile/${row?.user?._id}`}>{fullName(row.shipping)}</Link> },
+      {
+        title: "Name",
+        display: row => <Link to={current_user.isAdmin && `/secure/glow/userprofile/${row?.user?._id}`}>{fullName(row.shipping)}</Link>
+      },
       { title: "Since Ordered", display: row => sinceOrdered(row.createdAt) },
       {
         title: "Order Items",
