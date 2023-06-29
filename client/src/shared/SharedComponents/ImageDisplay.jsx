@@ -37,47 +37,49 @@ const ImageDisplay = ({ images, onChange }) => {
         <Droppable droppableId="imageList">
           {(provided, snapshot) => (
             <Box display="flex" flexWrap="wrap" {...provided.droppableProps} ref={provided.innerRef}>
-              {images.map((picture, index) => (
-                <Draggable key={index} draggableId={index.toString()} index={index}>
-                  {(provided, snapshot) => (
-                    <Box
-                      {...provided.draggableProps}
-                      {...provided.dragHandleProps}
-                      ref={provided.innerRef}
-                      sx={{
-                        backgroundColor: "primary.main",
-                        width: "100%",
-                        borderRadius: "15px",
-                        marginBottom: "1rem"
-                      }}
-                    >
-                      <Stack direction="row" alignItems="center" justifyContent="space-between">
-                        <img
-                          alt="product"
-                          style={{
-                            width: "100%",
-                            package_height: "auto",
-                            maxWidth: "100px",
-                            maxHeight: "100px",
-                            borderRadius: "15px"
-                          }}
-                          className="mv-10px ml-10px"
-                          src={picture.link}
-                        />
-                        <Typography style={{ color: "white" }}>{picture.link}</Typography>
-                        <Stack direction="row" justifyContent="flex-end">
-                          <IconButton onClick={() => copyToClipboard(picture.link)} aria-label="Copy">
-                            <FileCopy style={{ color: "white", fontSize: "20px" }} />
-                          </IconButton>
-                          <IconButton onClick={() => remove_image(index)} aria-label="Delete">
-                            <Delete style={{ color: "white", fontSize: "20px" }} />
-                          </IconButton>
+              {images &&
+                Array.isArray(images) &&
+                images.map((picture, index) => (
+                  <Draggable key={index} draggableId={index.toString()} index={index}>
+                    {(provided, snapshot) => (
+                      <Box
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        ref={provided.innerRef}
+                        sx={{
+                          backgroundColor: "primary.main",
+                          width: "100%",
+                          borderRadius: "15px",
+                          marginBottom: "1rem"
+                        }}
+                      >
+                        <Stack direction="row" alignItems="center" justifyContent="space-between">
+                          <img
+                            alt="product"
+                            style={{
+                              width: "100%",
+                              package_height: "auto",
+                              maxWidth: "100px",
+                              maxHeight: "100px",
+                              borderRadius: "15px"
+                            }}
+                            className="mv-10px ml-10px"
+                            src={picture.link}
+                          />
+                          <Typography style={{ color: "white" }}>{picture.link}</Typography>
+                          <Stack direction="row" justifyContent="flex-end">
+                            <IconButton onClick={() => copyToClipboard(picture.link)} aria-label="Copy">
+                              <FileCopy style={{ color: "white", fontSize: "20px" }} />
+                            </IconButton>
+                            <IconButton onClick={() => remove_image(index)} aria-label="Delete">
+                              <Delete style={{ color: "white", fontSize: "20px" }} />
+                            </IconButton>
+                          </Stack>
                         </Stack>
-                      </Stack>
-                    </Box>
-                  )}
-                </Draggable>
-              ))}
+                      </Box>
+                    )}
+                  </Draggable>
+                ))}
               {provided.placeholder}
             </Box>
           )}

@@ -72,42 +72,41 @@ const DropdownDisplayV2 = ({
                   ))
                 }
               />
-              {showItems && (
+              {showItems && value && Array.isArray(value) && (
                 <List>
-                  {value &&
-                    value?.map((item, index) => (
-                      <Draggable key={item._id} draggableId={item._id} index={index}>
-                        {(provided, snapshot) => (
-                          <ListItem
-                            ref={provided.innerRef}
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                            key={item._id}
-                            sx={{
-                              backgroundColor: snapshot.isDragging ? "secondary.main" : "primary.main",
-                              color: "white",
-                              "&:hover": {
-                                backgroundColor: "primary.dark"
-                              },
-                              borderRadius: 5,
-                              my: 1
-                            }}
-                          >
-                            <ListItemText primary={item[labelProp]} />
-                            <ListItemSecondaryAction>
-                              {onEdit && (
-                                <IconButton edge="end" onClick={() => onEdit(item)}>
-                                  <EditIcon sx={{ color: "white" }} />
-                                </IconButton>
-                              )}
-                              <IconButton edge="end" onClick={() => onChange(value.filter(selectedItem => selectedItem._id !== item._id))}>
-                                <DeleteIcon sx={{ color: "white" }} />
+                  {value.map((item, index) => (
+                    <Draggable key={item._id} draggableId={item._id} index={index}>
+                      {(provided, snapshot) => (
+                        <ListItem
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                          key={item._id}
+                          sx={{
+                            backgroundColor: snapshot.isDragging ? "secondary.main" : "primary.main",
+                            color: "white",
+                            "&:hover": {
+                              backgroundColor: "primary.dark"
+                            },
+                            borderRadius: 5,
+                            my: 1
+                          }}
+                        >
+                          <ListItemText primary={item[labelProp]} />
+                          <ListItemSecondaryAction>
+                            {onEdit && (
+                              <IconButton edge="end" onClick={() => onEdit(item)}>
+                                <EditIcon sx={{ color: "white" }} />
                               </IconButton>
-                            </ListItemSecondaryAction>
-                          </ListItem>
-                        )}
-                      </Draggable>
-                    ))}
+                            )}
+                            <IconButton edge="end" onClick={() => onChange(value.filter(selectedItem => selectedItem._id !== item._id))}>
+                              <DeleteIcon sx={{ color: "white" }} />
+                            </IconButton>
+                          </ListItemSecondaryAction>
+                        </ListItem>
+                      )}
+                    </Draggable>
+                  ))}
                   {provided.placeholder}
                 </List>
               )}
