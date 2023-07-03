@@ -348,7 +348,7 @@ const essentials = {
       path: "/collections/all/products/category/wholesale",
       variant: "nav",
       className: "ta-l",
-      permissions: item => item?.isWholesaler
+      permissions: item => (item ? item.isWholesaler : undefined)
     }
   ]
 };

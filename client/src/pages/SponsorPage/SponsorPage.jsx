@@ -66,13 +66,13 @@ const SponsorPage = props => {
             <GLButton variant="secondary" onClick={() => history.goBack()}>
               Back
             </GLButton>
-            {current_user?.isAdmin && (
+            {/* {current_user?.isAdmin && (
               <Link to={"/secure/glow/editaffiliate/" + props.match.params.pathname}>
                 <GLButton variant="secondary" style={{ width: "156px" }}>
                   Edit Affiliate
                 </GLButton>
               </Link>
-            )}
+            )} */}
           </div>
 
           <div className="column jc-c">
@@ -232,42 +232,8 @@ const SponsorPage = props => {
               </div>
             </div>
           )}
-          <h3 className=""> {affiliate.artist_name}'s Glow Gear</h3>
-          {/* <div className="product_big_screen">
-						<div className="products jc-b m-auto">
-							{
-							{affiliate.products && (
-								<ul className="products" style={{ marginTop: 0 }}>
-									{affiliate.products.map((product, index) => (
-										<ProductSimple
-											size="300px"
-											key={index}
-											product={product}
-											// product_occurrences={product_occurrences}
-										/>
-									))}
-								</ul>
-							)}
-						</div>
-					</div>
-					<div className="product_small_screen none">
-						<div className="products jc-b m-auto">
-							{
-							{affiliate.products && (
-								<ul className="products" style={{ marginTop: 0 }}>
-									{affiliate.products.map((product, index) => (
-										<ProductSimpleSmallScreen
-											size="300px"
-											key={index}
-											product={product}
-											// product_occurrences={product_occurrences}
-										/>
-									))}
-								</ul>
-							)}
-						</div>
-					</div> */}
-          {affiliate.products && (
+          {/* <h3 className=""> {affiliate.artist_name}'s Glow Gear</h3> */}
+          {/* {affiliate.products && (
             <div>
               <div className="product_big_screen">
                 {affiliate.products && (
@@ -299,7 +265,7 @@ const SponsorPage = props => {
                 )}
               </div>
             </div>
-          )}
+          )} */}
           {/* <div className="products jc-c m-auto">
 						{affiliate.products &&
 							affiliate.products.map((product) => {

@@ -228,5 +228,17 @@ export default {
     } catch (error) {
       res.status(500).send({ error, message: "Error Deleting Product" });
     }
+  },
+  distinct_products_c: async (req: any, res: any) => {
+    const { params } = req;
+    try {
+      const product = await product_services.distinct_products_s(params);
+      if (product) {
+        return res.status(201).send(product);
+      }
+      return res.status(500).send({ message: "Error Finding Product Attributes" });
+    } catch (error) {
+      res.status(500).send({ error, message: "Error Finding Product Attributes" });
+    }
   }
 };

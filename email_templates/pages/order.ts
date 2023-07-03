@@ -304,9 +304,10 @@ export default (props: any): string => {
 																</p>
 															</td>
 															<td style="font-family:helvetica;padding:5px 0;text-align:right" align="righ=t">
-																<strong style="font-size:16px;color:white">-$${(
-                                  order.orderItems.reduce((a: any, c: any) => a + c.price * c.qty, 0) - order.itemsPrice
-                                )?.toFixed(2)}</strong>
+															<strong style="font-size:16px;color:white">&minus;&nbsp;$${(
+                                order.orderItems.reduce((a: any, c: any) => a + c.price * c.qty, 0) - order.itemsPrice
+                              )?.toFixed(2)}</strong>
+
 															</td>
 														</tr>`
                                 : ""

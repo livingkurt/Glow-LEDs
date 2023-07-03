@@ -16,7 +16,7 @@ import { createTheme, ThemeProvider } from "@mui/material";
 import glow_leds_theme from "./theme";
 import { OrderPage } from "./pages/OrderPage";
 import { PlaceOrderPage } from "./pages/PlaceOrderPage";
-import { ChangePasswordPage, PasswordResetPage, ResetPasswordPage, AdminChangePasswordPage } from "./pages/ProfiePage/components";
+import { AdminChangePasswordPage } from "./pages/ProfiePage/components";
 import { EditProductPage } from "./pages/ProductsPage/components";
 import { GcodeContinousPage } from "./pages/GcodeContinousPage";
 import { DatabaseMigrationPage } from "./pages/DatabaseMigrationPage";
@@ -42,9 +42,25 @@ import { EditPromoPage, PromosPage } from "./pages/PromosPage";
 import { AffiliatesPage } from "./pages/AffiliatesPage";
 import { EditTeamPage, TeamsPage } from "./pages/TeamsPage";
 import { ChipsPage, EditChipPage } from "./pages/ChipsPage";
+
+import { ProfilePage } from "./pages/ProfiePage";
+import { UsersPage } from "./pages/UsersPage";
+import { Four04Page } from "./pages/Four04Page";
+import { TutorialsPage } from "./pages/TutorialsPage";
+import { WholesalersPage } from "./pages/WholesalersPage";
+import { ImagesPage } from "./pages/ImagesPage";
+import LabelCreatorPage from "./pages/LabelCreatorPage/LabelCreatorPage";
+import config from "./config";
+import jwt_decode from "jwt-decode";
+import { EditOrderPage } from "./pages/EditOrderPage";
+import { set_current_user } from "./slices/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { handleTokenRefresh } from "./api/axiosInstance";
+import * as API from "./api";
 import { HomePage } from "./pages/HomePage";
 import { LoginPage } from "./pages/LoginPage";
 import VerifiedPage from "./pages/LoginPage/components/VerifiedPage";
+import { ChangePasswordPage, PasswordResetPage, ResetPasswordPage } from "./pages/ProfiePage/components";
 import { RegisterPage } from "./pages/RegisterPage";
 import ShippingPage from "./pages/ProfiePage/components/UserShippingPage";
 import { CartPage } from "./pages/CartPage";
@@ -69,26 +85,49 @@ import { FAQPage } from "./pages/FAQPage";
 import { SitemapPage } from "./pages/SitemapPage";
 import { MusicPage } from "./pages/MusicPage";
 import { CompletePage } from "./pages/CompletePage";
-import { ProfilePage } from "./pages/ProfiePage";
-import { UsersPage } from "./pages/UsersPage";
 import { CheckEmailPage } from "./pages/LoginPage/components";
 import { AffiliateTermsPage } from "./pages/AffiliatesPage/components";
-import { Four04Page } from "./pages/Four04Page";
-import { TutorialsPage } from "./pages/TutorialsPage";
-import { WholesalersPage } from "./pages/WholesalersPage";
 import { TutorialsGridPage } from "./pages/TutorialsGridPage";
-import { ImagesPage } from "./pages/ImagesPage";
-import LabelCreatorPage from "./pages/LabelCreatorPage/LabelCreatorPage";
 import TrackOrderPage from "./pages/TrackOrderPage/TrackOrderPage";
-import config from "./config";
-import jwt_decode from "jwt-decode";
-import { EditOrderPage } from "./pages/EditOrderPage";
-import { set_current_user } from "./slices/userSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { handleTokenRefresh } from "./api/axiosInstance";
-import * as API from "./api";
+import routes from "./sitemap/routes";
 
 const App = () => {
+  const Components = {
+    HomePage,
+    LoginPage,
+    VerifiedPage,
+    ChangePasswordPage,
+    PasswordResetPage,
+    ResetPasswordPage,
+    RegisterPage,
+    ShippingPage,
+    CartPage,
+    ProductsGridPage,
+    ProductsGridByChipPage,
+    ProductPage,
+    FeaturesGridPage,
+    FeaturedPage,
+    SponsorsGridPage,
+    SponsorPage,
+    TeamsGridPage,
+    TeamPage,
+    AnnouncementsPage,
+    ManualPage,
+    ColorPalettePage,
+    EventsPage,
+    ContactPage,
+    TermsPage,
+    MenuPage,
+    AboutPage,
+    FAQPage,
+    SitemapPage,
+    MusicPage,
+    CompletePage,
+    CheckEmailPage,
+    AffiliateTermsPage,
+    TutorialsGridPage,
+    TrackOrderPage
+  };
   const dispatch = useDispatch();
   useEffect(() => {
     handleTokenRefresh();
@@ -355,72 +394,9 @@ const App = () => {
                 <AdminRoute path="/secure/glow/images" component={ImagesPage} />
                 <AdminRoute path="/secure/glow/wholesalers" component={WholesalersPage} />
 
-                {/* Public Routes */}
-                <Route path="/" exact={true} component={HomePage} />
-
-                {/* Account */}
-                <Route path="/account/login" component={LoginPage} />
-                <Route path="/account/verified/:id" component={VerifiedPage} />
-                <Route path="/account/checkemail" component={CheckEmailPage} />
-                <Route path="/account/changepassword" component={ChangePasswordPage} />
-                <Route path="/account/register" component={RegisterPage} />
-                <Route path="/account/passwordreset" component={PasswordResetPage} />
-                <Route path="/account/resetpassword/:id" component={ResetPasswordPage} />
-
-                {/* Checkout */}
-                <Route path="/checkout/placeorder" component={PlaceOrderPage} />
-                <Route path="/checkout/shipping" component={ShippingPage} />
-                <Route path="/checkout/cart/:pathname?" component={CartPage} />
-                <Route path="/checkout/order/:id" exact={true} component={OrderPage} />
-
-                {/* Collections */}
-                {/* Product Collections */}
-                <Route path="/collections/all/products" exact={true} component={ProductsGridPage} />
-                <Route path="/collections/all/products/shop_by_chip" component={ProductsGridByChipPage} />
-                <Route
-                  path="/collections/all/products/category/:category/subcategory/:subcategory/collection/:collection?"
-                  component={ProductsGridPage}
-                />
-                <Route path="/collections/all/products/category/:category/subcategory/:subcategory?" component={ProductsGridPage} />
-                <Route path="/collections/all/products/category/:category" component={ProductsGridPage} />
-                <Route path="/collections/all/products/:pathname" component={ProductPage} />
-
-                {/* Feature Collections */}
-                <Route path="/collections/all/features/category/:category?" exact={true} component={FeaturesGridPage} />
-                <Route path="/collections/all/features/category/:category/:pathname?" exact={true} component={FeaturedPage} />
-
-                {/* Sponsors Collections */}
-                <Route path="/collections/all/sponsors/category/:category?" exact={true} component={SponsorsGridPage} />
-                <Route path="/collections/all/sponsors" exact={true} component={SponsorsGridPage} />
-                <Route path="/collections/all/sponsors/:promo_code?" exact={true} component={SponsorPage} />
-
-                {/* Team Collections */}
-                <Route path="/collections/all/teams/category/:category?" exact={true} component={TeamsGridPage} />
-                <Route path="/collections/all/teams" exact={true} component={TeamsGridPage} />
-                <Route path="/collections/all/teams/:pathname?" exact={true} component={TeamPage} />
-
-                {/* Team Collections */}
-                <Route path="/collections/all/tutorials/category/:category?" exact={true} component={TutorialsGridPage} />
-                <Route path="/collections/all/tutorials" exact={true} component={TutorialsGridPage} />
-                {/* <Route path="/collections/all/tutorials/:pathname?" exact={true} component={TeamPage} /> */}
-
-                {/* Pages */}
-                <Route path="/pages/announcements" exact={true} component={AnnouncementsPage} />
-                <Route path="/pages/manual/:pathname?" exact={true} component={ManualPage} />
-                <Route path="/pages/affiliate_terms" exact={true} component={AffiliateTermsPage} />
-                <Route path="/pages/color_palettes" exact={true} component={ColorPalettePage} />
-                <Route path="/pages/events" exact={true} component={EventsPage} />
-                <Route path="/pages/contact/:reason?" exact={true} component={ContactPage} />
-                <Route path="/pages/glowcontrol" component={ContactPage} />
-                <Route path="/pages/terms" exact={true} component={TermsPage} />
-                <Route path="/pages/menu/:pathname" exact={true} component={MenuPage} />
-                <Route path="/pages/about" exact={true} component={AboutPage} />
-                <Route path="/pages/faq" exact={true} component={FAQPage} />
-                <Route path="/pages/sitemap" exact={true} component={SitemapPage} />
-                <Route path="/pages/music" exact={true} component={MusicPage} />
-                <Route path="/pages/track_your_order" exact={true} component={TrackOrderPage} />
-                <Route path="/pages/complete/:type/:id?" exact={true} component={CompletePage} />
-
+                {routes.map((route, index) => (
+                  <Route key={index} path={route.path} exact={route.exact} component={Components[route.component]} />
+                ))}
                 <Route component={Four04Page} />
               </Switch>
             </ScrollToTop>

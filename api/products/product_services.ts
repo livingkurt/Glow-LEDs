@@ -467,5 +467,15 @@ export default {
         throw new Error(error.message);
       }
     }
+  },
+  distinct_products_s: async (params: any) => {
+    const { attribute } = params;
+    try {
+      return await product_db.distinct_products_db(attribute);
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
   }
 };
