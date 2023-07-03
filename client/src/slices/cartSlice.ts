@@ -129,6 +129,23 @@ const cartPage = createSlice({
       state.error = payload.error;
       state.message = payload.message;
     },
+    [API.updateQuantity.pending as any]: (state: any, { payload }: any) => {
+      state.loading = true;
+    },
+    [API.updateQuantity.fulfilled as any]: (state: any, { payload }: any) => {
+      const { data, current_user } = payload;
+      state.my_cart = data;
+      // Only update local storage if the user is not logged in
+      if (Object.keys(current_user).length === 0) {
+        localStorage.setItem("cartItems", JSON.stringify(data.cartItems));
+      }
+      state.loading = false;
+    },
+    [API.updateQuantity.rejected as any]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.error = payload.error;
+      state.message = payload.message;
+    },
     [API.addToCart.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
     },

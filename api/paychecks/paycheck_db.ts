@@ -54,6 +54,7 @@ export default {
     }
   },
   update_paychecks_db: async (id: string, body: any) => {
+    console.log({ id, body });
     try {
       const paycheck: any = await Paycheck.findOne({ _id: id });
       if (paycheck) {

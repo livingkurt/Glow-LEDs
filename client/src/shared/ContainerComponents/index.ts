@@ -6,4 +6,4 @@ export { default as ContentWide } from "./ContentWide";
 export { default as Footer } from "./Footer";
 export { default as Sidebar } from "./Sidebar";
 export { default as Banner } from "./Banner";
-export { default as Cart } from "./Cart";
+export { default as Cart } from "./Cart/Cart";

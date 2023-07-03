@@ -2,6 +2,7 @@ import { affiliate_db } from "../affiliates";
 import { user_db } from "../users";
 
 export const normalizePaycheckFilters = (input: any) => {
+  console.log({ input });
   const output: any = {};
   Object.keys(input).forEach(key => {
     switch (key) {
@@ -10,14 +11,14 @@ export const normalizePaycheckFilters = (input: any) => {
           output["paid"] = false;
         }
         break;
-      case "affiliates":
-        for (const affiliate of input.affiliates) {
-          output["affiliate"] = affiliate.value;
+      case "affiliate":
+        for (const affiliate of input.affiliate) {
+          output["affiliate"] = affiliate;
         }
         break;
       case "employees":
         for (const employee of input.employees) {
-          output["user"] = employee.value;
+          output["user"] = employee;
         }
         break;
 
@@ -25,6 +26,7 @@ export const normalizePaycheckFilters = (input: any) => {
         break;
     }
   });
+  console.log({ output });
   return output;
 };
 

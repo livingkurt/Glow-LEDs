@@ -81,6 +81,7 @@ const paycheckPage = createSlice({
     [API.savePaycheck.fulfilled as any]: (state: any, { payload }: any) => {
       state.loading = false;
       state.message = "Paycheck Saved";
+      state.remoteVersionRequirement = Date.now();
     },
     [API.savePaycheck.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
@@ -107,6 +108,7 @@ const paycheckPage = createSlice({
       state.loading = false;
       state.paycheck = payload.paycheck;
       state.message = "Paycheck Deleted";
+      state.remoteVersionRequirement = Date.now();
     },
     [API.deletePaycheck.rejected as any]: (state: any, { payload }: any) => {
       state.loading = false;
