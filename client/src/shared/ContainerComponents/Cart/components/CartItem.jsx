@@ -54,7 +54,7 @@ const CartItem = ({ item, index, dispatch, current_user }) => {
           </div>
         </div>
 
-        <div className="jc-b mb-10px">
+        <div className="jc-b mb-10px ai-c">
           <label className="mv-0px mr-10px title_font">Qty:</label>
           <div className="custom-select">
             <select
@@ -76,12 +76,6 @@ const CartItem = ({ item, index, dispatch, current_user }) => {
 
                 // Save the updated cart
                 dispatch(API.updateQuantity({ ...my_cart, cartItems: updatedCartItems }));
-                const cart = document.querySelector(".cart_sidebar");
-
-                if (cart.classList.value === "cart_sidebar open") {
-                } else if (cart.classList.value === "cart_sidebar") {
-                  document.querySelector(".cart_sidebar").classList.add("open");
-                }
               }}
             >
               {[...Array(30).keys()].map((x, index) => (
