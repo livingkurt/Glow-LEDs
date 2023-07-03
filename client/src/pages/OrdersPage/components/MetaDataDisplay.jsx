@@ -13,16 +13,14 @@ const MetaDataDisplay = ({ row }) => {
     dispatch(set_loading_label(true));
     await API_Emails.send_order_status_email(
       row,
-      status === "manufactured" ? "Your Order has been Crafted!" : "Your Order has been " + toCapitalize(status) + "!",
+      "Your Order has been " + toCapitalize(status) + "!",
       row.shipping.email,
       status,
       message_to_user
     );
     await API_Emails.send_order_status_email(
       row,
-      status === "manufactured"
-        ? row.shipping.first_name + "'s Order has been Crafted!"
-        : row.shipping.first_name + "'s Order has been " + toCapitalize(status) + "!",
+      row.shipping.first_name + "'s Order has been " + toCapitalize(status) + "!",
       config.REACT_APP_INFO_EMAIL,
       status,
       message_to_user

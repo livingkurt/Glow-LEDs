@@ -33,9 +33,16 @@ const OrderStatusButtons = ({ order, update_order_payment_state, update_order_st
       <GLButton
         variant="primary"
         className="mv-5px w-100per"
-        onClick={() => update_order_state(order, order.isManufactured, "isManufactured", "manufacturedAt")}
+        onClick={() => update_order_state(order, order.isCrafting, "isCrafting", "craftingAt")}
       >
-        {order.isManufactured ? "Unset to Manufactured" : "Set to Manufactured"}
+        {order.isCrafting ? "Unset to Crafting" : "Set to Crafting"}
+      </GLButton>
+      <GLButton
+        variant="primary"
+        className="mv-5px w-100per"
+        onClick={() => update_order_state(order, order.isCrafted, "isCrafted", "craftedAt")}
+      >
+        {order.isCrafted ? "Unset to Crafted" : "Set to Crafted"}
       </GLButton>
       <GLButton
         variant="primary"

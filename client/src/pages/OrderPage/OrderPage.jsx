@@ -170,16 +170,14 @@ const OrderPage = props => {
   const send_email = async (status, message_to_user) => {
     await API_Emails.send_order_status_email(
       order,
-      status === "manufactured" ? "Your Order has been Crafted!" : "Your Order has been " + toCapitalize(status) + "!",
+      "Your Order has been " + toCapitalize(status) + "!",
       order.shipping.email,
       status,
       message_to_user
     );
     await API_Emails.send_order_status_email(
       order,
-      status === "manufactured"
-        ? order.shipping.first_name + "'s Order has been Crafted!"
-        : order.shipping.first_name + "'s Order has been " + toCapitalize(status) + "!",
+      order.shipping.first_name + "'s Order has been " + toCapitalize(status) + "!",
       config.REACT_APP_INFO_EMAIL,
       status,
       message_to_user
@@ -502,11 +500,11 @@ const OrderPage = props => {
     set_loading_label(false);
   };
 
-  const check_item_as_manufactured = async index => {
+  const check_item_as_crafted = async index => {
     let new_order_items = [...order_items];
     new_order_items[index] = {
       ...new_order_items[index],
-      is_manufactured: order_items[index].is_manufactured ? false : true
+      is_crafted: order_items[index].is_crafted ? false : true
     };
     set_order_items(new_order_items);
     dispatch(
@@ -731,11 +729,21 @@ const OrderPage = props => {
                   <div>
                     <div className="row ai-c">
                       <div className="mv-5px">
-                        {order.isManufactured ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
+                        {order.isCrafting ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
                       </div>
-                      <div className="mh-10px">Manufactured</div>
+                      <div className="mh-10px">Crafting</div>
 
-                      <div>{!order.manufacturedAt ? "" : format_date(order.manufacturedAt)}</div>
+                      <div>{!order.craftingAt ? "" : format_date(order.craftingAt)}</div>
+                    </div>
+                  </div>
+                  <div>
+                    <div className="row ai-c">
+                      <div className="mv-5px">
+                        {order.isCrafted ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
+                      </div>
+                      <div className="mh-10px">Crafted</div>
+
+                      <div>{!order.craftedAt ? "" : format_date(order.craftedAt)}</div>
                     </div>
                   </div>
                   <div>
@@ -937,7 +945,7 @@ ${order.shipping.email}`)
                       <div>Cart is empty</div>
                     ) : (
                       order.orderItems.map((item, index) => (
-                        <CartItem check_item_as_manufactured={check_item_as_manufactured} item={item} index={index} show_qty={false} />
+                        <CartItem check_item_as_crafted={check_item_as_crafted} item={item} index={index} show_qty={false} />
                       ))
                     )}
                   </ul>
@@ -1192,12 +1200,12 @@ ${order.shipping.email}`)
 										onClick={() =>
 											update_order_state(
 												order,
-												order.isManufactured,
-												'isManufactured',
-												'manufacturedAt'
+												order.isCrafted,
+												'isCrafted',
+												'craftedAt'
 											)}
 									>
-										{order.isManufactured ? 'Unset to Manufactured' : 'Set to Manufactured'}
+										{order.isCrafted ? 'Unset to Crafted' : 'Set to Crafted'}
 									</GLButton>
 									<GLButton
 										variant="primary" className="mv-5px "

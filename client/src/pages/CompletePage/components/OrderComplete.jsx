@@ -29,8 +29,8 @@ const OrderComplete = ({ current_user, order_id }) => {
       <p className="ta-c max-w-800px lh-30px m-auto">You will be receiving a confirmation email with your order details shortly.</p>
       <h2 className="ta-c mb-10px">What to Expect</h2>
       <div className="ta-c max-w-800px m-auto">
-        <p className="mv-10px "> Since everything is made to order...</p>
-        <p className="mv-10px "> You will receive your hand crafted items within 1 - 3 weeks of placing your order domestically.</p>
+        <p className="mv-10px ">Since everything is made to order...</p>
+        <p className="mv-10px ">You will receive your hand crafted items within 1 - 3 weeks of placing your order domestically.</p>
         <p className="mv-10px ">Expect a three to six week delivery window for international orders.</p>
         <p className="mv-10px ">Keep in mind, items may ship out at different times on the Glow LEDs product journey.</p>
         <p className="mv-10px ">For more information about how we create our products and shipping times, refer to our FAQs.</p>

@@ -2,7 +2,9 @@ import { format_date, determine_product_name, order_status_steps, determine_trac
 
 const determine_emoji = (status: string): string | undefined => {
   switch (status) {
-    case "manufactured":
+    case "crafting":
+      return "🛠️";
+    case "crafted":
       return "🛠️";
     case "packaged":
       return "📦";
@@ -16,7 +18,9 @@ const determine_emoji = (status: string): string | undefined => {
 };
 const determine_color = (status: string): string | undefined => {
   switch (status) {
-    case "manufactured":
+    case "crafting":
+      return "#4b7188";
+    case "crafted":
       return "#4b7188";
     case "packaged":
       return "#6f5f7d";
@@ -30,7 +34,9 @@ const determine_color = (status: string): string | undefined => {
 };
 const determine_message = (status: string): string | undefined => {
   switch (status) {
-    case "manufactured":
+    case "crafting":
+      return "your items have begun crafting! We will notify you when you items have been crafted.";
+    case "crafted":
       return "your items just finished being hand crafted! We will notify you when you items have been cleaned up and packaged.";
     case "packaged":
       return "your order has been packaged and is ready to ship! We will notify you when it has been sent.";
@@ -57,13 +63,11 @@ export default ({ email, order, status, message_to_user }: any): string => {
               <h1
                 style="text-align:center;font-family:helvetica;width:100%;margin:10px auto;line-height:50px;color:#333333;font-size:50px; padding-bottom: 7px;">
                 ${order.shipping.first_name.toUpperCase()}, </h1>
-              <h1 style="text-align:center;font-family:helvetica;width:100%;margin:0px;line-height:50px;color:#333333;font-size:${
-                status === " manufactured" ? "30px" : "30px"
-              }; padding-bottom: 7px;">
+              <h1 style="text-align:center;font-family:helvetica;width:100%;margin:0px;line-height:50px;color:#333333;font-size:"30px"; padding-bottom: 7px;">
                 ${
                   status === "reassured"
                     ? "Apologies for the Longer Wait Time"
-                    : `YOUR ORDER HAS BEEN ${status === "manufactured" ? "CRAFTED" : status.toUpperCase()} ${determine_emoji(status)}`
+                    : `YOUR ORDER HAS BEEN ${status.toUpperCase()} ${determine_emoji(status)}`
                 }</h1>
             </td>
           </tr>

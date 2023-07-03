@@ -26,8 +26,8 @@ const EditOrderPage = props => {
   const [totalPrice, set_totalPrice] = useState(0);
   const [isPaid, set_isPaid] = useState(false);
   const [paidAt, set_paidAt] = useState();
-  const [isManufactured, set_isManufactured] = useState(false);
-  const [manufacturedAt, set_manufacturedAt] = useState("");
+  const [isCrafted, set_isCrafted] = useState(false);
+  const [craftedAt, set_craftedAt] = useState("");
   const [isPackaged, set_isPackaged] = useState(false);
   const [packagedAt, set_packagedAt] = useState();
   const [isShipped, set_isShipped] = useState(false);
@@ -81,9 +81,9 @@ const EditOrderPage = props => {
     if (order.paidAt) {
       set_paidAt(format_date(order.paidAt));
     }
-    set_isManufactured(order.isManufactured);
-    if (order.manufacturedAt) {
-      set_manufacturedAt(format_date(order.manufacturedAt));
+    set_isCrafted(order.isCrafted);
+    if (order.craftedAt) {
+      set_craftedAt(format_date(order.craftedAt));
     }
     set_isPackaged(order.isPackaged);
     if (order.packagedAt) {
@@ -124,8 +124,8 @@ const EditOrderPage = props => {
     set_totalPrice("");
     set_isPaid("");
     set_paidAt("");
-    set_isManufactured("");
-    set_manufacturedAt("");
+    set_isCrafted("");
+    set_craftedAt("");
     set_isPackaged("");
     set_packagedAt("");
     set_isShipped("");
@@ -186,8 +186,8 @@ const EditOrderPage = props => {
         totalPrice,
         isPaid,
         paidAt,
-        isManufactured,
-        manufacturedAt: manufacturedAt && unformat_date(manufacturedAt),
+        isCrafted,
+        craftedAt: craftedAt && unformat_date(craftedAt),
         isPackaged,
         packagedAt: packagedAt && unformat_date(packagedAt),
         isShipped,
@@ -710,29 +710,29 @@ const EditOrderPage = props => {
                         <div>Loading...</div>
                       ) : (
                         <li>
-                          <label htmlFor="isManufactured">Manufactured?</label>
+                          <label htmlFor="isCrafted">Crafted?</label>
                           <input
                             type="checkbox"
-                            name="isManufactured"
-                            // defaultChecked={isManufactured ? 'checked' : 'unchecked'}
-                            // defaultValue={isManufactured}
-                            defaultChecked={isManufactured}
-                            // value={isManufactured ? '1' : '0'}
-                            id="isManufactured"
+                            name="isCrafted"
+                            // defaultChecked={isCrafted ? 'checked' : 'unchecked'}
+                            // defaultValue={isCrafted}
+                            defaultChecked={isCrafted}
+                            // value={isCrafted ? '1' : '0'}
+                            id="isCrafted"
                             onChange={e => {
-                              set_isManufactured(e.target.checked);
+                              set_isCrafted(e.target.checked);
                             }}
                           />
                         </li>
                       )}
                       <li>
-                        <label htmlFor="manufacturedAt">Manufactured At</label>
+                        <label htmlFor="craftedAt">Crafted At</label>
                         <input
                           type="text"
-                          name="manufacturedAt"
-                          value={manufacturedAt}
-                          id="manufacturedAt"
-                          onChange={e => set_manufacturedAt(e.target.value)}
+                          name="craftedAt"
+                          value={craftedAt}
+                          id="craftedAt"
+                          onChange={e => set_craftedAt(e.target.value)}
                         />
                       </li>
 

@@ -11,35 +11,48 @@ export const normalizeOrderFilters = (input: any) => {
           switch (status) {
             case "isPaid":
               output["isPaid"] = true;
-              output["isManufactured"] = false;
+              output["isCrafting"] = false;
+              output["isCrafted"] = false;
               output["isPackaged"] = false;
               output["isShipped"] = false;
               output["isDelivered"] = false;
               break;
-            case "isManufactured":
+            case "isCrafting":
               output["isPaid"] = true;
-              output["isManufactured"] = true;
+              output["isCrafting"] = true;
+              output["isCrafted"] = false;
+              output["isPackaged"] = false;
+              output["isShipped"] = false;
+              output["isDelivered"] = false;
+              break;
+            case "isCrafted":
+              output["isPaid"] = true;
+              output["isCrafting"] = true;
+              output["isCrafted"] = true;
               output["isPackaged"] = false;
               output["isShipped"] = false;
               output["isDelivered"] = false;
               break;
             case "isPackaged":
               output["isPaid"] = true;
-              output["isManufactured"] = true;
+              output["isCrafting"] = true;
+              output["isCrafted"] = true;
               output["isPackaged"] = true;
               output["isShipped"] = false;
               output["isDelivered"] = false;
               break;
             case "isShipped":
               output["isPaid"] = true;
-              output["isManufactured"] = true;
+              output["isCrafting"] = true;
+              output["isCrafted"] = true;
               output["isPackaged"] = true;
               output["isShipped"] = true;
               output["isDelivered"] = false;
               break;
             case "isInTransit":
               output["isPaid"] = true;
-              output["isManufactured"] = true;
+              output["isCrafting"] = true;
+              output["isCrafted"] = true;
               output["isPackaged"] = true;
               output["isShipped"] = true;
               output["isInTransit"] = true;
@@ -48,7 +61,8 @@ export const normalizeOrderFilters = (input: any) => {
               break;
             case "isOutForDelivery":
               output["isPaid"] = true;
-              output["isManufactured"] = true;
+              output["isCrafting"] = true;
+              output["isCrafted"] = true;
               output["isPackaged"] = true;
               output["isShipped"] = true;
               output["isInTransit"] = true;
@@ -57,7 +71,8 @@ export const normalizeOrderFilters = (input: any) => {
               break;
             case "isDelivered":
               output["isPaid"] = true;
-              output["isManufactured"] = true;
+              output["isCrafting"] = true;
+              output["isCrafted"] = true;
               output["isPackaged"] = true;
               output["isShipped"] = true;
               output["isInTransit"] = true;

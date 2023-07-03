@@ -1,7 +1,8 @@
 const order_colors = [
   { name: "Not Paid", color: "#6d3e3e" },
   { name: "Paid", color: "#3e4c6d" },
-  { name: "Manufactured", color: "#4b7188" },
+  { name: "Crafting", color: "#4b7188" },
+  { name: "Crafted", color: "#4b7188" },
   { name: "Packaged", color: "#6f5f7d" },
   { name: "Shipped", color: "#636363" },
   { name: "Delivered", color: "#333333" }
@@ -15,7 +16,10 @@ export const determine_order_color = order => {
   if (order.isPaid) {
     result = order_colors[1].color;
   }
-  if (order.isManufactured) {
+  if (order.isCrafting) {
+    result = order_colors[2].color;
+  }
+  if (order.isCrafted) {
     result = order_colors[2].color;
   }
   if (order.isPackaged) {

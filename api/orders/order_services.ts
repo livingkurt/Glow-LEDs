@@ -50,7 +50,8 @@ export default {
       const availableFilters = {
         order_status: [
           "isPaid",
-          "isManufactured",
+          "isCrafting",
+          "isCrafted",
           "isPackaged",
           "isShipped",
           "isInTransit",
@@ -127,16 +128,28 @@ export default {
         filter = {
           deleted: false,
           isPaid: true,
-          isManufactured: false,
+          isCrafting: false,
+          isCrafted: false,
           isPackaged: false,
           isShipped: false,
           isDelivered: false
         };
-      } else if (sort_query === "manufactured") {
+      } else if (sort_query === "crafting") {
         filter = {
           deleted: false,
           isPaid: true,
-          isManufactured: true,
+          isCrafting: true,
+          isCrafted: false,
+          isPackaged: false,
+          isShipped: false,
+          isDelivered: false
+        };
+      } else if (sort_query === "crafted") {
+        filter = {
+          deleted: false,
+          isPaid: true,
+          isCrafting: true,
+          isCrafted: true,
           isPackaged: false,
           isShipped: false,
           isDelivered: false
@@ -145,7 +158,8 @@ export default {
         filter = {
           deleted: false,
           isPaid: true,
-          isManufactured: true,
+          isCrafting: true,
+          isCrafted: true,
           isPackaged: true,
           isShipped: false,
           isDelivered: false
@@ -154,7 +168,8 @@ export default {
         filter = {
           deleted: false,
           isPaid: true,
-          isManufactured: true,
+          isCrafting: true,
+          isCrafted: true,
           isPackaged: true,
           isShipped: true,
           isDelivered: false
@@ -163,7 +178,8 @@ export default {
         filter = {
           deleted: false,
           isPaid: true,
-          isManufactured: true,
+          isCrafting: true,
+          isCrafted: true,
           isPackaged: true,
           isShipped: true,
           isDelivered: true
@@ -746,7 +762,8 @@ export default {
       const sort = {};
       const filter = {
         deleted: false,
-        isManufactured: true,
+        isCrafting: true,
+        isCrafted: true,
         isPackaged: true,
         isShipped: false,
         isDelivered: false

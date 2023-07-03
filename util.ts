@@ -642,7 +642,7 @@ export const order_status_steps = (order: any, status: string) => {
 
 			<div
 				style='${"width:100%; display:flex; justify-content: center;"} ${
-    status === "manufactured" || status === "packaged" || status === "shipped"
+    status === "crafting" || status === "crafted" || status === "packaged" || status === "shipped"
       ? "border-top: .3rem white solid; color: white;flex: 1 1;padding-top: 1rem; text-align: center; "
       : "	border-top: .3rem #c0c0c0 solid;color: white;flex: 1 1;padding-top: 1rem;text-align: center;"
   }'

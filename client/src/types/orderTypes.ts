@@ -55,7 +55,8 @@ interface IOrderItem {
   secondary_color?: string;
   color_group_name?: string;
   is_printing?: boolean;
-  is_manufactured?: boolean;
+  is_crafting?: boolean;
+  is_crafted?: boolean;
   is_packaged?: boolean;
   secondary_color_group_name?: string;
   secondary_color_code?: string;
@@ -105,7 +106,7 @@ interface IOrderItem {
 //   secondary_color?: string;
 //   color_group_name?: string;
 //   is_printing?: boolean;
-//   is_manufactured?: boolean;
+//   is_crafted?: boolean;
 //   is_packaged?: boolean;
 //   secondary_color_group_name?: string;
 //   secondary_color_code?: string;

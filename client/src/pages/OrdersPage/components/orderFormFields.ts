@@ -270,9 +270,9 @@ export const orderFormFields = ({
           label: "Is Printing",
           default: false
         },
-        is_manufactured: {
+        is_crafted: {
           type: "checkbox",
-          label: "Is Manufactured",
+          label: "Is Crafted",
           default: false
         },
         is_packaged: {
@@ -473,14 +473,23 @@ export const orderFormFields = ({
       type: "date",
       label: "Reassured At"
     },
-    isManufactured: {
+    isCrafting: {
       type: "checkbox",
-      label: "Is Manufactured",
+      label: "Is Crafting",
       default: false
     },
-    manufacturedAt: {
+    craftingAt: {
       type: "date",
-      label: "Manufactured At"
+      label: "Crafting At"
+    },
+    isCrafted: {
+      type: "checkbox",
+      label: "Is Crafted",
+      default: false
+    },
+    craftedAt: {
+      type: "date",
+      label: "Crafted At"
     },
     isPackaged: {
       type: "checkbox",

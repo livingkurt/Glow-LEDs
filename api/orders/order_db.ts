@@ -31,7 +31,7 @@ export default {
       //       isPaid: 1,
       //       isReassured: 1,
       //       isPaused: 1,
-      //       isManufactured: 1,
+      //       isCrafted: 1,
       //       isPackaged: 1,
       //       isShipped: 1,
       //       shipping: 1,

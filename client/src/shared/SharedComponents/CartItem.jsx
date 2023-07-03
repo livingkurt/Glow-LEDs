@@ -9,7 +9,7 @@ import { cart_item_name, sale_price_switch } from "../../utils/react_helper_func
 import { GLButton } from "../GlowLEDsComponents";
 import { deleteCartItem } from "../../api";
 
-const CartItem = ({ index, item, check_item_as_manufactured }) => {
+const CartItem = ({ index, item, check_item_as_crafted }) => {
   const [loading_checkboxes, set_loading_checkboxes] = useState(true);
   const dispatch = useDispatch();
 
@@ -23,7 +23,7 @@ const CartItem = ({ index, item, check_item_as_manufactured }) => {
   return (
     <li key={index} className="">
       <div className="cart-image m-auto ai-c">
-        {check_item_as_manufactured && current_user?.isAdmin && (
+        {check_item_as_crafted && current_user?.isAdmin && (
           <div>
             {loading_checkboxes ? (
               <div>Loading...</div>
@@ -31,15 +31,15 @@ const CartItem = ({ index, item, check_item_as_manufactured }) => {
               <div className="mv-1rem jc-c mr-2rem">
                 <input
                   type="checkbox"
-                  name="is_manufactured"
-                  defaultChecked={item.is_manufactured}
+                  name="is_crafted"
+                  defaultChecked={item.is_crafted}
                   style={{
                     transform: "scale(1.5)"
                   }}
                   className=""
-                  id="is_manufactured"
+                  id="is_crafted"
                   onChange={e => {
-                    check_item_as_manufactured(index);
+                    check_item_as_crafted(index);
                   }}
                 />
               </div>

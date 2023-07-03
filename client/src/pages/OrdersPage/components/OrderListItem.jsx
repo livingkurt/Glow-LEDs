@@ -200,11 +200,11 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
     set_loading_label(false);
   };
 
-  const check_item_as_manufactured = async index => {
+  const check_item_as_crafted = async index => {
     let new_order_items = [...order_items];
     new_order_items[index] = {
       ...new_order_items[index],
-      is_manufactured: order_items[index].is_manufactured ? false : true
+      is_crafted: order_items[index].is_crafted ? false : true
     };
 
     set_order_items(new_order_items);
@@ -450,15 +450,15 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
                           <div className="mv-1rem jc-c mr-2rem">
                             <input
                               type="checkbox"
-                              name="is_manufactured"
-                              defaultChecked={item.is_manufactured}
+                              name="is_crafted"
+                              defaultChecked={item.is_crafted}
                               style={{
                                 transform: "scale(1.5)"
                               }}
                               className=""
-                              id="is_manufactured"
+                              id="is_crafted"
                               onChange={e => {
-                                check_item_as_manufactured(index);
+                                check_item_as_crafted(index);
                               }}
                             />
                           </div>
@@ -527,11 +527,21 @@ const OrderListItem = ({ order, determine_color, admin, send_email, send_paid_em
               <div>
                 <div className="row ai-c">
                   <div className="mv-5px">
-                    {order.isManufactured ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
+                    {order.isCrafting ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
                   </div>
-                  <div className="mh-10px">Manufactured</div>
+                  <div className="mh-10px">Crafting</div>
 
-                  <div>{!order.manufacturedAt ? "" : format_date(order.manufacturedAt)}</div>
+                  <div>{!order.craftingAt ? "" : format_date(order.craftingAt)}</div>
+                </div>
+              </div>
+              <div>
+                <div className="row ai-c">
+                  <div className="mv-5px">
+                    {order.isCrafted ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
+                  </div>
+                  <div className="mh-10px">Crafted</div>
+
+                  <div>{!order.craftedAt ? "" : format_date(order.craftedAt)}</div>
                 </div>
               </div>
               <div>

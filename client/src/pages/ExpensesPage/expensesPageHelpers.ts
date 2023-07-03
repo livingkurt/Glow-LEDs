@@ -1,18 +1,5 @@
 import { tableColors } from "../../shared/GlowLEDsComponents/GLTableV2/glTableHelpers";
 
-export const expenseColors = [
-  { name: "Not Paid", color: tableColors.inactive },
-  { name: "Paid", color: tableColors.active },
-  { name: "Updated", color: tableColors.alt_color_5 },
-  { name: "Label Created", color: tableColors.alt_color_4 },
-  { name: "Manufactured", color: tableColors.alt_color_1 },
-  { name: "Packaged", color: tableColors.alt_color_2 },
-  { name: "Shipped", color: tableColors.waiting },
-  { name: "Delivered", color: tableColors.completed },
-  { name: "International", color: tableColors.alt_color_3 },
-  { name: "Paused", color: tableColors.paused }
-];
-
 export const determineExpenseColors = (expense: any) => {
   let result = tableColors.active;
   // const category = [

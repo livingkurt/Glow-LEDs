@@ -556,7 +556,7 @@ export const order_status_steps = (order, status) => {
       </div>
       <div
         style={
-          status === "manufactured" || status === "packaged" || status === "shipped"
+          status === "crafting" || status === "crafted" || status === "packaged" || status === "shipped"
             ? {
                 borderTop: ".3rem white solid",
                 color: "$font_color",
@@ -573,7 +573,7 @@ export const order_status_steps = (order, status) => {
               }
         }
       >
-        <div style={{ fontSize: "16px" }}>Manufactured </div>
+        <div style={{ fontSize: "16px" }}>Crafted</div>
       </div>
       <div
         style={
@@ -594,7 +594,7 @@ export const order_status_steps = (order, status) => {
               }
         }
       >
-        <div style={{ fontSize: "16px" }}>Packaged </div>
+        <div style={{ fontSize: "16px" }}>Packaged</div>
       </div>
       <div
         style={

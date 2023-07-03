@@ -23,15 +23,20 @@ const OrderStatusButtons = ({ order }) => {
       case "paused":
         dispatch(API.saveOrder({ ...order, isPaused: !order.isPaused, pausedAt: new Date() }));
         break;
-      case "manufactured":
-        dispatch(API.saveOrder({ ...order, isManufactured: !order.isManufactured, manufacturedAt: new Date() }));
+      case "crafting":
+        dispatch(API.saveOrder({ ...order, isCrafting: !order.isCrafting, craftingAt: new Date() }));
+        break;
+      case "crafted":
+        dispatch(API.saveOrder({ ...order, isCrafted: !order.isCrafted, craftedAt: new Date() }));
         break;
       case "packaged":
         dispatch(
           API.saveOrder({
             ...order,
-            isManufactured: !order.isManufactured,
-            manufacturedAt: new Date(),
+            isCrafting: !order.isCrafting,
+            craftingAt: new Date(),
+            isCrafted: !order.isCrafted,
+            craftedAt: new Date(),
             isPackaged: !order.isPackaged,
             packagedAt: new Date()
           })
@@ -51,14 +56,14 @@ const OrderStatusButtons = ({ order }) => {
   const send_order_status_email = async (status, message_to_user) => {
     await API_Emails.send_order_status_email(
       order,
-      status === "manufactured" ? "Your Order has been Crafted!" : "Your Order has been " + toCapitalize(status) + "!",
+      status === "crafted" ? "Your Order has been Crafted!" : "Your Order has been " + toCapitalize(status) + "!",
       order.shipping.email,
       status,
       message_to_user
     );
     await API_Emails.send_order_status_email(
       order,
-      status === "manufactured"
+      status === "crafted"
         ? order.shipping.first_name + "'s Order has been Crafted!"
         : order.shipping.first_name + "'s Order has been " + toCapitalize(status) + "!",
       config.REACT_APP_INFO_EMAIL,
@@ -84,8 +89,11 @@ const OrderStatusButtons = ({ order }) => {
       <GLButton variant="secondary" className="mv-5px w-100per" onClick={() => updateOrder("updated")}>
         {order.isUpdated ? "Unset" : "Set"} to Updated
       </GLButton>
-      <GLButton variant="primary" className="mv-5px w-100per" onClick={() => updateOrder("manufactured")}>
-        {order.isManufactured ? "Unset" : "Set"} to Manufactured
+      <GLButton variant="primary" className="mv-5px w-100per" onClick={() => updateOrder("crafting")}>
+        {order.isCrafting ? "Unset" : "Set"} to Crafting
+      </GLButton>
+      <GLButton variant="primary" className="mv-5px w-100per" onClick={() => updateOrder("crafted")}>
+        {order.isCrafted ? "Unset" : "Set"} to Crafted
       </GLButton>
       <GLButton variant="primary" className="mv-5px w-100per" onClick={() => updateOrder("packaged")}>
         {order.isPackaged ? "Unset" : "Set"} to Packaged

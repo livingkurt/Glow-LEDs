@@ -4,7 +4,8 @@ export const colors = [
   { name: "Not Paid", color: "#6d3e3e" },
   { name: "Paid", color: "#3e4c6d" },
   { name: "Paused", color: "#33323e" },
-  { name: "Manufactured", color: "#4b7188" },
+  { name: "Crafting", color: "#4b7188" },
+  { name: "Crafted", color: "#4b7188" },
   { name: "Packaged", color: "#6f5f7d" },
   { name: "Shipped", color: "#636363" },
   { name: "Delivered", color: "#333333" },
@@ -27,7 +28,10 @@ export const determine_color = (order: any) => {
     if (order.shipping.shipping_label) {
       result = tableColors.alt_color_4;
     }
-    if (order.isManufactured) {
+    if (order.isCrafting) {
+      result = tableColors.alt_color_1;
+    }
+    if (order.isCrafted) {
       result = tableColors.alt_color_1;
     }
     if (order.isPackaged) {
