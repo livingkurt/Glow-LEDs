@@ -56,16 +56,14 @@ const OrderStatusButtons = ({ order }) => {
   const send_order_status_email = async (status, message_to_user) => {
     await API_Emails.send_order_status_email(
       order,
-      status === "crafted" ? "Your Order has been Crafted!" : "Your Order has been " + toCapitalize(status) + "!",
+      "Your Order has been " + toCapitalize(status) + "!",
       order.shipping.email,
       status,
       message_to_user
     );
     await API_Emails.send_order_status_email(
       order,
-      status === "crafted"
-        ? order.shipping.first_name + "'s Order has been Crafted!"
-        : order.shipping.first_name + "'s Order has been " + toCapitalize(status) + "!",
+      order.shipping.first_name + "'s Order has been " + toCapitalize(status) + "!",
       config.REACT_APP_INFO_EMAIL,
       status,
       message_to_user
@@ -77,18 +75,6 @@ const OrderStatusButtons = ({ order }) => {
       <h3 className="fs-20px mv-5px">Order Status</h3>
       <Loading loading={loading_label} />
 
-      <GLButton variant="secondary" className="mv-5px w-100per" onClick={() => updateOrder("paid")}>
-        {order.isPaid ? "Unset" : "Set"} to Paid
-      </GLButton>
-      <GLButton variant="secondary" className="mv-5px w-100per" onClick={() => updateOrder("reassured")}>
-        {order.isReassured ? "Unset" : "Set"} to Reassured
-      </GLButton>
-      <GLButton variant="secondary" className="mv-5px w-100per" onClick={() => updateOrder("paused")}>
-        {order.isPaused ? "Unset" : "Set"} to Paused
-      </GLButton>
-      <GLButton variant="secondary" className="mv-5px w-100per" onClick={() => updateOrder("updated")}>
-        {order.isUpdated ? "Unset" : "Set"} to Updated
-      </GLButton>
       <GLButton variant="primary" className="mv-5px w-100per" onClick={() => updateOrder("crafting")}>
         {order.isCrafting ? "Unset" : "Set"} to Crafting
       </GLButton>
@@ -101,6 +87,21 @@ const OrderStatusButtons = ({ order }) => {
       <GLButton variant="secondary" className="mv-5px w-100per" onClick={() => updateOrder("shipped")}>
         {order.isShipped ? "Unset" : "Set"} to Shipped
       </GLButton>
+      <GLButton variant="secondary" className="mv-5px w-100per" onClick={() => updateOrder("updated")}>
+        {order.isUpdated ? "Unset" : "Set"} to Updated
+      </GLButton>
+
+      <GLButton variant="secondary" className="mv-5px w-100per" onClick={() => updateOrder("paid")}>
+        {order.isPaid ? "Unset" : "Set"} to Paid
+      </GLButton>
+
+      <GLButton variant="secondary" className="mv-5px w-100per" onClick={() => updateOrder("reassured")}>
+        {order.isReassured ? "Unset" : "Set"} to Reassured
+      </GLButton>
+      <GLButton variant="secondary" className="mv-5px w-100per" onClick={() => updateOrder("paused")}>
+        {order.isPaused ? "Unset" : "Set"} to Paused
+      </GLButton>
+
       <GLButton variant="secondary" className="mv-5px w-100per" onClick={() => updateOrder("refunded")}>
         {order.isRefunded ? "Unset" : "Set"} to Refunded
       </GLButton>
