@@ -1813,14 +1813,14 @@ router.route("/update_status").put(async (req: Request, res: Response) => {
 
       // Update each document and save it
       for (const doc of docs) {
-        if (doc[prevDateStatus]) {
-          // Check if the previous date status is defined
+        if (!doc[dateStatus]) {
+          // Check if the current date status is not defined
           doc[status] = true;
-          doc[dateStatus] = new Date(doc[prevDateStatus].getTime() + interval);
+          doc[dateStatus] = doc[prevDateStatus] ? new Date(doc[prevDateStatus].getTime() + interval) : new Date(); // or any default date you want to set
           await doc.save();
           console.log(`Updated document ${doc._id} for status ${status}.`);
         } else {
-          console.log(`Skipped document ${doc._id} due to missing ${prevDateStatus}.`);
+          console.log(`Skipped document ${doc._id} due to existing ${dateStatus}.`);
         }
       }
 
@@ -1831,6 +1831,27 @@ router.route("/update_status").put(async (req: Request, res: Response) => {
 
     console.log("Finished updating statuses.");
     res.status(200).send({ message: "Statuses updated successfully." });
+  } catch (err) {
+    console.error("An error occurred:", err);
+    res.status(500).send({ message: err.message });
+  }
+});
+
+router.route("/migrate_orders").put(async (req: any, res: any) => {
+  try {
+    const oldUserId = "600a151a3a0d3c002a9216e4";
+    const newUserId = "64a46533b66fe4000277ea80";
+
+    if (!oldUserId || !newUserId) {
+      return res.status(400).send({ message: "Both oldUserId and newUserId are required." });
+    }
+
+    const result = await Order.updateMany(
+      { user: oldUserId }, // find all orders with the oldUserId
+      { $set: { user: newUserId } } // update the user field to the newUserId
+    );
+
+    res.send({ message: `Successfully migrated ${result.nModified} orders.`, result });
   } catch (err) {
     console.error("An error occurred:", err);
     res.status(500).send({ message: err.message });
