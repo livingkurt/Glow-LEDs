@@ -67,6 +67,7 @@ export const deactivateOldCodes = async (affiliate: any) => {
   } catch (err) {
     console.log(err);
   }
+};
 
 export const generateSponsorCodes = async (affiliate: any) => {
   try {
