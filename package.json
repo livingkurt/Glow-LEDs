@@ -100,7 +100,7 @@
     "build": "tsc && npm run build:client",
     "build:client": "cd client && npm run build",
     "sitemap": "cd client && npm run generate-sitemap",
-    "heroku-postbuild": "npm run build && npm run build:client && npm run sitemap",
+    "heroku-postbuild": "npm run build && npm run build:client",
     "lint": "npm run lint:scss && npm run lint:js",
     "lint-staged": "$(npm bin)/lint-staged",
     "lint:fix": "npm run lint:js:fix && npm run lint:scss:fix",
