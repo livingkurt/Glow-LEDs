@@ -1,5 +1,5 @@
 const routes = [
-  { path: "/", component: "HomePage", exact: true },
+  // { path: "/", component: "HomePage", exact: true },
 
   { path: "/account/login", component: "LoginPage" },
   { path: "/account/verified/:id", component: "VerifiedPage" },
@@ -50,9 +50,6 @@ const routes = [
   { path: "/pages/music", component: "MusicPage", exact: true },
   { path: "/pages/track_your_order", component: "TrackOrderPage", exact: true },
   { path: "/pages/complete/:type/:id?", component: "CompletePage", exact: true }
-  //   path: "/collections/all/tutorials",
-  //   path: "/pages/menu/support",
-  //   path: "/pages/menu/support",
 ];
 
 module.exports = routes;

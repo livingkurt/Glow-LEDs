@@ -366,7 +366,6 @@ const App = () => {
                 <AdminRoute path="/secure/glow/editparcel/:id?" component={EditParcelPage} />
                 <AdminRoute path="/secure/glow/editpalette/:id?" component={EditPalettePage} />
                 <AdminRoute path="/secure/glow/editfilament/:id?" component={EditFilamentPage} />
-
                 <AdminRoute path="/secure/glow/change_password/:id" component={AdminChangePasswordPage} />
                 <AdminRoute path="/secure/glow/dashboard/monthly_expenes/:year" exact={true} component={MonthlyExpensesPage} />
                 <AdminRoute path="/secure/glow/dashboard/monthly_expenes/:year/:month" exact={true} component={MonthExpensesPage} />
@@ -391,11 +390,11 @@ const App = () => {
                 <AdminRoute path="/secure/glow/teams/category/:category" component={TeamsPage} />
                 <AdminRoute path="/secure/glow/chips" component={ChipsPage} />
                 <AdminRoute path="/secure/glow/product_display" component={ProductsDisplayPage} />
-
                 <AdminRoute path="/secure/glow/tutorials" component={TutorialsPage} />
                 <AdminRoute path="/secure/glow/images" component={ImagesPage} />
                 <AdminRoute path="/secure/glow/wholesalers" component={WholesalersPage} />
 
+                <Route path={"/"} exact={true} component={HomePage} />
                 {routes.map((route, index) => (
                   <Route key={index} path={route.path} exact={route.exact} component={Components[route.component]} />
                 ))}
