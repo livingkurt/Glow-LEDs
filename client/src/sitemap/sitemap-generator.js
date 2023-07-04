@@ -41,7 +41,7 @@ async function generateSitemap() {
       "/collections/all/products/:pathname": pathnameMap,
       "/pages/menu/:pathname": menu_types
     };
-    return new Sitemap(router).applyParams(paramsConfig).build("https://glow-leds.com").save("../sitemap.xml").save("public/sitemap.xml");
+    return new Sitemap(router).applyParams(paramsConfig).build("https://www.glow-leds.com").save("../sitemap.xml");
   } catch (error) {
     console.error("An error occurred while generating the sitemap:", error);
   }
