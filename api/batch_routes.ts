@@ -1779,14 +1779,14 @@ router.route("/update_status").put(async (req: Request, res: Response) => {
 
     // Define the time intervals for each status
     const timeIntervals = {
-      isCrafting: 36 * 60 * 60 * 1000, // 2 hours after payment
-      isCrafted: 3 * 60 * 60 * 1000, // 3 hours after payment
-      isPackaged: 2 * 60 * 60 * 1000, // 2 hours after payment (from provided dates)
-      isPickup: 24 * 60 * 60 * 1000, // 1 hour after payment
-      isShipped: 101 * 60 * 60 * 1000, // 101 hours after payment (from provided dates)
-      isInTransit: 6 * 60 * 60 * 1000, // 6 hours after payment
-      isOutForDelivery: 77 * 60 * 60 * 1000, // 77 hours after payment (from provided dates)
-      isDelivered: 100 * 60 * 60 * 1000 // 80 hours after payment (from provided dates)
+      isCrafting: 96 * 60 * 60 * 1000,
+      isCrafted: 120 * 60 * 60 * 1000,
+      isPackaged: 144 * 60 * 60 * 1000,
+      // isPickup: 144 * 60 * 60 * 1000,
+      isShipped: 168 * 60 * 60 * 1000,
+      isInTransit: 192 * 60 * 60 * 1000,
+      isOutForDelivery: 264 * 60 * 60 * 1000,
+      isDelivered: 264 * 60 * 60 * 1000
     };
 
     // Define the cutoff date
@@ -1796,8 +1796,8 @@ router.route("/update_status").put(async (req: Request, res: Response) => {
     // Update the documents
     let prevStatus = "isPaid";
     for (const [status, interval] of Object.entries(timeIntervals)) {
-      const dateStatus: string = status.slice(2, 1).toLowerCase() + status.slice(3) + "At";
-      const prevDateStatus: string = prevStatus.slice(2, 1).toLowerCase() + prevStatus.slice(3) + "At";
+      const dateStatus: string = status.slice(2).toLowerCase() + "At";
+      const prevDateStatus: string = prevStatus.slice(2).toLowerCase() + "At";
 
       // Find all documents that match the condition
       console.log(
@@ -1813,9 +1813,15 @@ router.route("/update_status").put(async (req: Request, res: Response) => {
 
       // Update each document and save it
       for (const doc of docs) {
-        doc[status] = true;
-        doc[dateStatus] = new Date(doc[prevDateStatus].getTime() + interval);
-        await doc.save();
+        if (doc[prevDateStatus]) {
+          // Check if the previous date status is defined
+          doc[status] = true;
+          doc[dateStatus] = new Date(doc[prevDateStatus].getTime() + interval);
+          await doc.save();
+          console.log(`Updated document ${doc._id} for status ${status}.`);
+        } else {
+          console.log(`Skipped document ${doc._id} due to missing ${prevDateStatus}.`);
+        }
       }
 
       console.log(`Updated documents for status ${status}.`);
@@ -1832,24 +1838,3 @@ router.route("/update_status").put(async (req: Request, res: Response) => {
 });
 
 export default router;
-// (expense.card === "Joint Amex 1006")
-// (expense.card === "Fidelity 7484")
-// (expense.card === "Covantage 0933")
-// (expense.card === "Amazon 9204")
-// (expense.card === "Amazon Business 1004")
-// (expense.card === "Destanye 1991")
-// (expense.card === "Amazon Business 1005")
-// (expense.card === "Stripe")
-// (expense.card === "Chase 2365")
-// (expense.card === "Joint Amex 2012")
-// (expense.card === "Amazon 4654")
-// (expense.card === "Mastercard 2713")
-// (expense.card === "Amazon Business 1004")
-// (expense.card === "Amazon Business 0584")
-//  (expense.card === "Charles Schwab 9432")
-//  (expense.card === "Charles Schwab 7633")
-//  (expense.card === "Venmo Balance")
-//  (expense.card === "Charles Schwab 2628")
-// (expense.card === "Venmo balance")
-// (expense.card === "Covantage 7060")
-// (expense.card === "Mastercard 7404")
