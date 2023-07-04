@@ -90,6 +90,7 @@ import { AffiliateTermsPage } from "./pages/AffiliatesPage/components";
 import { TutorialsGridPage } from "./pages/TutorialsGridPage";
 import TrackOrderPage from "./pages/TrackOrderPage/TrackOrderPage";
 import routes from "./sitemap/routes";
+import UpdateNotifier from "./shared/SharedComponents/UpdateNotifier";
 
 const App = () => {
   const Components = {
@@ -303,6 +304,7 @@ const App = () => {
           </Helmet>
           <Notification message={message} />
           <EmailModal set_show_modal={set_show_modal} show_modal={show_modal} />
+          <UpdateNotifier />
           {/* <Particles
           params={particlesjs_config}
           className="zi-n5"
