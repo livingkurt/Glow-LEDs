@@ -96,6 +96,8 @@ const App = () => {
   const Components = {
     HomePage,
     LoginPage,
+    PlaceOrderPage,
+    OrderPage,
     VerifiedPage,
     ChangePasswordPage,
     PasswordResetPage,

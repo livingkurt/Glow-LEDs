@@ -1,4 +1,5 @@
 import express from "express";
+import mongoose from "mongoose";
 import { User } from "./users";
 import { Expense } from "./expenses";
 import { Product } from "./products";
@@ -1765,6 +1766,65 @@ router.route("/delete_all_expenses").put(async (req: any, res: any) => {
     // Delete all expenses
     await Expense.deleteMany({});
     res.status(200).send({ message: "Expenses Deleted" });
+  } catch (err) {
+    console.error("An error occurred:", err);
+    res.status(500).send({ message: err.message });
+  }
+});
+import { Request, Response, Router } from "express";
+
+router.route("/update_status").put(async (req: Request, res: Response) => {
+  try {
+    console.log("Starting status update...");
+
+    // Define the time intervals for each status
+    const timeIntervals = {
+      isCrafting: 36 * 60 * 60 * 1000, // 2 hours after payment
+      isCrafted: 3 * 60 * 60 * 1000, // 3 hours after payment
+      isPackaged: 2 * 60 * 60 * 1000, // 2 hours after payment (from provided dates)
+      isPickup: 24 * 60 * 60 * 1000, // 1 hour after payment
+      isShipped: 101 * 60 * 60 * 1000, // 101 hours after payment (from provided dates)
+      isInTransit: 6 * 60 * 60 * 1000, // 6 hours after payment
+      isOutForDelivery: 77 * 60 * 60 * 1000, // 77 hours after payment (from provided dates)
+      isDelivered: 100 * 60 * 60 * 1000 // 80 hours after payment (from provided dates)
+    };
+
+    // Define the cutoff date
+    const cutoffDate: Date = new Date("2023-06-26T02:03:50.442Z");
+
+    console.log("Updating documents...");
+    // Update the documents
+    let prevStatus = "isPaid";
+    for (const [status, interval] of Object.entries(timeIntervals)) {
+      const dateStatus: string = status.slice(2, 1).toLowerCase() + status.slice(3) + "At";
+      const prevDateStatus: string = prevStatus.slice(2, 1).toLowerCase() + prevStatus.slice(3) + "At";
+
+      // Find all documents that match the condition
+      console.log(
+        `Finding documents with conditions: status ${status} not true, prevStatus ${prevStatus} true, createdAt before ${cutoffDate}`
+      );
+      const docs = await Order.find({
+        [status]: { $ne: true }, // status is not true
+        [prevStatus]: true, // previous status is true
+        createdAt: { $lt: cutoffDate } // created before the cutoff date
+      });
+
+      console.log(`Found ${docs.length} documents to update for status ${status}.`);
+
+      // Update each document and save it
+      for (const doc of docs) {
+        doc[status] = true;
+        doc[dateStatus] = new Date(doc[prevDateStatus].getTime() + interval);
+        await doc.save();
+      }
+
+      console.log(`Updated documents for status ${status}.`);
+
+      prevStatus = status;
+    }
+
+    console.log("Finished updating statuses.");
+    res.status(200).send({ message: "Statuses updated successfully." });
   } catch (err) {
     console.error("An error occurred:", err);
     res.status(500).send({ message: err.message });
