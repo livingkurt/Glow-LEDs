@@ -94,7 +94,6 @@ import UpdateNotifier from "./shared/SharedComponents/UpdateNotifier";
 
 const App = () => {
   const Components = {
-    HomePage,
     LoginPage,
     PlaceOrderPage,
     OrderPage,
@@ -131,6 +130,7 @@ const App = () => {
     TutorialsGridPage,
     TrackOrderPage
   };
+
   const dispatch = useDispatch();
   useEffect(() => {
     handleTokenRefresh();
