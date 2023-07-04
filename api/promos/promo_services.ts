@@ -4,7 +4,7 @@ import { getFilteredData } from "../api_helpers";
 import { order_db } from "../orders";
 import { promo_db } from "../promos";
 import { extractCodes } from "./promo_helpers";
-import { generateSponsorCodes, normalizePromoFilters, normalizePromoSearch } from "./promo_interactors";
+import { deactivateOldCodes, generateSponsorCodes, normalizePromoFilters, normalizePromoSearch } from "./promo_interactors";
 
 export default {
   findAll_promos_s: async (query: { page: string; search: string; sort: string; limit: string }) => {
@@ -179,6 +179,7 @@ export default {
     try {
       const sponsor_codes = await Promise.all(
         affiliates.map(async (affiliate: any) => {
+          deactivateOldCodes(affiliate);
           //const previousMonth = date.toLocaleString("default", { month: "long" });
           const checkinCompleted = affiliate?.sponsorMonthlyCheckins?.find(
             (checkin: any) => checkin.month === currentMonth && checkin.year === currentYear

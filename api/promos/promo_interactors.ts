@@ -56,6 +56,18 @@ export const normalizePromoSearch = (query: any) => {
   return search;
 };
 
+export const deactivateOldCodes = async (affiliate: any) => {
+  try {
+    const old_codes = await promo_db.findAll_promos_db({ affiliate: affiliate._id, active: true }, {}, "2", "1");
+    await Promise.all(
+      old_codes.map(async (code: any) => {
+        await promo_db.update_promos_db(code.id, { active: false });
+      })
+    );
+  } catch (err) {
+    console.log(err);
+  }
+
 export const generateSponsorCodes = async (affiliate: any) => {
   try {
     const start_date = new Date();
@@ -64,12 +76,6 @@ export const generateSponsorCodes = async (affiliate: any) => {
     const date = new Date();
     date.setMonth(date.getMonth() - 1);
 
-    const old_codes = await promo_db.findAll_promos_db({ affiliate: affiliate._id, active: true }, {}, "2", "1");
-    await Promise.all(
-      old_codes.map(async (code: any) => {
-        await promo_db.update_promos_db(code.id, { active: false });
-      })
-    );
     const private_code = {
       promo_code: `${affiliate.artist_name[0].toLowerCase()}${make_private_code(5)}`,
       user: affiliate.user._id,
