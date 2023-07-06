@@ -58,13 +58,6 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
                   getOptionLabel={option =>
                     option ? (fieldData.getOptionLabel ? fieldData.getOptionLabel(option) : option[fieldData.labelProp]) : ""
                   }
-                  // getOptionLabel={option =>
-                  //   option && option[fieldData.labelProp]
-                  //     ? fieldData.getOptionLabel
-                  //       ? fieldData.getOptionLabel(option)
-                  //       : option[fieldData.labelProp]
-                  //     : ""
-                  // }
                   optionDisplay={option => (fieldData.getOptionLabel ? fieldData.getOptionLabel(option) : option[fieldData.labelProp])}
                   getOptionSelected={(option, value) => option._id === value._id}
                   name={fieldName}
@@ -85,13 +78,6 @@ const GLForm = ({ formData, onChange, state, loading, nesting, index }) => {
                   margin="normal"
                   value={fieldState || ""}
                   options={fieldData.options || []}
-                  // getOptionLabel={option =>
-                  //   option && option[fieldData.labelProp]
-                  //     ? fieldData.getOptionLabel
-                  //       ? fieldData.getOptionLabel(option)
-                  //       : option[fieldData.labelProp]
-                  //     : ""
-                  // }
                   getOptionLabel={option =>
                     option ? (fieldData.getOptionLabel ? fieldData.getOptionLabel(option) : option[fieldData.labelProp]) : ""
                   }

@@ -51,7 +51,12 @@ const EditTutorialModal = () => {
     level: {
       type: "autocomplete_single",
       label: "Difficulty",
-      getOptionLabel: option => toCapitalize(option),
+      // getOptionLabel: option => toCapitalize(option),
+      getOptionLabel: option => {
+        if (typeof option === "string") {
+          return toCapitalize(option);
+        }
+      },
       options: ["beginner", "intermediate", "advanced"]
     },
     order: {
