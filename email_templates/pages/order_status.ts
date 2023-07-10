@@ -1,21 +1,5 @@
 import { format_date, determine_product_name, order_status_steps, determine_tracking_link } from "../../util";
 
-const determine_emoji = (status: string): string | undefined => {
-  switch (status) {
-    case "crafting":
-      return "🛠️";
-    case "crafted":
-      return "🛠️";
-    case "packaged":
-      return "📦";
-    case "shipped":
-      return "🚚";
-    case "updated":
-      return "👍";
-    default:
-      break;
-  }
-};
 const determine_color = (status: string): string | undefined => {
   switch (status) {
     case "crafting":
@@ -28,6 +12,26 @@ const determine_color = (status: string): string | undefined => {
       return "#636363";
     case "reassured":
       return "#585858";
+    case "updated":
+      return "#4b7188";
+    default:
+      break;
+  }
+};
+const determine_title = (status: string): string | undefined => {
+  switch (status) {
+    case "crafting":
+      return `YOUR ORDER HAS BEGUN ${status.toUpperCase()} 🛠️`;
+    case "crafted":
+      return `YOUR ORDER HAS BEEN ${status.toUpperCase()} ⌛`;
+    case "packaged":
+      return `YOUR ORDER HAS BEEN ${status.toUpperCase()} 📦`;
+    case "shipped":
+      return `YOUR ORDER HAS BEEN ${status.toUpperCase()} 🚚`;
+    case "updated":
+      return `YOUR ORDER HAS BEEN ${status.toUpperCase()} 👍`;
+    case "reassured":
+      return "Apologies for the Longer Wait Time";
     default:
       break;
   }
@@ -42,10 +46,10 @@ const determine_message = (status: string): string | undefined => {
       return "your order has been packaged and is ready to ship! We will notify you when it has been sent.";
     case "shipped":
       return "your shipment is on the way! Track your shipment to see the delivery status.";
-    case "reassured":
-      return "due to high order volume, orders are taking a little longer than usual. Don't worry we didn't forget about you, we still have your order and we will send it out to you as soon as we can 😊 Each product at Glow LEDs is handmade to order with love 😍 which allows us to think up new products as they are requested. 👍 Thank you so much for the support and patience!  We really appreciate you 💙 💙 💙 ";
     case "updated":
       return "your order has been updated, please review the changes and reach out if you need anymore changes made";
+    case "reassured":
+      return "due to high order volume, orders are taking a little longer than usual. Don't worry we didn't forget about you, we still have your order and we will send it out to you as soon as we can 😊 Each product at Glow LEDs is handmade to order with love 😍 which allows us to think up new products as they are requested. 👍 Thank you so much for the support and patience!  We really appreciate you 💙 💙 💙 ";
 
     default:
       break;
@@ -63,12 +67,9 @@ export default ({ email, order, status, message_to_user }: any): string => {
               <h1
                 style="text-align:center;font-family:helvetica;width:100%;margin:10px auto;line-height:50px;color:#333333;font-size:50px; padding-bottom: 7px;">
                 ${order.shipping.first_name.toUpperCase()}, </h1>
-              <h1 style="text-align:center;font-family:helvetica;width:100%;margin:0px;line-height:50px;color:#333333;font-size:"30px"; padding-bottom: 7px;">
-                ${
-                  status === "reassured"
-                    ? "Apologies for the Longer Wait Time"
-                    : `YOUR ORDER HAS BEEN ${status.toUpperCase()} ${determine_emoji(status)}`
-                }</h1>
+              <h1 style="text-align:center;font-family:helvetica;width:100%;margin:0px;line-height:50px;color:#333333;font-size:"30px"; padding-bottom: 7px;">${determine_title(
+                status
+              )}</h1>
             </td>
           </tr>
         </table>
