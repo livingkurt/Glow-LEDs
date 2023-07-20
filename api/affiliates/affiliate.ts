@@ -37,6 +37,8 @@ const affiliateSchema = new mongoose.Schema(
     picture: { type: String },
     video: { type: String },
     style: { type: String },
+    glove_size: { type: String },
+    t_shirt_size: { type: String },
     inspiration: { type: String },
     link: { type: String },
     venmo: { type: String },

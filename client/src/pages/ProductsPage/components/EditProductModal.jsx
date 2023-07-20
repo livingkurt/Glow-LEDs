@@ -44,7 +44,7 @@ const EditProductModal = () => {
     chips,
     setState: (value, key) => dispatch(set_product({ [key]: [...product[key], ...value] })),
     onEdit: product => dispatch(open_edit_product_modal(product)),
-    product
+    product,
   });
 
   return (

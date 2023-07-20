@@ -74,26 +74,26 @@ const OrdersPage = () => {
           <div>
             {!row.isRefunded && (
               <div>
-                <div>${row.totalPrice.toFixed(2)}</div>
+                <div>${row.totalPrice?.toFixed(2)}</div>
               </div>
             )}
             {row.isRefunded && (
               <div>
                 <del style={{ color: "red" }}>
                   <label style={{ color: "white" }}>
-                    <div>${row.totalPrice.toFixed(2)}</div>
+                    <div>${row.totalPrice?.toFixed(2)}</div>
                   </label>
                 </del>
               </div>
             )}
             {row.isRefunded && (
               <div>
-                <div>-${(row.payment.refund.reduce((a, c) => a + c.amount, 0) / 100).toFixed(2)}</div>
+                <div>-${(row.payment.refund.reduce((a, c) => a + c.amount, 0) / 100)?.toFixed(2)}</div>
               </div>
             )}
             {row.isRefunded && (
               <div>
-                <div>${(row.totalPrice - row.payment.refund.reduce((a, c) => a + c.amount, 0) / 100).toFixed(2)}</div>
+                <div>${(row.totalPrice - row.payment.refund.reduce((a, c) => a + c.amount, 0) / 100)?.toFixed(2)}</div>
               </div>
             )}
           </div>

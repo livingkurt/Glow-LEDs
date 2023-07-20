@@ -6,6 +6,7 @@ import * as API from "../../../api";
 import { GLForm } from "../../../shared/GlowLEDsComponents/GLForm";
 import { Typography } from "@mui/material";
 import { useLocation } from "react-router-dom";
+import { toCapitalize } from "../../../utils/helper_functions";
 
 const EditUserModal = () => {
   const dispatch = useDispatch();
@@ -89,6 +90,26 @@ const EditUserModal = () => {
       labelProp: "affiliate",
       getOptionLabel: option => option.artist_name,
       permissions: ["admin"]
+    },
+    t_shirt_size: {
+      type: "autocomplete_single",
+      label: "T-Shirt Size",
+      getOptionLabel: option => {
+        if (typeof option === "string") {
+          return toCapitalize(option);
+        }
+      },
+      options: ["Small", "Medium", "Large", "X-Large", "XX-Large"]
+    },
+    glove_size: {
+      type: "autocomplete_single",
+      label: "Glove Size",
+      getOptionLabel: option => {
+        if (typeof option === "string") {
+          return toCapitalize(option);
+        }
+      },
+      options: ["Small", "Medium", "Large", "X-Large", "XX-Large"]
     },
     employee_code: {
       type: "autocomplete_single",
