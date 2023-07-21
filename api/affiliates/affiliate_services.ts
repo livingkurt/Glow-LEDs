@@ -18,8 +18,8 @@ export default {
         ? {
             artist_name: {
               $regex: query.search,
-              $options: "i"
-            }
+              $options: "i",
+            },
           }
         : {};
       const filter = determine_filter(query, search);
@@ -44,7 +44,7 @@ export default {
       return {
         data: affiliates,
         total_count: count,
-        currentPage: page
+        currentPage: page,
       };
     } catch (error) {
       if (error instanceof Error) {
@@ -84,7 +84,7 @@ export default {
       time_limit: false,
       start_date: "2021-01-01",
       end_date: "2021-01-01",
-      active: true
+      active: true,
     };
     const private_code = {
       promo_code: make_private_code(6),
@@ -100,7 +100,7 @@ export default {
       time_limit: false,
       start_date: "2021-01-01",
       end_date: "2021-01-01",
-      active: true
+      active: true,
     };
     try {
       return await affiliate_db.create_affiliates_db(body, public_code, private_code);
@@ -126,7 +126,7 @@ export default {
         month: month,
         year: year,
         questionsConcerns: questionsConcerns,
-        numberOfContent: numberOfContent
+        numberOfContent: numberOfContent,
         // add any additional fields here
       };
       console.log({ checkin });
@@ -143,7 +143,8 @@ export default {
         } else {
           // Find the correct position for the new checkin based on month and year
           const correctPosition = affiliate.sponsorMonthlyCheckins.findIndex(
-            (checkin: any) => new Date(`${checkin.year}-${monthToNum(checkin.month)}-01`) > new Date(`${year}-${monthToNum(month)}-01`)
+            (checkin: any) =>
+              new Date(`${checkin.year}-${monthToNum(checkin.month)}-01`) > new Date(`${year}-${monthToNum(month)}-01`)
           );
 
           // If correct position found, insert at that position, else push to the end
@@ -211,7 +212,7 @@ export default {
       "Link to a recent lightshow if you are not able to upload one above",
       "How familiar are you with Glow LEDs products?",
       "What makes you want to be a part of the Glow LEDs Festival Gloving Team?",
-      "I understand that being on the Festival Gloving Team has responsibilities. If selected, I will be required to participate in all Glow LEDs Festival meetups as well as promote the brand during my time at the festival. Promoting includes giving lightshows with Glow LEDs products and spreading information about the brand to other festival attendees verbally and with free stickers and business cards. You will also be required to take pictures and videos with the products while at the festival."
+      "I understand that being on the Festival Gloving Team has responsibilities. If selected, I will be required to participate in all Glow LEDs Festival meetups as well as promote the brand during my time at the festival. Promoting includes giving lightshows with Glow LEDs products and spreading information about the brand to other festival attendees verbally and with free stickers and business cards. You will also be required to take pictures and videos with the products while at the festival.",
     ];
 
     try {
@@ -252,7 +253,7 @@ export default {
           time_limit: false,
           start_date: "2021-01-01",
           end_date: "2021-01-01",
-          active: true
+          active: true,
         };
         const private_code = {
           promo_code: make_private_code(6),
@@ -267,13 +268,17 @@ export default {
           time_limit: false,
           start_date: "2021-01-01",
           end_date: "2021-01-01",
-          active: true
+          active: true,
         };
 
         const user_found = await user_db.findByEmail_users_db(user.email);
 
         if (user_found) {
-          return await affiliate_db.create_affiliates_db({ ...affiliate, user: user_found._id }, public_code, private_code);
+          return await affiliate_db.create_affiliates_db(
+            { ...affiliate, user: user_found._id },
+            public_code,
+            private_code
+          );
         } else {
           try {
             let hashed_password = "";
@@ -286,7 +291,11 @@ export default {
                 try {
                   const new_user: any = await user_db.create_users_db(user_w_password);
 
-                  return await affiliate_db.create_affiliates_db({ ...affiliate, user: new_user._id }, public_code, private_code);
+                  return await affiliate_db.create_affiliates_db(
+                    { ...affiliate, user: new_user._id },
+                    public_code,
+                    private_code
+                  );
                 } catch (error) {
                   if (error instanceof Error) {
                     throw new Error(error.message);
@@ -318,5 +327,17 @@ export default {
         throw new Error(error.message);
       }
     }
-  }
+  },
+  generate_sponsor_codes_affiliates_s: async (params: any) => {
+    const { id } = params;
+    try {
+      const affiliate: any = await Affiliate.findOne({ _id: id });
+      await generateSponsorCodes(affiliate);
+      return affiliate;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
 };

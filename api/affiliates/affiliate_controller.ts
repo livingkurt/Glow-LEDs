@@ -109,5 +109,17 @@ export default {
     } catch (error) {
       res.status(500).send({ error, message: "Error Deleting Affiliate" });
     }
-  }
+  },
+  generate_sponsor_codes_affiliates_c: async (req: any, res: any) => {
+    const { params } = req;
+    try {
+      const affiliate = await affiliate_services.generate_sponsor_codes_affiliates_s(params);
+      if (affiliate) {
+        return res.status(201).send(affiliate);
+      }
+      return res.status(500).send({ message: "Error Creating Affiliate" });
+    } catch (error) {
+      res.status(500).send({ error, message: "Error Creating Affiliate" });
+    }
+  },
 };

@@ -7,7 +7,8 @@ import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { open_create_affiliate_modal, open_edit_affiliate_modal } from "../../slices/affiliateSlice";
 import { EditAffiliateModal } from "./components";
 import * as API from "../../api";
-import { Button } from "@mui/material";
+import PolylineIcon from "@mui/icons-material/Polyline";
+import { Button, IconButton } from "@mui/material";
 import { getAffiliates } from "../../api";
 import { determine_color } from "./affiliateHelpers";
 import { useLocation } from "react-router-dom";
@@ -32,9 +33,9 @@ const AffiliatesPage = () => {
                 API.saveAffiliate({
                   affiliate: {
                     ...affiliate,
-                    active: affiliate.active ? false : true
+                    active: affiliate.active ? false : true,
                   },
-                  profile: location.pathname === "/secure/account/profile"
+                  profile: location.pathname === "/secure/account/profile",
                 })
               );
             }}
@@ -42,16 +43,17 @@ const AffiliatesPage = () => {
           >
             {affiliate.active ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
           </GLButton>
-        )
+        ),
       },
       { title: "Artist Name", display: "artist_name" },
       {
         title: "Percentage Off",
-        display: affiliate => `${affiliate.private_code && affiliate.private_code.percentage_off}%`
+        display: affiliate => `${affiliate.private_code && affiliate.private_code.percentage_off}%`,
       },
       { title: "User", display: affiliate => fullName(affiliate.user) },
       { title: "Public Code", display: affiliate => affiliate.private_code && affiliate.public_code.promo_code },
       { title: "Private Code", display: affiliate => affiliate.private_code && affiliate.private_code.promo_code },
+
       {
         title: "Actions",
         display: affiliate => (
@@ -65,12 +67,19 @@ const AffiliatesPage = () => {
             >
               <i className="fas fa-edit" />
             </GLButton>
+            <GLButton
+              variant="icon"
+              aria-label="Edit"
+              onClick={() => dispatch(API.generateSponsorCodes(affiliate._id))}
+            >
+              <PolylineIcon style={{ color: "white" }} />
+            </GLButton>
             <GLButton variant="icon" onClick={() => dispatch(API.deleteAffiliate(affiliate._id))} aria-label="Delete">
               <i className="fas fa-trash-alt" />
             </GLButton>
           </div>
-        )
-      }
+        ),
+      },
     ],
     [dispatch]
   );
