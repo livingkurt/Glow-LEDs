@@ -25,9 +25,9 @@ const order = {
     state: "",
     postalCode: "",
     international: "",
-    country: ""
+    country: "",
   },
-  payment: { paymentMethod: "stripe", payment: {}, charge: {}, refund: [], refund_reason: "" },
+  payments: [{ paymentMethod: "stripe", payment: {}, charge: {}, refund: [], refund_reason: "" }],
   itemsPrice: 0,
   taxPrice: 0,
   shippingPrice: 0,
@@ -66,7 +66,7 @@ const order = {
   return_tracking_number: "",
   is_error: false,
   error_at: "",
-  error: false
+  error: false,
 };
 
 const orderPage = createSlice({
@@ -89,14 +89,14 @@ const orderPage = createSlice({
     refundReason: "",
     shippingModal: false,
     createLabelModal: false,
-    loading_label: false
+    loading_label: false,
   },
   reducers: {
     set_order: (state, { payload }) => {
       const updated_order = payload;
       return {
         ...state,
-        order: { ...state.order, ...updated_order }
+        order: { ...state.order, ...updated_order },
       };
     },
     set_loading: (state, { payload }) => {
@@ -155,7 +155,7 @@ const orderPage = createSlice({
     },
     closeShippingModal: (state, { payload }) => {
       state.shippingModal = false;
-    }
+    },
   },
   extraReducers: {
     [API.listOrders.pending as any]: (state: any, { payload }: any) => {
@@ -339,8 +339,8 @@ const orderPage = createSlice({
     },
     [API.createTracker.fulfilled as any]: (state: any, { payload }: any) => {
       state.remoteVersionRequirement = Date.now();
-    }
-  }
+    },
+  },
 });
 
 export const {
@@ -360,6 +360,6 @@ export const {
   closeRefundModal,
   setRefundAmount,
   setRefundReason,
-  closeShippingModal
+  closeShippingModal,
 } = orderPage.actions;
 export default orderPage.reducer;

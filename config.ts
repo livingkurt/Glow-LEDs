@@ -1,8 +1,8 @@
 import dotenv from "dotenv";
 
 dotenv.config();
-const environment = "prod";
-// const environment = process.env.ENVIRONMENT;
+// const environment = "prod";
+const environment = process.env.ENVIRONMENT;
 
 const decideEnvironment = (prod: string | undefined, dev: string | undefined): string | undefined => {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -116,7 +116,7 @@ const config = {
   // Image Uploading
   // Imgur
   IMGUR_ClIENT_ID: process.env.IMGUR_ClIENT_ID,
-  IMGUR_ClIENT_SECRET: process.env.IMGUR_ClIENT_SECRET
+  IMGUR_ClIENT_SECRET: process.env.IMGUR_ClIENT_SECRET,
 };
 
 export default config;

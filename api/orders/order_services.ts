@@ -2,7 +2,7 @@ import { affiliate_db } from "../affiliates";
 import { expense_db } from "../expenses";
 import { Order, order_db } from "../orders";
 import { promo_db } from "../promos";
-import { user_db } from "../users";
+import { User, user_db } from "../users";
 import {
   categories,
   dates_in_year,
@@ -17,6 +17,7 @@ import {
 } from "../../util";
 import { getFilteredData } from "../api_helpers";
 import { getCodeUsage, normalizeOrderFilters, normalizeOrderSearch } from "./order_interactors";
+import { Cart } from "../carts";
 const scraper = require("table-scraper");
 
 const today = new Date();
@@ -1568,6 +1569,55 @@ export default {
       );
 
       return updatedOrders;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  sample_testing_orders_s: async (body: any) => {
+    const { cartItems } = body;
+    const users = [
+      "5f2d7c0e9005a57059801ce8", // Kurt LaVacque S
+      "5f93cb1e7f9e40002a736df7", // Keith Booher XL
+      "610244349fb496002a222c7d", // Cody Chau S
+      "5f65757db5dd3d002a5fc474", // Nicolas McClain L
+      "5f6a7891f8bfc0002ab4904b", // Joseph Cosmo L
+      "600a151a3a0d3c002a9216e4", // Mckinnley Riojas L
+      "6053f4b5fa20db002a1d00f3", // Adam Barlet L
+      "60ae85667df9a9002a1611d8", // Derek Ward L
+      "63771ba2927e460029580d16", // Kevin Cablay L
+      "63c0a57b8fab120004b8d2cd", // Cristina Moskewicz S
+      "60243f3afe97542f0f15d665", // Dustin Chau M
+      "5fc91b9d231358002a003b21", // Gian Weiss S
+      "61e3bb71b1b687002bab24ac" // Mathew Howk XXL
+    ];
+    try {
+      for (const userId of users) {
+        // Fetch user details
+        const user = await User.findById(userId);
+        if (!user) {
+          console.log(`User with id ${userId} not found`);
+          continue;
+        }
+
+        // Create a new order for the user
+        const order = new Order({
+          user: userId,
+          orderItems: cartItems,
+          shipping: user.shipping,
+          totalPrice: 0,
+          taxPrice: 0,
+          shippingPrice: 0,
+          isPaid: true,
+          paidAt: Date.now()
+          // Add other necessary fields here
+        });
+
+        // Save the order
+        await order.save();
+      }
+      return "Success";
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

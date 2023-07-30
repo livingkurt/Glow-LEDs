@@ -185,7 +185,7 @@ interface IOrderItem {
 export interface IOrder {
   user?: IUser;
   shipping?: IShipping;
-  payment?: IPayment;
+  payments?: IPayment[];
   message?: IMessage[];
   order_items?: IOrderItem[];
   order_number?: string;

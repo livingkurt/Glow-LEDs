@@ -502,5 +502,17 @@ export default {
     } catch (error) {
       res.status(500).send({ error, message: "Error Deleting Order" });
     }
+  },
+  sample_testing_orders_c: async (req: any, res: any) => {
+    const { body } = req;
+    try {
+      const order = await order_services.sample_testing_orders_s(body);
+      if (order) {
+        return res.status(204).send({ message: "Order Deleted" });
+      }
+      return res.status(500).send({ message: "Error Deleting Order" });
+    } catch (error) {
+      res.status(500).send({ error, message: "Error Deleting Order" });
+    }
   }
 };

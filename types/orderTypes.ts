@@ -31,6 +31,14 @@ interface IPayment {
   refund_reason?: any[];
 }
 
+interface ITransaction {
+  paymentType?: string;
+  paymentMethod?: any;
+  payment?: any;
+  refund?: any[];
+  refundReason?: any[];
+}
+
 interface IMessage {
   message?: string;
   user?: boolean;
@@ -185,7 +193,8 @@ interface IOrderItem {
 export interface IOrder {
   user: IUser;
   shipping: IShipping;
-  payment: IPayment;
+  payments: [IPayment];
+  transactions: [ITransaction];
   message: IMessage[];
   order_items: IOrderItem[];
   order_number: string;

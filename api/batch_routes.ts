@@ -36,7 +36,7 @@ router.route("/users").put(isAuth, isAdmin, async (req: any, res: any) => {
     }
     if (method === "updateMany") {
       const users = await User.updateMany(parameter, {
-        [action]: { [property]: value }
+        [action]: { [property]: value },
       });
 
       res.send(users);
@@ -60,7 +60,7 @@ router.route("/expenses").put(isAuth, isAdmin, async (req: any, res: any) => {
     }
     if (method === "updateMany") {
       const expenses = await Expense.updateMany(parameter, {
-        [action]: { [property]: value }
+        [action]: { [property]: value },
       });
 
       res.send(expenses);
@@ -84,7 +84,7 @@ router.route("/products").put(isAuth, isAdmin, async (req: any, res: any) => {
     }
     if (method === "updateMany") {
       const products = await Product.updateMany(parameter, {
-        [action]: { [property]: value }
+        [action]: { [property]: value },
       });
 
       res.send(products);
@@ -108,7 +108,7 @@ router.route("/features").put(isAuth, isAdmin, async (req: any, res: any) => {
     }
     if (method === "updateMany") {
       const features = await Feature.updateMany(parameter, {
-        [action]: { [property]: value }
+        [action]: { [property]: value },
       });
 
       res.send(features);
@@ -132,7 +132,7 @@ router.route("/orders").put(isAuth, isAdmin, async (req: any, res: any) => {
     }
     if (method === "updateMany") {
       const orders = await Order.updateMany(parameter, {
-        [action]: { [property]: value }
+        [action]: { [property]: value },
       });
 
       res.send(orders);
@@ -156,7 +156,7 @@ router.route("/emails").put(isAuth, isAdmin, async (req: any, res: any) => {
     }
     if (method === "updateMany") {
       const emails = await Email.updateMany(parameter, {
-        [action]: { [property]: value }
+        [action]: { [property]: value },
       });
 
       res.send(emails);
@@ -180,7 +180,7 @@ router.route("/affiliates").put(isAuth, isAdmin, async (req: any, res: any) => {
     }
     if (method === "updateMany") {
       const affiliates = await Affiliate.updateMany(parameter, {
-        [action]: { [property]: value }
+        [action]: { [property]: value },
       });
 
       res.send(affiliates);
@@ -204,7 +204,7 @@ router.route("/paychecks").put(isAuth, isAdmin, async (req: any, res: any) => {
     }
     if (method === "updateMany") {
       const paychecks = await Paycheck.updateMany(parameter, {
-        [action]: { [property]: value }
+        [action]: { [property]: value },
       });
 
       res.send(paychecks);
@@ -228,7 +228,7 @@ router.route("/parcels").put(isAuth, isAdmin, async (req: any, res: any) => {
     }
     if (method === "updateMany") {
       const parcels = await Parcel.updateMany(parameter, {
-        [action]: { [property]: value }
+        [action]: { [property]: value },
       });
 
       res.send(parcels);
@@ -252,7 +252,7 @@ router.route("/chips").put(isAuth, isAdmin, async (req: any, res: any) => {
     }
     if (method === "updateMany") {
       const chips = await Chip.updateMany(parameter, {
-        [action]: { [property]: value }
+        [action]: { [property]: value },
       });
 
       res.send(chips);
@@ -276,7 +276,7 @@ router.route("/filaments").put(isAuth, isAdmin, async (req: any, res: any) => {
     }
     if (method === "updateMany") {
       const filaments = await Filament.updateMany(parameter, {
-        [action]: { [property]: value }
+        [action]: { [property]: value },
       });
 
       res.send(filaments);
@@ -300,7 +300,7 @@ router.route("/contents").put(isAuth, isAdmin, async (req: any, res: any) => {
     }
     if (method === "updateMany") {
       const contents = await Content.updateMany(parameter, {
-        [action]: { [property]: value }
+        [action]: { [property]: value },
       });
 
       res.send(contents);
@@ -329,7 +329,7 @@ router.route("/product_sale_price").put(isAuth, isAdmin, async (req: any, res: a
         {
           sale_price: product.price - main_discount,
           sale_start_date,
-          sale_end_date
+          sale_end_date,
         }
       );
     });
@@ -355,7 +355,7 @@ router.route("/make_emails_lowercase").put(isAuth, isAdmin, async (req: any, res
     // Check if user exists
     if (userss.email !== userss.email.toLowerCase()) {
       const same_user: any = await User.findOne({
-        email: userss.email.toLowerCase()
+        email: userss.email.toLowerCase(),
       });
       if (!same_user) {
         updated_user.email = updated_user.email.toLowerCase();
@@ -429,14 +429,14 @@ router.route("/update_order_items").put(async (req: any, res: any) => {
     {
       "orderItems.category": {
         $regex: "frosted_diffusers",
-        $options: "i"
-      }
+        $options: "i",
+      },
     },
     {
       // $rename: { shipping_price: 'volume' }
       $set: {
-        "orderItems.$.category": "diffusers"
-      }
+        "orderItems.$.category": "diffusers",
+      },
       // $unset: { shipping_price: 1 }
     },
     { multi: true }
@@ -464,8 +464,8 @@ router.route("/convert_away_from_count_in_stock").put(async (req: any, res: any)
     {
       $rename: { countInStock: "count_in_stock" },
       $set: {
-        quantity: 20
-      }
+        quantity: 20,
+      },
     },
     { multi: true }
   );
@@ -476,7 +476,7 @@ router.route("/remove_countInStock").put(async (req: any, res: any) => {
   const products = await Product.updateMany(
     {},
     {
-      $unset: { countInStock: 1 }
+      $unset: { countInStock: 1 },
     },
     { multi: true }
   );
@@ -499,7 +499,7 @@ router.route("/remove_size").put(async (req: any, res: any) => {
   const products = await Product.updateMany(
     {},
     {
-      $unset: { size: 1 }
+      $unset: { size: 1 },
     },
     { multi: true }
   );
@@ -510,7 +510,7 @@ router.route("/rename_sizing_to_size").put(async (req: any, res: any) => {
   const products = await Product.updateMany(
     {},
     {
-      $rename: { sizing: "size" }
+      $rename: { sizing: "size" },
     },
     { multi: true }
   );
@@ -525,7 +525,7 @@ router.route("/remove_product_options").put(async (req: any, res: any) => {
       // $set: {
       // 	product_options: []
       // }
-      $unset: { product_options: 1 }
+      $unset: { product_options: 1 },
     },
     { multi: true }
     // { upsert: true }
@@ -541,14 +541,14 @@ router.route("/add_vortex_option_to_diffusers").put(async (req: any, res: any) =
   const products = await Product.updateMany(
     {
       deleted: false,
-      category: "diffusers"
+      category: "diffusers",
     },
     {
       // $rename: { shipping_price: 'volume' }
       $set: {
         option_product_group: true,
-        option_products: ["62732d2853e344002be8037f", "6261b1fd2fc16b002b58c2f7"]
-      }
+        option_products: ["62732d2853e344002be8037f", "6261b1fd2fc16b002b58c2f7"],
+      },
       // $unset: { product_options: 1 },
     },
     { multi: true }
@@ -561,7 +561,7 @@ router.route("/clozd_glowframez").put(async (req: any, res: any) => {
   const products = await Product.find({
     deleted: false,
     category: "glow_casings",
-    subcategory: "nova"
+    subcategory: "nova",
   });
 
   products.forEach(async (product: any) => {
@@ -583,7 +583,7 @@ router.route("/clozd_glowframez").put(async (req: any, res: any) => {
 router.route("/opyn_glowskinz").put(async (req: any, res: any) => {
   const products = await Product.find({
     deleted: false,
-    category: "glow_casings"
+    category: "glow_casings",
   });
 
   products.forEach(async (product: any) => {
@@ -606,7 +606,7 @@ router.route("/clozd_novaskinz").put(async (req: any, res: any) => {
   const products = await Product.find({
     deleted: false,
     category: "glowskins",
-    subcategory: "novaskins"
+    subcategory: "novaskins",
   });
 
   products.forEach(async (product: any) => {
@@ -629,7 +629,7 @@ router.route("/clozd_alt_novaskinz").put(async (req: any, res: any) => {
   const products = await Product.find({
     deleted: false,
     category: "glowskins",
-    subcategory: "alt_novaskins"
+    subcategory: "alt_novaskins",
   });
 
   products.forEach(async (product: any) => {
@@ -655,12 +655,14 @@ router.route("/clozd_skin_color_options").put(async (req: any, res: any) => {
     subcategory: "colors",
     name: {
       $regex: "skins",
-      $options: "i"
-    }
+      $options: "i",
+    },
   });
 
   products.forEach(async (product: any) => {
-    const product_name = product.name.replace(product.name.split(" ")[0], product.name.split(" ")[0] + " CLOZD").replace("skins", "skinz");
+    const product_name = product.name
+      .replace(product.name.split(" ")[0], product.name.split(" ")[0] + " CLOZD")
+      .replace("skins", "skinz");
     product.included_items = product.included_items.replace(product.name, product_name);
     product.meta_title = product.included_items.replace(product.name, product_name);
     product.name = product_name;
@@ -677,8 +679,8 @@ router.route("/clozd_skin_size_options").put(async (req: any, res: any) => {
     subcategory: "sizes",
     name: {
       $regex: "skins",
-      $options: "i"
-    }
+      $options: "i",
+    },
   });
 
   products.forEach(async (product: any) => {
@@ -699,8 +701,8 @@ router.route("/clozd_casing_color_options").put(async (req: any, res: any) => {
     subcategory: "colors",
     name: {
       $regex: "Casings",
-      $options: "i"
-    }
+      $options: "i",
+    },
   });
 
   products.forEach(async (product: any) => {
@@ -723,8 +725,8 @@ router.route("/clozd_casing_size_options").put(async (req: any, res: any) => {
     subcategory: "sizes",
     name: {
       $regex: "Casings",
-      $options: "i"
-    }
+      $options: "i",
+    },
   });
 
   products.forEach(async (product: any) => {
@@ -742,7 +744,7 @@ router.route("/clozd_glowskinz").put(async (req: any, res: any) => {
   const products = await Product.find({
     deleted: false,
     category: "glowskins",
-    subcategory: "classics"
+    subcategory: "classics",
   });
 
   products.forEach(async (product: any) => {
@@ -767,7 +769,7 @@ router.route("/update_frosted_domes_items").put(async (req: any, res: any) => {
   // });
   const order = await Order.updateMany(
     {
-      "orderItems.0.name": "Frosted Dome Diffusers"
+      "orderItems.0.name": "Frosted Dome Diffusers",
     },
     {
       // 0rename: { shipping_price: 'volume' }
@@ -778,8 +780,8 @@ router.route("/update_frosted_domes_items").put(async (req: any, res: any) => {
         "orderItems.0.color_code": "#abaeb5",
         "orderItems.0.color": "Frosted",
         "orderItems.0.color_product": "60ee85f5f26266002aee9c6e",
-        "orderItems.0.color_product_name": "Frosted Dome Diffusers"
-      }
+        "orderItems.0.color_product_name": "Frosted Dome Diffusers",
+      },
       // $unset: { shipping_price: 1 }
     },
     { multi: true }
@@ -795,7 +797,7 @@ router.route("/update_translucent_white_domes_items").put(async (req: any, res: 
   const order = await Order.updateMany(
     {
       "orderItems.0.name": "Dome Diffusers",
-      "orderItems.0.color": "Translucent White"
+      "orderItems.0.color": "Translucent White",
     },
     {
       // 0rename: { shipping_price: 'volume' }
@@ -806,8 +808,8 @@ router.route("/update_translucent_white_domes_items").put(async (req: any, res: 
         "orderItems.0.color_code": "#abaeb5",
         "orderItems.0.color": "Frosted",
         "orderItems.0.color_product": "60ee85f5f26266002aee9c6e",
-        "orderItems.0.color_product_name": "Frosted Dome Diffusers"
-      }
+        "orderItems.0.color_product_name": "Frosted Dome Diffusers",
+      },
       // $unset: { shipping_price: 1 }
     },
     { multi: true }
@@ -833,14 +835,14 @@ router.route("/updated_capez_price").put(async (req: any, res: any) => {
       subcategory: "options",
       name: {
         $regex: "Capez",
-        $options: "i"
-      }
+        $options: "i",
+      },
     },
     {
       // $rename: { shipping_price: 'volume' }
       $set: {
-        price: 4
-      }
+        price: 4,
+      },
       // $unset: { product_options: 1 },
     },
     { multi: true }
@@ -852,7 +854,7 @@ router.route("/updated_capez_price").put(async (req: any, res: any) => {
 router.route("/vortex_language").put(async (req: any, res: any) => {
   const products = await Product.find({
     deleted: false,
-    category: "diffusers"
+    category: "diffusers",
   });
 
   products.forEach(async (product: any) => {
@@ -872,7 +874,7 @@ router.route("/vortex_language").put(async (req: any, res: any) => {
 router.route("/processing_time_diffusers").put(async (req: any, res: any) => {
   const products = await Product.find({
     deleted: false,
-    category: "diffusers"
+    category: "diffusers",
   });
 
   products.forEach(async (product: any) => {
@@ -885,7 +887,7 @@ router.route("/processing_time_diffusers").put(async (req: any, res: any) => {
 router.route("/processing_time_exo_diffusers").put(async (req: any, res: any) => {
   const products = await Product.find({
     deleted: false,
-    category: "exo_diffusers"
+    category: "exo_diffusers",
   });
 
   products.forEach(async (product: any) => {
@@ -898,7 +900,7 @@ router.route("/processing_time_exo_diffusers").put(async (req: any, res: any) =>
 router.route("/processing_time_diffuser_caps").put(async (req: any, res: any) => {
   const products = await Product.find({
     deleted: false,
-    category: "diffuser_caps"
+    category: "diffuser_caps",
   });
 
   products.forEach(async (product: any) => {
@@ -911,7 +913,7 @@ router.route("/processing_time_diffuser_caps").put(async (req: any, res: any) =>
 router.route("/processing_time_decals").put(async (req: any, res: any) => {
   const products = await Product.find({
     deleted: false,
-    category: "decals"
+    category: "decals",
   });
 
   products.forEach(async (product: any) => {
@@ -924,7 +926,7 @@ router.route("/processing_time_decals").put(async (req: any, res: any) => {
 router.route("/processing_time_gloves").put(async (req: any, res: any) => {
   const products = await Product.find({
     deleted: false,
-    category: { $in: ["gloves"] }
+    category: { $in: ["gloves"] },
   });
 
   products.forEach(async (product: any) => {
@@ -937,7 +939,7 @@ router.route("/processing_time_gloves").put(async (req: any, res: any) => {
 router.route("/processing_time_glowskinz").put(async (req: any, res: any) => {
   const products = await Product.find({
     deleted: false,
-    category: { $in: ["glowskinz"] }
+    category: { $in: ["glowskinz"] },
   });
 
   products.forEach(async (product: any) => {
@@ -950,7 +952,7 @@ router.route("/processing_time_glowskinz").put(async (req: any, res: any) => {
 router.route("/processing_time_glowstringz").put(async (req: any, res: any) => {
   const products = await Product.find({
     deleted: false,
-    category: { $in: ["glowstringz"] }
+    category: { $in: ["glowstringz"] },
   });
 
   products.forEach(async (product: any) => {
@@ -964,7 +966,7 @@ router.route("/processing_time_battery_coin").put(async (req: any, res: any) => 
   const products = await Product.find({
     deleted: false,
     category: "batteries",
-    subcategory: "coin"
+    subcategory: "coin",
   });
 
   products.forEach(async (product: any) => {
@@ -978,7 +980,7 @@ router.route("/processing_time_battery_storage").put(async (req: any, res: any) 
   const products = await Product.find({
     deleted: false,
     category: "batteries",
-    subcategory: "storage"
+    subcategory: "storage",
   });
 
   products.forEach(async (product: any) => {
@@ -995,8 +997,8 @@ router.route("/adding_clear_tpu").put(async (req: any, res: any) => {
     color_code: "#4b4b4b",
     name: {
       $regex: "Skin",
-      $options: "i"
-    }
+      $options: "i",
+    },
   });
 
   products.forEach(async (product: any) => {
@@ -1013,8 +1015,8 @@ router.route("/adding_clear_petg").put(async (req: any, res: any) => {
     color_code: "#4b4b4b",
     name: {
       $regex: "Sled",
-      $options: "i"
-    }
+      $options: "i",
+    },
   });
 
   products.forEach(async (product: any) => {
@@ -1031,8 +1033,8 @@ router.route("/adding_frosted_tpu").put(async (req: any, res: any) => {
     color_code: "white",
     name: {
       $regex: "Skin",
-      $options: "i"
-    }
+      $options: "i",
+    },
   });
 
   products.forEach(async (product: any) => {
@@ -1046,7 +1048,7 @@ router.route("/adding_frosted_petg").put(async (req: any, res: any) => {
   const products = await Product.find({
     deleted: false,
     option: true,
-    color_code: "#abaeb5"
+    color_code: "#abaeb5",
   });
 
   products.forEach(async (product: any) => {
@@ -1064,8 +1066,8 @@ router.route("/adding_red_tpu").put(async (req: any, res: any) => {
     product_collection: "colors",
     pathname: {
       $regex: "_skin",
-      $options: "i"
-    }
+      $options: "i",
+    },
   });
 
   products.forEach(async (product: any) => {
@@ -1080,7 +1082,7 @@ router.route("/adding_red_petg").put(async (req: any, res: any) => {
     deleted: false,
     option: true,
     product_collection: "secondary_colors",
-    color_code: "#c11c22"
+    color_code: "#c11c22",
   });
 
   products.forEach(async (product: any) => {
@@ -1094,7 +1096,7 @@ router.route("/adding_emerald_tpu").put(async (req: any, res: any) => {
   const products = await Product.find({
     deleted: false,
     option: true,
-    color_code: "#15715a"
+    color_code: "#15715a",
   });
 
   products.forEach(async (product: any) => {
@@ -1108,7 +1110,7 @@ router.route("/adding_green_petg").put(async (req: any, res: any) => {
   const products = await Product.find({
     deleted: false,
     option: true,
-    color_code: "#00c700"
+    color_code: "#00c700",
   });
 
   products.forEach(async (product: any) => {
@@ -1122,7 +1124,7 @@ router.route("/adding_teal_tpu").put(async (req: any, res: any) => {
   const products = await Product.find({
     deleted: false,
     option: true,
-    color_code: "#1da5b3"
+    color_code: "#1da5b3",
   });
 
   products.forEach(async (product: any) => {
@@ -1140,8 +1142,8 @@ router.route("/adding_blue_tpu").put(async (req: any, res: any) => {
     product_collection: "colors",
     pathname: {
       $regex: "_skin",
-      $options: "i"
-    }
+      $options: "i",
+    },
   });
 
   products.forEach(async (product: any) => {
@@ -1155,7 +1157,7 @@ router.route("/adding_blue_petg").put(async (req: any, res: any) => {
   const products = await Product.find({
     deleted: false,
     option: true,
-    color_code: "#0014ff"
+    color_code: "#0014ff",
   });
 
   products.forEach(async (product: any) => {
@@ -1173,8 +1175,8 @@ router.route("/adding_violet_tpu").put(async (req: any, res: any) => {
     product_collection: "colors",
     pathname: {
       $regex: "_skin",
-      $options: "i"
-    }
+      $options: "i",
+    },
   });
 
   products.forEach(async (product: any) => {
@@ -1188,7 +1190,7 @@ router.route("/adding_violet_petg").put(async (req: any, res: any) => {
   const products = await Product.find({
     deleted: false,
     option: true,
-    color_code: "#543abb"
+    color_code: "#543abb",
   });
 
   products.forEach(async (product: any) => {
@@ -1206,8 +1208,8 @@ router.route("/adding_purple_tpu").put(async (req: any, res: any) => {
     product_collection: "colors",
     pathname: {
       $regex: "_skin",
-      $options: "i"
-    }
+      $options: "i",
+    },
   });
 
   products.forEach(async (product: any) => {
@@ -1221,7 +1223,7 @@ router.route("/adding_purple_petg").put(async (req: any, res: any) => {
   const products = await Product.find({
     deleted: false,
     option: true,
-    color: "Purple"
+    color: "Purple",
     // color_code: "purple",
   });
 
@@ -1240,8 +1242,8 @@ router.route("/adding_black_tpu").put(async (req: any, res: any) => {
     product_collection: "colors",
     pathname: {
       $regex: "_skin",
-      $options: "i"
-    }
+      $options: "i",
+    },
   });
 
   products.forEach(async (product: any) => {
@@ -1255,7 +1257,7 @@ router.route("/adding_black_petg").put(async (req: any, res: any) => {
   const products = await Product.find({
     deleted: false,
     option: true,
-    color: "Black"
+    color: "Black",
     // color_code: "purple",
   });
 
@@ -1271,7 +1273,7 @@ router.route("/adding_white_petg").put(async (req: any, res: any) => {
     deleted: false,
     option: true,
     // color: "White",
-    color_code: "white"
+    color_code: "white",
   });
 
   products.forEach(async (product: any) => {
@@ -1286,7 +1288,7 @@ router.route("/options_no_filament").put(async (req: any, res: any) => {
     deleted: false,
     option: true,
     filament: null,
-    color: ""
+    color: "",
     // filament: { $exists: false },
     // filament: { $type: 10 },
   });
@@ -1310,9 +1312,9 @@ router.route("/delete_multiple_products").put(async (req: any, res: any) => {
         "61088a1ac5d88c002aa23d95",
         "60ee8657f26266002aee9c91",
         "6155f7833e0a16002b77e627",
-        "60ee86a2701941002a37669c"
-      ]
-    }
+        "60ee86a2701941002a37669c",
+      ],
+    },
   });
 
   res.send(product);
@@ -1356,7 +1358,7 @@ router.route("/all_options").put(async (req: any, res: any) => {
     return {
       id: product._id,
       name: product.name,
-      pathname: product.pathname
+      pathname: product.pathname,
     };
   });
   // .flat()
@@ -1376,7 +1378,7 @@ router.route("/all_products").put(async (req: any, res: any) => {
     return {
       id: product._id,
       name: product.name,
-      pathname: product.pathname
+      pathname: product.pathname,
     };
   });
   // .flat()
@@ -1402,7 +1404,7 @@ router.route("/add_shipping").put(async (req: any, res: any) => {
     state: "",
     postalCode: "",
     international: false,
-    country: ""
+    country: "",
   };
   // Loop through users and add shipping
   users.forEach(async (user: any) => {
@@ -1427,7 +1429,7 @@ router.route("/add_public_url").put(async (req: any, res: any) => {
     state: "",
     postalCode: "",
     international: false,
-    country: ""
+    country: "",
   };
   // Loop through users and add shipping
   users.forEach(async (user: any) => {
@@ -1503,7 +1505,7 @@ router.route("/create_image_records_and_reference_them_in_product").put(async (r
       { array: "color_images", object: "color_images_object" },
       { array: "secondary_color_images", object: "secondary_color_images_object" },
       { array: "option_images", object: "option_images_object" },
-      { array: "secondary_images", object: "secondary_images_object" }
+      { array: "secondary_images", object: "secondary_images_object" },
     ];
 
     for (const { array, object } of imagesToUpdate) {
@@ -1568,7 +1570,7 @@ router.route("/delete_old_carts").put(async (req: any, res: any) => {
     const mostRecentCarts = await Cart.aggregate([
       { $sort: { createdAt: -1 } },
       { $group: { _id: "$user", cart: { $first: "$_id" } } },
-      { $match: { _id: { $ne: null } } } // Exclude carts with no user
+      { $match: { _id: { $ne: null } } }, // Exclude carts with no user
     ]);
 
     const mostRecentCartIds = mostRecentCarts.map(c => c.cart);
@@ -1577,7 +1579,7 @@ router.route("/delete_old_carts").put(async (req: any, res: any) => {
     // Delete all carts that are not in the list of most recent cart ids
     // And carts with no user
     const result = await Cart.deleteMany({
-      $or: [{ _id: { $nin: mostRecentCartIds } }, { user: null }]
+      $or: [{ _id: { $nin: mostRecentCartIds } }, { user: null }],
     });
 
     console.log(`Deleted ${result.deletedCount} extra carts.`);
@@ -1660,7 +1662,7 @@ router.route("/link_documents_to_expenses").put(async (req: any, res: any) => {
       .filter(file => [".jpg", ".jpeg", ".png", ".gif"].includes(path.extname(file).toLowerCase()))
       .map(file => ({
         name: file,
-        path: path.join(tempDir, file)
+        path: path.join(tempDir, file),
       }));
 
     // Group the files by airtable_id
@@ -1698,7 +1700,7 @@ router.route("/link_documents_to_expenses").put(async (req: any, res: any) => {
           "https://api.imgur.com/3/album",
           { title: expense_name, privacy: "hidden" },
           {
-            headers: { Authorization: `Client-ID ${config.IMGUR_ClIENT_ID}` }
+            headers: { Authorization: `Client-ID ${config.IMGUR_ClIENT_ID}` },
           }
         );
         const album = albumResponse.data.data;
@@ -1708,9 +1710,9 @@ router.route("/link_documents_to_expenses").put(async (req: any, res: any) => {
           const imgResponse = await axios.post("https://api.imgur.com/3/image", imageData, {
             headers: {
               Authorization: `Client-ID ${config.IMGUR_ClIENT_ID}`,
-              "Content-Type": "multipart/form-data"
+              "Content-Type": "multipart/form-data",
             },
-            params: { album: album.deletehash }
+            params: { album: album.deletehash },
           });
           uploadedImageLinks.push(imgResponse.data.data.link);
         }
@@ -1786,7 +1788,7 @@ router.route("/update_status").put(async (req: Request, res: Response) => {
       isShipped: 168 * 60 * 60 * 1000,
       isInTransit: 192 * 60 * 60 * 1000,
       isOutForDelivery: 264 * 60 * 60 * 1000,
-      isDelivered: 264 * 60 * 60 * 1000
+      isDelivered: 264 * 60 * 60 * 1000,
     };
 
     // Define the cutoff date
@@ -1806,7 +1808,7 @@ router.route("/update_status").put(async (req: Request, res: Response) => {
       const docs = await Order.find({
         [status]: { $ne: true }, // status is not true
         [prevStatus]: true, // previous status is true
-        createdAt: { $lt: cutoffDate } // created before the cutoff date
+        createdAt: { $lt: cutoffDate }, // created before the cutoff date
       });
 
       console.log(`Found ${docs.length} documents to update for status ${status}.`);
@@ -1855,6 +1857,85 @@ router.route("/migrate_orders").put(async (req: any, res: any) => {
   } catch (err) {
     console.error("An error occurred:", err);
     res.status(500).send({ message: err.message });
+  }
+});
+router.route("/sample_ids").put(async (req, res) => {
+  try {
+    // Get all users that are employees
+    const employees = await User.find({ is_employee: true });
+
+    // Get all affiliates that are sponsored
+    const sponsoredAffiliates = await Affiliate.find({ sponsor: true });
+
+    // Get the user details of the sponsored affiliates
+    const sponsoredAffiliateUsers = await User.find({
+      _id: { $in: sponsoredAffiliates.map((affiliate: any) => affiliate.user) },
+    });
+
+    // Combine the employees and sponsored affiliate users
+    const users = [...employees, ...sponsoredAffiliateUsers];
+
+    // Send the user ids as the response
+    res.send(users.map(user => ({ id: user._id, user: user.first_name + " " + user.last_name })));
+  } catch (err) {
+    console.error("An error occurred:", err);
+    res.status(500).send({ message: err.message });
+  }
+});
+router.route("/migrate_payments").put(async (req, res) => {
+  try {
+    // Fetch all orders from the database
+    const orders = await Order.find({});
+
+    // Iterate over each order
+    for (const order of orders) {
+      // Array to hold new transactions
+      const newTransactions = [];
+
+      // Convert payment into a transaction
+      if (order.payment && order.payment.payment) {
+        newTransactions.push({
+          paymentType: order.payment.paymentMethod,
+          paymentMethod: order.payment.payment,
+          payment: order.payment.charge,
+          refund: {},
+          refundReason: {},
+        });
+      }
+
+      // Convert each refund into a transaction
+      if (order.payment && order.payment.refund) {
+        for (const refund of order.payment.refund) {
+          newTransactions.push({
+            paymentType: "",
+            paymentMethod: {},
+            payment: {},
+            refund: refund,
+            refundReason: order.payment.refund_reason,
+          });
+        }
+      }
+
+      // Update transactions in the order
+      order.transactions = newTransactions;
+
+      // Save the order back to the database
+      await order.save();
+    }
+
+    // Send response
+    res.send({ message: "Payment data migrated successfully." });
+  } catch (err) {
+    console.error("An error occurred:", err);
+    res.status(500).send({ message: err.message });
+  }
+});
+router.route("/unset_payments").put(async (req, res) => {
+  try {
+    console.log("Transactions removed from all orders.");
+    return await Order.updateMany({}, { $unset: { payments: 1 } });
+  } catch (error) {
+    console.error("Error:", error);
   }
 });
 

@@ -10,17 +10,17 @@ const shippingSchema = {
   return_shipping_rate: { type: Object },
   return_shipping_label: { type: Object },
   return_shipment_tracker: { type: Object },
-  first_name: { type: String, required: true },
-  last_name: { type: String, required: true },
-  email: { type: String, required: true },
+  first_name: { type: String },
+  last_name: { type: String },
+  email: { type: String },
   address: { type: String },
-  address_1: { type: String, required: true },
+  address_1: { type: String },
   address_2: { type: String },
-  city: { type: String, required: true },
-  state: { type: String, required: true },
-  postalCode: { type: String, required: true },
+  city: { type: String },
+  state: { type: String },
+  postalCode: { type: String },
   international: { type: Boolean },
-  country: { type: String, required: true }
+  country: { type: String },
 };
 
 const paymentSchema = {
@@ -28,14 +28,28 @@ const paymentSchema = {
   payment: { type: Object },
   charge: { type: Object },
   refund: { type: Array },
-  refund_reason: { type: Array }
+  refund_reason: { type: Array },
 };
+
+const transactionSchema = {
+  paymentType: { type: String },
+  paymentMethod: { type: Object },
+  payment: { type: Object },
+  refund: { type: Object },
+  refundReason: { type: Object },
+};
+// const paymentsSchema = {
+//   paymentMethod: { type: String },
+//   payments: { type: Array },
+//   refunds: { type: Array },
+//   refundReasons: { type: Array },
+// };
 
 const messageSchema = {
   message: { type: String },
   user: { type: Boolean },
   admin: { type: Boolean },
-  deleted: { type: Boolean, default: false }
+  deleted: { type: Boolean, default: false },
 };
 
 const productOptionsSchema = new mongoose.Schema({
@@ -43,14 +57,14 @@ const productOptionsSchema = new mongoose.Schema({
   price: { type: Number },
   sale_price: { type: Number, default: 0 },
   size: { type: Number },
-  color: { type: String }
+  color: { type: String },
 });
 
 const orderItemSchema = new mongoose.Schema(
   {
-    name: { type: String, required: true },
-    qty: { type: Number, required: true },
-    display_image: { type: String, required: true },
+    name: { type: String },
+    qty: { type: Number },
+    display_image: { type: String },
     secondary_image: { type: String },
     color: { type: String },
     secondary_color: { type: String },
@@ -64,10 +78,10 @@ const orderItemSchema = new mongoose.Schema(
     secondary_group_name: { type: String },
     option_group_name: { type: String },
     color_code: { type: String },
-    price: { type: Number, required: true },
+    price: { type: Number },
     add_on_price: { type: Number },
     show_add_on: { type: Boolean },
-    category: { type: String, required: true },
+    category: { type: String },
     count_in_stock: { type: Number },
     subcategory: { type: String },
     pathname: { type: String },
@@ -89,31 +103,30 @@ const orderItemSchema = new mongoose.Schema(
     product: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Product",
-      required: true
     },
     color_product: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Product"
+      ref: "Product",
     },
     color_product_name: { type: String },
     secondary_color_product: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Product"
+      ref: "Product",
     },
     secondary_color_product_name: { type: String },
     option_product_name: { type: String },
     option_product: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Product"
+      ref: "Product",
     },
     secondary_product_name: { type: String },
     secondary_product: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Product"
-    }
+      ref: "Product",
+    },
   },
   {
-    timestamps: true
+    timestamps: true,
   }
 );
 
@@ -124,6 +137,17 @@ const orderSchema = new mongoose.Schema(
     messages: [messageSchema],
     shipping: shippingSchema,
     payment: paymentSchema,
+    payments: [paymentSchema],
+    transactions: [transactionSchema],
+    // payments: [
+    //   {
+    //     amount: { type: Number },
+    //     paymentMethod: { type: String },
+    //     paymentDate: { type: Date },
+    //     transactionId: { type: String }
+    //     // ... any other fields you need
+    //   }
+    // ],
     itemsPrice: { type: Number },
     taxPrice: { type: Number },
     shippingPrice: { type: Number },
@@ -170,10 +194,10 @@ const orderSchema = new mongoose.Schema(
     is_error: { type: Boolean, default: false },
     error_at: { type: Date },
     error: { type: Object },
-    deleted: { type: Boolean, default: false }
+    deleted: { type: Boolean, default: false },
   },
   {
-    timestamps: true
+    timestamps: true,
   }
 );
 
