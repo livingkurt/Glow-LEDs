@@ -6,13 +6,17 @@ import FirstPageIcon from "@mui/icons-material/FirstPage";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import LastPageIcon from "@mui/icons-material/LastPage";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Autocomplete, TextField } from "@mui/material";
 
 const GLTableActions = ({ count, page, rowsPerPage, onPageChange }) => {
   const theme = useTheme();
   const totalPages = Math.ceil(count / rowsPerPage);
   const [selectedPage, setSelectedPage] = useState(page + 1);
+
+  useEffect(() => {
+    setSelectedPage(page + 1);
+  }, [page]);
 
   const handleSelectedPageChange = (event, newValue) => {
     if (newValue === null) {
@@ -49,7 +53,11 @@ const GLTableActions = ({ count, page, rowsPerPage, onPageChange }) => {
   return (
     <Box sx={{ flexShrink: 0, ml: 2.5, display: "flex", alignItems: "center" }}>
       <IconButton onClick={handleFirstPageButtonClick} disabled={page === 0} aria-label="first page">
-        {theme.direction === "rtl" ? <LastPageIcon style={{ fontSize: "25px" }} /> : <FirstPageIcon style={{ fontSize: "25px" }} />}
+        {theme.direction === "rtl" ? (
+          <LastPageIcon style={{ fontSize: "25px" }} />
+        ) : (
+          <FirstPageIcon style={{ fontSize: "25px" }} />
+        )}
       </IconButton>
       <IconButton onClick={handleBackButtonClick} disabled={page === 0} aria-label="previous page">
         {theme.direction === "rtl" ? (
@@ -72,15 +80,15 @@ const GLTableActions = ({ count, page, rowsPerPage, onPageChange }) => {
               width: 80,
               "& .MuiInputBase-root": {
                 fontSize: "0.8rem", // Adjust the font size here
-                alignItems: "center" // Align the elements vertically in the center
+                alignItems: "center", // Align the elements vertically in the center
               },
               "& .MuiInputAdornment-root": {
-                alignItems: "center" // Align the adornment elements vertically in the center
-              }
+                alignItems: "center", // Align the adornment elements vertically in the center
+              },
             }}
             inputProps={{
               ...params.inputProps,
-              "aria-label": "select page"
+              "aria-label": "select page",
             }}
           />
         )}
@@ -93,7 +101,11 @@ const GLTableActions = ({ count, page, rowsPerPage, onPageChange }) => {
         )}
       </IconButton>
       <IconButton onClick={handleLastPageButtonClick} disabled={page >= totalPages - 1} aria-label="last page">
-        {theme.direction === "rtl" ? <FirstPageIcon style={{ fontSize: "25px" }} /> : <LastPageIcon style={{ fontSize: "25px" }} />}
+        {theme.direction === "rtl" ? (
+          <FirstPageIcon style={{ fontSize: "25px" }} />
+        ) : (
+          <LastPageIcon style={{ fontSize: "25px" }} />
+        )}
       </IconButton>
     </Box>
   );
@@ -103,7 +115,7 @@ GLTableActions.propTypes = {
   count: PropTypes.number.isRequired,
   onPageChange: PropTypes.func.isRequired,
   page: PropTypes.number.isRequired,
-  rowsPerPage: PropTypes.number.isRequired
+  rowsPerPage: PropTypes.number.isRequired,
 };
 
 export default GLTableActions;

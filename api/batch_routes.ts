@@ -24,6 +24,7 @@ import appRoot from "app-root-path";
 import { downloadFile, sanitizeExpenseName } from "./expenses/expense_helpers";
 import { Parser } from "json2csv";
 import config from "../config";
+import * as csv from "fast-csv";
 
 const router = express.Router();
 
@@ -1936,6 +1937,60 @@ router.route("/unset_payments").put(async (req, res) => {
     return await Order.updateMany({}, { $unset: { payments: 1 } });
   } catch (error) {
     console.error("Error:", error);
+  }
+});
+router.route("/import_checkins").put(async (req, res) => {
+  try {
+    const filePath = "/Users/kurtlavacque/Desktop/Glow-LEDs/api/checkin.csv";
+    const checkinsStream = fs.createReadStream(filePath);
+
+    const checkinsData: any = [];
+    csv
+      .parseStream(checkinsStream, { headers: true })
+      .on("error", (error: any) => console.error(error))
+      .on("data", (row: any) => checkinsData.push(row))
+      .on("end", async (rowCount: any) => {
+        for (const data of checkinsData) {
+          const {
+            "Glover Name": artist_name,
+            "What month are you checking in?": month,
+            "Questions/problems we can discuss in meetings or questions for the company.": questionsConcerns,
+          } = data;
+
+          const checkin = { month, questionsConcerns, year: 2023 };
+
+          const affiliate = await Affiliate.findOne({ artist_name });
+          if (affiliate) {
+            // Check if there is already a checkin for the same month and year.
+            const existingCheckin = affiliate.sponsorMonthlyCheckins.find(
+              ci => ci.year === checkin.year && ci.month === checkin.month
+            );
+
+            if (existingCheckin) {
+              continue; // Skip this checkin if it already exists.
+            }
+
+            // Add new checkin at the correct position based on month and year.
+            const newCheckins = [...affiliate.sponsorMonthlyCheckins];
+            const index = newCheckins.findIndex(
+              ci => ci.year > checkin.year || (ci.year === checkin.year && ci.month.localeCompare(month) > 0)
+            );
+            if (index !== -1) {
+              newCheckins.splice(index, 0, checkin);
+            } else {
+              newCheckins.push(checkin);
+            }
+
+            affiliate.sponsorMonthlyCheckins = newCheckins;
+            await affiliate.save();
+          }
+        }
+
+        res.status(200).send("Import completed successfully");
+      });
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).send("Server Error");
   }
 });
 

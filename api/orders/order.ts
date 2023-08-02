@@ -30,20 +30,23 @@ const paymentSchema = {
   refund: { type: Array },
   refund_reason: { type: Array },
 };
-
-const transactionSchema = {
-  paymentType: { type: String },
-  paymentMethod: { type: Object },
-  payment: { type: Object },
-  refund: { type: Object },
-  refundReason: { type: Object },
+const paymentsSchema = {
+  paymentMethod: { type: String },
+  stripePaymentIntentId: { type: String },
+  stripePaymentId: { type: String },
+  amount: { type: Number },
+  isPaid: { type: Boolean },
+  paidAt: { type: Date },
+  brand: { type: String },
+  last4: { type: String },
 };
-// const paymentsSchema = {
-//   paymentMethod: { type: String },
-//   payments: { type: Array },
-//   refunds: { type: Array },
-//   refundReasons: { type: Array },
-// };
+const refundsSchema = {
+  refundId: { type: String },
+  amount: { type: Number },
+  reason: { type: String },
+  isRefunded: { type: Boolean },
+  refundedAt: { type: Date },
+};
 
 const messageSchema = {
   message: { type: String },
@@ -136,18 +139,9 @@ const orderSchema = new mongoose.Schema(
     orderItems: [orderItemSchema],
     messages: [messageSchema],
     shipping: shippingSchema,
-    payment: paymentSchema,
-    payments: [paymentSchema],
-    transactions: [transactionSchema],
-    // payments: [
-    //   {
-    //     amount: { type: Number },
-    //     paymentMethod: { type: String },
-    //     paymentDate: { type: Date },
-    //     transactionId: { type: String }
-    //     // ... any other fields you need
-    //   }
-    // ],
+    payment: paymentSchema, // Deprecated
+    payments: [paymentsSchema],
+    refunds: [refundsSchema],
     itemsPrice: { type: Number },
     taxPrice: { type: Number },
     shippingPrice: { type: Number },
