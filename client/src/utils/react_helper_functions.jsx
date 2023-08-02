@@ -56,7 +56,7 @@ export const product_page_sale_price_switch = (
     return (
       <label className="fs-18px">
         <label>${price ? price?.toFixed(2) : price}</label>
-        <label> ({(100 * (1 - price / previous_price)).toFixed(2)}% Off) </label>
+        <label> ({(100 * (1 - price / previous_price)).toFixed(0)}% Off) </label>
         <label>
           <del style={color}>
             <label className="" style={color}>
@@ -71,7 +71,7 @@ export const product_page_sale_price_switch = (
       return (
         <label className="fs-18px">
           <label>${sale_price ? sale_price?.toFixed(2) : sale_price}</label>
-          <label> ({100 * (1 - sale_price / price).toFixed(2)}% Off) </label>
+          <label> ({100 * (1 - sale_price / price).toFixed(0)}% Off) </label>
           <label>
             <del style={color}>
               <label className="" style={color}>
@@ -98,14 +98,20 @@ export const sale_price_switch = ({ product, cartItem, background, isWholesaler 
   if (product) {
     if (isWholesaler && product.wholesale_price) {
       return (
-        <label className="fs-18px">WSP: ${product.wholesale_price ? product.wholesale_price?.toFixed(2) : product.wholesale_price}</label>
+        <label className="fs-18px">
+          WSP: ${product.wholesale_price ? product.wholesale_price?.toFixed(2) : product.wholesale_price}
+        </label>
       );
-    } else if (product.sale_price !== 0 && today >= new Date(product.sale_start_date) && today <= new Date(product.sale_end_date)) {
+    } else if (
+      product.sale_price !== 0 &&
+      today >= new Date(product.sale_start_date) &&
+      today <= new Date(product.sale_end_date)
+    ) {
       return (
         <label className="fs-18px">
           {determine_preorder(product) ? "Preorder " : ""}
           <label>${product.sale_price ? product.sale_price?.toFixed(2) : product.sale_price}</label>
-          <label> ({(100 * (1 - product.sale_price / product.price)).toFixed(2)}% Off) </label>
+          <label> ({(100 * (1 - product.sale_price / product.price)).toFixed(0)}% Off) </label>
           <label>
             <del style={color}>
               <label className="" style={color}>
@@ -120,7 +126,7 @@ export const sale_price_switch = ({ product, cartItem, background, isWholesaler 
         <label className="fs-18px">
           {determine_preorder(product) ? "Preorder " : ""}
           <label>${product.price ? product.price?.toFixed(2) : product.price}</label>
-          <label> ({(100 * (1 - product.price / product.previous_price)).toFixed(2)}% Off) </label>
+          <label> ({(100 * (1 - product.price / product.previous_price)).toFixed(0)}% Off) </label>
           <label>
             <del style={color}>
               <label className="" style={color}>
@@ -142,7 +148,11 @@ export const sale_price_switch = ({ product, cartItem, background, isWholesaler 
 
 export const email_sale_price_switch = (item, color, isWholesaler) => {
   if (isWholesaler && item.wholesale_price) {
-    return <label className="fs-18px">WSP: ${item.wholesale_price ? item.wholesale_price?.toFixed(2) : item.wholesale_price}</label>;
+    return (
+      <label className="fs-18px">
+        WSP: ${item.wholesale_price ? item.wholesale_price?.toFixed(2) : item.wholesale_price}
+      </label>
+    );
   } else if (item.sale_price !== 0) {
     return (
       <label>
@@ -178,7 +188,9 @@ export const cart_item_name = item => {
     <div className="">
       {item.secondary_product && (
         <div className="ai-c mb-20px jc-b w-100per">
-          <label className="mv-0px mr-5px">{item.secondary_group_name ? item.secondary_group_name : "Cap Design"}: </label>
+          <label className="mv-0px mr-5px">
+            {item.secondary_group_name ? item.secondary_group_name : "Cap Design"}:{" "}
+          </label>
           <label className=" mv-0px">{determine_secondary_product_name(item.secondary_product_name, item)}</label>
         </div>
       )}
@@ -187,13 +199,17 @@ export const cart_item_name = item => {
           <label className="mv-0px mr-5px">{item.color_group_name ? item.color_group_name : "Color"}: </label>
           <div className="ai-c">
             <label className=" mv-0px">{item.color}</label>
-            {item.color_code && <canvas className=" ml-5px w-60px h-20px br-7px" style={{ backgroundColor: item.color_code }} />}
+            {item.color_code && (
+              <canvas className=" ml-5px w-60px h-20px br-7px" style={{ backgroundColor: item.color_code }} />
+            )}
           </div>
         </div>
       )}
       {item.size !== "1 Skin" && item.secondary_color && (
         <div className="ai-c mb-20px jc-b w-100per">
-          <label className="mv-0px mr-5px">{item.secondary_color_group_name ? item.secondary_color_group_name : "Secondary Color"}: </label>
+          <label className="mv-0px mr-5px">
+            {item.secondary_color_group_name ? item.secondary_color_group_name : "Secondary Color"}:{" "}
+          </label>
           <div className="ai-c">
             <label className=" mv-0px">{item.secondary_color}</label>
             {item.secondary_color_code && (
@@ -230,10 +246,14 @@ const size = (item, modifier) => {
 };
 
 const secondary_color = item => {
-  return `${item.secondary_color && item.secondary_color_product ? `${second_dash(item)} ${item.secondary_color}` : ""}`;
+  return `${
+    item.secondary_color && item.secondary_color_product ? `${second_dash(item)} ${item.secondary_color}` : ""
+  }`;
 };
 const secondary_color_name = item => {
-  const secondary_color_name = item.secondary_color_group_name ? item.secondary_color_group_name.split(" ")[0] + "s" : "";
+  const secondary_color_name = item.secondary_color_group_name
+    ? item.secondary_color_group_name.split(" ")[0] + "s"
+    : "";
   if (item.category === "gloves") {
     return secondary_color_name;
   }
@@ -410,7 +430,11 @@ export const determine_product_name_display = product => {
   //
   const option = product.option_products.find(option => option.default_option === true);
   //
-  if (product.category === "diffusers" || product.category === "exo_diffusers" || product.category === "diffuser_caps") {
+  if (
+    product.category === "diffusers" ||
+    product.category === "exo_diffusers" ||
+    product.category === "diffuser_caps"
+  ) {
     return <div>{product.name} - 10</div>;
   } else if (product.category === "decals") {
     return <div>{product.name} - 11</div>;
@@ -509,7 +533,7 @@ export const order_status_steps = (order, status) => {
         justifyContent: "space-between",
         maxWidth: "58rem",
         width: "100%",
-        margin: "1rem auto"
+        margin: "1rem auto",
       }}
     >
       <div
@@ -520,14 +544,14 @@ export const order_status_steps = (order, status) => {
                 color: "$font_color",
                 flex: "1 1",
                 paddingTop: "1rem",
-                textAlign: "center"
+                textAlign: "center",
               }
             : {
                 borderTop: ".3rem #c0c0c0 solid",
                 color: "$font_color",
                 flex: "1 1",
                 paddingTop: "1rem",
-                textAlign: "center"
+                textAlign: "center",
               }
         }
       >
@@ -541,14 +565,14 @@ export const order_status_steps = (order, status) => {
                 color: "$font_color",
                 flex: "1 1",
                 paddingTop: "1rem",
-                textAlign: "center"
+                textAlign: "center",
               }
             : {
                 borderTop: ".3rem #c0c0c0 solid",
                 color: "$font_color",
                 flex: "1 1",
                 paddingTop: "1rem",
-                textAlign: "center"
+                textAlign: "center",
               }
         }
       >
@@ -562,14 +586,14 @@ export const order_status_steps = (order, status) => {
                 color: "$font_color",
                 flex: "1 1",
                 paddingTop: "1rem",
-                textAlign: "center"
+                textAlign: "center",
               }
             : {
                 borderTop: ".3rem #c0c0c0 solid",
                 color: "$font_color",
                 flex: "1 1",
                 paddingTop: "1rem",
-                textAlign: "center"
+                textAlign: "center",
               }
         }
       >
@@ -583,14 +607,14 @@ export const order_status_steps = (order, status) => {
                 color: "$font_color",
                 flex: "1 1",
                 paddingTop: "1rem",
-                textAlign: "center"
+                textAlign: "center",
               }
             : {
                 borderTop: ".3rem #c0c0c0 solid",
                 color: "$font_color",
                 flex: "1 1",
                 paddingTop: "1rem",
-                textAlign: "center"
+                textAlign: "center",
               }
         }
       >
@@ -604,14 +628,14 @@ export const order_status_steps = (order, status) => {
                 color: "$font_color",
                 flex: "1 1",
                 paddingTop: "1rem",
-                textAlign: "center"
+                textAlign: "center",
               }
             : {
                 borderTop: ".3rem #c0c0c0 solid",
                 color: "$font_color",
                 flex: "1 1",
                 paddingTop: "1rem",
-                textAlign: "center"
+                textAlign: "center",
               }
         }
       >
