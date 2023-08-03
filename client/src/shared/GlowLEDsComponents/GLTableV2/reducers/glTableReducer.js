@@ -22,7 +22,7 @@ import {
   FETCH_TABLE_FILTERS,
   FETCH_TABLE_FILTERS_SUCCESS,
   REORDER_ROWS_SUCCESS,
-  UPDATE_QUERY
+  UPDATE_QUERY,
 } from "../actions/actionTypes";
 import { calcVisibleRows, determineFilters } from "../glTableHelpers";
 import defaultState from "./defaultState";
@@ -43,12 +43,12 @@ const reducer =
           nonTagFilters,
           remote: {
             ...state.remote,
-            isRemote
-          }
+            isRemote,
+          },
         };
         return {
           ...newState,
-          ...calcVisibleRows(newState)
+          ...calcVisibleRows(newState),
         };
       }
       case `${namespace}/${REORDER_ROWS_SUCCESS}`: {
@@ -71,7 +71,7 @@ const reducer =
           ...state,
           rows: reorderedRows,
           filteredRows: reorderedRows,
-          visibleRows: reorderedRows
+          visibleRows: reorderedRows,
         };
       }
       case `${namespace}/${FETCH_TABLE_FILTERS}`: {
@@ -79,8 +79,8 @@ const reducer =
           ...state,
           remote: {
             ...state.remote,
-            isLoadingFilters: true
-          }
+            isLoadingFilters: true,
+          },
         };
       }
       case `${namespace}/${FETCH_TABLE_FILTERS_SUCCESS}`: {
@@ -93,8 +93,8 @@ const reducer =
           filters: { ...state.filters, ...defaultFilters },
           remote: {
             ...state.remote,
-            isLoadingFilters: false
-          }
+            isLoadingFilters: false,
+          },
         };
       }
       case `${namespace}/${FETCH_TABLE_PAGE}`: {
@@ -104,16 +104,16 @@ const reducer =
           remote: {
             ...state.remote,
             isRemoteLoading: true,
-            remotePageLoadingState: { ...state.remote.remotePageLoadingState, [id]: false }
-          }
+            remotePageLoadingState: { ...state.remote.remotePageLoadingState, [id]: false },
+          },
         };
       }
       case `${namespace}/${FETCH_TABLE_PAGE_SUCCESS}`: {
         const {
           response: {
-            data: { data, total_count }
+            data: { data, total_count },
           },
-          id
+          id,
         } = action.payload;
         const idNumber = Number(id);
         const newRemotePageLoadingState = { ...state.remote.remotePageLoadingState, [id]: true };
@@ -132,8 +132,8 @@ const reducer =
               lastRemoteFetchedPageId: Number(id),
               latestRemoteVersionTimestamp: Date.now(),
               remotePageLoadingState: newRemotePageLoadingState,
-              isRemoteLoading: newIsRemoteLoading
-            }
+              isRemoteLoading: newIsRemoteLoading,
+            },
           };
         } else {
           return {
@@ -141,8 +141,8 @@ const reducer =
             remote: {
               ...state.remote,
               remotePageLoadingState: newRemotePageLoadingState,
-              isRemoteLoading: newIsRemoteLoading
-            }
+              isRemoteLoading: newIsRemoteLoading,
+            },
           };
         }
       }
@@ -154,7 +154,7 @@ const reducer =
           filters: filters,
           page: page,
           pageSize: pageSize,
-          sorting: sorting
+          sorting: sorting,
         };
       }
       case `${namespace}/${CLEAR_TABLE}`: {
@@ -165,7 +165,7 @@ const reducer =
           filteredRows: [],
           visibleRows: [],
           selectedRows: [],
-          filters: {}
+          filters: {},
         };
       }
       case `${namespace}/${APPLY_SEARCH}`: {
@@ -174,14 +174,14 @@ const reducer =
         const newState = {
           ...state,
           search,
-          page: 0
+          page: 0,
         };
 
         if (state.remote.isRemote) return { ...newState };
 
         return {
           ...newState,
-          ...calcVisibleRows(newState)
+          ...calcVisibleRows(newState),
         };
       }
 
@@ -189,14 +189,14 @@ const reducer =
         const { columnIndex, orderDirection } = action.payload;
         const newState = {
           ...state,
-          sorting: [columnIndex, orderDirection]
+          sorting: [columnIndex, orderDirection],
         };
 
         if (state.remote.isRemote) return { ...newState };
 
         return {
           ...newState,
-          ...calcVisibleRows(newState)
+          ...calcVisibleRows(newState),
         };
       }
       case `${namespace}/${ON_EXPAND_ROW}`: {
@@ -204,34 +204,34 @@ const reducer =
         const { expandRow } = state;
         return {
           ...state,
-          expandRow: expandRow === rowName ? "" : rowName
+          expandRow: expandRow === rowName ? "" : rowName,
         };
       }
       case `${namespace}/${UPDATE_PAGE_SIZE}`: {
         const newState = {
           ...state,
           pageSize: action.pageSize,
-          page: 0
+          page: 0,
         };
 
         if (state.remote.isRemote) return { ...newState };
 
         return {
           ...newState,
-          ...calcVisibleRows(newState)
+          ...calcVisibleRows(newState),
         };
       }
       case `${namespace}/${UPDATE_PAGE}`: {
         const newState = {
           ...state,
-          page: action.page
+          page: action.page,
         };
 
         if (state.remote.isRemote) return { ...newState };
 
         return {
           ...newState,
-          ...calcVisibleRows(newState)
+          ...calcVisibleRows(newState),
         };
       }
       case `${namespace}/${UPDATE_FILTER_DISPLAY}`: {
@@ -240,7 +240,7 @@ const reducer =
           ...state,
           menuOpen,
           menuSelection,
-          filterSearch: ""
+          filterSearch: "",
         };
       }
       case `${namespace}/${TOGGLE_FILTER}`: {
@@ -252,16 +252,16 @@ const reducer =
             ...state,
             filters: {
               ...filters,
-              [menuSelection]: filters[menuSelection].filter(filter => filter !== item)
-            }
+              [menuSelection]: filters[menuSelection].filter(filter => filter !== item),
+            },
           };
         } else {
           return {
             ...state,
             filters: {
               ...filters,
-              [menuSelection]: [...(filters[menuSelection] || []), item]
-            }
+              [menuSelection]: [...(filters[menuSelection] || []), item],
+            },
           };
         }
       }
@@ -272,8 +272,8 @@ const reducer =
           ...state,
           filters: {
             ...filters,
-            [filter]: []
-          }
+            [filter]: [],
+          },
         };
         if (action.payload) {
           delete newState.filters[menuSelection];
@@ -282,20 +282,20 @@ const reducer =
 
         return {
           ...newState,
-          ...calcVisibleRows(newState)
+          ...calcVisibleRows(newState),
         };
       }
       case `${namespace}/${REMOVE_ALL_FILTERS}`: {
         const newState = {
           ...state,
-          filters: {}
+          filters: {},
         };
 
         if (state.remote.isRemote) return { ...newState };
 
         return {
           ...newState,
-          ...calcVisibleRows(newState)
+          ...calcVisibleRows(newState),
         };
       }
       case `${namespace}/${APPLY_FILTER}`: {
@@ -304,22 +304,24 @@ const reducer =
         return {
           ...state,
           ...calcVisibleRows({ ...state, page: 0 }),
-          page: 0
+          page: 0,
         };
       }
       case `${namespace}/${SELECT_ROW}`: {
         const { rowId } = action.payload;
         const { selectedRows } = state;
-        const updatedSelections = selectedRows.includes(rowId) ? selectedRows.filter(id => id !== rowId) : [...selectedRows, rowId];
+        const updatedSelections = selectedRows.includes(rowId)
+          ? selectedRows.filter(id => id !== rowId)
+          : [...selectedRows, rowId];
         return {
           ...state,
-          selectedRows: [...updatedSelections]
+          selectedRows: [...updatedSelections],
         };
       }
       case `${namespace}/${DESELECT_ROWS}`: {
         return {
           ...state,
-          selectedRows: []
+          selectedRows: [],
         };
       }
       case `${namespace}/${SELECT_ALL_ROWS}`: {
@@ -329,14 +331,14 @@ const reducer =
         const updatedSelections = selectedRowsCount === visibleRowsCount ? [] : visibleRows.map(row => row._id);
         return {
           ...state,
-          selectedRows: [...updatedSelections]
+          selectedRows: [...updatedSelections],
         };
       }
       case `${namespace}/${APPLY_FILTER_SEARCH}`: {
         const { filterSearch } = action.payload;
         return {
           ...state,
-          filterSearch
+          filterSearch,
         };
       }
       default: {

@@ -13,7 +13,7 @@ export const getUsers = async ({
   sorting,
   filters,
   page,
-  pageSize
+  pageSize,
 }: {
   search: string;
   sorting: any;
@@ -28,13 +28,13 @@ export const getUsers = async ({
         page: page,
         search: search,
         sort: sorting,
-        filters
-      }
+        filters,
+      },
     });
   } catch (error) {
     Covy().showSnackbar({
       message: `Error: ${error}`,
-      severity: "error"
+      severity: "error",
     });
   }
 };
@@ -51,7 +51,7 @@ export const listUsers = createAsyncThunk("users/listUsers", async (query: any, 
   } catch (error) {
     Covy().showSnackbar({
       message: `Error: ${error}`,
-      severity: "error"
+      severity: "error",
     });
   }
 });
@@ -72,7 +72,7 @@ export const saveUser = createAsyncThunk("users/saveUser", async ({ user, profil
   } catch (error) {
     Covy().showSnackbar({
       message: `Error: ${error}`,
-      severity: "error"
+      severity: "error",
     });
   }
 });
@@ -84,7 +84,7 @@ export const detailsUser = createAsyncThunk("users/detailsUser", async (id: any,
   } catch (error) {
     Covy().showSnackbar({
       message: `Error: ${error}`,
-      severity: "error"
+      severity: "error",
     });
   }
 });
@@ -96,7 +96,7 @@ export const deleteUser = createAsyncThunk("users/deleteUser", async (id: string
   } catch (error) {
     Covy().showSnackbar({
       message: `Error: ${error}`,
-      severity: "error"
+      severity: "error",
     });
   }
 });
@@ -109,7 +109,7 @@ export const registerUser = createAsyncThunk("users/registerUser", async (userDa
   } catch (error) {
     Covy().showSnackbar({
       message: `Error: ${error}`,
-      severity: "error"
+      severity: "error",
     });
   }
 });
@@ -168,8 +168,8 @@ export const loginUser = createAsyncThunk("users/loginUser", async (userData: an
 export const logoutUser = createAsyncThunk("users/logoutUser", async (refresh_token: any, thunkApi: any) => {
   const {
     carts: {
-      cartPage: { my_cart }
-    }
+      cartPage: { my_cart },
+    },
   } = thunkApi.getState();
   try {
     await axios.put("/api/users/logout", { refresh_token });
@@ -177,7 +177,7 @@ export const logoutUser = createAsyncThunk("users/logoutUser", async (refresh_to
   } catch (error) {
     Covy().showSnackbar({
       message: `Error: ${error}`,
-      severity: "error"
+      severity: "error",
     });
   }
 });
@@ -187,7 +187,7 @@ export const refreshLogin = async (refresh_token: any, thunkApi: any) => {
   } catch (error) {
     Covy().showSnackbar({
       message: `Error: ${error}`,
-      severity: "error"
+      severity: "error",
     });
   }
 };
@@ -199,7 +199,7 @@ export const loginAsUser = createAsyncThunk("users/loginAsUser", async (userData
   } catch (error) {
     Covy().showSnackbar({
       message: `Error: ${error}`,
-      severity: "error"
+      severity: "error",
     });
   }
 });
@@ -209,14 +209,14 @@ export const passwordReset = createAsyncThunk(
   async ({ userId, password, rePassword }: { userId: string; password: string; rePassword: string }, thunkApi: any) => {
     const {
       users: {
-        userPage: { current_user }
-      }
+        userPage: { current_user },
+      },
     } = thunkApi.getState();
     try {
       const { data } = await axios.put("/api/users/password_reset", {
         userId,
         password,
-        rePassword
+        rePassword,
       });
 
       // if (data && data.hasOwnProperty("first_name")) {
@@ -227,7 +227,7 @@ export const passwordReset = createAsyncThunk(
     } catch (error) {
       Covy().showSnackbar({
         message: `Error: ${error}`,
-        severity: "error"
+        severity: "error",
       });
     }
   }
@@ -242,7 +242,7 @@ export const resetPassword = createAsyncThunk("users/resetPassword", async (emai
   } catch (error) {
     Covy().showSnackbar({
       message: `Error: ${error}`,
-      severity: "error"
+      severity: "error",
     });
   }
 });

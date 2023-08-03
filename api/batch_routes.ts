@@ -1963,7 +1963,7 @@ router.route("/import_checkins").put(async (req, res) => {
           if (affiliate) {
             // Check if there is already a checkin for the same month and year.
             const existingCheckin = affiliate.sponsorMonthlyCheckins.find(
-              ci => ci.year === checkin.year && ci.month === checkin.month
+              (ci: any) => ci.year === checkin.year && ci.month === checkin.month
             );
 
             if (existingCheckin) {

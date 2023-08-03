@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import config from "../../config";
 const stripe = require("stripe")(config.STRIPE_KEY);
 
