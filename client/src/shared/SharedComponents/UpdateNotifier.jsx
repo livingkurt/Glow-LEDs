@@ -8,13 +8,13 @@ const UpdateNotifier = () => {
 
   useEffect(() => {
     // Get the current version when the page loads
-    axios.get("/api/version").then(response => {
+    axios.get("/api/versions").then(response => {
       setVersion(response.data.version);
     });
 
     // Check for updates every 5 minutes
     const interval = setInterval(() => {
-      axios.get("/api/version").then(response => {
+      axios.get("/api/versions").then(response => {
         if (response.data.version > version) {
           setShowUpdatePopup(true);
         }
