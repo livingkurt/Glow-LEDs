@@ -25,8 +25,8 @@ router.post("/", async (req, res) => {
 router.put("/", async (req, res) => {
   try {
     console.log({ version: "version" });
-    const versions = await Version.find();
-    const versionDoc = await Version.updateOne({ _id: versions[0]._id }, { version: versions[0].version + 1 });
+    const version = await Version.findOne();
+    const versionDoc = await Version.updateOne({ _id: version._id }, { version: version.version + 1 });
     console.log({ versionDoc });
     res.json({ version: versionDoc.version });
   } catch (err) {

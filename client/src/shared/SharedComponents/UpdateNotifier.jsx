@@ -19,7 +19,7 @@ const UpdateNotifier = () => {
           setShowUpdatePopup(true);
         }
       });
-    }, 300000); // 300000 ms = 5 minutes
+    }, 30000); // 300000 ms = 5 minutes
 
     // Clean up the interval on unmount
     return () => clearInterval(interval);
