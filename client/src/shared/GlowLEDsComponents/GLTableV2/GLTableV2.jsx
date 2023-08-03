@@ -1,7 +1,17 @@
 /* eslint-disable max-lines-per-function */
 import { useEffect, useRef } from "react";
 import PropTypes from "prop-types";
-import { Table, TablePagination, Divider, Paper, TableBody, TableRow, TableCell, Typography, Skeleton } from "@mui/material";
+import {
+  Table,
+  TablePagination,
+  Divider,
+  Paper,
+  TableBody,
+  TableRow,
+  TableCell,
+  Typography,
+  Skeleton,
+} from "@mui/material";
 import mapValues from "lodash/mapValues";
 import at from "lodash/at";
 import times from "lodash/times";
@@ -14,11 +24,17 @@ import {
   GLTableToolbar,
   GLTableSearch,
   GLTableFilterChips,
-  GLTableActions
+  GLTableActions,
 } from "./components";
 import glTable from "./glTable.module.scss";
 import "./glTable.scss";
-import { isItemSelected, reorder, updateTableStateFromUrl, updateUrlWithTableState, visibleSelected } from "./glTableHelpers";
+import {
+  isItemSelected,
+  reorder,
+  updateTableStateFromUrl,
+  updateUrlWithTableState,
+  visibleSelected,
+} from "./glTableHelpers";
 import {
   addRows,
   updatePage,
@@ -27,7 +43,7 @@ import {
   fetchTableFilters,
   reorderRows,
   updateQuery,
-  selectRow
+  selectRow,
 } from "./actions/actions";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { useHistory, useLocation } from "react-router-dom";
@@ -136,7 +152,7 @@ const GLTableV2 = ({
   colors,
   defaultFilters,
   dropdownAction,
-  noURLParams
+  noURLParams,
 }) => {
   const isMounted = useRef(false);
   const dispatch = useDispatch();
@@ -166,7 +182,7 @@ const GLTableV2 = ({
     availableFilters,
     filterSearch,
     booleanFilters,
-    remote: { remoteCount, isLoadingFilters, isRemoteLoading, latestRemoteVersionTimestamp }
+    remote: { remoteCount, isLoadingFilters, isRemoteLoading, latestRemoteVersionTimestamp },
   } = tableState;
 
   useEffect(() => {
@@ -177,7 +193,7 @@ const GLTableV2 = ({
         nonTagFilters,
         filters: mapValues(availableFiltersProp, () => []),
         availableFilters: availableFiltersProp,
-        isRemote: !!remoteApi
+        isRemote: !!remoteApi,
       })
     );
   }, [remoteApi, availableFiltersProp, columnDefs, dispatch, namespace, nonTagFilters, rows]);
@@ -194,7 +210,7 @@ const GLTableV2 = ({
               filters,
               page,
               pageSize,
-              sorting
+              sorting,
             })
           );
           if (!noURLParams) {
@@ -222,7 +238,7 @@ const GLTableV2 = ({
         filters,
         page,
         pageSize,
-        sorting
+        sorting,
       });
 
       // Update the state based on the URL parameters
@@ -232,7 +248,7 @@ const GLTableV2 = ({
           filters: param_filters,
           page: param_page,
           pageSize: param_pageSize,
-          sorting: param_sorting
+          sorting: param_sorting,
         })
       );
     }
@@ -250,7 +266,7 @@ const GLTableV2 = ({
           filters,
           page,
           pageSize,
-          sorting
+          sorting,
         })
       );
       if (!noURLParams) {
@@ -270,7 +286,7 @@ const GLTableV2 = ({
           filters,
           page,
           pageSize,
-          sorting
+          sorting,
         })
       );
     }
@@ -313,7 +329,7 @@ const GLTableV2 = ({
         remoteVersionRequirementType,
         remoteReorderApi,
         page,
-        pageSize
+        pageSize,
       })
     );
   };
@@ -335,7 +351,11 @@ const GLTableV2 = ({
 
   return (
     <div style={{ overflowX: "scroll" }} className="w-100per">
-      <Paper className={containerClassNames} style={{ ...style, margin: "1px", minWidth: "1000px" }} data-test="glTable">
+      <Paper
+        className={containerClassNames}
+        style={{ ...style, margin: "1px", minWidth: "1000px" }}
+        data-test="glTable"
+      >
         <GLTableToolbar
           tableName={tableName}
           numSelected={numSelected}
@@ -379,7 +399,9 @@ const GLTableV2 = ({
                     <Typography variant="h6" color="textPrimary" component="div">
                       {numSelected} Selected
                     </Typography>
-                    {hiddenSelected > 0 && <sup className={glTable.subtextWrapper}>{hiddenSelected} not shown on the current page</sup>}
+                    {hiddenSelected > 0 && (
+                      <sup className={glTable.subtextWrapper}>{hiddenSelected} not shown on the current page</sup>
+                    )}
                   </div>
                 ) : (
                   <Typography variant="h6" data-test="tableToolbarTitle" id="tableTitle" component="div">
@@ -497,11 +519,9 @@ const GLTableV2 = ({
               {loading || isRemoteLoading
                 ? times(pageSize || 10, index => (
                     <TableRow key={`${index}-skeleton-row`} data-test="loading-row">
-                      {times(columnDefs.length + 1, i => (
-                        <TableCell key={`${i}-skeleton-cell`}>
-                          <Skeleton animation="wave" variant="rect" height={40} />
-                        </TableCell>
-                      ))}
+                      <TableCell key="skeleton-cell" colSpan={columnDefs.length + 1}>
+                        <Skeleton animation="wave" variant="rect" height={40} style={{ borderRadius: "10px" }} />
+                      </TableCell>
                     </TableRow>
                   ))
                 : visibleRows &&
@@ -555,11 +575,11 @@ const GLTableV2 = ({
           SelectProps={{
             inputProps: {
               "aria-label": "rows per page",
-              fontSize: "20px"
+              fontSize: "20px",
             },
             SelectDisplayProps: {
-              style: { fontSize: "1.4rem", paddingTop: "15px", paddingRight: "15px" } // Adjust the font size here
-            }
+              style: { fontSize: "1.4rem", paddingTop: "15px", paddingRight: "15px" }, // Adjust the font size here
+            },
           }}
           rowsPerPage={pageSize}
           page={page}
@@ -606,7 +626,7 @@ GLTableV2.defaultProps = {
   dropdownComponent: false,
   colors: [],
   noURLParams: false,
-  dropdownAction: x => x
+  dropdownAction: x => x,
 };
 
 GLTableV2.propTypes = {
@@ -634,7 +654,7 @@ GLTableV2.propTypes = {
       align: PropTypes.string, // Align optioms: left, right, center
       colSpan: PropTypes.number, // How many table columns it should span (default: 1)
       nonSortable: PropTypes.bool,
-      nonSelectable: PropTypes.bool
+      nonSelectable: PropTypes.bool,
     })
   ).isRequired,
   dropdownColumnDefs: PropTypes.array,
@@ -664,7 +684,7 @@ GLTableV2.propTypes = {
   dropdownComponent: PropTypes.func,
   dropdownAction: PropTypes.func,
   colors: PropTypes.array,
-  noURLParams: PropTypes.bool
+  noURLParams: PropTypes.bool,
 };
 
 export default GLTableV2;
