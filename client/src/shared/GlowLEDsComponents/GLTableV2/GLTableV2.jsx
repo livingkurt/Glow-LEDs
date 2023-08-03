@@ -48,6 +48,7 @@ import {
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { useHistory, useLocation } from "react-router-dom";
 import GLLegend from "./components/GLLegend";
+import GLTablePagination from "./components/GLTablePagination";
 
 // const useStyles = makeStyles(() => ({
 //   palette: {
@@ -427,7 +428,16 @@ const GLTableV2 = ({
             </div>
           </div>
         </GLTableToolbar>
-
+        <Divider />
+        <GLTablePagination
+          count={rowCount}
+          rowsPerPage={pageSize}
+          namespace={namespace}
+          page={page}
+          onPageChange={(e, v) => dispatch(updatePage(namespace, v))}
+          onRowsPerPageChange={(e, v) => dispatch(updatePageSize(namespace, v))}
+          id={`${namespace}-table-pagination`}
+        />
         <Divider />
         <Table aria-labelledby={tableName}>
           <GLTableHeader
@@ -564,25 +574,14 @@ const GLTableV2 = ({
             </TableBody>
           )}
         </Table>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25, 50, 100, { label: "All", value: -1 }]}
-          colSpan={3}
-          component="div"
+        <GLTablePagination
           count={rowCount}
-          SelectProps={{
-            inputProps: {
-              "aria-label": "rows per page",
-              fontSize: "20px",
-            },
-            SelectDisplayProps: {
-              style: { fontSize: "1.4rem", paddingTop: "15px", paddingRight: "15px" }, // Adjust the font size here
-            },
-          }}
           rowsPerPage={pageSize}
+          namespace={namespace}
           page={page}
           onPageChange={(e, v) => dispatch(updatePage(namespace, v))}
-          onRowsPerPageChange={e => dispatch(updatePageSize(namespace, e.target.value))}
-          ActionsComponent={GLTableActions}
+          onRowsPerPageChange={(e, v) => dispatch(updatePageSize(namespace, v))}
+          id={`${namespace}-table-pagination`}
         />
       </Paper>
     </div>
