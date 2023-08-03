@@ -32,7 +32,7 @@ export const colors = [
   "#2a2ab5",
   "#742bbd",
   "#bd28bd",
-  "#c12573"
+  "#c12573",
 ];
 
 export const years = [2019, 2020, 2021, 2022, 2023, 2024, 2025];
@@ -48,7 +48,7 @@ export const months = [
   "September",
   "October",
   "November",
-  "December"
+  "December",
 ];
 
 export const run_daily_workers = (dispatch: any) => {
@@ -110,7 +110,7 @@ export const combineYearlyRevenueAndExpenses = (revenueData: any, expensesData: 
       revenue: revenue.totalPrice,
       revenueMonthlyAverage: revenue.monthlyAverage,
       expense: expense ? expense.amount : 0,
-      expenseMonthlyAverage: expense ? expense.monthlyAverage : 0
+      expenseMonthlyAverage: expense ? expense.monthlyAverage : 0,
     });
   }
 
@@ -121,7 +121,7 @@ export const combineYearlyRevenueAndExpenses = (revenueData: any, expensesData: 
         revenue: 0,
         revenueMonthlyAverage: 0,
         expense: expense.amount,
-        expenseMonthlyAverage: expense.monthlyAverage
+        expenseMonthlyAverage: expense.monthlyAverage,
       });
     }
   }
@@ -142,7 +142,7 @@ export const combineMonthlyRevenueAndExpenses = (revenueData: any, expensesData:
       revenue: revenue.totalPrice,
       revenueDailyAverage: revenue.dailyAverage,
       expense: expense ? expense.amount : 0,
-      expenseDailyAverage: expense ? expense.dailyAverage : 0
+      expenseDailyAverage: expense ? expense.dailyAverage : 0,
     });
   }
 
@@ -153,7 +153,7 @@ export const combineMonthlyRevenueAndExpenses = (revenueData: any, expensesData:
         revenue: 0,
         revenueDailyAverage: 0,
         expense: expense.amount,
-        expenseDailyAverage: expense.dailyAverage
+        expenseDailyAverage: expense.dailyAverage,
       });
     }
   }
@@ -167,14 +167,16 @@ export const combineDailyRevenueAndExpenses = (revenueData: any, expensesData: a
   let combinedData = [];
 
   for (let revenue of revenueData) {
-    let expense = expensesData.find((exp: any) => new Date(exp.date).toDateString() === new Date(revenue.date).toDateString());
+    let expense = expensesData.find(
+      (exp: any) => new Date(exp.date).toDateString() === new Date(revenue.date).toDateString()
+    );
 
     combinedData.push({
       date: revenue.date,
       revenue: revenue.totalPrice,
       revenueHourlyAverage: revenue.hourlyAverage,
       expense: expense ? expense.amount : 0,
-      expenseHourlyAverage: expense ? expense.hourlyAverage : 0
+      expenseHourlyAverage: expense ? expense.hourlyAverage : 0,
     });
   }
 
@@ -185,7 +187,7 @@ export const combineDailyRevenueAndExpenses = (revenueData: any, expensesData: a
         revenue: 0,
         revenueHourlyAverage: 0,
         expense: expense.amount,
-        expenseHourlyAverage: expense.hourlyAverage
+        expenseHourlyAverage: expense.hourlyAverage,
       });
     }
   }
@@ -193,4 +195,8 @@ export const combineDailyRevenueAndExpenses = (revenueData: any, expensesData: a
   combinedData.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()); // This sorts by date
 
   return combinedData;
+};
+
+export const conditionalColor = (value1: number, value2: number): string => {
+  return value1 - value2 < 0 ? "red" : value1 - value2 > 0 ? "green" : "black";
 };

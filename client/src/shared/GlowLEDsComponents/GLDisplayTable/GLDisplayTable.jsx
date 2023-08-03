@@ -90,7 +90,11 @@ const GLDisplayTable = ({ rows, columnDefs, loading, title, onEdit }) => {
                             onClick={e => e.stopPropagation()}
                             onChange={e => setEditValue(e.target.value)}
                           />
-                          <Button variant="contained" sx={{ height: 22 }} onClick={e => handleSave(row, e, columnDef.attribute)}>
+                          <Button
+                            variant="contained"
+                            sx={{ height: 22 }}
+                            onClick={e => handleSave(row, e, columnDef.attribute)}
+                          >
                             Save
                           </Button>
                         </Box>
@@ -98,12 +102,7 @@ const GLDisplayTable = ({ rows, columnDefs, loading, title, onEdit }) => {
                         <div
                           onClick={e => handleClick(columnDef.attribute, row, rowIndex, e)}
                           style={{
-                            color:
-                              columnDef.title === "Profit" && columnDef.value(row) < 0
-                                ? "red"
-                                : columnDef.title === "Profit" && columnDef.value(row) > 0
-                                ? "green"
-                                : "black"
+                            color: columnDef.conditionalColor && columnDef.conditionalColor(row),
                           }}
                         >
                           {displayValue(columnDef.display, row, rowIndex)}

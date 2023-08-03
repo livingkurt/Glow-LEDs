@@ -15,16 +15,19 @@ const SponsorCheckins = ({ month, year, sponsorCheckinStatus }) => {
         { title: "Sponsor", display: "artist_name" },
         {
           title: `Has Checked In`,
-          display: row => (row.hasCheckedIn ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />)
+          display: row =>
+            row.numberOfContent > 0 ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />,
+          value: row => (row.numberOfContent > 0 ? true : false),
+          conditionalColor: row => (row.numberOfContent === 0 ? "red" : row.numberOfContent >= 3 ? "green" : "black"),
         },
         {
           title: `This Months Delieveries`,
-          display: row => (row.numberOfContent ? row.numberOfContent : 0)
+          display: row => (row.numberOfContent ? row.numberOfContent : 0),
         },
         {
           title: `Total Deliveries`,
-          display: row => (row.totalNumberOfContent ? row.totalNumberOfContent : 0)
-        }
+          display: row => (row.totalNumberOfContent ? row.totalNumberOfContent : 0),
+        },
       ]}
     />
   );
