@@ -456,8 +456,8 @@ const GLTableV2 = ({
                     {loading || isRemoteLoading
                       ? times(pageSize || 10, index => (
                           <TableRow key={`${index}-skeleton-row`} data-test="loading-row">
-                            <TableCell key="skeleton-cell" colSpan={columnDefs.length + 1} style={{ padding: 15 }}>
-                              <Skeleton animation="wave" variant="rect" height={30} style={{ borderRadius: "10px" }} />
+                            <TableCell key="skeleton-cell" colSpan={columnDefs.length + 1} style={{ padding: 12 }}>
+                              <Skeleton animation="wave" variant="rect" height={40} style={{ borderRadius: "10px" }} />
                             </TableCell>
                           </TableRow>
                         ))
@@ -517,8 +517,8 @@ const GLTableV2 = ({
               {loading || isRemoteLoading
                 ? times(pageSize || 10, index => (
                     <TableRow key={`${index}-skeleton-row`} data-test="loading-row">
-                      <TableCell key="skeleton-cell" colSpan={columnDefs.length + 1} style={{ padding: 15 }}>
-                        <Skeleton animation="wave" variant="rect" height={30} style={{ borderRadius: "10px" }} />
+                      <TableCell key="skeleton-cell" colSpan={columnDefs.length + 1} style={{ padding: 12 }}>
+                        <Skeleton animation="wave" variant="rect" height={40} style={{ borderRadius: "10px" }} />
                       </TableCell>
                     </TableRow>
                   ))
