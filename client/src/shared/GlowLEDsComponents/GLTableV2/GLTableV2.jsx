@@ -564,7 +564,6 @@ const GLTableV2 = ({
             </TableBody>
           )}
         </Table>
-        {!loading && visibleRows.length === 0 && <p style={{ textAlign: "center" }}>{noContentMessage}</p>}
         <TablePagination
           rowsPerPageOptions={[5, 10, 25, 50, 100, { label: "All", value: -1 }]}
           colSpan={3}
