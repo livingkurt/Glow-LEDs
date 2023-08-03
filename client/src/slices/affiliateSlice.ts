@@ -35,7 +35,7 @@ const affiliate = {
   team: false,
   sponsor: false,
   active: true,
-  deleted: false
+  deleted: false,
 };
 
 const affiliatePage = createSlice({
@@ -63,14 +63,14 @@ const affiliatePage = createSlice({
     files: [],
     monthlyCheckinModal: false,
     questionsConcerns: "",
-    numberOfContent: 0
+    numberOfContent: 0,
   },
   reducers: {
     set_affiliate: (state, { payload }) => {
       const updated_affiliate = payload;
       return {
         ...state,
-        affiliate: { ...state.affiliate, ...updated_affiliate }
+        affiliate: { ...state.affiliate, ...updated_affiliate },
       };
     },
     set_loading: (state, { payload }) => {
@@ -127,7 +127,10 @@ const affiliatePage = createSlice({
     },
     setQuestion: (state, { payload }) => {
       state.questionsConcerns = payload;
-    }
+    },
+    addNewCheckin: (state, { payload }) => {
+      state.affiliate = payload;
+    },
   },
   extraReducers: {
     [API.listAffiliates.pending as any as any]: (state: any, { payload }: any) => {
@@ -223,8 +226,8 @@ const affiliatePage = createSlice({
       state.loading_year_earnings = false;
       state.error = payload.error;
       state.message = payload.message;
-    }
-  }
+    },
+  },
 });
 
 export const {
@@ -242,6 +245,7 @@ export const {
   setFiles,
   setQuestion,
   setNumberOfContent,
-  setCheckin
+  setCheckin,
+  addNewCheckin,
 } = affiliatePage.actions;
 export default affiliatePage.reducer;

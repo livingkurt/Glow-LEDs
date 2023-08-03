@@ -1,3 +1,5 @@
+import { months, toCapitalize } from "../../../utils/helper_functions";
+
 export const affiliateFormFields = ({
   products,
   users,
@@ -148,10 +150,14 @@ export const affiliateFormFields = ({
       labelProp: "sponsorMonthlyCheckins",
       fields: {
         month: {
-          type: "text",
+          type: "autocomplete_single",
           label: "Month",
-          labelProp: "month",
-          required: true,
+          getOptionLabel: (option: any) => {
+            if (typeof option === "string") {
+              return option;
+            }
+          },
+          options: months,
         },
         year: {
           type: "number",
