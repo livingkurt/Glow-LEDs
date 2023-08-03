@@ -102,7 +102,6 @@
     "build": "tsc && npm run build:client",
     "build:client": "cd client && npm run build",
     "sitemap": "cd client && npm run generate-sitemap",
-    "heroku-prebuild": "apt-get install curl",
     "heroku-postbuild": "npm run build && npm run build:client && apt-get install curl",
     "lint": "npm run lint:scss && npm run lint:js",
     "lint-staged": "$(npm bin)/lint-staged",
