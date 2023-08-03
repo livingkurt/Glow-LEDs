@@ -17,7 +17,7 @@ import {
   useGetRangeExpensesQuery,
   useGetDailyExpenseOrdersQuery,
   useGetMonthlyExpenseOrdersQuery,
-  useGetYearlyExpenseOrdersQuery
+  useGetYearlyExpenseOrdersQuery,
 } from "./dashboardApi";
 import { determineTabName, run_daily_workers, run_monthly_workers, run_weekly_workers } from "./dashboardHelpers";
 import { useDispatch, useSelector } from "react-redux";
@@ -58,7 +58,6 @@ const DashboardPage = () => {
   const yearly_expenses = useGetYearlyExpenseOrdersQuery();
   const range_payouts = useGetRangePayoutsQuery({ start_date, end_date });
   const range_expenses = useGetRangeExpensesQuery({ start_date, end_date });
-  console.log({ daily_expenses, monthly_expenses, yearly_expenses, daily_revenue, monthly_revenue, yearly_revenue });
   const sponsorCheckinStatus = useGetSponsorCheckinStatusQuery({ start_date, end_date });
   const monthly_product_revenue = useGetMonthlyRevenueProductOrdersQuery({ productId: product._id, year });
   const yearly_product_revenue = useGetYearlyRevenueProductOrdersQuery({ productId: product._id });
@@ -84,11 +83,22 @@ const DashboardPage = () => {
         </GLButton>
       </div>
       <Loading
-        loading={daily_revenue.isLoading && monthly_revenue.isLoading && category_range_revenue.isLoading && yearly_revenue.isLoading}
+        loading={
+          daily_revenue.isLoading &&
+          monthly_revenue.isLoading &&
+          category_range_revenue.isLoading &&
+          yearly_revenue.isLoading
+        }
       />
       <Loading loading={loading} />
       <div className="m-auto w-100per max-w-1000px">
-        <DatePicker year={year} month={month} start_date={start_date} end_date={end_date} start_end_date={start_end_date} />
+        <DatePicker
+          year={year}
+          month={month}
+          start_date={start_date}
+          end_date={end_date}
+          start_end_date={start_end_date}
+        />
         <TotalsTable
           range_revenue={range_revenue}
           tips_range_revenue={tips_range_revenue}

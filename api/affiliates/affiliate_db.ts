@@ -70,7 +70,7 @@ export default {
         return await Affiliate.create({
           ...body,
           public_code: pub_code._id,
-          private_code: priv_code._id
+          private_code: priv_code._id,
         });
       }
     } catch (error) {
@@ -90,14 +90,14 @@ export default {
         {
           $match: {
             active: true,
-            sponsor: true
-          }
+            sponsor: true,
+          },
         },
         {
           $unwind: {
             path: "$sponsorMonthlyCheckins",
-            preserveNullAndEmptyArrays: true
-          }
+            preserveNullAndEmptyArrays: true,
+          },
         },
         {
           $addFields: {
@@ -115,12 +115,12 @@ export default {
                   { case: { $eq: ["$sponsorMonthlyCheckins.month", "September"] }, then: 9 },
                   { case: { $eq: ["$sponsorMonthlyCheckins.month", "October"] }, then: 10 },
                   { case: { $eq: ["$sponsorMonthlyCheckins.month", "November"] }, then: 11 },
-                  { case: { $eq: ["$sponsorMonthlyCheckins.month", "December"] }, then: 12 }
+                  { case: { $eq: ["$sponsorMonthlyCheckins.month", "December"] }, then: 12 },
                 ],
-                default: 0
-              }
-            }
-          }
+                default: 0,
+              },
+            },
+          },
         },
         {
           $group: {
@@ -135,13 +135,13 @@ export default {
                       { $gte: ["$sponsorMonthlyCheckins.year", startYear] },
                       { $lte: ["$sponsorMonthlyCheckins.year", endYear] },
                       { $gte: ["$sponsorMonthlyCheckins.monthNumber", startMonth] },
-                      { $lte: ["$sponsorMonthlyCheckins.monthNumber", endMonth] }
-                    ]
+                      { $lte: ["$sponsorMonthlyCheckins.monthNumber", endMonth] },
+                    ],
                   },
                   true,
-                  false
-                ]
-              }
+                  false,
+                ],
+              },
             },
             numberOfContent: {
               $max: {
@@ -152,27 +152,30 @@ export default {
                       { $gte: ["$sponsorMonthlyCheckins.year", startYear] },
                       { $lte: ["$sponsorMonthlyCheckins.year", endYear] },
                       { $gte: ["$sponsorMonthlyCheckins.monthNumber", startMonth] },
-                      { $lte: ["$sponsorMonthlyCheckins.monthNumber", endMonth] }
-                    ]
+                      { $lte: ["$sponsorMonthlyCheckins.monthNumber", endMonth] },
+                    ],
                   },
                   "$sponsorMonthlyCheckins.numberOfContent",
-                  0
-                ]
-              }
+                  0,
+                ],
+              },
             },
             totalNumberOfContent: {
               $sum: {
                 $cond: [
                   {
-                    $and: [{ $ne: ["$sponsorMonthlyCheckins", null] }, { $eq: ["$sponsorMonthlyCheckins.year", startYear] }]
+                    $and: [
+                      { $ne: ["$sponsorMonthlyCheckins", null] },
+                      { $eq: ["$sponsorMonthlyCheckins.year", startYear] },
+                    ],
                   },
                   "$sponsorMonthlyCheckins.numberOfContent",
-                  0
-                ]
-              }
-            }
-          }
-        }
+                  0,
+                ],
+              },
+            },
+          },
+        },
       ]);
       return sponsorCheckins;
     } catch (error) {
@@ -261,5 +264,5 @@ export default {
         throw new Error(error.message);
       }
     }
-  }
+  },
 };
