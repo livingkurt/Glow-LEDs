@@ -91,7 +91,7 @@ const EditAffiliateModal = () => {
                 }}
               >
                 {affiliate?.sponsorMonthlyCheckins?.map((item, index) => {
-                  return <Tab label={item.month} value={index} />;
+                  return <Tab label={`${item.year} ${item.month}`} value={index} />;
                 })}
               </Tabs>
             </AppBar>
