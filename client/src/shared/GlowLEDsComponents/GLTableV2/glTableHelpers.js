@@ -86,8 +86,10 @@ const applySort = (currentRows, sorting, columnDefs) => {
       const alphabet = "*!@_.()#^&%$-=+~01234567989abcdefghijklmnopqrstuvwxyz";
       const row_a = typeof evaluateRow(a) === "string" ? evaluateRow(a).toLowerCase() : evaluateRow(a);
       const row_b = typeof evaluateRow(b) === "string" ? evaluateRow(b).toLowerCase() : evaluateRow(b);
-      const index_a = evaluateRow(a) !== null && evaluateRow(a) !== undefined ? alphabet.indexOf(row_a[0]) : alphabet.length;
-      const index_b = evaluateRow(b) !== null && evaluateRow(a) !== undefined ? alphabet.indexOf(row_b[0]) : alphabet.length;
+      const index_a =
+        evaluateRow(a) !== null && evaluateRow(a) !== undefined ? alphabet.indexOf(row_a[0]) : alphabet.length;
+      const index_b =
+        evaluateRow(b) !== null && evaluateRow(a) !== undefined ? alphabet.indexOf(row_b[0]) : alphabet.length;
 
       const order = sorting[1] === "asc" ? 1 : -1;
 
@@ -110,7 +112,17 @@ const applySort = (currentRows, sorting, columnDefs) => {
 
 const applyPagination = (currentRows, page, pageSize) => currentRows.slice(page * pageSize, (page + 1) * pageSize);
 
-export const calcVisibleRows = ({ rows, sorting, filters, page, pageSize, search, searchBy, columnDefs, nonTagFilters }) => {
+export const calcVisibleRows = ({
+  rows,
+  sorting,
+  filters,
+  page,
+  pageSize,
+  search,
+  searchBy,
+  columnDefs,
+  nonTagFilters,
+}) => {
   // we need to know filteredRows to display proper count in pagination
   const filteredRows = applyFilters(applySearch(rows, search, searchBy), filters, nonTagFilters);
   // visibleRows this is what Table component uses to render rows
@@ -134,7 +146,8 @@ export const determineHover = (e, visiblity, name, namespace, rowType) => {
   }
 };
 
-export const visibleSelected = (visibleRows, selectedRows) => visibleRows.filter(x => selectedRows.includes(x.id)).length;
+export const visibleSelected = (visibleRows, selectedRows) =>
+  visibleRows.filter(x => selectedRows.includes(x.id)).length;
 export const isItemSelected = (name, selectedRows) => selectedRows.indexOf(name) !== -1;
 
 export const handleDataTypes = (item, typedString) => {
@@ -164,7 +177,7 @@ export const applyFilter = (menuItems, filterSearch, minFilterLength) => {
 
 export const filterLabelsMap = {
   departments: "departments",
-  locations: "locations"
+  locations: "locations",
 };
 
 export const enableClearAll = filters => Object.values(filters).reduce((acc, cur) => acc || cur.length > 0, false);
@@ -184,7 +197,7 @@ export const tableColors = {
   alt_color_2: "#6f5f7d",
   alt_color_3: "#874d72",
   alt_color_4: "#2c796e",
-  alt_color_5: "#3a5363"
+  alt_color_5: "#3a5363",
 };
 
 export const reorder = (list, startIndex, endIndex) => {
@@ -218,7 +231,7 @@ export const updateTableStateFromUrl = ({ location, search, filters, page, pageS
     param_filters: queryParams.filters ? JSON.parse(queryParams.filters) : filters,
     param_page: queryParams.page ? parseInt(queryParams.page, 10) : page,
     param_pageSize: queryParams.pageSize ? parseInt(queryParams.pageSize, 10) : pageSize,
-    param_sorting: queryParams.sorting ? JSON.parse(queryParams.sorting) : sorting
+    param_sorting: queryParams.sorting ? JSON.parse(queryParams.sorting) : sorting,
   };
 };
 
@@ -228,12 +241,12 @@ export const updateUrlWithTableState = ({ location, history, search, filters, pa
     filters: JSON.stringify(filters),
     page,
     pageSize,
-    sorting: JSON.stringify(sorting)
+    sorting: JSON.stringify(sorting),
   });
 
   history.push({
     pathname: location.pathname,
-    search: `?${queryParams.toString()}`
+    search: `?${queryParams.toString()}`,
   });
 };
 
@@ -253,3 +266,15 @@ export const determineFilters = data => {
 
   return { availableFilters, booleanFilters };
 };
+
+export const totalPages = (rowsPerPage, count) => (rowsPerPage ? Math.ceil(count / rowsPerPage) : 10);
+export const pageItems = (rowsPerPage, count) =>
+  Array.from({ length: totalPages(rowsPerPage, count) }, (_, i) => i + 1);
+
+export const getDisplayedRowsInfo = (count, page, rowsPerPage) => {
+  const firstRowIndex = page * rowsPerPage + 1;
+  const lastRowIndex = Math.min((page + 1) * rowsPerPage, count);
+  return `${firstRowIndex}-${lastRowIndex} of ${count}`;
+};
+
+export const selectedPage = newValue => (newValue === null ? "1" : newValue.toString());

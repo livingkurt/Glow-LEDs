@@ -429,15 +429,7 @@ const GLTableV2 = ({
           </div>
         </GLTableToolbar>
         <Divider />
-        <GLTablePagination
-          count={rowCount}
-          rowsPerPage={pageSize}
-          namespace={namespace}
-          page={page}
-          onPageChange={(e, v) => dispatch(updatePage(namespace, v))}
-          onRowsPerPageChange={(e, v) => dispatch(updatePageSize(namespace, v))}
-          id={`${namespace}-table-pagination`}
-        />
+        <GLTablePagination count={rowCount} rowsPerPage={pageSize} namespace={namespace} location="top" page={page} />
         <Divider />
         <Table aria-labelledby={tableName}>
           <GLTableHeader
@@ -574,15 +566,7 @@ const GLTableV2 = ({
             </TableBody>
           )}
         </Table>
-        <GLTablePagination
-          count={rowCount}
-          rowsPerPage={pageSize}
-          namespace={namespace}
-          page={page}
-          onPageChange={(e, v) => dispatch(updatePage(namespace, v))}
-          onRowsPerPageChange={(e, v) => dispatch(updatePageSize(namespace, v))}
-          id={`${namespace}-table-pagination`}
-        />
+        <GLTablePagination count={rowCount} rowsPerPage={pageSize} namespace={namespace} location="top" page={page} />
       </Paper>
     </div>
   );
