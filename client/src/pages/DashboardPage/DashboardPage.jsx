@@ -18,6 +18,7 @@ import {
   useGetDailyExpenseOrdersQuery,
   useGetMonthlyExpenseOrdersQuery,
   useGetYearlyExpenseOrdersQuery,
+  updateVersion,
 } from "./dashboardApi";
 import { determineTabName, run_daily_workers, run_monthly_workers, run_weekly_workers } from "./dashboardHelpers";
 import { useDispatch, useSelector } from "react-redux";
@@ -82,6 +83,9 @@ const DashboardPage = () => {
           Run Monthly Workers
         </GLButton>
       </div>
+      <GLButton variant="primary" onClick={() => updateVersion()}>
+        Update Version
+      </GLButton>
       <Loading
         loading={
           daily_revenue.isLoading &&

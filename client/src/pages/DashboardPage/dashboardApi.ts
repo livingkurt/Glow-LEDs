@@ -1,102 +1,121 @@
+import { createAsyncThunk } from "@reduxjs/toolkit";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import axios from "axios";
+import Covy from "../../shared/GlowLEDsComponents/GLCovy/GLCovy";
+
+export const updateVersion = async () => {
+  try {
+    const { data } = await axios.put(`/api/versions/increment`);
+    Covy().showSnackbar({
+      message: `Version updated to ${data.version}`,
+      severity: "success",
+    });
+    return data;
+  } catch (error) {
+    Covy().showSnackbar({
+      message: `Error: ${error}`,
+      severity: "error",
+    });
+  }
+};
 
 export const dashboardApi = createApi({
   reducerPath: "dashboardApi",
   baseQuery: fetchBaseQuery({ baseUrl: "/api" }),
   endpoints: builder => ({
     getProductQuantitiesOrders: builder.query({
-      query: () => "/orders/get_product_quantities_orders"
+      query: () => "/orders/get_product_quantities_orders",
     }),
     getAllShippingOrders: builder.query({
-      query: () => "/orders/get_all_shipping_orders"
+      query: () => "/orders/get_all_shipping_orders",
     }),
     getAllTimeRevenueOrders: builder.query({
-      query: () => "/orders/get_all_time_revenue_orders"
+      query: () => "/orders/get_all_time_revenue_orders",
     }),
     getYearlyRevenueOrders: builder.query({
-      query: () => "/orders/get_yearly_revenue_orders"
+      query: () => "/orders/get_yearly_revenue_orders",
     }),
     getMonthlyRevenueOrders: builder.query({
-      query: ({ year }: { year: string }) => `/orders/get_monthly_revenue_orders?year=${year}`
+      query: ({ year }: { year: string }) => `/orders/get_monthly_revenue_orders?year=${year}`,
     }),
     getDailyRevenueOrders: builder.query({
       query: ({ start_date, end_date }: { start_date: string; end_date: string }) =>
-        `/orders/get_daily_revenue_orders?start_date=${start_date}&end_date=${end_date}`
+        `/orders/get_daily_revenue_orders?start_date=${start_date}&end_date=${end_date}`,
     }),
     getYearlyRevenueProductOrders: builder.query({
-      query: ({ productId }: { productId: string }) => `/orders/get_yearly_revenue_product_orders/${productId}/product`
+      query: ({ productId }: { productId: string }) => `/orders/get_yearly_revenue_product_orders/${productId}/product`,
     }),
     getMonthlyRevenueProductOrders: builder.query({
       query: ({ year, productId }: { year: string; productId: string }) =>
-        `/orders/get_monthly_revenue_product_orders/${productId}/product?year=${year}`
+        `/orders/get_monthly_revenue_product_orders/${productId}/product?year=${year}`,
     }),
     getProductAllTimeRevenueOrders: builder.query({
-      query: id => `/orders/get_product_all_time_revenue_orders/${id},`
+      query: id => `/orders/get_product_all_time_revenue_orders/${id},`,
     }),
     getProductRangeRevenueOrders: builder.query({
       query: ({ productId, start_date, end_date }: { productId: string; start_date: string; end_date: string }) =>
-        `/orders/${productId}/product_range_revenue_orders?start_date=${start_date}&end_date=${end_date}`
+        `/orders/${productId}/product_range_revenue_orders?start_date=${start_date}&end_date=${end_date}`,
     }),
     getRangeRevenueOrders: builder.query({
       query: ({ start_date, end_date }: { start_date: string; end_date: string }) =>
-        `/orders/get_range_revenue_orders?start_date=${start_date}&end_date=${end_date}`
+        `/orders/get_range_revenue_orders?start_date=${start_date}&end_date=${end_date}`,
     }),
 
     getRangeCategoryRevenueOrders: builder.query({
       query: ({ start_date, end_date }: { start_date: string; end_date: string }) =>
-        `/orders/get_range_category_revenue_orders?start_date=${start_date}&end_date=${end_date}`
+        `/orders/get_range_category_revenue_orders?start_date=${start_date}&end_date=${end_date}`,
     }),
     getAllTimeCategoryRevenueOrders: builder.query({
-      query: () => "/orders/get_all_time_category_revenue_orders"
+      query: () => "/orders/get_all_time_category_revenue_orders",
     }),
     getRangeTipsRevenueOrders: builder.query({
       query: ({ start_date, end_date }: { start_date: string; end_date: string }) =>
-        `/orders/get_range_tips_revenue_orders?start_date=${start_date}&end_date=${end_date}`
+        `/orders/get_range_tips_revenue_orders?start_date=${start_date}&end_date=${end_date}`,
     }),
     getAllTimeTipsRevenueOrders: builder.query({
-      query: () => "/orders/get_all_time_tips_revenue_orders"
+      query: () => "/orders/get_all_time_tips_revenue_orders",
     }),
     getRangeAffiliateEarningsCodeUsage: builder.query({
       query: ({ start_date, end_date }: { start_date: string; end_date: string }) =>
-        `/orders/affiliate_earnings?start_date=${start_date}&end_date=${end_date}`
+        `/orders/affiliate_earnings?start_date=${start_date}&end_date=${end_date}`,
     }),
     getAllTimePayouts: builder.query({
-      query: () => "/paychecks/get_all_time_payouts"
+      query: () => "/paychecks/get_all_time_payouts",
     }),
     getRangePayouts: builder.query({
       query: ({ start_date, end_date }: { start_date: string; end_date: string }) =>
-        `/paychecks/get_range_payouts?start_date=${start_date}&end_date=${end_date}`
+        `/paychecks/get_range_payouts?start_date=${start_date}&end_date=${end_date}`,
     }),
     getRangeExpenses: builder.query({
       query: ({ start_date, end_date }: { start_date: string; end_date: string }) =>
-        `/expenses/get_range_expenses?start_date=${start_date}&end_date=${end_date}`
+        `/expenses/get_range_expenses?start_date=${start_date}&end_date=${end_date}`,
     }),
     getRangeGloves: builder.query({
       query: ({ start_date, end_date }: { start_date: string; end_date: string }) =>
-        `/paychecks/get_range_payouts?start_date=${start_date}&end_date=${end_date}`
+        `/paychecks/get_range_payouts?start_date=${start_date}&end_date=${end_date}`,
     }),
     getProductRevenue: builder.query({
       query: ({ start_date, end_date }: { start_date: string; end_date: string }) =>
-        `/orders/get_all_product_range_revenue_orders?start_date=${start_date}&end_date=${end_date}`
+        `/orders/get_all_product_range_revenue_orders?start_date=${start_date}&end_date=${end_date}`,
     }),
     getCurrentStock: builder.query({
-      query: () => `/products/current_stock`
+      query: () => `/products/current_stock`,
     }),
     getSponsorCheckinStatus: builder.query({
       query: ({ start_date, end_date }: { start_date: string; end_date: string }) =>
-        `/affiliates/checkin_status?start_date=${start_date}&end_date=${end_date}`
+        `/affiliates/checkin_status?start_date=${start_date}&end_date=${end_date}`,
     }),
     getYearlyExpenseOrders: builder.query({
-      query: () => "/expenses/get_yearly_expenses_expenses"
+      query: () => "/expenses/get_yearly_expenses_expenses",
     }),
     getMonthlyExpenseOrders: builder.query({
-      query: ({ year }: { year: string }) => `/expenses/get_monthly_expenses_expenses?year=${year}`
+      query: ({ year }: { year: string }) => `/expenses/get_monthly_expenses_expenses?year=${year}`,
     }),
     getDailyExpenseOrders: builder.query({
       query: ({ start_date, end_date }: { start_date: string; end_date: string }) =>
-        `/expenses/get_daily_expenses_expenses?start_date=${start_date}&end_date=${end_date}`
-    })
-  })
+        `/expenses/get_daily_expenses_expenses?start_date=${start_date}&end_date=${end_date}`,
+    }),
+  }),
 });
 
 export const {
@@ -124,7 +143,7 @@ export const {
   useGetSponsorCheckinStatusQuery,
   useGetYearlyExpenseOrdersQuery,
   useGetMonthlyExpenseOrdersQuery,
-  useGetDailyExpenseOrdersQuery
+  useGetDailyExpenseOrdersQuery,
 } = dashboardApi;
 
 // export const get_airtable_expenses = async (year: number): Promise<void> => {
