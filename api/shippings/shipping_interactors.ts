@@ -10,20 +10,13 @@ const EasyPost = new easy_post_api(config.EASY_POST);
 export const buyLabel = async ({ shipment_id, shipping_rate, order }: any) => {
   try {
     const label = await EasyPost.Shipment.buy(shipment_id, shipping_rate?.id);
-    console.log("Label:", label); // Added logging
     await addTracking({ order, label, shipping_rate });
     return label;
   } catch (error) {
     console.error("Error buying label:", error);
-    try {
-      const label = await createLabel({ order, shipping_rate });
-      console.log("Label (createLabel):", label); // Added logging
-      await addTracking({ order, label, shipping_rate: label.selected_rate });
-      return label;
-    } catch (error) {
-      console.error("Error creating label:", error);
-      throw new Error("Error creating label");
-    }
+    const label = await createLabel({ order, shipping_rate });
+    await addTracking({ order, label, shipping_rate: label.selected_rate });
+    return label;
   }
 };
 export const addTracking = async ({ label, order, shipping_rate, isReturnTracking = false }: any) => {
@@ -44,15 +37,9 @@ export const addTracking = async ({ label, order, shipping_rate, isReturnTrackin
       order.shipping.shipment_id = label.id;
     }
 
-    try {
-      await order_db.update_orders_db(order._id, order);
-    } catch (error) {
-      console.error("Error updating order with tracking:", error);
-      throw new Error("Error updating order with tracking");
-    }
+    await order_db.update_orders_db(order._id, order);
   } catch (error) {
     console.error("Error adding tracking:", error);
-    throw new Error("Error adding tracking");
   }
 };
 export const clearTracking = async ({ order, isReturnTracking = false }: any) => {
@@ -78,7 +65,7 @@ export const createTracker = async ({ order }: any) => {
     const label = await EasyPost.Shipment.retrieve(order.shipping.shipment_id);
     const tracker = await EasyPost.Tracker.create({
       tracking_code: order.tracking_number,
-      carrier: order.shipping?.shipping_rate?.carrier || label.selected_rate.carrier
+      carrier: order.shipping?.shipping_rate?.carrier || label.selected_rate.carrier,
     });
 
     order.tracking_url = tracker.public_url;
@@ -99,7 +86,7 @@ export const createTracker = async ({ order }: any) => {
 export const refundLabel = async ({ order, is_return_tracking }: any) => {
   const refund = await EasyPost.Refund.create({
     carrier: order.shipping.shipping_rate.carrier,
-    tracking_codes: [is_return_tracking ? order.return_tracking_number : order.tracking_number]
+    tracking_codes: [is_return_tracking ? order.return_tracking_number : order.tracking_number],
   });
   if (refund) {
     if (is_return_tracking) {
@@ -123,7 +110,9 @@ export const refundLabel = async ({ order, is_return_tracking }: any) => {
 export const createLabel = async ({ order, shipping_rate }: any) => {
   try {
     const { shipment }: any = await createShippingRates({ order, returnLabel: false });
-    const rate = shipment.rates.find((rate: any) => rate.service === shipping_rate.service && rate.carrier === shipping_rate.carrier);
+    const rate = shipment.rates.find(
+      (rate: any) => rate.service === shipping_rate.service && rate.carrier === shipping_rate.carrier
+    );
     return await EasyPost.Shipment.buy(shipment.id, rate.id);
   } catch (error) {
     console.error("Error create label:", error);
@@ -145,7 +134,7 @@ export const createShippingRates = async ({ order, returnLabel }: any) => {
       state: order.shipping.state,
       zip: order.shipping.postalCode,
       country: order.shipping.country,
-      phone: config.PHONE_NUMBER
+      phone: config.PHONE_NUMBER,
     };
 
     const returnAddress = {
@@ -156,7 +145,7 @@ export const createShippingRates = async ({ order, returnLabel }: any) => {
       zip: config.PRODUCTION_POSTAL_CODE,
       country: config.PRODUCTION_COUNTRY,
       company: "Glow LEDs",
-      phone: config.PHONE_NUMBER
+      phone: config.PHONE_NUMBER,
     };
 
     const shipment = await EasyPost.Shipment.create({
@@ -166,7 +155,7 @@ export const createShippingRates = async ({ order, returnLabel }: any) => {
         length: parcel.length,
         width: parcel.width,
         height: parcel.height,
-        weight: calculateTotalOunces(order.orderItems)
+        weight: calculateTotalOunces(order.orderItems),
       },
       customs_info: {
         eel_pfc: "NOEEI 30.37(a)",
@@ -181,14 +170,14 @@ export const createShippingRates = async ({ order, returnLabel }: any) => {
             quantity: item.qty,
             value: item.price,
             weight: covertToOunces(item),
-            origin_country: "US"
+            origin_country: "US",
           };
-        })
+        }),
       },
       options: {
         commercial_invoice_letterhead: "IMAGE_1",
-        commercial_invoice_signature: "IMAGE_2"
-      }
+        commercial_invoice_signature: "IMAGE_2",
+      },
     });
     return { shipment, parcel };
   } catch (error) {
