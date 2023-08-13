@@ -17,7 +17,7 @@ const InternationalShippingSpeed = ({ rates, service, choose_shipping_rate, moda
         return parseFloat(a.rate) - parseFloat(b.rate);
       }
     })
-    .filter(rate => rate.carrier === "FedEx");
+    .filter(rate => rate.carrier === "UPSDAP");
 
   const [open, setOpen] = useState(false);
 

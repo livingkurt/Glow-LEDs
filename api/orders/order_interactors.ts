@@ -113,6 +113,7 @@ export const normalizeOrderSearch = (query: any) => {
   let search = {};
   const USPS_REGEX = /^[0-9]{20,22}$/; // Matches USPS tracking numbers
   const FEDEX_REGEX = /^[0-9]{12,15}$/; // Matches FedEx tracking numbers
+  const UPS_REGEX = /^1Z[A-Z0-9]{16}$/; // Matches UPS tracking numbers
 
   if (query.search && query.search.match(/^[0-9a-fA-F]{24}$/)) {
     search = query.search ? { _id: mongoose.Types.ObjectId(query.search) } : {};
@@ -123,27 +124,33 @@ export const normalizeOrderSearch = (query: any) => {
             $regexMatch: {
               input: "$shipping.email",
               regex: query.search,
-              options: "i"
-            }
-          }
+              options: "i",
+            },
+          },
         }
       : {};
   } else if (query.search && query.search.substring(0, 1) === "#") {
     search = query.search
       ? {
-          promo_code: query.search.slice(1, query.search.length).toLowerCase()
+          promo_code: query.search.slice(1, query.search.length).toLowerCase(),
         }
       : {};
   } else if (query.search && query.search.match(USPS_REGEX)) {
     search = query.search
       ? {
-          tracking_number: query.search
+          tracking_number: query.search,
+        }
+      : {};
+  } else if (query.search && query.search.match(UPS_REGEX)) {
+    search = query.search
+      ? {
+          tracking_number: query.search,
         }
       : {};
   } else if (query.search && query.search.match(FEDEX_REGEX)) {
     search = query.search
       ? {
-          tracking_number: query.search
+          tracking_number: query.search,
         }
       : {};
   } else {
@@ -152,12 +159,12 @@ export const normalizeOrderSearch = (query: any) => {
           $expr: {
             $regexMatch: {
               input: {
-                $concat: ["$shipping.first_name", " ", "$shipping.last_name"]
+                $concat: ["$shipping.first_name", " ", "$shipping.last_name"],
               },
               regex: query.search,
-              options: "i"
-            }
-          }
+              options: "i",
+            },
+          },
         }
       : {};
   }
@@ -174,9 +181,9 @@ export const getCodeUsage = async (data: any) => {
       isPaid: true,
       createdAt: {
         $gte: start_date,
-        $lte: end_date
+        $lte: end_date,
       },
-      promo_code: new RegExp(promo_code, "i")
+      promo_code: new RegExp(promo_code, "i"),
     };
 
     const limit = "0";

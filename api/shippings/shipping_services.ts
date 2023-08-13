@@ -2,7 +2,15 @@ import config from "../../config";
 import invoice from "../../email_templates/pages/invoice";
 import { order_db } from "../orders";
 import { covertToOunces, parseOrderData } from "./shipping_helpers";
-import { addTracking, buyLabel, clearTracking, createLabel, createShippingRates, createTracker, refundLabel } from "./shipping_interactors";
+import {
+  addTracking,
+  buyLabel,
+  clearTracking,
+  createLabel,
+  createShippingRates,
+  createTracker,
+  refundLabel,
+} from "./shipping_interactors";
 
 const easy_post_api = require("@easypost/api");
 const EasyPost = new easy_post_api(config.EASY_POST);
@@ -125,7 +133,7 @@ export default {
         country: config.PRODUCTION_COUNTRY,
         company: "Glow LEDs",
         phone: config.PHONE_NUMBER,
-        email: config.INFO_EMAIL
+        email: config.INFO_EMAIL,
       });
 
       const orders = await order_db.findAll_orders_db(
@@ -133,10 +141,10 @@ export default {
           deleted: false,
           isPaid: true,
           isPackaged: true,
-          "shipping.shipping_rate.carrier": "FedEx",
+          "shipping.shipping_rate.carrier": "UPSDAP",
           isPickup: false,
           isShipped: false,
-          isDelivered: false
+          isDelivered: false,
         },
         {},
         "0",
@@ -151,17 +159,19 @@ export default {
       if (shipments) {
         // Create a batch with the shipments
         const batch = await EasyPost.Batch.create({
-          shipments: shipments
+          shipments: shipments,
         });
 
         const pickup = await EasyPost.Pickup.create({
           address: homeAddress,
           min_datetime: formattedReadyTime, // use date here
           max_datetime: formattedLatestTimeAvailable, // use date here
-          reference: `${orders.map((order: any) => `${order.shipping.first_name} ${order.shipping.last_name}`).join(", ")} Orders`,
+          reference: `${orders
+            .map((order: any) => `${order.shipping.first_name} ${order.shipping.last_name}`)
+            .join(", ")} Orders`,
           is_account_address: false,
           instructions: "Pick up on front porch please.",
-          batch: batch
+          batch: batch,
         });
         return { pickup, orders };
       }
@@ -219,7 +229,7 @@ export default {
           country: to_shipping.country,
           company: to_shipping.company,
           phone: to_shipping.phone,
-          email: to_shipping.email
+          email: to_shipping.email,
         },
         from_address: {
           name: from_shipping.company ? "" : from_shipping.first_name + " " + from_shipping.last_name,
@@ -231,14 +241,14 @@ export default {
           country: from_shipping.country,
           company: from_shipping.company,
           phone: from_shipping.phone,
-          email: from_shipping.email
+          email: from_shipping.email,
         },
         parcel: {
           length: package_dimensions.length,
           width: package_dimensions.width,
           height: package_dimensions.height,
-          weight: covertToOunces(package_dimensions)
-        }
+          weight: covertToOunces(package_dimensions),
+        },
       });
 
       return { shipment, parcel: package_dimensions };
@@ -247,5 +257,5 @@ export default {
         throw new Error(error.message);
       }
     }
-  }
+  },
 };

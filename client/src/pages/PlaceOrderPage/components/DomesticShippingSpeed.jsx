@@ -4,21 +4,32 @@ import { determine_service, toTitleCaseSnakeCase } from "../placeOrderHelpers";
 import { useSelector } from "react-redux";
 import ProcessingConfirmModal from "./ProcessingConfirmModal";
 
-const DomesticShippingSpeed = ({ rates, service, name, time, choose_shipping_rate, modalShown, setModalShown }) => {
+const DomesticShippingSpeed = ({
+  rates,
+  service,
+  name,
+  time,
+  choose_shipping_rate,
+  modalShown,
+  setModalShown,
+  setHideContinue,
+}) => {
   const cartPage = useSelector(state => state.carts.cartPage);
   const { my_cart } = cartPage;
   const { cartItems } = my_cart;
 
   const USPSRates = rates.filter(rate => rate.carrier === "USPS");
-  const FedExRates = rates.filter(rate => rate.carrier === "FedEx");
+  const UPSRates = rates.filter(rate => rate.carrier === "UPSDAP");
 
   const sortedUSPSRates = USPSRates.sort((a, b) => parseFloat(a.rate) - parseFloat(b.rate));
-  const sortedFedExRates = FedExRates.sort((a, b) => parseFloat(a.rate) - parseFloat(b.rate));
+  const sortedUPSRates = UPSRates.sort((a, b) => parseFloat(a.rate) - parseFloat(b.rate));
 
-  const selectedRates = [...sortedUSPSRates.slice(0, 1), ...sortedFedExRates.slice(0, 2)];
+  const selectedRates = [...sortedUSPSRates.slice(0, 1), sortedUPSRates[0], sortedUPSRates[2]];
+
+  console.log({ selectedRates });
 
   // Define custom service names for selected rates
-  const serviceNames = ["USPS: Standard", "Fedex: Ground", "Fedex: Priority"];
+  const serviceNames = ["USPS: Standard", "UPS: Ground", "UPS: Priority"];
 
   const [open, setOpen] = useState(false);
 
@@ -27,12 +38,14 @@ const DomesticShippingSpeed = ({ rates, service, name, time, choose_shipping_rat
       choose_shipping_rate(rate, service, serviceNames[index]);
       return;
     }
-    const processingTime = cartItems.some(item => item.processing_time) && Math.max(...cartItems.map(item => item.processing_time[1]));
+    const processingTime =
+      cartItems.some(item => item.processing_time) && Math.max(...cartItems.map(item => item.processing_time[1]));
     if (serviceNames[index] !== "USPS: Standard" && processingTime) {
       setModalShown(true);
       setOpen(true);
     } else {
       choose_shipping_rate(rate, service, serviceNames[index]);
+      setHideContinue(false);
     }
   };
 

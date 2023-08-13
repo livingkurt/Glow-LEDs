@@ -35,7 +35,11 @@ const OrdersPage = () => {
       { title: "Order Placed", display: row => format_date(row.createdAt) },
       {
         title: "Name",
-        display: row => <Link to={current_user.isAdmin && `/secure/glow/userprofile/${row?.user?._id}`}>{fullName(row.shipping)}</Link>
+        display: row => (
+          <Link to={current_user.isAdmin && `/secure/glow/userprofile/${row?.user?._id}`}>
+            {fullName(row.shipping)}
+          </Link>
+        ),
       },
       { title: "Since Ordered", display: row => sinceOrdered(row.createdAt) },
       {
@@ -65,7 +69,7 @@ const OrdersPage = () => {
               )}
             </div>
           </div>
-        )
+        ),
       },
 
       {
@@ -97,7 +101,7 @@ const OrdersPage = () => {
               </div>
             )}
           </div>
-        )
+        ),
       },
       // { title: "Total", display: row => `$${row.totalPrice.toFixed(2)}` },
       // display: row => (
@@ -161,8 +165,8 @@ const OrdersPage = () => {
               <i className="fas fa-trash-alt" />
             </GLButton>
           </div>
-        )
-      }
+        ),
+      },
     ],
     [dispatch]
   );
@@ -190,7 +194,9 @@ const OrdersPage = () => {
         columnDefs={column_defs}
         enableDropdownRow
         rowName={"_id"}
-        dropdownComponent={row => <OrderDropdown row={row} determine_color={determineOrderColors} colspan={column_defs.length + 1} />}
+        dropdownComponent={row => (
+          <OrderDropdown row={row} determine_color={determineOrderColors} colspan={column_defs.length + 1} />
+        )}
         loading={loading}
         enableRowSelect={true}
         titleActions={
@@ -213,7 +219,7 @@ const OrdersPage = () => {
               Create Label
             </Button>
             <Button color="secondary" variant="contained" onClick={() => dispatch(open_create_pickup_modal())}>
-              Create Fedex Pickup
+              Create UPS Pickup
             </Button>
             <Button color="primary" variant="contained" onClick={() => dispatch(open_create_order_modal())}>
               Create Order

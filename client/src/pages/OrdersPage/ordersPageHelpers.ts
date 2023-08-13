@@ -15,7 +15,7 @@ export const orderColors = [
   { name: "Shipped", color: tableColors.waiting },
   { name: "Delivered", color: tableColors.completed },
   { name: "International", color: tableColors.alt_color_3 },
-  { name: "Paused", color: tableColors.paused }
+  { name: "Paused", color: tableColors.paused },
 ];
 
 export const determineOrderColors = (order: any) => {
@@ -80,25 +80,16 @@ export const sinceOrdered = (date: string) => {
 };
 
 export const determine_tracking_link = (tracking_number: string) => {
+  const USPS_REGEX = /^[0-9]{20,22}$/; // Matches USPS tracking numbers
+  const FEDEX_REGEX = /^[0-9]{12,15}$/; // Matches FedEx tracking numbers
+  const UPS_REGEX = /^1Z[A-Z0-9]{16}$/; // Matches UPS tracking numbers
   if (tracking_number) {
-    if (tracking_number.startsWith("1Z")) {
+    if (tracking_number.match(USPS_REGEX)) {
       return `https://www.ups.com/track?tracknum=${tracking_number}`;
-    } else if (tracking_number.length === 22) {
+    } else if (tracking_number.match(UPS_REGEX)) {
       return `https://tools.usps.com/go/TrackConfirmAction?tLabels=${tracking_number}`;
-    } else if (tracking_number.startsWith("927")) {
-      return `https://www.dhl.com/en/express/tracking.html?tracking_number=${tracking_number}`;
-    } else if (tracking_number.startsWith("LX")) {
-      return `https://www.ups.com/track?loc=en_us&tracknum=${tracking_number}`;
-    } else if (tracking_number.startsWith("C")) {
+    } else if (tracking_number.match(FEDEX_REGEX)) {
       return `https://www.fedex.com/apps/fedextrack/?tracknumbers=${tracking_number}`;
-    } else if (tracking_number.startsWith("S")) {
-      return `https://www.dhl.com/en/express/tracking.html?tracking_number=${tracking_number}`;
-    } else if (tracking_number.startsWith("CJ")) {
-      return `https://tools.usps.com/go/TrackConfirmAction?tLabels=${tracking_number}`;
-    } else if (tracking_number.startsWith("9")) {
-      return `https://www.fedex.com/apps/fedextrack/?tracknumbers=${tracking_number}`;
-    } else {
-      return `https://tools.usps.com/go/TrackConfirmAction?tLabels=${tracking_number}`;
     }
   }
 };
@@ -170,7 +161,7 @@ export const duplicateOrder = (order: any) => {
       return_shipment_id: null,
       return_shipping_rate: null,
       return_shipment_tracker: null,
-      return_shipping_label: null
+      return_shipping_label: null,
     },
     itemsPrice: order.itemsPrice,
     shippingPrice: 0,
@@ -182,7 +173,7 @@ export const duplicateOrder = (order: any) => {
     return_tracking_url: "",
     tracking_url: "",
     return_tracking_number: "",
-    tracking_number: ""
+    tracking_number: "",
   };
 };
 
@@ -242,7 +233,7 @@ export const printLabel = async (label: string) => {
     color: black;
     font-family: helvetica, sans-serif;
   }
-`
+`,
   ]);
 };
 
@@ -258,7 +249,7 @@ export const printInvoice = async (invoice: string) => {
     color: black;
     font-family: helvetica, sans-serif;
   }
-`
+`,
   ]);
 };
 
