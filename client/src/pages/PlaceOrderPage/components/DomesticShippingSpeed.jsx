@@ -26,8 +26,6 @@ const DomesticShippingSpeed = ({
 
   const selectedRates = [...sortedUSPSRates.slice(0, 1), sortedUPSRates[0], sortedUPSRates[2]];
 
-  console.log({ selectedRates });
-
   // Define custom service names for selected rates
   const serviceNames = ["USPS: Standard", "UPS: Ground", "UPS: Priority"];
 

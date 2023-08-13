@@ -29,6 +29,7 @@ const ShippingStep = ({
   loading_shipping,
   choose_shipping_rate,
   hide_pay_button,
+  set_hide_pay_button,
   current_shipping_speed,
   re_choose_shipping_rate,
   show_shipping_complete,
@@ -38,7 +39,7 @@ const ShippingStep = ({
   set_verify_shipping,
   verify_shipping,
   error_happened,
-  show_payment
+  show_payment,
 }) => {
   const all_shipping = useGetAllShippingOrdersQuery();
   const [first_name, set_first_name] = useState("");
@@ -58,6 +59,11 @@ const ShippingStep = ({
 
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
+
+  console.log({ hide_pay_button });
+  useEffect(() => {
+    set_hide_pay_button(true);
+  }, []);
 
   useEffect(() => {
     let clean = true;
@@ -109,7 +115,7 @@ const ShippingStep = ({
       state,
       postalCode,
       country,
-      international
+      international,
     };
 
     const request = validate_shipping(data);
@@ -135,7 +141,7 @@ const ShippingStep = ({
           state,
           postalCode,
           country: international ? country : "US",
-          international
+          international,
         })
       );
       save_user_shipping_to_user();
@@ -164,10 +170,10 @@ const ShippingStep = ({
               state,
               postalCode,
               country: international ? country : "US",
-              international
-            }
+              international,
+            },
           },
-          profile: false
+          profile: false,
         })
       );
     }
@@ -253,7 +259,10 @@ const ShippingStep = ({
               <ul className={`shipping-container mv-0px pv-0px ${width > 400 ? "ph-2rem" : "p-0px"}`}>
                 {current_user && current_user.shipping && current_user.shipping.hasOwnProperty("first_name") && (
                   <li>
-                    <GLButton onClick={e => use_saved_shipping(e, current_user.shipping, current_user)} variant="primary">
+                    <GLButton
+                      onClick={e => use_saved_shipping(e, current_user.shipping, current_user)}
+                      variant="primary"
+                    >
                       Use Saved Shipping
                     </GLButton>
                   </li>
@@ -265,7 +274,7 @@ const ShippingStep = ({
                         <select
                           className="qty_select_dropdown w-100per"
                           style={{
-                            width: "100%"
+                            width: "100%",
                           }}
                           onChange={e => update_shipping(e.target.value)}
                         >
@@ -298,7 +307,7 @@ const ShippingStep = ({
                             defaultChecked={verify_shipping}
                             id="verify_shipping"
                             style={{
-                              transform: "scale(1.5)"
+                              transform: "scale(1.5)",
                             }}
                             className="mr-1rem"
                             onChange={e => {
@@ -326,7 +335,7 @@ const ShippingStep = ({
                       <label
                         className="validation_text"
                         style={{
-                          justifyContent: "center"
+                          justifyContent: "center",
                         }}
                       >
                         {first_name_validations}
@@ -345,7 +354,7 @@ const ShippingStep = ({
                       <label
                         className="validation_text"
                         style={{
-                          justifyContent: "center"
+                          justifyContent: "center",
                         }}
                       >
                         {last_name_validations}
@@ -361,7 +370,7 @@ const ShippingStep = ({
                     className="fs-16px"
                     value={address_1}
                     options={{
-                      types: ["address"]
+                      types: ["address"],
                     }}
                     onPlaceSelected={place => {
                       update_google_shipping(place);
@@ -372,14 +381,20 @@ const ShippingStep = ({
                 <label
                   className="validation_text"
                   style={{
-                    justifyContent: "center"
+                    justifyContent: "center",
                   }}
                 >
                   {address_validations}
                 </label>
                 <li>
                   <label htmlFor="address_2">Apt/Suite</label>
-                  <input type="text" value={address_2} name="address_2" id="address_2" onChange={e => set_address_2(e.target.value)} />
+                  <input
+                    type="text"
+                    value={address_2}
+                    name="address_2"
+                    id="address_2"
+                    onChange={e => set_address_2(e.target.value)}
+                  />
                 </li>
                 <li>
                   <label htmlFor="city">City</label>
@@ -388,7 +403,7 @@ const ShippingStep = ({
                 <label
                   className="validation_text"
                   style={{
-                    justifyContent: "center"
+                    justifyContent: "center",
                   }}
                 >
                   {city_validations}
@@ -400,7 +415,11 @@ const ShippingStep = ({
                     </label>
                     <div className="ai-c h-25px mb-15px jc-c">
                       <div className="custom-select w-100per">
-                        <select className="qty_select_dropdown w-100per" onChange={e => setState(e.target.value)} value={state && state}>
+                        <select
+                          className="qty_select_dropdown w-100per"
+                          onChange={e => setState(e.target.value)}
+                          value={state && state}
+                        >
                           {state_names.map((state, index) => (
                             <option key={index} value={state.short_name}>
                               {state.long_name}
@@ -421,19 +440,25 @@ const ShippingStep = ({
                 <label
                   className="validation_text"
                   style={{
-                    justifyContent: "center"
+                    justifyContent: "center",
                   }}
                 >
                   {state_validations}
                 </label>
                 <li>
                   <label htmlFor="postalCode">Postal Code</label>
-                  <input type="text" value={postalCode} name="postalCode" id="postalCode" onChange={e => setPostalCode(e.target.value)} />
+                  <input
+                    type="text"
+                    value={postalCode}
+                    name="postalCode"
+                    id="postalCode"
+                    onChange={e => setPostalCode(e.target.value)}
+                  />
                 </li>
                 <label
                   className="validation_text"
                   style={{
-                    justifyContent: "center"
+                    justifyContent: "center",
                   }}
                 >
                   {postal_code_validations}
@@ -452,7 +477,7 @@ const ShippingStep = ({
                           value={international}
                           id="international"
                           style={{
-                            transform: "scale(1.5)"
+                            transform: "scale(1.5)",
                           }}
                           className="mr-1rem"
                           onChange={e => {
@@ -465,7 +490,13 @@ const ShippingStep = ({
                     {international && (
                       <li>
                         <label htmlFor="country">Country</label>
-                        <input type="text" value={country} name="country" id="country" onChange={e => setCountry(e.target.value)} />
+                        <input
+                          type="text"
+                          value={country}
+                          name="country"
+                          id="country"
+                          onChange={e => setCountry(e.target.value)}
+                        />
                       </li>
                     )}
                   </div>
@@ -473,7 +504,7 @@ const ShippingStep = ({
                 <label
                   className="validation_text"
                   style={{
-                    justifyContent: "center"
+                    justifyContent: "center",
                   }}
                 >
                   {country_validations}
@@ -495,7 +526,7 @@ const ShippingStep = ({
                           name="save_user_shipping"
                           defaultChecked={save_user_shipping}
                           style={{
-                            transform: "scale(1.5)"
+                            transform: "scale(1.5)",
                           }}
                           className="mr-1rem"
                           id="save_user_shipping"
@@ -535,6 +566,7 @@ const ShippingStep = ({
                 rates={shipping_rates.rates}
                 choose_shipping_rate={choose_shipping_rate}
                 hide_pay_button={hide_pay_button}
+                set_hide_pay_button={set_hide_pay_button}
                 shipping={shipping}
                 current_shipping_speed={current_shipping_speed}
                 re_choose_shipping_rate={re_choose_shipping_rate}
@@ -546,12 +578,17 @@ const ShippingStep = ({
                 </h4>
               )}
               {!show_payment && (
-                <GLTooltip tooltip={!show_shipping_complete && "You must select shipping speed before continuing"} className="w-100per">
+                <GLTooltip
+                  tooltip={
+                    !show_shipping_complete && !hide_pay_button && "You must select shipping speed before continuing"
+                  }
+                  className="w-100per"
+                >
                   <GLButton
                     type="submit"
-                    variant={!show_shipping_complete ? "disabled" : "primary"}
+                    variant={!show_shipping_complete && !hide_pay_button ? "disabled" : "primary"}
                     id="open-modal"
-                    className={`${show_shipping_complete ? "bob" : "disabled"} mt-10px w-100per`}
+                    className={`${show_shipping_complete && !hide_pay_button ? "bob" : "disabled"} mt-10px w-100per`}
                     onClick={() => {
                       // set_show_modal(true);
                       next_step("payment");

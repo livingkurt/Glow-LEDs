@@ -1,5 +1,5 @@
 // React
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import DomesticShippingSpeed from "./DomesticShippingSpeed";
 import InternationalShippingSpeed from "./InternationalShippingSpeed";
@@ -12,14 +12,16 @@ const ShippingChoice = ({
   current_shipping_speed,
   choose_shipping_rate,
   re_choose_shipping_rate,
+  set_hide_pay_button,
 }) => {
-  const [modalShown, setModalShown] = useState(false);
-  const [hideContinue, setHideContinue] = useState(true);
-
+  useEffect(() => {
+    set_hide_pay_button(true);
+  }, [rates, set_hide_pay_button]);
   console.log({ hide_pay_button, shipping, rates });
+  const [modalShown, setModalShown] = useState(false);
   return (
     <div className="w-100per">
-      {hideContinue && rates && (
+      {hide_pay_button && rates && (
         <div className="w-100per">
           {shipping && shipping.international && (
             <div>
@@ -28,7 +30,6 @@ const ShippingChoice = ({
                 choose_shipping_rate={choose_shipping_rate}
                 modalShown={modalShown}
                 setModalShown={setModalShown}
-                setHideContinue={setHideContinue}
               />
             </div>
           )}
@@ -39,13 +40,12 @@ const ShippingChoice = ({
                 choose_shipping_rate={choose_shipping_rate}
                 modalShown={modalShown}
                 setModalShown={setModalShown}
-                setHideContinue={setHideContinue}
               />
             </div>
           )}
         </div>
       )}
-      {!hideContinue && current_shipping_speed && (
+      {!hide_pay_button && current_shipping_speed && (
         <div className=" mv-1rem jc-b ai-c w-100per">
           <div className="shipping_rates jc-b w-100per ">
             <div className="jc-b w-100per">

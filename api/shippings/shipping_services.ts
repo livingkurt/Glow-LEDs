@@ -150,7 +150,8 @@ export default {
         "0",
         "1"
       );
-      if (!orders) {
+      console.log({ orders });
+      if (orders.length === 0 || !orders) {
         throw new Error("Orders not found");
       }
 

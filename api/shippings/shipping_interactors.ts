@@ -179,6 +179,7 @@ export const createShippingRates = async ({ order, returnLabel }: any) => {
         commercial_invoice_signature: "IMAGE_2",
       },
     });
+    console.log({ shipment, parcel });
     return { shipment, parcel };
   } catch (error) {
     console.log("Error creating rates:", error);
