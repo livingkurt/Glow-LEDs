@@ -10,10 +10,13 @@ router.route("/:order_id/create_return_label").put(isAuth, isAdmin, shipping_con
 router.route("/:order_id/generate_csv_label").put(isAuth, isAdmin, shipping_controller.generate_csv_label_shipping_c);
 router.route("/create_pickup").put(isAuth, isAdmin, shipping_controller.create_pickup_shipping_c);
 router.route("/confirm_pickup").put(isAuth, isAdmin, shipping_controller.confirm_pickup_shipping_c);
-router.route("/:order_id/refund_label/:is_return_tracking").put(isAuth, isAdmin, shipping_controller.refund_label_shipping_c);
+router
+  .route("/:order_id/refund_label/:is_return_tracking")
+  .put(isAuth, isAdmin, shipping_controller.refund_label_shipping_c);
 
 router.route("/:order_id/create_tracker").put(isAuth, isAdmin, shipping_controller.create_tracker_shipping_c);
 router.route("/custom_shipping_rates").put(isAuth, isAdmin, shipping_controller.custom_shipping_rates_shipping_c);
+router.route("/create_custom_label").put(isAuth, isAdmin, shipping_controller.create_custom_label_shipping_c);
 router
   .route("/:order_id/different_shipping_rates/:shipment_id")
   .get(isAuth, isAdmin, shipping_controller.different_shipping_rates_shipping_c);

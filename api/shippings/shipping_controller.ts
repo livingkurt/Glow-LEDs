@@ -138,6 +138,18 @@ export default {
       res.status(500).send({ error, message: "Error Creating Shipping" });
     }
   },
+  create_custom_label_shipping_c: async (req: any, res: any) => {
+    const { body } = req;
+    try {
+      const shipping = await shipping_services.create_custom_label_shipping_s(body);
+      if (shipping) {
+        return res.status(201).send(shipping);
+      }
+      return res.status(500).send({ message: "Error Creating Shipping" });
+    } catch (error) {
+      res.status(500).send({ error, message: "Error Creating Shipping" });
+    }
+  },
 
   shipping_rates_shipping_c: async (req: any, res: any) => {
     const { body } = req;
@@ -151,5 +163,5 @@ export default {
     } catch (error) {
       res.status(200).json({ error, message: error.message });
     }
-  }
+  },
 };

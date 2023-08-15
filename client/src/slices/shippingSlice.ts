@@ -7,6 +7,7 @@ const shippingSlice = createSlice({
   name: "shippingSlice",
   initialState: {
     loading_label: false,
+    loading: false,
     invoice: "",
     label: "",
     shippingRates: [],
@@ -16,7 +17,10 @@ const shippingSlice = createSlice({
     csvLabel: [],
     rate: {},
     hideLabelButton: true,
-    parcel: {},
+    selectedRateId: "",
+    shipmentId: "",
+    parcel: { parcelChoice: {}, length: "", width: "", height: "", weight_pounds: "", weight_ounces: "" },
+
     toShipping: {
       first_name: "",
       last_name: "",
@@ -29,7 +33,7 @@ const shippingSlice = createSlice({
       international: "",
       phone: "",
       email: "",
-      company: ""
+      company: "",
     },
     fromShipping: {
       first_name: "",
@@ -43,8 +47,8 @@ const shippingSlice = createSlice({
       international: "",
       phone: "",
       email: "",
-      company: ""
-    }
+      company: "",
+    },
   },
   reducers: {
     clearPrints: (state, { payload }) => {
@@ -55,18 +59,36 @@ const shippingSlice = createSlice({
       const updatedToShipping = payload;
       return {
         ...state,
-        toShipping: { ...state.toShipping, ...updatedToShipping }
+        toShipping: { ...state.toShipping, ...updatedToShipping },
       };
     },
     setFromShipping: (state, { payload }) => {
       const updatedFromShipping = payload;
       return {
         ...state,
-        fromShipping: { ...state.fromShipping, ...updatedFromShipping }
+        fromShipping: { ...state.fromShipping, ...updatedFromShipping },
       };
     },
     setParcel: (state, { payload }) => {
-      state.parcel = payload;
+      console.log({ payload });
+      if (payload.parcelChoice) {
+        return {
+          ...state,
+          parcel: {
+            ...state.parcel,
+            parcelChoice: payload.parcelChoice,
+            length: payload.parcelChoice.length,
+            width: payload.parcelChoice.width,
+            height: payload.parcelChoice.height,
+          },
+        };
+      } else {
+        const packageDimmenisons = payload;
+        return {
+          ...state,
+          parcel: { ...state.parcel, ...packageDimmenisons },
+        };
+      }
     },
     chooseShippingRate: (state, { payload }) => {
       const { rate, speed } = payload;
@@ -79,6 +101,38 @@ const shippingSlice = createSlice({
     },
     closeCreateLabelModal: (state, { payload }) => {
       state.createLabelModal = false;
+      state.selectedRateId = "";
+      state.shipmentId = "";
+      state.parcel = { parcelChoice: {}, length: "", width: "", height: "", weight_pounds: "", weight_ounces: "" };
+
+      state.toShipping = {
+        first_name: "",
+        last_name: "",
+        address_1: "",
+        address_2: "",
+        city: "",
+        state: "",
+        postalCode: "",
+        country: "",
+        international: "",
+        phone: "",
+        email: "",
+        company: "",
+      };
+      state.fromShipping = {
+        first_name: "",
+        last_name: "",
+        address_1: "",
+        address_2: "",
+        city: "",
+        state: "",
+        postalCode: "",
+        country: "",
+        international: "",
+        phone: "",
+        email: "",
+        company: "",
+      };
     },
     open_create_pickup_modal: (state, { payload }) => {
       state.create_pickup_modal = true;
@@ -89,7 +143,15 @@ const shippingSlice = createSlice({
     reChooseShippingRate: (state, { payload }) => {
       state.hideLabelButton = true;
       state.shippingRate = {};
-    }
+    },
+    setSelectedRateId: (state, { payload }) => {
+      state.selectedRateId = payload;
+    },
+    resetRates: (state, { payload }) => {
+      state.shippingRates = [];
+      state.shipmentId = "";
+      state.selectedRateId = "";
+    },
   },
   extraReducers: {
     [API.buyLabel.pending as any]: (state: any, { payload }: any) => {
@@ -200,8 +262,40 @@ const shippingSlice = createSlice({
       state.loading = false;
       state.error = payload.error;
       state.message = payload.message;
-    }
-  }
+    },
+    [API.customShippingRates.pending as any]: (state: any, { payload }: any) => {
+      state.loading = true;
+      state.shippingRates = [];
+    },
+    [API.customShippingRates.fulfilled as any]: (state: any, { payload }: any) => {
+      const { shipment } = payload;
+      state.loading = false;
+      state.success = true;
+      state.shippingRates = shipment.rates;
+      state.shipmentId = shipment.id;
+      state.message = "Orders Transfered to New User";
+    },
+    [API.customShippingRates.rejected as any]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.error = payload.error;
+      state.message = payload.message;
+    },
+    [API.createCustomLabel.pending as any]: (state: any, { payload }: any) => {
+      state.loading = true;
+      state.label = "";
+    },
+    [API.createCustomLabel.fulfilled as any]: (state: any, { payload }: any) => {
+      console.log({ payload });
+      state.loading = false;
+      state.label = payload.postage_label.label_url;
+      state.message = "Label Bought";
+    },
+    [API.createCustomLabel.rejected as any]: (state: any, { payload }: any) => {
+      state.loading = false;
+      state.error = payload.error;
+      state.message = payload.message;
+    },
+  },
 });
 
 export const {
@@ -214,6 +308,8 @@ export const {
   closeCreateLabelModal,
   setToShipping,
   setFromShipping,
-  setParcel
+  setParcel,
+  setSelectedRateId,
+  resetRates,
 } = shippingSlice.actions;
 export default shippingSlice.reducer;

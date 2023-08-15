@@ -185,3 +185,49 @@ export const createShippingRates = async ({ order, returnLabel }: any) => {
     console.log("Error creating rates:", error);
   }
 };
+
+export const createCustomShippingRates = async ({ toShipping, fromShipping, parcel }: any) => {
+  try {
+    const shipment = await EasyPost.Shipment.create({
+      to_address: {
+        verify: ["delivery"],
+        email: toShipping.email,
+        company: toShipping.company,
+        name: `${toShipping.first_name} ${toShipping.last_name}`,
+        street1: toShipping.address_1,
+        street2: toShipping.address_2,
+        city: toShipping.city,
+        state: toShipping.state,
+        zip: toShipping.postalCode,
+        country: toShipping.country,
+        phone: toShipping.phone,
+      },
+      from_address: {
+        email: fromShipping.email,
+        company: fromShipping.company,
+        name: `${fromShipping.first_name} ${fromShipping.last_name}`,
+        street1: fromShipping.address_1,
+        street2: fromShipping.address_2,
+        city: fromShipping.city,
+        state: fromShipping.state,
+        zip: fromShipping.postalCode,
+        country: fromShipping.country,
+        phone: fromShipping.phone,
+      },
+      parcel: {
+        length: parcel.length,
+        width: parcel.width,
+        height: parcel.height,
+        weight: covertToOunces({ weight_pounds: parcel.weight_pounds, weight_ounces: parcel.weight_ounces }),
+      },
+      options: {
+        commercial_invoice_letterhead: "IMAGE_1",
+        commercial_invoice_signature: "IMAGE_2",
+      },
+    });
+    console.log({ shipment, parcel });
+    return { shipment, parcel };
+  } catch (error) {
+    console.log("Error creating rates:", error);
+  }
+};
