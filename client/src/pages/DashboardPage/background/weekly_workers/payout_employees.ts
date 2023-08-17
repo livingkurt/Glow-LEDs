@@ -15,26 +15,26 @@ export const payout_employees = async (): Promise<void> => {
         await axios.post(`${domainUrl}/api/payments/payout_transfer`, {
           amount: employee?.weekly_wage,
           stripe_connect_id: employee.stripe_connect_id,
-          description: `Weekly Payout for ${employee.first_name} ${employee.last_name}`
+          description: `Weekly Payout for ${employee.first_name} ${employee.last_name}`,
         });
         console.log({
           amount: employee?.weekly_wage,
           stripe_connect_id: employee.stripe_connect_id,
-          description: `Weekly Payout for ${employee.first_name} ${employee.last_name}`
+          description: `Weekly Payout for ${employee.first_name} ${employee.last_name}`,
         });
         await axios.post(`${domainUrl}/api/paychecks`, {
           user: employee?._id,
           amount: employee?.weekly_wage,
           stripe_connect_id: employee?.stripe_connect_id || null,
           paid: true,
-          paid_at: new Date()
+          paid_at: new Date(),
         });
         console.log({
           user: employee?._id,
           amount: employee?.weekly_wage,
           stripe_connect_id: employee?.stripe_connect_id || null,
           paid: true,
-          paid_at: new Date()
+          paid_at: new Date(),
         });
         const data = {
           expense_name: `${employee.first_name} ${employee.last_name} Paycheck`,
@@ -42,10 +42,14 @@ export const payout_employees = async (): Promise<void> => {
           date_of_purchase: get_todays_date(),
           category: "Employee Paycheck",
           card: "Stripe",
-          amount: employee?.weekly_wage || 0 // ensure that Amount is a number and not undefined
+          amount: employee?.weekly_wage || 0, // ensure that Amount is a number and not undefined
         };
         save_paycheck_to_expenses(data);
       }
     });
-  } catch (error) {}
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+  }
 };

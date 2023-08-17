@@ -84,18 +84,18 @@ export default {
           path: "orderItems.product",
           populate: [
             {
-              path: "color_products"
+              path: "color_products",
             },
             {
-              path: "secondary_color_products"
+              path: "secondary_color_products",
             },
             {
-              path: "option_products"
+              path: "option_products",
             },
             {
-              path: "secondary_products"
-            }
-          ]
+              path: "secondary_products",
+            },
+          ],
         });
     } catch (error) {
       if (error instanceof Error) {
@@ -106,8 +106,15 @@ export default {
 
   findBy_orders_db: async (params: any) => {
     try {
-      return await Order.findOne(params).populate("user").populate("orderItems.product").populate("orderItems.secondary_product");
-    } catch (error) {}
+      return await Order.findOne(params)
+        .populate("user")
+        .populate("orderItems.product")
+        .populate("orderItems.secondary_product");
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
   },
   create_orders_db: async (body: any) => {
     try {
@@ -155,17 +162,17 @@ export default {
     try {
       const products = await Order.aggregate([
         {
-          $match: { deleted: false }
+          $match: { deleted: false },
         },
         {
-          $unwind: "$orderItems"
+          $unwind: "$orderItems",
         },
         {
           $group: {
             _id: "$orderItems.product",
-            quantity: { $sum: "$orderItems.qty" }
-          }
-        }
+            quantity: { $sum: "$orderItems.qty" },
+          },
+        },
       ]);
 
       // Loop through products and get the name
@@ -177,7 +184,7 @@ export default {
           return {
             name: p ? p.name : "No Name",
             category: p ? p.category : "No Category",
-            quantity: product.quantity
+            quantity: product.quantity,
           };
         })
       );
@@ -205,9 +212,9 @@ export default {
               state: "$shipping.state",
               postalCode: "$shipping.postalCode",
               international: "$shipping.international",
-              country: "$shipping.country"
-            }
-          }
+              country: "$shipping.country",
+            },
+          },
         },
         {
           $project: {
@@ -222,9 +229,9 @@ export default {
             state: "$_id.state",
             postalCode: "$_id.postalCode",
             international: "$_id.international",
-            country: "$_id.country"
-          }
-        }
+            country: "$_id.country",
+          },
+        },
       ]);
       return dedupedShippingAddresses;
     } catch (error) {
@@ -239,36 +246,36 @@ export default {
         {
           $match: {
             deleted: false,
-            isPaid: true
-          }
+            isPaid: true,
+          },
         },
         {
           $group: {
             _id: null,
             totalPrice: {
-              $sum: "$totalPrice"
+              $sum: "$totalPrice",
             },
             refundTotal: {
-              $sum: "$refundTotal"
-            }
-          }
+              $sum: "$refundTotal",
+            },
+          },
         },
         {
           $group: {
             _id: null,
             totalPrice: {
-              $sum: "$totalPrice"
+              $sum: "$totalPrice",
             },
             refundTotal: {
-              $sum: "$refundTotal"
+              $sum: "$refundTotal",
             },
             netTotalPrice: {
               $sum: {
-                $subtract: ["$totalPrice", "$refundTotal"]
-              }
-            }
-          }
-        }
+                $subtract: ["$totalPrice", "$refundTotal"],
+              },
+            },
+          },
+        },
       ]).exec();
       return totalPrice;
     } catch (error) {
@@ -286,37 +293,37 @@ export default {
             isPaid: true,
             createdAt: {
               $gte: new Date(start_date),
-              $lt: new Date(end_date)
-            }
-          }
+              $lt: new Date(end_date),
+            },
+          },
         },
         {
           $group: {
             _id: null,
             totalPrice: {
-              $sum: "$totalPrice"
+              $sum: "$totalPrice",
             },
             refundTotal: {
-              $sum: "$refundTotal"
-            }
-          }
+              $sum: "$refundTotal",
+            },
+          },
         },
         {
           $group: {
             _id: null,
             totalPrice: {
-              $sum: "$totalPrice"
+              $sum: "$totalPrice",
             },
             refundTotal: {
-              $sum: "$refundTotal"
+              $sum: "$refundTotal",
             },
             netTotalPrice: {
               $sum: {
-                $subtract: ["$totalPrice", "$refundTotal"]
-              }
-            }
-          }
-        }
+                $subtract: ["$totalPrice", "$refundTotal"],
+              },
+            },
+          },
+        },
       ]).exec();
       return totalPrice;
     } catch (error) {
@@ -382,44 +389,44 @@ export default {
             isPaid: true,
             createdAt: {
               $gte: new Date(`${year}-01-01T00:00:00.000Z`),
-              $lt: new Date(`${parseInt(year) + 1}-01-01T00:00:00.000Z`)
-            }
-          }
+              $lt: new Date(`${parseInt(year) + 1}-01-01T00:00:00.000Z`),
+            },
+          },
         },
         {
-          $unwind: "$orderItems"
+          $unwind: "$orderItems",
         },
         {
           $match: {
-            "orderItems.product": ObjectId(product_id)
-          }
+            "orderItems.product": ObjectId(product_id),
+          },
         },
         {
           $group: {
             _id: { month: { $month: "$createdAt" }, day: { $dayOfMonth: "$createdAt" } },
             dailyTotal: {
               $sum: {
-                $multiply: ["$orderItems.price", "$orderItems.qty"]
-              }
+                $multiply: ["$orderItems.price", "$orderItems.qty"],
+              },
             },
             monthlyQuantity: {
-              $sum: "$orderItems.qty"
-            }
-          }
+              $sum: "$orderItems.qty",
+            },
+          },
         },
         {
           $group: {
             _id: "$_id.month",
             totalPrice: {
-              $sum: "$dailyTotal"
+              $sum: "$dailyTotal",
             },
             totalQuantity: {
-              $sum: "$monthlyQuantity"
+              $sum: "$monthlyQuantity",
             },
             dailyAverage: {
-              $avg: "$dailyTotal"
-            }
-          }
+              $avg: "$dailyTotal",
+            },
+          },
         },
         {
           $project: {
@@ -427,9 +434,9 @@ export default {
             month: "$_id",
             totalPrice: 1,
             dailyAverage: 1,
-            totalQuantity: 1
-          }
-        }
+            totalQuantity: 1,
+          },
+        },
       ]).exec();
 
       return totalPriceByMonth;
@@ -447,46 +454,46 @@ export default {
         {
           $match: {
             deleted: false,
-            isPaid: true
-          }
+            isPaid: true,
+          },
         },
         {
-          $unwind: "$orderItems"
+          $unwind: "$orderItems",
         },
         {
           $match: {
-            "orderItems.product": ObjectId(product_id)
-          }
+            "orderItems.product": ObjectId(product_id),
+          },
         },
         {
           $group: {
             _id: {
               year: { $year: "$createdAt" },
-              month: { $month: "$createdAt" }
+              month: { $month: "$createdAt" },
             },
             monthlyTotal: {
               $sum: {
-                $multiply: ["$orderItems.price", "$orderItems.qty"]
-              }
+                $multiply: ["$orderItems.price", "$orderItems.qty"],
+              },
             },
             yearlyQuantity: {
-              $sum: "$orderItems.qty"
-            }
-          }
+              $sum: "$orderItems.qty",
+            },
+          },
         },
         {
           $group: {
             _id: "$_id.year",
             totalPrice: {
-              $sum: "$monthlyTotal"
+              $sum: "$monthlyTotal",
             },
             monthlyAverage: {
-              $avg: "$monthlyTotal"
+              $avg: "$monthlyTotal",
             },
             totalQuantity: {
-              $sum: "$monthlyQuantity"
-            }
-          }
+              $sum: "$monthlyQuantity",
+            },
+          },
         },
         {
           $project: {
@@ -494,9 +501,9 @@ export default {
             year: "$_id",
             totalPrice: 1,
             monthlyAverage: 1,
-            totalQuantity: 1
-          }
-        }
+            totalQuantity: 1,
+          },
+        },
       ]).exec();
       return totalPriceByYear;
     } catch (error) {
@@ -515,42 +522,42 @@ export default {
             isPaid: true,
             createdAt: {
               $gte: new Date(`${year}-01-01T00:00:00.000Z`),
-              $lt: new Date(`${parseInt(year) + 1}-01-01T00:00:00.000Z`)
-            }
-          }
+              $lt: new Date(`${parseInt(year) + 1}-01-01T00:00:00.000Z`),
+            },
+          },
         },
         {
           $group: {
             _id: {
               month: { $month: "$createdAt" },
-              day: { $dayOfMonth: "$createdAt" }
+              day: { $dayOfMonth: "$createdAt" },
             },
             dailyTotalPrice: {
-              $sum: "$totalPrice"
-            }
-          }
+              $sum: "$totalPrice",
+            },
+          },
         },
         {
           $group: {
             _id: {
-              month: "$_id.month"
+              month: "$_id.month",
             },
             totalPrice: {
-              $sum: "$dailyTotalPrice"
+              $sum: "$dailyTotalPrice",
             },
             dailyAverage: {
-              $avg: "$dailyTotalPrice"
-            }
-          }
+              $avg: "$dailyTotalPrice",
+            },
+          },
         },
         {
           $project: {
             _id: 0,
             month: "$_id.month",
             totalPrice: 1,
-            dailyAverage: 1
-          }
-        }
+            dailyAverage: 1,
+          },
+        },
       ]).exec();
 
       return totalPriceByMonth;
@@ -566,41 +573,41 @@ export default {
         {
           $match: {
             deleted: false,
-            isPaid: true
-          }
+            isPaid: true,
+          },
         },
         {
           $group: {
             _id: {
               year: { $year: "$createdAt" },
-              month: { $month: "$createdAt" }
+              month: { $month: "$createdAt" },
             },
             monthlyTotalPrice: {
-              $sum: "$totalPrice"
-            }
-          }
+              $sum: "$totalPrice",
+            },
+          },
         },
         {
           $group: {
             _id: {
-              year: "$_id.year"
+              year: "$_id.year",
             },
             totalPrice: {
-              $sum: "$monthlyTotalPrice"
+              $sum: "$monthlyTotalPrice",
             },
             monthlyAverage: {
-              $avg: "$monthlyTotalPrice"
-            }
-          }
+              $avg: "$monthlyTotalPrice",
+            },
+          },
         },
         {
           $project: {
             _id: 0,
             year: "$_id.year",
             totalPrice: 1,
-            monthlyAverage: 1
-          }
-        }
+            monthlyAverage: 1,
+          },
+        },
       ]).exec();
       return totalPriceByYear;
     } catch (error) {
@@ -618,9 +625,9 @@ export default {
             isPaid: true,
             createdAt: {
               $gte: new Date(start_date),
-              $lt: new Date(end_date)
-            }
-          }
+              $lt: new Date(end_date),
+            },
+          },
         },
         {
           $group: {
@@ -628,27 +635,27 @@ export default {
               year: { $year: "$createdAt" },
               month: { $month: "$createdAt" },
               day: { $dayOfMonth: "$createdAt" },
-              hour: { $hour: "$createdAt" }
+              hour: { $hour: "$createdAt" },
             },
             hourlyTotalPrice: {
-              $sum: "$totalPrice"
-            }
-          }
+              $sum: "$totalPrice",
+            },
+          },
         },
         {
           $group: {
             _id: {
               year: "$_id.year",
               month: "$_id.month",
-              day: "$_id.day"
+              day: "$_id.day",
             },
             totalPrice: {
-              $sum: "$hourlyTotalPrice"
+              $sum: "$hourlyTotalPrice",
             },
             hourlyAverage: {
-              $avg: "$hourlyTotalPrice"
-            }
-          }
+              $avg: "$hourlyTotalPrice",
+            },
+          },
         },
         {
           $project: {
@@ -656,19 +663,19 @@ export default {
               $dateFromParts: {
                 year: "$_id.year",
                 month: "$_id.month",
-                day: "$_id.day"
-              }
+                day: "$_id.day",
+              },
             },
             totalPrice: 1,
             hourlyAverage: 1,
-            _id: 0
-          }
+            _id: 0,
+          },
         },
         {
           $sort: {
-            date: 1
-          }
-        }
+            date: 1,
+          },
+        },
       ]).exec();
 
       return totalPriceByDay;
@@ -689,29 +696,29 @@ export default {
             "orderItems.product": id,
             createdAt: {
               $gte: new Date(start_date),
-              $lt: new Date(end_date)
-            }
-          }
+              $lt: new Date(end_date),
+            },
+          },
         },
         {
-          $unwind: "$orderItems"
+          $unwind: "$orderItems",
         },
         {
           $group: {
             _id: "$orderItems.product",
             name: { $first: "$orderItems.name" },
             totalRevenue: { $sum: { $multiply: ["$orderItems.price", "$orderItems.qty"] } },
-            totalQuantity: { $sum: "$orderItems.qty" }
-          }
+            totalQuantity: { $sum: "$orderItems.qty" },
+          },
         },
         {
           $project: {
             _id: 0,
             name: 1,
             totalRevenue: 1,
-            totalQuantity: 1
-          }
-        }
+            totalQuantity: 1,
+          },
+        },
       ]).exec();
       return result;
     } catch (error) {
@@ -729,29 +736,29 @@ export default {
             isPaid: true,
             createdAt: {
               $gte: new Date(start_date),
-              $lt: new Date(end_date)
-            }
-          }
+              $lt: new Date(end_date),
+            },
+          },
         },
         {
-          $unwind: "$orderItems"
+          $unwind: "$orderItems",
         },
         {
           $group: {
             _id: "$orderItems.product",
             name: { $first: "$orderItems.name" },
             totalRevenue: { $sum: { $multiply: ["$orderItems.price", "$orderItems.qty"] } },
-            totalQuantity: { $sum: "$orderItems.qty" }
-          }
+            totalQuantity: { $sum: "$orderItems.qty" },
+          },
         },
         {
           $project: {
             _id: 1,
             name: 1,
             totalRevenue: 1,
-            totalQuantity: 1
-          }
-        }
+            totalQuantity: 1,
+          },
+        },
       ]).exec();
       return result;
     } catch (error) {
@@ -767,17 +774,17 @@ export default {
         {
           $match: {
             deleted: false,
-            isPaid: true
-          }
+            isPaid: true,
+          },
         },
         {
           $group: {
             _id: null,
             total_tips: {
-              $sum: "$tip"
-            }
-          }
-        }
+              $sum: "$tip",
+            },
+          },
+        },
       ]).exec();
       return total_tips;
     } catch (error) {
@@ -795,18 +802,18 @@ export default {
             isPaid: true,
             createdAt: {
               $gte: new Date(start_date),
-              $lt: new Date(end_date)
-            }
-          }
+              $lt: new Date(end_date),
+            },
+          },
         },
         {
           $group: {
             _id: null,
             total_tips: {
-              $sum: "$tip"
-            }
-          }
-        }
+              $sum: "$tip",
+            },
+          },
+        },
       ]).exec();
       return total_tips;
     } catch (error) {
@@ -825,31 +832,31 @@ export default {
             isPaid: true,
             createdAt: {
               $gte: new Date(start_date),
-              $lt: new Date(end_date)
-            }
-          }
+              $lt: new Date(end_date),
+            },
+          },
         },
         {
-          $unwind: "$orderItems"
+          $unwind: "$orderItems",
         },
         {
           $lookup: {
             from: "products",
             localField: "orderItems.product",
             foreignField: "_id",
-            as: "product"
-          }
+            as: "product",
+          },
         },
         {
-          $unwind: "$product"
+          $unwind: "$product",
         },
         {
           $group: {
             _id: "$product.category",
             revenue: { $sum: { $multiply: ["$orderItems.qty", "$product.price"] } },
-            quantity: { $sum: "$orderItems.qty" }
-          }
-        }
+            quantity: { $sum: "$orderItems.qty" },
+          },
+        },
       ]);
       return category_totals;
     } catch (error) {
@@ -864,30 +871,30 @@ export default {
         {
           $match: {
             deleted: false,
-            isPaid: true
-          }
+            isPaid: true,
+          },
         },
         {
-          $unwind: "$orderItems"
+          $unwind: "$orderItems",
         },
         {
           $lookup: {
             from: "products",
             localField: "orderItems.product",
             foreignField: "_id",
-            as: "product"
-          }
+            as: "product",
+          },
         },
         {
-          $unwind: "$product"
+          $unwind: "$product",
         },
         {
           $group: {
             _id: "$product.category",
             revenue: { $sum: { $multiply: ["$orderItems.qty", "$product.price"] } },
-            quantity: { $sum: "$orderItems.qty" }
-          }
-        }
+            quantity: { $sum: "$orderItems.qty" },
+          },
+        },
       ]);
       return category_totals;
     } catch (error) {
@@ -899,29 +906,29 @@ export default {
   get_occurances_products_db: async () => {
     const final_result = await Order.aggregate([
       {
-        $match: { deleted: false }
+        $match: { deleted: false },
       },
       {
-        $unwind: "$orderItems"
+        $unwind: "$orderItems",
       },
       {
         $group: {
           _id: "$orderItems.product",
           name: { $first: "$orderItems.name" },
-          occurrence: { $sum: 1 }
-        }
+          occurrence: { $sum: 1 },
+        },
       },
       {
         $project: {
           _id: 0,
           id: "$_id",
           name: 1,
-          occurrence: 1
-        }
+          occurrence: 1,
+        },
       },
       {
-        $sort: { occurrence: -1 }
-      }
+        $sort: { occurrence: -1 },
+      },
     ]);
     return final_result;
   },
@@ -929,18 +936,18 @@ export default {
     try {
       const affiliatesEarnings = await Affiliate.aggregate([
         {
-          $match: { active: true, rave_mob: false }
+          $match: { active: true, rave_mob: false },
         },
         {
           $lookup: {
             from: "promos",
             localField: "public_code",
             foreignField: "_id",
-            as: "public_code"
-          }
+            as: "public_code",
+          },
         },
         {
-          $unwind: "$public_code"
+          $unwind: "$public_code",
         },
         {
           $lookup: {
@@ -953,27 +960,27 @@ export default {
                     $and: [
                       { $eq: ["$promo_code", "$$affiliate_promo_code"] },
                       { $gte: ["$createdAt", new Date(start_date)] },
-                      { $lte: ["$createdAt", new Date(end_date)] }
-                    ]
-                  }
-                }
+                      { $lte: ["$createdAt", new Date(end_date)] },
+                    ],
+                  },
+                },
               },
               {
                 $group: {
                   _id: null,
                   number_of_uses: { $sum: 1 },
-                  total_revenue: { $sum: "$totalPrice" }
-                }
-              }
+                  total_revenue: { $sum: "$totalPrice" },
+                },
+              },
             ],
-            as: "affiliate_orders"
-          }
+            as: "affiliate_orders",
+          },
         },
         {
           $addFields: {
             number_of_uses: { $arrayElemAt: ["$affiliate_orders.number_of_uses", 0] },
-            revenue: { $arrayElemAt: ["$affiliate_orders.total_revenue", 0] }
-          }
+            revenue: { $arrayElemAt: ["$affiliate_orders.total_revenue", 0] },
+          },
         },
         {
           $addFields: {
@@ -981,10 +988,10 @@ export default {
               $cond: {
                 if: { $eq: ["$sponsor", true] },
                 then: { $multiply: ["$revenue", 0.15] },
-                else: { $multiply: ["$revenue", 0.1] }
-              }
-            }
-          }
+                else: { $multiply: ["$revenue", 0.1] },
+              },
+            },
+          },
         },
         {
           $project: {
@@ -992,9 +999,9 @@ export default {
             artist_name: 1,
             number_of_uses: 1,
             revenue: 1,
-            earnings: 1
-          }
-        }
+            earnings: 1,
+          },
+        },
       ]);
 
       return affiliatesEarnings;
@@ -1013,23 +1020,23 @@ export default {
             isPaid: true,
             createdAt: {
               $gte: new Date(start_date),
-              $lt: new Date(end_date)
-            }
-          }
+              $lt: new Date(end_date),
+            },
+          },
         },
         {
-          $unwind: "$orderItems"
+          $unwind: "$orderItems",
         },
         {
           $group: {
             _id: {
               subcategory: "$orderItems.subcategory",
-              option_product_name: "$orderItems.option_product_name"
+              option_product_name: "$orderItems.option_product_name",
             },
             count: { $sum: 1 },
-            total_price: { $sum: "$orderItems.price" }
-          }
-        }
+            total_price: { $sum: "$orderItems.price" },
+          },
+        },
       ]).exec();
       // Transform the aggregation results into the desired output format
       // const breakdown = {
@@ -1037,7 +1044,11 @@ export default {
       // };
 
       return orders_data;
-    } catch (error) {}
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
   },
   remove_multiple_orders_db: async (ids: string[]) => {
     try {
@@ -1047,5 +1058,5 @@ export default {
         throw new Error(error.message);
       }
     }
-  }
+  },
 };

@@ -27,7 +27,7 @@ export const google_catalog_upload = async () => {
       "brand",
       "google_product_category",
       "sale_price",
-      "sale_price_effective_date"
+      "sale_price_effective_date",
     ]);
     const domainUrl = domain();
     const { data } = await axios.get(`${domainUrl}/api/products?limit=0&hidden=false&option=false`);
@@ -64,7 +64,7 @@ export const google_catalog_upload = async () => {
           brand,
           google_product_category,
           sale_price,
-          sale_price_effective_date
+          sale_price_effective_date,
         };
       });
 
@@ -73,5 +73,9 @@ export const google_catalog_upload = async () => {
     // adding / removing sheets
     // const newSheet = await doc.addSheet({ title: 'hot new sheet!' });
     // await newSheet.delete();
-  } catch (error) {}
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+  }
 };

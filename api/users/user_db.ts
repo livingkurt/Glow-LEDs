@@ -12,12 +12,12 @@ export default {
           path: "affiliate",
           populate: [
             {
-              path: "public_code"
+              path: "public_code",
             },
             {
-              path: "private_code"
-            }
-          ]
+              path: "private_code",
+            },
+          ],
         })
         .populate("wholesaler")
         .populate("products")
@@ -36,12 +36,12 @@ export default {
           path: "affiliate",
           populate: [
             {
-              path: "public_code"
+              path: "public_code",
             },
             {
-              path: "private_code"
-            }
-          ]
+              path: "private_code",
+            },
+          ],
         })
         .populate("wholesaler")
         .populate("products");
@@ -58,12 +58,12 @@ export default {
           path: "affiliate",
           populate: [
             {
-              path: "public_code"
+              path: "public_code",
             },
             {
-              path: "private_code"
-            }
-          ]
+              path: "private_code",
+            },
+          ],
         })
         .populate("wholesaler")
         .populate("products");
@@ -80,12 +80,12 @@ export default {
           path: "affiliate",
           populate: [
             {
-              path: "public_code"
+              path: "public_code",
             },
             {
-              path: "private_code"
-            }
-          ]
+              path: "private_code",
+            },
+          ],
         })
         .populate("wholesaler")
         .populate("products");
@@ -98,7 +98,11 @@ export default {
   findByEmail_users_db: async (email: string) => {
     try {
       return await User.findOne({ email }).populate("wholesaler");
-    } catch (error) {}
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
   },
   create_users_db: async (user: any) => {
     try {
@@ -152,5 +156,5 @@ export default {
         throw new Error(error.message);
       }
     }
-  }
+  },
 };

@@ -157,7 +157,11 @@ export const loginUser = createAsyncThunk("users/loginUser", async (userData: an
     }
 
     return data;
-  } catch (error) {}
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+  }
 });
 
 // export const loginUser = createAsyncThunk("users/loginUser", async (userData: any, thunkApi: any) => {

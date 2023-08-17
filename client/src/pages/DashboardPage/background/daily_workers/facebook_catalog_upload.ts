@@ -11,7 +11,7 @@ export const facebook_catalog_upload = async () => {
     const doc = new GoogleSpreadsheet("1NqPY49Q-58oCVuslOw576zNyBUnyAAaOmGdzCrVT4g8");
     await doc.useServiceAccountAuth({
       client_email: config.REACT_APP_INFO_EMAIL,
-      private_key: config.REACT_APP_GOOGLE_SHEETS_PRIVATE
+      private_key: config.REACT_APP_GOOGLE_SHEETS_PRIVATE,
     });
     await doc.loadInfo();
     const sheet = doc.sheetsByIndex[0];
@@ -34,7 +34,7 @@ export const facebook_catalog_upload = async () => {
       "sale_price_effective_date",
       "product_type",
       "color",
-      "size"
+      "size",
       // 'shipping_weight',
       // 'item_group_id'
     ]);
@@ -88,7 +88,7 @@ export const facebook_catalog_upload = async () => {
           sale_price_effective_date,
           product_type,
           color,
-          size
+          size,
           // shipping_weight,
           // item_group_id
         };
@@ -96,5 +96,9 @@ export const facebook_catalog_upload = async () => {
 
     await sheet.addRows(new_rows);
     await sheet.saveUpdatedCells();
-  } catch (error) {}
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+  }
 };

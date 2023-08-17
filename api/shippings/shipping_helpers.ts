@@ -4,17 +4,21 @@ const generateOrientations = (length: string, width: string, height: string) => 
   [width, length, height],
   [width, height, length],
   [height, length, width],
-  [height, width, length]
+  [height, width, length],
 ];
 
 const fitsInParcel = (itemDimensions: any, parcel: any) => {
   const orientations = generateOrientations(itemDimensions.length, itemDimensions.width, itemDimensions.height);
 
-  return orientations.some(([length, width, height]) => length <= parcel.length && width <= parcel.width && height <= parcel.height);
+  return orientations.some(
+    ([length, width, height]) => length <= parcel.length && width <= parcel.width && height <= parcel.height
+  );
 };
 
 const filterParcels = (parcels: any, dimmensions: any) => {
-  return parcels.filter((parcel: any) => dimmensions.every((itemDimensions: any) => fitsInParcel(itemDimensions, parcel)));
+  return parcels.filter((parcel: any) =>
+    dimmensions.every((itemDimensions: any) => fitsInParcel(itemDimensions, parcel))
+  );
 };
 
 const getOrderItemDimensions = (orderItems: any) =>
@@ -23,7 +27,7 @@ const getOrderItemDimensions = (orderItems: any) =>
     width: item.package_width,
     height: item.package_height,
     volume: item.package_volume,
-    qty: parseInt(item.qty)
+    qty: parseInt(item.qty),
   }));
 
 const selectBestFitParcel = (fit_parcels: any, all_parcels: any) => {
@@ -130,8 +134,12 @@ export const parseOrderData = (shipment: any, order: any) => {
       "customs_item.value": shipment.customs_info.customs_items[0].value,
       "customs_item.code": shipment.customs_info.customs_items[0].code,
       "customs_item.hs_tariff_number": shipment.customs_info.customs_items[0].hs_tariff_number,
-      "customs_item.origin_country": shipment.customs_info.customs_items[0].origin_country
+      "customs_item.origin_country": shipment.customs_info.customs_items[0].origin_country,
     };
     return data;
-  } catch (error) {}
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+  }
 };

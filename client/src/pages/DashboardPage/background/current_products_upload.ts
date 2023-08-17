@@ -50,7 +50,7 @@ const current_products_upload = async () => {
           product_type,
           color,
           size,
-          id
+          id,
         };
       });
 
@@ -69,7 +69,11 @@ const current_products_upload = async () => {
     // adding / removing sheets
     // const newSheet = await doc.addSheet({ title: 'hot new sheet!' });
     // await newSheet.delete();
-  } catch (error) {}
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+  }
 };
 
 current_products_upload();

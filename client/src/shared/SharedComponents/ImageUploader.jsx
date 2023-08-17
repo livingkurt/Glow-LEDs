@@ -39,11 +39,15 @@ const ImageUploader = ({ onUpload, album, type }) => {
     try {
       const response = await axios.post(`/api/images/upload/${type}`, formData, {
         headers: {
-          "Content-Type": "multipart/form-data"
-        }
+          "Content-Type": "multipart/form-data",
+        },
       });
       onUpload(response.data);
-    } catch (error) {}
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
   };
 
   return (

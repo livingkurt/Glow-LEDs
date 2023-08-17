@@ -15,7 +15,7 @@ export default {
         query,
         sort_options,
         search_name: "affiliate",
-        normalizeFilters: normalizePaycheckFilters
+        normalizeFilters: normalizePaycheckFilters,
         // normalizeSearch: normalizePaycheckSearch
       });
       const paychecks = await paycheck_db.findAll_paychecks_db(filter, sort, limit, page);
@@ -23,7 +23,7 @@ export default {
       return {
         data: paychecks,
         total_count: count,
-        currentPage: page
+        currentPage: page,
       };
     } catch (error) {
       if (error instanceof Error) {
@@ -37,13 +37,13 @@ export default {
     try {
       const availableFilters = {
         paid: [],
-        affiliates: affiliates.map((affiliate: any) => ({ display: affiliate.artist_name, value: affiliate._id }))
+        affiliates: affiliates.map((affiliate: any) => ({ display: affiliate.artist_name, value: affiliate._id })),
         // employees: users.map((user: any) => ({ display: `${user.first_name} ${user.last_name}`, value: user._id }))
       };
       const booleanFilters = {
         paid: {
-          label: "Show Paid"
-        }
+          label: "Show Paid",
+        },
       };
       return { availableFilters, booleanFilters };
     } catch (error) {
@@ -104,8 +104,8 @@ export default {
           isPaid: true,
           createdAt: {
             $gte: new Date(start_date),
-            $lte: new Date(end_date)
-          }
+            $lte: new Date(end_date),
+          },
         };
       } else if (params.year && params.year.length > 0) {
         const start_date = params.year + "-01-01";
@@ -115,8 +115,8 @@ export default {
           isPaid: true,
           createdAt: {
             $gte: new Date(start_date),
-            $lte: new Date(end_date)
-          }
+            $lte: new Date(end_date),
+          },
         };
       } else {
         o_filter = { deleted: false, isPaid: true };
@@ -138,14 +138,18 @@ export default {
               affiliate: affiliate._id,
               amount: orders
                 .filter(
-                  (order: any) => order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
+                  (order: any) =>
+                    order.promo_code &&
+                    order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
                 )
                 .reduce(
                   (a: any, order: any) =>
                     a +
                     (order.totalPrice -
                       order.taxPrice -
-                      (order.payment.refund ? order.payment.refund.reduce((a: any, c: any) => a + c.amount, 0) / 100 : 0)) *
+                      (order.payment.refund
+                        ? order.payment.refund.reduce((a: any, c: any) => a + c.amount, 0) / 100
+                        : 0)) *
                       discount,
                   0
                 )
@@ -154,20 +158,25 @@ export default {
               promo_code: affiliate.public_code.promo_code.toLowerCase(),
               revenue: orders
                 .filter(
-                  (order: any) => order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
+                  (order: any) =>
+                    order.promo_code &&
+                    order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
                 )
                 .reduce(
                   (a: any, order: any) =>
                     a +
                     (order.totalPrice -
                       order.taxPrice -
-                      (order.payment.refund ? order.payment.refund.reduce((a: any, c: any) => a + c.amount, 0) / 100 : 0)),
+                      (order.payment.refund
+                        ? order.payment.refund.reduce((a: any, c: any) => a + c.amount, 0) / 100
+                        : 0)),
                   0
                 )
                 .toFixed(2),
               uses: orders.filter(
-                (order: any) => order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
-              ).length
+                (order: any) =>
+                  order.promo_code && order.promo_code.toLowerCase() === affiliate.public_code.promo_code.toLowerCase()
+              ).length,
             });
           })
         );
@@ -183,7 +192,9 @@ export default {
                     a +
                     (order.totalPrice -
                       order.taxPrice -
-                      (order.payment.refund ? order.payment.refund.reduce((a: any, c: any) => a + c.amount, 0) / 100 : 0)) *
+                      (order.payment.refund
+                        ? order.payment.refund.reduce((a: any, c: any) => a + c.amount, 0) / 100
+                        : 0)) *
                       discount,
                   0
                 )
@@ -201,14 +212,20 @@ export default {
                   0
                 )
                 .toFixed(2),
-              uses: orders.filter((order: any) => order.promo_code && order.promo_code.toLowerCase() === team.promo_code).length
+              uses: orders.filter(
+                (order: any) => order.promo_code && order.promo_code.toLowerCase() === team.promo_code
+              ).length,
             });
           })
         );
       }
 
       return paychecks;
-    } catch (error) {}
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
   },
   update_paychecks_s: async (params: any, body: any) => {
     try {
@@ -236,5 +253,5 @@ export default {
         throw new Error(error.message);
       }
     }
-  }
+  },
 };

@@ -43,15 +43,17 @@ export const top_code_usage_upload = async (year: number, month: string) => {
     const { data: last_months_rows } = await API_Orders.all_affiliate_code_usage_orders_a({
       year,
       month,
-      position: ""
+      position: "",
     });
     const { data: total_rows } = await API_Orders.all_affiliate_code_usage_orders_a({
       year: "",
       month: "",
-      position: ""
+      position: "",
     });
 
-    const sorted_total_rows = total_rows.affiliates.sort((a: any, b: any) => (parseFloat(a.Uses) > parseFloat(b.Uses) ? -1 : 1));
+    const sorted_total_rows = total_rows.affiliates.sort((a: any, b: any) =>
+      parseFloat(a.Uses) > parseFloat(b.Uses) ? -1 : 1
+    );
 
     const formated_total = removeDuplicates(sorted_total_rows, "Promo Code").map((affiliate: any) => {
       return { ...affiliate, Revenue: `$${affiliate.Revenue}` };
@@ -74,14 +76,18 @@ export const top_code_usage_upload = async (year: number, month: string) => {
     // adding / removing sheets
 
     const newSheet = await doc.addSheet({
-      title: `${toCapitalize(month)} ${year} Affiliate Revenue`
+      title: `${toCapitalize(month)} ${year} Affiliate Revenue`,
     });
     await newSheet.setHeaderRow(["Promo Code", "Uses", "Revenue"]);
 
     await newSheet.addRows(formated_last_month);
     await newSheet.saveUpdatedCells();
     // // await newSheet.delete();
-  } catch (error) {}
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+  }
 };
 
 export const top_earner_upload = async (year: number, month: string) => {
@@ -113,12 +119,12 @@ export const top_earner_upload = async (year: number, month: string) => {
     const { data: last_months_rows } = await API_Orders.all_affiliate_code_usage_orders_a({
       year,
       month,
-      position: ""
+      position: "",
     });
     const { data: total_rows } = await API_Orders.all_affiliate_code_usage_orders_a({
       year: "",
       month: "",
-      position: ""
+      position: "",
     });
 
     const sorted_last_months_rows = last_months_rows.affiliates.sort((a: any, b: any) =>
@@ -128,7 +134,9 @@ export const top_earner_upload = async (year: number, month: string) => {
       return { ...affiliate, Revenue: `$${affiliate.Revenue}` };
     });
 
-    const sorted_total_rows = total_rows.affiliates.sort((a: any, b: any) => (parseFloat(a.Revenue) > parseFloat(b.Revenue) ? -1 : 1));
+    const sorted_total_rows = total_rows.affiliates.sort((a: any, b: any) =>
+      parseFloat(a.Revenue) > parseFloat(b.Revenue) ? -1 : 1
+    );
 
     const formated_total = removeDuplicates(sorted_total_rows, "Promo Code").map((affiliate: any) => {
       return { ...affiliate, Revenue: `$${affiliate.Revenue}` };
@@ -144,14 +152,18 @@ export const top_earner_upload = async (year: number, month: string) => {
     // adding / removing sheets
 
     const newSheet = await doc.addSheet({
-      title: `${toCapitalize(month)} ${year} Affiliate Revenue`
+      title: `${toCapitalize(month)} ${year} Affiliate Revenue`,
     });
     await newSheet.setHeaderRow(["Promo Code", "Revenue", "Uses"]);
 
     await newSheet.addRows(formated_last_month);
     await newSheet.saveUpdatedCells();
     // await newSheet.delete();
-  } catch (error) {}
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+  }
 };
 
 export const affiliate_revenue_upload = async (position: any, year: number, month: string, google_sheet: string) => {
@@ -183,15 +195,17 @@ export const affiliate_revenue_upload = async (position: any, year: number, mont
     const { data: last_months_rows } = await API_Orders.all_affiliate_code_usage_orders_a({
       year,
       month,
-      position
+      position,
     });
     const { data: total_rows } = await API_Orders.all_affiliate_code_usage_orders_a({
       year: "",
       month: "",
-      position
+      position,
     });
 
-    const sorted_total_rows = total_rows.affiliates.sort((a: any, b: any) => (parseFloat(a.Revenue) > parseFloat(b.Revenue) ? -1 : 1));
+    const sorted_total_rows = total_rows.affiliates.sort((a: any, b: any) =>
+      parseFloat(a.Revenue) > parseFloat(b.Revenue) ? -1 : 1
+    );
     const sorted_last_months_rows = last_months_rows.affiliates.sort((a: any, b: any) =>
       parseFloat(a.Revenue) > parseFloat(b.Revenue) ? -1 : 1
     );
@@ -212,7 +226,7 @@ export const affiliate_revenue_upload = async (position: any, year: number, mont
     // adding / removing sheets
 
     const newSheet = await doc.addSheet({
-      title: `${toCapitalize(month)} ${year} ${position ? toCapitalize(position) : "Affiliate"} Revenue`
+      title: `${toCapitalize(month)} ${year} ${position ? toCapitalize(position) : "Affiliate"} Revenue`,
     });
     await newSheet.setHeaderRow(["Promo Code", "Uses", "Revenue", "Percentage Off"]);
 
@@ -220,7 +234,11 @@ export const affiliate_revenue_upload = async (position: any, year: number, mont
     await newSheet.saveUpdatedCells();
 
     // await newSheet.delete();
-  } catch (error) {}
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+  }
 };
 
 export const facebook_catalog_upload = async (products: any) => {
@@ -271,7 +289,7 @@ export const facebook_catalog_upload = async (products: any) => {
       "sale_price_effective_date",
       "product_type",
       "color",
-      "size"
+      "size",
       // 'shipping_weight',
       // 'item_group_id'
     ]);
@@ -322,7 +340,7 @@ export const facebook_catalog_upload = async (products: any) => {
         sale_price_effective_date,
         product_type,
         color,
-        size
+        size,
         // shipping_weight,
         // item_group_id
       };
@@ -333,7 +351,11 @@ export const facebook_catalog_upload = async (products: any) => {
     // adding / removing sheets
     // const newSheet = await doc.addSheet({ title: 'hot new sheet!' });
     // await newSheet.delete();
-  } catch (error) {}
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+  }
 };
 export const current_products_upload = async (products: any) => {
   // google_sheets_json.private_key = config.REACT_APP_REACT_APP_GOOGLE_SHEETS_PRIVATE;
@@ -384,7 +406,7 @@ export const current_products_upload = async (products: any) => {
       "color",
       "size",
       "id",
-      "airtable_id"
+      "airtable_id",
 
       // 'shipping_weight',
       // 'item_group_id'
@@ -437,7 +459,7 @@ export const current_products_upload = async (products: any) => {
         color,
         size,
         id,
-        airtable_id: ""
+        airtable_id: "",
         // shipping_weight,
         // item_group_id
       };
@@ -448,7 +470,11 @@ export const current_products_upload = async (products: any) => {
     // adding / removing sheets
     // const newSheet = await doc.addSheet({ title: 'hot new sheet!' });
     // await newSheet.delete();
-  } catch (error) {}
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+  }
 };
 
 export const google_catalog_upload = async (products: any) => {
@@ -492,7 +518,7 @@ export const google_catalog_upload = async (products: any) => {
       "brand",
       "google_product_category",
       "sale_price",
-      "sale_price_effective_date"
+      "sale_price_effective_date",
     ]);
     // const { data } = await axios.get('https://www.glow-leds.com/api/products/shown');
 
@@ -524,7 +550,7 @@ export const google_catalog_upload = async (products: any) => {
         brand,
         google_product_category,
         sale_price,
-        sale_price_effective_date
+        sale_price_effective_date,
       };
     });
 
@@ -533,7 +559,11 @@ export const google_catalog_upload = async (products: any) => {
     // adding / removing sheets
     // const newSheet = await doc.addSheet({ title: 'hot new sheet!' });
     // await newSheet.delete();
-  } catch (error) {}
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+  }
 };
 
 export const orders_upload = async (orders: any) => {
@@ -584,7 +614,7 @@ export const orders_upload = async (orders: any) => {
       "items prices",
       "item quantitys",
       "item color",
-      "item size (gloves)"
+      "item size (gloves)",
     ]);
 
     // const { data } = await axios.get('https://www.glow-leds.com/api/orders/shown');
@@ -627,7 +657,7 @@ export const orders_upload = async (orders: any) => {
         "items prices": item_prices,
         "item quantitys": item_quantities,
         "item color": item_color,
-        "item size (gloves)": item_size
+        "item size (gloves)": item_size,
       };
     });
 
@@ -636,5 +666,9 @@ export const orders_upload = async (orders: any) => {
     // adding / removing sheets
     // const newSheet = await doc.addSheet({ title: 'hot new sheet!' });
     // await newSheet.delete();
-  } catch (error) {}
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+  }
 };
