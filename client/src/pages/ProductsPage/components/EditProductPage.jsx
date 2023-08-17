@@ -8,7 +8,7 @@ import {
   create_color_products,
   create_secondary_color_products,
   create_option_products,
-  create_secondary_products
+  create_secondary_products,
 } from "../../../utils/helpers/product_helpers";
 import { API_Products } from "../../../utils";
 import useClipboard from "react-hook-clipboard";
@@ -16,7 +16,7 @@ import {
   determine_color_modifier,
   determine_secondary_color_modifier,
   determine_option_modifier,
-  determine_secondary_modifier
+  determine_secondary_modifier,
 } from "../../../utils/helpers/product_helpers";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import ImageUploader from "../../../shared/SharedComponents/ImageUploader";
@@ -30,7 +30,7 @@ import {
   set_option_modifier,
   set_option_products_list,
   set_product,
-  set_secondary_color_modifier
+  set_secondary_color_modifier,
 } from "../../../slices/productSlice";
 
 const EditProductPage = props => {
@@ -67,7 +67,7 @@ const EditProductPage = props => {
     option_image,
     secondary_image,
     sale_start_date,
-    sale_end_date
+    sale_end_date,
   } = productPage;
 
   const {
@@ -155,7 +155,7 @@ const EditProductPage = props => {
     default_option,
     option,
     macro_product,
-    extra_cost
+    extra_cost,
   } = product;
 
   const chipPage = useSelector(state => state.chips);
@@ -209,7 +209,7 @@ const EditProductPage = props => {
   const findAllGrid_products_a = async () => {
     const { data } = await API_Products.findAllGrid_products_a({
       // option: false,
-      limit: 0
+      limit: 0,
     });
 
     dispatch(set_macro_products_list(data.products.sort((a, b) => (a.name > b.name ? 1 : -1))));
@@ -217,7 +217,7 @@ const EditProductPage = props => {
   const get_all_options = async () => {
     const { data } = await API_Products.findAllGrid_products_a({
       option: true,
-      limit: 0
+      limit: 0,
     });
 
     dispatch(set_option_products_list(data.products.sort((a, b) => (a.name > b.name ? 1 : -1))));
@@ -249,7 +249,7 @@ const EditProductPage = props => {
       option: data.option,
       macro_product: data.macro_product,
       extra_cost: data.extra_cost,
-      item_group_id: data.item_group_id
+      item_group_id: data.item_group_id,
     };
 
     dispatch(set_product({ ...product, template }));
@@ -361,7 +361,7 @@ const EditProductPage = props => {
         item_group_id: props.match.params.item_group_id || item_group_id,
         previous_price,
         has_add_on,
-        filament: filament ? filament._id : null
+        filament: filament ? filament._id : null,
       })
     );
     // if (props.match.params.product_option && props.match.params.item_group_id) {
@@ -443,31 +443,31 @@ const EditProductPage = props => {
       const { data: option_product } = await API_Products.findByPathname_products_a(pathname);
       const { data: macro_product } = await API_Products.findById_products_a(props.match.params.item_group_id);
       let saved_data = {
-        _id: macro_product.item_group_id
+        _id: macro_product.item_group_id,
       };
       switch (props.match.params.product_option) {
         case "color_product":
           saved_data = {
             ...macro_product,
-            color_products: [...macro_product.color_products, option_product._id]
+            color_products: [...macro_product.color_products, option_product._id],
           };
           break;
         case "secondary_color_product":
           saved_data = {
             ...macro_product,
-            secondary_color_products: [...macro_product.secondary_color_products, option_product._id]
+            secondary_color_products: [...macro_product.secondary_color_products, option_product._id],
           };
           break;
         case "option_product":
           saved_data = {
             ...macro_product,
-            option_products: [...macro_product.option_products, option_product._id]
+            option_products: [...macro_product.option_products, option_product._id],
           };
           break;
         case "secondary_product":
           saved_data = {
             ...macro_product,
-            secondary_products: [...macro_product.secondary_products, option_product._id]
+            secondary_products: [...macro_product.secondary_products, option_product._id],
           };
           break;
 
@@ -587,7 +587,6 @@ const EditProductPage = props => {
     <div className="main_container p-20px">
       <h1 style={{ textAlign: "center" }}>{props.match.params.pathname ? "Edit Product" : "Create Product"}</h1>
       <Loading loading={loading_options} />
-      <Notification message={message} />
 
       <div className="form">
         <form onSubmit={submitHandler} className="w-100per">
@@ -635,14 +634,14 @@ const EditProductPage = props => {
                         textAlign: "center",
                         width: "100%",
                         marginRight: "auto",
-                        justifyContent: "center"
+                        justifyContent: "center",
                       }}
                       className="ta-c "
                     >
                       <Link
                         to={{
                           pathname: "/collections/all/products/" + product.pathname,
-                          previous_path: history.location.pathname
+                          previous_path: history.location.pathname,
                         }}
                       >
                         {loading ? "Product" : product.name}
@@ -1177,7 +1176,9 @@ const EditProductPage = props => {
                               name="processing_time"
                               defaultValue={processing_time && processing_time[0]}
                               id="processing_time"
-                              onChange={e => dispatch(set_product({ [e.target.name]: [e.target.value, processing_time[1]] }))}
+                              onChange={e =>
+                                dispatch(set_product({ [e.target.name]: [e.target.value, processing_time[1]] }))
+                              }
                             />
                           </div>
                           <div>
@@ -1188,7 +1189,9 @@ const EditProductPage = props => {
                               name="processing_time"
                               defaultValue={processing_time && processing_time[1]}
                               id="processing_time"
-                              onChange={e => dispatch(set_product({ [e.target.name]: [processing_time[0], e.target.value] }))}
+                              onChange={e =>
+                                dispatch(set_product({ [e.target.name]: [processing_time[0], e.target.value] }))
+                              }
                             />
                           </div>
                         </div>
@@ -1262,7 +1265,12 @@ const EditProductPage = props => {
                         <input
                           type="text"
                           name="package_volume"
-                          value={package_length && package_width && package_height && package_length * package_width * package_height}
+                          value={
+                            package_length &&
+                            package_width &&
+                            package_height &&
+                            package_length * package_width * package_height
+                          }
                           id="package_volume"
                           onChange={e => dispatch(set_product({ [e.target.name]: e.target.value }))}
                         />
@@ -1536,7 +1544,9 @@ const EditProductPage = props => {
                                     Create Color Products
                                   </GLButton>
                                 </div>
-                                <Link to={`/secure/glow/editproduct/${props.match.params.pathname}/true/color_product/${product._id}`}>
+                                <Link
+                                  to={`/secure/glow/editproduct/${props.match.params.pathname}/true/color_product/${product._id}`}
+                                >
                                   <GLButton variant="primary">Create Color Product</GLButton>
                                 </Link>
                               </div>
@@ -1602,7 +1612,10 @@ const EditProductPage = props => {
                                     className=""
                                     onChange={e => dispatch(set_product({ [e.target.name]: e.target.value }))}
                                   />
-                                  <GLButton variant="primary" onClick={e => create_product_options(e, "secondary_color")}>
+                                  <GLButton
+                                    variant="primary"
+                                    onClick={e => create_product_options(e, "secondary_color")}
+                                  >
                                     Create Secondary Color Products
                                   </GLButton>
                                 </div>
@@ -1621,7 +1634,9 @@ const EditProductPage = props => {
                               Copy Secondary Products to Clipboard
                             </GLButton>
                             <div>
-                              <label htmlFor="secondary_color_group_name">Paste Copied Secondary Color Product IDs Here</label>
+                              <label htmlFor="secondary_color_group_name">
+                                Paste Copied Secondary Color Product IDs Here
+                              </label>
                               <input
                                 type="text"
                                 name="secondary_color_ids"
@@ -1703,7 +1718,9 @@ const EditProductPage = props => {
                                     Create Option Products
                                   </GLButton>
                                 </div>
-                                <Link to={`/secure/glow/editproduct/${props.match.params.pathname}/true/option_product/${product._id}`}>
+                                <Link
+                                  to={`/secure/glow/editproduct/${props.match.params.pathname}/true/option_product/${product._id}`}
+                                >
                                   <GLButton variant="primary">Create Option Product</GLButton>
                                 </Link>
                               </div>
@@ -1772,7 +1789,9 @@ const EditProductPage = props => {
                                     Create Secondary Products
                                   </GLButton>
                                 </div>
-                                <Link to={`/secure/glow/editproduct/${props.match.params.pathname}/true/secondary_product/${product._id}`}>
+                                <Link
+                                  to={`/secure/glow/editproduct/${props.match.params.pathname}/true/secondary_product/${product._id}`}
+                                >
                                   <GLButton variant="primary">Create Secondary Product</GLButton>
                                 </Link>
                               </div>
@@ -1859,7 +1878,7 @@ const EditProductPage = props => {
                         textAlign: "center",
                         width: "100%",
                         marginRight: "auto",
-                        justifyContent: "center"
+                        justifyContent: "center",
                       }}
                       className="ta-c "
                     />
@@ -1892,7 +1911,7 @@ const EditProductPage = props => {
                     <Link
                       to={{
                         pathname: "/collections/all/products/" + product.pathname,
-                        previous_path: history.location.pathname
+                        previous_path: history.location.pathname,
                       }}
                     >
                       <GLButton variant="secondary" className="w-100per">

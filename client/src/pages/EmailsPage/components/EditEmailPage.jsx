@@ -147,7 +147,7 @@ const EditEmailPage = props => {
 
     set_content_state({
       ...data.home_page,
-      link: new_link
+      link: new_link,
     });
   };
   const view_announcement_email = async () => {
@@ -170,7 +170,7 @@ const EditEmailPage = props => {
       button_color,
       text_color,
       title_color,
-      active: email_active
+      active: email_active,
     });
 
     const htmlToReactParser = new HtmlToReactParser();
@@ -228,7 +228,7 @@ const EditEmailPage = props => {
         text_color,
         title_color,
         scheduled_at: date && time ? unformat_date_and_time(date, time) : null,
-        active: email_active
+        active: email_active,
       })
     );
     e.target.reset();
@@ -251,20 +251,20 @@ const EditEmailPage = props => {
         borderRadius: "1px",
         boxShadow: "0 0 0 1px rgba(0,0,0,.1)",
         display: "inline-block",
-        cursor: "pointer"
+        cursor: "pointer",
       },
       popover: {
         position: "absolute",
-        zIndex: "2"
+        zIndex: "2",
       },
       cover: {
         position: "fixed",
         top: "0px",
         right: "0px",
         bottom: "0px",
-        left: "0px"
-      }
-    }
+        left: "0px",
+      },
+    },
   });
 
   const preset_colors = ["#333333", "#333333", "#FFFFFF", "#7d7c7c", "#585858", "#4c4f60"];
@@ -278,7 +278,7 @@ const EditEmailPage = props => {
           {/* {loading_data ? (
 						<div>Loading...</div>
 					) : ( */}
-          <Notification message={message} />
+
           <Loading loading={loading} error={error}>
             {email && (
               <div>
@@ -291,7 +291,7 @@ const EditEmailPage = props => {
                   style={{
                     maxWidth: "100rem",
                     width: "100%",
-                    marginBottom: "20px"
+                    marginBottom: "20px",
                   }}
                 >
                   <li>
@@ -333,7 +333,11 @@ const EditEmailPage = props => {
                   <li>
                     <div className="ai-c h-25px mb-15px jc-c">
                       <div className="custom-select w-100per">
-                        <select className="qty_select_dropdown w-100per" onChange={e => set_status(e.target.value)} value={status}>
+                        <select
+                          className="qty_select_dropdown w-100per"
+                          onChange={e => set_status(e.target.value)}
+                          value={status}
+                        >
                           <option defaultValue="">---Status---</option>
 
                           <option value={"draft"}>Draft</option>
@@ -357,13 +361,16 @@ const EditEmailPage = props => {
                             onChange={e => set_header_footer_color(e.target.value)}
                           />
                           <div>
-                            <div style={styles.swatch} onClick={() => set_header_footer_color_picker(!header_footer_color_picker)}>
+                            <div
+                              style={styles.swatch}
+                              onClick={() => set_header_footer_color_picker(!header_footer_color_picker)}
+                            >
                               <div
                                 style={{
                                   width: "36px",
                                   height: "14px",
                                   borderRadius: "2px",
-                                  background: header_footer_color
+                                  background: header_footer_color,
                                 }}
                               />
                             </div>
@@ -395,7 +402,7 @@ const EditEmailPage = props => {
                                   width: "36px",
                                   height: "14px",
                                   borderRadius: "2px",
-                                  background: title_color
+                                  background: title_color,
                                 }}
                               />
                             </div>
@@ -427,7 +434,7 @@ const EditEmailPage = props => {
                                   width: "36px",
                                   height: "14px",
                                   borderRadius: "2px",
-                                  background: text_color
+                                  background: text_color,
                                 }}
                               />
                             </div>
@@ -456,13 +463,16 @@ const EditEmailPage = props => {
                             }}
                           />
                           <div>
-                            <div style={styles.swatch} onClick={() => set_background_color_picker(!background_color_picker)}>
+                            <div
+                              style={styles.swatch}
+                              onClick={() => set_background_color_picker(!background_color_picker)}
+                            >
                               <div
                                 style={{
                                   width: "36px",
                                   height: "14px",
                                   borderRadius: "2px",
-                                  background: background_color
+                                  background: background_color,
                                 }}
                               />
                             </div>
@@ -494,7 +504,7 @@ const EditEmailPage = props => {
                                   width: "36px",
                                   height: "14px",
                                   borderRadius: "2px",
-                                  background: module_color
+                                  background: module_color,
                                 }}
                               />
                             </div>
@@ -526,7 +536,7 @@ const EditEmailPage = props => {
                                   width: "36px",
                                   height: "14px",
                                   borderRadius: "2px",
-                                  background: button_color
+                                  background: button_color,
                                 }}
                               />
                             </div>
@@ -545,11 +555,23 @@ const EditEmailPage = props => {
                       </ul>
                       <li>
                         <label htmlFor="subject">Subject</label>
-                        <input type="text" name="subject" value={subject} id="subject" onChange={e => set_subject(e.target.value)} />
+                        <input
+                          type="text"
+                          name="subject"
+                          value={subject}
+                          id="subject"
+                          onChange={e => set_subject(e.target.value)}
+                        />
                       </li>
                       <li>
                         <label htmlFor="email_h1">Heading</label>
-                        <input type="text" name="email_h1" value={email_h1} id="email_h1" onChange={e => set_email_h1(e.target.value)} />
+                        <input
+                          type="text"
+                          name="email_h1"
+                          value={email_h1}
+                          id="email_h1"
+                          onChange={e => set_email_h1(e.target.value)}
+                        />
                       </li>
                       <li>
                         <label htmlFor="email_h2">Summary</label>
@@ -595,11 +617,21 @@ const EditEmailPage = props => {
                       <div className="jc-b g-10px">
                         <div className="column w-100per">
                           <label htmlFor="email_link">Scheduled Date</label>
-                          <input type="text" value={date} className="w-100per" onChange={e => set_date(e.target.value)} />
+                          <input
+                            type="text"
+                            value={date}
+                            className="w-100per"
+                            onChange={e => set_date(e.target.value)}
+                          />
                         </div>
                         <div className="column w-100per">
                           <label htmlFor="email_link">Scheduled Time</label>
-                          <input type="text" value={time} className="w-100per" onChange={e => set_time(e.target.value)} />
+                          <input
+                            type="text"
+                            value={time}
+                            className="w-100per"
+                            onChange={e => set_time(e.target.value)}
+                          />
                         </div>
                       </div>
 

@@ -33,7 +33,6 @@ export const getCategorys = async ({
       message: errorMessage(error),
       severity: "error",
     });
-    return thunkApi.rejectWithValue(error.response?.data);
   }
 };
 export const reorderCategorys = async ({ reorderedItems }: { reorderedItems: any }) => {
@@ -44,7 +43,6 @@ export const reorderCategorys = async ({ reorderedItems }: { reorderedItems: any
       message: errorMessage(error),
       severity: "error",
     });
-    return thunkApi.rejectWithValue(error.response?.data);
   }
 };
 

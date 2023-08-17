@@ -50,7 +50,7 @@ const EmailsPage = props => {
   const colors = [
     { name: "Draft", color: "#7d5555" },
     { name: "Scheduled", color: "#3e4c6d" },
-    { name: "Sent", color: "#3e6d69" }
+    { name: "Sent", color: "#3e6d69" },
   ];
 
   const determine_color = email => {
@@ -70,7 +70,7 @@ const EmailsPage = props => {
     dispatch(
       API.saveEmail({
         ...email,
-        active: email.active ? false : true
+        active: email.active ? false : true,
       })
     );
     dispatch(API.listEmails({}));
@@ -93,7 +93,7 @@ const EmailsPage = props => {
     "contact",
     "contact_confirmation",
     "custom_contact",
-    "account_created"
+    "account_created",
   ];
 
   const [link, set_link] = useState("announcement");
@@ -117,7 +117,7 @@ const EmailsPage = props => {
       <Helmet>
         <title>Admin Emails | Glow LEDs</title>
       </Helmet>
-      <Notification message={message} />
+
       <div className="wrap jc-b ai-c">
         <div className="ai-c h-25px mv-15px jc-c">
           <div className="custom-select">
@@ -153,7 +153,7 @@ const EmailsPage = props => {
                   backgroundColor: color.color,
                   height: "20px",
                   width: "60px",
-                  borderRadius: "5px"
+                  borderRadius: "5px",
                 }}
               />
             </div>
@@ -187,7 +187,7 @@ const EmailsPage = props => {
                     key={index}
                     style={{
                       backgroundColor: determine_color(email),
-                      fontSize: "16px"
+                      fontSize: "16px",
                     }}
                   >
                     <td className="paragraph_font ta-c">

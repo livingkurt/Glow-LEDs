@@ -36,7 +36,6 @@ export const getAffiliates = async ({
       message: errorMessage(error),
       severity: "error",
     });
-    return thunkApi.rejectWithValue(error.response?.data);
   }
 };
 

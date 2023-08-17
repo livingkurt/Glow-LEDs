@@ -37,7 +37,6 @@ export const getUsers = async ({
       message: errorMessage(error),
       severity: "error",
     });
-    return thunkApi.rejectWithValue(error.response?.data);
   }
 };
 
@@ -49,6 +48,7 @@ export const getUserFilters = async () => {
 export const listUsers = createAsyncThunk("users/listUsers", async (query: any, thunkApi: any) => {
   try {
     const { data } = await axios.get(`/api/users?${create_query(query)}`);
+
     return data;
   } catch (error) {
     Covy().showSnackbar({
@@ -63,10 +63,17 @@ export const saveUser = createAsyncThunk("users/saveUser", async ({ user, profil
   try {
     if (!user._id) {
       const { data } = await axios.post("/api/users", user);
-
+      Covy().showSnackbar({
+        message: `User Created`,
+        severity: "success",
+      });
       return { data, profile };
     } else {
       const { data } = await axios.put(`/api/users/${user._id}`, user);
+      Covy().showSnackbar({
+        message: `User Updated`,
+        severity: "success",
+      });
       if (profile) {
         await handleTokenRefresh(true);
       }
@@ -84,6 +91,10 @@ export const saveUser = createAsyncThunk("users/saveUser", async ({ user, profil
 export const detailsUser = createAsyncThunk("users/detailsUser", async (id: any, thunkApi: any) => {
   try {
     const { data } = await axios.get(`/api/users/${id}`);
+    Covy().showSnackbar({
+      message: `User Found`,
+      severity: "success",
+    });
     return data;
   } catch (error) {
     Covy().showSnackbar({
@@ -97,6 +108,10 @@ export const detailsUser = createAsyncThunk("users/detailsUser", async (id: any,
 export const deleteUser = createAsyncThunk("users/deleteUser", async (id: string, thunkApi: any) => {
   try {
     const { data } = await axios.delete(`/api/users/${id}`);
+    Covy().showSnackbar({
+      message: `User Deleted`,
+      severity: "success",
+    });
     return data;
   } catch (error) {
     Covy().showSnackbar({
@@ -111,6 +126,10 @@ export const registerUser = createAsyncThunk("users/registerUser", async (userDa
   try {
     const { data } = await axios.post("/api/users/register", userData);
     axios.post("/api/emails/account_created", data);
+    Covy().showSnackbar({
+      message: `User Registered`,
+      severity: "success",
+    });
     return data;
   } catch (error) {
     Covy().showSnackbar({
@@ -155,12 +174,17 @@ export const loginUser = createAsyncThunk("users/loginUser", async (userData: an
       // Remove the anonymous cart
       // localStorage.removeItem("cartItems");
     }
-
+    Covy().showSnackbar({
+      message: `User Logged In`,
+      severity: "success",
+    });
     return data;
   } catch (error) {
-    if (error instanceof Error) {
-      throw new Error(error.message);
-    }
+    Covy().showSnackbar({
+      message: errorMessage(error),
+      severity: "error",
+    });
+    return thunkApi.rejectWithValue(error.response?.data);
   }
 });
 
@@ -184,6 +208,10 @@ export const logoutUser = createAsyncThunk("users/logoutUser", async (refresh_to
   } = thunkApi.getState();
   try {
     await axios.put("/api/users/logout", { refresh_token });
+    Covy().showSnackbar({
+      message: `User Logged Out`,
+      severity: "success",
+    });
     return { my_cart };
   } catch (error) {
     Covy().showSnackbar({
@@ -201,13 +229,16 @@ export const refreshLogin = async (refresh_token: any, thunkApi: any) => {
       message: errorMessage(error),
       severity: "error",
     });
-    return thunkApi.rejectWithValue(error.response?.data);
   }
 };
 
 export const loginAsUser = createAsyncThunk("users/loginAsUser", async (userData: any, thunkApi: any) => {
   try {
     const { data } = await axios.post("/api/users/login_as_user", userData);
+    Covy().showSnackbar({
+      message: `Logged in as User`,
+      severity: "success",
+    });
     return data;
   } catch (error) {
     Covy().showSnackbar({
@@ -237,6 +268,10 @@ export const passwordReset = createAsyncThunk(
       //   axios.post("/api/emails/password_reset", data);
       //   return data;
       // }
+      Covy().showSnackbar({
+        message: `Password Reset`,
+        severity: "success",
+      });
       return { current_user, data };
     } catch (error) {
       Covy().showSnackbar({
@@ -252,6 +287,10 @@ export const resetPassword = createAsyncThunk("users/resetPassword", async (emai
     const { data } = await axios.post("/api/users/reset_password", { email });
 
     axios.post("/api/emails/reset_password", data);
+    Covy().showSnackbar({
+      message: `Reset Password`,
+      severity: "success",
+    });
     return data;
   } catch (error) {
     Covy().showSnackbar({

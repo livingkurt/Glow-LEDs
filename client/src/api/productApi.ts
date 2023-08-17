@@ -33,7 +33,6 @@ export const getProducts = async ({
       message: errorMessage(error),
       severity: "error",
     });
-    return thunkApi.rejectWithValue(error.response?.data);
   }
 };
 
@@ -49,13 +48,13 @@ export const reorderProducts = async ({ reorderedItems }: { reorderedItems: any 
       message: errorMessage(error),
       severity: "error",
     });
-    return thunkApi.rejectWithValue(error.response?.data);
   }
 };
 
 export const listProducts = createAsyncThunk("products/listProducts", async (query: any, thunkApi: any) => {
   try {
     const { data } = await axios.get(`/api/products/grid?${create_query(query)}`);
+
     return data;
   } catch (error) {
     Covy().showSnackbar({
@@ -70,9 +69,17 @@ export const saveProduct = createAsyncThunk("products/saveProduct", async (produ
   try {
     if (!product._id) {
       const { data } = await axios.post("/api/products", product);
+      Covy().showSnackbar({
+        message: `Product Created`,
+        severity: "success",
+      });
       return data;
     } else {
       const { data } = await axios.put(`/api/products/${product._id}`, product);
+      Covy().showSnackbar({
+        message: `Product Updated`,
+        severity: "success",
+      });
       return data;
     }
   } catch (error) {
@@ -87,6 +94,10 @@ export const saveProduct = createAsyncThunk("products/saveProduct", async (produ
 export const detailsProduct = createAsyncThunk("products/detailsProduct", async (pathname: any, thunkApi: any) => {
   try {
     const { data } = await axios.get(`/api/products/${pathname}`);
+    Covy().showSnackbar({
+      message: `Product Found`,
+      severity: "success",
+    });
     return data;
   } catch (error) {
     Covy().showSnackbar({
@@ -100,6 +111,10 @@ export const detailsProduct = createAsyncThunk("products/detailsProduct", async 
 export const deleteProduct = createAsyncThunk("products/deleteProduct", async (id: string, thunkApi: any) => {
   try {
     const { data } = await axios.delete(`/api/products/${id}`);
+    Covy().showSnackbar({
+      message: `Product Deleted`,
+      severity: "success",
+    });
     return data;
   } catch (error) {
     Covy().showSnackbar({
@@ -115,6 +130,10 @@ export const deleteMultipleProducts = createAsyncThunk(
   async (ids: string, thunkApi: any) => {
     try {
       const { data } = await axios.put(`/api/products/delete_multiple`, { ids });
+      Covy().showSnackbar({
+        message: `Products Deleted`,
+        severity: "success",
+      });
       return data;
     } catch (error) {
       Covy().showSnackbar({
@@ -141,6 +160,10 @@ export const saveProductReview = createAsyncThunk(
     } = thunkApi.getState();
     try {
       const { data } = await axios.post(`/api/products/reviews/${product_pathname}`, { review, current_user });
+      Covy().showSnackbar({
+        message: `Product Review Saved`,
+        severity: "success",
+      });
       return data;
     } catch (error) {
       Covy().showSnackbar({
@@ -156,6 +179,10 @@ export const deleteProductReview = createAsyncThunk(
   async ({ product_pathname, review_id }: { product_pathname: string; review_id: string }, thunkApi: any) => {
     try {
       const { data } = await axios.delete(`/api/products/reviews/${product_pathname}/delete_one/${review_id}`);
+      Covy().showSnackbar({
+        message: `Product Review Deleted`,
+        severity: "success",
+      });
       return data;
     } catch (error) {
       Covy().showSnackbar({

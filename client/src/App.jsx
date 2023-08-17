@@ -303,7 +303,7 @@ const App = () => {
             />
             <meta name="twitter:creator" content="@glow_leds" />
           </Helmet>
-          <Notification message={message} />
+
           <EmailModal set_show_modal={set_show_modal} show_modal={show_modal} />
           <UpdateNotifier />
           {/* <Particles

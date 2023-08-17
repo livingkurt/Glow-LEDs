@@ -46,13 +46,21 @@ const FeaturesPage = props => {
     dispatch(API.deleteFeature(feature._id));
   };
 
-  const sort_options = ["Release Date", "Glover Name", "Facebook Name", "Instagram Handle", "Product", "Song ID", "Newest"];
+  const sort_options = [
+    "Release Date",
+    "Glover Name",
+    "Facebook Name",
+    "Instagram Handle",
+    "Product",
+    "Song ID",
+    "Newest",
+  ];
   const colors = [
     { name: "Glovers", color: "#3e4c6d" },
     { name: "Producers", color: "#4b7188" },
     { name: "Artists", color: "#6f5f7d" },
     { name: "VFX", color: "#408184" },
-    { name: "Unreleased", color: "#636363" }
+    { name: "Unreleased", color: "#636363" },
     // { name: 'Refunded', color: '#a9a9a9' }
   ];
 
@@ -82,7 +90,7 @@ const FeaturesPage = props => {
       <Helmet>
         <title>Admin Features | Glow LEDs</title>
       </Helmet>
-      <Notification message={message} />
+
       <div className="wrap jc-b">
         <Link to="/secure/glow/editfeature">
           <GLButton variant="primary" style={{ width: "160px" }}>
@@ -100,7 +108,7 @@ const FeaturesPage = props => {
                   backgroundColor: color.color,
                   height: "20px",
                   width: "60px",
-                  borderRadius: "5px"
+                  borderRadius: "5px",
                 }}
               />
             </div>
@@ -134,7 +142,7 @@ const FeaturesPage = props => {
                     key={index}
                     style={{
                       backgroundColor: determine_color(feature),
-                      fontSize: "16px"
+                      fontSize: "16px",
                     }}
                   >
                     <td className="p-10px" style={{ minWidth: "15rem" }}>

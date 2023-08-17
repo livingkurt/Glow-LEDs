@@ -60,7 +60,7 @@ const SurveysPage = props => {
     { name: "2 Rating", color: "#8a502e" },
     { name: "3 Rating", color: "#898a2e" },
     { name: "4 Rating", color: "#2e8a42" },
-    { name: "5 Rating", color: "#2e578a" }
+    { name: "5 Rating", color: "#2e578a" },
   ];
 
   const determine_color = survey => {
@@ -95,7 +95,7 @@ const SurveysPage = props => {
       <Helmet>
         <title>Admin Surveys | Glow LEDs</title>
       </Helmet>
-      <Notification message={message} />
+
       <Loading loading={loading_surveys} error={error} />
       <div className="wrap jc-b">
         <div className="wrap jc-b">
@@ -108,7 +108,7 @@ const SurveysPage = props => {
                     backgroundColor: color.color,
                     height: "20px",
                     width: "60px",
-                    borderRadius: "5px"
+                    borderRadius: "5px",
                   }}
                 />
               </div>
@@ -150,7 +150,7 @@ const SurveysPage = props => {
                     key={index}
                     style={{
                       backgroundColor: determine_color(survey),
-                      fontSize: "16px"
+                      fontSize: "16px",
                     }}
                   >
                     <td className="p-10px" style={{ minWidth: "15rem" }}>

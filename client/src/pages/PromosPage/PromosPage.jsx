@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Notification } from "../../shared/SharedComponents";
+
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
@@ -25,7 +25,8 @@ const PromosPage = () => {
       { title: "Date", display: paycheck => paycheck.createdAt && format_date(paycheck.createdAt) },
       {
         title: "Active",
-        display: promo => (promo.active ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />)
+        display: promo =>
+          promo.active ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />,
       },
       { title: "Promo Code", display: promo => promo.promo_code.toUpperCase() },
       { title: "Percentage Off", display: promo => `${promo.percentage_off || 0}%` },
@@ -35,7 +36,8 @@ const PromosPage = () => {
       { title: "Minimum Total", display: promo => `$${promo.minimum_total || "0.00"}` },
       {
         title: "Free Shipping",
-        display: promo => (promo.free_shipping ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />)
+        display: promo =>
+          promo.free_shipping ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />,
       },
       {
         title: "Actions",
@@ -50,7 +52,7 @@ const PromosPage = () => {
                 dispatch(
                   API.savePromo({
                     ...promo,
-                    active: !promo.active
+                    active: !promo.active,
                   })
                 )
               }
@@ -62,8 +64,8 @@ const PromosPage = () => {
               <i className="fas fa-trash-alt" />
             </GLButton>
           </div>
-        )
-      }
+        ),
+      },
     ],
     []
   );
@@ -76,7 +78,7 @@ const PromosPage = () => {
       <Helmet>
         <title>Admin Promos | Glow LEDs</title>
       </Helmet>
-      <Notification message={message} />
+
       <GLTableV2
         remoteApi={remoteApi}
         remoteFiltersApi={remoteFiltersApi}
@@ -283,7 +285,7 @@ export default PromosPage;
 //       <Helmet>
 //         <title>Admin Promos | Glow LEDs</title>
 //       </Helmet>
-//       <Notification message={message} />
+//
 //       <div className="wrap jc-b">
 //         <div className="wrap jc-b">
 //           {colors.map((color, index) => {

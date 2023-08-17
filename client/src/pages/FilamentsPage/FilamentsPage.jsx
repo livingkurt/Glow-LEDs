@@ -81,7 +81,7 @@ const FilamentsPage = props => {
 
   const colors = [
     { name: "PETG", color: "#44648c" },
-    { name: "TPU", color: "#448c89" }
+    { name: "TPU", color: "#448c89" },
   ];
 
   const determine_color = filament => {
@@ -99,7 +99,7 @@ const FilamentsPage = props => {
     dispatch(
       API.saveFilament({
         ...filament,
-        active: filament.active ? false : true
+        active: filament.active ? false : true,
       })
     );
     dispatch(API.listFilaments({}));
@@ -111,7 +111,7 @@ const FilamentsPage = props => {
       <Helmet>
         <title>Admin Filaments | Glow LEDs</title>
       </Helmet>
-      <Notification message={message} />
+
       <Loading loading={loading_filaments} error={error} />
       <div className="wrap jc-b">
         <div className="wrap jc-b">
@@ -124,7 +124,7 @@ const FilamentsPage = props => {
                     backgroundColor: color.color,
                     height: "20px",
                     width: "60px",
-                    borderRadius: "5px"
+                    borderRadius: "5px",
                   }}
                 />
               </div>
@@ -166,7 +166,7 @@ const FilamentsPage = props => {
                     key={index}
                     style={{
                       backgroundColor: determine_color(filament),
-                      fontSize: "16px"
+                      fontSize: "16px",
                     }}
                   >
                     <td className="p-10px">
@@ -175,7 +175,11 @@ const FilamentsPage = props => {
                         onClick={() => change_filament_status(filament)}
                         aria-label={filament.active ? "deactive" : "activate"}
                       >
-                        {filament.active ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
+                        {filament.active ? (
+                          <i className="fas fa-check-circle" />
+                        ) : (
+                          <i className="fas fa-times-circle" />
+                        )}
                       </GLButton>
                     </td>
                     <td className="p-10px" style={{ minWidth: "15rem" }}>

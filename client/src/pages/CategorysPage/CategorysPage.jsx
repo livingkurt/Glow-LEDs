@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Notification } from "../../shared/SharedComponents";
+
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
@@ -31,12 +31,16 @@ const CategorysPage = () => {
             >
               <i className="fas fa-edit" />
             </GLButton>
-            <GLButton variant="icon" onClick={() => dispatch(API.deleteCategory(category.pathname))} aria-label="Delete">
+            <GLButton
+              variant="icon"
+              onClick={() => dispatch(API.deleteCategory(category.pathname))}
+              aria-label="Delete"
+            >
               <i className="fas fa-trash-alt" />
             </GLButton>
           </div>
-        )
-      }
+        ),
+      },
     ],
     [dispatch]
   );
@@ -49,7 +53,7 @@ const CategorysPage = () => {
       <Helmet>
         <title>Admin Categorys | Glow LEDs</title>
       </Helmet>
-      <Notification message={message} />
+
       <GLTableV2
         remoteApi={remoteApi}
         // remoteReorderApi={remoteReorderApi}

@@ -33,7 +33,6 @@ export const getTutorials = async ({
       message: errorMessage(error),
       severity: "error",
     });
-    return thunkApi.rejectWithValue(error.response?.data);
   }
 };
 export const reorderTutorials = async ({ reorderedItems }: { reorderedItems: any }) => {
@@ -44,13 +43,13 @@ export const reorderTutorials = async ({ reorderedItems }: { reorderedItems: any
       message: errorMessage(error),
       severity: "error",
     });
-    return thunkApi.rejectWithValue(error.response?.data);
   }
 };
 
 export const listTutorials = createAsyncThunk("tutorials/listTutorials", async (query: any, thunkApi: any) => {
   try {
     const { data } = await axios.get(`/api/tutorials?${create_query(query)}`);
+
     return data;
   } catch (error) {
     Covy().showSnackbar({
@@ -65,9 +64,17 @@ export const saveTutorial = createAsyncThunk("tutorials/saveTutorial", async (tu
   try {
     if (!tutorial._id) {
       const { data } = await axios.post("/api/tutorials", tutorial);
+      Covy().showSnackbar({
+        message: `Tutorial Created`,
+        severity: "success",
+      });
       return data;
     } else {
       const { data } = await axios.put(`/api/tutorials/${tutorial._id}`, tutorial);
+      Covy().showSnackbar({
+        message: `Tutorials Updated`,
+        severity: "success",
+      });
       return data;
     }
   } catch (error) {
@@ -89,6 +96,10 @@ export const detailsTutorial = createAsyncThunk(
       } else if (pathname) {
         response = await axios.get(`/api/tutorials/${pathname}/pathname`);
       }
+      Covy().showSnackbar({
+        message: `Tutorial Found`,
+        severity: "success",
+      });
       return response.data;
     } catch (error) {
       Covy().showSnackbar({
@@ -102,6 +113,10 @@ export const detailsTutorial = createAsyncThunk(
 export const deleteTutorial = createAsyncThunk("tutorials/deleteTutorial", async (id: string, thunkApi: any) => {
   try {
     const { data } = await axios.delete(`/api/tutorials/${id}`);
+    Covy().showSnackbar({
+      message: `Tutorial Deleted`,
+      severity: "success",
+    });
     return data;
   } catch (error) {
     Covy().showSnackbar({

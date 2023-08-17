@@ -33,13 +33,13 @@ export const getWholesalers = async ({
       message: errorMessage(error),
       severity: "error",
     });
-    return thunkApi.rejectWithValue(error.response?.data);
   }
 };
 
 export const listWholesalers = createAsyncThunk("wholesalers/listWholesalers", async (query: any, thunkApi: any) => {
   try {
     const { data } = await axios.get(`/api/wholesalers?${create_query(query)}`);
+
     return data;
   } catch (error) {
     Covy().showSnackbar({
@@ -54,9 +54,17 @@ export const saveWholesaler = createAsyncThunk("wholesalers/saveWholesaler", asy
   try {
     if (!wholesaler._id) {
       const { data } = await axios.post("/api/wholesalers", wholesaler);
+      Covy().showSnackbar({
+        message: `Wholesaler Created`,
+        severity: "success",
+      });
       return data;
     } else {
       const { data } = await axios.put(`/api/wholesalers/${wholesaler._id}`, wholesaler);
+      Covy().showSnackbar({
+        message: `Wholesaler Updated`,
+        severity: "success",
+      });
       return data;
     }
   } catch (error) {
@@ -70,10 +78,14 @@ export const saveWholesaler = createAsyncThunk("wholesalers/saveWholesaler", asy
 
 export const detailsWholesaler = createAsyncThunk(
   "wholesalers/detailsWholesaler",
-  async ({ pathname, id }: any, thunkApi: any) => {
+  async ({ id }: any, thunkApi: any) => {
     try {
-      const response = await axios.get(`/api/wholesalers/${id}`);
-      return response.data;
+      const { data } = await axios.get(`/api/wholesalers/${id}`);
+      Covy().showSnackbar({
+        message: `Wholesaler Found`,
+        severity: "success",
+      });
+      return data;
     } catch (error) {
       Covy().showSnackbar({
         message: errorMessage(error),
@@ -86,6 +98,10 @@ export const detailsWholesaler = createAsyncThunk(
 export const deleteWholesaler = createAsyncThunk("wholesalers/deleteWholesaler", async (id, thunkApi: any) => {
   try {
     const { data } = await axios.delete(`/api/wholesalers/${id}`);
+    Covy().showSnackbar({
+      message: `Wholesaler Deleted`,
+      severity: "success",
+    });
     return data;
   } catch (error) {
     Covy().showSnackbar({

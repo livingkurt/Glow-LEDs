@@ -8,7 +8,7 @@ import {
   humanize,
   shuffle,
   sort_options,
-  update_products_url
+  update_products_url,
 } from "../../utils/helper_functions";
 import { Helmet } from "react-helmet";
 import { API_Chips, API_Products } from "../../utils";
@@ -97,7 +97,12 @@ const AllProductsPage = props => {
       get_occurrences(props.match.params.category);
     }
     return () => (clean = false);
-  }, [props.match.params.category, props.match.params.subcategory, props.match.params.collection, getUrlParameter(props.location).search]);
+  }, [
+    props.match.params.category,
+    props.match.params.subcategory,
+    props.match.params.collection,
+    getUrlParameter(props.location).search,
+  ]);
 
   const determine_products = async () => {
     const query = getUrlParameter(props.location);
@@ -165,7 +170,7 @@ const AllProductsPage = props => {
           limit,
           hidden,
           option,
-          sale
+          sale,
         })
       );
     } else {
@@ -217,7 +222,7 @@ const AllProductsPage = props => {
         page,
         limit,
         hidden,
-        option
+        option,
       })
     );
   };
@@ -242,7 +247,7 @@ const AllProductsPage = props => {
         page,
         limit,
         hidden,
-        option
+        option,
       })
     );
     set_filter_on(true);
@@ -260,7 +265,7 @@ const AllProductsPage = props => {
         page,
         limit,
         hidden,
-        option
+        option,
       })
     );
     history.push("/collections/all/products");
@@ -283,7 +288,7 @@ const AllProductsPage = props => {
         page: new_page,
         limit,
         hidden,
-        option
+        option,
       })
     );
   };
@@ -329,14 +334,19 @@ const AllProductsPage = props => {
         <meta property="og:description" content={description_determination(category)} />
         <meta name="twitter:description" content={description_determination(category)} />
       </Helmet>
-      <Notification message={message} />
+
       {page_title}
 
       <div className="jc-c ai-c wrap m-auto pb-1rem">
         <Sort sortHandler={sortHandler} sort_options={sort_options} />
         <Filter filterHandler={filterHandler} state={chip_name} filter_options={chips_list} />
         {filter_on && (
-          <GLButton type="submit" variant="primary" className="w-50px h-40px fs-20px mb-0px " onClick={() => reset_filter()}>
+          <GLButton
+            type="submit"
+            variant="primary"
+            className="w-50px h-40px fs-20px mb-0px "
+            onClick={() => reset_filter()}
+          >
             &#10008;
           </GLButton>
         )}
@@ -361,9 +371,19 @@ const AllProductsPage = props => {
                 .filter(product => !product.option)
                 .map(product =>
                   width >= 704 ? (
-                    <ProductItemD size="300px" key={product.name} product={product} product_occurrences={product_occurrences} />
+                    <ProductItemD
+                      size="300px"
+                      key={product.name}
+                      product={product}
+                      product_occurrences={product_occurrences}
+                    />
                   ) : (
-                    <ProductItemM size="300px" key={product.name} product={product} product_occurrences={product_occurrences} />
+                    <ProductItemM
+                      size="300px"
+                      key={product.name}
+                      product={product}
+                      product_occurrences={product_occurrences}
+                    />
                   )
                 )}
           </ul>
@@ -379,7 +399,9 @@ const AllProductsPage = props => {
             />
           )}
         </div>
-        {products.length === 0 && !best_sellers && <h2 style={{ textAlign: "center" }}>Sorry we can't find anything with that name</h2>}
+        {products.length === 0 && !best_sellers && (
+          <h2 style={{ textAlign: "center" }}>Sorry we can't find anything with that name</h2>
+        )}
       </Loading>
     </div>
   );

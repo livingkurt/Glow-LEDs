@@ -34,7 +34,6 @@ export const getPaychecks = async ({
       message: errorMessage(error),
       severity: "error",
     });
-    return thunkApi.rejectWithValue(error.response?.data);
   }
 };
 
@@ -46,6 +45,7 @@ export const getPaycheckFilters = async () => {
 export const listPaychecks = createAsyncThunk("paychecks/listPaychecks", async (query: any, thunkApi: any) => {
   try {
     const { data } = await axios.get(`/api/paychecks?${create_query(query)}`);
+
     return data;
   } catch (error) {
     Covy().showSnackbar({
@@ -60,9 +60,17 @@ export const savePaycheck = createAsyncThunk("paychecks/savePaycheck", async (pa
   try {
     if (!paycheck._id) {
       const { data } = await axios.post("/api/paychecks", paycheck);
+      Covy().showSnackbar({
+        message: `Paycheck Created`,
+        severity: "success",
+      });
       return data;
     } else {
       const { data } = await axios.put(`/api/paychecks/${paycheck._id}`, paycheck);
+      Covy().showSnackbar({
+        message: `Paycheck Updated`,
+        severity: "success",
+      });
       return data;
     }
   } catch (error) {
@@ -77,6 +85,10 @@ export const savePaycheck = createAsyncThunk("paychecks/savePaycheck", async (pa
 export const detailsPaycheck = createAsyncThunk("paychecks/detailsPaycheck", async (id: string, thunkApi: any) => {
   try {
     const { data } = await axios.get(`/api/paychecks/${id}`);
+    Covy().showSnackbar({
+      message: `Paycheck Found`,
+      severity: "success",
+    });
     return data;
   } catch (error) {
     Covy().showSnackbar({
@@ -90,6 +102,10 @@ export const detailsPaycheck = createAsyncThunk("paychecks/detailsPaycheck", asy
 export const deletePaycheck = createAsyncThunk("paychecks/deletePaycheck", async (pathname, thunkApi: any) => {
   try {
     const { data } = await axios.delete("/api/paychecks/" + pathname);
+    Covy().showSnackbar({
+      message: `Paycheck Deleted`,
+      severity: "success",
+    });
     return data;
   } catch (error) {
     Covy().showSnackbar({
@@ -105,6 +121,10 @@ export const deleteMultiplePaychecks = createAsyncThunk(
   async (ids: string, thunkApi: any) => {
     try {
       const { data } = await axios.put(`/api/paycheck/delete_multiple`, { ids });
+      Covy().showSnackbar({
+        message: `Paychecks Deleted`,
+        severity: "success",
+      });
       return data;
     } catch (error) {
       Covy().showSnackbar({

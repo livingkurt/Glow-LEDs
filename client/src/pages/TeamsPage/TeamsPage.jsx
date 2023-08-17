@@ -49,7 +49,7 @@ const TeamsPage = props => {
 
   const colors = [
     { name: "Sponsor", color: "#3e4c6d" },
-    { name: "Promoter", color: "#7d5555" }
+    { name: "Promoter", color: "#7d5555" },
   ];
 
   const determine_color = team => {
@@ -69,7 +69,7 @@ const TeamsPage = props => {
       <Helmet>
         <title>Admin Teams | Glow LEDs</title>
       </Helmet>
-      <Notification message={message} />
+
       <div className="wrap jc-b">
         <div className="wrap jc-b">
           {colors.map((color, index) => {
@@ -81,7 +81,7 @@ const TeamsPage = props => {
                     backgroundColor: color.color,
                     height: "20px",
                     width: "60px",
-                    borderRadius: "5px"
+                    borderRadius: "5px",
                   }}
                 />
               </div>
@@ -125,7 +125,7 @@ const TeamsPage = props => {
                     key={index}
                     style={{
                       backgroundColor: determine_color(team),
-                      fontSize: "16px"
+                      fontSize: "16px",
                     }}
                   >
                     <td className="p-10px">{team._id}</td>

@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Notification } from "../../shared/SharedComponents";
+
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
@@ -27,11 +27,12 @@ const UsersPage = () => {
       { title: "Email", display: "email" },
       {
         title: "Guest",
-        display: user => (user.guest ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />)
+        display: user => (user.guest ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />),
       },
       {
         title: "Affiliated",
-        display: user => (user.is_affiliated ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />)
+        display: user =>
+          user.is_affiliated ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />,
       },
       {
         title: "Actions",
@@ -65,8 +66,8 @@ const UsersPage = () => {
               <i className="fas fa-trash-alt" />
             </GLButton>
           </div>
-        )
-      }
+        ),
+      },
     ],
     [dispatch]
   );
@@ -79,7 +80,7 @@ const UsersPage = () => {
       <Helmet>
         <title>Admin Users | Glow LEDs</title>
       </Helmet>
-      <Notification message={message} />
+
       <GLTableV2
         remoteApi={remoteApi}
         remoteFiltersApi={remoteFiltersApi}
@@ -115,7 +116,7 @@ const UsersPage = () => {
                       dispatch(
                         open_combine_users_modal({
                           user1: rows.find(row => row._id === selectedRows[0]),
-                          user2: rows.find(row => row._id === selectedRows[1])
+                          user2: rows.find(row => row._id === selectedRows[1]),
                         })
                       )
                     }

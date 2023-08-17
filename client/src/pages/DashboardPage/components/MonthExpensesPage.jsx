@@ -49,7 +49,7 @@ const MonthExpensesPage = props => {
       promo_code_usage(year, props.match.params.month, { single_use: true });
       promo_code_usage(year, props.match.params.month, { used_once: true });
       promo_code_usage(year, props.match.params.month, {
-        affiliate_only: true
+        affiliate_only: true,
       });
       promo_code_usage(year, props.match.params.month, { sponsor_only: true });
       promo_code_usage(year, props.match.params.month, { admin_only: true });
@@ -62,7 +62,7 @@ const MonthExpensesPage = props => {
     set_loading(true);
     const { data } = await API_Orders.all_affiliate_code_usage_orders_a({
       year,
-      month
+      month,
     });
 
     set_affiliate_earnings(data);
@@ -93,11 +93,15 @@ const MonthExpensesPage = props => {
   let exenses_pie_num = -expenses_pie_multiplier;
 
   const expenses_pie_data = {
-    labels: monthly_income.macro_income && monthly_income.macro_income.category_expenses.map(item => toCapitalize(item.category)),
+    labels:
+      monthly_income.macro_income &&
+      monthly_income.macro_income.category_expenses.map(item => toCapitalize(item.category)),
     datasets: [
       {
         label: "Income",
-        data: monthly_income.macro_income && monthly_income.macro_income.category_expenses.map(item => item.expense.toFixed(2)),
+        data:
+          monthly_income.macro_income &&
+          monthly_income.macro_income.category_expenses.map(item => item.expense.toFixed(2)),
         borderWidth: 1,
         fill: true,
         borderColor: "#3e4c6d",
@@ -106,26 +110,30 @@ const MonthExpensesPage = props => {
           let color = hslToHex(exenses_pie_num, 100, 50);
           return color;
         }),
-        color: "white"
-      }
-    ]
+        color: "white",
+      },
+    ],
   };
 
   const expenses_pie_options = {
     responsive: true,
     maintainAspectRatio: true,
-    fontColor: "#000000"
+    fontColor: "#000000",
   };
 
   const income_pie_multiplier = 360 / categories.length;
   let income_pie_num = -income_pie_multiplier;
 
   const income_pie_data = {
-    labels: monthly_income.macro_income && monthly_income.macro_income.category_income.map(item => toCapitalize(item.category)),
+    labels:
+      monthly_income.macro_income &&
+      monthly_income.macro_income.category_income.map(item => toCapitalize(item.category)),
     datasets: [
       {
         label: "Income",
-        data: monthly_income.macro_income && monthly_income.macro_income.category_income.map(item => item.income.toFixed(2)),
+        data:
+          monthly_income.macro_income &&
+          monthly_income.macro_income.category_income.map(item => item.income.toFixed(2)),
         borderWidth: 1,
         fill: true,
         borderColor: "#3e4c6d",
@@ -134,14 +142,14 @@ const MonthExpensesPage = props => {
           let color = hslToHex(income_pie_num, 100, 50);
           return color;
         }),
-        color: "white"
-      }
-    ]
+        color: "white",
+      },
+    ],
   };
   const income_pie_options = {
     responsive: true,
     maintainAspectRatio: true,
-    fontColor: "#000000"
+    fontColor: "#000000",
   };
   const history = useHistory();
 
@@ -203,7 +211,7 @@ const MonthExpensesPage = props => {
           Admin {this_month} {this_year} Breakdown | Glow LEDs
         </title>
       </Helmet>
-      {/* <Notification message={message} /> */}
+
       <Loading loading={loading} />
       <div className="">
         <Link to="/secure/glow/dashboard">
@@ -272,7 +280,9 @@ const MonthExpensesPage = props => {
             <h2>
               {this_month} {year} Income
             </h2>
-            <div className="fs-25px">${monthly_income.macro_income.income ? monthly_income.macro_income.income.toFixed(2) : "0.00"}</div>
+            <div className="fs-25px">
+              ${monthly_income.macro_income.income ? monthly_income.macro_income.income.toFixed(2) : "0.00"}
+            </div>
           </div>
           <div>
             <h2>
@@ -286,7 +296,9 @@ const MonthExpensesPage = props => {
             <h2>
               {this_month} {year} Profit
             </h2>
-            <div className="fs-25px">${monthly_income.macro_income.profit ? monthly_income.macro_income.profit.toFixed(2) : "0.00"}</div>
+            <div className="fs-25px">
+              ${monthly_income.macro_income.profit ? monthly_income.macro_income.profit.toFixed(2) : "0.00"}
+            </div>
           </div>
         </div>
       )}
@@ -329,7 +341,9 @@ const MonthExpensesPage = props => {
               </Tab>
             </TabList>
           </Overflow.Content>
-          {canScroll && <div className="tab_indicator bob br-5px ta-c bg-primary h-30px w-30px p-4px box-s-d b-1px">{">"}</div>}
+          {canScroll && (
+            <div className="tab_indicator bob br-5px ta-c bg-primary h-30px w-30px p-4px box-s-d b-1px">{">"}</div>
+          )}
         </Overflow>
         <TabPanel>
           {monthly_income && Object.keys(monthly_income).length > 0 && (
@@ -355,7 +369,7 @@ const MonthExpensesPage = props => {
                               style={{
                                 backgroundColor: "#2f3244",
                                 fontSize: "16px",
-                                height: "50px"
+                                height: "50px",
                               }}
                             >
                               <th style={{ padding: "15px" }}>{toCapitalize(humanize(item.category))}</th>
@@ -397,7 +411,7 @@ const MonthExpensesPage = props => {
                               style={{
                                 backgroundColor: "#2f3244",
                                 fontSize: "16px",
-                                height: "50px"
+                                height: "50px",
                               }}
                             >
                               <th style={{ padding: "15px" }}>{toCapitalize(humanize(item.subcategory))}</th>
@@ -441,7 +455,7 @@ const MonthExpensesPage = props => {
                               style={{
                                 backgroundColor: "#2f3244",
                                 fontSize: "16px",
-                                height: "50px"
+                                height: "50px",
                               }}
                             >
                               <th style={{ padding: "15px" }}>{toCapitalize(humanize(item.category))}</th>
@@ -500,13 +514,17 @@ const MonthExpensesPage = props => {
                                   style={{
                                     backgroundColor: "#2f3244",
                                     fontSize: "1.6rem",
-                                    height: "50px"
+                                    height: "50px",
                                   }}
                                 >
                                   <th style={{ padding: "15px" }}>{affiliate["Promo Code"]}</th>
 
-                                  <th style={{ padding: "15px" }}>${affiliate.Revenue ? parseFloat(affiliate.Revenue) : "0.00"}</th>
-                                  <th style={{ padding: "15px" }}>${affiliate.Earned ? parseFloat(affiliate.Earned) : "0.00"}</th>
+                                  <th style={{ padding: "15px" }}>
+                                    ${affiliate.Revenue ? parseFloat(affiliate.Revenue) : "0.00"}
+                                  </th>
+                                  <th style={{ padding: "15px" }}>
+                                    ${affiliate.Earned ? parseFloat(affiliate.Earned) : "0.00"}
+                                  </th>
                                   <th style={{ padding: "15px" }}>{affiliate.Uses}</th>
                                 </tr>
                               ))}
@@ -552,12 +570,16 @@ const MonthExpensesPage = props => {
                                   style={{
                                     backgroundColor: "#2f3244",
                                     fontSize: "1.6rem",
-                                    height: "50px"
+                                    height: "50px",
                                   }}
                                 >
                                   <th style={{ padding: "15px" }}>{affiliate["Promo Code"]}</th>
-                                  <th style={{ padding: "15px" }}>${affiliate.Earned ? parseFloat(affiliate.Earned) : "0.00"}</th>
-                                  <th style={{ padding: "15px" }}>${affiliate.Revenue ? parseFloat(affiliate.Revenue) : "0.00"}</th>
+                                  <th style={{ padding: "15px" }}>
+                                    ${affiliate.Earned ? parseFloat(affiliate.Earned) : "0.00"}
+                                  </th>
+                                  <th style={{ padding: "15px" }}>
+                                    ${affiliate.Revenue ? parseFloat(affiliate.Revenue) : "0.00"}
+                                  </th>
 
                                   <th style={{ padding: "15px" }}>{affiliate.Uses}</th>
                                 </tr>
@@ -604,13 +626,17 @@ const MonthExpensesPage = props => {
                                   style={{
                                     backgroundColor: "#2f3244",
                                     fontSize: "1.6rem",
-                                    height: "50px"
+                                    height: "50px",
                                   }}
                                 >
                                   <th style={{ padding: "15px" }}>{affiliate["Promo Code"]}</th>
                                   <th style={{ padding: "15px" }}>{affiliate.Uses}</th>
-                                  <th style={{ padding: "15px" }}>${affiliate.Earned ? parseFloat(affiliate.Earned) : "0.00"}</th>
-                                  <th style={{ padding: "15px" }}>${affiliate.Revenue ? parseFloat(affiliate.Revenue) : "0.00"}</th>
+                                  <th style={{ padding: "15px" }}>
+                                    ${affiliate.Earned ? parseFloat(affiliate.Earned) : "0.00"}
+                                  </th>
+                                  <th style={{ padding: "15px" }}>
+                                    ${affiliate.Revenue ? parseFloat(affiliate.Revenue) : "0.00"}
+                                  </th>
                                 </tr>
                               ))}
                         </tbody>
@@ -655,13 +681,17 @@ const MonthExpensesPage = props => {
                                   style={{
                                     backgroundColor: "#2f3244",
                                     fontSize: "1.6rem",
-                                    height: "50px"
+                                    height: "50px",
                                   }}
                                 >
                                   <th style={{ padding: "15px" }}>{affiliate["Promo Code"]}</th>
                                   <th style={{ padding: "15px" }}>{affiliate.Uses}</th>
-                                  <th style={{ padding: "15px" }}>${affiliate.Revenue ? parseFloat(affiliate.Revenue) : "0.00"}</th>
-                                  <th style={{ padding: "15px" }}>${affiliate.Earned ? parseFloat(affiliate.Earned) : "0.00"}</th>
+                                  <th style={{ padding: "15px" }}>
+                                    ${affiliate.Revenue ? parseFloat(affiliate.Revenue) : "0.00"}
+                                  </th>
+                                  <th style={{ padding: "15px" }}>
+                                    ${affiliate.Earned ? parseFloat(affiliate.Earned) : "0.00"}
+                                  </th>
                                 </tr>
                               ))}
                         </tbody>
@@ -691,7 +721,7 @@ const MonthExpensesPage = props => {
                     <Tab
                       style={{
                         padding: "10px",
-                        borderRadius: "10px 10px 0px 0px"
+                        borderRadius: "10px 10px 0px 0px",
                       }}
                     >
                       {this_month} {this_year} {humanize(promo[0])}
@@ -699,7 +729,9 @@ const MonthExpensesPage = props => {
                   ))}
                 </TabList>
               </Overflow.Content>
-              {canScroll && <div className="tab_indicator bob br-5px ta-c bg-primary h-30px w-30px p-4px box-s-d b-1px">{">"}</div>}
+              {canScroll && (
+                <div className="tab_indicator bob br-5px ta-c bg-primary h-30px w-30px p-4px box-s-d b-1px">{">"}</div>
+              )}
             </Overflow>
             {Object.entries(promo_earnings).map(promo => (
               <TabPanel>
@@ -726,13 +758,17 @@ const MonthExpensesPage = props => {
                                 style={{
                                   backgroundColor: "#2f3244",
                                   fontSize: "1.6rem",
-                                  height: "50px"
+                                  height: "50px",
                                 }}
                               >
                                 <th style={{ padding: "15px" }}>{affiliate["Promo Code"]}</th>
 
-                                <th style={{ padding: "15px" }}>${affiliate.Revenue ? parseFloat(affiliate.Revenue) : "0.00"}</th>
-                                <th style={{ padding: "15px" }}>${affiliate.Earned ? parseFloat(affiliate.Earned) : "0.00"}</th>
+                                <th style={{ padding: "15px" }}>
+                                  ${affiliate.Revenue ? parseFloat(affiliate.Revenue) : "0.00"}
+                                </th>
+                                <th style={{ padding: "15px" }}>
+                                  ${affiliate.Earned ? parseFloat(affiliate.Earned) : "0.00"}
+                                </th>
                                 <th style={{ padding: "15px" }}>{affiliate.Uses}</th>
                               </tr>
                             ))}

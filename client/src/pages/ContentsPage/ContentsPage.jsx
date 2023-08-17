@@ -37,7 +37,7 @@ const ContentsPage = props => {
     dispatch(
       API.saveContent({
         ...content,
-        active: content.active ? false : true
+        active: content.active ? false : true,
       })
     );
     dispatch(API.listContents({}));
@@ -49,7 +49,7 @@ const ContentsPage = props => {
       <Helmet>
         <title>Admin Contents | Glow LEDs</title>
       </Helmet>
-      <Notification message={message} />
+
       <div className="wrap jc-b">
         <a href={`${domain()}/links`}>
           <GLButton variant="primary" style={{ width: "160px" }}>
@@ -87,7 +87,7 @@ const ContentsPage = props => {
                     key={index}
                     style={{
                       backgroundColor: "#3e4c6d",
-                      fontSize: "16px"
+                      fontSize: "16px",
                     }}
                   >
                     <td className="p-10px">

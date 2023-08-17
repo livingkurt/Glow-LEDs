@@ -106,7 +106,7 @@ const HomePage = props => {
       ...subcategories.map(category => {
         return { name: humanize(category) };
       }),
-      ...data.products.filter(product => !product.option).filter(product => !product.hidden)
+      ...data.products.filter(product => !product.option).filter(product => !product.hidden),
     ]);
     set_loading(false);
   };
@@ -169,7 +169,7 @@ const HomePage = props => {
           content="https://www.glow-leds.com/images/optimized_images/logo_images/glow_leds_link_logo_optimized.png"
         />
       </Helmet>
-      <Notification message={message} />
+
       <Loading loading={slideshow.length === 0} />
       {contents &&
       contents.filter(content => content.active === true)[0] &&
@@ -199,11 +199,13 @@ const HomePage = props => {
                     backgroundColor: "#6a6c8091",
                     top: "100px",
                     left: "50%",
-                    transform: "translate(-50%, 50%)"
+                    transform: "translate(-50%, 50%)",
                   }}
                 >
                   <div className="jc-c">
-                    <h1 className={`welcome_text mb-1rem ta-c ${determine_welcome_font_size(width)}`}>Welcome to Glow-LEDs</h1>
+                    <h1 className={`welcome_text mb-1rem ta-c ${determine_welcome_font_size(width)}`}>
+                      Welcome to Glow-LEDs
+                    </h1>
                   </div>
                   <div className="jc-c">
                     <h2 className={`mb-1rem ta-c lh-25px ${determine_innovators_font_size(width)}`}>
@@ -263,11 +265,13 @@ const HomePage = props => {
                     backgroundColor: "#6a6c8091",
                     top: "100px",
                     left: "50%",
-                    transform: "translate(-50%, 50%)"
+                    transform: "translate(-50%, 50%)",
                   }}
                 >
                   <div className="jc-c">
-                    <h1 className={`welcome_text mv-2rem ta-c ${determine_welcome_font_size(width)}`}>Welcome to Glow-LEDs</h1>
+                    <h1 className={`welcome_text mv-2rem ta-c ${determine_welcome_font_size(width)}`}>
+                      Welcome to Glow-LEDs
+                    </h1>
                   </div>
                   <div className="jc-c">
                     <h2 className={`mb-1rem ta-c lh-25px ${determine_innovators_font_size(width)}`}>
@@ -334,7 +338,9 @@ const HomePage = props => {
                   }
                 >
                   <div className="jc-c">
-                    <h1 className={`welcome_text mv-2rem ta-c ${determine_welcome_font_size(width)}`}>Welcome to Glow-LEDs</h1>
+                    <h1 className={`welcome_text mv-2rem ta-c ${determine_welcome_font_size(width)}`}>
+                      Welcome to Glow-LEDs
+                    </h1>
                   </div>
                   <div className="jc-c">
                     <h2 className={`mb-1rem ta-c lh-25px ${determine_innovators_font_size(width)}`}>
@@ -397,7 +403,9 @@ const HomePage = props => {
                 }
               >
                 <div className="jc-c">
-                  <h1 className={`welcome_text mb-1rem ta-c ${determine_welcome_font_size(width)}`}>Welcome to Glow-LEDs</h1>
+                  <h1 className={`welcome_text mb-1rem ta-c ${determine_welcome_font_size(width)}`}>
+                    Welcome to Glow-LEDs
+                  </h1>
                 </div>
                 <div className="jc-c">
                   <h2 className={`mb-1rem ta-c lh-30px ${determine_innovators_font_size(width)}`}>
@@ -462,7 +470,7 @@ const HomePage = props => {
                 lineHeight: "30px",
                 margin: "1rem",
                 color: "white",
-                textAlign: "center"
+                textAlign: "center",
               }}
             >
               Here at Glow LEDs we aim to be the biggest innovators in the gloving industry.
@@ -477,11 +485,12 @@ const HomePage = props => {
                 lineHeight: "30px",
                 margin: "1rem",
                 color: "white",
-                textAlign: "center"
+                textAlign: "center",
               }}
             >
-              Some of our most popular inventions include EXO Diffusers, Decals, Diffuser Caps and Glowskinz! We've even put our own spin on
-              gloves and batteries! Plus we're one of the few places where you can order Custom gloving accessories.
+              Some of our most popular inventions include EXO Diffusers, Decals, Diffuser Caps and Glowskinz! We've even
+              put our own spin on gloves and batteries! Plus we're one of the few places where you can order Custom
+              gloving accessories.
             </p>
 
             <div style={{ borderBottom: "1px white solid" }} className="m-auto max-w-800px" />
@@ -493,11 +502,11 @@ const HomePage = props => {
                 lineHeight: "30px",
                 margin: "1rem",
                 color: "white",
-                textAlign: "center"
+                textAlign: "center",
               }}
             >
-              We are ran by a very small team of people who are dedicated to listening to the community and creating what's most wanted. Our
-              products are made by hand to order, so every order is made with love.
+              We are ran by a very small team of people who are dedicated to listening to the community and creating
+              what's most wanted. Our products are made by hand to order, so every order is made with love.
             </p>
           </div>
         </div>
@@ -640,7 +649,9 @@ const HomePage = props => {
                     )}
 
                     <div className="jc-c">
-                      <h4 className="fs-18px mb-0px ta-c title_font lh-30px mv-1rem">{feature.product && humanize(feature.product)}</h4>
+                      <h4 className="fs-18px mb-0px ta-c title_font lh-30px mv-1rem">
+                        {feature.product && humanize(feature.product)}
+                      </h4>
                     </div>
                     <div className="jc-c w-100per mv-1rem">
                       <p>{feature.song_id}</p>

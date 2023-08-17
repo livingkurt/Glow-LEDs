@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Notification } from "../../shared/SharedComponents";
+
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
@@ -28,7 +28,7 @@ const WholesalersPage = () => {
               dispatch(
                 API.saveWholesaler({
                   ...wholesaler,
-                  active: wholesaler.active ? false : true
+                  active: wholesaler.active ? false : true,
                 })
               );
             }}
@@ -36,7 +36,7 @@ const WholesalersPage = () => {
           >
             {wholesaler.active ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
           </GLButton>
-        )
+        ),
       },
       { title: "Company", display: "company" },
       { title: "Minimum Order Amount", display: "minimum_order_amount" },
@@ -57,8 +57,8 @@ const WholesalersPage = () => {
               <i className="fas fa-trash-alt" />
             </GLButton>
           </div>
-        )
-      }
+        ),
+      },
     ],
     [dispatch]
   );
@@ -70,7 +70,7 @@ const WholesalersPage = () => {
       <Helmet>
         <title>Admin Wholesalers | Glow LEDs</title>
       </Helmet>
-      <Notification message={message} />
+
       <GLTableV2
         remoteApi={remoteApi}
         remoteVersionRequirement={remoteVersionRequirement}

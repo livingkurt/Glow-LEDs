@@ -104,7 +104,7 @@ const EditChipPage = props => {
         image,
         colors,
         dimensions,
-        pathname: pathname ? pathname : snake_case(name)
+        pathname: pathname ? pathname : snake_case(name),
       })
     );
     e.target.reset();
@@ -137,7 +137,7 @@ const EditChipPage = props => {
     let new_color_items = [...colors];
     new_color_items[index] = {
       ...new_color_items[index],
-      [field_name]: e.target.value
+      [field_name]: e.target.value,
     };
     set_colors(new_color_items);
   };
@@ -174,7 +174,6 @@ const EditChipPage = props => {
 
       <div className="form">
         <form onSubmit={submitHandler} style={{ width: "100%" }}>
-          <Notification message={message} />
           <Loading loading={loading} error={error}>
             <div>
               <Helmet>
@@ -190,11 +189,23 @@ const EditChipPage = props => {
                     </li>
                     <li>
                       <label htmlFor="company">Company</label>
-                      <input type="text" name="company" value={company} id="company" onChange={e => set_company(e.target.value)} />
+                      <input
+                        type="text"
+                        name="company"
+                        value={company}
+                        id="company"
+                        onChange={e => set_company(e.target.value)}
+                      />
                     </li>
                     <li>
                       <label htmlFor="category">Category</label>
-                      <input type="text" name="category" value={category} id="category" onChange={e => set_category(e.target.value)} />
+                      <input
+                        type="text"
+                        name="category"
+                        value={category}
+                        id="category"
+                        onChange={e => set_category(e.target.value)}
+                      />
                     </li>
                     <li>
                       <label htmlFor="number_of_modes">Number of Modes</label>
@@ -289,7 +300,13 @@ const EditChipPage = props => {
 										</li> */}
                     <li>
                       <label htmlFor="image">Image</label>
-                      <input type="text" name="image" value={image} id="image" onChange={e => set_image(e.target.value)} />
+                      <input
+                        type="text"
+                        name="image"
+                        value={image}
+                        id="image"
+                        onChange={e => set_image(e.target.value)}
+                      />
                     </li>
                     <li>
                       <label htmlFor="pathname">Pathname</label>

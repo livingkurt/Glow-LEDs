@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Notification } from "../../shared/SharedComponents";
+
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
@@ -38,7 +38,7 @@ const ProductsPage = () => {
               dispatch(
                 API.saveProduct({
                   ...product,
-                  hidden: product.active ? false : true
+                  hidden: product.active ? false : true,
                 })
               );
             }}
@@ -46,7 +46,7 @@ const ProductsPage = () => {
           >
             {product.active ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
           </GLButton>
-        )
+        ),
       },
       { title: "Category", display: "category" },
       { title: "Order", display: "order" },
@@ -79,7 +79,7 @@ const ProductsPage = () => {
                     ...row,
                     _id: null,
                     name: `${row.name} Copy`,
-                    pathname: `${row.pathname}_copy`
+                    pathname: `${row.pathname}_copy`,
                   })
                 )
               }
@@ -90,8 +90,8 @@ const ProductsPage = () => {
               <i className="fas fa-trash-alt" />
             </GLButton>
           </div>
-        )
-      }
+        ),
+      },
     ],
     [dispatch]
   );
@@ -106,7 +106,7 @@ const ProductsPage = () => {
       <Helmet>
         <title>Admin Products | Glow LEDs</title>
       </Helmet>
-      <Notification message={message} />
+
       <GLTableV2
         remoteApi={remoteApi}
         remoteReorderApi={remoteReorderApi}
@@ -123,7 +123,9 @@ const ProductsPage = () => {
         enableDropdownRow
         rowName={"name"}
         dropdownColumnDefs={column_defs}
-        dropdownRows={row => [row.color_products, row.secondary_color_products, row.option_products, row.secondary_products].flat()}
+        dropdownRows={row =>
+          [row.color_products, row.secondary_color_products, row.option_products, row.secondary_products].flat()
+        }
         loading={loading}
         enableRowSelect
         enableDragDrop

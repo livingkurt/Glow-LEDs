@@ -9,7 +9,7 @@ import {
   prnt,
   shuffle,
   sort_options,
-  update_products_url
+  update_products_url,
 } from "../../../utils/helper_functions";
 import { Helmet } from "react-helmet";
 import { API_Chips, API_Products } from "../../../utils";
@@ -158,7 +158,7 @@ const AllProductsByChipPage = props => {
           limit,
           hidden,
           option,
-          sale
+          sale,
         })
       );
     } else {
@@ -215,7 +215,7 @@ const AllProductsByChipPage = props => {
         page,
         limit,
         hidden,
-        option
+        option,
       })
     );
   };
@@ -237,7 +237,7 @@ const AllProductsByChipPage = props => {
         page,
         limit,
         hidden,
-        option
+        option,
       })
     );
   };
@@ -259,7 +259,7 @@ const AllProductsByChipPage = props => {
         page: new_page,
         limit,
         hidden,
-        option
+        option,
       })
     );
   };
@@ -269,9 +269,9 @@ const AllProductsByChipPage = props => {
       <div className="jc-c">
         <div className="row">
           <h1 className="fs-25px mb-5px ta-c">
-            {`${humanize(category) === "Exo Diffusers" ? "EXO Diffusers" : humanize(category)} ${subcategory && humanize(subcategory)} ${
-              collection && humanize(collection)
-            }` || "Products"}
+            {`${humanize(category) === "Exo Diffusers" ? "EXO Diffusers" : humanize(category)} ${
+              subcategory && humanize(subcategory)
+            } ${collection && humanize(collection)}` || "Products"}
           </h1>
           <label style={{ color: "#d2cfcf", marginTop: "10px" }}>
             {category === "diffuser_caps" ||
@@ -299,7 +299,7 @@ const AllProductsByChipPage = props => {
         <meta property="og:description" content={description_determination(category)} />
         <meta name="twitter:description" content={description_determination(category)} />
       </Helmet>
-      <Notification message={message} />
+
       {page_title}
 
       <div className="jc-c ai-c wrap m-auto pb-1rem">
@@ -326,9 +326,19 @@ const AllProductsByChipPage = props => {
                 .filter(product => !product.option)
                 .map((product, index) =>
                   width >= 704 ? (
-                    <ProductItemD size="300px" key={index} product={product} product_occurrences={product_occurrences} />
+                    <ProductItemD
+                      size="300px"
+                      key={index}
+                      product={product}
+                      product_occurrences={product_occurrences}
+                    />
                   ) : (
-                    <ProductItemM size="300px" key={index} product={product} product_occurrences={product_occurrences} />
+                    <ProductItemM
+                      size="300px"
+                      key={index}
+                      product={product}
+                      product_occurrences={product_occurrences}
+                    />
                   )
                 )}
           </ul>
@@ -344,7 +354,9 @@ const AllProductsByChipPage = props => {
             />
           )}
         </div>
-        {products.length === 0 && !best_sellers && <h2 style={{ textAlign: "center" }}>Sorry we can't find anything with that name</h2>}
+        {products.length === 0 && !best_sellers && (
+          <h2 style={{ textAlign: "center" }}>Sorry we can't find anything with that name</h2>
+        )}
       </Loading>
     </div>
   );

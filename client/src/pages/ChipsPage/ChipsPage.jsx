@@ -57,7 +57,7 @@ const ChipsPage = props => {
     { name: "FL Coin", color: "#4b7188" },
     { name: "Apollo", color: "#6f5f7d" },
     { name: "Coffin", color: "#636363" },
-    { name: "Inova", color: "#333333" }
+    { name: "Inova", color: "#333333" },
   ];
 
   const determine_color = chip => {
@@ -100,7 +100,7 @@ const ChipsPage = props => {
       <Helmet>
         <title>Admin Chips | Glow LEDs</title>
       </Helmet>
-      <Notification message={message} />
+
       <div className="wrap jc-b">
         <div className="wrap jc-b">
           {colors.map((color, index) => {
@@ -112,7 +112,7 @@ const ChipsPage = props => {
                     backgroundColor: color.color,
                     height: "20px",
                     width: "60px",
-                    borderRadius: "5px"
+                    borderRadius: "5px",
                   }}
                 />
               </div>
@@ -132,7 +132,7 @@ const ChipsPage = props => {
         <Search search={search} set_search={set_search} handleListItems={handleListItems} category={category} />
         <Sort sortHandler={sortHandler} sort_options={sort_options} />
       </div>
-      <Notification message={message} />
+
       <Loading loading={loading} error={error}>
         {chips && (
           <div className="chip-list responsive_table">
@@ -153,7 +153,7 @@ const ChipsPage = props => {
                     key={index}
                     style={{
                       backgroundColor: determine_color(chip),
-                      fontSize: "16px"
+                      fontSize: "16px",
                     }}
                   >
                     <td className="p-10px">{chip._id}</td>
@@ -161,7 +161,11 @@ const ChipsPage = props => {
                     <td className="p-10px">{chip.company}</td>
                     <td className="p-10px">{chip.category}</td>
                     <td className="p-10px">
-                      {chip.programmmable ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
+                      {chip.programmmable ? (
+                        <i className="fas fa-check-circle" />
+                      ) : (
+                        <i className="fas fa-times-circle" />
+                      )}
                     </td>
                     <td className="p-10px">
                       <div className="jc-b">

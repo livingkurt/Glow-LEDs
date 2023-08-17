@@ -34,7 +34,6 @@ export const getImages = async ({
       message: errorMessage(error),
       severity: "error",
     });
-    return thunkApi.rejectWithValue(error.response?.data);
   }
 };
 
@@ -55,9 +54,17 @@ export const saveImage = createAsyncThunk("images/saveImage", async (image: any,
   try {
     if (!image._id) {
       const { data } = await axios.post("/api/images", image);
+      Covy().showSnackbar({
+        message: `Image Created`,
+        severity: "success",
+      });
       return data;
     } else {
       const { data } = await axios.put(`/api/images/${image._id}`, image);
+      Covy().showSnackbar({
+        message: `Image Saved`,
+        severity: "success",
+      });
       return data;
     }
   } catch (error) {
@@ -85,6 +92,10 @@ export const detailsImage = createAsyncThunk("images/detailsImage", async (id: s
 export const getImagesByLink = createAsyncThunk("images/getImagesByLink", async (link: string, thunkApi: any) => {
   try {
     const { data } = await axios.put(`/api/images/link`, { link });
+    Covy().showSnackbar({
+      message: `Image Found`,
+      severity: "success",
+    });
     return data;
   } catch (error) {
     Covy().showSnackbar({
@@ -98,6 +109,10 @@ export const getImagesByLink = createAsyncThunk("images/getImagesByLink", async 
 export const deleteImage = createAsyncThunk("images/deleteImage", async (pathname, thunkApi: any) => {
   try {
     const { data } = await axios.delete("/api/images/" + pathname);
+    Covy().showSnackbar({
+      message: `Image Deleted`,
+      severity: "success",
+    });
     return data;
   } catch (error) {
     Covy().showSnackbar({

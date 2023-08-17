@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { API_Emails } from "../../../utils";
 import { accurate_date, format_date, format_time, unformat_date_and_time } from "../../../utils/helper_functions";
-import { Notification } from "../../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../../shared/GlowLEDsComponents";
 import * as API from "../../../api";
@@ -89,7 +88,6 @@ const AnnouncementEmail = props => {
       <Helmet>
         <title>View Email | Glow LEDs</title>
       </Helmet>
-      <Notification message={email_sent_message} />
       <div className="jc-b mb-1rem ai-c">
         <GLButton variant="primary" onClick={() => history.goBack()}>
           Back to Emails
@@ -127,7 +125,12 @@ const AnnouncementEmail = props => {
             <input type="text" value={time} className="w-50per" onChange={e => set_time(e.target.value)} />
           </div>
         )}
-        <input type="text" placeholder="Subject" defaultValue={email && email.h1} onChange={e => set_subject(e.target.value)} />
+        <input
+          type="text"
+          placeholder="Subject"
+          defaultValue={email && email.h1}
+          onChange={e => set_subject(e.target.value)}
+        />
         {loading_checkboxes ? (
           <div>Loading...</div>
         ) : (

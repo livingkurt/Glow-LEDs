@@ -5,8 +5,17 @@ import { API_Products } from "../../utils";
 import { Link, useHistory } from "react-router-dom";
 import { Loading, Notification } from "../../shared/SharedComponents";
 import { Helmet } from "react-helmet";
-import { facebook_catalog_upload, google_catalog_upload, current_products_upload } from "../../utils/google_sheets_upload";
-import { mutliDragAwareReorder, multiSelectTo as multiSelect, update_products_url, getUrlParameter } from "../../utils/helper_functions";
+import {
+  facebook_catalog_upload,
+  google_catalog_upload,
+  current_products_upload,
+} from "../../utils/google_sheets_upload";
+import {
+  mutliDragAwareReorder,
+  multiSelectTo as multiSelect,
+  update_products_url,
+  getUrlParameter,
+} from "../../utils/helper_functions";
 import memoizeOne from "memoize-one";
 import Search from "../../shared/GlowLEDsComponents/GLTable/Search";
 import Sort from "../../shared/GlowLEDsComponents/GLTable/Sort";
@@ -90,7 +99,7 @@ function ProductPage(props) {
           page,
           limit,
           hidden,
-          option
+          option,
         })
       );
     }
@@ -105,7 +114,7 @@ function ProductPage(props) {
         search,
         sort,
         option: false,
-        limit
+        limit,
       })
     );
   };
@@ -118,7 +127,7 @@ function ProductPage(props) {
         subcategory,
         search,
         sort: e.target.value,
-        option: false
+        option: false,
       })
     );
   };
@@ -137,7 +146,7 @@ function ProductPage(props) {
           sort,
           page,
           limit,
-          option: false
+          option: false,
         })
       );
       set_loading_upload(false);
@@ -153,7 +162,7 @@ function ProductPage(props) {
     { name: "Diffusers", color: "#ca9160" },
     { name: "Diffuser Caps", color: "#6c7ea9" },
     { name: "Accessories", color: "#925757" },
-    { name: "EXO Diffusers", color: "#4162ad" }
+    { name: "EXO Diffusers", color: "#4162ad" },
   ];
 
   const determine_color = (product, isSelected, isDragging) => {
@@ -202,7 +211,7 @@ function ProductPage(props) {
       limit: 0,
       hidden: false,
       deleted: false,
-      option: false
+      option: false,
     });
 
     await facebook_catalog_upload(data.products);
@@ -226,13 +235,13 @@ function ProductPage(props) {
         "column-1": {
           id: "column-1",
           title: "Products",
-          product_ids: []
-        }
+          product_ids: [],
+        },
       },
-      columnOrder: ["column-1"]
+      columnOrder: ["column-1"],
     },
     selectedProductIds: [],
-    draggingProductId: null
+    draggingProductId: null,
   });
 
   useEffect(() => {
@@ -263,7 +272,7 @@ function ProductPage(props) {
         setState({
           entities: items,
           selectedProductIds: [],
-          draggingProductId: null
+          draggingProductId: null,
         });
         if (currentPage) {
           set_page(currentPage);
@@ -276,13 +285,13 @@ function ProductPage(props) {
               "column-1": {
                 id: "column-1",
                 title: "Products",
-                product_ids: items.map(product => product._id)
-              }
+                product_ids: items.map(product => product._id),
+              },
             },
-            columnOrder: ["column-1"]
+            columnOrder: ["column-1"],
           },
           selectedProductIds: [],
-          draggingProductId: null
+          draggingProductId: null,
         });
       }
     }
@@ -316,7 +325,7 @@ function ProductPage(props) {
         limit,
         hidden,
         option,
-        sort
+        sort,
       })
     );
   };
@@ -350,7 +359,7 @@ function ProductPage(props) {
       entities: state.entities,
       selectedProductIds: state.selectedProductIds,
       source,
-      destination
+      destination,
     });
     setState(state => {
       return { ...processed, draggingProductId: null };
@@ -419,7 +428,7 @@ function ProductPage(props) {
       setState(state => {
         return {
           ...state,
-          selectedProductIds: [...selectedProductIds, productId]
+          selectedProductIds: [...selectedProductIds, productId],
         };
       });
       return;
@@ -469,7 +478,11 @@ function ProductPage(props) {
     set_loading_upload(true);
     e.preventDefault();
     items.forEach(item_group => {
-      const options = [...item_group.color_products, ...item_group.secondary_color_products, ...item_group.option_products];
+      const options = [
+        ...item_group.color_products,
+        ...item_group.secondary_color_products,
+        ...item_group.option_products,
+      ];
       options.forEach(async option => {
         const { data } = await API_Products.save_item_group_id(option._id, item_group._id);
       });
@@ -482,7 +495,7 @@ function ProductPage(props) {
       <Helmet>
         <title>Admin Products | Glow LEDs</title>
       </Helmet>
-      <Notification message={message} />
+
       <div className="jc-b">
         {/* <div className="w-20per">
 					{colors.map((color, index) => {
@@ -525,7 +538,7 @@ function ProductPage(props) {
                     sort,
                     page,
                     limit: 500,
-                    option: false
+                    option: false,
                   })
                 );
               }}
@@ -557,7 +570,7 @@ function ProductPage(props) {
                   limit: 0,
                   hidden: false,
                   option: true,
-                  sort
+                  sort,
                 })
               )
             }

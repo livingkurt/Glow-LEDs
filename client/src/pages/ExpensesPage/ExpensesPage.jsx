@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Notification } from "../../shared/SharedComponents";
+
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
@@ -26,19 +26,19 @@ const ExpensesPage = () => {
       { title: "Date Added", display: expense => expense.date_of_purchase && format_date(expense.date_of_purchase) },
       {
         title: "Expense",
-        display: "expense_name"
+        display: "expense_name",
       },
       {
         title: "Place of Purchase",
-        display: "place_of_purchase"
+        display: "place_of_purchase",
       },
       {
         title: "Category",
-        display: "category"
+        display: "category",
       },
       {
         title: "Card",
-        display: "card"
+        display: "card",
       },
       // {
       //   title: "Airtable ID",
@@ -62,17 +62,19 @@ const ExpensesPage = () => {
                 />
               </div>
             );
-          })
+          }),
       },
       {
         title: "Invoice Links",
         display: expense => (
-          <div style={{ overflow: "hidden", width: "100px" }}>{expense?.airtable_invoice_links.map(links => links).join(", ")}</div>
-        )
+          <div style={{ overflow: "hidden", width: "100px" }}>
+            {expense?.airtable_invoice_links.map(links => links).join(", ")}
+          </div>
+        ),
       },
       {
         title: "Amount",
-        display: expense => expense.amount && `$${expense.amount.toFixed(2)}`
+        display: expense => expense.amount && `$${expense.amount.toFixed(2)}`,
       },
 
       {
@@ -86,8 +88,8 @@ const ExpensesPage = () => {
               <i className="fas fa-trash-alt" />
             </GLButton>
           </div>
-        )
-      }
+        ),
+      },
     ],
     []
   );
@@ -100,7 +102,7 @@ const ExpensesPage = () => {
       <Helmet>
         <title>Admin Expenses | Glow LEDs</title>
       </Helmet>
-      <Notification message={message} />
+
       <GLTableV2
         remoteApi={remoteApi}
         remoteFiltersApi={remoteFiltersApi}
@@ -118,7 +120,11 @@ const ExpensesPage = () => {
           </Button>
         }
       />
-      <GLImageModal open={image_display_modal} onClose={() => dispatch(close_image_display_modal(false))} selected_image={selected_image} />
+      <GLImageModal
+        open={image_display_modal}
+        onClose={() => dispatch(close_image_display_modal(false))}
+        selected_image={selected_image}
+      />
       <EditExpenseModal />
     </div>
   );

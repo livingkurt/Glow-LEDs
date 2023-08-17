@@ -63,7 +63,7 @@ const ExpensesPage = props => {
     { name: "Shipping", color: "#3e4c6d" },
     { name: "Business", color: "#6d5a3e" },
     { name: "Equipment", color: "#3f6561" },
-    { name: "Refunds", color: "#4a4a4a" }
+    { name: "Refunds", color: "#4a4a4a" },
   ];
 
   const determine_color = expense => {
@@ -167,7 +167,6 @@ const ExpensesPage = props => {
       <Helmet>
         <title>Admin Expenses | Glow LEDs</title>
       </Helmet>
-      <Notification message={message} />
 
       <div className="wrap jc-b">
         <div className="wrap jc-b">
@@ -180,7 +179,7 @@ const ExpensesPage = props => {
                     backgroundColor: color.color,
                     height: "20px",
                     width: "60px",
-                    borderRadius: "5px"
+                    borderRadius: "5px",
                   }}
                 />
               </div>
@@ -240,7 +239,7 @@ const ExpensesPage = props => {
                   // key={expense._id}
                   style={{
                     backgroundColor: "#626262",
-                    fontSize: "16px"
+                    fontSize: "16px",
                   }}
                 >
                   <td className="p-10px">
@@ -306,7 +305,7 @@ const ExpensesPage = props => {
                     key={index}
                     style={{
                       backgroundColor: determine_color(expense),
-                      fontSize: "16px"
+                      fontSize: "16px",
                     }}
                   >
                     <td className="p-10px">{expense._id}</td>

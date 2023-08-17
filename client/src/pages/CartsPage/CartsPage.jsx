@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Notification } from "../../shared/SharedComponents";
+
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
@@ -29,7 +29,7 @@ const CartsPage = () => {
               dispatch(
                 API.saveCart({
                   ...cart,
-                  active: cart.active ? false : true
+                  active: cart.active ? false : true,
                 })
               );
             }}
@@ -37,7 +37,7 @@ const CartsPage = () => {
           >
             {cart.active ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
           </GLButton>
-        )
+        ),
       },
       { title: "Date Updated", display: row => format_date(row.updatedAt) },
       { title: "User", display: row => (row?.user ? `${row?.user.first_name} ${row?.user.last_name}` : "Guest") },
@@ -59,8 +59,8 @@ const CartsPage = () => {
               <i className="fas fa-trash-alt" />
             </GLButton>
           </div>
-        )
-      }
+        ),
+      },
     ],
     [dispatch]
   );
@@ -72,7 +72,7 @@ const CartsPage = () => {
       <Helmet>
         <title>Admin Carts | Glow LEDs</title>
       </Helmet>
-      <Notification message={message} />
+
       <GLTableV2
         remoteApi={remoteApi}
         remoteVersionRequirement={remoteVersionRequirement}

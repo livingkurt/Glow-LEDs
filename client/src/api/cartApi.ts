@@ -34,7 +34,6 @@ export const getCarts = async ({
       message: errorMessage(error),
       severity: "error",
     });
-    return thunkApi.rejectWithValue(error.response?.data);
   }
 };
 
@@ -75,6 +74,10 @@ export const addToCart = createAsyncThunk(
       } else {
         data = await axios.post(`/api/carts/add_to_cart`, { cart_item, cartItems: my_cart.cartItems, current_user });
       }
+      Covy().showSnackbar({
+        message: `Cart Item Added`,
+        severity: "success",
+      });
 
       // Add current_user to the returned payload
       return { data: data.data, type, current_user };
@@ -91,9 +94,17 @@ export const saveCart = createAsyncThunk("carts/saveCart", async (cart: any, thu
   try {
     if (!cart._id) {
       const { data } = await axios.post("/api/carts", cart);
+      Covy().showSnackbar({
+        message: `Cart Created`,
+        severity: "success",
+      });
       return { data };
     } else {
       const { data } = await axios.put(`/api/carts/${cart._id}`, cart);
+      Covy().showSnackbar({
+        message: `Cart Saved`,
+        severity: "success",
+      });
       return { data };
     }
   } catch (error) {
@@ -126,6 +137,10 @@ export const updateQuantity = createAsyncThunk("carts/updateQuantity", async (ca
 export const detailsCart = createAsyncThunk("carts/detailsCart", async (id: string, thunkApi: any) => {
   try {
     const { data } = await axios.get(`/api/carts/${id}`);
+    Covy().showSnackbar({
+      message: `Cart Found`,
+      severity: "success",
+    });
     return data;
   } catch (error) {
     Covy().showSnackbar({
@@ -165,6 +180,10 @@ export const emptyCart = createAsyncThunk("carts/emptyCart", async (id: string, 
 export const deleteCart = createAsyncThunk("carts/deleteCart", async (id: string, thunkApi: any) => {
   try {
     const { data } = await axios.delete(`/api/carts/${id}`);
+    Covy().showSnackbar({
+      message: `Cart Deleted`,
+      severity: "success",
+    });
     return data;
   } catch (error) {
     Covy().showSnackbar({
@@ -188,6 +207,10 @@ export const deleteCartItem = createAsyncThunk(
         },
       } = thunkApi.getState();
       const { data } = await axios.put(`/api/carts/${my_cart._id}/cart_item/${item_index}`, { current_user, my_cart });
+      Covy().showSnackbar({
+        message: `Cart Item Deleted`,
+        severity: "success",
+      });
       return { data, type };
     } catch (error) {
       Covy().showSnackbar({

@@ -56,7 +56,7 @@ const ParcelsPage = props => {
 
   const colors = [
     { name: "Box", color: "#44648c" },
-    { name: "Bubble Mailer", color: "#448c89" }
+    { name: "Bubble Mailer", color: "#448c89" },
   ];
 
   const determine_color = parcel => {
@@ -75,7 +75,7 @@ const ParcelsPage = props => {
       <Helmet>
         <title>Admin Parcels | Glow LEDs</title>
       </Helmet>
-      <Notification message={message} />
+
       <Loading loading={loading_parcels} error={error} />
       <div className="wrap jc-b">
         <div className="wrap jc-b">
@@ -88,7 +88,7 @@ const ParcelsPage = props => {
                     backgroundColor: color.color,
                     height: "20px",
                     width: "60px",
-                    borderRadius: "5px"
+                    borderRadius: "5px",
                   }}
                 />
               </div>
@@ -128,7 +128,7 @@ const ParcelsPage = props => {
                     key={index}
                     style={{
                       backgroundColor: determine_color(parcel),
-                      fontSize: "16px"
+                      fontSize: "16px",
                     }}
                   >
                     <td className="p-10px" style={{ minWidth: "15rem" }}>

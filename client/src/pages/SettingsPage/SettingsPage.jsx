@@ -60,7 +60,7 @@ const SettingsPage = props => {
 
   const colors = [
     { name: "Paid", color: "#3e4c6d" },
-    { name: "Not Paid", color: "#6f3c3c" }
+    { name: "Not Paid", color: "#6f3c3c" },
   ];
 
   const determine_color = setting => {
@@ -79,7 +79,7 @@ const SettingsPage = props => {
       <Helmet>
         <title>Admin Settings | Glow LEDs</title>
       </Helmet>
-      <Notification message={message} />
+
       <Loading loading={loading_settings} error={error} />
       <div className="wrap jc-b">
         <div className="wrap jc-b">
@@ -92,7 +92,7 @@ const SettingsPage = props => {
                     backgroundColor: color.color,
                     height: "20px",
                     width: "60px",
-                    borderRadius: "5px"
+                    borderRadius: "5px",
                   }}
                 />
               </div>
@@ -127,7 +127,7 @@ const SettingsPage = props => {
                     key={index}
                     style={{
                       backgroundColor: determine_color(setting),
-                      fontSize: "16px"
+                      fontSize: "16px",
                     }}
                   >
                     <td className="p-10px">

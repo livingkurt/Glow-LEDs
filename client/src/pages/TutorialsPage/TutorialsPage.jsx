@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Notification } from "../../shared/SharedComponents";
+
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
@@ -26,7 +26,7 @@ const TutorialsPage = () => {
               dispatch(
                 API.saveTutorial({
                   ...tutorial,
-                  active: tutorial.active ? false : true
+                  active: tutorial.active ? false : true,
                 })
               );
             }}
@@ -34,7 +34,7 @@ const TutorialsPage = () => {
           >
             {tutorial.active ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />}
           </GLButton>
-        )
+        ),
       },
       { title: "Title", display: "title" },
       { title: "Video", display: "video" },
@@ -54,12 +54,16 @@ const TutorialsPage = () => {
             >
               <i className="fas fa-edit" />
             </GLButton>
-            <GLButton variant="icon" onClick={() => dispatch(API.deleteTutorial(tutorial.pathname))} aria-label="Delete">
+            <GLButton
+              variant="icon"
+              onClick={() => dispatch(API.deleteTutorial(tutorial.pathname))}
+              aria-label="Delete"
+            >
               <i className="fas fa-trash-alt" />
             </GLButton>
           </div>
-        )
-      }
+        ),
+      },
     ],
     [dispatch]
   );
@@ -72,7 +76,7 @@ const TutorialsPage = () => {
       <Helmet>
         <title>Admin Tutorials | Glow LEDs</title>
       </Helmet>
-      <Notification message={message} />
+
       <GLTableV2
         remoteApi={remoteApi}
         remoteReorderApi={remoteReorderApi}

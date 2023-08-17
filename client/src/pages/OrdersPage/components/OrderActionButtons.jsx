@@ -10,6 +10,7 @@ import { toCapitalize } from "../../../utils/helper_functions";
 import { openShippingModal, set_loading_label } from "../../../slices/orderSlice";
 import GenerateCSVLabel from "./GenerateCSVLabel";
 import { Link } from "react-router-dom";
+import Covy from "../../../shared/GlowLEDsComponents/GLCovy/GLCovy";
 
 const OrderActionButtons = ({ order }) => {
   const dispatch = useDispatch();
@@ -57,7 +58,11 @@ const OrderActionButtons = ({ order }) => {
         Print Invoice
       </GLButton>
       {order.shipping.shipment_id !== null && !order.shipping.shipping_label && (
-        <GLButton variant="primary" onClick={() => dispatch(API.buyLabel({ orderId: order._id }))} className="w-100per mv-5px">
+        <GLButton
+          variant="primary"
+          onClick={() => dispatch(API.buyLabel({ orderId: order._id }))}
+          className="w-100per mv-5px"
+        >
           Buy Label
         </GLButton>
       )}
@@ -113,22 +118,34 @@ const OrderActionButtons = ({ order }) => {
                   return_shipment_id: null,
                   return_shipping_rate: null,
                   return_shipment_tracker: null,
-                  return_shipping_label: null
-                }
+                  return_shipping_label: null,
+                },
               })
             );
+            Covy().showSnackbar({
+              message: `Label and Tracking Cleared for Order`,
+              severity: "success",
+            });
           }
         }}
       >
         Clear Shipping Label
       </GLButton>
       {order.shipping.shipment_id && order.tracking_number && (
-        <GLButton variant="secondary" className="w-100per mv-5px" onClick={() => dispatch(API.createTracker({ orderId: order._id }))}>
+        <GLButton
+          variant="secondary"
+          className="w-100per mv-5px"
+          onClick={() => dispatch(API.createTracker({ orderId: order._id }))}
+        >
           Link Order to Label
         </GLButton>
       )}
       {!order.shipping.return_shipping_label && (
-        <GLButton variant="secondary" className="w-100per mv-5px" onClick={() => dispatch(API.createReturnLabel({ orderId: order._id }))}>
+        <GLButton
+          variant="secondary"
+          className="w-100per mv-5px"
+          onClick={() => dispatch(API.createReturnLabel({ orderId: order._id }))}
+        >
           Buy Return Label
         </GLButton>
       )}

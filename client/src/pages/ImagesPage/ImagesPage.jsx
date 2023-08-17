@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Notification } from "../../shared/SharedComponents";
+
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
@@ -9,7 +9,7 @@ import {
   open_create_image_modal,
   open_edit_image_modal,
   open_image_display_modal,
-  set_selected_image
+  set_selected_image,
 } from "../../slices/imageSlice";
 import { EditImageModal } from "./components";
 import * as API from "../../api";
@@ -29,7 +29,7 @@ const ImagesPage = () => {
       { title: "Date Added", display: image => image.createdAt && format_date(image.createdAt) },
       {
         title: "Album",
-        display: "album"
+        display: "album",
       },
       {
         title: "Image",
@@ -42,11 +42,11 @@ const ImagesPage = () => {
               onClick={() => dispatch(open_image_display_modal(image.link))}
             />
           </div>
-        )
+        ),
       },
       {
         title: "Link",
-        display: "link"
+        display: "link",
       },
 
       {
@@ -60,8 +60,8 @@ const ImagesPage = () => {
               <i className="fas fa-trash-alt" />
             </GLButton>
           </div>
-        )
-      }
+        ),
+      },
     ],
     []
   );
@@ -73,7 +73,7 @@ const ImagesPage = () => {
       <Helmet>
         <title>Admin Images | Glow LEDs</title>
       </Helmet>
-      <Notification message={message} />
+
       <GLTableV2
         remoteApi={remoteApi}
         remoteVersionRequirement={remoteVersionRequirement}
@@ -89,7 +89,11 @@ const ImagesPage = () => {
           </Button>
         }
       />
-      <GLImageModal open={image_display_modal} onClose={() => dispatch(close_image_display_modal(false))} selected_image={selected_image} />
+      <GLImageModal
+        open={image_display_modal}
+        onClose={() => dispatch(close_image_display_modal(false))}
+        selected_image={selected_image}
+      />
       <UploadImageModal />
       <EditImageModal />
     </div>

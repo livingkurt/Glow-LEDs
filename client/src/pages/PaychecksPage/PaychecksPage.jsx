@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Notification } from "../../shared/SharedComponents";
+
 import { Helmet } from "react-helmet";
 import { GLButton } from "../../shared/GlowLEDsComponents";
 import GLTableV2 from "../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
@@ -28,21 +28,24 @@ const PaychecksPage = () => {
       { title: "Date Paid", display: paycheck => paycheck.paid_at && format_date(paycheck.paid_at) },
       {
         title: "Paid",
-        display: paycheck => (paycheck.paid ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />)
+        display: paycheck =>
+          paycheck.paid ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />,
       },
       {
         title: "Affiliate",
-        display: paycheck => (paycheck.affiliate ? paycheck.affiliate.artist_name : paycheck.team && paycheck.team.team_name)
+        display: paycheck =>
+          paycheck.affiliate ? paycheck.affiliate.artist_name : paycheck.team && paycheck.team.team_name,
       },
       {
         title: "User",
-        display: paycheck => (paycheck.user ? fullName(paycheck.user) : "")
+        display: paycheck => (paycheck.user ? fullName(paycheck.user) : ""),
       },
 
       { title: "Amount", display: paycheck => `$${paycheck.amount.toFixed(2)}` },
       {
         title: "Team",
-        display: paycheck => (paycheck.team ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />)
+        display: paycheck =>
+          paycheck.team ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />,
       },
       {
         title: "Actions",
@@ -62,7 +65,7 @@ const PaychecksPage = () => {
                     venmo: paycheck.venmo,
                     receipt: paycheck.receipt,
                     paid: true,
-                    paid_at: format_date(today)
+                    paid_at: format_date(today),
                   })
                 )
               }
@@ -77,7 +80,7 @@ const PaychecksPage = () => {
                   API.savePaycheck({
                     ...paycheck,
                     paid: true,
-                    paid_at: format_date(today)
+                    paid_at: format_date(today),
                   })
                 )
               }
@@ -89,8 +92,8 @@ const PaychecksPage = () => {
               <i className="fas fa-trash-alt" />
             </GLButton>
           </div>
-        )
-      }
+        ),
+      },
     ],
     []
   );
@@ -103,7 +106,7 @@ const PaychecksPage = () => {
       <Helmet>
         <title>Admin Paychecks | Glow LEDs</title>
       </Helmet>
-      <Notification message={message} />
+
       <GLTableV2
         remoteApi={remoteApi}
         remoteFiltersApi={remoteFiltersApi}

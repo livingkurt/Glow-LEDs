@@ -2,6 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import axios from "axios";
 import Covy from "../../shared/GlowLEDsComponents/GLCovy/GLCovy";
+import { errorMessage } from "../../helpers/sharedHelpers";
 
 export const updateVersion = async () => {
   try {
@@ -16,7 +17,6 @@ export const updateVersion = async () => {
       message: errorMessage(error),
       severity: "error",
     });
-    return thunkApi.rejectWithValue(error.response?.data);
   }
 };
 
