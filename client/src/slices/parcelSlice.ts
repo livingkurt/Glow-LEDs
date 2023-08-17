@@ -14,14 +14,14 @@ const parcelPage = createSlice({
     search: "",
     sort: "",
     page: 1,
-    limit: 10
+    limit: 10,
   },
   reducers: {
     set_parcel: (state, { payload }) => {
       const updated_parcel = payload;
       return {
         ...state,
-        parcel: { ...state.parcel, ...updated_parcel }
+        parcel: { ...state.parcel, ...updated_parcel },
       };
     },
     set_loading: (state, { payload }) => {
@@ -38,7 +38,7 @@ const parcelPage = createSlice({
     },
     set_limit: (state, { payload }) => {
       state.limit = payload;
-    }
+    },
   },
   extraReducers: {
     [API.listParcels.pending as any]: (state: any, { payload }: any) => {
@@ -52,10 +52,10 @@ const parcelPage = createSlice({
       state.page = payload.currentPage;
       state.message = "Parcels Found";
     },
-    [API.listParcels.rejected as any]: (state: any, { payload }: any) => {
+    [API.listParcels.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.saveParcel.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -64,10 +64,10 @@ const parcelPage = createSlice({
       state.loading = false;
       state.message = "Parcel Saved";
     },
-    [API.saveParcel.rejected as any]: (state: any, { payload }: any) => {
+    [API.saveParcel.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.detailsParcel.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -77,10 +77,10 @@ const parcelPage = createSlice({
       state.parcel = payload;
       state.message = "Parcel Found";
     },
-    [API.detailsParcel.rejected as any]: (state: any, { payload }: any) => {
+    [API.detailsParcel.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.deleteParcel.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -90,12 +90,12 @@ const parcelPage = createSlice({
       state.parcel = payload.parcel;
       state.message = "Parcel Deleted";
     },
-    [API.deleteParcel.rejected as any]: (state: any, { payload }: any) => {
+    [API.deleteParcel.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
-    }
-  }
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
+    },
+  },
 });
 
 export const { set_search, set_sort, set_page, set_limit, set_loading, set_parcel } = parcelPage.actions;

@@ -2,6 +2,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import Covy from "../shared/GlowLEDsComponents/GLCovy/GLCovy";
 import axios from "axios";
+import { errorMessage } from "../helpers/sharedHelpers";
 
 import { create_query } from "../utils/helper_functions";
 import config from "../config";
@@ -11,7 +12,7 @@ export const getOrders = async ({
   sorting,
   filters,
   page,
-  pageSize
+  pageSize,
 }: {
   search: string;
   sorting: any;
@@ -26,14 +27,15 @@ export const getOrders = async ({
         page: page,
         search: search,
         sort: sorting,
-        filters: filters
-      }
+        filters: filters,
+      },
     });
   } catch (error) {
     Covy().showSnackbar({
-      message: `Error: ${error}`,
-      severity: "error"
+      message: errorMessage(error),
+      severity: "error",
     });
+    return thunkApi.rejectWithValue(error.response?.data);
   }
 };
 export const getOrderFilters = async () => {
@@ -47,9 +49,10 @@ export const listOrders = createAsyncThunk("orders/listOrders", async (query: an
     return data;
   } catch (error) {
     Covy().showSnackbar({
-      message: `Error: ${error}`,
-      severity: "error"
+      message: errorMessage(error),
+      severity: "error",
     });
+    return thunkApi.rejectWithValue(error.response?.data);
   }
 });
 
@@ -59,9 +62,10 @@ export const listMyOrders = createAsyncThunk("orders/listMyOrders", async (user_
     return data;
   } catch (error) {
     Covy().showSnackbar({
-      message: `Error: ${error}`,
-      severity: "error"
+      message: errorMessage(error),
+      severity: "error",
     });
+    return thunkApi.rejectWithValue(error.response?.data);
   }
 });
 
@@ -72,9 +76,10 @@ export const createNoPayOrder = createAsyncThunk("orders/createNoPayOrder", asyn
     return data;
   } catch (error) {
     Covy().showSnackbar({
-      message: `Error: ${error}`,
-      severity: "error"
+      message: errorMessage(error),
+      severity: "error",
     });
+    return thunkApi.rejectWithValue(error.response?.data);
   }
 });
 
@@ -89,9 +94,10 @@ export const saveOrder = createAsyncThunk("orders/saveOrder", async (order: any,
     }
   } catch (error) {
     Covy().showSnackbar({
-      message: `Error: ${error}`,
-      severity: "error"
+      message: errorMessage(error),
+      severity: "error",
     });
+    return thunkApi.rejectWithValue(error.response?.data);
   }
 });
 
@@ -102,7 +108,7 @@ export const createPayOrder = createAsyncThunk(
       order,
       paymentMethod,
       create_account,
-      new_password
+      new_password,
     }: { order: any; paymentMethod: any; create_account: boolean; new_password: string },
     thunkApi: any
   ) => {
@@ -110,8 +116,8 @@ export const createPayOrder = createAsyncThunk(
 
     const {
       users: {
-        userPage: { current_user }
-      }
+        userPage: { current_user },
+      },
     } = thunkApi.getState();
 
     try {
@@ -122,7 +128,7 @@ export const createPayOrder = createAsyncThunk(
           first_name: order.shipping.first_name,
           last_name: order.shipping.last_name,
           email: order.shipping.email,
-          password: new_password
+          password: new_password,
         });
         axios.post("/api/emails/account_created", create_user);
         user_id = create_user._id;
@@ -138,7 +144,7 @@ export const createPayOrder = createAsyncThunk(
             isVerified: true,
             email_subscription: true,
             guest: true,
-            password: config.REACT_APP_TEMP_PASS
+            password: config.REACT_APP_TEMP_PASS,
           });
           user_id = new_user._id;
         }
@@ -157,8 +163,8 @@ export const createPayOrder = createAsyncThunk(
 export const detailsOrder = createAsyncThunk("orders/detailsOrder", async (order_id: string, thunkApi: any) => {
   const {
     users: {
-      userPage: { current_user }
-    }
+      userPage: { current_user },
+    },
   } = thunkApi.getState();
   try {
     if (current_user && current_user.first_name) {
@@ -170,9 +176,10 @@ export const detailsOrder = createAsyncThunk("orders/detailsOrder", async (order
     }
   } catch (error) {
     Covy().showSnackbar({
-      message: `Error: ${error}`,
-      severity: "error"
+      message: errorMessage(error),
+      severity: "error",
     });
+    return thunkApi.rejectWithValue(error.response?.data);
   }
 });
 
@@ -182,38 +189,45 @@ export const deleteOrder = createAsyncThunk("orders/deleteOrder", async (id: str
     return data;
   } catch (error) {
     Covy().showSnackbar({
-      message: `Error: ${error}`,
-      severity: "error"
+      message: errorMessage(error),
+      severity: "error",
     });
+    return thunkApi.rejectWithValue(error.response?.data);
   }
 });
 
-export const deleteMultipleOrders = createAsyncThunk("orders/deleteMultipleOrders", async (ids: string, thunkApi: any) => {
-  try {
-    const { data } = await axios.put(`/api/orders/glow/delete_multiple`, { ids });
-    return data;
-  } catch (error) {
-    Covy().showSnackbar({
-      message: `Error: ${error}`,
-      severity: "error"
-    });
+export const deleteMultipleOrders = createAsyncThunk(
+  "orders/deleteMultipleOrders",
+  async (ids: string, thunkApi: any) => {
+    try {
+      const { data } = await axios.put(`/api/orders/glow/delete_multiple`, { ids });
+      return data;
+    } catch (error) {
+      Covy().showSnackbar({
+        message: errorMessage(error),
+        severity: "error",
+      });
+    }
   }
-});
+);
 
-export const refundOrder = createAsyncThunk("orders/refundOrder", async ({ orderId, refundAmount, refundReason }: any, thunkApi: any) => {
-  try {
-    const { data } = await axios.put(`/api/payments/${orderId}/refund`, {
-      refundAmount,
-      refundReason
-    });
-    return data;
-  } catch (error) {
-    Covy().showSnackbar({
-      message: `Error: ${error}`,
-      severity: "error"
-    });
+export const refundOrder = createAsyncThunk(
+  "orders/refundOrder",
+  async ({ orderId, refundAmount, refundReason }: any, thunkApi: any) => {
+    try {
+      const { data } = await axios.put(`/api/payments/${orderId}/refund`, {
+        refundAmount,
+        refundReason,
+      });
+      return data;
+    } catch (error) {
+      Covy().showSnackbar({
+        message: errorMessage(error),
+        severity: "error",
+      });
+    }
   }
-});
+);
 export const payOrder = createAsyncThunk(
   "orders/payOrder",
   async ({ order, paymentMethod }: { order: any; paymentMethod: any }, thunkApi: any) => {
@@ -222,8 +236,8 @@ export const payOrder = createAsyncThunk(
       return data;
     } catch (error) {
       Covy().showSnackbar({
-        message: `Error: ${error}`,
-        severity: "error"
+        message: errorMessage(error),
+        severity: "error",
       });
     }
   }
@@ -236,8 +250,8 @@ export const payOrderGuest = createAsyncThunk(
       return data;
     } catch (error) {
       Covy().showSnackbar({
-        message: `Error: ${error}`,
-        severity: "error"
+        message: errorMessage(error),
+        severity: "error",
       });
     }
   }
@@ -251,21 +265,24 @@ export const transferOrders = createAsyncThunk(
       return data;
     } catch (error) {
       Covy().showSnackbar({
-        message: `Error: ${error}`,
-        severity: "error"
+        message: errorMessage(error),
+        severity: "error",
       });
     }
   }
 );
 
-export const invoiceOrder = createAsyncThunk("orders/invoiceOrder", async ({ orderId }: { orderId: string }, thunkApi: any) => {
-  try {
-    const { data } = await axios.put(`/api/orders/${orderId}/invoice`);
-    return data;
-  } catch (error) {
-    Covy().showSnackbar({
-      message: `Error: ${error}`,
-      severity: "error"
-    });
+export const invoiceOrder = createAsyncThunk(
+  "orders/invoiceOrder",
+  async ({ orderId }: { orderId: string }, thunkApi: any) => {
+    try {
+      const { data } = await axios.put(`/api/orders/${orderId}/invoice`);
+      return data;
+    } catch (error) {
+      Covy().showSnackbar({
+        message: errorMessage(error),
+        severity: "error",
+      });
+    }
   }
-});
+);

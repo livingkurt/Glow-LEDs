@@ -7,3 +7,7 @@ export const domain = (): string => {
     return "http://localhost:3000";
   }
 };
+
+export const errorMessage = (error: any) => {
+  return `Error: ${error.response ? error.response.data.message : "An unexpected error occurred"}`;
+};

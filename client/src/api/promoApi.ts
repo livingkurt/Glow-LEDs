@@ -2,6 +2,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import Covy from "../shared/GlowLEDsComponents/GLCovy/GLCovy";
 import axios from "axios";
+import { errorMessage } from "../helpers/sharedHelpers";
 
 import { create_query } from "../utils/helper_functions";
 
@@ -10,7 +11,7 @@ export const getPromos = async ({
   sorting,
   filters,
   page,
-  pageSize
+  pageSize,
 }: {
   search: string;
   sorting: any;
@@ -25,14 +26,15 @@ export const getPromos = async ({
         page: page,
         search: search,
         sort: sorting,
-        filters
-      }
+        filters,
+      },
     });
   } catch (error) {
     Covy().showSnackbar({
-      message: `Error: ${error}`,
-      severity: "error"
+      message: errorMessage(error),
+      severity: "error",
     });
+    return thunkApi.rejectWithValue(error.response?.data);
   }
 };
 
@@ -47,23 +49,27 @@ export const listPromos = createAsyncThunk("promos/listPromos", async (query: an
     return data;
   } catch (error) {
     Covy().showSnackbar({
-      message: `Error: ${error}`,
-      severity: "error"
+      message: errorMessage(error),
+      severity: "error",
     });
+    return thunkApi.rejectWithValue(error.response?.data);
   }
 });
 
-export const listSponsorCodes = createAsyncThunk("promos/listSponsorCodes", async (affiliateId: string, thunkApi: any) => {
-  try {
-    const { data } = await axios.get(`/api/promos/${affiliateId}/sponsor_codes`);
-    return data;
-  } catch (error) {
-    Covy().showSnackbar({
-      message: `Error: ${error}`,
-      severity: "error"
-    });
+export const listSponsorCodes = createAsyncThunk(
+  "promos/listSponsorCodes",
+  async (affiliateId: string, thunkApi: any) => {
+    try {
+      const { data } = await axios.get(`/api/promos/${affiliateId}/sponsor_codes`);
+      return data;
+    } catch (error) {
+      Covy().showSnackbar({
+        message: errorMessage(error),
+        severity: "error",
+      });
+    }
   }
-});
+);
 
 export const savePromo = createAsyncThunk("promos/savePromo", async (promo: any, thunkApi: any) => {
   try {
@@ -76,9 +82,10 @@ export const savePromo = createAsyncThunk("promos/savePromo", async (promo: any,
     }
   } catch (error) {
     Covy().showSnackbar({
-      message: `Error: ${error}`,
-      severity: "error"
+      message: errorMessage(error),
+      severity: "error",
     });
+    return thunkApi.rejectWithValue(error.response?.data);
   }
 });
 
@@ -88,9 +95,10 @@ export const detailsPromo = createAsyncThunk("promos/detailsPromo", async (id: s
     return data;
   } catch (error) {
     Covy().showSnackbar({
-      message: `Error: ${error}`,
-      severity: "error"
+      message: errorMessage(error),
+      severity: "error",
     });
+    return thunkApi.rejectWithValue(error.response?.data);
   }
 });
 
@@ -100,23 +108,27 @@ export const deletePromo = createAsyncThunk("promos/deletePromo", async (pathnam
     return data;
   } catch (error) {
     Covy().showSnackbar({
-      message: `Error: ${error}`,
-      severity: "error"
+      message: errorMessage(error),
+      severity: "error",
     });
+    return thunkApi.rejectWithValue(error.response?.data);
   }
 });
 
-export const deleteMultiplePromos = createAsyncThunk("promo/deleteMultiplePromos", async (ids: string, thunkApi: any) => {
-  try {
-    const { data } = await axios.put(`/api/promos/delete_multiple`, { ids });
-    return data;
-  } catch (error) {
-    Covy().showSnackbar({
-      message: `Error: ${error}`,
-      severity: "error"
-    });
+export const deleteMultiplePromos = createAsyncThunk(
+  "promo/deleteMultiplePromos",
+  async (ids: string, thunkApi: any) => {
+    try {
+      const { data } = await axios.put(`/api/promos/delete_multiple`, { ids });
+      return data;
+    } catch (error) {
+      Covy().showSnackbar({
+        message: errorMessage(error),
+        severity: "error",
+      });
+    }
   }
-});
+);
 
 export const refreshSponsorCodes = createAsyncThunk("promo/refreshSponsorCodes", async (_data, thunkApi: any) => {
   try {
@@ -124,8 +136,9 @@ export const refreshSponsorCodes = createAsyncThunk("promo/refreshSponsorCodes",
     return data;
   } catch (error) {
     Covy().showSnackbar({
-      message: `Error: ${error}`,
-      severity: "error"
+      message: errorMessage(error),
+      severity: "error",
     });
+    return thunkApi.rejectWithValue(error.response?.data);
   }
 });

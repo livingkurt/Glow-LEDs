@@ -23,7 +23,7 @@ const user = {
     state: "",
     postalCode: "",
     international: false,
-    country: ""
+    country: "",
   },
   email_subscription: false,
   stripe_connect_id: "",
@@ -31,7 +31,7 @@ const user = {
   isWholesaler: false,
   minimum_order_amount: "",
   guest: false,
-  international: false
+  international: false,
 };
 
 const userPage = createSlice({
@@ -49,14 +49,14 @@ const userPage = createSlice({
     success: false,
     error: {},
     user1: {},
-    user2: {}
+    user2: {},
   },
   reducers: {
     set_user: (state, { payload }) => {
       const updated_user = payload;
       return {
         ...state,
-        user: { ...state.user, ...updated_user }
+        user: { ...state.user, ...updated_user },
       };
     },
     set_loading: (state, { payload }) => {
@@ -88,7 +88,7 @@ const userPage = createSlice({
     close_modals: (state, { payload }) => {
       state.combine_user_modal = false;
       state.edit_user_modal = false;
-    }
+    },
   },
   extraReducers: {
     [API.listUsers.pending as any]: (state: any, { payload }: any) => {
@@ -103,10 +103,10 @@ const userPage = createSlice({
       state.message = "Users Found";
       state.loading = false;
     },
-    [API.listUsers.rejected as any]: (state: any, { payload }: any) => {
+    [API.listUsers.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.saveUser.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -125,10 +125,10 @@ const userPage = createSlice({
       //   // window.location.reload();
       // }
     },
-    [API.saveUser.rejected as any]: (state: any, { payload }: any) => {
+    [API.saveUser.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.detailsUser.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -139,10 +139,10 @@ const userPage = createSlice({
       state.message = "User Found";
       state.loading = false;
     },
-    [API.detailsUser.rejected as any]: (state: any, { payload }: any) => {
+    [API.detailsUser.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.deleteUser.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -152,10 +152,10 @@ const userPage = createSlice({
       state.message = "User Deleted";
       state.remoteVersionRequirement = Date.now();
     },
-    [API.deleteUser.rejected as any]: (state: any, { payload }: any) => {
+    [API.deleteUser.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
       state.loading = false;
     },
     [API.passwordReset.pending as any]: (state: any, { payload }: any) => {
@@ -174,10 +174,10 @@ const userPage = createSlice({
       state.message = "Password Reset";
       state.success = true;
     },
-    [API.passwordReset.rejected as any]: (state: any, { payload }: any) => {
+    [API.passwordReset.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.registerUser.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -187,10 +187,10 @@ const userPage = createSlice({
       state.message = "User Registered";
       state.success = true;
     },
-    [API.registerUser.rejected as any]: (state: any, { payload }: any) => {
+    [API.registerUser.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.loginUser.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -207,10 +207,10 @@ const userPage = createSlice({
       state.success = true;
     },
 
-    [API.loginUser.rejected as any]: (state: any, { payload }: any) => {
+    [API.loginUser.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.loginAsUser.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -227,10 +227,10 @@ const userPage = createSlice({
       state.message = "User Login Success";
       state.success = true;
     },
-    [API.loginAsUser.rejected as any]: (state: any, { payload }: any) => {
+    [API.loginAsUser.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.logoutUser.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -243,12 +243,12 @@ const userPage = createSlice({
       localStorage.setItem("cartItems", JSON.stringify(my_cart.cartItems));
       state.current_user = {};
     },
-    [API.logoutUser.rejected as any]: (state: any, { payload }: any) => {
+    [API.logoutUser.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
-    }
-  }
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
+    },
+  },
 });
 
 export const {
@@ -260,6 +260,6 @@ export const {
   open_create_user_modal,
   open_combine_users_modal,
   close_modals,
-  open_edit_user_modal
+  open_edit_user_modal,
 } = userPage.actions;
 export default userPage.reducer;

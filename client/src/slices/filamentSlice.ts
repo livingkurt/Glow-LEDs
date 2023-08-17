@@ -14,14 +14,14 @@ const filamentPage = createSlice({
     search: "",
     sort: "",
     page: 1,
-    limit: 10
+    limit: 10,
   },
   reducers: {
     set_filament: (state, { payload }) => {
       const updated_filament = payload;
       return {
         ...state,
-        filament: { ...state.filament, ...updated_filament }
+        filament: { ...state.filament, ...updated_filament },
       };
     },
     set_loading: (state, { payload }) => {
@@ -38,7 +38,7 @@ const filamentPage = createSlice({
     },
     set_limit: (state, { payload }) => {
       state.limit = payload;
-    }
+    },
   },
   extraReducers: {
     [API.listFilaments.pending as any]: (state: any, { payload }: any) => {
@@ -52,10 +52,10 @@ const filamentPage = createSlice({
       state.page = payload.currentPage;
       state.message = "Filaments Found";
     },
-    [API.listFilaments.rejected as any]: (state: any, { payload }: any) => {
+    [API.listFilaments.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.saveFilament.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -64,10 +64,10 @@ const filamentPage = createSlice({
       state.loading = false;
       state.message = "Filament Saved";
     },
-    [API.saveFilament.rejected as any]: (state: any, { payload }: any) => {
+    [API.saveFilament.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.detailsFilament.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -77,10 +77,10 @@ const filamentPage = createSlice({
       state.filament = payload;
       state.message = "Filament Found";
     },
-    [API.detailsFilament.rejected as any]: (state: any, { payload }: any) => {
+    [API.detailsFilament.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.deleteFilament.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -90,12 +90,12 @@ const filamentPage = createSlice({
       state.filament = payload.filament;
       state.message = "Filament Deleted";
     },
-    [API.deleteFilament.rejected as any]: (state: any, { payload }: any) => {
+    [API.deleteFilament.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
-    }
-  }
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
+    },
+  },
 });
 
 export const { set_search, set_sort, set_page, set_limit, set_loading, set_filament } = filamentPage.actions;

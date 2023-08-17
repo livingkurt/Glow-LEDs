@@ -2,6 +2,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import Covy from "../shared/GlowLEDsComponents/GLCovy/GLCovy";
 import axios from "axios";
+import { errorMessage } from "../helpers/sharedHelpers";
 
 import { create_query } from "../utils/helper_functions";
 
@@ -10,7 +11,7 @@ export const getPaychecks = async ({
   sorting,
   filters,
   page,
-  pageSize
+  pageSize,
 }: {
   search: string;
   sorting: any;
@@ -25,14 +26,15 @@ export const getPaychecks = async ({
         page: page,
         search: search,
         sort: sorting,
-        filters
-      }
+        filters,
+      },
     });
   } catch (error) {
     Covy().showSnackbar({
-      message: `Error: ${error}`,
-      severity: "error"
+      message: errorMessage(error),
+      severity: "error",
     });
+    return thunkApi.rejectWithValue(error.response?.data);
   }
 };
 
@@ -47,9 +49,10 @@ export const listPaychecks = createAsyncThunk("paychecks/listPaychecks", async (
     return data;
   } catch (error) {
     Covy().showSnackbar({
-      message: `Error: ${error}`,
-      severity: "error"
+      message: errorMessage(error),
+      severity: "error",
     });
+    return thunkApi.rejectWithValue(error.response?.data);
   }
 });
 
@@ -64,9 +67,10 @@ export const savePaycheck = createAsyncThunk("paychecks/savePaycheck", async (pa
     }
   } catch (error) {
     Covy().showSnackbar({
-      message: `Error: ${error}`,
-      severity: "error"
+      message: errorMessage(error),
+      severity: "error",
     });
+    return thunkApi.rejectWithValue(error.response?.data);
   }
 });
 
@@ -76,9 +80,10 @@ export const detailsPaycheck = createAsyncThunk("paychecks/detailsPaycheck", asy
     return data;
   } catch (error) {
     Covy().showSnackbar({
-      message: `Error: ${error}`,
-      severity: "error"
+      message: errorMessage(error),
+      severity: "error",
     });
+    return thunkApi.rejectWithValue(error.response?.data);
   }
 });
 
@@ -88,20 +93,24 @@ export const deletePaycheck = createAsyncThunk("paychecks/deletePaycheck", async
     return data;
   } catch (error) {
     Covy().showSnackbar({
-      message: `Error: ${error}`,
-      severity: "error"
+      message: errorMessage(error),
+      severity: "error",
     });
+    return thunkApi.rejectWithValue(error.response?.data);
   }
 });
 
-export const deleteMultiplePaychecks = createAsyncThunk("paycheck/deleteMultiplePaychecks", async (ids: string, thunkApi: any) => {
-  try {
-    const { data } = await axios.put(`/api/paycheck/delete_multiple`, { ids });
-    return data;
-  } catch (error) {
-    Covy().showSnackbar({
-      message: `Error: ${error}`,
-      severity: "error"
-    });
+export const deleteMultiplePaychecks = createAsyncThunk(
+  "paycheck/deleteMultiplePaychecks",
+  async (ids: string, thunkApi: any) => {
+    try {
+      const { data } = await axios.put(`/api/paycheck/delete_multiple`, { ids });
+      return data;
+    } catch (error) {
+      Covy().showSnackbar({
+        message: errorMessage(error),
+        severity: "error",
+      });
+    }
   }
-});
+);

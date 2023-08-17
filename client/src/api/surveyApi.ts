@@ -2,6 +2,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import Covy from "../shared/GlowLEDsComponents/GLCovy/GLCovy";
 import axios from "axios";
+import { errorMessage } from "../helpers/sharedHelpers";
 
 import { create_query } from "../utils/helper_functions";
 
@@ -11,9 +12,10 @@ export const listSurveys = createAsyncThunk("surveys/listSurveys", async (query:
     return data;
   } catch (error) {
     Covy().showSnackbar({
-      message: `Error: ${error}`,
-      severity: "error"
+      message: errorMessage(error),
+      severity: "error",
     });
+    return thunkApi.rejectWithValue(error.response?.data);
   }
 });
 
@@ -28,9 +30,10 @@ export const saveSurvey = createAsyncThunk("surveys/saveSurvey", async (survey: 
     }
   } catch (error) {
     Covy().showSnackbar({
-      message: `Error: ${error}`,
-      severity: "error"
+      message: errorMessage(error),
+      severity: "error",
     });
+    return thunkApi.rejectWithValue(error.response?.data);
   }
 });
 
@@ -40,9 +43,10 @@ export const detailsSurvey = createAsyncThunk("surveys/detailsSurvey", async (id
     return data;
   } catch (error) {
     Covy().showSnackbar({
-      message: `Error: ${error}`,
-      severity: "error"
+      message: errorMessage(error),
+      severity: "error",
     });
+    return thunkApi.rejectWithValue(error.response?.data);
   }
 });
 
@@ -52,8 +56,9 @@ export const deleteSurvey = createAsyncThunk("surveys/deleteSurvey", async (path
     return data;
   } catch (error) {
     Covy().showSnackbar({
-      message: `Error: ${error}`,
-      severity: "error"
+      message: errorMessage(error),
+      severity: "error",
     });
+    return thunkApi.rejectWithValue(error.response?.data);
   }
 });

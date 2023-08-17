@@ -13,10 +13,13 @@ export const buyLabel = async ({ shipment_id, shipping_rate, order }: any) => {
     await addTracking({ order, label, shipping_rate });
     return label;
   } catch (error) {
-    console.error("Error buying label:", error);
-    const label = await createLabel({ order, shipping_rate });
-    await addTracking({ order, label, shipping_rate: label.selected_rate });
-    return label;
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+    // console.error("Error buying label:", error);
+    // const label = await createLabel({ order, shipping_rate });
+    // await addTracking({ order, label, shipping_rate: label.selected_rate });
+    // return label;
   }
 };
 export const addTracking = async ({ label, order, shipping_rate, isReturnTracking = false }: any) => {
@@ -39,7 +42,10 @@ export const addTracking = async ({ label, order, shipping_rate, isReturnTrackin
 
     await order_db.update_orders_db(order._id, order);
   } catch (error) {
-    console.error("Error adding tracking:", error);
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+    // console.error("Error adding tracking:", error);
   }
 };
 export const clearTracking = async ({ order, isReturnTracking = false }: any) => {
@@ -57,7 +63,11 @@ export const clearTracking = async ({ order, isReturnTracking = false }: any) =>
     }
 
     await order_db.update_orders_db(order._id, order);
-  } catch (error) {}
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+  }
 };
 
 export const createTracker = async ({ order }: any) => {
@@ -84,27 +94,33 @@ export const createTracker = async ({ order }: any) => {
 };
 
 export const refundLabel = async ({ order, is_return_tracking }: any) => {
-  const refund = await EasyPost.Refund.create({
-    carrier: order.shipping.shipping_rate.carrier,
-    tracking_codes: [is_return_tracking ? order.return_tracking_number : order.tracking_number],
-  });
-  if (refund) {
-    if (is_return_tracking) {
-      order.shipping.return_shipment_tracker = null;
-      order.return_tracking_url = null;
-      order.return_tracking_number = null;
-      order.shipping.return_shipping_label = null;
-    } else {
-      order.shipping.shipment_id = null;
-      order.shipping.shipping_rate = null;
-      order.shipping.shipment_tracker = null;
-      order.tracking_number = null;
-      order.tracking_url = null;
-      order.shipping.shipping_label = null;
+  try {
+    const refund = await EasyPost.Refund.create({
+      carrier: order.shipping.shipping_rate.carrier,
+      tracking_codes: [is_return_tracking ? order.return_tracking_number : order.tracking_number],
+    });
+    if (refund) {
+      if (is_return_tracking) {
+        order.shipping.return_shipment_tracker = null;
+        order.return_tracking_url = null;
+        order.return_tracking_number = null;
+        order.shipping.return_shipping_label = null;
+      } else {
+        order.shipping.shipment_id = null;
+        order.shipping.shipping_rate = null;
+        order.shipping.shipment_tracker = null;
+        order.tracking_number = null;
+        order.tracking_url = null;
+        order.shipping.shipping_label = null;
+      }
+    }
+
+    return await order_db.update_orders_db(order._id, order);
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
     }
   }
-
-  return await order_db.update_orders_db(order._id, order);
 };
 
 export const createLabel = async ({ order, shipping_rate }: any) => {
@@ -182,7 +198,9 @@ export const createShippingRates = async ({ order, returnLabel }: any) => {
     console.log({ shipment, parcel });
     return { shipment, parcel };
   } catch (error) {
-    console.log("Error creating rates:", error);
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
   }
 };
 
@@ -228,6 +246,8 @@ export const createCustomShippingRates = async ({ toShipping, fromShipping, parc
     console.log({ shipment, parcel });
     return { shipment, parcel };
   } catch (error) {
-    console.log("Error creating rates:", error);
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
   }
 };

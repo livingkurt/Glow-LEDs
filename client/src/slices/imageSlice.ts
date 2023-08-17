@@ -12,7 +12,7 @@ const imagePage = createSlice({
     image: {
       id: "",
       link: "",
-      album: ""
+      album: "",
     },
     remoteVersionRequirement: 0,
     edit_image_modal: false,
@@ -21,14 +21,14 @@ const imagePage = createSlice({
     image_modal: false,
     selected_image: null,
     message: "",
-    error: {}
+    error: {},
   },
   reducers: {
     set_image: (state, { payload }) => {
       const updated_image = payload;
       return {
         ...state,
-        image: { ...state.image, ...updated_image }
+        image: { ...state.image, ...updated_image },
       };
     },
     set_loading: (state, { payload }) => {
@@ -50,7 +50,7 @@ const imagePage = createSlice({
       state.image = {
         id: "",
         link: "",
-        album: ""
+        album: "",
       };
     },
     open_edit_image_modal: (state, { payload }) => {
@@ -64,7 +64,7 @@ const imagePage = createSlice({
       state.image = {
         id: "",
         link: "",
-        album: ""
+        album: "",
       };
     },
     open_image_modal: (state, { payload }) => {
@@ -74,7 +74,7 @@ const imagePage = createSlice({
     image_uploaded: (state, { payload }) => {
       state.upload_image_modal = false;
       state.remoteVersionRequirement = Date.now();
-    }
+    },
   },
   extraReducers: {
     [API.listImages.pending as any]: (state: any, { payload }: any) => {
@@ -88,10 +88,10 @@ const imagePage = createSlice({
       state.page = payload.currentPage;
       state.message = "Images Found";
     },
-    [API.listImages.rejected as any]: (state: any, { payload }: any) => {
+    [API.listImages.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.saveImage.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -101,10 +101,10 @@ const imagePage = createSlice({
       state.message = "Image Saved";
       state.remoteVersionRequirement = Date.now();
     },
-    [API.saveImage.rejected as any]: (state: any, { payload }: any) => {
+    [API.saveImage.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.detailsImage.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -114,10 +114,10 @@ const imagePage = createSlice({
       state.image = payload;
       state.message = "Image Found";
     },
-    [API.detailsImage.rejected as any]: (state: any, { payload }: any) => {
+    [API.detailsImage.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.getImagesByLink.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -127,10 +127,10 @@ const imagePage = createSlice({
       state.image = payload;
       state.message = "Image Found";
     },
-    [API.getImagesByLink.rejected as any]: (state: any, { payload }: any) => {
+    [API.getImagesByLink.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.deleteImage.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -141,12 +141,12 @@ const imagePage = createSlice({
       state.message = "Image Deleted";
       state.remoteVersionRequirement = Date.now();
     },
-    [API.deleteImage.rejected as any]: (state: any, { payload }: any) => {
+    [API.deleteImage.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
-    }
-  }
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
+    },
+  },
 });
 
 export const {
@@ -159,6 +159,6 @@ export const {
   open_edit_image_modal,
   image_uploaded,
   open_image_display_modal,
-  close_image_display_modal
+  close_image_display_modal,
 } = imagePage.actions;
 export default imagePage.reducer;

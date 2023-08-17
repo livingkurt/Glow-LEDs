@@ -14,14 +14,14 @@ const chipPage = createSlice({
     search: "",
     sort: "",
     page: 1,
-    limit: 10
+    limit: 10,
   },
   reducers: {
     set_chip: (state, { payload }) => {
       const updated_chip = payload;
       return {
         ...state,
-        chip: { ...state.chip, ...updated_chip }
+        chip: { ...state.chip, ...updated_chip },
       };
     },
     set_loading: (state, { payload }) => {
@@ -38,7 +38,7 @@ const chipPage = createSlice({
     },
     set_limit: (state, { payload }) => {
       state.limit = payload;
-    }
+    },
   },
   extraReducers: {
     [API.listChips.pending as any]: (state: any, { payload }: any) => {
@@ -52,10 +52,10 @@ const chipPage = createSlice({
       state.page = payload.currentPage;
       state.message = "Chips Found";
     },
-    [API.listChips.rejected as any]: (state: any, { payload }: any) => {
+    [API.listChips.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.saveChip.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -64,10 +64,10 @@ const chipPage = createSlice({
       state.loading = false;
       state.message = "Chip Saved";
     },
-    [API.saveChip.rejected as any]: (state: any, { payload }: any) => {
+    [API.saveChip.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.detailsChip.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -77,10 +77,10 @@ const chipPage = createSlice({
       state.chip = payload;
       state.message = "Chip Found";
     },
-    [API.detailsChip.rejected as any]: (state: any, { payload }: any) => {
+    [API.detailsChip.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.deleteChip.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -90,12 +90,12 @@ const chipPage = createSlice({
       state.chip = payload.chip;
       state.message = "Chip Deleted";
     },
-    [API.deleteChip.rejected as any]: (state: any, { payload }: any) => {
+    [API.deleteChip.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
-    }
-  }
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
+    },
+  },
 });
 
 export const { set_search, set_sort, set_page, set_limit, set_loading, set_chip } = chipPage.actions;

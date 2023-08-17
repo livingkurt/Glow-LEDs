@@ -13,9 +13,10 @@ export const updateVersion = async () => {
     return data;
   } catch (error) {
     Covy().showSnackbar({
-      message: `Error: ${error}`,
+      message: errorMessage(error),
       severity: "error",
     });
+    return thunkApi.rejectWithValue(error.response?.data);
   }
 };
 

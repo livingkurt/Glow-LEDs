@@ -2,6 +2,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import Covy from "../shared/GlowLEDsComponents/GLCovy/GLCovy";
 import axios from "axios";
+import { errorMessage } from "../helpers/sharedHelpers";
 
 import { create_query } from "../utils/helper_functions";
 
@@ -11,9 +12,10 @@ export const listEmails = createAsyncThunk("emails/listEmails", async (query: an
     return data;
   } catch (error) {
     Covy().showSnackbar({
-      message: `Error: ${error}`,
-      severity: "error"
+      message: errorMessage(error),
+      severity: "error",
     });
+    return thunkApi.rejectWithValue(error.response?.data);
   }
 });
 
@@ -28,9 +30,10 @@ export const saveEmail = createAsyncThunk("emails/saveEmail", async (email: any,
     }
   } catch (error) {
     Covy().showSnackbar({
-      message: `Error: ${error}`,
-      severity: "error"
+      message: errorMessage(error),
+      severity: "error",
     });
+    return thunkApi.rejectWithValue(error.response?.data);
   }
 });
 
@@ -40,9 +43,10 @@ export const detailsEmail = createAsyncThunk("emails/detailsEmail", async (id: s
     return data;
   } catch (error) {
     Covy().showSnackbar({
-      message: `Error: ${error}`,
-      severity: "error"
+      message: errorMessage(error),
+      severity: "error",
     });
+    return thunkApi.rejectWithValue(error.response?.data);
   }
 });
 
@@ -52,9 +56,10 @@ export const deleteEmail = createAsyncThunk("emails/deleteEmail", async (pathnam
     return data;
   } catch (error) {
     Covy().showSnackbar({
-      message: `Error: ${error}`,
-      severity: "error"
+      message: errorMessage(error),
+      severity: "error",
     });
+    return thunkApi.rejectWithValue(error.response?.data);
   }
 });
 
@@ -83,8 +88,8 @@ export const sendContactEmail = createAsyncThunk(
       return data;
     } catch (error) {
       Covy().showSnackbar({
-        message: `Error: ${error}`,
-        severity: "error"
+        message: errorMessage(error),
+        severity: "error",
       });
     }
   }

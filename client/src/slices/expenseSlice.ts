@@ -13,7 +13,7 @@ const expense = {
   category: "",
   card: "",
   amount: 0,
-  documents: []
+  documents: [],
 };
 
 const expensePage = createSlice({
@@ -27,14 +27,14 @@ const expensePage = createSlice({
     upload_expense_modal: false,
     expense_modal: false,
     message: "",
-    error: {}
+    error: {},
   },
   reducers: {
     set_expense: (state, { payload }) => {
       const updated_expense = payload;
       return {
         ...state,
-        expense: { ...state.expense, ...updated_expense }
+        expense: { ...state.expense, ...updated_expense },
       };
     },
     set_loading: (state, { payload }) => {
@@ -64,7 +64,7 @@ const expensePage = createSlice({
     expense_uploaded: (state, { payload }) => {
       state.upload_expense_modal = false;
       state.remoteVersionRequirement = Date.now();
-    }
+    },
   },
   extraReducers: {
     [API.listExpenses.pending as any]: (state: any, { payload }: any) => {
@@ -78,10 +78,10 @@ const expensePage = createSlice({
       state.page = payload.currentPage;
       state.message = "Expenses Found";
     },
-    [API.listExpenses.rejected as any]: (state: any, { payload }: any) => {
+    [API.listExpenses.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.saveExpense.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -92,10 +92,10 @@ const expensePage = createSlice({
       state.remoteVersionRequirement = Date.now();
       state.edit_expense_modal = false;
     },
-    [API.saveExpense.rejected as any]: (state: any, { payload }: any) => {
+    [API.saveExpense.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.detailsExpense.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -105,10 +105,10 @@ const expensePage = createSlice({
       state.expense = payload;
       state.message = "Expense Found";
     },
-    [API.detailsExpense.rejected as any]: (state: any, { payload }: any) => {
+    [API.detailsExpense.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.deleteExpense.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -119,12 +119,12 @@ const expensePage = createSlice({
       state.message = "Expense Deleted";
       state.remoteVersionRequirement = Date.now();
     },
-    [API.deleteExpense.rejected as any]: (state: any, { payload }: any) => {
+    [API.deleteExpense.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
-    }
-  }
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
+    },
+  },
 });
 
 export const {
@@ -135,6 +135,6 @@ export const {
   open_expense_modal,
   close_expense_modal,
   open_edit_expense_modal,
-  expense_uploaded
+  expense_uploaded,
 } = expensePage.actions;
 export default expensePage.reducer;

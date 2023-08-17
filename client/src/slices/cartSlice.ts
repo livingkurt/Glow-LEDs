@@ -28,7 +28,7 @@ const cartPage = createSlice({
     my_cart: { ...my_cart },
     carts: [],
     cart: {
-      cartItems: []
+      cartItems: [],
     },
     message: "",
     error: {},
@@ -43,19 +43,19 @@ const cartPage = createSlice({
       state: "",
       postalCode: "",
       international: false,
-      country: ""
+      country: "",
     },
     remoteVersionRequirement: 0,
     edit_cart_modal: false,
     cart_modal: false,
-    paymentMethod: "stripe"
+    paymentMethod: "stripe",
   },
   reducers: {
     set_cart: (state, { payload }) => {
       const updated_cart = payload;
       return {
         ...state,
-        cart: { ...state.cart, ...updated_cart }
+        cart: { ...state.cart, ...updated_cart },
       };
     },
     set_loading: (state, { payload }) => {
@@ -79,7 +79,7 @@ const cartPage = createSlice({
     open_create_cart_modal: (state, { payload }) => {
       state.edit_cart_modal = true;
       state.cart = {
-        cartItems: []
+        cartItems: [],
       };
     },
     open_edit_cart_modal: (state, { payload }) => {
@@ -89,13 +89,13 @@ const cartPage = createSlice({
     close_cart_modal: (state, { payload }) => {
       state.cart_modal = false;
       state.cart = {
-        cartItems: []
+        cartItems: [],
       };
     },
     open_cart_modal: (state, { payload }) => {
       state.cart_modal = true;
       state.cart = payload;
-    }
+    },
   },
   extraReducers: {
     [API.listCarts.pending as any]: (state: any, { payload }: any) => {
@@ -109,10 +109,10 @@ const cartPage = createSlice({
       state.page = payload.currentPage;
       state.message = "Carts Found";
     },
-    [API.listCarts.rejected as any]: (state: any, { payload }: any) => {
+    [API.listCarts.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.saveCart.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -124,10 +124,10 @@ const cartPage = createSlice({
       state.remoteVersionRequirement = Date.now();
       state.loading = false;
     },
-    [API.saveCart.rejected as any]: (state: any, { payload }: any) => {
+    [API.saveCart.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.updateQuantity.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -141,10 +141,10 @@ const cartPage = createSlice({
       }
       state.loading = false;
     },
-    [API.updateQuantity.rejected as any]: (state: any, { payload }: any) => {
+    [API.updateQuantity.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.addToCart.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -167,10 +167,10 @@ const cartPage = createSlice({
       state.loading = false;
     },
 
-    [API.addToCart.rejected as any]: (state: any, { payload }: any) => {
+    [API.addToCart.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.detailsCart.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -180,10 +180,10 @@ const cartPage = createSlice({
       state.cart = payload;
       state.message = "Cart Found";
     },
-    [API.detailsCart.rejected as any]: (state: any, { payload }: any) => {
+    [API.detailsCart.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.deleteCart.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -194,10 +194,10 @@ const cartPage = createSlice({
       state.message = "Cart Deleted";
       localStorage.removeItem("cartItems");
     },
-    [API.deleteCart.rejected as any]: (state: any, { payload }: any) => {
+    [API.deleteCart.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.deleteCartItem.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -216,10 +216,10 @@ const cartPage = createSlice({
       }
       state.message = "Cart Deleted";
     },
-    [API.deleteCartItem.rejected as any]: (state: any, { payload }: any) => {
+    [API.deleteCartItem.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.createPayOrder.fulfilled as any]: (state: any, { payload }: any) => {
       state.cart = {};
@@ -238,12 +238,12 @@ const cartPage = createSlice({
         state.message = "User Cart Found";
       }
     },
-    [API.getCurrentUserCart.rejected as any]: (state: any, { payload }: any) => {
+    [API.getCurrentUserCart.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
-    }
-  }
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
+    },
+  },
 });
 
 export const {
@@ -256,6 +256,6 @@ export const {
   open_create_cart_modal,
   open_cart_modal,
   close_cart_modal,
-  open_edit_cart_modal
+  open_edit_cart_modal,
 } = cartPage.actions;
 export default cartPage.reducer;

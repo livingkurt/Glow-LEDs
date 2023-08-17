@@ -13,13 +13,13 @@ const ShowSnackbar = ({ containerNode, message, open, severity, duration, horizo
   const determine_alert_color = () => {
     switch (severity) {
       case "success":
-        return "#4caf50";
+        return "#3e6e3f";
       case "info":
-        return "#2196f3";
+        return "#496cba";
       case "warning":
-        return "#ffc107";
+        return "#ba8f49";
       case "error":
-        return "#f44336";
+        return "#ba4949";
       default:
     }
   };
@@ -33,7 +33,13 @@ const ShowSnackbar = ({ containerNode, message, open, severity, duration, horizo
       autoHideDuration={duration}
       onClose={() => handleClose()}
     >
-      <Alert elevation={10} variant="filled" severity={severity} style={{ backgroundColor: determine_alert_color(), color: "white" }}>
+      <Alert
+        elevation={10}
+        variant="filled"
+        severity={"success"}
+        // style={{ color: "white", fontSize: "16px" }}
+        style={{ backgroundColor: determine_alert_color(), color: "white", fontSize: "16px" }}
+      >
         {message}
       </Alert>
     </Snackbar>
@@ -43,7 +49,7 @@ const ShowSnackbar = ({ containerNode, message, open, severity, duration, horizo
 ShowSnackbar.defaultProps = {
   duration: 4000,
   horizontal: "center",
-  vertical: "top"
+  vertical: "top",
 };
 
 ShowSnackbar.propTypes = {
@@ -53,7 +59,7 @@ ShowSnackbar.propTypes = {
   severity: PropTypes.string.isRequired,
   duration: PropTypes.number,
   horizontal: PropTypes.string,
-  vertical: PropTypes.string
+  vertical: PropTypes.string,
 };
 
 export default ShowSnackbar;

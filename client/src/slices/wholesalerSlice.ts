@@ -25,32 +25,32 @@ const wholesalerPage = createSlice({
           state: "",
           postalCode: "",
           international: false,
-          country: ""
+          country: "",
         },
         email_subscription: false,
         stripe_connect_id: "",
         weekly_wage: 0,
         isWholesaler: false,
         guest: false,
-        international: false
+        international: false,
       },
       company: "",
       minimum_order_amount: "",
-      active: false
+      active: false,
     },
     remoteVersionRequirement: 0,
     edit_wholesaler_modal: false,
     wholesaler_modal: false,
     message: "",
     success: false,
-    error: {}
+    error: {},
   },
   reducers: {
     set_wholesaler: (state, { payload }) => {
       const updated_wholesaler = payload;
       return {
         ...state,
-        wholesaler: { ...state.wholesaler, ...updated_wholesaler }
+        wholesaler: { ...state.wholesaler, ...updated_wholesaler },
       };
     },
     set_loading: (state, { payload }) => {
@@ -68,7 +68,7 @@ const wholesalerPage = createSlice({
         user: "",
         company: "",
         minimum_order_amount: "",
-        active: false
+        active: false,
       };
     },
     open_edit_wholesaler_modal: (state, { payload }) => {
@@ -81,13 +81,13 @@ const wholesalerPage = createSlice({
         user: "",
         company: "",
         minimum_order_amount: "",
-        active: false
+        active: false,
       };
     },
     open_wholesaler_modal: (state, { payload }) => {
       state.wholesaler_modal = true;
       state.wholesaler = payload;
-    }
+    },
   },
   extraReducers: {
     [API.listWholesalers.pending as any]: (state: any, { payload }: any) => {
@@ -101,10 +101,10 @@ const wholesalerPage = createSlice({
       state.page = payload.currentPage;
       state.message = "Wholesalers Found";
     },
-    [API.listWholesalers.rejected as any]: (state: any, { payload }: any) => {
+    [API.listWholesalers.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.saveWholesaler.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -116,10 +116,10 @@ const wholesalerPage = createSlice({
       state.message = "Wholesaler Saved";
       state.remoteVersionRequirement = Date.now();
     },
-    [API.saveWholesaler.rejected as any]: (state: any, { payload }: any) => {
+    [API.saveWholesaler.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.detailsWholesaler.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -129,10 +129,10 @@ const wholesalerPage = createSlice({
       state.wholesaler = payload;
       state.message = "Wholesaler Found";
     },
-    [API.detailsWholesaler.rejected as any]: (state: any, { payload }: any) => {
+    [API.detailsWholesaler.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.deleteWholesaler.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -143,12 +143,12 @@ const wholesalerPage = createSlice({
       state.message = "Wholesaler Deleted";
       state.remoteVersionRequirement = Date.now();
     },
-    [API.deleteWholesaler.rejected as any]: (state: any, { payload }: any) => {
+    [API.deleteWholesaler.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
-    }
-  }
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
+    },
+  },
 });
 
 export const {
@@ -158,6 +158,6 @@ export const {
   open_create_wholesaler_modal,
   open_wholesaler_modal,
   close_wholesaler_modal,
-  open_edit_wholesaler_modal
+  open_edit_wholesaler_modal,
 } = wholesalerPage.actions;
 export default wholesalerPage.reducer;

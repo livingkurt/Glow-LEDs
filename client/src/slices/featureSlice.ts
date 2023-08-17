@@ -14,14 +14,14 @@ const featurePage = createSlice({
     search: "",
     sort: "",
     page: 1,
-    limit: 10
+    limit: 10,
   },
   reducers: {
     set_feature: (state, { payload }) => {
       const updated_feature = payload;
       return {
         ...state,
-        feature: { ...state.feature, ...updated_feature }
+        feature: { ...state.feature, ...updated_feature },
       };
     },
     set_loading: (state, { payload }) => {
@@ -38,7 +38,7 @@ const featurePage = createSlice({
     },
     set_limit: (state, { payload }) => {
       state.limit = payload;
-    }
+    },
   },
   extraReducers: {
     [API.listFeatures.pending as any]: (state: any, { payload }: any) => {
@@ -52,10 +52,10 @@ const featurePage = createSlice({
       state.page = payload.currentPage;
       state.message = "Features Found";
     },
-    [API.listFeatures.rejected as any]: (state: any, { payload }: any) => {
+    [API.listFeatures.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.saveFeature.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -64,10 +64,10 @@ const featurePage = createSlice({
       state.loading = false;
       state.message = "Feature Saved";
     },
-    [API.saveFeature.rejected as any]: (state: any, { payload }: any) => {
+    [API.saveFeature.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.detailsFeature.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -77,10 +77,10 @@ const featurePage = createSlice({
       state.feature = payload;
       state.message = "Feature Found";
     },
-    [API.detailsFeature.rejected as any]: (state: any, { payload }: any) => {
+    [API.detailsFeature.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.deleteFeature.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -90,12 +90,12 @@ const featurePage = createSlice({
       state.feature = payload.feature;
       state.message = "Feature Deleted";
     },
-    [API.deleteFeature.rejected as any]: (state: any, { payload }: any) => {
+    [API.deleteFeature.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
-    }
-  }
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
+    },
+  },
 });
 
 export const { set_search, set_sort, set_page, set_limit, set_loading, set_feature } = featurePage.actions;

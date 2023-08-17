@@ -14,14 +14,14 @@ const palettePage = createSlice({
     search: "",
     sort: "",
     page: 1,
-    limit: 10
+    limit: 10,
   },
   reducers: {
     set_palette: (state, { payload }) => {
       const updated_palette = payload;
       return {
         ...state,
-        palette: { ...state.palette, ...updated_palette }
+        palette: { ...state.palette, ...updated_palette },
       };
     },
     set_loading: (state, { payload }) => {
@@ -38,7 +38,7 @@ const palettePage = createSlice({
     },
     set_limit: (state, { payload }) => {
       state.limit = payload;
-    }
+    },
   },
   extraReducers: {
     [API.listPalettes.pending as any]: (state: any, { payload }: any) => {
@@ -52,10 +52,10 @@ const palettePage = createSlice({
       state.page = payload.currentPage;
       state.message = "Palettes Found";
     },
-    [API.listPalettes.rejected as any]: (state: any, { payload }: any) => {
+    [API.listPalettes.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.savePalette.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -64,10 +64,10 @@ const palettePage = createSlice({
       state.loading = false;
       state.message = "Palette Saved";
     },
-    [API.savePalette.rejected as any]: (state: any, { payload }: any) => {
+    [API.savePalette.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.detailsPalette.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -77,10 +77,10 @@ const palettePage = createSlice({
       state.palette = payload;
       state.message = "Palette Found";
     },
-    [API.detailsPalette.rejected as any]: (state: any, { payload }: any) => {
+    [API.detailsPalette.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.deletePalette.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -90,12 +90,12 @@ const palettePage = createSlice({
       state.palette = payload.palette;
       state.message = "Palette Deleted";
     },
-    [API.deletePalette.rejected as any]: (state: any, { payload }: any) => {
+    [API.deletePalette.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
-    }
-  }
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
+    },
+  },
 });
 
 export const { set_search, set_sort, set_page, set_limit, set_loading, set_palette } = palettePage.actions;

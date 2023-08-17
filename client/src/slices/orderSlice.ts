@@ -169,10 +169,10 @@ const orderPage = createSlice({
       state.page = payload.currentPage;
       state.message = "Orders Found";
     },
-    [API.listOrders.rejected as any]: (state: any, { payload }: any) => {
+    [API.listOrders.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.listMyOrders.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -183,10 +183,10 @@ const orderPage = createSlice({
       state.orders = payload;
       state.message = "Orders Found";
     },
-    [API.listMyOrders.rejected as any]: (state: any, { payload }: any) => {
+    [API.listMyOrders.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.createPayOrder.pending as any]: (state: any, { payload }: any) => {
       state.loading_payment = true;
@@ -197,10 +197,10 @@ const orderPage = createSlice({
       state.order = payload.order;
       state.message = "Order Created and Paid";
     },
-    [API.createPayOrder.rejected as any]: (state: any, { payload }: any) => {
+    [API.createPayOrder.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading_payment = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.saveOrder.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -212,10 +212,10 @@ const orderPage = createSlice({
       state.edit_order_modal = false;
       state.remoteVersionRequirement = Date.now();
     },
-    [API.saveOrder.rejected as any]: (state: any, { payload }: any) => {
+    [API.saveOrder.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.createNoPayOrder.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -229,10 +229,10 @@ const orderPage = createSlice({
       state.success_no_pay_order = true;
       state.remoteVersionRequirement = Date.now();
     },
-    [API.createNoPayOrder.rejected as any]: (state: any, { payload }: any) => {
+    [API.createNoPayOrder.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.detailsOrder.pending as any]: (state: any, { payload }: any) => {
       state.loading_order = true;
@@ -242,10 +242,10 @@ const orderPage = createSlice({
       state.order = payload;
       state.message = "Order Found";
     },
-    [API.detailsOrder.rejected as any]: (state: any, { payload }: any) => {
+    [API.detailsOrder.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading_order = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.deleteOrder.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -255,10 +255,10 @@ const orderPage = createSlice({
       state.message = "Order Deleted";
       state.remoteVersionRequirement = Date.now();
     },
-    [API.deleteOrder.rejected as any]: (state: any, { payload }: any) => {
+    [API.deleteOrder.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.deleteMultipleOrders.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -268,10 +268,10 @@ const orderPage = createSlice({
       state.message = "Order Deleted";
       state.remoteVersionRequirement = Date.now();
     },
-    [API.deleteMultipleOrders.rejected as any]: (state: any, { payload }: any) => {
+    [API.deleteMultipleOrders.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.refundOrder.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -283,10 +283,10 @@ const orderPage = createSlice({
       state.message = "Order Refunded";
       state.remoteVersionRequirement = Date.now();
     },
-    [API.refundOrder.rejected as any]: (state: any, { payload }: any) => {
+    [API.refundOrder.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.payOrder.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -296,10 +296,10 @@ const orderPage = createSlice({
       state.success = true;
       state.message = "Order Paied";
     },
-    [API.payOrder.rejected as any]: (state: any, { payload }: any) => {
+    [API.payOrder.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.payOrderGuest.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -309,10 +309,10 @@ const orderPage = createSlice({
       state.success = true;
       state.message = "Order Paid Guest";
     },
-    [API.payOrderGuest.rejected as any]: (state: any, { payload }: any) => {
+    [API.payOrderGuest.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.transferOrders.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -322,10 +322,10 @@ const orderPage = createSlice({
       state.success = true;
       state.message = "Orders Transfered to New User";
     },
-    [API.transferOrders.rejected as any]: (state: any, { payload }: any) => {
+    [API.transferOrders.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
 
     [API.buyLabel.fulfilled as any]: (state: any, { payload }: any) => {

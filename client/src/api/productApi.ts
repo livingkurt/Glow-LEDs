@@ -2,6 +2,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import Covy from "../shared/GlowLEDsComponents/GLCovy/GLCovy";
 import axios from "axios";
+import { errorMessage } from "../helpers/sharedHelpers";
 import { create_query } from "../utils/helper_functions";
 
 export const getProducts = async ({
@@ -9,7 +10,7 @@ export const getProducts = async ({
   sorting,
   filters,
   page,
-  pageSize
+  pageSize,
 }: {
   search: string;
   sorting: any;
@@ -24,14 +25,15 @@ export const getProducts = async ({
         page: page,
         search: search,
         sort: sorting,
-        filters
-      }
+        filters,
+      },
     });
   } catch (error) {
     Covy().showSnackbar({
-      message: `Error: ${error}`,
-      severity: "error"
+      message: errorMessage(error),
+      severity: "error",
     });
+    return thunkApi.rejectWithValue(error.response?.data);
   }
 };
 
@@ -44,9 +46,10 @@ export const reorderProducts = async ({ reorderedItems }: { reorderedItems: any 
     return axios.put(`/api/products/reorder`, { reorderedItems });
   } catch (error) {
     Covy().showSnackbar({
-      message: `Error: ${error}`,
-      severity: "error"
+      message: errorMessage(error),
+      severity: "error",
     });
+    return thunkApi.rejectWithValue(error.response?.data);
   }
 };
 
@@ -56,9 +59,10 @@ export const listProducts = createAsyncThunk("products/listProducts", async (que
     return data;
   } catch (error) {
     Covy().showSnackbar({
-      message: `Error: ${error}`,
-      severity: "error"
+      message: errorMessage(error),
+      severity: "error",
     });
+    return thunkApi.rejectWithValue(error.response?.data);
   }
 });
 
@@ -73,9 +77,10 @@ export const saveProduct = createAsyncThunk("products/saveProduct", async (produ
     }
   } catch (error) {
     Covy().showSnackbar({
-      message: `Error: ${error}`,
-      severity: "error"
+      message: errorMessage(error),
+      severity: "error",
     });
+    return thunkApi.rejectWithValue(error.response?.data);
   }
 });
 
@@ -85,9 +90,10 @@ export const detailsProduct = createAsyncThunk("products/detailsProduct", async 
     return data;
   } catch (error) {
     Covy().showSnackbar({
-      message: `Error: ${error}`,
-      severity: "error"
+      message: errorMessage(error),
+      severity: "error",
     });
+    return thunkApi.rejectWithValue(error.response?.data);
   }
 });
 
@@ -97,42 +103,49 @@ export const deleteProduct = createAsyncThunk("products/deleteProduct", async (i
     return data;
   } catch (error) {
     Covy().showSnackbar({
-      message: `Error: ${error}`,
-      severity: "error"
+      message: errorMessage(error),
+      severity: "error",
     });
+    return thunkApi.rejectWithValue(error.response?.data);
   }
 });
 
-export const deleteMultipleProducts = createAsyncThunk("products/deleteMultipleProducts", async (ids: string, thunkApi: any) => {
-  try {
-    const { data } = await axios.put(`/api/products/delete_multiple`, { ids });
-    return data;
-  } catch (error) {
-    Covy().showSnackbar({
-      message: `Error: ${error}`,
-      severity: "error"
-    });
+export const deleteMultipleProducts = createAsyncThunk(
+  "products/deleteMultipleProducts",
+  async (ids: string, thunkApi: any) => {
+    try {
+      const { data } = await axios.put(`/api/products/delete_multiple`, { ids });
+      return data;
+    } catch (error) {
+      Covy().showSnackbar({
+        message: errorMessage(error),
+        severity: "error",
+      });
+    }
   }
-});
+);
 
 export const saveProductReview = createAsyncThunk(
   "products/deleteProduct",
   async (
-    { product_pathname, review }: { product_pathname: string; review: { name: string; rating: number; comment: string } },
+    {
+      product_pathname,
+      review,
+    }: { product_pathname: string; review: { name: string; rating: number; comment: string } },
     thunkApi: any
   ) => {
     const {
       users: {
-        userPage: { current_user }
-      }
+        userPage: { current_user },
+      },
     } = thunkApi.getState();
     try {
       const { data } = await axios.post(`/api/products/reviews/${product_pathname}`, { review, current_user });
       return data;
     } catch (error) {
       Covy().showSnackbar({
-        message: `Error: ${error}`,
-        severity: "error"
+        message: errorMessage(error),
+        severity: "error",
       });
     }
   }
@@ -146,8 +159,8 @@ export const deleteProductReview = createAsyncThunk(
       return data;
     } catch (error) {
       Covy().showSnackbar({
-        message: `Error: ${error}`,
-        severity: "error"
+        message: errorMessage(error),
+        severity: "error",
       });
     }
   }

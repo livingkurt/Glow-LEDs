@@ -144,10 +144,10 @@ const affiliatePage = createSlice({
       state.page = payload.currentPage;
       state.message = "Affiliates Found";
     },
-    [API.listAffiliates.rejected as any]: (state: any, { payload }: any) => {
+    [API.listAffiliates.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.saveAffiliate.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -159,10 +159,10 @@ const affiliatePage = createSlice({
       state.message = "Affiliate Saved";
       state.remoteVersionRequirement = Date.now();
     },
-    [API.saveAffiliate.rejected as any]: (state: any, { payload }: any) => {
+    [API.saveAffiliate.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.detailsAffiliate.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -172,10 +172,10 @@ const affiliatePage = createSlice({
       state.affiliate = payload;
       state.message = "Affiliate Found";
     },
-    [API.detailsAffiliate.rejected as any]: (state: any, { payload }: any) => {
+    [API.detailsAffiliate.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.deleteAffiliate.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -186,10 +186,10 @@ const affiliatePage = createSlice({
       state.message = "Affiliate Deleted";
       state.remoteVersionRequirement = Date.now();
     },
-    [API.deleteAffiliate.rejected as any]: (state: any, { payload }: any) => {
+    [API.deleteAffiliate.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.monthlyCheckin.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -199,10 +199,10 @@ const affiliatePage = createSlice({
       state.numberOfContent = 0;
       state.questionsConcerns = "";
     },
-    [API.monthlyCheckin.rejected as any]: (state: any, { payload }: any) => {
+    [API.monthlyCheckin.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.affiliateEarnings.pending as any]: (state: any, { payload }: any) => {
       state.loading_year_earnings = true;
@@ -221,11 +221,11 @@ const affiliatePage = createSlice({
       state.message = "Affiliate Earnings Found";
       state.remoteVersionRequirement = Date.now();
     },
-    [API.affiliateEarnings.rejected as any]: (state: any, { payload }: any) => {
+    [API.affiliateEarnings.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading_month_earnings = false;
       state.loading_year_earnings = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
   },
 });

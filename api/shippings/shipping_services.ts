@@ -43,9 +43,9 @@ export default {
   },
 
   buy_label_shipping_s: async (params: any) => {
-    const order = await order_db.findById_orders_db(params.order_id);
-    const { shipping_rate, shipment_id } = order.shipping;
     try {
+      const order = await order_db.findById_orders_db(params.order_id);
+      const { shipping_rate, shipment_id } = order.shipping;
       const label: any = await buyLabel({ shipment_id, shipping_rate, order });
       return { invoice: invoice({ order }), label: label.postage_label.label_url };
     } catch (error) {
@@ -57,7 +57,8 @@ export default {
   create_label_shipping_s: async (params: any) => {
     try {
       const order = await order_db.findById_orders_db(params.order_id);
-      const label: any = await createLabel({ order });
+      const { shipping_rate } = order.shipping;
+      const label: any = await createLabel({ order, shipping_rate });
       await addTracking({ order, label, shipping_rate: label.selected_rate });
       return { invoice: invoice({ order }), label: label.postage_label.label_url };
     } catch (error) {

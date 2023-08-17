@@ -3,7 +3,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import Covy from "../shared/GlowLEDsComponents/GLCovy/GLCovy";
 import axios from "axios";
 
-import * as API from "../api";
+import { errorMessage } from "../helpers/sharedHelpers";
 
 export const buyLabel = createAsyncThunk("shipping/buyLabel", async ({ orderId }: any, thunkApi: any) => {
   try {
@@ -11,9 +11,10 @@ export const buyLabel = createAsyncThunk("shipping/buyLabel", async ({ orderId }
     return data;
   } catch (error) {
     Covy().showSnackbar({
-      message: `Error: ${error}`,
+      message: errorMessage(error),
       severity: "error",
     });
+    return thunkApi.rejectWithValue(error.response?.data);
   }
 });
 
@@ -23,9 +24,10 @@ export const createLabel = createAsyncThunk("shipping/createLabel", async ({ ord
     return data;
   } catch (error) {
     Covy().showSnackbar({
-      message: `Error: ${error}`,
+      message: errorMessage(error),
       severity: "error",
     });
+    return thunkApi.rejectWithValue(error.response?.data);
   }
 });
 
@@ -37,7 +39,7 @@ export const createCustomLabel = createAsyncThunk(
       return data;
     } catch (error) {
       Covy().showSnackbar({
-        message: `Error: ${error}`,
+        message: errorMessage(error),
         severity: "error",
       });
     }
@@ -51,9 +53,10 @@ export const createTracker = createAsyncThunk("shipping/createTracker", async ({
     return data;
   } catch (error) {
     Covy().showSnackbar({
-      message: `Error: ${error}`,
+      message: errorMessage(error),
       severity: "error",
     });
+    return thunkApi.rejectWithValue(error.response?.data);
   }
 });
 export const createReturnLabel = createAsyncThunk(
@@ -64,7 +67,7 @@ export const createReturnLabel = createAsyncThunk(
       return data;
     } catch (error) {
       Covy().showSnackbar({
-        message: `Error: ${error}`,
+        message: errorMessage(error),
         severity: "error",
       });
     }
@@ -79,7 +82,7 @@ export const shippingRates = createAsyncThunk(
       return data;
     } catch (error) {
       Covy().showSnackbar({
-        message: `Error: ${error}`,
+        message: errorMessage(error),
         severity: "error",
       });
     }
@@ -94,7 +97,7 @@ export const customShippingRates = createAsyncThunk(
       return data;
     } catch (error) {
       Covy().showSnackbar({
-        message: `Error: ${error}`,
+        message: errorMessage(error),
         severity: "error",
       });
     }
@@ -109,7 +112,7 @@ export const refundLabel = createAsyncThunk(
       return data;
     } catch (error) {
       Covy().showSnackbar({
-        message: `Error: ${error}`,
+        message: errorMessage(error),
         severity: "error",
       });
     }
@@ -124,7 +127,7 @@ export const generateCSVLabel = createAsyncThunk(
       return data;
     } catch (error) {
       Covy().showSnackbar({
-        message: `Error: ${error}`,
+        message: errorMessage(error),
         severity: "error",
       });
     }
@@ -139,7 +142,7 @@ export const createPickup = createAsyncThunk(
       return data;
     } catch (error) {
       Covy().showSnackbar({
-        message: `Error: ${error}`,
+        message: errorMessage(error),
         severity: "error",
       });
     }
@@ -158,7 +161,7 @@ export const confirmPickup = createAsyncThunk(
       return data;
     } catch (error) {
       Covy().showSnackbar({
-        message: `Error: ${error}`,
+        message: errorMessage(error),
         severity: "error",
       });
     }
@@ -180,7 +183,7 @@ export const differentShippingRates = createAsyncThunk(
       }
     } catch (error) {
       Covy().showSnackbar({
-        message: `Error: ${error}`,
+        message: errorMessage(error),
         severity: "error",
       });
     }
@@ -199,7 +202,7 @@ export const differentShippingRates = createAsyncThunk(
 //     return data;
 //     } catch (error) {
 //   Covy().showSnackbar({
-//     message: `Error: ${error}`,
+//     message: errorMessage(error),
 //     severity: "error"
 //   });
 // }
@@ -212,7 +215,7 @@ export const differentShippingRates = createAsyncThunk(
 //     return response_data;
 //     } catch (error) {
 //   Covy().showSnackbar({
-//     message: `Error: ${error}`,
+//     message: errorMessage(error),
 //     severity: "error"
 //   });
 // }
@@ -232,7 +235,7 @@ export const differentShippingRates = createAsyncThunk(
 //       return data;
 //       } catch (error) {
 //   Covy().showSnackbar({
-//     message: `Error: ${error}`,
+//     message: errorMessage(error),
 //     severity: "error"
 //   });
 // }
@@ -253,7 +256,7 @@ export const differentShippingRates = createAsyncThunk(
 //       return data;
 //       } catch (error) {
 //   Covy().showSnackbar({
-//     message: `Error: ${error}`,
+//     message: errorMessage(error),
 //     severity: "error"
 //   });
 // }
@@ -273,7 +276,7 @@ export const differentShippingRates = createAsyncThunk(
 //     return data;
 //     } catch (error) {
 //   Covy().showSnackbar({
-//     message: `Error: ${error}`,
+//     message: errorMessage(error),
 //     severity: "error"
 //   });
 // }

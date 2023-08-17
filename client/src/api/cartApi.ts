@@ -2,6 +2,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import Covy from "../shared/GlowLEDsComponents/GLCovy/GLCovy";
 import axios from "axios";
+import { errorMessage } from "../helpers/sharedHelpers";
 
 import { create_query } from "../utils/helper_functions";
 
@@ -10,7 +11,7 @@ export const getCarts = async ({
   sorting,
   filters,
   page,
-  pageSize
+  pageSize,
 }: {
   search: string;
   sorting: any;
@@ -25,14 +26,15 @@ export const getCarts = async ({
         page: page,
         search: search,
         sort: sorting,
-        filters
-      }
+        filters,
+      },
     });
   } catch (error) {
     Covy().showSnackbar({
-      message: `Error: ${error}`,
-      severity: "error"
+      message: errorMessage(error),
+      severity: "error",
     });
+    return thunkApi.rejectWithValue(error.response?.data);
   }
 };
 
@@ -42,9 +44,10 @@ export const listCarts = createAsyncThunk("carts/listCarts", async (query: any, 
     return data;
   } catch (error) {
     Covy().showSnackbar({
-      message: `Error: ${error}`,
-      severity: "error"
+      message: errorMessage(error),
+      severity: "error",
     });
+    return thunkApi.rejectWithValue(error.response?.data);
   }
 });
 
@@ -54,17 +57,21 @@ export const addToCart = createAsyncThunk(
     try {
       const {
         users: {
-          userPage: { current_user }
+          userPage: { current_user },
         },
         carts: {
-          cartPage: { my_cart }
-        }
+          cartPage: { my_cart },
+        },
       } = thunkApi.getState();
 
       // Call handle_cart route whether the cart exists or not
       let data;
       if (cart._id) {
-        data = await axios.post(`/api/carts/${cart._id}/add_to_cart`, { cart_item, cartItems: my_cart.cartItems, current_user });
+        data = await axios.post(`/api/carts/${cart._id}/add_to_cart`, {
+          cart_item,
+          cartItems: my_cart.cartItems,
+          current_user,
+        });
       } else {
         data = await axios.post(`/api/carts/add_to_cart`, { cart_item, cartItems: my_cart.cartItems, current_user });
       }
@@ -73,8 +80,8 @@ export const addToCart = createAsyncThunk(
       return { data: data.data, type, current_user };
     } catch (error) {
       Covy().showSnackbar({
-        message: `Error: ${error}`,
-        severity: "error"
+        message: errorMessage(error),
+        severity: "error",
       });
     }
   }
@@ -91,9 +98,10 @@ export const saveCart = createAsyncThunk("carts/saveCart", async (cart: any, thu
     }
   } catch (error) {
     Covy().showSnackbar({
-      message: `Error: ${error}`,
-      severity: "error"
+      message: errorMessage(error),
+      severity: "error",
     });
+    return thunkApi.rejectWithValue(error.response?.data);
   }
 });
 
@@ -101,16 +109,17 @@ export const updateQuantity = createAsyncThunk("carts/updateQuantity", async (ca
   try {
     const {
       users: {
-        userPage: { current_user }
-      }
+        userPage: { current_user },
+      },
     } = thunkApi.getState();
     const { data } = await axios.put(`/api/carts/${cart._id}`, cart);
     return { data: cart, current_user };
   } catch (error) {
     Covy().showSnackbar({
-      message: `Error: ${error}`,
-      severity: "error"
+      message: errorMessage(error),
+      severity: "error",
     });
+    return thunkApi.rejectWithValue(error.response?.data);
   }
 });
 
@@ -120,9 +129,10 @@ export const detailsCart = createAsyncThunk("carts/detailsCart", async (id: stri
     return data;
   } catch (error) {
     Covy().showSnackbar({
-      message: `Error: ${error}`,
-      severity: "error"
+      message: errorMessage(error),
+      severity: "error",
     });
+    return thunkApi.rejectWithValue(error.response?.data);
   }
 });
 
@@ -132,9 +142,10 @@ export const getCurrentUserCart = createAsyncThunk("carts/getCurrentUserCart", a
     return data;
   } catch (error) {
     Covy().showSnackbar({
-      message: `Error: ${error}`,
-      severity: "error"
+      message: errorMessage(error),
+      severity: "error",
     });
+    return thunkApi.rejectWithValue(error.response?.data);
   }
 });
 
@@ -144,9 +155,10 @@ export const emptyCart = createAsyncThunk("carts/emptyCart", async (id: string, 
     return data;
   } catch (error) {
     Covy().showSnackbar({
-      message: `Error: ${error}`,
-      severity: "error"
+      message: errorMessage(error),
+      severity: "error",
     });
+    return thunkApi.rejectWithValue(error.response?.data);
   }
 });
 
@@ -156,9 +168,10 @@ export const deleteCart = createAsyncThunk("carts/deleteCart", async (id: string
     return data;
   } catch (error) {
     Covy().showSnackbar({
-      message: `Error: ${error}`,
-      severity: "error"
+      message: errorMessage(error),
+      severity: "error",
     });
+    return thunkApi.rejectWithValue(error.response?.data);
   }
 });
 
@@ -168,18 +181,18 @@ export const deleteCartItem = createAsyncThunk(
     try {
       const {
         users: {
-          userPage: { current_user }
+          userPage: { current_user },
         },
         carts: {
-          cartPage: { my_cart }
-        }
+          cartPage: { my_cart },
+        },
       } = thunkApi.getState();
       const { data } = await axios.put(`/api/carts/${my_cart._id}/cart_item/${item_index}`, { current_user, my_cart });
       return { data, type };
     } catch (error) {
       Covy().showSnackbar({
-        message: `Error: ${error}`,
-        severity: "error"
+        message: errorMessage(error),
+        severity: "error",
       });
     }
   }

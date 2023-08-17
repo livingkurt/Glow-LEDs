@@ -12,7 +12,7 @@ const paycheck = {
   venmo: "",
   paid: "",
   reciept: "",
-  paid_at: ""
+  paid_at: "",
 };
 
 const paycheckPage = createSlice({
@@ -25,14 +25,14 @@ const paycheckPage = createSlice({
     edit_paycheck_modal: false,
     paycheck_modal: false,
     message: "",
-    error: {}
+    error: {},
   },
   reducers: {
     set_paycheck: (state, { payload }) => {
       const updated_paycheck = payload;
       return {
         ...state,
-        paycheck: { ...state.paycheck, ...updated_paycheck }
+        paycheck: { ...state.paycheck, ...updated_paycheck },
       };
     },
     set_loading: (state, { payload }) => {
@@ -56,7 +56,7 @@ const paycheckPage = createSlice({
     open_paycheck_modal: (state, { payload }) => {
       state.paycheck_modal = true;
       state.paycheck = payload;
-    }
+    },
   },
   extraReducers: {
     [API.listPaychecks.pending as any]: (state: any, { payload }: any) => {
@@ -70,10 +70,10 @@ const paycheckPage = createSlice({
       state.page = payload.currentPage;
       state.message = "Paychecks Found";
     },
-    [API.listPaychecks.rejected as any]: (state: any, { payload }: any) => {
+    [API.listPaychecks.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.savePaycheck.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -83,10 +83,10 @@ const paycheckPage = createSlice({
       state.message = "Paycheck Saved";
       state.remoteVersionRequirement = Date.now();
     },
-    [API.savePaycheck.rejected as any]: (state: any, { payload }: any) => {
+    [API.savePaycheck.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.detailsPaycheck.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -96,10 +96,10 @@ const paycheckPage = createSlice({
       state.paycheck = { ...payload, paid_at: payload.paid_at ? format_date(payload.paid_at) : "" };
       state.message = "Paycheck Found";
     },
-    [API.detailsPaycheck.rejected as any]: (state: any, { payload }: any) => {
+    [API.detailsPaycheck.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.deletePaycheck.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -110,10 +110,10 @@ const paycheckPage = createSlice({
       state.message = "Paycheck Deleted";
       state.remoteVersionRequirement = Date.now();
     },
-    [API.deletePaycheck.rejected as any]: (state: any, { payload }: any) => {
+    [API.deletePaycheck.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.deleteMultiplePaychecks.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -123,12 +123,12 @@ const paycheckPage = createSlice({
       state.message = "Paycheck Deleted";
       state.remoteVersionRequirement = Date.now();
     },
-    [API.deleteMultiplePaychecks.rejected as any]: (state: any, { payload }: any) => {
+    [API.deleteMultiplePaychecks.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
-    }
-  }
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
+    },
+  },
 });
 
 export const {
@@ -138,6 +138,6 @@ export const {
   open_create_paycheck_modal,
   open_paycheck_modal,
   close_paycheck_modal,
-  open_edit_paycheck_modal
+  open_edit_paycheck_modal,
 } = paycheckPage.actions;
 export default paycheckPage.reducer;

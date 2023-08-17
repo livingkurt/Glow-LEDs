@@ -11,14 +11,14 @@ const settingPage = createSlice({
     setting: {},
     message: "",
     error: {},
-    show_search_bar: true
+    show_search_bar: true,
   },
   reducers: {
     set_setting: (state, { payload }) => {
       const updated_setting = payload;
       return {
         ...state,
-        setting: { ...state.setting, ...updated_setting }
+        setting: { ...state.setting, ...updated_setting },
       };
     },
     set_loading: (state, { payload }) => {
@@ -26,7 +26,7 @@ const settingPage = createSlice({
     },
     set_show_search_bar: (state, { payload }) => {
       state.show_search_bar = payload;
-    }
+    },
   },
   extraReducers: {
     [API.listSettings.pending as any]: (state: any, { payload }: any) => {
@@ -40,10 +40,10 @@ const settingPage = createSlice({
       state.page = payload.currentPage;
       state.message = "Settings Found";
     },
-    [API.listSettings.rejected as any]: (state: any, { payload }: any) => {
+    [API.listSettings.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.saveSetting.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -52,10 +52,10 @@ const settingPage = createSlice({
       state.loading = false;
       state.message = "Setting Saved";
     },
-    [API.saveSetting.rejected as any]: (state: any, { payload }: any) => {
+    [API.saveSetting.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
 
     [API.detailsSetting.pending as any]: (state: any, { payload }: any) => {
@@ -66,10 +66,10 @@ const settingPage = createSlice({
       state.setting = payload;
       state.message = "Setting Found";
     },
-    [API.detailsSetting.rejected as any]: (state: any, { payload }: any) => {
+    [API.detailsSetting.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.deleteSetting.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -79,12 +79,12 @@ const settingPage = createSlice({
       state.setting = payload.setting;
       state.message = "Setting Deleted";
     },
-    [API.deleteSetting.rejected as any]: (state: any, { payload }: any) => {
+    [API.deleteSetting.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
-    }
-  }
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
+    },
+  },
 });
 
 export const { set_loading, set_setting, set_show_search_bar } = settingPage.actions;

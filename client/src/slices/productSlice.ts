@@ -91,7 +91,7 @@ const product = {
   default_option: false,
   option: false,
   macro_product: false,
-  extra_cost: 0
+  extra_cost: 0,
 };
 
 const productPage = createSlice({
@@ -127,14 +127,14 @@ const productPage = createSlice({
     remoteVersionRequirement: 0,
     edit_product_modal: false,
     product_modal: false,
-    limit: 10
+    limit: 10,
   },
   reducers: {
     set_product: (state, { payload }) => {
       const updated_product = payload;
       return {
         ...state,
-        product: { ...state.product, ...updated_product }
+        product: { ...state.product, ...updated_product },
       };
     },
     set_loading: (state, { payload }) => {
@@ -199,7 +199,7 @@ const productPage = createSlice({
     },
     set_new_index: (state, { payload }) => {
       state.new_index = payload;
-    }
+    },
   },
   extraReducers: {
     [API.listProducts.pending as any]: (state: any, { payload }: any) => {
@@ -213,10 +213,10 @@ const productPage = createSlice({
       state.page = payload.currentPage;
       state.message = "Products Found";
     },
-    [API.listProducts.rejected as any]: (state: any, { payload }: any) => {
+    [API.listProducts.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.saveProduct.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -227,10 +227,10 @@ const productPage = createSlice({
       state.edit_product_modal = false;
       state.remoteVersionRequirement = Date.now();
     },
-    [API.saveProduct.rejected as any]: (state: any, { payload }: any) => {
+    [API.saveProduct.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.detailsProduct.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -250,10 +250,10 @@ const productPage = createSlice({
       state.product = payload;
       state.message = "Product Found";
     },
-    [API.detailsProduct.rejected as any]: (state: any, { payload }: any) => {
+    [API.detailsProduct.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.deleteProduct.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -265,10 +265,10 @@ const productPage = createSlice({
       state.message = "Product Deleted";
       state.remoteVersionRequirement = Date.now();
     },
-    [API.deleteProduct.rejected as any]: (state: any, { payload }: any) => {
+    [API.deleteProduct.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.deleteMultipleProducts.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -278,10 +278,10 @@ const productPage = createSlice({
       state.message = "Product Deleted";
       state.remoteVersionRequirement = Date.now();
     },
-    [API.deleteMultipleProducts.rejected as any]: (state: any, { payload }: any) => {
+    [API.deleteMultipleProducts.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.saveProductReview.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -292,12 +292,12 @@ const productPage = createSlice({
       state.success = true;
       state.message = "Product Review Saved";
     },
-    [API.saveProductReview.rejected as any]: (state: any, { payload }: any) => {
+    [API.saveProductReview.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
-    }
-  }
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
+    },
+  },
 });
 
 export const {
@@ -321,6 +321,6 @@ export const {
   open_product_modal,
   close_edit_product_modal,
   open_edit_product_modal,
-  setRemoteVersionRequirement
+  setRemoteVersionRequirement,
 } = productPage.actions;
 export default productPage.reducer;

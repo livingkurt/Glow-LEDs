@@ -15,21 +15,21 @@ const tutorialPage = createSlice({
       level: "",
       pathname: "",
       order: null,
-      active: false
+      active: false,
     },
     remoteVersionRequirement: 0,
     edit_tutorial_modal: false,
     tutorial_modal: false,
     message: "",
     success: false,
-    error: {}
+    error: {},
   },
   reducers: {
     set_tutorial: (state, { payload }) => {
       const updated_tutorial = payload;
       return {
         ...state,
-        tutorial: { ...state.tutorial, ...updated_tutorial }
+        tutorial: { ...state.tutorial, ...updated_tutorial },
       };
     },
     set_loading: (state, { payload }) => {
@@ -52,7 +52,7 @@ const tutorialPage = createSlice({
         level: "",
         pathname: "",
         order: null,
-        active: false
+        active: false,
       };
     },
     open_edit_tutorial_modal: (state, { payload }) => {
@@ -70,7 +70,7 @@ const tutorialPage = createSlice({
         level: "",
         pathname: "",
         order: null,
-        active: false
+        active: false,
       };
     },
     open_tutorial_modal: (state, { payload }) => {
@@ -79,7 +79,7 @@ const tutorialPage = createSlice({
     },
     setRemoteVersionRequirement: (state, { payload }) => {
       state.remoteVersionRequirement = Date.now();
-    }
+    },
   },
   extraReducers: {
     [API.listTutorials.pending as any]: (state: any, { payload }: any) => {
@@ -93,10 +93,10 @@ const tutorialPage = createSlice({
       state.page = payload.currentPage;
       state.message = "Tutorials Found";
     },
-    [API.listTutorials.rejected as any]: (state: any, { payload }: any) => {
+    [API.listTutorials.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.saveTutorial.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -108,10 +108,10 @@ const tutorialPage = createSlice({
       state.message = "Tutorial Saved";
       state.remoteVersionRequirement = Date.now();
     },
-    [API.saveTutorial.rejected as any]: (state: any, { payload }: any) => {
+    [API.saveTutorial.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.detailsTutorial.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -121,10 +121,10 @@ const tutorialPage = createSlice({
       state.tutorial = payload;
       state.message = "Tutorial Found";
     },
-    [API.detailsTutorial.rejected as any]: (state: any, { payload }: any) => {
+    [API.detailsTutorial.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.deleteTutorial.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -135,12 +135,12 @@ const tutorialPage = createSlice({
       state.message = "Tutorial Deleted";
       state.remoteVersionRequirement = Date.now();
     },
-    [API.deleteTutorial.rejected as any]: (state: any, { payload }: any) => {
+    [API.deleteTutorial.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
-    }
-  }
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
+    },
+  },
 });
 
 export const {
@@ -151,6 +151,6 @@ export const {
   open_tutorial_modal,
   close_tutorial_modal,
   open_edit_tutorial_modal,
-  setRemoteVersionRequirement
+  setRemoteVersionRequirement,
 } = tutorialPage.actions;
 export default tutorialPage.reducer;

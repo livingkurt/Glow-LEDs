@@ -49,7 +49,6 @@ import { Four04Page } from "./pages/Four04Page";
 import { TutorialsPage } from "./pages/TutorialsPage";
 import { WholesalersPage } from "./pages/WholesalersPage";
 import { ImagesPage } from "./pages/ImagesPage";
-import LabelCreatorPage from "./pages/LabelCreatorPage/LabelCreatorPage";
 import config from "./config";
 import jwt_decode from "jwt-decode";
 import { EditOrderPage } from "./pages/EditOrderPage";
@@ -128,7 +127,7 @@ const App = () => {
     CheckEmailPage,
     AffiliateTermsPage,
     TutorialsGridPage,
-    TrackOrderPage
+    TrackOrderPage,
   };
 
   const dispatch = useDispatch();
@@ -148,7 +147,7 @@ const App = () => {
     footer: "#333333",
     header: "#333333",
     content: "linear-gradient(180deg, #8a8a8a 0%, #272727 100%);",
-    container: "#272727"
+    container: "#272727",
   };
 
   const out_of_office_date_1 = "2021-11-23";
@@ -321,7 +320,13 @@ const App = () => {
           )}
           <Sidebar visible={visible} height={height} width={width} wrapperRef={wrapperRef} />
 
-          <Cart visible={visible} height={height} width={width} date_1={out_of_office_date_1} date_2={out_of_office_date_2} />
+          <Cart
+            visible={visible}
+            height={height}
+            width={width}
+            date_1={out_of_office_date_1}
+            date_2={out_of_office_date_2}
+          />
 
           <Content>
             {config.NODE_ENV === "production" && (
@@ -349,7 +354,6 @@ const App = () => {
                 <AdminRoute path="/secure/glow/gcode_continous" component={GcodeContinousPage} />
                 <AdminRoute path="/secure/glow/edit_all_data" component={DatabaseMigrationPage} />
                 <AdminRoute path="/secure/glow/products" component={ProductsPage} />
-                <AdminRoute path="/secure/glow/create_label" component={LabelCreatorPage} />
                 <AdminRoute path="/secure/glow/edit_order/:id" component={EditOrderPage} />
                 <AdminRoute path="/secure/glow/orders" component={OrdersPage} />
                 <AdminRoute path="/secure/glow/users" component={UsersPage} />
@@ -369,8 +373,16 @@ const App = () => {
                 <AdminRoute path="/secure/glow/editpalette/:id?" component={EditPalettePage} />
                 <AdminRoute path="/secure/glow/editfilament/:id?" component={EditFilamentPage} />
                 <AdminRoute path="/secure/glow/change_password/:id" component={AdminChangePasswordPage} />
-                <AdminRoute path="/secure/glow/dashboard/monthly_expenes/:year" exact={true} component={MonthlyExpensesPage} />
-                <AdminRoute path="/secure/glow/dashboard/monthly_expenes/:year/:month" exact={true} component={MonthExpensesPage} />
+                <AdminRoute
+                  path="/secure/glow/dashboard/monthly_expenes/:year"
+                  exact={true}
+                  component={MonthlyExpensesPage}
+                />
+                <AdminRoute
+                  path="/secure/glow/dashboard/monthly_expenes/:year/:month"
+                  exact={true}
+                  component={MonthExpensesPage}
+                />
                 <AdminRoute path="/secure/glow/dashboard" component={DashboardPage} />
                 <AdminRoute path="/secure/glow/editexpense/:id?" component={EditExpensePage} />
                 <AdminRoute path="/secure/glow/editfeature/:pathname?" component={EditFeaturePage} />

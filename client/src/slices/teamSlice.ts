@@ -31,21 +31,21 @@ const teamPage = createSlice({
       video: "",
       public_code: "",
       private_code: "",
-      venmo: ""
+      venmo: "",
     },
     message: "",
     error: {},
     search: "",
     sort: "",
     page: 1,
-    limit: 10
+    limit: 10,
   },
   reducers: {
     set_team: (state, { payload }) => {
       const updated_team = payload;
       return {
         ...state,
-        team: { ...state.team, ...updated_team }
+        team: { ...state.team, ...updated_team },
       };
     },
     set_loading: (state, { payload }) => {
@@ -62,7 +62,7 @@ const teamPage = createSlice({
     },
     set_limit: (state, { payload }) => {
       state.limit = payload;
-    }
+    },
   },
   extraReducers: {
     [API.listTeams.pending as any]: (state: any, { payload }: any) => {
@@ -76,10 +76,10 @@ const teamPage = createSlice({
       state.page = payload.currentPage;
       state.message = "Teams Found";
     },
-    [API.listTeams.rejected as any]: (state: any, { payload }: any) => {
+    [API.listTeams.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.saveTeam.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -88,10 +88,10 @@ const teamPage = createSlice({
       state.loading = false;
       state.message = "Team Saved";
     },
-    [API.saveTeam.rejected as any]: (state: any, { payload }: any) => {
+    [API.saveTeam.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.detailsTeam.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -101,10 +101,10 @@ const teamPage = createSlice({
       state.team = payload;
       state.message = "Team Found";
     },
-    [API.detailsTeam.rejected as any]: (state: any, { payload }: any) => {
+    [API.detailsTeam.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.deleteTeam.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -114,12 +114,12 @@ const teamPage = createSlice({
       state.team = payload.team;
       state.message = "Team Deleted";
     },
-    [API.deleteTeam.rejected as any]: (state: any, { payload }: any) => {
+    [API.deleteTeam.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
-    }
-  }
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
+    },
+  },
 });
 
 export const { set_search, set_sort, set_page, set_limit, set_loading, set_team } = teamPage.actions;

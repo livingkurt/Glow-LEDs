@@ -26,7 +26,7 @@ const promo = {
   end_date: "",
   used_once: false,
   minimum_total: 0,
-  active: false
+  active: false,
 };
 
 const promoPage = createSlice({
@@ -39,14 +39,14 @@ const promoPage = createSlice({
     edit_promo_modal: false,
     promo_modal: false,
     message: "",
-    error: {}
+    error: {},
   },
   reducers: {
     set_promo: (state, { payload }) => {
       const updated_promo = payload;
       return {
         ...state,
-        promo: { ...state.promo, ...updated_promo }
+        promo: { ...state.promo, ...updated_promo },
       };
     },
     set_loading: (state, { payload }) => {
@@ -70,7 +70,7 @@ const promoPage = createSlice({
     open_promo_modal: (state, { payload }) => {
       state.promo_modal = true;
       state.promo = payload;
-    }
+    },
   },
   extraReducers: {
     [API.listPromos.pending as any]: (state: any, { payload }: any) => {
@@ -84,10 +84,10 @@ const promoPage = createSlice({
       state.page = payload.currentPage;
       state.message = "Promos Found";
     },
-    [API.listPromos.rejected as any]: (state: any, { payload }: any) => {
+    [API.listPromos.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.listSponsorCodes.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -101,10 +101,10 @@ const promoPage = createSlice({
       state.twentyFiveOffCode = twentyFiveOffCode;
       state.message = "Promos Found";
     },
-    [API.listSponsorCodes.rejected as any]: (state: any, { payload }: any) => {
+    [API.listSponsorCodes.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.savePromo.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -115,10 +115,10 @@ const promoPage = createSlice({
       state.edit_promo_modal = false;
       state.remoteVersionRequirement = Date.now();
     },
-    [API.savePromo.rejected as any]: (state: any, { payload }: any) => {
+    [API.savePromo.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.detailsPromo.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -128,10 +128,10 @@ const promoPage = createSlice({
       state.promo = { ...payload, paid_at: payload.paid_at ? format_date(payload.paid_at) : "" };
       state.message = "Promo Found";
     },
-    [API.detailsPromo.rejected as any]: (state: any, { payload }: any) => {
+    [API.detailsPromo.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.deletePromo.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -141,10 +141,10 @@ const promoPage = createSlice({
       state.promo = payload.promo;
       state.message = "Promo Deleted";
     },
-    [API.deletePromo.rejected as any]: (state: any, { payload }: any) => {
+    [API.deletePromo.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.deleteMultiplePromos.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -154,10 +154,10 @@ const promoPage = createSlice({
       state.message = "Promo Deleted";
       state.remoteVersionRequirement = Date.now();
     },
-    [API.deleteMultiplePromos.rejected as any]: (state: any, { payload }: any) => {
+    [API.deleteMultiplePromos.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.refreshSponsorCodes.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -167,12 +167,12 @@ const promoPage = createSlice({
       state.message = "Sponsor Codes Refreshed";
       state.remoteVersionRequirement = Date.now();
     },
-    [API.refreshSponsorCodes.rejected as any]: (state: any, { payload }: any) => {
+    [API.refreshSponsorCodes.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
-    }
-  }
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
+    },
+  },
 });
 
 export const {
@@ -182,6 +182,6 @@ export const {
   open_create_promo_modal,
   open_promo_modal,
   close_promo_modal,
-  open_edit_promo_modal
+  open_edit_promo_modal,
 } = promoPage.actions;
 export default promoPage.reducer;

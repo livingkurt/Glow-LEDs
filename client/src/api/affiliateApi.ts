@@ -1,6 +1,7 @@
 /* eslint-disable consistent-return */
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { errorMessage } from "../helpers/sharedHelpers";
 import { create_query } from "../utils/helper_functions";
 
 import * as API from "../api";
@@ -32,9 +33,10 @@ export const getAffiliates = async ({
     });
   } catch (error) {
     Covy().showSnackbar({
-      message: `Error: ${error}`,
+      message: errorMessage(error),
       severity: "error",
     });
+    return thunkApi.rejectWithValue(error.response?.data);
   }
 };
 
@@ -44,9 +46,10 @@ export const listAffiliates = createAsyncThunk("affiliates/listAffiliates", asyn
     return data;
   } catch (error) {
     Covy().showSnackbar({
-      message: `Error: ${error}`,
+      message: errorMessage(error),
       severity: "error",
     });
+    return thunkApi.rejectWithValue(error.response?.data);
   }
 });
 
@@ -74,7 +77,7 @@ export const saveAffiliate = createAsyncThunk(
       }
     } catch (error) {
       Covy().showSnackbar({
-        message: `Error: ${error}`,
+        message: errorMessage(error),
         severity: "error",
       });
     }
@@ -94,7 +97,7 @@ export const detailsAffiliate = createAsyncThunk(
       }
     } catch (error) {
       Covy().showSnackbar({
-        message: `Error: ${error}`,
+        message: errorMessage(error),
         severity: "error",
       });
     }
@@ -107,9 +110,10 @@ export const deleteAffiliate = createAsyncThunk("affiliates/deleteAffiliate", as
     return data;
   } catch (error) {
     Covy().showSnackbar({
-      message: `Error: ${error}`,
+      message: errorMessage(error),
       severity: "error",
     });
+    return thunkApi.rejectWithValue(error.response?.data);
   }
 });
 
@@ -123,9 +127,10 @@ export const generateSponsorCodes = createAsyncThunk("affiliates/generateSponsor
     return data;
   } catch (error) {
     Covy().showSnackbar({
-      message: `Error: ${error}`,
+      message: errorMessage(error),
       severity: "error",
     });
+    return thunkApi.rejectWithValue(error.response?.data);
   }
 });
 
@@ -137,7 +142,7 @@ export const create_rave_mob_affiliates = createAsyncThunk(
       return data;
     } catch (error) {
       Covy().showSnackbar({
-        message: `Error: ${error}`,
+        message: errorMessage(error),
         severity: "error",
       });
     }
@@ -168,7 +173,7 @@ export const affiliateEarnings = createAsyncThunk(
       return { data, type };
     } catch (error) {
       Covy().showSnackbar({
-        message: `Error: ${error}`,
+        message: errorMessage(error),
         severity: "error",
       });
     }
@@ -189,7 +194,7 @@ export const monthlyCheckin = createAsyncThunk(
       return data;
     } catch (error) {
       Covy().showSnackbar({
-        message: `Error: ${error}`,
+        message: errorMessage(error),
         severity: "error",
       });
     }

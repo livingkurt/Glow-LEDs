@@ -25,21 +25,21 @@ const surveyPage = createSlice({
       order: "",
       is_survey: "",
       active: "",
-      rating: null
+      rating: null,
     },
     message: "",
     error: {},
     search: "",
     sort: "",
     page: 1,
-    limit: 10
+    limit: 10,
   },
   reducers: {
     set_survey: (state, { payload }) => {
       const updated_survey = payload;
       return {
         ...state,
-        survey: { ...state.survey, ...updated_survey }
+        survey: { ...state.survey, ...updated_survey },
       };
     },
     set_loading: (state, { payload }) => {
@@ -56,7 +56,7 @@ const surveyPage = createSlice({
     },
     set_limit: (state, { payload }) => {
       state.limit = payload;
-    }
+    },
   },
   extraReducers: {
     [API.listSurveys.pending as any]: (state: any, { payload }: any) => {
@@ -70,10 +70,10 @@ const surveyPage = createSlice({
       state.page = payload.currentPage;
       state.message = "Surveys Found";
     },
-    [API.listSurveys.rejected as any]: (state: any, { payload }: any) => {
+    [API.listSurveys.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.saveSurvey.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -82,10 +82,10 @@ const surveyPage = createSlice({
       state.loading = false;
       state.message = "Survey Saved";
     },
-    [API.saveSurvey.rejected as any]: (state: any, { payload }: any) => {
+    [API.saveSurvey.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.detailsSurvey.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -95,10 +95,10 @@ const surveyPage = createSlice({
       state.survey = payload;
       state.message = "Survey Found";
     },
-    [API.detailsSurvey.rejected as any]: (state: any, { payload }: any) => {
+    [API.detailsSurvey.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
     },
     [API.deleteSurvey.pending as any]: (state: any, { payload }: any) => {
       state.loading = true;
@@ -108,12 +108,12 @@ const surveyPage = createSlice({
       state.survey = payload.survey;
       state.message = "Survey Deleted";
     },
-    [API.deleteSurvey.rejected as any]: (state: any, { payload }: any) => {
+    [API.deleteSurvey.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
-      state.error = payload.error;
-      state.message = payload.message;
-    }
-  }
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
+    },
+  },
 });
 
 export const { set_search, set_sort, set_page, set_limit, set_loading, set_survey } = surveyPage.actions;
