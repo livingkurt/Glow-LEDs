@@ -37,11 +37,21 @@ const DatePicker = ({ year, month, start_date, end_date }) => {
   };
 
   const handleMonthChange = selectedMonth => {
-    const { start_date, end_date } = getMonthStartEndDates({ year, month: selectedMonth });
-    dispatch(set_month(selectedMonth));
-    dispatch(set_start_date(start_date));
-    dispatch(set_end_date(end_date));
-    // updateUrlParams({ start_date, end_date });
+    if (selectedMonth) {
+      // Case when a month is selected
+      const { start_date, end_date } = getMonthStartEndDates({ year, month: selectedMonth });
+      dispatch(set_month(selectedMonth));
+      dispatch(set_start_date(start_date));
+      dispatch(set_end_date(end_date));
+      // updateUrlParams({ start_date, end_date });
+    } else {
+      // Case when the 'x' button is clicked
+      const { start_date, end_date } = getMonthStartEndDates({ year }); // Get the start and end dates of the year
+      dispatch(set_month("")); // Clear the month
+      dispatch(set_start_date(start_date));
+      dispatch(set_end_date(end_date));
+      // updateUrlParams({ start_date, end_date });
+    }
   };
 
   const handleStartDateChange = date => {

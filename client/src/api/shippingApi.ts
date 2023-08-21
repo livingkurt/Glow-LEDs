@@ -60,7 +60,6 @@ export const createCustomLabel = createAsyncThunk(
 );
 
 export const getShipments = createAsyncThunk("shipping/getShipments", async (_params, thunkApi: any) => {
-  console.log("getShipments");
   try {
     const { data } = await axios.get(`/api/shipping/shipments`);
     Covy().showSnackbar({

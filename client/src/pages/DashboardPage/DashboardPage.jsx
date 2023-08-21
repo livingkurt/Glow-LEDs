@@ -1,25 +1,6 @@
 import { Helmet } from "react-helmet";
-import {
-  useGetMonthlyRevenueOrdersQuery,
-  useGetRangeAffiliateEarningsCodeUsageQuery,
-  useGetRangeCategoryRevenueOrdersQuery,
-  useGetRangeRevenueOrdersQuery,
-  useGetRangeTipsRevenueOrdersQuery,
-  useGetYearlyRevenueOrdersQuery,
-  useGetRangePayoutsQuery,
-  useGetDailyRevenueOrdersQuery,
-  useGetCurrentStockQuery,
-  useGetProductRevenueQuery,
-  useGetProductRangeRevenueOrdersQuery,
-  useGetMonthlyRevenueProductOrdersQuery,
-  useGetYearlyRevenueProductOrdersQuery,
-  useGetSponsorCheckinStatusQuery,
-  useGetRangeExpensesQuery,
-  useGetDailyExpenseOrdersQuery,
-  useGetMonthlyExpenseOrdersQuery,
-  useGetYearlyExpenseOrdersQuery,
-  updateVersion,
-} from "./dashboardApi";
+
+import * as API from "./dashboardApi";
 import { determineTabName, run_daily_workers, run_monthly_workers, run_weekly_workers } from "./dashboardHelpers";
 import { useDispatch, useSelector } from "react-redux";
 import { DatePicker } from "./components";
@@ -46,25 +27,27 @@ const DashboardPage = () => {
   const productPage = useSelector(state => state.products.productPage);
   const { product } = productPage;
 
-  const range_revenue = useGetRangeRevenueOrdersQuery({ start_date, end_date });
-  const category_range_revenue = useGetRangeCategoryRevenueOrdersQuery({ start_date, end_date });
-  const tips_range_revenue = useGetRangeTipsRevenueOrdersQuery({ start_date, end_date });
-  const affiliate_earnings_code_usage = useGetRangeAffiliateEarningsCodeUsageQuery({ start_date, end_date });
-  const all_product_revenue = useGetProductRevenueQuery({ start_date, end_date });
-  const daily_revenue = useGetDailyRevenueOrdersQuery({ start_date, end_date });
-  const monthly_revenue = useGetMonthlyRevenueOrdersQuery({ year });
-  const yearly_revenue = useGetYearlyRevenueOrdersQuery();
-  const daily_expenses = useGetDailyExpenseOrdersQuery({ start_date, end_date });
-  const monthly_expenses = useGetMonthlyExpenseOrdersQuery({ year });
-  const yearly_expenses = useGetYearlyExpenseOrdersQuery();
-  const range_payouts = useGetRangePayoutsQuery({ start_date, end_date });
-  const range_expenses = useGetRangeExpensesQuery({ start_date, end_date });
-  const sponsorCheckinStatus = useGetSponsorCheckinStatusQuery({ start_date, end_date });
-  const monthly_product_revenue = useGetMonthlyRevenueProductOrdersQuery({ productId: product._id, year });
-  const yearly_product_revenue = useGetYearlyRevenueProductOrdersQuery({ productId: product._id });
-  // const range_product_revenue = useGetProductRangeRevenueOrdersQuery({ productId: product._id, start_date, end_date });
-  // const range_gloves = useGetRangeGlovesQuery({ start_date, end_date });
-  const currentStock = useGetCurrentStockQuery();
+  const range_revenue = API.useGetRangeRevenueOrdersQuery({ start_date, end_date });
+  const category_range_revenue = API.useGetRangeCategoryRevenueOrdersQuery({ start_date, end_date });
+  const tips_range_revenue = API.useGetRangeTipsRevenueOrdersQuery({ start_date, end_date });
+  const affiliate_earnings_code_usage = API.useGetRangeAffiliateEarningsCodeUsageQuery({ start_date, end_date });
+  const all_product_revenue = API.useGetProductRevenueQuery({ start_date, end_date });
+  const daily_revenue = API.useGetDailyRevenueOrdersQuery({ start_date, end_date });
+  const monthly_revenue = API.useGetMonthlyRevenueOrdersQuery({ year });
+  const yearly_revenue = API.useGetYearlyRevenueOrdersQuery();
+  const daily_expenses = API.useGetDailyExpenseOrdersQuery({ start_date, end_date });
+  const monthly_expenses = API.useGetMonthlyExpenseOrdersQuery({ year });
+  const yearly_expenses = API.useGetYearlyExpenseOrdersQuery();
+  const range_payouts = API.useGetRangePayoutsQuery({ start_date, end_date });
+  const range_expenses = API.useGetRangeExpensesQuery({ start_date, end_date });
+  const sponsorCheckinStatus = API.useGetSponsorCheckinStatusQuery({ start_date, end_date });
+  const questionConcerns = API.useGetQuestionConcernsQuery({ start_date, end_date });
+
+  const monthly_product_revenue = API.useGetMonthlyRevenueProductOrdersQuery({ productId: product._id, year });
+  const yearly_product_revenue = API.useGetYearlyRevenueProductOrdersQuery({ productId: product._id });
+  // const range_product_revenue = API.useGetProductRangeRevenueOrdersQuery({ productId: product._id, start_date, end_date });
+  // const range_gloves = API.useGetRangeGlovesQuery({ start_date, end_date });
+  const currentStock = API.useGetCurrentStockQuery();
 
   return (
     <div className="main_container p-20px">
@@ -83,7 +66,7 @@ const DashboardPage = () => {
           Run Monthly Workers
         </GLButton>
       </div>
-      <GLButton variant="primary" onClick={() => updateVersion()}>
+      <GLButton variant="primary" onClick={() => API.updateVersion()}>
         Update Version
       </GLButton>
       <Loading
@@ -162,7 +145,12 @@ const DashboardPage = () => {
           />
         </GLTabPanel>
         <GLTabPanel value={tabIndex} index={5}>
-          <SponsorCheckins month={month} year={year} sponsorCheckinStatus={sponsorCheckinStatus} />
+          <SponsorCheckins
+            month={month}
+            year={year}
+            sponsorCheckinStatus={sponsorCheckinStatus}
+            questionConcerns={questionConcerns}
+          />
         </GLTabPanel>
         <CurrentStock currentStock={currentStock} />
       </div>

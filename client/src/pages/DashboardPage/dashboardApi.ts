@@ -106,6 +106,10 @@ export const dashboardApi = createApi({
       query: ({ start_date, end_date }: { start_date: string; end_date: string }) =>
         `/affiliates/checkin_status?start_date=${start_date}&end_date=${end_date}`,
     }),
+    getQuestionConcerns: builder.query({
+      query: ({ start_date, end_date }: { start_date: string; end_date: string }) =>
+        `/affiliates/question_concerns?start_date=${start_date}&end_date=${end_date}`,
+    }),
     getYearlyExpenseOrders: builder.query({
       query: () => "/expenses/get_yearly_expenses_expenses",
     }),
@@ -145,6 +149,7 @@ export const {
   useGetYearlyExpenseOrdersQuery,
   useGetMonthlyExpenseOrdersQuery,
   useGetDailyExpenseOrdersQuery,
+  useGetQuestionConcernsQuery,
 } = dashboardApi;
 
 // export const get_airtable_expenses = async (year: number): Promise<void> => {

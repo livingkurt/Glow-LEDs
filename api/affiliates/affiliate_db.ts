@@ -185,51 +185,46 @@ export default {
     }
   },
 
-  // checkin_status_affiliates_db: async (start_date: string, end_date: string) => {
-  //   try {
-  //     const sponsorCheckins = await Affiliate.aggregate([
-  //       {
-  //         $match: {
-  //           active: true,
-  //           sponsor: true
-  //         }
-  //       },
-  //       {
-  //         $unwind: {
-  //           path: "$sponsorMonthlyCheckins",
-  //           preserveNullAndEmptyArrays: true
-  //         }
-  //       },
-  //       {
-  //         $group: {
-  //           _id: "$_id",
-  //           artist_name: { $first: "$artist_name" },
-  //           hasCheckedIn: {
-  //             $first: {
-  //               $cond: [
-  //                 {
-  //                   $and: [
-  //                     { $ne: ["$sponsorMonthlyCheckins", null] },
-  //                     { $gte: ["$sponsorMonthlyCheckins.createdAt", start_date] },
-  //                     { $lte: ["$sponsorMonthlyCheckins.createdAt", end_date] }
-  //                   ]
-  //                 },
-  //                 true,
-  //                 false
-  //               ]
-  //             }
-  //           },
-  //           numberOfContent: { $first: "$sponsorMonthlyCheckins.numberOfContent" }
-  //         }
-  //       }
-  //     ]);
-  //     return sponsorCheckins;
-  //   } catch (error) {
-  //     if (error instanceof Error) {
-  //       throw new Error(error.message);
-  //     }
-  //   }
-  // },
+  question_concerns_affiliates_db: async (start_date: string, end_date: string) => {
+    const startDate = new Date(start_date);
+    const endDate = new Date(end_date);
+
+    const result = await Affiliate.aggregate([
+      {
+        $unwind: "$sponsorMonthlyCheckins",
+      },
+      {
+        $addFields: {
+          checkinDate: {
+            $dateFromString: {
+              dateString: {
+                $concat: [
+                  { $toString: "$sponsorMonthlyCheckins.year" },
+                  "-",
+                  { $toString: "$sponsorMonthlyCheckins.month" },
+                  "-01",
+                ],
+              },
+            },
+          },
+        },
+      },
+      {
+        $match: {
+          checkinDate: { $gte: startDate, $lte: endDate },
+        },
+      },
+      {
+        $project: {
+          artist_name: 1,
+          year: 1,
+          month: 1,
+          questionsConcerns: "$sponsorMonthlyCheckins.questionsConcerns",
+        },
+      },
+    ]);
+    return result;
+  },
 
   update_affiliates_db: async (id: any, body: any) => {
     try {

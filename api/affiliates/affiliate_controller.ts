@@ -1,4 +1,4 @@
-import { affiliate_services } from "../affiliates";
+import { affiliate_db, affiliate_services } from "../affiliates";
 
 export default {
   findAll_affiliates_c: async (req: any, res: any) => {
@@ -65,6 +65,18 @@ export default {
     const { query } = req;
     try {
       const affiliate = await affiliate_services.checkin_status_affiliates_s(query);
+      if (affiliate) {
+        return res.status(201).send(affiliate);
+      }
+      return res.status(500).send({ message: "Error Creating Affiliate" });
+    } catch (error) {
+      res.status(500).send({ error, message: "Error Creating Affiliate" });
+    }
+  },
+  question_concerns_affiliates_c: async (req: any, res: any) => {
+    const { query } = req;
+    try {
+      const affiliate = await affiliate_db.question_concerns_affiliates_db(query.start_date, query.end_date);
       if (affiliate) {
         return res.status(201).send(affiliate);
       }
