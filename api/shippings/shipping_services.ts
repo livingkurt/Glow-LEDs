@@ -46,7 +46,8 @@ export default {
     try {
       const order = await order_db.findById_orders_db(params.order_id);
       const { shipping_rate, shipment_id } = order.shipping;
-      const label: any = await buyLabel({ shipment_id, shipping_rate, order });
+      const label: any = await buyLabel({ shipment_id, shipping_rate });
+      await addTracking({ order, label, shipping_rate });
       return { invoice: invoice({ order }), label: label.postage_label.label_url };
     } catch (error) {
       if (error instanceof Error) {
@@ -74,6 +75,19 @@ export default {
       const refund: any = await refundLabel({ order, is_return_tracking });
       await clearTracking({ order, isReturnTracking: is_return_tracking });
       return refund;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  },
+  shipments_shipping_s: async () => {
+    try {
+      const shipments = await EasyPost.Shipment.all({
+        page_size: 20,
+      });
+      console.log({ shipments });
+      return shipments;
     } catch (error) {
       if (error instanceof Error) {
         throw new Error(error.message);

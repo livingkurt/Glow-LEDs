@@ -340,6 +340,9 @@ const orderPage = createSlice({
     [API.createTracker.fulfilled as any]: (state: any, { payload }: any) => {
       state.remoteVersionRequirement = Date.now();
     },
+    // [API.getShipments.fulfilled as any]: (state: any, { payload }: any) => {
+    //   state.order = payload.order;
+    // },
   },
 });
 

@@ -7,19 +7,13 @@ import { calculateTotalOunces, covertToOunces, determine_parcel } from "./shippi
 const easy_post_api = require("@easypost/api");
 const EasyPost = new easy_post_api(config.EASY_POST);
 
-export const buyLabel = async ({ shipment_id, shipping_rate, order }: any) => {
+export const buyLabel = async ({ shipment_id, shipping_rate }: any) => {
   try {
-    const label = await EasyPost.Shipment.buy(shipment_id, shipping_rate?.id);
-    await addTracking({ order, label, shipping_rate });
-    return label;
+    return await EasyPost.Shipment.buy(shipment_id, shipping_rate?.id);
   } catch (error) {
     if (error instanceof Error) {
       throw new Error(error.message);
     }
-    // console.error("Error buying label:", error);
-    // const label = await createLabel({ order, shipping_rate });
-    // await addTracking({ order, label, shipping_rate: label.selected_rate });
-    // return label;
   }
 };
 export const addTracking = async ({ label, order, shipping_rate, isReturnTracking = false }: any) => {
@@ -45,7 +39,6 @@ export const addTracking = async ({ label, order, shipping_rate, isReturnTrackin
     if (error instanceof Error) {
       throw new Error(error.message);
     }
-    // console.error("Error adding tracking:", error);
   }
 };
 export const clearTracking = async ({ order, isReturnTracking = false }: any) => {
@@ -73,11 +66,12 @@ export const clearTracking = async ({ order, isReturnTracking = false }: any) =>
 export const createTracker = async ({ order }: any) => {
   try {
     const label = await EasyPost.Shipment.retrieve(order.shipping.shipment_id);
+    console.log({ label });
     const tracker = await EasyPost.Tracker.create({
       tracking_code: order.tracking_number,
       carrier: order.shipping?.shipping_rate?.carrier || label.selected_rate.carrier,
     });
-
+    console.log({ tracker });
     order.tracking_url = tracker.public_url;
     order.shipping.shipping_label = label;
     order.shipping.shipping_rate = order.shipping?.shipping_rate || label.selected_rate;

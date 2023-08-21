@@ -6,10 +6,10 @@ const sponsorCheckinSchema = new mongoose.Schema(
     month: { type: String },
     year: { type: Number },
     questionsConcerns: { type: String },
-    numberOfContent: { type: Number }
+    numberOfContent: { type: Number },
   },
   {
-    timestamps: true
+    timestamps: true,
   }
 );
 
@@ -49,10 +49,10 @@ const affiliateSchema = new mongoose.Schema(
     team: { type: Boolean, default: false },
     sponsor: { type: Boolean, default: false },
     active: { type: Boolean, default: true },
-    deleted: { type: Boolean, default: false }
+    deleted: { type: Boolean, default: false },
   },
   {
-    timestamps: true
+    timestamps: true,
   }
 );
 

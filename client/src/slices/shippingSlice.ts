@@ -12,12 +12,15 @@ const shippingSlice = createSlice({
     label: "",
     shippingRates: [],
     shippingRate: {},
+    linkLabelModal: false,
     create_pickup_modal: false,
     createLabelModal: false,
+    shipments: [],
     csvLabel: [],
     rate: {},
     hideLabelButton: true,
     selectedRateId: "",
+    selectedShipmentId: "",
     shipmentId: "",
     parcel: { parcelChoice: {}, length: "", width: "", height: "", weight_pounds: "", weight_ounces: "" },
 
@@ -62,6 +65,7 @@ const shippingSlice = createSlice({
         toShipping: { ...state.toShipping, ...updatedToShipping },
       };
     },
+
     setFromShipping: (state, { payload }) => {
       const updatedFromShipping = payload;
       return {
@@ -70,7 +74,6 @@ const shippingSlice = createSlice({
       };
     },
     setParcel: (state, { payload }) => {
-      console.log({ payload });
       if (payload.parcelChoice) {
         return {
           ...state,
@@ -151,6 +154,16 @@ const shippingSlice = createSlice({
       state.shippingRates = [];
       state.shipmentId = "";
       state.selectedRateId = "";
+    },
+    openLinkLabelModal: (state, { payload }) => {
+      state.linkLabelModal = true;
+    },
+    closeLinkLabelModal: (state, { payload }) => {
+      state.linkLabelModal = false;
+      state.selectedShipmentId = "";
+    },
+    setSelectedShipmentId: (state, { payload }) => {
+      state.selectedShipmentId = payload;
     },
   },
   extraReducers: {
@@ -285,13 +298,26 @@ const shippingSlice = createSlice({
       state.label = "";
     },
     [API.createCustomLabel.fulfilled as any]: (state: any, { payload }: any) => {
-      console.log({ payload });
       state.loading = false;
       state.label = payload.postage_label.label_url;
       state.message = "Label Bought";
     },
     [API.createCustomLabel.rejected as any]: (state: any, { payload, error }: any) => {
       state.loading = false;
+      state.error = payload ? payload.error : error.message;
+      state.message = payload ? payload.message : "An error occurred";
+    },
+    [API.getShipments.pending as any]: (state: any, { payload }: any) => {
+      state.loadingShipments = true;
+      state.label = "";
+    },
+    [API.getShipments.fulfilled as any]: (state: any, { payload }: any) => {
+      state.loadingShipments = false;
+      state.linkLabelModal = true;
+      state.shipments = payload.shipments;
+    },
+    [API.getShipments.rejected as any]: (state: any, { payload, error }: any) => {
+      state.loadingShipments = false;
       state.error = payload ? payload.error : error.message;
       state.message = payload ? payload.message : "An error occurred";
     },
@@ -311,5 +337,8 @@ export const {
   setParcel,
   setSelectedRateId,
   resetRates,
+  closeLinkLabelModal,
+  openLinkLabelModal,
+  setSelectedShipmentId,
 } = shippingSlice.actions;
 export default shippingSlice.reducer;

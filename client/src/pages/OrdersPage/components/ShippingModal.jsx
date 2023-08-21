@@ -16,10 +16,10 @@ const ShippingModal = () => {
   const { shippingRates, shippingRate, hideLabelButton, rate, shipment_id, loading } = shippingSlice;
 
   useEffect(() => {
-    if (order.shipping.first_name.length > 0) {
+    if (shippingModal && order.shipping.first_name.length > 0) {
       dispatch(API.differentShippingRates(order));
     }
-  }, [dispatch, order]);
+  }, [dispatch, order, shippingModal]);
 
   const sortedRates = [...shippingRates].sort((a, b) => {
     if (a.retail_rate && b.retail_rate) {
@@ -46,10 +46,10 @@ const ShippingModal = () => {
                 shipping_rate: shippingRate,
                 shipment_id,
                 shipping_label: null,
-                shipment_tracker: null
+                shipment_tracker: null,
               },
               tracking_number: "",
-              tracking_url: ""
+              tracking_url: "",
             })
           );
           dispatch(closeShippingModal());

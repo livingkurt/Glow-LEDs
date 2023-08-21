@@ -19,6 +19,7 @@ import CreatePickupModal from "./components/CreatePickupModal";
 import RefundOrderModal from "./components/RefundOrderModal";
 import CreateLabelModal from "./components/CreateLabelModal";
 import { format_date } from "../../utils/helper_functions";
+import LinkLabelModal from "./components/LinkLabelModal";
 
 const OrdersPage = () => {
   const orderPage = useSelector(state => state.orders.orderPage);
@@ -232,6 +233,7 @@ const OrdersPage = () => {
       <CreatePickupModal />
       <RefundOrderModal />
       <CreateLabelModal />
+      <LinkLabelModal />
     </div>
   );
 };

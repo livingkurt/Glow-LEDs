@@ -37,7 +37,7 @@ const GLActiionModal = props => {
     actionClasses,
     cancelDisabled,
     actionDisabled,
-    disableEscapeKeyDown
+    disableEscapeKeyDown,
   } = props;
 
   return (
@@ -105,7 +105,6 @@ const GLActiionModal = props => {
                   color={confirmColor}
                   disabled={confirmDisabled}
                   aria-label={confirmLabel}
-                  loadingOnly={confirmLoading}
                   loading={confirmLoading}
                 >
                   {confirmLabel}
@@ -148,7 +147,7 @@ GLActiionModal.defaultProps = {
   contentClasses: null,
   actionClasses: null,
   onEnter: null,
-  disableEscapeKeyDown: false
+  disableEscapeKeyDown: false,
 };
 
 GLActiionModal.propTypes = {
@@ -180,7 +179,7 @@ GLActiionModal.propTypes = {
   dialogClasses: PropTypes.object,
   titleClasses: PropTypes.object,
   contentClasses: PropTypes.object,
-  actionClasses: PropTypes.object
+  actionClasses: PropTypes.object,
 };
 
 export default GLActiionModal;

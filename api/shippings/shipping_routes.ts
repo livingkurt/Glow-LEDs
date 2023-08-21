@@ -10,6 +10,7 @@ router.route("/:order_id/create_return_label").put(isAuth, isAdmin, shipping_con
 router.route("/:order_id/generate_csv_label").put(isAuth, isAdmin, shipping_controller.generate_csv_label_shipping_c);
 router.route("/create_pickup").put(isAuth, isAdmin, shipping_controller.create_pickup_shipping_c);
 router.route("/confirm_pickup").put(isAuth, isAdmin, shipping_controller.confirm_pickup_shipping_c);
+router.route("/shipments").get(isAuth, isAdmin, shipping_controller.shipments_shipping_c);
 router
   .route("/:order_id/refund_label/:is_return_tracking")
   .put(isAuth, isAdmin, shipping_controller.refund_label_shipping_c);

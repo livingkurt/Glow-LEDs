@@ -59,6 +59,23 @@ export const createCustomLabel = createAsyncThunk(
   }
 );
 
+export const getShipments = createAsyncThunk("shipping/getShipments", async (_params, thunkApi: any) => {
+  console.log("getShipments");
+  try {
+    const { data } = await axios.get(`/api/shipping/shipments`);
+    Covy().showSnackbar({
+      message: `Shipments Found`,
+      severity: "success",
+    });
+    return data;
+  } catch (error) {
+    Covy().showSnackbar({
+      message: errorMessage(error),
+      severity: "error",
+    });
+    return thunkApi.rejectWithValue(error.response?.data);
+  }
+});
 export const createTracker = createAsyncThunk("shipping/createTracker", async ({ orderId }: any, thunkApi: any) => {
   try {
     const { data } = await axios.put(`/api/shipping/${orderId}/create_tracker`, {});

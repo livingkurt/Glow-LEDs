@@ -76,6 +76,17 @@ export default {
       res.status(500).send({ error, message: "Error Updating Shipping" });
     }
   },
+  shipments_shipping_c: async (req: any, res: any) => {
+    try {
+      const shipping = await shipping_services.shipments_shipping_s();
+      if (shipping) {
+        return res.status(200).send(shipping);
+      }
+      return res.status(500).send({ message: "Error Updating Shipping" });
+    } catch (error) {
+      res.status(500).send({ error, message: "Error Updating Shipping" });
+    }
+  },
   create_pickup_shipping_c: async (req: any, res: any) => {
     const { body } = req;
     try {
