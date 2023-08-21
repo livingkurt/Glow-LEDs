@@ -41,6 +41,7 @@ const LinkLabelModal = () => {
         onCancel={() => {
           dispatch(closeLinkLabelModal());
         }}
+        confirmDisabled={!selectedShipmentId}
         title={"Link Label to Order"}
         confirmLabel={"Save"}
         confirmColor="primary"
