@@ -29,13 +29,14 @@ const LinkLabelModal = () => {
                   ...order.shipping,
                   shipment_id: selectedShipment.id,
                   shipping_label: selectedShipment,
-                  tracking_url: selectedShipment.postage_label.label_url,
-                  shipment_tracker: selectedShipment.shipment_tracker,
+                  shipment_tracker: selectedShipment.tracker.id,
                   shipping_rate: selectedShipment.selected_rate,
                 },
-                tracking_number: selectedShipment.tracking_number,
+                tracking_url: selectedShipment.tracker.public_url,
+                tracking_number: selectedShipment.tracking_code,
               })
             );
+            dispatch(closeLinkLabelModal());
           }
         }}
         onCancel={() => {
