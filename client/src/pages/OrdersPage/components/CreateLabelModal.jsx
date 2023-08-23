@@ -19,7 +19,7 @@ import { printLabel } from "../ordersPageHelpers";
 
 const CreateLabelModal = () => {
   const dispatch = useDispatch();
-  const shipping = useSelector(state => state.shipping);
+  const shipping = useSelector(state => state.shipping.shippingPage);
   const {
     createLabelModal,
     toShipping,

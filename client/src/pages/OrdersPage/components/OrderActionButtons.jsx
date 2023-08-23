@@ -18,7 +18,7 @@ const OrderActionButtons = ({ order }) => {
   const orderPage = useSelector(state => state.orders.orderPage);
   const { hide_label_button } = orderPage;
 
-  const shippingSlice = useSelector(state => state.shipping);
+  const shippingSlice = useSelector(state => state.shipping.shippingPage);
   const { invoice, label, loading_label } = shippingSlice;
 
   useEffect(() => {

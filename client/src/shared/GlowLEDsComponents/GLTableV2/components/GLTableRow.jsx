@@ -26,7 +26,7 @@ const GLTableRow = ({
   determine_color,
   provided,
   innerRef,
-  dropdownAction
+  dropdownAction,
 }) => {
   const dispatch = useDispatch();
 
@@ -34,13 +34,13 @@ const GLTableRow = ({
     dropdownAction(row);
     if (enableDropdownRow) {
       if (rowCheckboxClicked(e.target)) {
-        dispatch(selectRow(namespace, row._id));
+        dispatch(selectRow(namespace, row._id || row.id));
         return;
       }
       dispatch(onExpandRow(namespace, name));
     } else if (enableRowClick) {
       if (enableRowSelect && rowCheckboxClicked(e.target)) {
-        dispatch(selectRow(namespace, row._id));
+        dispatch(selectRow(namespace, row._id || row.id));
         return;
       }
       onRowClick(e, row);
@@ -49,11 +49,11 @@ const GLTableRow = ({
       if (e.target.href) {
         return;
       }
-      dispatch(selectRow(namespace, row._id));
+      dispatch(selectRow(namespace, row._id || row.id));
     }
   };
 
-  const name = row[rowName] || row._id;
+  const name = row[rowName] || row._id || row.id;
 
   return (
     <>
@@ -71,16 +71,22 @@ const GLTableRow = ({
         sx={{
           backgroundColor: determine_color ? determine_color(row) : tableColors.active, // Set background color based on attribute value
           "&:hover": {
-            backgroundColor: `${determine_color ? darken(determine_color(row), 0.3) : darken(tableColors.active, 0.3)} !important`
+            backgroundColor: `${
+              determine_color ? darken(determine_color(row), 0.3) : darken(tableColors.active, 0.3)
+            } !important`,
           },
           "&.Mui-selected": {
-            backgroundColor: `${determine_color ? darken(determine_color(row), 0.3) : darken(tableColors.active, 0.3)} !important`,
+            backgroundColor: `${
+              determine_color ? darken(determine_color(row), 0.3) : darken(tableColors.active, 0.3)
+            } !important`,
             "&:hover": {
-              backgroundColor: `${determine_color ? darken(determine_color(row), 0.5) : darken(tableColors.active, 0.3)} !important`
-            }
-          }
+              backgroundColor: `${
+                determine_color ? darken(determine_color(row), 0.5) : darken(tableColors.active, 0.3)
+              } !important`,
+            },
+          },
         }}
-        key={row._id}
+        key={row._id || row.id}
         selected={enableRowSelect && isItemSelected}
         id={`${namespace}-row-${name}`}
         data-test={`${namespace}-row-${name}`.replace(/ +/g, "_")}
@@ -91,28 +97,28 @@ const GLTableRow = ({
         {...rowProps(row)}
       >
         {enableRowSelect && (
-          <TableCell padding="checkbox" key={row._id}>
+          <TableCell padding="checkbox" key={row._id || row.id}>
             <Checkbox
               size="large"
               color="primary"
               sx={{
                 color: determine_color ? "white" : "",
                 "& .MuiSvgIcon-root": {
-                  color: "white"
+                  color: "white",
                 },
                 "& .Mui-checked": {
                   color: "white",
-                  backgroundColor: determine_color ? determine_color(row) : "#"
+                  backgroundColor: determine_color ? determine_color(row) : "#",
                 },
                 "&:hover": {
-                  backgroundColor: `${determine_color ? darken(determine_color(row), 0.3) : "white"} !important`
-                }
+                  backgroundColor: `${determine_color ? darken(determine_color(row), 0.3) : "white"} !important`,
+                },
               }}
               checked={enableRowSelect && isItemSelected}
               inputProps={{
                 "aria-labelledby": labelId,
                 "aria-label": labelId,
-                "data-test": `${namespace}-checkbox`
+                "data-test": `${namespace}-checkbox`,
               }}
               onClick={onCellClick}
             />
@@ -123,13 +129,13 @@ const GLTableRow = ({
           return (
             <TableCell
               {...cellProps(row)}
-              key={`${column.title}-${row._id}`}
+              key={`${column.title}-${row._id || row.id}`}
               align={column.align}
               colSpan={column.colSpan || 1}
               data-test={`${namespace}-cell`}
               onClick={column.nonSelectable ? () => {} : onCellClick}
               sx={{
-                color: "white"
+                color: "white",
               }}
             >
               {value}
@@ -153,7 +159,7 @@ GLTableRow.defaultProps = {
   cellProps: () => ({}),
   innerRef: {},
   provided: {},
-  dropdownAction: x => x
+  dropdownAction: x => x,
 };
 
 GLTableRow.propTypes = {
@@ -172,7 +178,7 @@ GLTableRow.propTypes = {
   cellProps: PropTypes.func,
   dropdownAction: PropTypes.func,
   innerRef: PropTypes.object,
-  provided: PropTypes.object
+  provided: PropTypes.object,
 };
 
 export default GLTableRow;

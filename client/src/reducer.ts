@@ -20,7 +20,7 @@ import {
   userSlice,
   wholesalerSlice,
   tutorialSlice,
-  shippingSlice
+  shippingSlice,
 } from "./slices";
 
 import { dashboardApi } from "./pages/DashboardPage/dashboardApi";
@@ -38,8 +38,8 @@ const reducers = {
       searchBy: (row: any, search: string) => {
         const searchableText = `${row.first_name} ${row.last_name}}`;
         return searchableText.toLowerCase().includes(search.toLowerCase());
-      }
-    })
+      },
+    }),
   }),
   carts: combineReducers({
     cartPage: cartSlice,
@@ -48,8 +48,8 @@ const reducers = {
       searchBy: (row: any, search: string) => {
         const searchableText = `${row.first_name} ${row.last_name}}`;
         return searchableText.toLowerCase().includes(search.toLowerCase());
-      }
-    })
+      },
+    }),
   }),
   categorys: combineReducers({
     categoryPage: categorySlice,
@@ -58,8 +58,8 @@ const reducers = {
       searchBy: (row: any, search: string) => {
         const searchableText = row.name;
         return searchableText.toLowerCase().includes(search.toLowerCase());
-      }
-    })
+      },
+    }),
   }),
   chips: chipSlice,
   contents: contentSlice,
@@ -70,8 +70,8 @@ const reducers = {
       searchBy: (row: any, search: string) => {
         const searchableText = row.expense_name;
         return searchableText.toLowerCase().includes(search.toLowerCase());
-      }
-    })
+      },
+    }),
   }),
   features: featureSlice,
   filaments: filamentSlice,
@@ -83,8 +83,8 @@ const reducers = {
       searchBy: (row: any, search: string) => {
         const searchableText = `${row.shipping.first_name} ${row.shipping.last_name} ${row._id}`;
         return searchableText.toLowerCase().includes(search.toLowerCase());
-      }
-    })
+      },
+    }),
   }),
   palettes: paletteSlice,
   parcels: parcelSlice,
@@ -94,8 +94,8 @@ const reducers = {
       searchBy: (row: any, search: string) => {
         const searchableText = row.affiliate;
         return searchableText.toLowerCase().includes(search.toLowerCase());
-      }
-    })
+      },
+    }),
   }),
   images: combineReducers({
     imagePage: imageSlice,
@@ -103,8 +103,8 @@ const reducers = {
       searchBy: (row: any, search: string) => {
         const searchableText = row.album;
         return searchableText.toLowerCase().includes(search.toLowerCase());
-      }
-    })
+      },
+    }),
   }),
   products: combineReducers({
     productPage: productSlice,
@@ -114,8 +114,8 @@ const reducers = {
       searchBy: (row: any, search: string) => {
         const searchableText = row.name;
         return searchableText.toLowerCase().includes(search.toLowerCase());
-      }
-    })
+      },
+    }),
   }),
   promos: combineReducers({
     promoPage: promoSlice,
@@ -123,11 +123,19 @@ const reducers = {
       searchBy: (row: any, search: string) => {
         const searchableText = row.promo_code;
         return searchableText.toLowerCase().includes(search.toLowerCase());
-      }
-    })
+      },
+    }),
   }),
   settings: settingSlice,
-  shipping: shippingSlice,
+  shipping: combineReducers({
+    shippingPage: shippingSlice,
+    shippingTable: glTableReducer("shippingTable", {
+      searchBy: (row: any, search: string) => {
+        const searchableText = row?.buyer_address.name || row?.buyer_address.company;
+        return searchableText.toLowerCase().includes(search.toLowerCase());
+      },
+    }),
+  }),
   surveys: surveySlice,
   teams: teamSlice,
   users: combineReducers({
@@ -138,8 +146,8 @@ const reducers = {
       searchBy: (row: any, search: string) => {
         const searchableText = `${row.first_name} ${row.last_name}}`;
         return searchableText.toLowerCase().includes(search.toLowerCase());
-      }
-    })
+      },
+    }),
   }),
   [allRecordsApi.reducerPath]: allRecordsApi.reducer,
   [dashboardApi.reducerPath]: dashboardApi.reducer,
@@ -151,8 +159,8 @@ const reducers = {
       searchBy: (row: any, search: string) => {
         const searchableText = `${row?.user?.first_name} ${row?.user?.last_name}}`;
         return searchableText.toLowerCase().includes(search.toLowerCase());
-      }
-    })
+      },
+    }),
   }),
   tutorials: combineReducers({
     tutorialPage: tutorialSlice,
@@ -161,9 +169,9 @@ const reducers = {
       searchBy: (row: any, search: string) => {
         const searchableText = row.title;
         return searchableText.toLowerCase().includes(search.toLowerCase());
-      }
-    })
-  })
+      },
+    }),
+  }),
 };
 
 export default reducers;

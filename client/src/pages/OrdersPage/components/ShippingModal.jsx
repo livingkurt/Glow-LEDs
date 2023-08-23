@@ -12,7 +12,7 @@ const ShippingModal = () => {
 
   const orderPage = useSelector(state => state.orders.orderPage);
   const { shippingModal, order } = orderPage;
-  const shippingSlice = useSelector(state => state.shipping);
+  const shippingSlice = useSelector(state => state.shipping.shippingPage);
   const { shippingRates, shippingRate, hideLabelButton, rate, shipment_id, loading } = shippingSlice;
 
   useEffect(() => {

@@ -9,7 +9,7 @@ import { Loading } from "../../../shared/SharedComponents";
 
 const CreatePickupModal = () => {
   const dispatch = useDispatch();
-  const shipping = useSelector(state => state.shipping);
+  const shipping = useSelector(state => state.shipping.shippingPage);
   const { create_pickup_modal, pickup, orders, loading_label } = shipping;
 
   const date = new Date();
@@ -72,7 +72,7 @@ const CreatePickupModal = () => {
             value={readyTime}
             onChange={e => setReadyTime(e.target.value)}
             InputLabelProps={{
-              shrink: true
+              shrink: true,
             }}
           />
         </Grid>
@@ -85,7 +85,7 @@ const CreatePickupModal = () => {
             value={latestTimeAvailable}
             onChange={e => setLatestTimeAvailable(e.target.value)}
             InputLabelProps={{
-              shrink: true
+              shrink: true,
             }}
           />
         </Grid>

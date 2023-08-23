@@ -4,7 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import * as API from "../api";
 
 const shippingSlice = createSlice({
-  name: "shippingSlice",
+  name: "shippingPage",
   initialState: {
     loading_label: false,
     loading: false,

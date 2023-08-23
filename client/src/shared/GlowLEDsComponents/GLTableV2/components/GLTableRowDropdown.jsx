@@ -8,8 +8,8 @@ import { Checkbox, darken } from "@mui/material";
 
 const useStyles = makeStyles(() => ({
   dropdownRows: {
-    cursor: "pointer"
-  }
+    cursor: "pointer",
+  },
 }));
 
 const GLTableRowDropdown = ({
@@ -21,7 +21,7 @@ const GLTableRowDropdown = ({
   determine_color,
   isItemSelected,
   labelId,
-  onCellClick
+  onCellClick,
 }) => {
   const classes = useStyles();
   // const [selectedRows, selectedRows] = useState([]);
@@ -46,28 +46,28 @@ const GLTableRowDropdown = ({
             data-test={`${namespace}-subrow`}
           >
             {enableRowSelect && (
-              <TableCell padding="checkbox" key={row._id}>
+              <TableCell padding="checkbox" key={row._id || row.id}>
                 <Checkbox
                   size="large"
                   color="primary"
                   sx={{
                     color: determine_color ? "white" : "",
                     "& .MuiSvgIcon-root": {
-                      color: "white"
+                      color: "white",
                     },
                     "& .Mui-checked": {
                       color: "white",
-                      backgroundColor: determine_color ? determine_color(subrow) : "#"
+                      backgroundColor: determine_color ? determine_color(subrow) : "#",
                     },
                     "&:hover": {
-                      backgroundColor: `${determine_color ? darken(determine_color(subrow), 0.3) : "white"} !important`
-                    }
+                      backgroundColor: `${determine_color ? darken(determine_color(subrow), 0.3) : "white"} !important`,
+                    },
                   }}
-                  // checked={enableRowSelect && isItemSelected(row._id, selectedRows)}
+                  // checked={enableRowSelect && isItemSelected(row._id || row.id, selectedRows)}
                   inputProps={{
                     "aria-labelledby": labelId,
                     "aria-label": labelId,
-                    "data-test": `${namespace}-checkbox`
+                    "data-test": `${namespace}-checkbox`,
                   }}
                   onClick={onCellClick}
                 />
@@ -76,7 +76,12 @@ const GLTableRowDropdown = ({
             {dropdownColumnDefs.map(column => {
               const value = typeof column.display === "function" ? column.display(subrow) : subrow[column.display];
               return (
-                <TableCell key={column.title} colSpan={column.colSpan || 1} align={column.align} data-test={`${namespace}-cell-${subrow}`}>
+                <TableCell
+                  key={column.title}
+                  colSpan={column.colSpan || 1}
+                  align={column.align}
+                  data-test={`${namespace}-cell-${subrow}`}
+                >
                   {value}
                 </TableCell>
               );
@@ -92,7 +97,7 @@ GLTableRowDropdown.propTypes = {
   dropdownRows: PropTypes.array.isRequired,
   namespace: PropTypes.string.isRequired,
   dropdownColumnDefs: PropTypes.array.isRequired,
-  row: PropTypes.object.isRequired
+  row: PropTypes.object.isRequired,
 };
 
 export default GLTableRowDropdown;

@@ -7,7 +7,7 @@ import { useEffect } from "react";
 const GenerateCSVLabel = ({ order }) => {
   const dispatch = useDispatch();
 
-  const shipping = useSelector(state => state.shipping);
+  const shipping = useSelector(state => state.shipping.shippingPage);
   const { csvLabel } = shipping;
 
   const generateAndDownloadCSV = async csvLabel => {
@@ -38,7 +38,11 @@ const GenerateCSVLabel = ({ order }) => {
 
   return (
     <div className="GenerateCSVLabel">
-      <GLButton variant="secondary" className="mv-5px w-100per" onClick={() => dispatch(API.generateCSVLabel({ orderId: order._id }))}>
+      <GLButton
+        variant="secondary"
+        className="mv-5px w-100per"
+        onClick={() => dispatch(API.generateCSVLabel({ orderId: order._id }))}
+      >
         Download CSV Label
       </GLButton>
     </div>

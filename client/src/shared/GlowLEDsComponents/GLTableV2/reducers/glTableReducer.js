@@ -328,7 +328,8 @@ const reducer =
         const { selectedRows, visibleRows } = state;
         const selectedRowsCount = selectedRows.length;
         const visibleRowsCount = visibleRows.length;
-        const updatedSelections = selectedRowsCount === visibleRowsCount ? [] : visibleRows.map(row => row._id);
+        const updatedSelections =
+          selectedRowsCount === visibleRowsCount ? [] : visibleRows.map(row => row._id || row.id);
         return {
           ...state,
           selectedRows: [...updatedSelections],

@@ -352,11 +352,7 @@ const GLTableV2 = ({
 
   return (
     <div style={{ overflowX: "scroll" }} className="w-100per">
-      <Paper
-        className={containerClassNames}
-        style={{ ...style, margin: "1px", minWidth: "1000px" }}
-        data-test="glTable"
-      >
+      <Paper className={containerClassNames} style={{ ...style, margin: "1px" }} data-test="glTable">
         <GLTableToolbar
           tableName={tableName}
           numSelected={numSelected}
@@ -465,15 +461,15 @@ const GLTableV2 = ({
                         ))
                       : visibleRows &&
                         visibleRows.map((row, index) => (
-                          <Draggable key={row._id} draggableId={row._id} index={index}>
+                          <Draggable key={row._id || row.id} draggableId={row._id || row.id} index={index}>
                             {provided => (
                               <GLTableRow
-                                key={row._id}
+                                key={row._id || row.id}
                                 row={row}
                                 provided={provided}
                                 innerRef={provided.innerRef}
                                 enableRowSelect={enableRowSelect}
-                                isItemSelected={isItemSelected(row._id, selectedRows)}
+                                isItemSelected={isItemSelected(row._id || row.id, selectedRows)}
                                 labelId={`${tableName && tableName.toLowerCase()}-${index}`}
                                 index={index}
                                 columnDefs={columnDefs}
@@ -527,10 +523,10 @@ const GLTableV2 = ({
                 : visibleRows &&
                   visibleRows.map((row, index) => (
                     <GLTableRow
-                      key={row._id}
+                      key={row._id || row.id}
                       row={row}
                       enableRowSelect={enableRowSelect}
-                      isItemSelected={isItemSelected(row._id, selectedRows)}
+                      isItemSelected={isItemSelected(row._id || row.id, selectedRows)}
                       labelId={`${tableName && tableName.toLowerCase()}-${index}`}
                       index={index}
                       columnDefs={columnDefs}
