@@ -16,7 +16,6 @@ const LinkLabelModal = () => {
   const { linkLabelModal, shipments, loadingShipments } = shipping;
   const shippingTable = useSelector(state => state.shipping.shippingTable);
   const { selectedRows } = shippingTable;
-  console.log({ selectedRows });
 
   const selectedShipment = shipments?.find(shipment => shipment.id === selectedRows[0]);
 
@@ -33,7 +32,7 @@ const LinkLabelModal = () => {
       {
         title: "Rate",
         display: shipment =>
-          parseFloat(shipment?.selected_rate.retail_rate || shipment?.selected_rate.rate || 0).toFixed(2),
+          `$${parseFloat(shipment?.selected_rate.retail_rate || shipment?.selected_rate.rate || 0).toFixed(2)}`,
       },
       {
         title: "Service",

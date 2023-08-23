@@ -130,6 +130,7 @@ const reducers = {
   shipping: combineReducers({
     shippingPage: shippingSlice,
     shippingTable: glTableReducer("shippingTable", {
+      sorting: [0, "desc"],
       searchBy: (row: any, search: string) => {
         const searchableText = row?.buyer_address.name || row?.buyer_address.company;
         return searchableText.toLowerCase().includes(search.toLowerCase());

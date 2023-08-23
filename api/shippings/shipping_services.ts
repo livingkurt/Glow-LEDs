@@ -84,7 +84,7 @@ export default {
   shipments_shipping_s: async () => {
     try {
       const shipments = await EasyPost.Shipment.all({
-        page_size: 100,
+        page_size: 50,
       });
       return shipments;
     } catch (error) {
