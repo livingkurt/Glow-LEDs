@@ -126,7 +126,6 @@ export default {
     }
   },
   update_orders_db: async (id: string, body: any) => {
-    console.log({ body });
     try {
       const order: any = await Order.findOne({ _id: id });
       if (order) {
