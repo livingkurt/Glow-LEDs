@@ -97,7 +97,7 @@ const GLTablePagination = ({ count, page, rowsPerPage, namespace }) => {
           <KeyboardArrowLeft style={{ fontSize: "25px" }} />
         </IconButton>
         <Autocomplete
-          value={selectedPage}
+          value={page + 1}
           onChange={handleSelectedPageChange}
           getOptionLabel={option => option.toString()}
           options={pageItems(rowsPerPage, count)}

@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import GLModal from "../../../shared/GlowLEDsComponents/GLActiionModal/GLActiionModal";
 import * as API from "../../../api";
@@ -7,6 +7,8 @@ import { Grid, Typography, List, ListItem, ListItemText, Collapse } from "@mui/m
 import LoadingInside from "../../../shared/SharedComponents/LoadingInside";
 import GLTableV2 from "../../../shared/GlowLEDsComponents/GLTableV2/GLTableV2";
 import { format_date } from "../../../utils/helper_functions";
+import { fullName } from "../../UsersPage/usersHelpers";
+import { applySearch } from "../../../shared/GlowLEDsComponents/GLTableV2/actions/actions";
 
 const LinkLabelModal = () => {
   const dispatch = useDispatch();
@@ -18,6 +20,12 @@ const LinkLabelModal = () => {
   const { selectedRows } = shippingTable;
 
   const selectedShipment = shipments?.find(shipment => shipment.id === selectedRows[0]);
+
+  useEffect(() => {
+    if (linkLabelModal) {
+      dispatch(applySearch("shippingTable", fullName(order.shipping)));
+    }
+  }, [dispatch, linkLabelModal, order.shipping]);
 
   const column_defs = useMemo(
     () => [
