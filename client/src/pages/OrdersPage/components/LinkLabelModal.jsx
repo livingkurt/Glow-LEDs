@@ -69,7 +69,7 @@ const LinkLabelModal = () => {
         onCancel={() => {
           dispatch(closeLinkLabelModal());
         }}
-        confirmDisabled={selectedRows.length === 1}
+        confirmDisabled={selectedRows.length > 1 || selectedRows.length === 0}
         title={"Link Label to Order"}
         confirmLabel={"Save"}
         confirmColor="primary"
