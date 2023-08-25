@@ -41,6 +41,7 @@ export const getProductFilters = async () => {
   return data;
 };
 export const reorderProducts = async ({ reorderedItems }: { reorderedItems: any }) => {
+  console.log({ reorderedItems });
   try {
     return axios.put(`/api/products/reorder`, { reorderedItems });
   } catch (error) {
