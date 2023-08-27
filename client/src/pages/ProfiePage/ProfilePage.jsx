@@ -205,7 +205,7 @@ const ProfilePage = () => {
         <Grid item xs={12}>
           <ProfileAffiliateEarnings />
         </Grid>
-        <Grid item xs={12}>
+        {/* <Grid item xs={12}>
           {user && user?.affiliate?._id && (
             <GLTableV2
               remoteApi={paychecksRemoteApi}
@@ -221,8 +221,8 @@ const ProfilePage = () => {
               enableRowSelect={false}
             />
           )}
-        </Grid>
-        <Grid item xs={12}>
+        </Grid> */}
+        {/* <Grid item xs={12}>
           <GLTableV2
             remoteApi={ordersRemoteApi}
             tableName={"Orders"}
@@ -236,7 +236,7 @@ const ProfilePage = () => {
             loading={loading_order}
             enableRowSelect={false}
           />
-        </Grid>
+        </Grid> */}
       </Grid>
       <SponsorMonthlyCheckinModal />
     </div>

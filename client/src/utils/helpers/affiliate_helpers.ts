@@ -1,6 +1,6 @@
 import { IAffiliate } from "../../types/affiliateTypes";
 
-export const determine_code_tier = (affiliate: IAffiliate, code_usage: Number) => {
+export const determine_code_tier = (affiliate: IAffiliate, code_usage: number) => {
   if (affiliate.promoter) {
     if (code_usage === 0 || code_usage === 1) {
       return 10;
