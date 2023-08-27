@@ -1,5 +1,5 @@
 /* eslint-disable max-lines-per-function */
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import {
   Table,
@@ -154,6 +154,8 @@ const GLTableV2 = ({
   defaultFilters,
   dropdownAction,
   noURLParams,
+  minTableWidth,
+  singleSelect,
 }) => {
   const isMounted = useRef(false);
   const dispatch = useDispatch();
@@ -352,7 +354,11 @@ const GLTableV2 = ({
 
   return (
     <div style={{ overflowX: "scroll" }} className="w-100per">
-      <Paper className={containerClassNames} style={{ ...style, margin: "1px" }} data-test="glTable">
+      <Paper
+        className={containerClassNames}
+        style={{ ...style, margin: "1px", minWidth: minTableWidth }}
+        data-test="glTable"
+      >
         <GLTableToolbar
           tableName={tableName}
           numSelected={numSelected}
@@ -439,7 +445,6 @@ const GLTableV2 = ({
           />
           {enableDragDrop ? (
             <DragDropContext
-              // onDragEnd={onDragEnd}
               onDragEnd={result => {
                 if (!result.destination) {
                   return;
@@ -484,6 +489,7 @@ const GLTableV2 = ({
                                 enableDropdownRow={enableDropdownRow}
                                 namespace={namespace}
                                 rowName={rowName}
+                                singleSelect={singleSelect}
                                 enableRowClick={enableRowClick}
                                 onRowClick={onRowClick}
                                 handleRowSelection={handleRowSelection}
@@ -547,6 +553,9 @@ const GLTableV2 = ({
                       cellProps={cellProps}
                       determine_color={determine_color}
                       dropdownAction={dropdownAction}
+                      singleSelect={singleSelect}
+                      isRowSelected={isRowSelected}
+                      setIsRowSelected={setIsRowSelected}
                     >
                       {enableDropdownRow && expandRow === row[rowName] && (
                         <>
@@ -611,6 +620,8 @@ GLTableV2.defaultProps = {
   colors: [],
   noURLParams: false,
   dropdownAction: x => x,
+  minTableWidth: "1000px",
+  singleSelect: false,
 };
 
 GLTableV2.propTypes = {
@@ -669,6 +680,8 @@ GLTableV2.propTypes = {
   dropdownAction: PropTypes.func,
   colors: PropTypes.array,
   noURLParams: PropTypes.bool,
+  minTableWidth: PropTypes.string,
+  singleSelect: PropTypes.bool,
 };
 
 export default GLTableV2;

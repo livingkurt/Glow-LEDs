@@ -98,6 +98,8 @@ const LinkLabelModal = () => {
                 loading={loadingShipments}
                 enableRowSelect={true}
                 noURLParams
+                singleSelect={true}
+                minTableWidth={"unset"}
               />
               <Collapse in={selectedShipment}>
                 <div className="mt-10px">
