@@ -90,6 +90,7 @@ import { TutorialsGridPage } from "./pages/TutorialsGridPage";
 import TrackOrderPage from "./pages/TrackOrderPage/TrackOrderPage";
 import routes from "./sitemap/routes";
 import UpdateNotifier from "./shared/SharedComponents/UpdateNotifier";
+import { hot } from "react-hot-loader/root";
 
 const App = () => {
   const Components = {
@@ -129,42 +130,9 @@ const App = () => {
     TutorialsGridPage,
     TrackOrderPage,
   };
-
   const dispatch = useDispatch();
-  useEffect(() => {
-    handleTokenRefresh();
-  }, [dispatch]);
-
   const userPage = useSelector(state => state.users.userPage);
   const { current_user } = userPage;
-  useEffect(() => {
-    if (current_user._id) {
-      dispatch(API.getCurrentUserCart(current_user._id));
-    }
-  }, [dispatch, current_user._id]);
-
-  const theme_colors = {
-    footer: "#333333",
-    header: "#333333",
-    content: "linear-gradient(180deg, #8a8a8a 0%, #272727 100%);",
-    container: "#272727",
-  };
-
-  const out_of_office_date_1 = "2021-11-23";
-  const out_of_office_date_2 = "2021-12-02";
-  const { height, width } = useWindowDimensions();
-
-  const [message, set_message] = useState("");
-
-  const frame = document.getElementsByTagName("body");
-
-  // We listen to the resize event
-  window.addEventListener("resize", () => {
-    // We execute the same script as before
-    let vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty("--vh", `${vh}px`);
-  });
-
   const debounce = (func, wait, immediate) => {
     let timeout;
     return function () {
@@ -193,6 +161,10 @@ const App = () => {
   }, 50);
 
   useEffect(() => {
+    handleTokenRefresh();
+  }, [dispatch]);
+
+  useEffect(() => {
     window.addEventListener("scroll", handleScroll);
 
     return () => window.removeEventListener("scroll", handleScroll);
@@ -203,13 +175,6 @@ const App = () => {
       modal.style.display = "none";
     }
   };
-
-  var modal = document.getElementById("myModal");
-  const [show_modal, set_show_modal] = useState(false);
-
-  const date = new Date();
-
-  const today = date.toISOString();
 
   useEffect(() => {
     let clean = true;
@@ -224,35 +189,42 @@ const App = () => {
           set_show_modal(true);
         }, 5000);
       }
-      // if (!popup) {
-      // 	setTimeout(() => {
-      // 		set_show_modal(true);
-      // 	}, 5000);
-      // }
     }
     return () => (clean = false);
   }, []);
 
-  const [active, set_active] = useState(false);
+  useEffect(() => {
+    if (current_user._id) {
+      dispatch(API.getCurrentUserCart(current_user._id));
+    }
+  }, [dispatch, current_user._id]);
 
-  const open_sidebar = () => {
-    const sidebar = document.querySelector(".sidebar");
+  const theme_colors = {
+    footer: "#333333",
+    header: "#333333",
+    content: "linear-gradient(180deg, #8a8a8a 0%, #272727 100%);",
+    container: "#272727",
   };
+
+  const out_of_office_date_1 = "2021-11-23";
+  const out_of_office_date_2 = "2021-12-02";
+  const { height, width } = useWindowDimensions();
+
+  // We listen to the resize event
+  window.addEventListener("resize", () => {
+    // We execute the same script as before
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty("--vh", `${vh}px`);
+  });
+
+  var modal = document.getElementById("myModal");
+  const [show_modal, set_show_modal] = useState(false);
+
+  const date = new Date();
+
+  const today = date.toISOString();
 
   const wrapperRef = useRef(null);
-  // useOutsideAlerter(wrapperRef);
-
-  const open_close = () => {
-    open_sidebar();
-    const sidebar = document.querySelector(".head-btn");
-    if (sidebar.classList.value === "head-btn not-active") {
-      document.querySelector(".head-btn").classList.remove("not-active");
-      document.querySelector(".head-btn").classList.add("active");
-    } else {
-      document.querySelector(".head-btn").classList.remove("active");
-      document.querySelector(".head-btn").classList.add("not-active");
-    }
-  };
   const theme = createTheme(glow_leds_theme);
 
   return (
@@ -423,4 +395,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default process.env.NODE_ENV === "development" ? hot(App) : App;

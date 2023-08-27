@@ -72,7 +72,7 @@ const ProfilePage = () => {
             start_date: month_start_date,
             end_date: month_end_date,
             sponsor: user?.affiliate?.sponsor,
-            type: "month"
+            type: "month",
           })
         );
         dispatch(
@@ -81,7 +81,7 @@ const ProfilePage = () => {
             start_date: year_start_date,
             end_date: year_end_date,
             sponsor: user?.affiliate?.sponsor,
-            type: "year"
+            type: "year",
           })
         );
       }
@@ -97,13 +97,15 @@ const ProfilePage = () => {
       { title: "Date Paid", display: paycheck => paycheck.paid_at && format_date(paycheck.paid_at) },
       {
         title: "Affiliate",
-        display: paycheck => (paycheck.affiliate ? paycheck.affiliate.artist_name : paycheck.team && paycheck.team.team_name)
+        display: paycheck =>
+          paycheck.affiliate ? paycheck.affiliate.artist_name : paycheck.team && paycheck.team.team_name,
       },
       {
         title: "Paid",
-        display: paycheck => (paycheck.paid ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />)
+        display: paycheck =>
+          paycheck.paid ? <i className="fas fa-check-circle" /> : <i className="fas fa-times-circle" />,
       },
-      { title: "Amount", display: paycheck => `$${paycheck.amount.toFixed(2)}` }
+      { title: "Amount", display: paycheck => `$${paycheck.amount.toFixed(2)}` },
     ],
     []
   );
@@ -112,7 +114,10 @@ const ProfilePage = () => {
     () => [
       { title: "Order #", display: "_id" },
       { title: "Order Placed", display: row => format_date(row.createdAt) },
-      { title: "Name", display: row => <Link to={`/secure/account/profile/${row?.user?._id}`}>{fullName(row.shipping)}</Link> },
+      {
+        title: "Name",
+        display: row => <Link to={`/secure/account/profile/${row?.user?._id}`}>{fullName(row.shipping)}</Link>,
+      },
       {
         title: "Order Items",
         display: row => (
@@ -123,7 +128,11 @@ const ProfilePage = () => {
               ))}
             </div>
             <div>
-              <OrderItemsDisplay order={row} determine_color={determineOrderColors} colspan={orderColumnDefs.length + 1} />
+              <OrderItemsDisplay
+                order={row}
+                determine_color={determineOrderColors}
+                colspan={orderColumnDefs.length + 1}
+              />
             </div>
             <div className="mt-10px">
               {row.order_note && (
@@ -140,7 +149,7 @@ const ProfilePage = () => {
               )}
             </div>
           </div>
-        )
+        ),
       },
 
       { title: "Total", display: row => `$${row.totalPrice.toFixed(2)}` },
@@ -154,8 +163,8 @@ const ProfilePage = () => {
               </GLButton>
             </Link>
           </div>
-        )
-      }
+        ),
+      },
     ],
     [dispatch]
   );

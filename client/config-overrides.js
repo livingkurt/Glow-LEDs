@@ -1,3 +1,5 @@
+const rewireReactHotLoader = require("react-app-rewire-hot-loader");
+
 module.exports = function override(config, env) {
   // Add polyfills
   config.resolve.fallback = {
@@ -16,6 +18,8 @@ module.exports = function override(config, env) {
     "zlib": require.resolve("browserify-zlib"), // Add this line
     "react/jsx-runtime": require.resolve("react/jsx-runtime.js"),
   };
+
+  config = rewireReactHotLoader(config, env);
 
   return config;
 };
