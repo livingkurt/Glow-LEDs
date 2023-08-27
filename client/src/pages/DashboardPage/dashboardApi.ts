@@ -7,8 +7,9 @@ import { errorMessage } from "../../helpers/sharedHelpers";
 export const updateVersion = async () => {
   try {
     const { data } = await axios.put(`/api/versions/increment`);
+    console.log({ data });
     Covy().showSnackbar({
-      message: `Version updated to ${data}`,
+      message: `Version updated to ${data.version}`,
       severity: "success",
     });
     return data;
